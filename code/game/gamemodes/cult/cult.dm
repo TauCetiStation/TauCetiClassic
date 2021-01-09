@@ -35,32 +35,22 @@
 	var/datum/religion/cult/religion
 
 	var/datum/mind/sacrifice_target = null
+	var/list/sacrificed = list()
+
 	var/list/datum/mind/started_cultists = list()
 
-	var/list/objectives = list()
-	var/list/sacrificed = list()
+	var/list/datum/objective/objectives = list()
 
 	var/eldergod = FALSE //for the summon god objective
 
 	var/acolytes_needed = 5 //for the survive objective
 	var/acolytes_out = 0
 
-	var/piety_needed = 0 // for objective
-
-	var/need_capture = 4 // areas
-
-	var/list/possibles_objectives = list(RECRUIT, SACRIFICE, CAPTURE, SUMMON_GOD, PIETY)
-
 /datum/game_mode/cult/announce()
 	to_chat(world, "<B>Текущий режим игры - Культ!</B>")
 	to_chat(world, "<B>Некоторые члены экипажа прибыли на станцию, состоя в культе!<BR>\nКультисты - выполняют свои задачи. Заставляйте людей последовать за вами любыми способами. Перемещайте смертных в своё измерение насильно. Запомни - тебя нет, есть только культ.<BR>\nПерсонал - не знает о культе, но при обнаружении кровавых рун и фанатиков будет сопротивляться. Хороший способ борьбы с фанатиками - это промывка мозгов Библией священника в разрешенную ЦентКоммом религию.</B>")
 
 /datum/game_mode/cult/pre_setup()
-	if(!config.objectives_disabled)
-		for(var/i in 1 to rand(2, 3))
-			var/object = pick_n_take(possibles_objectives)
-			objectives += object
-
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -82,23 +72,13 @@
 	religion = create_religion(/datum/religion/cult)
 	modePlayer += started_cultists
 
-	for(var/obj in objectives)
-		switch(obj)
-			if(SACRIFICE)
-				find_sacrifice_target()
-
-			if(RECRUIT)
-				acolytes_needed = max(4, round(player_list.len * 0.1))
-
-			if(PIETY)
-				piety_needed = round(player_list.len * 10)
-
 	for(var/datum/mind/cult_mind in started_cultists)
 		religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
 		equip_cultist(cult_mind.current)
 		to_chat(cult_mind.current, "<span class = 'info'><b>Вы член <font color='red'>культа</font>!</b></span>")
 
 		if(!config.objectives_disabled)
+			generate_objectives()
 			memoize_cult_objectives(cult_mind)
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span></i></b>")
@@ -108,26 +88,19 @@
 
 	return ..()
 
-// TODO: Rework to /datum/objectives
+/datum/game_mode/cult/proc/generate_objectives()
+	var/list/possibles_objectives = subtypesof(/datum/objective/cult)
+	for(var/i in 1 to rand(2, 3))
+		var/type = pick_n_take(possibles_objectives)
+		var/datum/objective/cult/objective = new type(null, src)
+		objectives += objective
+
 /datum/game_mode/cult/proc/memoize_cult_objectives(datum/mind/cult_mind)
-	for(var/obj_count in 1 to objectives.len)
-		var/explanation
-		switch(objectives[obj_count])
-			if(RECRUIT)
-				explanation = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] культистов улетят на шаттле, чтобы проложить исследования на других станциях."
-			if(SACRIFICE)
-				if(sacrifice_target)
-					explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]."
-				else
-					explanation = "Свободная задача."
-			if(SUMMON_GOD)
-				explanation = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции."
-			if(CAPTURE)
-				explanation = "Захватите не менее [need_capture] отсеков станции с помощью руны захвата зон."
-			if(PIETY)
-				explanation = "Накопите и сохраните [piety_needed] piety"
-		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+	var/obj_count = 1
+	for(var/datum/objective/O in objectives)
+		to_chat(cult_mind.current, "<B>Задача #[obj_count]</B>: [O.explanation_text]")
+		cult_mind.memory += "<B>Задача #[obj_count]</B>: [O.explanation_text]<BR>"
+		obj_count++
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -163,10 +136,10 @@
 	if(global.cult_religion.remove_member(cult_mind.current))
 		remove_antag_hud(ANTAG_HUD_CULT, cult_mind.current)
 		cult_mind.current.Paralyse(5)
-		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
+		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
 		cult_mind.memory = ""
 		if(show_message)
-			cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</span></FONT>")
+			cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
 
 /datum/game_mode/cult/proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
@@ -190,39 +163,13 @@
 	return ucs
 
 /datum/game_mode/cult/proc/check_cult_victory()
-	var/cult_fail = 0
-	for(var/obj in objectives)
-		switch(obj)
-			if(RECRUIT)
-				cult_fail += check_survive() //the proc returns 1 if there are not enough cultists on the shuttle, 0 otherwise
-			if(SUMMON_GOD)
-				cult_fail -= eldergod // 1 if nar-sie has risen
-			if(SACRIFICE)
-				if(sacrifice_target && !sacrificed.Find(sacrifice_target)) //if the target has been sacrificed, ignore this step. otherwise, add 1 to cult_fail
-					cult_fail++
-			if(CAPTURE)
-				if(!check_capture())
-					cult_fail++
-			if(PIETY)
-				if(religion.piety < piety_needed)
-					cult_fail++
+	var/cult_fail = FALSE
+	for(var/datum/objective/O in objectives)
+		if(!O.check_completion())
+			cult_fail = TRUE
+			break
 
 	return cult_fail //if any objectives aren't met, failure
-
-/datum/game_mode/cult/proc/check_survive()
-	for(var/mob/cultist in religion.members)
-		if(cultist?.stat != DEAD)
-			var/area/A = get_area(cultist)
-			if(is_type_in_typecache(A, centcom_areas_typecache))
-				acolytes_out++
-	if(acolytes_out >= acolytes_needed)
-		return FALSE
-	return TRUE
-
-/datum/game_mode/cult/proc/check_capture()
-	if(religion.captured_areas.len >= need_capture)
-		return TRUE
-	return FALSE
 
 /datum/game_mode/cult/proc/find_sacrifice_target()
 	var/list/possible_targets = get_unconvertables()
@@ -235,67 +182,29 @@
 		return TRUE
 	completion_text += "<h3>Результаты Культа:</h3>"
 	if(!check_cult_victory())
-		mode_result = "победа - культ выйграл"
+		mode_result = "win - cult win"
 		feedback_set_details("round_end_result", mode_result)
 		feedback_set("round_end_result", acolytes_out)
 		completion_text += "<span class='color: red; font-weight: bold;'>Культ <span style='color: green'>выйгал</span>! Рабы преуспели в служении своим темным хозяевам!</span><br>"
 		score["roleswon"]++
 	else
-		mode_result = "поражение - персонал остановил культ"
+		mode_result = "loss - staff can stop cult"
 		feedback_set_details("round_end_result", mode_result)
 		feedback_set("round_end_result", acolytes_out)
 		completion_text += "<span class='color: red; font-weight: bold;'>Персонал смог остановить культ!</span><br>"
 
 	var/text = "<b>Культистов улетело:</b> [acolytes_out]"
 	if(!config.objectives_disabled)
-		if(objectives.len)
-			text += "<br><b>Целями культистов было:</b>"
-			for(var/obj_count in 1 to objectives.len)
-				var/explanation
-				switch(objectives[obj_count])
-					if(RECRUIT)
-						if(!check_survive())
-							explanation = "Убедитесь, что хотя бы [acolytes_needed] улетят на шаттле. <span style='color: green; font-weight: bold;'>Успех!</span>"
-							feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
-						else
-							explanation = "Убедитесь, что хотя бы [acolytes_needed] улетят на шаттле. <span style='color: red; font-weight: bold;'>Провал.</span>"
-							feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
-					if(SACRIFICE)
-						if(sacrifice_target)
-							if(sacrifice_target in sacrificed)
-								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: green; font-weight: bold;'>Успех!</span>"
-								feedback_add_details("cult_objective","cult_sacrifice|SUCCESS")
-							else if(sacrifice_target && sacrifice_target.current)
-								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Провал.</span>"
-								feedback_add_details("cult_objective","cult_sacrifice|FAIL")
-							else
-								explanation = "Принесите в жертву [sacrifice_target.name], [sacrifice_target.assigned_role]. <span style='color: red; font-weight: bold;'>Провал (Тело уничтожено).</span>"
-								feedback_add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
-						else
-							explanation = "Свободная цель. <span style='color: green; font-weight: bold;'>Успех!</span>"
-							feedback_add_details("cult_objective","cult_free_objective|SUCCESS")
-					if(SUMMON_GOD)
-						if(eldergod)
-							explanation = "Призовите Нар-Си. <span style='color: green; font-weight: bold;'>Успех!</span>"
-							feedback_add_details("cult_objective","cult_narsie|SUCCESS")
-						else
-							explanation = "Призовите Нар-Си. <span style='color: red; font-weight: bold;'>Провал.</span>"
-							feedback_add_details("cult_objective","cult_narsie|FAIL")
-					if(CAPTURE)
-						if(check_capture())
-							explanation = "Захватите не менее [need_capture] отсеков станции. <span style='color: green; font-weight: bold;'>Успех!</span>"
-							feedback_add_details("cult_objective","cult_capture|SUCCESS")
-						else
-							explanation = "Захватите не менее [need_capture] отсеков станции. <span style='color: red; font-weight: bold;'>Провал.</span>"
-							feedback_add_details("cult_objective","cult_capture|FAIL")
-					if(PIETY)
-						if(religion.piety >= piety_needed)
-							explanation = "Накопите и сохраните [piety_needed] piety. <span style='color: green; font-weight: bold;'>Успех!</span>"
-							feedback_add_details("cult_objective","cult_piety|SUCCESS")
-						else
-							explanation = "Накопите и сохраните [piety_needed] piety. <span style='color: red; font-weight: bold;'>Провал.</span>"
-							feedback_add_details("cult_objective","cult_piety|FAIL")
-				text += "<br><b>Задача #[obj_count]</b>: [explanation]"
+		text += "<br><b>Целями культистов было:</b>"
+		var/obj_count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				text += "<br><b>Задача #[obj_count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Успех!</span>"
+				feedback_add_details("cult_objective","[objective.type]|SUCCESS")
+			else
+				text += "<br><b>Задача #[obj_count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Провал.</span>"
+				feedback_add_details("cult_objective","[objective.type]|FAIL")
+			obj_count++
 
 	completion_text += text
 	..()
@@ -305,11 +214,11 @@
 	var/dat = ""
 
 	dat += {"<B><U>MODE STATS</U></B><BR>
-	<B>Members of Cult:</B> [religion.members.len]<BR>
-	<B>Captured areas:</B> [religion.captured_areas.len]<BR>
-	<B>Accumulated Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
-	<B>Runes on the map:</B> [religion.runes.len]<BR>
-	<B>Anomaly destroyed:</B> [score["destranomaly"]]<BR>
+	<B>Членов Культа:</B> [religion.members.len]<BR>
+	<B>Захвачено зон:</B> [religion.captured_areas.len]<BR>
+	<B>Накоплено Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
+	<B>Рун на станции:</B> [religion.runes.len]<BR>
+	<B>Аномалий уничтожено:</B> [score["destranomaly"]]<BR>
 	<HR>"}
 
 	return dat

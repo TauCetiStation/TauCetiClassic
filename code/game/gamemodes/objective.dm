@@ -962,3 +962,94 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	if(blobs.len >= blobwincount)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/cult
+	// Many vars in mode
+	var/datum/game_mode/cult/cur_mode
+
+/datum/objective/cult/New(text, datum/game_mode/cult/mode)
+	cur_mode = mode
+	..()
+
+/datum/objective/cult/sacrifice/New()
+	..()
+	find_target()
+
+/datum/objective/cult/sacrifice/find_target()
+	cur_mode.find_sacrifice_target()
+	if(cur_mode.sacrifice_target)
+		explanation_text = "Принесите в жертву [cur_mode.sacrifice_target.name], [cur_mode.sacrifice_target.assigned_role]."
+	else
+		explanation_text = "Свободная задача."
+
+/datum/objective/cult/sacrifice/check_completion()
+	if(cur_mode.sacrifice_target in cur_mode.sacrificed)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/recruit
+	var/acolytes_needed
+
+/datum/objective/cult/recruit/New()
+	acolytes_needed = max(4, round(player_list.len * 0.1))
+	explanation_text = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] культистов улетят на шаттле, чтобы проложить исследования на других станциях."
+	..()
+
+/datum/objective/cult/recruit/find_target()
+	return
+
+/datum/objective/cult/recruit/check_completion()
+	for(var/mob/cultist in cur_mode.religion.members)
+		if(cultist?.stat != DEAD)
+			var/area/A = get_area(cultist)
+			if(is_type_in_typecache(A, centcom_areas_typecache))
+				cur_mode.acolytes_out++
+
+	if(cur_mode.acolytes_out >= acolytes_needed)
+		return OBJECTIVE_WIN
+
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/summon_narsie
+	explanation_text = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции."
+
+/datum/objective/cult/summon_narsie/find_target()
+	return
+
+/datum/objective/cult/summon_narsie/check_completion()
+	if(cur_mode.eldergod)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/capture_areas
+	var/need_capture = 4 // areas
+	explanation_text = "Захватите не менее 4 отсеков станции с помощью руны захвата зон."
+
+/datum/objective/cult/capture_areas/New()
+	explanation_text = "Захватите не менее [need_capture] отсеков станции с помощью руны захвата зон."
+	..()
+
+/datum/objective/cult/capture_areas/find_target()
+	return
+
+/datum/objective/cult/capture_areas/check_completion()
+	if(cur_mode.religion.captured_areas.len >= need_capture)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/save_piety
+	var/piety_needed = 0
+	explanation_text = "Накопите и сохраните 10000 piety"
+
+/datum/objective/cult/save_piety/New()
+	piety_needed = round(player_list.len * 10)
+	explanation_text = "Накопите и сохраните [piety_needed] piety"
+	..()
+
+/datum/objective/cult/save_piety/find_target()
+	return
+
+/datum/objective/cult/save_piety/check_completion()
+	if(cur_mode.religion.piety >= piety_needed)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

@@ -152,7 +152,7 @@
 	to_chat(T, "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form")
 	to_chat(user, "<span class='notice'><b>Capture successful!</b>:</span> [T.name]'s has been recaptured and stored within the soul stone.")
 
-/obj/item/device/soulstone/proc/create_construct(target, mob/user)
+/obj/item/device/soulstone/proc/create_construct(atom/target, mob/user)
 	var/mob/living/simple_animal/shade/A = locate() in src
 	if(!A)
 		to_chat(user, "<span class='warning'><b>Creation failed!</b>:</span> The soul stone is empty! Go kill someone!")
@@ -160,7 +160,7 @@
 
 	var/construct_class = show_radial_menu(user, target, class_images, require_near = TRUE, tooltips = TRUE)
 
-	var/type = classes[name]
+	var/type = classes[construct_class]
 	var/mob/M = new type(get_turf(target.loc))
 	M.key = A.key
 	A.cancel_camera()
