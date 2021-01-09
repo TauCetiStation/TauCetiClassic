@@ -89,7 +89,7 @@
  *
  * Returns a map name.
  */
-/client/proc/create_popup(name, ratiox = 100, ratioy = 100)
+/client/proc/create_map_popup(name, ratiox = 100, ratioy = 100)
 	winclone(src, "popupwindow", name)
 	var/list/winparams = list()
 	winparams["size"] = "[ratiox]x[ratioy]"
@@ -113,14 +113,14 @@
  *
  * Width and height are multiplied by 64 by default.
  */
-/client/proc/setup_popup(popup_name, width = 9, height = 9, \
+/client/proc/setup_map_popup(popup_name, width = 9, height = 9, \
 		tilesize = 2, bg_icon)
 	if(!popup_name)
 		return
 	clear_map("[popup_name]_map")
 	var/x_value = world.icon_size * tilesize * width
 	var/y_value = world.icon_size * tilesize * height
-	var/map_name = create_popup(popup_name, x_value, y_value)
+	var/map_name = create_map_popup(popup_name, x_value, y_value)
 
 	var/obj/screen/background/background = new
 	background.assigned_map = map_name
@@ -134,13 +134,13 @@
 /**
  * Closes a popup.
  */
-/client/proc/close_popup(popup)
+/client/proc/close_map_popup(popup)
 	winshow(src, popup, 0)
-	handle_popup_close(popup)
+	handle_map_popup_close(popup)
 
 /**
  * When the popup closes in any way (player or proc call) it calls this.
  */
-/client/verb/handle_popup_close(window_id as text)
+/client/verb/handle_map_popup_close(window_id as text)
 	set hidden = TRUE
 	clear_map("[window_id]_map")
