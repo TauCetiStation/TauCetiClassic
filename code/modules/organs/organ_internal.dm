@@ -346,13 +346,13 @@
 			accumulator_warning = world.time + 15 SECONDS
 
 /obj/item/organ/internal/liver/ipc/proc/ipc_cell_explode()
-	var/turf/T = get_turf(owner.loc)
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
 	if(!C)
-		UnregisterSignal(parent, COMSIG_ATOM_ELECTROCUTE_ACT)
-	else if(owner.nutrition > (C.maxcharge*1.2))
+		return
+	var/turf/T = get_turf(owner.loc)
+	if(owner.nutrition > (C.maxcharge*1.2))
 		explosion(T, 1, 0, 1, 1)
-		qdel(C)
+		C.ex_act(1.0)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
