@@ -79,7 +79,7 @@
 	for(var/obj/item/weapon/photo/Ph in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 
-	var/datum/browser/popup = new(user, "window=clipboard", src,name)
+	var/datum/browser/popup = new(user, "window=clipboard", name)
 	popup.set_content(dat)
 	popup.open()
 

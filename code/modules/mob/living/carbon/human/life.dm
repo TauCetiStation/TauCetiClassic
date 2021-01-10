@@ -150,7 +150,7 @@
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
-/mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
+/mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
@@ -902,7 +902,7 @@
 	return min(1,thermal_protection)
 
 /*
-/mob/living/carbon/human/proc/add_fire_protection(var/temp)
+/mob/living/carbon/human/proc/add_fire_protection(temp)
 	var/fire_prot = 0
 	if(head)
 		if(head.protective_temperature > temp)
@@ -1457,7 +1457,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/welding) )
 			var/obj/item/clothing/glasses/welding/O = glasses
 			if(!O.up && tinted_weldhelh)
-				impaired = max(impaired, 1)
+				impaired = max(impaired, 2)
 
 		if(eye_blurry)
 			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)

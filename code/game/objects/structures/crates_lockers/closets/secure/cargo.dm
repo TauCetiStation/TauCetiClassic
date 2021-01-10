@@ -16,8 +16,8 @@
 	new /obj/item/clothing/head/soft(src)
 //	new /obj/item/weapon/cartridge/quartermaster(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/cargo(src)
-	new /obj/item/clothing/suit/wintercoat/cargo(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
@@ -52,7 +52,7 @@
 	new /obj/item/weapon/mining_voucher(src)
 	new /obj/item/weapon/survivalcapsule(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/cargo(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
