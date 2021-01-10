@@ -257,6 +257,8 @@
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
+			if(camera && ("Robots" in camera.network))
+				camera.add_network("Security")
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
