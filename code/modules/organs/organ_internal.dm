@@ -334,7 +334,8 @@
 		owner.SetParalysis(2)
 		owner.eye_blurry = 2
 		owner.silent = 2
-	else if(damage)
+		return
+	if(damage)
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
