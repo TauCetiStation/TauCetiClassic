@@ -781,12 +781,13 @@ Please contact me on #coderbus IRC. ~Carn x
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 
-			if(BP.status & ORGAN_DEAD)
-				tail_s.color = NECROSIS_COLOR_MOD
-			else if(HULK in mutations)
-				tail_s.color = HULK_SKIN_COLOR
-			else
-				tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+			if(species.flags[HAS_SKIN_COLOR])
+				if(BP.status & ORGAN_DEAD)
+					tail_s.color = NECROSIS_COLOR_MOD
+				else if(HULK in mutations)
+					tail_s.color = HULK_SKIN_COLOR
+				else
+					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
 
 			overlays_standing[TAIL_LAYER] = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 

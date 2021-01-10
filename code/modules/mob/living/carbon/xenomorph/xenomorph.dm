@@ -26,6 +26,7 @@
 
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
+	add_language("Xenomorph language")
 	alien_list += src
 
 /mob/living/carbon/xenomorph/Destroy()
