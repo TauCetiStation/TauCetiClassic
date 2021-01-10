@@ -69,8 +69,8 @@
 
 	if(religion.rites_info.len != 0 || religion.rites_by_name.len != 0)
 		msg += "List of available Rites:"
-		for(var/i in religion.rites_info)
-			msg += "\n[i]"
+		for(var/name in religion.rites_info)
+			msg += "\n[religion.rites_info[name]]"
 
 	to_chat(user, msg)
 
@@ -343,11 +343,11 @@
 	for(var/M in mobs_around)
 		mobs_around -= M
 
-/obj/structure/altar_of_gods/proc/turf_around_enter(datum/source, atom/movable/mover, atom/oldLoc)
+/obj/structure/altar_of_gods/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
 	if(istype(mover, /mob/living))
-		mobs_around += mover
+		mobs_around |= mover
 
-/obj/structure/altar_of_gods/proc/turf_around_exit(datum/source, atom/movable/mover, atom/newLoc)
+/obj/structure/altar_of_gods/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
 	mobs_around -= mover
 
 // Called from a ritе

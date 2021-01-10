@@ -42,6 +42,7 @@
 	R.adjust_favor(calc_sacrifice_favor(AOG.buckled_mob))
 
 	playsound(AOG, 'sound/magic/disintegrate.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
 
 /datum/religion_rites/instant/cult/sacrifice/proc/calc_sacrifice_favor(mob/living/L)
 	if(!istype(L))
@@ -96,6 +97,79 @@
 	..()
 	var/datum/religion/cult/cult = religion
 	cult.mode.add_cultist(AOG.buckled_mob.mind)
-	AOG.buckled_mob.mind.special_role = "Cultist"
 	to_chat(AOG.buckled_mob, "<span class='cult'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
 	religion.adjust_favor(300)
+	return TRUE
+
+/datum/religion_rites/instant/cult/emp
+	name = "EMP"
+	desc = "Produces an electrical pulse of photons."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Энергетический импульс!!!"
+	favor_cost = 200
+
+	needed_aspects = list(
+		ASPECT_TECH = 2,
+	)
+
+/datum/religion_rites/instant/cult/emp/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	var/turf/turf = get_turf(AOG)
+	playsound(AOG, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 25)
+	turf.hotspot_expose(700, 125)
+	empulse(turf, 3, 5)
+	return TRUE
+
+/datum/religion_rites/instant/cult/drain_torture
+	name = "Drain life"
+	desc = "Drain life out of people on a charged torture table!"
+	ritual_length = (1 SECONDS)
+	invoke_msg = "Дай мне сил!!!"
+	favor_cost = 100
+
+	needed_aspects = list(
+		ASPECT_OBSCURE = 1,
+		ASPECT_RESCUE = 1,
+	)
+
+/datum/religion_rites/instant/cult/drain_torture/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	var/datum/religion/cult/C = religion
+	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
+		if(table.victim)
+			return TRUE
+
+	return FALSE
+
+/datum/religion_rites/instant/cult/drain_torture/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	var/drain = 0
+	var/datum/religion/cult/C = religion
+	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
+		if(table.victim.stat != DEAD && table.victim != user)
+			var/bdrain = rand(1, 25)
+			to_chat(table.victim, "<span class='userdanger'>Вы чувствуете слабость.</span>")
+			table.victim.take_overall_damage(bdrain, 0)
+			table.victim.Paralyse(5 SECONDS)
+			playsound(table, 'sound/magic/transfer_blood.ogg', VOL_EFFECTS_MASTER)
+			drain += bdrain
+
+	if(!drain)
+		return FALSE
+
+	user.visible_message("<span class='userdanger'>Кровь течет из пустоты в [user]!</span>", \
+		"<span class='cult'>Кровь начинает течь из дыры в пространстве в твое слабое смертное тело. Ты чувствуешь... переполненость.</span>", \
+		"<span class='userdanger'>Вы слышите течение жидкости.</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			if(prob(drain * 1.5))
+				if(BP.is_stump || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
+					BP.rejuvenate()
+					to_chat(user, "<span class='cult'>Ты чувствуешь прилив сил в [BP].</span>")
+
+	user.heal_overall_damage(1.2 * drain, drain)
+	return TRUE

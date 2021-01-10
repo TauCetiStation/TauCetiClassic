@@ -83,7 +83,6 @@
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span></i></b>")
 
-		cult_mind.special_role = "Cultist"
 		add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
 
 	return ..()
@@ -101,6 +100,8 @@
 		to_chat(cult_mind.current, "<B>Задача #[obj_count]</B>: [O.explanation_text]")
 		cult_mind.memory += "<B>Задача #[obj_count]</B>: [O.explanation_text]<BR>"
 		obj_count++
+
+	cult_mind.special_role = "Cultist"
 
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/H)
 	if(!istype(H))

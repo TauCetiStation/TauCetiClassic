@@ -36,6 +36,14 @@
 /obj/structure/pedestal/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
 		return
+
+	if(iswrench(W))
+		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
+		if(W.use_tool(src, user, 20, volume = 50))
+			anchored = !anchored
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+		return
+
 	return ..()
 
 // Tracking items on a pedestal

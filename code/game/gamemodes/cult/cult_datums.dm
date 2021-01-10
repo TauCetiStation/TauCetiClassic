@@ -291,63 +291,6 @@
 		"<span class='cult'>Вы чувствуете, как воздух целенаправленной куда-то движется от руны.</span>", \
 		"<span class='userdanger'>Вы чувствуете запах и вкус озона.</span>")
 
-/datum/rune/cult/emp
-	words = list("destroy", "see", "technology")
-
-/datum/rune/cult/emp/rune_reaction(mob/living/carbon/user)
-	return 3
-
-/datum/rune/cult/emp/talisman_reaction(mob/living/carbon/user)
-	return 5
-
-/datum/rune/cult/emp/action(mob/living/carbon/user)
-	var/emp_power = holder_reaction(user)
-	var/turf/turf = get_turf(holder)
-	playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 25)
-	turf.hotspot_expose(700,125)
-	empulse(turf, (emp_power - 2), emp_power)
-
-/datum/rune/cult/drain
-	words = list("travel", "blood", "self")
-
-/mob/living/carbon/proc/drain_dot(loop_value) //recursive proc to Imitate "damage over time" mechanics
-	if(loop_value > 0 && src && stat != DEAD)
-		take_overall_damage(3, 0)
-		addtimer(CALLBACK(src, .proc/drain_dot, --loop_value), 20)
-
-/datum/rune/cult/drain/action(mob/living/carbon/user)
-	var/drain = 0
-	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, type))
-			continue
-		for(var/mob/living/carbon/C in R.loc)
-			if(C.stat != DEAD && C != user)
-				var/bdrain = rand(1, 25)
-				to_chat(C, "<span class='userdanger'>You feel weakened.</span>")
-				C.take_overall_damage(bdrain, 0)
-				playsound(R, 'sound/magic/transfer_blood.ogg', VOL_EFFECTS_MASTER)
-				drain += bdrain
-	if(!drain)
-		return fizzle(user)
-	user.say ("Yu[pick("'","`")]gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
-	user.visible_message("<span class='userdanger'>Blood flows from the rune into [user]!</span>", \
-		"<span class='cult'>The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.</span>", \
-		"<span class='userdanger'>You hear a liquid flowing.</span>")
-	if(drain >= 40)
-		user.visible_message("<span class='userdanger'>[user]'s eyes give off eerie red glow!</span>", \
-			"<span class='cult'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
-			"<span class='userdanger'>You hear a heartbeat.</span>")
-		user.drain_dot(drain)
-		return
-	if(prob(drain * 1.5) && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.is_stump || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
-				BP.rejuvenate()
-				to_chat(user, "<span class='cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
-				break
-	user.heal_overall_damage(1.2 * drain, drain)
-
 /datum/rune/cult/seer
 	words = list("see", "hell", "join")
 
@@ -564,7 +507,6 @@
 	D.underwear = 0
 	D.key = ghost.key
 	SSticker.mode.add_cultist(D.mind)
-	D.mind.special_role = "Cultist"
 	dummies += D
 	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
 		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.	Assist your new compatriots in their \
@@ -600,9 +542,9 @@
 
 /datum/rune/cult/freedom/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in global.cult_religion.members)
-		if(iscarbon(H.current))
-			cultists += H.current
+	for(var/mob/M in global.cult_religion.members)
+		if(iscarbon(M))
+			cultists += M
 	var/list/acolytes = nearest_cultists()
 	var/amount_of_acolytes = length(acolytes)
 	if(amount_of_acolytes < 3)
@@ -654,9 +596,9 @@
 
 /datum/rune/cult/summon/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in global.cult_religion.members)
-		if (iscarbon(H.current))
-			cultists += H.current
+	for(var/mob/M in global.cult_religion.members)
+		if(iscarbon(M))
+			cultists += M
 
 	var/list/acolytes = nearest_cultists()
 	var/acolytes_amount = length(acolytes)

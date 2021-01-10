@@ -57,6 +57,9 @@
 	// Instead of storing links to turfs
 	var/list/coord_started_anomalies = list()
 
+	// Used for ritе Drain
+	var/list/obj/machinery/optable/torture_table/torture_tables = list()
+
 	// Are they dead or not yet? Maybe separate it somehow and put it in /datum/religion
 	var/list/humans_in_heaven = list()
 	// When's the next time you scare people in heaven

@@ -3,6 +3,16 @@
 	anchored = 1
 	icon = 'icons/obj/cult.dmi'
 
+/obj/structure/cult/attackby(obj/item/W, mob/user, params)
+	if(iswrench(W))
+		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
+		if(W.use_tool(src, user, 20, volume = 50))
+			anchored = !anchored
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+		return
+
+	return ..()
+
 /obj/structure/cult/tome
 	name = "desk"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
@@ -29,6 +39,9 @@
 	can_buckle = TRUE
 	buckle_lying = TRUE
 
+	var/datum/religion/cult/religion
+	var/charged = FALSE
+
 	var/image/belt
 	var/belt_icon = 'icons/obj/cult.dmi'
 	var/belt_icon_state = "torture_restraints"
@@ -36,6 +49,31 @@
 /obj/machinery/optable/torture_table/atom_init()
 	. = ..()
 	belt = image(belt_icon, belt_icon_state, layer = FLY_LAYER)
+
+/obj/machinery/optable/torture_table/Destroy()
+	religion.torture_tables -= src
+	return ..()
+
+/obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)
+	if(!charged && istype(W, /obj/item/weapon/storage/bible/tome))
+		var/obj/item/weapon/storage/bible/tome/T = W
+		if(T.religion && istype(T.religion, /datum/religion/cult))
+			var/datum/religion/cult/C = T.religion
+			C.torture_tables += src
+			religion = C
+			name = "charged [initial(name)]"
+			filters += filter(type = "outline", size = 1, color = "#990066")
+			charged = TRUE
+			return
+
+	if(iswrench(W))
+		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
+		if(W.use_tool(src, user, 20, volume = 50))
+			anchored = !anchored
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+		return
+
+	return ..()
 
 /obj/machinery/optable/torture_table/MouseDrop_T(atom/A, mob/user)
 	if(A in loc)

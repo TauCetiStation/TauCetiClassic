@@ -16,6 +16,7 @@
 
 	var/static/list/rune_next = list()
 	var/rune_cd = 10 SECONDS
+	var/scribe_time = 3 SECONDS
 
 	var/list/choices_generated = FALSE
 	var/static/list/build_choices_image = list()
@@ -118,6 +119,9 @@
 		return
 
 	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
+		return
+
+	if(!do_after(user, scribe_time, target = get_turf(user)))
 		return
 
 	var/mob/living/L = user

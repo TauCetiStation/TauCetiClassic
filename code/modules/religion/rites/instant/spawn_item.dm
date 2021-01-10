@@ -28,3 +28,27 @@
 	needed_aspects = list(
 		ASPECT_DEATH = 1,
 	)
+
+/datum/religion_rites/instant/spawn_item/cult/soulstone
+	name = "Summon soulstone"
+	desc = "Summons an empty soulstone for forgotten souls."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "For paranormal!!!"
+	favor_cost = 150
+	spawn_type = /obj/item/device/soulstone
+
+	needed_aspects = list(
+		ASPECT_SPAWN = 2,
+	)
+
+/datum/religion_rites/instant/spawn_item/cult/constructshell
+	name = "Summon shell"
+	desc = "Summons an empty shell for forgotten souls."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "For paranormal!!!"
+	favor_cost = 50
+	spawn_type = /obj/structure/constructshell
+
+	needed_aspects = list(
+		ASPECT_MYSTIC = 1,
+	)

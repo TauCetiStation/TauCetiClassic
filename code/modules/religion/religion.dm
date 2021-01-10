@@ -90,6 +90,7 @@
 	var/list/active_deities = list()
 
 	// Lists of rites with information. Converts itself into a list of rites with "name - desc (favor_cost)"
+	// rite.name = info
 	var/list/rites_info = list()
 	// Lists of rite name by type. "name = rite"
 	var/list/rites_by_name = list()
@@ -456,7 +457,7 @@
 					altar.look_piety = TRUE
 				name_entry += "<span class='piety'> ([RI.piety_cost] piety)</span>"
 
-			rites_info += "[name_entry]"
+			rites_info[RI.name] = "[name_entry]"
 
 // Adds all binding rites once
 /datum/religion/proc/give_binding_rites()
