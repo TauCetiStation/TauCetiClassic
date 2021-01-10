@@ -346,7 +346,7 @@
 			accumulator_warning = world.time + 15 SECONDS
 
 /obj/item/organ/internal/liver/ipc/proc/ipc_cell_explode()
-	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
+	var/obj/item/weapon/stock_parts/cell/C = locate() in src
 	if(!C)
 		return
 	var/turf/T = get_turf(owner.loc)
