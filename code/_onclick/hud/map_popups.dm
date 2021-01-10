@@ -4,6 +4,8 @@
  */
 /obj/screen/map_view
 	// Map view has to be on the lowest plane to enable proper lighting
+	icon = null
+	icon_state = null
 	layer = GAME_PLANE
 	plane = GAME_PLANE
 
