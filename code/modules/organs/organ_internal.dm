@@ -350,7 +350,7 @@
 	if(!C)
 		UnregisterSignal(parent, COMSIG_ATOM_ELECTROCUTE_ACT)
 	else if(owner.nutrition > (C.maxcharge*1.2))
-		explosion(T,1,0,1,1)
+		explosion(T, 1, 0, 1, 1)
 		qdel(C)
 
 /obj/item/organ/internal/kidneys
