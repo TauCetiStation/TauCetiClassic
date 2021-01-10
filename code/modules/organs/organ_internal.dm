@@ -350,7 +350,7 @@
 	if(!C)
 		return
 	var/turf/T = get_turf(owner.loc)
-	if(owner.nutrition > (C.maxcharge*1.2))
+	if(owner.nutrition > (C.maxcharge * 1.2))
 		explosion(T, 1, 0, 1, 1)
 		C.ex_act(1.0)
 
