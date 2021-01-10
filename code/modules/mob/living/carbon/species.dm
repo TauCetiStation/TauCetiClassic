@@ -104,7 +104,7 @@
 	// Keep in mind that position of organ is important in those lists.
 	// If hand connects to chest, then chest should go first.
 	var/list/has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
+		BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
 		,BP_HEAD   = /obj/item/organ/external/head
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
@@ -114,7 +114,7 @@
 		)
 
 	var/list/has_organ = list(
-		 O_HEART   = /obj/item/organ/internal/heart
+		O_HEART   = /obj/item/organ/internal/heart
 		,O_BRAIN   = /obj/item/organ/internal/brain
 		,O_EYES    = /obj/item/organ/internal/eyes
 		,O_LUNGS   = /obj/item/organ/internal/lungs
@@ -254,7 +254,7 @@
 	dietflags = DIET_OMNI
 
 	flags = list(
-	 HAS_SKIN_TONE = TRUE
+	HAS_SKIN_TONE = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
@@ -292,7 +292,7 @@
 	speed_mod = 0.7
 
 	flags = list(
-	 IS_WHITELISTED = TRUE
+	IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
@@ -363,7 +363,7 @@
 	speed_mod = -0.7
 
 	flags = list(
-	 IS_WHITELISTED = TRUE
+	IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
@@ -411,7 +411,7 @@
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
 
 	flags = list(
-	 IS_WHITELISTED = TRUE
+	IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_SKIN_COLOR = TRUE
@@ -588,7 +588,7 @@
 	poison_type = "oxygen"
 
 	flags = list(
-	 NO_SCAN = TRUE
+	NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
@@ -642,7 +642,7 @@
 	bodypart_butcher_results = list(/obj/item/stack/sheet/wood = 1)
 
 	flags = list(
-	 IS_WHITELISTED = TRUE
+	IS_WHITELISTED = TRUE
 	,NO_BREATHE = TRUE
 	,REQUIRE_LIGHT = TRUE
 	,NO_SCAN = TRUE
@@ -655,7 +655,7 @@
 	)
 
 	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
+		BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
 		,BP_HEAD   = /obj/item/organ/external/head/diona
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
@@ -770,7 +770,7 @@
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
 
 	flags = list(
-	 IS_WHITELISTED = TRUE
+	IS_WHITELISTED = TRUE
 	,NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
@@ -789,7 +789,7 @@
 	)
 
 	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest/robot/ipc
+		BP_CHEST  = /obj/item/organ/external/chest/robot/ipc
 		,BP_GROIN  = /obj/item/organ/external/groin/robot/ipc
 		,BP_HEAD   = /obj/item/organ/external/head/robot/ipc
 		,BP_L_ARM  = /obj/item/organ/external/l_arm/robot/ipc
@@ -799,7 +799,7 @@
 		)
 
 	has_organ = list(
-		 O_HEART   = /obj/item/organ/internal/heart/ipc
+		O_HEART   = /obj/item/organ/internal/heart/ipc
 		,O_BRAIN   = /obj/item/organ/internal/brain/ipc
 		,O_EYES    = /obj/item/organ/internal/eyes/ipc
 		,O_LUNGS   = /obj/item/organ/internal/lungs/ipc
@@ -857,7 +857,7 @@
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
 	flags = list(
-	 NO_BREATHE = TRUE
+	NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
@@ -894,7 +894,7 @@
 	bodypart_butcher_results = list()
 
 	flags = list(
-	 NO_BREATHE = TRUE
+	NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_DNA = TRUE
 	,NO_SCAN = TRUE
@@ -910,7 +910,7 @@
 	)
 
 	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest/skeleton
+		BP_CHEST  = /obj/item/organ/external/chest/skeleton
 		,BP_GROIN  = /obj/item/organ/external/groin/skeleton
 		,BP_HEAD   = /obj/item/organ/external/head/skeleton
 		,BP_L_ARM  = /obj/item/organ/external/l_arm/skeleton
@@ -920,7 +920,7 @@
 		)
 
 	has_organ = list(
-		 O_BRAIN   = /obj/item/organ/internal/brain
+		O_BRAIN   = /obj/item/organ/internal/brain
 		,O_EYES    = /obj/item/organ/internal/eyes
 		)
 
@@ -1013,7 +1013,7 @@
 	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
 
 	flags = list(
-	 NO_BREATHE = TRUE
+	NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_EMBED = TRUE
 	,RAD_IMMUNE = TRUE
@@ -1279,7 +1279,7 @@
 	cold_level_3 = 150
 
 	flags = list(
-	 NO_BREATHE = TRUE
+	NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,HAS_SKIN_COLOR = TRUE

@@ -87,7 +87,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 
 	   /** #### - Artificial Broadcast - #### **/
-	   			// (Imitates a mob)
+				// (Imitates a mob)
 
 		if(signal.data["type"] == 2)
 
@@ -464,10 +464,10 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		//End of research and feedback code.
 
-	 /* ###### Send the message ###### */
+	/* ###### Send the message ###### */
 
 
-	  	/* --- Process all the mobs that heard a masked voice (understood) --- */
+		/* --- Process all the mobs that heard a masked voice (understood) --- */
 
 		if (length(heard_masked))
 			for (var/mob/R in heard_masked)
@@ -674,7 +674,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		//End of research and feedback code.
 
-	 /* ###### Send the message ###### */
+		/* ###### Send the message ###### */
 
 		/* --- Process all the mobs that heard the voice normally (understood) --- */
 

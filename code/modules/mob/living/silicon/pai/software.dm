@@ -655,12 +655,12 @@
 	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[jointext(laws.supplied, "<br>")]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of
-			 comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
-			 rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
-			 only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><p>
-			 <b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
-			 simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
-			 prime directive to the best of your ability.</b></p>
+			comprehending the subtle nuances of human language. You may parse the \"spirit\" of a directive and follow its intent,
+			rather than tripping over pedantics and getting snared by technicalities. Above all, you are machine in name and build
+			only. In all other aspects, you may be seen as the ideal, unwavering human companion that you are.</i></p><p>
+			<b>Your prime directive comes before all others. Should a supplemental directive conflict with it, you are capable of
+			simply discarding this inconsistency, ignoring the conflicting supplemental directive and continuing to fulfill your
+			prime directive to the best of your ability.</b></p>
 			"}
 	return dat
 
@@ -744,7 +744,7 @@
 		dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 		if ((istype(src.medicalActive1, /datum/data/record) && data_core.general.Find(src.medicalActive1)))
 			dat += text("Name: []<BR>\nID: []<BR>\nSex: []<BR>\nAge: []<BR>\nFingerprint: []<BR>\nPhysical Status: []<BR>\nMental Status: []<BR>",
-			 src.medicalActive1.fields["name"], src.medicalActive1.fields["id"], src.medicalActive1.fields["sex"], src.medicalActive1.fields["age"], src.medicalActive1.fields["fingerprint"], src.medicalActive1.fields["p_stat"], src.medicalActive1.fields["m_stat"])
+			src.medicalActive1.fields["name"], src.medicalActive1.fields["id"], src.medicalActive1.fields["sex"], src.medicalActive1.fields["age"], src.medicalActive1.fields["fingerprint"], src.medicalActive1.fields["p_stat"], src.medicalActive1.fields["m_stat"])
 		else
 			dat += "<pre>Requested medical record not found.</pre><BR>"
 		if ((istype(src.medicalActive2, /datum/data/record) && data_core.medical.Find(src.medicalActive2)))
@@ -798,7 +798,7 @@
 	var/dat = ""
 	if(src.subscreen == 0)
 		dat += {"<h2>Medical Analysis Suite</h2><hr>
-				 <h4>Visual Status Overlay</h4>
+				<h4>Visual Status Overlay</h4>
 					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
 					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>enabled</font>" : "<font color=#FF5555>disabled</font>" ].<br>
 					<a href='byond://?src=\ref[src];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
@@ -807,7 +807,7 @@
 					"}
 	if(src.subscreen == 1)
 		dat += {"<h2>Medical Analysis Suite</h2><hr>
-				 <h4>Host Bioscan</h4>
+				<h4>Host Bioscan</h4>
 				"}
 		var/mob/living/M = src.loc
 		if(!istype(M, /mob/living))
@@ -829,10 +829,10 @@
 		"}
 		for(var/datum/disease/D in M.viruses)
 			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
-					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
+					Name: [D.name]<br>
+					Type: [D.spread]<br>
+					Stage: [D.stage]/[D.max_stages]<br>
+					Possible Cure: [D.cure]<br>
 					"}
 		dat += "<br><a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Refresh Bioscan</a><br>"
 		dat += "<br><a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"

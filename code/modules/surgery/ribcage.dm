@@ -185,7 +185,7 @@
 
 /datum/surgery_step/ribcage/remove_embryo/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning'>[user] rips the larva out of [target]'s ribcage!</span>",
-						 "You rip the larva out of [target]'s ribcage!")
+	                     "You rip the larva out of [target]'s ribcage!")
 
 	for(var/obj/item/alien_embryo/A in target)
 		A.loc = A.loc.loc
@@ -506,7 +506,7 @@
 		target.dna = PB.brainmob.dna
 	qdel(tool)
 	target.stat = CONSCIOUS
-	
+
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -730,6 +730,6 @@
 	tool.forceMove(accum)
 
 	var/obj/item/weapon/stock_parts/cell/C = tool
-	
+
 	target.nutrition = C.charge
 

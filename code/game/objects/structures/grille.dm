@@ -46,8 +46,8 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
-						 "<span class='warning'>You kick [src].</span>", \
-						 "You hear twisting metal.")
+	                     "<span class='warning'>You kick [src].</span>", \
+	                     "You hear twisting metal.")
 
 	if(shock(user, 70))
 		return
@@ -64,8 +64,8 @@
 
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] mangles [src].</span>", \
-						 "<span class='warning'>You mangle [src].</span>", \
-						 "You hear twisting metal.")
+	                     "<span class='warning'>You mangle [src].</span>", \
+	                     "You hear twisting metal.")
 
 	if(!shock(user, 70))
 		health -= 5
@@ -78,8 +78,8 @@
 	user.do_attack_animation(src)
 	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
-						 "<span class='warning'>You smash against [src].</span>", \
-						 "You hear twisting metal.")
+	                     "<span class='warning'>You smash against [src].</span>", \
+	                     "You hear twisting metal.")
 
 	health -= rand(2,3)
 	healthcheck()
@@ -135,7 +135,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
-								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
+			                     "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
 			return
 
 //window placing begin

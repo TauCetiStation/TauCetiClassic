@@ -263,7 +263,7 @@
 		else if(src.occupant.cloneloss > (100 - src.heal_level))
 			src.occupant.Paralyse(4)
 
-			 //Slowly get that clone healed and finished.
+			//Slowly get that clone healed and finished.
 			src.occupant.adjustCloneLoss(-((speed_coeff/2)))
 
 			//Premature clones may have brain damage.

@@ -1012,4 +1012,4 @@
 
 /obj/item/weapon/fluff/farwadoll/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] hugs [src]! How cute! </span>", \
-						 "<span class='notice'>You hug [src]. Dawwww... </span>")
+	                     "<span class='notice'>You hug [src]. Dawwww... </span>")

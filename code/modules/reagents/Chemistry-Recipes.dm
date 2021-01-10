@@ -834,8 +834,8 @@
 	holder.clear_reagents()
 
 	var/virus = pick(/datum/disease/advance/flu, /datum/disease/advance/cold, \
-	 /datum/disease/pierrot_throat, /datum/disease/fake_gbs, \
-	 /datum/disease/brainrot, /datum/disease/magnitis)
+	                 /datum/disease/pierrot_throat, /datum/disease/fake_gbs, \
+	                 /datum/disease/brainrot, /datum/disease/magnitis)
 
 
 	var/datum/disease/F = new virus(0)

@@ -263,7 +263,7 @@
 /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor/cast(list/targets)
 	for(var/mob/living/user in targets)
 		user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and begins to shift around their body!</span>", \
-							 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
+		                     "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
 		for(var/obj/item/I in user)
 			if(I.flags & ABSTRACT)
 				qdel(I)

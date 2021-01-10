@@ -49,14 +49,14 @@
 		return
 	else if(!user.is_busy(A))
 		user.visible_message("<span class='warning'>[user] starts to force the door to open with [src]!</span>",\
-							 "<span class='warning'>You start forcing the door to open.</span>",\
-							 "<span class='warning'>You hear metal strain.</span>")
+		                     "<span class='warning'>You start forcing the door to open.</span>",\
+		                     "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 70, target = A))
 			if(A.density && in_range(A, user))
 				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
-									 "<span class='warning'>You force the door to open.</span>",\
-									 "<span class='warning'>You hear a metal screeching sound.</span>")
+				                     "<span class='warning'>You force the door to open.</span>",\
+				                     "<span class='warning'>You hear a metal screeching sound.</span>")
 				A.open(1)
 
 /obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, obj/machinery/door/airlock/A)
@@ -66,15 +66,15 @@
 		var/attempts = 0
 		while(A)
 			user.visible_message("<span class='warning'>[user] attempts to break open the airlock with [src]!</span>",\
-								 "<span class='warning'>You attempt to break open the airlock.</span>",\
-								 "<span class='warning'>You hear metal strain.</span>")
+			                     "<span class='warning'>You attempt to break open the airlock.</span>",\
+			                     "<span class='warning'>You hear metal strain.</span>")
 			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(do_after(user, 100, target = A))
 				if(A && A.density && in_range(A, user))
 					if(attempts >= 2 && prob(attempts*5))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
-											 "<span class='warning'>You break the airlock.</span>",\
-											 "<span class='warning'>You hear a metal screeching sound.</span>")
+						                     "<span class='warning'>You break the airlock.</span>",\
+						                     "<span class='warning'>You hear a metal screeching sound.</span>")
 						A.door_rupture(user)
 						playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 						return
@@ -89,14 +89,14 @@
 		return
 	else if(!user.is_busy(A))
 		user.visible_message("<span class='warning'>[user] attempts to break open the emergency shutter with [src]!</span>",\
-							 "<span class='warning'>You attempt to break open the emergency shutter.</span>",\
-							 "<span class='warning'>You hear metal strain.</span>")
+		                     "<span class='warning'>You attempt to break open the emergency shutter.</span>",\
+		                     "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 200, target = A))
 			if(A.density && in_range(A, user))
 				user.visible_message("<span class='warning'>[user] broke the emergency shutter with [src]!</span>",\
-									 "<span class='warning'>You break the emergency shutter.</span>",\
-									 "<span class='warning'>You hear a metal screeching sound.</span>")
+				                     "<span class='warning'>You break the emergency shutter.</span>",\
+				                     "<span class='warning'>You hear a metal screeching sound.</span>")
 				A.blocked = FALSE
 				A.open(1)
 

@@ -51,16 +51,16 @@
 					c[i][j] = colors[i][j]
 
 	return MapColors_interpolate(I, ratio,
-		 colors[ 1][1], colors[ 1][2], colors[ 1][3], colors[ 1][4], // Red 1
-		 colors[ 2][1], colors[ 2][2], colors[ 2][3], colors[ 2][4], // Red 2
-		 colors[ 3][1], colors[ 3][2], colors[ 3][3], colors[ 3][4], // Green 1
-		 colors[ 4][1], colors[ 4][2], colors[ 4][3], colors[ 4][4], // Green 2
-		 colors[ 5][1], colors[ 5][2], colors[ 5][3], colors[ 5][4], // Blue 1
-		 colors[ 6][1], colors[ 6][2], colors[ 6][3], colors[ 6][4], // Blue 2
-		 colors[ 7][1], colors[ 7][2], colors[ 7][3], colors[ 7][4], // Alpha 1
-		 colors[ 8][1], colors[ 8][2], colors[ 8][3], colors[ 8][4], // Alpha 2
-		 colors[ 9][1], colors[ 9][2], colors[ 9][3], colors[ 9][4], // Added 1
-		 colors[10][1], colors[10][2], colors[10][3], colors[10][4]) // Added 2
+		colors[ 1][1], colors[ 1][2], colors[ 1][3], colors[ 1][4], // Red 1
+		colors[ 2][1], colors[ 2][2], colors[ 2][3], colors[ 2][4], // Red 2
+		colors[ 3][1], colors[ 3][2], colors[ 3][3], colors[ 3][4], // Green 1
+		colors[ 4][1], colors[ 4][2], colors[ 4][3], colors[ 4][4], // Green 2
+		colors[ 5][1], colors[ 5][2], colors[ 5][3], colors[ 5][4], // Blue 1
+		colors[ 6][1], colors[ 6][2], colors[ 6][3], colors[ 6][4], // Blue 2
+		colors[ 7][1], colors[ 7][2], colors[ 7][3], colors[ 7][4], // Alpha 1
+		colors[ 8][1], colors[ 8][2], colors[ 8][3], colors[ 8][4], // Alpha 2
+		colors[ 9][1], colors[ 9][2], colors[ 9][3], colors[ 9][4], // Added 1
+		colors[10][1], colors[10][2], colors[10][3], colors[10][4]) // Added 2
 
 
 

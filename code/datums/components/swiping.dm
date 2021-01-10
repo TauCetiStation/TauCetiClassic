@@ -39,7 +39,7 @@
 	// Whether you can spin-sweep 1 tile around you with this weapon. can_sweep is not required to be able to spin.
 	var/can_spin = FALSE
 
-	 // A callback that allows to check for additional conditions before pushing.
+	// A callback that allows to check for additional conditions before pushing.
 	var/datum/callback/can_push_call
 	// A callback that allows to check for additional conditions before pulling.
 	var/datum/callback/can_pull_call

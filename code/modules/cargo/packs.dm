@@ -367,7 +367,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/storage/labcoat,
 					/obj/item/clothing/mask/surgical,
 					/obj/item/weapon/storage/box/evidence
-					 )
+					)
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Investigation Crate"
 	group = "Security"

@@ -22,8 +22,8 @@
 		to_chat(user,"<span class='userdanger'> We cannot reform our [weapon_name_simple] while restrained</span>")
 		return
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
-	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
-	 "<span class='warning'>You hear organic matter ripping and tearing!</span>")
+	                     "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
+	                     "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	return ..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)

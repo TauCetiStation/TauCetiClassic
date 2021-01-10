@@ -789,7 +789,7 @@ Buildable meters
 		"You hear ratchet.")
 	qdel(src)	// remove the pipe item
 
-	 //TODO: DEFERRED
+	//TODO: DEFERRED
 
 // ensure that setterm() is called for a newly connected pipeline
 

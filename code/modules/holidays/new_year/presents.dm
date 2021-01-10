@@ -60,7 +60,7 @@
 			var/mob/living/carbon/human/H = user
 			if(H.species.flags[HAS_HAIR])
 				H.visible_message("[user] begins balding.", \
-										 "<span class='notice'>You become bald from shame.</span>")
+				                  "<span class='notice'>You become bald from shame.</span>")
 				H.h_style = "Bald"
 				H.update_hair()
 		qdel(src)

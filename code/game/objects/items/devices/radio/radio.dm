@@ -406,8 +406,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			// we're done here.
 			return
 
-	  	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
-	  	// Send a mundane broadcast with limited targets:
+		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
+		// Send a mundane broadcast with limited targets:
 
 		//THIS IS TEMPORARY.
 		if(!connection)	return	//~Carn

@@ -36,7 +36,7 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
-						 "<span class='notice'>You label [target] as [label].</span>")
+	                     "<span class='notice'>You label [target] as [label].</span>")
 	target.name = "[target.name] ([label])"
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user)

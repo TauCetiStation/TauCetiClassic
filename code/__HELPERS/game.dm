@@ -354,7 +354,7 @@
 	var/dest_y
 
 /datum/projectile_data/New(src_x, src_y, time, distance, \
-							 power_x, power_y, dest_x, dest_y)
+	                       power_x, power_y, dest_x, dest_y)
 	src.src_x = src_x
 	src.src_y = src_y
 	src.time = time

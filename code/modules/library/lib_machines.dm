@@ -77,11 +77,11 @@
 				dat += "</table><BR>"
 			dat += {"
 			<A href='?src=\ref[src];back=1'>Go Back</A>
-			 <A href='?src=\ref[src];pageprev=2'><< Page</A>
-			 <A href='?src=\ref[src];pageprev=1'>< Page</A>
-			 <A href='?src=\ref[src];pagereset=1'>Reset</A>
-			 <A href='?src=\ref[src];pagenext=1'>Page ></A>
-			 <A href='?src=\ref[src];pagenext=2'>Page >></A><BR>"}
+			<A href='?src=\ref[src];pageprev=2'><< Page</A>
+			<A href='?src=\ref[src];pageprev=1'>< Page</A>
+			<A href='?src=\ref[src];pagereset=1'>Reset</A>
+			<A href='?src=\ref[src];pagenext=1'>Page ></A>
+			<A href='?src=\ref[src];pagenext=2'>Page >></A><BR>"}
 
 	var/datum/browser/popup = new(user, "publiclibrary", "Library Visitor", 600, 600)
 	popup.set_content(dat)
@@ -248,11 +248,11 @@
 				<tr><td>ID</td><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"} + dat
 			dat += {"
 			<BR><A href='?src=\ref[src];switchscreen=0'>Main Menu</A>
-			 <A href='?src=\ref[src];pageprev=2'><< Page</A>
-			 <A href='?src=\ref[src];pageprev=1'>< Page</A>
-			 <A href='?src=\ref[src];pagereset=1'>Reset</A>
-			 <A href='?src=\ref[src];pagenext=1'>Page ></A>
-			 <A href='?src=\ref[src];pagenext=2'>Page >></A><BR>"}
+			<A href='?src=\ref[src];pageprev=2'><< Page</A>
+			<A href='?src=\ref[src];pageprev=1'>< Page</A>
+			<A href='?src=\ref[src];pagereset=1'>Reset</A>
+			<A href='?src=\ref[src];pagenext=1'>Page ></A>
+			<A href='?src=\ref[src];pagenext=2'>Page >></A><BR>"}
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)

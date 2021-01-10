@@ -11,7 +11,7 @@ var/global/total_runtimes_skipped = 0
 
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
-												 If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
+	                                           If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
 
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()

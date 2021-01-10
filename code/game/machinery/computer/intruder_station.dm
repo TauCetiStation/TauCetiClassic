@@ -160,8 +160,8 @@
 
 /datum/intruder_tools/rig
 	name = "Syndi Rig"
-	desc = "The red syndicate space rig with additional armor plating.\
-	 Nanotrasen crewmembers are trained to report red space suit sightings."
+	desc = "The red syndicate space rig with additional armor plating. \
+	Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/rig
 	cost = 8
 

@@ -6,7 +6,7 @@
 
 	...
 	I guess you're a little cool.
-	 -Sayu
+	-Sayu
 */
 
 /obj/item/clothing/gloves/space_ninja

@@ -143,10 +143,10 @@
 /obj/effect/blob/bullet_act(obj/item/projectile/Proj)
 	..()
 	switch(Proj.damage_type)
-	 if(BRUTE)
-		 health -= (Proj.damage/brute_resist)
-	 if(BURN)
-		 health -= (Proj.damage/fire_resist)
+		if(BRUTE)
+			health -= (Proj.damage/brute_resist)
+		if(BURN)
+			health -= (Proj.damage/fire_resist)
 
 	update_icon()
 	return 0

@@ -612,7 +612,7 @@
 			if("Drone")
 				new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
 		if(prob(20))
-		 new /obj/machinery/artifact/bluespace_crystal(T)
+			new /obj/machinery/artifact/bluespace_crystal(T)
 	return
 
 /**********************Asteroid**************************/

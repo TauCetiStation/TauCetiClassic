@@ -492,7 +492,7 @@
 		if(inhale_pp > 0)
 			var/ratio = inhale_pp/safe_pressure_min
 
-			 // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+			// Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
 			adjustOxyLoss(min(5*(1 - ratio), HUMAN_MAX_OXYLOSS))
 			failed_last_breath = 1
 			inhaled_gas_used = inhaling*ratio/6
@@ -577,7 +577,7 @@
 
 	// Hot air hurts :(
 	if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1))
-	 // #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
+		// #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
 
 		if(status_flags & GODMODE)
 			return 1

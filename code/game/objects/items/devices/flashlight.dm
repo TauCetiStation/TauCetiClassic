@@ -80,14 +80,14 @@
 			if(!M.blinded)
 				M.flash_eyes()
 				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
-									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+				                  "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
 				M.visible_message("<span class='notice'>[M] directs [src] to \his eyes.</span>", \
-									 "<span class='notice'>You wave the light in front of your eyes.</span>")
+				                  "<span class='notice'>You wave the light in front of your eyes.</span>")
 			return
 
 		user.visible_message("<span class='notice'>[user] directs [src] to [M]'s eyes.</span>", \
-							 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
+		                     "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
 
 		if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))	//robots and aliens are unaffected
 			if(M.stat == DEAD || M.sdisabilities & BLIND)	//mob is dead or fully blind

@@ -68,7 +68,7 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 
 	build_inventory(products)
-	 //Add hidden inventory
+	//Add hidden inventory
 	build_inventory(contraband, 1)
 	build_inventory(premium, 0, 1)
 	power_change()
@@ -950,8 +950,8 @@
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
 	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,
 	/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2, /obj/item/device/modkit/wizard/skrell = 1,
-	 /obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1, /obj/item/device/modkit/wizard/vox = 1, /obj/item/clothing/head/wizard/redhood = 1, /obj/item/clothing/head/wizard/bluehood = 1,
-	 /obj/item/clothing/suit/wizrobe/wiz_blue = 1, /obj/item/clothing/suit/wizrobe/wiz_red = 1)
+	/obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1, /obj/item/device/modkit/wizard/vox = 1, /obj/item/clothing/head/wizard/redhood = 1, /obj/item/clothing/head/wizard/bluehood = 1,
+	/obj/item/clothing/suit/wizrobe/wiz_blue = 1, /obj/item/clothing/suit/wizrobe/wiz_red = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
 /obj/machinery/vending/weirdomat
@@ -1092,8 +1092,8 @@
 	icon_deny = "engivend-deny"
 	req_access = list(11) //Engineering Equipment access
 	products = list(/obj/item/clothing/glasses/meson = 2,/obj/item/device/multitool = 4, /obj/item/weapon/gun/energy/pyrometer/engineering = 4, /obj/item/weapon/airlock_electronics = 10,/obj/item/weapon/module/power_control = 10,/obj/item/weapon/airalarm_electronics = 10,/obj/item/weapon/stock_parts/cell/high = 10,
-			    	/obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,/obj/item/weapon/stock_parts/capacitor = 5,
-					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
+	                /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,/obj/item/weapon/stock_parts/capacitor = 5,
+	                /obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
 	contraband = list(/obj/item/weapon/stock_parts/cell/potato = 3)
 	premium = list(/obj/item/weapon/storage/belt/utility = 3,/obj/item/weapon/storage/part_replacer=1)
 	refill_canister = /obj/item/weapon/vending_refill/engivend

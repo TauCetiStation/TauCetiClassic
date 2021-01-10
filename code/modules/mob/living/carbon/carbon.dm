@@ -489,7 +489,7 @@
 		legcuffed = null
 		update_inv_legcuffed()
 	else
-	 ..()
+		..()
 
 	return
 
@@ -773,7 +773,7 @@
 		adjustOxyLoss(-suff)
 
 	if(do_mob(user, src, HUMAN_STRIP_DELAY))
-		 // yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
+		// yes, we check this after the action, allowing player to try this even if it looks wrong (for fun).
 		if(user.species && user.species.flags[NO_BREATHE])
 			to_chat(user, "<span class='notice bold'>Your species can not perform AV!</span>")
 			return

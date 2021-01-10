@@ -49,7 +49,7 @@
 	else if(iswrench(C))
 		anchored = !anchored
 		user.visible_message("<span class='warning'>[user] has [anchored ? "" : "un" ]secured \the [src]!</span>",
-							 "You have [anchored ? "" : "un" ]secured \the [src]!")
+		                     "You have [anchored ? "" : "un" ]secured \the [src]!")
 		update_icon()
 	else if(!anchored && iswelder(C))
 		var/obj/item/weapon/weldingtool/WT = C
@@ -59,7 +59,7 @@
 			"You start to dissassemble \the [src].")
 			if(C.use_tool(src, user, 40, volume = 50))
 				user.visible_message("<span class='warning'>[user] has dissassembled \the [src].</span>",
-									 "You have dissassembled \the [src].")
+				                     "You have dissassembled \the [src].")
 				new /obj/item/stack/sheet/metal(src.loc, 2)
 				qdel(src)
 		else

@@ -80,15 +80,15 @@
 
 	swapmap.New(id,x,y,z)
 		Create a new map; specify id, width (x), height (y), and
-		 depth (z)
+			depth (z)
 		Default size is world.maxx,world.maxy,1
 	swapmap.New(id,turf1,turf2)
 		Create a new map; specify id and 2 corners
 		This becomes a /swapmap for one of the compiled-in maps, for
-		 easy saving.
+			easy saving.
 	swapmap.New()
 		Create a new map datum, but does not allocate space or assign an
-		 ID (used for loading).
+			ID (used for loading).
 	swapmap.Del()
 		Deletes a map but does not save
 	swapmap.Save()
@@ -101,29 +101,29 @@
 		Change the map's id and make changes to the lookup list
 	swapmap.AllTurfs(z)
 		Returns a block of turfs encompassing the entire map, or on just
-		 one z-level
+			one z-level
 		z is in world coordinates; it is optional
 	swapmap.Contains(turf/T)
 		Returns nonzero if T is inside the map's boundaries.
 		Also works for objs and mobs, but the proc is not area-safe.
 	swapmap.InUse()
 		Returns nonzero if a mob with a key is within the map's
-		 boundaries.
+			boundaries.
 	swapmap.LoCorner(z=z1)
 		Returns locate(x1,y1,z), where z=z1 if none is specified.
 	swapmap.HiCorner(z=z2)
 		Returns locate(x2,y2,z), where z=z2 if none is specified.
 	swapmap.BuildFilledRectangle(turf/corner1,turf/corner2,item)
 		Builds a filled rectangle of item from one corner turf to the
-		 other, on multiple z-levels if necessary. The corners may be
-		 specified in any order.
+			other, on multiple z-levels if necessary. The corners may be
+			specified in any order.
 		item is a type path like /turf/wall or /obj/barrel{full=1}.
 	swapmap.BuildRectangle(turf/corner1,turf/corner2,item)
 		Builds an unfilled rectangle of item from one corner turf to
-		 the other, on multiple z-levels if necessary.
+			the other, on multiple z-levels if necessary.
 	swapmap.BuildInTurfs(list/turfs,item)
 		Builds item on all of the turfs listed. The list need not
-		 contain only turfs, or even only atoms.
+			contain only turfs, or even only atoms.
  */
 
 /swapmap

@@ -148,7 +148,7 @@
 	icon_dead = "Syndicat_dead"
 	//gender = FEMALE
 	flags = list(
-	 IS_SYNTHETIC = TRUE
+	IS_SYNTHETIC = TRUE
 	,NO_BREATHE = TRUE
 	)
 	faction = list("syndicate")

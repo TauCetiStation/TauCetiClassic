@@ -236,7 +236,7 @@ var/global/list/tophats_list = list()
 								/obj/item/weapon/storage,
 								/obj/structure/closet,
 								/turf
-							 )
+							)
 
 /obj/item/clothing/head/wizard/tophat/atom_init()
 	. = ..()
@@ -286,7 +286,7 @@ var/global/list/tophats_list = list()
 			MT.armed = TRUE
 			MT.triggered(target, target.hand ? BP_L_ARM : BP_R_ARM)
 			target.visible_message("<span class='warning'>[target] accidentally sets off [src], breaking their fingers.</span>",
-								 "<span class='warning'>You accidentally trigger [src]!</span>")
+			                       "<span class='warning'>You accidentally trigger [src]!</span>")
 			MT.forceMove(target.loc)
 			return TRUE
 	return FALSE
@@ -438,10 +438,10 @@ var/global/list/tophats_list = list()
 
 	if(user == AM)
 		user.visible_message("<span class='warning'>[user] prepares to dive into [src]!</span>",
-							 "<span class='warning'>You prepare to dive into [src]!</span>")
+		                     "<span class='warning'>You prepare to dive into [src]!</span>")
 	else
 		user.visible_message("<span class='warning'>[user] is trying to stuff [AM] into [src]!</span>",
-							 "<span class='warning'>You are trying to stuff [AM] into [src]!</span>")
+		                     "<span class='warning'>You are trying to stuff [AM] into [src]!</span>")
 	if(do_after(user, put_in_delay, target=AM))
 		if(!isturf(loc))
 			if(ismob(loc))
@@ -476,11 +476,11 @@ var/global/list/tophats_list = list()
 		if(user.mind && user.mind.special_role == "Wizard")
 			if(try_get_monkey(user))
 				user.visible_message("<span class='notice'>[user] takes something big out of [src]!</span>",
-									 "<span class='notice'>You take something unproportionally big out of [src].</span>")
+				                     "<span class='notice'>You take something unproportionally big out of [src].</span>")
 		else
 			if(try_mousetrap(user))
 				user.visible_message("<span class='warning'>[user] stumbles on a mousetrap, as he reaches into [src]!</span>",
-									 "<span class='warning'>As you reach into [src], you stumble on a mousetrap!</span>")
+				                     "<span class='warning'>As you reach into [src], you stumble on a mousetrap!</span>")
 	else
 		..()
 

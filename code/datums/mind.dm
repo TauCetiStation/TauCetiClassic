@@ -671,19 +671,19 @@
 
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
-			 and it just activated!</B></FONT></span>")
+			  and it just activated!</B></FONT></span>")
 			if(src in SSticker.mode.revolutionaries)
 				special_role = null
 				SSticker.mode.revolutionaries -= src
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove \
-				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
+				  all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(!is_mind_shield && (src in SSticker.mode.head_revolutionaries))
 				special_role = null
 				SSticker.mode.head_revolutionaries -=src
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
-				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
+				  all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
 			if(src in SSticker.mode.cult)
 				SSticker.mode.cult -= src
 				remove_antag_hud(ANTAG_HUD_REV, current)
@@ -692,7 +692,7 @@
 				if (istype(cult))
 					cult.memoize_cult_objectives(src)
 				to_chat(current, "<span class='warning'><FONT size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all\
-				 thoughts about being in a cult.  Have a productive day!</B></FONT></span>")
+				  thoughts about being in a cult.  Have a productive day!</B></FONT></span>")
 				memory = ""
 			if(!is_mind_shield && (src in SSticker.mode.traitors))
 				SSticker.mode.traitors -= src

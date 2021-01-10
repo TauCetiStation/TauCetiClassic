@@ -184,9 +184,9 @@
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
 	desc = "The power-fist is a metal gauntlet with a built-in piston-ram powered by an external gas supply.\
-		 Upon hitting a target, the piston-ram will extend foward to make contact for some serious damage. \
-		 Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
-		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
+		  Upon hitting a target, the piston-ram will extend foward to make contact for some serious damage. \
+		  Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
+		  deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/weapon/melee/powerfist
 	cost = 8
 
@@ -496,7 +496,7 @@
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
-			 throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
+			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
 	item = /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
 	cost = 6
 

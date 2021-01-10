@@ -207,7 +207,7 @@
 			else
 				item_quants[O.name] = 1
 			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
-								 "<span class='notice'>You add \the [O] to \the [src].</span>")
+			                     "<span class='notice'>You add \the [O] to \the [src].</span>")
 
 			nanomanager.update_uis(src)
 

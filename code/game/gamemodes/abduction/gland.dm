@@ -39,7 +39,7 @@
 		uses--
 		next_activation  = world.time + rand(cooldown_low,cooldown_high)
 	if(uses == 0)
-	 active = 0
+		active = 0
 
 /obj/item/gland/proc/activate()
 	return

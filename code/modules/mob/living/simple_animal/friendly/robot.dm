@@ -6,12 +6,12 @@
 	desc = "Digital Explorer Theory - 5. Its a robot with shiny wheels. Sometimes sparks fly out of its hull."
 
 	speak = list("Beep", "Beep-beep", "Beeeepsky",
-				 "One...two...three...more...",
-				 "Z-z-z-zero", "One...null...Beep",
-				 "Analyzing...", "Successfully",
-				 "...this is a joke", "La la la...beep",
-				 "Boom...", "Not enough time",
-				 "Science time", "ED-209 protect me", "Director, where are researches?")
+	             "One...two...three...more...",
+	             "Z-z-z-zero", "One...null...Beep",
+	             "Analyzing...", "Successfully",
+	             "...this is a joke", "La la la...beep",
+	             "Boom...", "Not enough time",
+	             "Science time", "ED-209 protect me", "Director, where are researches?")
 
 	speak_emote = list("beeps", "rang out")
 	emote_hear = list("raises manipulators", "twists the scanner")

@@ -205,8 +205,8 @@
 	if(attacker.environment_smash)
 		..()
 		attacker.visible_message("<span class='warning'>[attacker] smashes against [src].</span>", \
-			 "<span class='warning'>You smash against [src].</span>", \
-			 "You hear twisting metal.")
+		                         "<span class='warning'>You smash against [src].</span>", \
+		                         "You hear twisting metal.")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		health -= attacker.melee_damage
 		if(health <= 0)

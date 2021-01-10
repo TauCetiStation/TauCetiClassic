@@ -47,7 +47,7 @@
 						</div>
 						</body>
 						</html>
-					 "}
+					"}
 	return output
 
 ///Returns the status of the mech.

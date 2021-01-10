@@ -55,7 +55,7 @@
 		if((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50))
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
-								 "<span class='warning'>You accidentally trigger [src]!</span>")
+			                     "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
@@ -68,7 +68,7 @@
 			user.SetNextMove(CLICK_CD_INTERACT)
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
-								 "<span class='warning'>You accidentally trigger [src]!</span>")
+			                     "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
 	..()
 

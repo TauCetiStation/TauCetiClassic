@@ -128,7 +128,7 @@
 	if(!(ndir in cardinal))
 		return
 	user.visible_message("<span class='notice'>[user] hangs [src] to \the [T].</span>",
-						 "<span class='notice'>You hang [src] to \the [T].</span>")
+	                     "<span class='notice'>You hang [src] to \the [T].</span>")
 	var/obj/structure/picture_frame/wooden/PF = new frame_type(get_turf(user), ndir, 1)
 	if(displayed)
 		var/obj/item/I = displayed
@@ -198,19 +198,19 @@
 					return
 		if(screwed)
 			user.visible_message("<span class='notice'>[user] starts unscrewing \the [src].</span>",
-								 "<span class='notice'>You start unscrewing \the [src].</span>")
+			                     "<span class='notice'>You start unscrewing \the [src].</span>")
 		else
 			user.visible_message("<span class='notice'>[user] starts screwing \the [src] to the wall.</span>",
-								 "<span class='notice'>You start screwing \the [src] to the wall.</span>")
+			                     "<span class='notice'>You start screwing \the [src] to the wall.</span>")
 		if(do_after(user, 20 * O.toolspeed, target = src))
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			screwed = !screwed
 			if(!screwed)
 				user.visible_message("<span class='notice'>[user] unscrews \the [src].</span>",
-									 "<span class='notice'>You unscrew \the [src].</span>")
+				                     "<span class='notice'>You unscrew \the [src].</span>")
 			else
 				user.visible_message("<span class='notice'>[user] screws \the [src] to the wall.</span>",
-								 "<span class='notice'>You screw \the [src] to the wall.</span>")
+				                     "<span class='notice'>You screw \the [src] to the wall.</span>")
 		update_icon()
 		return
 	else if(istype(O, /obj/item/stack/sheet/glass))
@@ -274,7 +274,7 @@
 			return
 		if(do_after(user, 8, target = src))
 			user.visible_message("<span class='notice'>[user] takes off \the [src] from the wall.</span>",
-								 "<span class='notice'>You take off \the [src] from the wall.</span>")
+			                     "<span class='notice'>You take off \the [src] from the wall.</span>")
 			var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(user))
 			if(framed)
 				var/obj/item/I = framed
@@ -301,7 +301,7 @@
 					return
 				if(do_after(M, 8, target = src))
 					M.visible_message("<span class='notice'>[M] takes off \the [src] from the wall.</span>",
-									 "<span class='notice'>You take off \the [src] from the wall.</span>")
+					                 "<span class='notice'>You take off \the [src] from the wall.</span>")
 					var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(M))
 					if(framed)
 						var/obj/item/I = framed

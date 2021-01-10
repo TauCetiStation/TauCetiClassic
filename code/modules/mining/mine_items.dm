@@ -886,7 +886,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				else
 					item_quants[O.name] = 1
 				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
-									 "<span class='notice'>You add \the [O] to \the [src].</span>")
+				                     "<span class='notice'>You add \the [O] to \the [src].</span>")
 				nanomanager.update_uis(src)
 				return
 
