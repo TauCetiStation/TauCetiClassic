@@ -8224,7 +8224,8 @@
 "ant" = (
 /obj/machinery/camera{
 	c_tag = "Prisoner Rec Room North-East";
-	dir = 8
+	dir = 8;
+	network = list("SS13","Prison")
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -9522,7 +9523,7 @@
 /area/station/security/prison)
 "apL" = (
 /obj/machinery/camera{
-	c_tag = "Prison Rec Room Southwest";
+	c_tag = "Prison Rec Room South-West";
 	dir = 1;
 	network = list("SS13","Prison");
 	pixel_x = 22
@@ -10559,7 +10560,7 @@
 /area/station/security/lobby)
 "arG" = (
 /obj/machinery/camera{
-	c_tag = "Bedroom";
+	c_tag = "Prison Bedroom";
 	dir = 6;
 	network = list("SS13","Prison")
 	},
@@ -43952,7 +43953,7 @@
 /area/station/civilian/theatre)
 "bDP" = (
 /obj/machinery/camera{
-	c_tag = "Cargo Bay Entrance";
+	c_tag = "Central Hallway South-West";
 	dir = 4
 	},
 /obj/machinery/light{
@@ -65930,7 +65931,7 @@
 /area/station/medical/hallway)
 "cIb" = (
 /obj/machinery/camera{
-	c_tag = "Detective South";
+	c_tag = "Detective Office";
 	dir = 4
 	},
 /obj/machinery/power/apc{
@@ -67510,7 +67511,7 @@
 /area/station/security/forensic_office)
 "cSb" = (
 /obj/machinery/camera{
-	c_tag = "Detective North"
+	c_tag = "Criminalist Office"
 	},
 /obj/machinery/computer/forensic_scanning,
 /turf/simulated/floor{
