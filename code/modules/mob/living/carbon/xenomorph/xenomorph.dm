@@ -26,6 +26,7 @@
 
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
+	add_language("Xenomorph language")
 	alien_list += src
 	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
