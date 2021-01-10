@@ -234,11 +234,11 @@
 
 
 /**
-  * Get the name of this object for examine
-  *
-  * You can override what is returned from this proc by registering to listen for the
-  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
-  */
+ * Get the name of this object for examine
+ *
+ * You can override what is returned from this proc by registering to listen for the
+ * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
+ */
 /atom/proc/get_examine_name(mob/user, atom/alt_obj)
 	var/list/override
 	if(!dirt_overlay)

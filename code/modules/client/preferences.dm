@@ -136,7 +136,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ambientocclusion = TRUE
 	var/parallax_theme = PARALLAX_THEME_CLASSIC
 
-  //custom loadout
+	//custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
 	var/list/custom_items = list()

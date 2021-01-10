@@ -117,7 +117,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
- // Ghost candle
+// Ghost candle
 /obj/item/candle/ghost
 	name = "black candle"
 
@@ -229,7 +229,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 
 	faded_candle = /obj/item/trash/candle/red
 
- // Infinite candle (Admin item)
+// Infinite candle (Admin item)
 /obj/item/candle/infinite
 	infinite = TRUE
 	start_lit = TRUE

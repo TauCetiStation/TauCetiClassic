@@ -9,9 +9,9 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 #ifdef NEWYEARCONTENT
-    #define LAMP_BRIGHTNESS 1.5
+	#define LAMP_BRIGHTNESS 1.5
 #else
-    #define LAMP_BRIGHTNESS 2
+	#define LAMP_BRIGHTNESS 2
 #endif
 
 

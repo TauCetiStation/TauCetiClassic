@@ -1,6 +1,6 @@
- ////////////
- //SHUTTLES//
- ////////////
+////////////
+//SHUTTLES//
+////////////
 
 //These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
 //place to another. Look at escape shuttle for example.

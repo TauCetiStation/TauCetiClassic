@@ -1,5 +1,5 @@
 /*
- This component used in chaplain rites to spawn and replace any rites on object
+This component used in chaplain rites to spawn and replace any rites on object
 */
 /datum/component/rite/spawn_item
 	// Type for the item to be spawned

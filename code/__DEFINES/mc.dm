@@ -2,12 +2,12 @@
 
 #define MC_SPLIT_TICK_INIT(phase_count) var/original_tick_limit = CURRENT_TICKLIMIT; var/split_tick_phases = ##phase_count
 #define MC_SPLIT_TICK \
-    if(split_tick_phases > 1){\
-        CURRENT_TICKLIMIT = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
-        --split_tick_phases;\
-    } else {\
-        CURRENT_TICKLIMIT = original_tick_limit;\
-    }
+	if(split_tick_phases > 1){\
+		CURRENT_TICKLIMIT = ((original_tick_limit - TICK_USAGE) / split_tick_phases) + TICK_USAGE;\
+		--split_tick_phases;\
+	} else {\
+		CURRENT_TICKLIMIT = original_tick_limit;\
+	}
 
 
 // Used to smooth out costs to try and avoid oscillation.
@@ -66,15 +66,15 @@
 
 #define SUBSYSTEM_DEF(X) var/datum/controller/subsystem/##X/SS##X;\
 /datum/controller/subsystem/##X/New(){\
-    NEW_SS_GLOBAL(SS##X);\
-    PreInit();\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
 }\
 /datum/controller/subsystem/##X
 
 #define PROCESSING_SUBSYSTEM_DEF(X) var/datum/controller/subsystem/processing/##X/SS##X;\
 /datum/controller/subsystem/processing/##X/New(){\
-    NEW_SS_GLOBAL(SS##X);\
-    PreInit();\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
 }\
 /datum/controller/subsystem/processing/##X
 

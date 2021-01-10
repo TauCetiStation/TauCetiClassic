@@ -76,10 +76,10 @@
 	return ..()
 
 /obj/effect/decal/cleanable/crayon/proc/update_plane()
-  if(istype(loc, /turf/simulated/floor))
-    plane = FLOOR_PLANE
-  else
-    plane = GAME_PLANE
+	if(istype(loc, /turf/simulated/floor))
+		plane = FLOOR_PLANE
+	else
+		plane = GAME_PLANE
 
 /obj/effect/decal/cleanable/crayon/proc/destroy_rune()
-  qdel(src)
+	qdel(src)

@@ -317,8 +317,8 @@
 
 
 /obj/item/weapon/twohanded/dualsaber/dropped(mob/user)
- 	..()
- 	slicing = FALSE
+	..()
+	slicing = FALSE
 
 /obj/item/weapon/twohanded/dualsaber/attack_self(mob/user)
 	if(slicing)

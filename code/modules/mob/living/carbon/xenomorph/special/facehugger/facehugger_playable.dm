@@ -162,10 +162,10 @@
 		client.screen |= contents
 
 /*----------------------------------------
-              LARVA'S  BITE
+	          LARVA'S  BITE
 
 This is chestburster mechanic for damaging
- victim chest to get out from stomach
+victim chest to get out from stomach
 ----------------------------------------*/
 /obj/screen/larva_bite
 	name = "larva_bite"
@@ -304,15 +304,15 @@ This is chestburster mechanic for damaging
 	return ..()
 
 /*----------------------------------------
-             FACEHUGGER'S  GRAB
+	         FACEHUGGER'S  GRAB
 
 This is tail grab mechanic. Actually, a heavy modified grab.
 We also check here, if there is any facehugger on the victim face.
 When we successfully clicked someone, it makes this special grab version to appear
- in player's tail control button hud.
+	in player's tail control button hud.
 The first step is we leap at victim face. With second step, we reinforce grip.
 With third step, we start to reinforce grip to its maximum phase and when that phase is passed,
- we cant remove facehugger from victim face anymore, until facehugger injects embryo inside victim.
+	we cant remove facehugger from victim face anymore, until facehugger injects embryo inside victim.
 With fourth step, we just confirm embryo injection and with firth, we actually start injecting embryo.
 When we finish, facehugger's player will be transfered inside embryo.
 ----------------------------------------*/

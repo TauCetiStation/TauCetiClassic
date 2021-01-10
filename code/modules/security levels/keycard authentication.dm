@@ -173,8 +173,8 @@
 	if(config.ert_admin_call_only) return 1
 	return SSticker.mode && SSticker.mode.ert_disabled
 
-var/global/maint_all_access_priority = FALSE    // Set only by keycard auth. If true, maint
-                                                // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
+var/global/maint_all_access_priority = FALSE	// Set only by keycard auth. If true, maint
+	                                            // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
 var/global/timer_maint_revoke_id = 0
 
 /proc/make_maint_all_access(priority = FALSE)

@@ -37,14 +37,14 @@
 /obj/item/fluff/sarah_calvera_1 //fniff: Sarah Calvera
 	name = "old photo"
 	desc = "Looks like it was made on a really old, cheap camera. Low quality. The camera shows a young hispanic looking girl with red hair wearing a white dress is standing in front of\
- an old looking wall. On the back there is a note in black marker that reads \"Sara, Siempre pensé que eras tan linda con ese vestido. Tu hermano, Carlos.\""
+	        an old looking wall. On the back there is a note in black marker that reads \"Sara, Siempre pensé que eras tan linda con ese vestido. Tu hermano, Carlos.\""
 	icon_state = "sarah_calvera_1"
 
 /obj/item/fluff/angelo_wilkerson_1 //fniff: Angleo Wilkerson
 	name = "fancy watch"
 	desc = "An old and expensive pocket watch. Engraved on the bottom is \"Odium est Source De Dolor\". On the back, there is an engraving that does not match the bottom and looks more recent.\
- \"Angelo, If you find this, you shall never see me again. Please, for your sake, go anywhere and do anything but stay. I'm proud of you and I will always love you. Your father, Jacob Wilkerson.\"\
-  Jacob Wilkerson... Wasn't he that serial killer?"
+	        \"Angelo, If you find this, you shall never see me again. Please, for your sake, go anywhere and do anything but stay. I'm proud of you and I will always love you. Your father, Jacob Wilkerson.\"\
+	        Jacob Wilkerson... Wasn't he that serial killer?"
 	icon_state = "angelo_wilkerson_1"
 
 /obj/item/fluff/sarah_carbrokes_1 //gvazdas: Sarah Carbrokes
@@ -533,10 +533,10 @@
 	icon_state = "brucehachert"
 
 /obj/item/clothing/head/fluff/kaine_kalim_1
-    name = "Formal Medical Cap"
-    desc = "An unusually sterile and folded cap. It seems to bare the Nanotrasen logo."
-    icon = 'icons/obj/custom_items.dmi'
-    icon_state = "kainecap"
+	name = "Formal Medical Cap"
+	desc = "An unusually sterile and folded cap. It seems to bare the Nanotrasen logo."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kainecap"
 
 
 /obj/item/clothing/head/beret/fluff/marine_beret	//Von2531: Jack Washington
@@ -605,12 +605,12 @@
 
 
 /obj/item/clothing/under/fluff/kaine_kalim_2
-    name = "Formal Medical Uniform"
-    desc = "An unusually sterile and pressed uniform. It seems to have a string of vials crossing the chest."
-    icon = 'icons/obj/custom_items.dmi'
-    icon_state = "kaineuniform"
-    item_state = "kaineuniform"
-    item_color = "kaineuniform"
+	name = "Formal Medical Uniform"
+	desc = "An unusually sterile and pressed uniform. It seems to have a string of vials crossing the chest."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kaineuniform"
+	item_state = "kaineuniform"
+	item_color = "kaineuniform"
 
 /obj/item/clothing/under/fluff/jumpsuitdown //searif: Yuki Matsuda
 	name = "rolled down jumpsuit"

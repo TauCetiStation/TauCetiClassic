@@ -122,33 +122,33 @@ var/intercom_range_display_status = 0
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 var/list/debug_verbs = list (
-	/client/proc/do_not_use_these
-        ,/client/proc/camera_view
-        ,/client/proc/sec_camera_report
-        ,/client/proc/intercom_view
-        ,/client/proc/Cell
-        ,/client/proc/atmosscan
-        ,/client/proc/powerdebug
-        ,/client/proc/count_objects_on_z_level
-        ,/client/proc/count_objects_all
-        ,/client/proc/cmd_assume_direct_control
-        ,/client/proc/startSinglo
-        ,/client/proc/set_fps	//allows you to set the ticklag.
-        ,/client/proc/cmd_admin_grantfullaccess
+	     /client/proc/do_not_use_these
+	    ,/client/proc/camera_view
+	    ,/client/proc/sec_camera_report
+	    ,/client/proc/intercom_view
+	    ,/client/proc/Cell
+	    ,/client/proc/atmosscan
+	    ,/client/proc/powerdebug
+	    ,/client/proc/count_objects_on_z_level
+	    ,/client/proc/count_objects_all
+	    ,/client/proc/cmd_assume_direct_control
+	    ,/client/proc/startSinglo
+	    ,/client/proc/set_fps	//allows you to set the ticklag.
+	    ,/client/proc/cmd_admin_grantfullaccess
 //        ,/client/proc/splash
-        ,/client/proc/cmd_admin_areatest
-        ,/client/proc/cmd_admin_rejuvenate
-        ,/datum/admins/proc/show_traitor_panel
-        ,/client/proc/forceEvent
-        ,/client/proc/disable_communication
-        ,/client/proc/disable_movement
-        ,/client/proc/Zone_Info
-        ,/client/proc/Test_ZAS_Connection
-        ,/client/proc/debug_z_levels
-        ,/client/proc/hide_debug_verbs
-	,/client/proc/testZAScolors
-	,/client/proc/testZAScolors_remove
-	,/client/proc/setup_supermatter_engine
+	    ,/client/proc/cmd_admin_areatest
+	    ,/client/proc/cmd_admin_rejuvenate
+	    ,/datum/admins/proc/show_traitor_panel
+	    ,/client/proc/forceEvent
+	    ,/client/proc/disable_communication
+	    ,/client/proc/disable_movement
+	    ,/client/proc/Zone_Info
+	    ,/client/proc/Test_ZAS_Connection
+	    ,/client/proc/debug_z_levels
+	    ,/client/proc/hide_debug_verbs
+	    ,/client/proc/testZAScolors
+	    ,/client/proc/testZAScolors_remove
+	    ,/client/proc/setup_supermatter_engine
 	)
 
 

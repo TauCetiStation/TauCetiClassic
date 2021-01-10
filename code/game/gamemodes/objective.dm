@@ -753,7 +753,7 @@ var/global/list/all_objectives = list()
 	return OBJECTIVE_LOSS
 
 /datum/objective/sacrifice/proc/find_target() //stolen from traitor target objective
- //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
+	//I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
 	var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
 	if(possible_targets.len > 0)
 		sacrifice_target = pick(possible_targets)

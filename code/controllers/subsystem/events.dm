@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(events)
 	// Report events at the end of the rouund
 	var/report_at_round_end = 0
 
-    // Event vars
+	// Event vars
 	var/datum/event_container/selected_event_container = null
 	var/list/active_events = list()
 	var/list/finished_events = list()

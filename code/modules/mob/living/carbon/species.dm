@@ -174,10 +174,10 @@
 
 
 /**
-  * Replace human clothes in [outfit] on species clothes
-  *
-  * Called after pre_equip()
-  */
+ * Replace human clothes in [outfit] on species clothes
+ *
+ * Called after pre_equip()
+ */
 /datum/species/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
 	species_replace_outfit(O, replace_outfit)
 	call_species_equip_proc(H, O)
@@ -225,7 +225,7 @@
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
- //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
+	//H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
 		H.h_style = ""
 		spawn(100)
 			//H.is_jittery = 0

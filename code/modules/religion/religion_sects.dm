@@ -1,7 +1,7 @@
 /**
-  * #Religious Sects
-  * A religious sect is an aspects preset for a religion, nothing more.
-  */
+ * #Religious Sects
+ * A religious sect is an aspects preset for a religion, nothing more.
+ */
 /datum/religion_sect
 	var/name = ""
 	/// Description of the religious sect, Presents itself in the selection menu (AKA be brief)
@@ -48,10 +48,10 @@
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_preset = list(
-	    /datum/aspect/death = 1,
+		/datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
-    )
+	)
 
 /datum/religion_sect/preset/technophile
 	name = "The Technomancers of "

@@ -1,7 +1,7 @@
 /**
-  * EM PULSE
-  *  Disables nearby tech equipment.
-  */
+ * EM PULSE
+ *  Disables nearby tech equipment.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjapulse()
 	set name = "EM Burst (2,000E)"
 	set desc = "Disable any nearby technology with a electro-magnetic pulse."

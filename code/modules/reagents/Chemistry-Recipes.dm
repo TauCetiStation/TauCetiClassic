@@ -2315,7 +2315,7 @@
 
 /*
 TODO: Convert everything to custom hair dye,
-      so this will be all gone. ~ Luduk.
+	  so this will be all gone. ~ Luduk.
 */
 
 /datum/chemical_reaction/hair_dye/red

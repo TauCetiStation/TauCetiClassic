@@ -27,7 +27,7 @@
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER)
 		cooldown_sound = world.time + 4
 
- // The older version of Particle protection suit
+// The older version of Particle protection suit
 /obj/item/clothing/suit/bio_suit/anomaly
 	name = "Anomaly suit"
 	desc = "A sealed bio suit capable of insulating against exotic alien energies."

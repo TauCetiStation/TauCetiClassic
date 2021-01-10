@@ -161,7 +161,7 @@
 /mob/living/simple_animal/special/scp173/death()
 	return
 
- //Only singularity can harm us! Praise the lord singulo!
+//Only singularity can harm us! Praise the lord singulo!
 /mob/living/simple_animal/special/scp173/gib()
 	return
 /mob/living/simple_animal/special/scp173/dust()

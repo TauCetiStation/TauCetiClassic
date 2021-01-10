@@ -20,10 +20,10 @@
 		var/name = null
 
 		if (pos)
-            // No, don't do lowertext here, that breaks paths on linux
+			// No, don't do lowertext here, that breaks paths on linux
 			name = copytext(t, 1, pos)
 		else
-            // No, don't do lowertext here, that breaks paths on linux
+			// No, don't do lowertext here, that breaks paths on linux
 			name = t
 
 		if (!name)

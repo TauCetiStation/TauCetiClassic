@@ -302,9 +302,9 @@
 */
 
 /obj/item/clothing/head/fedora/brown
- 	name = "brown fedora"
- 	desc = "Someone wearing this definitely makes them cool."
- 	icon_state = "hat_brown"
+	name = "brown fedora"
+	desc = "Someone wearing this definitely makes them cool."
+	icon_state = "hat_brown"
 
 
 /obj/item/clothing/head/batman_helmet

@@ -228,10 +228,10 @@
 	force = 8
 	w_class = ITEM_SIZE_LARGE
 	throwforce = 5
-//	flags = NOSHIELD
-		//var/protest_text
- 		//	var/protest_text_lenght = 100
- 	//var/image/inhand_blood_overlay
+	//flags = NOSHIELD
+	//var/protest_text
+	//var/protest_text_lenght = 100
+	//var/image/inhand_blood_overlay
 	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 
 /obj/item/weapon/transparant/atom_init()

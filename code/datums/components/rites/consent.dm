@@ -1,5 +1,5 @@
 /*
- This component is used in chaplain's rites to ask for consent to executing the rite.
+This component is used in chaplain's rites to ask for consent to executing the rite.
 */
 /datum/component/rite/consent
 	var/consent_msg

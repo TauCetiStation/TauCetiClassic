@@ -22,15 +22,15 @@ increment()
 return_angle()
 	Returns the direction (angle in degrees) the object is travelling in.
 
-             (N)
-             90?
-              ^
-              |
-  (W) 180? <--+--> 0? (E)
-              |
-              v
-             -90?
-             (S)
+	             (N)
+	             90?
+	              ^
+	              |
+	  (W) 180? <--+--> 0? (E)
+	              |
+	              v
+	             -90?
+	             (S)
 
 return_hypotenuse()
 	Returns the distance of travel for each step of the vector, relative to each full step of movement. 1 is a full turf

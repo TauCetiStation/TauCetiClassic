@@ -65,7 +65,7 @@
  */
 
 /***********************************************
- Medical HUD! Basic mode needs suit sensors on.
+Medical HUD! Basic mode needs suit sensors on.
 ************************************************/
 
 //called when a carbon changes virus
@@ -131,7 +131,7 @@
 		holder.icon_state = "hudill"
 
 /***********************************************
- Security HUDs! Basic mode shows only the job.
+Security HUDs! Basic mode shows only the job.
 ************************************************/
 /mob/living/carbon/human/proc/sec_hud_set_ID()
 	var/image/holder = hud_list[ID_HUD]
@@ -194,7 +194,7 @@
 	holder.icon_state = null
 
 /***********************************************
- Diagnostic HUDs!
+Diagnostic HUDs!
 ************************************************/
 
 //For Diag health and cell bars!

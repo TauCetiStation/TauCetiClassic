@@ -33,10 +33,10 @@ process()
 check_build()
 
 Setup map
-  |EC|
-CC|FC|
-  |PB|
-PE|PE|PE
+	  |EC|
+	CC|FC|
+	  |PB|
+	PE|PE|PE
 
 
 Icon Addemdum

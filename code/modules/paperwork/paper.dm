@@ -346,8 +346,8 @@
 
 /obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
 	var/list/burnable = list(/obj/item/weapon/paper,
-                          /obj/item/weapon/paper_bundle,
-                          /obj/item/weapon/photo)
+	                      /obj/item/weapon/paper_bundle,
+	                      /obj/item/weapon/photo)
 
 	if(!is_type_in_list(src, burnable))
 		return

@@ -2,18 +2,18 @@
 	hud_possible = list(ANTAG_HUD)
 
 /**
-  * Delete a mob
-  *
-  * Removes mob from the following global lists
-  * * global.mob_list
-  * * global.dead_mob_list
-  * * global.alive_mob_list
-  * Clears alerts for this mob
-  *
-  * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
-  */
+ * Delete a mob
+ *
+ * Removes mob from the following global lists
+ * * global.mob_list
+ * * global.dead_mob_list
+ * * global.alive_mob_list
+ * Clears alerts for this mob
+ *
+ * Parent call
+ *
+ * Returns QDEL_HINT_HARDDEL (don't change this)
+ */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
 	global.dead_mob_list -= src
@@ -1157,11 +1157,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return speaking ? speaking.scramble(message) : stars(message)
 
 /**
-  * Prepare the huds for this atom
-  *
-  * Goes through hud_possible list and adds the images to the hud_list variable (if not already
-  * cached)
-  */
+ * Prepare the huds for this atom
+ *
+ * Goes through hud_possible list and adds the images to the hud_list variable (if not already
+ * cached)
+ */
 /atom/proc/prepare_huds()
 	if(hud_list || !hud_possible)
 		return

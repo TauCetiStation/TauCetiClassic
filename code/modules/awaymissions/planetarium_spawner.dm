@@ -32,12 +32,12 @@
 	)
 
 /obj/structure/planetarium_spawner/attack_hand(mob/user)
-    var/selected_loot = pick(loot_types)
-    var/loot =  new selected_loot(loc)
-    if(istype(loot,  /obj/item/stack/sheet))
-        var/obj/item/stack/sheet/S = loot
-        S.amount = rand(5,15)
-    qdel(src) // delete after use
+	var/selected_loot = pick(loot_types)
+	var/loot =  new selected_loot(loc)
+	if(istype(loot,  /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = loot
+		S.amount = rand(5,15)
+	qdel(src) // delete after use
 
 /obj/structure/clown_stuff_spawner
 	name = "strange button"

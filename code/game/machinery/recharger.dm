@@ -13,11 +13,11 @@
 	var/obj/item/weapon/charging = null
 	var/recharge_coeff = 1
 	var/static/list/allowed_items = list(
-                                        /obj/item/weapon/gun/energy,
-                                        /obj/item/weapon/melee/baton,
-                                        /obj/item/weapon/twohanded/shockpaddles/standalone,
-                                        /obj/item/ammo_box/magazine/plasma
-                                    )
+	                                    /obj/item/weapon/gun/energy,
+	                                    /obj/item/weapon/melee/baton,
+	                                    /obj/item/weapon/twohanded/shockpaddles/standalone,
+	                                    /obj/item/ammo_box/magazine/plasma
+	                                )
 
 /obj/machinery/recharger/atom_init()
 	. = ..()

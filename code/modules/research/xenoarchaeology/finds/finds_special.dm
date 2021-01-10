@@ -211,7 +211,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	to_chat(obstacle, "<span class='warning'>You feel a chill run down your spine!</span>")
 
 
- // healing tool
+// healing tool
 /obj/item/weapon/strangetool
 	name = "strange device"
 	desc = "This device is made of metal, emits a strange purple formation of unknown origin."

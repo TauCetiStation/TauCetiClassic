@@ -1,4 +1,4 @@
- // only available at RnD
+// only available at RnD
 /obj/item/weapon/pickaxe/excavationdrill
 	name = "excavation drill"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'

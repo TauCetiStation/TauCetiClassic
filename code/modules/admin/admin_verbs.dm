@@ -687,8 +687,8 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
 
 /* disabled because this is not a sound but a hearable message, and also very hard to use since you need to choose an item from a huge list and not a view at least.
-   so, this proc needs rewrite to be a verb per object or something like that and also better name because it can be named more obvious than using desc.
-   also "in world"
+	so, this proc needs rewrite to be a verb per object or something like that and also better name because it can be named more obvious than using desc.
+	also "in world"
 /client/proc/make_sound(obj/O in world) // -- TLE
 	set category = "Special Verbs"
 	set name = "Make Sound"

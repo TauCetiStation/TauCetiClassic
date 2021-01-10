@@ -68,7 +68,7 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
-    /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
+	/// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
 	var/list/tools = list()
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE

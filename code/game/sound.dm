@@ -1,11 +1,11 @@
 /*=====================================================================================================================================
-     === Explanation for some variables ===
+	=== Explanation for some variables ===
 
 volume_channel = must always present in args, connected with the slider that controls its volume for client. Check VOL_* defines for available sliders [code\__DEFINES\sound.dm].
 ignore_environment = when you need to ignore environment effects that may change sound if mob is unconscious or anything else (e.g. global OOC announcement).
 voluminosity = if FALSE, removes the difference between left and right ear.
 
-     === Important notes for all soundmakers ===
+	=== Important notes for all soundmakers ===
 
 * !!! DO NOT USE `<<` !!!. Use playsound_local() instead of this with right arguments.
 * Before you create a new channel, put it in a file which is located in [code\__DEFINES\sound.dm].
@@ -249,7 +249,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	set_sound_volume(slider, vol_raw)
 
 /proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.    
+	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
 /client/verb/show_volume_controls()
 	set name = ".showvolumecontrols"

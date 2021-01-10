@@ -102,7 +102,7 @@
 	desc = "A once potent weapon, years of dust have collected in the chamber and lens of this weapon, weakening the beam significantly."
 	clumsy_check = 0
 
-  Safe code hints
+Safe code hints
  */
 
 //These vars hold the code itself, they'll be generated at round-start

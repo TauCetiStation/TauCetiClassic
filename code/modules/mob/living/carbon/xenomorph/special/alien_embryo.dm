@@ -99,7 +99,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			if(prob(1))
 				if(!affected_mob.stat)
 					affected_mob.visible_message("<span class='danger'>\The [affected_mob] starts shaking uncontrollably!</span>", \
-                                                 "<span class='danger'>You start shaking uncontrollably!</span>")
+					                             "<span class='danger'>You start shaking uncontrollably!</span>")
 					affected_mob.Paralyse(10)
 					affected_mob.make_jittery(110)
 			if(prob(2))

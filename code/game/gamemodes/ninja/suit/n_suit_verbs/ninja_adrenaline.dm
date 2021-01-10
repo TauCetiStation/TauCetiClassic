@@ -1,8 +1,8 @@
 /**
-  * ADRENALINE BOOST
-  *  Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
-  *  Movement impairing would indicate drugs and the like.
-  */
+ * ADRENALINE BOOST
+ *  Wakes the user so they are able to do their thing. Also injects a decent dose of radium.
+ *  Movement impairing would indicate drugs and the like.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjaboost()
 	set name = "Adrenaline Boost"
 	set desc = "Inject a secret chemical that will counteract all movement-impairing effect."

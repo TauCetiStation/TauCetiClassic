@@ -1,8 +1,8 @@
 /**
-  * NINJA STARS
-  *  Shoots ninja stars at random people.
-  *  This could be a lot better but I'm too tired atm.
-  */
+ * NINJA STARS
+ *  Shoots ninja stars at random people.
+ *  This could be a lot better but I'm too tired atm.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjastar()
 	set name = "Energy Star (800E)"
 	set desc = "Launches an energy star at a random living target."

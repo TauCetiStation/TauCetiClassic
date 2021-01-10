@@ -1,8 +1,8 @@
 /**
-  * SMOKE
-  *  Summons smoke in radius of user.
-  *  Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.
-  */
+ * SMOKE
+ *  Summons smoke in radius of user.
+ *  Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.
+ */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjasmoke()
 	set name = "Smoke Bomb"
 	set desc = "Blind your enemies momentarily with a well-placed smoke bomb."

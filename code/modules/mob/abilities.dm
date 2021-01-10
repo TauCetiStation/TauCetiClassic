@@ -6,7 +6,7 @@ Creature-level abilities.
 
 /*
 
- Example ability:
+Example ability:
 
 /client/proc/test_ability()
 

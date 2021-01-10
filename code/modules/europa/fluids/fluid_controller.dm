@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(fluids)
 			T.flood_neighbors()
 		CHECK_TICK
 
- 	// Process general fluid spread.
+	// Process general fluid spread.
 	var/list/spreading_fluids = active_fluids.Copy()
 	for(var/thing in spreading_fluids)
 		var/obj/effect/fluid/F = thing

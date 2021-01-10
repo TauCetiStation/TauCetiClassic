@@ -208,15 +208,15 @@
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	//can_suppress = 0
- 	//burst_size = 4
- 	//fire_delay = 1
+	//burst_size = 4
+	//fire_delay = 1
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
-   Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
-   However, it looks like subsequent guns that use removable magazines don't take that into account and just get
-   around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
-   when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
-   rough and poor attempt at making that happen. -Ausops */
+	Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
+	However, it looks like subsequent guns that use removable magazines don't take that into account and just get
+	around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
+	when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
+	rough and poor attempt at making that happen. -Ausops */
 
 /* Where Ausops failed, I have not. -SirBayer */
 

@@ -1185,7 +1185,7 @@
 	/obj/item/clothing/suit/student_jacket=120,/obj/item/clothing/suit/shawl=144,/obj/item/clothing/suit/atlas_jacket=95,/obj/item/clothing/under/sukeban_pants=160,
 	/obj/item/clothing/under/sukeban_dress=140,/obj/item/clothing/suit/sukeban_coat=135,/obj/item/clothing/under/pinkpolo=75,/obj/item/clothing/under/pretty_dress=85,
 	/obj/item/clothing/under/dress/dress_summer=100,/obj/item/clothing/under/dress/dress_vintage=120,/obj/item/clothing/under/dress/dress_evening=125,/obj/item/clothing/under/dress/dress_party=110,
-    /obj/item/clothing/glasses/aviator_orange=35, /obj/item/clothing/glasses/aviator_black=40, /obj/item/clothing/glasses/aviator_red=37, /obj/item/clothing/glasses/aviator_mirror=30,
+	/obj/item/clothing/glasses/aviator_orange=35, /obj/item/clothing/glasses/aviator_black=40, /obj/item/clothing/glasses/aviator_red=37, /obj/item/clothing/glasses/aviator_mirror=30,
 	/obj/item/clothing/glasses/jerusalem=30, /obj/item/clothing/glasses/threedglasses=25, /obj/item/clothing/glasses/gar=34)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 

@@ -1,5 +1,5 @@
 /*
-  Tiny babby plant critter plus procs.
+Tiny babby plant critter plus procs.
 */
 
 //Mob defines.
@@ -13,13 +13,13 @@
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
 	var/allowedinjecting = list("nutriment",
-                                "orangejuice",
-                                "tomatojuice",
-                                "limejuice",
-                                "carrotjuice",
-                                "milk",
-                                "coffee"
-                               )
+	                            "orangejuice",
+	                            "tomatojuice",
+	                            "limejuice",
+	                            "carrotjuice",
+	                            "milk",
+	                            "coffee"
+	                           )
 	race = DIONA
 	var/datum/reagent/injecting = null
 	universal_understand = FALSE // Dionaea do not need to speak to people

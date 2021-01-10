@@ -42,7 +42,7 @@
 
 /obj/item/weapon/gripper/Destroy()
 	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
-                               COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN, COMSIG_HAND_GET_ITEM))
+	                           COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN, COMSIG_HAND_GET_ITEM))
 
 	return ..()
 

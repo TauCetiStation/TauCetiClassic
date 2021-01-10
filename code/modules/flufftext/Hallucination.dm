@@ -12,12 +12,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 */
 
 #define SCARY_SOUNDS pick('sound/hallucinations/scary_sound_1.ogg', \
-                          'sound/hallucinations/scary_sound_2.ogg', \
-                          'sound/hallucinations/scary_sound_3.ogg', \
-                          'sound/hallucinations/scary_sound_4.ogg'  )
+	                      'sound/hallucinations/scary_sound_2.ogg', \
+	                      'sound/hallucinations/scary_sound_3.ogg', \
+	                      'sound/hallucinations/scary_sound_4.ogg'  )
 #define DEMON_SOUNDS pick('sound/hallucinations/demons_1.ogg', \
-                          'sound/hallucinations/demons_2.ogg', \
-                          'sound/hallucinations/demons_3.ogg', )
+	                      'sound/hallucinations/demons_2.ogg', \
+	                      'sound/hallucinations/demons_3.ogg', )
 
 /mob/living/carbon
 	var/image/halimage
@@ -34,7 +34,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		sleep(rand(200, 500) / (hallucination / 25))
 		switch(rand(1, 100))
 
-        // SCREWY HUD
+		// SCREWY HUD
 
 			if(0 to 15)
 				hal_screwyhud = pick(1, 2, 3, 3, 4, 4)
@@ -44,7 +44,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				spawn(rand(100,250))
 					hal_screwyhud = 0
 
-        //STRANGE ITEMS
+		//STRANGE ITEMS
 
 			if(16 to 25)
 				if(!halitem && !HAS_TRAIT(src, TRAIT_STRONGMIND))
@@ -98,7 +98,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 								client.screen -= halitem
 							halitem = null
 
-        // FLASHES OF DANGER, TURFS
+		// FLASHES OF DANGER, TURFS
 
 			if(26 to 40)
 				if(!halimage && !HAS_TRAIT(src, TRAIT_STRONGMIND))
@@ -130,7 +130,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							if(client) client.images -= halimage
 							halimage = null
 
-        // STRANGE AUDIO
+		// STRANGE AUDIO
 
 			if(41 to 65)
 				var/list/possible_points = list()
@@ -239,7 +239,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						                          'sound/hallucinations/fake_announcement.ogg')
 						playsound_local(target, pick(hallsound), VOL_EFFECTS_MASTER, null, FALSE)
 
-        // FLASHES OF DANGER, MOBS
+		// FLASHES OF DANGER, MOBS
 
 			if(66 to 70)
 				if(!halbody && !HAS_TRAIT(src, TRAIT_STRONGMIND))
@@ -266,7 +266,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if(!HAS_TRAIT(src, TRAIT_STRONGMIND))
 					fake_attack(src)
 
-        // FAKE DEATH
+		// FAKE DEATH
 
 			if(74 to 75)
 				src.SetSleeping(40 SECONDS)
