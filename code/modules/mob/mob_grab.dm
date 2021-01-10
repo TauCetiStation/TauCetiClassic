@@ -558,9 +558,11 @@
 			var/mob/living/carbon/attacker = user
 			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
 			if(istype(user, /mob/living/carbon/xenomorph/humanoid/hunter))
-				if(!do_mob(user, affecting)||!do_after(user, 30, target = affecting)) return
+				if(!do_mob(user, affecting))
+					return
 			else
-				if(!do_mob(user, affecting)||!do_after(user, 100, target = affecting)) return
+				if(!do_mob(user, affecting, 100))
+					return
 			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
 			if(isxeno(user))
 				if(affecting.stat == DEAD)
