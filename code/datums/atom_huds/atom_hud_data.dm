@@ -354,7 +354,7 @@ Diagnostic HUDs!
 			return "health-100"
 
 /*~~~~~~~~~~~~
-  Golem Master
+Golem Master
 ~~~~~~~~~~~~~*/
 /mob/living/proc/set_golem_hud()
 	var/image/holder = hud_list[GOLEM_MASTER_HUD]

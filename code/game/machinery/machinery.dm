@@ -46,11 +46,11 @@ Class Variables:
 	manual (num)
 	   Currently unused.
 
-	 min_operational_temperature (num)
+	min_operational_temperature (num)
 	     The minimal value returned by get_current_temperature() if the machine is currently
 	     "running".
 
-	 max_operational_temperature (num)
+	max_operational_temperature (num)
 	     The maximum value returned by get_current_temperature() if the machine is currently
 	     "running".
 

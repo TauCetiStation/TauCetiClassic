@@ -23,7 +23,7 @@
 	    Obliviously, after calling this proc, device will not receive any signals on old_frequency.
 	    Other frequencies will left unaffected.
 
-	 return_frequency(frequency)
+	return_frequency(frequency)
 	    returns:
 	     Reference to frequency object. Use it if you need to send and do not need to listen.
 
