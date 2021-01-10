@@ -226,6 +226,10 @@
 	var/mob/living/carbon/M = S.occupant
 	if(!M)
 		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
