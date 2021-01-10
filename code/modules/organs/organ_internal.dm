@@ -339,7 +339,7 @@
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
-	if(C && owner.nutrition < 1)
+	if(owner.nutrition < 1)
 		owner.SetParalysis(2)
 		if(accumulator_warning < world.time)
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
