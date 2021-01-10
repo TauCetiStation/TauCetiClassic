@@ -13,7 +13,7 @@
 	var/strength = 0
 	var/ticks_recovering = 10
 
-/obj/effect/energy_field/ex_act(var/severity)
+/obj/effect/energy_field/ex_act(severity)
 	Stress(0.5 + severity)
 
 /obj/effect/energy_field/bullet_act(obj/item/projectile/Proj)

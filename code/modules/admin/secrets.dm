@@ -1,5 +1,11 @@
 /datum/admins
-	var/current_tab =0
+	var/current_tab = 0
+
+	var/list/datum/secrets_menu/secrets_menu = list()
+
+	var/static/datum/announcement/station/gravity_off/announce_gravity_off = new
+	var/static/datum/announcement/station/gravity_on/announce_gravity_on = new
+	var/static/datum/announcement/centcomm/access_override/announce_override = new
 
 /datum/admins/proc/Secrets()
 	if(!check_rights(0))
@@ -52,6 +58,7 @@
 					<h4>Coder Secrets</h4>
 					<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 					<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
+					<A href='?src=\ref[src];secretscoder=topicspam'>Spam to Topic()</A><BR>
 					"}
 
 		if(1) // IC Events
@@ -193,11 +200,11 @@
 			if(gravity_is_on)
 				log_admin("[key_name(usr)] toggled gravity on.")
 				message_admins("<span class='notice'>[key_name_admin(usr)] toggled gravity on.</span>")
-				command_alert("Gravity generators are again functioning within normal parameters. Sorry for any inconvenience.", null, "gravon")
+				announce_gravity_on.play()
 			else
 				log_admin("[key_name(usr)] toggled gravity off.")
 				message_admins("<span class='notice'>[key_name_admin(usr)] toggled gravity off.</span>")
-				command_alert("Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day.", null, "gravoff")
+				announce_gravity_off.play()
 		// Make all areas powered
 		if("power")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -461,7 +468,7 @@
 				W.item_state = "w_suit"
 				W.item_color = "schoolgirl"
 			message_admins("[key_name_admin(usr)] activated Japanese Animes mode")
-			station_announce(sound = "animes")
+			announcement_ping.play("animes")
 		// Egalitarian Station Mode
 		if("eagles")//SCRAW
 			feedback_inc("admin_secrets_fun_used",1)
@@ -470,7 +477,7 @@
 				if(is_station_level(W.z) && !istype(get_area(W), /area/station/bridge) && !istype(get_area(W), /area/station/civilian/dormitories) && !istype(get_area(W), /area/station/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
-			command_alert("Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers.")
+			announce_override.play()
 		// Dorf Mode
 		if("dorf")
 			feedback_inc("admin_secrets_fun_used",1)
@@ -729,6 +736,17 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+		if("topicspam")
+			var/count = config.minutetopiclimit * 2
+			if(alert("Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,"Yes","No") == "Yes")
+				to_chat(usr, "<span class='interface'>You are lost your keys to control this station. Please wait...</span>")
+				usr.client.holder.disassociate()
+				message_admins("[key_name_admin(usr)] started topic spam.")
+				for(var/i in 1 to count)
+					sleep(1)
+					usr.client.Topic("spam=[i]", list())
+				usr.client.deadmin_holder.reassociate()
+				to_chat(usr, "<span class='interface'>You again have the keys to control the planet, or at least a small space station.</span>")
 		else
 			to_chat(world, "oof, this is ["secretcoder"] not worked")
 

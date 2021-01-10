@@ -24,7 +24,7 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
-/mob/living/simple_animal/hostile/cyber_horror/Life(var/mob/living/simple_animal/hostile/cyber_horror/M)
+/mob/living/simple_animal/hostile/cyber_horror/Life(mob/living/simple_animal/hostile/cyber_horror/M)
 	. = ..()
 	if(!.)
 		return 0

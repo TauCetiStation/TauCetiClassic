@@ -57,6 +57,8 @@
 /datum/atom_hud/broken
 	hud_icons = list(BROKEN_HUD)
 
+/datum/atom_hud/golem
+	hud_icons = list(GOLEM_MASTER_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -174,7 +176,7 @@
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
-	var/perpname = get_face_name(get_id_name(""))
+	var/perpname = get_visible_name(TRUE)
 	if(perpname && global.data_core)
 		var/datum/data/record/R = find_record("name", perpname, global.data_core.security)
 		if(R)
@@ -350,3 +352,10 @@
 			return "health-85"
 		else
 			return "health-100"
+
+/*~~~~~~~~~~~~
+  Golem Master
+~~~~~~~~~~~~~*/
+/mob/living/proc/set_golem_hud()
+	var/image/holder = hud_list[GOLEM_MASTER_HUD]
+	holder.icon_state = "agolem_master"

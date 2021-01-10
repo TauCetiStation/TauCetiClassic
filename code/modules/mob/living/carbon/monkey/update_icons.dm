@@ -46,7 +46,7 @@
 	if(update_icons)
 		update_icons()
 
-/mob/living/carbon/monkey/update_inv_wear_mask(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_wear_mask(update_icons=1)
 	if( wear_mask && istype(wear_mask, /obj/item/clothing/mask) )
 		if(wear_mask:icon_custom)
 			overlays_standing[M_MASK_LAYER]	= image("icon" = wear_mask:icon_custom, "icon_state" = "[wear_mask.icon_state]_mob")
@@ -58,7 +58,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_r_hand(update_icons=1)
 	if(r_hand)
 		var/t_state = r_hand.item_state
 		if(!t_state)	t_state = r_hand.icon_state
@@ -73,7 +73,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_l_hand(update_icons=1)
 	if(l_hand)
 		var/t_state = l_hand.item_state
 		if(!t_state)	 t_state = l_hand.icon_state
@@ -88,7 +88,7 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_back(update_icons=1)
 	if(back)
 		if(back:icon_custom)
 			overlays_standing[M_BACK_LAYER]	= image("icon" = back:icon_custom, "icon_state" = "[back.icon_state]_mob")
@@ -112,7 +112,7 @@
 		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
+/mob/living/carbon/monkey/update_inv_handcuffed(update_icons=1)
 	if(handcuffed)
 		drop_r_hand()
 		drop_l_hand()
@@ -128,7 +128,7 @@
 		client.screen |= contents
 
 //Call when target overlay should be added/removed
-/mob/living/carbon/monkey/update_targeted(var/update_icons=1)
+/mob/living/carbon/monkey/update_targeted(update_icons=1)
 	if (targeted_by && target_locked)
 		overlays_standing[TARGETED_LAYER]	= target_locked
 	else if (!targeted_by && target_locked)

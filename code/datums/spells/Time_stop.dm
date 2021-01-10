@@ -9,7 +9,7 @@ var/timestop_count = 0
 	layer = FLY_LAYER
 	pixel_x = -64
 	pixel_y = -64
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	bound_height = 160
 	bound_width = 160
 	bound_x = -64
@@ -71,6 +71,7 @@ var/timestop_count = 0
 				H.LoseTarget()
 
 			M.Stun(10, 1, 1, 1)
+			M.silent += duration
 			M.freeze_movement = TRUE
 			stopped_atoms |= M
 
@@ -99,6 +100,7 @@ var/timestop_count = 0
 
 		if(isliving(AM))
 			var/mob/living/M = AM
+			M.silent = max(M.silent - duration, 0)
 			M.AdjustStunned(-10, 1, 1, 0)
 
 		if(istype(AM, /obj/item/projectile))

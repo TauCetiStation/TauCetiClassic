@@ -335,7 +335,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	state = AHELP_RESOLVED
 	global.ahelp_tickets.ListInsert(src)
 
-	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/giveadminhelpverb, initiator_ckey), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
@@ -355,7 +355,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		return
 
 	if(initiator)
-		initiator.giveadminhelpverb()
+		giveadminhelpverb(initiator.ckey)
 
 		initiator.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
@@ -494,7 +494,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	else
 		return FALSE
 
-/client/proc/giveadminhelpverb()
+/proc/giveadminhelpverb(ckey)
 	ahelp_tickets.ckey_cooldown_holder[ckey] = 0
 
 /client/verb/adminhelp()
