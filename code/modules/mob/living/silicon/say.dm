@@ -23,7 +23,7 @@
 			return 1
 	return ..()
 
-/mob/living/silicon/say(var/message)
+/mob/living/silicon/say(message)
 
 	/*if (src.client)
 		if(client.prefs.muted & MUTE_IC)

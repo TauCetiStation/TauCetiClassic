@@ -2,9 +2,7 @@
 	startWhen = 3
 	announceWhen = 20
 	endWhen = 80
-
-/datum/event/anomaly/anomaly_flux/announce()
-	command_alert("Localized hyper-energetic flux wave detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", sound = "fluxanom")
+	announcement = new /datum/announcement/centcomm/anomaly/flux
 
 /datum/event/anomaly/anomaly_flux/start()
 	var/turf/T = pick(get_area_turfs(impact_area))
