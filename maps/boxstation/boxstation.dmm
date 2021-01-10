@@ -51953,16 +51953,11 @@
 /area/station/engineering/break_room)
 "bWI" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/device/t_scanner,
-/obj/item/weapon/tank/emergency_oxygen{
-	pixel_x = -8
-	},
-/obj/item/weapon/tank/emergency_oxygen{
-	pixel_x = -8
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 4
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engineering Department.";
+	name = "Engineering Monitor";
+	network = list("Engineering");
+	pixel_y = 3
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -52988,6 +52983,17 @@
 /area/station/engineering/break_room)
 "bZL" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/t_scanner,
+/obj/item/weapon/tank/emergency_oxygen{
+	pixel_x = -8
+	},
+/obj/item/weapon/tank/emergency_oxygen{
+	pixel_x = -8
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4
+	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "bZM" = (
