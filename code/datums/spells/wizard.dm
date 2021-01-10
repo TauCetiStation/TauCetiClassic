@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
-	name = "Magic Missile"
-	desc = "This spell fires several, slow moving, magic projectiles at nearby targets."
+	name = "Магическая Ракета"
+	desc = "Заклинание выпускает несколько медленно летящих зарядов с самонаведением в ближайшие цели."
 
 	school = "evocation"
 	charge_max = 350
@@ -26,7 +26,7 @@
 	action_icon_state = "magicm"
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	desc = "Some kind of Blasphemy"
+	desc = "Какое-то богохульство."
 	amt_weakened = 5
 	amt_dam_fire = 10
 	sound = 'sound/magic/MAGIC_MISSILE.ogg'
@@ -40,15 +40,15 @@
 	return 1
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
-	name = "Mutate"
-	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
+	name = "Мутация"
+	desc = "Это заклинание сделает вас халком и даст пострелять лазером из глаз, но недолго."
 
 	school = "transmutation"
 	charge_max = 400
 	clothes_req = 1
 	invocation = "BIRUZ BENNAR"
 	invocation_type = "shout"
-	message = "<span class='notice'>You feel strong! You feel a pressure building behind your eyes!</span>"
+	message = "<span class='notice'>Вы чувствовать сила! Вы чувствуете давление в области глаз!</span>"
 	range = -1
 	include_user = 1
 	sound = 'sound/magic/Mutate.ogg'
@@ -76,8 +76,8 @@
 	sparks_amt = 4
 
 /obj/effect/proc_holder/spell/targeted/smoke
-	name = "Smoke"
-	desc = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
+	name = "Дым"
+	desc = "Заклинание создает удушающий дым вокруг вас и не требует одежды для использования."
 
 	school = "conjuration"
 	charge_max = 120
@@ -93,8 +93,8 @@
 	smoke_amt = 10
 
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
-	name = "Disable Tech"
-	desc = "This spell disables all weapons, cameras and most other technology in range."
+	name = "Отключить Технологию"
+	desc = "Отключает всю технологическую мумбу-юмбу в радиусе дейсвия."
 	charge_max = 400
 	clothes_req = 1
 	invocation = "NEC CANTIO"
@@ -108,8 +108,8 @@
 	emp_light = 10
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
-	name = "Blink"
-	desc = "This spell randomly teleports you a short distance."
+	name = "Скачок"
+	desc = "Мгновенно телепортирует вас в случайном направлении на небольшую дистанцию."
 
 	school = "abjuration"
 	charge_max = 20
@@ -130,8 +130,8 @@
 	centcomm_cancast = 0 //prevent people from getting to centcomm
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
-	name = "Teleport"
-	desc = "This spell teleports you to a type of area of your selection."
+	name = "Телепорт"
+	desc = "Переносит вас туда, куда вы выберите."
 
 	school = "abjuration"
 	charge_max = 600
@@ -147,8 +147,8 @@
 	smoke_amt = 5
 
 /obj/effect/proc_holder/spell/targeted/forcewall
-	name = "Forcewall"
-	desc = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
+	name = "Магическая Стена"
+	desc = "Создает неразрушимую стену на 30 секунд и не требует одежды для использования."
 	school = "transmutation"
 	charge_max = 600
 	clothes_req = 0
@@ -184,8 +184,8 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
-	name = "Artificer"
-	desc = "This spell conjures a construct which may be controlled by Shades."
+	name = "Ремесленник"
+	desc = "Призывает конструкта, которым могут управлять тени."
 
 	school = "conjuration"
 	charge_max = 600
@@ -200,8 +200,8 @@
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature
-	name = "Summon Creature Swarm"
-	desc = "This spell tears the fabric of reality, allowing horrific daemons to spill forth."
+	name = "Призвать Рой Существ"
+	desc = "Разрывает реальность и позволяет призвать ужасающих созданий."
 
 	school = "conjuration"
 	charge_max = 1200
@@ -214,8 +214,8 @@
 	summon_type = list(/mob/living/simple_animal/hostile/creature)
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
-	name = "Blind"
-	desc = "This spell temporarily blinds a single person and does not require wizard garb."
+	name = "Ослепление"
+	desc = "Позволяет временно ослепить одного человека и не требует одежды для использования."
 
 	school = "transmutation"
 	charge_max = 300
@@ -223,7 +223,7 @@
 	invocation = "STI KALY"
 	invocation_type = "whisper"
 	sound = 'sound/magic/Blind.ogg'
-	message = "<span class ='notice'>Your eyes cry out in pain!</span>"
+	message = "<span class ='notice'>Вы почувствовали сильную боль в глазах.</span>"
 
 	action_icon_state = "blind"
 
@@ -240,8 +240,8 @@
 	sound = 'sound/magic/Blind.ogg'
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
-	name = "Fireball"
-	desc = "This spell fires a fireball at a target and does not require wizard garb."
+	name = "Огненный Шар"
+	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
 
 	school = "evocation"
 	charge_max = 100
@@ -369,8 +369,8 @@
 	centcomm_cancast = 0 //Stop people from getting to centcomm
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	name = "The Traps!"
-	desc = "Summon a number of traps to confuse and weaken your enemies, and possibly you."
+	name = "Ловушки!"
+	desc = "Призывает несколько ловушек, чтобы запутать противника и возможно вас."
 	charge_max = 250
 	clothes_req = 1
 	invocation = "CAVERE INSIDIAS"

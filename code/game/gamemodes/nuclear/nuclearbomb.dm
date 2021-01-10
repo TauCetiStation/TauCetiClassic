@@ -30,6 +30,8 @@ var/bomb_set
 	var/spray_icon_state
 	var/nuketype = ""
 
+	var/datum/announcement/station/nuke/announce_nuke = new
+
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
 	poi_list += src
@@ -299,7 +301,7 @@ var/bomb_set
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
 						var/area/nuclearbombloc = get_area(loc)
-						captain_announce("Detected activation of a nuclear warhead in [initial(nuclearbombloc.name)]. Someone trying to blow up the station!", sound = "nuke")
+						announce_nuke.play(nuclearbombloc)
 						set_security_level("delta")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else

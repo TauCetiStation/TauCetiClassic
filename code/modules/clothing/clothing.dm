@@ -67,7 +67,7 @@ var/global/list/icon_state_allowed_cache = list()
 			species_restricted |= specie
 
 	if(!sprite_sheet_slot)
-		if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+		if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
 			species_restricted = null
 		return
 
@@ -104,7 +104,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 			global.icon_state_allowed_cache[cache_key] = TRUE
 
-	if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+	if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
 		species_restricted = null
 
 //BS12: Species-restricted clothing check.
@@ -115,21 +115,17 @@ var/global/list/icon_state_allowed_cache = list()
 		return 0
 
 	if(species_restricted && istype(M,/mob/living/carbon/human))
-
 		var/wearable = null
-		var/exclusive = null
+		var/exclusive = ("exclude" in species_restricted)
 		var/mob/living/carbon/human/H = M
-
-		if("exclude" in species_restricted)
-			exclusive = 1
 
 		if(H.species)
 			if(exclusive)
 				if(!(H.species.name in species_restricted))
-					wearable = 1
+					wearable = TRUE
 			else
 				if(H.species.name in species_restricted)
-					wearable = 1
+					wearable = TRUE
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
@@ -435,12 +431,15 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"
 	w_class = ITEM_SIZE_LARGE//bulky item
+	throw_range = 2
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = THICKMATERIAL | PHORONGUARD | BLOCKUNIFORM

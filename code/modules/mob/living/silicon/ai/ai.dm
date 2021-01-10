@@ -130,7 +130,9 @@ var/list/ai_verbs_default = list(
 		"NT" = "ai-nanotrasen",
 		"Gentoo" = "ai-gentoo",
 		"Hal 9000" = "ai-hal",
-)
+	)
+
+	var/datum/announcement/station/command/ai/announcement = new
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
@@ -358,13 +360,17 @@ var/list/ai_verbs_default = list(
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
 	var/input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message)
+	if(message_cooldown)
+		to_chat(src, "Please allow one minute to pass between announcements.")
+		return
+	
 	if(!input)
 		return
 
 	if(check_unable(AI_CHECK_WIRELESS | AI_CHECK_RADIO))
 		return
 
-	captain_announce(input, "A.I. Announcement", src.name, "aiannounce")
+	announcement.play(src, input)
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
 	message_admins("[key_name_admin(usr)] has made an AI announcement.")
 	message_cooldown = 1
