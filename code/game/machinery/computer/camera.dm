@@ -158,20 +158,17 @@
 
 	var/list/visible_turfs = list()
 
-	// Is this camera located in or attached to a living thing? If so, assume the camera's loc is the living thing.
-	var/cam_location = isliving(active_camera.loc) ? active_camera.loc : active_camera
-
 	// If we're not forcing an update for some reason and the cameras are in the same location,
 	// we don't need to update anything.
 	// Most security cameras will end here as they're not moving.
-	var/newturf = get_turf(cam_location)
-	if(last_camera_turf == newturf)
+	var/camera_turf = get_turf(active_camera)
+	if(last_camera_turf == camera_turf)
 		return
 
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = newturf
+	last_camera_turf = camera_turf
 	//hear() bypasses luminosity checks
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : hear(active_camera.view_range, cam_location)
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, camera_turf) : hear(active_camera.view_range, camera_turf)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf
