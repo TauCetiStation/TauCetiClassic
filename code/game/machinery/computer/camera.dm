@@ -169,9 +169,9 @@
 		return
 
 	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = get_turf(cam_location)
-
-	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : view(active_camera.view_range, cam_location)
+	last_camera_turf = newturf
+	//hear() bypasses luminosity checks
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, cam_location) : hear(active_camera.view_range, cam_location)
 
 	for(var/turf/visible_turf in visible_things)
 		visible_turfs += visible_turf
