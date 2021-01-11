@@ -5,15 +5,16 @@
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
 	locked = TRUE
-	var/code = null
+	var/list/code = list()
 	var/lastattempt = null
 	var/attempts = 3
-	var/min = 1
-	var/max = 10
+	var/successful_numbers = 0
+	var/list/pos_numbers = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
-	code = rand(min,max)
+	for (var/i in 1 to 3)
+		code += pick_n_take(pos_numbers)
 
 /obj/structure/closet/crate/secure/loot/PopulateContents()
 	var/loot = rand(1,30)
@@ -58,28 +59,7 @@
 			return
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
-	if(locked)
-		to_chat(user, "<span class='notice'>The crate is locked with a Deca-code lock.</span>")
-		var/input = round(input(usr, "Enter digit from [min] to [max].", "Deca-Code Lock", "") as num)
-		if(Adjacent(user, src))
-			if(input == code)
-				to_chat(user, "<span class='notice'>The crate unlocks!</span>")
-				locked = FALSE
-				cut_overlays()
-				add_overlay(greenlight)
-			else if(input > max || input < min)
-				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
-			else
-				to_chat(user, "<span class='warning'>A red light flashes.</span>")
-				lastattempt = input
-				attempts--
-				if(attempts == 0)
-					for(var/mob/living/carbon/M in viewers(src, 3))
-						M.flash_eyes(3)
-						to_chat(M, "<span class='danger'>The crate's anti-tamper system activates!</span>")
-					qdel(src)
-		else
-			to_chat(user, "<span class='notice'>You attempt to interact with the device using a hand gesture, but it appears this crate is from before the DECANECT came out.</span>")
+	return
 
 /obj/structure/closet/crate/secure/loot/dump_contents()
 	if(locked)
@@ -104,3 +84,38 @@
 		locked = 0
 		return TRUE
 	return FALSE
+
+/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
+	ui_interact(user)
+
+/obj/structure/closet/crate/secure/loot/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/structure/closet/crate/secure/loot/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Lootcrate", name)
+		ui.open()
+
+/obj/structure/closet/crate/secure/loot/tgui_data()
+	var/data = list()
+	data["code"] = code
+
+	return data
+
+/obj/structure/closet/crate/secure/loot/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("test_for_luck")
+			if(!attempts)
+				return
+			attempts--
+			var/number = params["number"]
+			for(var/i in code)
+				if(number == i)
+					successful_numbers++
+
+	update_icon()

@@ -3,11 +3,12 @@
 /mob/living/simple_animal/hostile/retaliate/malf_drone
 	name = "combat drone"
 	desc = "An automated combat drone armed with state of the art weaponry and shielding."
-	icon_state = "drone3"
-	icon_living = "drone3"
-	icon_dead = "drone_dead"
-	ranged = 1
-	rapid = 1
+	icon = 'icons/mob/monsters.dmi'
+	icon_state = "drone_100"
+	icon_living = "drone_100"
+	icon_dead = "drone_0"
+	ranged = TRUE
+	amount_shoot = 3
 	speak_chance = 5
 	turns_per_move = 3
 	response_help = "pokes the"
@@ -18,21 +19,20 @@
 	stop_automated_movement_when_pulled = 0
 	health = 300
 	maxHealth = 300
+	retreat_distance = 3
+	minimum_distance = 3
 	speed = 8
 	projectiletype = /obj/item/projectile/beam/drone
 	projectilesound = 'sound/weapons/guns/gunpulse_laser3.ogg'
 	destroy_surroundings = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
 
-	//the drone randomly switches between these states because it's malfunctioning
-	var/hostile_drone = 0
 	//0 - retaliate, only attack enemies that attack it
 	//1 - hostile, attack everything that comes near
 
-	var/turf/patrol_target
-	var/explode_chance = 1
+	var/explode_chance = 0
 	var/disabled = 0
-	var/exploding = 0
+	var/exploding = FALSE
 
 	//Drones aren't affected by atmos.
 	min_oxy = 0
@@ -52,6 +52,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/atom_init()
 	. = ..()
+	loot_list = list(/obj/item/stack/sheet/plasteel = rand(1, 3), /obj/item/stack/rods = rand(1, 3), /obj/item/weapon/shard = rand(1, 3))
 	if(prob(5))
 		projectiletype = /obj/item/projectile/beam/pulse/drone
 		projectilesound = 'sound/weapons/guns/gunpulse2.ogg'
@@ -62,27 +63,19 @@
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/ListTargets()
-	if(hostile_drone)
-		return view(src, 10)
-	else
-		return ..()
-
 //self repair systems have a chance to bring the drone back to life
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Life()
 
 	//emps and lots of damage can temporarily shut us down
-	if(disabled > 0)
+	if(disabled)
 		stat = UNCONSCIOUS
-		icon_state = "drone_dead"
-		disabled--
-		wander = 0
+		disabled -= 2
+		wander = FALSE
 		speak_chance = 0
 		if(disabled <= 0)
 			stat = CONSCIOUS
-			icon_state = "drone0"
-			wander = 1
-			speak_chance = 5
+			wander = TRUE
+			speak_chance = initial(speak_chance)
 
 	//repair a bit of damage
 	if(prob(1))
@@ -90,7 +83,7 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		health += rand(25,100)
+		health += maxHealth * 0.3
 
 	//spark for no reason
 	if(prob(5))
@@ -98,65 +91,40 @@
 		s.set_up(3, 1, src)
 		s.start()
 
-	//sometimes our targetting sensors malfunction, and we attack anyone nearby
-	if(prob(disabled ? 0 : 1))
-		if(hostile_drone)
-			src.visible_message("<span class='notice'>[bicon(src)] [src] retracts several targetting vanes, and dulls it's running lights.</span>")
-			hostile_drone = 0
-		else
-			src.visible_message("<span class='warning'>[bicon(src)] [src] suddenly lights up, and additional targetting vanes slide into place.</span>")
-			hostile_drone = 1
-
-	if(health / maxHealth > 0.9)
-		icon_state = "drone3"
-		explode_chance = 0
-	else if(health / maxHealth > 0.7)
-		icon_state = "drone2"
-		explode_chance = 0
-	else if(health / maxHealth > 0.5)
-		icon_state = "drone1"
-		explode_chance = 0.5
-	else if(health / maxHealth > 0.3)
-		icon_state = "drone0"
-		explode_chance = 5
-	else if(health > 0)
-		//if health gets too low, shut down
-		icon_state = "drone_dead"
-		exploding = 0
+	if(health < maxHealth * 0.25) //if health gets too low, shut down
+		explode_chance = 20
+		exploding = FALSE
 		if(!disabled)
-			if(prob(50))
-				src.visible_message("<span class='notice'>[bicon(src)] [src] suddenly shuts down!</span>")
-			else
-				src.visible_message("<span class='notice'>[bicon(src)] [src] suddenly lies still and quiet.</span>")
-			disabled = rand(150, 600)
-			walk(src,0)
-
-	if(exploding && prob(20))
-		if(prob(50))
-			src.visible_message("<span class='warning'>[bicon(src)] [src] begins to spark and shake violenty!</span>")
-		else
-			src.visible_message("<span class='warning'>[bicon(src)] [src] sparks and shakes like it's about to explode!</span>")
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
+			src.visible_message("<span class='notice'>[bicon(src)] [src] suddenly shuts down!</span>")
+			disabled = rand(15, 40)
 
 	if(!exploding && !disabled && prob(explode_chance))
-		exploding = 1
-		stat = UNCONSCIOUS
-		wander = 1
-		walk(src,0)
-		spawn(rand(50,150))
-			if(!disabled && exploding)
-				explosion(get_turf(src), 0, 1, 4, 7)
-				//proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1)
+		if(prob(explode_chance))
+			exploding = TRUE
+			stat = UNCONSCIOUS
+			wander = TRUE
+			var/time_to_explosion = rand(40, 100)
+			src.visible_message("<span class='boldannounce'>[bicon(src)] [src] sparks and shakes, it can EXPLODE in [time_to_explosion / 10] seconds!</span>")
+			spawn(time_to_explosion)
+				if(!disabled && exploding)
+					explosion(src.loc, 0, 1, 4, 7)
+	update_icon()
 	..()
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/proc/update_icon()
+	if(disabled)
+		icon_state = "drone_0"
+		return
+
+	icon_state = "drone_[get_percent_health()]"
+
+/mob/living/simple_animal/hostile/retaliate/malf_drone/proc/get_percent_health()
+	return min(round(health * 100 / maxHealth, 25), 100)
 
 //ion rifle!
 /mob/living/simple_animal/hostile/retaliate/malf_drone/emp_act(severity)
-	health -= rand(3,15) * (severity + 1)
-	disabled = rand(150, 600)
-	hostile_drone = 0
-	walk(src,0)
+	health -= rand(3, 15) * (severity + 1)
+	disabled = rand(15, 40)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/death()
 	src.visible_message("<span class='notice'>[bicon(src)] [src] suddenly breaks apart.</span>")
@@ -164,6 +132,7 @@
 	qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Destroy()
+	QDEL_NULL(ion_trail)
 	//some random debris left behind
 	if(has_loot)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -171,52 +140,18 @@
 		s.start()
 		var/obj/O
 
-		//shards
-		O = new /obj/item/weapon/shard(src.loc)
-		step_to(O, get_turf(pick(view(7, src))))
-		if(prob(75))
-			O = new /obj/item/weapon/shard(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-		if(prob(50))
-			O = new /obj/item/weapon/shard(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-		if(prob(25))
-			O = new /obj/item/weapon/shard(src.loc)
+		for(var/obj/item in loot_list)
+			O = new item.type(src.loc)
 			step_to(O, get_turf(pick(view(7, src))))
 
-		//rods
-		O = new /obj/item/stack/rods(src.loc)
-		step_to(O, get_turf(pick(view(7, src))))
-		if(prob(75))
-			O = new /obj/item/stack/rods(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-		if(prob(50))
-			O = new /obj/item/stack/rods(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-		if(prob(25))
-			O = new /obj/item/stack/rods(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-
-		//plasteel
-		O = new /obj/item/stack/sheet/plasteel(src.loc)
-		step_to(O, get_turf(pick(view(7, src))))
-		if(prob(75))
-			O = new /obj/item/stack/sheet/plasteel(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-		if(prob(50))
-			O = new /obj/item/stack/sheet/plasteel(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-		if(prob(25))
-			O = new /obj/item/stack/sheet/plasteel(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
 
 		//also drop dummy circuit boards deconstructable for research (loot)
 		var/obj/item/weapon/circuitboard/C
 
 		//spawn 1-4 boards of a random type
 		var/spawnees = 0
-		var/num_boards = rand(1,4)
-		var/list/options = list(1,2,4,8,16,32,64,128,256, 512)
+		var/num_boards = rand(1, 4)
+		var/list/options = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512)
 		for(var/i=0, i<num_boards, i++)
 			var/chosen = pick(options)
 			options.Remove(options.Find(chosen))

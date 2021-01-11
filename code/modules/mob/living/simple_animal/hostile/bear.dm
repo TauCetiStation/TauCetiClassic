@@ -63,7 +63,7 @@
 	switch(stance)
 
 		if(HOSTILE_STANCE_TIRED)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			stance_step++
 			if(stance_step >= 10) //rests for 10 ticks
 				if(target && (target in ListTargets(10)))
@@ -72,7 +72,7 @@
 					stance = HOSTILE_STANCE_IDLE
 
 		if(HOSTILE_STANCE_ALERT)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			var/found_mob = 0
 			if(target && (target in ListTargets(10)))
 				if(CanAttack(target))

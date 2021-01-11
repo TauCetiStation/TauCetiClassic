@@ -263,13 +263,10 @@
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
-		if(istype(M, /mob/living/simple_animal/hulk))
-			var/mob/living/simple_animal/hulk/Hulk = M
-			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4,10)
+		M.health -= rand(3, 6)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
-			if(M.environment_smash == 3)
+			if(M.environment_smash >= 3)
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>You smash against the wall.</span>")
 			else
@@ -281,19 +278,16 @@
 			else
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>You smash against the wall.</span>")
-				return
-			return
 
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
-		if(user.a_intent == INTENT_HARM)
-			playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
-			take_damage(rand(15, 50))
-			if(prob(25))
-				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-			return //##Z2
+	if(HULK in user.mutations && user.a_intent == INTENT_HARM) //#Z2 No more chances, just randomized damage and hurt intent
+		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
+		take_damage(rand(15, 50))
+		if(prob(25))
+			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		return //##Z2
 
 	if(rotting)
 		to_chat(user, "<span class='notice'>The wall crumbles under your touch.</span>")

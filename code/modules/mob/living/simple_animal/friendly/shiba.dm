@@ -72,16 +72,16 @@
 			turns_since_scan = 0
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 				for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src,3))
 					if(isturf(histoy.loc))
 						movement_target = histoy
 						break
 			if(movement_target)
-				stop_automated_movement = 1
+				stop_automated_movement = TRUE
 				walk_to(src,movement_target,0,3)
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(1,src))
 		if(prob(50))

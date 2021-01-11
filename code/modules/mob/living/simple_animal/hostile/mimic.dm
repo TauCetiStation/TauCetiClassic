@@ -59,8 +59,8 @@
 
 	attacktext = "bites"
 
-	stop_automated_movement = 1
-	wander = 0
+	stop_automated_movement = TRUE
+	wander = FALSE
 	var/attempt_open = 0
 
 // Pickup loot
