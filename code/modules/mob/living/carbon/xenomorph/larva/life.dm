@@ -1,5 +1,6 @@
 /mob/living/carbon/xenomorph/larva/Life()
 	set invisibility = 0
+	var/larva_in_embryo = FALSE //the larva in the embryo should not grow
 
 	if (notransform)
 		return
@@ -7,11 +8,12 @@
 	for(var/obj/item/weapon/larva_bite/G in src)
 		G.process()
 	if(istype(src.loc, /obj/item/alien_embryo))
+		larva_in_embryo = TRUE
 		SetSleeping(5 SECONDS)
 
 	..()
 
-	if(stat != DEAD && !IS_IN_STASIS(src)) // not dead and not in stasis
+	if(stat != DEAD && !IS_IN_STASIS(src) && !larva_in_embryo) // not dead and not in stasis
 		if(amount_grown < max_grown)
 			amount_grown++
 
