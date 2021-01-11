@@ -307,7 +307,6 @@
 		return ..()
 	last_check = world.time
 	var/data = count_alien_percent()
-	//message_admins("<span class='notice'>Чужие: [data[TOTAL_ALIEN]] Люди: [data[TOTAL_HUMAN]] Процент: [data[ALIEN_PERCENT]]</span>")	//for debug
 	if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 		return TRUE
 	else
