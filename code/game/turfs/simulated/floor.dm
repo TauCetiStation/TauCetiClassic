@@ -631,29 +631,30 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/W = C
-		if(user.a_intent == INTENT_HARM && is_plating())
-			if(W.use(0, user))
-				to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
-				if(W.use_tool(src, user, 100, 3, 100))
-					if(!is_plating())
-						return
-
-					to_chat(user, "<span class='notice'>You remove the plating.</span>")
-					new /obj/item/stack/tile/plasteel(src)
-					ReplaceWithLattice()
-			else
+		if(!is_plating())
+			return
+		if(user.a_intent == INTENT_HELP)
+			if(!broken && !burnt)
+				return
+			if(!W.use(0,user))
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-		else if(is_plating())
-			if(broken || burnt)
-				if(W.use(0,user))
-					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
-					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-					icon_state = "plating"
-					burnt = 0
-					broken = 0
-				else
-					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-
+				return
+			to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "plating"
+			burnt = 0
+			broken = 0
+		else
+			if(!W.use(0, user))
+				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+				return
+			to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
+			if(W.use_tool(src, user, 100, 3, 100))
+				if(!is_plating())
+					return
+				to_chat(user, "<span class='notice'>You remove the plating.</span>")
+				new /obj/item/stack/tile/plasteel(src)
+				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK
