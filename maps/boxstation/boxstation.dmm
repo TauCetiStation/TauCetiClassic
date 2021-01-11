@@ -247,7 +247,7 @@
 /obj/machinery/camera{
 	c_tag = "Security Washroom";
 	dir = 4;
-	network = list("SS13,"Security"")
+	network = list("SS13,"Security")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -850,6 +850,12 @@
 /obj/machinery/camera{
 	c_tag = "Security Office North-West";
 	network = list("SS13","Security")
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used to monitor areas of the Security Division.";
+	name = "Security Monitor";
+	network = list("Security");
+	pixel_y = 30
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -45591,15 +45597,14 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "bGL" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the singularity chamber.";
-	layer = 4;
-	name = "Singularity Engine Telescreen";
-	network = list("Singularity");
-	pixel_y = 30
-	},
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engineering Department.";
+	name = "Engineering Monitor";
+	network = list("Engineering");
+	pixel_y = 30
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
@@ -51954,9 +51959,10 @@
 "bWI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engineering Department.";
-	name = "Engineering Monitor";
-	network = list("Engineering");
+	desc = "Used for watching the singularity chamber.";
+	layer = 4;
+	name = "Singularity Engine Telescreen";
+	network = list("Singularity");
 	pixel_y = 3
 	},
 /turf/simulated/floor,
@@ -62343,11 +62349,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/drone_fabrication)
 "cyx" = (
-/obj/machinery/computer/security/engineering{
-	desc = "Used to monitor Drones.";
-	name = "Drone Monitoring Cameras";
-	network = list("Drone")
-	},
+/obj/machinery/computer/security/engineering/drone,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -69822,7 +69824,7 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
 	name = "Engineering Monitor";
-	network = list("Engineering");
+	network = list("Engineering","Engineering Robots");
 	pixel_y = 30
 	},
 /turf/simulated/floor,
@@ -77612,7 +77614,10 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "caution"
+	},
 /area/station/engineering/break_room)
 "rXf" = (
 /obj/structure/disposalpipe/segment{

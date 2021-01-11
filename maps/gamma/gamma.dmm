@@ -25715,11 +25715,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/computer/security/engineering{
-	desc = "Used to monitor Drones.";
-	dir = 8;
-	name = "Drone Monitoring Cameras";
-	network = list("Drone")
+/obj/machinery/computer/security/engineering/drone{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
