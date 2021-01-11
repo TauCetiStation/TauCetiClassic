@@ -273,12 +273,12 @@
 						rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 						H.mind.objectives += rev_obj
 
-				H.verbs += /mob/living/carbon/human/proc/RevConvert
-				add_antag_hud(antag_hud_type, antag_hud_name, H)
+					H.verbs += /mob/living/carbon/human/proc/RevConvert
+					add_antag_hud(antag_hud_type, antag_hud_name, H)
 
-				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
-				added_heads = 1
-				break
+					to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
+					added_heads = 1
+					break
 
 			if(added_heads)
 				log_admin("Managed to add new heads of revolution.")
