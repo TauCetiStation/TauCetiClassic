@@ -69778,6 +69778,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/weapon/twohanded/flora,
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
 "gnb" = (
