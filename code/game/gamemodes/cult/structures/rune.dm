@@ -13,7 +13,7 @@
 /obj/effect/rune/atom_init(mapload, datum/religion/R)
 	. = ..()
 	religion = R
-	religion.runes += src
+	religion?.runes += src
 	var/image/I = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	I.override = TRUE
 	I.color = "#a10808"
@@ -29,11 +29,13 @@
 
 /obj/effect/rune/examine(mob/user)
 	if(iscultist(user) || isobserver(user))
-		to_chat(user, "[bicon(src)] That's <span class='cult'>руна!</span>")
-		to_chat(user, "Руной написано: <span class='cult'>[power?.name]</span>.")
+		to_chat(user, "[bicon(src)] That's <span class='[religion?.style_text]'>руна!</span>")
+		if(!power)
+			return
+		to_chat(user, "Руной написано: <span class='[religion?.style_text]'>[power?.name]</span>.")
 		if(istype(power, /datum/rune/cult/teleport))
 			var/datum/rune/cult/teleport/R = power
-			to_chat(user, "Id телепорта - <span class='cult'>[R.id]</span>.")
+			to_chat(user, "Id телепорта - <span class='[religion.style_text]'>[R.id]</span>.")
 		return
 	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
 	if(issilicon(user))
@@ -43,19 +45,15 @@
 
 /obj/effect/rune/attackby(I, mob/living/user)
 	if(istype(I, /obj/item/weapon/storage/bible/tome) && iscultist(user))
-		// return favors
-		for(var/datum/building_agent/rune/cult/C in religion.available_runes)
-			if(C.building_type == power?.type)
-				religion.adjust_favor(C.deconstruct_favor_cost)
-				religion.adjust_favor(C.deconstruct_piety_cost)
-				break
-		to_chat(user, "<span class='cult'>Вы заставляете руну исчезнуть.</span>")
+		to_chat(user, "<span class='[religion?.style_text]'>Вы заставляете руну исчезнуть.</span>")
 		qdel(src)
-	else if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		return
+	if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>Вы разрушаете мерзкую магию мертвящем полем [I].</span>")
 		qdel(src)
-	else
-		return ..()
+		return
+
+	return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
 	power.ghost_action(user)

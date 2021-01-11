@@ -104,9 +104,15 @@
 		return 1
 	return 0
 
+/obj/effect/forcefield/cult
+	name = "Blood Shield"
+	desc = "Like erythrocyte, the cells form a force barrier."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "cultshield"
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
-	name = "Paralysing Smoke"
-	desc = "This spell spawns a cloud of paralysing smoke."
+	name = "Парализующий Дым"
+	desc = "Это заклинание создает парализующий дым."
 
 	school = "conjuration"
 	charge_max = 200
@@ -114,6 +120,9 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 1
+
+	action_icon_state = "rot"
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new

@@ -19,7 +19,7 @@
 /obj/item/weapon/paper/talisman/chaplain/examine(mob/user)
 	..()
 	if(religion?.is_member(user) && rite)
-		to_chat(user, "<span class='piety'>Божественным почерком написано: [religion.rites_info[rite.name]]</span>.")
+		to_chat(user, "<span class='[religion.style_text]'>Божественным почерком написано: [religion.rites_info[rite.name]]</span>.")
 
 /obj/item/weapon/paper/talisman/cult
 	icon_state = "scrap_bloodied"
@@ -27,4 +27,4 @@
 /obj/item/weapon/paper/talisman/cult/examine(mob/user)
 	..()
 	if(religion?.is_member(user) && rite)
-		to_chat(user, "<span class='cult'>Кровью наскрябано: [religion.rites_info[rite.name]]</span>.")
+		to_chat(user, "<span class='[religion.style_text]'>Кровью наскрябано: [religion.rites_info[rite.name]]</span>.")

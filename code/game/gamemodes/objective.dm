@@ -999,13 +999,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	return
 
 /datum/objective/cult/recruit/check_completion()
-	for(var/mob/cultist in cur_mode.religion.members)
-		if(cultist?.stat != DEAD)
-			var/area/A = get_area(cultist)
-			if(is_type_in_typecache(A, centcom_areas_typecache))
-				cur_mode.acolytes_out++
-
-	if(cur_mode.acolytes_out >= acolytes_needed)
+	if(cur_mode.get_cultists_out() >= acolytes_needed)
 		return OBJECTIVE_WIN
 
 	return OBJECTIVE_LOSS

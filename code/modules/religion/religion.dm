@@ -111,6 +111,8 @@
 	var/list/mob/members = list()
 	// Easy access
 	var/datum/religion_sect/sect
+	// css
+	var/style_text
 
 	/*
 		Building
@@ -240,7 +242,7 @@
 /datum/religion/proc/update_structure_info()
 	var/carpet_symbol_info = carpet_dir_by_name[name]
 	if(carpet_symbol_info)
-		carpet_dir = carpet_dir_by_name["Default"]
+		carpet_dir = carpet_symbol_info
 	else
 		carpet_dir = 0
 

@@ -545,64 +545,44 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if (usr != src)
-		return 0 //something is terribly wrong
+		return TRUE //something is terribly wrong
 
 	var/ghosts_can_write
 	if(global.cult_religion)
 		if(global.cult_religion.members.len > config.cult_ghostwriter_req_cultists)
-			ghosts_can_write = 1
+			ghosts_can_write = TRUE
 
 	if(!ghosts_can_write)
-		to_chat(src, "<span class='red'>The veil is not thin enough for you to do that.</span>")
+		to_chat(src, "<span class='red'>Вуаль еще не ослабла.</span>")
 		return
 
-	var/list/choices = list()
-	for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
-		if(B.amount > 0)
-			choices += B
-
-	if(!choices.len)
-		to_chat(src, "<span class = 'warning'>There is no blood to use nearby.</span>")
-		return
-
-	var/obj/effect/decal/cleanable/blood/choice = input(src,"What blood would you like to use?") in null|choices
-
-	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
-	var/turf/simulated/T = src.loc
-	if (direction != "Here")
-		T = get_step(T,text2dir(direction))
-
-	if (!istype(T))
-		to_chat(src, "<span class='warning'>You cannot doodle there.</span>")
-		return
-
-	if(!choice || choice.amount == 0 || !(src.Adjacent(choice)))
-		return
-
-	var/datum/dirt_cover/doodle_color = new /datum/dirt_cover(choice.basedatum)
-
-	var/num_doodles = 0
-	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
-		num_doodles++
-	if (num_doodles > 4)
-		to_chat(src, "<span class='warning'>There is no space to write on!</span>")
-		return
+	var/datum/dirt_cover/doodle_color = new /datum/dirt_cover(pick(subtypesof(/datum/dirt_cover)))
 
 	var/max_length = 50
+	var/message = sanitize(input(src, "Напишите сообщение. Оно должно быть более 50 символов.", "Писание кровью", ""))
 
-	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
+	if(message)
+		var/turf/simulated/T = get_turf(src)
+		if(!istype(T))
+			to_chat(src, "<span class='warning'>Вы не можете здесь рисовать.</span>")
+			return
+		var/num_doodles = 0
+		for(var/obj/effect/decal/cleanable/blood/writing/W in T)
+			num_doodles++
+		if(num_doodles > 4)
+			to_chat(src, "<span class='warning'>Нехватает места для еще одной надписи.</span>")
+			return
 
-	if (message)
-		if (length_char(message) > max_length)
+		if(length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
-			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
+			to_chat(src, "<span class='warning'>Вам не хватило крови дописать.</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
 		W.basedatum = new/datum/dirt_cover(doodle_color)
 		W.update_icon()
 		W.message = message
 		W.add_hiddenprint(src)
-		W.visible_message("<span class='red'>Invisible fingers crudely paint something in blood on [T]...</span>")
+		W.visible_message("<span class='red'>Невидимые пальцы что-то рисуют кровью на [T]...</span>")
 
 /mob/dead/observer/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"

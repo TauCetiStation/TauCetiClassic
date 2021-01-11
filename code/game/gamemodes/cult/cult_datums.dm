@@ -122,6 +122,7 @@
 /datum/rune/cult/capture_area
 	name = "Capture area"
 	words = list("join", "hell", "technology")
+	var/per_obj_cd = 1 SECONDS
 	var/static/already_use = FALSE
 	var/static/first_area_captured = FALSE
 
@@ -166,10 +167,10 @@
 
 	if((100*i)/all_items.len % 25 == 0)
 		for(var/mob/M in religion.members)
-			to_chat(M, "<span class='cult'>Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%</span>")
+			to_chat(M, "<span class='[religion.style_text]'>Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%</span>")
 
 	INVOKE_ASYNC(src, .proc/capture_effect, i, all_items)
-	sleep(10)
+	sleep(per_obj_cd)
 	return TRUE
 
 /datum/rune/cult/capture_area/proc/capture_effect(i, list/all_items)
@@ -179,7 +180,7 @@
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
 			viewing |= M.client
 
-	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf)
+	var/image/I = image(uristrune_cache[pick(uristrune_cache)], turf, layer = SINGULARITY_LAYER)
 	flick_overlay(I, viewing, 30)
 	animate(I, alpha = 0, time = 30)
 
@@ -228,7 +229,7 @@
 	if(!id && !id_inputing)
 		id_inputing = TRUE
 		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
-		to_chat(user, "<span calss='notice'>Id телепорта - </span><span class='cult'>[id]</span>")
+		to_chat(user, "<span calss='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
 		return FALSE // Without instant teleport
 	return TRUE
 
@@ -251,7 +252,7 @@
 		return
 	if(tp_runes.len)
 		user.visible_message("<span class='userdanger'>[user] исчезает во вспышке красного света!</span>", \
-			"<span class='cult'>Вы чувствуете, как ваше тело проскальзывает сквозь измерения!</span>", \
+			"<span class='[religion.style_text]'>Вы чувствуете, как ваше тело проскальзывает сквозь измерения!</span>", \
 			"<span class='userdanger'>Вы слышите болезненный хруст и хлюпанье внутренностей.</span>")
 		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
 		user.forceMove(get_turf(pick(tp_runes)))
@@ -288,7 +289,7 @@
 
 	playsound(altar, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='userdanger'>Вы чувствуете, как воздух движется над руной.</span>", \
-		"<span class='cult'>Вы чувствуете, как воздух целенаправленной куда-то движется от руны.</span>", \
+		"<span class='[religion.style_text]'>Вы чувствуете, как воздух целенаправленной куда-то движется от руны.</span>", \
 		"<span class='userdanger'>Вы чувствуете запах и вкус озона.</span>")
 
 /datum/rune/cult/seer
@@ -302,15 +303,15 @@
 
 	if(user.seer)
 		user.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium viortia.")
-		to_chat(user, "<span class='cult'>The world beyond fades from your vision.</span>")
+		to_chat(user, "<span class='[religion.style_text]'>The world beyond fades from your vision.</span>")
 		user.see_invisible = SEE_INVISIBLE_LIVING
 		user.seer = FALSE
 	else if(user.see_invisible != SEE_INVISIBLE_LIVING)
-		to_chat(user, "<span class='cult'>The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision.</span>")
+		to_chat(user, "<span class='[religion.style_text]'>The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision.</span>")
 		user.see_invisible = SEE_INVISIBLE_CULT
 	else
 		user.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-		to_chat(user, "<span class='cult'>The world beyond opens to your eyes.</span>")
+		to_chat(user, "<span class='[religion.style_text]'>The world beyond opens to your eyes.</span>")
 		user.see_invisible = SEE_INVISIBLE_CULT
 		user.seer = TRUE
 
@@ -330,13 +331,13 @@
 		if(M.stat != DEAD)
 			continue
 		if(sacrifice_target && sacrifice_target == M.mind)
-			to_chat(user, "<span class='cult'>The Geometer of blood wants this dead mortal for himself.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>The Geometer of blood wants this dead mortal for himself.</span>")
 			return fizzle(user)
 		if(M.mind)
 			corpse_to_raise = M
 
 	if(!corpse_to_raise)
-		to_chat(user, "<span class='cult'>You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie.</span>")
+		to_chat(user, "<span class='[religion.style_text]'>You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie.</span>")
 		return fizzle(user)
 
 	for(var/obj/effect/rune/R in religion.runes)
@@ -346,13 +347,13 @@
 			if(H.stat == DEAD)
 				continue
 			if(sacrifice_target && sacrifice_target == H.mind)
-				to_chat(user, "<span class='cult'>The Geometer of blood wants this still alive mortal for himself.</span>")
+				to_chat(user, "<span class='[religion.style_text]'>The Geometer of blood wants this still alive mortal for himself.</span>")
 				return fizzle(user)
 			body_to_sacrifice = H
 			break
 
 	if(!body_to_sacrifice)
-		to_chat(user, "<span class='cult'>The sacrifical corpse is not dead. You must free it from this world of illusions before it may be used.</span>")
+		to_chat(user, "<span class='[religion.style_text]'>The sacrifical corpse is not dead. You must free it from this world of illusions before it may be used.</span>")
 		return fizzle(user)
 
 	corpse_to_raise.revive()
@@ -361,17 +362,17 @@
 
 
 	user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
-	corpse_to_raise.visible_message("<span class='cult'>[corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.</span>", \
-		"<span class='cult'>Life... I'm alive again...</span>", \
-		"<span class='cult'>You hear a faint, slightly familiar whisper.</span>")
-	body_to_sacrifice.visible_message("<span class='cult'>[body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!</span>", \
-		"<span class='cult'>You feel as your blood boils, tearing you apart.</span>", \
-		"<span class='cult'>You hear a thousand voices, all crying in pain.</span>")
+	corpse_to_raise.visible_message("<span class='[religion.style_text]'>[corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.</span>", \
+		"<span class='[religion.style_text]'>Life... I'm alive again...</span>", \
+		"<span class='[religion.style_text]'>You hear a faint, slightly familiar whisper.</span>")
+	body_to_sacrifice.visible_message("<span class='[religion.style_text]'>[body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!</span>", \
+		"<span class='[religion.style_text]'>You feel as your blood boils, tearing you apart.</span>", \
+		"<span class='[religion.style_text]'>You hear a thousand voices, all crying in pain.</span>")
 	body_to_sacrifice.gib()
 
-	to_chat(corpse_to_raise, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
+	to_chat(corpse_to_raise, "<span class='[religion.style_text]'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
 		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
-	to_chat(corpse_to_raise, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
+	to_chat(corpse_to_raise, "<span class='[religion.style_text]'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
 		One above all else. Bring It back.</span>")
 
 /datum/rune/cult/obscure
@@ -392,7 +393,7 @@
 /datum/rune/cult/ajourney/Destroy()
 	if(isprocessing)
 		STOP_PROCESSING(SSobj, src)
-		to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed. \
+		to_chat(ghost, "<span class='[religion.style_text]'>The astral cord that ties your body and your spirit has been severed. \
 			You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
 		ghost.can_reenter_corpse = FALSE
 		ghost = null
@@ -408,7 +409,7 @@
 			return
 		if(!ajourned || QDELETED(ajourned))
 			STOP_PROCESSING(SSobj, src)
-			to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed. \
+			to_chat(ghost, "<span class='[religion.style_text]'>The astral cord that ties your body and your spirit has been severed. \
 				You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
 			ghost.can_reenter_corpse = FALSE
 			ghost = null
@@ -416,10 +417,10 @@
 			return
 	if(ghost.can_reenter_corpse)
 		if(holder.loc != ajourned.loc)
-			to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed!</span>")
+			to_chat(ghost, "<span class='[religion.style_text]'>The astral cord that ties your body and your spirit has been severed!</span>")
 			ghost.can_reenter_corpse = FALSE
 	else if(holder.loc == ajourned.loc)
-		to_chat(ghost, "<span class='cult'>The astral cord has been restored!</span>")
+		to_chat(ghost, "<span class='[religion.style_text]'>The astral cord has been restored!</span>")
 		ghost.can_reenter_corpse = TRUE
 	if(cooldown < world.time)
 		cooldown = world.time + 100
@@ -487,7 +488,7 @@
 	user.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")
 	var/mob/living/carbon/human/dummy/D = new(holder.loc) // in soultstone code we have block for type dummy
 	user.visible_message("<span class='userdanger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
-		"<span class='cult'>A shape forms in the center of the rune. A shape of... a man.</span>", \
+		"<span class='[religion.style_text]'>A shape forms in the center of the rune. A shape of... a man.</span>", \
 		"<span class='userdanger'>You hear liquid flowing.</span>")
 	D.real_name = "Unknown"
 	var/chose_name = FALSE
@@ -508,7 +509,7 @@
 	D.key = ghost.key
 	SSticker.mode.add_cultist(D.mind)
 	dummies += D
-	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
+	to_chat(D, "<span class='[religion.style_text]'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
 		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.	Assist your new compatriots in their \
 		dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back</span>")
 	guider = user
@@ -584,7 +585,7 @@
 			scanner.open(cultist)
 			is_processed = TRUE
 	if(!is_processed)
-		to_chat(user, "<span class='cult'>The [cultist] is already free.</span>")
+		to_chat(user, "<span class='[religion.style_text]'>The [cultist] is already free.</span>")
 		return fizzle(user)
 	for(var/mob/living/carbon/C in acolytes)
 		user.take_overall_damage(45 / amount_of_acolytes, 0)
@@ -618,8 +619,8 @@
 		C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
 		C.take_overall_damage(90 / acolytes_amount, 0)
 	user.visible_message("<span class='userdanger'>Rune disappears with a flash of red light, and in its place now a body lies.</span>", \
-		"<span class='cult'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
-		"<span class='cult'>You hear a pop and smell ozone.</span>")
+		"<span class='[religion.style_text]'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
+		"<span class='[religion.style_text]'>You hear a pop and smell ozone.</span>")
 
 /datum/rune/cult/deafen
 	words = list("hide", "other", "see")
@@ -671,7 +672,7 @@
 /datum/rune/cult/bloodboil/action(mob/living/carbon/user)
 	var/list/acolytes = nearest_cultists(1, "Dedo ol[pick("'","`")]btoh!")
 	if(length(acolytes) < 3)
-		to_chat(user, "<span class='cult'>You will need more cultists chanting for the bloodboil to succeed.</span>")
+		to_chat(user, "<span class='[religion.style_text]'>You will need more cultists chanting for the bloodboil to succeed.</span>")
 		return fizzle(user)
 	var/damage_for_acolytes = 45 / length(acolytes)
 	var/list/heretics = nearest_heretics()

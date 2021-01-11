@@ -30,13 +30,13 @@
 		S.dust()
 		R.mode.sacrificed += S.mind
 		if(sacrifice_target && sacrifice_target == S.mind)
-			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
 			R.adjust_favor(300)
 	else if(ishuman(AOG.buckled_mob))
 		AOG.buckled_mob.gib()
 		R.mode.sacrificed += AOG.buckled_mob.mind
 		if(sacrifice_target && sacrifice_target == AOG.buckled_mob.mind)
-			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
 			R.adjust_favor(300)
 
 	R.adjust_favor(calc_sacrifice_favor(AOG.buckled_mob))
@@ -97,7 +97,7 @@
 	..()
 	var/datum/religion/cult/cult = religion
 	cult.mode.add_cultist(AOG.buckled_mob.mind)
-	to_chat(AOG.buckled_mob, "<span class='cult'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
+	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
 	religion.adjust_favor(300)
 	return TRUE
 
@@ -160,7 +160,7 @@
 		return FALSE
 
 	user.visible_message("<span class='userdanger'>Кровь течет из пустоты в [user]!</span>", \
-		"<span class='cult'>Кровь начинает течь из дыры в пространстве в твое слабое смертное тело. Ты чувствуешь... переполненость.</span>", \
+		"<span class='[religion.style_text]'>Кровь начинает течь из дыры в пространстве в твое слабое смертное тело. Ты чувствуешь... переполненость.</span>", \
 		"<span class='userdanger'>Вы слышите течение жидкости.</span>")
 
 	if(ishuman(user))
@@ -169,7 +169,31 @@
 			if(prob(drain * 1.5))
 				if(BP.is_stump || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
 					BP.rejuvenate()
-					to_chat(user, "<span class='cult'>Ты чувствуешь прилив сил в [BP].</span>")
+					to_chat(user, "<span class='[religion.style_text]'>Ты чувствуешь прилив сил в [BP].</span>")
 
 	user.heal_overall_damage(1.2 * drain, drain)
+	return TRUE
+
+/datum/religion_rites/instant/communicate
+	name = "Communicate"
+	desc = "Sends a message to all members of the religion!"
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Услышь меня!!!"
+	favor_cost = 100
+
+	needed_aspects = list(
+		ASPECT_HERD = 1,
+	)
+
+/datum/religion_rites/instant/communicate/invoke_effect(mob/living/user, obj/AOG)
+	..()
+
+	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[religion.name]", ""))
+
+	for(var/mob/M in global.mob_list)
+		if(religion.is_member(M) || isobserver(M))
+			to_chat(M, "<span class='[religion.style_text]'>Аколит [user.real_name]: [input]</span>")
+
+	playsound(AOG, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
+
 	return TRUE

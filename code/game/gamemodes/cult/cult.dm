@@ -2,13 +2,6 @@
 /proc/iscultist(mob/living/M)
 	return M && global.cult_religion && global.cult_religion.is_member(M)
 
-//Possibles objections
-#define SACRIFICE "sacrifice"
-#define SUMMON_GOD "summon eldergod"
-#define RECRUIT "recruit more people"
-#define PIETY "save up piety"
-#define CAPTURE "capture a station"
-
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
@@ -33,18 +26,15 @@
 	restricted_species_flags = list(NO_BLOOD)
 
 	var/datum/religion/cult/religion
+	var/list/datum/mind/started_cultists = list()
 
+	// For objectives
 	var/datum/mind/sacrifice_target = null
 	var/list/sacrificed = list()
-
-	var/list/datum/mind/started_cultists = list()
 
 	var/list/datum/objective/objectives = list()
 
 	var/eldergod = FALSE //for the summon god objective
-
-	var/acolytes_needed = 5 //for the survive objective
-	var/acolytes_out = 0
 
 /datum/game_mode/cult/announce()
 	to_chat(world, "<B>Текущий режим игры - Культ!</B>")
@@ -188,16 +178,16 @@
 	if(!check_cult_victory())
 		mode_result = "win - cult win"
 		feedback_set_details("round_end_result", mode_result)
-		feedback_set("round_end_result", acolytes_out)
 		completion_text += "<span class='color: red; font-weight: bold;'>Культ <span style='color: green'>выйгал</span>! Рабы преуспели в служении своим темным хозяевам!</span><br>"
 		score["roleswon"]++
 	else
 		mode_result = "loss - staff can stop cult"
 		feedback_set_details("round_end_result", mode_result)
-		feedback_set("round_end_result", acolytes_out)
 		completion_text += "<span class='color: red; font-weight: bold;'>Персонал смог остановить культ!</span><br>"
 
+	var/acolytes_out = get_cultists_out()
 	var/text = "<b>Культистов улетело:</b> [acolytes_out]"
+	feedback_set("round_end_result", acolytes_out)
 	if(!config.objectives_disabled)
 		text += "<br><b>Целями культистов было:</b>"
 		var/obj_count = 1
@@ -241,8 +231,12 @@
 
 	return text
 
-#undef SACRIFICE
-#undef SUMMON_GOD
-#undef RECRUIT
-#undef PIETY
-#undef CAPTURE
+/datum/game_mode/cult/proc/get_cultists_out()
+	var/acolytes_out
+	for(var/mob/cultist in religion.members)
+		if(cultist?.stat != DEAD)
+			var/area/A = get_area(cultist)
+			if(is_type_in_typecache(A, centcom_areas_typecache))
+				acolytes_out++
+
+	return acolytes_out

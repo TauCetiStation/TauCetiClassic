@@ -1481,49 +1481,41 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	set name = "Write in blood"
 	set desc = "Use blood on your hands to write a short message on the floor or a wall, murder mystery style."
 
-	if (incapacitated())
+	if(incapacitated())
 		return
 
-	if (usr != src)
+	if(usr != src)
 		return 0 //something is terribly wrong
 
-	if (!bloody_hands)
+	if(!bloody_hands)
 		verbs -= /mob/living/carbon/human/proc/bloody_doodle
 
-	if (src.gloves)
-		to_chat(src, "<span class='warning'>Your [src.gloves] are getting in the way.</span>")
-		return
-
-	var/turf/simulated/T = src.loc
-	if (!istype(T)) //to prevent doodling out of mechs and lockers
-		to_chat(src, "<span class='warning'>You cannot reach the floor.</span>")
-		return
-
-	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
-	if (direction != "Here")
-		T = get_step(T,text2dir(direction))
-	if (!istype(T))
-		to_chat(src, "<span class='warning'>You cannot doodle there.</span>")
-		return
-
-	var/num_doodles = 0
-	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
-		num_doodles++
-	if (num_doodles > 4)
-		to_chat(src, "<span class='warning'>There is no space to write on!</span>")
+	if(src.gloves)
+		to_chat(src, "<span class='warning'>[src.gloves] мешают вам это сделать.</span>")
 		return
 
 	var/max_length = bloody_hands * 30 //tweeter style
+	var/message = sanitize(input(src, "Напишите сообщение. Оно должно быть более [max_length] символов.", "Писание кровью", ""))
 
-	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
+	if(message)
+		var/turf/simulated/T = get_step(src, dir)
+		if(!istype(T)) //to prevent doodling out of mechs and lockers
+			to_chat(src, "<span class='warning'>Вы не можете здесь рисовать.</span>")
+			return
 
-	if (message)
+		var/num_doodles = 0
+		for(var/obj/effect/decal/cleanable/blood/writing/W in T)
+			num_doodles++
+		if(num_doodles > 4)
+			to_chat(src, "<span class='warning'>Нехватает места для еще одной надписи.</span>")
+			return
+
 		var/used_blood_amount = round(length(message) / 30, 1)
 		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
 
-		if (length_char(message) > max_length)
+		if(length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
-			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
+			to_chat(src, "<span class='warning'>Вам не хватило крови дописать.</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
 		W.basedatum = new(hand_dirt_datum)

@@ -77,6 +77,8 @@
 	area_type = /area/station/civilian/chapel
 	bible_type = /obj/item/weapon/storage/bible
 
+	style_text = "piety"
+
 // This subtype is used for integrating this system with current chaplain anything.
 /datum/religion/chaplain/New()
 	..()

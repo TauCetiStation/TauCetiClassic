@@ -34,7 +34,7 @@
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
-		spell_list += new spell(src)
+		AddSpell(new spell(src))
 
 	var/obj/effect/effect/forcefield/rune/R = new
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
@@ -85,7 +85,10 @@
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch3.ogg')
 	status_flags = 0
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	construct_spells = list(
+			/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall,
+			/obj/effect/proc_holder/spell/targeted/communicate,
+			)
 
 /mob/living/simple_animal/construct/armoured/atom_init()
 	. = ..()
@@ -134,7 +137,10 @@
 	speed = -1
 	see_in_dark = 7
 	attack_sound = list('sound/weapons/bladeslice.ogg')
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
+		/obj/effect/proc_holder/spell/targeted/communicate,
+		)
 
 
 /////////////////////////////Artificer/////////////////////////
@@ -154,10 +160,13 @@
 	speed = 0
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch2.ogg')
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
+		/obj/effect/proc_holder/spell/targeted/communicate,
+		)
 
 
 /////////////////////////////Behemoth/////////////////////////
@@ -205,7 +214,10 @@
 	environment_smash = 1
 	see_in_dark = 7
 	attack_sound = list('sound/weapons/slash.ogg')
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke)
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
+		/obj/effect/proc_holder/spell/targeted/communicate,
+		)
 
 /mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return 1

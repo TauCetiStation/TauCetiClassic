@@ -13,6 +13,7 @@
 
 /turf/unsimulated/floor/cult
 	name = "engraved floor"
+	plane = FLOOR_PLANE
 	icon_state = "cult"
 
 /turf/unsimulated/floor/cult/lava

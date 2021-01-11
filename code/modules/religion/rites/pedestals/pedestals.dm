@@ -16,16 +16,18 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1,
 	)
 
+	var/need_members = 4
+
 /datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
 	if(istype(get_area(AOG), religion.area_type))
 		if(user)
-			to_chat(user, "<span class='warning'>Вы можете проводить ритуал только на станции.</span>")
+			to_chat(user, "<span class='warning'>Мне нужно пространство станции.</span>")
 		return FALSE
 
-	if(religion.members.len < 3)
+	if(religion.members.len < need_members)
 		if(user)
 			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
 		return FALSE
@@ -90,5 +92,3 @@
 			qdel(R)
 			return TRUE
 	return FALSE
-
-/datum/religion_rites/pedestals/cult/summon

@@ -1,6 +1,6 @@
 /obj/structure/cult
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 
 /obj/structure/cult/attackby(obj/item/W, mob/user, params)
@@ -20,6 +20,18 @@
 	light_color = "#cc9338"
 	light_power = 2
 	light_range = 3
+
+/obj/structure/cult/statue
+	name = "statue"
+	icon_state = "shell" // can be shell_glow
+
+/obj/structure/cult/statue/jew
+	name = "statue of jew"
+	icon_state = "jew" // cant be jew_glow
+
+/obj/structure/cult/statue/gargoyle
+	name = "statue of gargoyle"
+	icon_state = "gargoyle" // can be gargoyle_glow
 
 /obj/structure/cult/pylon
 	name = "pylon"

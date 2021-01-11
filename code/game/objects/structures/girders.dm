@@ -226,64 +226,47 @@
 	state = 2
 	health = 500
 
-/obj/structure/cultgirder
+/obj/structure/girder/cult
 	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
 	icon_state= "girder_box"
 	anchored = 1
 	density = 1
 	layer = 2.9
-	var/health = 250
+	health = 250
 	smooth = SMOOTH_TRUE
 
-/obj/structure/cultgirder/attackby(obj/item/W, mob/user)
+/obj/structure/girder/cult/Destroy()
+	new /obj/effect/decal/remains/human(get_turf(src))
+	return ..()
+
+/obj/structure/girder/cult/attackby(obj/item/W, mob/user)
 	if(user.is_busy(src))
 		return
 	if(iswrench(W))
 		to_chat(user, "<span class='notice'>Now disassembling the girder</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			to_chat(user, "<span class='notice'>You dissasembled the girder!</span>")
-			new /obj/effect/decal/remains/human(get_turf(src))
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		to_chat(user, "<span class='notice'>Now slicing apart the girder</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			to_chat(user, "<span class='notice'>You slice apart the girder!</span>")
-		new /obj/effect/decal/remains/human(get_turf(src))
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		to_chat(user, "<span class='notice'>You drill through the girder!</span>")
-		new /obj/effect/decal/remains/human(get_turf(src))
 		qdel(src)
 
-/obj/structure/cultgirder/blob_act()
-	if(prob(40))
-		qdel(src)
-
-/obj/structure/cultgirder/bullet_act(obj/item/projectile/Proj) //No beam check- How else will you destroy the cult girder with silver bullets?????
-	health -= Proj.damage
-	..()
-	if(health <= 0)
-		new /obj/item/stack/sheet/metal(get_turf(src))
-		qdel(src)
-
-	return
-
-/obj/structure/cultgirder/ex_act(severity)
+/obj/structure/girder/cult/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
-			return
 		if(2.0)
-			if (prob(30))
+			if(prob(30))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
-			return
 		if(3.0)
-			if (prob(5))
+			if(prob(5))
 				new /obj/effect/decal/remains/human(loc)
 				qdel(src)
-			return
-		else
-	return
