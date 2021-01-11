@@ -247,7 +247,7 @@
 /obj/machinery/camera{
 	c_tag = "Security Washroom";
 	dir = 4;
-	network = list("SS13,"Security")
+	network = list("SS13","Security")
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
