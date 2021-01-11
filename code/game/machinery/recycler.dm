@@ -91,7 +91,7 @@ var/const/SAFETY_COOLDOWN = 100
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
 // This is purely for admin possession !FUN!.
-/obj/machinery/recycler/Bump(var/atom/movable/AM)
+/obj/machinery/recycler/Bump(atom/movable/AM)
 	..()
 	if(AM)
 		Bumped(AM)

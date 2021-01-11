@@ -446,7 +446,7 @@
 
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -494,8 +494,8 @@
 
 /obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "bhole3"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bluespace_wormhole_enter"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
 /obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
@@ -550,7 +550,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = 4.1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/resonance_damage = 30
 	var/creator = null
 
@@ -623,7 +623,7 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = "neutral"
 	var/emagged = 0
 	light_power = 2
@@ -814,6 +814,28 @@
 	throw_range = 5
 	var/loaded = 1
 
+/obj/item/weapon/lazarus_injector/proc/revive(mob/living/target, mob/living/user)
+	if(istype(target, /mob/living/simple_animal))
+		var/mob/living/simple_animal/M = target
+		if(M.stat == DEAD)
+			M.faction = "lazarus"
+			M.revive()
+			if(istype(target, /mob/living/simple_animal/hostile))
+				var/mob/living/simple_animal/hostile/H = M
+				H.friends += user
+				log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
+			loaded = FALSE
+			user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "lazarus_empty"
+			return
+		else
+			to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
+			return
+	else
+		to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
+		return
+
 /obj/item/weapon/lazarus_injector/attack(mob/living/M, mob/living/user, def_zone)
 	if(!..())
 		return TRUE
@@ -821,27 +843,8 @@
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity)
-		if(istype(target, /mob/living/simple_animal))
-			var/mob/living/simple_animal/M = target
-			if(M.stat == DEAD)
-				M.faction = "lazarus"
-				M.revive()
-				if(istype(target, /mob/living/simple_animal/hostile))
-					var/mob/living/simple_animal/hostile/H = M
-					H.friends += user
-					log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
-				loaded = 0
-				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
-				icon_state = "lazarus_empty"
-				return
-			else
-				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
-				return
-		else
-			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
-			return
+	if(isliving(target) && proximity)
+		revive(target, user)
 
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
@@ -863,6 +866,8 @@
 	var/loaded = 1
 
 /obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!loaded)
 		return
 	if(istype(target, /obj/item/clothing/suit/space))

@@ -13,7 +13,7 @@
 	var/dissonance_spread = 1		//proportion of the tile that is affected by this find
 									//used in conjunction with analysis machines to determine correct suspension field type
 
-/datum/find/New(var/digsite, var/exc_req)
+/datum/find/New(digsite, exc_req)
 	excavation_required = exc_req
 	find_type = get_random_find_type(digsite)
 	clearance_range = rand(2,6)
