@@ -6,6 +6,7 @@
 #define TOTAL_ALIEN		2
 #define ALIEN_PERCENT	3
 #define WIN_PERCENT		190
+
 /datum/game_mode
 
 	var/list/datum/mind/xenomorphs = list()

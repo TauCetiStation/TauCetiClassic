@@ -161,6 +161,18 @@
 //		else		client.screen -= hud_used.other		//Not used
 		client.screen |= contents
 
+/mob/living/carbon/xenomorph/facehugger/can_pickup(obj/O)
+	return FALSE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
+	return FALSE
+
 /*----------------------------------------
               LARVA'S  BITE
 
