@@ -34,7 +34,11 @@
 /mob/living/carbon/xenomorph/larva/Stat()
 	..()
 	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+		if(istype(src.loc, /obj/item/alien_embryo))
+			var/obj/item/alien_embryo/E = loc
+			stat(null, "Embryo progress: [E.full_growth_counter]/[FULL_EMBRYO_GROWTH]")
+		else
+			stat(null, "Larva progress: [amount_grown]/[max_grown]")
 
 /mob/living/carbon/xenomorph/larva/toggle_throw_mode()
 	return
@@ -59,13 +63,4 @@
 	return (move_delay_add + config.alien_delay - 1)
 
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
-	return FALSE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_head(targetzone = null)
-	return TRUE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_arm(targetzone = null)
-	return FALSE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
 	return FALSE
