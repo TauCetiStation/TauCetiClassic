@@ -359,22 +359,18 @@
 	//DECONSTRUCTION
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
+		if(!WT.use(0,user))
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			return
 		if(user.a_intent == INTENT_HELP)
 			if(!damage)
 				return
-			if(!WT.use(0,user))
-				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-				return
-			else
-				to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
-				if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
-					to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
-					take_damage(-damage)
+			to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
+				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
+				take_damage(-damage)
 
 		else
-			if(!WT.use(0, user))
-				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-				return
 			to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 			if(WT.use_tool(src, user, 100, 3, 100))
 				if(!istype(src, /turf/simulated/wall))
