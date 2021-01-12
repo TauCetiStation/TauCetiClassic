@@ -66909,9 +66909,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -30
 	},
-/obj/item/weapon/twohanded/flora/pottedplant{
-	icon_state = "plant-21"
-	},
+/obj/machinery/libraryscanner,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cLF" = (
