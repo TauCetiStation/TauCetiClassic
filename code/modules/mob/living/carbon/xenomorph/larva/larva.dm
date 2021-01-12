@@ -33,12 +33,20 @@
 //This needs to be fixed
 /mob/living/carbon/xenomorph/larva/Stat()
 	..()
+	stat(null)
 	if(statpanel("Status"))
 		if(istype(src.loc, /obj/item/alien_embryo))
 			var/obj/item/alien_embryo/E = loc
 			stat(null, "Embryo progress: [E.growth_counter]/[FULL_EMBRYO_GROWTH]")
 		else
 			stat(null, "Larva progress: [amount_grown]/[max_grown]")
+
+//If the player wants to become a ghost while in the embryo, then the control of the embryo must be transferred to the AI
+/mob/living/carbon/xenomorph/larva/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
+	if(istype(src.loc, /obj/item/alien_embryo))
+		var/obj/item/alien_embryo/E = loc
+		E.controlled_by_ai = TRUE
+	return ..()
 
 /mob/living/carbon/xenomorph/larva/toggle_throw_mode()
 	return

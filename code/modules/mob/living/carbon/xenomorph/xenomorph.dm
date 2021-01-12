@@ -149,39 +149,8 @@
 
 /mob/living/carbon/xenomorph/Stat()
 	..()
-
 	if(statpanel("Status"))
-		if(isxenoqueen(src))
-			var/hugger = 0
-			var/larva = 0
-			var/drone = 0
-			var/sentinel = 0
-			var/hunter = 0
-
-			for(var/mob/living/carbon/xenomorph/A in alien_list)
-				if(A.stat == DEAD)
-					continue
-				if(!A.key)
-					continue
-
-				if(isfacehugger(A))
-					hugger++
-				else if(isxenolarva(A))
-					larva++
-				else if(isxenodrone(A))
-					drone++
-				else if(isxenosentinel(A))
-					sentinel++
-				else if(isxenohunter(A))
-					hunter++
-
-			stat(null, "Hive Status:")
-			stat(null, "Huggers: [hugger]")
-			stat(null, "Larvas: [larva]")
-			stat(null, "Drones: [drone]")
-			stat(null, "Sentinels: [sentinel]")
-			stat(null, "Hunters: [hunter]")
-		else
+		if(!isxenoqueen(src))
 			var/mob/living/carbon/xenomorph/queen = null
 			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
 				if(Q.stat == DEAD || !Q.key)
@@ -194,6 +163,36 @@
 				stat(null, "Conscious: [queen.stat ? "No":"Yes"]")
 				stat(null, "Health: [queen.health]/[queen.maxHealth]")
 				stat(null, "Location: [queen.loc.loc.name]")
+
+		var/hugger = 0
+		var/larva = 0
+		var/drone = 0
+		var/sentinel = 0
+		var/hunter = 0
+
+		for(var/mob/living/carbon/xenomorph/A in alien_list)
+			if(A.stat == DEAD)
+				continue
+			if(!A.key)
+				continue
+
+			if(isfacehugger(A))
+				hugger++
+			else if(isxenolarva(A))
+				larva++
+			else if(isxenodrone(A))
+				drone++
+			else if(isxenosentinel(A))
+				sentinel++
+			else if(isxenohunter(A))
+				hunter++
+
+		stat(null, "Hive Status:")
+		stat(null, "Huggers: [hugger]")
+		stat(null, "Larvas: [larva]")
+		stat(null, "Drones: [drone]")
+		stat(null, "Sentinels: [sentinel]")
+		stat(null, "Hunters: [hunter]")
 
 /mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)
