@@ -511,7 +511,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/kinetic_accelerator/examine(mob/user)
 	..()
 	if(max_mod_capacity)
-		to_chat(user, "<span class='notice'><b>[get_remaining_mod_capacity()] %</b> mod capacity remaining.</span>")
+		to_chat(user, "<span class='notice'><b>[get_remaining_mod_capacity()]%</b> mod capacity remaining.</span>")
 		for(var/obj/item/kinetic_upgrade/KU in modkits)
 			to_chat(user, "<span class='notice'>There is \a [KU] installed, using <b>[KU.cost]%</b> capacity.</span>")
 
