@@ -840,6 +840,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/noticeboard{
+	pixel_y = 30
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -850,12 +853,6 @@
 /obj/machinery/camera{
 	c_tag = "Security Office North-West";
 	network = list("SS13","Security")
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used to monitor areas of the Security Division.";
-	name = "Security Monitor";
-	network = list("Security");
-	pixel_y = 30
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -1142,9 +1139,13 @@
 	},
 /area/station/security/armoury)
 "abU" = (
-/obj/structure/noticeboard{
+/obj/machinery/computer/security/telescreen{
+	desc = "Used to monitor areas of the Security Division.";
+	name = "Security Monitor";
+	network = list("Security");
 	pixel_y = 30
 	},
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -53619,6 +53620,12 @@
 /area/station/maintenance/portsolar)
 "cbM" = (
 /obj/structure/bookcase/manuals/engineering,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engineering Department.";
+	name = "Engineering Monitor";
+	network = list("Engineering");
+	pixel_y = 30
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cbN" = (
@@ -53632,10 +53639,6 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/glasses/welding,
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -5;
 	pixel_y = 6
@@ -53649,12 +53652,6 @@
 /area/station/engineering/engine)
 "cbO" = (
 /obj/machinery/computer/atmos_alert,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engineering Department.";
-	name = "Engineering Monitor";
-	network = list("Engineering");
-	pixel_y = 30
-	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "cbP" = (
@@ -60432,6 +60429,10 @@
 /area/station/tcommsat/chamber)
 "csQ" = (
 /obj/machinery/computer/station_alert,
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "csR" = (
@@ -69782,9 +69783,6 @@
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
 "gnb" = (
-/obj/machinery/newscaster{
-	pixel_y = 30
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -69792,6 +69790,12 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the Engineering Department.";
+	name = "Engineering Monitor";
+	network = list("Engineering","Engineering Robots");
+	pixel_y = 30
 	},
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
@@ -69822,10 +69826,7 @@
 /obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the Engineering Department.";
-	name = "Engineering Monitor";
-	network = list("Engineering","Engineering Robots");
+/obj/machinery/newscaster{
 	pixel_y = 30
 	},
 /turf/simulated/floor,
@@ -113903,7 +113904,7 @@ aaa
 cAd
 aah
 aah
-aaV
+cLb
 abx
 acl
 acM
@@ -114160,7 +114161,7 @@ aaa
 agn
 aaa
 aaa
-cLb
+aaV
 abw
 acl
 acM
