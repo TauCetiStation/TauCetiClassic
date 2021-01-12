@@ -69,6 +69,8 @@
 
 	var/mob/M = usr
 	if(over_location && over_object != M)
+		if(!istype(over_location, /turf)) //Check for string argument from over_location.
+			return
 		if(M.incapacitated())
 			return
 		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
