@@ -30,13 +30,13 @@
 		S.dust()
 		R.mode.sacrificed += S.mind
 		if(sacrifice_target && sacrifice_target == S.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я принимаю эту жертву, ваша цель теперь может считаться выполненой.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>Я принимаю эту жертву, ваша цель теперь может считаться выполненной.</span>")
 			R.adjust_favor(300)
 	else if(ishuman(AOG.buckled_mob))
 		AOG.buckled_mob.gib()
 		R.mode.sacrificed += AOG.buckled_mob.mind
 		if(sacrifice_target && sacrifice_target == AOG.buckled_mob.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я принимаю эту жертву, ваша цель теперь может считаться выполненой.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>Я принимаю эту жертву, ваша цель теперь может считаться выполненной.</span>")
 			R.adjust_favor(300)
 
 	R.adjust_favor(calc_sacrifice_favor(AOG.buckled_mob))
@@ -243,7 +243,7 @@
 
 		C.mode.sacrificed += M.mind
 		if(C.mode.sacrifice_target && C.mode.sacrifice_target == M.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я принимаю жертву, ваша цель теперь может считаться выполненой.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>Я принимаю жертву, ваша цель теперь может считаться выполненной.</span>")
 			C.adjust_favor(300)
 
 		M.gib()
