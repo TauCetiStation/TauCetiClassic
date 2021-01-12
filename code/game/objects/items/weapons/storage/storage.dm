@@ -68,9 +68,7 @@
 		return
 
 	var/mob/M = usr
-	if(over_location && over_object != M)
-		if(!istype(over_location, /turf)) //Check for string argument from over_location.
-			return
+	if((over_location && istype(over_location, /turf)) && over_object != M)
 		if(M.incapacitated())
 			return
 		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
@@ -78,7 +76,8 @@
 		if(!isturf(M.loc))
 			return
 		if(istype(src, /obj/item/weapon/storage/lockbox))
-			if(src:locked)
+			var/obj/item/weapon/storage/lockbox/L = src
+			if(L.locked)
 				return
 		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
 			return
