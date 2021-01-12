@@ -63,7 +63,6 @@
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
-
 	if(src.camera && !scrambledcodes)
 		if(src.stat == DEAD || wires.is_index_cut(BORG_WIRE_CAMERA))
 			src.camera.status = 0
@@ -82,6 +81,7 @@
 		death()
 
 	if (src.stat != DEAD) //Alive.
+
 		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
 			src.stat = UNCONSCIOUS
 			if (src.stunned > 0)
@@ -91,11 +91,19 @@
 			if (src.paralysis > 0)
 				AdjustParalysis(-1)
 				src.blinded = 1
+			if (last_stat != stat)
+				playsound(src, 'sound/machines/robotpoweroff.ogg', VOL_EFFECTS_MASTER)
+				visible_message("<B>[src]</B> shuts down.")
+				last_stat = stat
 			else
 				src.blinded = 0
 
 		else	//Not stunned.
 			src.stat = CONSCIOUS
+			if (last_stat == UNCONSCIOUS)
+				playsound(src, 'sound/machines/robotpoweron.ogg', VOL_EFFECTS_MASTER)
+				visible_message("<B>[src]</B> turns on.")
+				last_stat = stat
 
 	else //Dead.
 		src.blinded = 1

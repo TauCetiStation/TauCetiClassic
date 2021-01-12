@@ -15,6 +15,7 @@
 	var/custom_name = ""
 	var/crisis //Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
+	var/last_stat = null
 
 //Hud stuff
 

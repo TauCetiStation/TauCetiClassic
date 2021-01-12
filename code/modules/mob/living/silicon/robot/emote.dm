@@ -73,6 +73,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("deathgasp")
+			playsound(src, 'sound/machines/robotdeath.ogg', VOL_EFFECTS_MASTER)
 			message = "<B>[src]</B> shudders violently for a moment, then becomes motionless, its eyes slowly darkening."
 			m_type = SHOWMSG_VISUAL
 
@@ -157,6 +158,108 @@
 			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			m_type = SHOWMSG_VISUAL
 
+		if("laugh")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> laughs at [param]."
+			else
+				message = "<B>[src]</B> laughs."
+			playsound(src, 'sound/voice/robotlaugh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("welcome")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> welcomes [param]."
+			else
+				message = "<B>[src]</B> welcomes."
+			playsound(src, 'sound/voice/robotwelcome.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("gameover1")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> menaces [param]."
+			else
+				message = "<B>[src]</B> menaces."
+			playsound(src, 'sound/voice/robotgameover1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("gameover2")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> menaces [param]."
+			else
+				message = "<B>[src]</B> menaces."
+			playsound(src, 'sound/voice/robotgameover2.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("gameover3")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> menaces [param]."
+			else
+				message = "<B>[src]</B> menaces."
+			playsound(src, 'sound/voice/robotgameover3.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("gameover4")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> menaces [param]."
+			else
+				message = "<B>[src]</B> menaces."
+			playsound(src, 'sound/voice/robotgameover4.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
 		if("buzz")
 			var/M = null
 			if(param)
@@ -198,7 +301,7 @@
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 		if ("help")
-			to_chat(src, "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt")
+			to_chat(src, "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt, laugh, welcome, gameover1, gameover2, gameover3, gameover4, ")
 		else
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
