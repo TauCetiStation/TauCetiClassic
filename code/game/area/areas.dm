@@ -360,6 +360,7 @@ var/list/ghostteleportlocs = list()
 
 /area/Entered(atom/movable/A)
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A)
+	SEND_SIGNAL(A, COMSIG_ENTER_AREA, src) //The atom that enters the area
 	if (!isliving(A))
 		return
 
@@ -406,8 +407,9 @@ var/list/ghostteleportlocs = list()
   *
   * Sends signals COMSIG_EXIT_AREA (to the atom)
   */
-/area/Exited(atom/movable/M)
-	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
+/area/Exited(atom/movable/A)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A)
+	SEND_SIGNAL(A, COMSIG_EXIT_AREA, src) //The atom that exits the area
 
 /area/proc/gravitychange(gravitystate = FALSE)
 	has_gravity = gravitystate

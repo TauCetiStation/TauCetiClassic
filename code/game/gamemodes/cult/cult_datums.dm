@@ -32,7 +32,7 @@
 	action(user)
 	fizzle(user)
 	holder_reaction(user)
-	if(religion.disposable_rune)
+	if(!religion.reusable_rune)
 		qdel(holder)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
@@ -292,98 +292,7 @@
 		"<span class='[religion.style_text]'>Вы чувствуете, как воздух целенаправленной куда-то движется от руны.</span>", \
 		"<span class='userdanger'>Вы чувствуете запах и вкус озона.</span>")
 
-/datum/rune/cult/seer
-	words = list("see", "hell", "join")
-
-/datum/rune/cult/seer/action(mob/living/carbon/human/user)
-	if(!istype(user)) // until only human life proc supporting seer
-		return
-	if(user.loc != holder.loc)
-		return fizzle(user)
-
-	if(user.seer)
-		user.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium viortia.")
-		to_chat(user, "<span class='[religion.style_text]'>The world beyond fades from your vision.</span>")
-		user.see_invisible = SEE_INVISIBLE_LIVING
-		user.seer = FALSE
-	else if(user.see_invisible != SEE_INVISIBLE_LIVING)
-		to_chat(user, "<span class='[religion.style_text]'>The world beyond flashes your eyes but disappears quickly, as if something is disrupting your vision.</span>")
-		user.see_invisible = SEE_INVISIBLE_CULT
-	else
-		user.say("Rash'tla sektath mal[pick("'","`")]zua. Zasan therium vivira. Itonis al'ra matum!")
-		to_chat(user, "<span class='[religion.style_text]'>The world beyond opens to your eyes.</span>")
-		user.see_invisible = SEE_INVISIBLE_CULT
-		user.seer = TRUE
-
-/datum/rune/cult/raise
-	words = list("blood", "hell", "join")
-
-/datum/rune/cult/raise/action(mob/living/carbon/user)
-	var/mob/living/carbon/human/corpse_to_raise
-	var/mob/living/carbon/human/body_to_sacrifice
-
-	var/datum/mind/sacrifice_target
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = SSticker.mode
-		sacrifice_target = cur_mode.sacrifice_target
-
-	for(var/mob/living/carbon/human/M in holder.loc)
-		if(M.stat != DEAD)
-			continue
-		if(sacrifice_target && sacrifice_target == M.mind)
-			to_chat(user, "<span class='[religion.style_text]'>The Geometer of blood wants this dead mortal for himself.</span>")
-			return fizzle(user)
-		if(M.mind)
-			corpse_to_raise = M
-
-	if(!corpse_to_raise)
-		to_chat(user, "<span class='[religion.style_text]'>You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie.</span>")
-		return fizzle(user)
-
-	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, type) || R.power == src)
-			continue
-		for(var/mob/living/carbon/human/H in R.loc)
-			if(H.stat == DEAD)
-				continue
-			if(sacrifice_target && sacrifice_target == H.mind)
-				to_chat(user, "<span class='[religion.style_text]'>The Geometer of blood wants this still alive mortal for himself.</span>")
-				return fizzle(user)
-			body_to_sacrifice = H
-			break
-
-	if(!body_to_sacrifice)
-		to_chat(user, "<span class='[religion.style_text]'>The sacrifical corpse is not dead. You must free it from this world of illusions before it may be used.</span>")
-		return fizzle(user)
-
-	corpse_to_raise.revive()
-	playsound(holder, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
-	SSticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
-
-
-	user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
-	corpse_to_raise.visible_message("<span class='[religion.style_text]'>[corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.</span>", \
-		"<span class='[religion.style_text]'>Life... I'm alive again...</span>", \
-		"<span class='[religion.style_text]'>You hear a faint, slightly familiar whisper.</span>")
-	body_to_sacrifice.visible_message("<span class='[religion.style_text]'>[body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!</span>", \
-		"<span class='[religion.style_text]'>You feel as your blood boils, tearing you apart.</span>", \
-		"<span class='[religion.style_text]'>You hear a thousand voices, all crying in pain.</span>")
-	body_to_sacrifice.gib()
-
-	to_chat(corpse_to_raise, "<span class='[religion.style_text]'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
-		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
-	to_chat(corpse_to_raise, "<span class='[religion.style_text]'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
-		One above all else. Bring It back.</span>")
-
-/datum/rune/cult/obscure
-	words = list("hide", "see", "blood")
-
-/datum/rune/cult/obscure/action(mob/living/carbon/user, radius = 4)
-	var/turf/center = get_turf(holder)
-	for(var/obj/effect/rune/R in range(radius, center))
-		if(R != holder)
-			R.invisibility = INVISIBILITY_OBSERVER
-
+// TODO: IDK
 /datum/rune/cult/ajourney
 	words = list("hell", "travel", "self")
 	var/mob/living/ajourned
@@ -440,188 +349,35 @@
 	playsound(holder, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
 	START_PROCESSING(SSobj, src)
 
-/datum/rune/cult/manifest
-	words = list("blood", "see", "travel")
-	var/mob/living/guider
-	var/list/dummies = list()
-
-/datum/rune/cult/manifest/Destroy()
-	if(isprocessing)
-		for(var/mob/living/L in dummies)
-			L.visible_message("<span class='userdanger'>[L] slowly dissipates into dust and bones.</span>", \
-				"<span class='userdanger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
-				"<span class='userdanger'>You hear faint rustle.</span>")
-			L.dust()
-		dummies.Cut()
-		guider = null
-		STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/datum/rune/cult/manifest/process()
-	var/amount_of_dummies = length(dummies)
-	if(guider && guider.loc == holder.loc && !guider.stat && guider.client && amount_of_dummies > 0)
-		guider.take_bodypart_damage(2 * amount_of_dummies, 0)
-	else
-		for(var/mob/living/L in dummies)
-			L.visible_message("<span class='userdanger'>[L] slowly dissipates into dust and bones.</span>", \
-				"<span class='userdanger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
-				"<span class='userdanger'>You hear faint rustle.</span>")
-			L.dust()
-		dummies.Cut()
-		guider = null
-		STOP_PROCESSING(SSobj, src)
-
-/datum/rune/cult/manifest/action(mob/living/carbon/human/user)
-	if(guider && guider != user)
-		return fizzle(user)
-	if(user.loc != holder.loc)
-		return fizzle(user)
-	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in holder.loc)
-		if(!O.client || (O.mind && O.mind.current && O.mind.current.stat != DEAD))
-			continue
-		ghost = O
-		break
-	if(!ghost || jobban_isbanned(ghost, ROLE_CULTIST) || jobban_isbanned(ghost, "Syndicate") || role_available_in_minutes(ghost, ROLE_CULTIST))
-		return fizzle(user)
-	playsound(holder, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
-	user.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")
-	var/mob/living/carbon/human/dummy/D = new(holder.loc) // in soultstone code we have block for type dummy
-	user.visible_message("<span class='userdanger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
-		"<span class='[religion.style_text]'>A shape forms in the center of the rune. A shape of... a man.</span>", \
-		"<span class='userdanger'>You hear liquid flowing.</span>")
-	D.real_name = "Unknown"
-	var/chose_name = FALSE
-	for(var/obj/item/weapon/paper/P in holder.loc)
-		if(P.info)
-			D.real_name = copytext(P.info, findtext(P.info,">")+1, findtext(P.info,"<",2) )
-			chose_name = TRUE
-			break
-	if(!chose_name)
-		D.real_name = "[pick(first_names_male)] [pick(last_names)]"
-	D.universal_speak = 1
-	D.status_flags &= ~GODMODE
-	D.s_tone = 35
-	D.b_eyes = 200
-	D.r_eyes = 200
-	D.g_eyes = 200
-	D.underwear = 0
-	D.key = ghost.key
-	SSticker.mode.add_cultist(D.mind)
-	dummies += D
-	to_chat(D, "<span class='[religion.style_text]'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
-		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.	Assist your new compatriots in their \
-		dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back</span>")
-	guider = user
-	START_PROCESSING(SSobj, src)
-
-/datum/rune/cult/reveal
-	words = list("blood", "see", "hide")
-
-/datum/rune/cult/reveal/action(mob/living/carbon/user, radius = 6)
-	var/turf/center = get_turf(holder)
-	for(var/obj/effect/rune/R in range(radius, center))
-		if(R != holder)
-			R.invisibility = SEE_INVISIBLE_LIVING
-
 /datum/rune/cult/wall
+	name = "Summon wall"
 	words = list("destroy", "travel", "self")
 
+	var/obj/effect/forcefield/cult/alt_app/wall
+
+/datum/rune/cult/wall/Destroy()
+	QDEL_NULL(wall)
+	return ..()
+
+/datum/rune/cult/wall/can_action(mob/living/carbon/user)
+	if(!religion.reusable_rune) // The first click puts up a wall. The second click removes the wall and rune.
+		if(!wall)
+			action()
+			return FALSE
+	return TRUE
+
 /datum/rune/cult/wall/action(mob/living/carbon/user)
-	user.say("Khari[pick("'","`")]d! Eske'te tannin!")
-	user.take_bodypart_damage(2, 0)
-	if(holder.density)
-		holder.density = FALSE
-		to_chat(user, "<span class='userdanger'>Your blood flows into the rune, and you feel that the very space over the rune thickens.</span>")
+	if(wall)
+		to_chat(user, "<span class='userdanger'>Ваша кровь перестает течь в руне, и вы чувствуете, как пространство над руной начинает редеть.</span>")
+		QDEL_NULL(wall)
 	else
-		to_chat(user, "<span class='userdanger'>Your blood flows into the rune, and you feel as the rune releases its grasp on space.</span>")
-		holder.density = TRUE
+		wall = new /obj/effect/forcefield/cult/alt_app(get_turf(src))
+		to_chat(user, "<span class='userdanger'>Ваша кровь начинает течь в руне, и вы чувствуете, как пространство над руной начинает сгущаться.</span>")
 
-/datum/rune/cult/freedom
-	words = list("technology", "travel", "other")
-
-
-/datum/rune/cult/freedom/action(mob/living/carbon/user)
-	var/list/cultists = list()
-	for(var/mob/M in global.cult_religion.members)
-		if(iscarbon(M))
-			cultists += M
-	var/list/acolytes = nearest_cultists()
-	var/amount_of_acolytes = length(acolytes)
-	if(amount_of_acolytes < 3)
-		return fizzle(user)
-	var/mob/living/carbon/cultist = input("Choose the one who you want to free", "Followers of Geometer") as null|anything in (cultists - acolytes)
-	var/is_processed = FALSE
-	if(!cultist)
-		return fizzle(user)
-	if(cultist.buckled)
-		cultist.buckled.unbuckle_mob()
-		is_processed = TRUE
-	if (cultist.handcuffed)
-		cultist.drop_from_inventory(cultist.handcuffed)
-		is_processed = TRUE
-	if (cultist.legcuffed)
-		cultist.drop_from_inventory(cultist.legcuffed)
-		is_processed = TRUE
-	if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
-		cultist.remove_from_mob(cultist.wear_mask)
-		is_processed = TRUE
-	if(istype(cultist.loc, /obj/structure/closet))
-		var/obj/structure/closet/closet = cultist.loc
-		if(istype(closet.loc, /obj/structure/bigDelivery))
-			var/obj/structure/bigDelivery/D = closet.loc
-			closet.forceMove(get_turf(D.loc))
-		if(closet.welded || closet.locked || !closet.opened)
-			closet.welded = FALSE
-			closet.locked = FALSE
-			closet.open()
-			closet.update_icon()
-			is_processed = TRUE
-	if(istype(cultist.loc, /obj/machinery/dna_scannernew))
-		var/obj/machinery/dna_scannernew/scanner = cultist.loc
-		if(scanner.locked)
-			scanner.locked = FALSE
-			scanner.panel_open = FALSE
-			scanner.open(cultist)
-			is_processed = TRUE
-	if(!is_processed)
-		to_chat(user, "<span class='[religion.style_text]'>The [cultist] is already free.</span>")
-		return fizzle(user)
-	for(var/mob/living/carbon/C in acolytes)
-		user.take_overall_damage(45 / amount_of_acolytes, 0)
-		C.say("Khari[pick("'","`")]d! Gual'te nikka!")
-
-/datum/rune/cult/summon
-	words = list("join", "other", "self")
+	user.take_bodypart_damage(2, 0)
 
 
-/datum/rune/cult/summon/action(mob/living/carbon/user)
-	var/list/cultists = list()
-	for(var/mob/M in global.cult_religion.members)
-		if(iscarbon(M))
-			cultists += M
-
-	var/list/acolytes = nearest_cultists()
-	var/acolytes_amount = length(acolytes)
-	if(acolytes_amount < 3)
-		return fizzle(user)
-	var/mob/living/carbon/cultist = input("Choose the one who you want to summon", "Followers of Geometer") as null|anything in (cultists - acolytes)
-	if(!cultist)
-		return fizzle()
-	if(cultist.incapacitated() || !isturf(cultist.loc))
-		for(var/mob/C in acolytes)
-			to_chat(C, "<span class='userdanger'>You cannot summon the [cultist], for his shackles of blood are strong.</span>")
-		return fizzle()
-	cultist.visible_message("<span class='userdanger'>The [cultist] suddenly disappears!</span>")
-	cultist.forceMove(get_turf(holder.loc))
-	cultist.lying = 1
-	for(var/mob/living/carbon/C in acolytes)
-		C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
-		C.take_overall_damage(90 / acolytes_amount, 0)
-	user.visible_message("<span class='userdanger'>Rune disappears with a flash of red light, and in its place now a body lies.</span>", \
-		"<span class='[religion.style_text]'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
-		"<span class='[religion.style_text]'>You hear a pop and smell ozone.</span>")
-
+// TODO: To Rite
 /datum/rune/cult/deafen
 	words = list("hide", "other", "see")
 
@@ -665,6 +421,7 @@
 				C.sdisabilities |= BLIND
 		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", SHOWMSG_VISUAL)
 
+// TODO: To Rite
 /datum/rune/cult/bloodboil
 	words = list("destroy", "blood", "see")
 
@@ -691,6 +448,7 @@
 	for(var/mob/living/carbon/C in acolytes)
 		C.take_overall_damage(damage_for_acolytes, 0)
 
+// TODO: To Rite
 /datum/rune/cult/stun
 	words = list("join", "hide", "technology")
 
@@ -727,6 +485,7 @@
 			C.Weaken(15)
 			C.Stun(15)
 
+// TODO: To Rite
 /datum/rune/cult/brainswap
 	words = list("travel", "blood", "other")
 
@@ -782,6 +541,7 @@
 	else
 		return TRUE
 
+// TODO: To Rite
 /datum/rune/cult/armor
 	words = list("hell", "destroy", "other")
 

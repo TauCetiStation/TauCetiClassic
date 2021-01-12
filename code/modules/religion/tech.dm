@@ -14,7 +14,7 @@
 /datum/religion_tech/cult/reusable_runes
 
 /datum/religion_tech/cult/reusable_runes/apply_effect(datum/religion/R)
-	R.disposable_rune = FALSE
+	R.reusable_rune = TRUE
 
 /datum/religion_tech/cult/build_everywhere
 

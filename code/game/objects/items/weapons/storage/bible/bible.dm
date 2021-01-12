@@ -10,7 +10,7 @@
 	var/god_lore = ""
 	max_storage_space = DEFAULT_BOX_STORAGE
 
-	var/datum/religion/cult/religion
+	var/datum/religion/religion
 	var/religify_next = list()
 	var/religify_cd = 3 MINUTE
 
@@ -39,7 +39,7 @@
 /obj/item/weapon/storage/bible/proc/can_convert(atom/target, mob/user)
 	if(!user.mind || !user.mind.holy_role)
 		return FALSE
-	if(!religion || !religion.faith_reactions.len)
+	if(!religion.faith_reactions.len)
 		return FALSE
 	if(!target.reagents)
 		return FALSE
@@ -48,7 +48,7 @@
 	return TRUE
 
 /obj/item/weapon/storage/bible/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity)
+	if(!proximity || !religion)
 		return
 
 	if(!can_convert(target, user))
@@ -96,7 +96,6 @@
 	var/list/choices = list("Altar", "Pews", "Mat symbol")
 
 	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
-	var/datum/religion/R = user.my_religion
 	while(!done)
 		if(!choices.len)
 			done = TRUE
@@ -113,32 +112,32 @@
 
 		switch(looks)
 			if("Altar")
-				var/new_look = show_radial_menu(user, src, R.altar_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_look = show_radial_menu(user, src, religion.altar_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
-				R.altar_icon_state = R.altar_info_by_name[new_look]
+				religion.altar_icon_state = religion.altar_info_by_name[new_look]
 				changes = TRUE
 				choices -= "Altar"
 
 			if("Pews")
-				var/new_look = show_radial_menu(user, src, R.pews_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_look = show_radial_menu(user, src, religion.pews_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
-				R.pews_icon_state = R.pews_info_by_name[new_look]
+				religion.pews_icon_state = religion.pews_info_by_name[new_look]
 				changes = TRUE
 				choices -= "Pews"
 
 			if("Mat symbol")
-				var/new_mat = show_radial_menu(user, src, R.carpet_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_mat = show_radial_menu(user, src, religion.carpet_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
 
-				R.carpet_dir = R.carpet_dir_by_name[new_mat]
+				religion.carpet_dir = religion.carpet_dir_by_name[new_mat]
 				changes = TRUE
 				choices -= "Mat symbol"
 
 	if(changes)
 		religify_next[user.ckey] = world.time + religify_cd
-		R.religify(null, null, user)
+		religion.religify(null, null, user)

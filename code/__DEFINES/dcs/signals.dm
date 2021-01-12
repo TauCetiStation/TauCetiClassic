@@ -117,6 +117,10 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
+///from base of area/Entered(): (/area)
+#define COMSIG_ENTER_AREA "enter_area"
+///from base of area/Exited(): (/area)
+#define COMSIG_EXIT_AREA "exit_area"
 
 // /obj/item signals
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)

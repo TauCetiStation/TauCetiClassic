@@ -18,7 +18,6 @@
 	var/rune_cd = 10 SECONDS
 	var/scribe_time = 3 SECONDS
 
-	var/list/choices_generated = FALSE
 	var/static/list/build_choices_image = list()
 	var/static/list/rune_choices_image = list()
 
@@ -43,10 +42,9 @@
 		religion = user.my_religion
 
 /obj/item/weapon/storage/bible/tome/attack_self(mob/user)
-	if(religion && !choices_generated)
+	if(religion && (!build_choices_image || !rune_choices_image))
 		building_choices()
 		rune_choices()
-		choices_generated = TRUE
 
 	if(user.mind?.holy_role && istype(user.my_religion, /datum/religion/cult))
 		choice_bible_func(user)
@@ -56,8 +54,11 @@
 
 /obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
 	..()
+	if(!istype(religion, /datum/religion/cult))
+		return
 
-	if(target.type in religion.strange_anomalies)
+	var/datum/religion/cult/C = religion
+	if(target.type in C.strange_anomalies)
 		animate(target, 1 SECONDS, alpha = 0)
 		sleep(1 SECONDS)
 		religion.adjust_favor(rand(1, 5))
@@ -112,6 +113,9 @@
 /obj/item/weapon/storage/bible/tome/proc/scribe_rune(mob/user)
 	if(rune_next[user.ckey] > world.time)
 		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[user.ckey] - world.time) * 0.1)+1] секунд!</span>")
+		return
+	if(religion.max_runes >= religion.runes)
+		to_chat(user, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
 		return
 
 	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, user)

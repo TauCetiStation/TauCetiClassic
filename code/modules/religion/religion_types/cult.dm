@@ -1,7 +1,7 @@
 /datum/religion/cult
 	name = "Cult of Blood"
 	deity_names_by_name = list(
-		"Cult of Blood" = list("Nar-Sie", "The Geometer of Blood", "The One Who Sees", )
+		"Cult of Blood" = list("Nar-Sie", "The Geometer of Blood", "The One Who Sees", "Dark One")
 	)
 
 	bible_info_by_name = list(
@@ -39,11 +39,12 @@
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
 
-	style_text = "cult"
-
 	favor = 10000
 	piety = 10000
 	max_favor = 10000
+
+	max_runes = 10
+	style_text = "cult"
 
 	// Just gamemode of cult
 	var/datum/game_mode/cult/mode

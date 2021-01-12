@@ -12,7 +12,6 @@
 	light_power = 3
 	w_class = ITEM_SIZE_SMALL
 	var/last_process = 0
-	var/datum/rune/cult/reveal/power
 	var/static/list/scum
 
 	var/tried_replacing = FALSE
@@ -25,7 +24,10 @@
 	. = ..()
 	if(!scum)
 		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
-	power = new(src)
+
+/obj/item/weapon/nullrod/proc/reveal_runes(radius, turf/center)
+	for(var/obj/effect/rune/R in range(radius, center))
+		R.invisibility = SEE_INVISIBLE_LIVING
 
 /obj/item/weapon/nullrod/attack_self(mob/living/user)
 	if(user.mind && user.mind.holy_role && !tried_replacing)
@@ -59,7 +61,6 @@
 
 /obj/item/weapon/nullrod/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(power)
 	return ..()
 
 /obj/item/weapon/nullrod/dropped(mob/user)
@@ -100,9 +101,9 @@
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
 
 /obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
-		power.action_wrapper(user, 1)
+		reveal_runes(3, get_turf(target))
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
@@ -197,7 +198,7 @@
 			addtimer(CALLBACK(src, .proc/reset_search), 200)
 
 /obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
-	var/list/candidates = pollGhostCandidates("Someone is requesting a your soul in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
+	var/list/candidates = pollGhostCandidates("Do you want to serve [user.my_religion.name] in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
 	for(var/mob/M in candidates) // No random
 		if(next_apply[M.client.ckey] > world.time)
 			to_chat(M, "You were forcibly kicked from staff, left [round((next_apply[M.client.ckey] - world.time) / 600)] minutes")
@@ -232,7 +233,6 @@
 	if(god_lore != "")
 		brainmob.mind.memory = "<B>YOUR LORE</B><BR>"
 		brainmob.mind.memory += god_lore
-	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
 	for(var/aspect in summoner.my_religion.aspects)
 		var/datum/aspect/asp = summoner.my_religion.aspects[aspect]

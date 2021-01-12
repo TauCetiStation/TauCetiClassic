@@ -110,6 +110,16 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cultshield"
 
+/obj/effect/forcefield/cult/alt_app
+	icon = null
+	icon_state = null
+
+/obj/effect/forcefield/cult/alt_app/atom_init()
+	. = ..()
+	var/image/I = image('icons/effects/effects.dmi', src, "cultshield")
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/holy_role, "cult_wall", I)
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
 	name = "Парализующий Дым"
 	desc = "Это заклинание создает парализующий дым."

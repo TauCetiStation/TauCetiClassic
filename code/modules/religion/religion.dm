@@ -99,8 +99,10 @@
 
 	// All runes on map
 	var/list/obj/effect/rune/runes = list()
+	// Max runes on map
+	var/max_runes
 	// Is the rune removed after use
-	var/disposable_rune = TRUE
+	var/reusable_rune = FALSE
 
 	/*
 		Others
@@ -386,8 +388,7 @@
 		if(1)
 			if(!isnull(piety_cost) && !isnull(favor_cost))
 				return FALSE
-			else if(!isnull(piety_cost) || !isnull(favor_cost))
-				return TRUE
+			return TRUE
 		if(2)
 			if(!isnull(piety_cost) && !isnull(favor_cost))
 				return TRUE
@@ -539,15 +540,17 @@
 /datum/religion/proc/add_deity(mob/M)
 	active_deities += M
 	M.my_religion = src
+	M.mind?.holy_role = HOLY_ROLE_HIGHPRIEST
 	give_god_spells(M)
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
 	M.my_religion = null
+	M.mind?.holy_role = initial(M.mind.holy_role)
 	remove_god_spells(M)
 
 /datum/religion/proc/add_member(mob/M, holy_role)
-	if(M in members)
+	if(is_member(M))
 		return FALSE
 
 	members |= M
@@ -556,11 +559,11 @@
 	return TRUE
 
 /datum/religion/proc/remove_member(mob/M)
-	if(!(M in members))
+	if(!is_member(M))
 		return FALSE
 
 	members -= M
-	M.my_religion = null
+	M.my_religion = initial(M.my_religion)
 	M.mind?.holy_role = initial(M.mind.holy_role)
 	return TRUE
 

@@ -13,7 +13,7 @@
 		user.examinate(src)
 		return
 
-	user.adjustBruteLoss(5)
+	user.take_overall_damage(rand(5, 8), rand(1, 5))
 	rite?.perform_rite(user, src)
 
 /obj/item/weapon/paper/talisman/chaplain/examine(mob/user)

@@ -10,7 +10,6 @@
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
-	var/dog_owner
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
@@ -18,7 +17,6 @@
 	var/agent = 0
 	var/team = 0
 	var/metadata
-	var/seer = 0 // used in cult datum /cult/seer
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
 

@@ -141,6 +141,10 @@
 	name = "Item Teleport"
 	rune_type = /datum/rune/cult/item_port
 
+/datum/building_agent/rune/cult/wall
+	name = "Summon wall"
+	rune_type = /datum/rune/cult/wall
+
 
 // For tech_table
 /datum/building_agent/tech
