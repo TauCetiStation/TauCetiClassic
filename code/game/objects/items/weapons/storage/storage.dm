@@ -75,6 +75,9 @@
 			return
 		if(!isturf(M.loc))
 			return
+		if(istype(src, /obj/item/weapon/storage/lockbox))
+			if(src:locked)
+				return
 		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
 			return
 		if(M.a_intent == INTENT_HELP)
