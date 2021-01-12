@@ -256,26 +256,29 @@
 		tried_to_add_revheads = world.time+50
 		var/active_revs = 0
 		for(var/datum/mind/rev_mind in head_revolutionaries)
-			if(rev_mind.current && rev_mind.current.client && rev_mind.current.client.inactivity <= 10*60*20) // 20 minutes inactivity are OK
+			if(rev_mind.current && rev_mind.current.client && rev_mind.current.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 				active_revs++
 
 		if(active_revs == 0)
 			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = 0
-			for(var/mob/living/carbon/human/H in human_list) if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 10*60*20 && (H.mind in revolutionaries))
-				head_revolutionaries += H.mind
-				for(var/datum/mind/head_mind in heads)
-					var/datum/objective/mutiny/rp/rev_obj = new
-					rev_obj.owner = H.mind
-					rev_obj.target = head_mind
-					rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
-					H.mind.objectives += rev_obj
+			for(var/mob/living/carbon/human/H in human_list)
+				if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 20 MINUTES && (H.mind in revolutionaries))
+					head_revolutionaries += H.mind
+					revolutionaries -= H.mind
+					for(var/datum/mind/head_mind in heads)
+						var/datum/objective/mutiny/rp/rev_obj = new
+						rev_obj.owner = H.mind
+						rev_obj.target = head_mind
+						rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+						H.mind.objectives += rev_obj
 
-				H.verbs += /mob/living/carbon/human/proc/RevConvert
+					H.verbs += /mob/living/carbon/human/proc/RevConvert
+					add_antag_hud(antag_hud_type, antag_hud_name, H)
 
-				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
-				added_heads = 1
-				break
+					to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
+					added_heads = 1
+					break
 
 			if(added_heads)
 				log_admin("Managed to add new heads of revolution.")

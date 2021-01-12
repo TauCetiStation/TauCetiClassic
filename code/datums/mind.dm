@@ -73,12 +73,13 @@
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
-/datum/mind/New(var/key)
+/datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
 
 /datum/mind/proc/transfer_to(mob/new_character)
 	if(current)					//remove ourself from our old body's mind variable
+		SStgui.on_transfer(current, new_character)
 		current.mind = null
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null

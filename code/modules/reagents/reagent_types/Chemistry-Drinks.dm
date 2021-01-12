@@ -712,7 +712,7 @@
 	..()
 	return !flags[IS_ORGANIC]
 
-/datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
+/datum/reagent/consumable/ethanol/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()

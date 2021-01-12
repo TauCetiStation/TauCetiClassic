@@ -198,8 +198,10 @@ Doesn't work on other aliens/AI.*/
 			H.Stun(5)
 			H.Paralyse(2)
 	last_screech = world.time
+
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
+
 /mob/living/carbon/xenomorph/humanoid/proc/toggle_neurotoxin(message = 1)
 	switch(neurotoxin_on_click)
 
@@ -289,12 +291,15 @@ Doesn't work on other aliens/AI.*/
 
 	last_neurotoxin = world.time
 	return
+
 #undef ALIEN_NEUROTOXIN
 #undef ALIEN_ACID
+
 #define ALREADY_STRUCTURE_THERE (locate(/obj/structure/alien/air_plant) in get_turf(src))      || (locate(/obj/structure/alien/egg) in get_turf(src)) \
                              || (locate(/obj/structure/mineral_door/resin) in get_turf(src))   || (locate(/obj/structure/alien/resin/wall) in get_turf(src)) \
                              || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src))
                              // does anyone have an idea how to make it shorter?
+
 /mob/living/carbon/xenomorph/humanoid/proc/resin() // -- TLE
 	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."
@@ -330,10 +335,11 @@ Doesn't work on other aliens/AI.*/
 		if(stomach_contents.len)
 			for(var/mob/M in src)
 				if(M in stomach_contents)
+					if(!do_mob(usr, usr))
+						return
 					stomach_contents.Remove(M)
 					M.loc = loc
-					//M.update_pipe_vision()
-					//Paralyse(10)
+					M.Paralyse(2)
 			src.visible_message("<span class='warning'>[src] hurls out the contents of their stomach!</span>")
 	return
 
