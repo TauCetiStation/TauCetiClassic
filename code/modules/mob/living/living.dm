@@ -1252,7 +1252,7 @@
 		nutrition -= 50
 		eye_blurry = max(5, eye_blurry)
 
-	var/turf/simulated/T = loc
+	var/turf/T = loc
 	if(spawn_vomit)
 		var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
 		if(WC && WC.open)
