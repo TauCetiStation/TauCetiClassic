@@ -1090,14 +1090,8 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/do_afterclose()
 	var/turf/src_turf = get_turf(src)
-	for(var/obj/structure/S in src_turf)
-		S.airlock_crush_act()
-	for(var/mob/living/L in src_turf)
-		L.airlock_crush_act()
-		L.visible_message("<span class='red'>[L] was crushed by the [src] door.</span>",
-							"<span class='danger'>[src] door crushed you.</span>")
-	for(var/obj/mecha/M in src_turf)
-		M.airlock_crush_act()
+	for(var/atom/A in src_turf)
+		A.airlock_crush_act()
 	..()
 
 /obj/machinery/door/airlock/proc/autoclose()

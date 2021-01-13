@@ -414,6 +414,8 @@
 	AdjustStunned(5)
 	AdjustWeakened(5)
 	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
+	visible_message("<span class='red'>[src] was crushed by the door.</span>",
+					"<span class='danger'>The door crushed you.</span>")
 
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
