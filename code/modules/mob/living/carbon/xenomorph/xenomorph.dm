@@ -157,12 +157,13 @@
 					continue
 				queen = Q
 			if(!queen)
-				stat(null, "Queen: No.")
+				stat(null, "Королева: Нет")
 			else
-				stat(null, "Queen Status:")
-				stat(null, "Conscious: [queen.stat ? "No":"Yes"]")
-				stat(null, "Health: [queen.health]/[queen.maxHealth]")
-				stat(null, "Location: [queen.loc.loc.name]")
+				stat(null, "Статус Королевы:")
+				stat(null, "В сознании: [queen.stat ? "Нет":"Да"]")
+				stat(null, "Здоровье: [queen.health]/[queen.maxHealth]")
+				stat(null, "Местоположение: [queen.loc.loc.name]")
+				stat(null) //for readability
 
 		var/hugger = 0
 		var/larva = 0
@@ -171,11 +172,8 @@
 		var/hunter = 0
 
 		for(var/mob/living/carbon/xenomorph/A in alien_list)
-			if(A.stat == DEAD)
+			if(A.stat == DEAD || !A.key)
 				continue
-			if(!A.key)
-				continue
-
 			if(isfacehugger(A))
 				hugger++
 			else if(isxenolarva(A))
@@ -187,12 +185,17 @@
 			else if(isxenohunter(A))
 				hunter++
 
-		stat(null, "Hive Status:")
-		stat(null, "Huggers: [hugger]")
-		stat(null, "Larvas: [larva]")
-		stat(null, "Drones: [drone]")
-		stat(null, "Sentinels: [sentinel]")
-		stat(null, "Hunters: [hunter]")
+		stat(null, "Статус Улья:")
+		if(drone)
+			stat(null, "Трутни: [drone]")
+		if(hunter)
+			stat(null, "Охотники: [hunter]")
+		if(sentinel)
+			stat(null, "Стражи: [sentinel]")
+		if(larva)
+			stat(null, "Грудоломы: [larva]")
+		if(hugger)
+			stat(null, "Лицехваты: [hugger]")
 
 /mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)
