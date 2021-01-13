@@ -80,15 +80,15 @@
 	return ..()
 
 /datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)
-	to_chat(xeno.current, "<span class='notice'><B>Вы - ксеноморф. Ваша текущая форма - грудолом.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Сейчас вы очень слабы и вас легко убить.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Прячьтесь под предметами и передвигайтесь по вентиляции, что бы сохранить свою жизнь.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Ваша главная задача - вырасти во взрослого ксеноморфа. Прогресс роста указан во вкладке Status.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Когда прогресс роста дойдет до конца, вы сможете эволюционировать в оду из трех взрослых форм.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Договоритесь со своими сестрами, кто и в какую форму будет эволюционировать.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Для общения внутри улья поставьте :ф перед сообщением.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><b>Кто-то обязательно должен стать трутнем, это единственная форма, способная вырасти в королеву.</b></span>")
-	to_chat(xeno.current, "<span class='notice'>------------------</span>")
+	to_chat(xeno.current, {"<span class='notice'><b>Вы - ксеноморф. Ваша текущая форма - грудолом.
+Сейчас вы очень слабы и вас легко убить.
+Прячьтесь под предметами и передвигайтесь по вентиляции, что бы сохранить свою жизнь.
+Ваша главная задача - вырасти во взрослого ксеноморфа. Прогресс роста указан во вкладке Status.
+Когда прогресс роста дойдет до конца, вы сможете эволюционировать в оду из трех взрослых форм.
+Договоритесь со своими сестрами, кто и в какую форму будет эволюционировать.
+Для общения внутри улья поставьте :ф перед сообщением.
+Кто-то обязательно должен стать трутнем, это единственная форма, способная вырасти в королеву.
+------------------</b></span>"})
 
 /*
 	GAME FINISH CHECKS
@@ -196,7 +196,7 @@
 	var/text =""
 	var/list/aliens = count_hive_power(in_detail = TRUE)
 	var/icon/I
-	text += "<table>"
+	text += "<table class = 'collapsing'>"
 
 	if(!aliens["Q_live"] && !aliens["Q_dead"])
 		text += "<tr><td colspan='2'; style='color: orange; font-weight: bold;'>У ксеноморфов не было королевы!</td></tr>"
@@ -300,7 +300,7 @@
 		alien_percent = round(total_alien * 100 / total_human)
 	else if(!total_human && total_alien)
 		alien_percent = WIN_PERCENT
-	. = list(total_human, total_alien, alien_percent)
+	. = list(TOTAL_HUMAN = total_human, TOTAL_ALIEN = total_alien, ALIEN_PERCENT = alien_percent)
 
 /datum/game_mode/infestation/check_finished()
 	if((world.time - last_check) < CHECK_PERIOD)
