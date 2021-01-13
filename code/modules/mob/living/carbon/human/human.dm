@@ -1038,8 +1038,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						if(2)
 							to_chat(H, "<span class='warning'>You feel something coming up your throat!</span>")
 					stage++
-			else
-				if(!prob((reagents.total_volume * 9) + 10))
+			else if(H.should_have_organ(O_STOMACH))
+				var/obj/item/organ/internal/stomach/stomach = H.organs_by_name[O_STOMACH]
+				if(!prob((stomach.reagents.total_volume * 9) + 10))
 					H.visible_message("<span class='warning'>[H] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
 					H.adjustOxyLoss(3)
 					H.adjustHalLoss(5)

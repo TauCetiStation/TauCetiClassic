@@ -1243,15 +1243,22 @@
 	if(stat == DEAD && !punched)
 		return FALSE
 
+	var/spawn_vomit = TRUE
+	var/can_vomit = TRUE
 	Stun(3)
 	if(nutrition < 50)
-		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
-		adjustOxyLoss(3)
-		adjustHalLoss(5)
-		return FALSE
+		can_vomit = FALSE
+	else
+		nutrition -= 50
+		eye_blurry = max(5, eye_blurry)
 
-	nutrition -= 50
-	eye_blurry = max(5, eye_blurry)
+	var/turf/simulated/T = loc
+	if(spawn_vomit)
+		var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
+		if(WC && WC.open)
+			spawn_vomit = FALSE
+		if(locate(/obj/structure/sink) in T)
+			spawn_vomit = FALSE
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk
 		var/list/vomitsound = list()
@@ -1259,43 +1266,49 @@
 		if((HULK in H.mutations) && H.hulk_activator == ACTIVATOR_VOMITING)
 			H.try_mutate_to_hulk()
 
-		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
-		if(masked)
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FRIGVOMIT
-			else
-				vomitsound = SOUNDIN_MRIGVOMIT
-			eye_blurry = max(10, eye_blurry)
-			losebreath += 20
-		else
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
-			if(gender == FEMALE)
-				vomitsound = SOUNDIN_FEMALEVOMIT
-			else
-				vomitsound = SOUNDIN_MALEVOMIT
-		make_jittery(max(35 - jitteriness, 0))
 		if(H.should_have_organ(O_STOMACH))
 			var/obj/item/organ/internal/stomach/stomach = H.organs_by_name[O_STOMACH]
 			if(stomach.contents && stomach.is_full())
 				for(var/atom/movable/AM in stomach.contents)
 					AM.forceMove(get_turf(src))
 			if(stomach.reagents.total_volume)
+				can_vomit = TRUE
 				for(var/datum/reagent/R in stomach.reagents.reagent_list)
-					stomach.reagents.remove_reagent(R, R.volume * 0.5 )
-		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
-	else
+					if(!masked && spawn_vomit)
+						stomach.reagents.reaction(T, TOUCH, R.volume * -0.5)
+					stomach.reagents.remove_reagent(R.id, R.volume * 0.5)
+
+		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
+		if(can_vomit)
+			if(masked)
+				visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
+				if(gender == FEMALE)
+					vomitsound = SOUNDIN_FRIGVOMIT
+				else
+					vomitsound = SOUNDIN_MRIGVOMIT
+				eye_blurry = max(10, eye_blurry)
+				losebreath += 20
+				spawn_vomit = FALSE
+			else
+				visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+				if(gender == FEMALE)
+					vomitsound = SOUNDIN_FEMALEVOMIT
+				else
+					vomitsound = SOUNDIN_MALEVOMIT
+			make_jittery(max(35 - jitteriness, 0))
+			playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
+
+	else if(can_vomit)
 		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
-	var/turf/simulated/T = loc
-	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
-	if(WC && WC.open)
-		return TRUE
-	if(locate(/obj/structure/sink) in T)
-		return TRUE
+	if(!can_vomit)
+		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
+		adjustOxyLoss(3)
+		adjustHalLoss(5)
+		return FALSE
 
-	if(istype(T))
+	if(spawn_vomit)
 		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
 
 	return TRUE
