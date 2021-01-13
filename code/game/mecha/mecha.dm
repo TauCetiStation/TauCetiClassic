@@ -589,6 +589,9 @@
 				src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
 
+/obj/mecha/airlock_crush_act()
+	take_damage(DOOR_CRUSH_DAMAGE, "brute")
+
 /*Will fix later -Sieve
 /obj/mecha/attack_blob(mob/user as mob)
 	src.log_message("Attack by blob. Attacker - [user].",1)

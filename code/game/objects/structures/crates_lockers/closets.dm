@@ -162,6 +162,12 @@
 				dump_contents()
 				qdel(src)
 
+/obj/structure/closet/airlock_crush_act()
+	health -= DOOR_CRUSH_DAMAGE * 2
+	if(health <= 0)
+		dump_contents()
+		qdel(src)
+
 /obj/structure/closet/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()

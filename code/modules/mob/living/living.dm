@@ -405,6 +405,16 @@
 	gib()
 	return(gain)
 
+/mob/living/airlock_crush_act()
+	var/turf/mob_turf = get_turf(src)
+	for(var/dir in cardinal)
+		var/turf/new_turf = get_step(mob_turf, dir)
+		if(Move(new_turf))
+			break
+	AdjustStunned(5)
+	AdjustWeakened(5)
+	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
+
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 

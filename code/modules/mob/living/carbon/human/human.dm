@@ -266,6 +266,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/weapon_message = "Explosive Blast"
 	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 
+/mob/living/carbon/human/airlock_crush_act()
+	..()
+	emote("scream")
+
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
 	if(mind)
