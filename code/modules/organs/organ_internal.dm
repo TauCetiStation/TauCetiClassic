@@ -527,10 +527,10 @@
 /obj/item/digest_act(obj/item/organ/internal/stomach/S)
 	health -= max(0.1, (1 - S.health / S.maxHealth) * 10)
 	if(prob(10))
-		reagents.add_reagent("nutrition", 1)
+		S.reagents.add_reagent("nutriment", 1)
 
 	if(S.health <= 0)
-		reagents.add_reagent("nutrition", 1)
+		S.reagents.add_reagent("nutriment", 1)
 		for(var/obj/item/I in contents)
 			I.forceMove(S)
 		qdel(src)
