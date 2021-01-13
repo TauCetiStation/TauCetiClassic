@@ -1042,11 +1042,11 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/close_checks()
 	if(..() && !welded && !locked)
 		if(safe)
-			for(var/turf/T in locs)
-				if(locate(/mob/living) in T)
+			for(var/atom/A in get_turf(src))
+				if(isliving(A))
 					autoclose()
 					return FALSE
-				if(locate(/obj/mecha) in T)
+				if(A.density)
 					autoclose()
 					return FALSE
 		return TRUE
