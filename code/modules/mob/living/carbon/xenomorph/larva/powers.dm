@@ -12,13 +12,13 @@
 		to_chat(src, text("<span class='notice'>Сейчас вы прячетесь.</span>"))
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				to_chat(O, text("<B>[] исчезает.</B>", src))
+				to_chat(O, text("[] исчезает.", src))
 	else
 		layer = MOB_LAYER
 		to_chat(src, text("<span class='notice'>Вы больше не прячетесь.</span>"))
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
-				to_chat(O, text("[] появляется...", src))
+				to_chat(O, text("[] появляется.", src))
 
 /mob/living/carbon/xenomorph/larva/verb/evolve()
 	set name = "Эволюция"
@@ -45,11 +45,11 @@
 				continue
 			if(isxenodrone(A))
 				drone = TRUE
-				return	//we don't care how many drones there are
+				break	//we don't care how many drones there are
 
 		var/evolve_now = null
 		var/alien_caste = null
-		if(!queen || !drone)
+		if(!queen && !drone)
 			evolve_now = alert(src, "Сейчас вы можете превратиться только в трутня, так как среди ксеноморфов нет в живых ни одного трутня либо королевы.", "Улей в опасности!", "Быть Трутнем", "Отмена")
 			if(evolve_now == "Отмена")
 				return
