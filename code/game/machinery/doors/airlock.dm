@@ -1049,9 +1049,6 @@ var/list/airlock_overlays = list()
 				if(locate(/obj/mecha) in T)
 					autoclose()
 					return FALSE
-				if(locate(/obj/structure) in T)
-					autoclose()
-					return FALSE
 		return TRUE
 	return FALSE
 
