@@ -107,6 +107,7 @@
 
 /obj/structure/window/airlock_crush_act()
 	take_damage(DOOR_CRUSH_DAMAGE * 2)
+	..()
 
 /obj/structure/window/blob_act()
 	take_damage(rand(30, 50))

@@ -163,6 +163,7 @@
 				qdel(src)
 
 /obj/structure/closet/airlock_crush_act()
+	..()
 	health -= DOOR_CRUSH_DAMAGE * 2
 	if(health <= 0)
 		dump_contents()
