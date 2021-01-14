@@ -158,7 +158,7 @@
 			playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			m_type = SHOWMSG_VISUAL
 
-		if("laugh")
+		if("laugh1")
 			var/M = null
 			if(param)
 				for (var/mob/A in view(null, null))
@@ -172,10 +172,44 @@
 				message = "<B>[src]</B> laughs at [param]."
 			else
 				message = "<B>[src]</B> laughs."
-			playsound(src, 'sound/voice/robotlaugh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			playsound(src, 'sound/voice/robotlaugh1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			m_type = SHOWMSG_VISUAL
 
-		if("welcome")
+		if("laugh2")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> laughs at [param]."
+			else
+				message = "<B>[src]</B> laughs."
+			playsound(src, 'sound/voice/robotlaugh2.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("laugh3")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> laughs at [param]."
+			else
+				message = "<B>[src]</B> laughs."
+			playsound(src, 'sound/voice/robotlaugh3.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("welcome1")
 			var/M = null
 			if(param)
 				for (var/mob/A in view(null, null))
@@ -189,7 +223,24 @@
 				message = "<B>[src]</B> welcomes [param]."
 			else
 				message = "<B>[src]</B> welcomes."
-			playsound(src, 'sound/voice/robotwelcome.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			playsound(src, 'sound/voice/robotwelcome1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			m_type = SHOWMSG_VISUAL
+
+		if("welcome2")
+			var/M = null
+			if(param)
+				for (var/mob/A in view(null, null))
+					if (param == A.name)
+						M = A
+						break
+			if(!M)
+				param = null
+
+			if (param)
+				message = "<B>[src]</B> welcomes [param]."
+			else
+				message = "<B>[src]</B> welcomes."
+			playsound(src, 'sound/voice/robotwelcome2.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			m_type = SHOWMSG_VISUAL
 
 		if("gameover1")
@@ -206,7 +257,7 @@
 				message = "<B>[src]</B> menaces [param]."
 			else
 				message = "<B>[src]</B> menaces."
-			playsound(src, 'sound/voice/robotgameover1.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			playsound(src, pick('sound/voice/robotgameover1_1.ogg', 'sound/voice/robotgameover1_2.ogg', 'sound/voice/robotgameover1_3.ogg', 'sound/voice/robotgameover1_4.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 			m_type = SHOWMSG_VISUAL
 
 		if("gameover2")
@@ -224,40 +275,6 @@
 			else
 				message = "<B>[src]</B> menaces."
 			playsound(src, 'sound/voice/robotgameover2.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			m_type = SHOWMSG_VISUAL
-
-		if("gameover3")
-			var/M = null
-			if(param)
-				for (var/mob/A in view(null, null))
-					if (param == A.name)
-						M = A
-						break
-			if(!M)
-				param = null
-
-			if (param)
-				message = "<B>[src]</B> menaces [param]."
-			else
-				message = "<B>[src]</B> menaces."
-			playsound(src, 'sound/voice/robotgameover3.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			m_type = SHOWMSG_VISUAL
-
-		if("gameover4")
-			var/M = null
-			if(param)
-				for (var/mob/A in view(null, null))
-					if (param == A.name)
-						M = A
-						break
-			if(!M)
-				param = null
-
-			if (param)
-				message = "<B>[src]</B> menaces [param]."
-			else
-				message = "<B>[src]</B> menaces."
-			playsound(src, 'sound/voice/robotgameover4.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			m_type = SHOWMSG_VISUAL
 
 		if("buzz")
@@ -301,7 +318,7 @@
 			INVOKE_ASYNC(src, /mob.proc/pray_animation)
 
 		if ("help")
-			to_chat(src, "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt, laugh, welcome, gameover1, gameover2, gameover3, gameover4, ")
+			to_chat(src, "salute, bow-(none)/mob, clap, flap, aflap, twitch, twitch_s, nod, deathgasp, glare-(none)/mob, stare-(none)/mob, look, beep, ping, \nbuzz, law, halt, laugh1, laugh2, laugh3, welcome1, welcome2, gameover1, gameover2")
 		else
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
