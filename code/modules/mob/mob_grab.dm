@@ -517,11 +517,11 @@
 							var/mob/living/carbon/assailant_C = assailant
 							var/obj/item/clothing/hat = assailant_C.head
 							if(istype(hat))
-								damage += hat.force * 10
+								damage += hat.force * 4
 						var/armor = affecting.run_armor_check(BP_HEAD, "melee")
 						var/armor_assailant = assailant.run_armor_check(BP_HEAD, "melee")
 						affecting.apply_damage(damage*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor)
-						assailant.apply_damage((10*rand(90, 110))/100, BRUTE, BP_HEAD, blocked = armor_assailant)
+						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor_assailant)
 						if(!armor && prob(damage))
 							affecting.apply_effect(20, PARALYZE)
 							affecting.visible_message("<span class='danger'>[affecting] has been knocked unconscious!</span>")
