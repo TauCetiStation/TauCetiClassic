@@ -1089,8 +1089,7 @@ var/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/do_afterclose()
-	var/turf/src_turf = get_turf(src)
-	for(var/atom/A in src_turf)
+	for(var/atom/A in range(0, src) - src)
 		A.airlock_crush_act()
 	..()
 
