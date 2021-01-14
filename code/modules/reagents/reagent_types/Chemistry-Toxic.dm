@@ -268,9 +268,6 @@
 		var/mob/living/carbon/C = M
 		if((method==INGEST) || C.wear_mask)
 			return
-
-		if(C.wear_mask)
-			return
 		C.adjustToxLoss(2 * toxpwr)
 		return
 
@@ -282,11 +279,11 @@
 		H.adjustToxLoss(2 * toxpwr)
 		return
 
-	var/brute = toxpwr * 10 //plantmen take a LOT of damage
-	var/burn = toxpwr * 7
+	var/brute = toxpwr * 5 //plantmen take a LOT of damage
+	var/burn = toxpwr * 4
 
 	if(method==INGEST)
-		var/capped = min(volume, 3)
+		var/capped = min(volume, 5)
 		H.take_bodypart_damage(brute * capped, burn * capped)
 		return
 
@@ -308,12 +305,12 @@
 
 	if(!targets.len)
 		return
-	var/coef = min(volume / 6, 3) * 2
+	var/coef = min(volume / 3, 5) * 2
 	brute *= coef
 	burn *= coef
 
 	for(var/obj/item/organ/external/BP in targets)
-		BP.take_damage(brute * coef, burn * coef)
+		BP.take_damage(brute, burn)
 
 
 /datum/reagent/toxin/stoxin
