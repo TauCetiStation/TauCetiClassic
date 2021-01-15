@@ -2046,10 +2046,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	last_massage = world.time
 
-	if(op_stage.ribcage != 2 && prob(5))
-		var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
-		BP.fracture()
-		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
+	var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
+	if (BP == BP_CHEST)
+		if(op_stage.ribcage != 2  && prob(5))
+			BP.fracture()
+			to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
+	else
+		if(BP.open < 2  && prob(5))
+			BP.fracture()
+			to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	if (client) //in body?
