@@ -193,6 +193,10 @@
 	..()
 
 /datum/game_mode/proc/auto_declare_completion_infestation()
+
+	if(SSticker && !istype(SSticker.mode, /datum/game_mode/infestation))
+		return
+
 	var/text =""
 	var/list/aliens = count_hive_power(in_detail = TRUE)
 	var/icon/I
@@ -215,20 +219,16 @@
 			text += {"<tr><td><img src="logo_[tempstate].png"></td>"}
 			text += "<td style='color: red; font-weight: bold;'>Королева была убита!</td></tr>"
 
-	if(!aliens["D_live"] && !aliens["D_dead"])
-	else
+	if(aliens["D_live"] || aliens["D_dead"])
 		text += generate_completion_text("drone", aliens["D_live"], aliens["D_dead"], aliens["D_key"])
 
-	if(!aliens["S_live"] && !aliens["S_dead"])
-	else
+	if(aliens["S_live"] || aliens["S_dead"])
 		text += generate_completion_text("sentinel", aliens["S_live"], aliens["S_dead"], aliens["S_key"])
 
-	if(!aliens["H_live"] && !aliens["H_dead"])
-	else
+	if(aliens["H_live"] || aliens["H_dead"])
 		text += generate_completion_text("hunter", aliens["H_live"], aliens["H_dead"], aliens["H_key"])
 
-	if(!aliens["L_live"] && !aliens["L_dead"])
-	else
+	if(aliens["L_live"] || aliens["L_dead"])
 		text += generate_completion_text("larva", aliens["L_live"], aliens["L_dead"], aliens["L_key"])
 
 	text += "</table>"
