@@ -2051,8 +2051,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(op_stage.ribcage != 2  && prob(5))
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
-	else
-		if(BP.open < 2  && prob(5))
+	else if(BP.open < 2  && prob(5))
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
