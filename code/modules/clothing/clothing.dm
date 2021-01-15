@@ -284,14 +284,7 @@ var/global/list/icon_state_allowed_cache = list()
 	var/invisa_view = 0
 	// Standart hud type
 	var/list/hud_types
-	// Default huds for fix
-	var/list/def_hud_types
 	var/mob/living/carbon/glasses_user
-
-/obj/item/clothing/glasses/atom_init()
-	. = ..()
-	if(hud_types)
-		def_hud_types = hud_types
 
 /*
 SEE_SELF  // can see self, no matter what

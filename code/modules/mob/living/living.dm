@@ -13,8 +13,6 @@
 	diaghud.add_to_hud(src)
 	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
 	sechud.add_to_hud(src)
-	var/datum/atom_hud/broken/brhud = global.huds[DATA_HUD_BROKEN]
-	brhud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
