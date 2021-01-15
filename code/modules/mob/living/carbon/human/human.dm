@@ -2052,8 +2052,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 	else if(BP.open < 2  && prob(5))
-			BP.fracture()
-			to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
+		BP.fracture()
+		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 
 /mob/living/carbon/human/proc/return_to_body_dialog()
 	if (client) //in body?
