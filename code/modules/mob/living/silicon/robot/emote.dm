@@ -330,3 +330,15 @@
 			for(var/mob/O in hearers(src, null))
 				O.show_message(message, m_type)
 	return
+
+/obj/item/weapon/robot_module/security/verb/halt()
+	set name = "Voice: Halt!"
+	set desc = "Use imbedded hailer."
+	set category = "IC"
+	if (spamcheck)
+		return
+	playsound(src, 'sound/voice/halt.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	visible_message("<span class='warning'>Security robot's imbedded hailer rasps, \"Halt! Security!\"</span>")
+	spamcheck = 1
+	spawn(25)
+		spamcheck = 0

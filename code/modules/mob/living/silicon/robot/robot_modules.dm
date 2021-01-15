@@ -10,6 +10,7 @@
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
 	var/list/stacktypes
+	var/spamcheck = 0
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
