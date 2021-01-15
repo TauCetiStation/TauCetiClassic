@@ -375,9 +375,8 @@
 			if(WT.use_tool(src, user, 100, 3, 100))
 				if(!istype(src, /turf/simulated/wall))
 					return
-				if(user.get_active_hand() == WT)
-					to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
-					dismantle_wall()
+				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
+				dismantle_wall()
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 		if(user.is_busy(src))
