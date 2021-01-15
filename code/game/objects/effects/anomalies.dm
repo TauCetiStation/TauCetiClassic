@@ -210,6 +210,13 @@
 	if(!isnull(bound))
 		need_bound = bound
 
+	enable()
+
+/obj/effect/anomaly/bluespace/cult_portal/Destroy()
+	disable()
+	return ..()
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/enable()
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
 		var/turf/F = get_turf(pick(L))
@@ -223,16 +230,13 @@
 			beams += B
 
 		// Iterating through all possible coordinates
-		if(i % 2 == 0)
-			coord_of_pylons[1] *= -1;
-		else
-			coord_of_pylons[2] *= -1;
+		coord_of_pylons[i % 2 == 0 ? 1 : 2] *= -1;
 
-/obj/effect/anomaly/bluespace/cult_portal/Destroy()
-	for(var/datum/beam/B in beams)
-		B.origin.icon_state = "pylon"
-		B.End()
-	return ..()
+/obj/effect/anomaly/bluespace/cult_portal/proc/disable()
+	if(beams.len)
+		for(var/datum/beam/B in beams)
+			B.origin.icon_state = "pylon"
+			B.End()
 
 /obj/effect/anomaly/bluespace/cult_portal/anomalyEffect()
 	if(prob(20))
@@ -261,6 +265,9 @@
 	create_shell(user, type)
 	next_spawn = world.time + spawn_cd
 	spawns -= 1
+
+	if(spawns == 0)
+		disable()
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
 	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 10 SECONDS)
