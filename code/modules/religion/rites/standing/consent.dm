@@ -192,5 +192,61 @@
 	religion.add_member(H, HOLY_ROLE_PRIEST)
 	H.mutations.Add(CLUMSY)
 	H.mind.assigned_role = "Clown"
-	religion.sect.on_conversion(H)
+	return TRUE
+
+/*
+ * Divine invitation
+ * Adds clumsy mutation to mob and changes their clothes
+ */
+/datum/religion_rites/standing/consent/invite
+	name = "Divine invitation"
+	desc = "Makes a person believe in God."
+	ritual_length = (40 SECONDS)
+	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
+						"...From our mother to our ears we got the gift of horns...",
+						"...From our mother to our feet we walk on we got the shoes of length...")
+	invoke_msg = "...And from our mothers gift to you, we grant you the power of HONK!"
+	favor_cost = 250
+
+	consent_msg = "Do you believe in God?"
+
+	needed_aspects = list(
+		ASPECT_HERD = 1
+	)
+
+/datum/religion_rites/standing/consent/invite/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	if(!ishuman(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Only a human can go through the ritual.</span>")
+		return FALSE
+
+	if(!AOG.buckled_mob.mind)
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob]'s body is too weak!</span>")
+		return FALSE
+
+	if(AOG.buckled_mob.mind.holy_role >= HOLY_ROLE_PRIEST)
+		to_chat(user, "<span class='warning'>[AOG.buckled_mob] are already holy!</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/religion_rites/standing/consent/invite/invoke_effect(mob/living/user, obj/AOG)
+	..()
+
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(!istype(H))
+		return FALSE
+
+	H.remove_from_mob(H.wear_mask)
+	H.remove_from_mob(H.w_uniform)
+	H.remove_from_mob(H.head)
+	H.remove_from_mob(H.wear_suit)
+	H.remove_from_mob(H.back)
+	H.remove_from_mob(H.shoes)
+
+	to_chat(H, "<span class='piety'>Теперь вы верите в [pick(religion.deity_names)]</span>")
+
+	religion.add_member(H, HOLY_ROLE_PRIEST)
 	return TRUE

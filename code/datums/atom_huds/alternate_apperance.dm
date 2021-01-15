@@ -16,6 +16,18 @@ var/global/list/active_alternate_appearances = list()
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
 
+/atom/proc/update_all_alt_apperance()
+	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
+		if(!AA)
+			continue
+		AA.update_alt_appearance(src)
+
+/atom/proc/update_alt_appearance_by_type(type)
+	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
+		if(!AA || !istype(AA, type))
+			continue
+		AA.update_alt_appearance(src)
+
 /**
   * Allows you to add an alternative sprite to the object in the form "appearance_key" = "image"
   *
@@ -38,6 +50,8 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/proc/update_alt_appearance(mob/M)
 	if(mobShouldSee(M))
 		add_hud_to(M)
+	else
+		remove_hud_from(M)
 
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
@@ -91,7 +105,6 @@ var/global/list/active_alternate_appearances = list()
 		target = loc
 		update_image()
 
-	theImage.layer = target.layer
 	theImage.layer = target.layer
 	theImage.plane = target.plane
 	theImage.appearance_flags = target.appearance_flags
@@ -197,6 +210,7 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+// Fake-image can see only mime
 /datum/atom_hud/alternate_appearance/basic/mime
 
 /datum/atom_hud/alternate_appearance/basic/mime/New()
@@ -212,6 +226,7 @@ var/global/list/active_alternate_appearances = list()
 			return TRUE
 	return FALSE
 
+// Fake-image can see only holy_roled
 /datum/atom_hud/alternate_appearance/basic/holy_role
 	add_ghost_version = TRUE
 
@@ -223,5 +238,27 @@ var/global/list/active_alternate_appearances = list()
 
 /datum/atom_hud/alternate_appearance/basic/holy_role/mobShouldSee(mob/living/carbon/human/H)
 	if(H.mind && H.mind.holy_role)
+		return TRUE
+	return FALSE
+
+// Fake-image can see members of one religion
+/datum/atom_hud/alternate_appearance/basic/my_religion
+	add_ghost_version = TRUE
+	var/datum/religion/religion
+
+/datum/atom_hud/alternate_appearance/basic/my_religion/New(key, image/I, alternate_type, loc, datum/religion/R)
+	..(key, I, alternate_type, loc)
+	religion = R
+	for(var/mob/living/carbon/human/H in global.player_list)
+		if(mobShouldSee(H))
+			add_hud_to(H)
+
+/datum/atom_hud/alternate_appearance/basic/my_religion/Destroy()
+	religion = null
+	return ..()
+
+/datum/atom_hud/alternate_appearance/basic/my_religion/mobShouldSee(mob/living/carbon/human/H)
+	to_chat(world, "[H] - [src] - [religion] - [religion.is_member(H)]")
+	if(religion.is_member(H))
 		return TRUE
 	return FALSE

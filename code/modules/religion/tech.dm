@@ -20,3 +20,8 @@
 
 /datum/religion_tech/cult/build_everywhere/apply_effect(datum/religion/R)
 	R.can_build_everywhere = TRUE
+
+/datum/religion_tech/cult/more_runes
+
+/datum/religion_tech/cult/more_runes/apply_effect(datum/religion/R)
+	R.max_runes += 10

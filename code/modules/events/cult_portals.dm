@@ -19,8 +19,7 @@
 
 /datum/event/anomaly/cult_portal/end()
 	var/obj/effect/anomaly/bluespace/cult_portal/C = newAnomaly
-	for(var/datum/beam/B in C.beams)
-		B.End()
+	C.disable()
 
 /datum/event/anomaly/cult_portal/massive
 

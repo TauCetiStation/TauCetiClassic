@@ -176,6 +176,14 @@
 	favor_cost = 100
 	piety_cost = 10
 
+/datum/building_agent/tech/cult/more_runes
+	name = "Maximum runes increased by 10"
+	icon = 'icons/obj/rune.dmi'
+	icon_state = "3"
+	building_type = /datum/religion_tech/cult/more_runes
+	favor_cost = 100
+	piety_cost = 10
+
 // For forge
 /datum/building_agent/tool/cult
 /datum/building_agent/tool/cult/tome

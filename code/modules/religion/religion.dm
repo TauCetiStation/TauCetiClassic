@@ -549,6 +549,16 @@
 	M.mind?.holy_role = initial(M.mind.holy_role)
 	remove_god_spells(M)
 
+/datum/religion/proc/give_alt_app(mob/M)
+	// In the future, you can change this icon_state depending on religions
+	var/image/I = image('icons/mob/hud.dmi', M, "nimbus")
+	M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "nimbus", I, null, null, src)
+	M.update_alt_appearance_by_type(/datum/atom_hud/alternate_appearance/basic/my_religion)
+
+/datum/religion/proc/take_alt_app(mob/M)
+	M.remove_alt_appearance("nimbus")
+	M.update_alt_appearance_by_type(/datum/atom_hud/alternate_appearance/basic/my_religion)
+
 /datum/religion/proc/add_member(mob/M, holy_role)
 	if(is_member(M))
 		return FALSE
@@ -556,6 +566,8 @@
 	members |= M
 	M.my_religion = src
 	M.mind?.holy_role = holy_role
+	sect?.on_conversion(M)
+	give_alt_app(M)
 	return TRUE
 
 /datum/religion/proc/remove_member(mob/M)
@@ -565,6 +577,7 @@
 	members -= M
 	M.my_religion = initial(M.my_religion)
 	M.mind?.holy_role = initial(M.mind.holy_role)
+	take_alt_app(M)
 	return TRUE
 
 /datum/religion/proc/is_member(mob/M)

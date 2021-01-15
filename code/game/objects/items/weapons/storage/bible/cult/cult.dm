@@ -84,8 +84,8 @@
 			animate(target, 2 SECONDS, alpha = 0)
 			sleep(2 SECONDS)
 			if(istype(target, /turf/simulated/wall/cult))
-				var/turf/simulated/wall/cult/C = target
-				C.dismantle_wall(TRUE)
+				var/turf/simulated/wall/cult/wall = target
+				wall.dismantle_wall(TRUE)
 			else if(isturf(target))
 				var/turf/T = target
 				var/type_new_turf = /turf/simulated/floor/plating

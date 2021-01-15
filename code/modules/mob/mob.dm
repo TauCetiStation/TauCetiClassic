@@ -43,10 +43,8 @@
 		alive_mob_list += src
 	. = ..()
 	prepare_huds()
-	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA)
-			continue
-		AA.update_alt_appearance(src)
+	update_all_alt_apperance()
+
 
 /mob/proc/Cell()
 	set category = "Admin"
