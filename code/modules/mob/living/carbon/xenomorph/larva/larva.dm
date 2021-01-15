@@ -37,9 +37,9 @@
 	if(statpanel("Status"))
 		if(istype(src.loc, /obj/item/alien_embryo))
 			var/obj/item/alien_embryo/E = loc
-			stat(null, "Прогресс роста зародыша: [E.growth_counter]/[FULL_EMBRYO_GROWTH]")
+			stat("Прогресс роста эмбриона: [E.growth_counter]/[FULL_EMBRYO_GROWTH]")
 		else
-			stat(null, "Прогресс роста: [amount_grown]/[max_grown]")
+			stat("Прогресс роста: [amount_grown]/[max_grown]")
 
 //If the player wants to become a ghost while in the embryo, then the control of the embryo must be transferred to the AI
 /mob/living/carbon/xenomorph/larva/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)

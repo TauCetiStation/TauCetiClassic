@@ -157,12 +157,12 @@
 					continue
 				queen = Q
 			if(!queen)
-				stat(null, "Королева: Нет")
+				stat("Королева: Нет")
 			else
-				stat(null, "Статус Королевы:")
-				stat(null, "В сознании: [queen.stat ? "Нет":"Да"]")
-				stat(null, "Здоровье: [queen.health]/[queen.maxHealth]")
-				stat(null, "Местоположение: [queen.loc.loc.name]")
+				stat("Статус Королевы:")
+				stat("В сознании: [queen.stat ? "Нет":"Да"]")
+				stat("Здоровье: [queen.health]/[queen.maxHealth]")
+				stat("Местоположение: [queen.loc.loc.name]")
 				stat(null) //for readability
 
 		var/hugger = 0
@@ -185,17 +185,17 @@
 			else if(isxenohunter(A))
 				hunter++
 
-		stat(null, "Статус Улья:")
+		stat("Статус Улья:")
 		if(drone)
-			stat(null, "Трутни: [drone]")
+			stat("Трутни: [drone]")
 		if(hunter)
-			stat(null, "Охотники: [hunter]")
+			stat("Охотники: [hunter]")
 		if(sentinel)
-			stat(null, "Стражи: [sentinel]")
+			stat("Стражи: [sentinel]")
 		if(larva)
-			stat(null, "Грудоломы: [larva]")
+			stat("Грудоломы: [larva]")
 		if(hugger)
-			stat(null, "Лицехваты: [hugger]")
+			stat("Лицехваты: [hugger]")
 
 /mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)

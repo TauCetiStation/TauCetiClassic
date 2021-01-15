@@ -67,7 +67,7 @@
 			if(alien_caste == "Отмена")
 				return
 
-		to_chat(src, "<span class='alien'>Подождите пока закончиться процесс эволюции.</span>")
+		to_chat(src, "<span class='alien'>Подождите пока закончится процесс эволюции.</span>")
 		if(!do_after(src, 10 SECONDS, target = src))
 			return
 

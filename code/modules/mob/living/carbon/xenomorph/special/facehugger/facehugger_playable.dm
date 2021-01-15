@@ -184,7 +184,7 @@ This is chestburster mechanic for damaging
 
 /obj/screen/larva_bite/Click()
 	var/obj/item/weapon/larva_bite/G = master
-	if(G)	//fix runtime
+	if(G)
 		G.s_click(src)
 		return TRUE
 
@@ -337,7 +337,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/screen/fh_grab/Click()
 	var/obj/item/weapon/fh_grab/G = master
-	if(G)	//fix runtime
+	if(G)
 		G.s_click(src)
 		return TRUE
 
