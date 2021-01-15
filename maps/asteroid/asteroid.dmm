@@ -6662,9 +6662,7 @@
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -6776,44 +6774,30 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oa" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/universal,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "ob" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "od" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1379;
-	master_tag = "dwarf_airlock";
-	name = "interior access button";
-	pixel_x = -25;
-	pixel_y = -25
-	},
-/obj/machinery/atmospherics/components/binary/pump/on,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
 /area/asteroid/mine/dwarf)
 "oe" = (
-/obj/structure/table,
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/storage/bag/ore,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "of" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
@@ -6988,17 +6972,16 @@
 	},
 /area/asteroid/mine/explored)
 "ox" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/atmospherics/components/binary/valve/open,
+/obj/machinery/access_button{
+	command = "cycle_interior";
 	frequency = 1379;
-	id_tag = "dwarf_interior";
-	locked = 1;
-	name = "Dwarf Outpost Airlock"
+	master_tag = "dwarf_airlock";
+	name = "interior access button";
+	pixel_x = -25;
+	pixel_y = -25
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oy" = (
 /obj/structure/dispenser/oxygen,
@@ -7009,7 +6992,9 @@
 	dir = 8
 	},
 /obj/machinery/meter,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/asteroid/mine/dwarf)
 "oA" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
@@ -7071,27 +7056,27 @@
 	},
 /area/asteroid/research_outpost/harvesting)
 "oI" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "dwarf_interior";
+	locked = 1;
+	name = "Dwarf Outpost Airlock"
 	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oJ" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	id_tag = "dwarf_airlock";
-	pixel_x = 26;
-	tag_airpump = "dwarf_pump";
-	tag_chamber_sensor = "dwarf_sensor";
-	tag_exterior_door = "dwarf_outer";
-	tag_interior_door = "dwarf_interior"
-	},
+/obj/structure/table,
+/obj/item/weapon/storage/bag/ore,
+/obj/item/weapon/storage/bag/ore,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
 /area/asteroid/mine/dwarf)
 "oK" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light_construct/small,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oL" = (
@@ -7105,7 +7090,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
-/obj/machinery/light_construct/small,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oN" = (
@@ -8588,9 +8572,16 @@
 	},
 /area/asteroid/mine/dwarf)
 "sv" = (
-/obj/item/weapon/storage/box/lights/mixed,
 /obj/structure/table,
+/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/weapon/storage/box/lights/bulbs,
 /obj/item/weapon/reagent_containers/glass/bucket,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = 25
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sw" = (
@@ -8598,13 +8589,18 @@
 /obj/item/stack/cable_coil/red,
 /obj/item/stack/cable_coil/red,
 /obj/item/clothing/gloves/fyellow,
-/obj/machinery/light_construct/small{
-	dir = 1
+/obj/machinery/recharger/wallcharger{
+	dir = 1;
+	pixel_x = 5;
+	pixel_y = 25
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sx" = (
 /obj/structure/closet/crate/dwarf_agriculture,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sy" = (
@@ -8613,14 +8609,15 @@
 /area/asteroid/mine/dwarf)
 "sz" = (
 /obj/machinery/pipedispenser,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sA" = (
 /obj/machinery/light_construct/small{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/item/weapon/shard{
+	icon_state = "small"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -8638,21 +8635,22 @@
 	},
 /area/asteroid/mine/west_outpost)
 "sD" = (
-/obj/machinery/light_construct/small{
-	dir = 1
-	},
 /mob/living/simple_animal/hostile/mimic/crate,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sE" = (
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/dwarf)
+"sF" = (
+/obj/machinery/mineral/input,
 /turf/simulated/floor/plating{
 	dir = 4;
 	icon_state = "warnplate"
 	},
-/area/asteroid/mine/dwarf)
-"sF" = (
-/obj/machinery/mineral/input,
-/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sG" = (
 /obj/machinery/mineral/processing_unit,
@@ -8717,10 +8715,10 @@
 /area/asteroid/mine/west_outpost)
 "sP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
 /area/asteroid/mine/dwarf)
 "sQ" = (
@@ -8785,6 +8783,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/mob/living/simple_animal/mushroom{
+	desc = "It's a massive mushroom... with beard?";
+	name = "Dwarfi"
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sY" = (
@@ -8803,10 +8805,10 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "ta" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Dwarf Outpost APC";
-	pixel_x = -32
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -8885,48 +8887,29 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Dwarf Outpost APC";
+	pixel_x = -32
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
+/obj/machinery/light_construct/small,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/item/weapon/shard{
+	icon_state = "medium"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "to" = (
@@ -8950,7 +8933,10 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "dw_c"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
 /area/asteroid/mine/dwarf)
 "tr" = (
 /obj/structure/window/reinforced{
@@ -8971,9 +8957,6 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/recharger/wallcharger{
-	pixel_x = -24
-	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tt" = (
@@ -8983,19 +8966,29 @@
 	},
 /area/asteroid/mine/west_outpost)
 "tu" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
 /area/asteroid/mine/dwarf)
 "tv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
+/obj/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tw" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9060,27 +9053,35 @@
 	},
 /area/asteroid/mine/living_quarters)
 "tE" = (
-/turf/simulated/floor{
-	icon_state = "warning"
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "dwarf_pump";
+	name = "Dwarf Large Air Vent"
 	},
+/obj/structure/closet/emcloset,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tF" = (
-/obj/machinery/airlock_sensor{
-	id_tag = "dwarf_sensor";
-	pixel_x = 25;
-	pixel_y = -5
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
 /area/asteroid/mine/dwarf)
 "tG" = (
-/obj/machinery/light_construct/small,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/asteroid/mine/dwarf)
 "tH" = (
 /obj/machinery/mineral/output,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
 /area/asteroid/mine/dwarf)
 "tI" = (
 /obj/machinery/mineral/stacking_machine,
@@ -9094,6 +9095,16 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tK" = (
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/area/asteroid/mine/dwarf)
+"tL" = (
+/turf/simulated/floor/airless{
+	icon_state = "asteroidwarning"
+	},
+/area/asteroid/mine/explored)
+"tM" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "dwarf_outer";
@@ -9103,24 +9114,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
-"tL" = (
-/turf/simulated/floor/airless{
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
-"tM" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "dwarf_airlock";
-	name = "exterior access button";
-	pixel_x = 25;
-	pixel_y = 25
-	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidwarning"
-	},
-/area/asteroid/mine/explored)
 "tN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -10982,9 +10975,11 @@
 	},
 /area/asteroid/mine/living_quarters)
 "yj" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/structure/grille,
+/obj/item/weapon/shard{
+	icon_state = "medium"
 	},
+/obj/structure/barricade/wooden,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -11788,6 +11783,23 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/hallway)
+"AI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1379;
+	id_tag = "dwarf_pump";
+	name = "Dwarf Large Air Vent"
+	},
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	id_tag = "dwarf_airlock";
+	pixel_x = 26;
+	tag_airpump = "dwarf_pump";
+	tag_chamber_sensor = "dwarf_sensor";
+	tag_exterior_door = "dwarf_outer";
+	tag_interior_door = "dwarf_interior"
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/dwarf)
 "AJ" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
@@ -12127,12 +12139,17 @@
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "CO" = (
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
+/obj/structure/computerframe,
+/obj/item/weapon/shard,
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
+/area/asteroid/mine/dwarf)
+"CP" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "Db" = (
 /obj/structure/disposalpipe/segment{
@@ -12206,13 +12223,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
-"DL" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 8;
-	frequency = 1379;
-	id_tag = "dwarf_pump";
-	name = "Dwarf Large Air Vent"
+"DC" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/dwarf)
+"DL" = (
+/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -12336,10 +12360,9 @@
 /turf/space,
 /area/shuttle/mining/transit)
 "FQ" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/random/tools/tech_supply,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -12444,10 +12467,17 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
 "Hq" = (
-/obj/machinery/light_construct/small,
-/turf/simulated/floor{
-	icon_state = "floorgrime"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "Ib" = (
 /obj/structure/sign/warning/nosmoking/circle{
@@ -12507,6 +12537,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"IT" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "dwarf_airlock";
+	name = "exterior access button";
+	pixel_x = 25;
+	pixel_y = 25
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidwarning"
+	},
+/area/asteroid/mine/explored)
 "Jb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
@@ -12617,6 +12660,14 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/longtermstorage)
+"Kr" = (
+/obj/machinery/light_construct/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/area/asteroid/mine/dwarf)
 "Lb" = (
 /obj/structure/sign/departments/botany{
 	pixel_x = 32
@@ -12672,6 +12723,16 @@
 /obj/machinery/power/grounding_rod,
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/iso1)
+"Lo" = (
+/obj/machinery/airlock_sensor{
+	id_tag = "dwarf_sensor";
+	pixel_x = 25;
+	pixel_y = -5
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/asteroid/mine/dwarf)
 "Mb" = (
 /obj/structure/sign/departments/chemistry{
 	desc = "A warning sign which reads 'SAMPLE PREPARATION'";
@@ -13342,6 +13403,22 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/production)
+"XO" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/barricade/wooden,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/asteroid/mine/dwarf)
 "Yb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -34901,7 +34978,7 @@ kO
 st
 sw
 sJ
-sJ
+tl
 tg
 sJ
 tB
@@ -35678,7 +35755,7 @@ tj
 tj
 st
 kO
-ac
+kO
 ac
 ac
 ac
@@ -35936,7 +36013,7 @@ st
 st
 kO
 kO
-ac
+kO
 ac
 ac
 ad
@@ -36189,9 +36266,9 @@ nY
 ta
 tk
 FQ
-tu
-tk
-tL
+st
+kO
+kO
 kO
 kO
 ac
@@ -36443,13 +36520,13 @@ sp
 st
 sA
 sP
-ss
+sJ
 tm
-CO
-Hq
-tm
+st
+st
+st
+st
 tL
-lA
 kO
 kO
 ac
@@ -36698,15 +36775,15 @@ kO
 sp
 sr
 su
+ss
 ob
 ss
 ss
-tl
 tv
 tE
-tl
+Kr
+DC
 tL
-lA
 lA
 kO
 kO
@@ -36955,20 +37032,20 @@ kO
 sq
 ss
 su
-yj
+sJ
 oa
 od
 ox
 oI
-tE
+CP
 tK
 tM
-lA
-lA
+IT
 lA
 kO
 kO
-ej
+kO
+ad
 ad
 ad
 ad
@@ -37212,20 +37289,20 @@ kO
 sp
 sr
 su
-ob
-ss
+sJ
+tu
 ss
 tn
-tv
-tE
-tn
+Hq
+AI
+Lo
+XO
 tL
 lA
-ej
-lA
 lA
 kO
 kO
+ac
 ad
 ad
 ad
@@ -37470,19 +37547,19 @@ sp
 sp
 st
 nN
+tF
 ss
-ss
-tm
 DL
-Hq
-tm
+st
+st
+st
+st
 tL
 lA
-ej
-ej
 kO
 kO
-ej
+kO
+ad
 ad
 ad
 ad
@@ -37727,17 +37804,17 @@ kO
 kO
 st
 st
-ss
+yj
 oe
 tl
 oJ
-tF
-tl
-tL
+st
 kO
-ac
-ac
-ac
+kO
+kO
+kO
+kO
+kO
 ac
 ad
 ad
@@ -37993,7 +38070,7 @@ st
 kO
 kO
 kO
-ac
+kO
 ac
 ac
 ad
@@ -38248,8 +38325,8 @@ tx
 tG
 st
 kO
-ac
-ac
+kO
+kO
 ac
 ac
 ad
@@ -38499,13 +38576,13 @@ kO
 st
 sE
 sJ
-sJ
+tl
 sJ
 ty
-sE
+tm
 st
 kO
-ac
+kO
 ac
 ac
 ad
@@ -38756,7 +38833,7 @@ kO
 st
 sF
 sT
-sJ
+CO
 tq
 tz
 tH
