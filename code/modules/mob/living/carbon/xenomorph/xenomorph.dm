@@ -41,13 +41,6 @@
 	updatePlasmaDisplay()
 	return
 
-/mob/living/carbon/xenomorph/adjustFireLoss(amount) // Weak to Fire
-	if(amount > 0)
-		..(amount * 2)
-	else
-		..(amount)
-	return
-
 /mob/living/carbon/xenomorph/proc/getPlasma()
 	return storedPlasma
 
