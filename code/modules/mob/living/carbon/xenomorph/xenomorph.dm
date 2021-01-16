@@ -58,6 +58,8 @@
 		//oxyloss is only used for suicide
 		//toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+		med_hud_set_health()
+		med_hud_set_status()
 
 /mob/living/carbon/xenomorph/handle_environment(datum/gas_mixture/environment)
 
