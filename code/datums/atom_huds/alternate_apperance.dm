@@ -258,7 +258,6 @@ var/global/list/active_alternate_appearances = list()
 	return ..()
 
 /datum/atom_hud/alternate_appearance/basic/my_religion/mobShouldSee(mob/living/carbon/human/H)
-	to_chat(world, "[H] - [src] - [religion] - [religion.is_member(H)]")
 	if(religion.is_member(H))
 		return TRUE
 	return FALSE

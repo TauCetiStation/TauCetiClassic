@@ -42,7 +42,7 @@
 		religion = user.my_religion
 
 /obj/item/weapon/storage/bible/tome/attack_self(mob/user)
-	if(religion && (!build_choices_image || !rune_choices_image))
+	if(religion && (!build_choices_image.len || !rune_choices_image.len))
 		building_choices()
 		rune_choices()
 
@@ -114,7 +114,7 @@
 	if(rune_next[user.ckey] > world.time)
 		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[user.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
-	if(religion.max_runes >= religion.runes)
+	if(religion.max_runes < religion.runes.len)
 		to_chat(user, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
 		return
 

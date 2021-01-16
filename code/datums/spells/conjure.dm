@@ -113,6 +113,7 @@
 /obj/effect/forcefield/cult/alt_app
 	icon = null
 	icon_state = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/forcefield/cult/alt_app/atom_init()
 	. = ..()

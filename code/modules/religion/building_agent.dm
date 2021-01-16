@@ -119,7 +119,7 @@
 
 /datum/building_agent/rune/cult/teleport_to_heaven
 	name = "Teleport to HEAVEN"
-	rune_type = /datum/rune/cult/teleport_to_heaven
+	rune_type = /datum/rune/cult/teleport/teleport_to_heaven
 
 /datum/building_agent/rune/cult/capture_area
 	name = "Capture a Area"
@@ -135,7 +135,7 @@
 
 /datum/building_agent/rune/cult/teleport
 	name = "Teleport"
-	rune_type = /datum/rune/cult/teleport
+	rune_type = /datum/rune/cult/teleport/teleport
 
 /datum/building_agent/rune/cult/item_port
 	name = "Item Teleport"
@@ -144,6 +144,14 @@
 /datum/building_agent/rune/cult/wall
 	name = "Summon wall"
 	rune_type = /datum/rune/cult/wall
+
+/datum/building_agent/rune/cult/bloodboil
+	name = "Bloodboil"
+	rune_type = /datum/rune/cult/bloodboil
+
+/datum/building_agent/rune/cult/armor
+	name = "Summon a regimentals"
+	rune_type = /datum/rune/cult/armor
 
 
 // For tech_table

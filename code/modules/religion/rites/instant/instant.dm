@@ -229,7 +229,8 @@
 		return FALSE
 
 	corpse_to_raise.revive()
-	SSticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
+	var/datum/religion/cult/cult = religion
+	cult.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
 	corpse_to_raise.visible_message("<span class='[religion.style_text]'>Глаза, раньше бездыханного тела, загораются слабым красным светом.</span>", \
 		"<span class='[religion.style_text]'>Жизнь... Я снова живу...</span>", \
 		"<span class='[religion.style_text]'>Вы слышите слабый, но знакомый шепот.</span>")
@@ -327,7 +328,7 @@
 		to_chat(user, "<span class='warning'>В вашей религии нет членов, даже вы не член её...</span>")
 		return FALSE
 
-	var/mob/living/carbon/cultist = input("Выберите кого хотите освободить.", religion.name) as null|anything in cultists
+	var/mob/living/carbon/cultist = input("Выберите кого хотите освободить.", religion.name) as null|anything in cultists - user
 	var/is_processed = FALSE
 	if(!cultist)
 		return FALSE
@@ -372,7 +373,7 @@
 /datum/religion_rites/instant/cult/summon_acolyt
 	name = "Summon acolyt"
 	desc = "Teleports free of the shackles and live an acolyte."
-	ritual_length = (20 SECONDS) // plus 15 seconds of pollGhostCandidates
+	ritual_length = (20 SECONDS)
 	invoke_msg = "Появись же!!!"
 	favor_cost = 200
 
@@ -394,7 +395,7 @@
 		to_chat(user, "<span class='warning'>В вашей религии нет членов, даже вы не член её...</span>")
 		return FALSE
 
-	var/mob/living/carbon/cultist = input("Выберите кого хотите призвать.", religion.name) as null|anything in cultists
+	var/mob/living/carbon/cultist = input("Выберите кого хотите призвать.", religion.name) as null|anything in cultists - user
 	if(!cultist)
 		return FALSE
 
@@ -414,6 +415,167 @@
 
 	return TRUE
 
+/datum/religion_rites/instant/cult/brainswap
+	name = "Brainswap"
+	desc = "You exchange brains with a target on the altar."
+	ritual_length = (13 SECONDS)
+	invoke_msg = "Хаккрутжу гопоенжим!!"
+	favor_cost = 200
+
+	needed_aspects = list(
+		ASPECT_DEATH = 2,
+		ASPECT_RESCUE = 2,
+	)
+
+/datum/religion_rites/instant/cult/brainswap/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	if(!(locate(/mob/living) in get_turf(AOG)))
+		to_chat(user, "<span class='warning'>На алтаре должен лежать человек.</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/religion_rites/instant/cult/brainswap/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	if(!(locate(/mob/living) in get_turf(AOG)))
+		return FALSE
+
+	var/bdam = rand(2, 10)
+	var/mob/living/L = locate() in get_turf(AOG)
+	to_chat(user, "<span class='notice'>Вы чувствуете, как теряете концентрацию...</span>")
+	to_chat(L, "<span class='warning'>Вы чувствуете, как теряете концентрацию...</span>")
+
+	if(!do_after(user, 5 SECONDS, FALSE, L))
+		return FALSE
+
+	to_chat(user, "<span class='warning'>Вы чувствуете слабость.</span>")
+	L.adjustBrainLoss(bdam)
+	user.adjustBrainLoss(bdam)
+	to_chat(user, "<span class='danger'>Ваш разум перемещается в другое тело. Вы чувствуете, как частичка себя теряется в забвенье.</span>")
+	var/mob/dead/observer/ghost = L.ghostize(FALSE)
+	user.mind.transfer_to(L)
+	ghost.mind.transfer_to(user)
+	user.key = ghost.key
+	user.say("Йу'Аи! Лаури лантар ласси сринен'ни н'тим ве рмар алдарон!!")
+	L.say("Йу'Аи! Лаури лантар ласси сринен'ни н'тим ве рмар алдарон!!")
+	return TRUE
+
+/datum/religion_rites/instant/impose_blind
+	name = "Impose bliendess"
+	desc = "Impose bliendess on all heretics around."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Ослепление!!!"
+	favor_cost = 75
+
+	needed_aspects = list(
+		ASPECT_CHAOS = 1,
+		ASPECT_DEATH = 1,
+	)
+
+/datum/religion_rites/instant/impose_blind/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	var/list/heretics = religion.nearest_heretics(AOG, 7)
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
+		return FALSE
+	return TRUE
+
+/datum/religion_rites/instant/impose_blind/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	var/list/affected = religion.nearest_heretics(AOG, 7)
+	if(length(affected) < 1)
+		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
+		return FALSE
+	var/blindless_modifier = clamp(90 / length(affected), 5, 30)
+	for(var/mob/living/carbon/C in affected)
+		C.eye_blurry += blindless_modifier
+		C.eye_blind += blindless_modifier / 2
+		if(prob(5))
+			C.disabilities |= NEARSIGHTED
+			if(prob(10))
+				C.sdisabilities |= BLIND
+		C.show_message("<span class='userdanger'>Внезапно вы видите красную вспышку, которая ослепила вас.</span>", SHOWMSG_VISUAL)
+	return TRUE
+
+/datum/religion_rites/instant/impose_deaf
+	name = "Impose deafness"
+	desc = "Impose deafness on all heretics around."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Оглушение!!!"
+	favor_cost = 50
+
+	needed_aspects = list(
+		ASPECT_CHAOS = 1,
+		ASPECT_MYSTIC = 1,
+	)
+
+/datum/religion_rites/instant/impose_deaf/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	var/list/heretics = religion.nearest_heretics(AOG, 7)
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
+		return FALSE
+	return TRUE
+
+/datum/religion_rites/instant/impose_deaf/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	var/list/affected = religion.nearest_heretics(AOG, 7)
+	if(length(affected) < 1)
+		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
+		return FALSE
+	var/deafness_modifier = max(5, 120 / length(affected))
+	for(var/mob/living/carbon/C in affected)
+		C.playsound_local(null, 'sound/effects/mob/ear_ring_single.ogg', VOL_EFFECTS_MASTER)
+		C.ear_deaf += deafness_modifier
+		to_chat(C, "<span class='userdanger'>Мир вокруг вас внезапно становится тихим.</span>")
+		if(prob(5))
+			C.sdisabilities |= DEAF
+	return TRUE
+
+/datum/religion_rites/instant/impose_stun
+	name = "Impose stun"
+	desc = "Impose stun on all heretics around."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Онемение!!!"
+	favor_cost = 150
+
+	needed_aspects = list(
+		ASPECT_CHAOS = 1,
+		ASPECT_OBSCURE = 1,
+	)
+
+/datum/religion_rites/instant/impose_stun/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	var/list/heretics = religion.nearest_heretics(AOG, 2)
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
+		return FALSE
+	return TRUE
+
+/datum/religion_rites/instant/impose_stun/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	var/list/heretics = religion.nearest_heretics(AOG, 2)
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
+		return FALSE
+	var/stun_modifier = 12 / length(heretics)
+	for(var/mob/living/carbon/C in heretics)
+		C.flash_eyes()
+		if(C.stuttering < 1 && (!(HULK in C.mutations)))
+			C.stuttering = 1
+			C.Weaken(stun_modifier)
+			C.Stun(stun_modifier)
+			C.show_message("<span class='userdanger'>У вас будто бы вылетает из тела душа, а по возвращении в назад она потеряла контроль над телом..</span>", SHOWMSG_VISUAL)
+	return TRUE
+
 /datum/religion_rites/instant/communicate
 	name = "Communicate"
 	desc = "Sends a message to all members of the religion!"
@@ -429,7 +591,6 @@
 	..()
 
 	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[religion.name]", ""))
-
 	for(var/mob/M in global.mob_list)
 		if(religion.is_member(M) || isobserver(M))
 			to_chat(M, "<span class='[religion.style_text]'>Аколит [user.real_name]: [input]</span>")

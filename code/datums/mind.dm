@@ -1701,6 +1701,11 @@
 	mind.assigned_role = "Behemoth"
 	to_chat(src, "<span class='cult'>Вы играете за Behemoth. Вы самая сильная и живучая оболочка, но это не остановит Полкана.</span>")
 
+/mob/living/simple_animal/construct/proteon/mind_initialize()
+	..()
+	mind.assigned_role = "Proteon"
+	to_chat(src, "<span class='cult'>Вы играете за Proteon. Ваши боевые способности превосходят все оболочки, а так же вы очень быстры и ловки, но при этом вы очень хрупки, по сравнению с другими.</span>")
+
 /mob/living/simple_animal/vox/armalis/mind_initialize()
 	..()
 	mind.assigned_role = "Armalis"

@@ -47,8 +47,6 @@
 
 /datum/religion_rites/standing/spawn_item/banana/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
-	if(!.)
-		return FALSE
 
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
@@ -84,8 +82,6 @@
 
 /datum/religion_rites/standing/spawn_item/banana_ore/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
-	if(!.)
-		return FALSE
 
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
@@ -165,8 +161,6 @@
 
 /datum/religion_rites/standing/spawn_item/call_animal/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
-	if(!.)
-		return FALSE
 
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
@@ -210,8 +204,6 @@
 
 /datum/religion_rites/standing/spawn_item/create_sword/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
-	if(!.)
-		return FALSE
 
 	for(var/mob/living/carbon/human/M in viewers(usr.loc, null))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)

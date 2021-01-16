@@ -260,6 +260,7 @@
 	var/type = pick(90;/mob/living/simple_animal/construct/harvester,\
 					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
+					40; /mob/living/simple_animal/construct/proteon,\
 					70; /mob/living/simple_animal/construct/builder,\
 					1;  /mob/living/simple_animal/construct/behemoth)
 	create_shell(user, type)
@@ -276,7 +277,13 @@
 
 	while(candidates.len || spawns != 0)
 		var/mob/slave = pick_n_take(candidates)
-		var/type = pick(200;/mob/living/simple_animal/construct/harvester, 50;/mob/living/simple_animal/construct/wraith, 30;/mob/living/simple_animal/construct/armoured, 70;/mob/living/simple_animal/construct/builder, 1;/mob/living/simple_animal/construct/behemoth)
+		var/type = pick(
+				200;/mob/living/simple_animal/construct/harvester,\
+				50; /mob/living/simple_animal/construct/wraith,\
+				30; /mob/living/simple_animal/construct/armoured,\
+				40; /mob/living/simple_animal/construct/proteon,\
+				70; /mob/living/simple_animal/construct/builder,\
+				1;  /mob/living/simple_animal/construct/behemoth)
 		create_shell(slave, type)
 		spawns -= 1
 

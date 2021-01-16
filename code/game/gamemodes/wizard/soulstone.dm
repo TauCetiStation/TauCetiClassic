@@ -14,6 +14,7 @@
 				"Juggernaut" = /mob/living/simple_animal/construct/armoured,
 				"Wraith" = /mob/living/simple_animal/construct/wraith,
 				"Artificer" = /mob/living/simple_animal/construct/builder,
+				"Proteon" = /mob/living/simple_animal/construct/proteon,
 				)
 
 /obj/item/device/soulstone/proc/gen_images()
@@ -165,6 +166,10 @@
 
 	var/type = classes[construct_class]
 	var/mob/M = new type(get_turf(target.loc))
+
+	flick("make_[M.icon_state]", M)
+	playsound(M, 'sound/effects/constructform.ogg', 50)
+
 	M.key = A.key
 	A.cancel_camera()
 

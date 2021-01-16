@@ -115,6 +115,7 @@
 	var/datum/religion_sect/sect
 	// css
 	var/style_text
+	var/need_nimbus = TRUE
 
 	/*
 		Building
@@ -567,7 +568,8 @@
 	M.my_religion = src
 	M.mind?.holy_role = holy_role
 	sect?.on_conversion(M)
-	give_alt_app(M)
+	if(need_nimbus)
+		give_alt_app(M)
 	return TRUE
 
 /datum/religion/proc/remove_member(mob/M)
@@ -577,7 +579,8 @@
 	members -= M
 	M.my_religion = initial(M.my_religion)
 	M.mind?.holy_role = initial(M.mind.holy_role)
-	take_alt_app(M)
+	if(need_nimbus)
+		take_alt_app(M)
 	return TRUE
 
 /datum/religion/proc/is_member(mob/M)
@@ -606,3 +609,25 @@
 
 /datum/religion/proc/remove_holy_turf(turf/simulated/floor/F)
 	qdel(holy_turfs[F])
+
+/datum/religion/proc/nearest_heretics(atom/target, range, ignore_holy = FALSE)
+	var/list/heretics = list()
+	var/turf/center = get_turf(target)
+	for(var/mob/living/heretic in view(range, center))
+		if(is_member(heretic))
+			continue
+		if(!ignore_holy)
+			if(heretic.my_religion || heretic.mind?.holy_role)
+				continue
+		heretics += heretic
+	return heretics
+
+/datum/religion/proc/nearest_acolytes(atom/target, range = 1, message)
+	var/list/acolytes = list()
+	var/turf/center = get_turf(target)
+	for(var/mob/living/carbon/C in range(range, center))
+		if(is_member(C) && !C.stat)
+			acolytes += C
+			if(message)
+				C.say(message)
+	return acolytes

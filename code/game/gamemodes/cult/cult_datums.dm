@@ -46,29 +46,6 @@
 /datum/rune/proc/talisman_reaction(mob/living/carbon/user)
 	return
 
-/datum/rune/proc/nearest_cultists(range = 1, message)
-	var/list/acolytes = list()
-	var/turf/center = get_turf(holder)
-	for(var/mob/living/carbon/C in range(range, center))
-		if(religion.is_member(C) && !C.stat)
-			acolytes += C
-			if(message)
-				C.say(message)
-	return acolytes
-
-/datum/rune/proc/nearest_heretics(range = 7, ignore_nullrod = FALSE)
-	var/list/heretics = list()
-	var/turf/center = get_turf(holder)
-	for(var/mob/living/heretic in view(range, center))
-		if(iscultist(heretic))
-			continue
-		if(!ignore_nullrod)
-			var/obj/item/weapon/nullrod/N = locate() in heretic
-			if(N)
-				continue
-		heretics += heretic
-	return heretics
-
 /datum/rune/proc/fizzle(mob/living/user)
 	if(istype(holder, /obj/effect/rune))
 		user.say(pick("Хаккрутйу гопоенйим.", "Храсаи пивроиашан.", "Фирййи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Миуф хон внор'с.", "Вакабаи хий фен йусших."))
@@ -77,21 +54,37 @@
 	holder.visible_message("<span class='danger'>Иероглиф начинает пульсировать незаметным светом и сразу тухнет.</span>","<span class='danger'>Вы слишите тихое шипение.</span>")
 
 /datum/rune/cult
-/datum/rune/cult/teleport_to_heaven
+
+/datum/rune/cult/teleport
+	var/delay = 1 SECONDS
+
+/datum/rune/cult/teleport/proc/teleporting(turf/target, mob/user)
+	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
+	new /obj/effect/temp_visual/cult/blood/out(user.loc)
+	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
+	new /obj/effect/temp_visual/cult/blood(target)
+	var/list/companions = holder.handle_teleport_grab(target, user)
+	user.forceMove(target)
+	user.eject_from_wall(TRUE, companions = companions)
+	after_tp(target, user, companions)
+
+/datum/rune/cult/teleport/proc/after_tp(turf/target, mob/user, list/companions)
+	return
+
+/datum/rune/cult/teleport/teleport_to_heaven
 	name = "Teleport to HEAVEN"
 	words = list("travel", "self", "hell")
 
-/datum/rune/cult/teleport_to_heaven/action(mob/living/carbon/user)
+/datum/rune/cult/teleport/teleport_to_heaven/action(mob/living/carbon/user)
 	var/area/A = locate(religion.area_type)
 	var/turf/T = get_turf(pick(A.contents))
-	var/list/companions = holder.handle_teleport_grab(T, usr)
-	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
-	user.forceMove(T)
-	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
-	user.eject_from_wall(TRUE, companions = companions)
-	if(user && !(locate(/datum/rune/cult) in T)) // user can gibbed
-		var/obj/effect/rune/R = new(get_turf(user), religion)
-		R.power = new /datum/rune/cult/teleport_from_heaven(R, get_turf(holder))
+	teleporting(T, user)
+
+/datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/user, list/companions)
+	if(user && !(locate(/obj/effect/rune) in target)) // user can gibbed
+		var/obj/effect/rune/R = new(target, religion)
+		R.power = new /datum/rune/cult/teleport/teleport_from_heaven(R, get_turf(holder))
+		R.power.religion = religion
 		R.icon = get_uristrune_cult(TRUE, R.power.words)
 		var/datum/religion/cult/C = religion
 		if(companions)
@@ -100,24 +93,69 @@
 		else
 			C.create_anomalys(TRUE)
 
-/datum/rune/cult/teleport_from_heaven
+/datum/rune/cult/teleport/teleport_from_heaven
 	name = "Teleport from HEAVEN"
 	var/turf/destination
 	words = list("travel", "self", "technology")
 
-/datum/rune/cult/teleport_from_heaven/New(holder, turf/_destination)
+/datum/rune/cult/teleport/teleport_from_heaven/New(holder, turf/_destination)
 	..()
 	destination = _destination
 
-/datum/rune/cult/teleport_from_heaven/Destroy()
+/datum/rune/cult/teleport/teleport_from_heaven/Destroy()
 	destination = null
 	return ..()
 
-/datum/rune/cult/teleport_from_heaven/action(mob/living/carbon/user)
-	holder.handle_teleport_grab(destination, usr)
-	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
-	user.forceMove(destination)
-	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
+/datum/rune/cult/teleport/teleport_from_heaven/action(mob/living/carbon/user)
+	teleporting(destination, user)
+
+
+/datum/rune/cult/teleport/teleport
+	name = "Teleport"
+	words = list("travel", "self", "see")
+	var/id
+	var/id_inputing = FALSE
+
+/datum/rune/cult/teleport/teleport/can_action(mob/living/carbon/user)
+	if(!id && !id_inputing)
+		id_inputing = TRUE
+		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
+		to_chat(user, "<span calss='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
+		return FALSE // Without instant teleport
+	return TRUE
+
+/datum/rune/cult/teleport/teleport/proc/get_tp_runes()
+	var/list/runes = list()
+	for(var/obj/effect/rune/R in religion.runes)
+		to_chat(world, "[R] - [R.power] - [type] - [R.power.type]")
+		if(!istype(R.power, type) || R.power == src)
+			continue
+		to_chat(world, "Good")
+		var/datum/rune/cult/teleport/teleport/T = R.power
+		if(T.id == id && (!is_centcom_level(R.loc.z) || istype(get_area(R), religion.area_type)))
+			runes += R
+			to_chat(world, "Very good")
+	return runes
+
+/datum/rune/cult/teleport/teleport/action(mob/living/carbon/user)
+	var/list/tp_runes = get_tp_runes()
+
+	if(tp_runes.len >= 5)
+		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")
+		user.take_overall_damage(5, 0)
+		return
+	if(tp_runes.len)
+		user.visible_message("<span class='userdanger'>[user] исчезает во вспышке красного света!</span>", \
+			"<span class='[religion.style_text]'>Вы чувствуете, как ваше тело проскальзывает сквозь измерения!</span>", \
+			"<span class='userdanger'>Вы слышите болезненный хруст и хлюпанье внутренностей.</span>")
+		var/turf/T = get_turf(pick(tp_runes))
+		teleporting(T, user)
+
+/datum/rune/cult/teleport/teleport/ghost_action(mob/living/carbon/user)
+	var/list/tp_runes = get_tp_runes()
+
+	if(tp_runes.len)
+		user.forceMove(get_turf(pick(tp_runes)))
 
 /datum/rune/cult/capture_area
 	name = "Capture area"
@@ -218,51 +256,6 @@
 				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-floor", I, H)
 		else if(religion.door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
 			H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-door", null, H, pick(religion.door_types), A)
-
-/datum/rune/cult/teleport
-	name = "Teleport"
-	words = list("travel", "self", "see")
-	var/id
-	var/id_inputing = FALSE
-
-/datum/rune/cult/teleport/can_action(mob/living/carbon/user)
-	if(!id && !id_inputing)
-		id_inputing = TRUE
-		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
-		to_chat(user, "<span calss='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
-		return FALSE // Without instant teleport
-	return TRUE
-
-/datum/rune/cult/teleport/proc/get_tp_runes()
-	var/list/runes = list()
-	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, type) || R.power == src)
-			continue
-		var/datum/rune/cult/teleport/T = R.power
-		if(T.id == id && (!is_centcom_level(R.loc.z) || istype(get_area(R), religion.type)))
-			runes += R
-	return runes
-
-/datum/rune/cult/teleport/action(mob/living/carbon/user)
-	var/list/tp_runes = get_tp_runes()
-
-	if(tp_runes.len >= 5)
-		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")
-		user.take_overall_damage(5, 0)
-		return
-	if(tp_runes.len)
-		user.visible_message("<span class='userdanger'>[user] исчезает во вспышке красного света!</span>", \
-			"<span class='[religion.style_text]'>Вы чувствуете, как ваше тело проскальзывает сквозь измерения!</span>", \
-			"<span class='userdanger'>Вы слышите болезненный хруст и хлюпанье внутренностей.</span>")
-		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
-		user.forceMove(get_turf(pick(tp_runes)))
-		playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
-
-/datum/rune/cult/teleport/ghost_action(mob/living/carbon/user)
-	var/list/tp_runes = get_tp_runes()
-
-	if(tp_runes.len)
-		user.forceMove(get_turf(pick(tp_runes)))
 
 /datum/rune/cult/item_port
 	name = "Teleport item to Altar"
@@ -371,188 +364,54 @@
 		to_chat(user, "<span class='userdanger'>Ваша кровь перестает течь в руне, и вы чувствуете, как пространство над руной начинает редеть.</span>")
 		QDEL_NULL(wall)
 	else
-		wall = new /obj/effect/forcefield/cult/alt_app(get_turf(src))
+		wall = new /obj/effect/forcefield/cult/alt_app(get_turf(holder))
 		to_chat(user, "<span class='userdanger'>Ваша кровь начинает течь в руне, и вы чувствуете, как пространство над руной начинает сгущаться.</span>")
 
 	user.take_bodypart_damage(2, 0)
 
-
-// TODO: To Rite
-/datum/rune/cult/deafen
-	words = list("hide", "other", "see")
-
-/datum/rune/cult/deafen/rune_reaction(mob/living/carbon/user)
-	return 120
-
-/datum/rune/cult/deafen/talisman_reaction(mob/living/carbon/user)
-	return 70
-
-/datum/rune/cult/deafen/action(mob/living/carbon/user)
-	var/list/affected = nearest_heretics()
-	if(length(affected) < 1)
-		return
-	var/deafness_modifier = max(5, holder_reaction(user) / length(affected))
-	for(var/mob/living/carbon/C in affected)
-		C.playsound_local(null, 'sound/effects/mob/ear_ring_single.ogg', VOL_EFFECTS_MASTER)
-		C.ear_deaf += deafness_modifier
-		to_chat(C, "<span class='userdanger'>The world around you suddenly becomes quiet.</span>")
-		if(prob(1))
-			C.sdisabilities |= DEAF
-/datum/rune/cult/blind
-	words = list("destroy", "other", "see")
-
-/datum/rune/cult/blind/rune_reaction(mob/living/carbon/user)
-	return 90
-
-/datum/rune/cult/blind/talisman_reaction(mob/living/carbon/user)
-	return 30
-
-/datum/rune/cult/blind/action(mob/living/carbon/user)
-	var/list/affected = nearest_heretics()
-	if(length(affected) < 1)
-		return fizzle(user)
-	var/blindless_modifier = clamp(holder_reaction(user) / length(affected), 5, 30)
-	for(var/mob/living/carbon/C in affected)
-		C.eye_blurry += blindless_modifier
-		C.eye_blind += blindless_modifier / 2
-		if(prob(5))
-			C.disabilities |= NEARSIGHTED
-			if(prob(10))
-				C.sdisabilities |= BLIND
-		C.show_message("<span class='userdanger'>Suddenly you see red flash that blinds you.</span>", SHOWMSG_VISUAL)
-
-// TODO: To Rite
 /datum/rune/cult/bloodboil
 	words = list("destroy", "blood", "see")
 
+/datum/rune/cult/bloodboil/can_action(mob/living/carbon/user)
+	var/list/acolytes = religion.nearest_acolytes(1)
+	if(length(acolytes) < 3)
+		to_chat(user, "<span class='[religion.style_text]'>Вам необходимо как минимум 3 культиста вокруг руны.</span>")
+		return FALSE
+	var/list/heretics = religion.nearest_heretics()
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='[religion.style_text]'>Никого нет рядом.</span>")
+		return FALSE
+	return TRUE
 
 /datum/rune/cult/bloodboil/action(mob/living/carbon/user)
-	var/list/acolytes = nearest_cultists(1, "Dedo ol[pick("'","`")]btoh!")
-	if(length(acolytes) < 3)
-		to_chat(user, "<span class='[religion.style_text]'>You will need more cultists chanting for the bloodboil to succeed.</span>")
-		return fizzle(user)
+	var/list/acolytes = religion.nearest_acolytes(1, "Дедло ол[pick("'","`")]бтох!")
+	var/list/heretics = religion.nearest_heretics()
 	var/damage_for_acolytes = 45 / length(acolytes)
-	var/list/heretics = nearest_heretics()
-	if(length(heretics) < 1)
-		return fizzle(user)
-	var/damage_modifier = min(150 / length(heretics), 45)
+	var/damage_modifier = min(120 / length(heretics), 45)
 
 	for(var/mob/living/carbon/M in heretics)
 		M.take_overall_damage(damage_modifier, damage_modifier)
-		to_chat(M, "<span class='warning'>Your blood boils!</span>")
+		to_chat(M, "<span class='userdanger'>Твоя кровь кипит!</span>")
 		if(prob(5) && M)
 			M.gib()
 	for(var/obj/effect/rune/R in view(holder))
 		if(prob(10))
 			explosion(R.loc, -1, 0, 1, 5)
-	for(var/mob/living/carbon/C in acolytes)
-		C.take_overall_damage(damage_for_acolytes, 0)
+	for(var/mob/living/L in acolytes)
+		L.take_overall_damage(damage_for_acolytes, 0)
 
-// TODO: To Rite
-/datum/rune/cult/stun
-	words = list("join", "hide", "technology")
-
-/datum/rune/cult/stun/rune_reaction(mob/living/carbon/user)
-	user.say("Fuu ma[pick("'","`")]jin!")
-	var/list/heretics = nearest_heretics()
-	if(length(heretics) < 1)
-		return fizzle(user)
-	var/stun_modifier = 12 / length(heretics)
-	for(var/mob/living/carbon/C in heretics)
-		C.flash_eyes()
-		if(C.stuttering < 1 && (!(HULK in C.mutations)))
-			C.stuttering = 1
-			C.Weaken(stun_modifier)
-			C.Stun(stun_modifier)
-			C.show_message("<span class='userdanger'>The rune explodes in a bright flash.</span>", SHOWMSG_VISUAL)
-
-/datum/rune/cult/stun/talisman_reaction(mob/living/carbon/user, mob/living/affected)
-	user.say("Dream sign ''Evil sealing talisman'[pick("'","`")]!")
-	var/obj/item/weapon/nullrod/N = locate() in affected
-	if(N)
-		affected.visible_message("<span class='danger'>[user] invokes a talisman at [affected], but they are unaffected!</span>")
-		return
-	else
-		affected.visible_message("<span class='danger'>[user] invokes a talisman at [affected]!</span>")
-
-	if(issilicon(affected))
-		affected.Weaken(15)
-	else if(iscarbon(affected))
-		var/mob/living/carbon/C = affected
-		C.flash_eyes()
-		if(!(HULK in C.mutations))
-			C.silent += 10
-			C.Weaken(15)
-			C.Stun(15)
-
-// TODO: To Rite
-/datum/rune/cult/brainswap
-	words = list("travel", "blood", "other")
-
-	var/brainswapping = FALSE
-
-/datum/rune/cult/brainswap/action(mob/living/carbon/user)
-	if(user.is_busy())
-		return
-	var/bdam = rand(2, 10)
-	for(var/obj/effect/rune/R in religion.runes)
-		if(!istype(R.power, type) || R.power == src)
-			continue
-		for(var/mob/living/target in holder.loc)
-			if(!do_checks(user, target))
-				return
-			user.whisper("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen'ni nótim ve rmar aldaron!")
-			to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
-			to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
-			brainswapping = TRUE
-			if(do_after(user, BRAINSWAP_TIME, FALSE, target, FALSE, FALSE) && do_checks(user, target))
-				brainswapping = TRUE
-			else
-				brainswapping = FALSE
-			to_chat(user, "<span class='warning'>You feel weakend.</span>")
-			target.adjustBrainLoss(bdam)
-			user.adjustBrainLoss(bdam)
-			user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen'ni nótim ve rmar aldaron!")
-			to_chat(user, "<span class='danger'>Your mind flows into other body. You feel a lack of intelligence.</span>")
-			var/mob/dead/observer/ghost = target.ghostize(FALSE)
-			user.mind.transfer_to(target)
-			ghost.mind.transfer_to(user)
-			user.key = ghost.key
-			brainswapping = FALSE
-			return
-
-/datum/rune/cult/brainswap/proc/do_checks(mob/user, mob/target)
-	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	if(target == user)
-		to_chat(user, "<span class='warning'>You cant swap minds with yourself.</span>")
-		return FALSE
-	else if(!(target.type in compatible_mobs))
-		to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.</span>")
-		return FALSE
-	else if(target.stat == DEAD)
-		to_chat(user, "<span class='warning'>Swapping your mind with a dead body is a bad idea, isn't it?</span>")
-		return FALSE
-	else if(!target.mind || !target.key)
-		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.</span>")
-		return FALSE
-	else if(brainswapping)
-		to_chat(user, "<span class='warning'>Someone is already conducting a ritual here.</span>")
-		return FALSE
-	else
-		return TRUE
-
-// TODO: To Rite
 /datum/rune/cult/armor
+	name = "Summon a regimentals"
 	words = list("hell", "destroy", "other")
 
 /datum/rune/cult/armor/action(mob/living/carbon/user)
-	user.visible_message("<span class='userdanger'>The rune disappears with a flash of red light, and a set of armor appears on [user]...</span>", \
-	"<span class='userdanger'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor.</span>")
-	user.equip_to_slot_or_del(new /obj/item/clothing/head/culthood/alt(user), SLOT_HEAD)
-	user.equip_to_slot_or_del(new /obj/item/clothing/suit/cultrobes/alt(user), SLOT_WEAR_SUIT)
-	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/cult(user), SLOT_SHOES)
-	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), SLOT_BACK)
-	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+	user.visible_message("<span class='userdanger'>Из руны начинает гореть яркий красный свет, когда он рассвеивается, то на руне появляется броня и меч...</span>", \
+	"<span class='userdanger'>Вы ослеплены вспышкой красного света! После ослепления вы видите на месте руны набо доспехов с мечом.</span>")
+	new /obj/item/clothing/head/culthood(holder.loc)
+	new /obj/item/clothing/suit/cultrobes(holder.loc)
+	new /obj/item/clothing/shoes/boots/cult(holder.loc)
+	new /obj/item/weapon/storage/backpack/cultpack(holder.loc)
+	new /obj/item/weapon/melee/cultblade(holder.loc)
 	playsound(holder, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
 
 #undef BRAINSWAP_TIME

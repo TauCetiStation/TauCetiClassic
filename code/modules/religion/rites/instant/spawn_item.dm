@@ -21,8 +21,8 @@
 	name = "Summon talisman"
 	desc = "Summons an empty talisman in which to place the ritual."
 	ritual_length = (10 SECONDS)
-	invoke_msg = "Portable magic!!!"
-	favor_cost = 75
+	invoke_msg = "Переносная магия!!!"
+	favor_cost = 150
 	spawn_type = /obj/item/weapon/paper/talisman/cult
 
 	needed_aspects = list(
@@ -33,7 +33,7 @@
 	name = "Summon soulstone"
 	desc = "Summons an empty soulstone for forgotten souls."
 	ritual_length = (5 SECONDS)
-	invoke_msg = "For paranormal!!!"
+	invoke_msg = "За всё паранормальное!!!"
 	favor_cost = 150
 	spawn_type = /obj/item/device/soulstone
 
@@ -45,10 +45,31 @@
 	name = "Summon shell"
 	desc = "Summons an empty shell for forgotten souls."
 	ritual_length = (5 SECONDS)
-	invoke_msg = "For paranormal!!!"
+	invoke_msg = "За всё паранормальное!!!"
 	favor_cost = 50
 	spawn_type = /obj/structure/constructshell
 
 	needed_aspects = list(
 		ASPECT_MYSTIC = 1,
 	)
+
+/datum/religion_rites/instant/spawn_item/cult/space_suits
+	name = "Summon space suits"
+	desc = "Summons armor in which you can freely walk in space."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Я прийду к тебе!!!"
+	favor_cost = 200
+	spawn_type = /obj/item/clothing/suit/space/cult
+
+	needed_aspects = list(
+		ASPECT_WEAPON = 2,
+		ASPECT_SCIENCE = 1
+	)
+
+/datum/religion_rites/instant/spawn_item/cult/space_suits/invoke_effect(mob/living/user, obj/AOG)
+	. = ..()
+
+	new /obj/item/clothing/head/helmet/space/cult(get_turf(AOG))
+	playsound(AOG, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
+
+	return TRUE

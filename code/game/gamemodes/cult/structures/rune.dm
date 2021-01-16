@@ -33,8 +33,8 @@
 		if(!power)
 			return
 		to_chat(user, "Руной написано: <span class='[religion?.style_text]'>[power?.name]</span>.")
-		if(istype(power, /datum/rune/cult/teleport))
-			var/datum/rune/cult/teleport/R = power
+		if(istype(power, /datum/rune/cult/teleport/teleport))
+			var/datum/rune/cult/teleport/teleport/R = power
 			to_chat(user, "Id телепорта - <span class='[religion.style_text]'>[R.id]</span>.")
 		return
 	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")

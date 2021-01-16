@@ -27,7 +27,8 @@
 
 /obj/item/clothing/head/culthood
 	name = "cult hood"
-	icon_state = "culthood"
+	icon_state = "cult_hoodalt"
+	item_state = "cult_hoodalt"
 	desc = "A hood worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES
@@ -37,20 +38,11 @@
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
 
-
-/obj/item/clothing/head/culthood/alt
-	icon_state = "cult_hoodalt"
-	item_state = "cult_hoodalt"
-
-/obj/item/clothing/suit/cultrobes/alt
-	icon_state = "cultrobesalt"
-	item_state = "cultrobesalt"
-
 /obj/item/clothing/suit/cultrobes
 	name = "cult robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
-	icon_state = "cultrobes"
-	item_state = "cultrobes"
+	icon_state = "cultrobesalt"
+	item_state = "cultrobesalt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/bible/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 50, bullet = 15, laser = 15,energy = 20, bomb = 25, bio = 10, rad = 0)

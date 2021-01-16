@@ -45,6 +45,7 @@
 
 	max_runes = 10
 	style_text = "cult"
+	need_nimbus = FALSE
 
 	// Just gamemode of cult
 	var/datum/game_mode/cult/mode
