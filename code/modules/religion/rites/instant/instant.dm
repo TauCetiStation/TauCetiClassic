@@ -462,6 +462,87 @@
 	L.say("Йу'Аи! Лаури лантар ласси сринен'ни н'тим ве рмар алдарон!!")
 	return TRUE
 
+/datum/religion_rites/instant/cult/give_forcearmor
+	name = "Give power aura"
+	desc = "Surrounds the target with power aura that can block damage."
+	ritual_length = (15 SECONDS)
+	invoke_msg = "Защитись же!!"
+	favor_cost = 300
+
+	needed_aspects = list(
+		ASPECT_CHAOS = 2,
+		ASPECT_RESCUE = 2,
+	)
+
+/datum/religion_rites/instant/cult/give_forcearmor/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	if(!ishuman(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Только люди могут пройти через этот ритуал.</span>")
+		return FALSE
+
+	if(!AOG.buckled_mob.mind)
+		to_chat(user, "<span class='warning'>Тело [AOG.buckled_mob] слишком слабо!</span>")
+		return FALSE
+
+	if(AOG.buckled_mob.GetComponent(/datum/component/forcefield))
+		to_chat(user, "<span class='warning'>Эта оболочка уже под защитой.</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/religion_rites/instant/cult/give_forcearmor/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(!H)
+		return FALSE
+
+	user.take_overall_damage(20, 10)
+	H.take_overall_damage(10, 20)
+
+	var/obj/effect/effect/forcefield/rune/R = new
+	H.AddComponent(/datum/component/forcefield, "power aura", 50, 1 MINUTE, 40 SECONDS, R, FALSE, TRUE)
+	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
+
+	return TRUE
+
+/datum/religion_rites/instant/cult/give_forcearmor
+	name = "Upgrade tome"
+	desc = "Improves your tome reducing costs and giving other benefits."
+	ritual_length = (5 SECONDS)
+	invoke_msg = "Больше силы!!"
+	favor_cost = 150
+
+	needed_aspects = list(
+		ASPECT_WEAPON = 2,
+		ASPECT_TECH = 1,
+	)
+
+/datum/religion_rites/instant/cult/give_forcearmor/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	// Can use religion.bible_type, but chaplain does not have an improved book now
+	var/obj/item/weapon/storage/bible/tome/T = locate() in AOG.loc
+	if(!T)
+		to_chat(user, "<span class='warning'>На алтаре должен быть хотя бы один том.</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/religion_rites/instant/cult/give_forcearmor/invoke_effect(mob/living/user, obj/AOG)
+	..()
+	var/obj/item/weapon/storage/bible/tome/T = locate() in AOG.loc
+	if(!T)
+		return FALSE
+
+	for(var/obj/item/weapon/storage/bible/tome/tome in AOG.loc)
+		qdel(tome)
+		religion.spawn_bible(AOG.loc, /obj/item/weapon/storage/bible/tome/upgraded)
+
+	return TRUE
+
 /datum/religion_rites/instant/impose_blind
 	name = "Impose bliendess"
 	desc = "Impose bliendess on all heretics around."

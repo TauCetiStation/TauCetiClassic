@@ -77,12 +77,18 @@
 		if(user)
 			to_chat(user, "<span class='warning'>All pedestals is faded.</span>")
 		return FALSE
+	for(var/obj/structure/P in involved_pedestals)
+		if(!P.anchored)
+			if(user)
+				to_chat(user, "<span class='warning'>The pylon's fastenings were loosened.</span>")
+			return FALSE
 	return TRUE
 
 /datum/religion_rites/pedestals/pre_start(mob/living/user, obj/AOG)
 	var/rules_indx = 1
 	var/for_step = pedestals.len/rules.len
 	for(var/i in 1 to pedestals.len step for_step)
+		new /obj/effect/temp_visual/cult/sparks(get_turf(pedestals[i]))
 		involved_pedestals[pedestals[i]] = list(rules[rules_indx] = rules[rules[rules_indx]])
 		var/obj/structure/pedestal/cult/P = pedestals[i]
 		P.my_rite = src
@@ -125,7 +131,7 @@
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/AOG)
 	pedestals = list()
 	for(var/obj/structure/pedestal/cult/P in spiral_range(search_radius_of_pedestals, AOG))
-		if(P.my_rite)
+		if(P.my_rite || !P.anchored)
 			continue
 		pedestals += P
 		P.last_turf = get_turf(P)

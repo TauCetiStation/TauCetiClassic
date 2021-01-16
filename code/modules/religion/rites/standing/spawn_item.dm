@@ -94,7 +94,7 @@
 
 /datum/religion_rites/standing/spawn_item/banana_ore/modify_item(atom/item)
 	if(prob(20))
-		new item(item.loc)
+		new item.type(item.loc)
 
 /*
  * Create random friendly animal.

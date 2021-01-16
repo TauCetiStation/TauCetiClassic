@@ -63,7 +63,7 @@
 
 	var/piety = ""
 	if(look_piety)
-		piety = "and <span class='piety'>[round(religion.piety)] piety</span>"
+		piety = "and <span class='[religion.style_text]'>[round(religion.piety)] piety</span>"
 
 	msg += "<span class='notice'>The sect currently has [round(religion.favor)] favor [piety] with [pick(religion.deity_names)].\n</span>"
 
@@ -316,7 +316,13 @@
 				aspect_power = rite.needed_aspects[asp]
 
 		var/datum/aspect/strongest_aspect = religion.aspects[aspect]
-		rite_choices[rite.name] = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
+		var/image/I
+		if(strongest_aspect)
+			I = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
+		else
+			I = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_magic")
+
+		rite_choices[rite.name] = I
 
 	return rite_choices
 

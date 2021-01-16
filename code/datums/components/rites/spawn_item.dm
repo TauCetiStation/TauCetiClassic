@@ -156,7 +156,7 @@
 		if(invoke_effect)
 			invoke_effect.Invoke(created)
 
-		if(!ismob(created))
+		if(isitem(created))
 			created.pixel_x = I.pixel_x
 			created.pixel_y = I.pixel_y
 

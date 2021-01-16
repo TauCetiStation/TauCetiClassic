@@ -288,7 +288,10 @@
 		spawns -= 1
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/create_shell(mob/slave, type)
-	var/mob/living/simple_animal/construct/C = new type(src.loc)
+	var/turf/T = get_turf(src)
+	var/mob/living/simple_animal/construct/C = new type(T)
+
+	new /obj/effect/temp_visual/cult/sparks(T)
 
 	if(global.cult_religion)
 		SSticker.mode.add_cultist(C.mind)

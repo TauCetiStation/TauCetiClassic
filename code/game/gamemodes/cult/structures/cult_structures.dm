@@ -147,7 +147,7 @@
 	icon_state = "hole"
 	density = 1
 	unacidable = 1
-	anchored = 1.0
+	anchored = 1
 	light_color = "#550314"
 	light_power = 30
 	light_range = 3

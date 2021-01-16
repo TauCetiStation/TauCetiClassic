@@ -1,5 +1,5 @@
 
-/proc/iscultist(mob/living/M)
+/proc/iscultist(mob/M)
 	return M && global.cult_religion && global.cult_religion.is_member(M)
 
 /datum/game_mode/cult
@@ -101,6 +101,12 @@
 		if(H.mind.assigned_role == "Clown")
 			to_chat(H, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.mutations.Remove(CLUMSY)
+
+	var/datum/religion_rites/instant/communicate/rite = new
+	rite.religion = global.cult_religion
+	var/obj/item/weapon/paper/talisman/cult/T = new(H, global.cult_religion, rite)
+	T.disposable = TRUE
+	H.equip_to_slot_or_del(T, SLOT_IN_BACKPACK)
 
 	global.cult_religion.give_tome(H)
 

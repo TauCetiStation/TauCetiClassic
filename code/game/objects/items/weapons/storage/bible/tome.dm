@@ -23,6 +23,9 @@
 
 	var/toggle_deconstruct = FALSE
 
+	// Allows you to increase or decrease the costs
+	var/cost_coef = 1
+
 /obj/item/weapon/storage/bible/tome/atom_init()
 	. = ..()
 	rad_choices["Chapel looks"] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left")
@@ -46,7 +49,7 @@
 		building_choices()
 		rune_choices()
 
-	if(user.mind?.holy_role && istype(user.my_religion, /datum/religion/cult))
+	if(iscultist(user))
 		choice_bible_func(user)
 		return
 
@@ -77,7 +80,7 @@
 
 	for(var/datum/building_agent/B in religion.available_buildings)
 		if(istype(target, B.building_type))
-			if(!religion.check_costs(B.deconstruct_favor_cost, B.deconstruct_piety_cost, user))
+			if(!religion.check_costs(B.deconstruct_favor_cost * cost_coef, B.deconstruct_piety_cost * cost_coef, user))
 				break
 
 			destr_next[user.ckey] = world.time + destr_cd
@@ -94,8 +97,8 @@
 				T.ChangeTurf(type_new_turf)
 
 			qdel(target)
-			religion.adjust_favor(-B.deconstruct_favor_cost)
-			religion.adjust_piety(-B.deconstruct_piety_cost)
+			religion.adjust_favor(-B.deconstruct_favor_cost * cost_coef)
+			religion.adjust_piety(-B.deconstruct_piety_cost * cost_coef)
 			break
 
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()
@@ -122,7 +125,7 @@
 	if(!choice)
 		return
 
-	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
+	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return
 
 	if(!do_after(user, scribe_time, target = get_turf(user)))
@@ -138,8 +141,10 @@
 	R.blood_DNA = list()
 	R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
-	religion.adjust_favor(-choice.favor_cost)
-	religion.adjust_piety(-choice.piety_cost)
+	new /obj/effect/temp_visual/cult/sparks(get_turf(R))
+
+	religion.adjust_favor(-choice.favor_cost * cost_coef)
+	religion.adjust_piety(-choice.piety_cost * cost_coef)
 	rune_next[user.ckey] = world.time + rune_cd
 
 /obj/item/weapon/storage/bible/tome/proc/building(mob/user)
@@ -165,7 +170,7 @@
 				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого.</span>")
 				return
 
-	if(!religion.check_costs(choice.favor_cost, choice.piety_cost, user))
+	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return
 
 	var/turf/targeted_turf = get_step(src, user.dir)
@@ -177,8 +182,10 @@
 	else
 		new choice.building_type(targeted_turf)
 
-	religion.adjust_favor(-choice.favor_cost)
-	religion.adjust_piety(-choice.piety_cost)
+	new /obj/effect/temp_visual/cult/sparks(targeted_turf)
+
+	religion.adjust_favor(-choice.favor_cost * cost_coef)
+	religion.adjust_piety(-choice.piety_cost * cost_coef)
 	build_next[user.ckey] = world.time + build_cd
 
 /obj/item/weapon/storage/bible/tome/proc/choice_bible_func(mob/user)
@@ -198,7 +205,7 @@
 
 /obj/item/weapon/storage/bible/tome/proc/get_agent_radial_menu(list/datum/building_agent/BA, mob/user)
 	for(var/datum/building_agent/B in BA)
-		B.name = "[initial(B.name)] [B.get_costs()]"
+		B.name = "[initial(B.name)] [B.get_costs(cost_coef)]"
 
 	var/datum/building_agent/choice = show_radial_menu(user, src, BA, tooltips = TRUE, require_near = TRUE)
 

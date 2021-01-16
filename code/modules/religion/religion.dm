@@ -26,6 +26,7 @@
 	var/datum/bible_info/bible_info
 	// Type of bible of religion
 	var/bible_type
+
 	var/list/bible_info_by_name
 	// Radial menu
 	var/list/bible_skins
@@ -337,8 +338,12 @@
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
-/datum/religion/proc/spawn_bible(atom/location)
-	var/obj/item/weapon/storage/bible/B = new bible_type(location)
+/datum/religion/proc/spawn_bible(atom/location, custom_type)
+	var/obj/item/weapon/storage/bible/B
+	if(custom_type)
+		B = new custom_type(location)
+	else
+		B = new bible_type(location)
 	bible_info.apply_to(B)
 	B.deity_name = pick(deity_names)
 	B.god_lore = lore
@@ -433,6 +438,30 @@
 	for(var/mob/deity in active_deities)
 		give_god_spells(deity)
 
+/datum/religion/proc/get_rite_info(datum/religion_rites/RI)
+	var/name_entry = ""
+
+	var/tip_text
+	for(var/tip in RI.tips)
+		if(tip_text)
+			tip_text += " "
+		tip_text += tip
+	if(tip_text)
+		name_entry += "[EMBED_TIP(RI.name, tip_text)]"
+	else
+		name_entry += "[RI.name]"
+
+	if(RI.desc)
+		name_entry += " - [RI.desc]"
+	if(RI.favor_cost)
+		name_entry += " ([RI.favor_cost] favor)"
+	if(RI.piety_cost)
+		for(var/obj/structure/altar_of_gods/altar in altars)
+			altar.look_piety = TRUE
+		name_entry += "<span class='[style_text]'> ([RI.piety_cost] piety)</span>"
+
+	return name_entry
+
 // Generate new rite_list
 /datum/religion/proc/update_rites()
 	if(rites_by_name.len > 0)
@@ -440,28 +469,7 @@
 		// Generates a list of information of rite, used for examine() in altar_of_gods
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]
-			var/name_entry = ""
-
-			var/tip_text
-			for(var/tip in RI.tips)
-				if(tip_text)
-					tip_text += " "
-				tip_text += tip
-			if(tip_text)
-				name_entry += "[EMBED_TIP(RI.name, tip_text)]"
-			else
-				name_entry += "[RI.name]"
-
-			if(RI.desc)
-				name_entry += " - [RI.desc]"
-			if(RI.favor_cost)
-				name_entry += " ([RI.favor_cost] favor)"
-			if(RI.piety_cost)
-				for(var/obj/structure/altar_of_gods/altar in altars)
-					altar.look_piety = TRUE
-				name_entry += "<span class='piety'> ([RI.piety_cost] piety)</span>"
-
-			rites_info[RI.name] = "[name_entry]"
+			rites_info[RI.name] = get_rite_info(RI)
 
 // Adds all binding rites once
 /datum/religion/proc/give_binding_rites()

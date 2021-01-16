@@ -9,19 +9,19 @@
 	var/piety_cost = 0
 	var/deconstruct_piety_cost = 0
 
-/datum/building_agent/proc/get_costs()
+/datum/building_agent/proc/get_costs(coef = 1)
 	var/costs = ""
 
 	if(favor_cost || piety_cost)
 		costs += "("
 
 	if(favor_cost > 0)
-		costs += "[favor_cost] favor"
+		costs += "[favor_cost * coef] favor"
 
 	if(piety_cost > 0)
 		if(favor_cost > 0)
 			costs += " "
-		costs += "[piety_cost] piety"
+		costs += "[piety_cost * coef] piety"
 
 	if(favor_cost || piety_cost)
 		costs += ")"

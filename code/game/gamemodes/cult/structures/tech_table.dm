@@ -132,6 +132,9 @@
 /obj/structure/cult/tech_table/proc/start_activity(datum/callback/end_activity)
 	LAZYINITLIST(pylon_around)
 	for(var/obj/structure/cult/pylon/P in oview(3))
+		if(!P.anchored)
+			continue
+		new /obj/effect/temp_visual/cult/sparks(P.loc)
 		pylon_around += P
 		P.icon_state = "pylon_glow"
 	researching = TRUE
