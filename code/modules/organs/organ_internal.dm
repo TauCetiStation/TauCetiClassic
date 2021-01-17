@@ -496,7 +496,7 @@
 	to_chat(user, "<span class='notice'>You lean on the back of [src] stomach and start pushing himself out. (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='warning'>You hear a gurgles from [src]!</span>")
 
-	if(do_after(user,(breakout_time MINUTE), target = src))
+	if(do_after(user, (breakout_time MINUTE), target = src))
 		if(!user || user.incapacitated() || user.loc != src)
 			return
 
