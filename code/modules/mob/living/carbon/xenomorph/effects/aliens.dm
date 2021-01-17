@@ -171,7 +171,7 @@
 	icon_state = "weeds"
 	anchored = TRUE
 	density = FALSE
-	layer = 2.5
+	layer = TURF_LAYER
 	plane = FLOOR_PLANE
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/simulated/wall)
 	smooth = SMOOTH_MORE
@@ -296,7 +296,7 @@
 	icon_state = "weednode"
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	layer = 2.5
+	layer = TURF_LAYER
 	light_range = 0
 	light_color = "#24c1ff"
 
