@@ -102,7 +102,7 @@
 	var/mob/living/target = victim
 	if(isobj(victim))
 		target = src
-	if(!do_mob(src, target,eat_speed))
+	if(!do_mob(src, target, eat_speed))
 		return FALSE
 	visible_message("<span class='danger'>\The [src] devours \the [victim] whole!</span>")
 	if(ismob(victim))
