@@ -35,7 +35,7 @@
 	. = ..()
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
-			to_chat(M, "<font size='15' color='red'><b>НАР-СИ ВОССТАЛ</b></font>")
+			to_chat(M, "<font size='15' color='red'><b>Н́̿̚Ӓ́̈́Р̔̚͘-̽̔͆С̈́͛͛И̓͊̕ В͒̚͝О̓͒̓С̓̾͑С̔̓͝Т̈́͘̚А͒͑͘Л͐͌̾</b></font>")
 			M.playsound_local(null, pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'), VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
 	var/area/A = get_area(src)
@@ -92,9 +92,13 @@
 		L.gib()
 		return
 
+	else if(istype(A, /obj/structure/mineral_door/cult))
+		return
+
 	else if(istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door))
 		new /obj/structure/mineral_door/cult(get_turf(A))
 		qdel(A)
+		return
 
 	else if(isturf(A))
 		var/turf/T = A
@@ -179,12 +183,12 @@
 
 
 /obj/singularity/narsie/proc/acquire(mob/food)
-	to_chat(target, "<span class='notice'>ТЫ МНЕ БОЛЬШЕ НЕ ИНЕТЕРЕСЕН</span>")
+	to_chat(target, "<span class='userdanger'>Т͆̐͠Ы͛̚͝ М̀̿̿Н͛͊̀Е͊̈́͑ Б͑͌͛О͒̕̚Л̐̓͝Ь̀͑̿Ш͑͆̈́Е̾̓͘ Н̈́̿Е̾͆̾ И͑͐͝Н̈́͌̿Е̓͆͘Т͌̚͠Е͋͛͆Р̐̾̒Е͊͑̓С͋͠͠Е͋̈́͊Н̿͒̈́</span>")
 	target = food
 	if(ishuman(target))
-		to_chat(target, "<span class ='userdanger'>МНЕ НУЖНА ТВОЯ ДУША</span>")
+		to_chat(target, "<span class ='userdanger'>М̿̾̈́Н͆̀͒Е̒͑͆ Н̽͒͝У̔̈́̚Ж̿͛͝Н̔̓Ӓ́͋̐ Т̐͌̔В͒́О̒͐͝Я͋͌͋ Д͊̓͠У̒̒̕Ш̈́̀͌А͊̽</span>")
 	else
-		to_chat(target, "<span class ='userdanger'>ТЫ МЕНЯ ПРИВЕДЕШЬ К СЛЕДУЮЩЕЙ ЖЕРТВЕ</span>")
+		to_chat(target, "<span class ='userdanger'>Т̓̓̐Ы̒͛̕ М̐̈́Е͐͛Н́̀Я̀͑̽ П͐̐Р̐̀̓И͝͝В͐͘͠Е͛̐̕Д́̈́͝Е͊̓͝Ш̈́͝͠Ь͋̒̚ К̐̾ С̔̾̀Л̈́͊Е̽̒͝Д̈́͊̕У̿̚͝Ю͆̒͘Щ̈́̈́͝Е̔̈́̐Й̾̓̈́ Ж̽̿̾Е͐̀̽Р͒͐̚Т̈́̐͌В̿̕͠Е̽̐̿</span>")
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()

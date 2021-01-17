@@ -14,17 +14,18 @@
 	var/type_of_sects = /datum/religion_sect/preset/chaplain
 	var/custom_sect_type = /datum/religion_sect/custom/chaplain
 
-	var/change_preset_name = TRUE
-
 	var/datum/religion_rites/performing_rite
 	var/datum/religion/religion //easy access
+
 	var/chosen_aspect = FALSE
 	var/choosing_sects = FALSE
+	var/change_preset_name = TRUE
+	var/look_piety = FALSE
 
 	// It's fucking science! I ain't gotta explain this.
 	var/datum/experiment_data/experiments
-
-	var/look_piety = FALSE
+	// name = image
+	var/list/rite_images = list()
 
 	var/list/mob/mobs_around = list()
 	var/list/turf/turfs_around = list()
@@ -206,9 +207,10 @@
 		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
 		return
 
-	var/list/rite_choices = get_rite_choices()
+	if(rite_images.len < religion.rites_info.len)
+		rite_images = get_rite_choices()
 
-	var/choosed_rite = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
+	var/choosed_rite = show_radial_menu(user, src, rite_images, require_near = TRUE, tooltips = TRUE)
 	if(!choosed_rite)
 		return
 
@@ -249,9 +251,10 @@
 		to_chat(user, "<span class='warning'>Талисман уже заряжен.</span>")
 		return
 
-	var/list/rite_choices = get_rite_choices()
+	if(rite_images.len < religion.rites_info.len)
+		rite_images = get_rite_choices()
 
-	var/choosed_rite = show_radial_menu(user, src, rite_choices, require_near = TRUE, tooltips = TRUE)
+	var/choosed_rite = show_radial_menu(user, src, rite_images, require_near = TRUE, tooltips = TRUE)
 	if(!choosed_rite)
 		return
 
@@ -318,8 +321,8 @@
 		var/datum/aspect/strongest_aspect = religion.aspects[aspect]
 		var/image/I
 		if(strongest_aspect)
-			I = image(icon = strongest_aspect.icon, icon_state = strongest_aspect.icon_state)
-		else
+			I = strongest_aspect.aspect_image
+		else // For rites without need for aspects
 			I = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_magic")
 
 		rite_choices[rite.name] = I

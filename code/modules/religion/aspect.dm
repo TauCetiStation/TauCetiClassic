@@ -10,6 +10,7 @@
 	// Used in the radial menu when choosing a ritual
 	var/icon = 'icons/mob/radial.dmi'
 	var/icon_state = "radial_magic"
+	var/image/aspect_image
 
 	// List of holy turfs blessed with this aspect.
 	var/list/holy_turfs
@@ -18,6 +19,10 @@
 
 	// Color of aspect
 	var/color
+
+/datum/aspect/New()
+	if(icon && icon_state)
+		aspect_image = image(icon = src.icon, icon_state = src.icon_state)
 
 /datum/aspect/Destroy()
 	QDEL_LIST_ASSOC_VAL(holy_turfs)

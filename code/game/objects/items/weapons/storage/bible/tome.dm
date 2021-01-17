@@ -33,8 +33,8 @@
 	rad_choices["Construction"] = image(icon = 'icons/turf/walls/cult/wall.dmi', icon_state = "box")
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
-	if(iscultist(user) || isobserver(user))
-		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
+	if((iscultist(user) || isobserver(user)) && religion)
+		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. \
 		Most of these are useless, though.")
 		to_chat(user, "Current count of favor: [religion.favor] piety: <span class='piety'>[religion.piety]</span>")
 	else
@@ -45,9 +45,11 @@
 		religion = user.my_religion
 
 /obj/item/weapon/storage/bible/tome/attack_self(mob/user)
-	if(religion && (!build_choices_image.len || !rune_choices_image.len))
-		building_choices()
-		rune_choices()
+	if(religion)
+		if(build_choices_image.len - 1 < religion.available_buildings.len)
+			building_choices()
+		if(rune_choices_image.len < religion.available_runes.len)
+			rune_choices()
 
 	if(iscultist(user))
 		choice_bible_func(user)

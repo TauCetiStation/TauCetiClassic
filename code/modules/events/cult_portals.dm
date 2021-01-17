@@ -38,7 +38,11 @@
 /datum/event/anomaly/cult_portal/massive/proc/spawn_portals()
 	for(var/i in 1 to 50)
 		impact_area = findEventArea()
-		var/turf/T = pick(get_area_turfs(impact_area))
+		var/list/turfs = get_area_turfs(impact_area)
+		if(!turfs.len)
+			message_admins("В [impact_area] нету турфов. Это баг, сообщите кодерам про это.")
+			continue
+		var/turf/T = pick(turfs)
 		if(T)
 			var/obj/effect/anomaly/bluespace/cult_portal/C = new(T)
 			newAnomaly += C

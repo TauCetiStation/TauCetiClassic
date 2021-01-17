@@ -168,6 +168,7 @@
 	var/mob/M = new type(get_turf(target.loc))
 
 	flick("make_[M.icon_state]", M)
+	sleep(9)
 	playsound(M, 'sound/effects/constructform.ogg', 50)
 
 	M.key = A.key

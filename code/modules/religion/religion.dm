@@ -331,7 +331,7 @@
 
 	var/list/areas = get_areas(_area_type)
 	for(var/area/A in areas)
-		captured_areas += src
+		captured_areas += A
 		if(A.religion)
 			A.religion.captured_areas -= A.religion
 		A.religion = src

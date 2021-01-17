@@ -48,7 +48,7 @@
 
 /datum/rune/proc/fizzle(mob/living/user)
 	if(istype(holder, /obj/effect/rune))
-		user.say(pick("Хаккрутйу гопоенйим.", "Храсаи пивроиашан.", "Фирййи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Миуф хон внор'с.", "Вакабаи хий фен йусших."))
+		user.say(pick("Хаккрутжу гопоенжим.", "Нхерасаи пивроиашан.", "Фиржжи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Мийф хон внор'с.", "Вакабаи хиж фен жусвикс."))
 	else
 		user.whisper(pick("Хаккрутжу гопоенжим.", "Нхерасаи пивроиашан.", "Фиржжи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Мийф хон внор'с.", "Вакабаи хиж фен жусвикс."))
 	holder.visible_message("<span class='danger'>Иероглиф начинает пульсировать незаметным светом и сразу тухнет.</span>","<span class='danger'>Вы слишите тихое шипение.</span>")
@@ -74,11 +74,13 @@
 /datum/rune/cult/teleport/teleport_to_heaven
 	name = "Teleport to HEAVEN"
 	words = list("travel", "self", "hell")
+	var/turf/destination
 
 /datum/rune/cult/teleport/teleport_to_heaven/action(mob/living/carbon/user)
-	var/area/A = locate(religion.area_type)
-	var/turf/T = get_turf(pick(A.contents))
-	teleporting(T, user)
+	if(!destination)
+		var/area/A = locate(religion.area_type)
+		destination = get_turf(pick(A.contents))
+	teleporting(destination	, user)
 
 /datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/user, list/companions)
 	if(user && !(locate(/obj/effect/rune) in target)) // user can gibbed
@@ -127,14 +129,11 @@
 /datum/rune/cult/teleport/teleport/proc/get_tp_runes()
 	var/list/runes = list()
 	for(var/obj/effect/rune/R in religion.runes)
-		to_chat(world, "[R] - [R.power] - [type] - [R.power.type]")
 		if(!istype(R.power, type) || R.power == src)
 			continue
-		to_chat(world, "Good")
 		var/datum/rune/cult/teleport/teleport/T = R.power
 		if(T.id == id && (!is_centcom_level(R.loc.z) || istype(get_area(R), religion.area_type)))
 			runes += R
-			to_chat(world, "Very good")
 	return runes
 
 /datum/rune/cult/teleport/teleport/action(mob/living/carbon/user)
@@ -169,7 +168,7 @@
 	return ..()
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
-	var/area/area = get_area(user)
+	var/area/area = get_area(holder)
 
 	if(is_centcom_level(user.z))
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
@@ -355,7 +354,7 @@
 /datum/rune/cult/wall/can_action(mob/living/carbon/user)
 	if(!religion.reusable_rune) // The first click puts up a wall. The second click removes the wall and rune.
 		if(!wall)
-			action()
+			action(user)
 			return FALSE
 	return TRUE
 
@@ -373,20 +372,23 @@
 	words = list("destroy", "blood", "see")
 
 /datum/rune/cult/bloodboil/can_action(mob/living/carbon/user)
-	var/list/acolytes = religion.nearest_acolytes(1)
+	var/list/acolytes = religion.nearest_acolytes(holder, 1)
 	if(length(acolytes) < 3)
 		to_chat(user, "<span class='[religion.style_text]'>Вам необходимо как минимум 3 культиста вокруг руны.</span>")
 		return FALSE
-	var/list/heretics = religion.nearest_heretics()
+	var/list/heretics = religion.nearest_heretics(holder, 5)
 	if(length(heretics) < 1)
 		to_chat(user, "<span class='[religion.style_text]'>Никого нет рядом.</span>")
 		return FALSE
 	return TRUE
 
 /datum/rune/cult/bloodboil/action(mob/living/carbon/user)
-	var/list/acolytes = religion.nearest_acolytes(1, "Дедло ол[pick("'","`")]бтох!")
-	var/list/heretics = religion.nearest_heretics()
-	var/damage_for_acolytes = 45 / length(acolytes)
+	var/list/acolytes = religion.nearest_acolytes(holder, 1, "Дедло ол[pick("'","`")]бтох!")
+	var/list/heretics = religion.nearest_heretics(holder, 5)
+	if(length(heretics) < 1)
+		to_chat(user, "<span class='[religion.style_text]'>Никого нет рядом.</span>")
+		return
+	var/damage_for_acolytes = 65 / length(acolytes)
 	var/damage_modifier = min(120 / length(heretics), 45)
 
 	for(var/mob/living/carbon/M in heretics)

@@ -293,9 +293,6 @@
 
 	new /obj/effect/temp_visual/cult/sparks(T)
 
-	if(global.cult_religion)
-		SSticker.mode.add_cultist(C.mind)
-
 	C.key = slave.key
 	var/rand_num = rand(1, 3)
 	for(var/i in 1 to rand_num)

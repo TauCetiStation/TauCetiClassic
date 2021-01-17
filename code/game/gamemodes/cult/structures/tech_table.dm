@@ -8,11 +8,11 @@
 
 	// /datum/aspect = image
 	// Maybe be wrapped too in /datum/building_agent
-	var/static/list/aspect_images
+	var/static/list/aspect_images = list()
 	// /datum/building_agent = image
-	var/static/list/uniq_images
+	var/static/list/uniq_images = list()
 	// string = image
-	var/static/list/category_images
+	var/static/list/category_images = list()
 	var/researching = FALSE
 	var/research_time = 20 MINUTES
 	var/end_research_time
@@ -41,9 +41,11 @@
 		to_chat(user, "<span class='warning'>There are [round((end_research_time - world.time) * 0.1)] seconds left until the end of studying the aspect.</span>")
 		return
 
-	if(!category_images || !uniq_images || !aspect_images)
+	if(!aspect_images)
 		gen_aspect_images()
+	if(uniq_images.len < user.my_religion.available_techs.len)
 		gen_tech_images(user)
+	if(!category_images)
 		gen_category_images()
 
 	var/choice = show_radial_menu(user, src, category_images, tooltips = TRUE, require_near = TRUE)
@@ -115,7 +117,7 @@
 	)
 
 /obj/structure/cult/tech_table/proc/gen_tech_images(mob/living/user)
-	uniq_images= list()
+	uniq_images = list()
 	for(var/datum/building_agent/tech/BA in user.my_religion.available_techs)
 		uniq_images[BA] = image(icon = BA.icon, icon_state = BA.icon_state)
 

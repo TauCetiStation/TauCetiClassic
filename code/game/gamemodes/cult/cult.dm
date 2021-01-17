@@ -181,7 +181,7 @@
 	if(config.objectives_disabled)
 		return TRUE
 	completion_text += "<h3>Результаты Культа:</h3>"
-	if(!check_cult_victory())
+	if(check_cult_victory())
 		mode_result = "win - cult win"
 		feedback_set_details("round_end_result", mode_result)
 		completion_text += "<span class='color: red; font-weight: bold;'>Культ <span style='color: green'>выйгал</span>! Рабы преуспели в служении своим темным хозяевам!</span><br>"

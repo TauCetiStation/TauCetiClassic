@@ -30,13 +30,13 @@
 		S.dust()
 		R.mode.sacrificed += S.mind
 		if(sacrifice_target && sacrifice_target == S.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я принимаю эту жертву, ваша цель теперь может считаться выполненной.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
 			R.adjust_favor(300)
 	else if(ishuman(AOG.buckled_mob))
 		AOG.buckled_mob.gib()
 		R.mode.sacrificed += AOG.buckled_mob.mind
 		if(sacrifice_target && sacrifice_target == AOG.buckled_mob.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я принимаю эту жертву, ваша цель теперь может считаться выполненной.</span>")
+			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
 			R.adjust_favor(300)
 
 	R.adjust_favor(calc_sacrifice_favor(AOG.buckled_mob))
@@ -138,7 +138,7 @@
 
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.victim?.stat != DEAD)
+		if(table.buckled_mob?.stat != DEAD)
 			return TRUE
 
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
@@ -149,13 +149,14 @@
 	var/drain = 0
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.victim?.stat != DEAD)
-			var/bdrain = rand(1, 25)
-			to_chat(table.victim, "<span class='userdanger'>Вы чувствуете слабость.</span>")
-			table.victim.take_overall_damage(bdrain, 0)
-			table.victim.Paralyse(5 SECONDS)
-			playsound(table, 'sound/magic/transfer_blood.ogg', VOL_EFFECTS_MASTER)
-			drain += bdrain
+		if(!table.buckled_mob || table.buckled_mob.stat == DEAD)
+			continue
+		var/bdrain = rand(1, 25)
+		to_chat(table.buckled_mob, "<span class='userdanger'>Вы чувствуете слабость.</span>")
+		table.buckled_mob.take_overall_damage(bdrain, 0)
+		table.buckled_mob.Paralyse(5 SECONDS)
+		playsound(table, 'sound/magic/transfer_blood.ogg', VOL_EFFECTS_MASTER)
+		drain += bdrain
 
 	if(!drain)
 		return FALSE
@@ -197,7 +198,7 @@
 
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.victim?.stat != DEAD)
+		if(table.buckled_mob?.stat != DEAD)
 			return TRUE
 
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
@@ -214,15 +215,15 @@
 
 	var/datum/religion/cult/C = religion
 	if(C.mode.sacrifice_target && C.mode.sacrifice_target == AOG.buckled_mob.mind)
-		to_chat(user, "<span class='[religion.style_text]'>Я запрещаю его воскрешать!</span>")
+		to_chat(user, "<span class='[religion.style_text]'>Я̿̀͝ ӟ́͌͝а̓͌́п̒͛̈́р͌͌̕е̾̈́̀щ̈́̚а̓͊ю̔͌͋ е̽̕г͆͛ӧ́̕̕ в̈́͝о͆̽̈́с̾͐̐к̽͒͌р̔̔̕е͋͑̈́ш̀̕͝а́͒̕т̈́̽̒ь͊̓̕!</span>")
 		return FALSE
 	if(AOG.buckled_mob.mind)
 		corpse_to_raise = AOG.buckled_mob
 
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(!table.victim || table.victim.stat == DEAD)
+		if(!table.buckled_mob || table.buckled_mob.stat == DEAD)
 			continue
-		bodys_to_sacrifice += table.victim
+		bodys_to_sacrifice += table.buckled_mob
 
 	if(!bodys_to_sacrifice.len)
 		to_chat(user, "<span class='[religion.style_text]'>Не хватает тел для жертвы.</span>")
@@ -275,7 +276,7 @@
 
 /datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
 	..()
-	var/list/candidates = pollGhostCandidates("Do you want to move into a [religion.name] homunculus?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 15 SECONDS)
+	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 15 SECONDS)
 	if(!candidates.len)
 		to_chat(user, "<span class='warning'>Ниодна душа не захотела вселяться в гомункула.</span>")
 		return FALSE
@@ -286,7 +287,7 @@
 		"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
 		"<span class='userdanger'>Вы слышите, как течет жидкость.</span>")
 
-	D.real_name = "familiar of [religion.deity_names] [num2roman(rand(1, 20))]"
+	D.real_name = "homunculus of [pick(religion.deity_names)] [num2roman(rand(1, 20))]"
 	D.universal_speak = TRUE
 	D.status_flags &= ~GODMODE
 	D.s_tone = 35
@@ -409,7 +410,7 @@
 	if(AOG.can_buckle && !AOG.buckled_mob)
 		AOG.user_buckle_mob(cultist, user)
 
-	user.visible_message("<span class='userdanger'>С красной вспышкой появляется [cultist].</span>", \
+	cultist.visible_message("<span class='userdanger'>С красной вспышкой появляется [cultist].</span>", \
 		"<span class='[religion.style_text]'>Вас на мгновенье ослепила красная вспышка. Теперь вы видите перед собой внезапно появившееся тело.</span>", \
 		"<span class='[religion.style_text]'>Вы слышите хлопок и чувствуете запах озона.</span>")
 
@@ -507,7 +508,7 @@
 
 	return TRUE
 
-/datum/religion_rites/instant/cult/give_forcearmor
+/datum/religion_rites/instant/cult/upgrade_tome
 	name = "Upgrade tome"
 	desc = "Improves your tome reducing costs and giving other benefits."
 	ritual_length = (5 SECONDS)
@@ -519,7 +520,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/instant/cult/give_forcearmor/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/upgrade_tome/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -531,7 +532,7 @@
 
 	return TRUE
 
-/datum/religion_rites/instant/cult/give_forcearmor/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/cult/upgrade_tome/invoke_effect(mob/living/user, obj/AOG)
 	..()
 	var/obj/item/weapon/storage/bible/tome/T = locate() in AOG.loc
 	if(!T)

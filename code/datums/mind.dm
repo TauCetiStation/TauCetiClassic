@@ -1681,6 +1681,11 @@
 	..()
 	mind.assigned_role = "Shade"
 
+/mob/living/simple_animal/construct/mind_initialize()
+	..()
+	if(global.cult_religion)
+		SSticker.mode.add_cultist(mind)
+
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
