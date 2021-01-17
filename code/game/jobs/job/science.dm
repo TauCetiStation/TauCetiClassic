@@ -115,5 +115,6 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
 	salary = 50
+	minimal_player_ingame_minutes = 800
 	outfit = /datum/outfit/job/research_assistant
 
