@@ -443,7 +443,7 @@
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	QDEL_NULL(reagents)
-	. = ..()
+	return ..()
 
 /obj/item/organ/internal/stomach/proc/can_eat_atom(atom/movable/food)
 	return get_devour_time(food)
