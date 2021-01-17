@@ -311,11 +311,8 @@
 						else if(Heart.heart_status == HEART_FIBR)
 							organ_status = "Heart Fibrillation:"
 					if(istype(IO, /obj/item/organ/internal/stomach))
-						var/content_count = 0
-						for(var/A in IO.contents)
-							content_count += 1
-						if(content_count)
-							content = "Unknown [content_count] body present:"
+						if(IO.contents.len)
+							content = "Unknown [IO.contents.len] body present:"
 
 					if(istype(IO, /obj/item/organ/internal/lungs))
 						if(occupant.is_lung_ruptured())
