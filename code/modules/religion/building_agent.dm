@@ -38,26 +38,26 @@
 /datum/building_agent/structure/cult/wall
 	name = "Wall"
 	building_type = /turf/simulated/wall/cult
-	favor_cost = 0
-	deconstruct_favor_cost = 0
+	favor_cost = 50
+	deconstruct_favor_cost = 25
 	piety_cost = 0
 	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/floor
 	name = "Floor"
 	building_type = /turf/simulated/floor/engine/cult
-	favor_cost = 100
-	deconstruct_favor_cost = 50
-	piety_cost = 10
-	deconstruct_piety_cost = 1
+	favor_cost = 10
+	deconstruct_favor_cost = 5
+	piety_cost = 0
+	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/altar
 	name = "Altar"
 	building_type = /obj/structure/altar_of_gods/cult
-	favor_cost = 100
+	favor_cost = 150
 	deconstruct_favor_cost = 50
-	piety_cost = 10
-	deconstruct_piety_cost = 1
+	piety_cost = 50
+	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/pedestal
 	name = "Pedestal"
@@ -65,47 +65,47 @@
 	favor_cost = 100
 	deconstruct_favor_cost = 50
 	piety_cost = 10
-	deconstruct_piety_cost = 1
+	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/pylon
 	name = "Pylon"
 	building_type = /obj/structure/cult/pylon
-	favor_cost = 100
-	deconstruct_favor_cost = 50
-	piety_cost = 10
-	deconstruct_piety_cost = 1
+	favor_cost = 150
+	deconstruct_favor_cost = 75
+	piety_cost = 0
+	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/door
 	name = "Door"
 	building_type = /obj/structure/mineral_door/cult
-	favor_cost = 100
+	favor_cost = 125
 	deconstruct_favor_cost = 50
-	piety_cost = 10
+	piety_cost = 0
 	deconstruct_piety_cost = 1
 
 /datum/building_agent/structure/cult/tech_table
 	name = "Tech Table"
 	building_type = /obj/structure/cult/tech_table
-	favor_cost = 100
+	favor_cost = 50
 	deconstruct_favor_cost = 50
-	piety_cost = 10
-	deconstruct_piety_cost = 1
+	piety_cost = 100
+	deconstruct_piety_cost = 20
 
 /datum/building_agent/structure/cult/forge
 	name = "Forge"
 	building_type = /obj/structure/cult/forge
-	favor_cost = 100
+	favor_cost = 50
 	deconstruct_favor_cost = 50
-	piety_cost = 10
-	deconstruct_piety_cost = 1
+	piety_cost = 50
+	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/torture_table
 	name = "Torture Table"
 	building_type = /obj/machinery/optable/torture_table
-	favor_cost = 100
+	favor_cost = 200
 	deconstruct_favor_cost = 50
 	piety_cost = 10
-	deconstruct_piety_cost = 1
+	deconstruct_piety_cost = 0
 
 /datum/building_agent/rune
 	// Type of effect of rune
@@ -165,15 +165,15 @@
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "4"
 	building_type = /datum/religion_tech/cult/memorizing_rune
-	favor_cost = 100
-	piety_cost = 10
+	favor_cost = 300
+	piety_cost = 150
 
 /datum/building_agent/tech/cult/reusable_runes
 	name = "Reusable runes"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	building_type = /datum/religion_tech/cult/reusable_runes
-	favor_cost = 100
+	favor_cost = 700
 	piety_cost = 10
 
 /datum/building_agent/tech/cult/build_everywhere
@@ -181,21 +181,21 @@
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "2"
 	building_type = /datum/religion_tech/cult/build_everywhere
-	favor_cost = 100
-	piety_cost = 10
+	favor_cost = 400
+	piety_cost = 50
 
 /datum/building_agent/tech/cult/more_runes
 	name = "Maximum runes increased by 10"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "3"
 	building_type = /datum/religion_tech/cult/more_runes
-	favor_cost = 100
-	piety_cost = 10
+	favor_cost = 300
+	piety_cost = 80
 
 // For forge
 /datum/building_agent/tool/cult
 /datum/building_agent/tool/cult/tome
 	name = "Tome"
 	building_type = /obj/item/weapon/storage/bible/tome
-	favor_cost = 100
+	favor_cost = 200
 	piety_cost = 10

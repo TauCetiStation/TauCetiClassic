@@ -113,6 +113,9 @@
 
 	QDEL_NULL(light)
 
+	var/area/A = get_area(usr)
+	A.Exited(usr, null)
+
 	return ..()
 
 /atom/proc/CheckParts(list/parts_list)
