@@ -2047,7 +2047,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	last_massage = world.time
 
 	if(prob(5))
-	var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
+		var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
 		if (BP == BP_CHEST && op_stage.ribcage != 2)
 			BP.fracture()
 			to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
