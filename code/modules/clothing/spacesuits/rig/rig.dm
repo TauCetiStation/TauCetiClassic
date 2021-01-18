@@ -858,6 +858,7 @@
 	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
+	glowtype = "terrohazmat"
 	rig_type = "hazmat"
 
 /obj/item/clothing/suit/space/rig/syndi/hazmat

@@ -169,18 +169,7 @@
 	item_state = "waterbackpacknuke"
 	volume = 1600
 	noz = /obj/item/weapon/reagent_containers/spray/mister/syndie
-
-/obj/item/weapon/reagent_containers/watertank_backpack/syndie/atom_init()
-	. = ..()
-	reagents.clear_reagents()
-	reagents.add_reagent("lexorin", 200)
-	reagents.add_reagent("mindbreaker", 200)
-	reagents.add_reagent("alphaamanitin", 200)
-	reagents.add_reagent("space_drugs", 200)
-	reagents.add_reagent("pacid", 200)
-	reagents.add_reagent("fuel", 200)
-	reagents.add_reagent("condensedcapsaicin", 200)
-	reagents.add_reagent("stoxin", 200)
+	list_reagents = list("lexorin" = 200, "mindbreaker" = 200, "alphaamanitin" = 200, "space_drugs" = 200, "pacid" = 200, "fuel" = 200, "condensedcapsaicin" = 200, "stoxin" = 200)
 
 /obj/item/weapon/reagent_containers/spray/mister/syndie
 	name = "chemical spray nozzle"
