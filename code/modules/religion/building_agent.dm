@@ -184,6 +184,14 @@
 	favor_cost = 400
 	piety_cost = 50
 
+/datum/building_agent/tech/cult/mirror_shield
+	name = "Mirror shield"
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "mirror_shield"
+	building_type = /datum/religion_tech/cult/mirror_shield
+	favor_cost = 200
+	piety_cost = 50
+
 /datum/building_agent/tech/cult/more_runes
 	name = "Maximum runes increased by 10"
 	icon = 'icons/obj/rune.dmi'

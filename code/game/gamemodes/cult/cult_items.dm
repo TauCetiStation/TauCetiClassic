@@ -8,6 +8,16 @@
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
+/obj/item/weapon/melee/cultblade/atom_init(mapload, give_shield)
+	. = ..()
+	if(give_shield)
+		var/shield_type = /obj/item/weapon/shield/riot/mirror
+		AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, .proc/only_cultists), 5 MINUTE, 30 SECONDS, 2 MINUTE)
+
+/obj/item/weapon/melee/cultblade/proc/only_cultists(datum/source, mob/M)
+	if(iscultist(M))
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(iscultist(user))
@@ -24,6 +34,19 @@
 		to_chat(user, "<span class='warning'>An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly.</span>")
 		user.make_dizzy(120)
 
+/obj/item/weapon/shield/riot/mirror
+	name = "mirror shield"
+	desc = "An infamous shield used by eldritch sects to confuse and disorient their enemies."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "mirror_shield"
+	flags = ABSTRACT|DROPDEL
+	slot_flags = FALSE
+	var/reflect_chance = 70
+
+/obj/item/weapon/shield/riot/mirror/IsReflect()
+	if(prob(reflect_chance))
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/head/culthood
 	name = "cult hood"

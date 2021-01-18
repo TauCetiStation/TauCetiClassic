@@ -154,6 +154,7 @@
 		M.ckey = candidate.ckey
 		M.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
 		M.real_name = M.name
+		religion.add_member(M)
 		candidate.cancel_camera()
 		candidate.reset_view()
 	else if (response == "Never for this round")

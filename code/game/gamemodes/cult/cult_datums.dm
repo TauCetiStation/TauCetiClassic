@@ -409,11 +409,12 @@
 /datum/rune/cult/armor/action(mob/living/carbon/user)
 	user.visible_message("<span class='userdanger'>Из руны начинает гореть яркий красный свет, когда он рассвеивается, то на руне появляется броня и меч...</span>", \
 	"<span class='userdanger'>Вы ослеплены вспышкой красного света! После ослепления вы видите на месте руны набо доспехов с мечом.</span>")
+	var/datum/religion/cult/R = religion
 	new /obj/item/clothing/head/culthood(holder.loc)
 	new /obj/item/clothing/suit/cultrobes(holder.loc)
 	new /obj/item/clothing/shoes/boots/cult(holder.loc)
 	new /obj/item/weapon/storage/backpack/cultpack(holder.loc)
-	new /obj/item/weapon/melee/cultblade(holder.loc)
+	new /obj/item/weapon/melee/cultblade(holder.loc, R.blade_with_shield)
 	playsound(holder, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
 
 #undef BRAINSWAP_TIME

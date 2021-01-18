@@ -47,6 +47,14 @@
 	style_text = "cult"
 	need_nimbus = FALSE
 
+	/*
+		Tech
+	*/
+	var/blade_with_shield = FALSE
+
+	/*
+		Only cult
+	*/
 	// Just gamemode of cult
 	var/datum/game_mode/cult/mode
 
@@ -61,7 +69,7 @@
 	// Instead of storing links to turfs
 	var/list/coord_started_anomalies = list()
 
-	// Used for ritе Drain
+	// Used for ritеs
 	var/list/obj/machinery/optable/torture_table/torture_tables = list()
 
 	// Are they dead or not yet? Maybe separate it somehow and put it in /datum/religion
