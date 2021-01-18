@@ -205,10 +205,9 @@
 	var/list/coord_of_pylons = list(1, 1)
 	var/list/beams = list()
 
-/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound)
+/obj/effect/anomaly/bluespace/cult_portal/atom_init(mapload, bound = FALSE)
 	. = ..()
-	if(!isnull(bound))
-		need_bound = bound
+	need_bound = bound
 
 	enable()
 
