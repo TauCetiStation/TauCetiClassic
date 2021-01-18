@@ -45,7 +45,7 @@
 
 	max_runes = 10
 	style_text = "cult"
-	need_nimbus = FALSE
+	symbol_icon_state = null
 
 	/*
 		Tech

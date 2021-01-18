@@ -78,6 +78,7 @@
 	bible_type = /obj/item/weapon/storage/bible
 
 	style_text = "piety"
+	symbol_icon_state = "nimbus"
 
 // This subtype is used for integrating this system with current chaplain anything.
 /datum/religion/chaplain/New()

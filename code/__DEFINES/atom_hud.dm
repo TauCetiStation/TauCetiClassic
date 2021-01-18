@@ -3,41 +3,43 @@
 // /datum/atom_hud expects these to be unique
 // these need to be strings in order to make them associative lists
 /// dead, alive, sick, health status
-#define HEALTH_HUD			"1"
+#define HEALTH_HUD			"health"
 /// a simple line rounding the mob's number health
-#define STATUS_HUD			"2"
+#define STATUS_HUD			"status"
 /// the job asigned to your ID
-#define ID_HUD				"3"
+#define ID_HUD				"id"
 /// wanted, released, parroled, security status
-#define WANTED_HUD			"4"
+#define WANTED_HUD			"wanted"
 /// loyality implant
-#define IMPLOYAL_HUD		"5"
+#define IMPLOYAL_HUD		"imployal"
 /// chemical implant
-#define IMPCHEM_HUD			"6"
+#define IMPCHEM_HUD			"impchem"
 /// tracking implant
-#define IMPTRACK_HUD		"7"
+#define IMPTRACK_HUD		"imptrack"
 /// Silicon/Mech/Circuit Status
-#define DIAG_STAT_HUD		"8"
+#define DIAG_STAT_HUD		"diag_stat"
 /// Silicon health bar
-#define DIAG_HUD			"9"
+#define DIAG_HUD			"diag"
 /// Borg/Mech/Circutry power meter
-#define DIAG_BATT_HUD		"10"
+#define DIAG_BATT_HUD		"diag_batt"
 /// Mech health bar
-#define DIAG_MECH_HUD		"11"
+#define DIAG_MECH_HUD		"diag_mech"
 /// Airlock shock overlay
-#define DIAG_AIRLOCK_HUD 	"12"
+#define DIAG_AIRLOCK_HUD 	"diag_airlock"
 // For antag huds. these are used at the /mob level
-#define ANTAG_HUD			"13"
+#define ANTAG_HUD			"antag"
 // Implant of mindshield
-#define IMPMINDS_HUD		"14"
+#define IMPMINDS_HUD		"impminds"
 // Broken glasses hud
-#define BROKEN_HUD			"15"
+#define BROKEN_HUD			"broken"
 // Mineral hud
-#define MINE_MINERAL_HUD	"16"
+#define MINE_MINERAL_HUD	"mine_mineral"
 // Hud of the golem that shows its master
-#define GOLEM_MASTER_HUD	"17"
+#define GOLEM_MASTER_HUD	"golem_master"
 // Artifact huds
-#define MINE_ARTIFACT_HUD	"18"
+#define MINE_ARTIFACT_HUD	"mine_artifact"
+// Holy huds
+#define HOLY_HUD			"holy"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -52,6 +54,7 @@
 #define DATA_HUD_BROKEN					20
 #define DATA_HUD_MINER					21
 #define DATA_HUD_GOLEM					14
+#define DATA_HUD_HOLY					23
 
 //antag HUD defines
 #define ANTAG_HUD_CULT          4

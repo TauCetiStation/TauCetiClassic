@@ -116,7 +116,8 @@
 	var/datum/religion_sect/sect
 	// css
 	var/style_text
-	var/need_nimbus = TRUE
+	// It`s hud
+	var/symbol_icon_state
 
 	/*
 		Building
@@ -551,22 +552,30 @@
 	M.my_religion = src
 	M.mind?.holy_role = HOLY_ROLE_HIGHPRIEST
 	give_god_spells(M)
+	var/datum/atom_hud/holy/hud = global.huds[DATA_HUD_HOLY]
+	hud.add_hud_to(src)
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
 	M.my_religion = null
 	M.mind?.holy_role = initial(M.mind.holy_role)
 	remove_god_spells(M)
+	var/datum/atom_hud/holy/hud = global.huds[DATA_HUD_HOLY]
+	hud.remove_hud_from(src)
 
-/datum/religion/proc/give_alt_app(mob/M)
-	// In the future, you can change this icon_state depending on religions
-	var/image/I = image('icons/mob/hud.dmi', M, "nimbus")
-	M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "nimbus", I, null, null, src)
-	M.update_alt_appearance_by_type(/datum/atom_hud/alternate_appearance/basic/my_religion)
+/datum/religion/proc/give_hud(mob/M)
+	var/datum/atom_hud/holy/hud = global.huds[DATA_HUD_HOLY]
+	hud.add_to_hud(M)
+	M.set_holy_hud()
+	if(!ishuman(M))
+		hud.add_hud_to(M)
 
-/datum/religion/proc/take_alt_app(mob/M)
-	M.remove_alt_appearance("nimbus")
-	M.update_alt_appearance_by_type(/datum/atom_hud/alternate_appearance/basic/my_religion)
+/datum/religion/proc/take_hud(mob/M)
+	var/datum/atom_hud/holy/hud = global.huds[DATA_HUD_HOLY]
+	hud.remove_from_hud(M)
+	M.set_holy_hud()
+	if(!ishuman(M))
+		hud.remove_hud_from(M)
 
 /datum/religion/proc/add_member(mob/M, holy_role)
 	if(is_member(M))
@@ -576,8 +585,8 @@
 	M.my_religion = src
 	M.mind?.holy_role = holy_role
 	sect?.on_conversion(M)
-	if(need_nimbus)
-		give_alt_app(M)
+	if(symbol_icon_state)
+		give_hud(M)
 	return TRUE
 
 /datum/religion/proc/remove_member(mob/M)
@@ -587,8 +596,8 @@
 	members -= M
 	M.my_religion = initial(M.my_religion)
 	M.mind?.holy_role = initial(M.mind.holy_role)
-	if(need_nimbus)
-		take_alt_app(M)
+	if(symbol_icon_state)
+		take_hud(M)
 	return TRUE
 
 /datum/religion/proc/is_member(mob/M)

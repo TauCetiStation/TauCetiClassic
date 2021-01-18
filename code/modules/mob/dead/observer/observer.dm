@@ -251,7 +251,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "Please disable antag-HUD or combo-HUDs in the admin tab.")
 		return
 
-	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY) // Data huds allowed all ghost
 	if(data_hud)
 		data_hud = !data_hud
 		for(var/hudtype in datahuds)
