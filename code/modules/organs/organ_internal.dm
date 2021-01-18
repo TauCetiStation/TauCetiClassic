@@ -500,7 +500,7 @@
 		if(!user || user.incapacitated() || user.loc != src)
 			return
 
-		user.forceMove(get_turf(src.owner))
+		user.forceMove(get_turf(owner))
 		visible_message("<span class='danger'>[user] successfully broke out from [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out from [src]!</span>")
 
