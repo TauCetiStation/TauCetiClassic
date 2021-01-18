@@ -12,7 +12,8 @@
 		/obj/structure/falsewall,
 		/obj/structure/falsewall/reinforced,
 		/obj/structure/girder,
-		/obj/structure/girder/reinforced
+		/obj/structure/girder/reinforced,
+		/obj/structure/girder/cult,
 	)
 	smooth = SMOOTH_TRUE
 
@@ -228,7 +229,7 @@
 
 /obj/structure/girder/cult
 	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
-	icon_state= "girder_box"
+	icon_state= "box"
 	anchored = 1
 	density = 1
 	layer = 2.9
@@ -238,35 +239,3 @@
 /obj/structure/girder/cult/Destroy()
 	new /obj/effect/decal/remains/human(get_turf(src))
 	return ..()
-
-/obj/structure/girder/cult/attackby(obj/item/W, mob/user)
-	if(user.is_busy(src))
-		return
-	if(iswrench(W))
-		to_chat(user, "<span class='notice'>Now disassembling the girder</span>")
-		if(W.use_tool(src, user, 40, volume = 100))
-			to_chat(user, "<span class='notice'>You dissasembled the girder!</span>")
-			qdel(src)
-
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		to_chat(user, "<span class='notice'>Now slicing apart the girder</span>")
-		if(W.use_tool(src, user, 30, volume = 100))
-			to_chat(user, "<span class='notice'>You slice apart the girder!</span>")
-		qdel(src)
-
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
-		to_chat(user, "<span class='notice'>You drill through the girder!</span>")
-		qdel(src)
-
-/obj/structure/girder/cult/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if(prob(30))
-				new /obj/effect/decal/remains/human(loc)
-				qdel(src)
-		if(3.0)
-			if(prob(5))
-				new /obj/effect/decal/remains/human(loc)
-				qdel(src)

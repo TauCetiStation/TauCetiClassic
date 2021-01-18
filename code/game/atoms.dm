@@ -97,7 +97,7 @@
 
 /atom/Destroy()
 	if(alternate_appearances)
-		var/prev_key // There is a runtime when the index remains in the sheet, but the type or other devilry disappears
+		var/prev_key // There is a runtime when the index remains in list, but the type or other devilry disappears
 		for(var/K in alternate_appearances)
 			// ghost apperance qdeling in main apperance
 			if(K == "[prev_key]_observer")
@@ -113,8 +113,8 @@
 
 	QDEL_NULL(light)
 
-	var/area/A = get_area(usr)
-	A.Exited(usr, null)
+	var/area/A = get_area(src)
+	A?.Exited(src, null)
 
 	return ..()
 
