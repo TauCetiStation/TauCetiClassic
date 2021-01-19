@@ -27067,6 +27067,9 @@
 /obj/structure/reagent_dispensers/cleaner{
 	pixel_y = -32
 	},
+/obj/item/weapon/grenade/chem_grenade/antiweed,
+/obj/item/weapon/grenade/chem_grenade/antiweed,
+/obj/item/weapon/grenade/chem_grenade/antiweed,
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "hDL" = (
