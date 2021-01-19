@@ -26,6 +26,9 @@
 	var/piety_cost = 0
 	/// Needed aspects to get the rite.
 	var/list/needed_aspects
+	/// The more, the stronger the ritual, formula of increase
+	/// power = power * (summ of aspect diferences / amount of spell aspects + 1)
+	var/divine_power = 1
 
 /datum/religion_rites/proc/update_tip()
 	if(religion)

@@ -21,7 +21,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	/****RELIGIOUS ASPECT****/
 	var/favor_cost = 0 //cost
 	var/divine_power = 0 //control of spell power depending on the aspect
-	var/list/needed_aspect
+	var/list/needed_aspects
 	/****RELIGIOUS ASPECT****/
 
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"

@@ -232,6 +232,7 @@
 #include "code\datums\atom_huds\atom_hud_antag.dm"
 #include "code\datums\atom_huds\atom_hud_data.dm"
 #include "code\datums\components\_component.dm"
+#include "code\datums\components\attack_self_effect.dm"
 #include "code\datums\components\bound.dm"
 #include "code\datums\components\clickplace.dm"
 #include "code\datums\components\footstep.dm"

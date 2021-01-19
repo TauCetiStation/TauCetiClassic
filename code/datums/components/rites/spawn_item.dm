@@ -19,9 +19,9 @@
 	// Extra Mana Cost!
 	var/adding_favor_per_item
 
-/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, datum/callback/_invoke_effect, datum/callback/_change_spawn_type, tip_text)
+/datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, _divine_power datum/callback/_invoke_effect, datum/callback/_change_spawn_type, tip_text)
 	spawn_type = _spawn_type
-	count_items = _count_items
+	count_items = _count_items * _divine_power
 	sacrifice_type = _sacrifice_type
 	adding_favor_per_item = _adding_favor_per_item
 	invoke_effect = _invoke_effect

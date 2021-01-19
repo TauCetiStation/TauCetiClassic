@@ -405,31 +405,39 @@
 /datum/religion/proc/satisfy_requirements(element, datum/aspect/A)
 	return element <= A.power
 
-// This proc is used to change divine power of a spell according to this religion's aspects.
+// This proc is used to change divine power of a spell or rite according to this religion's aspects.
 // Uses a form of this formula:
 // power = power * (summ of aspect diferences / amount of spell aspects + 1)
-/datum/religion/proc/affect_divine_power(obj/effect/proc_holder/spell/S)
-	var/divine_power = initial(S.divine_power)
+/datum/religion/proc/calc_divine_power(list/needed_aspects, initial_divine_power)
+	var/divine_power = initial_divine_power
 
 	var/diff = 0
 
 	for(var/aspect_name in aspects)
 		var/datum/aspect/asp = aspects[aspect_name]
-		if(S.needed_aspect[asp.name])
-			diff += asp.power - S.needed_aspect[asp.name]
+		if(needed_aspects[asp.name])
+			diff += asp.power - needed_aspects[asp.name]
 
-	S.divine_power = divine_power * (diff / S.needed_aspect.len + 1)
+	divine_power = divine_power * (diff / needed_aspects.len + 1)
+
+	return divine_power
+
+/datum/religion/proc/affect_divine_power_spell(obj/effect/proc_holder/spell/S)
+	S.divine_power = calc_divine_power(S.needed_aspects, initial(S.divine_power))
+
+/datum/religion/proc/affect_divine_power_rite(datum/religion_rites/R)
+	R.divine_power = calc_divine_power(R.needed_aspects, initial(R.divine_power))
 
 // Give our gods all needed spells which in /list/spells
 /datum/religion/proc/give_god_spells(mob/G)
 	for(var/spell in god_spells)
 		var/obj/effect/proc_holder/spell/S = G.GetSpell(spell)
 		if(S)
-			affect_divine_power(S)
+			affect_divine_power_spell(S)
 			continue
 		else
 			S = new spell
-			affect_divine_power(S)
+			affect_divine_power_spell(S)
 			G.AddSpell(S)
 
 /datum/religion/proc/remove_god_spells(mob/G)
@@ -475,16 +483,21 @@
 // Adds all binding rites once
 /datum/religion/proc/give_binding_rites()
 	for(var/rite_type in binding_rites)
-		var/datum/religion_rites/R = new rite_type
-		R.religion = src
-		rites_by_name[R.name] = R
+		setup_rite(rite_type)
+
+// Gives the rite religion and divine_power and puts it in religion list rite_by_name
+/datum/religion/proc/setup_rite(rite_type)
+	var/datum/religion_rites/R = new rite_type
+	R.religion = src
+	rites_by_name[R.name] = R
+	affect_divine_power_rite(R)
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
 	for(var/spell_type in global.spells_by_aspects[asp.name])
 		var/obj/effect/proc_holder/spell/S = new spell_type
 
-		if(is_sublist_assoc(S.needed_aspect, aspects, aspect_pred))
+		if(is_sublist_assoc(S.needed_aspects, aspects, aspect_pred))
 			god_spells |= spell_type
 
 		QDEL_NULL(S)
@@ -499,9 +512,7 @@
 			continue
 
 		if(is_sublist_assoc(RR.needed_aspects, aspects, aspect_pred))
-			var/datum/religion_rites/R = new rite_type
-			R.religion = src
-			rites_by_name[R.name] = R
+			setup_rite(rite_type)
 
 		QDEL_NULL(RR)
 

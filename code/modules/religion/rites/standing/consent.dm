@@ -119,7 +119,7 @@
 	if(!L.ckey)
 		sacrifice_favor  *= 0.5
 
-	religion.adjust_favor(sacrifice_favor)
+	religion.adjust_favor(sacrifice_favor * divine_power)
 
 	L.gib()
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")

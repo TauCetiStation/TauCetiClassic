@@ -9,7 +9,7 @@
 	var/adding_favor = 75
 
 /datum/religion_rites/instant/spawn_item/New()
-	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, CALLBACK(src, .proc/modify_item))
+	AddComponent(/datum/component/rite/spawn_item, spawn_type, 1, sacrifice_type, adding_favor, divine_power, CALLBACK(src, .proc/modify_item))
 
 // Used to apply some effect to an item after its spawn.
 /datum/religion_rites/instant/spawn_item/proc/modify_item(atom/item)
@@ -68,8 +68,8 @@
 
 /datum/religion_rites/instant/spawn_item/cult/space_suits/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
-
-	new /obj/item/clothing/head/helmet/space/cult(get_turf(AOG))
+	for(var/i in 1 to divine_power)
+		new /obj/item/clothing/head/helmet/space/cult(get_turf(AOG))
 	playsound(AOG, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
 
 	return TRUE

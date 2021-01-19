@@ -6,7 +6,7 @@
 	startWhen = rand(50, 150)
 	announceWhen = startWhen + 5
 	endWhen = startWhen + 300
-	max_constructs = rand(2, 7)
+	max_constructs = rand(4, 7)
 	impact_area = findEventArea()
 
 /datum/event/anomaly/cult_portal/start()

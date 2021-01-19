@@ -5,7 +5,7 @@
 	charge_max = 2 MINUTES
 	favor_cost = 100
 	divine_power = 1 //count
-	needed_aspect = list(ASPECT_RESOURCES = 1, ASPECT_RESCUE = 1)
+	needed_aspects = list(ASPECT_RESOURCES = 1, ASPECT_RESCUE = 1)
 
 	range = 0
 	invocation = "none"
@@ -28,7 +28,7 @@
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
 	divine_power = -5 //power
-	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_CHAOS = 1)
+	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_CHAOS = 1)
 
 	clothes_req = 0
 	invocation = "none"
@@ -61,7 +61,7 @@
 	favor_cost = 300
 	charge_max = 1.5 MINUTES
 	divine_power = 5 //power
-	needed_aspect = list(ASPECT_OBSCURE = 1, ASPECT_CHAOS = 1)
+	needed_aspects = list(ASPECT_OBSCURE = 1, ASPECT_CHAOS = 1)
 
 	action_icon_state = "god_default"
 	sound = 'sound/magic/Repulse.ogg'
@@ -72,7 +72,7 @@
 	favor_cost = 200
 	charge_max = 1 MINUTES
 	divine_power = 8 //power
-	needed_aspect = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
+	needed_aspects = list(ASPECT_WEAPON = 1, ASPECT_MYSTIC = 1)
 
 	range = 0
 	invocation = "none"
@@ -109,7 +109,7 @@
 	favor_cost = 400
 	charge_max = 4 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_TECH = 1)
+	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_TECH = 1)
 
 	range = 0
 	invocation = "none"
@@ -177,7 +177,7 @@
 	favor_cost = 250
 	charge_max = 3 MINUTES
 	divine_power = 2 //count
-	needed_aspect = list(ASPECT_SPAWN = 1 , ASPECT_FOOD = 1)
+	needed_aspects = list(ASPECT_SPAWN = 1 , ASPECT_FOOD = 1)
 
 	range = 0
 	invocation = "none"
@@ -199,7 +199,7 @@
 	favor_cost = 250
 	charge_max = 2 MINUTES
 	divine_power = 1 //count
-	needed_aspect = list(ASPECT_SPAWN = 1)
+	needed_aspects = list(ASPECT_SPAWN = 1)
 	summon_amt = 1
 
 	invocation = "none"
@@ -225,7 +225,7 @@
 	favor_cost = 500
 	charge_max = 5 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_WACKY = 3)
+	needed_aspects = list(ASPECT_WACKY = 3)
 
 	invocation = "none"
 	range = 0
@@ -245,7 +245,7 @@
 	favor_cost = 300
 	charge_max = 3 MINUTES
 	divine_power = 1 //range
-	needed_aspect = list(ASPECT_RESCUE = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_RESCUE = 1, ASPECT_OBSCURE = 1)
 
 	range = 0
 	invocation = "none"
@@ -295,7 +295,7 @@
 	name = "Spread a evil infection"
 	desc = "Evil infection with viruses cough and headache"
 
-	needed_aspect = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
+	needed_aspects = list(ASPECT_DEATH = 1, ASPECT_OBSCURE = 1)
 
 	action_icon_state = "infection_evil"
 
@@ -346,7 +346,7 @@
 	favor_cost = 150
 	charge_max = 3 MINUTES
 	divine_power = 1 //count gibs
-	needed_aspect = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
+	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 2)
 
 	range = 0
 	invocation = "none"

@@ -31,15 +31,15 @@
 		R.mode.sacrificed += S.mind
 		if(sacrifice_target && sacrifice_target == S.mind)
 			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
-			R.adjust_favor(300)
+			R.adjust_favor(300 * divine_power)
 	else if(ishuman(AOG.buckled_mob))
 		AOG.buckled_mob.gib()
 		R.mode.sacrificed += AOG.buckled_mob.mind
 		if(sacrifice_target && sacrifice_target == AOG.buckled_mob.mind)
 			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
-			R.adjust_favor(300)
+			R.adjust_favor(300 * divine_power)
 
-	R.adjust_favor(calc_sacrifice_favor(AOG.buckled_mob))
+	R.adjust_favor(calc_sacrifice_favor(AOG.buckled_mob) * divine_power)
 
 	playsound(AOG, 'sound/magic/disintegrate.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
@@ -98,7 +98,7 @@
 	var/datum/religion/cult/cult = religion
 	cult.mode.add_cultist(AOG.buckled_mob.mind)
 	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
-	religion.adjust_favor(300)
+	religion.adjust_favor(300 * divine_power)
 	return TRUE
 
 /datum/religion_rites/instant/cult/emp
@@ -117,7 +117,7 @@
 	var/turf/turf = get_turf(AOG)
 	playsound(AOG, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER, 25)
 	turf.hotspot_expose(700, 125)
-	empulse(turf, 3, 5)
+	empulse(turf, 3, 5 * divine_power)
 	return TRUE
 
 /datum/religion_rites/instant/cult/drain_torture
@@ -151,7 +151,7 @@
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
 		if(!table.buckled_mob || table.buckled_mob.stat == DEAD)
 			continue
-		var/bdrain = rand(1, 25)
+		var/bdrain = rand(1, 25) * divine_power
 		to_chat(table.buckled_mob, "<span class='userdanger'>Вы чувствуете слабость.</span>")
 		table.buckled_mob.take_overall_damage(bdrain, 0)
 		table.buckled_mob.Paralyse(5 SECONDS)
@@ -246,7 +246,7 @@
 		C.mode.sacrificed += M.mind
 		if(C.mode.sacrifice_target && C.mode.sacrifice_target == M.mind)
 			to_chat(user, "<span class='[religion.style_text]'>Я принимаю жертву, ваша цель теперь может считаться выполненной.</span>")
-			C.adjust_favor(300)
+			C.adjust_favor(300 * divine_power)
 
 		M.gib()
 
@@ -281,28 +281,29 @@
 		to_chat(user, "<span class='warning'>Ниодна душа не захотела вселяться в гомункула.</span>")
 		return FALSE
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
-	var/mob/M = pick(candidates)
-	var/mob/living/carbon/human/dummy/D = new(get_turf(AOG)) // in soultstone code we have block for type dummy
-	user.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
-		"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
-		"<span class='userdanger'>Вы слышите, как течет жидкость.</span>")
+	for(var/i in 1 to divine_power)
+		var/mob/M = pick(candidates)
+		var/mob/living/carbon/human/dummy/D = new(get_turf(AOG)) // in soultstone code we have block for type dummy
+		user.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
+			"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
+			"<span class='userdanger'>Вы слышите, как течет жидкость.</span>")
 
-	D.real_name = "homunculus of [pick(religion.deity_names)] [num2roman(rand(1, 20))]"
-	D.universal_speak = TRUE
-	D.status_flags &= ~GODMODE
-	D.s_tone = 35
-	D.b_eyes = 200
-	D.r_eyes = 200
-	D.g_eyes = 200
-	D.underwear = 0
-	D.key = M.key
-	var/datum/religion/cult/C = religion
-	C.mode.add_cultist(D.mind)
+		D.real_name = "homunculus of [pick(religion.deity_names)] [num2roman(rand(1, 20))]"
+		D.universal_speak = TRUE
+		D.status_flags &= ~GODMODE
+		D.s_tone = 35
+		D.b_eyes = 200
+		D.r_eyes = 200
+		D.g_eyes = 200
+		D.underwear = 0
+		D.key = M.key
+		var/datum/religion/cult/C = religion
+		C.mode.add_cultist(D.mind)
 
-	to_chat(D, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
-	to_chat(D, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
+		to_chat(D, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
+		to_chat(D, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
 
-	RegisterSignal(D, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
+		RegisterSignal(D, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
 	return TRUE
 
 /datum/religion_rites/instant/cult/freedom
@@ -443,7 +444,7 @@
 	if(!(locate(/mob/living) in get_turf(AOG)))
 		return FALSE
 
-	var/bdam = rand(2, 10)
+	var/bdam = round(rand(2, 10) / divine_power)
 	var/mob/living/L = locate() in get_turf(AOG)
 	to_chat(user, "<span class='notice'>Вы чувствуете, как теряете концентрацию...</span>")
 	to_chat(L, "<span class='warning'>Вы чувствуете, как теряете концентрацию...</span>")
@@ -503,7 +504,7 @@
 	H.take_overall_damage(10, 20)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	H.AddComponent(/datum/component/forcefield, "power aura", 50, 1 MINUTE, 40 SECONDS, R, FALSE, TRUE)
+	H.AddComponent(/datum/component/forcefield, "power aura", 50 * divine_power, 1 MINUTE, 40 SECONDS, R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE
@@ -540,7 +541,8 @@
 
 	for(var/obj/item/weapon/storage/bible/tome/tome in AOG.loc)
 		qdel(tome)
-		religion.spawn_bible(AOG.loc, /obj/item/weapon/storage/bible/tome/upgraded)
+		for(var/i in 1 to divine_power)
+			religion.spawn_bible(AOG.loc, /obj/item/weapon/storage/bible/tome/upgraded)
 
 	return TRUE
 
@@ -572,7 +574,7 @@
 	if(length(affected) < 1)
 		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
 		return FALSE
-	var/blindless_modifier = clamp(90 / length(affected), 5, 30)
+	var/blindless_modifier = clamp(90 / length(affected), 5 * divine_power, 30)
 	for(var/mob/living/carbon/C in affected)
 		C.eye_blurry += blindless_modifier
 		C.eye_blind += blindless_modifier / 2
@@ -611,7 +613,7 @@
 	if(length(affected) < 1)
 		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
 		return FALSE
-	var/deafness_modifier = max(5, 120 / length(affected))
+	var/deafness_modifier = max(5 * divine_power, 120 / length(affected))
 	for(var/mob/living/carbon/C in affected)
 		C.playsound_local(null, 'sound/effects/mob/ear_ring_single.ogg', VOL_EFFECTS_MASTER)
 		C.ear_deaf += deafness_modifier
@@ -648,7 +650,7 @@
 	if(length(heretics) < 1)
 		to_chat(user, "<span class='warning'>Никого нет рядом.</span>")
 		return FALSE
-	var/stun_modifier = 12 / length(heretics)
+	var/stun_modifier = 12 / length(heretics) * divine_power
 	for(var/mob/living/carbon/C in heretics)
 		C.flash_eyes()
 		if(C.stuttering < 1 && (!(HULK in C.mutations)))
@@ -671,7 +673,7 @@
 
 /datum/religion_rites/instant/communicate/invoke_effect(mob/living/user, obj/AOG)
 	..()
-
+	favor_cost = initial(favor_cost) / divine_power
 	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[religion.name]", ""))
 	for(var/mob/M in global.mob_list)
 		if(religion.is_member(M) || isobserver(M))

@@ -1,6 +1,7 @@
 
 /obj/item/weapon/storage/bible/tome/upgraded
-	name = "big book"
+	name = "strange book"
+	icon_state = "strange_book"
 	build_cd = 15
 	rune_cd = 5
 	scribe_time = 1

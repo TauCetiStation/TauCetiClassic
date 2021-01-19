@@ -49,7 +49,7 @@
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	spawn_food(get_turf(AOG), 4 + rand(2, 5))
+	spawn_food(get_turf(AOG), 4 + rand(2, 5) * divine_power)
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
@@ -89,7 +89,7 @@
 	if(!.)
 		return FALSE
 
-	var/heal_num = -15
+	var/heal_num = -15 * divine_power
 	for(var/mob/living/L in range(2, src))
 		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
 
@@ -168,7 +168,7 @@
 	if(anim_items.len == 0)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
 		return FALSE
-	favor_cost = initial(favor_cost) * religion.members * anim_items
+	favor_cost = round(initial(favor_cost) * religion.members * anim_items / divine_power)
 	return TRUE
 
 /datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/AOG)
@@ -224,7 +224,7 @@
 		if(M.mind.holy_role)
 			M.make_jittery(50)
 		else
-			M.confused += 10
+			M.confused += 10 * divine_power
 			M.make_jittery(50)
 			if(prob(50))
 				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
@@ -232,7 +232,7 @@
 		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 		I.override = TRUE
 		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS)
+		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS * divine_power)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))
@@ -358,7 +358,7 @@
 	if(!istype(animal))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
-
+	animal.maxHealth *= divine_power
 	animal.rejuvenate()
 
 	return TRUE

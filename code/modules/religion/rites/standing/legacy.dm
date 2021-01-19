@@ -25,10 +25,10 @@
 		var/obj/structure/altar_of_gods/A = AOG
 
 		if(invoke_effect_spell)
-			A.religion.affect_divine_power(invoke_effect_spell)
+			A.religion.affect_divine_power_spell(invoke_effect_spell)
 			invoke_effect_spell.divine_power *= divine_power_mult
 		if(on_invocation_spell)
-			A.religion.affect_divine_power(on_invocation_spell)
+			A.religion.affect_divine_power_spell(on_invocation_spell)
 			on_invocation_spell *= divine_power_mult
 
 	return ..()
