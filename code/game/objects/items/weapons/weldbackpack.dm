@@ -17,7 +17,7 @@
 /obj/item/weapon/weldpack/attackby(obj/item/I, mob/user, params)
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/T = I
-		if(T.welding & prob(50))
+		if(T.isOn() & prob(50))
 			message_admins("[key_name_admin(user)] triggered a welding kit explosion. [ADMIN_JMP(user)]")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
@@ -26,7 +26,7 @@
 				qdel(src)
 			return
 		else
-			if(T.welding)
+			if(T.isOn())
 				to_chat(user, "<span class='warning'>That was close!</span>")
 			reagents.trans_to(I, T.max_fuel)
 			to_chat(user, "<span class='notice'>Welder refilled!</span>")
@@ -62,7 +62,7 @@
 /obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/I, mob/user, params)
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/T = I
-		if(T.welding)
+		if(T.isOn())
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. [ADMIN_JMP(user)]")
 			log_game("[key_name(user)] triggered a flamethrower back explosion.")
 			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
