@@ -232,7 +232,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/MouseDrop(obj/over_object)
 	..(over_object)
 
-/obj/structure/scrap/proc/dig_out_lump(newloc = loc, var/hard_dig = 0)
+/obj/structure/scrap/proc/dig_out_lump(newloc = loc, hard_dig = 0)
 	src.dig_amount--
 	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")

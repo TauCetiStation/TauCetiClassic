@@ -1,4 +1,4 @@
-/mob/dead/observer/say(var/message)
+/mob/dead/observer/say(message)
 	message = sanitize(message)
 
 	if (!message)

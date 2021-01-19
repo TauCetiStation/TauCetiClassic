@@ -170,12 +170,19 @@
 	if(pumping_volume > 0)
 		lungs.add_refrigerant(pumping_volume)
 
+/obj/item/organ/internal/heart/vox
+	parent_bodypart = BP_GROIN
+
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 
 	var/has_gills = FALSE
+
+/obj/item/organ/internal/lungs/vox
+	name = "air capillary sack"
+	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
@@ -278,6 +285,9 @@
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
 
+/obj/item/organ/internal/liver/vox
+	name = "waste tract"
+
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
 	var/accumulator_warning = 0
@@ -346,6 +356,9 @@
 	name = "kidneys"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/kidneys/vox
+	name = "filtration bladder"
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
