@@ -51,10 +51,10 @@
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
 
-/datum/atom_hud/data/mine
+/datum/atom_hud/mine
 	hud_icons = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 
-/datum/atom_hud/broken
+/datum/atom_hud/data/broken
 	hud_icons = list(BROKEN_HUD)
 
 /datum/atom_hud/golem

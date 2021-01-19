@@ -7,12 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/medical/medhud in global.huds)
-		medhud.add_to_hud(src)
-	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
-	diaghud.add_to_hud(src)
-	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
-	sechud.add_to_hud(src)
+	for(var/datum/atom_hud/data/hud in global.huds)
+		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
