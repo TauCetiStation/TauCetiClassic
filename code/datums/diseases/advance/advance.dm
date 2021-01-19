@@ -47,7 +47,7 @@ var/list/advance_cures = 	list(
 
  */
 
-/datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
+/datum/disease/advance/New(process = 1, datum/disease/advance/D)
 
 	// Setup our dictionary if it hasn't already.
 	if(!dictionary_symptoms.len)

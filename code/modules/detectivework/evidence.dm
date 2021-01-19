@@ -10,8 +10,6 @@
 
 /obj/item/weapon/evidencebag/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(!in_range(target, user))
-		return
 
 	if(!istype(target, /obj/item))
 		return ..()
