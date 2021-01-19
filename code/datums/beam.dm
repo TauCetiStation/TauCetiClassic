@@ -122,7 +122,7 @@
 
 
 /obj/effect/ebeam
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = 1
 	var/datum/beam/owner
 

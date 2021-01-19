@@ -507,6 +507,7 @@
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
+	suiciding = FALSE
 
 	if(pinned.len)
 		for(var/obj/O in pinned)
@@ -530,7 +531,7 @@
 			H.restore_blood()
 			H.full_prosthetic = null
 			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart.heart_normalize()
+			Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	cure_all_viruses()
@@ -1164,7 +1165,7 @@
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
 		return
-	if(butcher_results.len)
+	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
 				new path(src.loc)
