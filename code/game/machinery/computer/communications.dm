@@ -37,6 +37,8 @@
 	var/stat_msg1
 	var/stat_msg2
 
+	var/datum/announcement/station/command/announcement = new
+
 /obj/machinery/computer/communications/atom_init()
 	. = ..()
 	communications_list += src
@@ -62,7 +64,7 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+	SSshuttle.announce_emer_called.play()
 
 	return ..()
 
@@ -150,7 +152,7 @@
 				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
-				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				announcement.play(input) //This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement. [ADMIN_JMP(usr)]")
 
@@ -473,7 +475,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+	SSshuttle.announce_emer_called.play()
 
 	make_maint_all_access(FALSE)
 
@@ -513,7 +515,7 @@
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "crew_shut_called")
+	SSshuttle.announce_crew_called.play()
 
 	return
 

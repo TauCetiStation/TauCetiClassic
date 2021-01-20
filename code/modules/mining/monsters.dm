@@ -232,13 +232,12 @@
 	icon_aggro = "Hivelord_alert"
 	icon_dead = "Hivelord_dead"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
 	ranged = 1
 	vision_range = 5
 	aggro_vision_range = 9
 	idle_vision_range = 5
-	loot_list = list(/obj/item/asteroid/hivelord_core = 1)
 	speed = 3
 	maxHealth = 75
 	health = 75
@@ -264,15 +263,39 @@
 	OpenFire()
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/death(gibbed)
-	mouse_opacity = 1
-	..(gibbed)
+	mouse_opacity = MOUSE_OPACITY_ICON
+	..()
+	var/obj/item/asteroid/hivelord_core/core = new /obj/item/asteroid/hivelord_core(loc)
+	core.corpse = src
+	loc = core  //put dead hivelord in droped core
 
 /obj/item/asteroid/hivelord_core
-	name = "hivelord remains"
+	name = "hivelord core"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
-	icon = 'icons/obj/food.dmi'
-	icon_state = "boiledrorocore"
+	icon = 'icons/mob/monsters.dmi'
+	icon_state = "Hivelod_core"
 	var/inert = 0
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/corpse
+
+/obj/item/asteroid/hivelord_core/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/lazarus_injector))
+		var/obj/item/weapon/lazarus_injector/L = I
+		if(L.loaded)
+			if(!corpse)
+				corpse = new /mob/living/simple_animal/hostile/asteroid/hivelord(src)
+				corpse.death()
+				var/obj/item/asteroid/hivelord_core/C = corpse.loc
+				C.corpse = null
+			corpse.loc = get_turf(loc)
+			L.revive(corpse, user)
+			corpse = null
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/asteroid/hivelord_core/Destroy()
+	QDEL_NULL(corpse)
+	return ..()
 
 /obj/item/asteroid/hivelord_core/atom_init()
 	. = ..()
@@ -281,6 +304,7 @@
 /obj/item/asteroid/hivelord_core/proc/make_inert()
 	inert = 1
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	icon_state = "Hivelord_dead"
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -312,7 +336,7 @@
 	icon_aggro = "Hivelordbrood"
 	icon_dead = "Hivelordbrood"
 	icon_gib = "syndicate_gib"
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 0
 	friendly = "buzzes near"
 	vision_range = 10
@@ -351,7 +375,7 @@
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
 	attack_sound = list('sound/weapons/punch4.ogg')
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 40
 	ranged = 1
 	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight

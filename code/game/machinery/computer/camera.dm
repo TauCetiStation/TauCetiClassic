@@ -241,13 +241,18 @@
 	network = list("MINE")
 
 /obj/machinery/computer/security/engineering
-	name = "engineering camera monitor"
+	name = "alarms monitoring cameras"
 	desc = "Used to monitor fires and breaches."
 	icon_state = "engineeringcameras"
 	state_broken_preset = "powerb"
 	state_nopower_preset = "power0"
-	network = list("Engineering","Power Alarms","Atmosphere Alarms","Fire Alarms")
+	network = list("Power Alarms","Atmosphere Alarms","Fire Alarms")
 	light_color = "#b88b2e"
+
+/obj/machinery/computer/security/engineering/drone
+	name = "drone monitoring cameras"
+	desc = "Used to monitor drones and engineering borgs."
+	network = list("Engineering Robots")
 
 /obj/machinery/computer/security/nuclear
 	name = "head mounted camera monitor"
