@@ -92,3 +92,58 @@
 			qdel(R)
 			return TRUE
 	return FALSE
+
+/datum/religion_rites/pedestals/cult/make_skeleton
+	name = "Skeletofication"
+	desc = "Turns the person on the altar into an immortal skeleton."
+	ritual_length = (30 SECONDS)
+	invoke_msg = "Venit ad nos!"
+	favor_cost = 200
+
+	rules = list(
+		/obj/item/organ/external/r_arm = 1,
+		/obj/item/organ/external/l_arm = 1,
+		/obj/item/organ/external/l_leg = 1,
+		/obj/item/organ/external/r_leg = 1,
+	)
+
+	needed_aspects = list(
+		ASPECT_SPAWN = 3,
+		ASPECT_RESCUE = 1,
+	)
+
+/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	if(!ishuman(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
+		return FALSE
+
+	return TRUE
+
+/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/AOG)
+	. = ..()
+
+	var/mob/living/carbon/human/H = AOG.buckled_mob
+	if(!H || !ishuman(H))
+		to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
+		return FALSE
+
+	var/datum/effect/effect/system/smoke_spread/chem/S = new
+	AOG.create_reagents(1)
+	AOG.reagents.add_reagent("blood", 1)
+	S.set_up(AOG.reagents, 5, 0, get_turf(AOG))
+	S.attach(get_turf(AOG))
+	S.color = "#db0101" //dark purple
+	S.start()
+
+	H.set_species(SKELETON)
+	H.revive()
+	H.visible_message("<span class='warning'>После того, как дым развеялся, на алтаре виден скелет человека.</span>",
+					"<span class='cult'>Вы чувствуете, как с вас буквально содрали всю кожу, хотя у тебя теперь нет и нервов.</span>")
+	var/datum/religion/cult/C = religion
+	C.mode.add_cultist(H.mind)
+	H.regenerate_icons()
+
+	return TRUE

@@ -74,8 +74,10 @@
 	var/datum/religion_tech/T = new choosed_tech.building_type
 	T.apply_effect(R)
 	qdel(T)
-	qdel(uniq_images[choosed_tech])
+
 	uniq_images -= choosed_tech
+	R.available_techs -= choosed_tech
+	qdel(uniq_images[choosed_tech])
 
 	end_activity()
 
@@ -140,7 +142,7 @@
 		pylon_around += P
 		P.icon_state = "pylon_glow"
 	researching = TRUE
-	end_research_time = world.time + research_time - (pylon_around.len SECONDS) // I will forget it, heh..
+	end_research_time = world.time + research_time - (pylon_around.len SECONDS)
 	addtimer(end_activity, research_time)
 
 /obj/structure/cult/tech_table/proc/end_activity()

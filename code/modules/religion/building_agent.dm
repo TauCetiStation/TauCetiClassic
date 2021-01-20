@@ -36,7 +36,7 @@
 /datum/building_agent/structure/cult
 
 /datum/building_agent/structure/cult/wall
-	name = "Wall"
+	name = "Стена"
 	building_type = /turf/simulated/wall/cult
 	favor_cost = 50
 	deconstruct_favor_cost = 25
@@ -44,7 +44,7 @@
 	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/floor
-	name = "Floor"
+	name = "Пол"
 	building_type = /turf/simulated/floor/engine/cult
 	favor_cost = 10
 	deconstruct_favor_cost = 5
@@ -52,7 +52,7 @@
 	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/altar
-	name = "Altar"
+	name = "Алтарь"
 	building_type = /obj/structure/altar_of_gods/cult
 	favor_cost = 150
 	deconstruct_favor_cost = 50
@@ -60,7 +60,7 @@
 	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/pedestal
-	name = "Pedestal"
+	name = "Пьедестал"
 	building_type = /obj/structure/pedestal/cult
 	favor_cost = 100
 	deconstruct_favor_cost = 50
@@ -68,7 +68,7 @@
 	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/pylon
-	name = "Pylon"
+	name = "Пилон"
 	building_type = /obj/structure/cult/pylon
 	favor_cost = 150
 	deconstruct_favor_cost = 75
@@ -76,7 +76,7 @@
 	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/door
-	name = "Door"
+	name = "Дверь"
 	building_type = /obj/structure/mineral_door/cult
 	favor_cost = 125
 	deconstruct_favor_cost = 50
@@ -84,15 +84,15 @@
 	deconstruct_piety_cost = 1
 
 /datum/building_agent/structure/cult/tech_table
-	name = "Tech Table"
+	name = "Стол исследований"
 	building_type = /obj/structure/cult/tech_table
 	favor_cost = 50
 	deconstruct_favor_cost = 50
-	piety_cost = 100
+	piety_cost = 150
 	deconstruct_piety_cost = 20
 
 /datum/building_agent/structure/cult/forge
-	name = "Forge"
+	name = "Кузня"
 	building_type = /obj/structure/cult/forge
 	favor_cost = 50
 	deconstruct_favor_cost = 50
@@ -100,7 +100,7 @@
 	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/torture_table
-	name = "Torture Table"
+	name = "Стол Пыток"
 	building_type = /obj/machinery/optable/torture_table
 	favor_cost = 200
 	deconstruct_favor_cost = 50
@@ -118,39 +118,39 @@
 	building_type = /obj/effect/rune
 
 /datum/building_agent/rune/cult/teleport_to_heaven
-	name = "Teleport to HEAVEN"
+	name = "Телепорт в РАЙ"
 	rune_type = /datum/rune/cult/teleport/teleport_to_heaven
 
 /datum/building_agent/rune/cult/capture_area
-	name = "Capture a Area"
+	name = "Захват Зоны"
 	rune_type = /datum/rune/cult/capture_area
 
 /datum/building_agent/rune/cult/portal_beacon
-	name = "Beacon of Cult Portal"
+	name = "Маяк Портала Культа"
 	rune_type = /datum/rune/cult/portal_beacon
 
 /datum/building_agent/rune/cult/look_to_future
-	name = "Back to The Future"
+	name = "Назад в Будущее"
 	rune_type = /datum/rune/cult/look_to_future
 
 /datum/building_agent/rune/cult/teleport
-	name = "Teleport"
+	name = "Телепорт"
 	rune_type = /datum/rune/cult/teleport/teleport
 
 /datum/building_agent/rune/cult/item_port
-	name = "Item Teleport"
+	name = "Телепорт Предметов"
 	rune_type = /datum/rune/cult/item_port
 
 /datum/building_agent/rune/cult/wall
-	name = "Summon wall"
+	name = "Призыв Стены"
 	rune_type = /datum/rune/cult/wall
 
 /datum/building_agent/rune/cult/bloodboil
-	name = "Bloodboil"
+	name = "Бладбоил"
 	rune_type = /datum/rune/cult/bloodboil
 
 /datum/building_agent/rune/cult/armor
-	name = "Summon a regimentals"
+	name = "Призыв Обмундирования"
 	rune_type = /datum/rune/cult/armor
 
 
@@ -161,7 +161,7 @@
 
 /datum/building_agent/tech/cult
 /datum/building_agent/tech/cult/memorize_rune
-	name = "Memorize rune"
+	name = "Запомнить Руну"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "4"
 	building_type = /datum/religion_tech/cult/memorizing_rune
@@ -169,7 +169,7 @@
 	piety_cost = 150
 
 /datum/building_agent/tech/cult/reusable_runes
-	name = "Reusable runes"
+	name = "Многоразовые Руны"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	building_type = /datum/religion_tech/cult/reusable_runes
@@ -177,15 +177,15 @@
 	piety_cost = 10
 
 /datum/building_agent/tech/cult/build_everywhere
-	name = "Build everywhere"
-	icon = 'icons/obj/rune.dmi'
-	icon_state = "2"
+	name = "Строительство Везде"
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "pylon"
 	building_type = /datum/religion_tech/cult/build_everywhere
 	favor_cost = 400
 	piety_cost = 50
 
 /datum/building_agent/tech/cult/mirror_shield
-	name = "Mirror shield"
+	name = "Зеркальный Щит"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "mirror_shield"
 	building_type = /datum/religion_tech/cult/mirror_shield
@@ -193,7 +193,7 @@
 	piety_cost = 50
 
 /datum/building_agent/tech/cult/more_runes
-	name = "Maximum runes increased by 10"
+	name = "Увеличение Максимума Рун на 10"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "3"
 	building_type = /datum/religion_tech/cult/more_runes
@@ -203,7 +203,7 @@
 // For forge
 /datum/building_agent/tool/cult
 /datum/building_agent/tool/cult/tome
-	name = "Tome"
+	name = "Том"
 	building_type = /obj/item/weapon/storage/bible/tome
 	favor_cost = 200
 	piety_cost = 10

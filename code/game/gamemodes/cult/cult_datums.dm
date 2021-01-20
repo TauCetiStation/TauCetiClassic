@@ -72,7 +72,7 @@
 	return
 
 /datum/rune/cult/teleport/teleport_to_heaven
-	name = "Teleport to HEAVEN"
+	name = "Телепорт в РАЙ"
 	words = list("travel", "self", "hell")
 	var/turf/destination
 
@@ -82,16 +82,22 @@
 		destination = get_turf(pick(A.contents))
 	teleporting(destination	, user)
 
-/datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/user, list/companions)
+/datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/living/user, list/companions)
 	if(user && !(locate(/obj/effect/rune) in target)) // user can gibbed
 		var/obj/effect/rune/R = new(target, religion)
 		R.power = new /datum/rune/cult/teleport/teleport_from_heaven(R, get_turf(holder))
 		R.power.religion = religion
 		R.icon = get_uristrune_cult(TRUE, R.power.words)
+
+		var/damage = round(((world.time * 0.1)**1/2) * 0.5) // 42 damage if round goes 2 hours ir 72000 ticks
+		user.take_overall_damage(damage, 0, "warp")
+
 		var/datum/religion/cult/C = religion
 		if(companions)
-			for(var/i in 1 to companions.len + 1) // with usr
+			for(var/mob/living/L in companions)
+				L.take_overall_damage(damage, 0, "warp")
 				C.create_anomalys(TRUE)
+			C.create_anomalys(TRUE) // with user
 		else
 			C.create_anomalys(TRUE)
 
@@ -113,7 +119,7 @@
 
 
 /datum/rune/cult/teleport/teleport
-	name = "Teleport"
+	name = "Телепорт"
 	words = list("travel", "self", "see")
 	var/id
 	var/id_inputing = FALSE
@@ -161,7 +167,7 @@
 		user.forceMove(get_turf(pick(tp_runes)))
 
 /datum/rune/cult/capture_area
-	name = "Capture area"
+	name = "Захват Зоны"
 	words = list("join", "hell", "technology")
 	var/per_obj_cd = 1 SECONDS
 	var/static/already_use = FALSE
@@ -173,23 +179,23 @@
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
 	var/area/area = get_area(holder)
+	if(already_use)
+		to_chat(user, "<span class='warning'>Вы уже захватываете одну зону.</span>")
+		return FALSE
 
 	if(is_centcom_level(user.z))
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
 		return FALSE
 
-	else if(religion == area.religion)
+	if(religion == area.religion)
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
 		return FALSE
 
-	else if(first_area_captured)
-		if(!istype(religion, area.religion?.type))
+	if(first_area_captured)
+		var/area/user_area = get_area(user)
+		if(istype(religion, area.religion?.type) || !istype(religion, user_area.religion?.type))
 			to_chat(user, "<span class='warning'>Вы должны находится в уже захваченной зоне, а руна в зоне, которую вы хотите захватить.</span>")
 			return FALSE
-
-	else if(already_use)
-		to_chat(user, "<span class='warning'>Вы уже захватываете одну зону.</span>")
-		return FALSE
 
 	return TRUE
 
@@ -226,7 +232,7 @@
 	animate(I, alpha = 0, time = 30)
 
 /datum/rune/cult/portal_beacon
-	name = "Beacon of Cult Portal"
+	name = "Маяк Портала Культа"
 	words = list("travel", "hell", "technology")
 
 // Work only for rite
@@ -234,7 +240,7 @@
 	return FALSE
 
 /datum/rune/cult/look_to_future
-	name = "Look to future"
+	name = "Назад в Будущее"
 	words = list("see", "hell", "self")
 
 /datum/rune/cult/look_to_future/can_action(mob/living/carbon/user)
@@ -261,7 +267,7 @@
 			H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-door", null, H, pick(religion.door_types), A)
 
 /datum/rune/cult/item_port
-	name = "Teleport item to Altar"
+	name = "Телепорт Предметов"
 	words = list("travel", "other", "see")
 
 /datum/rune/cult/item_port/can_action(mob/living/carbon/user)
@@ -289,7 +295,7 @@
 		"<span class='userdanger'>Вы чувствуете запах и вкус озона.</span>")
 
 /datum/rune/cult/wall
-	name = "Summon wall"
+	name = "Призыв Стены"
 	words = list("destroy", "travel", "self")
 
 	var/obj/effect/forcefield/cult/alt_app/wall
@@ -316,6 +322,7 @@
 	user.take_bodypart_damage(2, 0)
 
 /datum/rune/cult/bloodboil
+	name = "Бладбоил"
 	words = list("destroy", "blood", "see")
 
 /datum/rune/cult/bloodboil/can_action(mob/living/carbon/user)
@@ -350,7 +357,7 @@
 		L.take_overall_damage(damage_for_acolytes, 0)
 
 /datum/rune/cult/armor
-	name = "Summon a regimentals"
+	name = "Призыв Обмундирования"
 	words = list("hell", "destroy", "other")
 
 /datum/rune/cult/armor/action(mob/living/carbon/user)

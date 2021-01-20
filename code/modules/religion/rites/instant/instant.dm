@@ -284,7 +284,9 @@
 	for(var/i in 1 to divine_power)
 		var/mob/M = pick(candidates)
 		var/mob/living/carbon/human/dummy/D = new(get_turf(AOG)) // in soultstone code we have block for type dummy
-		user.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
+		var/area/area = get_area(AOG)
+		slave_enter_area(D, area)
+		D.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
 			"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
 			"<span class='userdanger'>Вы слышите, как течет жидкость.</span>")
 
