@@ -234,7 +234,7 @@
 	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
 		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
 		return
-	if(mind.hulkizing)
+	if(!mind || mind.hulkizing)
 		to_chat(src, "<span class='warning'>You no longer strength to transform!</span>") // Hulk transformation at most 1 time.
 		return
 
