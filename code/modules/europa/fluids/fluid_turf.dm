@@ -1,6 +1,6 @@
 /obj/effect/flood
 	name = ""
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = FLY_LAYER
 	color = "#66d1ff"
 	icon = 'icons/effects/liquids.dmi'

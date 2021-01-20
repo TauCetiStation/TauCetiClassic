@@ -18,7 +18,7 @@
 	chamber_round()
 	update_icon()
 
-/obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1, var/no_casing = 0)
+/obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1, no_casing = 0)
 //	if(chambered)
 //		return 1
 	if(crit_fail && prob(50))  // IT JAMMED GODDAMIT

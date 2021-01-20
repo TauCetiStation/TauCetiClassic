@@ -27,7 +27,7 @@
 	var/thrusters_active = FALSE
 	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 
-/obj/mecha/combat/marauder/Process_Spacemove(var/movement_dir = 0)
+/obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(.)
 		return 1

@@ -229,16 +229,15 @@
 				prob(12);/obj/item/clothing/head/helmet/space/santahat,\
 				prob(12);/obj/item/clothing/suit/space/santa,\
 				prob(12);/obj/item/clothing/shoes/winterboots,\
-				prob(3);/obj/item/clothing/suit/wintercoat,\
-				prob(3);/obj/item/clothing/suit/storage/labcoat/winterlabcoat,\
-				prob(1);/obj/item/clothing/suit/wintercoat/security,\
-				prob(1);/obj/item/clothing/suit/wintercoat/engineering/atmos,\
-				prob(1);/obj/item/clothing/suit/wintercoat/engineering,\
-				prob(1);/obj/item/clothing/suit/wintercoat/science,\
-				prob(1);/obj/item/clothing/suit/wintercoat/medical,\
-				prob(1);/obj/item/clothing/suit/wintercoat/cargo,\
-				prob(1);/obj/item/clothing/suit/wintercoat/hydro,\
-				prob(1);/obj/item/clothing/suit/wintercoat/captain,\
+				prob(3);/obj/item/clothing/suit/hooded/wintercoat,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/security,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/engineering,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/science,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/medical,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/cargo,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/hydro,\
+				prob(1);/obj/item/clothing/suit/hooded/wintercoat/captain,\
 				prob(12);/obj/item/weapon/storage/backpack/santabag,\
 			)
 
