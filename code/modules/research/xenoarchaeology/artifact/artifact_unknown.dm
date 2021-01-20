@@ -286,7 +286,7 @@
 			secondary_effect.ToggleActivate(0)
 
 	else if (istype(W,/obj/item/weapon/match) && W:lit ||\
-			iswelder(W) && W:welding ||\
+			iswelder(W) && W:isOn() ||\
 			istype(W,/obj/item/weapon/lighter) && W:lit)
 		if(my_effect.trigger == TRIGGER_HEAT)
 			my_effect.ToggleActivate()

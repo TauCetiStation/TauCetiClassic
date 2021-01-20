@@ -32,8 +32,8 @@
 	// TO-DO: use traits? ~Luduk
 	var/list/restricted_species_flags = list()
 
-	var/required_players = 0
-	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
+	var/required_players = 0 // Minimum number of players, if game mode is forced
+	var/required_players_bundles = 0 //Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -106,7 +106,7 @@ Implants;
 	if (playerC == 0 && required_players == 0)
 		return TRUE
 	// check for minimal player on server
-	if((modeset && modeset == "secret" && playerC < required_players_secret) || playerC < required_players)
+	if((modeset && modeset == ("secret" || "tau classic" || "bs12") && playerC < required_players_bundles) || playerC < required_players)
 		return FALSE
 	// get list of all antags possiable
 	antag_candidates = get_players_for_role(role_type)
@@ -316,7 +316,7 @@ Implants;
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	if(security_level < SEC_LEVEL_BLUE)

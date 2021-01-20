@@ -45,7 +45,6 @@
 	if(..() && istype(O, /obj/item/clothing/mask/facehugger))
 		return TRUE
 	else
-		to_chat(src, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/set_m_intent(intent)

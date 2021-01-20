@@ -313,20 +313,6 @@
 	if(istype(I, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = I
-		if(T.calc_carry() > 0)
-			if(prob(85))
-				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
-				return FALSE
-			else
-				I.forceMove(user.loc)
-				if(user.client && user.s_active != src)
-					user.client.screen -= I
-				I.dropped(user)
-				to_chat(user, "<span class='warning'>God damnit!</span>")
-			return
-
 	if(istype(I, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
@@ -351,7 +337,7 @@
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
 	return attack_hand(user)                  // to unequip - there is drag n drop available for this task - same as humans do.
 
-/obj/item/weapon/storage/proc/gather_all(var/turf/T, var/mob/user)
+/obj/item/weapon/storage/proc/gather_all(turf/T, mob/user)
 	var/success = 0
 	var/failure = 0
 

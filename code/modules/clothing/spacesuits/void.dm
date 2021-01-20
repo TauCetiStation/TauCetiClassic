@@ -5,6 +5,8 @@
 	desc = "A high tech, NASA Centcom branch designed, dark red space suit helmet. Used for AI satellite maintenance."
 	icon_state = "void"
 	item_state = "void"
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA voidsuit"
