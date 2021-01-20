@@ -16,15 +16,16 @@
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
-	if(length(message) >= 1)
+	if(length(message) >= 2)
 		if(department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "alientalk")
 			message = copytext(message, 2 + length(message[2]))
 			message = trim(message)
 			alien_talk(message)
-		else
-			if(!stat)
-				playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
-			return ..(message, xeno_language, sanitize = 0)
+			return
+
+	if(stat != CONSCIOUS)
+		playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
+		return ..(message, xeno_language, sanitize = 0)
 
 /mob/living/carbon/xenomorph/facehugger/say(message)
 

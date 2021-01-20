@@ -125,6 +125,10 @@
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
 		step_rand(M)
+	QDEL_NULL(pr_int_temp_processor)
+	QDEL_NULL(pr_give_air)
+	QDEL_NULL(pr_internal_damage)
+	QDEL_NULL(pr_mecha_light)
 	mechas_list -= src //global mech list
 	return ..()
 
@@ -364,7 +368,8 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
+	if(!islist(possible_int_damage) || isemptylist(possible_int_damage))
+		return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
@@ -565,7 +570,6 @@
 	if(prob(60))
 		explosion(T, 0, 0, 1, 3)
 	qdel(src)
-
 
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
