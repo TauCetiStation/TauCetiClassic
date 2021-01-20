@@ -13,10 +13,10 @@
 	//var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 
-/datum/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
+/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[FOLLOW_LINK(O, src)] [message]</span>")
+			to_chat(O, "<span class='ghostalert'>[message]</span>")
 			if(ghost_sound)
 				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
