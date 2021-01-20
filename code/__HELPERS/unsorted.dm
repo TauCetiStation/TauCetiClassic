@@ -1514,3 +1514,9 @@ var/list/WALLITEMS = typecacheof(list(
 		return 1
 
 	return contains(location.loc)
+
+// \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
+// If it ever becomes necesary to get a more performant REF(), this lies here in wait
+// #define REF(thing) "\ref[thing]"
+/proc/REF(input)
+	return "\ref[input]"
