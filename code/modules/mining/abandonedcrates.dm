@@ -5,11 +5,12 @@
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
 	locked = TRUE
-	var/list/code = list()
 	var/lastattempt = null
 	var/attempts = 3
 	var/successful_numbers = 0
 	var/list/pos_numbers = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
+	var/list/buttons_pressed = list(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
+	var/list/code = list()
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
@@ -100,6 +101,8 @@
 /obj/structure/closet/crate/secure/loot/tgui_data()
 	var/data = list()
 	data["code"] = code
+	data["attempts"] = attempts
+	data["buttons_pressed"] = buttons_pressed
 
 	return data
 
@@ -112,8 +115,14 @@
 		if("test_for_luck")
 			if(!attempts)
 				return
-			attempts--
+
 			var/number = params["number"]
+			if (!buttons_pressed[number])
+				buttons_pressed[number] = TRUE
+				attempts--
+			else
+				return
+
 			for(var/i in code)
 				if(number == i)
 					successful_numbers++
