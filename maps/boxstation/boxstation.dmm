@@ -18022,7 +18022,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aFz" = (
-/obj/structure/disposalpipe/junction{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -20394,6 +20394,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aJX" = (
@@ -29963,7 +29966,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bbe" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -30068,13 +30071,6 @@
 	icon_state = "dark"
 	},
 /area/station/ai_monitored/eva)
-"bbm" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/secondary/entry)
 "bbn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -30115,14 +30111,20 @@
 	},
 /area/station/civilian/kitchen)
 "bbr" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/hologram/holopad,
 /obj/effect/landmark{
 	name = "Observer-Start"
 	},
-/obj/machinery/hologram/holopad,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bbs" = (
 /obj/machinery/status_display{
@@ -37452,12 +37454,6 @@
 	icon_state = "dark"
 	},
 /area/station/rnd/telesci)
-"bpc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "bpd" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -92247,9 +92243,9 @@ xLk
 atE
 atE
 bkQ
-bpc
+qtj
 atE
-bpc
+qtj
 bhj
 bvg
 bhj
@@ -95053,8 +95049,8 @@ aaa
 aaa
 apT
 btA
+bbd
 bbr
-aTy
 bhj
 aWW
 aHg
