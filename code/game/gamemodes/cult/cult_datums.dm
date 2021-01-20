@@ -288,63 +288,6 @@
 		"<span class='[religion.style_text]'>Вы чувствуете, как воздух целенаправленной куда-то движется от руны.</span>", \
 		"<span class='userdanger'>Вы чувствуете запах и вкус озона.</span>")
 
-// TODO: IDK
-/datum/rune/cult/ajourney
-	words = list("hell", "travel", "self")
-	var/mob/living/ajourned
-	var/mob/dead/observer/ghost
-	var/cooldown = 0
-
-/datum/rune/cult/ajourney/Destroy()
-	if(isprocessing)
-		STOP_PROCESSING(SSobj, src)
-		to_chat(ghost, "<span class='[religion.style_text]'>The astral cord that ties your body and your spirit has been severed. \
-			You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
-		ghost.can_reenter_corpse = FALSE
-		ghost = null
-		ajourned = null
-	return ..()
-
-/datum/rune/cult/ajourney/process()
-	if(ghost)
-		if(QDELETED(ghost))
-			ajourned = null
-			ghost = null
-			STOP_PROCESSING(SSobj, src)
-			return
-		if(!ajourned || QDELETED(ajourned))
-			STOP_PROCESSING(SSobj, src)
-			to_chat(ghost, "<span class='[religion.style_text]'>The astral cord that ties your body and your spirit has been severed. \
-				You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
-			ghost.can_reenter_corpse = FALSE
-			ghost = null
-			ajourned = null
-			return
-	if(ghost.can_reenter_corpse)
-		if(holder.loc != ajourned.loc)
-			to_chat(ghost, "<span class='[religion.style_text]'>The astral cord that ties your body and your spirit has been severed!</span>")
-			ghost.can_reenter_corpse = FALSE
-	else if(holder.loc == ajourned.loc)
-		to_chat(ghost, "<span class='[religion.style_text]'>The astral cord has been restored!</span>")
-		ghost.can_reenter_corpse = TRUE
-	if(cooldown < world.time)
-		cooldown = world.time + 100
-		ajourned.take_bodypart_damage(10, 0)
-
-
-/datum/rune/cult/ajourney/action(mob/living/carbon/human/user)
-	if(!istype(user) || user.loc != holder.loc)
-		return fizzle(user)
-	user.say("Fwe[pick("'","`")]sh mah erl nyag r'ya!")
-	user.visible_message("<span class='userdanger'>[user]'s eyes glow blue as \he freezes in place, absolutely motionless.</span>", \
-		"<span class='userdanger'>The shadow that is your spirit separates itself from your body. You are now in the realm beyond.\
-		While this is a great sight, being here strains your mind and body. Hurry...</span>", \
-		"<span class='userdanger'>You hear only complete silence for a moment.</span>")
-	ajourned = user
-	ghost = user.ghostize(TRUE)
-	playsound(holder, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
-	START_PROCESSING(SSobj, src)
-
 /datum/rune/cult/wall
 	name = "Summon wall"
 	words = list("destroy", "travel", "self")
