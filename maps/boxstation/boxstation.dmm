@@ -7018,14 +7018,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall,
 /area/station/security/detectives_office)
-"aly" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "whiteblue"
-	},
-/area/station/hallway/secondary/exit)
 "alz" = (
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 4;
@@ -16550,16 +16542,15 @@
 	},
 /area/station/hallway/secondary/exit)
 "aCZ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
+	dir = 10;
+	icon_state = "whiteblue"
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/secondary/exit)
 "aDa" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -18030,10 +18021,13 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aFF" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/secondary/entry)
 "aFG" = (
 /turf/simulated/wall,
@@ -18647,15 +18641,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aGS" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
-	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = 2;
-	pixel_y = 2
-	},
 /obj/item/weapon/storage/firstaid/o2,
 /obj/item/device/radio/off{
 	pixel_x = -6;
@@ -18664,6 +18650,9 @@
 /obj/item/device/radio/off{
 	pixel_x = 6;
 	pixel_y = 1
+	},
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -21882,15 +21871,14 @@
 /area/station/maintenance/cargo)
 "aMU" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 4;
-	pixel_y = 4
-	},
 /obj/item/weapon/medical/teleporter{
 	pixel_x = -5;
 	pixel_y = 7
 	},
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 2;
+	pixel_y = 2
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -24629,13 +24617,14 @@
 	},
 /area/station/rnd/scibreak)
 "aRV" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "whiteblue"
+/obj/machinery/camera{
+	c_tag = "Mining Shuttle";
+	pixel_x = 18
 	},
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/hallway/secondary/entry)
 "aRW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -25461,24 +25450,13 @@
 	},
 /area/station/civilian/chapel/crematorium)
 "aTy" = (
-/obj/structure/sign/directions/dock_tablo/arrival{
-	pixel_y = -4
+/obj/machinery/hologram/holopad,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark{
+	name = "Observer-Start"
 	},
-/obj/structure/sign/mark{
-	icon_state = "ylf";
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/structure/sign/mark{
-	icon_state = "ylf";
-	pixel_x = 16;
-	pixel_y = 8
-	},
-/obj/structure/sign/mark{
-	icon_state = "ylf";
-	pixel_y = 8
-	},
-/turf/simulated/wall,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aTz" = (
 /obj/effect/decal/cleanable/generic,
@@ -25605,9 +25583,14 @@
 	pixel_x = -32;
 	pixel_y = 32
 	},
+/obj/item/weapon/twohanded/flora/random,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -30
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitebluecorner"
+	dir = 8;
+	icon_state = "whiteblue"
 	},
 /area/station/hallway/secondary/exit)
 "aTK" = (
@@ -27924,10 +27907,6 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
-/obj/machinery/camera{
-	c_tag = "Mining Shuttle";
-	dir = 1
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -28419,9 +28398,6 @@
 	},
 /obj/item/weapon/reagent_containers/blood/APlus{
 	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BMinus{
 	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/blood/BPlus{
@@ -29779,13 +29755,6 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/secondary/entry)
-"bbh" = (
-/obj/machinery/iv_drip,
-/obj/structure/stool/bed/roller,
-/turf/simulated/floor{
-	icon_state = "whiteblue"
-	},
-/area/station/hallway/secondary/exit)
 "bbi" = (
 /obj/item/stack/sheet/mineral/phoron{
 	layer = 2.9
@@ -34298,7 +34267,7 @@
 	pixel_y = -1
 	},
 /obj/machinery/vending/wallmed2{
-	pixel_x = 24
+	pixel_x = 26
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -36457,10 +36426,10 @@
 "bnK" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/weapon/paper{
-	info = "Where is BANANAS?";
-	info_links = "Clown Note";
+	info = "Космос. Он прекрасен. Почему они говорят что мне туда нельзя? Почему они говорят что я сумашедший? Он тянет меня... Он... Зовет меня... Я слышу его голос... Я больше так не могу...";
+	info_links = "Окровавленные Записи";
 	layer = 3;
-	name = "Clown Note"
+	name = "Окровавленные Записи"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -39143,12 +39112,6 @@
 /obj/structure/lattice,
 /turf/space,
 /area/space)
-"bsB" = (
-/obj/machinery/status_display{
-	layer = 4
-	},
-/turf/simulated/wall,
-/area/station/hallway/secondary/entry)
 "bsC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -39357,9 +39320,12 @@
 "bsU" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal,
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
+	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
 /area/station/hallway/secondary/entry)
 "bsV" = (
@@ -39389,10 +39355,6 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "bsX" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
 	},
@@ -41067,6 +41029,10 @@
 /obj/item/weapon/twohanded/flora/deskleaf{
 	pixel_y = 7
 	},
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41425,20 +41391,7 @@
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
-"bwu" = (
-/obj/machinery/door/firedoor,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "escape"
-	},
-/area/station/hallway/secondary/entry)
 "bwv" = (
-/obj/structure/sign/directions/dock_tablo{
-	pixel_y = -4
-	},
 /obj/structure/sign/mark{
 	icon_state = "ylf";
 	pixel_y = 8
@@ -41452,6 +41405,9 @@
 	icon_state = "ylf";
 	pixel_x = 16;
 	pixel_y = 8
+	},
+/obj/structure/sign/directions/dock_tablo/arrival{
+	pixel_y = -4
 	},
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
@@ -41556,19 +41512,6 @@
 "bwF" = (
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
-"bwG" = (
-/obj/effect/landmark{
-	name = "Observer-Start"
-	},
-/obj/machinery/hologram/holopad,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/secondary/entry)
 "bwH" = (
 /obj/machinery/computer/secure_data/detective_computer,
 /turf/simulated/floor{
@@ -44795,14 +44738,25 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "bDi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/sign/mark{
+	icon_state = "ylf";
+	pixel_x = 8;
+	pixel_y = 8
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/obj/structure/sign/mark{
+	icon_state = "ylf";
+	pixel_x = 16;
+	pixel_y = 8
+	},
+/obj/structure/sign/mark{
+	icon_state = "ylf";
+	pixel_y = 8
+	},
+/obj/structure/sign/directions/dock_tablo{
+	pixel_y = -4
+	},
+/turf/simulated/wall,
+/area/station/hallway/secondary/entry)
 "bDj" = (
 /obj/item/weapon/defibrillator/loaded,
 /obj/machinery/recharger/wallcharger{
@@ -61631,6 +61585,10 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
+/obj/machinery/newscaster{
+	pixel_x = -28;
+	pixel_y = 1
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -69000,13 +68958,6 @@
 	},
 /area/station/medical/chemistry)
 "dvb" = (
-/obj/structure/mirror{
-	dir = 4;
-	pixel_y = 32
-	},
-/obj/structure/sink{
-	pixel_y = 26
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -70039,9 +69990,6 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "fbb" = (
-/obj/machinery/alarm{
-	pixel_y = 28
-	},
 /obj/machinery/camera{
 	c_tag = "Escape Medical Checkpoint";
 	network = list("SS13","Medical")
@@ -85837,7 +85785,7 @@ hjb
 aCw
 bjn
 hub
-aWt
+aRV
 aXR
 aSV
 aDy
@@ -87379,7 +87327,7 @@ apT
 apT
 apT
 apT
-aCZ
+aGU
 aGX
 apT
 aaa
@@ -88664,7 +88612,7 @@ aEb
 aEb
 boh
 aJO
-aFF
+aTy
 aJJ
 bbZ
 apT
@@ -89949,7 +89897,7 @@ apT
 apT
 apT
 apT
-aCZ
+aGU
 aIm
 apT
 aaa
@@ -92008,7 +91956,7 @@ bdz
 buT
 bvW
 bwv
-aTy
+bDi
 apT
 aEb
 aEb
@@ -94833,7 +94781,7 @@ aaa
 aaa
 apT
 btA
-bwG
+bbt
 qtj
 bhj
 aWW
@@ -95073,7 +95021,7 @@ apW
 dhb
 dhb
 apW
-aah
+aaa
 apW
 aBb
 gSb
@@ -95322,7 +95270,7 @@ aaa
 aaa
 aah
 aah
-aaa
+aah
 apW
 bwT
 bjR
@@ -95334,10 +95282,10 @@ aaa
 apW
 bwT
 apW
-aaa
-aaa
-aaa
-aaa
+aah
+aah
+aah
+aah
 aRn
 asP
 asP
@@ -95578,7 +95526,7 @@ aaa
 aaa
 aah
 aah
-aaa
+aah
 aaa
 apW
 aXX
@@ -95834,7 +95782,7 @@ aaa
 aaa
 aaa
 aah
-aaa
+aah
 aaa
 aaa
 aYA
@@ -95859,7 +95807,7 @@ baU
 bqr
 brV
 wJk
-bsB
+apT
 bvT
 bwI
 bsR
@@ -96091,10 +96039,10 @@ aaa
 aaa
 aaa
 aah
-cmc
-aRn
-aRn
-aRn
+aah
+aaa
+aaa
+apW
 hvb
 hvb
 hvb
@@ -96346,12 +96294,12 @@ aaa
 aaa
 aaa
 aaa
+cmc
 aRn
 aRn
 aRn
-aRV
-aly
-bxR
+aRn
+aRn
 uab
 uab
 uab
@@ -96607,8 +96555,8 @@ aRn
 ctq
 aOk
 aTJ
-bbs
-bDi
+aCZ
+bxR
 aVq
 aVq
 aYe
@@ -96628,7 +96576,7 @@ aRn
 aRn
 aRn
 aRn
-aRn
+tPb
 aRn
 apT
 apT
@@ -96881,8 +96829,8 @@ tSb
 bnL
 bvK
 aLB
-bwu
-urb
+ajR
+aFF
 urb
 brU
 bsj
@@ -97892,7 +97840,7 @@ aRn
 aMU
 aRP
 aQJ
-bbh
+aYW
 aRn
 aRn
 aRn
