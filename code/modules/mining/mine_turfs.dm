@@ -74,7 +74,7 @@
 	if(hud_list)
 		return
 	prepare_huds()
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	mine.add_to_hud(src)
 	set_mine_hud()
 
@@ -366,7 +366,7 @@
 			M.apply_effect(25, IRRADIATE)
 
 
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
 
@@ -646,7 +646,7 @@
 		icon_state = "asteroid_stone_[rand(1, 10)]"
 
 	//I dont know how, but it gets into hudatoms
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
 

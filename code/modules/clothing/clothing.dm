@@ -67,7 +67,7 @@ var/global/list/icon_state_allowed_cache = list()
 			species_restricted |= specie
 
 	if(!sprite_sheet_slot)
-		if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+		if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
 			species_restricted = null
 		return
 
@@ -104,7 +104,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 			global.icon_state_allowed_cache[cache_key] = TRUE
 
-	if(!species_restricted.len || (species_restricted.len == 1 && exclusive))
+	if(!species_restricted.len || (species_restricted.len == 1 && !exclusive))
 		species_restricted = null
 
 //BS12: Species-restricted clothing check.
@@ -115,21 +115,17 @@ var/global/list/icon_state_allowed_cache = list()
 		return 0
 
 	if(species_restricted && istype(M,/mob/living/carbon/human))
-
 		var/wearable = null
-		var/exclusive = null
+		var/exclusive = ("exclude" in species_restricted)
 		var/mob/living/carbon/human/H = M
-
-		if("exclude" in species_restricted)
-			exclusive = 1
 
 		if(H.species)
 			if(exclusive)
 				if(!(H.species.name in species_restricted))
-					wearable = 1
+					wearable = TRUE
 			else
 				if(H.species.name in species_restricted)
-					wearable = 1
+					wearable = TRUE
 
 			if(!wearable && (slot != SLOT_L_STORE && slot != SLOT_R_STORE)) //Pockets.
 				to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")
@@ -284,7 +280,15 @@ var/global/list/icon_state_allowed_cache = list()
 	var/invisa_view = 0
 	// Standart hud type
 	var/list/hud_types
+	// Default huds for fix
+	var/list/def_hud_types
 	var/mob/living/carbon/glasses_user
+
+/obj/item/clothing/glasses/atom_init()
+	. = ..()
+	if(hud_types)
+		def_hud_types = hud_types
+
 
 /*
 SEE_SELF  // can see self, no matter what

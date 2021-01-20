@@ -107,11 +107,6 @@
 
 	return ..()
 
-/mob/living/simple_animal/shade/god/Login()
-	..()
-	stat = CONSCIOUS
-	blinded = FALSE
-
 /mob/living/simple_animal/shade/god/Life()
 	..()
 	if(global.chaplain_religion)

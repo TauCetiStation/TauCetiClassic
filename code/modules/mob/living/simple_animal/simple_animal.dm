@@ -79,6 +79,12 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
+/mob/living/simple_animal/Login()
+	..()
+	blinded = FALSE
+	stat = CONSCIOUS
+	update_canmove()
+
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
 
