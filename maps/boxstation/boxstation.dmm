@@ -29989,19 +29989,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
-"bbh" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/secondary/entry)
 "bbi" = (
 /obj/item/stack/sheet/mineral/phoron{
 	layer = 2.9
@@ -30125,16 +30112,6 @@
 	name = "Observer-Start"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
-"bbs" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
 /area/station/hallway/secondary/entry)
 "bbt" = (
 /obj/structure/grille,
@@ -93764,7 +93741,7 @@ aaa
 aaa
 aEb
 bsX
-bbh
+bbd
 nFb
 bit
 bnB
@@ -96334,7 +96311,7 @@ brW
 beZ
 apT
 btx
-bbs
+bbd
 aTy
 aHc
 aWW

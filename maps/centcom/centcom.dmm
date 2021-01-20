@@ -748,13 +748,15 @@
 /area/shuttle/escape/centcom)
 "abO" = (
 /obj/structure/object_wall/evac{
-	icon_state = "2,4"
+	icon_state = "2,4";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
 "abP" = (
 /obj/structure/object_wall/evac{
-	icon_state = "3,4"
+	icon_state = "3,4";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
@@ -766,7 +768,8 @@
 /area/custom/syndicate_mothership/elite_squad)
 "abS" = (
 /obj/structure/object_wall/evac{
-	icon_state = "4,4"
+	icon_state = "4,4";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
@@ -1319,48 +1322,31 @@
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/machinery/iv_drip,
-/obj/structure/stool/bed/roller,
-/obj/item/weapon/reagent_containers/syringe/inaprovaline,
 /obj/item/stack/medical/ointment,
 /obj/item/stack/medical/bruise_pack,
+/obj/item/weapon/reagent_containers/pill/dexalin,
+/obj/item/weapon/reagent_containers/pill/dexalin,
+/obj/item/weapon/reagent_containers/pill/dexalin,
+/obj/item/weapon/reagent_containers/pill/bicaridine,
+/obj/item/weapon/reagent_containers/pill/bicaridine,
+/obj/item/weapon/reagent_containers/pill/bicaridine,
+/obj/item/weapon/reagent_containers/pill/tramadol,
+/obj/item/weapon/reagent_containers/pill/tramadol,
+/obj/item/weapon/reagent_containers/pill/tramadol,
+/obj/item/weapon/reagent_containers/syringe/inaprovaline,
+/obj/item/weapon/reagent_containers/syringe/inaprovaline,
+/obj/item/weapon/reagent_containers/syringe/inaprovaline,
 /obj/structure/closet/medical_wall{
 	layer = 3.1;
 	pixel_x = 30
 	},
-/turf/simulated/shuttle/floor/evac/medbay,
-/area/shuttle/escape/centcom)
-"adx" = (
-/obj/structure/stool/bed/roller,
-/obj/machinery/life_assist/artificial_ventilation,
+/obj/structure/table,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "ady" = (
-/obj/structure/table,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/bonesetter,
-/obj/item/weapon/bonegel{
-	pixel_x = 5;
-	pixel_y = 5
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
-	name = "Surgery Cleaner"
-	},
-/obj/item/weapon/scalpel,
-/obj/item/weapon/circular_saw{
-	pixel_y = 10
-	},
-/obj/item/weapon/cautery,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/retractor,
-/obj/item/weapon/FixOVein{
-	pixel_x = -5
-	},
-/turf/simulated/shuttle/floor/evac/medbay,
-/area/shuttle/escape/centcom)
-"adz" = (
-/obj/machinery/optable,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adA" = (
@@ -1523,7 +1509,7 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/twohanded/flora/pottedplant/orientaltree,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adX" = (
@@ -1908,7 +1894,8 @@
 "afI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/flasher_button{
-	id = "shutflash"
+	id = "shutflash";
+	pixel_y = 2
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
@@ -17816,6 +17803,11 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"cYR" = (
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/turf/simulated/shuttle/floor/evac/medbay,
+/area/shuttle/escape/centcom)
 "cZb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/velocity{
@@ -21322,6 +21314,14 @@
 	icon_state = "grass2"
 	},
 /area/centcom/living)
+"kcE" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/stool/bed/roller,
+/obj/machinery/life_assist/artificial_ventilation,
+/turf/simulated/shuttle/floor/evac/medbay,
+/area/shuttle/escape/centcom)
 "kdb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -23141,7 +23141,7 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "onb" = (
-/obj/machinery/sleeper{
+/obj/structure/stool/bed/chair/schair/wagon{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
@@ -23299,7 +23299,7 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "oKb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/machinery/sleeper{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
@@ -23679,11 +23679,8 @@
 	},
 /area/centcom/evac)
 "pNb" = (
-/obj/machinery/sleeper{
+/obj/structure/stool/bed/chair/schair/wagon{
 	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
@@ -43272,11 +43269,11 @@ adW
 aRG
 oFb
 oKb
+kcE
+cYR
 oKb
-oKb
-adx
 pNb
-adz
+pNb
 pXb
 abz
 abO
