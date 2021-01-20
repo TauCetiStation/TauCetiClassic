@@ -84,7 +84,7 @@
 	// More important than favor, used in very expensive rites
 	var/piety = 0
 
-	// Chosen aspects.
+	// Chosen aspects, name = aspect
 	var/list/aspects = list()
 	// Spells that are determined by aspect combinations, are given to God.
 	var/list/god_spells = list()
@@ -95,6 +95,8 @@
 	var/list/rites_info = list()
 	// Lists of rite name by type. "name = rite"
 	var/list/rites_by_name = list()
+	// "name" = int, shows how many times the ritual was cast
+	var/list/ritename_by_count = list()
 	// List with the types of all mandatory rites which are always given
 	var/list/binding_rites = list()
 
@@ -409,6 +411,9 @@
 // Uses a form of this formula:
 // power = power * (summ of aspect diferences / amount of spell aspects + 1)
 /datum/religion/proc/calc_divine_power(list/needed_aspects, initial_divine_power)
+	if(!needed_aspects || !needed_aspects.len)
+		return initial_divine_power
+
 	var/divine_power = initial_divine_power
 
 	var/diff = 0
@@ -490,6 +495,7 @@
 	var/datum/religion_rites/R = new rite_type
 	R.religion = src
 	rites_by_name[R.name] = R
+	ritename_by_count[R.name] = 0
 	affect_divine_power_rite(R)
 
 // Adds all spells related to asp.

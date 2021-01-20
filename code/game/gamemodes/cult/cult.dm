@@ -206,6 +206,16 @@
 				feedback_add_details("cult_objective","[objective.type]|FAIL")
 			obj_count++
 
+	text += "<br><br><b>Аспекты:</b>"
+	for(var/name in global.cult_religion.aspects)
+		var/datum/aspect/A = global.cult_religion.aspects[name]
+		text += "<br><font color='[A.color]'>[name]</font> - с силой [A.power]"
+
+	text += "<br><br><b>Ритуалы:</b>"
+	for(var/name in global.cult_religion.ritename_by_count)
+		var/count = global.cult_religion.ritename_by_count[name]
+		text += "<br><i>[name]</i> - использован [count] [russian_plural(count, "раз", "раза", "раз")]"
+
 	completion_text += text
 	..()
 	return TRUE

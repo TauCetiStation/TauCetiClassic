@@ -28,24 +28,24 @@
 	if(!user.mind.holy_role || !user.my_religion || user.my_religion.aspects.len == 0)
 		return
 
-	to_chat(user, "<span class='notice'>Aspects and his power in your religion:</span>")
+	to_chat(user, "<span class='notice'>Аспекты и их сила в [user.my_religion.name]:</span>")
 	for(var/name in user.my_religion.aspects)
 		var/datum/aspect/A = user.my_religion.aspects[name]
-		to_chat(user, "\t<font color='[A.color]'>[name]</font> with power of <font size='[1+A.power]'><i>[A.power]</i></font>")
+		to_chat(user, "\t<font color='[A.color]'>[name]</font> с силой <font size='[1+A.power]'><i>[A.power]</i></font>")
 
 /obj/structure/cult/tech_table/attack_hand(mob/living/user)
 	if(!user.mind.holy_role || !user.my_religion)
 		return
 
 	if(researching)
-		to_chat(user, "<span class='warning'>There are [round((end_research_time - world.time) * 0.1)] seconds left until the end of studying the aspect.</span>")
+		to_chat(user, "<span class='warning'>Осталось [round((end_research_time - world.time) * 0.1)] до конца исследования.</span>")
 		return
 
-	if(!aspect_images)
+	if(!aspect_images.len)
 		gen_aspect_images()
 	if(uniq_images.len < user.my_religion.available_techs.len)
 		gen_tech_images(user)
-	if(!category_images)
+	if(!category_images.len)
 		gen_category_images()
 
 	var/choice = show_radial_menu(user, src, category_images, tooltips = TRUE, require_near = TRUE)
@@ -66,7 +66,7 @@
 	if(!user.my_religion.check_costs(choosed_tech.favor_cost, choosed_tech.piety_cost, user))
 		return
 
-	to_chat(user, "<span class='notice'>You started to explore the [initial(choosed_tech.name)].</span>")
+	to_chat(user, "<span class='notice'>Вы начали изучение [initial(choosed_tech.name)].</span>")
 
 	start_activity(CALLBACK(src, .proc/research_tech, user.my_religion, choosed_tech))
 
@@ -83,7 +83,7 @@
 	// Generates a name with the power of an aspect and upgrade cost
 	for(var/datum/aspect/A in aspect_images)
 		var/datum/aspect/in_religion = user.my_religion.aspects[initial(A.name)]
-		A.name = "[initial(A.name)], power: [in_religion ? in_religion.power : "0"], upgrade piety cost: [get_upgrade_cost(in_religion)]"
+		A.name = "[initial(A.name)], сила: [in_religion ? in_religion.power : "0"], piety: [get_upgrade_cost(in_religion)]"
 
 	var/datum/aspect/choosed_aspect = show_radial_menu(user, src, aspect_images, tooltips = TRUE, require_near = TRUE)
 	if(!choosed_aspect)
@@ -92,7 +92,7 @@
 	if(!user.my_religion.check_costs(null, get_upgrade_cost(in_religion), user))
 		return
 
-	to_chat(user, "<span class='notice'>You started to [in_religion ? "upgrade" : "explore"] the [initial(choosed_aspect.name)].</span>")
+	to_chat(user, "<span class='notice'>Вы начали [in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)].</span>")
 	start_activity(CALLBACK(src, .proc/upgrade_aspect, user.my_religion, choosed_aspect))
 
 /obj/structure/cult/tech_table/proc/upgrade_aspect(datum/religion/R, datum/aspect/aspect_to_upgrade)

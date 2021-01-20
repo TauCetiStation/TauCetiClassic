@@ -125,6 +125,7 @@
 	end(user, AOG)
 	if(invoke_effect(user, AOG))
 		religion.adjust_favor(-favor_cost)
+		religion.ritename_by_count[name]++
 	reset_rite_wrapper(src, user, AOG)
 
 /datum/religion_rites/proc/reset_rite_wrapper(datum/source, mob/living/user, obj/AOG)
