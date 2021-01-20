@@ -8,6 +8,8 @@
 	density = 1
 	anchored = 1
 
+	var/datum/announcement/centcomm/bsa/announcement = new
+
 /obj/machinery/artillerycontrol/process()
 	if(src.reload<180)
 		src.reload++
@@ -58,7 +60,7 @@
 		var/loc = pick(L)
 		if(loc)
 			if(intensity)
-				command_alert("Bluespace artillery fire detected in [thearea.name]. Brace for impact.", "artillery")
+				announcement.play(thearea)
 				message_admins("[key_name_admin(usr)] has launched an artillery strike at [thearea.name]. [ADMIN_JMP(thearea)]")
 				explosion(loc,2,5,11)
 			else

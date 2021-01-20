@@ -2855,9 +2855,6 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
-"alt" = (
-/turf/space,
-/area/custom/syndicate_mothership)
 "alx" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
@@ -6156,14 +6153,6 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
-"awB" = (
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f10"
-	},
-/area/velocity)
 "awC" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
@@ -7091,13 +7080,6 @@
 /obj/machinery/door/poddoor{
 	id = "velocity_main";
 	name = "Security Doors"
-	},
-/obj/item/device/flashlight/lamp/green{
-	anchored = 1;
-	invisibility = 61;
-	name = "invisibly light";
-	pixel_x = 1;
-	pixel_y = 5
 	},
 /turf/unsimulated/floor{
 	icon_state = "circuit"
@@ -14467,9 +14449,6 @@
 "aYG" = (
 /turf/space,
 /area/shuttle/officer/centcom)
-"aYJ" = (
-/turf/space,
-/area/centcom/evac)
 "aYL" = (
 /obj/structure/stool/bed/chair/metal/white,
 /turf/unsimulated/beach/sand,
@@ -17425,13 +17404,6 @@
 	icon_state = "door_locked";
 	locked = 1
 	},
-/obj/item/device/flashlight/lamp/green{
-	anchored = 1;
-	invisibility = 61;
-	name = "invisibly light";
-	pixel_x = 1;
-	pixel_y = 5
-	},
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
@@ -18245,14 +18217,6 @@
 	icon_state = "warnplate"
 	},
 /area/space)
-"fpb" = (
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f6"
-	},
-/area/velocity)
 "fqb" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -18358,13 +18322,6 @@
 	},
 /area/centcom/living)
 "fAb" = (
-/obj/item/device/flashlight/lamp/green{
-	anchored = 1;
-	invisibility = 61;
-	name = "invisibly light";
-	pixel_x = 1;
-	pixel_y = 5
-	},
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
 	icon_state = "chair_b02"
@@ -18442,22 +18399,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "warning"
-	},
-/area/velocity)
-"fJb" = (
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f5"
-	},
-/area/velocity)
-"fKb" = (
-/turf/unsimulated/floor{
-	icon_state = "circuit"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f9"
 	},
 /area/velocity)
 "fLb" = (
@@ -23274,6 +23215,14 @@
 	icon_state = "1,6"
 	},
 /area/shuttle/supply/velocity)
+"qnM" = (
+/obj/effect/step_trigger/thrower{
+	direction = 4;
+	name = "thrower_noghoststop(right)";
+	tiles = 0
+	},
+/turf/space,
+/area/space)
 "qsd" = (
 /obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
@@ -23369,6 +23318,18 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"uEN" = (
+/obj/effect/step_trigger/teleporter/random{
+	name = "escapeshuttle_leave_noghosts";
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/turf/space,
+/area/space)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2";
@@ -48355,7 +48316,7 @@ aHv
 mRb
 mUb
 aHv
-aYJ
+aaM
 agG
 agV
 ahm
@@ -48612,7 +48573,7 @@ aHv
 mRb
 hRb
 aHv
-aYJ
+aaM
 agL
 agX
 ahp
@@ -73986,11 +73947,11 @@ ayO
 azi
 azi
 azi
-fpb
+dIb
 aAA
 aAA
 aAA
-fJb
+enb
 azi
 azi
 azi
@@ -74757,11 +74718,11 @@ ayO
 azi
 azi
 azi
-awB
+auI
 dNb
 dNb
 dNb
-fKb
+eqb
 azi
 azi
 azi
@@ -74967,8 +74928,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75224,8 +75185,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75481,8 +75442,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75738,8 +75699,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -75995,8 +75956,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -76252,8 +76213,8 @@ aaM
 aaM
 aaM
 aeD
-alT
-alT
+qnM
+qnM
 aeD
 aaM
 aaM
@@ -76509,8 +76470,8 @@ aaM
 aaM
 aaM
 aeD
-ahG
-ahG
+uEN
+uEN
 aeD
 aaM
 aaM
@@ -80842,7 +80803,7 @@ aaN
 aaN
 aaN
 aie
-alt
+aaM
 aie
 aaN
 aaN
@@ -82141,7 +82102,7 @@ akQ
 akQ
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -82398,7 +82359,7 @@ akQ
 akQ
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM
@@ -82655,7 +82616,7 @@ alF
 als
 aie
 aie
-alt
+aaM
 aaM
 aaM
 aaM

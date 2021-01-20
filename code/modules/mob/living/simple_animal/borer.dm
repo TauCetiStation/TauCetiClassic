@@ -2,7 +2,7 @@
 	name = "host brain"
 	real_name = "host brain"
 
-/mob/living/captive_brain/say(var/message)
+/mob/living/captive_brain/say(message)
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
@@ -111,7 +111,7 @@
 				if(prob(host.brainloss/20))
 					host.say("*[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
 
-/mob/living/simple_animal/borer/say(var/message)
+/mob/living/simple_animal/borer/say(message)
 
 	message = capitalize(sanitize(message))
 

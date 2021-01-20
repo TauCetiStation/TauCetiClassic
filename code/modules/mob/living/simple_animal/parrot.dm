@@ -768,7 +768,7 @@
 	memory_saved = 1 //At this point nothing is saved
 	. = ..()
 
-/mob/living/simple_animal/parrot/say(var/message)
+/mob/living/simple_animal/parrot/say(message)
 
 	if(stat || !message)
 		return

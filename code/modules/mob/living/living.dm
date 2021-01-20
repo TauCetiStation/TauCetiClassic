@@ -7,12 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/medical/medhud in global.huds)
-		medhud.add_to_hud(src)
-	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
-	diaghud.add_to_hud(src)
-	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
-	sechud.add_to_hud(src)
+	for(var/datum/atom_hud/data/hud in global.huds)
+		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
@@ -530,7 +526,7 @@
 			H.restore_blood()
 			H.full_prosthetic = null
 			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart.heart_normalize()
+			Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	cure_all_viruses()
@@ -1164,7 +1160,7 @@
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
 		return
-	if(butcher_results.len)
+	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
 				new path(src.loc)

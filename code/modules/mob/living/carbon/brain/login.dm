@@ -1,4 +1,5 @@
 /mob/living/carbon/brain/Login()
 	..()
 	update_hud()
-	return
+	blinded = FALSE
+	stat = CONSCIOUS
