@@ -320,7 +320,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0, skip_mindless=0)
-	var/list/mobs = sortmobs()
+	var/list/mobs = sortmobs() - global.dummy_mob_list
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()

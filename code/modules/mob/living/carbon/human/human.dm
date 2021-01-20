@@ -29,12 +29,6 @@
 
 	moveset_type = /datum/combat_moveset/human
 
-/mob/living/carbon/human/dummy
-	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
-
-INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
-
 /mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
 	. = ..(mapload, SKRELL)
