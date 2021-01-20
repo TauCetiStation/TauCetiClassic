@@ -125,8 +125,10 @@
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
 		step_rand(M)
-	pr_internal_damage.stop()
-	pr_give_air.stop()
+	QDEL_NULL(pr_int_temp_processor)
+	QDEL_NULL(pr_give_air)
+	QDEL_NULL(pr_internal_damage)
+	QDEL_NULL(pr_mecha_light)
 	mechas_list -= src //global mech list
 	return ..()
 
