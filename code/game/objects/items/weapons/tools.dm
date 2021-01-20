@@ -111,6 +111,7 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 8
 	throw_speed = 2
 	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
@@ -157,14 +158,17 @@
 		item_state = "cutters_[param_color]"
 
 /obj/item/weapon/wirecutters/attack(mob/living/carbon/C, mob/user)
-	if(istype(C) && C.handcuffed && istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
-		usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
-		"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
-		"You hear cable being cut.")
-		C.handcuffed = null
-		if(C.buckled && C.buckled.buckle_require_restraints)
-			C.buckled.unbuckle_mob()
-		C.update_inv_handcuffed()
+	if(istype(C) && C.handcuffed && user.a_intent == INTENT_HELP)
+		if(istype(C.handcuffed, /obj/item/weapon/handcuffs/cable))
+			usr.visible_message("\The [usr] cuts \the [C]'s restraints with \the [src]!",\
+			"<span class='notice'>You cut \the [C]'s restraints with \the [src]!</span>",\
+			"You hear cable being cut.")
+			QDEL_NULL(C.handcuffed)
+			if(C.buckled && C.buckled.buckle_require_restraints)
+				C.buckled.unbuckle_mob()
+			C.update_inv_handcuffed()
+		else
+			to_chat(user, "The [C.handcuffed] are too tough to cut with [src].")
 		return
 	else
 		..()
