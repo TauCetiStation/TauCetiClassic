@@ -68,7 +68,7 @@
 /datum/religion_rites/instant/cult/convert
 	name = "Convert"
 	desc = "The best brainwashing in the galaxy!"
-	ritual_length = (5 SECONDS)
+	ritual_length = (10 SECONDS)
 	invoke_msg = "Служи ему!!!"
 	favor_cost = 100
 

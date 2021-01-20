@@ -124,6 +124,14 @@
 		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
 		to_chat(user, "<span calss='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
 		return FALSE // Without instant teleport
+	var/list/tp_runes = get_tp_runes()
+	if(!tp_runes.len)
+		to_chat(user, "<span calss='warning'>Рун телепорта с id - </span><span class='[religion.style_text]'>[id]</span><span calss='warning'>не обнаружено</span>")
+		return FALSE
+	if(tp_runes.len >= 5)
+		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")
+		user.take_overall_damage(5, 0)
+		return FALSE
 	return TRUE
 
 /datum/rune/cult/teleport/teleport/proc/get_tp_runes()
@@ -139,10 +147,6 @@
 /datum/rune/cult/teleport/teleport/action(mob/living/carbon/user)
 	var/list/tp_runes = get_tp_runes()
 
-	if(tp_runes.len >= 5)
-		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")
-		user.take_overall_damage(5, 0)
-		return
 	if(tp_runes.len)
 		user.visible_message("<span class='userdanger'>[user] исчезает во вспышке красного света!</span>", \
 			"<span class='[religion.style_text]'>Вы чувствуете, как ваше тело проскальзывает сквозь измерения!</span>", \
