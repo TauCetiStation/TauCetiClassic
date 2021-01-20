@@ -298,7 +298,7 @@ SUBSYSTEM_DEF(shuttle)
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-				end_location.parallax_movedir = WEST
+				end_location.parallax_movedir = NORTH
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
