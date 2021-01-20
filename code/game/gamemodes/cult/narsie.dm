@@ -154,7 +154,7 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
-	narsie_spawn_animation()
+	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
 	invisibility = 60
 
 	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.5), 70)

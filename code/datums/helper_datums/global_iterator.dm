@@ -63,7 +63,7 @@ Data storage vars:
 		tag = "\ref[src]"
 	set_process_args(arguments)
 	if(autostart)
-		start()
+		INVOKE_ASYNC(src, .proc/start)
 	return
 
 /datum/global_iterator/proc/main()
