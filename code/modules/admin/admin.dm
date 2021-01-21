@@ -280,7 +280,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		"text",
 		"DATE_FORMAT(timestamp, '[timestamp_format]')",
 		"DATEDIFF(timestamp, '[days_ago_start_date]')",
-        "round_id"
+		"round_id"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_messages WHERE (targetckey = '[ckey(player_ckey)]') AND (deleted = 0) ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -332,7 +332,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		"DATEDIFF(unbanned_datetime, '[days_ago_start_date]')",
 		"unbanned_ckey",
 		"rounds",
-        "round_id"
+		"round_id"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[ckey(player_ckey)]') ORDER BY id LIMIT 100")
 	if(!query.Execute())
