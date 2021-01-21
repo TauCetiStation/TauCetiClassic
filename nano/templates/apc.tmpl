@@ -4,7 +4,7 @@
 			Интерфейс:
 		</div>
 		<div class="itemContentFull">
-			{{:helper.link('Закрыто', 'locked', {'toggleaccess' : 1}, data.locked ? 'selected' : null)}}{{:helper.link('Открыто', 'unlocked', {'toggleaccess' : 1}, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
+			{{:helper.link('Заблокировано', 'locked', {'toggleaccess' : 1}, data.locked ? 'selected' : null)}}{{:helper.link('Разблокировано', 'unlocked', {'toggleaccess' : 1}, data.malfStatus >= 2 ? 'linkOff' : (data.locked ? null : 'selected'))}}
 		</div>
 		<div class="clearBoth"></div>
 	{{else}}
