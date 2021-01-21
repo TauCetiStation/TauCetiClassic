@@ -22,7 +22,7 @@
 	w_class = ITEM_SIZE_TINY
 	sharp = 1
 	//item_state = "electronic"
-	var/source_rock = "/turf/simulated/mineral/"
+	var/source_rock = /turf/simulated/mineral
 	var/datum/geosample/geological_data
 
 /obj/item/weapon/rocksliver/atom_init()
@@ -47,7 +47,7 @@
 	//all potential finds are initialised to null, so nullcheck before you access them
 	var/list/find_presence = list()
 
-/datum/geosample/New(var/turf/simulated/mineral/container)
+/datum/geosample/New(turf/simulated/mineral/container)
 
 	UpdateTurf(container)
 

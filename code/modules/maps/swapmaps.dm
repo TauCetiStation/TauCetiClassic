@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /*
 	SwapMaps library by Lummox JR
 	developed for digitalBYOND
@@ -174,15 +172,15 @@
 		   x2>swapmaps_compiled_maxx)
 			var/list/areas=new
 			for(var/atom/A in block(locate(x1,y1,z1),locate(x2,y2,z2)))
-				for(var/obj/O in A) del(O)
+				for(var/obj/O in A) qdel(O)
 				for(var/mob/M in A)
-					if(!M.key) del(M)
+					if(!M.key) qdel(M)
 					else M.loc=null
 				areas[A.loc]=null
 				qdel(A)
 			// delete areas that belong only to this map
 			for(var/area/a in areas)
-				if(a && !a.contents.len) del(a)
+				if(a && !a.contents.len) qdel(a)
 			if(x2>=world.maxx || y2>=world.maxy || z2>=world.maxz) CutXYZ()
 			qdel(areas)
 	..()
@@ -286,9 +284,9 @@
 					A.contents+=T
 				else defarea.contents+=T
 				// clear the turf
-				for(var/obj/O in T) del(O)
+				for(var/obj/O in T) qdel(O)
 				for(var/mob/M in T)
-					if(!M.key) del(M)
+					if(!M.key) qdel(M)
 					else M.loc=null
 				// finish the read
 				T.Read(S)
@@ -471,7 +469,7 @@ An item may be like:
 			l=l.Copy()
 			for(M in src) if(M.key) l-=M
 		if(l.len) S["contents"]<<l
-		if(l!=contents) del(l)
+		if(l!=contents) qdel(l)
 
 /atom/Read(savefile/S)
 	var/list/l

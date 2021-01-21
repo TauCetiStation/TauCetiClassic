@@ -125,6 +125,10 @@
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
 		step_rand(M)
+	QDEL_NULL(pr_int_temp_processor)
+	QDEL_NULL(pr_give_air)
+	QDEL_NULL(pr_internal_damage)
+	QDEL_NULL(pr_mecha_light)
 	mechas_list -= src //global mech list
 	return ..()
 
@@ -344,7 +348,7 @@
 		use_power(step_energy_drain)
 	return result
 
-/obj/mecha/Bump(var/atom/obstacle, non_native_bump)
+/obj/mecha/Bump(atom/obstacle, non_native_bump)
 	if(non_native_bump)
 		if(throwing)
 			..()
@@ -364,7 +368,8 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
+	if(!islist(possible_int_damage) || isemptylist(possible_int_damage))
+		return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
@@ -565,7 +570,6 @@
 	if(prob(60))
 		explosion(T, 0, 0, 1, 3)
 	qdel(src)
-
 
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
@@ -1290,7 +1294,7 @@
 /datum/global_iterator/mecha_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
 	delay = 20
 
-/datum/global_iterator/mecha_preserve_temp/process(var/obj/mecha/mecha)
+/datum/global_iterator/mecha_preserve_temp/process(obj/mecha/mecha)
 	if(mecha.cabin_air && mecha.cabin_air.volume > 0)
 		var/delta = mecha.cabin_air.temperature - T20C
 		mecha.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
@@ -1299,7 +1303,7 @@
 /datum/global_iterator/mecha_tank_give_air
 	delay = 15
 
-/datum/global_iterator/mecha_tank_give_air/process(var/obj/mecha/mecha)
+/datum/global_iterator/mecha_tank_give_air/process(obj/mecha/mecha)
 	if(mecha.internal_tank)
 		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
 		var/datum/gas_mixture/cabin_air = mecha.cabin_air
@@ -1329,7 +1333,7 @@
 		return stop()
 	return
 
-/datum/global_iterator/mecha_internal_damage/process(var/obj/mecha/mecha) // processing internal damage
+/datum/global_iterator/mecha_internal_damage/process(obj/mecha/mecha) // processing internal damage
 	if(!mecha.hasInternalDamage())
 		return stop()
 	if(mecha.hasInternalDamage(MECHA_INT_FIRE))
@@ -1363,7 +1367,7 @@
 			mecha.diag_hud_set_mechcell()
 	return
 
-/datum/global_iterator/mecha_light/process(var/obj/mecha/mecha)
+/datum/global_iterator/mecha_light/process(obj/mecha/mecha)
 	if(!mecha.lights)
 		return
 	if(mecha.has_charge(mecha.lights_power))

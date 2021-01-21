@@ -36,7 +36,7 @@
 		qdel(src)
 	return
 
-/obj/effect/energy_net/process(var/mob/living/carbon/M as mob)
+/obj/effect/energy_net/process(mob/living/carbon/M)
 	var/check = 60//30 seconds before teleportation. Could be extended I guess. - Extended to one minute
 	//var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 	//The person can still try and attack the net when inside.

@@ -73,7 +73,7 @@
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
-/datum/mind/New(var/key)
+/datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
 

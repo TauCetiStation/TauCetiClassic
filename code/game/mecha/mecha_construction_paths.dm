@@ -61,7 +61,7 @@
 
 
 /datum/construction/reversible/mecha/ripley
-	result = "/obj/mecha/working/ripley"
+	result_type = /obj/mecha/working/ripley
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -259,7 +259,7 @@
 
 
 /datum/construction/reversible/mecha/gygax
-	result = "/obj/mecha/combat/gygax"
+	result_type = /obj/mecha/combat/gygax
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -529,7 +529,7 @@
 
 
 /datum/construction/reversible/mecha/firefighter
-	result = "/obj/mecha/working/ripley/firefighter"
+	result_type = /obj/mecha/working/ripley/firefighter
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -739,7 +739,7 @@
 
 
 /datum/construction/mecha/honker
-	result = "/obj/mecha/combat/honker"
+	result_type = /obj/mecha/combat/honker
 	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
 					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
 					 list("key"=/obj/item/weapon/bikehorn),//3
@@ -809,7 +809,7 @@
 	return
 
 /datum/construction/reversible/mecha/durand
-	result = "/obj/mecha/combat/durand"
+	result_type = /obj/mecha/combat/durand
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -1060,7 +1060,7 @@
 
 
 /datum/construction/mecha/phazon_chassis
-	result = "/obj/mecha/combat/phazon"
+	result_type = /obj/mecha/combat/phazon
 	steps = list(list("key"=/obj/item/mecha_parts/part/phazon_torso),//1
 					 list("key"=/obj/item/mecha_parts/part/phazon_left_arm),//2
 					 list("key"=/obj/item/mecha_parts/part/phazon_right_arm),//3
@@ -1093,7 +1093,7 @@
 
 
 /datum/construction/reversible/mecha/odysseus
-	result = "/obj/mecha/medical/odysseus"
+	result_type = /obj/mecha/medical/odysseus
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -1290,7 +1290,7 @@
 	return
 
 /datum/construction/reversible/mecha/vindicator
-	result = "/obj/mecha/combat/durand/vindicator"
+	result_type = /obj/mecha/combat/durand/vindicator
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
@@ -1560,7 +1560,7 @@
 
 
 /datum/construction/reversible/mecha/ultra
-	result = "/obj/mecha/combat/gygax/ultra"
+	result_type = /obj/mecha/combat/gygax/ultra
 	steps = list(
 					//1
 					list("key"=/obj/item/weapon/weldingtool,
