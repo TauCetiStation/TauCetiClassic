@@ -644,13 +644,13 @@
 /datum/religion/proc/remove_holy_turf(turf/simulated/floor/F)
 	qdel(holy_turfs[F])
 
-/datum/religion/proc/nearest_heretics(atom/target, range, ignore_holy = FALSE)
+/datum/religion/proc/nearest_heretics(atom/target, range, ignore_holy = TRUE)
 	var/list/heretics = list()
 	var/turf/center = get_turf(target)
 	for(var/mob/living/heretic in view(range, center))
 		if(is_member(heretic))
 			continue
-		if(!ignore_holy)
+		if(ignore_holy)
 			if(heretic.my_religion || heretic.mind?.holy_role)
 				continue
 		heretics += heretic
