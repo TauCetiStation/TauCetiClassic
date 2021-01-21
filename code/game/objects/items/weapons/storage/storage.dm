@@ -68,7 +68,7 @@
 		return
 
 	var/mob/M = usr
-	if((over_location && istype(over_location, /turf)) && over_object != M)
+	if(isturf(over_location) && over_object != M)
 		if(M.incapacitated())
 			return
 		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
