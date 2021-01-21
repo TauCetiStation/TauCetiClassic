@@ -210,7 +210,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	var/content = PLAYER_INFO_MISSING_CONTENT_TEXT      // text content of the information
 	var/timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT  // Because this is bloody annoying
 	var/days_timestamp = 0 // number of day after 1 Jan 2000
-    var/round_id = PLAYER_INFO_MISSING_ROUND_ID_TEXT
+	var/round_id = PLAYER_INFO_MISSING_ROUND_ID_TEXT
 
 /datum/player_info/proc/get_days_timestamp()
 	return isnum(days_timestamp) ? days_timestamp : 0
@@ -292,7 +292,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		var/text = query.item[2]
 		var/timestamp = query.item[3]
 		var/days_ago = text2num(query.item[4])
-        var/rid = text2num(query.item[5])
+		var/rid = text2num(query.item[5])
 
 		if(length(a_ckey))
 			notes_record.author = a_ckey
@@ -302,8 +302,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			notes_record.timestamp = timestamp
 		if(days_ago)
 			notes_record.days_timestamp = days_ago
-        if(rid)
-            notes_record.round_id = rid
+		if(rid)
+			notes_record.round_id = rid
 
 		db_player_notes += notes_record
 
@@ -357,11 +357,11 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		var/unbanned_days_ago = text2num(query.item[12])
 		var/unbanned_a_ckey = query.item[13]
 		var/rounds_ban_counter = text2num(query.item[14])  // legacy field, but it can be in DB now
-        var/rid = text2num(query.item[15])
-        
-        if(rid)
-            notes_record.round_id = rid
-        
+		var/rid = text2num(query.item[15])
+
+		if(rid)
+			notes_record.round_id = rid
+
 		// -1 = perma, duration in minutes come
 		if(!duration)
 			duration = "N/A"

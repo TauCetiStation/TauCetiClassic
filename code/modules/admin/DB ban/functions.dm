@@ -453,7 +453,7 @@
 				var/edits = select_query.item[13]
 				var/ip = select_query.item[14]
 				var/cid = select_query.item[15]
-                var/rid = select_query.item[16]
+				var/rid = select_query.item[16]
 
 				var/lcolor = blcolor
 				var/dcolor = bdcolor
