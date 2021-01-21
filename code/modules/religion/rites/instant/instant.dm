@@ -72,10 +72,7 @@
 	invoke_msg = "Служи ему!!!"
 	favor_cost = 100
 
-/datum/religion_rites/instant/cult/convert/can_start(mob/living/user, obj/AOG)
-	if(!..())
-		return FALSE
-
+/datum/religion_rites/instant/cult/convert/proc/can_convert(mob/living/user, obj/AOG)
 	if(!ishuman(AOG.buckled_mob))
 		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
 		return FALSE
@@ -93,8 +90,20 @@
 
 	return TRUE
 
+/datum/religion_rites/instant/cult/convert/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+
+	if(!can_convert(user, AOG))
+		return FALSE
+
+	return TRUE
+
 /datum/religion_rites/instant/cult/convert/invoke_effect(mob/living/user, obj/AOG)
 	..()
+	if(!can_convert(user, AOG))
+		return FALSE
+
 	var/datum/religion/cult/cult = religion
 	cult.mode.add_cultist(AOG.buckled_mob.mind)
 	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
