@@ -154,6 +154,9 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+	INVOKE_ASYNC(src, .proc/begin_the_end)
+
+/obj/singularity/narsie/large/proc/begin_the_end()
 	narsie_spawn_animation()
 	invisibility = 60
 
