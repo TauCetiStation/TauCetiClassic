@@ -47,7 +47,7 @@
 /obj/item/clothing/glasses/proc/fix_hud()
 	if(glasses_user)
 		disable_hud(glasses_user)
-	hud_types = initial(hud_types)
+	hud_types = def_hud_types
 	if(glasses_user)
 		enable_hud(glasses_user)
 	crit_fail = 0
