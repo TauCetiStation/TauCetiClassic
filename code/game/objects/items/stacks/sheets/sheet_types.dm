@@ -91,7 +91,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	icon_state = "sheet-metal"
 	hitsound = list('sound/items/trayhit2.ogg')
 	m_amt = 3750
-	throwforce = 14.0
+	throwforce = 5.0
 	flags = CONDUCT
 	origin_tech = "materials=1"
 
@@ -101,7 +101,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
 	m_amt = 0
-	throwforce = 14.0
+	throwforce = 5.0
 	flags = CONDUCT
 
 /obj/item/stack/sheet/metal/atom_init()
@@ -124,7 +124,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	icon_state = "sheet-plasteel"
 	item_state = "sheet-metal"
 	m_amt = 7500
-	throwforce = 15.0
+	throwforce = 7.0
 	flags = CONDUCT
 	origin_tech = "materials=2"
 

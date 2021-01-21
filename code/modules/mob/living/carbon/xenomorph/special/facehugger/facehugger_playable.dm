@@ -161,6 +161,18 @@
 //		else		client.screen -= hud_used.other		//Not used
 		client.screen |= contents
 
+/mob/living/carbon/xenomorph/facehugger/can_pickup(obj/O)
+	return FALSE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_head(targetzone = null)
+	return TRUE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
+	return FALSE
+
 /*----------------------------------------
               LARVA'S  BITE
 
@@ -478,7 +490,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 				hud.name = "prepare to impregnate"
 				if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
 					var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
-					FH_mask.canremove = 0
+					FH_mask.canremove = FALSE
 				assailant.visible_message("<span class='danger'>[assailant] has tightened \his tail on [affecting]'s neck!</span>")
 				assailant.next_move = world.time + 10
 				//affecting.losebreath += 1
@@ -504,7 +516,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
 		assailant.visible_message("<span class='danger'>[assailant] falls limp after violating [affecting]'s face!</span>")
 		var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
-		FH_mask.canremove = 1
+		FH_mask.canremove = TRUE
 		FH_mask.Impregnate(affecting, assailant)
 		qdel(src)
 
