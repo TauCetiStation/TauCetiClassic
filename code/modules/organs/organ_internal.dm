@@ -434,6 +434,9 @@
 	reagents = new/datum/reagents()
 	var/next_cramp = 0
 
+/obj/item/organ/internal/stomach/vox
+	name = "gizzard"
+
 /obj/item/organ/internal/stomach/atom_init()
 	. = ..()
 	reagents.total_volume = owner.species.stomach_capacity * 10
@@ -527,7 +530,7 @@
 /obj/item/digest_act(obj/item/organ/internal/stomach/S)
 	health -= max(0.1, (1 - S.health / S.maxHealth) * 10)
 	if(prob(10))
-		S.reagents.add_reagent("nutriment", 1)
+		S.reagents.add_reagent("nutriment", 0.01)
 
 	if(S.health <= 0)
 		S.reagents.add_reagent("nutriment", 1)

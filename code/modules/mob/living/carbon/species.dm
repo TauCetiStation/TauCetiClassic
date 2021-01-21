@@ -484,7 +484,8 @@
 		O_EYES    = /obj/item/organ/internal/eyes,
 		O_LUNGS   = /obj/item/organ/internal/lungs/vox,
 		O_LIVER   = /obj/item/organ/internal/liver/vox,
-		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox,
+		O_STOMACH = /obj/item/organ/internal/stomach
 		)
 
 	blood_datum_path = /datum/dirt_cover/blue_blood
