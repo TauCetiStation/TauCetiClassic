@@ -633,6 +633,8 @@ var/list/wood_icons = list("wood","wood-broken")
 		var/obj/item/weapon/weldingtool/W = C
 		if(!is_plating())
 			return
+		if(istype(src, /turf/simulated/floor/plating/airless/asteroid))
+			return
 		if(!W.use(0, user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
