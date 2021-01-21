@@ -67,12 +67,6 @@
 	. = ..()
 	recolor()
 	controller = new controller_type(src)
-	if(H)
-		species = owner.species
-		b_type = owner.dna.b_type
-	else // Bodypart was spawned outside of the body so we need to update its sprite
-		species = all_species[HUMAN]
-		update_sprite()
 
 /obj/item/organ/external/Destroy()
 	if(parent)
@@ -103,6 +97,15 @@
 		harvest(I, user)
 	else
 		return ..()
+
+/obj/item/organ/external/set_owner(mob/living/carbon/human/H)
+	..()
+	if(H)
+		species = owner.species
+		b_type = owner.dna.b_type
+	else // Bodypart was spawned outside of the body so we need to update its sprite
+		species = all_species[HUMAN]
+		update_sprite()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
