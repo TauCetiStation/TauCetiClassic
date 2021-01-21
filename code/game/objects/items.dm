@@ -14,6 +14,7 @@
 	var/list/hitsound = list()
 	var/usesound = null
 	var/wet = 0
+	var/digestion_product = null
 	var/w_class = ITEM_SIZE_NORMAL
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.

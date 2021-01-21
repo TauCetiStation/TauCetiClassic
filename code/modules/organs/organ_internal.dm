@@ -528,12 +528,12 @@
 		S.reagents.add_reagent(digestion_product, rand(1,3))
 
 /obj/item/digest_act(obj/item/organ/internal/stomach/S)
-	health -= max(0.1, (1 - S.health / S.maxHealth) * 10)
-	if(prob(10))
-		S.reagents.add_reagent("nutriment", 0.01)
+	var/damage = max(0.1, (1 - S.health / S.maxHealth) * 10)
+	health -= damage
+	if(prob(10) && digestion_product)
+		S.reagents.add_reagent(digestion_product, damage)
 
 	if(S.health <= 0)
-		S.reagents.add_reagent("nutriment", 1)
 		for(var/obj/item/I in contents)
 			I.forceMove(S)
 		qdel(src)
