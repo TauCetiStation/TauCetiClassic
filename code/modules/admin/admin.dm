@@ -3,7 +3,7 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-proc/message_admins(msg, reg_flag = R_ADMIN)
+/proc/message_admins(msg, reg_flag = R_ADMIN)
 	log_adminwarn(msg) // todo: msg in html format, dublicates other logs; must be removed, use logs_*() where necessary (also, thanks you dear ZVE)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	for(var/client/C in admins)
