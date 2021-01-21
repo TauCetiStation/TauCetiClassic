@@ -301,6 +301,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(character.dna)
 		character.dna.real_name = character.real_name
 
+	character.set_species(species)
+
 	character.flavor_text = flavor_text
 	character.metadata = metadata
 	character.med_record = med_record

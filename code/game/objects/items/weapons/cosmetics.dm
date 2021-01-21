@@ -234,7 +234,7 @@
 	return hash
 
 /obj/item/weapon/scissors/proc/make_mannequin(mob/living/carbon/human/H)
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_BARBER)
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_BARBER, H.species)
 	mannequin.gender = H.gender
 	mannequin.age = H.age
 	mannequin.b_type = H.b_type

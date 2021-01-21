@@ -209,7 +209,7 @@
 			return
 
 	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES, species)
 	copy_to(mannequin)
 
 	var/datum/species/S = all_species[species]

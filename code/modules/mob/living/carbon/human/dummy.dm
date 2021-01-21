@@ -20,14 +20,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 var/global/list/human_dummy_list = list()
 var/global/list/dummy_mob_list = list()
 
-/proc/generate_or_wait_for_human_dummy(slotkey)
+/proc/generate_or_wait_for_human_dummy(slotkey, species)
 	if(!slotkey)
 		return new /mob/living/carbon/human/dummy
 	var/mob/living/carbon/human/dummy/D = global.human_dummy_list[slotkey]
 	if(istype(D))
 		UNTIL(!D.in_use)
 	if(QDELETED(D))
-		D = new
+		D = new(null, species)
 		global.human_dummy_list[slotkey] = D
 		global.dummy_mob_list += D
 	D.in_use = TRUE

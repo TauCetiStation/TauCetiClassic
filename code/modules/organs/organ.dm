@@ -23,12 +23,6 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
-/obj/item/organ/atom_init(mapload, mob/living/carbon/human/H)
-	if(istype(H))
-		insert_organ(H)
-
-	return ..()
-
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	STOP_PROCESSING(SSobj, src)
 

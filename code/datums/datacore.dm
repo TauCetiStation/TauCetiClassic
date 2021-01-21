@@ -54,6 +54,7 @@
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H)
+	set waitfor = FALSE
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 
