@@ -62,7 +62,7 @@
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		INVOKE_ASYNC(src, .proc/emote, "deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
 
