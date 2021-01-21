@@ -415,6 +415,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			db_player_notes += unban_notes_record
 	return db_player_notes
 
+#undef PLAYER_INFO_MISSING_ROUND_ID_TEXT
 #undef PLAYER_INFO_MISSING_CONTENT_TEXT
 #undef PLAYER_INFO_MISSING_AUTHOR_TEXT
 #undef PLAYER_INFO_MISSING_RANK_TEXT
