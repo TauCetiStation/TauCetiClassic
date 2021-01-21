@@ -283,29 +283,29 @@
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	for(var/i in 1 to divine_power)
 		var/mob/M = pick(candidates)
-		var/mob/living/carbon/human/dummy/D = new(get_turf(AOG)) // in soultstone code we have block for type dummy
+		var/mob/living/carbon/human/H = new(get_turf(AOG))
 		var/area/area = get_area(AOG)
-		slave_enter_area(D, area)
-		D.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
+		slave_enter_area(H, area)
+		H.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
 			"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
 			"<span class='userdanger'>Вы слышите, как течет жидкость.</span>")
 
-		D.real_name = "homunculus of [pick(religion.deity_names)] [num2roman(rand(1, 20))]"
-		D.universal_speak = TRUE
-		D.status_flags &= ~GODMODE
-		D.s_tone = 35
-		D.b_eyes = 200
-		D.r_eyes = 200
-		D.g_eyes = 200
-		D.underwear = 0
-		D.key = M.key
+		H.real_name = "homunculus of [pick(religion.deity_names)] [num2roman(rand(1, 20))]"
+		H.universal_speak = TRUE
+		H.s_tone = 35
+		H.b_eyes = 200
+		H.r_eyes = 200
+		H.g_eyes = 200
+		H.underwear = 0
+		H.key = M.key
+
 		var/datum/religion/cult/C = religion
-		C.mode.add_cultist(D.mind)
+		C.mode.add_cultist(H.mind)
 
-		to_chat(D, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
-		to_chat(D, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
+		to_chat(H, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
+		to_chat(H, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
 
-		RegisterSignal(D, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
+		RegisterSignal(H, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
 	return TRUE
 
 /datum/religion_rites/instant/cult/freedom

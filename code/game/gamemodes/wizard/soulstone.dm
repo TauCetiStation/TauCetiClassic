@@ -29,8 +29,6 @@
 /obj/item/device/soulstone/attack(mob/living/carbon/human/M, mob/user)
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
-	if(istype(M, /mob/living/carbon/human/dummy))
-		return..()
 
 	if(M.has_brain_worms()) //Borer stuff - RR
 		to_chat(user, "<span class='warning'>This being is corrupted by an alien intelligence and cannot be soul trapped.</span>")
