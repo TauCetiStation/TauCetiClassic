@@ -124,7 +124,7 @@
 			if(!M.client)
 				continue //skip leavers
 			if((M.client.prefs.chat_ghostsight != CHAT_GHOSTSIGHT_NEARBYMOBS) && !(M in viewers(src, null)))
-				to_chat(M, "[FOLLOW_LINK(src, src)] [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+				to_chat(M, "[FOLLOW_LINK(M, src)] [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 
 		if (m_type & SHOWMSG_VISUAL)
 			for (var/mob/O in get_mobs_in_view(world.view,src))
