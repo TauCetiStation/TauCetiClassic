@@ -109,10 +109,9 @@
 		to_chat(usr, "<span class='notice'>You finish placing the [src].</span>")
 
 /obj/item/taperoll/afterattack(atom/target, mob/user, proximity, params)
-	if (istype(target, /obj/machinery/door/airlock))
-		if(!user.Adjacent(target))
-			to_chat(user, "<span class='notice'>You're too far away from \the [target]!</span>")
-			return
+	if(!proximity)
+		return
+	if(istype(target, /obj/machinery/door/airlock))
 		var/turf/T = get_turf(target)
 		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
 		P.loc = locate(T.x,T.y,T.z)

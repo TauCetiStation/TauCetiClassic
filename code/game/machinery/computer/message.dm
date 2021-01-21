@@ -61,7 +61,7 @@
 		message = rebootmsg
 		return TRUE
 	else
-		to_chat(user, "<div class='NoticeBox'>A no server error appears on the screen.</span>")
+		to_chat(user, "<div class='NoticeBox'>A no server error appears on the screen.</div>")
 		return FALSE
 
 /obj/machinery/computer/message_monitor/update_icon()
@@ -120,7 +120,7 @@
 					dat += "<dd><span class='blue'>&#09;[n]. ---------------</span><br></dd>"
 			if((isAI(user) || isrobot(user)) && (user.mind.special_role && user.mind.original == user))
 				//Malf/Traitor AIs can bruteforce into the system to gain the Key.
-				dat += "<dd><A href='?src=\ref[src];hack=1'><i><span class='Red'>*&@#. Bruteforce Key</span></i></span></a><br></dd>"
+				dat += "<dd><A href='?src=\ref[src];hack=1'><i><span class='Red'>*&@#. Bruteforce Key</span></i></a><br></dd>"
 			else
 				dat += "<br>"
 
@@ -489,7 +489,7 @@
 		for(var/obj/machinery/message_server/server in message_servers)
 			if(!isnull(server))
 				if(!isnull(server.decryptkey))
-					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+					info = "<center><h2>Пароль от сервера сообщений.</h2></center><br>Ключевое слово для сервера сообщений сегодня - '[server.decryptkey]'.<br>Пожалуйста, никому его не называйте. Особенно клоуну.<br>В случае необходимости его можно изменить."
 					info_links = info
 					icon_state = "paper_words"
 					break

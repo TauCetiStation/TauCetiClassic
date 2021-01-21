@@ -1016,9 +1016,10 @@ var/list/cult_runes = list()
 			to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
 			to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
 			brainswapping = TRUE
-			if(!do_after(user, BRAINSWAP_TIME, FALSE, target, FALSE, FALSE) || !do_checks(user, target))
+			if(do_after(user, BRAINSWAP_TIME, FALSE, target, FALSE, FALSE) && do_checks(user, target))
+				brainswapping = TRUE
+			else
 				brainswapping = FALSE
-				continue
 			to_chat(user, "<span class='warning'>You feel weakend.</span>")
 			target.adjustBrainLoss(bdam)
 			user.adjustBrainLoss(bdam)

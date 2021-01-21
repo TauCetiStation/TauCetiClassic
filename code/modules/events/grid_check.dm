@@ -5,10 +5,10 @@
 	endWhen = rand(30,120)
 
 /datum/event/grid_check/start()
-	power_failure(0)
+	power_failure()
 
 /datum/event/grid_check/announce()
-	command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Automated Grid Check", "poweroff")
+	return
 
 /datum/event/grid_check/end()
 	if(power_fail_event)
@@ -16,15 +16,15 @@
 
 
 var/power_fail_event = 0
-/proc/power_failure(announce = 1)
+/proc/power_failure()
 	if(power_fail_event)
 		return
 	power_fail_event = 1
 
-	if(announce)
-		command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", "poweroff")
-		if(prob(25))
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/play_ambience), 600)
+	var/datum/announcement/centcomm/grid_off/announcement = new
+	announcement.play()
+	if(prob(25))
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/play_ambience), 600)
 
 	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)
 
@@ -51,12 +51,12 @@ var/power_fail_event = 0
 	for(var/mob/M in player_list)
 		M.playsound_music('sound/ambience/specific/hullcreak.ogg', VOL_AMBIENT, null, null, CHANNEL_AMBIENT_LOOP)
 
-/proc/power_restore(announce = 1, badminery = 0)
+/proc/power_restore(badminery = 0)
 	power_fail_event = 0
 	var/list/skipped_areas = list(/area/station/aisat/ai_chamber, /area/station/tcommsat/computer, /area/station/tcommsat/chamber)
 
-	if(announce)
-		command_alert("Power has been restored to [station_name()]. We apologize for the inconvenience.", "Power Systems Nominal", "poweron")
+	var/datum/announcement/centcomm/grid_on/announcement = new
+	announcement.play()
 	if(badminery)
 		for(var/obj/machinery/power/apc/C in apc_list)
 			if(C.cell && is_station_level(C.z))
@@ -75,8 +75,8 @@ var/power_fail_event = 0
 
 //This one can be called only by admin.
 /proc/power_restore_quick(announce = 1)
-	if(announce)
-		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal", "poweron")
+	var/datum/announcement/centcomm/grid_on/announcement = new
+	announcement.play()
 	for(var/obj/machinery/power/smes/S in smes_list)
 		if(!is_station_level(S.z))
 			continue

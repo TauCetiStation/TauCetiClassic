@@ -16,7 +16,7 @@
 /obj/item/device/geoscanner/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(target, /turf/simulated/mineral))
 		return
-	if(!in_range(user, target))
+	if(!proximity)
 		return
 	var/turf/simulated/mineral/M = target
 	var/data_message = ""

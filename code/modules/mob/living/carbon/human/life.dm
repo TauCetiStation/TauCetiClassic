@@ -150,7 +150,7 @@
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
-/mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
+/mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
@@ -902,7 +902,7 @@
 	return min(1,thermal_protection)
 
 /*
-/mob/living/carbon/human/proc/add_fire_protection(var/temp)
+/mob/living/carbon/human/proc/add_fire_protection(temp)
 	var/fire_prot = 0
 	if(head)
 		if(head.protective_temperature > temp)
@@ -1414,19 +1414,17 @@
 						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 		if(nutrition_icon)
-			switch(get_nutrition())
-				if(NUTRITION_LEVEL_FULL to INFINITY)
-					nutrition_icon.icon_state = "fat"
-				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-					nutrition_icon.icon_state = "full"
-				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-					nutrition_icon.icon_state = "well_fed"
-				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-					nutrition_icon.icon_state = "fed"
-				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-					nutrition_icon.icon_state = "hungry"
-				else
-					nutrition_icon.icon_state = "starving"
+			var/full_perc // Nutrition pecentage
+			var/fullness_icon = species.flags[IS_SYNTHETIC] ? "lowcell" : "burger"
+			var/get_nutrition_max
+			if (species.flags[IS_SYNTHETIC])
+				var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+				var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
+				get_nutrition_max = I.maxcharge
+			else
+				get_nutrition_max = NUTRITION_LEVEL_FAT
+			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
+			nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
@@ -1459,7 +1457,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/welding) )
 			var/obj/item/clothing/glasses/welding/O = glasses
 			if(!O.up && tinted_weldhelh)
-				impaired = max(impaired, 1)
+				impaired = max(impaired, 2)
 
 		if(eye_blurry)
 			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
