@@ -38,18 +38,10 @@
 /datum/building_agent/structure/cult/wall
 	name = "Стена"
 	building_type = /turf/simulated/wall/cult
-	favor_cost = 50
-	deconstruct_favor_cost = 25
-	piety_cost = 0
-	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/floor
 	name = "Пол"
 	building_type = /turf/simulated/floor/engine/cult
-	favor_cost = 10
-	deconstruct_favor_cost = 5
-	piety_cost = 0
-	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/altar
 	name = "Алтарь"
@@ -62,26 +54,14 @@
 /datum/building_agent/structure/cult/pedestal
 	name = "Пьедестал"
 	building_type = /obj/structure/pedestal/cult
-	favor_cost = 100
-	deconstruct_favor_cost = 50
-	piety_cost = 10
-	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/pylon
 	name = "Пилон"
 	building_type = /obj/structure/cult/pylon
-	favor_cost = 150
-	deconstruct_favor_cost = 75
-	piety_cost = 0
-	deconstruct_piety_cost = 0
 
 /datum/building_agent/structure/cult/door
 	name = "Дверь"
 	building_type = /obj/structure/mineral_door/cult
-	favor_cost = 125
-	deconstruct_favor_cost = 50
-	piety_cost = 0
-	deconstruct_piety_cost = 1
 
 /datum/building_agent/structure/cult/tech_table
 	name = "Стол исследований"
@@ -102,10 +82,6 @@
 /datum/building_agent/structure/cult/torture_table
 	name = "Стол Пыток"
 	building_type = /obj/machinery/optable/torture_table
-	favor_cost = 200
-	deconstruct_favor_cost = 50
-	piety_cost = 10
-	deconstruct_piety_cost = 0
 
 /datum/building_agent/rune
 	// Type of effect of rune

@@ -9,10 +9,10 @@
 	religify_cd = 5 MINUTES
 
 	var/static/list/build_next = list()
-	var/build_cd = 30 SECONDS
+	var/build_cd = 1 MINUTE
 
 	var/static/list/destr_next = list()
-	var/destr_cd = 1 SECOND
+	var/destr_cd = 30 SECOND
 
 	var/static/list/rune_next = list()
 	var/rune_cd = 10 SECONDS
