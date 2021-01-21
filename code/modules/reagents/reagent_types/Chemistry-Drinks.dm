@@ -712,7 +712,7 @@
 	..()
 	return !flags[IS_ORGANIC]
 
-/datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
+/datum/reagent/consumable/ethanol/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()
@@ -1337,7 +1337,7 @@
 /datum/reagent/consumable/ethanol/singulo
 	name = "Singulo"
 	id = "singulo"
-	description = "A blue-space beverage!"
+	description = "A bluespace beverage!"
 	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 5
 	dizzy_adj = 15

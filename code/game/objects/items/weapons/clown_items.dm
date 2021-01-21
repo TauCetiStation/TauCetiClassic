@@ -22,7 +22,7 @@
 
 /obj/item/weapon/bananapeel/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4)
+	AddComponent(/datum/component/slippery, 2)
 
 /obj/item/weapon/bananapeel/honk
 	name = "Clowny banana peel"
@@ -37,7 +37,7 @@
 
 /obj/item/weapon/bananapeel/honk/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
+	AddComponent(/datum/component/slippery, 3, SLIDE | GALOSHES_DONT_HELP)
 
 /*
  * Soap
@@ -55,7 +55,7 @@
 
 /obj/item/weapon/soap/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4)
+	AddComponent(/datum/component/slippery, 2)
 
 /obj/item/weapon/soap/nanotrasen
 	desc = "A Nanotrasen brand bar of soap. Smells of phoron."
