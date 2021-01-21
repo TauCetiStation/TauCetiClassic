@@ -102,7 +102,7 @@
 			message = "<B>[src]</B> в припадке!"
 			m_type = SHOWMSG_AUDIO
 		if("deathgasp")
-			message = "<B>[src]</B> замерев, безвольно падает. Его глаза безжизненны..."
+			message = "<B>[src]</B> замерев, безвольно падает и умирает..."
 			m_type = SHOWMSG_VISUAL
 		if("cough")
 			message = "<B>[src]</B> кашляет!"
