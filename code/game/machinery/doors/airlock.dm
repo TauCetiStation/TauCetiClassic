@@ -921,18 +921,17 @@ var/list/airlock_overlays = list()
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
 
-	if(iswelder(C) && !(operating > 0) && density)
+	if(iswelder(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
 			if(W.use_tool(src, user, 30, volume = 100))
-				if(density)
-					welded = !welded
-					update_icon()
-					user.visible_message("[user] [welded?"welds":"unwelds"] [src]'s shutters with [W].",
-					                     "<span class='notice'>You [welded? "weld":"remove welding from"] [src]'s shutters with [W].</span>")
-					return
+				welded = !welded
+				update_icon()
+				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
+				                     "<span class='notice'>You [welded ? "weld" : "remove welding from"] [src]'s shutters with [W].</span>")
+				return
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return

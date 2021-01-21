@@ -359,7 +359,7 @@
 	//DECONSTRUCTION
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(!WT.use(0,user))
+		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		if(user.a_intent == INTENT_HELP)

@@ -633,7 +633,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		var/obj/item/weapon/weldingtool/W = C
 		if(!is_plating())
 			return
-		if(!W.use(0,user))
+		if(!W.use(0, user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		if(user.a_intent == INTENT_HELP)
