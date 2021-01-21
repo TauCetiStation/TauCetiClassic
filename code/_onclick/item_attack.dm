@@ -62,7 +62,7 @@
 
 /mob/living/carbon/human/attackby(obj/item/I, mob/user)
 	if(user == src && zone_sel.selecting == O_MOUTH && a_intent == INTENT_GRAB)
-		if(!CanEat(src, src, I, "eat"))
+		if(!CanEat(src, I, "eat"))
 			return
 
 		if(isholder(I))
