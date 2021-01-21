@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 var/global/list/autolathe_recipes = list( \
 		/* screwdriver removed*/ \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \

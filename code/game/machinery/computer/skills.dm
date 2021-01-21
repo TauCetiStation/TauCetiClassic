@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 #define SKILLS_MODE_MAIN_SCREEN 1
 #define SKILLS_MODE_MAINTENACE_SCREEN 2
 #define SKILLS_MODE_EDIT_SCREEN 3
