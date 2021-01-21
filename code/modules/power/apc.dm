@@ -195,7 +195,7 @@
 			if(has_electronics && terminal)
 				to_chat(user, "Крышка [opened == 2 ? "отсутствует" : "открыта"]. Батарея [ cell ? "установлена" : "отсутствует"].")
 			else if(!has_electronics && terminal)
-				to_chat(user, "Там есть терминал, но нет платы.")
+				to_chat(user, "Есть терминал, но нет платы.")
 			else if(has_electronics && !terminal)
 				to_chat(user, "Плата установлена, но нет терминала.")
 			else /* if(!has_electronics && !terminal) */
@@ -630,7 +630,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				to_chat(H, "<span class='warning'>В APC обнаружены скачки напряжения, которые повредлиои ваш корпус!</span>")
+				to_chat(H, "<span class='warning'>В APC обнаружены скачки напряжения, которые повредили ваш корпус!</span>")
 				H.adjustFireLoss(10,0)
 			else if(src.cell && src.cell.charge > 500 && H.a_intent == INTENT_GRAB)
 				if(H.nutrition < C.maxcharge*0.9)
@@ -821,7 +821,7 @@
 			)                                                            \
 		)
 			if(!loud)
-				to_chat(user, "<span class='warning'>У [src] отключено управление ИИ!</span>")
+				to_chat(user, "<span class='warning'>В [src] отключено управление ИИ!</span>")
 				nanomanager.close_user_uis(user, src)
 
 			return 0
@@ -908,7 +908,7 @@
 			if(malfai.malfhacking)
 				to_chat(malfai, "Вы уже взламываете APC.")
 				return FALSE
-			to_chat(malfai, "Начинаю переписывать системы APC. Это займет какое-то время и вы не сможете выполнять другие действия во время этого процесса.")
+			to_chat(malfai, "Начато переписывание системы APC. Это займет какое-то время и вы не сможете выполнять другие действия во время этого процесса.")
 			malfai.malfhack = src
 			malfai.malfhacking = 1
 			sleep(600)
@@ -941,7 +941,6 @@
 	if(!istype(malf))
 		return
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
-		to_chat(malf, "<span class='warning'>Сначала вы должны эвакуировать нынешний APC.</span>")
 		return
 	if(src.z != ZLEVEL_STATION)
 		return
@@ -984,7 +983,6 @@
 		if(prob(3))
 			src.locked = 1
 			if(src.cell.charge > 0)
-//				world << "<span class='warning'>APC взоварслся в [src.loc.loc].</span>"
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1
@@ -996,8 +994,7 @@
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
 				s.start()
-				visible_message("<span class='warning'>[src.name] выпустил клубы дыма и искры!</span>", blind_message = "<span class='warning'>Вы слышите электрический треск.</span>")
-
+				visible_message("<span class='warning'>[src.name] задымился и заискрил!</span>", blind_message = "<span class='warning'>Вы слышите электрический треск.</span>")
 
 /obj/machinery/power/apc/surplus()
 	if(terminal)
