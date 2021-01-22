@@ -394,7 +394,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()
-		W.dir = character.dir
+		W.set_dir(character.dir)
 		W.buckled_mob = character
 		W.add_fingerprint(character)
 

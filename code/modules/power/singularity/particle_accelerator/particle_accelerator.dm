@@ -96,7 +96,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/structure/particle_accelerator/verb/rotateccw()
@@ -107,7 +107,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/structure/particle_accelerator/examine(mob/user)
@@ -281,7 +281,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/particle_accelerator/verb/rotateccw()
@@ -292,7 +292,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/particle_accelerator/update_icon()

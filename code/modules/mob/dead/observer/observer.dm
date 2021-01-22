@@ -209,7 +209,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = TRUE
-	dir = Dir
+	set_dir(Dir)
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -385,7 +385,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target, orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	dir = SOUTH // Reset dir so the right directional sprites show up
+	set_dir(SOUTH) // Reset dir so the right directional sprites show up
 	..()
 
 /mob/dead/observer/stop_orbit()

@@ -87,6 +87,9 @@
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
+/// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
+#define COSMIG_ATOM_CHANGE_DIR "change_dir"
+
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"

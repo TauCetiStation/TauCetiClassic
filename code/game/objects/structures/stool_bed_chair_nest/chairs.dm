@@ -71,7 +71,7 @@
 		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-		E.dir = dir
+		E.set_dir(dir)
 		E.part = SK
 		SK.loc = E
 		SK.master = E
@@ -123,7 +123,7 @@
 		layer = OBJ_LAYER
 
 	if(buckled_mob)
-		buckled_mob.dir = dir
+		buckled_mob.set_dir(dir)
 		buckled_mob.update_canmove()
 
 /obj/structure/stool/bed/chair/verb/rotate()
@@ -140,7 +140,7 @@
 	if(usr.incapacitated())
 		return
 
-	src.dir = turn(src.dir, 90)
+	src.set_dir(turn(src.dir, 90))
 	handle_rotation()
 	return
 

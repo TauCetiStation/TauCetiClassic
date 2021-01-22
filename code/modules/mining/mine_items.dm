@@ -266,7 +266,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
 	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
-		user.dir = i
+		user.set_dir(i)
 		sleep(1)
 
 /obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)

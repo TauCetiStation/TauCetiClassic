@@ -580,7 +580,7 @@ var/list/blacklisted_builds = list(
 			LAZYSET(char_render_holders, "[D]", O)
 			screen |= O
 		O.appearance = MA
-		O.dir = D
+		O.set_dir(D)
 		O.underlays += image('icons/turf/floors.dmi', "floor")
 		O.screen_loc = "character_preview_map:0,[pos]"
 

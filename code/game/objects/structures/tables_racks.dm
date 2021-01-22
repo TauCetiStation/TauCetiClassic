@@ -351,7 +351,7 @@
 		if (!A.anchored)
 			A.throw_at(pick(targets),1,1)
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -400,7 +400,7 @@
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1

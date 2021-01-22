@@ -28,7 +28,7 @@
 
 
 /obj/effect/accelerated_particle/atom_init(mapload, dir = 2)
-	src.dir = dir
+	src.set_dir(dir)
 	if(movement_range > 20)
 		movement_range = 20
 	INVOKE_ASYNC(src, .proc/move, 1)

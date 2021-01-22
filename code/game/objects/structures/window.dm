@@ -329,7 +329,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 90)
+	set_dir(turn(dir, 90))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -349,7 +349,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 270)
+	set_dir(turn(dir, 270))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -396,7 +396,7 @@
 /obj/structure/window/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
-	dir = ini_dir
+	set_dir(ini_dir)
 	update_nearby_tiles(need_rebuild=1)
 
 //checks if this window is full-tile one
