@@ -1,10 +1,10 @@
-#define SELF_TIP "Имеет эффект."
+#define SELF_TIP "Имеет эффект при активации."
 
 /datum/mechanic_tip/self_effect
 	tip_name = SELF_TIP
 
-/datum/mechanic_tip/self_effect/New(datum/component/bounded/B)
-	description = "Если держа предмет в руке по нему нажать, то что-то произойдёт."
+/datum/mechanic_tip/self_effect/New(datum/component/bounded/B, atom/type)
+	description = "Если держа предмет в руке по нему нажать, то создастся [initial(type.name)]."
 
 
 /datum/component/self_effect
@@ -39,7 +39,7 @@
 	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped_effect)
 	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/scatter_effect)
 
-	var/datum/mechanic_tip/self_effect/effect_tip = new(src)
+	var/datum/mechanic_tip/self_effect/effect_tip = new(src, effect_type)
 
 	parent.AddComponent(/datum/component/mechanic_desc, list(effect_tip))
 
