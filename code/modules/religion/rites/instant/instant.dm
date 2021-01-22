@@ -2,8 +2,8 @@
 	religion_type = /datum/religion/cult
 
 /datum/religion_rites/instant/cult/sacrifice
-	name = "Sacrifice"
-	desc = "Soul for the ancient gods."
+	name = "Жертвоприношение"
+	desc = "Душа для древнего бога."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Для моих богов!!"
 	favor_cost = 50
@@ -66,8 +66,8 @@
 	return sacrifice_favor
 
 /datum/religion_rites/instant/cult/convert
-	name = "Convert"
-	desc = "The best brainwashing in the galaxy!"
+	name = "Обращение"
+	desc = "Лучшая промывка мозгов в галактике!"
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Служи ему!!!"
 	favor_cost = 100
@@ -111,8 +111,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/emp
-	name = "EMP"
-	desc = "Produces an electrical pulse of photons."
+	name = "ЕМП"
+	desc = "Производит электрический импульс фотонов."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Энергетический импульс!!!"
 	favor_cost = 200
@@ -130,8 +130,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/drain_torture
-	name = "Drain life"
-	desc = "Drain life out of people on a charged torture table!"
+	name = "Высасывание Жизни"
+	desc = "Высасывет жизнь из людей на заряженных столах пыток!"
 	ritual_length = (1 SECONDS)
 	invoke_msg = "Дай мне сил!!!"
 	favor_cost = 100
@@ -186,8 +186,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/raise_torture
-	name = "Raise"
-	desc = "Gibs people on torture tables, but revive a person on the altar."
+	name = "Воскрешение"
+	desc = "Взрывает людей на столах пыток, но возрождает человека на алтаре."
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Восстань из мертвых!!!"
 	favor_cost = 300
@@ -265,8 +265,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/create_slave
-	name = "Create homunculus"
-	desc = "Creates a homunculus who can only live within the areas of your religion."
+	name = "Создание Гомункула"
+	desc = "Создаёт гомункула, который может существовать только внутри территории религии."
 	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
 	invoke_msg = "Прийди же!!!"
 	favor_cost = 200
@@ -277,7 +277,7 @@
 	)
 
 /datum/religion_rites/instant/cult/create_slave/proc/slave_enter_area(mob/slave, area/A)
-	if(!(A in religion.captured_areas))
+	if(!A.religion || !istype(slave.my_religion, A.religion.type))
 		slave.visible_message("<span class='userdanger'>[slave] медленно превращается в пыль и кости.</span>", \
 				"<span class='userdanger'>Вы чувствуете боль, когда разрывается связь между вашей душой и этим гомункулом.</span>", \
 				"<span class='userdanger'>Вы слышите множество тихих падений песчинок.</span>")
@@ -318,8 +318,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/freedom
-	name = "Freedom"
-	desc = "Frees the selected acolyte from slavery."
+	name = "Свобода"
+	desc = "Освобождает выбранного аколита из рабства."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Освободись же!!!"
 	favor_cost = 100
@@ -384,8 +384,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/summon_acolyt
-	name = "Summon acolyt"
-	desc = "Teleports free of the shackles and live an acolyte."
+	name = "Призыв Аколита"
+	desc = "Телепортирует свободного от оков и живого аколита."
 	ritual_length = (20 SECONDS)
 	invoke_msg = "Появись же!!!"
 	favor_cost = 200
@@ -429,8 +429,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/brainswap
-	name = "Brainswap"
-	desc = "You exchange brains with a target on the altar."
+	name = "Обмен Разумов"
+	desc = "Вы обмениваетесь разумом с существом на алтаре."
 	ritual_length = (13 SECONDS)
 	invoke_msg = "Хаккрутжу гопоенжим!!"
 	favor_cost = 200
@@ -476,8 +476,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/give_forcearmor
-	name = "Give power aura"
-	desc = "Surrounds the target with power aura that can block damage."
+	name = "Создание Силовой Ауры"
+	desc = "Окружает человека на алтаре силовой аурой, которая может блокировать урон."
 	ritual_length = (15 SECONDS)
 	invoke_msg = "Защитись же!!"
 	favor_cost = 300
@@ -521,8 +521,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/upgrade_tome
-	name = "Upgrade tome"
-	desc = "Improves your tome reducing costs and giving other benefits."
+	name = "Улучшение Тома"
+	desc = "Заменяет старую книгу из библиотеки на мощный артефакт."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Больше силы!!"
 	favor_cost = 150
@@ -558,8 +558,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/impose_blind
-	name = "Impose bliendess"
-	desc = "Impose bliendess on all heretics around."
+	name = "Наложить Ослепление"
+	desc = "Накладывает ослепление на всех еретиков вокруг."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Ослепление!!!"
 	favor_cost = 75
@@ -597,10 +597,10 @@
 	return TRUE
 
 /datum/religion_rites/instant/impose_deaf
-	name = "Impose deafness"
-	desc = "Impose deafness on all heretics around."
+	name = "Наложить Глухоту"
+	desc = "Накладывает глухоту на всех еретиков вокруг."
 	ritual_length = (5 SECONDS)
-	invoke_msg = "Оглушение!!!"
+	invoke_msg = "Оглохните!!!"
 	favor_cost = 50
 
 	needed_aspects = list(
@@ -634,10 +634,10 @@
 	return TRUE
 
 /datum/religion_rites/instant/impose_stun
-	name = "Impose stun"
-	desc = "Impose stun on all heretics around."
+	name = "Наложить Оглушение"
+	desc = "Накладывает оглушение на всех еретиков вокруг."
 	ritual_length = (5 SECONDS)
-	invoke_msg = "Онемение!!!"
+	invoke_msg = "Оглушение!!!"
 	favor_cost = 150
 
 	needed_aspects = list(
@@ -672,8 +672,8 @@
 	return TRUE
 
 /datum/religion_rites/instant/communicate
-	name = "Communicate"
-	desc = "Sends a message to all members of the religion!"
+	name = "Общение"
+	desc = "Отправляет телепатическое сообщение всем членам религии!"
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Услышь меня!!!"
 	favor_cost = 100

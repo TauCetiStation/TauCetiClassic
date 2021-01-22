@@ -18,8 +18,8 @@
 	religion_type = /datum/religion/cult
 
 /datum/religion_rites/instant/spawn_item/cult/talisman
-	name = "Summon talisman"
-	desc = "Summons an empty talisman in which to place the ritual."
+	name = "Призыв Талисмана"
+	desc = "Призывает пустой талисман, в который можно поместить ритуал."
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Переносная магия!!!"
 	favor_cost = 150
@@ -30,8 +30,8 @@
 	)
 
 /datum/religion_rites/instant/spawn_item/cult/soulstone
-	name = "Summon soulstone"
-	desc = "Summons an empty soulstone for forgotten souls."
+	name = "Призыв Камня Душ"
+	desc = "Призывает камень душ для заблудших лярв."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "За всё паранормальное!!!"
 	favor_cost = 150
@@ -42,8 +42,8 @@
 	)
 
 /datum/religion_rites/instant/spawn_item/cult/constructshell
-	name = "Summon shell"
-	desc = "Summons an empty shell for forgotten souls."
+	name = "Призыв Оболочки"
+	desc = "Призывает пустую оболочку для пойманных лярв."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "За всё паранормальное!!!"
 	favor_cost = 50
@@ -54,8 +54,8 @@
 	)
 
 /datum/religion_rites/instant/spawn_item/cult/space_suits
-	name = "Summon space suits"
-	desc = "Summons armor in which you can freely walk in space."
+	name = "Призыв Космического Костюма"
+	desc = "Призывает броню, в которой можно свободно ходить в космосе."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Я прийду к тебе!!!"
 	favor_cost = 200
