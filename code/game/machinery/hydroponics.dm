@@ -10,7 +10,7 @@
 
 	var/waterlevel = 100             //The amount of water in the tray (max 100)
 	var/maxwater = 100               //The maximum amount of water in the tray
-	var/nutrilevel = 10              //The amount of nutrient in the tray (max 10)
+	var/nutrilevel = 3              //The amount of nutrient in the tray (max 10)
 	var/maxnutri = 10                //The maximum nutrient of water in the tray
 	var/pestlevel = 0                //The amount of pests in the tray (max 10)
 	var/weedlevel = 0                //The amount of weeds in the tray (max 10)
@@ -52,8 +52,6 @@
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5  // Up to 30
-	waterlevel = maxwater
-	nutrilevel = 3
 
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
@@ -391,7 +389,9 @@
 	if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
 		user.remove_from_mob(O)
-		nutrilevel = 10
+		nutrilevel += 10
+		if(nutrilevel > maxnutri)
+			nutrilevel = maxnutri
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
 		to_chat(user, "You replace the nutrient solution in [src].")
