@@ -3,8 +3,8 @@
 
 
 /datum/religion_rites/pedestals/cult/narsie
-	name = "Summon Nar-Sie"
-	desc = "Summons the ancient god, don't be afraid to sacrifice your friend's body parts."
+	name = "Призыв Нар-Си"
+	desc = "Призывает древнего бога, не бойтесь пожертвовать частями тела своего друга, вам всё сочтётся."
 	ritual_length = (1 MINUTE)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 2000
@@ -52,8 +52,8 @@
 	return TRUE
 
 /datum/religion_rites/pedestals/cult/cult_portal
-	name = "Summon portal"
-	desc = "Your subjects can come out of it."
+	name = "Призыв Портала"
+	desc = "Ваши подданые прийду."
 	ritual_length = (1 MINUTE)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 1000
@@ -94,8 +94,8 @@
 	return FALSE
 
 /datum/religion_rites/pedestals/cult/make_skeleton
-	name = "Skeletofication"
-	desc = "Turns the person on the altar into an immortal skeleton."
+	name = "Скелетофикация"
+	desc = "Превращает человека на алтаре в бессмертного скелета."
 	ritual_length = (30 SECONDS)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 200

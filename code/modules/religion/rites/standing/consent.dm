@@ -11,8 +11,8 @@
  * Replace your friendly robotechnicians with this little rite!
  */
 /datum/religion_rites/standing/consent/synthconversion
-	name = "Synthetic Conversion"
-	desc = "Convert a human-esque individual into a (superior) Android."
+	name = "Синтетическое Возвышение"
+	desc = "Превращает <i>homosapiens</i> в (превосходящего) Андройда."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("By the inner workings of our god...",
 						"...We call upon you, in the face of adversity...",
@@ -78,8 +78,8 @@
  * Sacrifice a willing being to get a lot of points. Non-sentient beings who can not consent give points, but a lesser amount.
  */
 /datum/religion_rites/standing/consent/sacrifice
-	name = "Sacrifice"
-	desc = "Convert living energy in favor."
+	name = "Добровольное Жертвоприношение"
+	desc = "Превращает энергию живого в favor."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Hallowed be thy name...",
 							  "...Thy kingdom come...",
@@ -130,8 +130,8 @@
  * Adds clumsy mutation to mob and changes their clothes
  */
 /datum/religion_rites/standing/consent/clownconversion
-	name = "Clownconversion"
-	desc = "Convert a just person into a clown."
+	name = "Клоунконверсия"
+	desc = "Превращает маленького человека в Клоуна." // this is ref to Russian writers
 	ritual_length = (1.9 MINUTES)
 	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
 						"...From our mother to our ears we got the gift of horns...",
@@ -196,11 +196,11 @@
 
 /*
  * Divine invitation
- * Adds clumsy mutation to mob and changes their clothes
+ * Undresses and baptizes a person
  */
 /datum/religion_rites/standing/consent/invite
-	name = "Divine invitation"
-	desc = "Makes a person believe in God."
+	name = "Божественное Приглашение"
+	desc = "Заставляет человека поверить в Бога."
 	ritual_length = (40 SECONDS)
 	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
 						"...From our mother to our ears we got the gift of horns...",

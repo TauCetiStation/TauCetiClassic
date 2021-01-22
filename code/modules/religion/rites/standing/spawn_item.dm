@@ -21,8 +21,8 @@
  * Spawn banana
  */
 /datum/religion_rites/standing/spawn_item/banana
-	name = "Atomic molecular reconstruction of a whole blessed banana"
-	desc = "BANANAS!"
+	name = "Атомная Реконструкция Молекулярной Решётки Целого Благословлённого Банана."
+	desc = "БАНАНЫ!"
 	ritual_length = (10 SECONDS)
 	ritual_invocations = list("Oh great mother!...",
 							"...May your power descend to us and bestow upon your part....",
@@ -61,8 +61,8 @@
  * Spawn bananium ore
  */
 /datum/religion_rites/standing/spawn_item/banana_ore
-	name = "Enrichment of oxygen molecules with banana atoms"
-	desc = "Empire recovery!"
+	name = "Обогащение Молекул Кислорода Атомами Банана"
+	desc = "Восстановление Империи!"
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Oh great mother!...",
 							"...Help us in this difficult moment!...",
@@ -101,8 +101,8 @@
  * Any ghost with preference can become animal.
  */
 /datum/religion_rites/standing/spawn_item/call_animal
-	name = "Call animal"
-	desc = "Create random friendly animal."
+	name = "Призыв Животного"
+	desc = "Создаёт случайного дружелюбного помощника."
 	ritual_length = (1.3 MINUTES)
 	ritual_invocations = list("As these complex nodules of the world are interconnected...",
 						"...so even my animal will be connected with this place...",
@@ -157,8 +157,8 @@
  * Just create claymore with reduced damage.
  */
 /datum/religion_rites/standing/spawn_item/create_sword
-	name = "Create sword"
-	desc = "Creates a religious sword in the name of God."
+	name = "Создание Меча"
+	desc = "Создаёт меч во имя Бога."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("The Holy Spirit, who solves all problems, sheds light on all roads so that I can reach my goal...",
 						"...You are giving me the Divine gift of forgiveness and the forgiveness of all evil done against me...",
@@ -196,11 +196,11 @@
 	return TRUE
 
 /datum/religion_rites/standing/spawn_item/talisman
-	name = "Create talisman"
-	desc = "Create an empty talisman in which to place the ritual."
+	name = "Создание Талисмана"
+	desc = "Создаёт пустой талисман, в который можно поместить ритуал."
 	ritual_length = (1 MINUTE)
 	invoke_msg = "Portable magic!!!"
-	favor_cost = 75
+	favor_cost = 200
 	spawn_type = /obj/item/weapon/paper/talisman/chaplain
 
 	needed_aspects = list(

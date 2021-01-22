@@ -55,8 +55,8 @@
  * AoE charge
  */
 /datum/religion_rites/standing/legacy/charge
-	name = "Electric Charge Pulse"
-	desc = "Charge equipment, cells, and other things around you."
+	name = "Беспроводная Зарядка"
+	desc = "Заряжает оборудование, батарейки и другие штуки вокруг тебя."
 	ritual_length = (20 SECONDS)
 	ritual_invocations = list("By the power of our gods...",
 						"...We call upon you, who make the energy flow...",

@@ -3,8 +3,8 @@
  * Grants a lot of food while you AFK near the altar. Even more food if you finish the ritual.
  */
 /datum/religion_rites/standing/food
-	name = "Create food"
-	desc = "Create more and more food!"
+	name = "Создание Еды"
+	desc = "Нужно больше и больше еды!"
 	ritual_length = (2.1 MINUTES)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
@@ -63,8 +63,8 @@
  * Increases favour while you AFK near altar, heals everybody around if invoked succesfully.
  */
 /datum/religion_rites/standing/pray
-	name = "Prayer to god"
-	desc = "Pray for a while in exchange for favor."
+	name = "Молитва"
+	desc = "За добрые слова вы получаете немного favor'а."
 	ritual_length = (4 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
@@ -108,8 +108,8 @@
  * The ritual creates a honk that everyone hears.
  */
 /datum/religion_rites/standing/honk
-	name = "Clown shriek"
-	desc = "Spread honks throughout the station."
+	name = "Клоунский Крик"
+	desc = "Разносит хонк по всей станции."
 	ritual_length = (1.9 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you...",
@@ -144,8 +144,8 @@
  * It makes a thing move and say something. You can't pick up a thing until you kill a item-mob.
  */
 /datum/religion_rites/standing/animation
-	name = "Animation"
-	desc = "Revives a things on the altar."
+	name = "Анимация"
+	desc = "Возраждает вещи на алтаре."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
 							  "...given from the light given by the wisdom of the gods returned...",
@@ -193,8 +193,8 @@
  * This ritual spooks players: Light lamps pop out, and people start to shake
  */
 /datum/religion_rites/standing/spook
-	name = "Spook"
-	desc = "Distributes a jerky sound."
+	name = "Испуг"
+	desc = "Издаёт из алтаря страшный крик."
 	ritual_length = (20 SECONDS)
 	ritual_invocations = list("I call the souls of people here, I send your soul to the otherworldly thief, in a black mirror...",
 							  "...Let Evil take you and lock you up...",
@@ -246,8 +246,8 @@
  * The ritual turns on the flash in range, create overlay of "spirit" and the person begins to glow
  */
 /datum/religion_rites/standing/illuminate
-	name = "Illuminate"
-	desc = "Create wisp of light and turns on the light."
+	name = "Озарение"
+	desc = "Создаёт пучок света над вами."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
@@ -305,8 +305,8 @@
  * Revive animal
  */
 /datum/religion_rites/standing/revive_animal
-	name = "Revive"
-	desc = "The animal revives from the better world."
+	name = "Возрождение Животного"
+	desc = "Возвращает душу животного из лучшего мира."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I will say, whisper, quietly say such words...",
 							  "...May every disease leave you...",

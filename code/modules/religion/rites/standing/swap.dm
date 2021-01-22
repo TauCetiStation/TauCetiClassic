@@ -29,8 +29,8 @@
  * In the radius from the altar, changes the denomination of banknotes one higher
  */
 /datum/religion_rites/standing/swap/devaluation
-	name = "Devaluation"
-	desc = "Changes the denomination of banknotes one higher."
+	name = "Девальвалия"
+	desc = "Меняет номинал банкнот на один выше."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Lord, hope and support...",
 							  "...Thy Everlasting Throne, your backwater...",
@@ -60,8 +60,8 @@
  * In the radius from the altar, changes stock_parts withs rating to stock_parts with rating + 1
  */
 /datum/religion_rites/standing/swap/upgrade
-	name = "Upgrade"
-	desc = "Upgrade scientific things."
+	name = "Улучшение"
+	desc = "Улучшает научные штуки."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("The moon was born...",
 							  "...the force was born...",
