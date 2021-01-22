@@ -125,40 +125,23 @@
 /datum/religion_rites/standing/spawn_item/call_animal/proc/choose_spawn_type()
 	return pick(summon_type)
 
-/datum/religion_rites/standing/spawn_item/call_animal/modify_item(atom/animal)
-	for(var/mob/dead/observer/O in observer_list)
-		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
-			continue
-		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(IGNORE_FAMILIAR) && (ROLE_GHOSTLY in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C, animal)
+/datum/religion_rites/standing/spawn_item/call_animal/modify_item(mob/animal)
+	var/mob/candidates = pollGhostCandidates("Do you want to become the Familiar of religion?", ROLE_GHOSTLY, IGNORE_FAMILIAR, 10 SECONDS)
+	var/mob/M = pick(candidates)
 
-/datum/religion_rites/standing/spawn_item/call_animal/proc/question(client/C, mob/M)
-	if(!C)
-		return
-	var/response = alert(C, "Do you want to become the Familiar of religion?", "Familiar request", "No", "Yes", "Never for this round")
-	if(!C || M.ckey)
-		return //handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-	if(response == "Yes")
-		var/mob/candidate = C.mob
-		var/god_name
-		if(religion.active_deities.len == 0)
-			god_name = pick(religion.deity_names)
-		else
-			var/mob/god = pick(religion.active_deities)
-			god_name = god.name
-		M.mind = candidate.mind
-		M.ckey = candidate.ckey
-		M.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
-		M.real_name = M.name
-		religion.add_member(M)
-		candidate.cancel_camera()
-		candidate.reset_view()
-	else if (response == "Never for this round")
-		C.prefs.ignore_question += IGNORE_FAMILIAR
+	var/god_name
+	if(religion.active_deities.len == 0)
+		god_name = pick(religion.deity_names)
+	else
+		var/mob/god = pick(religion.active_deities)
+		god_name = god.name
+
+	animal.ckey = M.ckey
+	animal.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
+	animal.real_name = M.name
+	religion.add_member(M)
+	M.cancel_camera()
+	M.reset_view()
 
 /datum/religion_rites/standing/spawn_item/call_animal/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()

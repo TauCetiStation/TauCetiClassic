@@ -225,7 +225,6 @@
 	brainmob.invisibility = INVISIBILITY_OBSERVER
 	brainmob.see_invisible = SEE_INVISIBLE_OBSERVER
 
-	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
 	brainmob.real_name = name
