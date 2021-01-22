@@ -788,6 +788,7 @@
 "abV" = (
 /obj/structure/object_wall/evac{
 	icon_state = "2,20";
+	name = "shuttle window";
 	opacity = 0
 	},
 /turf/space,
@@ -1589,11 +1590,11 @@
 	},
 /area/centcom/holding)
 "aeg" = (
-/obj/structure/closet/hydrant{
-	layer = 3.1;
-	pixel_y = 30
-	},
 /obj/structure/closet/toolcloset,
+/obj/structure/extinguisher_cabinet{
+	layer = 3.1;
+	pixel_y = 32
+	},
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
 "aeh" = (
@@ -1658,8 +1659,7 @@
 /area/shuttle/escape/centcom)
 "aep" = (
 /obj/machinery/door/airlock/erokez/eng{
-	name = "Engineering Airlock";
-	req_one_access = list(11, 24)
+	name = "Engineering Airlock"
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
@@ -12717,6 +12717,7 @@
 "aRs" = (
 /obj/structure/object_wall/evac{
 	icon_state = "3,20";
+	name = "shuttle window";
 	opacity = 0
 	},
 /turf/space,
@@ -13774,6 +13775,7 @@
 "aUE" = (
 /obj/structure/object_wall/evac{
 	icon_state = "13,20";
+	name = "shuttle window";
 	opacity = 0
 	},
 /turf/space,
@@ -14142,6 +14144,7 @@
 "aVM" = (
 /obj/structure/object_wall/evac{
 	icon_state = "14,20";
+	name = "shuttle window";
 	opacity = 0
 	},
 /turf/space,
@@ -17154,6 +17157,15 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"bJl" = (
+/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/extinguisher_cabinet{
+	layer = 3.1;
+	pixel_x = -31;
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "bKb" = (
 /obj/machinery/computer/pod{
 	id = "NTrasen";
@@ -18430,6 +18442,15 @@
 	icon_state = "vel_09"
 	},
 /area/velocity)
+"ehN" = (
+/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/extinguisher_cabinet{
+	layer = 3.1;
+	pixel_x = 31;
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "eib" = (
 /turf/unsimulated/floor/velocity{
 	icon_state = "vel_10"
@@ -44297,7 +44318,7 @@ aRG
 aRG
 aWR
 oOb
-aWR
+bJl
 adT
 aWR
 oOb
@@ -45325,7 +45346,7 @@ aRG
 aRG
 aWR
 avJ
-aWR
+ehN
 adU
 aWR
 avJ

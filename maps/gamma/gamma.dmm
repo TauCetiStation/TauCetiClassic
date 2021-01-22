@@ -5376,6 +5376,11 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aII" = (
@@ -6577,11 +6582,6 @@
 	},
 /area/station/medical/morgue)
 "beA" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -14053,6 +14053,18 @@
 	icon_state = "warning"
 	},
 /area/station/hallway/secondary/entry)
+"drt" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Escape Shuttle Hallway APC";
+	pixel_x = 26
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "drv" = (
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -37454,8 +37466,10 @@
 	},
 /area/station/medical/hallway)
 "kRz" = (
-/obj/structure/closet/emergency_wall{
-	pixel_x = 30
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -43508,9 +43522,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -68325,6 +68339,12 @@
 	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space)
+"uDC" = (
+/obj/structure/closet/emergency_wall{
+	pixel_x = 30
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "uEd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -98197,11 +98217,11 @@ evu
 wjC
 qJH
 hQN
-qJH
-qJH
+uDC
+drt
 kRz
-qJH
-qJH
+kRz
+kRz
 aIk
 adG
 qPA

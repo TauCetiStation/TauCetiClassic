@@ -4391,15 +4391,14 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxstarboard)
 "ahw" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "browncorner"
+	dir = 4;
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
 "ahx" = (
@@ -7769,7 +7768,8 @@
 	chargemode = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Security Substation"
+	c_tag = "Security Substation";
+	network = list("SS13","Security")
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -28322,13 +28322,22 @@
 	},
 /area/station/cargo/miningoffice)
 "aYm" = (
-/obj/structure/closet/emergency_wall{
-	pixel_x = 30
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "warningcorner"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/station/hallway/secondary/exit)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "aYn" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2"
@@ -29987,6 +29996,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bbi" = (
@@ -31236,6 +31250,11 @@
 	dir = 4;
 	name = "Private Office";
 	sortType = "Private Office"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -37155,7 +37174,8 @@
 /obj/item/device/flash,
 /obj/machinery/camera{
 	c_tag = "Escape Security Hall";
-	dir = 8
+	dir = 8;
+	network = list("SS13","Security")
 	},
 /obj/machinery/light{
 	dir = 4
@@ -38115,7 +38135,8 @@
 /area/station/rnd/chargebay)
 "bqr" = (
 /obj/machinery/door/window/brigdoor{
-	dir = 1
+	dir = 1;
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -40279,7 +40300,7 @@
 /obj/structure/closet/emcloset,
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Arrival Shuttle Hallway APC";
+	name = "Arrival Hallway APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -66095,6 +66116,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "cEq" = (
@@ -81069,6 +81095,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"xrW" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "xwj" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -87310,7 +87353,7 @@ aGy
 aGy
 aGy
 aGy
-aaa
+bWt
 aaa
 aaa
 aaa
@@ -92730,7 +92773,7 @@ bOA
 bis
 bTp
 bbT
-ahw
+ajb
 bis
 bHe
 bll
@@ -95283,8 +95326,8 @@ aaa
 aaa
 apT
 bup
-bbd
-aTy
+ahw
+aYm
 bhj
 vhl
 aHM
@@ -95541,7 +95584,7 @@ aRn
 apT
 aWu
 bbd
-aTy
+xrW
 bhj
 nQR
 aIr
@@ -95798,7 +95841,7 @@ uvb
 apT
 buZ
 bbd
-aTy
+xrW
 bhj
 aWW
 aID
@@ -96312,7 +96355,7 @@ beZ
 apT
 btx
 bbd
-aTy
+xrW
 aHc
 aWW
 aAH
@@ -96569,7 +96612,7 @@ aYg
 apT
 bsY
 bbd
-aTy
+xrW
 bmb
 aSP
 aSP
@@ -97083,7 +97126,7 @@ aTv
 aWv
 aYR
 bbd
-aTy
+xrW
 bhi
 aSP
 aJs
@@ -97830,8 +97873,8 @@ aQJ
 aQJ
 aYW
 bJH
-aVq
-aYm
+tIb
+bqf
 tIb
 tIb
 bng
