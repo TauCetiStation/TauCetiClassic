@@ -2,9 +2,7 @@
 	startWhen = 3
 	announceWhen = 20
 	endWhen = 120
-
-/datum/event/anomaly/anomaly_grav/announce()
-	command_alert("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", sound = "gravanom")
+	announcement = new /datum/announcement/centcomm/anomaly/gravity
 
 /datum/event/anomaly/anomaly_grav/start()
 	var/turf/T = pick(get_area_turfs(impact_area))

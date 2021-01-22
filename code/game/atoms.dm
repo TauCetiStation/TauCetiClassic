@@ -78,6 +78,8 @@
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -665,7 +667,7 @@
 	if(isturf(loc))
 		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
 
-/atom/movalbe/lightning_object/shake_act(severity, recursive = TRUE)
+/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return
 
 /turf/shake_act(severity, recursive = TRUE)

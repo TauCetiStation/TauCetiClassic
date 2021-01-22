@@ -31,7 +31,7 @@
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/santa(src)
-		new /obj/item/clothing/suit/wintercoat/security(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	#endif
 
@@ -62,7 +62,7 @@
 		new /obj/item/clothing/shoes/black(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat(src)
+		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -157,7 +157,7 @@
 		new /obj/item/clothing/head/beret/eng(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	#endif
 
@@ -182,7 +182,7 @@
 		new /obj/item/clothing/head/beret/eng(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat/engineering(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	#endif
 
@@ -246,7 +246,7 @@
 		new /obj/item/clothing/gloves/black(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -284,7 +284,7 @@
 		new /obj/item/clothing/suit/storage/labcoat/genetics(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -307,7 +307,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/medical(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -337,10 +337,10 @@
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/medical(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/suit/storage/labcoat/winterlabcoat(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	#endif
 
 
@@ -358,7 +358,7 @@
 		new /obj/item/clothing/head/soft/grey(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat(src)
+		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -404,7 +404,7 @@
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/suit/hooded/wintercoat(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif

@@ -57,6 +57,9 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	var/warning = FALSE // Warning about the end of the round.
 	var/returning = FALSE
 
+	var/datum/announcement/centcomm/vox/arrival/announce_arrival = new
+	var/datum/announcement/centcomm/vox/returns/announce_returns = new
+
 /obj/machinery/computer/vox_station/atom_init()
 	. = ..()
 	curr_location = locate(/area/shuttle/vox/arkship)
@@ -75,9 +78,9 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 
 	if(announce_vox_departure)
 		if(curr_location == locate(/area/shuttle/vox/arkship))
-			command_alert("Внимание, [station_name()], неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. По последним данным этот корабль принадлежит Торговой Конфедерации.")
+			announce_arrival.play()
 		else if(returning)
-			command_alert("Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. Looks like they're heading out of [system_name()] at a rapid clip.", "NSV Icarus")
+			announce_returns.play()
 
 	moving = TRUE
 	lastMove = world.time

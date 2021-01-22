@@ -55,6 +55,8 @@
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
+/// from base of mob/living/carbon/human/electrocute_act(): (shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+#define COMSIG_ATOM_ELECTROCUTE_ACT "atom_electrocute_act"
 /// from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)

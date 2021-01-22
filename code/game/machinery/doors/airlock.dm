@@ -25,7 +25,7 @@ var/list/airlock_overlays = list()
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
 	var/spawnPowerRestoreRunning = 0
-	var/welded = null
+	var/welded = FALSE
 	var/locked = 0
 	var/lights = 1 // bolt lights show by default
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
@@ -700,7 +700,7 @@ var/list/airlock_overlays = list()
 		..()
 
 
-/obj/machinery/door/airlock/Topic(href, href_list, var/no_window = 0)
+/obj/machinery/door/airlock/Topic(href, href_list, no_window = 0)
 	. = ..(href, href_list)
 	if(!.)
 		return
@@ -923,11 +923,17 @@ var/list/airlock_overlays = list()
 
 	if(iswelder(C) && !(operating > 0) && density)
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.use(0,user))
-			welded = !welded
-			update_icon()
-			return
+		if(W.use(0, user))
+			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
+			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
+			if(W.use_tool(src, user, 30, volume = 100))
+				welded = !welded
+				update_icon()
+				user.visible_message("[user] [welded?"welds":"unwelds"] [src]'s shutters with [W].",
+				                     "<span class='notice'>You [welded? "weld":"remove welding from"] [src]'s shutters with [W].</span>")
+				return
 		else
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 	else if(isscrewdriver(C))
 		p_open = !p_open
@@ -1090,6 +1096,8 @@ var/list/airlock_overlays = list()
 				M.SetWeakened(5)
 
 			var/turf/mob_turf = get_turf(M)
+			if(M.buckled)
+				M.buckled.unbuckle_mob()
 			for(var/dir in cardinal)
 				var/turf/new_turf = get_step(mob_turf, dir)
 				if(M.Move(new_turf))

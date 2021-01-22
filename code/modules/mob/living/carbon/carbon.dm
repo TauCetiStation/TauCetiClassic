@@ -105,6 +105,8 @@
 
 /mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
 	if(istype(attacker))
+		if(attacker in stomach_contents)
+			return	//you cannot beat from the stomach
 		var/spread = TRUE
 		if(ishuman(attacker))
 			var/mob/living/carbon/human/H = attacker

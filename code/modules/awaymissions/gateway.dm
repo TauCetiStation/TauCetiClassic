@@ -194,7 +194,7 @@
 	if(isliving(entered))
 		var/mob/living/M = entered
 		M.Stun(10, 1, 1, 1)
-		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity=0; screen_loc="1,0"; } (src)
+		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity = MOUSE_OPACITY_TRANSPARENT; screen_loc="1,0"; } (src)
 		if(M.client)
 			M.client.screen += cinematic
 			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS_MASTER, null, FALSE)
