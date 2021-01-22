@@ -12,6 +12,9 @@
 
 /obj/structure/altar_of_gods/cult/interact_bible(obj/item/I, mob/user)
 	if(!chosen_aspect && !choosing_sects)
+		if(user.mind.holy_role != HOLY_ROLE_CULTMASTER)
+			to_chat(user, "<span class='warning'>Только лидер культа может выбирать аспекты!</span>")
+			return
 		..(I, user)
 	else
 		interact_nullrod(I, user)

@@ -17,6 +17,7 @@
 
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudcultist"
+	var/leader_hud_name = "hudheadcultist"
 
 	votable = 0
 
@@ -57,25 +58,44 @@
 
 	return (started_cultists.len >= required_enemies)
 
-
 /datum/game_mode/cult/post_setup()
 	religion = create_religion(/datum/religion/cult)
 	modePlayer += started_cultists
+	if(!config.objectives_disabled)
+		generate_objectives()
+
+	var/datum/mind/leader = pick(started_cultists)
+	started_cultists -= leader
+	leader_setup(leader)
 
 	for(var/datum/mind/cult_mind in started_cultists)
-		religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
-		equip_cultist(cult_mind.current)
-		to_chat(cult_mind.current, "<span class = 'info'><b>Вы член <font color='red'>культа</font>!</b></span>")
-
-		if(!config.objectives_disabled)
-			generate_objectives()
-			memoize_cult_objectives(cult_mind)
-		else
-			to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span></i></b>")
-
-		add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
+		cultist_setup(cult_mind)
 
 	return ..()
+
+/datum/game_mode/cult/proc/cultist_setup(datum/mind/cult_mind)
+	religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
+	add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
+
+	equip_cultist(cult_mind.current)
+	to_chat(cult_mind.current, "<span class = 'info'><b>Вы член <font color='red'>культа</font>!</b></span>")
+
+	if(!config.objectives_disabled)
+		memoize_cult_objectives(cult_mind)
+	else
+		to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span></i></b>")
+
+/datum/game_mode/cult/proc/leader_setup(datum/mind/leader)
+	religion.add_member(leader.current, HOLY_ROLE_CULTMASTER)
+	add_antag_hud(antag_hud_type, leader_hud_name, leader.current)
+
+	equip_cultist(leader.current)
+	to_chat(leader.current, "<span class = 'info'><b>Вы <span class='cult'>лидер</span> <font color='red'>культа</font>!</b></span>")
+
+	if(!config.objectives_disabled)
+		memoize_cult_objectives(leader)
+	else
+		to_chat(leader.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span></i></b>")
 
 /datum/game_mode/cult/proc/generate_objectives()
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult)

@@ -453,6 +453,7 @@
 #include "code\game\gamemodes\cult\structures\forge.dm"
 #include "code\game\gamemodes\cult\structures\pedestal.dm"
 #include "code\game\gamemodes\cult\structures\rune.dm"
+#include "code\game\gamemodes\cult\structures\statue.dm"
 #include "code\game\gamemodes\cult\structures\tech_table.dm"
 #include "code\game\gamemodes\extended\extended.dm"
 #include "code\game\gamemodes\gang\dominator.dm"

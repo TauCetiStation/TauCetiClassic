@@ -172,9 +172,11 @@
 	var/per_obj_cd = 1 SECONDS
 	var/static/already_use = FALSE
 	var/static/first_area_captured = FALSE
+	var/obj/structure/cult/statue/capture/statue
 
 /datum/rune/cult/capture_area/Destroy()
 	already_use = FALSE
+	QDEL_NULL(statue)
 	return ..()
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
@@ -204,6 +206,7 @@
 	var/area/A = get_area(holder)
 	var/datum/announcement/station/cult/capture_area/announce = new
 	announce.play(A)
+	statue = new(get_turf(holder), holder)
 	if(religion.religify_area(A.type, CALLBACK(src, .proc/capture_iteration)))
 		first_area_captured = TRUE
 	already_use = FALSE

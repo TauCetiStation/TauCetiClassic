@@ -21,18 +21,6 @@
 	light_power = 2
 	light_range = 3
 
-/obj/structure/cult/statue
-	name = "statue"
-	icon_state = "shell" // can be shell_glow
-
-/obj/structure/cult/statue/jew
-	name = "statue of jew"
-	icon_state = "jew" // cant be jew_glow
-
-/obj/structure/cult/statue/gargoyle
-	name = "statue of gargoyle"
-	icon_state = "gargoyle" // can be gargoyle_glow
-
 /obj/structure/cult/pylon
 	name = "pylon"
 	desc = "A floating crystal that hums with an unearthly energy."

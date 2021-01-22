@@ -135,7 +135,7 @@
 	AOG.reagents.add_reagent("blood", 1)
 	S.set_up(AOG.reagents, 5, 0, get_turf(AOG))
 	S.attach(get_turf(AOG))
-	S.color = "#db0101" //dark purple
+	S.color = "#db0101"
 	S.start()
 
 	H.set_species(SKELETON)
