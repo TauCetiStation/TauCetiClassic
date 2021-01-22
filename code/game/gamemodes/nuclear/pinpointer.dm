@@ -13,8 +13,6 @@
 	var/mode = SEARCH_FOR_DISK  // Need here for GREAT OOP style, 0 - searching disk
 
 /obj/item/weapon/pinpointer/attack_self(mob/user)
-	RegisterSignal(user, COSMIG_ATOM_CHANGE_DIR, .proc/test)
-	step(user, NORTH)
 	if(!active)
 		START_PROCESSING(SSobj, src)
 		to_chat(user, "<span class='notice'>You activate the pinpointer</span>")
@@ -22,10 +20,6 @@
 		icon_state = "pinoff"
 		to_chat(user, "<span class='notice'>You deactivate the pinpointer</span>")
 	active = !active
-
-/obj/item/weapon/pinpointer/proc/test()
-	visible_message("test")
-
 
 /obj/item/weapon/pinpointer/process()
 	if(!active)
