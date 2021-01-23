@@ -318,6 +318,10 @@
 	donut_sprite_type = "classic"
 	list_reagents = list("nutriment" = 3, "sprinkles" = 3)
 
+/obj/item/weapon/reagent_containers/food/snacks/donut/syndie
+	donut_sprite_type = "classic"
+	list_reagents = list("nutriment" = 3, "syndicream" = 3)
+
 /obj/item/weapon/reagent_containers/food/snacks/donut/choco
 	desc = "With tasty chocolate icing."
 	donut_sprite_type = "choco"
