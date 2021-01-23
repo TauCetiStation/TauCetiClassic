@@ -111,6 +111,7 @@
 	sheetType = /obj/item/stack/sheet/metal
 	light_color = "#990000"
 	light_range = 2
+	can_unwrench = FALSE
 
 /obj/structure/mineral_door/cult/MobChecks(mob/user)
 	if(!..())

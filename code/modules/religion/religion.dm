@@ -338,6 +338,7 @@
 		if(A.religion)
 			A.religion.captured_areas -= A.religion
 		A.religion = src
+		passive_favor_gain = max(0, captured_areas.len - areas.len)
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.

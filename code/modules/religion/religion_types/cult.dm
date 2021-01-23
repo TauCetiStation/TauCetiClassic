@@ -39,8 +39,8 @@
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
 
-	//favor = 10000
-	//piety = 10000
+	favor = 10000
+	piety = 10000
 	max_favor = 10000
 
 	max_runes = 10
@@ -114,6 +114,7 @@
 	mode = SSticker.mode
 
 /datum/religion/cult/process()
+	adjust_favor(passive_favor_gain)
 	if(next_anomaly < world.time)
 		create_anomalys()
 

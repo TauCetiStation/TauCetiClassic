@@ -17,7 +17,11 @@
 	var/research_time = 20 MINUTES
 	var/end_research_time
 
+	var/current_research = "Nothing"
+
 	var/list/pylon_around
+
+	var/datum/religion/religion
 
 /obj/structure/cult/tech_table/Destroy()
 	pylon_around = null
@@ -25,25 +29,30 @@
 
 /obj/structure/cult/tech_table/examine(mob/user, distance)
 	..()
-	if(!user.mind.holy_role || !user.my_religion || user.my_religion.aspects.len == 0)
-		return
+	if(isliving(user))
+		if(!user.mind?.holy_role || !religion || religion.aspects.len == 0)
+			return
 
-	to_chat(user, "<span class='notice'>Аспекты и их сила в [user.my_religion.name]:</span>")
-	for(var/name in user.my_religion.aspects)
-		var/datum/aspect/A = user.my_religion.aspects[name]
+	to_chat(user, "<span class='notice'>Текущее исследование: [current_research].</span>")
+	to_chat(user, "<span class='notice'>Аспекты и их сила в [religion.name]:</span>")
+	for(var/name in religion.aspects)
+		var/datum/aspect/A = religion.aspects[name]
 		to_chat(user, "\t<font color='[A.color]'>[name]</font> с силой <font size='[1+A.power]'><i>[A.power]</i></font>")
 
 /obj/structure/cult/tech_table/attack_hand(mob/living/user)
 	if(!user.mind.holy_role || !user.my_religion)
 		return
 
+	if(!religion)
+		religion = user.my_religion
+
 	if(researching)
-		to_chat(user, "<span class='warning'>Осталось [round((end_research_time - world.time) * 0.1)] до конца исследования.</span>")
+		to_chat(user, "<span class='warning'>Осталось [round((end_research_time - world.time) * 0.1)] секунд до конца исследования.</span>")
 		return
 
 	if(!aspect_images.len)
 		gen_aspect_images()
-	if(uniq_images.len < user.my_religion.available_techs.len)
+	if(uniq_images.len < religion.available_techs.len)
 		gen_tech_images(user)
 	if(!category_images.len)
 		gen_category_images()
@@ -51,9 +60,9 @@
 	var/choice = show_radial_menu(user, src, category_images, tooltips = TRUE, require_near = TRUE)
 
 	switch(choice)
-		if("Aspect")
+		if("Аспекты")
 			choose_aspect(user)
-		if("Unique techs")
+		if("Уникальные технологии")
 			choose_uniq_tech(user)
 
 /obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/living/user)
@@ -63,20 +72,21 @@
 	var/datum/building_agent/choosed_tech = show_radial_menu(user, src, uniq_images, tooltips = TRUE, require_near = TRUE)
 	if(!choosed_tech)
 		return
-	if(!user.my_religion.check_costs(choosed_tech.favor_cost, choosed_tech.piety_cost, user))
+	if(!religion.check_costs(choosed_tech.favor_cost, choosed_tech.piety_cost, user))
 		return
 
 	to_chat(user, "<span class='notice'>Вы начали изучение [initial(choosed_tech.name)].</span>")
 
-	start_activity(CALLBACK(src, .proc/research_tech, user.my_religion, choosed_tech))
+	current_research = initial(choosed_tech.name)
+	start_activity(CALLBACK(src, .proc/research_tech, choosed_tech))
 
-/obj/structure/cult/tech_table/proc/research_tech(datum/religion/R, datum/building_agent/tech/choosed_tech)
+/obj/structure/cult/tech_table/proc/research_tech(datum/building_agent/tech/choosed_tech)
 	var/datum/religion_tech/T = new choosed_tech.building_type
-	T.apply_effect(R)
+	T.apply_effect(religion)
 	qdel(T)
 
 	uniq_images -= choosed_tech
-	R.available_techs -= choosed_tech
+	religion.available_techs -= choosed_tech
 	qdel(uniq_images[choosed_tech])
 
 	end_activity()
@@ -84,18 +94,19 @@
 /obj/structure/cult/tech_table/proc/choose_aspect(mob/living/user)
 	// Generates a name with the power of an aspect and upgrade cost
 	for(var/datum/aspect/A in aspect_images)
-		var/datum/aspect/in_religion = user.my_religion.aspects[initial(A.name)]
+		var/datum/aspect/in_religion = religion.aspects[initial(A.name)]
 		A.name = "[initial(A.name)], сила: [in_religion ? in_religion.power : "0"], piety: [get_upgrade_cost(in_religion)]"
 
 	var/datum/aspect/choosed_aspect = show_radial_menu(user, src, aspect_images, tooltips = TRUE, require_near = TRUE)
 	if(!choosed_aspect)
 		return
-	var/datum/aspect/in_religion = user.my_religion.aspects[initial(choosed_aspect.name)]
-	if(!user.my_religion.check_costs(null, get_upgrade_cost(in_religion), user))
+	var/datum/aspect/in_religion = religion.aspects[initial(choosed_aspect.name)]
+	if(!religion.check_costs(null, get_upgrade_cost(in_religion), user))
 		return
 
 	to_chat(user, "<span class='notice'>Вы начали [in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)].</span>")
-	start_activity(CALLBACK(src, .proc/upgrade_aspect, user.my_religion, choosed_aspect))
+	current_research = "[in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)]"
+	start_activity(CALLBACK(src, .proc/upgrade_aspect, choosed_aspect))
 
 /obj/structure/cult/tech_table/proc/upgrade_aspect(datum/religion/R, datum/aspect/aspect_to_upgrade)
 	if(initial(aspect_to_upgrade.name) in R)
@@ -114,13 +125,13 @@
 
 /obj/structure/cult/tech_table/proc/gen_category_images()
 	category_images = list(
-		"Aspect" = aspect_images[pick(aspect_images)],
-		"Unique techs" = uniq_images[pick(uniq_images)],
+		"Аспекты" = aspect_images[pick(aspect_images)],
+		"Уникальные технологии" = uniq_images[pick(uniq_images)],
 	)
 
 /obj/structure/cult/tech_table/proc/gen_tech_images(mob/living/user)
 	uniq_images = list()
-	for(var/datum/building_agent/tech/BA in user.my_religion.available_techs)
+	for(var/datum/building_agent/tech/BA in religion.available_techs)
 		uniq_images[BA] = image(icon = BA.icon, icon_state = BA.icon_state)
 
 /obj/structure/cult/tech_table/proc/gen_aspect_images()
@@ -150,3 +161,5 @@
 	for(var/obj/structure/cult/pylon/P in pylon_around)
 		pylon_around -= P
 		P.icon_state = "pylon"
+
+	current_research = "Ничего"

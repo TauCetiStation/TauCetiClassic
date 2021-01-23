@@ -57,7 +57,8 @@
 	capture_rune = R
 
 /obj/structure/cult/statue/capture/Destroy()
-	QDEL_NULL(capture_rune)
+	if(!QDELETED(capture_rune))
+		qdel(capture_rune)
 	return ..()
 
 /obj/structure/cult/statue/jew

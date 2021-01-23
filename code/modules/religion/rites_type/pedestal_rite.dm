@@ -1,7 +1,7 @@
 #define MAX_WAITING_TIME 36
 
 /obj/effect/overlay/item_illusion
-	var/my_fake_type
+	var/obj/my_fake_type
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /datum/religion_rites/pedestals

@@ -12,11 +12,12 @@
 	consume_range = 6 //How many tiles out do we eat
 
 /datum/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
-	for(var/mob/dead/observer/O in player_list)
-		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[FOLLOW_LINK(O, src)] [message]</span>")
-			if(ghost_sound)
-				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	for(var/mob/M in observer_list)
+		if(!M.client)
+			continue
+		to_chat(M, "<span class='ghostalert'>[FOLLOW_LINK(M, src)] [message]</span>")
+		if(ghost_sound)
+			M.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 /obj/singularity/narsie/large
 	name = "Nar-Sie"

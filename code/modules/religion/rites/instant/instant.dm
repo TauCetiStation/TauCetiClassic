@@ -686,6 +686,8 @@
 	..()
 	favor_cost = initial(favor_cost) / divine_power
 	var/input = sanitize(input(user, "Введите сообщение, которое услышат другие последователи.", "[religion.name]", ""))
+	if(!input)
+		return FALSE
 	for(var/mob/M in global.mob_list)
 		if(religion.is_member(M) || isobserver(M))
 			to_chat(M, "<span class='[religion.style_text]'>Аколит [user.real_name]: [input]</span>")

@@ -73,18 +73,19 @@
 		score["destranomaly"]++
 		return
 
-	if(!toggle_deconstruct)
+	if(!toggle_deconstruct || !proximity)
 		return
 
 	if(destr_next[user.ckey] > world.time)
 		to_chat(user, "<span class='warning'>Ты сможешь уничтожить через [round((destr_next[user.ckey] - world.time) * 0.1)] секунд.</span>")
 		return
 
+	if(istype(target, /obj/structure/altar_of_gods/cult) && religion.altars.len == 1)
+		to_chat(user, "<span class='warning'>Вы не можете уничтожить последний алтарь.</span>")
+		return
+
 	for(var/datum/building_agent/B in religion.available_buildings)
 		if(istype(target, B.building_type))
-			if(!religion.check_costs(B.deconstruct_favor_cost * cost_coef, B.deconstruct_piety_cost * cost_coef, user))
-				break
-
 			destr_next[user.ckey] = world.time + destr_cd
 			animate(target, 2 SECONDS, alpha = 0)
 			sleep(2 SECONDS)
@@ -99,8 +100,8 @@
 				T.ChangeTurf(type_new_turf)
 
 			qdel(target)
-			religion.adjust_favor(-B.deconstruct_favor_cost * cost_coef)
-			religion.adjust_piety(-B.deconstruct_piety_cost * cost_coef)
+			religion.adjust_favor(B.deconstruct_favor_cost * cost_coef)
+			religion.adjust_piety(B.deconstruct_piety_cost * cost_coef)
 			break
 
 /obj/item/weapon/storage/bible/tome/proc/rune_choices()

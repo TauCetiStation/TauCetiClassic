@@ -131,14 +131,13 @@
 		religion.ritename_by_count[name]++
 	reset_rite_wrapper(src, user, AOG)
 
-	if(istype(religion, /datum/religion/cult) && istype(AOG, /obj/structure/altar_of_gods/cult))
-		AOG.icon_state = "cultaltar"
-
 /datum/religion_rites/proc/reset_rite_wrapper(datum/source, mob/living/user, obj/AOG)
 	UnregisterSignal(src, list(COMSIG_RITE_STEP_ENDED, COMSIG_RITE_FAILED_CHECK))
 	if(istype(AOG, /obj/structure/altar_of_gods))
 		var/obj/structure/altar_of_gods/A = AOG
 		A.reset_rite() // Very bad.
+	if(istype(religion, /datum/religion/cult) && istype(AOG, /obj/structure/altar_of_gods/cult)) // Very bad too
+		AOG.icon_state = "cultaltar"
 	reset_rite()
 
 /datum/religion_rites/proc/on_chosen(mob/living/user, obj/AOG)

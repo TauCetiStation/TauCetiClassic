@@ -11,6 +11,7 @@
 	var/isSwitchingStates = FALSE
 	var/sheetAmount = 7
 	var/health = 100
+	var/can_unwrench = TRUE
 
 	var/sheetType
 
@@ -121,7 +122,7 @@
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			Dismantle()
 
-	else if(iswrench(W) && !istype(src, /obj/structure/mineral_door/resin))
+	else if(iswrench(W) && can_unwrench)
 		if(user.is_busy(src))
 			return
 		if(anchored)
@@ -286,6 +287,7 @@
 	operating_sound = 'sound/effects/attackblob.ogg'
 	icon_state = "resin"
 	health = 150
+	can_unwrench = FALSE
 	var/close_delay = 100
 
 /obj/structure/mineral_door/resin/atom_init()

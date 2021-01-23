@@ -56,7 +56,7 @@
 	return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
-	power.ghost_action(user)
+	power?.ghost_action(user)
 
 /obj/effect/rune/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_INTERACT)

@@ -232,6 +232,7 @@
 		coord_of_pylons[i % 2 == 0 ? 1 : 2] *= -1;
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/disable()
+	spawns = 0
 	if(beams.len)
 		for(var/datum/beam/B in beams)
 			B.origin.icon_state = "pylon"
@@ -256,7 +257,7 @@
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
 
-	var/type = pick(90;/mob/living/simple_animal/construct/harvester,\
+	var/type = pick(200; /mob/living/simple_animal/construct/harvester,\
 					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
 					40; /mob/living/simple_animal/construct/proteon,\
@@ -276,6 +277,8 @@
 
 	while(candidates.len || spawns != 0)
 		var/mob/slave = pick_n_take(candidates)
+		if(!slave) // I dont know why or how it can be null, but it can be null
+			continue
 		var/type = pick(
 				200;/mob/living/simple_animal/construct/harvester,\
 				50; /mob/living/simple_animal/construct/wraith,\
@@ -283,8 +286,11 @@
 				40; /mob/living/simple_animal/construct/proteon,\
 				70; /mob/living/simple_animal/construct/builder,\
 				1;  /mob/living/simple_animal/construct/behemoth)
-		create_shell(slave, type)
+		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
 		spawns -= 1
+
+	if(spawns == 0)
+		disable()
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/create_shell(mob/slave, type)
 	var/turf/T = get_turf(src)

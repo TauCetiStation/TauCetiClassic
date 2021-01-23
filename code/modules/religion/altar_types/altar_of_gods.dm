@@ -38,6 +38,8 @@
 	AddComponent(/datum/component/clickplace)
 	init_turfs_around()
 
+	poi_list += src
+
 /obj/structure/altar_of_gods/Destroy()
 	mobs_around = null
 	turfs_around = null
@@ -106,7 +108,7 @@
 
 // This proc is used to sacrifice all items on altar. Returns TRUE if at least something was sacrificed.
 /obj/structure/altar_of_gods/proc/sacrifice(mob/user)
-	if(!religion || chosen_aspect || choosing_sects)
+	if(!religion || !religion.aspects.len)
 		to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 		return FALSE
 

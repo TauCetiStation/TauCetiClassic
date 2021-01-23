@@ -29,8 +29,8 @@
 	if(!can_action(user))
 		return
 
-	action(user)
 	fizzle(user)
+	action(user)
 	holder_reaction(user)
 	if(!religion.reusable_rune)
 		qdel(holder)
@@ -82,21 +82,22 @@
 		destination = get_turf(pick(A.contents))
 	teleporting(destination	, user)
 
+/datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/living/user)
+	if(istype(target, /turf/space))
+		return
+	var/obj/effect/rune/R = new(target, religion)
+	R.power = new /datum/rune/cult/teleport/teleport_from_heaven(R, get_turf(holder))
+	R.power.religion = religion
+	R.icon = get_uristrune_cult(TRUE, R.power.words)
+
 /datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/living/user, list/companions)
 	if(user && !(locate(/obj/effect/rune) in target)) // user can gibbed
-		var/obj/effect/rune/R = new(target, religion)
-		R.power = new /datum/rune/cult/teleport/teleport_from_heaven(R, get_turf(holder))
-		R.power.religion = religion
-		R.icon = get_uristrune_cult(TRUE, R.power.words)
-
-		//var/damage = round(((world.time * 0.1)**1/2) * 0.5) // 42 damage if round goes 2 hours ir 72000 ticks
-		//user.take_overall_damage(damage, 0, "warp")
-
+		create_from_heaven(target, user)
 		var/datum/religion/cult/C = religion
 		if(companions)
 			for(var/mob/living/L in companions)
-				L.take_overall_damage(damage, 0, "warp")
 				C.create_anomalys(TRUE)
+				create_from_heaven(get_step(target, global.alldirs), user)
 			C.create_anomalys(TRUE) // with user
 		else
 			C.create_anomalys(TRUE)
@@ -132,7 +133,7 @@
 		return FALSE // Without instant teleport
 	var/list/tp_runes = get_tp_runes()
 	if(!tp_runes.len)
-		to_chat(user, "<span calss='warning'>Рун телепорта с id - </span><span class='[religion.style_text]'>[id]</span><span calss='warning'>не обнаружено</span>")
+		to_chat(user, "<span calss='warning'>Рун телепорта с id - </span><span class='[religion.style_text]'>[id]</span> <span calss='warning'>не обнаружено</span>")
 		return FALSE
 	if(tp_runes.len >= 5)
 		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")
@@ -171,21 +172,17 @@
 	words = list("join", "hell", "technology")
 	var/per_obj_cd = 1 SECONDS
 	var/static/already_use = FALSE
-	var/static/first_area_captured = FALSE
 	var/obj/structure/cult/statue/capture/statue
 
 /datum/rune/cult/capture_area/Destroy()
 	already_use = FALSE
-	QDEL_NULL(statue)
+	if(!QDELETED(statue))
+		qdel(statue)
 	return ..()
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
 	var/area/area = get_area(holder)
-	if(already_use)
-		to_chat(user, "<span class='warning'>Вы уже захватываете одну зону.</span>")
-		return FALSE
-
-	if(is_centcom_level(user.z))
+	if(is_centcom_level(user.z) || already_use || istype(area, /turf/space))
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
 		return FALSE
 
@@ -193,22 +190,19 @@
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
 		return FALSE
 
-	if(first_area_captured)
-		var/area/user_area = get_area(user)
-		if(istype(religion, area.religion?.type) || !istype(religion, user_area.religion?.type))
-			to_chat(user, "<span class='warning'>Вы должны находится в уже захваченной зоне, а руна в зоне, которую вы хотите захватить.</span>")
-			return FALSE
-
 	return TRUE
 
 /datum/rune/cult/capture_area/action(mob/living/carbon/user)
+	var/area/area = get_area(holder)
+	var/area/user_area = get_area(user)
+	if(!istype(religion, area.religion?.type) && istype(religion, user_area.religion?.type))
+		per_obj_cd = 0.5 SECONDS
+
 	already_use = TRUE
-	var/area/A = get_area(holder)
 	var/datum/announcement/station/cult/capture_area/announce = new
-	announce.play(A)
+	announce.play(area)
 	statue = new(get_turf(holder), holder)
-	if(religion.religify_area(A.type, CALLBACK(src, .proc/capture_iteration)))
-		first_area_captured = TRUE
+	religion.religify_area(area.type, CALLBACK(src, .proc/capture_iteration))
 	already_use = FALSE
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)

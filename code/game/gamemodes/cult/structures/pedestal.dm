@@ -33,6 +33,25 @@
 		my_rite.reset_rite()
 	return ..()
 
+/obj/structure/pedestal/examine(mob/user, distance)
+	. = ..()
+	if(!my_rite || !lying_illusions.len)
+		return
+
+	var/can_i_see = FALSE
+	if(isobserver(user))
+		can_i_see = TRUE
+	else if(isliving(user))
+		var/mob/living/L = user
+		if(L.mind && L.mind.holy_role)
+			can_i_see = TRUE
+
+	if(!can_i_see)
+		return
+
+	var/obj/effect/overlay/item_illusion/E = pick(lying_illusions) // one pedestal = one type of items
+	to_chat(user, "<span class='notice'>Вам всего нужно положить [lying_illusions.len] - [bicon(E)][initial(E.my_fake_type.name)].</span>")
+
 /obj/structure/pedestal/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
 		return

@@ -41,13 +41,16 @@
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-	add_overlay("glow_[icon_state]")
+	var/image/glow = image(icon, null, "glow_[icon_state]", LIGHTING_LAYER + 1)
+	glow.plane = LIGHTING_PLANE + 1
+	add_overlay(glow)
 
 /mob/living/simple_animal/construct/death()
 	..()
-	new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm (src.loc)
+	new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(src.loc)
 	visible_message("<span class='red'>[src] collapses in a shattered heap.</span>")
-	ghostize(bancheck = TRUE)
+	if(key || ckey)
+		ghostize(bancheck = TRUE)
 	qdel(src)
 
 /mob/living/simple_animal/construct/examine(mob/user)
@@ -70,6 +73,11 @@
 		return
 	return ..()
 
+/mob/living/simple_animal/construct/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
+	..()
+	if(key || ckey)
+		death(src)
+
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"
@@ -81,7 +89,7 @@
 	health = 250
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
-	melee_damage = 30
+	melee_damage = 20
 	attacktext = "smash"
 	speed = 3
 	environment_smash = 2
@@ -187,11 +195,14 @@
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch4.ogg')
 	resize = 1.2
+	construct_spells = list(
+		/obj/effect/proc_holder/spell/targeted/communicate,
+		)
 
 /mob/living/simple_animal/construct/behemoth/atom_init()
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
-	AddComponent(/datum/component/forcefield, "strong blood aura", 1000, 20 SECONDS, 10 SECONDS, R, TRUE, TRUE)
+	AddComponent(/datum/component/forcefield, "strong blood aura", 1000, 30 SECONDS, 10 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 
@@ -236,8 +247,8 @@
 	desc = "A weaker construct meant to scour ruins for objects of Nar'Sie's affection. Those barbed claws are no joke."
 	icon_state = "proteon"
 	icon_living = "proteon"
-	maxHealth = 35
-	health = 35
+	maxHealth = 30
+	health = 30
 	melee_damage = 35
 	speed = -2
 	response_harm = "pinch"

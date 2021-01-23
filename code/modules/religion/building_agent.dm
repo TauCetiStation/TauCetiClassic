@@ -34,10 +34,12 @@
 
 // Used in tome
 /datum/building_agent/structure/cult
+	// deconstruct its adding a favor, not removing it
 
 /datum/building_agent/structure/cult/wall
 	name = "Стена"
 	building_type = /turf/simulated/wall/cult
+	deconstruct_favor_cost = 10
 
 /datum/building_agent/structure/cult/floor
 	name = "Пол"
@@ -54,10 +56,13 @@
 /datum/building_agent/structure/cult/pedestal
 	name = "Пьедестал"
 	building_type = /obj/structure/pedestal/cult
+	deconstruct_favor_cost = 50
 
 /datum/building_agent/structure/cult/pylon
 	name = "Пилон"
 	building_type = /obj/structure/cult/pylon
+	favor_cost = 100
+	deconstruct_favor_cost = 50
 
 /datum/building_agent/structure/cult/door
 	name = "Дверь"
