@@ -72,4 +72,13 @@
 	icon_state = "donut_classic"
 
 /obj/random/foods/donuts/item_to_spawn()
-	return pick(subtypesof(/obj/item/weapon/reagent_containers/food/snacks/donut) - /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly)
+	return pick(
+		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/classic,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/syndie,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/choco,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/banana,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/berry,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia,
+	)
