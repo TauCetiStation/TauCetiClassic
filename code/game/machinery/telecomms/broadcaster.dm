@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
 	The broadcaster sends processed messages to all radio devices in the game. They
 	do not have to be headsets; intercoms and station-bounced radios suffice.
@@ -22,7 +20,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	machinetype = 5
 	heatgen = 0
 	delay = 7
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
 /obj/machinery/telecomms/broadcaster/atom_init()
 	. = ..()

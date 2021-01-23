@@ -25708,17 +25708,15 @@
 	},
 /area/station/security/forensic_office)
 "hhE" = (
-/obj/machinery/computer/security/engineering{
-	dir = 8;
-	name = "Drone Monitoring Cameras";
-	network = list("Engineering")
-	},
 /obj/machinery/camera{
 	c_tag = "Drone Fabrication";
 	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/computer/security/engineering/drone{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
