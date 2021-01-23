@@ -1,7 +1,7 @@
 /obj/structure/cult/tech_table
 	name = "scientific altar"
 	desc = "A bloodstained altar dedicated to Nar-Sie."
-	icon_state = "talismanaltar"
+	icon_state = "techaltar"
 	light_color = "#2f0e0e"
 	light_power = 2
 	light_range = 3
