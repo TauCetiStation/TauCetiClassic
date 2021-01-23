@@ -62,8 +62,8 @@
 		if(!M.client)
 			continue
 		if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-			var/tracker = "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> "
-			to_chat(M, tracker + rendered)
+			var/tracker = FOLLOW_LINK(M, src)
+			to_chat(M, "[tracker] [rendered]")
 
 	var/list/listening = hearers(1, src)
 	listening -= src
