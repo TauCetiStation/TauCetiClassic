@@ -86,11 +86,8 @@
 	H.UpdateDamageIcon(BP)
 
 	if(istype(BP, /obj/item/organ/external/head))
-		var/obj/item/organ/external/head/B = BP
-		if (B.brainmob && B.brainmob.mind)
-			B.brainmob.mind.transfer_to(H)
-			H.dna = B.brainmob.dna
-			QDEL_NULL(B.brainmob)
+		H.force_remote_viewing = FALSE
+		H.reset_view()
 
 	H.visible_message("<span class='notice'>[usr] attached [BP.name] to [M]</span>")
 
@@ -119,6 +116,10 @@
 /obj/item/organ/external/head/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
+
+/obj/item/organ/external/head/skeleton/transfer_identity()
+	owner.force_remote_viewing = TRUE
+	owner.reset_view(src)
 
 /obj/item/organ/external/groin/skeleton
 	name = "skeleton groin"

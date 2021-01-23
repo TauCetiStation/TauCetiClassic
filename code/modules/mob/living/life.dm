@@ -92,7 +92,7 @@
 			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
-			if(!client.adminobs)
+			if(!client.adminobs && !force_remote_viewing)
 				reset_view(null)
 
 /mob/living/proc/update_sight()
