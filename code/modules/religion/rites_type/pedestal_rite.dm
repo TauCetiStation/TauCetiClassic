@@ -95,6 +95,9 @@
 		P.create_illusions(rules[rules_indx], rules[rules[rules_indx]])
 		rules_indx += 1
 
+	if(istype(religion, /datum/religion/cult)) // AOG its only /structure/altar_of_gods
+		AOG.icon_state = "cultaltar-blood"
+
 /datum/religion_rites/pedestals/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
 	var/obj/structure/pedestal/cult/P = involved_pedestals[current_stage]
 	P.create_holy_outline("#c50404")
@@ -127,6 +130,9 @@
 /datum/religion_rites/pedestals/end(mob/living/user, obj/AOG)
 	if(invoke_msg)
 		user.say(invoke_msg)
+
+	if(istype(religion, /datum/religion/cult)) // AOG its only /structure/altar_of_gods
+		AOG.icon_state = "cultaltar"
 
 /datum/religion_rites/pedestals/proc/init_pedestals(obj/AOG)
 	pedestals = list()

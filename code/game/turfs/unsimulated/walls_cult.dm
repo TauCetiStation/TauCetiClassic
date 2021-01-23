@@ -13,12 +13,11 @@
 
 /turf/unsimulated/floor/cult
 	name = "engraved floor"
-	plane = FLOOR_PLANE
 	icon_state = "cult"
 
 /turf/unsimulated/floor/cult/lava
 	name = "lava"
-	icon_state = "lava"
+	icon_state = "cultlava"
 	light_color = "#9c660e"
 	light_power = 2
 	light_range = 3

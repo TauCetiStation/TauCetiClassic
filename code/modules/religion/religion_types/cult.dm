@@ -13,7 +13,7 @@
 	)
 
 	altar_info_by_name = list(
-		"Cult of Blood" = "satanaltar"
+		"Cult of Blood" = "cultaltar"
 	)
 
 	carpet_type_by_name = list(

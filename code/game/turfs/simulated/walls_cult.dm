@@ -18,7 +18,7 @@
 
 /turf/simulated/floor/engine/cult/lava
 	name = "lava"
-	icon_state = "lava"
+	icon_state = "cultlava"
 	light_color = "#9c660e"
 	light_power = 2
 	light_range = 3
