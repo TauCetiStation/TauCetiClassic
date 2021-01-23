@@ -57,10 +57,6 @@
 
 	add_overlay(icon('icons/obj/storage.dmi', "donutbox_front"))
 
-/obj/item/weapon/storage/fancy/donut_box/atom_init()
-	. = ..()
-	update_icon()
-
 /obj/item/weapon/storage/fancy/donut_box/traitor
 	startswith = list(
 		/obj/item/weapon/reagent_containers/food/snacks/donut/syndie = 1,
