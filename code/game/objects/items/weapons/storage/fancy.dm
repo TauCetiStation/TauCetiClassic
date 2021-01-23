@@ -59,7 +59,7 @@
 /obj/item/weapon/storage/fancy/donut_box/atom_init()
 	. = ..()
 	for (var/i in 1 to storage_slots)
-		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
+		new /obj/random/foods/donuts(src)
 	update_icon()
 
 /*

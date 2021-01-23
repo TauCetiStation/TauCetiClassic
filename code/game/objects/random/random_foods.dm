@@ -64,3 +64,12 @@
 						prob(2);/obj/random/foods/drink_can,\
 						prob(16);/obj/random/foods/food_trash\
 					)
+
+/obj/random/foods/donuts
+	name = "Random Donut"
+	desc = "This is a random donut for donut box."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "donut_classic"
+
+/obj/random/foods/donuts/item_to_spawn()
+	return pick(subtypesof(/obj/item/weapon/reagent_containers/food/snacks/donut) - /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly)
