@@ -335,6 +335,7 @@ h1.alert, h2.alert		{color: #000000;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
 .deadsay				{color: #5c00e6;}
+.ghostalert				{color: #6600ff; font-style: italic; font-weight: bold;}
 .newscaster				{color: #800000;}
 
 .binarysay    			{color: #20c20e; background-color: #414141; display: block;}

@@ -116,10 +116,23 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	return ..()
 
 /mob/dead/observer/Topic(href, href_list)
+	if(usr != src)
+		return
+
 	if(href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
-		if(target)
+		if(istype(target) && (target != src))
 			ManualFollow(target)
+			return
+
+	if(href_list["x"] && href_list["y"] && href_list["z"])
+		var/tx = text2num(href_list["x"])
+		var/ty = text2num(href_list["y"])
+		var/tz = text2num(href_list["z"])
+		var/turf/target = locate(tx, ty, tz)
+		if(istype(target))
+			forceMove(target)
+			return
 
 	if(href_list["ghostplayerobservejump"])
 		var/atom/movable/target = locate(href_list["ghostplayerobservejump"])

@@ -11,10 +11,10 @@
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
 
-/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
+/datum/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message]</span>")
+			to_chat(O, "<span class='ghostalert'>[FOLLOW_LINK(O, src)] [message]</span>")
 			if(ghost_sound)
 				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
@@ -41,6 +41,9 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("Нар-си восстал в [A.name]. По всей станции скоро появятся его порталы, нажмите на него, чтобы получить свою оболочку.")
+	INVOKE_ASYNC(src, .proc/begin_the_end)
+
+/obj/singularity/narsie/large/proc/begin_the_end()
 	narsie_spawn_animation()
 	invisibility = 60
 
