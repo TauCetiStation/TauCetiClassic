@@ -89,8 +89,8 @@
 		R.power.religion = religion
 		R.icon = get_uristrune_cult(TRUE, R.power.words)
 
-		var/damage = round(((world.time * 0.1)**1/2) * 0.5) // 42 damage if round goes 2 hours ir 72000 ticks
-		user.take_overall_damage(damage, 0, "warp")
+		//var/damage = round(((world.time * 0.1)**1/2) * 0.5) // 42 damage if round goes 2 hours ir 72000 ticks
+		//user.take_overall_damage(damage, 0, "warp")
 
 		var/datum/religion/cult/C = religion
 		if(companions)

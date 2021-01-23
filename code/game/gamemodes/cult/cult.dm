@@ -13,7 +13,7 @@
 	required_players_bundles = 0
 	// REMEMBER IT!!!!
 	required_enemies = 0
-	recommended_enemies = 1
+	recommended_enemies = 3
 
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudcultist"
