@@ -26,46 +26,60 @@
 
 /datum/recipe/microwave/donut
 	reagents = list("sugar" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
+	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
-
-/datum/recipe/microwave/donut/New()
-	. = ..()
-	items += /obj/item/weapon/reagent_containers/food/snacks/doughslice
 
 /datum/recipe/microwave/donut/classic
 	reagents = list("sugar" = 5, "cream" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
+	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/classic
 
 /datum/recipe/microwave/donut/cherry
 	reagents = list("cherryjelly" = 5, "sugar" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
+	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly
 
 /datum/recipe/microwave/donut/slime
 	reagents = list("slimejelly" = 5, "sugar" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
+	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly
 
 /datum/recipe/microwave/donut/berry
 	reagents = list("berryjuice" = 5, "sugar" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
+	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/berry
 
 /datum/recipe/microwave/donut/banana
 	reagents = list("sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/banana
 
 /datum/recipe/microwave/donut/ambrosia
 	reagents = list("sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia
 
 /datum/recipe/microwave/donut/choco
 	reagents = list("sugar" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		/obj/item/weapon/reagent_containers/food/snacks/doughslice
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/choco
 
