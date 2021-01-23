@@ -5,7 +5,7 @@
 #define TOTAL_HUMAN		1
 #define TOTAL_ALIEN		2
 #define ALIEN_PERCENT	3
-#define WIN_PERCENT		190
+#define WIN_PERCENT		150
 
 /datum/game_mode
 
@@ -147,8 +147,7 @@
 
 	if(in_detail)
 		return aliens
-	else
-		return count
+	return count
 
 /datum/game_mode/infestation/declare_completion()
 	completion_text += "<h3>Итоги режима ксеноморфы:</h3>"
@@ -283,13 +282,13 @@
 	var/total_human = 0
 	for(var/mob/living/carbon/human/H in human_list)
 		var/turf/human_loc = get_turf(H)
-		if(!is_station_level(human_loc.z))
+		if(!human_loc || !is_station_level(human_loc.z))
 			continue
 		if(H.stat == DEAD)
 			continue
 		if(!H.mind || !H.client)
 			continue
-		total_human ++
+		total_human++
 	return total_human
 
 /datum/game_mode/infestation/proc/count_alien_percent()
@@ -309,8 +308,7 @@
 	var/data = count_alien_percent()
 	if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 		return TRUE
-	else
-		return ..()
+	return ..()
 
 #undef CHECK_PERIOD
 #undef TOTAL_HUMAN
