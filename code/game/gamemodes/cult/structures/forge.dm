@@ -8,7 +8,7 @@
 
 	var/datum/religion/religion
 
-	var/images_gen = FALSE
+	// Maybe move it to /datum/religion?
 	var/list/datum/building_agent/available_items = list()
 	var/static/list/items_image
 
@@ -21,21 +21,17 @@
 	QDEL_LIST_ASSOC(items_image)
 	return ..()
 
-/obj/structure/cult/forge/attackby(obj/item/W, mob/user, params)
-	if(!istype(W, /obj/item/weapon/storage/bible) || !user.mind.holy_role)
+/obj/structure/cult/forge/attack_hand(mob/living/user)
+	if(!user.mind.holy_role || !user.my_religion)
 		return
 
-	var/obj/item/weapon/storage/bible/B = W
-	religion = B.religion
+	if(!religion)
+		religion = user.my_religion
 
-	if(!images_gen)
+	if(!items_image)
 		to_chat(user, "<span class='notice'>The forge was set up.</span>")
 		gen_images()
-		images_gen = TRUE
 
-/obj/structure/cult/forge/attack_hand(mob/living/user)
-	if(!user.mind.holy_role)
-		return
 	create_def_items(user)
 
 /obj/structure/cult/forge/proc/gen_images()

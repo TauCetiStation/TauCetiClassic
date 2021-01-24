@@ -226,7 +226,7 @@
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
 	. = ..()
-	if(istype(A, /turf/simulated/wall/cult) && A != loc) //we can go through cult walls
+	if((istype(A, /turf/simulated/wall/cult) || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult))) && A != loc) //we can go through cult walls
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))

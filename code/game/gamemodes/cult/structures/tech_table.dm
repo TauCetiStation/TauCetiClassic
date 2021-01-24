@@ -46,6 +46,10 @@
 	if(!religion)
 		religion = user.my_religion
 
+	if(religion.aspects.len == 0)
+		to_chat(user, "<span class='warning'>Сначало выберите аспекты.</span>")
+		return
+
 	if(researching)
 		to_chat(user, "<span class='warning'>Осталось [round((end_research_time - world.time) * 0.1)] секунд до конца исследования.</span>")
 		return
@@ -152,8 +156,10 @@
 		new /obj/effect/temp_visual/cult/sparks(P.loc)
 		pylon_around += P
 		P.icon_state = "pylon_glow"
+		P.can_unwrench = FALSE
 	researching = TRUE
 	end_research_time = world.time + research_time - (pylon_around.len SECONDS)
+	can_unwrench = FALSE
 	addtimer(end_activity, research_time)
 
 /obj/structure/cult/tech_table/proc/end_activity()
@@ -161,5 +167,7 @@
 	for(var/obj/structure/cult/pylon/P in pylon_around)
 		pylon_around -= P
 		P.icon_state = "pylon"
+		P.can_unwrench = TRUE
 
 	current_research = "Ничего"
+	can_unwrench = TRUE

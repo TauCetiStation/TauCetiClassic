@@ -2,9 +2,10 @@
 	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
+	var/can_unwrench = TRUE
 
 /obj/structure/cult/attackby(obj/item/W, mob/user, params)
-	if(iswrench(W))
+	if(iswrench(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -123,13 +124,13 @@
 	return TRUE
 
 // Just trash
-/obj/effect/spacewhole
+/obj/structure/cult/spacewhole
 	name = "abyss in space"
 	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "space"
 
-/obj/effect/timewhole
+/obj/structure/cult/timewhole
 	name = "abyss in time"
 	desc = "You feel a billion different looks when you gaze into emptiness."
 	icon = 'icons/obj/cult.dmi'
@@ -141,7 +142,7 @@
 	light_power = 30
 	light_range = 3
 
-/obj/effect/orb
+/obj/structure/cult/orb
 	name = "orb"
 	desc = "Strange circle."
 	icon = 'icons/obj/cult.dmi'
