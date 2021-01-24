@@ -13,7 +13,6 @@
 	var/charging_cap_passive = 2500			// Passive Cap - Recharging internal capacitor when no cyborg is inside
 	var/icon_update_tick = 0				// Used to update icon only once every 10 ticks
 	var/construct_op = 0
-	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
 	var/locked = TRUE
 	var/open = TRUE
 	var/recharge_speed

@@ -257,6 +257,8 @@
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
+			if(camera && ("Robots" in camera.network))
+				camera.add_network("Security")
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
@@ -270,7 +272,7 @@
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && ("Robots" in camera.network))
-				camera.add_network("Engineering")
+				camera.add_network("Engineering Robots")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Custom"] = "custom_astra_t3"
