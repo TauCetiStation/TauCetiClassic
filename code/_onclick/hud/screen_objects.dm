@@ -763,6 +763,7 @@
 	if(!inv_item)
 		return
 	inv_item.remove_outline()
+
 /client/var/list/image/outlined_item = list()
 /obj/item/proc/apply_outline(color)
 	if(!usr.client.prefs.outline_enabled)
