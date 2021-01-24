@@ -246,6 +246,9 @@
 	if(!H)
 		to_chat(user, "<span class='warning'>На руне должен быть человек.</span>")
 		return FALSE
+	if(is_centcom_level(holder.z))
+		to_chat(user, "<span class='warning'>Вы уже в будущем.</span>")
+		return FALSE
 	return TRUE
 
 /datum/rune/cult/look_to_future/action(mob/living/carbon/user)
