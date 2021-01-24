@@ -156,6 +156,7 @@
 			else
 				stat("Здоровье Королевы: [queen.health]/[queen.maxHealth]")
 				stat("Локация Королевы: [queen.loc.loc.name]")
+				stat("Королева в сознании: [queen.stat ? "Нет":"Да"]")
 				stat(null) //for readability
 
 		var/hugger = 0
