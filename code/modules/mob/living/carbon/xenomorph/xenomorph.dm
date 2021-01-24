@@ -154,10 +154,8 @@
 			if(!queen)
 				stat("Королева: Нет")
 			else
-				stat("Статус Королевы:")
-				stat("В сознании: [queen.stat ? "Нет":"Да"]")
-				stat("Здоровье: [queen.health]/[queen.maxHealth]")
-				stat("Местоположение: [queen.loc.loc.name]")
+				stat("Здоровье Королевы: [queen.health]/[queen.maxHealth]")
+				stat("Локация Королевы: [queen.loc.loc.name]")
 				stat(null) //for readability
 
 		var/hugger = 0

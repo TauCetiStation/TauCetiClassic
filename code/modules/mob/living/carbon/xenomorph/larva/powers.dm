@@ -79,10 +79,12 @@
 				new_xeno = new /mob/living/carbon/xenomorph/humanoid/sentinel(loc)
 			if("Трутень")
 				new_xeno = new /mob/living/carbon/xenomorph/humanoid/drone(loc)
+		if(!new_xeno)
+			CRASH("new_xeno = null. Chosen caste: [alien_caste].")
 		if(mind)
 			mind.transfer_to(new_xeno)
 			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
-		qdel(src)
+			qdel(src)
 		return
 	else
 		to_chat(src, "<span class='warning'>Вы еще не выросли.</span>")

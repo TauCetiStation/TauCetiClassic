@@ -35,7 +35,7 @@
 	..()
 	stat(null)
 	if(statpanel("Status"))
-		if(istype(src.loc, /obj/item/alien_embryo))
+		if(istype(loc, /obj/item/alien_embryo))
 			var/obj/item/alien_embryo/E = loc
 			stat("Прогресс роста эмбриона: [E.growth_counter]/[FULL_EMBRYO_GROWTH]")
 		else
