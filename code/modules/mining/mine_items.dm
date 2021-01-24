@@ -114,7 +114,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
-	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
+	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/ui_interact(user)
@@ -501,7 +501,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	cell_type = /obj/item/weapon/stock_parts/cell/crap
 	var/recharge_time = 20
 	var/already_improved = FALSE
 
@@ -832,6 +832,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
+		if(O.flags & NODROP || !O.canremove)
+			return 0
 		return 1
 	return 0
 

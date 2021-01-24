@@ -6,7 +6,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, GOLEM_MASTER_HUD, BROKEN_HUD)
+	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
@@ -620,6 +620,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
 		return 0	//godmode
 	if(NO_SHOCK in src.mutations)
@@ -925,7 +926,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/helmet/space) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
+	if(istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
@@ -2047,7 +2048,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	last_massage = world.time
 
 	if(op_stage.ribcage != 2 && prob(5))
-		var/obj/item/organ/external/BP = Heart.parent_bodypart
+		var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
 		BP.fracture()
 		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 

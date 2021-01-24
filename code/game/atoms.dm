@@ -78,6 +78,8 @@
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE

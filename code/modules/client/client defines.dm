@@ -90,6 +90,8 @@
 	var/last_completed_asset_job = 0
 	var/list/topiclimiter
 
+	var/bwoink_sound = 'sound/effects/adminhelp.ogg'
+
 	/**
 	 * Assoc list with all the active maps - when a screen obj is added to
 	 * a map, it's put in here as well.

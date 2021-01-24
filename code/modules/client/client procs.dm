@@ -83,7 +83,6 @@ var/list/blacklisted_builds = list(
 	if( findtext(href,"<script",1,0) )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
-		//del(usr)
 		return
 
 	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
@@ -488,7 +487,7 @@ var/list/blacklisted_builds = list(
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			del(src)
+			qdel(src)
 			return TRUE
 
 		if (oldcid != computer_id) //IT CHANGED!!!
@@ -511,7 +510,7 @@ var/list/blacklisted_builds = list(
 
 			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
 
-			del(src)
+			qdel(src)
 			return TRUE
 		else
 			if (cidcheck_failedckeys[ckey])
@@ -541,7 +540,7 @@ var/list/blacklisted_builds = list(
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			del(src)
+			qdel(src)
 			return TRUE
 
 /client/proc/cid_check_reconnect()
