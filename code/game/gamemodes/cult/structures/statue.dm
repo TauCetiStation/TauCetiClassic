@@ -38,6 +38,10 @@
 	BP.take_damage(3, 0, 0, "stone")
 	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
 
+/obj/structure/cult/statue/attack_animal(mob/living/simple_animal/user)
+	. = ..()
+	health -= user.melee_damage
+
 /obj/structure/cult/statue/attack_paw(mob/living/user)
 	return attack_hand(user)
 

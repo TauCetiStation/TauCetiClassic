@@ -49,9 +49,7 @@
 	..()
 	new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(src.loc)
 	visible_message("<span class='red'>[src] collapses in a shattered heap.</span>")
-	if(key || ckey)
-		ghostize(bancheck = TRUE)
-	qdel(src)
+	ghostize(bancheck = TRUE)
 
 /mob/living/simple_animal/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"
@@ -74,8 +72,9 @@
 	return ..()
 
 /mob/living/simple_animal/construct/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
-	..()
-	death(src)
+	if(key || ckey)
+		qdel(src)
+	. = ..()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured

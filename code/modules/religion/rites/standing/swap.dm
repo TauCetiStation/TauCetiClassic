@@ -29,7 +29,7 @@
  * In the radius from the altar, changes the denomination of banknotes one higher
  */
 /datum/religion_rites/standing/swap/devaluation
-	name = "Девальвалия"
+	name = "Девальвация"
 	desc = "Меняет номинал банкнот на один выше."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Lord, hope and support...",

@@ -258,7 +258,7 @@
 	text += printlogo("cult", "cultists")
 	if(global.cult_religion.members.len)
 		for(var/mob/cultist in global.cult_religion.members)
-			if(cultist.mind)
+			if((cultist.mind && cultist.ckey) || (cultist.mind in global.cult_religion.mode.started_cultists))
 				text += printplayerwithicon(cultist.mind)
 
 	if(text)

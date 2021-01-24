@@ -239,6 +239,7 @@
 /datum/rune/cult/look_to_future
 	name = "Назад в Будущее"
 	words = list("see", "hell", "self")
+	var/static/image/cash = list()
 
 /datum/rune/cult/look_to_future/can_action(mob/living/carbon/user)
 	var/mob/living/carbon/human/H = locate() in holder.loc
@@ -253,15 +254,21 @@
 		if(istype(A, /turf/simulated/wall))
 			if(religion.wall_types)
 				var/atom/type = pick(religion.wall_types)
-				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
-				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-wall", I, H)
+				if(!cash[type])
+					var/image/I = image(initial(type.icon), A, initial(type.icon_state))
+					cash[type] = I
+
+				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-wall-[user.name]", cash[type], H)
 		else if(istype(A, /turf/simulated/floor))
 			if(religion.floor_types)
 				var/atom/type = pick(religion.floor_types)
-				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
-				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-floor", I, H)
+				if(!cash[type])
+					var/image/I = image(initial(type.icon), A, initial(type.icon_state))
+					cash[type] = I
+
+				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-floor-[user.name]", cash[type], H)
 		else if(religion.door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
-			H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-door", null, H, pick(religion.door_types), A)
+			H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-door-[user.name]", null, H, pick(religion.door_types), A)
 
 /datum/rune/cult/item_port
 	name = "Телепорт Предметов"
