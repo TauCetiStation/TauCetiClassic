@@ -1025,7 +1025,7 @@ var/global/list/items_blood_overlay_by_type = list()
 	remove_outline()
 
 /obj/item/proc/apply_outline(color)
-	if(!usr.client.prefs.outline_enabled)
+	if(anchored || !usr.client.prefs.outline_enabled)
 		return
 	if(!color)
 		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
