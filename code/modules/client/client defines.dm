@@ -90,4 +90,6 @@
 	var/last_completed_asset_job = 0
 	var/list/topiclimiter
 
+	var/bwoink_sound = 'sound/effects/adminhelp.ogg'
+
 	var/list/image/outlined_item = list()
