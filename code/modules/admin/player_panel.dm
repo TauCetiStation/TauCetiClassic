@@ -579,7 +579,7 @@
 		if(global.cult_religion?.members.len)
 			var/list/minds = list()
 			for(var/mob/M in global.cult_religion.members)
-				if(!ishuman(M) && !M.ckey)
+				if(!ishuman(M) && !M.client)
 					continue
 				minds += M.mind
 			dat += check_role_table("Cultists", minds, src, 0)

@@ -58,3 +58,4 @@
 
 	religion.adjust_favor(-choice.favor_cost)
 	religion.adjust_piety(-choice.piety_cost)
+	playsound(src, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)

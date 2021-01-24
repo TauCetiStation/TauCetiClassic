@@ -52,24 +52,3 @@
 	needed_aspects = list(
 		ASPECT_MYSTIC = 1,
 	)
-
-/datum/religion_rites/instant/spawn_item/cult/space_suits
-	name = "Призыв Космического Костюма"
-	desc = "Призывает броню, в которой можно свободно ходить в космосе."
-	ritual_length = (5 SECONDS)
-	invoke_msg = "Я прийду к тебе!!!"
-	favor_cost = 200
-	spawn_type = /obj/item/clothing/suit/space/cult
-
-	needed_aspects = list(
-		ASPECT_WEAPON = 2,
-		ASPECT_SCIENCE = 1
-	)
-
-/datum/religion_rites/instant/spawn_item/cult/space_suits/invoke_effect(mob/living/user, obj/AOG)
-	. = ..()
-	for(var/i in 1 to divine_power)
-		new /obj/item/clothing/head/helmet/space/cult(get_turf(AOG))
-	playsound(AOG, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
-
-	return TRUE

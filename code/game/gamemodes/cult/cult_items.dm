@@ -8,12 +8,6 @@
 	throwforce = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-/obj/item/weapon/melee/cultblade/atom_init(mapload, give_shield)
-	. = ..()
-	if(give_shield)
-		var/shield_type = /obj/item/weapon/shield/riot/mirror
-		AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, .proc/only_cultists), 5 MINUTE, 30 SECONDS, 2 MINUTE)
-
 /obj/item/weapon/melee/cultblade/proc/only_cultists(datum/source, mob/M)
 	if(iscultist(M))
 		return TRUE
@@ -30,8 +24,13 @@
 		BP.take_damage(rand(force / 2, force)) //random amount of damage between half of the blade's force and the full force of the blade.
 
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>An overwhelming feeling of dread comes over you as you pick up the cultist's sword. It would be wise to be rid of this blade quickly.</span>")
+	if(iscultist(user))
+		var/datum/religion/cult/C = user.my_religion
+		if(!GetComponent(/datum/component/self_effect) && C.blade_with_shield)
+			var/shield_type = /obj/item/weapon/shield/riot/mirror
+			AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, .proc/only_cultists), 5 MINUTE, 30 SECONDS, 2 MINUTE)
+	else
+		to_chat(user, "<span class='warning'>Ошеломляющее чувство страха охватывает тебя при поднятии красного меча, было бы разумно поскорее избавиться от него.</span>")
 		user.make_dizzy(120)
 
 /obj/item/weapon/shield/riot/mirror
@@ -43,8 +42,8 @@
 	slot_flags = FALSE
 	var/reflect_chance = 70
 
-/obj/item/weapon/shield/riot/mirror/IsReflect()
-	if(prob(reflect_chance))
+/obj/item/weapon/shield/riot/mirror/IsReflect(def_zone, hol_dir, hit_dir)
+	if(prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir))
 		return TRUE
 	return FALSE
 
@@ -102,7 +101,6 @@
 	armor = list(melee = 60, bullet = 25, laser = 25,energy = 15, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0
 
-
 /obj/item/clothing/suit/space/cult
 	name = "cult armour"
 	icon_state = "cult_armour"
@@ -114,3 +112,23 @@
 	armor = list(melee = 60, bullet = 25, laser = 25,energy = 15, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+/obj/item/weapon/storage/backpack/cultpack
+	name = "trophy rack"
+	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
+	icon_state = "cultpack"
+
+/obj/item/weapon/storage/backpack/cultpack/armor
+
+/obj/item/weapon/storage/backpack/cultpack/armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/culthood(src)
+	new /obj/item/clothing/suit/cultrobes(src)
+	new /obj/item/clothing/shoes/boots/cult(src)
+
+/obj/item/weapon/storage/backpack/cultpack/space_armor
+
+/obj/item/weapon/storage/backpack/cultpack/space_armor/atom_init()
+	. = ..()
+	new /obj/item/clothing/suit/space/cult(src)
+	new /obj/item/clothing/head/helmet/space/cult(src)

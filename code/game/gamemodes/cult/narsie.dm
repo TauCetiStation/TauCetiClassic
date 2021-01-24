@@ -118,7 +118,7 @@
 			if(prob(50))
 				T.ChangeTurf(pick(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava))
 			if(prob(5))
-				var/obj = pick(/obj/effect/spacewhole, /obj/effect/timewhole, /obj/effect/orb, /obj/structure/cult/shell)
+				var/obj = pick(/obj/structure/cult/spacewhole, /obj/structure/cult/timewhole, /obj/structure/cult/orb, /obj/structure/cult/shell)
 				new obj(T)
 			var/area/area = get_area(A)
 			area.religion = global.cult_religion

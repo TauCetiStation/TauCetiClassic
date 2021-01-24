@@ -65,7 +65,7 @@
 	// Created anomalies at the beginning and the number of possible anomalies after
 	var/max_spawned_anomalies = 12
 	// Types
-	var/list/strange_anomalies = list(/obj/effect/spacewhole, /obj/effect/timewhole, /obj/effect/orb, /obj/structure/cult/shell)
+	var/list/strange_anomalies = list(/obj/structure/cult/spacewhole, /obj/structure/cult/timewhole, /obj/structure/cult/orb, /obj/structure/cult/shell)
 	// Instead of storing links to turfs
 	var/list/coord_started_anomalies = list()
 

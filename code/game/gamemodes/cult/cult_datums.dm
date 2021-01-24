@@ -360,19 +360,35 @@
 	for(var/mob/living/L in acolytes)
 		L.take_overall_damage(damage_for_acolytes, 0)
 
-/datum/rune/cult/armor
-	name = "Призыв Обмундирования"
-	words = list("hell", "destroy", "other")
+/datum/rune/cult/charge_pylons
+	name = "Активация Пилонов"
+	words = list("destroy", "other", "technology")
+	var/time_to_stop = 1 MINUTE
 
-/datum/rune/cult/armor/action(mob/living/carbon/user)
-	user.visible_message("<span class='userdanger'>Из руны начинает гореть яркий красный свет, когда он рассвеивается, то на руне появляется броня и меч...</span>", \
-	"<span class='userdanger'>Вы ослеплены вспышкой красного света! После ослепления вы видите на месте руны набо доспехов с мечом.</span>")
-	var/datum/religion/cult/R = religion
-	new /obj/item/clothing/head/culthood(holder.loc)
-	new /obj/item/clothing/suit/cultrobes(holder.loc)
-	new /obj/item/clothing/shoes/boots/cult(holder.loc)
-	new /obj/item/weapon/storage/backpack/cultpack(holder.loc)
-	new /obj/item/weapon/melee/cultblade(holder.loc, R.blade_with_shield)
-	playsound(holder, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
+/datum/rune/cult/charge_pylons/can_action(mob/living/carbon/user)
+	var/has_pylon = FALSE
+	for(var/obj/structure/cult/pylon/P in oview(1, holder))
+		if(!P.anchored)
+			continue
+		has_pylon = TRUE
+		break
+	if(!has_pylon)
+		to_chat(user, "<span class='warning'>Вокруг руны нету пилонов.</span>")
+		return
+	return TRUE
+
+/datum/rune/cult/charge_pylons/action(mob/living/carbon/user)
+	var/list/all_pylons = list()
+	for(var/obj/structure/cult/pylon/P in oview(1, holder))
+		if(!P.anchored)
+			continue
+		var/mob/living/simple_animal/hostile/pylon/charged = new(P.loc)
+		charged.maxHealth = P.health
+		charged.health = P.health
+		P.forceMove(charged)
+		all_pylons += charged
+		addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate, all_pylons), time_to_stop)
+
+	holder.visible_message("<span class='warning'>[russian_plural(all_pylons.len, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")
 
 #undef BRAINSWAP_TIME

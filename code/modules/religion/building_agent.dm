@@ -130,9 +130,9 @@
 	name = "Бладбоил"
 	rune_type = /datum/rune/cult/bloodboil
 
-/datum/building_agent/rune/cult/armor
-	name = "Призыв Обмундирования"
-	rune_type = /datum/rune/cult/armor
+/datum/building_agent/rune/cult/charge_pylons
+	name = "Активация Пилонов"
+	rune_type = /datum/rune/cult/charge_pylons
 
 
 // For tech_table
@@ -186,5 +186,20 @@
 /datum/building_agent/tool/cult/tome
 	name = "Том"
 	building_type = /obj/item/weapon/storage/bible/tome
-	favor_cost = 200
-	piety_cost = 10
+	favor_cost = 100
+
+/datum/building_agent/tool/cult/armor
+	name = "Набор Брони"
+	building_type = /obj/item/weapon/storage/backpack/cultpack/armor
+	favor_cost = 300
+
+/datum/building_agent/tool/cult/blade
+	name = "Кровавая Месть"
+	building_type = /obj/item/weapon/melee/cultblade
+	favor_cost = 150
+
+/datum/building_agent/tool/cult/space_armor
+	name = "Набор Космической Брони"
+	building_type = /obj/item/weapon/storage/backpack/cultpack/space_armor
+	favor_cost = 500
+	piety_cost = 20

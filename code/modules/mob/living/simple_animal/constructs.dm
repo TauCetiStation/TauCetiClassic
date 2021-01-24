@@ -71,11 +71,6 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/construct/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
-	if(key || ckey)
-		qdel(src)
-	. = ..()
-
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"
@@ -226,12 +221,12 @@
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
 	. = ..()
-	if((istype(A, /turf/simulated/wall/cult) || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult))) && A != loc) //we can go through cult walls
+	if((istype(A, /turf/simulated/wall/cult) || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult)) && A != loc) //we can go through cult walls
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
 			stored_pulling.forceMove(loc)
-		forceMove(A)
+		forceMove(A.loc)
 		if(stored_pulling)
 			start_pulling(stored_pulling) //drag anything we're pulling through the wall with us by magic
 
@@ -254,3 +249,46 @@
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/targeted/communicate,
 		)
+
+/////////////////////////////////////Charged Pylon not construct/////////////////////////////////
+/mob/living/simple_animal/hostile/pylon
+	name = "charged pylon"
+	real_name = "charged pylon"
+	desc = "A floating crystal that hums with an unearthly energy."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "pylon_glow"
+	icon_living = "pylon"
+	ranged = TRUE
+	rapid = TRUE
+	projectiletype = /obj/item/projectile/energy/scatter
+	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
+	ranged_cooldown = 5
+	ranged_cooldown_cap = 0
+	maxHealth = 200
+	health = 200
+	melee_damage = 0
+	speed = 0
+	anchored = TRUE
+	stop_automated_movement = TRUE
+	canmove = FALSE
+	faction = "cult"
+
+/mob/living/simple_animal/hostile/pylon/atom_init()
+	. = ..()
+	friends = global.cult_religion?.members
+
+/mob/living/simple_animal/hostile/pylon/death(gibbed)
+	. = ..()
+	for(var/atom/A in contents)
+		qdel(A)
+	new /obj/item/stack/sheet/metal(loc)
+	qdel(src)
+
+/mob/living/simple_animal/hostile/pylon/proc/deactivate()
+	for(var/obj/structure/cult/pylon/P in contents)
+		P.health = health
+		P.forceMove(loc)
+	qdel(src)
+
+/mob/living/simple_animal/hostile/pylon/update_canmove()
+	return FALSE
