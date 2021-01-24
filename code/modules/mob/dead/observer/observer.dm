@@ -339,12 +339,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
-	set category = "Ghost"
 	set name = "Orbit" // "Haunt"
+	set category = "Ghost"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
+	var/list/mobs = getpois(FALSE, TRUE)
+	var/input = input("Please, select a object!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
 	if(!target)
 		return
@@ -397,7 +397,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
 
-		dest += getpois(mobs_only=1) //Fill list, prompt user with list
+		dest += getpois(mobs_only = TRUE) //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target

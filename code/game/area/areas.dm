@@ -92,7 +92,7 @@ var/list/ghostteleportlocs = list()
 	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name))
 			continue
-		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome))
+		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome) || istype(AR, /area/custom/cult))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
