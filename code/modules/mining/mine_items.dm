@@ -501,7 +501,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	cell_type = /obj/item/weapon/stock_parts/cell/crap
 	var/recharge_time = 16
 	var/overheat = FALSE
 	var/recharge_timerid = null
