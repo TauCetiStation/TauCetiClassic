@@ -75,8 +75,7 @@
 
 /mob/living/simple_animal/construct/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
 	..()
-	if(key || ckey)
-		death(src)
+	death(src)
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured

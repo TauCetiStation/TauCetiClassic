@@ -33,7 +33,7 @@
 
 /obj/structure/cult/statue/attack_hand(mob/living/carbon/human/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	visible_message("<span class='userdanger'>[user] kicks [src].</span>")
+	user.visible_message("<span class='userdanger'>[user] kicks [src] unsuccessfully.</span>", "<span class='userdanger'>You feel pain of hitting [src] hard with your fist.</span>")
 	var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 	BP.take_damage(3, 0, 0, "stone")
 	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
