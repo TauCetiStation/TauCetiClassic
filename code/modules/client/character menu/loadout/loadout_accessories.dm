@@ -35,7 +35,7 @@
 	path = /obj/item/clothing/head/headscarf
 
 /datum/gear/accessory/haircomb
-	display_name = "Purple comb"
+	display_name = "Black comb"
 	path = /obj/item/weapon/haircomb
 
 /datum/gear/accessory/lipstick

@@ -198,3 +198,24 @@
 	icon_state = "SS_Helmet"
 	item_state = "helmet"
 	item_color = "SS_Helmet"
+
+/obj/item/clothing/head/helmet/syndilight
+	name = "light helmet"
+	desc = "Light and far less armored than it's assault counterpart, this helmet is used by stealthy operators."
+	icon_state = "lighthelmet"
+	item_state = "lighthelmet"
+	armor = list(melee = 50, bullet = 60, laser = 45,energy = 50, bomb = 35, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault
+	name = "assault helmet"
+	desc = "Stylish black and red helmet with armored protective visor."
+	icon_state = "assaulthelmet_b"
+	item_state = "assaulthelmet_b"
+	armor = list(melee = 55, bullet = 60, laser = 50, energy = 70, bomb = 50, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault/alternate
+	icon_state = "assaulthelmet"
+	item_state = "assaulthelmet"
+
