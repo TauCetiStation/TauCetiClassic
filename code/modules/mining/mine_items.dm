@@ -34,7 +34,7 @@
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/cargo
+	new /obj/item/clothing/suit/hooded/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	#endif
@@ -114,7 +114,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
-	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
+	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/ui_interact(user)
@@ -1044,6 +1044,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
+		if(O.flags & NODROP || !O.canremove)
+			return 0
 		return 1
 	return 0
 

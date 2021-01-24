@@ -21,7 +21,7 @@
 	role_type = ROLE_MUTINEER
 	required_players = 7
 	recommended_enemies = 2
-	required_players_secret = 10
+	required_players_bundles = 10
 
 	votable = 0
 
@@ -29,6 +29,9 @@
 
 	uplink_welcome = "Mutineers Uplink Console:"
 	uplink_uses = 0
+
+	var/datum/announcement/centcomm/mutiny/reveal/announce_reveal = new
+	var/datum/announcement/centcomm/mutiny/noert/announce_ert = new
 
 /datum/game_mode/mutiny/New()
 	fluff = new(src)
@@ -39,7 +42,7 @@
 
 /datum/game_mode/mutiny/proc/reveal_directives()
 	spawn(rand(1 MINUTE, 3 MINUTES))
-		command_alert("Incoming emergency directive: Captain's office fax machine, [station_name()].","Emergency Transmission")
+		announce_reveal.play()
 		spawn(rand(3 MINUTES, 5 MINUTES))
 			send_pda_message()
 		spawn(rand(3 MINUTES, 5 MINUTES))
@@ -79,7 +82,7 @@
 					"classified security operations",
 					"science-defying raw elemental chaos"
 					)
-				command_alert("The presence of [pick(reasons)] in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time.","Emergency Transmission")
+				announce_ert.play(pick(reasons))
 
 // Returns an array in case we want to expand on this later.
 /datum/game_mode/mutiny/proc/get_head_loyalist_candidates()
@@ -144,11 +147,11 @@
 	var/slots = get_equipment_slots()
 	switch(faction)
 		if("loyalist")
-			if(captains_key) del(captains_key)
+			if(captains_key) qdel(captains_key)
 			captains_key = new(H)
 			H.equip_in_one_of_slots(captains_key, slots)
 		if("mutineer")
-			if(secondary_key) del(secondary_key)
+			if(secondary_key) qdel(secondary_key)
 			secondary_key = new(H)
 			H.equip_in_one_of_slots(secondary_key, slots)
 

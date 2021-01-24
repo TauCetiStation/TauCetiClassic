@@ -553,7 +553,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = 4.1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/resonance_damage = 30
 	var/creator = null
 
@@ -626,7 +626,7 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = "neutral"
 	var/emagged = 0
 	light_power = 2
@@ -869,6 +869,8 @@
 	var/loaded = 1
 
 /obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!loaded)
 		return
 	if(istype(target, /obj/item/clothing/suit/space))

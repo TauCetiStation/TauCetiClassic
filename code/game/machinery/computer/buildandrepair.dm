@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
@@ -111,7 +109,7 @@
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+	SSshuttle.announce_emer_called.play()
 
 	return ..()
 
@@ -364,17 +362,17 @@
 		if(check_access(I))
 			user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
 			switch(src.build_path)
-	
+
 				if(/obj/machinery/computer/rdconsole/core)
 					src.name = "Circuit Board (RD Console - Robotics)"
 					src.build_path = /obj/machinery/computer/rdconsole/robotics
 					to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
-	
+
 				if(/obj/machinery/computer/rdconsole/robotics)
 					src.name = "Circuit Board (RD Console - Mining)"
 					src.build_path = /obj/machinery/computer/rdconsole/mining
 					to_chat(user, "<span class='notice'>Access protocols set to mining.</span>")
-	
+
 				if(/obj/machinery/computer/rdconsole/mining)
 					src.name = "Circuit Board (RD Console)"
 					src.build_path = /obj/machinery/computer/rdconsole/core

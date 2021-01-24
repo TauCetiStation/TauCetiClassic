@@ -164,6 +164,8 @@
 
 	immunity_type = "rad"
 
+	var/datum/announcement/centcomm/anomaly/radstorm_passed/announcement = new
+
 /datum/weather/rad_storm/telegraph()
 	..()
 	status_alarm("alert")
@@ -190,7 +192,7 @@
 /datum/weather/rad_storm/end()
 	if(..())
 		return
-	command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert", "radpassed")
+	announcement.play()
 	if(timer_maint_revoke_id)
 		deltimer(timer_maint_revoke_id)
 		timer_maint_revoke_id = 0

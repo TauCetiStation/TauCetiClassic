@@ -60,7 +60,7 @@
 	var/rendered = "<span class='game deadsay linkify emojify'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[message]\"</span></span>"
 
 	for(var/mob/M in player_list)
-		var/tracker = "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> "
+		var/tracker = "[FOLLOW_LINK(M, src)] "
 		if(isnewplayer(M))
 			continue
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
@@ -93,8 +93,6 @@
 		if(isAI(src) && ispAI(other))
 			return 1
 		if(istype(other, src.type) || istype(src, other.type))
-			return 1
-		if(src.alien_talk_understand && other.alien_talk_understand)
 			return 1
 		return 0
 

@@ -388,7 +388,7 @@
 /obj/effect/essence_phantom
 	anchored = TRUE
 	invisibility = SEE_INVISIBLE_OBSERVER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/showed = FALSE
 	var/mob/living/parasite/essence/host
 	var/image/overlay

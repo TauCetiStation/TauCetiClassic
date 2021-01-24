@@ -151,6 +151,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/adminchangemap,
 	)
 var/list/admin_verbs_debug = list(
+	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
@@ -597,7 +598,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a spell to a mob."
 	var/list/spell_names = list()
 	for(var/v in spells)
-	//	"/obj/effect/proc_holder/spell/" 30 symbols ~Intercross21
+	//	"[/obj/effect/proc_holder/spell]/" 30 symbols ~Intercross21
 		spell_names.Add(copytext("[v]", 31, 0))
 	var/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_names
 	if(!S) return
@@ -613,7 +614,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a (tg-style) Disease to a mob."
 	var/list/disease_names = list()
 	for(var/v in diseases)
-	//	"/datum/disease/" 15 symbols ~Intercross
+	//	"[/datum/disease]/" 15 symbols ~Intercross
 		disease_names.Add(copytext("[v]", 16, 0))
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in disease_names
 	if(!D) return
