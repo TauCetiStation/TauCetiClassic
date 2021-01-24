@@ -63,6 +63,17 @@
 	pass_flags = PASSTABLE
 	health = 200
 
+/obj/structure/cult/pylon/Destroy()
+	new /obj/structure/cult/pylon_platform(loc)
+	new /obj/item/stack/sheet/metal(loc)
+	return ..()
+
+/obj/structure/cult/pylon_platform
+	name = "pylon platform"
+	desc = "Useless."
+	icon_state = "pylon_platform"
+	health = 50
+
 // For operations
 /obj/machinery/optable/torture_table
 	name = "torture table"

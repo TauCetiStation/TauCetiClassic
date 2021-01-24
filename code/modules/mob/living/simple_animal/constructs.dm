@@ -281,7 +281,6 @@
 	. = ..()
 	for(var/atom/A in contents)
 		qdel(A)
-	new /obj/item/stack/sheet/metal(loc)
 	qdel(src)
 
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
