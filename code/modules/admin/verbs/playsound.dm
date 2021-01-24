@@ -96,3 +96,29 @@ var/global/list/sounds_cache_local = list()
 		M.playsound_stop(CHANNEL_ADMIN)
 	log_admin("[key_name(src)] has stopped the global sound.")
 	message_admins("[key_name_admin(src)] has stopped the global sound.")
+
+/client/proc/set_bwoink_sound()
+	set category = "Fun"
+	set name = "Set Own Bwoink Sound"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/choice = alert("Category",,"Cache", "File", "Cancel")
+	var/sound/S
+
+	switch(choice)
+		if("Cache")
+			if(!length(sounds_cache_global))
+				to_chat(src, "<span class='notice'>Operation aborted. Reason: no cache.</span>")
+				return
+			S = input("Select a sound from the server to play") as null|anything in sounds_cache_global
+		if("File")
+			S = input("Select a sound from the local repository") as null|sound
+			sounds_cache_global |= S
+
+	if(!isfile(S))
+		to_chat(src, "<span class='notice'>Operation aborted. Reason: no input sound.</span>")
+		return
+	
+	bwoink_sound = S
