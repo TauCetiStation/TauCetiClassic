@@ -89,3 +89,5 @@
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
 	var/list/topiclimiter
+
+	var/list/image/outlined_item = list()

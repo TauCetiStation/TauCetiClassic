@@ -730,21 +730,6 @@
 	. = ..()
 	remove_stored_outline()
 
-/obj/item/MouseEntered()
-	SHOULD_CALL_PARENT(TRUE)
-	. = ..()
-	apply_outline()
-
-/obj/item/MouseExited()
-	SHOULD_CALL_PARENT(TRUE)
-	. = ..()
-	remove_outline()
-
-/obj/item/MouseDrop()
-	SHOULD_CALL_PARENT(TRUE)
-	. = ..()
-	remove_outline()
-
 /obj/screen/inventory/proc/add_stored_outline()
 	if(!slot_id || !usr.client.prefs.outline_enabled)
 		return
@@ -763,29 +748,6 @@
 	if(!inv_item)
 		return
 	inv_item.remove_outline()
-
-/client/var/list/image/outlined_item = list()
-/obj/item/proc/apply_outline(color)
-	if(!usr.client.prefs.outline_enabled)
-		return
-	if(!color)
-		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
-	if(usr.client.outlined_item[src])
-		return
-
-	var/image/IMG = image(icon, src, icon_state, layer = layer)
-	IMG.override = TRUE
-	IMG.overlays += overlays
-	IMG.appearance_flags |= KEEP_TOGETHER
-
-	IMG.filters += filter(type = "outline", size = 1, color = color)
-	usr.client.images += IMG
-	usr.client.outlined_item[src] = IMG
-
-
-/obj/item/proc/remove_outline()
-	usr.client.images -= usr.client.outlined_item[src]
-	usr.client.outlined_item[src] = null
 
 /obj/screen/inventory/craft
 	name = "crafting menu"

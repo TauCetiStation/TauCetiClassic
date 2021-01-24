@@ -1005,3 +1005,43 @@ var/global/list/items_blood_overlay_by_type = list()
 
 /obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	return
+
+/obj/item/MouseEntered()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	for(var/i in 1 to 10)
+	apply_outline()
+	remove_outline()
+	apply_outline()
+
+/obj/item/MouseExited()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	remove_outline()
+
+/obj/item/MouseDrop()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	remove_outline()
+
+/obj/item/proc/apply_outline(color)
+	if(!usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	var/image/IMG = image(icon, src, icon_state, layer = layer)
+	IMG.override = TRUE
+	IMG.overlays += overlays
+	IMG.appearance_flags |= KEEP_TOGETHER
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images += IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/obj/item/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item[src] = null
