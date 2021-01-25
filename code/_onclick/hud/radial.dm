@@ -89,6 +89,7 @@ var/global/list/radial_menus = list()
 	Reset()
 	hide()
 	QDEL_NULL(custom_check_callback)
+	elements = null
 	current_user = null
 	close_button = null
 	anchor = null
