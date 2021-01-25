@@ -20286,10 +20286,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
-"iPz" = (
-/obj/structure/cult/statue/jew,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "iQb" = (
 /obj/machinery/light{
 	dir = 1
@@ -21197,8 +21193,8 @@
 	},
 /area/centcom/living)
 "kGx" = (
-/obj/structure/cult/statue,
 /obj/effect/decal/cleanable/blood/drip,
+/obj/structure/cult/statue/camera,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "kHb" = (
@@ -22033,10 +22029,6 @@
 	icon_state = "green"
 	},
 /area/centcom/control)
-"mmL" = (
-/obj/structure/cult/statue/gargoyle,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "mnb" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -23904,6 +23896,10 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"rnl" = (
+/obj/structure/cult/statue/camera/jew,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "rvo" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/drip,
@@ -23928,7 +23924,7 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "scL" = (
-/obj/structure/cult/statue,
+/obj/structure/cult/statue/camera,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "sik" = (
@@ -24104,6 +24100,10 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"vaz" = (
+/obj/structure/cult/statue/camera/gargoyle,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "vaT" = (
 /obj/structure/closet/wardrobe/black,
 /turf/unsimulated/floor{
@@ -68026,7 +68026,7 @@ oVE
 hwm
 oxc
 lEG
-oEl
+kGx
 nZx
 xDh
 psO
@@ -68783,7 +68783,7 @@ rXx
 pII
 jiR
 peE
-iPz
+rnl
 qDT
 sQk
 sQk
@@ -69813,7 +69813,7 @@ mzq
 sQk
 sQk
 qDT
-mmL
+vaz
 qOG
 cZu
 mzq
@@ -70327,7 +70327,7 @@ sQk
 mzq
 sQk
 qDT
-mmL
+vaz
 lQs
 fXQ
 pGL

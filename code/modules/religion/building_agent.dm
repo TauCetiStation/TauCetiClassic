@@ -203,3 +203,9 @@
 	building_type = /obj/item/weapon/storage/backpack/cultpack/space_armor
 	favor_cost = 500
 	piety_cost = 20
+
+/datum/building_agent/tool/cult/stone
+	name = "Камень Прозрения"
+	building_type = /obj/item/device/cult_camera
+	favor_cost = 100
+	piety_cost = 50

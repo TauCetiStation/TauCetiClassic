@@ -129,11 +129,11 @@
 	if(!id && !id_inputing)
 		id_inputing = TRUE
 		id = input(user, "Введите Id руны телепорта", "Редактор Id рун", pick(all_words))
-		to_chat(user, "<span calss='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
+		to_chat(user, "<span class='notice'>Id телепорта - </span><span class='[religion.style_text]'>[id]</span>")
 		return FALSE // Without instant teleport
 	var/list/tp_runes = get_tp_runes()
 	if(!tp_runes.len)
-		to_chat(user, "<span calss='warning'>Рун телепорта с id - </span><span class='[religion.style_text]'>[id]</span> <span calss='warning'>не обнаружено</span>")
+		to_chat(user, "<span class='warning'>Рун телепорта с id - </span><span class='[religion.style_text]'>[id]</span> <span class='warning'>не обнаружено</span>")
 		return FALSE
 	if(tp_runes.len >= 5)
 		to_chat(user, "<span class='userdanger'>Вы чувствуете боль, так как руна исчезает в сдвиге реальности, вызванном большим напряжением в пространственно-временной ткани мира.</span>")

@@ -127,6 +127,7 @@
 	var/obj/item/weapon/paper/talisman/cult/T = new(H, global.cult_religion, rite)
 	T.disposable = TRUE
 	H.equip_to_slot_or_del(T, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/device/cult_camera(H), SLOT_IN_BACKPACK)
 
 	global.cult_religion.give_tome(H)
 

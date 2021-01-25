@@ -132,3 +132,93 @@
 	. = ..()
 	new /obj/item/clothing/suit/space/cult(src)
 	new /obj/item/clothing/head/helmet/space/cult(src)
+
+#define HEAVEN 0
+#define CAPTURE 1
+/obj/item/device/cult_camera
+	name = "stone"
+	desc = "The stone is made of a complex material, if you look closely, the surface structure is fractal."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "cultstone"
+	w_class = ITEM_SIZE_SMALL
+	var/toggle = FALSE
+	var/mode = HEAVEN
+	var/mob/living/carbon/human/current_user
+	var/obj/structure/cult/statue/camera/camera
+
+/obj/item/device/cult_camera/Destroy()
+	off()
+	return ..()
+
+/obj/item/device/cult_camera/verb/change_mode()
+	set name = "Change mode"
+	set category = "Object"
+	set src in usr
+
+	var/mob/user = usr
+	if(!user.my_religion || !user.mind.holy_role)
+		to_chat(current_user, "<span class='warning'>Вы не знаете как это сделать.</span>")
+		return
+	if(mode)
+		mode = HEAVEN
+		to_chat(user, "<span class='notice'>Выбраны обычные статую.</span>")
+	else
+		mode = CAPTURE
+		to_chat(user, "<span class='notice'>Выбраны статую захвата.</span>")
+
+/obj/item/device/cult_camera/proc/feel_pain()
+	to_chat(current_user, "<span class='userdanger'>После взрыва статую вы почувствовали её боль.</span>")
+	current_user.adjustBrainLoss(10)
+	current_user.take_overall_damage(10)
+	off()
+
+/obj/item/device/cult_camera/proc/off()
+	if(toggle)
+		current_user.reset_view()
+		current_user.force_remote_viewing = FALSE
+		camera.icon_state = initial(camera.icon_state)
+		toggle = !toggle
+		camera = null
+		current_user = null
+
+/obj/item/device/cult_camera/attack_self(mob/living/carbon/human/user)
+	. = ..()
+	if(!iscultist(user))
+		return
+
+	if(toggle)
+		off()
+		return
+
+	switch(mode)
+		if(HEAVEN)
+			if(!camera_statues_list.len)
+				to_chat(user, "<span class='warning'>Подходящих статуй не обнаружено.</span>")
+				return
+			camera = pick(camera_statues_list)
+
+		if(CAPTURE)
+			if(!capture_statues_list.len)
+				to_chat(user, "<span class='warning'>Подходящих статуй не обнаружено.</span>")
+				return
+			camera = pick(capture_statues_list)
+
+	current_user = user
+	if(camera.icon_state != "jew") // cant be glow
+		camera.icon_state = "[camera.icon_state]_glow"
+	current_user.force_remote_viewing = TRUE
+	current_user.reset_view(camera)
+	toggle = !toggle
+
+	RegisterSignal(camera, list(COMSIG_PARENT_QDELETED), .proc/feel_pain)
+
+/obj/item/device/cult_camera/dropped(mob/living/carbon/human/user)
+	. = ..()
+	off()
+
+/obj/item/device/cult_camera/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	off()
+
+#undef HEAVEN
+#undef CAPTURE

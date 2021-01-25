@@ -73,6 +73,7 @@
 	desc = "Useless."
 	icon_state = "pylon_platform"
 	health = 50
+	density = FALSE
 
 // For operations
 /obj/machinery/optable/torture_table
