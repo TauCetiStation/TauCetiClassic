@@ -114,15 +114,11 @@
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
-	health = 500
-	maxHealth = 500
+	health = 400
+	maxHealth = 400
 	faction = "mining"
-	projectiletype = /obj/item/projectile/beam/drone/mining
+	projectiletype = /obj/item/projectile/beam/xray
 
-
-
-/obj/item/projectile/beam/drone/mining
-	damage = 20
 
 ////////////////Goldgrub////////////////
 

@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
 	for(var/i in 1 to max_secret_rooms)
-		make_mining_asteroid_secret()
+		make_mining_asteroid_secret(3)
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))

@@ -7,7 +7,7 @@
 	var/atom/target
 	var/attack_same = 0
 	var/ranged = FALSE
-	var/amount_shoot = 1 // how many shots per attack?
+	var/amount_shoot = 1 // how many shots per range attack?
 	var/projectiletype
 	var/projectilesound
 	var/casingtype
@@ -234,7 +234,7 @@
 	walk(src, 0)
 	LoseAggro()
 
-//////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
+//////////////END HOSTILE MOB TARGETTIamount_shootNG AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/death()
 	LoseAggro()
@@ -243,17 +243,17 @@
 	walk(src, 0)
 
 /mob/living/simple_animal/hostile/proc/OpenFire(the_target)
-
 	var/target = the_target
 	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
 	var/tturf
 	for(var/i in 1 to amount_shoot)
-		tturf = get_turf(target) //need for refresh target location between shoots
+		tturf = get_turf(target) // need for refresh target location between shoots
 		Shoot(tturf, src.loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))
-		sleep(rand(3, 7))
+		sleep(3)
+
 	ranged_cooldown = ranged_cooldown_cap
 
 /mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
@@ -298,8 +298,6 @@
 				if(istype(A, /obj/item/tape))
 					var/obj/item/tape/Tp = A
 					Tp.breaktape(null, src, TRUE)
-	return
-
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	if(buckled)
