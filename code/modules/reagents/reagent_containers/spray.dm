@@ -216,8 +216,8 @@
 
 	var/colour_spray = input(usr, "Choose desired label colour") as null|anything in list("white", "red", "green", "blue", "black", "brown", "blond")
 	if(colour_spray)
-		name = "[colour_spray] [initial(name)]"
-		icon_state = "[initial(icon_state)][colour_spray]"
+		name = "[colour_spray] hair color spray"
+		icon_state = "hairspray[colour_spray]"
 	else
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
