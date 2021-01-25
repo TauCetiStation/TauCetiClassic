@@ -23,7 +23,7 @@
 			alien_talk(message)
 			return
 
-	if(stat != CONSCIOUS)
+	if(stat == CONSCIOUS)
 		playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
 		return ..(message, xeno_language, sanitize = 0)
 
