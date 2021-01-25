@@ -98,27 +98,28 @@
 
 /obj/screen/storage/MouseEntered(location, control, params)
 	. = ..()
-	if(master)
-		var/obj/item/weapon/storage/S = master
-		if(!S || !S.storage_ui)
-			return
-		// Taking something out of the storage screen (including clicking on item border overlay)
-		var/list/PM = params2list(params)
-		var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
-		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
-		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
+	if(!master)
+		return
+	var/obj/item/weapon/storage/S = master
+	if(!S || !S.storage_ui)
+		return
+	// Taking something out of the storage screen (including clicking on item border overlay)
+	var/list/PM = params2list(params)
+	var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+	var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
 
-		var/obj/item/I
-		for(var/i in 1 to S.storage_ui.click_border_start.len)
-			if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
-				I = S.contents[i]
-				if (I)
-					last_outlined = I
-					if(usr.incapacitated() || istype(usr.loc, /obj/mecha))
-						I.apply_outline(COLOR_RED_LIGHT)
-					else
-						I.apply_outline()
-					return
+	var/obj/item/I
+	for(var/i in 1 to S.storage_ui.click_border_start.len)
+		if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
+			I = S.contents[i]
+			if (I)
+				last_outlined = I
+				if(usr.incapacitated() || istype(usr.loc, /obj/mecha))
+					I.apply_outline(COLOR_RED_LIGHT)
+				else
+					I.apply_outline()
+				return
 
 /obj/screen/storage/MouseExited()
 	. = ..()
