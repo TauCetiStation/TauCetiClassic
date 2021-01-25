@@ -582,7 +582,7 @@
 				if(!ishuman(M) && !M.client)
 					continue
 				minds += M.mind
-			dat += check_role_table("Cultists", minds, src, 0)
+			dat += check_role_table("Cultists", minds, src, FALSE)
 
 		if(SSticker.mode.traitors.len)
 			dat += check_role_table("Traitors", SSticker.mode.traitors, src)
@@ -591,13 +591,21 @@
 		if(mutiny)
 			dat += mutiny.check_antagonists_ui(src)
 
+		if(alien_list.len)
+			var/list/datum/mind/alien_mind = list()
+			for(var/mob/living/carbon/xenomorph/A in alien_list)
+				if(A.stat == DEAD || !A.mind)
+					continue
+				alien_mind += A.mind
+			dat += check_role_table("Xenomorphs", alien_mind, src, FALSE)
+
 		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 400, 500)
 		popup.set_content(dat)
 		popup.open()
 	else
 		alert("The game hasn't started yet!")
 
-/proc/check_role_table(name, list/members, admins, show_objectives=1)
+/proc/check_role_table(name, list/members, admins, show_objectives = TRUE)
 	var/txt = "<br><table cellspacing=5><tr><td><b>[name]</b></td><td></td></tr>"
 	for(var/datum/mind/M in members)
 		txt += check_role_table_row(M.current, admins, show_objectives)
