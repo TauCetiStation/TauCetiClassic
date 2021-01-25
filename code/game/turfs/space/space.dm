@@ -9,7 +9,13 @@
 	plane = PLANE_SPACE
 //	heat_capacity = 700000 No.
 
+/**
+  * Space Initialize
+  *
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /turf/space/atom_init()
+	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
