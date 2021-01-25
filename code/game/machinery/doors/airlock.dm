@@ -1089,7 +1089,7 @@ var/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/do_afterclose()
-	for(var/atom/A in range(0, src) - src)
+	for(var/atom/A in orange(0, src))
 		A.airlock_crush_act()
 	..()
 
