@@ -22,6 +22,11 @@
 				growth_rate = 2	//we grow faster if we look at the queen
 				break
 
+		if(growth_rate == 1)
+			throw_alert("alien_queen", /obj/screen/alert/alien_queen)
+		else
+			clear_alert("alien_queen")
+
 		var/diff = max_grown - amount_grown
 		if(diff < growth_rate)
 			growth_rate = diff	//so as not to go beyond the maximum growth

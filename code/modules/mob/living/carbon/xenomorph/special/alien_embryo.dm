@@ -84,11 +84,15 @@ This is emryo growth procs
 			next_growth_limit += MAX_EMBRYO_GROWTH
 			add_infected_hud()
 //increase the growth rate if the host is buckled to the alien nest
-	var/growth_rate = 0
+	var/growth_rate = 1
 	if(affected_mob.buckled && istype(affected_mob.buckled, /obj/structure/stool/bed/nest))
 		growth_rate = 3
-	else
-		growth_rate = 1
+
+	if(baby && baby.client)
+		if(growth_rate == 1)
+			baby.throw_alert("alien_embryo", /obj/screen/alert/alien_embryo)
+		else
+			baby.clear_alert("alien_embryo")
 
 	var/diff = FULL_EMBRYO_GROWTH - growth_counter
 	if(diff < growth_rate)
