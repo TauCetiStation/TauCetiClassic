@@ -100,6 +100,7 @@
 /obj/item/radio/integrated/beepsky/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, control_freq)
+	secbot = null
 	return ..()
 
 /obj/item/radio/integrated/mule
