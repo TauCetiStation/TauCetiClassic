@@ -267,11 +267,11 @@ Doesn't work on other aliens/AI.*/
 			adjustToxLoss(-50)
 			neurotoxin_next_shot = world.time  + neurotoxin_delay
 		if(ALIEN_ACID)
-			if(!powerc(150))
+			if(!powerc(75))
 				return
 			BB = new /obj/item/projectile/acid_special(usr.loc)
-			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 4)
-			adjustToxLoss(-150)
+			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 2)
+			adjustToxLoss(-75)
 
 	visible_message("<span class='danger'>[src] spits [BB.name] at [target]!</span>")
 

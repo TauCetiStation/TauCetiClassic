@@ -1,4 +1,5 @@
 /mob/Logout()
+	set_typing_indicator(FALSE)
 	nanomanager.user_logout(src) // this is used to clean up (remove) this user's Nano UIs
 	SStgui.on_logout(src)
 	player_list -= src

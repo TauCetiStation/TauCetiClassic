@@ -1,13 +1,13 @@
 /mob/living/carbon/xenomorph/humanoid/sentinel
 	name = "alien sentinel"
 	caste = "s"
-	maxHealth = 150
-	health = 150
-	storedPlasma = 100
-	max_plasma = 250
+	maxHealth = 250
+	health = 250
+	storedPlasma = 150
+	max_plasma = 300
 	icon_state = "aliens_s"
 	plasma_rate = 10
-	heal_rate = 2
+	heal_rate = 3
 
 /mob/living/carbon/xenomorph/humanoid/sentinel/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
