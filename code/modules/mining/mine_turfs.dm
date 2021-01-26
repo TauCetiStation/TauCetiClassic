@@ -712,7 +712,7 @@
 
 	if (istype(W, /obj/item/weapon/shovel))
 		var/turf/T = user.loc
-		if (!istype(T, /turf))
+		if(!isturf(T))
 			return
 
 		if (dug)
