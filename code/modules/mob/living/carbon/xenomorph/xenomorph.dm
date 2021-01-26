@@ -261,6 +261,10 @@ Hit Procs
 	updatehealth()
 	return
 
+/mob/living/carbon/xenomorph/airlock_crush_act()
+	..()
+	emote("roar")
+
 /mob/living/carbon/xenomorph/emp_act(severity)
 	return
 
