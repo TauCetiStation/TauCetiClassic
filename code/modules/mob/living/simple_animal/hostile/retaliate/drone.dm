@@ -14,9 +14,9 @@
 	response_help = "pokes the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	speak = list("ТРЕ-ВОГА!",
+	speak = list("ТРЕВОГА!",
 	"Обнар-р-р-ружены вражде-б-б-бные существа.",
-	"У-становлены па-раметр-рр-ры потенциальной угрозы-ы.",
+	"Установлены па-раметр-рр-ры потенциальной уг-г-грозыы.",
 	"Перевод под-под-подсистемы в боевой режим. Тревога аль-ф-фа.",
 	"Поиск враж-ж-ждебных единиц...")
 	emote_see = list("beeps menacingly","whirrs threateningly","scans its immediate vicinity")
@@ -64,7 +64,7 @@
 
 	//repair a bit of damage
 	if(prob(1))
-		visible_message("<span class='warning'>[bicon(src)] [src] вздрагивает, когда некоторые из его поврежденных систем восстанавливаются.</span>")
+		visible_message("<span class='warning'>[bicon(src)] [src] начинает дергаться. Некоторые из его поврежденных систем восстанавливаются.</span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
@@ -110,7 +110,7 @@
 	speak_chance = initial(speak_chance)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/death()
-	src.visible_message("<span class='notice'>[bicon(src)] [src] разламывается, оставляя за собой некоторые свои комплектующие...</span>")
+	visible_message("<span class='notice'>[bicon(src)] [src] разваливается, оставляя после себя некоторые свои комплектующие...</span>")
 	..()
 	qdel(src)
 
@@ -141,7 +141,7 @@
 
 		if(spawnees & 2)
 			C = new(loc)
-			C.name = "Нейронный процессор Дрона"
+			C.name = "Нейронный интерфейс Дрона"
 			C.origin_tech = "biotech=[rand(4, 6)]"
 
 		if(spawnees & 4)
@@ -151,12 +151,12 @@
 
 		if(spawnees & 8)
 			C = new(loc)
-			C.name = "Блюспейс модуль Дрона"
+			C.name = "Контроллер щита Дрона"
 			C.origin_tech = "bluespace=[rand(4, 6)]"
 
 		if(spawnees & 16)
 			C = new(loc)
-			C.name = "Электрический конденсатор Дрона"
+			C.name = "Конденсатор Дрона"
 			C.origin_tech = "powerstorage=[rand(4, 6)]"
 
 		if(spawnees & 32)
@@ -166,7 +166,7 @@
 
 		if(spawnees & 64)
 			C = new(loc)
-			C.name = "Модуль авто-починки Дрона"
+			C.name = "Модуль авто-ремонта Дрона"
 			C.origin_tech = "engineering=[rand(4, 6)]"
 
 		if(spawnees & 128)
@@ -176,7 +176,7 @@
 
 		if(spawnees & 256)
 			C = new(loc)
-			C.name = "Модуль наводки Дрона"
+			C.name = "Модуль наведения Дрона"
 			C.origin_tech = "combat=[rand(4, 6)]"
 
 		if(spawnees & 512)

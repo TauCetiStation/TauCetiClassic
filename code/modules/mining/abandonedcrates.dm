@@ -86,7 +86,7 @@
 	playsound(src, 'sound/misc/mining_reward_0.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 	for(var/mob/living/carbon/C in viewers(src, 2))
 		C.flash_eyes()
-	new/mob/living/simple_animal/hostile/mimic/crate(src.loc)
+	new/mob/living/simple_animal/hostile/mimic/crate(loc)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
