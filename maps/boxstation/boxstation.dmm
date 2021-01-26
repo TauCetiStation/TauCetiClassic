@@ -28373,7 +28373,7 @@
 	},
 /area/station/gateway)
 "aYl" = (
-/obj/machinery/mineral/equipment_locker,
+/obj/machinery/mineral/equipment_vendor,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -102738,7 +102738,7 @@ auq
 bbq
 hho
 aWw
-aWw
+slc
 aWw
 haq
 qab
