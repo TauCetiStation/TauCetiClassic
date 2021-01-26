@@ -10,7 +10,6 @@
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
 	locked = TRUE
-	var/hacked = FALSE
 	var/attempts = 3
 	var/successful_numbers = 0
 	var/list/possible_numbers = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
@@ -99,15 +98,12 @@
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked && ismultitool(W))
-		if(user.is_busy())
-			return
 
-		if(do_after(user, 40, target = src))
+		if(W.use_tool(src, user, 25, volume = 50))
 			var/addition = code[1] + code[2] + code[3]
 			var/multiplication = code[1] * code[2] * code[3]
 			to_chat(user, "Сложение трех кодовых чисел равно: [addition]")
 			to_chat(user, "Перемножение трех кодовых чисел равно: [multiplication]")
-			user.SetNextMove(CLICK_CD_INTERACT)
 			return
 	return ..()
 

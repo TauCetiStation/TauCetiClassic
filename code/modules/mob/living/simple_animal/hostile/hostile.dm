@@ -276,7 +276,8 @@
 	A.original = get_turf(target)
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
-	A.process()
+	spawn(0)
+		A.process()
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)

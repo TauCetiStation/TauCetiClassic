@@ -126,62 +126,59 @@
 		var/obj/item/weapon/circuitboard/C
 
 		//spawn 1-4 boards of a random type
-		var/spawnees = 0
 		var/num_boards = rand(1, 4)
-		var/list/options = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512)
+		var/list/options = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
 		for(var/i = 0, i < num_boards, i++)
-			var/chosen = pick(options)
-			options.Remove(options.Find(chosen))
-			spawnees |= chosen
+			var/chosen = pick_n_take(options)
+			switch(chosen)
+				if(1)
+					C = new(loc)
+					C.name = "ЦПУ Дрона"
+					C.origin_tech = "programming=[rand(4, 6)]"
 
-		if(spawnees & 1)
-			C = new(loc)
-			C.name = "ЦПУ Дрона"
-			C.origin_tech = "programming=[rand(4, 6)]"
+				if(2)
+					C = new(loc)
+					C.name = "Нейронный интерфейс Дрона"
+					C.origin_tech = "biotech=[rand(4, 6)]"
 
-		if(spawnees & 2)
-			C = new(loc)
-			C.name = "Нейронный интерфейс Дрона"
-			C.origin_tech = "biotech=[rand(4, 6)]"
+				if(3)
+					C = new(loc)
+					C.name = "Магнитная плата Дрона"
+					C.origin_tech = "magnets=[rand(4, 6)]"
 
-		if(spawnees & 4)
-			C = new(loc)
-			C.name = "Магнитная плата Дрона"
-			C.origin_tech = "magnets=[rand(4, 6)]"
+				if(3)
+					C = new(loc)
+					C.name = "Контроллер щита Дрона"
+					C.origin_tech = "bluespace=[rand(4, 6)]"
 
-		if(spawnees & 8)
-			C = new(loc)
-			C.name = "Контроллер щита Дрона"
-			C.origin_tech = "bluespace=[rand(4, 6)]"
+				if(4)
+					C = new(loc)
+					C.name = "Конденсатор Дрона"
+					C.origin_tech = "powerstorage=[rand(4, 6)]"
 
-		if(spawnees & 16)
-			C = new(loc)
-			C.name = "Конденсатор Дрона"
-			C.origin_tech = "powerstorage=[rand(4, 6)]"
+				if(5)
+					C = new(loc)
+					C.name = "Плата корпуса Дрона"
+					C.origin_tech = "materials=[rand(4, 6)]"
 
-		if(spawnees & 32)
-			C = new(loc)
-			C.name = "Плата корпуса Дрона"
-			C.origin_tech = "materials=[rand(4, 6)]"
+				if(6)
+					C = new(loc)
+					C.name = "Модуль авто-ремонта Дрона"
+					C.origin_tech = "engineering=[rand(4, 6)]"
 
-		if(spawnees & 64)
-			C = new(loc)
-			C.name = "Модуль авто-ремонта Дрона"
-			C.origin_tech = "engineering=[rand(4, 6)]"
+				if(7)
+					C = new(loc)
+					C.name = "Фороновый микроконтроллер Дрона"
+					C.origin_tech = "phorontech=[rand(4, 6)]"
 
-		if(spawnees & 128)
-			C = new(loc)
-			C.name = "Фороновый микроконтроллер Дрона"
-			C.origin_tech = "phorontech=[rand(4, 6)]"
+				if(8)
+					C = new(loc)
+					C.name = "Модуль наведения Дрона"
+					C.origin_tech = "combat=[rand(4, 6)]"
 
-		if(spawnees & 256)
-			C = new(loc)
-			C.name = "Модуль наведения Дрона"
-			C.origin_tech = "combat=[rand(4, 6)]"
-
-		if(spawnees & 512)
-			C = new(loc)
-			C.name = "Модуль нестабильности Дрона"
-			C.origin_tech = "syndicate=[rand(4, 6)]"
+				if(9)
+					C = new(loc)
+					C.name = "Модуль нестабильности Дрона"
+					C.origin_tech = "syndicate=[rand(4, 6)]"
 
 	return ..()
