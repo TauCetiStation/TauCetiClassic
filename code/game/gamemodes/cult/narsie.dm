@@ -10,12 +10,14 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
+	plane = ABOVE_LIGHTING_LAYER
 
-/datum/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
+/atom/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/M in observer_list)
 		if(!M.client)
 			continue
-		to_chat(M, "<span class='ghostalert'>[FOLLOW_LINK(M, src)] [message]</span>")
+		var/turf/T = get_turf(src)
+		to_chat(M, "<span class='ghostalert'>[FOLLOW_OR_TURF_LINK(M, src, T)] [message]</span>")
 		if(ghost_sound)
 			M.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
@@ -41,12 +43,11 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Нар-си восстал в [A.name]. По всей станции скоро появятся его порталы, нажмите на него, чтобы получить свою оболочку.")
+		notify_ghosts("Нар-си восстал в [A.name]. По всей станции скоро появятся его порталы, нажмимая на них, вы можете стать каким-то конструктом.")
 	INVOKE_ASYNC(src, .proc/begin_the_end)
 
 /obj/singularity/narsie/large/proc/begin_the_end()
 	narsie_spawn_animation()
-	invisibility = 60
 
 	// Force event
 	var/datum/event_container/portals_event = new /datum/event_container/major
@@ -212,4 +213,3 @@
 	for(var/atom/A in orange(consume_range,src))
 		if(isturf(A) || istype(A, /atom/movable))
 			consume(A)
-	return

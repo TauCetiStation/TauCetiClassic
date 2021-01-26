@@ -25,10 +25,6 @@
 	if(!scum)
 		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
 
-/obj/item/weapon/nullrod/proc/reveal_runes(radius, turf/center)
-	for(var/obj/effect/rune/R in range(radius, center))
-		R.invisibility = SEE_INVISIBLE_LIVING
-
 /obj/item/weapon/nullrod/attack_self(mob/living/user)
 	if(user.mind && user.mind.holy_role && !tried_replacing)
 		if(!global.chaplain_religion)
@@ -99,11 +95,6 @@
 		else
 			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
-
-/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind?.holy_role == HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
-		reveal_runes(3, get_turf(target))
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"

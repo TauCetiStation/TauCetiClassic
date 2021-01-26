@@ -190,4 +190,4 @@
 /obj/structure/constructshell/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/S = O
-		S.transfer_soul("CONSTRUCT",src,user)
+		S.transfer_soul("CONSTRUCT", src, user)

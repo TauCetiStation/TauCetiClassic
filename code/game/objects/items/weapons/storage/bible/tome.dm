@@ -34,9 +34,8 @@
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
 	if((iscultist(user) || isobserver(user)) && religion)
-		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of. \
-		Most of these are useless, though.")
-		to_chat(user, "Current count of favor: [religion.favor] piety: <span class='piety'>[religion.piety]</span>")
+		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
+		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
 	else
 		..()
 

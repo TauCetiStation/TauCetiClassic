@@ -48,8 +48,6 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/update_icon()
-	if(istype(src, /obj/item/weapon/paper/talisman))
-		return
 	if(info)
 		icon_state = "paper_words"
 		return

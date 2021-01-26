@@ -134,5 +134,5 @@
 	message = "В зоне было обнаружено неизвестное блюспейс вторжение."
 /datum/announcement/station/cult/capture_area/play(area/A)
 	if(A)
-		message = "В [A] было обнаружено неизвестное блюспейс вторжение."
+		message = "В [A] было обнаружена блюспейс аномалия."
 	..()

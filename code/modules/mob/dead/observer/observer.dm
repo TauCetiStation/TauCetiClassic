@@ -614,7 +614,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		if (!ghostvision)
-			see_invisible = SEE_INVISIBLE_LIVING;
+			see_invisible = SEE_INVISIBLE_LIVING
 	updateghostimages()
 
 /proc/updateallghostimages()

@@ -15,6 +15,9 @@
 	religion = null
 	return ..()
 
+/obj/item/weapon/paper/talisman/update_icon()
+	return
+
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
 	if(!religion?.is_member(user))
 		user.examinate(src)

@@ -1,5 +1,3 @@
-#define BRAINSWAP_TIME 50
-
 /datum/rune
 	var/name
 	var/obj/effect/rune/holder
@@ -393,5 +391,3 @@
 		addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate, all_pylons), time_to_stop)
 
 	holder.visible_message("<span class='warning'>[russian_plural(all_pylons.len, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")
-
-#undef BRAINSWAP_TIME

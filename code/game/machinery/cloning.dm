@@ -212,7 +212,7 @@
 	if(mode)
 		mode.update_icon(H)
 
-	SSticker.mode.add_cultist(src.occupant.mind)
+	SSticker.mode.add_cultist(occupant.mind)
 
 	// -- End mode specific stuff
 

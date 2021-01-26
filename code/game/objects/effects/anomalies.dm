@@ -221,7 +221,12 @@
 		var/turf/F = get_turf(pick(L))
 		if(F && istype(F, /turf/simulated/floor))
 			for(var/obj in L)
-				if(!istype(obj, /turf))
+				if(istype(obj, /turf))
+					continue
+				if(ismob(obj)) // unlucky
+					var/mob/M = obj
+					M.gib()
+				else
 					qdel(obj)
 			var/obj/structure/pedestal/cult/P = new(F)
 			P.icon_state = "pylon_glow"
@@ -232,11 +237,12 @@
 		coord_of_pylons[i % 2 == 0 ? 1 : 2] *= -1;
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/disable()
-	spawns = 0
 	if(beams.len)
 		for(var/datum/beam/B in beams)
 			B.origin.icon_state = "pylon"
 			B.End()
+	if(!QDELING(src))
+		qdel(src)
 
 /obj/effect/anomaly/bluespace/cult_portal/anomalyEffect()
 	if(prob(20))
@@ -250,10 +256,7 @@
 	do_teleport(user, locate(user.x, user.y, user.z), 10)
 
 /obj/effect/anomaly/bluespace/cult_portal/attack_ghost(mob/dead/observer/user)
-	if(spawns == 0)
-		to_chat(user, "<span class='warning'>Нар-Си уже отправил всю свою армию.</span>")
-		return
-	else if(next_spawn > world.time)
+	if(next_spawn > world.time)
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
 

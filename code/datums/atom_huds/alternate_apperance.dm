@@ -44,7 +44,7 @@ var/global/list/active_alternate_appearances = list()
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	global.active_alternate_appearances -= src
-	qdel(alternate_obj)
+	QDEL_NULL(alternate_obj)
 	return ..()
 
 /datum/atom_hud/alternate_appearance/proc/update_alt_appearance(mob/M)
