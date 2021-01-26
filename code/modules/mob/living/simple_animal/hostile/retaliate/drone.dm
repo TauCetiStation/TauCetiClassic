@@ -141,7 +141,7 @@
 
 		if(spawnees & 2)
 			C = new(loc)
-			C.name = "Нейронный процессор Дрона"
+			C.name = "Нейронный интерфейс Дрона"
 			C.origin_tech = "biotech=[rand(4, 6)]"
 
 		if(spawnees & 4)
