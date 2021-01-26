@@ -118,3 +118,4 @@
 
 	var/list/topiclimiter
 
+	var/bwoink_sound = 'sound/effects/adminhelp.ogg'

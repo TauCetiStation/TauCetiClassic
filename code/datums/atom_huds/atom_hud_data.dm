@@ -51,12 +51,14 @@
 /datum/atom_hud/data/diagnostic
 	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_AIRLOCK_HUD)
 
-/datum/atom_hud/data/mine
+/datum/atom_hud/mine
 	hud_icons = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 
-/datum/atom_hud/broken
+/datum/atom_hud/data/broken
 	hud_icons = list(BROKEN_HUD)
 
+/datum/atom_hud/golem
+	hud_icons = list(GOLEM_MASTER_HUD)
 
 /* MED/SEC/DIAG HUD HOOKS */
 
@@ -350,3 +352,10 @@
 			return "health-85"
 		else
 			return "health-100"
+
+/*~~~~~~~~~~~~
+  Golem Master
+~~~~~~~~~~~~~*/
+/mob/living/proc/set_golem_hud()
+	var/image/holder = hud_list[GOLEM_MASTER_HUD]
+	holder.icon_state = "agolem_master"

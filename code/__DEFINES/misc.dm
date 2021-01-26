@@ -225,24 +225,22 @@
 
 ///Compile all the overlays for an atom from the cache lists
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
-		var/list/ad = A.add_overlays;\
-		var/list/rm = A.remove_overlays;\
-		if(length(rm)){\
-			A.overlays -= rm;\
-			rm.Cut();\
+	var/list/ad = A.add_overlays;\
+	var/list/rm = A.remove_overlays;\
+	if(length(rm)){\
+		A.overlays -= rm;\
+		rm.Cut();\
+	}\
+	if(length(ad)){\
+		A.overlays |= ad;\
+		ad.Cut();\
+	}\
+	for(var/I in A.alternate_appearances){\
+		var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
+		if(AA.transfer_overlays){\
+			AA.copy_overlays(A, TRUE);\
 		}\
-		if(length(ad)){\
-			A.overlays |= ad;\
-			ad.Cut();\
-		}\
-		for(var/I in A.alternate_appearances){\
-			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
-			if(AA.transfer_overlays){\
-				AA.copy_overlays(A, TRUE);\
-			}\
-		}\
-		A.flags_2 &= ~OVERLAY_QUEUED_2;\
-		if(isturf(A)){SSdemo.mark_turf(A);}\
-		if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
-	}
+	}\
+	A.flags_2 &= ~OVERLAY_QUEUED_2;\
+	if(isturf(A)){SSdemo.mark_turf(A);}\
+	if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\

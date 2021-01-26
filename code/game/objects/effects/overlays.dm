@@ -46,7 +46,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/overlay/wall_rot/atom_init()
-	..()
+	. = ..()
 	pixel_x += rand(-10, 10)
 	pixel_y += rand(-10, 10)
 

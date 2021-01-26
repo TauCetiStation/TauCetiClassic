@@ -4,12 +4,12 @@ Infestation:
 
 */
 
-
-
 /*
 	GAMEMODE
 */
-/datum/game_mode/var/list/datum/mind/xenomorphs = list()
+/datum/game_mode
+
+	var/list/datum/mind/xenomorphs = list()
 
 /datum/game_mode/infestation
 	name = "infestation"
@@ -29,10 +29,8 @@ Infestation:
 /datum/game_mode/infestation/can_start()
 	if(!..())
 		return FALSE
-	// Check for xeno_spawn landmark on map
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "xeno_spawn")
-			return TRUE
+	if(xeno_spawn.len > 0)
+		return TRUE
 	return FALSE
 
 /datum/game_mode/infestation/assign_outsider_antag_roles()
@@ -43,6 +41,8 @@ Infestation:
 
 	if(antag_candidates.len <= recommended_enemies)
 		xenomorphs_num = antag_candidates.len
+	else
+		xenomorphs_num = recommended_enemies
 
 	while(xenomorphs_num > 0)
 		var/datum/mind/new_xeno = pick(antag_candidates)
@@ -54,13 +54,6 @@ Infestation:
 		xeno.assigned_role = "MODE"
 		xeno.special_role = "Xenomorph"
 
-	return TRUE
-
-/datum/game_mode/infestation/pre_setup()
-	//Build a list of spawn points.
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "xeno_spawn")
-			xeno_spawn.Add(L)
 	return TRUE
 
 /datum/game_mode/infestation/post_setup()
@@ -79,28 +72,22 @@ Infestation:
 		for(var/obj/machinery/power/apc/apc in A.apc)
 			apc.overload_lighting()
 
-		var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(start_point))
-		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", FH)
-		var/mob/original = xeno.current
-
-		xeno.transfer_to(FH)
-
+		var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
+		xeno.transfer_to(L)
+		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", L)
 		greet_xeno(xeno)
-		qdel(original)
 	return ..()
 
 /datum/game_mode/infestation/proc/greet_xeno(datum/mind/xeno)
-	to_chat(xeno.current, "<span class='notice'><B>You are a Xenomorph.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Your current alien form is a facehugger.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Go find some monkeys, corgi or a sleeping human.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>To leap at someones face, you simply start with left mouse button click.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Then check your tail action button, there will be leap available.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>Leap isnt instant, keep that in mind. There is 1-2 seconds delay, before you can actually leap.</b></span>")
-	to_chat(xeno.current, "<span class='notice'><B>You target also must be near, after you prepares to leap.</b></span>")
-	to_chat(xeno.current, "<span class='notice'>Use :A to hivetalk.</span>")
+	to_chat(xeno.current, "<span class='notice'><B>Вы - ксеноморф. Ваша текущая форма - грудолом.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Сейчас вы очень слабы и вас легко убить.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Прячьтесь под предметами и передвигайтесь по вентиляции, что бы сохранить свою жизнь.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Ваша главная задача - вырасти во взрослого ксеноморфа. Прогресс роста указан во вкладке Status.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Когда прогресс роста дойдет до конца, вы сможете эволюционировать в оду из трех взрослых форм.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Договоритесь со своими сестрами, кто и в какую форму будет эволюционировать.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><B>Для общения внутри улья поставьте :ф перед сообщением.</b></span>")
+	to_chat(xeno.current, "<span class='notice'><b>Кто-то обязательно должен стать трутнем, это единственная форма, способная вырасти в королеву.</b></span>")
 	to_chat(xeno.current, "<span class='notice'>------------------</span>")
-	//xeno.current << "<span class='warning'>IF YOU HAVE NOT PLAYED A XENOMORPH, REVIEW THIS THREAD: http://tauceti.ru</span>"
-
 
 /*
 	GAME FINISH CHECKS

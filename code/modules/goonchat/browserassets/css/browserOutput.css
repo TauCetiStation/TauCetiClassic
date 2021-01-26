@@ -334,6 +334,7 @@ h1.alert, h2.alert	{color: #000000;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
 .deadsay				{color: #5c00e6;}
+.ghostalert				{color: #6600ff; font-style: italic; font-weight: bold;}
 .newscaster				{color: #800000;}
 
 .binarysay    			{color: #20c20e; background-color: #414141; display: block;}
@@ -367,7 +368,9 @@ h1.alert, h2.alert	{color: #000000;}
 .abductor_team3			{color: #6E4040;	font-style: italic;}
 .abductor_team4			{color: #800080;	font-style: italic;}
 .cult					{color: #800080;	font-weight: bold; font-style: italic;}
-.alien					{color: #543354;}
+.alien					{color: #6b286b;	font-style: italic;}
+.hive,	.hive_queen		{color: #420a81;	font-weight: bold;}
+.hive_queen				{font-size: medium;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 

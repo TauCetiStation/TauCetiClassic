@@ -7,7 +7,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	light_color = "#00b000"
-	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
+	circuit = /obj/item/weapon/circuitboard/atmoscontrol
 	req_access = list(access_ce)
 	allowed_checks = ALLOWED_CHECK_NONE
 
