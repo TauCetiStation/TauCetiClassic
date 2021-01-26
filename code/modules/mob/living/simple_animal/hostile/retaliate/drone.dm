@@ -166,7 +166,7 @@
 
 		if(spawnees & 64)
 			C = new(loc)
-			C.name = "Модуль авто-починки Дрона"
+			C.name = "Модуль авто-ремонта Дрона"
 			C.origin_tech = "engineering=[rand(4, 6)]"
 
 		if(spawnees & 128)
