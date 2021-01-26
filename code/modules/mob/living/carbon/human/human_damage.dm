@@ -312,7 +312,7 @@ This function restores all bodyparts.
 	for(var/BP_ZONE in species.has_bodypart)
 		if(!bodyparts_by_name[BP_ZONE])
 			var/path = species.has_bodypart[BP_ZONE]
-			new path(null, src)
+			new path(null)
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
