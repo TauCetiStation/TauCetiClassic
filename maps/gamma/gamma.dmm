@@ -20923,7 +20923,7 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "fHk" = (
-/obj/machinery/mineral/equipment_locker,
+/obj/machinery/mineral/equipment_vendor,
 /obj/machinery/light{
 	dir = 8
 	},
