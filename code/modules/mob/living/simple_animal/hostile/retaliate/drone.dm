@@ -156,7 +156,7 @@
 
 		if(spawnees & 16)
 			C = new(loc)
-			C.name = "Электрический конденсатор Дрона"
+			C.name = "Конденсатор Дрона"
 			C.origin_tech = "powerstorage=[rand(4, 6)]"
 
 		if(spawnees & 32)
