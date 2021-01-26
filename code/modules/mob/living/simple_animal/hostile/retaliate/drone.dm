@@ -176,7 +176,7 @@
 
 		if(spawnees & 256)
 			C = new(loc)
-			C.name = "Модуль наводки Дрона"
+			C.name = "Модуль наведения Дрона"
 			C.origin_tech = "combat=[rand(4, 6)]"
 
 		if(spawnees & 512)
