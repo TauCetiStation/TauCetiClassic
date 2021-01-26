@@ -1300,48 +1300,12 @@
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "adw" = (
-/obj/item/weapon/reagent_containers/blood/AMinus{
-	pixel_x = -7;
-	pixel_y = -3
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 8
 	},
-/obj/item/weapon/reagent_containers/blood/APlus{
-	pixel_x = -5;
-	pixel_y = 4
+/obj/machinery/light{
+	dir = 4
 	},
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus{
-	pixel_x = -5;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/stack/medical/ointment,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/weapon/reagent_containers/pill/dexalin,
-/obj/item/weapon/reagent_containers/pill/dexalin,
-/obj/item/weapon/reagent_containers/pill/dexalin,
-/obj/item/weapon/reagent_containers/pill/bicaridine,
-/obj/item/weapon/reagent_containers/pill/bicaridine,
-/obj/item/weapon/reagent_containers/pill/bicaridine,
-/obj/item/weapon/reagent_containers/pill/tramadol,
-/obj/item/weapon/reagent_containers/pill/tramadol,
-/obj/item/weapon/reagent_containers/pill/tramadol,
-/obj/item/weapon/reagent_containers/syringe/inaprovaline,
-/obj/item/weapon/reagent_containers/syringe/inaprovaline,
-/obj/item/weapon/reagent_containers/syringe/inaprovaline,
-/obj/structure/closet/medical_wall{
-	layer = 3.1;
-	pixel_x = 30
-	},
-/obj/structure/table,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "ady" = (
@@ -17817,7 +17781,7 @@
 /area/velocity)
 "cYR" = (
 /obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "cZb" = (
@@ -21339,8 +21303,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/stool/bed/roller,
-/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "kdb" = (
@@ -23162,7 +23124,7 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "onb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/machinery/sleeper{
 	dir = 8
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
@@ -23320,9 +23282,8 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "oKb" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "oLb" = (
@@ -23653,9 +23614,6 @@
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/machinery/vending/wallmed1{
 	layer = 3.1;
@@ -23700,7 +23658,7 @@
 	},
 /area/centcom/evac)
 "pNb" = (
-/obj/structure/stool/bed/chair/schair/wagon{
+/obj/machinery/sleeper{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
@@ -23872,6 +23830,52 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
+"skC" = (
+/obj/item/weapon/reagent_containers/blood/AMinus{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/blood/APlus{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/bruise_pack,
+/obj/item/weapon/reagent_containers/pill/dexalin,
+/obj/item/weapon/reagent_containers/pill/dexalin,
+/obj/item/weapon/reagent_containers/pill/dexalin,
+/obj/item/weapon/reagent_containers/pill/bicaridine,
+/obj/item/weapon/reagent_containers/pill/bicaridine,
+/obj/item/weapon/reagent_containers/pill/bicaridine,
+/obj/item/weapon/reagent_containers/pill/tramadol,
+/obj/item/weapon/reagent_containers/pill/tramadol,
+/obj/item/weapon/reagent_containers/pill/tramadol,
+/obj/item/weapon/reagent_containers/syringe/inaprovaline,
+/obj/item/weapon/reagent_containers/syringe/inaprovaline,
+/obj/item/weapon/reagent_containers/syringe/inaprovaline,
+/obj/structure/table,
+/obj/structure/closet/medical_wall{
+	layer = 3.1;
+	pixel_x = 2;
+	pixel_y = -30
+	},
+/turf/simulated/shuttle/floor/evac/medbay,
+/area/shuttle/escape/centcom)
 "sAN" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/projectile/automatic/l6_saw,
@@ -43289,12 +43293,12 @@ afz
 adW
 aRG
 oFb
-oKb
+oLb
 kcE
 cYR
 oKb
 pNb
-pNb
+skC
 pXb
 abz
 abO
