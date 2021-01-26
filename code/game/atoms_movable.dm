@@ -142,7 +142,6 @@
 
 /atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
 	if(destination)
-		usr.remove_outline()
 		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
 		var/atom/oldloc = loc
