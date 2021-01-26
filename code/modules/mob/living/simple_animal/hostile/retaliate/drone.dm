@@ -14,7 +14,7 @@
 	response_help = "pokes the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	speak = list("ТРЕ-ВОГА!",
+	speak = list("ТРЕВОГА!",
 	"Обнар-р-р-ружены вражде-б-б-бные существа.",
 	"У-становлены па-раметр-рр-ры потенциальной угрозы-ы.",
 	"Перевод под-под-подсистемы в боевой режим. Тревога аль-ф-фа.",
