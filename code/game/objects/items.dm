@@ -1045,4 +1045,4 @@ var/global/list/items_blood_overlay_by_type = list()
 
 /obj/item/proc/remove_outline()
 	usr.client.images -= usr.client.outlined_item[src]
-	usr.client.outlined_item[src] = null
+	usr.client.outlined_item -= src
