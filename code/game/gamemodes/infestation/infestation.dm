@@ -110,38 +110,38 @@
 			continue
 		if(isxenolarva(A))
 			if(A.stat == DEAD || !A.key)
-				aliens["L_dead"] ++
+				aliens["L_dead"]++
 			else
-				aliens["L_live"] ++
+				aliens["L_live"]++
 				aliens["L_key"] += " [A.key];"
 			continue
 		if(isxenohunter(A))
 			if(A.stat == DEAD || !A.key)
-				aliens["H_dead"] ++
+				aliens["H_dead"]++
 				continue
 			else
-				aliens["H_live"] ++
+				aliens["H_live"]++
 				aliens["H_key"] += " [A.key];"
 		if(isxenosentinel(A))
 			if(A.stat == DEAD || !A.key)
-				aliens["S_dead"] ++
+				aliens["S_dead"]++
 				continue
 			else
-				aliens["S_live"] ++
+				aliens["S_live"]++
 				aliens["S_key"] += " [A.key];"
 		if(isxenodrone(A))
 			if(A.stat == DEAD || !A.key)
-				aliens["D_dead"] ++
+				aliens["D_dead"]++
 				continue
 			else
-				aliens["D_live"] ++
+				aliens["D_live"]++
 				aliens["D_key"] += " [A.key];"
 		if(isxenoqueen(A))
 			if(A.stat == DEAD || !A.key)
-				aliens["Q_dead"] ++
+				aliens["Q_dead"]++
 				continue
 			else
-				aliens["Q_live"] ++
+				aliens["Q_live"]++
 				aliens["Q_key"] = "[A.key]"	//there can only be one queen
 		count ++
 
