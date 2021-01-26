@@ -90,7 +90,7 @@
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
-#define COSMIG_ATOM_CHANGE_DIR "change_dir"
+#define COMSIG_ATOM_CHANGE_DIR "change_dir"
 
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)

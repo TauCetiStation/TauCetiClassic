@@ -1,6 +1,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+	VAR_FINAL/dir = NORTH
 	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
@@ -300,7 +301,7 @@
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
-	SEND_SIGNAL(src, COSMIG_ATOM_CHANGE_DIR, dir)
+	SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 /atom/proc/relaymove()
 	return

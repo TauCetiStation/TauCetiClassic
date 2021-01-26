@@ -106,7 +106,7 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
-	SEND_SIGNAL(src, COSMIG_ATOM_CHANGE_DIR, dir)
+	SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 	for(var/atom/movable/AM in contents)
 		AM.locMoved(OldLoc, Dir)
 
