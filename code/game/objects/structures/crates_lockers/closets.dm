@@ -162,7 +162,6 @@
 				dump_contents()
 				qdel(src)
 
-
 /obj/structure/closet/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
