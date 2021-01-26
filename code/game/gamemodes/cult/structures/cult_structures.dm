@@ -37,6 +37,8 @@
 /obj/structure/cult/attack_animal(mob/living/simple_animal/user)
 	. = ..()
 	health -= user.melee_damage
+	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	healthcheck()
 
 /obj/structure/cult/attack_paw(mob/living/user)
 	return attack_hand(user)
