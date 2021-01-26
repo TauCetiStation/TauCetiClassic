@@ -91,5 +91,3 @@
 	var/list/topiclimiter
 
 	var/bwoink_sound = 'sound/effects/adminhelp.ogg'
-
-	var/list/image/outlined_item = list()

@@ -1023,6 +1023,8 @@ var/global/list/items_blood_overlay_by_type = list()
 	. = ..()
 	remove_outline()
 
+
+/client/var/list/image/outlined_item = list()
 /obj/item/proc/apply_outline(color)
 	if(anchored || !usr.client.prefs.outline_enabled)
 		return
