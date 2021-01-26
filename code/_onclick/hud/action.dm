@@ -30,6 +30,7 @@
 	if(owner)
 		Remove(owner)
 	target = null
+	QDEL_NULL(button)
 	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
@@ -46,7 +47,6 @@
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		del(button)
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null

@@ -266,6 +266,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/weapon_message = "Explosive Blast"
 	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 
+/mob/living/carbon/human/airlock_crush_act()
+	..()
+	emote("scream")
+
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
 	if(mind)
@@ -620,6 +624,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
 		return 0	//godmode
 	if(NO_SHOCK in src.mutations)
@@ -925,7 +930,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/helmet/space) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
+	if(istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses

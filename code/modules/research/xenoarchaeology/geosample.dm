@@ -22,7 +22,7 @@
 	w_class = ITEM_SIZE_TINY
 	sharp = 1
 	//item_state = "electronic"
-	var/source_rock = "/turf/simulated/mineral/"
+	var/source_rock = /turf/simulated/mineral
 	var/datum/geosample/geological_data
 
 /obj/item/weapon/rocksliver/atom_init()

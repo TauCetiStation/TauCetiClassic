@@ -168,6 +168,7 @@ function run_code_tests {
     run_test_fail "ensure code, nanoui templates, icons unique" "find code/ nano/templates/ icons/ -type f -exec md5sum {} + | sort | uniq -D -w 32 | grep -w 'code\|nano\|icons'"
     run_test_fail "ensure code, nanoui templates, icons has no empty files" "find code/ nano/templates/ icons/ -empty -type f | grep -w 'code\|nano\|icons'"
     run_test_fail "no invalid spans" "grep -REnr --include='*.dm' \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" code/"
+    run_test_fail "code contains path as string \"/path/\"" "grep -P '\"/(obj|datum|atom|turf|area|mob)/[^\[\s\(]*\"' code/**/*.dm"
     run_test_fail "changed files contains proc argument starting with 'var'" "grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
