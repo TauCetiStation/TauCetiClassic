@@ -49,12 +49,11 @@
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
-	if(client)
-		return
-
 	if(!.)
 		walk(src, 0)
-		return
+		return 0
+	if(client)
+		return 0
 
 	if(!stat)
 		switch(stance)
