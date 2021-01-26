@@ -51,11 +51,6 @@
 		. = ..()
 	return
 
-/obj/mecha/combat/phazon/airlock_crush_act()
-	if(phasing)
-		use_power(phasing_energy_drain)
-	else
-		..()
 
 /obj/mecha/combat/phazon/click_action(atom/target,mob/user)
 	if(phasing)
