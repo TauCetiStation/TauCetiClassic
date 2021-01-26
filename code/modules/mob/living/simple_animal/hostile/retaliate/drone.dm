@@ -151,7 +151,7 @@
 
 		if(spawnees & 8)
 			C = new(loc)
-			C.name = "Блюспейс модуль Дрона"
+			C.name = "Контроллер щита Дрона"
 			C.origin_tech = "bluespace=[rand(4, 6)]"
 
 		if(spawnees & 16)
