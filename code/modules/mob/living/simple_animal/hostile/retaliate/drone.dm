@@ -64,7 +64,7 @@
 
 	//repair a bit of damage
 	if(prob(1))
-		visible_message("<span class='warning'>[bicon(src)] [src] вздрагивает, когда некоторые из его поврежденных систем восстанавливаются.</span>")
+		visible_message("<span class='warning'>[bicon(src)] [src] начинает дергаться. Некоторые из его поврежденных систем восстанавливаются.</span>")
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
