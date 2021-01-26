@@ -1,7 +1,7 @@
 #define MIN_TUNNEL_LENGTH 20
 #define MAX_TUNNEL_LENGTH 60
 #define DISTANCE_BEETWEEN_MOSTERS 16
-#define CRATE_DROP_CHANCE 0.4 // 1 in 250
+#define CRATE_DROP_CHANCE 0.5 // 1 in 200
 
 /**********************Mineral deposits**************************/
 /turf/simulated/mineral

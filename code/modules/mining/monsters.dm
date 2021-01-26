@@ -463,8 +463,11 @@
 		M.adjustBruteLoss(strength * 0.4) // 40% pure damage of Goliath force
 	qdel(src)
 
-/obj/effect/goliath_tentacle/Crossed(mob/living/L)
-	Trip()
+/obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		Trip()
+		return
+	. = ..()
 
 /obj/item/asteroid/goliath_hide
 	name = "goliath hide plates"
