@@ -11,7 +11,7 @@
 	response_disarm = "shoves the"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5

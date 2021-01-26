@@ -19,7 +19,7 @@
 	universal_speak = 0	// No, just no.
 	var/stop_automated_movement = FALSE // Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = TRUE // Does the mob wander around when idle?
-	var/stop_automated_movement_when_pulled = 1 // When set to 1 this stops the animal from moving when someone is pulling it.
+	var/stop_automated_movement_when_pulled = TRUE // When set to 1 this stops the animal from moving when someone is pulling it.
 
 	// Interaction
 	var/response_help   = "tries to help"

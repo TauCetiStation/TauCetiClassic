@@ -14,8 +14,8 @@
 	var/move_to_delay = 4 //delay for the automated movement.
 	var/list/friends = list()
 	var/break_stuff_probability = 10
-	stop_automated_movement_when_pulled = 0
-	var/destroy_surroundings = 1
+	stop_automated_movement_when_pulled = FALSE
+	var/destroy_surroundings = TRUE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
 	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
 
@@ -234,7 +234,7 @@
 	walk(src, 0)
 	LoseAggro()
 
-//////////////END HOSTILE MOB TARGETTIamount_shootNG AND AGGRESSION////////////
+//////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
 /mob/living/simple_animal/hostile/death()
 	LoseAggro()
@@ -252,7 +252,7 @@
 		Shoot(tturf, src.loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))
-		sleep(3)
+		sleep(4)
 
 	ranged_cooldown = ranged_cooldown_cap
 

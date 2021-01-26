@@ -4,8 +4,8 @@
 #define DEATH_LOOT 0
 
 /obj/structure/closet/crate/secure/loot
-	name = "abandoned crate"
-	desc = "What could be inside?"
+	name = "заброшенный ящик"
+	desc = "Что же может оказаться внутри?"
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
@@ -19,10 +19,11 @@
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
-	for (var/i in 1 to 3)
+	for (var/i in 1 to 3) // generate code
 		code += pick_n_take(possible_numbers)
 
 /obj/structure/closet/crate/secure/loot/proc/GetReward(loot_quality)
+	visible_message("<span class='notice'>Издавая звук, ящик открывается!</span>")
 	locked = FALSE
 	cut_overlays()
 	add_overlay(greenlight)
@@ -50,7 +51,7 @@
 	playsound(src, 'sound/misc/mining_reward_2.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 	switch(rand(1, 4))
 		if(1)
-			new/obj/item/weapon/pickaxe/drill(src)
+			new/obj/item/weapon/pickaxe/drill/diamond_drill(src)
 			new/obj/item/device/taperecorder(src)
 			new/obj/item/clothing/suit/space(src)
 			new/obj/item/clothing/head/helmet/space(src)
@@ -98,13 +99,17 @@
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked && ismultitool(W))
+		var/addition = code[1] + code[2] + code[3]
+		var/multiplication = code[1] * code[2] * code[3]
+		to_chat(user, "Сложение трех кодовых чисел равно: [addition]")
+		to_chat(user, "Перемножение трех кодовых чисел равно: [multiplication]")
 		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
-		to_chat(user, "<span class='notice'>The crate unlocks!</span>")
+		visible_message("<span class='notice'>Таинственный ящик мерцает и со скрипом приоткрывается!</span>")
 		locked = FALSE
 		GetReward(rand(0, 4))
 		return TRUE

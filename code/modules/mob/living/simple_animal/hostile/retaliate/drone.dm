@@ -1,8 +1,8 @@
 
 //malfunctioning combat drones
 /mob/living/simple_animal/hostile/retaliate/malf_drone
-	name = "combat drone"
-	desc = "An automated combat drone armed with state of the art weaponry and shielding."
+	name = "боевой дрон"
+	desc = "Автоматический боевой дрон, вооруженный новейшим вооружением и обладающий высокой прочностью корпуса."
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "drone_100"
 	icon_living = "drone_100"
@@ -20,7 +20,6 @@
 	"Перевод под-под-подсистемы в боевой режим. Тревога аль-ф-фа.",
 	"Поиск враж-ж-ждебных единиц...")
 	emote_see = list("beeps menacingly","whirrs threateningly","scans its immediate vicinity")
-	stop_automated_movement_when_pulled = 0
 	health = 300
 	maxHealth = 300
 	retreat_distance = 3
@@ -28,13 +27,13 @@
 	speed = 8
 	projectiletype = /obj/item/projectile/beam/xray
 	projectilesound = 'sound/weapons/guns/fire_pulse.ogg'
-	destroy_surroundings = 0
-	var/datum/effect/effect/system/ion_trail_follow/ion_trail
+	destroy_surroundings = FALSE
+	faction = "malf_drone"
+	animalistic = FALSE
 
-	//0 - retaliate, only attack enemies that attack it
-	//1 - hostile, attack everything that comes near
-
-	var/disabled = 0
+	var/datum/effect/effect/system/ion_trail_follow/ion
+	var/disabled = FALSE
+	var/has_loot = TRUE
 
 	//Drones aren't affected by atmos.
 	min_oxy = 0
@@ -47,20 +46,15 @@
 	max_n2 = 0
 	minbodytemp = 0
 
-	var/has_loot = 1
-	faction = "malf_drone"
-
-	animalistic = FALSE
-
 /mob/living/simple_animal/hostile/retaliate/malf_drone/atom_init()
 	. = ..()
 	loot_list = list(
 	/obj/item/stack/sheet/plasteel = rand(1, 3),
 	/obj/item/stack/rods = rand(1, 3),
 	/obj/item/weapon/shard = rand(1, 3))
-	ion_trail = new
-	ion_trail.set_up(src)
-	ion_trail.start()
+	ion = new /datum/effect/effect/system/ion_trail_follow()
+	ion.set_up(src)
+	ion.start()
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -74,7 +68,7 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		health += maxHealth * 0.3
+		health += maxHealth * 0.25
 
 	//spark for no reason
 	if(prob(5))
@@ -83,7 +77,7 @@
 		s.start()
 
 	update_icon()
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/proc/update_icon()
 	if(disabled)
@@ -97,11 +91,11 @@
 
 //ion rifle!
 /mob/living/simple_animal/hostile/retaliate/malf_drone/emp_act(severity)
-	disable(rand(80, 240))
+	disable(rand(120, 240))
 	health -= rand(15, 30) * (severity + 1)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/proc/disable(time)
-	visible_message("<span class='notice'>[bicon(src)] [src] suddenly shuts down!</span>")
+	visible_message("<span class='notice'>[bicon(src)] [src] внезапно выключается!</span>")
 	disabled = TRUE
 	stat = UNCONSCIOUS
 	wander = FALSE
@@ -109,6 +103,7 @@
 	addtimer(CALLBACK(src, .proc/enable), time)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/proc/enable()
+	visible_message("<span class='notice'>[bicon(src)] [src] включается.</span>")
 	disabled = FALSE
 	stat = CONSCIOUS
 	wander = TRUE
@@ -120,18 +115,12 @@
 	qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/Destroy()
-	QDEL_NULL(ion_trail)
+	QDEL_NULL(ion)
 	//some random debris left behind
 	if(has_loot)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		var/obj/O
-
-		for(var/obj/item in loot_list)
-			O = new item.type(src.loc)
-			step_to(O, get_turf(pick(view(7, src))))
-
 
 		//also drop dummy circuit boards deconstructable for research (loot)
 		var/obj/item/weapon/circuitboard/C
@@ -140,58 +129,58 @@
 		var/spawnees = 0
 		var/num_boards = rand(1, 4)
 		var/list/options = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512)
-		for(var/i=0, i<num_boards, i++)
+		for(var/i = 0, i < num_boards, i++)
 			var/chosen = pick(options)
 			options.Remove(options.Find(chosen))
 			spawnees |= chosen
 
 		if(spawnees & 1)
-			C = new(src.loc)
-			C.name = "Центральный процессор Дрона"
+			C = new(loc)
+			C.name = "ЦПУ Дрона"
 			C.origin_tech = "programming=[rand(4, 6)]"
 
 		if(spawnees & 2)
-			C = new(src.loc)
-			C.name = "Нейронный интерфейс Дрона"
+			C = new(loc)
+			C.name = "Нейронный процессор Дрона"
 			C.origin_tech = "biotech=[rand(4, 6)]"
 
 		if(spawnees & 4)
-			C = new(src.loc)
-			C.name = "Процессор подвески Дрона"
+			C = new(loc)
+			C.name = "Магнитная плата Дрона"
 			C.origin_tech = "magnets=[rand(4, 6)]"
 
 		if(spawnees & 8)
-			C = new(src.loc)
+			C = new(loc)
 			C.name = "Блюспейс модуль Дрона"
 			C.origin_tech = "bluespace=[rand(4, 6)]"
 
 		if(spawnees & 16)
-			C = new(src.loc)
-			C.name = "Конденсатор мощности Дрона"
+			C = new(loc)
+			C.name = "Электрический конденсатор Дрона"
 			C.origin_tech = "powerstorage=[rand(4, 6)]"
 
 		if(spawnees & 32)
-			C = new(src.loc)
-			C.name = "Плата прочности корпуса Дрона"
+			C = new(loc)
+			C.name = "Плата корпуса Дрона"
 			C.origin_tech = "materials=[rand(4, 6)]"
 
 		if(spawnees & 64)
-			C = new(src.loc)
+			C = new(loc)
 			C.name = "Модуль авто-починки Дрона"
 			C.origin_tech = "engineering=[rand(4, 6)]"
 
 		if(spawnees & 128)
-			C = new(src.loc)
+			C = new(loc)
 			C.name = "Фороновый микроконтроллер Дрона"
 			C.origin_tech = "phorontech=[rand(4, 6)]"
 
 		if(spawnees & 256)
-			C = new(src.loc)
+			C = new(loc)
 			C.name = "Модуль наводки Дрона"
 			C.origin_tech = "combat=[rand(4, 6)]"
 
 		if(spawnees & 512)
-			C = new(src.loc)
+			C = new(loc)
 			C.name = "Модуль нестабильности Дрона"
 			C.origin_tech = "syndicate=[rand(4, 6)]"
 
