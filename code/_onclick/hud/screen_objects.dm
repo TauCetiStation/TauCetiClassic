@@ -65,6 +65,10 @@
 	name = "storage"
 	var/obj/item/last_outlined // for removing outline from item
 
+/obj/screen/storage/Destroy()
+	last_outlined = null
+	return ..()
+
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
 		return 1
