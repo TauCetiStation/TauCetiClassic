@@ -51,7 +51,6 @@
 		. = ..()
 	return
 
-
 /obj/mecha/combat/phazon/click_action(atom/target,mob/user)
 	if(phasing)
 		occupant_message("Unable to interact with objects while phasing")
