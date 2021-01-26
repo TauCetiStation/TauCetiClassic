@@ -1,10 +1,11 @@
 /mob/living/carbon/xenomorph/humanoid/drone
 	name = "alien drone"
 	caste = "d"
-	maxHealth = 120
-	health = 120
+	maxHealth = 180
+	health = 180
 	icon_state = "aliend_s"
 	plasma_rate = 15
+	heal_rate = 2
 
 /mob/living/carbon/xenomorph/humanoid/drone/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
