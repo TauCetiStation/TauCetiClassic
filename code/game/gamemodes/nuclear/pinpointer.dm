@@ -119,7 +119,7 @@
 							target = M
 							break
 				if("AI System")
-					target = locate(/mob/living/silicon/ai) in ai_list
+					target = input("Select AI to search for", "AI Select") as null|anything in ai_list
 					if(!target)
 						to_chat(usr, "Failed to locate active AI system!")
 						return
