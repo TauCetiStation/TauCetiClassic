@@ -1,5 +1,5 @@
 /*
-	This datum is used to neatly package all of chaplain's choices and etc
+	This datum is used to neatly package all of religion's choices and etc
 	and save them somewhere for future reference.
 */
 
@@ -76,12 +76,14 @@
 		Aspects and Rites related
 	*/
 	// The religion's 'Mana'
+	// Maybe I'll make this field protected and make getters and setters.
 	var/favor = 0
 	// The max amount of favor the religion can have
 	var/max_favor = 3000
 	// The amount of favor generated passively
 	var/passive_favor_gain = 0.0
 	// More important than favor, used in very expensive rites
+	// Maybe I'll make this field protected and make getters and setters.
 	var/piety = 0
 
 	// Chosen aspects, name = aspect
@@ -112,7 +114,7 @@
 	*/
 	// Contains an altar, wherever it is
 	var/list/obj/structure/altar_of_gods/altars = list()
-	// The whole composition of beings in religion
+	// The whole composition of beings in religion. Contains any mobs, even dead and without mind.
 	var/list/mob/members = list()
 	// Easy access
 	var/datum/religion_sect/sect
