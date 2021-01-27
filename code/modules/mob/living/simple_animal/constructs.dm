@@ -169,6 +169,10 @@
 		/obj/effect/proc_holder/spell/targeted/communicate,
 		)
 
+/mob/living/simple_animal/construct/builder/atom_init()
+	. = ..()
+	var/datum/atom_hud/data/medical/adv/hud = global.huds[DATA_HUD_MEDICAL_ADV]
+	hud.add_hud_to(src)
 
 /////////////////////////////Behemoth/////////////////////////
 /mob/living/simple_animal/construct/behemoth
