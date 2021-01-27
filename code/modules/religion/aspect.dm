@@ -244,7 +244,7 @@
 	if(M.stat || !M.client)
 		return
 
-	F.holy.religion.favor += weaken_duration * power * 0.5
+	F.holy.religion.adjust_favor(weaken_duration * power * 0.5)
 
 /datum/aspect/wacky/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
 	..()

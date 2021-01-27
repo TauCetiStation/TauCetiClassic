@@ -109,7 +109,7 @@
 /mob/living/simple_animal/shade/god/Life()
 	..()
 	if(my_religion)
-		my_religion.favor += 0.2
+		my_religion.adjust_favor(0.2)
 
 /mob/living/simple_animal/shade/god/proc/god_attack(atom/A)
 	if(ismob(A))

@@ -57,7 +57,7 @@
 	var/list/choices = list()
 	for(var/reaction_id in religion.faith_reactions)
 		var/datum/faith_reaction/FR = religion.faith_reactions[reaction_id]
-		var/desc = FR.get_description(target, user)
+		var/desc = FR.get_description(target, user, religion)
 		if(desc == "")
 			continue
 
@@ -72,7 +72,7 @@
 	var/chosen_id = choices[chosen_reaction]
 
 	var/datum/faith_reaction/FR = religion.faith_reactions[chosen_id]
-	FR.react(target, user)
+	FR.react(target, user, religion)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/I, mob/user, params)
 	if(length(use_sound))
