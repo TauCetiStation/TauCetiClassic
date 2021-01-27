@@ -98,7 +98,7 @@
 
 	if(!species)
 		if(new_species)
-			set_species(new_species, null, TRUE)
+			set_species(new_species, FALSE, TRUE)
 		else
 			set_species()
 
@@ -1401,7 +1401,7 @@
 	else
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
 
-/mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = null)
+/mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
 
 	if(!new_species)
 		if(dna.species)
@@ -1434,7 +1434,7 @@
 		b_skin = 0
 
 	if(force_organs || !bodyparts.len)
-		species.create_organs(src, deleteOld = TRUE)
+		species.create_organs(src, TRUE)
 	else
 		apply_recolor()
 

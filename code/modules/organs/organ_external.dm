@@ -63,11 +63,6 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
-/obj/item/organ/external/atom_init(mapload, mob/living/carbon/human/H)
-	. = ..()
-	recolor()
-	controller = new controller_type(src)
-
 /obj/item/organ/external/Destroy()
 	if(parent)
 		parent.children -= src
@@ -100,6 +95,10 @@
 
 /obj/item/organ/external/set_owner(mob/living/carbon/human/H)
 	..()
+
+	recolor()
+	controller = new controller_type(src)
+
 	if(H)
 		species = owner.species
 		b_type = owner.dna.b_type
@@ -422,7 +421,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
-		new /obj/item/organ/external/stump(null, owner, src)
+		var/obj/item/organ/external/stump/S = new(null)
+		S.set_owner(owner, src)
+		S.insert_organ(owner)
 	owner.updatehealth()
 
 	if(!should_delete)
@@ -730,14 +731,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/b_grad
 	var/hair_painted
 
-/obj/item/organ/external/head/atom_init()
-	. = ..()
-	organ_head_list += src
-
 /obj/item/organ/external/head/Destroy()
 	organ_head_list -= src
 	QDEL_NULL(brainmob)
 	return ..()
+
+/obj/item/organ/external/head/set_owner()
+	..()
+	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
 	if(H.species.name == IPC || H.species.name == DIONA)
