@@ -204,12 +204,3 @@
 	sleep(11)
 	move_self = 1
 	icon = initial(icon)
-
-//Wizard narsie
-/obj/singularity/narsie/wizard
-	grav_pull = 0
-
-/obj/singularity/narsie/wizard/eat()
-	for(var/atom/A in orange(consume_range,src))
-		if(isturf(A) || istype(A, /atom/movable))
-			consume(A)
