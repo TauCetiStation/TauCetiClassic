@@ -117,6 +117,7 @@
 							continue
 						if(M.dna.unique_enzymes == DNAstring)
 							target = M
+							break
 				if("AI System")
 					target = locate(/mob/living/silicon/ai) in ai_list
 					if(!target)
