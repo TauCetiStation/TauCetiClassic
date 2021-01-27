@@ -17,6 +17,10 @@
 	size = 5.0
 	var/list/fields = list(  )
 
+/datum/data/record/Destroy()
+	fields = null
+	return ..()
+
 /datum/data/text
 	name = "text"
 	var/data = null
