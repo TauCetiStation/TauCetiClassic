@@ -351,7 +351,7 @@
 
 /obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
 	//basic set+Sy-Code
-	. = ..(R)
+	. = ..()
 
 	R.add_language("Sy-Code", TRUE)
 
