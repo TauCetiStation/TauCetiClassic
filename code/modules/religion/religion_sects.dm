@@ -157,7 +157,6 @@
 
 /datum/religion_sect/custom/cult
 	name = "Custom Cult"
-
 	convert_opener = "Chaos is power."
 
 	aspects_count = 5

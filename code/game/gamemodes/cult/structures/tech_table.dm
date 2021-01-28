@@ -29,7 +29,9 @@
 
 /obj/structure/cult/tech_table/examine(mob/user, distance)
 	..()
-	if(isliving(user))
+	if(!religion)
+		return
+	if(isliving(user)) // for ghosts
 		if(!user.mind?.holy_role || !religion || religion.aspects.len == 0)
 			return
 

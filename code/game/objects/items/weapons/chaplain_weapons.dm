@@ -227,7 +227,7 @@
 	for(var/aspect in summoner.my_religion.aspects)
 		var/datum/aspect/asp = summoner.my_religion.aspects[aspect]
 		if(asp.god_desc)
-			brainmob.mind.memory += "<BR><BR><B>Aspect [aspect]</B><BR>[asp.god_desc]"
+			brainmob.mind.memory += "<BR><BR><B>Aspect [aspect]</B>:<BR>[asp.god_desc]"
 
 	candidate.cancel_camera()
 	candidate.reset_view()

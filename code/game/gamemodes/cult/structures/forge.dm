@@ -21,6 +21,20 @@
 	QDEL_LIST_ASSOC(items_image)
 	return ..()
 
+/obj/structure/cult/forge/examine(mob/user, distance)
+	. = ..()
+	if(!religion)
+		return
+	if(isliving(user)) // for ghosts
+		if(!iscultist(user))
+			return
+
+	for(var/name in religion.aspects)
+		var/datum/aspect/asp = religion.aspects[name]
+		if(asp.god_desc)
+			to_chat(user, "<font color='[asp.color]'>[name]</font>:")
+			to_chat(user, "\t[asp.god_desc]")
+
 /obj/structure/cult/forge/attack_hand(mob/living/user)
 	if(!user.mind.holy_role || !user.my_religion)
 		return
