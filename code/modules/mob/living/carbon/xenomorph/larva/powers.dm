@@ -1,25 +1,3 @@
-
-/mob/living/carbon/xenomorph/larva/verb/hide()
-	set name = "Спрятаться"
-	set desc = "Позволяет прятаться под столами и другими предметами. Включается и отключается."
-	set category = "Alien"
-
-	if(incapacitated())
-		return
-
-	if (layer != TURF_LAYER+0.2)
-		layer = TURF_LAYER+0.2
-		to_chat(src, text("<span class='notice'>Сейчас вы прячетесь.</span>"))
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				to_chat(O, text("[] исчезает.", src))
-	else
-		layer = MOB_LAYER
-		to_chat(src, text("<span class='notice'>Вы больше не прячетесь.</span>"))
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				to_chat(O, text("[] появляется.", src))
-
 /mob/living/carbon/xenomorph/larva/verb/evolve()
 	set name = "Эволюция"
 	set desc = "Превратиться во взрослого ксеноморфа."

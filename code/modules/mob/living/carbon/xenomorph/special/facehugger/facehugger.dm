@@ -8,7 +8,7 @@
 	icon_state = "facehugger"
 	item_state = "facehugger"
 	density = 1
-	layer = ABOVE_WINDOW_LAYER
+	layer = MOB_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
 	body_parts_covered = FACE|EYES
 
@@ -333,6 +333,24 @@
 	visible_message("<span class='warning'>[src] curls up into a ball!</span>")
 
 	return
+
+/obj/item/clothing/mask/facehugger/verb/hide_fh()
+	set name = "Спрятать"
+	set src in oview(1)
+
+	if(usr.stat != CONSCIOUS)
+		return
+
+	if(!isxenoadult(usr))
+		to_chat(usr, "<span class='notice'>[src] не реагирует.</span>")
+		return
+
+	if (layer != TURF_LAYER+0.2)
+		layer = TURF_LAYER+0.2
+		visible_message("<span class='danger'>[src] исчезает.</span>")
+	else
+		layer = MOB_LAYER
+		visible_message("<span class='danger'>[src] появляется.</span>")
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME
