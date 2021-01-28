@@ -91,7 +91,7 @@
 
 //ion rifle!
 /mob/living/simple_animal/hostile/retaliate/malf_drone/emp_act(severity)
-	disable(rand(120, 240))
+	disable(rand(70, 140) * (severity + 1))
 	health -= rand(15, 30) * (severity + 1)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/proc/disable(time)
