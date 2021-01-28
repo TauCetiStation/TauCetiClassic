@@ -10225,7 +10225,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "wp" = (
-/obj/machinery/mineral/equipment_locker,
+/obj/machinery/mineral/equipment_vendor,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bot"
@@ -13499,7 +13499,7 @@
 	},
 /area/asteroid/mine/production)
 "Zf" = (
-/obj/machinery/mineral/equipment_locker,
+/obj/machinery/mineral/equipment_vendor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

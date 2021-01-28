@@ -310,6 +310,9 @@
 /atom/proc/blob_act()
 	return
 
+/atom/proc/airlock_crush_act()
+	return
+
 /atom/proc/fire_act()
 	return
 

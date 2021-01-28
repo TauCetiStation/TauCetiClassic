@@ -479,6 +479,9 @@
 /mob/living/silicon/robot/restrained()
 	return 0
 
+/mob/living/silicon/robot/airlock_crush_act()
+	..()
+	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)
