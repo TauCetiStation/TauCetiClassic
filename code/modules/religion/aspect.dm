@@ -59,7 +59,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_MAROON
 
-	god_desc = "Mortal humans can donate to increase your strength: blood bags, brains, internal organs and limbs."
+	god_desc = "Смертные людишки могут жертвовать для увеличения вашей силы: пакеты с кровью, мозги, внутренние и внешние органы."
 
 /datum/aspect/death/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/reagent_containers/blood))
@@ -85,7 +85,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_VIOLET
 
-	god_desc = "Homosapiens and other xenos races can present all sorts of scientific things to gain your favour."
+	god_desc = "Хомосапиенс и другие инородные расы могут дарить все сорта научных вещей."
 
 /datum/aspect/science/sacrifice(obj/item/I, mob/living/L, obj/structure/altar_of_gods/AOG)
 	. = AOG.experiments.get_object_research_value(I) * 0.01
@@ -100,7 +100,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_BROWN_ORANGE
 
-	god_desc = "Peasants are required to pay you food."
+	god_desc = "Крестьяне обязаны платить вам едой."
 
 /datum/aspect/food/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/reagent_containers/food) && I.reagents)
@@ -129,7 +129,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_DARK_BROWN
 
-	god_desc = "May the workers bring diverse resources to your mercy."
+	god_desc = "Рабочие могут приносить разные ресурсы на вашу милость."
 
 /datum/aspect/resources/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/stack/sheet))
@@ -181,7 +181,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_CYAN
 
-	god_desc = "Accept electrical energy and quality tech parts."
+	god_desc = "Принимаются электрическая энергия и качаственные технические детали."
 
 /datum/aspect/technology/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
@@ -218,7 +218,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_OLIVE
 
-	god_desc = "The Family urgently needs a lot of BANANAS and BANANIUM!!!"
+	god_desc = "Вашей Семье срочно нужно очень много БАНАНОВ и БАНАНИУМА!!!"
 
 /datum/aspect/wacky/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/bananapeel/honk))
@@ -307,7 +307,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_DARK_GUNMETAL
 
-	god_desc = "You need darkness in holy land"
+	god_desc = "Вам нужная тьма на святой земле."
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
 	return (0.6 - F.get_lumcount()) * power * 0.05
@@ -321,7 +321,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_AMBER
 
-	god_desc = "You need light in holy land"
+	god_desc = "Вам нужнен свет на святой земле."
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
 	return (F.get_lumcount() - 0.4) * power * 0.03
@@ -335,7 +335,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_BOTTLE_GREEN
 
-	god_desc = "Not everything that shines is gold, sometimes dollar bills break the mold. You wish for wealth."
+	god_desc = "Не всё то золото, что блестит, иногда купюры могут этому следовать. Вам нужно богаств."
 
 /datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	return I.get_price() * 0.05
