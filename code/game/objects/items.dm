@@ -1018,10 +1018,11 @@ var/global/list/items_blood_overlay_by_type = list()
 	. = ..()
 	remove_outline()
 
-/obj/item/MouseDrop()
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	remove_outline()
+	if(src_location != over_location)
+		remove_outline()
 
 
 /client/var/list/image/outlined_item = list()
