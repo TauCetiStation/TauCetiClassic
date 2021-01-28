@@ -83,9 +83,6 @@
 // This subtype is used for integrating this system with current chaplain anything.
 /datum/religion/chaplain/New()
 	..()
-	area_types = typesof(area_type)
-	religify_area()
-
 	//Radial menu
 	gen_bible_variants()
 

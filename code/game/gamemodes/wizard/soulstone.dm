@@ -31,8 +31,8 @@
 		return ..()
 
 	if(M.has_brain_worms()) //Borer stuff - RR
-		to_chat(user, "<span class='warning'>This being is corrupted by an alien intelligence and cannot be soul trapped.</span>")
-		return..()
+		to_chat(user, "<span class='warning'>Разум этого существа сопротивляется силе камня.</span>")
+		return ..()
 
 	M.log_combat(user, "soul-captured via [name]")
 
@@ -47,10 +47,10 @@
 	user.set_machine(src)
 	var/dat = ""
 	for(var/mob/living/simple_animal/shade/A in src)
-		dat += "Captured Soul: [A.name]<br>"
-		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
+		dat += "Захваченная душа: [A.name]<br>"
+		dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Призвать Тень</A>"}
 
-	var/datum/browser/popup = new(user, "window=aicard", "Soul Stone", ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=aicard", "Камень Душ", ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
@@ -68,7 +68,7 @@
 		for(var/mob/living/simple_animal/shade/A in src)
 			A.status_flags &= ~GODMODE
 			A.canmove = 1
-			to_chat(A, "<b>You have been released from your prison, but you are still bound to [user.name]'s and his allies will. Help them suceed in their goals at all costs.</b>")
+			to_chat(A, "<b>Вы были освобожденены из своей тюрьмы, но вы остаётесь привязанным к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой.</b>")
 			A.loc = user.loc
 			A.cancel_camera()
 			src.icon_state = "soulstone"
@@ -92,16 +92,16 @@
 	var/obj/item/device/soulstone/C = src
 	if(target != user)
 		if(C.imprinted != "empty")
-			to_chat(user, "<span class='warning'><b>Capture failed!</b>:</span> The soul stone has already been imprinted with [C.imprinted]'s mind!")
+			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [C.imprinted]!")
 			return
 		if(T.stat == CONSCIOUS)
-			to_chat(user, "<span class='warning'><b>Capture failed!</b>:</span> Kill or maim the victim first!")
+			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Сначала убейте или оглушите жертву!")
 			return
 		if(T.client == null)
-			to_chat(user, "<span class='warning'><b>Capture failed!</b>:</span> The soul has already fled it's mortal frame.")
+			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В этой оболочке нет души.")
 			return
 		if(C.contents.len)
-			to_chat(user, "<span class='warning'><b>Capture failed!</b>:</span> The soul stone is full! Use or free an existing soul to make room.")
+			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Камень душ полон! Используйте или освободите душу внутри камня.")
 			return
 
 	for(var/obj/item/W in T)
@@ -117,19 +117,19 @@
 	qdel(animation)
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
 	S.my_religion = T.my_religion
-	S.loc = C //put shade in stone
+	S.forceMove(C)
 	S.status_flags |= GODMODE //So they won't die inside the stone somehow
-	S.canmove = 0//Can't move out of the soul stone
+	S.canmove = FALSE //Can't move out of the soul stone
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
-	if (T.client)
+	if(T.client)
 		T.client.mob = S
 	S.cancel_camera()
 	C.icon_state = "soulstone_glow_blink"
 	C.name = "Soul Stone: [S.real_name]"
-	to_chat(S, "Your soul has been captured! You are now bound to [user.name]'s and his allies will, help them suceed in their goals at all costs.")
-	to_chat(user, "<span class='notice'><b>Capture successful!</b>:</span> [T.real_name]'s soul has been ripped from their body and stored within the soul stone.")
-	to_chat(user, "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls.")
+	to_chat(S, "Ваша душа была захвачена! Теперь вы привязанны к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой..")
+	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [T.real_name] была вырвана из его тела и помещена в камень душ.")
+	to_chat(user, "Камень душ запечатал разум [S.real_name], теперь вы не сможете захватить других душ.")
 	C.imprinted = "[S.name]"
 	qdel(T)
 
@@ -137,27 +137,27 @@
 	var/mob/living/simple_animal/shade/T = target
 	var/obj/item/device/soulstone/C = src
 	if(T.stat == DEAD)
-		to_chat(user, "<span class='warning'><b>Capture failed!</b>:</span> The shade has already been banished!")
+		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Тень уже изгнана!")
 		return
 	if(C.contents.len)
-		to_chat(user, "<span class='warning'><b>Capture failed!</b>:</span> The soul stone is full! Use or free an existing soul to make room.")
+		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Камень душ полон! Используйте или освободите душу внутри камня.")
 		return
 	if(T.name != C.imprinted)
-		to_chat(user, "<span class='warning'><b>Capture failed!</b>:</span> The soul stone has already been imprinted with [C.imprinted]'s mind!")
+		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [C.imprinted]!")
 		return
 
-	T.loc = C //put shade in stone
+	T.forceMove(C) //put shade in stone
 	T.status_flags |= GODMODE
-	T.canmove = 0
+	T.canmove = FALSE
 	T.health = T.maxHealth
 	C.icon_state = "soulstone_glow_blink"
-	to_chat(T, "Your soul has been recaptured by the soul stone, its arcane energies are reknitting your ethereal form")
-	to_chat(user, "<span class='notice'><b>Capture successful!</b>:</span> [T.name]'s has been recaptured and stored within the soul stone.")
+	to_chat(T, "Ваша душа была снова захвачена в камень душ, тайная энергия опять связывает твою эфирную форму.")
+	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [T.name] была снова захвачен в камень душ.")
 
 /obj/item/device/soulstone/proc/create_construct(atom/target, mob/user)
 	var/mob/living/simple_animal/shade/A = locate() in src
 	if(!A)
-		to_chat(user, "<span class='warning'><b>Creation failed!</b>:</span> The soul stone is empty! Go kill someone!")
+		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> Камень душ пуст! Самое время убить кого-нибудь.")
 		return
 
 	var/construct_class = show_radial_menu(user, target, class_images, require_near = TRUE, tooltips = TRUE)

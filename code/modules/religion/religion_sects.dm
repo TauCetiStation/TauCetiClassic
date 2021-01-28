@@ -24,7 +24,7 @@
 
 // This proc is used to give all binding rites once
 /datum/religion_sect/proc/give_binding_rites(mob/living/L, datum/religion/R)
-	return
+	R.give_binding_rites()
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/L)
@@ -36,9 +36,6 @@
 
 /datum/religion_sect/preset/give_aspects(mob/living/L, datum/religion/R)
 	R.add_aspects(aspect_preset)
-
-/datum/religion_sect/preset/give_binding_rites(mob/living/L, datum/religion/R)
-	R.give_binding_rites()
 
 /********************/
 /*    CHAPLAIN      */
@@ -144,6 +141,7 @@
 		/datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
+		/datum/aspect/conjure = 2,
 	)
 
 /datum/religion_sect/preset/cult/test

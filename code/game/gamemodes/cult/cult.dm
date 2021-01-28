@@ -246,15 +246,21 @@
 				feedback_add_details("cult_objective","[objective.type]|FAIL")
 			obj_count++
 
-	text += "<br><br><b>Аспекты:</b>"
-	for(var/name in global.cult_religion.aspects)
-		var/datum/aspect/A = global.cult_religion.aspects[name]
-		text += "<br><font color='[A.color]'>[name]</font> - с силой [A.power]"
+	text += "<br><b>Аспекты([global.cult_religion.aspects.len]):</b>"
+	if(!global.cult_religion.aspects.len)
+		text += "<br>Ниодного аспекта не было выбрано"
+	else
+		for(var/name in global.cult_religion.aspects)
+			var/datum/aspect/A = global.cult_religion.aspects[name]
+			text += "<br><font color='[A.color]'>[name]</font> - с силой [A.power]"
 
 	text += "<br><br><b>Ритуалы:</b>"
-	for(var/name in global.cult_religion.ritename_by_count)
-		var/count = global.cult_religion.ritename_by_count[name]
-		text += "<br><i>[name]</i> - использован [count] [russian_plural(count, "раз", "раза", "раз")]"
+	if(!global.cult_religion.ritename_by_count.len)
+		text += "<br>Ниодного ритуала не было выбрано"
+	else
+		for(var/name in global.cult_religion.ritename_by_count)
+			var/count = global.cult_religion.ritename_by_count[name]
+			text += "<br><i>[name]</i> - использован [count] [russian_plural(count, "раз", "раза", "раз")]"
 
 	completion_text += text
 	..()
@@ -264,8 +270,8 @@
 	var/dat = ""
 
 	dat += {"<B><U>MODE STATS</U></B><BR>
-	<B>Членов Культа:</B> [religion.members.len]<BR>
-	<B>Захвачено зон:</B> [religion.captured_areas.len]<BR>
+	<B>Всего членов Культа:</B> [religion.members.len]<BR>
+	<B>Захвачено зон:</B> [religion.captured_areas.len - religion.area_types.len]<BR>
 	<B>Накоплено Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
 	<B>Рун на станции:</B> [religion.runes.len]<BR>
 	<B>Аномалий уничтожено:</B> [score["destranomaly"]]<BR>
@@ -288,7 +294,7 @@
 	return text
 
 /datum/game_mode/cult/proc/get_cultists_out()
-	var/acolytes_out
+	var/acolytes_out = 0
 	for(var/mob/cultist in religion.members)
 		if(cultist?.stat != DEAD)
 			var/area/A = get_area(cultist)

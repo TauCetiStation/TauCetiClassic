@@ -87,9 +87,6 @@
 
 /datum/religion/cult/New()
 	..()
-	area_types = typesof(area_type)
-	religify_area()
-
 	// Init anomalys
 	var/area/area = locate(/area/custom/cult)
 	for(var/i in 1 to max_spawned_anomalies)

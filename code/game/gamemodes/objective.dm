@@ -991,7 +991,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 
 /datum/objective/cult/recruit/New()
 	acolytes_needed = max(4, round(player_list.len * 0.1))
-	explanation_text = "Наши знания должны жить. Убедитесь, что хотя бы [acolytes_needed] [russian_plural(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы проложить исследования на других станциях."
+	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [russian_plural(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы продолжить исследования на других станциях."
 	..()
 
 /datum/objective/cult/recruit/find_target()
@@ -1026,7 +1026,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	return
 
 /datum/objective/cult/capture_areas/check_completion()
-	if(cur_mode.religion.captured_areas.len >= need_capture)
+	if(cur_mode.religion.captured_areas.len - cur_mode.religion.area_types.len >= need_capture)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
