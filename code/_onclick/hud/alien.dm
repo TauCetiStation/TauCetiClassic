@@ -207,6 +207,9 @@
 	mymob.xenomorph_plasma_display.icon_state = "power_display3"
 	mymob.xenomorph_plasma_display.name = "plasma stored"
 	mymob.xenomorph_plasma_display.screen_loc = ui_alienplasmadisplay
+	if(isxeno(mymob))
+		var/mob/living/carbon/xenomorph/X = mymob
+		X.updatePlasmaDisplay()
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
