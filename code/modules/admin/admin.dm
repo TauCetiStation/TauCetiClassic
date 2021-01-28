@@ -904,10 +904,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set category = "Server"
 	set desc="Change facehuggers control type"
 	set name="Change FH control type"
-	var/FH_control_type = input("Choose a control type of facehuggers.","FH control type") as null|anything in list("Static AI(default)", "Dynamic AI", "Playable(+SAI)")
+	var/FH_control_type = input("Choose a control type of facehuggers.","FH control type") as null|anything in list("Playable(+SAI)(default)", "Dynamic AI", "Static AI")
 	feedback_add_details("admin_verb","CFHAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	switch(FH_control_type)
-		if("Static AI(default)")
+		if("Static AI")
 			facehuggers_control_type = FACEHUGGERS_STATIC_AI
 			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
 				STOP_PROCESSING(SSobj, FH)
@@ -915,7 +915,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			facehuggers_control_type = FACEHUGGERS_DYNAMIC_AI
 			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
 				START_PROCESSING(SSobj, FH)
-		if("Playable(+SAI)")
+		if("Playable(+SAI)(default)")
 			facehuggers_control_type = FACEHUGGERS_PLAYABLE
 			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
 				STOP_PROCESSING(SSobj, FH)
