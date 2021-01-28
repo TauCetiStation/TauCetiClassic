@@ -89,6 +89,8 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
+	SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
+
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
@@ -106,7 +108,6 @@
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
-	SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 	for(var/atom/movable/AM in contents)
 		AM.locMoved(OldLoc, Dir)
 
