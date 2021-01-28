@@ -24,6 +24,13 @@ var/list/mechtoys = list(
 	anchored = 1
 	layer = 4
 	explosion_resistance = 5
+	var/list/mob_can_pass = list(
+		/mob/living/carbon/monkey,
+		/mob/living/carbon/slime,
+		/mob/living/simple_animal/mouse,
+		/mob/living/silicon/robot/drone,
+		/mob/living/carbon/xenomorph/facehugger,
+		/mob/living/carbon/xenomorph/larva)
 
 /obj/structure/plasticflaps/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(istype(caller, /obj/machinery/bot/mulebot))
@@ -50,9 +57,15 @@ var/list/mechtoys = list(
 			return TRUE
 		if(istype(M, /mob/living/simple_animal/hostile))
 			return FALSE
-		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse) && !istype(M, /mob/living/silicon/robot/drone))  //If your not laying down, or a small creature, no pass.
+		if(!M.lying && !check_pass(M))  //If your not laying down, or a small creature, no pass.
 			return FALSE
 	return ..()
+
+/obj/structure/plasticflaps/proc/check_pass(mob/M)
+	for(var/T in mob_can_pass)
+		if(istype(M, T))
+			return TRUE
+	return FALSE
 
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
