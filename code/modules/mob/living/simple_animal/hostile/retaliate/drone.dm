@@ -127,7 +127,7 @@
 
 		//spawn 1-4 boards of a random type
 		var/num_boards = rand(1, 4)
-		var/list/options = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
+		var/list/options = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 		for(var/i = 0, i < num_boards, i++)
 			var/chosen = pick_n_take(options)
 			switch(chosen)
@@ -146,37 +146,37 @@
 					C.name = "Магнитная плата Дрона"
 					C.origin_tech = "magnets=[rand(4, 6)]"
 
-				if(3)
+				if(4)
 					C = new(loc)
 					C.name = "Контроллер щита Дрона"
 					C.origin_tech = "bluespace=[rand(4, 6)]"
 
-				if(4)
+				if(5)
 					C = new(loc)
 					C.name = "Конденсатор Дрона"
 					C.origin_tech = "powerstorage=[rand(4, 6)]"
 
-				if(5)
+				if(6)
 					C = new(loc)
 					C.name = "Плата корпуса Дрона"
 					C.origin_tech = "materials=[rand(4, 6)]"
 
-				if(6)
+				if(7)
 					C = new(loc)
 					C.name = "Модуль авто-ремонта Дрона"
 					C.origin_tech = "engineering=[rand(4, 6)]"
 
-				if(7)
+				if(8)
 					C = new(loc)
 					C.name = "Фороновый микроконтроллер Дрона"
 					C.origin_tech = "phorontech=[rand(4, 6)]"
 
-				if(8)
+				if(9)
 					C = new(loc)
 					C.name = "Модуль наведения Дрона"
 					C.origin_tech = "combat=[rand(4, 6)]"
 
-				if(9)
+				if(10)
 					C = new(loc)
 					C.name = "Модуль нестабильности Дрона"
 					C.origin_tech = "syndicate=[rand(4, 6)]"

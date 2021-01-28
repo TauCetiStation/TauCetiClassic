@@ -197,11 +197,11 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
 	if(alerted)
 		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-	var/turftype = get_turf(src)
-	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
-		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
-		A.gets_dug()
-	qdel(src)
+		var/turftype = get_turf(src)
+		if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
+			var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+			A.gets_dug()
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
 	if(!ore_eaten || !ore_types_eaten.len)
