@@ -287,6 +287,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.outline_enabled = !prefs.outline_enabled
 	prefs.save_preferences()
+	to_chat(src, "Outline is [prefs.outline_enabled ? "enabled" : "disabled"].")
 	feedback_add_details("admin_verb", "TO")
 
 
@@ -300,4 +301,5 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		return
 	prefs.outline_color = pickedOutlineColor
 	prefs.save_preferences()
+	to_chat(src, "Outline color changed.")
 	feedback_add_details("admin_verb", "COC")
