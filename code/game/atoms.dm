@@ -1,7 +1,6 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	VAR_FINAL/dir = NORTH
 	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
