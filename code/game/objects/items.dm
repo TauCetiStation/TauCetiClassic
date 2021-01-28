@@ -1021,7 +1021,7 @@ var/global/list/items_blood_overlay_by_type = list()
 /obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
-	if(src_location != over_location)
+	if(src != over)
 		remove_outline()
 
 
