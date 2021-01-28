@@ -586,13 +586,54 @@
 		if(mutiny)
 			dat += mutiny.check_antagonists_ui(src)
 
+		if(SSticker.mode.name == "infestation")
+			var/datum/game_mode/infestation/inf = SSticker.mode
+			var/data = inf.count_alien_percent()
+			dat += "<br><table><tr><td><B>Окончание режима</B></td><td></td></tr>"
+			dat += "<tr><td>Экипажа на станции:</td><td>[data[TOTAL_HUMAN]]</td></tr>"
+			dat += "<tr><td>Взрослых ксеноморфов на станции:</td><td>[data[TOTAL_ALIEN]]</td></tr>"
+			dat += "<tr><td>Процент/Необходимый процент:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
+
 		if(alien_list.len)
-			var/list/datum/mind/alien_mind = list()
+			var/list/datum/mind/queen_mind = list()
+			var/list/datum/mind/drone_mind = list()
+			var/list/datum/mind/sentinel_mind = list()
+			var/list/datum/mind/hunter_mind = list()
+			var/list/datum/mind/larva_mind = list()
+			var/list/datum/mind/faceh_mind = list()
 			for(var/mob/living/carbon/xenomorph/A in alien_list)
 				if(A.stat == DEAD || !A.mind)
 					continue
-				alien_mind += A.mind
-			dat += check_role_table("Xenomorphs", alien_mind, src, FALSE)
+				if(isxenoqueen(A))
+					queen_mind += A.mind
+					continue
+				if(isxenodrone(A))
+					drone_mind += A.mind
+					continue
+				if(isxenosentinel(A))
+					sentinel_mind += A.mind
+					continue
+				if(isxenohunter(A))
+					hunter_mind += A.mind
+					continue
+				if(isxenolarva(A))
+					larva_mind += A.mind
+					continue
+				if(isfacehugger(A))
+					faceh_mind += A.mind
+					continue
+			if(queen_mind.len)
+				dat += check_role_table("Королева", queen_mind, src, FALSE)
+			if(drone_mind.len)
+				dat += check_role_table("Трутни", drone_mind, src, FALSE)
+			if(sentinel_mind.len)
+				dat += check_role_table("Стражи", sentinel_mind, src, FALSE)
+			if(hunter_mind.len)
+				dat += check_role_table("Охотники", hunter_mind, src, FALSE)
+			if(larva_mind.len)
+				dat += check_role_table("Грудоломы", larva_mind, src, FALSE)
+			if(faceh_mind.len)
+				dat += check_role_table("Лицехваты", faceh_mind, src, FALSE)
 
 		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 400, 500)
 		popup.set_content(dat)

@@ -2,13 +2,8 @@
 //	GAMEMODE
 
 #define CHECK_PERIOD 	200
-#define TOTAL_HUMAN		1
-#define TOTAL_ALIEN		2
-#define ALIEN_PERCENT	3
-#define WIN_PERCENT		150
 
 /datum/game_mode
-
 	var/list/datum/mind/xenomorphs = list()
 
 /datum/game_mode/infestation
@@ -311,7 +306,3 @@
 	return ..()
 
 #undef CHECK_PERIOD
-#undef TOTAL_HUMAN
-#undef TOTAL_ALIEN
-#undef ALIEN_PERCENT
-#undef WIN_PERCENT
