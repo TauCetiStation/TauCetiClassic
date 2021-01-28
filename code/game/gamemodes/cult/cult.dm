@@ -39,7 +39,9 @@
 
 /datum/game_mode/cult/announce()
 	to_chat(world, "<B>Текущий режим игры - Культ!</B>")
-	to_chat(world, "<B>Некоторые члены экипажа прибыли на станцию, состоя в культе!<BR>\nКультисты - выполняют свои задачи. Заставляйте людей последовать за вами любыми способами. Перемещайте смертных в своё измерение насильно. Запомни - тебя нет, есть только культ.<BR>\nПерсонал - не знает о культе, но при обнаружении кровавых рун и фанатиков будет сопротивляться. Хороший способ борьбы с фанатиками - это промывка мозгов Библией священника в разрешенную ЦентКоммом религию.</B>")
+	to_chat(world, "<B>Некоторые члены экипажа прибыли на станцию, состоя в культе!</B>")
+	to_chat(world, "<B>Культисты - сеют хаос. Заставляйте людей последовать за вами любыми способами. Перемещайте смертных в своё измерение насильно. Запомни - тебя нет, есть только культ.</B>")
+	to_chat(world, "<B>Персонал - не знает о культе, но при обнаружении кровавых рун и фанатиков будет сопротивляться. Хороший способ борьбы с фанатиками - это промывка мозгов Библией священника в разрешенную ЦентКоммом религию.</B>")
 
 /datum/game_mode/cult/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -89,7 +91,7 @@
 	religion.add_member(leader.current, HOLY_ROLE_CULTMASTER)
 	add_antag_hud(antag_hud_type, leader_hud_name, leader.current)
 
-	equip_cultist(leader.current)
+	equip_cultist_leader(leader.current)
 	to_chat(leader.current, "<span class = 'info'><b>Вы <span class='cult'>лидер</span> <font color='red'>культа</font>!</b></span>")
 
 	if(!config.objectives_disabled)
@@ -113,6 +115,27 @@
 
 	cult_mind.special_role = "Cultist"
 
+/datum/game_mode/proc/get_talisman(_disposable)
+	var/datum/religion_rites/instant/communicate/rite = new
+	rite.religion = global.cult_religion
+	var/obj/item/weapon/paper/talisman/cult/T = new(null, global.cult_religion, rite)
+	T.disposable = _disposable
+	return T
+
+/datum/game_mode/cult/proc/equip_cultist_leader(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+
+	if(H.mind)
+		if(H.mind.assigned_role == "Clown")
+			to_chat(H, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+			H.mutations.Remove(CLUMSY)
+
+	H.equip_to_slot_or_del(get_talisman(FALSE), SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/device/cult_camera(H), SLOT_IN_BACKPACK)
+
+	global.cult_religion.give_tome(H)
+
 /datum/game_mode/proc/equip_cultist(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
@@ -122,11 +145,7 @@
 			to_chat(H, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.mutations.Remove(CLUMSY)
 
-	var/datum/religion_rites/instant/communicate/rite = new
-	rite.religion = global.cult_religion
-	var/obj/item/weapon/paper/talisman/cult/T = new(H, global.cult_religion, rite)
-	T.disposable = TRUE
-	H.equip_to_slot_or_del(T, SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(get_talisman(TRUE), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/device/cult_camera(H), SLOT_IN_BACKPACK)
 
 	global.cult_religion.give_tome(H)

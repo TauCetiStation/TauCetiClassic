@@ -147,18 +147,19 @@
 				var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("husk_s", "electrocuted_generic", "ghost", "zombie", "skeleton", "abductor_s", "electrocuted_base"), layer = INFRONT_MOB_LAYER, loc = target)
 				I.override = TRUE
 				target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", I, H)
+				addtimer(CALLBACK(src, .proc/remove_spook_effect, target), 3 MINUTES)
 			else
 				var/obj/item/I = pick(H.contents)
 				I.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/effect/decal/remains/human, I)
+				addtimer(CALLBACK(src, .proc/remove_spook_effect, I), 3 MINUTES)
 
-			addtimer(CALLBACK(src, .proc/remove_spook_effect, H), 3 MINUTES)
 
 		else if(prob(1)) // temp alt_apperance of nar-sie
 			if(!altars.len)
 				return
 			var/obj/structure/altar_of_gods/altar = pick(altars)
 			altar.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/singularity/narsie, altar)
-			addtimer(CALLBACK(src, .proc/remove_spook_effect, H), 10 MINUTES)
+			addtimer(CALLBACK(src, .proc/remove_spook_effect, altar), 10 MINUTES)
 
 		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow
 			H.say(pick(possible_human_phrases))
@@ -197,5 +198,5 @@
 	C.y_pos = T.y
 	C.z_pos = T.z
 
-/datum/religion/cult/proc/remove_spook_effect(mob/living/carbon/C)
-	C.remove_alt_appearance("nar-sie_hall")
+/datum/religion/cult/proc/remove_spook_effect(atom/A)
+	A.remove_alt_appearance("nar-sie_hall")
