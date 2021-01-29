@@ -586,13 +586,13 @@
 		if(mutiny)
 			dat += mutiny.check_antagonists_ui(src)
 
-		if(SSticker.mode.name == "infestation")
+		if(istype(SSticker.mode, /datum/game_mode/infestation))
 			var/datum/game_mode/infestation/inf = SSticker.mode
 			var/data = inf.count_alien_percent()
-			dat += "<br><table><tr><td><B>Окончание режима</B></td><td></td></tr>"
-			dat += "<tr><td>Экипажа на станции:</td><td>[data[TOTAL_HUMAN]]</td></tr>"
-			dat += "<tr><td>Взрослых ксеноморфов на станции:</td><td>[data[TOTAL_ALIEN]]</td></tr>"
-			dat += "<tr><td>Процент/Необходимый процент:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
+			dat += "<br><table><tr><td><B>Статистика</B></td><td></td></tr>"
+			dat += "<tr><td>Экипаж:</td><td>[data[TOTAL_HUMAN]]</td></tr>"
+			dat += "<tr><td>Взрослые ксеноморфы:</td><td>[data[TOTAL_ALIEN]]</td></tr>"
+			dat += "<tr><td>Победа:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
 
 		if(alien_list.len)
 			var/list/datum/mind/queen_mind = list()
