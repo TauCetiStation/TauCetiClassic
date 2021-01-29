@@ -1,7 +1,3 @@
-/mob/var/typing = FALSE
-
-/mob/var/obj/effect/overlay/typing_indicator/typing_indicator
-
 /mob/proc/set_typing_indicator(state)
 	if(!typing_indicator)
 		typing_indicator = new(null, "[typing_indicator_type]0")
