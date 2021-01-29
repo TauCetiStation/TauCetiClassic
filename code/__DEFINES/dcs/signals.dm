@@ -22,19 +22,19 @@
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
 // /datum/religion_rites signals
-/// from base of religion_rites/on_chosen(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/on_chosen(): (/mob, /obj)
 #define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
-/// from base of religion_rites/can_start_wrapper(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/can_start_wrapper(): (/mob, /obj)
 #define COMSIG_RITE_CAN_START "rite_can_start"
-/// from base of religion_rites/start(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/start(): (/mob, /obj)
 #define COMSIG_RITE_STARTED "rite_is_started"
-/// from base of religion_rites/rite_step_wrapper(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/rite_step_wrapper(): (/mob, /obj)
 #define COMSIG_RITE_IN_STEP "rite_in_step"
-/// from base of religion_rites/step_end(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/step_end(): (/mob, /obj)
 #define COMSIG_RITE_STEP_ENDED "rite_step_ended"
-/// from base of religion_rites/invoke_effect(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/invoke_effect(): (/mob, /obj)
 #define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
-/// from base of religion_rites/can_step(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/can_step(): (/mob, /obj)
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
 
@@ -123,6 +123,12 @@
 #define COMSIG_ENTER_AREA "enter_area"
 ///from base of area/Exited(): (/area)
 #define COMSIG_EXIT_AREA "exit_area"
+
+// /obj
+/// from base of datum/religion_rites/reset_rite_wrapper(): ()
+#define COMSIG_OBJ_RESET_RITE "obj_reset_rite"
+/// from base of datum/religion_rites/start(): ()
+#define COMSIG_OBJ_START_RITE "obj_start_rite"
 
 // /obj/item signals
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)

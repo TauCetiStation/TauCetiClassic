@@ -1,3 +1,6 @@
+////////////////
+//  NULLRODS  //
+////////////////
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
@@ -88,7 +91,7 @@
 		return
 
 	if (M.stat != DEAD)
-		if((global.cult_religion.is_member(M)) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(10))
+		if(iscultist(M) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(10))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
 			SSticker.mode.remove_cultist(M.mind)
@@ -213,12 +216,8 @@
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
 
-	brainmob.invisibility = INVISIBILITY_OBSERVER
-	brainmob.see_invisible = SEE_INVISIBLE_OBSERVER
-
 	brainmob.ckey = candidate.ckey
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
-	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	if(god_lore != "")
 		brainmob.mind.memory = "<B>YOUR LORE</B><BR>"
@@ -232,8 +231,6 @@
 	candidate.cancel_camera()
 	candidate.reset_view()
 
-	brainmob.universal_speak = FALSE
-
 	summoner.my_religion.add_deity(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
@@ -242,6 +239,8 @@
 	name = "staff of the [god_name]"
 	if(god_name == "Aghanim") //sprite is very similar
 		name = "Aghanim's Scepter"
+
+	brainmob.real_name = name
 
 	desc = "Stone sometimes glow. Pray for mercy on [god_name]."
 	to_chat(brainmob, "<b>You are an avatar of god, brought into existence on [station_name()].</b>")
@@ -342,7 +341,9 @@
 		deactivate(user)
 
 
-
+///////////////
+// EQUIPMENT //
+///////////////
 /obj/item/weapon/shield/riot/roman/religion
 	name = "sacred shield"
 	desc = "Go-... Whatever deity you worship protects you!"

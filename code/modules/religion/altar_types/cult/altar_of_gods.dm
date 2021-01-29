@@ -10,6 +10,14 @@
 
 	type_of_sects = /datum/religion_sect/preset/cult
 
+/obj/structure/altar_of_gods/cult/start_rite()
+	. = ..()
+	icon_state = "cultaltar-blood"
+
+/obj/structure/altar_of_gods/cult/reset_rite()
+	. = ..()
+	icon_state = initial(icon_state)
+
 /obj/structure/altar_of_gods/cult/interact_bible(obj/item/I, mob/user)
 	if(!chosen_aspect && !choosing_sects)
 		if(user.mind.holy_role != HOLY_ROLE_CULTMASTER)

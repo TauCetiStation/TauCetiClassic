@@ -97,9 +97,6 @@
 	RegisterSignal(src, list(COMSIG_RITE_STEP_ENDED), .proc/try_next_step)
 	try_next_step(src, user, AOG, 1)
 
-	if(istype(religion, /datum/religion/cult) && istype(AOG, /obj/structure/altar_of_gods/cult))
-		AOG.icon_state = "cultaltar-blood"
-
 /datum/religion_rites/proc/try_next_step(datum/source, mob/living/user, obj/AOG, current_stage)
 	if(!can_step(user, AOG, current_stage))
 		return FALSE
@@ -128,16 +125,13 @@
 	end(user, AOG)
 	if(invoke_effect(user, AOG))
 		religion.adjust_favor(-favor_cost)
+		religion.adjust_favor(-piety_cost)
 		religion.ritename_by_count[name]++
 	reset_rite_wrapper(src, user, AOG)
 
 /datum/religion_rites/proc/reset_rite_wrapper(datum/source, mob/living/user, obj/AOG)
 	UnregisterSignal(src, list(COMSIG_RITE_STEP_ENDED, COMSIG_RITE_FAILED_CHECK))
-	if(istype(AOG, /obj/structure/altar_of_gods))
-		var/obj/structure/altar_of_gods/A = AOG
-		A.reset_rite() // Very bad.
-	if(istype(religion, /datum/religion/cult) && istype(AOG, /obj/structure/altar_of_gods/cult)) // Very bad too
-		AOG.icon_state = "cultaltar"
+	SEND_SIGNAL(AOG, COMSIG_OBJ_RESET_RITE)
 	reset_rite()
 
 /datum/religion_rites/proc/on_chosen(mob/living/user, obj/AOG)
@@ -147,6 +141,7 @@
 
 /datum/religion_rites/proc/perform_rite(mob/living/user, obj/AOG)
 	RegisterSignal(src, list(COMSIG_RITE_FAILED_CHECK), .proc/reset_rite_wrapper)
+	SEND_SIGNAL(AOG, COMSIG_OBJ_START_RITE)
 	if(!on_chosen(user, AOG))
 		SEND_SIGNAL(src, COMSIG_RITE_FAILED_CHECK, user, AOG)
 		return FALSE

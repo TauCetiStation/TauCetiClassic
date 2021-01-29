@@ -36,6 +36,8 @@
 	experiments.init_known_tech()
 
 	AddComponent(/datum/component/clickplace)
+	RegisterSignal(src, list(COMSIG_OBJ_START_RITE), .proc/start_rite)
+	RegisterSignal(src, list(COMSIG_OBJ_RESET_RITE), .proc/reset_rite)
 	init_turfs_around()
 
 	poi_list += src
@@ -270,7 +272,10 @@
 		return
 
 	to_chat(user, "<span class='notice'>Вы успешно зарядили талисман.</span>")
-	T.rite = R
+	T.rite = new R.type
+	T.rite.religion = religion
+	T.rite.favor_cost = 0
+	T.rite.piety_cost = 0
 	religion.adjust_favor(-R.favor_cost*2)
 	religion.adjust_piety(-R.piety_cost*2)
 
@@ -361,7 +366,9 @@
 /obj/structure/altar_of_gods/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
 	mobs_around -= mover
 
-// Called from a ritе
+/obj/structure/altar_of_gods/proc/start_rite()
+	return
+
 /obj/structure/altar_of_gods/proc/reset_rite()
 	performing_rite = null
 
