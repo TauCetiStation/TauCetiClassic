@@ -119,10 +119,10 @@
 							target = M
 							break
 				if("AI System")
-					if(!ai_list.len)
+					if(!global.ai_list.len)
 						to_chat(usr, "Failed to locate active AI system!")
 						return
-					var/target_ai = input("Select AI to search for", "AI Select") as null|anything in ai_list
+					var/target_ai = input("Select AI to search for", "AI Select") as null|anything in global.ai_list
 					if(!target_ai)
 						return
 					target = target_ai
