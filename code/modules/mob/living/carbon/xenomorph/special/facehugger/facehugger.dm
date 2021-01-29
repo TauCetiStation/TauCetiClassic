@@ -337,6 +337,7 @@
 /obj/item/clothing/mask/facehugger/verb/hide_fh()
 	set name = "Спрятать"
 	set src in oview(1)
+	set category = null
 
 	if(usr.stat != CONSCIOUS)
 		return
