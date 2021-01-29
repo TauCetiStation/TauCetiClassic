@@ -61,6 +61,7 @@
 		return
 
 	var/atom/oldloc = loc
+	var/old_dir = dir
 
 	if(loc != NewLoc)
 		if (!(Dir & (Dir - 1))) //Cardinal move
@@ -89,8 +90,6 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-	SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
-
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
@@ -102,6 +101,9 @@
 
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc,Dir)) //movement failed due to buckled mob
 		. = 0
+
+	if(dir != old_dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 	if(.)
 		Moved(oldloc, Dir)
