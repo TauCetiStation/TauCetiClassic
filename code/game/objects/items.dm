@@ -1038,8 +1038,7 @@ var/global/list/items_blood_overlay_by_type = list()
 		remove_outline()
 
 	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
-	IMG.appearance_flags |= KEEP_TOGETHER | KEEP_APART | RESET_COLOR
-	vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR
 	IMG.vis_contents += src
 
 	IMG.filters += filter(type = "outline", size = 1, color = color)
