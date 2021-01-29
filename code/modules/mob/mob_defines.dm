@@ -235,3 +235,5 @@
 	var/list/weather_immunities = list()
 
 	var/list/progressbars = null //for stacking do_after bars
+
+	var/typing_indicator_type = "default"
