@@ -251,7 +251,7 @@
 		text = "<i><b>[text]</b></i>: "
 		if(!global.cult_religion)
 			text += "<br>Create a cult religion <a href='?src=\ref[src];cult=religion'>create</a>"
-		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
+		else if(istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
 		else if(global.cult_religion?.is_member(current))
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
