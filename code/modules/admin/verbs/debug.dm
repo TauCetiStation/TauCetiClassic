@@ -2019,51 +2019,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if("Joined Clients")
 			to_chat(usr, jointext(joined_player_list,","))
 
-/client/proc/cmd_display_del_log()
-	set category = "Debug"
-	set name = "Display del() Log"
-	set desc = "Display del's log of everything that's passed through it."
-
-	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
-	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
-	for(var/path in SSgarbage.items)
-		var/datum/qdel_item/I = SSgarbage.items[path]
-		dellog += "<li><u>[path]</u><ul>"
-		if (I.failures)
-			dellog += "<li>Failures: [I.failures]</li>"
-		dellog += "<li>qdel() Count: [I.qdels]</li>"
-		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
-		if (I.hard_deletes)
-			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
-			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
-		if (I.slept_destroy)
-			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
-		if (I.no_respect_force)
-			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
-		if (I.no_hint)
-			dellog += "<li>No hint: [I.no_hint]</li>"
-		dellog += "</ul></li>"
-
-	dellog += "</ol>"
-
-	var/datum/browser/popup = new(usr, "dellog")
-	popup.set_content(dellog.Join())
-	popup.open()
-
-/client/proc/cmd_display_init_log()
-	set category = "Debug"
-	set name = "Display Initialzie() Log"
-	set desc = "Displays a list of things that didn't handle Initialize() properly"
-
-	if(!length(SSatoms.BadInitializeCalls))
-		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
-	else
-		var/dat = replacetext(SSatoms.InitLog(), "\n", "<br>")
-
-		var/datum/browser/popup = new(usr, "initlog")
-		popup.set_content(dat)
-		popup.open()
-
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)
 	if(!SSticker)
@@ -2101,3 +2056,55 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	usr.client.sent_assets = list()
 
 	to_chat(usr, "Your NanoUI Resource files have been refreshed")
+
+// from Goonstation
+/client/proc/edit_color_matrix()
+	set category = "Debug"
+	set name = "Edit Color Matrix"
+	set desc = "A little more control over the VFX"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	var/static/datum/debug_color_matrix/debug_color_matrix = new
+	debug_color_matrix.edit(src)
+
+/datum/debug_color_matrix
+
+/datum/debug_color_matrix/proc/edit(client/user)
+	var/static/editor = file2text('html/admin/color_matrix.html')
+	user << browse(editor, "window=colormatrix;size=410x500;")
+	addtimer(CALLBACK(src, .proc/callJsFunc, usr, "setRef", list("\ref[src]")), 10) //This is shit but without it, it calls the JS before the window is open and doesn't work.
+
+/datum/debug_color_matrix/Topic(href, href_list)
+	if(!islist(usr.client.color))
+		usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
+
+	// as somepotato pointed out this form is very insecure, so let's do some serverside verification that we got what we wanted
+	var/sanitised = sanitize(strip_html_properly(href_list["matrix"]))
+	var/list/matrixStrings = splittext(sanitised, ",")
+	// we are expecting 12 strings, so abort if we don't have that many
+	if(matrixStrings.len != 20)
+		return
+
+	var/list/matrix = list()
+	for(var/matrixString in matrixStrings)
+		var/num = text2num(matrixString)
+		if(isnum(num))
+			matrix += num
+
+	var/list/show_to = list(usr.client)
+
+	if(href_list["everyone"] == "y")
+		show_to = clients
+
+	if(href_list["animate"] == "y")
+		for(var/client/C in show_to)
+			animate(C, color = matrix, time = 5, easing = SINE_EASING)
+	else
+		for(var/client/C in show_to)
+			C.color = matrix
+
+/datum/debug_color_matrix/proc/callJsFunc(client, funcName, list/params)
+	var/paramsJS = list2params(params)
+	client << output(paramsJS,"colormatrix.browser:[funcName]")

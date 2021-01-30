@@ -232,7 +232,7 @@
 
 /**********************Mining Equipment Locker**************************/
 
-/obj/machinery/mineral/equipment_locker
+/obj/machinery/mineral/equipment_vendor
 	name = "mining equipment locker"
 	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
@@ -292,7 +292,7 @@
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
 	var/dat
 	dat +="<div class='Section'>"
 	if(istype(inserted_id))
@@ -309,7 +309,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/mineral/equipment_locker/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -341,7 +341,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/mineral/equipment_locker/attackby(obj/item/I, mob/user)
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -362,7 +362,7 @@
 		return 1
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/populate_selection()
+/obj/machinery/mineral/equipment_vendor/proc/populate_selection()
 	selection_items = list(
 	"Resonator kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
 	"Kinetic Accelerator" = image(icon = 'icons/obj/mining/hand_tools.dmi', icon_state = "kineticgun100"),
@@ -370,7 +370,7 @@
 	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining")
 	)
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/voucher, redeemer)
+/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
 		return
 	voucher.in_use = 1
@@ -394,7 +394,7 @@
 			return
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_locker/ex_act()
+/obj/machinery/mineral/equipment_vendor/ex_act()
 	return
 
 
@@ -550,7 +550,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = 4.1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/resonance_damage = 30
 	var/creator = null
 
@@ -623,7 +623,7 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = "neutral"
 	var/emagged = 0
 	light_power = 2
@@ -866,6 +866,8 @@
 	var/loaded = 1
 
 /obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!loaded)
 		return
 	if(istype(target, /obj/item/clothing/suit/space))

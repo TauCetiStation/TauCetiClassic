@@ -21,8 +21,6 @@
 		to_chat(user, "<span class='notice'>You deactivate the pinpointer</span>")
 	active = !active
 
-
-
 /obj/item/weapon/pinpointer/process()
 	if(!active)
 		return
@@ -32,7 +30,7 @@
 			icon_state = "pinonnull"
 			return
 	if(target)
-		dir = get_dir(src, target)
+		set_dir(get_dir(src, target))
 		var/turf/self_turf = get_turf(src)
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.z != self_turf.z)

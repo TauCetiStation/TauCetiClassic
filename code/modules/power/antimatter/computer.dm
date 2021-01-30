@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:05
 #define STATE_DEFAULT 1
 #define STATE_INJECTOR  2
 #define STATE_ENGINE 3

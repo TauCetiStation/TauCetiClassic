@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 //Few global vars to track the blob
 var/global/list/blobs = list()
 var/global/list/blob_cores = list()
@@ -29,6 +27,8 @@ var/global/blobwincount = 500
 	var/cores_to_spawn = 1
 	var/players_per_core = 30
 	var/blob_point_rate = 3
+
+	var/datum/announcement/centcomm/blob/outbreak5/announcement = new
 
 /datum/game_mode/blob/pre_setup()
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
@@ -144,7 +144,7 @@ var/global/blobwincount = 500
 			return
 
 		if (1)
-			command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak. The station crew isolation protocols are now active.", "Biohazard Alert", "outbreak5")
+			announcement.play()
 			return
 
 	return

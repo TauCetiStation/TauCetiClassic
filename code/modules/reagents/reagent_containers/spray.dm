@@ -40,7 +40,7 @@
 	if(istype(target, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src,target) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(target, /obj/structure/reagent_dispensers) && proximity) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		var/obj/structure/reagent_dispensers/RD = target
 		if(!is_open_container())
 			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
@@ -216,8 +216,8 @@
 
 	var/colour_spray = input(usr, "Choose desired label colour") as null|anything in list("white", "red", "green", "blue", "black", "brown", "blond")
 	if(colour_spray)
-		name = "[colour_spray] [initial(name)]"
-		icon_state = "[initial(icon_state)][colour_spray]"
+		name = "[colour_spray] hair color spray"
+		icon_state = "hairspray[colour_spray]"
 	else
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"

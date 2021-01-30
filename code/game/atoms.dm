@@ -78,6 +78,8 @@
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -298,6 +300,8 @@
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
+	if(.)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 /atom/proc/relaymove()
 	return
@@ -306,6 +310,9 @@
 	return
 
 /atom/proc/blob_act()
+	return
+
+/atom/proc/airlock_crush_act()
 	return
 
 /atom/proc/fire_act()
@@ -664,7 +671,7 @@
 	if(isturf(loc))
 		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
 
-/atom/movalbe/lightning_object/shake_act(severity, recursive = TRUE)
+/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return
 
 /turf/shake_act(severity, recursive = TRUE)

@@ -185,24 +185,25 @@ var/global/list/tophats_list = list()
 
 	tp_to_tophat(AM)
 
-/obj/effect/overlay/tophat_portal/examine(mob/living/user)
+/obj/effect/overlay/tophat_portal/examine(mob/user)
 	..()
-	if(user.client && global.tophats_list.len && in_range(user, src))
-		user.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
+	if(user.client && global.tophats_list.len && isliving(user) && in_range(user, src))
+		var/mob/living/L = user
+		L.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
 		var/obj/item/clothing/head/wizard/tophat/TP = pick(global.tophats_list)
 
 		if(TP)
-			user.force_remote_viewing = TRUE
-			user.reset_view(TP)
+			L.force_remote_viewing = TRUE
+			L.reset_view(TP)
 
 			for(var/i in 1 to 30)
-				if(do_after(user, 1 SECONDS, needhand = FALSE, target = src, progress = FALSE))
-					user.reset_view(TP)
+				if(do_after(L, 1 SECONDS, needhand = FALSE, target = src, progress = FALSE))
+					L.reset_view(TP)
 				else
 					break
 
-			user.reset_view(null)
-			user.force_remote_viewing = FALSE
+			L.reset_view(null)
+			L.force_remote_viewing = FALSE
 
 /obj/effect/overlay/tophat_portal/get_listeners()
 	. = list()

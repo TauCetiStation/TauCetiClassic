@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
  * GAMEMODES (by Rastaf0)
  *
@@ -316,7 +314,7 @@ Implants;
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	if(security_level < SEC_LEVEL_BLUE)
