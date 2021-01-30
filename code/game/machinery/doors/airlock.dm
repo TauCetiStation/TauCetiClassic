@@ -1046,6 +1046,9 @@ var/list/airlock_overlays = list()
 				if(locate(/mob/living) in T)
 					autoclose()
 					return FALSE
+				if(locate(/obj/mecha) in T)
+					autoclose()
+					return FALSE
 		return TRUE
 	return FALSE
 
@@ -1086,31 +1089,8 @@ var/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/do_afterclose()
-	for(var/turf/T in locs)
-		for(var/mob/living/M in T)
-			if(isrobot(M))
-				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 0.5)
-			else
-				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				M.SetStunned(5)
-				M.SetWeakened(5)
-
-			var/turf/mob_turf = get_turf(M)
-			if(M.buckled)
-				M.buckled.unbuckle_mob()
-			for(var/dir in cardinal)
-				var/turf/new_turf = get_step(mob_turf, dir)
-				if(M.Move(new_turf))
-					break
-
-			M.visible_message("<span class='red'>[M] was crushed by the [src] door.</span>",
-			                  "<span class='danger'>[src] door crushed you.</span>")
-
-		for(var/obj/structure/window/W in T)
-			W.ex_act(2)
-
-		for(var/obj/effect/fluid/F in T)
-			qdel(F)
+	for(var/atom/A in orange(0, src))
+		A.airlock_crush_act()
 	..()
 
 /obj/machinery/door/airlock/proc/autoclose()

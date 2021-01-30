@@ -297,9 +297,6 @@
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
 
-	//languages
-	module.add_languages(src)
-
 	hands.icon_state = lowertext(modtype)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
@@ -479,6 +476,9 @@
 /mob/living/silicon/robot/restrained()
 	return 0
 
+/mob/living/silicon/robot/airlock_crush_act()
+	..()
+	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)
