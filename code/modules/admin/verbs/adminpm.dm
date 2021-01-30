@@ -132,7 +132,7 @@
 				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 		//play the receiving admin the adminhelp sound (if they have them enabled)
-		recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		recipient.mob.playsound_local(null, recipient.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
