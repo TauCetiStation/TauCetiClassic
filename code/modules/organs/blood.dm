@@ -233,7 +233,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.update_icon()
 	if(spray_dir)
 		B.icon_state = "squirt"
-		B.dir = spray_dir
+		B.set_dir(spray_dir)
 
 	// Update blood information.
 	if(source.data["blood_DNA"])
