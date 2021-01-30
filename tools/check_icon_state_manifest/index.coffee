@@ -29,10 +29,22 @@ checkManifest = ->
     for line in lines
         cols = line.split ":"
         cols = (x.trim() for x in cols)
-        maniStates.push
-            path: cols[0]
-            iconState: cols[1]
-            hash: cols[2]
+        if cols[1][-4..] == ".dmi"
+            iconPath = path.join projectRoot, cols[1]
+            exists = fs.existsSync iconPath
+            if exists
+                icons = loadIconStates iconPath
+                for icon in icons
+                    maniStates.push
+                        path: cols[0]
+                        iconState: icon
+            else
+                process.stdout.write "ERROR: Missing icon file: #{cols[1]}\n"
+                process.exitCode = 1
+        else
+            maniStates.push
+                path: cols[0]
+                iconState: cols[1]
 
     # process each of the manifest entries
     icons = {}
