@@ -16,8 +16,7 @@
 
 	var/mob/living/silicon/robot/R = loc
 
-	if(R)
-		add_languages(R)
+	add_languages(R)
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
