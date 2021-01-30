@@ -132,7 +132,7 @@
 	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [H.real_name] была вырвана из его тела и помещена в камень душ.")
 	to_chat(user, "Камень душ запечатал разум [S.real_name], теперь вы не сможете захватить других душ.")
 	C.imprinted = "[S.name]"
-	qdel(H)
+	H.gib()
 
 /obj/item/device/soulstone/proc/capture_shade(target, mob/user)
 	var/mob/living/simple_animal/shade/S = target
