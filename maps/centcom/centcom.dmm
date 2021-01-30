@@ -1200,7 +1200,7 @@
 "adh" = (
 /obj/machinery/door/airlock/erokez/sec{
 	name = "Security Airlock";
-	req_access = list(2)
+	req_access = list(1)
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
@@ -5490,7 +5490,8 @@
 /area/shuttle/escape/centcom)
 "arE" = (
 /obj/machinery/door/unpowered/shuttle/pod{
-	dock_tag = "shuttle_escape"
+	dock_tag = "shuttle_escape";
+	req_access = list(1)
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)

@@ -14383,7 +14383,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Escape Security Hall";
+	c_tag = "Escape Security Room";
 	dir = 8;
 	network = list("SS13","Security");
 	pixel_y = -20
@@ -18738,7 +18738,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Escape Hall";
-	req_access = list(2)
+	req_access = list(1)
 	},
 /turf/simulated/floor{
 	dir = 5;
