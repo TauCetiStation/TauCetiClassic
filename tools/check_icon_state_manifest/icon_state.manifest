@@ -9,3 +9,5 @@
 # the project, or if that icon file exists but does not contain the
 # icon_state that has been specified.
 
+icons/mob/species/vox/helmet.dmi : hardhat_yellow0
+icons/mob/species/vox/helmet.dmi : icons/obj/clothing/hats.dmi
