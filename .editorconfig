@@ -4,5 +4,12 @@ indent_style = tab
 indent_size = 4
 trim_trailing_whitespace = true
 
-[*.dm]
+[*.{dm, sh}]
 end_of_line = lf
+
+[*.coffee]
+indent_style = space
+
+[*.json]
+indent_style = space
+indent_size = 2
