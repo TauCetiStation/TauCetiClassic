@@ -1,0 +1,11 @@
+# icon_state.manifest
+#
+# This is a manifest of all the icon_state that we want to verify are in
+# the project at build time. Each line has the following format:
+#
+# path/to/icon.dmi:icon_state
+#
+# The process will exit with an error if the icon file does not exist in
+# the project, or if that icon file exists but does not contain the
+# icon_state that has been specified.
+

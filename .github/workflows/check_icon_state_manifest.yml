@@ -1,0 +1,20 @@
+name: 'Check Icon State Manifest'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  verify_manifest:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Project
+      uses: actions/checkout@v2
+
+    - name: Setup Node
+      uses: actions/setup-node@v2-beta
+
+    - name: Verify Manifest
+      run: bash tools/check_icon_state_manifest/action.sh
