@@ -206,7 +206,7 @@
 // wires will attach to this
 /obj/machinery/power/smes/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
-	terminal.dir = get_dir(T,src)
+	terminal.set_dir(get_dir(T,src))
 	terminal.master = src
 
 /obj/machinery/power/smes/disconnect_terminal()

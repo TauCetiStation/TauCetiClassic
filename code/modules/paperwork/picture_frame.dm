@@ -137,7 +137,7 @@
 		PF.framed = I
 	if(frame_glass)
 		PF.frame_glass = TRUE
-	PF.dir = ndir
+	PF.set_dir(ndir)
 	PF.update_icon()
 	qdel(src)
 	return

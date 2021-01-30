@@ -266,6 +266,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/weapon_message = "Explosive Blast"
 	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
 
+/mob/living/carbon/human/airlock_crush_act()
+	..()
+	emote("scream")
+
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
 	if(mind)
@@ -926,7 +930,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/helmet/space) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
+	if(istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) && !istype(head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
@@ -1450,6 +1454,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(species.additional_languages)
 		for(var/A in species.additional_languages)
 			add_language(A)
+
+	typing_indicator_type = species.typing_indicator_type
 
 	species.handle_post_spawn(src)
 	species.on_gain(src)
@@ -2047,8 +2053,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	last_massage = world.time
 
-	if(op_stage.ribcage != 2 && prob(5))
-		var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
+	var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
+	if (((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2) && prob(5))
 		BP.fracture()
 		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 

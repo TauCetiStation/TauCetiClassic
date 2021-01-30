@@ -11,6 +11,13 @@
 	var/obj/item/borg/upgrade/jetpack = null
 	var/list/stacktypes
 
+/obj/item/weapon/robot_module/atom_init()
+	. = ..()
+
+	var/mob/living/silicon/robot/R = loc
+
+	add_languages(R)
+
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -340,6 +347,12 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+
+/obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
+	//basic set+Sy-Code
+	. = ..()
+
+	R.add_language("Sy-Code", TRUE)
 
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"

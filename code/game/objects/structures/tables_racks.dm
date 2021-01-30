@@ -110,6 +110,8 @@
 		else
 	return
 
+/obj/structure/table/airlock_crush_act()
+	destroy()
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -351,7 +353,7 @@
 		if (!A.anchored)
 			A.throw_at(pick(targets),1,1)
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -400,7 +402,7 @@
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -474,6 +476,9 @@
 	shatter()
 	qdel(G)
 	return TRUE
+
+/obj/structure/table/glass/airlock_crush_act()
+	shatter()
 
 /*
  * Wooden tables
@@ -605,6 +610,9 @@
 			if(prob(25))
 				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
+
+/obj/structure/rack/airlock_crush_act()
+	destroy()
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
