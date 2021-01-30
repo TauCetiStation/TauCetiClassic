@@ -16,6 +16,8 @@
 	var/colour = "grey"
 	ventcrawler = 2
 
+	typing_indicator_type = "slime"
+
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime
 
@@ -33,6 +35,8 @@
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
 	var/colour = "grey"
+
+	typing_indicator_type = "slime"
 
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime
