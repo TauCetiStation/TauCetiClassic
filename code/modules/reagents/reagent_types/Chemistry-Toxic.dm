@@ -266,7 +266,7 @@
 
 	if(!ishuman(M))
 		var/mob/living/carbon/C = M
-		if((method==INGEST) || C.wear_mask)
+		if((method == INGEST) || C.wear_mask)
 			return
 		C.adjustToxLoss(2 * toxpwr)
 		return
@@ -274,7 +274,7 @@
 	var/mob/living/carbon/human/H = M
 
 	if(!H.species.flags[IS_PLANT])
-		if((method==INGEST) || H.wear_mask || !H.need_breathe()) // different behaviour only for inhaling
+		if((method == INGEST) || H.wear_mask || !H.need_breathe()) // different behaviour only for inhaling
 			return
 		H.adjustToxLoss(2 * toxpwr)
 		return
@@ -282,7 +282,7 @@
 	var/brute = toxpwr * 5 //plantmen take a LOT of damage
 	var/burn = toxpwr * 4
 
-	if(method==INGEST)
+	if(method == INGEST)
 		var/capped = min(volume, 5)
 		H.take_bodypart_damage(brute * capped, burn * capped)
 		return
