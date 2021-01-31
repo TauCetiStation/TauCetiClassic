@@ -12,7 +12,7 @@
 	required_players = 0
 	required_players_bundles = 0
 	// REMEMBER IT!!!!
-	required_enemies = 0
+	required_enemies = 2
 	recommended_enemies = 3
 
 	antag_hud_type = ANTAG_HUD_CULT
