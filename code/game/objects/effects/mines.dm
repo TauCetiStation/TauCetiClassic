@@ -68,7 +68,7 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
-	del(obj:client)
+	qdel(obj:client)
 	spawn(0)
 		qdel(src)
 

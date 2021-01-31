@@ -209,7 +209,7 @@
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/rank/barber
-	desc = "A suit, that oozes fabulous."
+	desc = "A fancy pink shirt paired with light-catching white pants. Yet to be blood- and puke-stained."
 	name = "barber's uniform"
 	icon_state = "barber"
 	item_state = "barber"

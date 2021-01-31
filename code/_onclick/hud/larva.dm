@@ -69,7 +69,7 @@
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
-	using.dir = SOUTHWEST
+	using.set_dir(SOUTHWEST)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
@@ -80,7 +80,7 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "mouth"
-	inv_box.dir = WEST
+	inv_box.set_dir(WEST)
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
 	inv_box.icon_state = "hand_larva_active"
 	inv_box.screen_loc = ui_rhand

@@ -49,7 +49,7 @@
 			return
 		var/tile = get_turf(get_step(essence.phantom, direction))
 		if(get_dist(tile, essence.host) < 8)
-			essence.phantom.dir = direction
+			essence.phantom.set_dir(direction)
 			essence.phantom.loc = tile
 		return
 	if(user in src.stomach_contents)
@@ -105,6 +105,8 @@
 
 /mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
 	if(istype(attacker))
+		if(attacker in stomach_contents)
+			return	//you cannot beat from the stomach
 		var/spread = TRUE
 		if(ishuman(attacker))
 			var/mob/living/carbon/human/H = attacker

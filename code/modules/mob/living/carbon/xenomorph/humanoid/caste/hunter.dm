@@ -1,12 +1,11 @@
 /mob/living/carbon/xenomorph/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
-	maxHealth = 180
-	health = 180
+	maxHealth = 220
+	health = 220
 	storedPlasma = 100
 	max_plasma = 150
-	icon_state = "alienh_s"
-	plasma_rate = 5
+	icon_state = "alienh_s"	//default invisibility
 	heal_rate = 3
 
 /mob/living/carbon/xenomorph/humanoid/hunter/atom_init()
@@ -19,10 +18,12 @@
 	. = ..()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/handle_environment()
-	if(m_intent == "run" || resting)
-		..()
-	else
-		adjustToxLoss(-heal_rate)
+	if(icon_state == "alienh_s")	//if the hunter is invisible
+		adjustToxLoss(-heal_rate)	//plasma is spent on invisibility
+	if(storedPlasma < heal_rate)
+		hud_used.move_intent.icon_state = "running"
+		m_intent = MOVE_INTENT_RUN	//get out of invisibility if plasma runs out
+	..()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/handle_hud_icons_health()
 	if (healths)
@@ -75,6 +76,8 @@
 
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
+	if(resting)
+		lay_down()
 	leap_on_click = !leap_on_click
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
@@ -151,3 +154,8 @@
 
 /mob/living/carbon/xenomorph/humanoid/hunter/movement_delay()
 	return(-1 + move_delay_add + config.alien_delay)
+
+/mob/living/carbon/xenomorph/humanoid/hunter/lay_down()
+	if(leap_on_click)
+		toggle_leap()
+	..()

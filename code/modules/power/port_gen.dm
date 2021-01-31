@@ -56,7 +56,7 @@
 	var/max_sheets = 100
 	var/sheet_name = "solid phoron"
 	var/sheet_path = /obj/item/stack/sheet/mineral/phoron
-	var/board_path = "/obj/item/weapon/circuitboard/pacman"
+	var/board_path = /obj/item/weapon/circuitboard/pacman
 	var/sheet_left = 0 // How much is left of the sheet
 	var/time_per_sheet = 40
 	var/heat = 0
@@ -263,7 +263,7 @@
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
 	time_per_sheet = 65
-	board_path = "/obj/item/weapon/circuitboard/pacman/super"
+	board_path = /obj/item/weapon/circuitboard/pacman/super
 
 /obj/machinery/power/port_gen/pacman/super/overheat()
 	explosion(src.loc, 3, 3, 3, -1)
@@ -276,7 +276,7 @@
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
 	power_gen = 40000
 	time_per_sheet = 80
-	board_path = "/obj/item/weapon/circuitboard/pacman/mrs"
+	board_path = /obj/item/weapon/circuitboard/pacman/mrs
 
 /obj/machinery/power/port_gen/pacman/mrs/overheat()
 	explosion(src.loc, 4, 4, 4, -1)

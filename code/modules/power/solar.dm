@@ -104,7 +104,7 @@
 		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
 		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
-		src.dir = angle2dir(adir)
+		src.set_dir(angle2dir(adir))
 	return
 
 

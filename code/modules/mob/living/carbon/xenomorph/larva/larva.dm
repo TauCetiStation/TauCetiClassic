@@ -33,8 +33,20 @@
 //This needs to be fixed
 /mob/living/carbon/xenomorph/larva/Stat()
 	..()
+	stat(null)
 	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+		if(istype(loc, /obj/item/alien_embryo))
+			var/obj/item/alien_embryo/E = loc
+			stat("Прогресс роста эмбриона: [E.growth_counter]/[FULL_EMBRYO_GROWTH]")
+		else
+			stat("Прогресс роста: [amount_grown]/[max_grown]")
+
+//If the player wants to become a ghost while in the embryo, then the control of the embryo must be transferred to the AI
+/mob/living/carbon/xenomorph/larva/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
+	if(istype(src.loc, /obj/item/alien_embryo))
+		var/obj/item/alien_embryo/E = loc
+		E.controlled_by_ai = TRUE
+	return ..()
 
 /mob/living/carbon/xenomorph/larva/toggle_throw_mode()
 	return
@@ -59,13 +71,4 @@
 	return (move_delay_add + config.alien_delay - 1)
 
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
-	return FALSE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_head(targetzone = null)
-	return TRUE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_arm(targetzone = null)
-	return FALSE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
 	return FALSE

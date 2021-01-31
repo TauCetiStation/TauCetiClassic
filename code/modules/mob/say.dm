@@ -60,7 +60,7 @@
 	var/rendered = "<span class='game deadsay linkify emojify'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[message]\"</span></span>"
 
 	for(var/mob/M in player_list)
-		var/tracker = "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> "
+		var/tracker = "[FOLLOW_LINK(M, src)] "
 		if(isnewplayer(M))
 			continue
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
@@ -135,7 +135,7 @@
 	return get_turf(src)
 
 /proc/say_test(text)
-	var/ending = copytext(text, -1)
+	var/ending = copytext_char(text, -1)
 	if (ending == "?")
 		return "1"
 	else if (ending == "!")
