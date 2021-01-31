@@ -161,10 +161,10 @@
 		return
 	if(mode)
 		mode = HEAVEN
-		to_chat(user, "<span class='notice'>Выбраны обычные статую.</span>")
+		to_chat(user, "<span class='notice'>Выбраны обычные статуи.</span>")
 	else
 		mode = CAPTURE
-		to_chat(user, "<span class='notice'>Выбраны статую захвата.</span>")
+		to_chat(user, "<span class='notice'>Выбраны статуи захвата.</span>")
 
 /obj/item/device/cult_camera/proc/feel_pain()
 	to_chat(current_user, "<span class='userdanger'>После взрыва статую вы почувствовали её боль.</span>")

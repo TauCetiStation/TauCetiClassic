@@ -294,7 +294,6 @@
 		var/mob/M = pick(candidates)
 		var/mob/living/carbon/human/H = new(get_turf(AOG))
 		var/area/area = get_area(AOG)
-		slave_enter_area(H, area)
 		H.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
 			"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
 			"<span class='userdanger'>Вы слышите, как течет жидкость.</span>")
@@ -314,6 +313,7 @@
 		to_chat(H, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
 		to_chat(H, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
 
+		slave_enter_area(H, area)
 		RegisterSignal(H, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
 	return TRUE
 

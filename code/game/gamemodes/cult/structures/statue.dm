@@ -23,6 +23,7 @@ var/global/list/capture_statues_list = list()
 	icon_state = "gargoyle"
 
 	health = 100
+	can_unwrench = FALSE
 	var/obj/effect/rune/capture_rune
 
 /obj/structure/cult/statue/capture/atom_init(mapload, obj/effect/rune/R)

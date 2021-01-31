@@ -50,7 +50,9 @@
 		return
 
 	var/obj/effect/overlay/item_illusion/E = pick(lying_illusions) // one pedestal = one type of items
-	to_chat(user, "<span class='notice'>Вам всего нужно положить [lying_illusions.len] - [bicon(E)][initial(E.my_fake_type.name)].</span>")
+	if(!E.fake_icon)
+		E.fake_icon = image(initial(E.my_fake_type.icon), E, initial(E.my_fake_type.icon_state))
+	to_chat(user, "<span class='notice'>Вам нужно положить ещё [lying_illusions.len] - [bicon(E.fake_icon)][initial(E.my_fake_type.name)].</span>")
 
 /obj/structure/pedestal/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it

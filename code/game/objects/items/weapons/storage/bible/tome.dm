@@ -17,6 +17,7 @@
 	var/static/list/rune_next = list()
 	var/rune_cd = 10 SECONDS
 	var/scribe_time = 3 SECONDS
+	var/scribing = FALSE
 
 	var/static/list/build_choices_image = list()
 	var/static/list/rune_choices_image = list()
@@ -56,6 +57,17 @@
 
 	return ..()
 
+/obj/item/weapon/storage/bible/tome/proc/can_destroy(atom/target, mob/user)
+	if(istype(target, /obj/structure/altar_of_gods/cult) && religion.altars.len == 1)
+		to_chat(user, "<span class='warning'>Вы не можете уничтожить последний алтарь.</span>")
+		return FALSE
+	if(istype(target, /obj/structure/cult/tech_table))
+		var/obj/structure/cult/tech_table/T = target
+		if(T.researching)
+			to_chat(user, "<span class='warning'>Вы не можете уничтожить стол, пока идёт исследование.</span>")
+			return FALSE
+	return TRUE
+
 /obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	if(!istype(religion, /datum/religion/cult))
@@ -79,8 +91,7 @@
 		to_chat(user, "<span class='warning'>Ты сможешь уничтожить через [round((destr_next[user.ckey] - world.time) * 0.1)] секунд.</span>")
 		return
 
-	if(istype(target, /obj/structure/altar_of_gods/cult) && religion.altars.len == 1)
-		to_chat(user, "<span class='warning'>Вы не можете уничтожить последний алтарь.</span>")
+	if(!can_destroy(target, user))
 		return
 
 	for(var/datum/building_agent/B in religion.available_buildings)
@@ -116,46 +127,46 @@
 		build_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
 
 /obj/item/weapon/storage/bible/tome/proc/scribe_rune(mob/living/carbon/human/H)
-	if(rune_next[user.ckey] > world.time)
-		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[user.ckey] - world.time) * 0.1)+1] секунд!</span>")
-		return
-	if(religion.max_runes < religion.runes.len)
-		to_chat(user, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
-		return
-
-	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, user)
+	var/datum/building_agent/rune/cult/choice = get_agent_radial_menu(rune_choices_image, H)
 	if(!choice)
 		return
 
-	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
+	if(scribing)
+		to_chat(H, "<span class='warning'>Вы уже рисуете руну!</span>")
 		return
 
-	if(!do_after(user, scribe_time, target = get_turf(user)))
+	if(rune_next[H.ckey] > world.time)
+		to_chat(H, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[H.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
+
+	if(religion.max_runes < religion.runes.len)
+		to_chat(H, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
+		return
+
+	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, H))
+		return
+
+	scribing = TRUE
+	if(!do_after(H, scribe_time, target = get_turf(H)))
+		return
+	scribing = FALSE
 
 	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), ((rand(9) + 1) / 10))
 
-	var/obj/effect/rune/R = new choice.building_type(get_turf(user), religion)
+	var/obj/effect/rune/R = new choice.building_type(get_turf(H), religion)
 	R.icon = rune_choices_image[choice]
 	R.power = new choice.rune_type(R)
 	R.power.religion = religion
 	R.blood_DNA = list()
-	R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
+	R.blood_DNA[H.dna.unique_enzymes] = H.dna.b_type
 
 	new /obj/effect/temp_visual/cult/sparks(get_turf(R))
 
 	religion.adjust_favor(-choice.favor_cost * cost_coef)
 	religion.adjust_piety(-choice.piety_cost * cost_coef)
-	rune_next[user.ckey] = world.time + rune_cd
+	rune_next[H.ckey] = world.time + rune_cd
 
 /obj/item/weapon/storage/bible/tome/proc/building(mob/user)
-	if(build_next[user.ckey] > world.time)
-		to_chat(user, "<span class='warning'>Ты сможешь строить через [round((build_next[user.ckey] - world.time) * 0.1)+1] секунд.</span>")
-		return
-
-	if(!can_build_here(user))
-		return FALSE
-
 	var/datum/building_agent/choice = get_agent_radial_menu(build_choices_image, user)
 	if(!choice)
 		return
@@ -164,7 +175,15 @@
 		toggle_deconstruct = !toggle_deconstruct
 		to_chat(user, "<span class='notice'>Режим разрушения структур [toggle_deconstruct ? "включён" : "выключен"].</span>")
 		return
-	else if(ispath(choice.building_type, /obj/structure/altar_of_gods))
+
+	if(build_next[user.ckey] > world.time)
+		to_chat(user, "<span class='warning'>Ты сможешь строить через [round((build_next[user.ckey] - world.time) * 0.1)+1] секунд.</span>")
+		return
+
+	if(!can_build_here(user))
+		return FALSE
+
+	if(ispath(choice.building_type, /obj/structure/altar_of_gods))
 		var/turf/targeted_turf = get_step(src, user.dir)
 		for(var/obj/structure/altar_of_gods/altar in religion.altars)
 			if(get_dist(targeted_turf, get_turf(altar)) <= 70)

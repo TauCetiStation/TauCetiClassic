@@ -18,8 +18,8 @@
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return
+	..()
 
-	. = ..()
 	if(length(W.hitsound))
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
 	else

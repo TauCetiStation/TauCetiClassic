@@ -50,6 +50,12 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(src.loc)
 	visible_message("<span class='red'>[src] collapses in a shattered heap.</span>")
 	ghostize(bancheck = TRUE)
+	qdel(src)
+
+/mob/living/simple_animal/construct/ghostize(can_reenter_corpse, bancheck)
+	if(!QDELETED(src) && key && ckey)
+		qdel(src)
+	. = ..()
 
 /mob/living/simple_animal/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n"

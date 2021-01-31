@@ -2,6 +2,7 @@
 
 /obj/effect/overlay/item_illusion
 	var/obj/my_fake_type
+	var/image/fake_icon
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /datum/religion_rites/pedestals

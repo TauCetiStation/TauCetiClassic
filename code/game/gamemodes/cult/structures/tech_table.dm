@@ -13,11 +13,13 @@
 	var/static/list/uniq_images = list()
 	// string = image
 	var/static/list/category_images = list()
+
 	var/researching = FALSE
 	var/research_time = 20 MINUTES
 	var/end_research_time
 
 	var/current_research = "Nothing"
+	var/tech_timer
 
 	var/list/pylon_around
 
@@ -25,6 +27,8 @@
 
 /obj/structure/cult/tech_table/Destroy()
 	pylon_around = null
+	if(tech_timer)
+		deltimer(tech_timer)
 	return ..()
 
 /obj/structure/cult/tech_table/examine(mob/user, distance)
@@ -160,9 +164,9 @@
 		P.icon_state = "pylon_glow"
 		P.can_unwrench = FALSE
 	researching = TRUE
-	end_research_time = world.time + research_time - (pylon_around.len SECONDS)
+	end_research_time = max(0, world.time + research_time - (pylon_around.len SECONDS))
 	can_unwrench = FALSE
-	addtimer(end_activity, research_time)
+	tech_timer = addtimer(end_activity, research_time, TIMER_STOPPABLE)
 
 /obj/structure/cult/tech_table/proc/end_activity()
 	researching = FALSE
