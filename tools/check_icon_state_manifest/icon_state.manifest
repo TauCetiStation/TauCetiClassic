@@ -9,5 +9,58 @@
 # the project, or if that icon file exists but does not contain the
 # icon_state that has been specified.
 
-icons/mob/species/vox/helmet.dmi : hardhat_yellow0
-icons/mob/species/vox/helmet.dmi : icons/obj/clothing/hats.dmi
+# Base types for convenience
+
+# Clothing
+# icons/mob/belt.dmi :
+# icons/mob/ears.dmi :
+# icons/mob/eyes.dmi :
+# icons/mob/feet.dmi :
+# icons/mob/hands.dmi :
+# icons/mob/head.dmi :
+# icons/mob/mask.dmi :
+# icons/mob/suit.dmi :
+# icons/mob/suit_fat.dmi :
+# icons/mob/uniform.dmi :
+# icons/mob/uniform_fat.dmi :
+
+# Inhands
+# icons/mob/inhands/clothing_lefthand.dmi :
+# icons/mob/inhands/clothing_righthand.dmi :
+# icons/mob/inhands/guns_lefthand.dmi :
+# icons/mob/inhands/guns_righthand.dmi :
+# icons/mob/inhands/items_lefthand.dmi :
+# icons/mob/inhands/items_righthand.dmi :
+
+
+# Species-specific sprites. All sprites from spritesheets must be in human files too! Check #6806
+
+# Vox Armalis
+icons/mob/feet.dmi : icons/mob/species/armalis/feet.dmi
+icons/mob/hands.dmi : icons/mob/species/armalis/gloves.dmi
+icons/mob/head.dmi : icons/mob/species/armalis/head.dmi
+icons/mob/mask.dmi : icons/mob/species/armalis/mask.dmi
+icons/mob/suit.dmi : icons/mob/species/armalis/suit.dmi
+
+# Skrell
+icons/mob/head.dmi : icons/mob/species/skrell/helmet.dmi
+icons/mob/suit.dmi : icons/mob/species/skrell/suit.dmi
+
+# Tajaran (our lovely cats)
+icons/mob/head.dmi : icons/mob/species/tajaran/helmet.dmi
+icons/mob/suit.dmi : icons/mob/species/tajaran/suit.dmi
+icons/mob/suit_fat.dmi : icons/mob/species/tajaran/suit_fat.dmi
+
+# Unathi
+icons/mob/head.dmi : icons/mob/species/unathi/helmet.dmi
+icons/mob/suit.dmi : icons/mob/species/unathi/suit.dmi
+icons/mob/suit_fat.dmi : icons/mob/species/unathi/suit_fat.dmi
+
+# Vox
+icons/mob/eyes.dmi : icons/mob/species/vox/eyes.dmi
+icons/mob/feet.dmi : icons/mob/species/vox/shoes.dmi
+icons/mob/hands.dmi : icons/mob/species/vox/gloves.dmi
+icons/mob/head.dmi : icons/mob/species/vox/helmet.dmi
+icons/mob/mask.dmi : icons/mob/species/vox/masks.dmi
+icons/mob/suit.dmi : icons/mob/species/vox/suit.dmi
+icons/mob/uniform.dmi : icons/mob/species/vox/uniform.dmi
