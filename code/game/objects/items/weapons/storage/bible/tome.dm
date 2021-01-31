@@ -115,7 +115,7 @@
 		var/atom/build = B.building_type
 		build_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
 
-/obj/item/weapon/storage/bible/tome/proc/scribe_rune(mob/user)
+/obj/item/weapon/storage/bible/tome/proc/scribe_rune(mob/living/carbon/human/H)
 	if(rune_next[user.ckey] > world.time)
 		to_chat(user, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[user.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
@@ -133,8 +133,7 @@
 	if(!do_after(user, scribe_time, target = get_turf(user)))
 		return
 
-	var/mob/living/L = user
-	L.take_overall_damage((rand(9) + 1) / 10)
+	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), ((rand(9) + 1) / 10))
 
 	var/obj/effect/rune/R = new choice.building_type(get_turf(user), religion)
 	R.icon = rune_choices_image[choice]

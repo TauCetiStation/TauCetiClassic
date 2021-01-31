@@ -236,10 +236,10 @@
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
 			if(!BP || BP.is_stump)
 				qdel(src)
 				return PROCESS_KILL
+			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
 		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting

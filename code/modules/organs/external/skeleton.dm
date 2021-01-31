@@ -10,6 +10,8 @@
 
 // Bones just fly away if damage is too high. They also don't care about lasers
 /datum/bodypart_controller/skeleton/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+	if(!BP.owner)
+		return
 	brute = round(brute * BP.owner.species.brute_mod, 0.1)
 
 	if(brute <= 0)

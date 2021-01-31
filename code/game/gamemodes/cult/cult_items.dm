@@ -174,6 +174,7 @@
 
 /obj/item/device/cult_camera/proc/off()
 	if(toggle)
+		UnregisterSignal(camera, list(COMSIG_PARENT_QDELETED))
 		current_user.reset_view()
 		current_user.force_remote_viewing = FALSE
 		camera.icon_state = initial(camera.icon_state)

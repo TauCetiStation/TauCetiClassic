@@ -179,12 +179,12 @@
 	return ..()
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
-	var/area/area = get_area(holder)
-	if(is_centcom_level(user.z) || already_use || istype(area, /turf/space))
-		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
+	if(already_use)
+		to_chat(user, "<span class='warning'>Вы уже захватываете зону.</span>")
 		return FALSE
 
-	if(religion == area.religion)
+	var/area/area = get_area(holder)
+	if(is_centcom_level(user.z) || istype(area, /turf/space) || religion == area.religion)
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
 		return FALSE
 
@@ -237,7 +237,6 @@
 /datum/rune/cult/look_to_future
 	name = "Назад в Будущее"
 	words = list("see", "hell", "self")
-	var/static/image/cash = list()
 
 /datum/rune/cult/look_to_future/can_action(mob/living/carbon/user)
 	var/mob/living/carbon/human/H = locate() in holder.loc
@@ -255,21 +254,14 @@
 		if(istype(A, /turf/simulated/wall))
 			if(religion.wall_types)
 				var/atom/type = pick(religion.wall_types)
-				if(!cash[type])
-					var/image/I = image(initial(type.icon), A, initial(type.icon_state))
-					cash[type] = I
+				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
+				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-wall-[H.name]", I, H)
 
-				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-wall-[user.name]", cash[type], H)
 		else if(istype(A, /turf/simulated/floor))
 			if(religion.floor_types)
 				var/atom/type = pick(religion.floor_types)
-				if(!cash[type])
-					var/image/I = image(initial(type.icon), A, initial(type.icon_state))
-					cash[type] = I
-
-				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-floor-[user.name]", cash[type], H)
-		else if(religion.door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
-			H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-door-[user.name]", null, H, pick(religion.door_types), A)
+				var/image/I = image(initial(type.icon), A, initial(type.icon_state))
+				H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "rune-future-floor-[H.name]", I, H)
 
 /datum/rune/cult/item_port
 	name = "Телепорт Предметов"

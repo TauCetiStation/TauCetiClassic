@@ -145,6 +145,8 @@
 				target.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", I, H)
 				addtimer(CALLBACK(src, .proc/remove_spook_effect, target), 3 MINUTES)
 			else
+				if(!H.contents.len)
+					return
 				var/obj/item/I = pick(H.contents)
 				I.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "nar-sie_hall", null, H, /obj/effect/decal/remains/human, I)
 				addtimer(CALLBACK(src, .proc/remove_spook_effect, I), 3 MINUTES)

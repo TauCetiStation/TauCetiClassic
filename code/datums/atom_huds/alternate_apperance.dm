@@ -192,6 +192,13 @@ var/global/list/active_alternate_appearances = list()
 		if(mobShouldSee(mob))
 			add_hud_to(mob)
 
+/datum/atom_hud/alternate_appearance/basic/observers/Destroy()
+	var/datum/atom_hud/alternate_appearance/AA = target.alternate_appearances[appearance_key]
+	if(AA)
+		target.alternate_appearances[appearance_key] = null
+		target.alternate_appearances -= appearance_key
+	return ..()
+
 /datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
 	return isobserver(M)
 

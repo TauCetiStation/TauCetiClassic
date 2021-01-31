@@ -114,12 +114,12 @@
 	current_research = "[in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)]"
 	start_activity(CALLBACK(src, .proc/upgrade_aspect, choosed_aspect))
 
-/obj/structure/cult/tech_table/proc/upgrade_aspect(datum/religion/R, datum/aspect/aspect_to_upgrade)
-	if(initial(aspect_to_upgrade.name) in R)
-		var/datum/aspect/A = R.aspects[initial(aspect_to_upgrade.name)]
+/obj/structure/cult/tech_table/proc/upgrade_aspect(datum/aspect/aspect_to_upgrade)
+	if(initial(aspect_to_upgrade.name) in religion)
+		var/datum/aspect/A = religion.aspects[initial(aspect_to_upgrade.name)]
 		A.power += 1
 	else
-		R.add_aspects(list(aspect_to_upgrade.type = 1))
+		religion.add_aspects(list(aspect_to_upgrade.type = 1))
 
 	end_activity()
 
