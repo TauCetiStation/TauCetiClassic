@@ -290,12 +290,8 @@
 	var/list/bodyparts = H.get_damageable_bodyparts()
 	if(!bodyparts.len)
 		return
-	var/list/equipped = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
-	var/covered = 0
 
-	for(var/obj/item/clothing/C in equipped) // get covered bodyparts flags
-		covered |= C.body_parts_covered
-
+	var/covered = get_human_covering(H)
 	var/list/targets = list()
 
 	for(var/obj/item/organ/external/BP in bodyparts) // get uncovered bodyparts
