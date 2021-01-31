@@ -24,6 +24,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/has_enabled_antagHUD = 0
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY) // Data huds allowed all ghost
 	var/data_hud = FALSE
 	var/antagHUD = FALSE
 	universal_speak = 1
@@ -94,6 +95,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	observer_list += src
 
 /mob/dead/observer/Destroy()
+	if(data_hud)
+		remove_data_huds()
 	observer_list -= src
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
@@ -253,6 +256,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
+/mob/dead/observer/proc/show_data_huds()
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = global.huds[hudtype]
+		H.add_hud_to(src)
+
+/mob/dead/observer/proc/remove_data_huds()
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = global.huds[hudtype]
+		H.remove_hud_from(src)
+
 /mob/dead/observer/verb/toggle_allHUD()
 	set category = "Ghost"
 	set name = "Toggle HUDs"
@@ -264,18 +277,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "Please disable antag-HUD or combo-HUDs in the admin tab.")
 		return
 
-	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY) // Data huds allowed all ghost
 	if(data_hud)
 		data_hud = !data_hud
-		for(var/hudtype in datahuds)
-			var/datum/atom_hud/H = global.huds[hudtype]
-			H.remove_hud_from(src)
+		show_data_huds()
 		to_chat(src, "<span class='info'><B>HUDs Disabled</B></span>")
 	else
 		data_hud = !data_hud
-		for(var/hudtype in datahuds)
-			var/datum/atom_hud/H = global.huds[hudtype]
-			H.add_hud_to(src)
+		remove_data_huds()
 		to_chat(src, "<span class='info'><B>HUDs Enabled</B></span>")
 
 /mob/dead/observer/verb/toggle_antagHUD()

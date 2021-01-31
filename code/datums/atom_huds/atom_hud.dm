@@ -54,11 +54,15 @@ var/global/list/huds[23]
 	global.all_huds -= src
 	return ..()
 
-/datum/atom_hud/proc/remove_hud_from(mob/M)
+/datum/atom_hud/proc/remove_hud_from(mob/M, absolute = FALSE)
 	if(!M || !hudusers[M])
 		return
+	if (absolute || !--hudusers[M])
+		UnregisterSignal(M, COMSIG_PARENT_QDELETED)
 	if (!--hudusers[M])
 		hudusers -= M
+		if(next_time_allowed[M])
+			next_time_allowed -= M
 		if(queued_to_see[M])
 			queued_to_see -= M
 		else
@@ -84,6 +88,7 @@ var/global/list/huds[23]
 		return
 	if(!hudusers[M])
 		hudusers[M] = 1
+		RegisterSignal(M, COMSIG_PARENT_QDELETED, .proc/unregister_mob)
 		if(next_time_allowed[M] > world.time)
 			if(!queued_to_see[M])
 				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, M), next_time_allowed[M] - world.time)
@@ -94,6 +99,10 @@ var/global/list/huds[23]
 				add_to_single_hud(M, A)
 	else
 		hudusers[M]++
+
+/datum/atom_hud/proc/unregister_mob(datum/source, force)
+	SIGNAL_HANDLER
+	remove_hud_from(source, TRUE)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(hud_user, hidden_atom)
 	if(hudusers[hud_user])
