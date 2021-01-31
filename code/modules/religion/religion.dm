@@ -301,6 +301,7 @@
 				var/turf/simulated/wall/W = A
 				if(wall_types)
 					W.ChangeTurf(pick(wall_types))
+
 			else if(istype(A, /turf/simulated/floor))
 				var/turf/simulated/floor/F = A
 				if(A.icon_state == "carpetsymbol")
@@ -310,16 +311,19 @@
 					C.ChangeTurf(carpet_type)
 				else if(floor_types)
 					F.ChangeTurf(pick(floor_types))
+
 		else if(istype(A, /obj/structure/stool/bed/chair/pew))
 			var/obj/structure/stool/bed/chair/pew/P = A
 			P.pew_icon = pews_icon_state
 			P.update_icon()
+
 		else if(istype(A, /obj/structure/altar_of_gods))
 			var/obj/structure/altar_of_gods/G = A
 			G.religion = src
 			altars += G
 			G.icon_state = altar_icon_state
 			G.update_icon()
+
 		else if(door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
 			var/type = pick(door_types)
 			new type(get_turf(A))
