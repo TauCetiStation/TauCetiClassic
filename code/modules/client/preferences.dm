@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 var/list/preferences_datums = list()
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -394,7 +392,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()
-		W.dir = character.dir
+		W.set_dir(character.dir)
 		W.buckled_mob = character
 		W.add_fingerprint(character)
 

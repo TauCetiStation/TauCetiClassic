@@ -352,7 +352,7 @@ commented cause polls are kinda broken now, needs refactoring */
 	// Moving wheelchair if they have one
 	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
 		character.buckled.loc = character.loc
-		character.buckled.dir = character.dir
+		character.buckled.set_dir(character.dir)
 
 	SSticker.mode.latespawn(character)
 

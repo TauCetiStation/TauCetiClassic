@@ -13,10 +13,10 @@
 	//var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 
-/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
+/datum/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message]</span>")
+			to_chat(O, "<span class='ghostalert'>[FOLLOW_LINK(O, src)] [message]</span>")
 			if(ghost_sound)
 				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
@@ -154,6 +154,9 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+	INVOKE_ASYNC(src, .proc/begin_the_end)
+
+/obj/singularity/narsie/large/proc/begin_the_end()
 	narsie_spawn_animation()
 	invisibility = 60
 
@@ -294,7 +297,7 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/effects/narsie_spawn_anim.dmi'
-	dir = SOUTH
+	set_dir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)

@@ -106,6 +106,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	var/dropamt = 2
 
 /obj/effect/meteor/atom_init()
+	. = ..()
 	z_original = loc.z
 
 /obj/effect/meteor/Move()

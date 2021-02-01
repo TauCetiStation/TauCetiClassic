@@ -32,15 +32,15 @@
 
 				if(movement_target) // Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
-						dir = WEST
+						set_dir(WEST)
 					else if (movement_target.loc.x > src.x)
-						dir = EAST
+						set_dir(EAST)
 					else if (movement_target.loc.y < src.y)
-						dir = SOUTH
+						set_dir(SOUTH)
 					else if (movement_target.loc.y > src.y)
-						dir = NORTH
+						set_dir(NORTH)
 					else
-						dir = SOUTH
+						set_dir(SOUTH)
 
 					if(isturf(movement_target.loc) )
 						movement_target.attack_animal(src)
@@ -51,7 +51,7 @@
 		if(prob(1))
 			emote("me",1,pick("dances around","chases its tail"))
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-				dir = i
+				set_dir(i)
 				sleep(1)
 
 	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
