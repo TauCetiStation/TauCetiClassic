@@ -97,48 +97,51 @@
 	"S_live" = 0, "S_dead" = 0, "S_key" = "",
 	"H_live" = 0, "H_dead" = 0, "H_key" = "",
 	"L_live" = 0, "L_dead" = 0, "L_key" = "")
-	for(var/mob/living/carbon/xenomorph/A in alien_list)
-		var/turf/xeno_loc = get_turf(A)
-		if(!is_station_level(xeno_loc.z))
+	for(var/key in alien_list)
+		if(key == ALIEN_FACEHAGGER)
 			continue
-		if(isfacehugger(A))
-			continue
-		if(isxenolarva(A))
-			if(A.stat == DEAD || !A.key)
-				aliens["L_dead"]++
-			else
-				aliens["L_live"]++
-				aliens["L_key"] += " [A.key];"
-			continue
-		if(isxenohunter(A))
-			if(A.stat == DEAD || !A.key)
-				aliens["H_dead"]++
+		for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+			var/turf/xeno_loc = get_turf(A)
+			if(!xeno_loc)
 				continue
-			else
-				aliens["H_live"]++
-				aliens["H_key"] += " [A.key];"
-		if(isxenosentinel(A))
-			if(A.stat == DEAD || !A.key)
-				aliens["S_dead"]++
+			if(!is_station_level(xeno_loc.z))
 				continue
-			else
-				aliens["S_live"]++
-				aliens["S_key"] += " [A.key];"
-		if(isxenodrone(A))
-			if(A.stat == DEAD || !A.key)
-				aliens["D_dead"]++
+			if(key == ALIEN_QUEEN)
+				if(A.stat == DEAD || !A.key)
+					aliens["Q_dead"]++
+					continue
+				else
+					aliens["Q_live"]++
+					aliens["Q_key"] = "[A.key]"	//there can only be one queen
+			if(key == ALIEN_DRONE)
+				if(A.stat == DEAD || !A.key)
+					aliens["D_dead"]++
+					continue
+				else
+					aliens["D_live"]++
+					aliens["D_key"] += " [A.key];"
+			if(key == ALIEN_SENTINEL)
+				if(A.stat == DEAD || !A.key)
+					aliens["S_dead"]++
+					continue
+				else
+					aliens["S_live"]++
+					aliens["S_key"] += " [A.key];"
+			if(key == ALIEN_HUNTER)
+				if(A.stat == DEAD || !A.key)
+					aliens["H_dead"]++
+					continue
+				else
+					aliens["H_live"]++
+					aliens["H_key"] += " [A.key];"
+			if(key == ALIEN_LARVA)
+				if(A.stat == DEAD || !A.key)
+					aliens["L_dead"]++
+				else
+					aliens["L_live"]++
+					aliens["L_key"] += " [A.key];"
 				continue
-			else
-				aliens["D_live"]++
-				aliens["D_key"] += " [A.key];"
-		if(isxenoqueen(A))
-			if(A.stat == DEAD || !A.key)
-				aliens["Q_dead"]++
-				continue
-			else
-				aliens["Q_live"]++
-				aliens["Q_key"] = "[A.key]"	//there can only be one queen
-		count ++
+			count ++
 
 	if(in_detail)
 		return aliens

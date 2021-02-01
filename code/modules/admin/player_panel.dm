@@ -592,7 +592,7 @@
 			dat += "<br><table><tr><td><B>Статистика</B></td><td></td></tr>"
 			dat += "<tr><td>Экипаж:</td><td>[data[TOTAL_HUMAN]]</td></tr>"
 			dat += "<tr><td>Взрослые ксеноморфы:</td><td>[data[TOTAL_ALIEN]]</td></tr>"
-			dat += "<tr><td>Победа:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
+			dat += "<tr><td>Процент победы:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
 
 		if(alien_list.len)
 			var/list/datum/mind/queen_mind = list()
@@ -601,27 +601,28 @@
 			var/list/datum/mind/hunter_mind = list()
 			var/list/datum/mind/larva_mind = list()
 			var/list/datum/mind/faceh_mind = list()
-			for(var/mob/living/carbon/xenomorph/A in alien_list)
-				if(A.stat == DEAD || !A.mind)
-					continue
-				if(isxenoqueen(A))
-					queen_mind += A.mind
-					continue
-				if(isxenodrone(A))
-					drone_mind += A.mind
-					continue
-				if(isxenosentinel(A))
-					sentinel_mind += A.mind
-					continue
-				if(isxenohunter(A))
-					hunter_mind += A.mind
-					continue
-				if(isxenolarva(A))
-					larva_mind += A.mind
-					continue
-				if(isfacehugger(A))
-					faceh_mind += A.mind
-					continue
+			for(var/key in alien_list)
+				for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+					if(A.stat == DEAD || !A.mind)
+						continue
+					if(key == ALIEN_QUEEN)
+						queen_mind += A.mind
+						continue
+					if(key == ALIEN_DRONE)
+						drone_mind += A.mind
+						continue
+					if(key == ALIEN_SENTINEL)
+						sentinel_mind += A.mind
+						continue
+					if(key == ALIEN_HUNTER)
+						hunter_mind += A.mind
+						continue
+					if(key == ALIEN_LARVA)
+						larva_mind += A.mind
+						continue
+					if(key == ALIEN_FACEHAGGER)
+						faceh_mind += A.mind
+						continue
 			if(queen_mind.len)
 				dat += check_role_table("Королева", queen_mind, src, FALSE)
 			if(drone_mind.len)
