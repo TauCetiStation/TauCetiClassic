@@ -15,6 +15,7 @@
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, DIAG_BATT_HUD)
+	typing_indicator_type = "machine"
 
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.

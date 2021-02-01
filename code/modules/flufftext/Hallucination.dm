@@ -366,7 +366,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
-			src.dir = get_dir(src,my_target)
+			src.set_dir(get_dir(src,my_target))
 			step_towards(src,my_target)
 			updateimage()
 		else

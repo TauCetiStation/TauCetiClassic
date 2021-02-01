@@ -129,8 +129,8 @@
 	healthcheck()
 	return
 
-/obj/structure/alien/resin/attack_paw()
-	return attack_hand()
+/obj/structure/alien/resin/attack_paw(mob/user)
+	return attack_hand(user)
 
 /obj/structure/alien/resin/attack_alien(mob/user)
 	user.do_attack_animation(src)

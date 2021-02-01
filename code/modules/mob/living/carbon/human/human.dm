@@ -1455,6 +1455,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		for(var/A in species.additional_languages)
 			add_language(A)
 
+	typing_indicator_type = species.typing_indicator_type
+
 	species.handle_post_spawn(src)
 	species.on_gain(src)
 
