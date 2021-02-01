@@ -157,44 +157,17 @@
 				stat("Королева в сознании: [queen.stat ? "Нет" : "Да"]")
 				stat(null) //for readability
 
-		var/drone = 0
-		var/hunter = 0
-		var/sentinel = 0
-		var/larva = 0
-		var/hugger = 0
-
-		for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_DRONE])
-			if(A.stat == DEAD || !A.key)
-				continue
-			drone++
-		for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_SENTINEL])
-			if(A.stat == DEAD || !A.key)
-				continue
-			sentinel++
-		for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_HUNTER])
-			if(A.stat == DEAD || !A.key)
-				continue
-			hunter++
-		for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_LARVA])
-			if(A.stat == DEAD || !A.key)
-				continue
-			larva++
-		for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_FACEHAGGER])
-			if(A.stat == DEAD || !A.key)
-				continue
-			hugger++
-
 		stat("Статус Улья:")
-		if(drone)
-			stat("Трутни: [drone]")
-		if(hunter)
-			stat("Охотники: [hunter]")
-		if(sentinel)
-			stat("Стражи: [sentinel]")
-		if(larva)
-			stat("Грудоломы: [larva]")
-		if(hugger)
-			stat("Лицехваты: [hugger]")
+		for(var/key in alien_list)
+			var/count = 0
+			if(key == ALIEN_QUEEN)
+				continue
+			for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+				if(A.stat == DEAD || !A.key)
+					continue
+				count++
+			if(count)
+				stat("[key]: [count]")
 
 /mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)

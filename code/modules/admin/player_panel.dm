@@ -595,46 +595,14 @@
 			dat += "<tr><td>Процент победы:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
 
 		if(alien_list.len)
-			var/list/datum/mind/queen_mind = list()
-			var/list/datum/mind/drone_mind = list()
-			var/list/datum/mind/sentinel_mind = list()
-			var/list/datum/mind/hunter_mind = list()
-			var/list/datum/mind/larva_mind = list()
-			var/list/datum/mind/faceh_mind = list()
 			for(var/key in alien_list)
+				var/list/datum/mind/alien_minds = list()
 				for(var/mob/living/carbon/xenomorph/A in alien_list[key])
 					if(A.stat == DEAD || !A.mind)
 						continue
-					if(key == ALIEN_QUEEN)
-						queen_mind += A.mind
-						continue
-					if(key == ALIEN_DRONE)
-						drone_mind += A.mind
-						continue
-					if(key == ALIEN_SENTINEL)
-						sentinel_mind += A.mind
-						continue
-					if(key == ALIEN_HUNTER)
-						hunter_mind += A.mind
-						continue
-					if(key == ALIEN_LARVA)
-						larva_mind += A.mind
-						continue
-					if(key == ALIEN_FACEHAGGER)
-						faceh_mind += A.mind
-						continue
-			if(queen_mind.len)
-				dat += check_role_table("Королева", queen_mind, src, FALSE)
-			if(drone_mind.len)
-				dat += check_role_table("Трутни", drone_mind, src, FALSE)
-			if(sentinel_mind.len)
-				dat += check_role_table("Стражи", sentinel_mind, src, FALSE)
-			if(hunter_mind.len)
-				dat += check_role_table("Охотники", hunter_mind, src, FALSE)
-			if(larva_mind.len)
-				dat += check_role_table("Грудоломы", larva_mind, src, FALSE)
-			if(faceh_mind.len)
-				dat += check_role_table("Лицехваты", faceh_mind, src, FALSE)
+					alien_minds += A.mind
+				if(alien_minds.len)
+					dat += check_role_table(key, alien_minds, src, FALSE)
 
 		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 400, 500)
 		popup.set_content(dat)

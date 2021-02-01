@@ -5,12 +5,12 @@
 #define WIN_PERCENT			150
 
 //alien list
-#define ALIEN_QUEEN			"q"
-#define ALIEN_DRONE			"d"
-#define ALIEN_SENTINEL		"s"
-#define ALIEN_HUNTER		"h"
-#define ALIEN_LARVA			"l"
-#define ALIEN_FACEHAGGER	"f"
+#define ALIEN_QUEEN			"Королева"
+#define ALIEN_DRONE			"Трутни"
+#define ALIEN_SENTINEL		"Стражи"
+#define ALIEN_HUNTER		"Охотники"
+#define ALIEN_LARVA			"Грудоломы"
+#define ALIEN_FACEHAGGER	"Лицехваты"
 
 //alien embryo
 #define MAX_EMBRYO_GROWTH 40
