@@ -18,3 +18,5 @@ jobs:
 
     - name: Verify Manifest
       run: bash tools/check_icon_state_manifest/action.sh
+    - with:
+        conclusion: neutral
