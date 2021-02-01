@@ -10,7 +10,6 @@
 	var/obj/item/emag = null
 	var/obj/item/borg/upgrade/jetpack = null
 	var/list/stacktypes
-	var/spamcheck = 0
 
 /obj/item/weapon/robot_module/atom_init()
 	. = ..()
@@ -216,6 +215,7 @@
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
+	var/spamcheck = FALSE
 
 /obj/item/weapon/robot_module/security/atom_init()
 	. = ..()
