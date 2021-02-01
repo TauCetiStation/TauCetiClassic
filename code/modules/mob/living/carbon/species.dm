@@ -947,6 +947,8 @@
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
+	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
+
 	return ..()
 
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)

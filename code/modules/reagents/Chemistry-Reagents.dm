@@ -145,7 +145,7 @@
 	return TRUE
 
 /datum/reagent/proc/on_skeleton_digest(mob/living/M)
-	return TRUE
+	return FALSE
 
 /datum/reagent/proc/on_shadowling_digest(mob/living/M)
 	return TRUE
