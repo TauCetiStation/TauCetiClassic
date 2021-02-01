@@ -325,19 +325,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/pois = list()
 	var/list/namecounts = list()
 
-	if(!mobs_only)
-		for(var/atom/A in poi_list)
-			if(!A || !A.loc)
-				continue
-			var/name = A.name
-			if (names.Find(name))
-				namecounts[name]++
-				name = "[name] ([namecounts[name]])"
-			else
-				names.Add(name)
-				namecounts[name] = 1
-			pois[name] = A
-
 	if(with_mobs)
 		for(var/mob/M in mobs)
 			if(skip_mindless && (!M.mind && !M.ckey))
@@ -362,6 +349,20 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				else
 					name += " \[dead\]"
 			pois[name] = M
+			to_chat(world, "[M]")
+
+	if(!mobs_only)
+		for(var/atom/A in poi_list)
+			if(!A || !A.loc)
+				continue
+			var/name = A.name
+			if (names.Find(name))
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
+			else
+				names.Add(name)
+				namecounts[name] = 1
+			pois[name] = A
 
 	return pois
 

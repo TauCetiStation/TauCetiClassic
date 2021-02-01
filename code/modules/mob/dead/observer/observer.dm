@@ -351,7 +351,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(FALSE, TRUE)
+	var/list/mobs = getpois(TRUE, TRUE)
 	var/input = input("Please, select a object!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
 	if(!target)
@@ -420,6 +420,24 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
+
+/mob/dead/observer/verb/jumptoobj()
+	set name = "Points of interest"
+	set desc = "Teleport to a obj."
+	set category = "Ghost"
+
+	if(!istype(usr, /mob/dead/observer))
+		return
+
+	var/list/pois = getpois(FALSE, TRUE)
+	var/input = input("Please, select a object!", "Teleport", null, null) as null|anything in pois
+	var/atom/target = pois[input]
+	if(!target)
+		return
+	var/turf/T = get_turf(target)
+	if(T)
+		forceMove(T)
+		update_parallax_contents()
 
 /*
 /mob/dead/observer/verb/boo()
