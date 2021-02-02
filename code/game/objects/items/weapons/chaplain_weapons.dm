@@ -19,6 +19,9 @@
 
 	var/tried_replacing = FALSE
 
+	var/deconvert_turf_cd = 5 SECONDS
+	var/next_deconvert = 0
+
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='userdanger'>[user] is impaling himself with the [name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
@@ -76,6 +79,30 @@
 		if(iscultist(A) || is_type_in_typecache(A, scum))
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+
+/obj/item/weapon/nullrod/proc/convert_effect(turf/T, turf_type)
+	new /obj/effect/temp_visual/religion/pulse(T)
+	sleep(8)
+	T.ChangeTurf(turf_type)
+
+/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !user.my_religion || !global.cult_religion || !isturf(target) || next_deconvert > world.time)
+		return
+
+	// Captured area is too strong
+	var/area/A = get_area(target)
+	if(A.religion && istype(A.religion, global.cult_religion.type))
+		to_chat(user, "<span class='danger'>Вам не хватает силы для этого!</span>")
+		return
+
+	// If it's not a cult type, then don't do it.
+	var/turf/T = target
+	if(T.type in global.cult_religion.wall_types)
+		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/wall)
+	else if(T.type in global.cult_religion.floor_types)
+		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/floor)
+
+	next_deconvert = world.time + deconvert_turf_cd
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
 	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")

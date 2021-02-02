@@ -31,7 +31,7 @@
 	. = ..()
 	rad_choices["Chapel looks"] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left")
 	rad_choices["Runes"] = image(icon = 'icons/obj/rune.dmi', icon_state = "[rand(1, 6)]")
-	rad_choices["Construction"] = image(icon = 'icons/turf/walls/cult/wall.dmi', icon_state = "box")
+	rad_choices["Construction"] = image(icon = 'icons/turf/walls/cult/runed_anim.dmi', icon_state = "box")
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
 	if((iscultist(user) || isobserver(user)) && religion)

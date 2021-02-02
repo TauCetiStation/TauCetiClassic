@@ -14,3 +14,8 @@
 
 /obj/effect/temp_visual/cult/blood/out
 	icon_state = "bloodout"
+
+/obj/effect/temp_visual/religion/pulse
+	icon_state = "religion_pulse"
+	duration = 11
+	color = "#ffff00"
