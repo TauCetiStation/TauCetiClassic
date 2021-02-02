@@ -119,6 +119,8 @@
 	return FALSE
 
 /obj/item/weapon/gripper/proc/get_item(datum/source, mob/user)
+	if(QDELETED(wrapped))
+		wrapped = null
 	if(wrapped)
 		return wrapped
 	return src //return src to signal COMSIG_HAND_ATTACK
@@ -189,6 +191,8 @@
 
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
+	if(QDELETED(wrapped))
+		wrapped = null
 	if(wrapped)
 		to_chat(user, "It is holding \a [wrapped].")
 
