@@ -21,7 +21,7 @@
 
 	if(target)
 		update_networks()
-		dir = target.dir
+		set_dir(target.dir)
 
 /obj/machinery/clamp/proc/update_networks()
 	if(!target)

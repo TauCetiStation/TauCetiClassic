@@ -124,7 +124,7 @@
 
 /obj/structure/stool/bed/chair/pedalgen/proc/update_mob(mob/M, buckling = 0)
 	if(M == buckled_mob)
-		M.dir = dir
+		M.set_dir(dir)
 		var/new_pixel_x = 0
 		var/new_pixel_y = 0
 		switch(dir)
