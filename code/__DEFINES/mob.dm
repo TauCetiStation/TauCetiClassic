@@ -158,13 +158,13 @@
 #define MAX_BRAIN_DAMAGE  80
 
 // Gluttony levels.
-#define GLUT_ITEM_TINY 1       // Eat items with a w_class of small or smaller
-#define GLUT_ITEM_NORMAL 2     // Eat items with a w_class of normal or smaller
-#define GLUT_ITEM_ANYTHING 3    // Eat any item
+#define GLUT_ITEM_TINY     (1<<0) //Eat items with a w_class of small or smaller
+#define GLUT_ITEM_NORMAL   (1<<1) //Eat items with a w_class of normal or smaller
+#define GLUT_ITEM_ANYTHING (1<<3) //Eat any item
 
-#define GLUT_TINY 4      // Eat anything tiny and smaller
-#define GLUT_SMALLER 8    // Eat anything smaller than we are
-#define GLUT_ANYTHING 11 // Eat anything, ever
+#define GLUT_TINY          (1<<4) //Eat anything tiny and smaller
+#define GLUT_SMALLER       (1<<5) //Eat anything smaller than we are
+#define GLUT_ANYTHING      (1<<6) //Eat anything, ever
 
 // Defines mob sizes, used by lockers and to determine what is considered a small sized mob, etc.
 #define MOB_LARGE  		40

@@ -539,24 +539,25 @@
 		qdel(src)
 
 /obj/item/organ/internal/stomach/proc/get_devour_time(atom/movable/food)
+	var/glut = owner.species.gluttonous
 	if(iscarbon(food) || isanimal(food))
 		var/mob/living/L = food
-		if((owner.species.gluttonous & GLUT_TINY) && (L.mob_size <= MOB_TINY)) // Anything MOB_TINY or smaller
-			return DEVOUR_SLOW
-		else if((owner.species.gluttonous & GLUT_SMALLER) && owner.mob_size > L.mob_size) // Anything we're larger than
-			return DEVOUR_SLOW
-		else if(owner.species.gluttonous & GLUT_ANYTHING) // Eat anything ever
+		if(glut & GLUT_ANYTHING) // Eat anything ever
 			return DEVOUR_FAST
+		else if((glut & GLUT_TINY) && (L.mob_size <= MOB_TINY)) // Anything MOB_TINY or smaller
+			return DEVOUR_SLOW
+		else if((glut & GLUT_SMALLER) && owner.mob_size > L.mob_size) // Anything we're larger than
+			return DEVOUR_SLOW
 
 	else if(istype(food, /obj/item) && !istype(food, /obj/item/weapon/holder)) //Don't eat holders. They are special.
 		var/obj/item/I = food
 		var/cost = I.get_storage_cost()
 		if(cost != ITEM_SIZE_NO_CONTAINER)
-			if((owner.species.gluttonous & GLUT_ITEM_TINY) && cost < 4)
-				return DEVOUR_SLOW
-			else if((owner.species.gluttonous & GLUT_ITEM_NORMAL) && cost <= 4)
-				return DEVOUR_SLOW
-			else if(owner.species.gluttonous & GLUT_ITEM_ANYTHING)
+			if(glut & GLUT_ITEM_ANYTHING)
 				return DEVOUR_FAST
+			else if((glut & GLUT_ITEM_TINY) && cost < 4)
+				return DEVOUR_SLOW
+			else if((glut & GLUT_ITEM_NORMAL) && cost <= 4)
+				return DEVOUR_SLOW
 
 	return FALSE
