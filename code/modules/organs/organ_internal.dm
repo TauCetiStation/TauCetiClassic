@@ -545,7 +545,7 @@
 	if(prob(10))
 		if(reagents && reagents.total_volume)
 			reagents.trans_to(S, reagents.total_volume * (damage / health))
-		else
+		else if(digestion_product)
 			S.reagents.add_reagent(digestion_product, damage)
 
 	if(S.health <= 0)
