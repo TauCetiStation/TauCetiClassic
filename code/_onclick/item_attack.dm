@@ -61,7 +61,7 @@
 	return I.attack(src, user, user.get_targetzone())
 
 /mob/living/carbon/human/attackby(obj/item/I, mob/user)
-	if(user == src && zone_sel.selecting == O_MOUTH && a_intent == INTENT_GRAB)
+	if(user == src && zone_sel.selecting == O_MOUTH && a_intent == INTENT_GRAB && !is_busy())
 		if(!CanEat(src, I, "eat"))
 			return
 

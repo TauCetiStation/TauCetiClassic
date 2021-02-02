@@ -528,10 +528,13 @@
 		S.reagents.add_reagent(digestion_product, rand(1,3))
 
 /obj/item/digest_act(obj/item/organ/internal/stomach/S)
-	var/damage = max(0.1, (1 - S.health / S.maxHealth) * 10)
+	var/damage = max(0.5, (1 - S.health / S.maxHealth) * 10)
 	health -= damage
-	if(prob(10) && digestion_product)
-		S.reagents.add_reagent(digestion_product, damage)
+	if(prob(10))
+		if(reagents && reagents.total_volume)
+			reagents.trans_to(S, reagents.total_volume * (damage / health))
+		else
+			S.reagents.add_reagent(digestion_product, damage)
 
 	if(S.health <= 0)
 		for(var/obj/item/I in contents)
