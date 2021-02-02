@@ -147,11 +147,11 @@
 	var/slots = get_equipment_slots()
 	switch(faction)
 		if("loyalist")
-			if(captains_key) del(captains_key)
+			if(captains_key) qdel(captains_key)
 			captains_key = new(H)
 			H.equip_in_one_of_slots(captains_key, slots)
 		if("mutineer")
-			if(secondary_key) del(secondary_key)
+			if(secondary_key) qdel(secondary_key)
 			secondary_key = new(H)
 			H.equip_in_one_of_slots(secondary_key, slots)
 

@@ -178,11 +178,11 @@
 		..()
 
 /obj/item/weapon/haircomb //sparklysheep's comb
-	name = "purple comb"
-	desc = "A pristine purple comb made from flexible plastic."
+	name = "black comb"
+	desc = "A pristine black comb made from flexible plastic."
 	w_class = ITEM_SIZE_TINY
 	icon = 'icons/obj/items.dmi'
-	icon_state = "purplecomb"
+	icon_state = "blackcomb"
 	item_state = "purplecomb"
 
 /obj/item/weapon/haircomb/attack_self(mob/user)
@@ -331,7 +331,7 @@
 			LAZYSET(char_render_holders, "[D]", O)
 			barber.client.screen |= O
 		O.appearance = MA
-		O.dir = D
+		O.set_dir(D)
 		O.screen_loc = "barber_preview_map:[pos],0"
 
 /obj/item/weapon/scissors/proc/clear_character_previews()

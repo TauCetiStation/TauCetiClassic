@@ -795,9 +795,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
-	dir = ndir
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
-		buckled.dir = ndir
+		buckled.set_dir(ndir)
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
 	return 1

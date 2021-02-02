@@ -9,6 +9,8 @@
 	req_access = list(access_syndicate)
 	mob_size = MOB_SMALL
 
+	typing_indicator_type = "syndibot"
+
 	var/static/image/sword_overlay
 
 /mob/living/silicon/robot/syndicate/atom_init()

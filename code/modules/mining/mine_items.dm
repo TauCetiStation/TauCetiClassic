@@ -114,7 +114,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
-	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
+	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/ui_interact(user)
@@ -266,7 +266,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
 	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
-		user.dir = i
+		user.set_dir(i)
 		sleep(1)
 
 /obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
@@ -501,7 +501,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	cell_type = /obj/item/weapon/stock_parts/cell/crap
 	var/recharge_time = 20
 	var/already_improved = FALSE
 

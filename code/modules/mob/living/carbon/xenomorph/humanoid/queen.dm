@@ -1,8 +1,8 @@
 /mob/living/carbon/xenomorph/humanoid/queen
 	name = "alien queen"
 	caste = "q"
-	maxHealth = 300
-	health = 300
+	maxHealth = 400
+	health = 400
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
 	pixel_x = -16
@@ -88,7 +88,7 @@
 		add_overlay(I)
 
 /mob/living/carbon/xenomorph/humanoid/queen/movement_delay()
-	return(5 + move_delay_add + config.alien_delay)
+	return(3 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/queen/can_inject(mob/user, def_zone, show_message = TRUE, penetrate_thick = FALSE)
 	return FALSE

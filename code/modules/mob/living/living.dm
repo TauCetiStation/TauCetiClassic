@@ -8,12 +8,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/medical/medhud in global.huds)
-		medhud.add_to_hud(src)
-	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
-	diaghud.add_to_hud(src)
-	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
-	sechud.add_to_hud(src)
+	for(var/datum/atom_hud/data/hud in global.huds)
+		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
@@ -217,10 +213,9 @@
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
-		src.adjustOxyLoss(src.health + 200)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+		adjustOxyLoss(health - config.health_threshold_dead)
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
-
+		death()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -405,6 +400,18 @@
 	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
+
+/mob/living/airlock_crush_act()
+	var/turf/mob_turf = get_turf(src)
+	for(var/dir in cardinal)
+		var/turf/new_turf = get_step(mob_turf, dir)
+		if(Move(new_turf))
+			break
+	AdjustStunned(5)
+	AdjustWeakened(5)
+	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
+	visible_message("<span class='red'>[src] was crushed by the door.</span>",
+					"<span class='danger'>The door crushed you.</span>")
 
 /mob/living/singularity_pull(S)
 	step_towards(src,S)

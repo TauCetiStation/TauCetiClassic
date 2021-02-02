@@ -17,6 +17,8 @@
 	var/colour = "grey"
 	ventcrawler = 2
 
+	typing_indicator_type = "slime"
+
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime
 
@@ -36,6 +38,8 @@
 	mob_size = MOB_LARGE
 	digestion_product = "slimejelly"
 	var/colour = "grey"
+
+	typing_indicator_type = "slime"
 
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime

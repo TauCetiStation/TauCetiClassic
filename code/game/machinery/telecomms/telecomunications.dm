@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /*
 	Hello, friends, this is Doohl from sexylands. You may be wondering what this
 	monstrous code file is. Sit down, boys and girls, while I tell you the tale.
@@ -31,7 +29,6 @@
 	var/delay = 10 // how many process() ticks to delay per heat
 	var/heating_power = 40000
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
-	var/circuitboard = null // string pointing to a circuitboard type
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
 
@@ -53,7 +50,7 @@
 
 // Loop through all linked machines and send the signal or copy.
 	for(var/obj/machinery/telecomms/machine in links)
-		if(filter && !istype( machine, text2path(filter) ))
+		if(filter && !istype(machine, filter))
 			continue
 		if(!machine.on)
 			continue
@@ -269,7 +266,6 @@
 	idle_power_usage = 30
 	machinetype = 1
 	heatgen = 0
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/receiver"
 
 /obj/machinery/telecomms/receiver/atom_init()
 	. = ..()
@@ -297,9 +293,9 @@
 			//Remove the level and then start adding levels that it is being broadcasted in.
 			signal.data["level"] = list()
 
-			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
+			var/can_send = relay_information(signal, /obj/machinery/telecomms/hub) // ideally relay the copied information to relays
 			if(!can_send)
-				relay_information(signal, "/obj/machinery/telecomms/bus") // Send it to a bus instead, if it's linked to one
+				relay_information(signal, /obj/machinery/telecomms/bus) // Send it to a bus instead, if it's linked to one
 
 /obj/machinery/telecomms/receiver/proc/check_receive_level(datum/signal/signal)
 
@@ -336,7 +332,6 @@
 	idle_power_usage = 80
 	machinetype = 7
 	heatgen = 40
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/hub"
 	long_range_link = 1
 	netspeed = 40
 
@@ -354,11 +349,11 @@
 	if(is_freq_listening(signal))
 		if(istype(machine_from, /obj/machinery/telecomms/receiver))
 			//If the signal is compressed, send it to the bus.
-			relay_information(signal, "/obj/machinery/telecomms/bus", 1) // ideally relay the copied information to bus units
+			relay_information(signal, /obj/machinery/telecomms/bus, 1) // ideally relay the copied information to bus units
 		else
 			// Get a list of relays that we're linked to, then send the signal to their levels.
-			relay_information(signal, "/obj/machinery/telecomms/relay", 1)
-			relay_information(signal, "/obj/machinery/telecomms/broadcaster", 1) // Send it to a broadcaster.
+			relay_information(signal, /obj/machinery/telecomms/relay, 1)
+			relay_information(signal, /obj/machinery/telecomms/broadcaster, 1) // Send it to a broadcaster.
 
 
 /*
@@ -380,7 +375,6 @@
 	idle_power_usage = 30
 	machinetype = 8
 	heatgen = 0
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/relay"
 	netspeed = 5
 	long_range_link = 1
 	var/broadcasting = 1
@@ -442,7 +436,6 @@
 	idle_power_usage = 50
 	machinetype = 2
 	heatgen = 20
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/bus"
 	netspeed = 40
 	var/change_frequency = 0
 
@@ -464,7 +457,7 @@
 
 		if(!istype(machine_from, /obj/machinery/telecomms/processor) && machine_from != src) // Signal must be ready (stupid assuming machine), let's send it
 			// send to one linked processor unit
-			var/send_to_processor = relay_information(signal, "/obj/machinery/telecomms/processor")
+			var/send_to_processor = relay_information(signal, /obj/machinery/telecomms/processor)
 
 			if(send_to_processor)
 				return
@@ -473,7 +466,7 @@
 			src.receive_information(signal, src)
 
 		// Try sending it!
-		var/list/try_send = list("/obj/machinery/telecomms/server", "/obj/machinery/telecomms/hub", "/obj/machinery/telecomms/broadcaster", "/obj/machinery/telecomms/bus")
+		var/list/try_send = list(/obj/machinery/telecomms/server, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster, /obj/machinery/telecomms/bus)
 		var/i = 0
 		for(var/send in try_send)
 			if(i)
@@ -505,7 +498,6 @@
 	machinetype = 3
 	heatgen = 100
 	delay = 5
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/processor"
 	var/process_mode = 1 // 1 = Uncompress Signals, 0 = Compress Signals
 
 /obj/machinery/telecomms/processor/atom_init()
@@ -535,7 +527,7 @@
 			relay_direct_information(signal, machine_from) // send the signal back to the machine
 		else // no bus detected - send the signal to servers instead
 			signal.data["slow"] += rand(5, 10) // slow the signal down
-			relay_information(signal, "/obj/machinery/telecomms/server")
+			relay_information(signal, /obj/machinery/telecomms/server)
 
 
 /*
@@ -557,7 +549,6 @@
 	idle_power_usage = 15
 	machinetype = 4
 	heatgen = 50
-	circuitboard = "/obj/item/weapon/circuitboard/telecomms/server"
 	var/list/log_entries = list()
 	var/list/stored_names = list()
 	var/list/TrafficActions = list()
@@ -636,9 +627,9 @@
 				var/identifier = num2text( rand(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
 
-			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
+			var/can_send = relay_information(signal, /obj/machinery/telecomms/hub)
 			if(!can_send)
-				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
+				relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 /obj/machinery/telecomms/server/proc/update_logs()
 	// start deleting the very first log entry
