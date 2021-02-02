@@ -2245,9 +2245,11 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "warning"
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 5;
+	pixel_y = -32
 	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "adF" = (
 /obj/item/weapon/twohanded/flora/random,
@@ -2265,9 +2267,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor{
-	icon_state = "warning"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "adH" = (
 /obj/structure/stool/bed/chair/pedalgen{
@@ -3545,7 +3545,8 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 8;
+	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
 "afM" = (
@@ -3564,7 +3565,7 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
 "afP" = (
-/obj/structure/closet/emcloset,
+/obj/random/vending/snack,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6607,13 +6608,13 @@
 	},
 /area/station/medical/morgue)
 "beA" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warning"
-	},
+/obj/structure/sign/warning/airlock,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "beE" = (
 /obj/structure/table/woodentable,
@@ -11175,16 +11176,10 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/camera{
-	c_tag = "Escape Hall North"
-	},
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "czd" = (
 /obj/structure/flora/ausbushes/pointybush,
@@ -24005,9 +24000,16 @@
 	},
 /area/station/medical/reception)
 "gxx" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Escape Hall North";
+	dir = 8
+	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
+	dir = 4;
+	icon_state = "escape"
 	},
 /area/station/hallway/secondary/exit)
 "gxA" = (
@@ -25535,7 +25537,8 @@
 "gWn" = (
 /obj/effect/landmark/sound_source/shuttle_docking,
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 8;
+	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
 "gWr" = (
@@ -38917,16 +38920,12 @@
 	},
 /area/station/maintenance/bridge)
 "lhG" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -25
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/obj/structure/closet/emcloset,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lhP" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -39661,7 +39660,7 @@
 "luM" = (
 /obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/secondary/exit)
 "luW" = (
@@ -41622,16 +41621,15 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "lZx" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 4
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/closet/emcloset,
+/obj/machinery/light{
+	dir = 8
 	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lZV" = (
 /obj/structure/cable{
@@ -41808,10 +41806,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "mda" = (
-/turf/simulated/floor{
-	dir = 6;
-	icon_state = "warning"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mde" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -41920,23 +41921,14 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "mdA" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 5;
-	pixel_y = -32
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Escape Hall South";
-	dir = 1
-	},
-/turf/simulated/floor{
-	icon_state = "warning"
-	},
+/obj/machinery/light,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mea" = (
 /obj/machinery/light/small{
@@ -43768,10 +43760,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "warning"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mJs" = (
 /obj/structure/stool/bed/chair/metal/red,
@@ -44790,16 +44779,20 @@
 	},
 /area/station/engineering/engine)
 "mZm" = (
-/obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Escape Hall South";
+	dir = 1;
+	pixel_x = 22
+	},
 /turf/simulated/floor{
-	dir = 10;
-	icon_state = "warning"
+	dir = 8;
+	icon_state = "bluecorner"
 	},
 /area/station/hallway/secondary/exit)
 "mZy" = (
@@ -54869,11 +54862,10 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormthree)
 "qkf" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 4
-	},
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
 "qko" = (
@@ -60303,9 +60295,7 @@
 /obj/structure/sign/departments/evac{
 	pixel_y = -32
 	},
-/turf/simulated/floor{
-	icon_state = "warning"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "rZi" = (
 /obj/structure/table/woodentable,
@@ -63874,15 +63864,6 @@
 	icon_state = "arrivalcorner"
 	},
 /area/station/hallway/primary/bridgehall)
-"tfF" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/sign/warning/airlock,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "tfW" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -65114,12 +65095,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/cargo/office)
-"tyF" = (
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "warning"
-	},
-/area/station/hallway/secondary/exit)
 "tyI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -69953,7 +69928,8 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 8;
+	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
 "uWQ" = (
@@ -70939,7 +70915,8 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 0;
+	icon_state = "blue"
 	},
 /area/station/hallway/secondary/exit)
 "vpN" = (
@@ -72620,7 +72597,8 @@
 /area/station/maintenance/eva)
 "vKL" = (
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 1;
+	icon_state = "warningcorner"
 	},
 /area/station/hallway/secondary/exit)
 "vKQ" = (
@@ -77673,7 +77651,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "xvG" = (
-/obj/item/weapon/twohanded/flora/random,
+/obj/item/weapon/twohanded/flora/pottedplant/orientaltree,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -79047,10 +79025,7 @@
 	pixel_x = 24
 	},
 /obj/item/weapon/twohanded/flora/random,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "xSP" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -96141,7 +96116,7 @@ kHU
 kHU
 kHU
 kHU
-plf
+kHU
 jzl
 nlB
 nlB
@@ -96893,10 +96868,10 @@ plf
 plf
 plf
 plf
-tfF
-clz
-clz
 pOf
+clz
+clz
+beA
 clz
 clz
 pOf
@@ -97152,18 +97127,18 @@ plf
 wqE
 wqE
 uWL
-vKL
-vKL
-vKL
-vKL
+vLS
+vLS
+vLS
+vLS
 afL
 gWn
+vLS
+vLS
+vLS
 vKL
-vKL
-vKL
-vKL
-vKL
-vKL
+qJH
+qJH
 vpM
 adM
 adY
@@ -97408,19 +97383,19 @@ plf
 plf
 wqE
 tex
-tyF
-vLS
-vLS
-vLS
-vLS
-vLS
-vLS
-vLS
-vLS
-vLS
-vLS
-vLS
-vLS
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
+qJH
 mZm
 wqE
 aee
@@ -97665,10 +97640,10 @@ plf
 plf
 wqE
 cgB
-gxx
+qJH
 qJH
 eYu
-eYu
+gxx
 eYu
 eYu
 xoj
@@ -98179,7 +98154,7 @@ kHU
 kHU
 wqE
 cfk
-gxx
+qJH
 mGo
 eji
 eoK
@@ -98436,7 +98411,7 @@ plf
 plf
 wqE
 cgT
-gxx
+qJH
 eKn
 uat
 fUb
@@ -98449,7 +98424,7 @@ xHd
 xHd
 itx
 pne
-adE
+mda
 nrI
 aSK
 kSz
@@ -98693,7 +98668,7 @@ plf
 plf
 wqE
 afP
-gxx
+qJH
 qJH
 vna
 evu
@@ -98961,9 +98936,9 @@ wqE
 wqE
 wqE
 xSm
-beA
+hQN
 mJh
-mda
+qJH
 mhQ
 lzK
 oxs

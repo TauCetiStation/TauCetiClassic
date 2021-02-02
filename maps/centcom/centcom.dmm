@@ -687,7 +687,7 @@
 /area/shuttle/escape/centcom)
 "abF" = (
 /obj/machinery/light{
-	dir = 1
+	dir = 8
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
@@ -786,12 +786,10 @@
 /turf/space,
 /area/shuttle/escape/centcom)
 "abV" = (
-/obj/structure/object_wall/evac{
-	icon_state = "2,20";
-	name = "shuttle window";
-	opacity = 0
+/obj/structure/window/reinforced/shuttle/evac{
+	icon_state = "2,20"
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "abW" = (
 /turf/simulated/shuttle/floor/evac/ex,
@@ -963,9 +961,6 @@
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
 "acw" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/emergency,
 /obj/item/weapon/crowbar,
@@ -1169,9 +1164,7 @@
 /area/shuttle/escape/centcom)
 "adf" = (
 /obj/machinery/door/airlock/erokez/med{
-	id_tag = "MedbayShuttle";
-	name = "Medbay Airlock";
-	req_access = list(5)
+	name = "Medbay Airlock"
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
@@ -1640,6 +1633,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
 /obj/structure/table,
+/obj/item/toy/plushie/space_whale{
+	name = "Plushie Oculus"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
 	},
@@ -1675,6 +1671,12 @@
 /obj/item/weapon/reagent_containers/food/snacks/friedbanana,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,
 /obj/structure/table,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/toy/plushie/tabby_cat{
+	name = "Plushie Bucherck"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
 	},
@@ -1818,6 +1820,9 @@
 	dir = 8
 	},
 /obj/structure/table,
+/obj/item/toy/plushie/orange_fox{
+	name = "Plushie Wendy"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
 	},
@@ -1890,6 +1895,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /obj/structure/table,
+/obj/item/toy/plushie/white_cat{
+	name = "Plushie Scinia"
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
 	},
@@ -4522,17 +4530,6 @@
 	icon_state = "floor5"
 	},
 /area/velocity)
-"aoL" = (
-/obj/machinery/door_control{
-	id = "MedbayShuttle";
-	layer = 3.1;
-	name = "Medbay Shuttle Doors Control";
-	pixel_x = 26;
-	pixel_y = 28;
-	range = 8
-	},
-/turf/simulated/shuttle/floor/evac/medbay,
-/area/shuttle/escape/centcom)
 "aoO" = (
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 8
@@ -12680,12 +12677,10 @@
 	},
 /area/centcom/holding)
 "aRs" = (
-/obj/structure/object_wall/evac{
-	icon_state = "3,20";
-	name = "shuttle window";
-	opacity = 0
+/obj/structure/window/reinforced/shuttle/evac{
+	icon_state = "3,20"
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aRt" = (
 /obj/structure/closet/emcloset,
@@ -13738,12 +13733,10 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aUE" = (
-/obj/structure/object_wall/evac{
-	icon_state = "13,20";
-	name = "shuttle window";
-	opacity = 0
+/obj/structure/window/reinforced/shuttle/evac{
+	icon_state = "13,20"
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aUH" = (
 /obj/machinery/door/airlock/centcom{
@@ -14107,12 +14100,10 @@
 	},
 /area/centcom/evac)
 "aVM" = (
-/obj/structure/object_wall/evac{
-	icon_state = "14,20";
-	name = "shuttle window";
-	opacity = 0
+/obj/structure/window/reinforced/shuttle/evac{
+	icon_state = "14,20"
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aVO" = (
 /obj/structure/object_wall/cargo{
@@ -43544,14 +43535,14 @@ aaM
 aaM
 aaM
 aUE
-abF
+aRG
 aRG
 aRG
 aRG
 aRG
 aRG
 adf
-aoL
+oLb
 oLb
 oLb
 oLb
@@ -45858,7 +45849,7 @@ aaM
 aaM
 abV
 aYJ
-aRG
+abF
 aRG
 aRG
 aRG
