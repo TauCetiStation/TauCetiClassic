@@ -198,3 +198,16 @@
 
 /datum/religion/cult/proc/remove_spook_effect(atom/A)
 	A.remove_alt_appearance("nar-sie_hall")
+
+/datum/religion/cult/proc/on_entry(mob/M)
+	var/type
+	if(ishuman(M))
+		type = /obj/effect/proc_holder/spell/targeted/communicate/fastener
+	else
+		type = /obj/effect/proc_holder/spell/targeted/communicate
+
+	M.AddSpell(new type(src))
+
+/datum/religion/cult/proc/on_exit(mob/M)
+	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)
+		M.RemoveSpell(C)

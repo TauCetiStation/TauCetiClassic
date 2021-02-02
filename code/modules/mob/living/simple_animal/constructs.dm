@@ -96,7 +96,6 @@
 	status_flags = 0
 	construct_spells = list(
 			/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall,
-			/obj/effect/proc_holder/spell/targeted/communicate,
 			)
 
 /mob/living/simple_animal/construct/armoured/atom_init()
@@ -147,7 +146,6 @@
 	attack_sound = list('sound/weapons/bladeslice.ogg')
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
-		/obj/effect/proc_holder/spell/targeted/communicate,
 		)
 
 
@@ -172,7 +170,6 @@
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
-		/obj/effect/proc_holder/spell/targeted/communicate,
 		)
 
 /mob/living/simple_animal/construct/builder/atom_init()
@@ -198,9 +195,6 @@
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch4.ogg')
 	resize = 1.2
-	construct_spells = list(
-		/obj/effect/proc_holder/spell/targeted/communicate,
-		)
 
 /mob/living/simple_animal/construct/behemoth/atom_init()
 	. = ..()
@@ -226,7 +220,6 @@
 	attack_sound = list('sound/weapons/slash.ogg')
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
-		/obj/effect/proc_holder/spell/targeted/communicate,
 		)
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
@@ -256,9 +249,6 @@
 	speed = -2
 	response_harm = "pinch"
 	attack_sound = 'sound/weapons/punch2.ogg'
-	construct_spells = list(
-		/obj/effect/proc_holder/spell/targeted/communicate,
-		)
 
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
 /mob/living/simple_animal/hostile/pylon

@@ -343,9 +343,9 @@
 
 	var/list/areas = get_areas(_area_type)
 	for(var/area/A in areas)
-		captured_areas += A
 		if(A.religion)
-			A.religion.captured_areas -= A.religion
+			A.religion.captured_areas -= A
+		captured_areas += A
 		A.religion = src
 		passive_favor_gain = max(0, captured_areas.len - areas.len)
 	return TRUE
@@ -614,7 +614,11 @@
 	sect?.on_conversion(M)
 	if(symbol_icon_state)
 		give_hud(M)
+	on_entry(M)
 	return TRUE
+
+/datum/religion/proc/on_entry(mob/M)
+	return
 
 /datum/religion/proc/remove_member(mob/M)
 	if(!is_member(M))
@@ -625,7 +629,11 @@
 	M.mind?.holy_role = initial(M.mind.holy_role)
 	if(symbol_icon_state)
 		take_hud(M)
+	on_exit(M)
 	return TRUE
+
+/datum/religion/proc/on_exit(mob/M)
+	return
 
 /datum/religion/proc/is_member(mob/M)
 	return M in members

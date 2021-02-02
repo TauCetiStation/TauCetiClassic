@@ -165,7 +165,7 @@
 	if(!..())
 		return FALSE
 
-	if(!user.my_religion || !istype(user.my_religion, /datum/religion/cult))
+	if(!user.my_religion)
 		return FALSE
 
 	return TRUE

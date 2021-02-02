@@ -407,3 +407,6 @@
 			to_chat(M, "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>")
 
 	playsound(user, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
+
+/obj/effect/proc_holder/spell/targeted/communicate/fastener
+	charge_max = 100

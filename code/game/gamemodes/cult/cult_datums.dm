@@ -226,6 +226,8 @@
 	flick_overlay(I, viewing, 30)
 	animate(I, alpha = 0, time = 30)
 
+	new /obj/effect/temp_visual/cult/sparks(statue.loc)
+
 /datum/rune/cult/portal_beacon
 	name = "Маяк Портала Культа"
 	words = list("travel", "hell", "technology")
