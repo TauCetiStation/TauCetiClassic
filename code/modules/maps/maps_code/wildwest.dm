@@ -138,7 +138,7 @@
 		s.start()
 		explosion(mob, 1, 0, 0, 0)
 		spawn(0)
-			del(src)
+			qdel(src)
 
 /obj/effect/meatgrinder
 	name = "Meat Grinder"

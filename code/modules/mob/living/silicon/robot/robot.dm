@@ -10,6 +10,8 @@
 	digestion_product = "carbon"
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
+	typing_indicator_type = "robot"
+
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
@@ -258,6 +260,8 @@
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
+			if(camera && ("Robots" in camera.network))
+				camera.add_network("Security")
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
@@ -271,7 +275,7 @@
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && ("Robots" in camera.network))
-				camera.add_network("Engineering")
+				camera.add_network("Engineering Robots")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Custom"] = "custom_astra_t3"
@@ -295,9 +299,6 @@
 			module_sprites["Acheron"] = "mechoid-Combat"
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
-
-	//languages
-	module.add_languages(src)
 
 	hands.icon_state = lowertext(modtype)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
@@ -478,6 +479,9 @@
 /mob/living/silicon/robot/restrained()
 	return 0
 
+/mob/living/silicon/robot/airlock_crush_act()
+	..()
+	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)

@@ -243,7 +243,7 @@
 
 	for(var/atom/A in to_religify)
 		if(istype(A, /turf/simulated/floor) && A.icon_state == "carpetsymbol")
-			A.dir = carpet_dir
+			A.set_dir(carpet_dir)
 		else if(istype(A, /obj/structure/stool/bed/chair/pew))
 			var/obj/structure/stool/bed/chair/pew/P = A
 			P.pew_icon = pews_icon_state

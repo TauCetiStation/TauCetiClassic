@@ -9,6 +9,8 @@
 	alien_talk_understand = 1
 	speak_emote = list("hisses")
 	digestion_product = "sacid"
+	typing_indicator_type = "alien"
+
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500
@@ -42,13 +44,6 @@
 	updatePlasmaDisplay()
 	return
 
-/mob/living/carbon/xenomorph/adjustFireLoss(amount) // Weak to Fire
-	if(amount > 0)
-		..(amount * 2)
-	else
-		..(amount)
-	return
-
 /mob/living/carbon/xenomorph/proc/getPlasma()
 	return storedPlasma
 
@@ -66,6 +61,8 @@
 		//oxyloss is only used for suicide
 		//toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+		med_hud_set_health()
+		med_hud_set_status()
 
 /mob/living/carbon/xenomorph/handle_environment(datum/gas_mixture/environment)
 
@@ -150,51 +147,52 @@
 
 /mob/living/carbon/xenomorph/Stat()
 	..()
-
 	if(statpanel("Status"))
-		if(isxenoqueen(src))
-			var/hugger = 0
-			var/larva = 0
-			var/drone = 0
-			var/sentinel = 0
-			var/hunter = 0
-
-			for(var/mob/living/carbon/xenomorph/A in alien_list)
-				if(A.stat == DEAD)
-					continue
-				if(!A.key)
-					continue
-
-				if(isfacehugger(A))
-					hugger++
-				else if(isxenolarva(A))
-					larva++
-				else if(isxenodrone(A))
-					drone++
-				else if(isxenosentinel(A))
-					sentinel++
-				else if(isxenohunter(A))
-					hunter++
-
-			stat(null, "Hive Status:")
-			stat(null, "Huggers: [hugger]")
-			stat(null, "Larvas: [larva]")
-			stat(null, "Drones: [drone]")
-			stat(null, "Sentinels: [sentinel]")
-			stat(null, "Hunters: [hunter]")
-		else
+		if(!isxenoqueen(src))
 			var/mob/living/carbon/xenomorph/queen = null
 			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
 				if(Q.stat == DEAD || !Q.key)
 					continue
 				queen = Q
 			if(!queen)
-				stat(null, "Queen: No.")
+				stat("Королева: Нет")
 			else
-				stat(null, "Queen Status:")
-				stat(null, "Conscious: [queen.stat ? "No":"Yes"]")
-				stat(null, "Health: [queen.health]/[queen.maxHealth]")
-				stat(null, "Location: [queen.loc.loc.name]")
+				stat("Здоровье Королевы: [queen.health]/[queen.maxHealth]")
+				stat("Локация Королевы: [queen.loc.loc.name]")
+				stat("Королева в сознании: [queen.stat ? "Нет" : "Да"]")
+				stat(null) //for readability
+
+		var/hugger = 0
+		var/larva = 0
+		var/drone = 0
+		var/sentinel = 0
+		var/hunter = 0
+
+		for(var/mob/living/carbon/xenomorph/A in alien_list)
+			if(A.stat == DEAD || !A.key)
+				continue
+			if(isfacehugger(A))
+				hugger++
+			else if(isxenolarva(A))
+				larva++
+			else if(isxenodrone(A))
+				drone++
+			else if(isxenosentinel(A))
+				sentinel++
+			else if(isxenohunter(A))
+				hunter++
+
+		stat("Статус Улья:")
+		if(drone)
+			stat("Трутни: [drone]")
+		if(hunter)
+			stat("Охотники: [hunter]")
+		if(sentinel)
+			stat("Стражи: [sentinel]")
+		if(larva)
+			stat("Грудоломы: [larva]")
+		if(hugger)
+			stat("Лицехваты: [hugger]")
 
 /mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)
@@ -265,6 +263,10 @@ Hit Procs
 
 	updatehealth()
 	return
+
+/mob/living/carbon/xenomorph/airlock_crush_act()
+	..()
+	emote("roar")
 
 /mob/living/carbon/xenomorph/emp_act(severity)
 	return

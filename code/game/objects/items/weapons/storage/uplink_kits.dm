@@ -255,7 +255,7 @@
 /obj/item/weapon/storage/box/syndie_kit/light_armor/atom_init()
 	. = ..()
 	new /obj/item/clothing/suit/armor/syndilight(src)
-	new /obj/item/clothing/head/helmet/syndiassault/alternate(src)
+	new /obj/item/clothing/head/helmet/syndilight(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/fake
