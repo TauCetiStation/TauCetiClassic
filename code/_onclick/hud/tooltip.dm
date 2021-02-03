@@ -11,7 +11,6 @@
 	maptext_x = -385
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/state = TRUE
-	var/size = 5
 	var/maptext_style = "font-size: 10pt;"
 
 /obj/screen/tooltip/proc/SetMapText(newValue, font, forcedFontColor = "#ffffff")
