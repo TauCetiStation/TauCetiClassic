@@ -86,11 +86,15 @@
 	. += 				"</tr>"
 	. +=				"<tr>"
 	. += 					"<td width='45%'>Name of Items:</td>"
-	. +=					"<td><a href='?_src_=prefs;preference=tooltip_show'><b>[tooltip ? "Hide" : "Show"]</a></td>"
+	. +=					"<td><a href='?_src_=prefs;preference=tooltip_show'><b>[tooltip ? "Hide" : "Show"]</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Font of Names of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_font_tooltip'><b>Change</b></a></td>"
 	. += 				"</tr>"
 	. +=				"<tr>"
 	. += 					"<td width='45%'>Change Names Loc:</td>"
-	. +=					"<td><a href='?_src_=prefs;preference=change_tooltip_loc'><b>[tooltip_loc == TOOLTIP_NORTH ? "Top" : "Bottom"]</a></td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_tooltip_loc'><b>[tooltip_loc == TOOLTIP_NORTH ? "Top" : "Bottom"]</b></a></td>"
 	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
@@ -143,6 +147,9 @@
 
 		if("change_tooltip_loc")
 			parent?.change_loc_tooltip()
+
+		if("change_font_tooltip")
+			parent?.change_font_tooltip()
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)

@@ -50,5 +50,5 @@
 // Order is of the essence apperantly. From highest order to lowest.
 #define JP_LEVELS list(JP_HIGH, JP_MEDIUM, JP_LOW)
 
-#define TOOLTIP_NORTH "TOP, CENTER-3"
+#define TOOLTIP_NORTH "TOP-0.4, CENTER-3"
 #define TOOLTIP_SOUTH "SOUTH+1.2, CENTER-3"

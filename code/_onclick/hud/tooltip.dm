@@ -6,15 +6,16 @@
 	icon_state = "transparent"
 	screen_loc = TOOLTIP_NORTH
 	plane = HUD_PLANE
-	layer = BELOW_HUD_LAYER
-	maptext_width = 256
-	maptext_x = -16
+	layer = ABOVE_HUD_LAYER
+	maptext_width = 999
+	maptext_x = -385
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/state = TRUE
-	var/maptext_style = "font-size:10px; font-family: Fixedsys, System;"
+	var/size = 5
+	var/maptext_style = "font-size: 10pt;"
 
-/obj/screen/tooltip/proc/SetMapText(newValue, forcedFontColor = "#ffffff")
-	var/style = "color:[forcedFontColor];text-shadow: 0 2px 2px [invertHTML(forcedFontColor)];[maptext_style];"
+/obj/screen/tooltip/proc/SetMapText(newValue, font, forcedFontColor = "#ffffff")
+	var/style = "font-family:'[font]';color:[forcedFontColor];text-shadow: 0 2px 2px [invertHTML(forcedFontColor)];[maptext_style];"
 	maptext = "<center><span style=\"[style]\">[newValue]</span></center>"
 
 /obj/screen/tooltip/proc/set_state(_state)
@@ -31,7 +32,7 @@
 	if(!prefs.tooltip)
 		return
 
-	if(tooltip?.state && SSticker.current_state >= GAME_STATE_PLAYING)
+	if(tooltip?.state)
 		var/text_in_tooltip = hoverOn.get_name()
 		screen |= tooltip
-		tooltip.SetMapText(text_in_tooltip, color)
+		tooltip.SetMapText(text_in_tooltip, prefs.tooltip_font, color)

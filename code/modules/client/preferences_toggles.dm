@@ -299,6 +299,17 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "Name of items [prefs.tooltip ? "enabled" : "disabled"].")
 	feedback_add_details("admin_verb", "TTIP")
 
+/client/verb/change_font_tooltip()
+	set name = "Change Font of Names"
+	set category = "Preferences"
+	set desc = "Toggle Font of Names of Items"
+
+	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Times", "serif", "Verdana", "Comic Sans MS")
+	prefs.tooltip_font = input(usr, "Font of Names of Items:") as anything in fonts
+
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "FTIP")
+
 /client/verb/change_loc_tooltip()
 	set name = "Change Loc of Names"
 	set category = "Preferences"
