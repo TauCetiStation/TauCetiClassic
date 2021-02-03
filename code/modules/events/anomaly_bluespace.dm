@@ -8,7 +8,7 @@
 /datum/event/anomaly/anomaly_bluespace/start()
 	var/list/turfs = get_area_turfs(impact_area)
 	if(!turfs.len)
-		continue
+		return
 	var/turf/T = pick(turfs)
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/bluespace(T)
