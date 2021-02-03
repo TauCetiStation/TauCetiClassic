@@ -5,7 +5,10 @@
 	announcement = new /datum/announcement/centcomm/anomaly/pyro
 
 /datum/event/anomaly/anomaly_pyro/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/list/turfs = get_area_turfs(impact_area)
+	if(!turfs.len)
+		continue
+	var/turf/T = pick(turfs)
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/pyro(T)
 

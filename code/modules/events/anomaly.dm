@@ -28,7 +28,6 @@
 
 /datum/event/anomaly/proc/findEventArea()
 	var/static/list/allowed_areas
-	var/static/list/world_areas
 	if(!allowed_areas)
 		//Places that shouldn't explode
 		var/list/safe_areas = list(
@@ -45,10 +44,6 @@
 
 		allowed_areas = subtypesof(/area/station) - safe_areas + unsafe_areas
 
-		world_areas = list()
-		for(var/area/A in world)
-			world_areas.Add(A.type)
-
-		allowed_areas &= world_areas
-
-	return locate(pick(allowed_areas))
+	var/list/possible_areas = typecache_filter_list(global.all_areas, allowed_areas)
+	if(length(possible_areas))
+		return pick(possible_areas)

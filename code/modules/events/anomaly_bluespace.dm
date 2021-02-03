@@ -6,7 +6,10 @@
 	var/datum/announcement/announcement_trigger = new /datum/announcement/centcomm/anomaly/bluespace_trigger
 
 /datum/event/anomaly/anomaly_bluespace/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/list/turfs = get_area_turfs(impact_area)
+	if(!turfs.len)
+		continue
+	var/turf/T = pick(turfs)
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 
