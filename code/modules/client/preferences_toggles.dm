@@ -284,10 +284,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 	set desc = "Toggle Name of Items"
 
-	if(ckey == "Akellazp")
-		to_chat(src, "Пользователь _spair запретил вам выключать названия предметов. Чтобы выключить названия внесите в патреон $5")
-		return
-
 	prefs.tooltip = !prefs.tooltip
 
 	if(prefs.tooltip)
