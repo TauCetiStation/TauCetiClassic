@@ -44,7 +44,7 @@
 			target.client.eye = holder
 
 		if(phaseshift)
-			holder.dir = target.dir
+			holder.set_dir(target.dir)
 			flick("phase_shift", holder)
 
 			sleep(FLICK_OVERLAY_JAUNT_DURATION)
