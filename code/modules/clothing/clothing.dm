@@ -259,7 +259,7 @@ var/global/list/icon_state_allowed_cache = list()
 	desc = O.desc
 	icon = O.icon
 	icon_state = O.icon_state
-	dir = O.dir
+	set_dir(O.dir)
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -440,7 +440,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
-	
+
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
