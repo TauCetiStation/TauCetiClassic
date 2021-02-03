@@ -8,6 +8,8 @@
 	braintype = "Robot"
 	req_access = list(access_syndicate)
 
+	typing_indicator_type = "syndibot"
+
 	var/static/image/sword_overlay
 
 /mob/living/silicon/robot/syndicate/atom_init()
