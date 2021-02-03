@@ -84,6 +84,14 @@
 	. += 					"<td width='45%'>Progress Bar:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_progbar'><b>[(toggles & SHOW_PROGBAR) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Name of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=tooltip_show'><b>[tooltip ? "Hide" : "Show"]</a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Names Loc:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_tooltip_loc'><b>[tooltip_loc == TOOLTIP_NORTH ? "Top" : "Bottom"]</a></td>"
+	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 	"</tr>"
@@ -129,6 +137,12 @@
 
 		if("tgui_lock")
 			tgui_lock = !tgui_lock
+
+		if("tooltip_show")
+			parent?.toggle_tooltip()
+
+		if("change_tooltip_loc")
+			parent?.change_loc_tooltip()
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)

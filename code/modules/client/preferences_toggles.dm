@@ -278,3 +278,33 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.tgui_fancy = !prefs.tgui_fancy
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "TFTGUI")
+
+/client/verb/toggle_tooltip()
+	set name = "Show/Hide Name of Items"
+	set category = "Preferences"
+	set desc = "Toggle Name of Items"
+
+	prefs.tooltip = !prefs.tooltip
+
+	if(prefs.tooltip)
+		tooltip.set_state(TRUE)
+	else
+		tooltip.set_state(FALSE)
+
+	prefs.save_preferences()
+	to_chat(src, "Name of items [prefs.tooltip ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TTIP")
+
+/client/verb/change_loc_tooltip()
+	set name = "Change Loc of Names"
+	set category = "Preferences"
+	set desc = "Change Loc of Names of Items"
+
+	if(prefs.tooltip_loc == TOOLTIP_NORTH)
+		prefs.tooltip_loc = TOOLTIP_SOUTH
+	else
+		prefs.tooltip_loc = TOOLTIP_NORTH
+
+	tooltip.screen_loc = prefs.tooltip_loc
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "LTIP")

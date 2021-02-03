@@ -79,6 +79,7 @@ What is the naming convention for planes or layers?
 #define FLASH_LAYER      18
 #define FULLSCREEN_LAYER 18.1
 
+#define BELOW_HUD_LAYER   18.9
 #define HUD_PLANE         19
 #define HUD_LAYER         19
 #define ABOVE_HUD_PLANE   20

@@ -486,6 +486,7 @@ window "mainwindow"
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Space Station 13"
+		statusbar = false
 		is-maximized = true
 		icon = 'icons\\ss13_64.png'
 		macro = "macro"

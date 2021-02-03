@@ -696,3 +696,12 @@
 				AA.theImage.layer = layer
 				AA.theImage.plane = plane
 				AA.theImage.appearance_flags = appearance_flags
+
+/atom/proc/get_name(mob/user)
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+			if(!AA.alternate_obj || !(user in AA.hudusers))
+				continue
+			return AA.alternate_obj.name
+	return name

@@ -259,6 +259,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
+	S["tooltip"]			>> tooltip
+	S["tooltip_loc"]		>> tooltip_loc
 
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
@@ -298,6 +300,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -345,6 +348,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+	S["tooltip"]			<< tooltip
+	S["tooltip_loc"]		<< tooltip_loc
 
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
