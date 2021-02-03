@@ -175,10 +175,13 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
+			var/track = ""
+			if(isobserver(C.mob))
+				track = FOLLOW_LINK(C.mob, mob)
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"
-			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
+			to_chat(C, "[track]<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
 
 /client/verb/fix_chat()
 	set name = "Fix chat"
