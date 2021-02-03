@@ -866,7 +866,7 @@
 	desc = "Menacing space suit painted in blood-red colors resembling an outdated hazmat suit. Designed for chemical and psychological warfare."
 	icon_state = "rig-hazmat-space"
 	item_state = "syndie_hazmat"
-	item_color = "rig_hazmat"
+	item_color = "rig-hazmat"
 	slowdown = 1.4
 	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	unacidable = TRUE
