@@ -3,14 +3,7 @@
 	announceWhen = 20
 	endWhen = 80
 	announcement = new /datum/announcement/centcomm/anomaly/flux
-
-/datum/event/anomaly/anomaly_flux/start()
-	var/list/turfs = get_area_turfs(impact_area)
-	if(!turfs.len)
-		return
-	var/turf/T = pick(turfs)
-	if(T)
-		newAnomaly = new /obj/effect/anomaly/flux(T)
+	anomaly_type = /obj/effect/anomaly/flux
 
 /datum/event/anomaly/anomaly_flux/end()
 	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to blow up.

@@ -3,15 +3,8 @@
 	announceWhen = 10
 	endWhen = 95
 	announcement = new /datum/announcement/centcomm/anomaly/bluespace
+	anomaly_type = /obj/effect/anomaly/bluespace
 	var/datum/announcement/announcement_trigger = new /datum/announcement/centcomm/anomaly/bluespace_trigger
-
-/datum/event/anomaly/anomaly_bluespace/start()
-	var/list/turfs = get_area_turfs(impact_area)
-	if(!turfs.len)
-		return
-	var/turf/T = pick(turfs)
-	if(T)
-		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 
 /datum/event/anomaly/anomaly_bluespace/end()
 	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to warp half the station away jeez
