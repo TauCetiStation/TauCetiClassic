@@ -16709,6 +16709,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human{
 	name = "Josh Body Meat"
 	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "chb" = (
@@ -17087,6 +17090,10 @@
 	icon_state = "purplechecker"
 	},
 /area/centcom)
+"cPU" = (
+/obj/effect/landmark/start/new_player,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "cQb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17355,6 +17362,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human{
 	name = "Victor Body Meat"
 	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dkb" = (
@@ -22518,6 +22528,10 @@
 "nVb" = (
 /turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
+"nVA" = (
+/obj/effect/landmark/start,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "nWb" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid8";
@@ -65103,7 +65117,7 @@ wfy
 wfy
 wfy
 wfy
-wfy
+nVA
 cNo
 wfy
 wfy
@@ -65360,7 +65374,7 @@ yea
 yea
 bZH
 wfy
-wfy
+cPU
 wfy
 wfy
 wfy
