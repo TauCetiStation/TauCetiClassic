@@ -62,8 +62,13 @@
 	playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
 	new /obj/effect/temp_visual/cult/blood(target)
 	var/list/companions = holder.handle_teleport_grab(target, user)
+	LAZYINITLIST(companions)
 	user.forceMove(target)
 	user.eject_from_wall(TRUE, companions = companions)
+	for(var/mob/M in companions + user)
+		if(M.client)
+			new /obj/screen/temp/cult_teleportation(M, M)
+
 	after_tp(target, user, companions)
 
 /datum/rune/cult/teleport/proc/after_tp(turf/target, mob/user, list/companions)
@@ -80,7 +85,7 @@
 		destination = get_turf(pick(A.contents))
 	teleporting(destination	, user)
 
-/datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/living/user)
+/datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target)
 	if(istype(target, /turf/space))
 		return
 	var/obj/effect/rune/R = new(target, religion)
@@ -89,8 +94,8 @@
 	R.icon = get_uristrune_cult(TRUE, R.power.words)
 
 /datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/living/user, list/companions)
-	if(user && !(locate(/obj/effect/rune) in target)) // user can gibbed
-		create_from_heaven(target, user)
+	if(user) // user can gibbed
+		create_from_heaven(target)
 		var/datum/religion/cult/C = religion
 		if(companions)
 			for(var/mob/living/L in companions)

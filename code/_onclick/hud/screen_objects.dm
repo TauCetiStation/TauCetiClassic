@@ -694,3 +694,29 @@
 /obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
+
+/obj/screen/temp
+	var/mob/user
+	var/delay = 0
+
+/obj/screen/temp/atom_init(mapload, mob/M)
+	. = ..()
+	user = M
+	if(user.client)
+		user.client.screen += src
+	QDEL_IN(src, delay)
+
+/obj/screen/temp/Destroy()
+	if(user.client)
+		user.client.screen -= src
+	user = null
+	return ..()
+
+/obj/screen/temp/cult_teleportation
+	name = "crafting menu"
+	icon = 'icons/effects/bloodTP.dmi'
+	icon_state = "cult_tp"
+	screen_loc = "1,1"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	delay = 8.5
