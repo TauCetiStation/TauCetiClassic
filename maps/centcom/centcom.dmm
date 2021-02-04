@@ -817,10 +817,6 @@
 /obj/effect/landmark/gateway_transit,
 /turf/unsimulated/floor,
 /area/space)
-"acR" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "acS" = (
 /turf/space,
 /area/shuttle/syndicate/transit)
@@ -6530,9 +6526,13 @@
 	},
 /area/velocity)
 "aya" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/simulated/wall/cult,
-/area/custom/cult)
+/obj/effect/landmark/start{
+	name = "Fallback-Start"
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/velocity)
 "ayb" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "Caterpillar Tractor Co.";
@@ -7012,10 +7012,7 @@
 /area/shuttle/officer/velocity)
 "azx" = (
 /obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "azB" = (
 /obj/effect/landmark/trololo,
@@ -14718,10 +14715,7 @@
 	},
 /area/shuttle/vox/arkship)
 "aZI" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/gibs/robot/limb,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "aZL" = (
@@ -16232,12 +16226,21 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"bqK" = (
+/obj/effect/decal/cleanable/blood/gibs/robot/up,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "brb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"bry" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/kitchenknife/ritual,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bsb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
@@ -16247,10 +16250,8 @@
 	},
 /area/custom/syndicate_mothership)
 "bsi" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
+/obj/structure/cult/pylon,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "btb" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -16261,10 +16262,6 @@
 	icon_state = "warning"
 	},
 /area/centcom/living)
-"btn" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "bub" = (
 /obj/machinery/faxmachine{
 	department = "Central Command";
@@ -16276,7 +16273,11 @@
 	},
 /area/centcom/living)
 "buc" = (
-/obj/effect/decal/cleanable/blood,
+/obj/structure/table/woodentable,
+/obj/item/clothing/shoes/boots/cult{
+	pixel_x = -1;
+	pixel_y = 6
+	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bvb" = (
@@ -16381,11 +16382,11 @@
 	},
 /area/centcom/specops)
 "bFc" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/turf/unsimulated/floor/cult,
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Edvard Right Leg Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bGb" = (
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
@@ -16412,8 +16413,8 @@
 	},
 /area/custom/syndicate_mothership)
 "bHV" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
-/turf/simulated/wall/cult,
+/obj/structure/cult/statue/camera/jew,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bIb" = (
 /obj/structure/table/reinforced,
@@ -16471,6 +16472,10 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"bKC" = (
+/obj/structure/cult/forge,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bLb" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -16484,11 +16489,9 @@
 	},
 /area/centcom/creed)
 "bLC" = (
-/obj/machinery/optable/torture_table,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
+/obj/structure/table/woodentable,
+/obj/item/weapon/book/manual/wiki/cult,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bMb" = (
 /obj/structure/mirror/magic{
@@ -16524,6 +16527,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
+"bOm" = (
+/obj/structure/table/woodentable,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bPb" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_l"
@@ -16553,7 +16560,13 @@
 	},
 /area/velocity)
 "bSj" = (
-/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/table/woodentable,
+/obj/item/clothing/suit/chef/classic{
+	name = "blacksmith apron"
+	},
+/obj/item/clothing/gloves/black{
+	name = "cult gloves"
+	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bTb" = (
@@ -16563,12 +16576,6 @@
 	icon_state = "brown"
 	},
 /area/velocity)
-"bTW" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/kitchenknife/butch,
-/obj/item/weapon/kitchenknife/ritual,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "bUb" = (
 /obj/structure/closet,
 /turf/unsimulated/floor{
@@ -16584,11 +16591,7 @@
 	},
 /area/velocity)
 "bVy" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
+/turf/simulated/wall/cult,
 /area/custom/cult)
 "bWb" = (
 /obj/machinery/conveyor{
@@ -16629,7 +16632,7 @@
 	},
 /area/velocity)
 "bZH" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/structure/pedestal/cult,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cbb" = (
@@ -16650,6 +16653,12 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"cdy" = (
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Edvard Right Leg Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "ceb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -16681,8 +16690,25 @@
 	},
 /area/velocity)
 "cgI" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Kelly Right Arm Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Josh Body Meat"
+	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "chb" = (
@@ -16825,8 +16851,8 @@
 	},
 /area/velocity)
 "cua" = (
-/obj/effect/decal/cleanable/blood/drip,
-/turf/simulated/wall/cult,
+/obj/effect/decal/cleanable/blood,
+/turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cub" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -16842,9 +16868,11 @@
 	},
 /area/velocity)
 "cvG" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
+/obj/item/weapon/wirecutters,
+/obj/item/weapon/kitchen/utensil/fork,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cwb" = (
 /turf/unsimulated/floor{
@@ -16925,11 +16953,10 @@
 	},
 /area/velocity)
 "cEu" = (
-/obj/structure/altar_of_gods/cult,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
+/obj/item/weapon/razor,
+/obj/item/weapon/reagent_containers/syringe,
+/obj/structure/table/woodentable/fancy/black,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cFb" = (
 /turf/unsimulated/floor{
@@ -16958,9 +16985,10 @@
 	},
 /area/velocity)
 "cIK" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Billi Left Arm Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cJb" = (
 /obj/item/weapon/twohanded/flora/random,
@@ -16999,9 +17027,8 @@
 	},
 /area/velocity)
 "cKX" = (
-/obj/structure/cult/forge,
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/turf/unsimulated/floor/cult/lava,
+/obj/structure/cult/statue/camera,
+/turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cLb" = (
 /obj/structure/disposalpipe/segment{
@@ -17031,12 +17058,13 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
-"cNr" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
+"cNo" = (
+/obj/structure/altar_of_gods/cult,
 /turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
+"cNr" = (
+/obj/structure/mineral_door/cult,
+/turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cOb" = (
 /obj/structure/table/reinforced,
@@ -17119,12 +17147,16 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cTm" = (
+/obj/machinery/optable/torture_table,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "cTM" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult/lava,
+/obj/structure/table/woodentable,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/weapon/handcuffs/cable/orange,
+/turf/unsimulated/floor/cult,
 /area/custom/cult)
 "cUb" = (
 /obj/machinery/door_control{
@@ -17190,10 +17222,13 @@
 	},
 /area/velocity)
 "cZu" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/scissors,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "cZN" = (
 /obj/structure/closet/wardrobe/white,
@@ -17225,6 +17260,10 @@
 	icon_state = "bcircuitoff"
 	},
 /area/velocity)
+"dcv" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "ddb" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -17294,9 +17333,29 @@
 	},
 /area/velocity)
 "djY" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/obj/effect/decal/cleanable/blood/writing,
-/turf/unsimulated/floor/cult,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Jimmy-Jim Left Leg Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Scotty Left Arm Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Victor Body Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dkb" = (
 /obj/item/weapon/twohanded/flora/random,
@@ -17307,11 +17366,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
-"dke" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/cult,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "dlb" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -17321,6 +17375,10 @@
 	icon_state = "bcircuitoff"
 	},
 /area/velocity)
+"dlr" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "dmb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
@@ -17330,10 +17388,11 @@
 	},
 /area/velocity)
 "dmc" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor/cult,
+/obj/machinery/optable/torture_table,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Christopher Body Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dnb" = (
 /obj/structure/sink{
@@ -17467,8 +17526,11 @@
 	},
 /area/velocity)
 "dAj" = (
-/obj/structure/cult/tech_table,
-/turf/unsimulated/floor/cult,
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/obj/item/weapon/book/manual/wiki/cult,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dBb" = (
 /obj/structure/sign/directions/velocity{
@@ -17529,8 +17591,12 @@
 	},
 /area/velocity)
 "dHm" = (
-/obj/effect/decal/cleanable/blood/gibs/robot,
-/turf/unsimulated/floor/cult,
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/obj/item/weapon/book/manual/wiki/cult,
+/obj/item/weapon/book/manual/wiki/cult,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dIb" = (
 /turf/simulated/shuttle/wall{
@@ -17671,9 +17737,8 @@
 	},
 /area/velocity)
 "dSA" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/turf/unsimulated/floor/cult,
+/obj/structure/cult/tech_table,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dTb" = (
 /obj/structure/disposalpipe/segment{
@@ -17702,11 +17767,6 @@
 	icon_state = "rampbottom"
 	},
 /area/velocity)
-"dUS" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "dVb" = (
 /obj/structure/sign/mark{
 	icon_state = "ylf"
@@ -17805,13 +17865,6 @@
 	icon_state = "vel_12"
 	},
 /area/velocity)
-"ega" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "egb" = (
 /obj/machinery/porta_turret/crescent,
 /turf/unsimulated/floor{
@@ -17950,11 +18003,6 @@
 	icon_state = "swall12"
 	},
 /area/velocity)
-"evg" = (
-/obj/structure/cult/pylon,
-/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "ewb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -18187,6 +18235,12 @@
 	},
 /turf/space,
 /area/shuttle/officer/velocity)
+"eVX" = (
+/obj/structure/dresser{
+	pixel_x = -1
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "eWb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -18304,11 +18358,6 @@
 	icon_state = "loadingarea"
 	},
 /area/velocity)
-"ffR" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "fgb" = (
 /obj/machinery/light{
 	dir = 8
@@ -18567,12 +18616,6 @@
 	icon_state = "warning"
 	},
 /area/velocity)
-"fIn" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "fLb" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/structure/sign/warning/pods{
@@ -18605,11 +18648,6 @@
 	icon_state = "warning"
 	},
 /area/centcom/prison)
-"fNj" = (
-/obj/effect/rune,
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "fOb" = (
 /obj/machinery/turretid{
 	control_area = "Solitary Confinement";
@@ -18696,9 +18734,8 @@
 	},
 /area/velocity)
 "fXQ" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/core,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "fYb" = (
 /turf/unsimulated/floor{
@@ -18706,12 +18743,6 @@
 	icon_state = "whitehall"
 	},
 /area/centcom/living)
-"fYT" = (
-/obj/structure/cult/pylon,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "fZb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -19069,14 +19100,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"gAC" = (
-/obj/effect/landmark/start{
-	name = "Fallback-Start"
-	},
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "gBb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -19128,18 +19151,6 @@
 	icon_state = "rubber_floor1"
 	},
 /area/velocity)
-"gEc" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup,
-/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup,
-/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup,
-/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup,
-/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup,
-/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "gFb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19187,11 +19198,6 @@
 	icon_state = "rubber_floor1"
 	},
 /area/velocity)
-"gHP" = (
-/obj/effect/landmark/start,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "gIb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19274,18 +19280,6 @@
 	icon_state = "rubber_floor2"
 	},
 /area/velocity)
-"gNk" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"gNT" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/core,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "gOb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19349,20 +19343,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"gSo" = (
-/obj/machinery/optable/torture_table,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"gSU" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "gTb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/energy,
@@ -19395,13 +19375,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/specops)
-"gVy" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "gWb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/energy,
@@ -19610,11 +19583,6 @@
 	icon_state = "rubber_floor2"
 	},
 /area/velocity)
-"hod" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
-/obj/item/weapon/reagent_containers/food/snacks/meat/shiba,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "hpb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -19657,9 +19625,10 @@
 /turf/space,
 /area/centcom/evac)
 "hsL" = (
-/obj/structure/cult/pylon,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "hsR" = (
 /obj/structure/rack,
@@ -19720,11 +19689,6 @@
 	icon_state = "warning"
 	},
 /area/centcom/evac)
-"hwm" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "hwF" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -19737,11 +19701,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/evac)
-"hxV" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "hyb" = (
 /turf/unsimulated/floor{
 	icon_state = "blue"
@@ -19773,20 +19732,16 @@
 	},
 /area/centcom/evac)
 "hCi" = (
-/obj/structure/cult/pylon,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
+/obj/item/weapon/shard,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/hatchet,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "hDb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall7"
 	},
 /area/centcom/evac)
-"hDF" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "hEb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
@@ -19812,11 +19767,6 @@
 	icon_state = "blue"
 	},
 /area/centcom/evac)
-"hHY" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/item/weapon/reagent_containers/food/snacks/meat/shiba,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "hIb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -19846,10 +19796,6 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
-"hMI" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -19902,13 +19848,6 @@
 	icon_state = "swall_s9"
 	},
 /area/centcom/evac)
-"hVY" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "hWb" = (
 /turf/unsimulated/floor{
 	icon_state = "grass2"
@@ -19985,14 +19924,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
-"iaV" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "ibb" = (
 /obj/structure/window/reinforced,
 /obj/machinery/shower{
@@ -20015,7 +19946,7 @@
 	},
 /area/centcom/specops)
 "idX" = (
-/obj/structure/mineral_door/cult,
+/obj/machinery/optable/torture_table,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "ieb" = (
@@ -20113,12 +20044,6 @@
 	icon_state = "floor2"
 	},
 /area/centcom/evac)
-"iry" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "isb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -20341,22 +20266,6 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"iTS" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "iUb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
@@ -20387,17 +20296,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/control)
-"iWd" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"iWL" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "iXb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 4
@@ -20517,15 +20415,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/control)
-"jij" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"jiR" = (
-/obj/machinery/optable/torture_table,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "jjb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -20630,10 +20519,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/control)
-"jwH" = (
-/obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "jxb" = (
 /obj/machinery/telecomms/bus/preset_cent,
 /turf/unsimulated/floor{
@@ -20896,10 +20781,6 @@
 	icon_state = "brownold"
 	},
 /area/centcom/holding)
-"kak" = (
-/obj/structure/pedestal/cult,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "kbb" = (
 /obj/machinery/atm{
 	pixel_y = 32
@@ -20960,10 +20841,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/living)
-"kfT" = (
-/obj/effect/decal/cleanable/blood/writing,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "kgb" = (
 /obj/machinery/gateway{
 	dir = 1
@@ -20995,11 +20872,6 @@
 	icon_state = "warnwhite"
 	},
 /area/centcom/living)
-"kiL" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "kjb" = (
 /obj/structure/closet/emcloset{
 	pixel_x = -7
@@ -21110,24 +20982,22 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/holding)
-"kxx" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
+"kxC" = (
+/obj/structure/closet{
+	icon_closed = "cabinet_closed";
+	icon_opened = "cabinet_open";
+	icon_state = "cabinet_closed";
+	name = "Clothing Storage"
+	},
+/obj/item/clothing/suit/necromancer_hoodie,
+/obj/item/weapon/storage/backpack/cultpack,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "kyb" = (
 /turf/unsimulated/floor{
 	icon_state = "neutral"
 	},
 /area/centcom/holding)
-"kyq" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "kzb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -21192,11 +21062,6 @@
 	icon_state = "green"
 	},
 /area/centcom/living)
-"kGx" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/structure/cult/statue/camera,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "kHb" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -21245,10 +21110,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/holding)
-"kNK" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "kOb" = (
 /obj/structure/table,
 /obj/item/weapon/lighter/zippo,
@@ -21351,11 +21212,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/holding)
-"lbQ" = (
-/obj/effect/rune,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "lcb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -21407,13 +21263,6 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/living)
-"ljO" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/robot,
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "lkb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -21486,11 +21335,6 @@
 	icon_state = "browncorner"
 	},
 /area/centcom/holding)
-"lre" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "lrm" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
@@ -21592,12 +21436,6 @@
 	icon_state = "brown"
 	},
 /area/centcom/holding)
-"lAM" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "lBb" = (
 /obj/random/vending/cola,
 /turf/unsimulated/floor{
@@ -21626,16 +21464,6 @@
 	icon_state = "brown"
 	},
 /area/centcom/holding)
-"lEG" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"lEM" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "lFb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -21750,15 +21578,6 @@
 	icon_state = "warnwhite"
 	},
 /area/centcom/control)
-"lQp" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"lQs" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "lRb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -21791,12 +21610,6 @@
 	icon_state = "circuit"
 	},
 /area/space)
-"lTG" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "lUb" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -21911,17 +21724,6 @@
 	icon_state = "warnplate"
 	},
 /area/centcom/control)
-"mbi" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"mbl" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "mcb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
@@ -21970,12 +21772,6 @@
 	icon_state = "warnwhite"
 	},
 /area/centcom/control)
-"mgX" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "mhb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -22136,6 +21932,7 @@
 	},
 /area/centcom/tdome/tdomeobserve)
 "mzq" = (
+/obj/effect/decal/cleanable/blood,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "mAb" = (
@@ -22168,12 +21965,6 @@
 	icon_state = "redbluefull"
 	},
 /area/centcom/tdome/tdomeobserve)
-"mFD" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "mGb" = (
 /obj/random/vending/snack,
 /turf/unsimulated/floor{
@@ -22211,11 +22002,6 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
-"mMa" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "mMb" = (
 /obj/machinery/computer/security/telescreen,
 /turf/unsimulated/floor{
@@ -22254,6 +22040,10 @@
 	icon_state = "warning"
 	},
 /area/centcom/evac)
+"mQF" = (
+/obj/structure/mineral_door/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "mRb" = (
 /obj/structure/closet/emcloset{
 	pixel_x = -7
@@ -22300,11 +22090,6 @@
 	},
 /turf/unsimulated/wall,
 /area/centcom/evac)
-"mXl" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "mYb" = (
 /obj/structure/sign/mark/symbol_b{
 	icon_state = "N"
@@ -22357,13 +22142,6 @@
 	icon_state = "greenfull"
 	},
 /area/centcom/evac)
-"ndG" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "neb" = (
 /obj/structure/sign/mark/symbol_b{
 	icon_state = "E"
@@ -22415,11 +22193,6 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
-"nly" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "nmb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 1
@@ -22461,12 +22234,6 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
-"npB" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "nqb" = (
 /obj/machinery/computer/security/telescreen,
 /turf/unsimulated/floor{
@@ -22491,11 +22258,6 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
-"nsO" = (
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "ntb" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/unsimulated/floor{
@@ -22530,13 +22292,6 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
-"nvd" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "nwb" = (
 /obj/machinery/computer/pod{
 	id = "thunderdomeaxe";
@@ -22572,9 +22327,10 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
-"nyK" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno,
-/obj/effect/decal/cleanable/blood/gibs/down,
+"nyj" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/cult,
+/obj/structure/curtain/black,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "nzb" = (
@@ -22740,13 +22496,6 @@
 	name = "plating"
 	},
 /area/custom/wizard_station)
-"nSN" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "nTb" = (
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. Evilly";
@@ -22781,11 +22530,6 @@
 	name = "plating"
 	},
 /area/custom/wizard_station)
-"nXQ" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "nYb" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid5";
@@ -22808,17 +22552,6 @@
 /obj/structure/plasticflaps/explosion_proof,
 /turf/unsimulated/floor,
 /area/centcom/holding)
-"nZx" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"nZX" = (
-/obj/structure/cult/pylon,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oab" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -22847,12 +22580,6 @@
 /obj/structure/plasticflaps/explosion_proof,
 /turf/unsimulated/floor,
 /area/centcom/control)
-"obc" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/core,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "obR" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
@@ -22937,10 +22664,6 @@
 /obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
-"ooG" = (
-/obj/structure/mineral_door/cult,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "opb" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light{
@@ -23030,11 +22753,6 @@
 	icon_state = "cmo"
 	},
 /area/shuttle/escape/centcom)
-"oxc" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oyb" = (
 /obj/structure/table,
 /obj/item/ashtray/bronze,
@@ -23051,11 +22769,6 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
-"ozH" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/item/weapon/reagent_containers/food/snacks/meat/human,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oAb" = (
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
@@ -23088,10 +22801,6 @@
 	icon_state = "whitebluefull"
 	},
 /area/shuttle/escape/centcom)
-"oEl" = (
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oFb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -23110,11 +22819,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/candy/taffy,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
-"oGz" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oHb" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/spray/cleaner,
@@ -23136,12 +22840,6 @@
 	icon_state = "whiteblue"
 	},
 /area/shuttle/escape/centcom)
-"oJR" = (
-/obj/item/weapon/nullrod,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oKb" = (
 /obj/structure/table,
 /obj/item/weapon/surgicaldrill,
@@ -23177,12 +22875,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"oNh" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oOb" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -23245,12 +22937,6 @@
 	icon_state = "warning"
 	},
 /area/shuttle/escape/centcom)
-"oVE" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oWb" = (
 /obj/structure/dispenser/oxygen,
 /turf/simulated/shuttle/plating{
@@ -23258,10 +22944,6 @@
 	icon_state = "warning"
 	},
 /area/shuttle/escape/centcom)
-"oWQ" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "oXb" = (
 /obj/structure/closet/toolcloset,
 /turf/simulated/shuttle/plating{
@@ -23327,12 +23009,6 @@
 	icon_state = "warning"
 	},
 /area/shuttle/escape/centcom)
-"peE" = (
-/obj/effect/decal/cleanable/blood/gibs/robot,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "pfb" = (
 /turf/simulated/shuttle/plating{
 	dir = 9;
@@ -23433,11 +23109,6 @@
 	icon_state = "delivery"
 	},
 /area/shuttle/escape/centcom)
-"ppf" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "pqb" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -23450,11 +23121,6 @@
 /obj/machinery/computer/secure_data,
 /turf/simulated/shuttle/floor,
 /area/shuttle/escape/centcom)
-"prO" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "psb" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor{
@@ -23470,11 +23136,6 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
-"psO" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "ptb" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -23499,10 +23160,6 @@
 	},
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
-"pvW" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "pwb" = (
 /obj/structure/sign/mark{
 	icon_state = "yup"
@@ -23514,11 +23171,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"pwc" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "pxb" = (
 /obj/machinery/light,
 /obj/item/weapon/twohanded/flora/random,
@@ -23592,25 +23244,12 @@
 	},
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
-"pGu" = (
-/obj/machinery/optable/torture_table,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"pGL" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "pHb" = (
 /obj/structure/sign/nanotrasen,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
 /area/shuttle/escape/centcom)
-"pII" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "pJb" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock";
@@ -23619,9 +23258,8 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "pJt" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-/turf/unsimulated/floor/cult,
+/obj/structure/pedestal/cult,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "pLb" = (
 /obj/structure/sign/mark{
@@ -23789,11 +23427,6 @@
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/shuttle/escape/centcom)
-"qds" = (
-/obj/effect/decal/cleanable/blood/writing,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "qeb" = (
 /obj/machinery/conveyor{
 	dir = 5;
@@ -23814,12 +23447,6 @@
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/supply/velocity)
-"qfr" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "qgb" = (
 /obj/machinery/door/poddoor/cargo{
 	id = "QMLoaddoor1";
@@ -23869,19 +23496,12 @@
 	},
 /area/velocity)
 "qDT" = (
-/turf/simulated/wall/cult,
+/obj/structure/cult/pylon,
+/turf/unsimulated/floor/cult,
 /area/custom/cult)
 "qOG" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
 /turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"qQj" = (
-/obj/effect/decal/cleanable/blood/writing,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
 /area/custom/cult)
 "qTT" = (
 /turf/simulated/shuttle/wall{
@@ -23896,24 +23516,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"rnl" = (
-/obj/structure/cult/statue/camera/jew,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"rvo" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"rVw" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"rXx" = (
-/turf/unsimulated/wall/cult/runed/anim,
-/area/custom/cult)
 "rXM" = (
 /obj/machinery/light{
 	dir = 4
@@ -23924,17 +23526,9 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "scL" = (
-/obj/structure/cult/statue/camera,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"sik" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"swG" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/kitchenknife/ritual,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "sAN" = (
@@ -23957,65 +23551,8 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"sKA" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"sQk" = (
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"sSm" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/core,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"sYX" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"tbS" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"tcg" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"tmF" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "tqh" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno,
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"ttD" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"txH" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"tAr" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
+/obj/structure/cult/statue/camera/gargoyle,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "tWq" = (
@@ -24024,24 +23561,6 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"tXO" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"tZH" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"uiN" = (
-/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"umw" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/up,
-/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "uwB" = (
 /obj/structure/rack,
 /obj/item/ammo_casing/a145,
@@ -24087,11 +23606,6 @@
 	},
 /turf/space,
 /area/space)
-"uHl" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod2";
@@ -24101,8 +23615,8 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "vaz" = (
-/obj/structure/cult/statue/camera/gargoyle,
-/turf/unsimulated/floor/cult,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "vaT" = (
 /obj/structure/closet/wardrobe/black,
@@ -24129,28 +23643,12 @@
 	},
 /area/velocity)
 "vDJ" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/up,
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
+/obj/effect/decal/cleanable/blood/gibs/up,
 /turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"vFL" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/unsimulated/floor/cult,
 /area/custom/cult)
 "vLb" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"vNe" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/item/weapon/reagent_containers/food/snacks/meat/shiba,
+/obj/effect/decal/cleanable/blood/gibs/core,
 /turf/unsimulated/floor/cult,
-/area/custom/cult)
-"vQk" = (
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "vSL" = (
 /obj/mecha/combat/marauder/mauler,
@@ -24158,33 +23656,11 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership)
-"wip" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"wlF" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"wuT" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"wFe" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
+"wfy" = (
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"wML" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
+"wtx" = (
+/turf/unsimulated/wall/cult/runed/anim,
 /area/custom/cult)
 "wRz" = (
 /obj/structure/table/glass{
@@ -24207,60 +23683,12 @@
 	icon_state = "purplechecker"
 	},
 /area/velocity)
-"wRW" = (
-/obj/effect/decal/cleanable/blood/gibs/robot/limb,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "wSn" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
-"wUd" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"xbg" = (
-/obj/structure/cult/pylon,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"xee" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"xiy" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"xlO" = (
-/obj/machinery/optable/torture_table,
-/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
-"xoC" = (
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
-"xsu" = (
-/obj/structure/pedestal/cult,
-/obj/effect/decal/cleanable/blood/gibs/robot/down,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "xsM" = (
 /obj/machinery/door/poddoor/shutters/syndi,
 /turf/unsimulated/floor{
@@ -24283,12 +23711,6 @@
 	icon_state = "barber"
 	},
 /area/velocity)
-"xDh" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "xLi" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -24300,18 +23722,9 @@
 	icon_state = "purplechecker"
 	},
 /area/velocity)
-"xNy" = (
-/obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "xYF" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/unsimulated/floor/cult,
+/obj/structure/cult/statue/camera,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "ycG" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -24321,19 +23734,8 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership/elite_squad)
-"ydk" = (
-/obj/effect/decal/cleanable/blood/gibs/core,
-/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
-/turf/unsimulated/floor/cult,
-/area/custom/cult)
 "yea" = (
-/obj/structure/cult/pylon,
 /turf/unsimulated/floor/cult,
-/area/custom/cult)
-"yfU" = (
-/obj/effect/decal/cleanable/blood/gibs/xeno/body,
-/obj/effect/decal/cleanable/blood/drip,
-/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "ygn" = (
 /obj/structure/table/reinforced,
@@ -61331,11 +60733,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+wtx
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -61587,13 +60989,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+nyj
+bVy
+nyj
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -61843,15 +61245,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+pJt
+wfy
+cKX
+wfy
+bZH
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -62100,15 +61502,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+nyj
+wfy
+wfy
+wfy
+wfy
+wfy
+nyj
+wtx
 aaM
 aaM
 aaM
@@ -62357,15 +61759,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+bVy
+wfy
+yea
+wfy
+wfy
+yea
+bVy
+wtx
 aaM
 aaM
 aaM
@@ -62614,15 +62016,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+nyj
+yea
+wfy
+wfy
+yea
+wfy
+nyj
+wtx
 aaM
 aaM
 aaM
@@ -62871,15 +62273,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+cgI
+wfy
+wfy
+wfy
+djY
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -63129,13 +62531,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+kxC
+yea
+wfy
+wfy
+eVX
+wtx
 aaM
 aaM
 aaM
@@ -63386,13 +62788,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+wtx
+mQF
+wtx
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -63644,11 +63046,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wfy
+wfy
+wfy
+wtx
 aaM
 aaM
 aaM
@@ -63898,17 +63300,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+wtx
+wtx
+yea
+wfy
+yea
+wtx
+wtx
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -64154,19 +63556,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+pJt
+tqh
+wtx
+yea
+wfy
+yea
+wtx
+xYF
+pJt
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -64410,21 +63812,21 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+pJt
+wfy
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+wfy
+pJt
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -64667,28 +64069,28 @@ aaM
 aaM
 aaM
 aaM
+wtx
+pJt
+wfy
+yea
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+yea
+wfy
+pJt
+wtx
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+wtx
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -64916,37 +64318,37 @@ aaM
 aaM
 aaM
 aaM
+wtx
+wtx
+wtx
+wtx
+wtx
+wtx
+wtx
 aaM
+wtx
+wfy
+yea
+yea
+yea
+qDT
+bZH
+wfy
+bZH
+qDT
+yea
+yea
+yea
+wfy
+wtx
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+hsL
+dHm
+hsL
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -65172,39 +64574,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+wtx
+azx
+bry
+bFc
+bOm
+azx
+wtx
+wtx
+wtx
+wtx
+yea
+yea
+qDT
+bZH
+wfy
+wfy
+wfy
+bZH
+qDT
+yea
+yea
+wtx
+wtx
+wtx
+wtx
+bsi
+yea
+wfy
+yea
+bsi
+wtx
+wtx
 aaM
 aaM
 aaM
@@ -65429,39 +64831,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+bsi
+aZI
+aZI
+wfy
+bqK
+aZI
+wtx
+wfy
+yea
+yea
+yea
+yea
+bZH
+wfy
+wfy
+wfy
+wfy
+wfy
+bZH
+yea
+yea
+yea
+yea
+wfy
+wtx
+yea
+wfy
+yea
+wfy
+yea
+pJt
+wtx
 aaM
 aaM
 aaM
@@ -65686,39 +65088,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+tqh
+wfy
+aZI
+bKC
+azx
+wfy
+mQF
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+cNo
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+mQF
+wfy
+yea
+dSA
+yea
+wfy
+tqh
+wtx
 aaM
 aaM
 aaM
@@ -65943,39 +65345,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+wtx
+bsi
+bqK
+wfy
+azx
+bqK
+wfy
+wtx
+wfy
+yea
+yea
+yea
+yea
+bZH
+wfy
+wfy
+wfy
+wfy
+wfy
+bZH
+yea
+yea
+yea
+yea
+wfy
+wtx
+yea
+wfy
+yea
+wfy
+yea
+pJt
+wtx
 aaM
 aaM
 aaM
@@ -66200,40 +65602,40 @@ aaM
 aaM
 aaM
 aaM
+wtx
+wtx
+wfy
+buc
+bLC
+bSj
+aZI
+wtx
+wtx
+wtx
+wtx
+yea
+yea
+qDT
+bZH
+wfy
+wfy
+wfy
+bZH
+qDT
+yea
+yea
+wtx
+wtx
+wtx
+wtx
+bsi
+yea
+wfy
+yea
+bsi
+wtx
+wtx
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
 aaM
 aaM
 "}
@@ -66458,39 +65860,39 @@ aaM
 aaM
 aaM
 aaM
+wtx
+wtx
+wtx
+wtx
+wtx
+wtx
+wtx
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-rXx
+wtx
+wfy
 yea
-ozH
-mMa
-evg
+yea
+yea
 qDT
-sQk
-sQk
-mzq
-mzq
-sQk
-sQk
-mzq
-sQk
-buc
-sQk
-sQk
-sQk
+bZH
+wfy
+bZH
 qDT
+yea
+yea
+yea
+wfy
+wtx
+aaM
+wtx
+wtx
+dAj
 hsL
-sQk
-jij
-jij
-yea
-rXx
+hsL
+wtx
+wtx
+aaM
+aaM
 aaM
 aaM
 "}
@@ -66723,31 +66125,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-ozH
-xlO
-nly
-bTW
-qDT
-lQs
-pvW
-oEl
-sQk
-pvW
-pvW
-sQk
-sQk
-oEl
-mzq
-sQk
-pGL
-aya
-sQk
-hMI
-lEG
-nXQ
-sQk
-rXx
+wtx
+pJt
+wfy
+yea
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+yea
+wfy
+pJt
+wtx
+aaM
+aaM
+wtx
+wtx
+wtx
+wtx
+wtx
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -66980,31 +66382,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-prO
-ffR
-lbQ
-umw
-qDT
-pII
-swG
-lQs
-oEl
-pGL
-sQk
-hxV
-oNh
-sQk
-bSj
-nsO
-yfU
-cua
-iry
-bFc
-dAj
-tcg
-jij
-rXx
+wtx
+wtx
+pJt
+wfy
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+wfy
+pJt
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -67237,31 +66639,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-vNe
-bLC
+aaM
+wtx
+wtx
 pJt
 xYF
-qDT
-kGx
-sQk
-hMI
-mbl
+wtx
+yea
+wfy
+yea
+wtx
 tqh
-kyq
-txH
-nyK
-tmF
-sQk
-wFe
-sik
-xoC
-sQk
-nXQ
-dSA
-hMI
-sQk
-rXx
+pJt
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -67494,31 +66896,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-hod
-hHY
-nSN
-sKA
-qDT
+aaM
+aaM
+wtx
+wtx
+wtx
+wtx
 yea
-lQs
-tbS
-xee
-cvG
-pvW
-sQk
-mFD
-iry
-oEl
-tXO
-bSj
-xoC
-hxV
-hwm
-kiL
-pII
+wfy
 yea
-rXx
+wtx
+wtx
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -67751,31 +67153,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-pvW
-gSo
-uiN
-ega
-ooG
-mzq
-sQk
-oEl
-mgX
-sQk
-mFD
-azx
-sQk
-oEl
-oEl
-sQk
-sQk
-acR
-sQk
-lEG
-aya
-qDT
-qDT
-rXx
+aaM
+aaM
+aaM
+aaM
+aaM
+wtx
+wfy
+wfy
+wfy
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -68008,31 +67410,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-ozH
-pvW
-gVy
-sYX
-ooG
-sQk
-pII
-pwc
-hwm
-qQj
-iWd
-sYX
-bSj
-oVE
-hwm
-oxc
-lEG
-kGx
-nZx
-xDh
-psO
-sQk
-mzq
-rXx
+aaM
+aaM
+aaM
+aaM
+aaM
+wtx
+wtx
+mQF
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -68265,31 +67667,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-lQs
-pGu
-sQk
-mzq
-qDT
+aaM
+aaM
+aaM
+aaM
+aaM
+wtx
 hCi
-sQk
-mzq
-bSj
-hwm
-nsO
-xoC
-sQk
-oVE
-fYT
-oGz
-hDF
-bVy
-nZX
-oEl
-oEl
-djY
-mzq
-rXx
+wfy
+cTM
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -68522,31 +67924,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-fNj
-uiN
-ljO
-ydk
-qDT
+aaM
+aaM
+aaM
+aaM
+aaM
+wtx
 scL
-btn
-oEl
-cTM
-hMI
-sQk
-wML
-mXl
-pGL
-hVY
-dHm
-sQk
-mXl
-qfr
-oEl
-xiy
-sQk
-bSj
-rXx
+vaz
+cZu
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -68779,31 +68181,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-pII
-jiR
-peE
-rnl
-qDT
-sQk
-sQk
+aaM
+aaM
+aaM
+aaM
+aaM
+wtx
+cvG
+yea
 bsi
-mzq
-lEG
-hDF
-bSj
-sQk
-wuT
-bZH
-gSU
-iaV
-wUd
-sQk
-xsu
-pII
-kNK
-sQk
-rXx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -69036,31 +68438,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-yea
-rVw
-rVw
-yea
-qDT
-sQk
-pvW
-lQs
-mzq
-pwc
-hDF
-sQk
-gAC
-cZu
-pGL
-oJR
+aaM
+aaM
+aaM
+aaM
+aaM
+wtx
 cEu
-mXl
-bZH
-oEl
-sQk
-bSj
-tZH
-rXx
+vaz
+pJt
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -69293,31 +68695,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-qDT
-qDT
-qDT
-qDT
-qDT
-mzq
-sQk
-hxV
-nvd
-jwH
-ppf
-hwm
-gHP
-gNk
-lEG
-pGL
-nXQ
-nXQ
-oEl
-kak
-mzq
-sQk
-sQk
-rXx
+aaM
+aaM
+aaM
+wtx
+wtx
+wtx
+wtx
+cNr
+wtx
+wtx
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -69550,31 +68952,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-dke
-dke
-dke
-dke
-qDT
-pII
-btn
-nZx
-sQk
-jwH
-mzq
-nsO
-oVE
-sQk
-ttD
-lre
-hxV
-lre
-xsu
-pII
-oEl
-wlF
-tmF
-rXx
+aaM
+aaM
+aaM
+wtx
+wfy
+wfy
+yea
+vaz
+wfy
+vaz
+yea
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -69807,31 +69209,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-sQk
-mzq
-sQk
-sQk
-qDT
+aaM
+aaM
+aaM
+wtx
+vaz
+cua
 vaz
 qOG
-cZu
-mzq
-kxx
-lQs
-mzq
-pII
-xNy
-xbg
-bVy
-oEl
-dUS
-yea
-lQs
-wip
-oxc
-tZH
-rXx
+wfy
+vDJ
+vaz
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -70064,31 +69466,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-iTS
-yea
-gEc
-mzq
+aaM
+aaM
+aaM
+wtx
+wfy
 idX
-sQk
-pII
-lQs
-pvW
-sQk
-jij
-fIn
-xYF
-mgX
-sQk
-ndG
-hwm
-hwm
-oVE
-pII
-oEl
-sQk
-sQk
-rXx
+vDJ
+cTm
+vaz
+idX
+cua
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -70321,31 +69723,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-sQk
-sQk
-mzq
-sQk
-qDT
-vaz
-lQs
+aaM
+aaM
+aaM
+wtx
+cdy
+wfy
+wfy
+wfy
 fXQ
-pGL
-oEl
-xee
-sQk
-vQk
-vFL
-oEl
-sQk
-jij
-rvo
-oEl
-tZH
-oEl
-npB
-sQk
-rXx
+yea
+wfy
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -70578,31 +69980,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-dke
-dke
-dke
-dke
-qDT
-sQk
-sQk
-sQk
-hxV
-gNT
-cIK
-lQs
-lQs
-aZI
-xoC
-hDF
-mbi
-kfT
-oEl
-lTG
-wlF
-mzq
-sQk
-rXx
+aaM
+aaM
+aaM
+wtx
+pJt
+wfy
+bsi
+cKX
+bsi
+wfy
+pJt
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -70835,31 +70237,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-qDT
-qDT
-qDT
-qDT
-qDT
-sQk
-mzq
-hwm
-acR
-hwm
-obc
-hxV
-sQk
-mbi
-sQk
-mzq
-bSj
-hwm
-lQs
-sYX
-sQk
-tZH
-sQk
-rXx
+aaM
+aaM
+aaM
+wtx
+wtx
+mQF
+wtx
+wtx
+wtx
+mQF
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -71092,31 +70494,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-iWL
-lEM
-tAr
+aaM
+aaM
+aaM
+wtx
 vLb
-qDT
-sQk
-sQk
-kfT
-oEl
-sQk
-nZx
-sQk
-oEl
-oEl
-qds
-oxc
-pGL
-bSj
-sQk
-sQk
-tZH
-jwH
-sQk
-rXx
+vaz
+wfy
+wtx
+wfy
+dlr
+vaz
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -71349,31 +70751,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-vLb
-tAr
-cNr
-vDJ
-qDT
+aaM
+aaM
+aaM
+wtx
+wfy
+idX
 mzq
-sQk
-sQk
-lQs
-sSm
-sQk
-sQk
-lAM
-sQk
-sQk
-oWQ
-sQk
+wtx
+wfy
 dmc
-mzq
-mzq
-sQk
-sQk
-mzq
-rXx
+vLb
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -71606,31 +71008,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-lEM
-cKX
-wRW
+aaM
+aaM
+aaM
+wtx
 vDJ
-idX
+wfy
+cIK
+wtx
+dcv
 mzq
-mzq
-mzq
-mzq
-mzq
-tAr
-mzq
-mzq
-mzq
-pvW
-xoC
-mzq
-mzq
-mzq
-kNK
-jwH
-jwH
-sQk
-rXx
+wfy
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -71733,7 +71135,7 @@ asq
 asB
 aoo
 atf
-atq
+aya
 atx
 atq
 aNG
@@ -71863,31 +71265,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-vLb
-uHl
-lQp
-cgI
+aaM
+aaM
+aaM
+wtx
+wtx
 bHV
-mzq
-mzq
-mzq
-mzq
-mzq
-mzq
-pvW
-mzq
-mzq
-mzq
-sQk
-sQk
-sQk
-oEl
-sQk
-mzq
-tZH
-sQk
-rXx
+wtx
+wtx
+wtx
+bHV
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}
@@ -72120,31 +71522,31 @@ aaM
 aaM
 aaM
 aaM
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
-rXx
+aaM
+aaM
+aaM
+aaM
+wtx
+wtx
+wtx
+aaM
+wtx
+wtx
+wtx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 "}

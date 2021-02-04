@@ -313,6 +313,14 @@
 	title = "Rules"
 	wiki_page = "Rules"
 
+/obj/item/weapon/book/manual/wiki/cult
+	name = "Ordhu'rug'ar"
+	icon_state = "book"
+	item_state = "book2"
+	author = "Bok'irg"
+	title = "Магия культа"
+	wiki_page = "Cult_Magic"
+
 //Old manuals that we should keep for a while
 
 /obj/item/weapon/book/manual/hydroponics_beekeeping
