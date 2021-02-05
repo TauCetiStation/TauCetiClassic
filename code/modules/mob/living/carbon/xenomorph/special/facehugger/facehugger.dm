@@ -132,9 +132,18 @@
 		if(Attach(user))
 			return
 	else
-		if(stat == DEAD && isxeno(user))
+		if(stat == DEAD && isxenoadult(user))
 			if(do_after(user, 20, target = src))
-				to_chat(user, "You ate a facehugger.")
+				var/mob/living/carbon/xenomorph/humanoid/X = user
+				if(X.health >= X.maxHealth)
+					X.adjustToxLoss(50)
+					to_chat(X, "<span class='notice'>Вы проглотили лицехвата. Это дало вам немного плазмы.</span>")
+				else
+					X.adjustBruteLoss(-50)
+					X.adjustFireLoss(-50)
+					X.adjustOxyLoss(-50)
+					X.adjustCloneLoss(-50)
+					to_chat(X, "<span class='notice'>Вы проглотили лицехвата. Ваше самочувствие улучшилось.</span>")
 				qdel(src)
 			return
 		..()
@@ -185,11 +194,6 @@
 	if(stat == CONSCIOUS)
 		return HasProximity(finder)
 	return FALSE
-/*
-/obj/item/clothing/mask/facehugger/proc/show_messageold(message, m_type)
-	if(current_hugger)
-		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-		FH.show_message(message,m_type)*/
 
 /obj/item/clothing/mask/facehugger/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first = FALSE, datum/callback/callback)
 	if(!..())
