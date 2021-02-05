@@ -50,6 +50,14 @@
 /obj/item/weapon/gripper/proc/is_hand(datum/source, atom/T, mob/user, params)
 	return TRUE
 
+/obj/item/weapon/gripper/proc/clear_wrapped()
+	wrapped = null
+
+/obj/item/weapon/gripper/proc/wrap(obj/item/I)
+	wrapped = I
+	I.forceMove(src)
+	RegisterSignal(I, list(COMSIG_PARENT_PREQDELETED), .proc/clear_wrapped)
+
 /obj/item/weapon/gripper/proc/attack_as_hand(datum/source, atom/T, mob/user, params)
 	if(wrapped)
 		return
@@ -67,11 +75,10 @@
 		if(A.opened)
 			if(A.cell)
 
-				wrapped = A.cell
+				wrap(A.cell)
 
 				A.cell.add_fingerprint(user)
 				A.cell.updateicon()
-				A.cell.forceMove(src)
 				A.cell = null
 
 				A.charging = FALSE
@@ -91,6 +98,7 @@
 		I.forceMove(T)
 	else
 		I.forceMove(get_turf(user))
+	UnregisterSignal(wrapped, list(COMSIG_PARENT_PREQDELETED))
 	wrapped = null
 	return TRUE
 
@@ -110,17 +118,14 @@
 	if(grab)
 		if(user.pulling == I)
 			user.stop_pulling()
+		wrap(I)
 		to_chat(user, "You collect \the [I].")
-		I.forceMove(src)
-		wrapped = I
 		return TRUE
 
 	to_chat(user, "<span class='warning'>Your gripper cannot hold \the [I].</span>")
 	return FALSE
 
 /obj/item/weapon/gripper/proc/get_item(datum/source, mob/user)
-	if(QDELETED(wrapped))
-		wrapped = null
 	if(wrapped)
 		return wrapped
 	return src //return src to signal COMSIG_HAND_ATTACK
@@ -191,8 +196,6 @@
 
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
-	if(QDELETED(wrapped))
-		wrapped = null
 	if(wrapped)
 		to_chat(user, "It is holding \a [wrapped].")
 
