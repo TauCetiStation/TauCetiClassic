@@ -185,6 +185,22 @@ var/global/list/active_alternate_appearances = list()
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/group
+	var/list/seers
+	add_ghost_version = TRUE
+
+/datum/atom_hud/alternate_appearance/basic/group/New(key, image/I, mob_or_mobs)
+	..(key, I, FALSE)
+	var/list/mobs = islist(mob_or_mobs) ? mob_or_mobs : list(mob_or_mobs)
+	seers = mobs
+	for(var/mob/M in seers)
+		add_hud_to(M)
+
+/datum/atom_hud/alternate_appearance/basic/group/mobShouldSee(mob/M)
+	if(M in seers || isobserver(M))
+		return TRUE
+	return FALSE
+
 /datum/atom_hud/alternate_appearance/basic/mime
 
 /datum/atom_hud/alternate_appearance/basic/mime/New()

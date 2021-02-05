@@ -35,8 +35,8 @@
 		M.Scale(3 + ((radius - 1) * 2))
 	radius_img.transform = M
 
-/datum/component/vis_radius/proc/show_radius(datum/sourse, mob/M)
-	radius_obj.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "visible_radius", radius_img, M)
+/datum/component/vis_radius/proc/show_radius(datum/sourse, mob_or_mobs)
+	radius_obj.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/group, "visible_radius", radius_img, mob_or_mobs)
 
 /datum/component/vis_radius/proc/hide_radius()
 	radius_obj.remove_alt_appearance("visible_radius")
