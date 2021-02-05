@@ -717,6 +717,7 @@
 	icon = 'icons/effects/bloodTP.dmi'
 	icon_state = "cult_tp"
 	screen_loc = "1,1"
+	layer = ABOVE_HUD_LAYER + 1
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	delay = 8.5

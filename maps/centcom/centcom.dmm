@@ -17090,10 +17090,6 @@
 	icon_state = "purplechecker"
 	},
 /area/centcom)
-"cPU" = (
-/obj/effect/landmark/start/new_player,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "cQb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22528,10 +22524,6 @@
 "nVb" = (
 /turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
-"nVA" = (
-/obj/effect/landmark/start,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
 "nWb" = (
 /turf/unsimulated/floor{
 	icon_state = "asteroid8";
@@ -23509,9 +23501,17 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"qxI" = (
+/obj/effect/landmark/start,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "qDT" = (
 /obj/structure/cult/pylon,
 /turf/unsimulated/floor/cult,
+/area/custom/cult)
+"qMP" = (
+/obj/effect/landmark/start/new_player,
+/turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "qOG" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -65117,7 +65117,7 @@ wfy
 wfy
 wfy
 wfy
-nVA
+qxI
 cNo
 wfy
 wfy
@@ -65374,7 +65374,7 @@ yea
 yea
 bZH
 wfy
-cPU
+qMP
 wfy
 wfy
 wfy

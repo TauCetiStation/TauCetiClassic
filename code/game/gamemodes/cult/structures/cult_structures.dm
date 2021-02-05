@@ -8,7 +8,7 @@
 /obj/structure/cult/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
-	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
@@ -23,7 +23,7 @@
 	if(length(W.hitsound))
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
 	else
-		playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	health -= W.force
 	healthcheck()
 
@@ -32,12 +32,12 @@
 	user.visible_message("<span class='userdanger'>[user] kicks [src] unsuccessfully.</span>", "<span class='userdanger'>You feel pain of hitting [src] hard with your fist.</span>")
 	var/obj/item/organ/external/BP = user.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
 	BP.take_damage(3, 0, 0, "stone")
-	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/cult/attack_animal(mob/living/simple_animal/user)
 	. = ..()
 	health -= user.melee_damage
-	playsound(src, 'sound/effects/digging.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 	healthcheck()
 
 /obj/structure/cult/attack_paw(mob/living/user)
