@@ -28,7 +28,6 @@
 		return
 	if(Proj.damage_type == BRUTE || Proj.damage_type == BURN)
 		apply_damage(Proj.damage)
-		healthcheck()
 
 /obj/structure/alien/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -44,6 +43,7 @@
 
 /obj/structure/alien/proc/apply_damage(value)
 	health = max(0, health - round(value))
+	healthcheck()
 
 // Resin
 /obj/structure/alien/resin
@@ -104,7 +104,6 @@
 		return
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	apply_damage(tforce)
-	healthcheck()
 	return
 
 /obj/structure/alien/resin/attack_hand(mob/user)
@@ -115,7 +114,6 @@
 		user.do_attack_animation(src)
 		user.visible_message("<span class='warning'>[user] destroys the [name]!</span>", self_message = "<span class='notice'>You easily destroy the [name].</span>")
 		health = 0
-		healthcheck()
 	else
 		user.visible_message("<span class='warning'>[user] claws at the [name]!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
 	return
@@ -133,7 +131,6 @@
 	apply_damage(rand(40, 60))
 	if(health <= 0)
 		user.visible_message("<span class='warning'>[usr] slices the [name] apart!</span>", self_message = "<span class='notice'>You slice the [name] to pieces.</span>")
-	healthcheck()
 	return
 
 /obj/structure/alien/resin/attackby(obj/item/weapon/W, mob/user)
@@ -141,7 +138,6 @@
 	if(!.)
 		return
 	apply_damage(W.force)
-	healthcheck()
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0
@@ -242,12 +238,10 @@
 		if(WT.use(0, user))
 			damage = 15
 	apply_damage(damage)
-	healthcheck()
 
 /obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		apply_damage(15)
-		healthcheck()
 
 /obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
 	return PROJECTILE_FORCE_MISS
@@ -439,7 +433,6 @@
 			if(prob(25))
 				audible_message("<span class='warning'>\The [src] is cracking!</span>")
 			apply_damage(5)
-			healthcheck()
 
 /obj/structure/alien/egg/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
@@ -451,7 +444,6 @@
 		if(WT.use(0, user))
 			damage = 15
 	apply_damage(damage)
-	healthcheck()
 
 
 /obj/structure/alien/egg/healthcheck()
@@ -461,7 +453,6 @@
 /obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		apply_damage(25)
-		healthcheck()
 
 #undef BURST
 #undef BURSTING
@@ -511,13 +502,11 @@
 	if(!.)
 		return
 	apply_damage(W.force)
-	healthcheck()
 
 
 /obj/structure/alien/air_plant/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		apply_damage(15)
-		healthcheck()
 
 #undef WEED_SOUTH_EDGING
 #undef WEED_NORTH_EDGING
