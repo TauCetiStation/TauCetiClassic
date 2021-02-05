@@ -23,7 +23,6 @@
 
 /obj/item/weapon/nullrod/atom_init()
 	. = ..()
-
 	if(!scum)
 		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
 	power = new(src)
