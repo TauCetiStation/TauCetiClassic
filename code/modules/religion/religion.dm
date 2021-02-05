@@ -104,8 +104,10 @@
 
 	// All runes on map
 	var/list/obj/effect/rune/runes = list()
-	// Max runes on map
-	var/max_runes
+	// mob = list(rune, rune, rune)
+	var/list/runes_by_mob = list()
+	// Max runes on mob
+	var/max_runes_on_mob
 	// Is the rune removed after use
 	var/reusable_rune = FALSE
 

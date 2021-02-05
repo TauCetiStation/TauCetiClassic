@@ -69,7 +69,7 @@
 		if(M.client)
 			new /obj/screen/temp/cult_teleportation(M, M)
 
-	after_tp(target, user, companions)
+	after_tp(get_turf(user), user, companions)
 
 /datum/rune/cult/teleport/proc/after_tp(turf/target, mob/user, list/companions)
 	return
@@ -85,17 +85,17 @@
 		destination = get_turf(pick(A.contents))
 	teleporting(destination	, user)
 
-/datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target)
+/datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
 	if(istype(target, /turf/space))
 		return
-	var/obj/effect/rune/R = new(target, religion)
+	var/obj/effect/rune/R = new(target, religion, user)
 	R.power = new /datum/rune/cult/teleport/teleport_from_heaven(R, get_turf(holder))
 	R.power.religion = religion
 	R.icon = get_uristrune_cult(TRUE, R.power.words)
 
 /datum/rune/cult/teleport/teleport_to_heaven/after_tp(turf/target, mob/living/user, list/companions)
 	if(user) // user can gibbed
-		create_from_heaven(target)
+		create_from_heaven(target, user)
 		var/datum/religion/cult/C = religion
 		if(companions)
 			for(var/mob/living/L in companions)

@@ -24,7 +24,7 @@
 /datum/religion_tech/cult/more_runes
 
 /datum/religion_tech/cult/more_runes/apply_effect(datum/religion/cult/R)
-	R.max_runes += 10
+	R.max_runes_on_mob += 5
 
 /datum/religion_tech/cult/mirror_shield
 

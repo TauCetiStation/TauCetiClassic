@@ -42,7 +42,7 @@
 	favor = 1000
 	max_favor = 10000
 
-	max_runes = 10
+	max_runes_on_mob = 5
 	style_text = "cult"
 	symbol_icon_state = null
 
@@ -123,7 +123,7 @@
 			return
 
 		if(prob(20)) // sound
-			var/list/sounds = pick(SOUNDIN_EXPLOSION, SOUNDIN_SPARKS, SOUNDIN_FEMALE_HEAVY_PAIN, SOUNDIN_MALE_HEAVY_PAIN)
+			var/list/sounds = pick(SOUNDIN_EXPLOSION, SOUNDIN_SPARKS, SOUNDIN_FEMALE_HEAVY_PAIN, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_SHATTER, SOUNDIN_HORROR)
 			playsound(H, pick(sounds), VOL_EFFECTS_INSTRUMENT)
 
 		else if(prob(20)) // chat_message

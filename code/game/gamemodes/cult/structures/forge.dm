@@ -1,7 +1,7 @@
 /obj/structure/cult/forge
 	name = "Daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
-	icon_state = "forge"
+	icon_state = "forge_inactive"
 	light_color = "#cc9338"
 	light_power = 2
 	light_range = 3
@@ -73,3 +73,5 @@
 	religion.adjust_favor(-choice.favor_cost)
 	religion.adjust_piety(-choice.piety_cost)
 	playsound(src, 'sound/magic/cult_equip.ogg', VOL_EFFECTS_MASTER)
+	icon_state = "forge_active"
+	VARSET_IN(src, icon_state, "forge_inactive", 10)

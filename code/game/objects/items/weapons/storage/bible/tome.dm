@@ -37,6 +37,7 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
+		to_chat(user, "Вами нарисовано/всего <span class='cult'>[religion.runes_by_mob[user] ? religion.runes_by_mob[user] : "0"]</span>/[religion.max_runes_on_mob]")
 	else
 		..()
 
@@ -139,9 +140,11 @@
 		to_chat(H, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[H.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
 
-	if(religion.max_runes < religion.runes.len)
-		to_chat(H, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
-		return
+	if(religion.runes_by_mob[H])
+		var/list/L = religion.runes_by_mob[H]
+		if(L.len > religion.max_runes_on_mob)
+			to_chat(H, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
+			return
 
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, H))
 		return
@@ -153,7 +156,7 @@
 
 	H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), ((rand(9) + 1) / 10))
 
-	var/obj/effect/rune/R = new choice.building_type(get_turf(H), religion)
+	var/obj/effect/rune/R = new choice.building_type(get_turf(H), religion, H)
 	R.icon = rune_choices_image[choice]
 	R.power = new choice.rune_type(R)
 	R.power.religion = religion

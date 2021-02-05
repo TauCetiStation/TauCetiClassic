@@ -9,11 +9,21 @@
 
 	var/datum/rune/power
 	var/datum/religion/religion
+	var/mob/creator
 
-/obj/effect/rune/atom_init(mapload, datum/religion/R)
+/obj/effect/rune/atom_init(mapload, datum/religion/R, mob/user)
 	. = ..()
-	religion = R
-	religion?.runes += src
+	if(R)
+		creator = user
+		religion = R
+		religion.runes += src
+
+		if(!religion.runes_by_mob.Find(creator))
+			religion.runes_by_mob[creator] = list(src)
+		else
+			var/list/L = religion.runes_by_mob[creator]
+			L += src
+
 	var/image/I = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	I.override = TRUE
 	I.color = "#a10808"
@@ -24,7 +34,14 @@
 
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
-	religion.runes -= src
+	if(religion)
+		var/list/L = religion.runes_by_mob[creator]
+		L -= src
+		religion.runes -= src
+		religion = null
+
+	creator = null
+
 	return ..()
 
 /obj/effect/rune/examine(mob/user)
@@ -35,7 +52,7 @@
 		to_chat(user, "Руной написано: <span class='[religion?.style_text]'>[power?.name]</span>.")
 		if(istype(power, /datum/rune/cult/teleport/teleport))
 			var/datum/rune/cult/teleport/teleport/R = power
-			to_chat(user, "Id телепорта - <span class='[religion.style_text]'>[R.id]</span>.")
+			to_chat(user, "Id телепорта - <span class='[religion.style_text]'>[R.id ? R.id : "Отсутствует"]</span>.")
 		return
 	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
 	if(issilicon(user))

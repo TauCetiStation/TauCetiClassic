@@ -102,7 +102,7 @@
 	for(var/ill in P.lying_illusions)
 		item_stage += 1
 		waiting_time = 0
-		var/datum/beam/B = AOG.Beam(ill, "drainbeam", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
+		var/datum/beam/B = AOG.Beam(ill, "drainvortex", time = INFINITY, maxdistance = INFINITY, beam_sleep_time = 2 SECONDS)
 		sleep(ritual_length / items_to_spawn)
 		var/obj/item/item = P.lying_illusions[ill]
 		while(!item && P && can_invocate(null, AOG, FALSE)) // waiting item with antilag
