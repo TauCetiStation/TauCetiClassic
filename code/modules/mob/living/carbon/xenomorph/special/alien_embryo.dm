@@ -32,6 +32,8 @@ This is emryo growth procs
 		STOP_PROCESSING(SSobj, src)
 		remove_infected_hud()
 		affected_mob.med_hud_set_status()
+	if(baby)
+		baby.clear_alert("alien_embryo")
 	affected_mob = null
 	baby = null
 	return ..()
