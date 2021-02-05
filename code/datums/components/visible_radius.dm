@@ -2,7 +2,7 @@
 	var/obj/effect/overlay/radius_obj
 	var/image/radius_img
 
-/datum/component/vis_radius/Initialize(radius, icon_state = "radius", color = "#FF0000")
+/datum/component/vis_radius/Initialize(radius, icon_state = "radius", color = COLOR_RED)
 	RegisterSignal(parent, COMSIG_SHOW_RADIUS, .proc/show_radius)
 	RegisterSignal(parent, list(COMSIG_HIDE_RADIUS, COMSIG_COMPONENT_REMOVING), .proc/hide_radius)
 
