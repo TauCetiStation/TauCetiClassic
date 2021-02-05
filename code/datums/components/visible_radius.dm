@@ -1,39 +1,42 @@
-#define RADIUS_TIP "Is slippery."
-
-/datum/mechanic_tip/vis_radius
-	tip_name = RADIUS_TIP
-	description = "This object will cause you to slip up if stepped on."
-
-
-
 /datum/component/vis_radius
-	var/radius = 0
+	var/obj/effect/overlay/radius_obj
+	var/image/radius_img
 
-/datum/component/vis_radius/Initialize(_radius)
-	radius = _radius
+/datum/component/vis_radius/Initialize(radius, icon_state = "radius", color = "#FF0000")
+	RegisterSignal(parent, COMSIG_SHOW_RADIUS, .proc/show_radius)
+	RegisterSignal(parent, list(COMSIG_HIDE_RADIUS, COMSIG_COMPONENT_REMOVING), .proc/hide_radius)
+
+	setup_radius(radius, icon_state, color)
+
+/datum/component/vis_radius/Destroy()
+	hide_radius()
+	QDEL_NULL(radius_img)
+	QDEL_NULL(radius_obj)
+	return ..()
+
+/datum/component/vis_radius/proc/setup_radius(radius, icon_state, color)
 	var/atom/movable/AM = parent
-	var/it = ((3 + (radius * 2)) * 4) - 4
-	var/list/L = list()
-	for(var/i in 0 to radius)
-		L += i
-	for(var/i in 1 to it)
-		for(var/int in L)
-			need_x = 
-			need_y = 
-			var/obj/effect/overlay/O = new
-			O.icon = 'icons/mob/screen1.dmi'
-			O.icon_state = "radius"
-			O.layer = ABOVE_LIGHTING_LAYER
-			O.x = AM.x +
-			O.y = AM.y +
+	radius_obj = new(get_turf(AM))
+	radius_obj.appearance_flags &= ~TILE_BOUND
+	radius_obj.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	radius_obj.AddComponent(/datum/component/bounded, AM, 0, 0, null, FALSE, FALSE)
 
+	radius_img = image('icons/mob/screen1.dmi', radius_obj, icon_state, ABOVE_LIGHTING_LAYER)
+	radius_img.plane = ABOVE_LIGHTING_PLANE
+	radius_img.appearance_flags &= ~TILE_BOUND
+	radius_img.alpha = 50
+	radius_img.color = color
+	radius_img.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+	var/matrix/M = matrix()
+	if(radius == 1)
+		M.Scale(3)
+	else
+		M.Scale(3 + ((radius - 1) * 2))
+	radius_img.transform = M
 
-	var/mob/a = parent
-	a.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "fwaaw", I)
+/datum/component/vis_radius/proc/show_radius(datum/sourse, mob/M)
+	radius_obj.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "visible_radius", radius_img, M)
 
-	//RegisterSignal(parent, list(COMSIG_VISIBLE_RADIUS), .proc/Slip)
-	var/datum/mechanic_tip/vis_radius/slip_tip = new
-	parent.AddComponent(/datum/component/mechanic_desc, list(slip_tip))
-
-#undef RADIUS_TIP
+/datum/component/vis_radius/proc/hide_radius()
+	radius_obj.remove_alt_appearance("visible_radius")

@@ -106,6 +106,9 @@ var/global/list/active_alternate_appearances = list()
 		var/image/ghost_image = image(icon = theImage.icon , icon_state = theImage.icon_state, loc = theImage.loc)
 		ghost_image.override = FALSE
 		ghost_image.alpha = 128
+		ghost_image.color = theImage.color
+		ghost_image.plane = theImage.plane
+		ghost_image.transform = theImage.transform
 		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()

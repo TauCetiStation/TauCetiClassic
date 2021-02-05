@@ -26,8 +26,10 @@
 	// resolved. Return TRUE if the situation was resolved.
 	// This component will pass itself into it.
 	var/datum/callback/resolve_callback
+	// Time to hide visible raduis
+	var/hide_radius_timer
 
-/datum/component/bounded/Initialize(atom/_bound_to, _min_dist, _max_dist, datum/callback/_resolve_callback)
+/datum/component/bounded/Initialize(atom/_bound_to, _min_dist, _max_dist, datum/callback/_resolve_callback, tips = TRUE, vis_radius = TRUE)
 	bound_to = _bound_to
 	min_dist = _min_dist
 	max_dist = _max_dist
@@ -39,11 +41,15 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
 
-	var/datum/mechanic_tip/bounded/bounded_tip = new(src)
-	var/datum/mechanic_tip/bound/bound_tip = new(src)
+	if(tips)
+		var/datum/mechanic_tip/bounded/bounded_tip = new(src)
+		var/datum/mechanic_tip/bound/bound_tip = new(src)
 
-	parent.AddComponent(/datum/component/mechanic_desc, list(bounded_tip))
-	bound_to.AddComponent(/datum/component/mechanic_desc, list(bound_tip))
+		parent.AddComponent(/datum/component/mechanic_desc, list(bounded_tip))
+		bound_to.AddComponent(/datum/component/mechanic_desc, list(bound_tip))
+
+	if(vis_radius && ismob(parent))
+		bound_to.AddComponent(/datum/component/vis_radius, _max_dist)
 
 	// First bounds update.
 	check_bounds()
@@ -53,6 +59,8 @@
 
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(BOUNDED_TIP))
 	SEND_SIGNAL(bound_to, COMSIG_TIPS_REMOVE, list(BOUNDS_TIP(src)))
+
+	qdel(bound_to.GetComponent(/datum/component/vis_radius))
 
 	bound_to = null
 	return ..()
@@ -135,8 +143,15 @@
 	if(dist == -1 && newLoc == T)
 		dist = 0
 	if(dist < min_dist || dist > max_dist)
+		SEND_SIGNAL(bound_to, COMSIG_SHOW_RADIUS, parent)
+		if(hide_radius_timer)
+			deltimer(hide_radius_timer)
+		hide_radius_timer = addtimer(CALLBACK(src, .proc/radius_hide), 20, TIMER_STOPPABLE)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	return NONE
+
+/datum/component/bounded/proc/radius_hide()
+	SEND_SIGNAL(bound_to, COMSIG_HIDE_RADIUS)
 
 /datum/component/bounded/proc/on_bound_destroyed(force, qdel_hint)
 	// Perhaps add an abilities to resolve this situation with a callback? ~Luduk

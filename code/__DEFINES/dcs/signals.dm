@@ -221,4 +221,7 @@
 /// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
 #define COMSIG_MOB_MOD_UPDATE "mob_mod_update"
 
-#define COMSIG_VISIBLE_RADIUS "visible_radius"
+/// /datum/component/vis_radius: ()
+#define COMSIG_SHOW_RADIUS "show_radius"
+/// /datum/component/vis_radius: ()
+#define COMSIG_HIDE_RADIUS "hide_radius"
