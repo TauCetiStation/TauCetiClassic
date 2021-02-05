@@ -24,7 +24,7 @@
 	radius_img = image('icons/mob/screen1.dmi', radius_obj, icon_state, ABOVE_LIGHTING_LAYER)
 	radius_img.plane = ABOVE_LIGHTING_PLANE
 	radius_img.appearance_flags &= ~TILE_BOUND
-	radius_img.alpha = 50
+	radius_img.alpha = 49
 	radius_img.color = color
 	radius_img.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
