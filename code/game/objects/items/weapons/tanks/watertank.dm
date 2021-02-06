@@ -164,7 +164,7 @@
 
 /obj/item/weapon/reagent_containers/watertank_backpack/syndie
 	name = "chemical tank"
-	desc = "A W.A.R.C.R.I.M.E.S. brand chemical backpack with nozzle to cover bodies with fresh chemical burns."
+	desc = "A W.A.R.C.R.I.M.E.S. brand chemical backpack with nozzle to cover bodies in fresh chemical burns."
 	icon_state = "waterbackpacknuke"
 	item_state = "waterbackpacknuke"
 	volume = 1600
@@ -179,7 +179,7 @@
 	triple_shot = TRUE
 	spray_size = 4
 	spray_sizes = list(2)
-
+	possible_transfer_amounts = null
 	spray_cloud_move_delay = 2
 	spray_cloud_react_delay = 0
 	volume = 1600
