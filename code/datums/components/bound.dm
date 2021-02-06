@@ -60,7 +60,7 @@
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(BOUNDED_TIP))
 	SEND_SIGNAL(bound_to, COMSIG_TIPS_REMOVE, list(BOUNDS_TIP(src)))
 
-	qdel(bound_to.GetComponent(/datum/component/vis_radius))
+	deltimer(hide_radius_timer)
 
 	bound_to = null
 	return ..()
