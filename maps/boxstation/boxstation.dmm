@@ -61553,6 +61553,8 @@
 "cwc" = (
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson,
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
 /obj/item/device/gps/engineering,
