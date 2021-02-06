@@ -181,7 +181,7 @@ var/global/list/active_alternate_appearances = list()
 	add_hud_to(seer)
 
 /datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
-	if(M == seer || isobserver(M))
+	if(M == seer)
 		return TRUE
 	return FALSE
 
@@ -197,7 +197,7 @@ var/global/list/active_alternate_appearances = list()
 		add_hud_to(M)
 
 /datum/atom_hud/alternate_appearance/basic/group/mobShouldSee(mob/M)
-	if(M in seers || isobserver(M))
+	if(M in seers)
 		return TRUE
 	return FALSE
 
