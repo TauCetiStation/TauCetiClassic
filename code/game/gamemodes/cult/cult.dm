@@ -169,7 +169,7 @@
 	if (!config.objectives_disabled)
 		memoize_cult_objectives(cult_mind)
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
+/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = TRUE)
 	if(global.cult_religion.remove_member(cult_mind.current))
 		remove_antag_hud(ANTAG_HUD_CULT, cult_mind.current)
 		cult_mind.current.Paralyse(5)

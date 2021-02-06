@@ -14,13 +14,20 @@
 	light_color = "#4c4cff"
 	light_power = 3
 	w_class = ITEM_SIZE_SMALL
+
+	// Deconvering mobs
+	var/deconverting = FALSE
+
+	// Glowing
 	var/last_process = 0
 	var/static/list/scum
 
+	// Change type of nullrod
 	var/tried_replacing = FALSE
 
+	// Deconverting turfs
 	var/deconvert_turf_cd = 5 SECONDS
-	var/next_deconvert = 0
+	var/next_turf_deconvert = 0
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='userdanger'>[user] is impaling himself with the [name]! It looks like \he's trying to commit suicide.</span>")
@@ -86,7 +93,7 @@
 	T.ChangeTurf(turf_type)
 
 /obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity || !user.my_religion || !global.cult_religion || !isturf(target) || next_deconvert > world.time)
+	if(!proximity || !user.my_religion || !global.cult_religion || !isturf(target) || next_turf_deconvert > world.time)
 		return
 
 	// Captured area is too strong
@@ -102,29 +109,39 @@
 	else if(T.type in global.cult_religion.floor_types)
 		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/floor)
 
-	next_deconvert = world.time + deconvert_turf_cd
+	next_turf_deconvert = world.time + deconvert_turf_cd
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
-		return
-
-	M.log_combat(user, "deconvered (attempt) via [name]")
-
-	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
+	if((CLUMSY in user.mutations) && prob(50))
+		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
 		user.adjustBruteLoss(10)
 		user.Paralyse(20)
 		return
 
-	if (M.stat != DEAD)
-		if(iscultist(M) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(10))
-			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
-			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
+	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST || deconverting)
+		return
+
+	user.visible_message("<span class='danger'>[user] заряжает [src] и целится в [M].</span>")
+
+	deconverting = TRUE
+	if(!do_after(user, 50, target = M))
+		return
+	deconverting = FALSE
+
+	M.log_combat(user, "deconvered (attempt) via [name]")
+
+	if(M.stat != DEAD)
+		if(iscultist(M))
+			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
 			SSticker.mode.remove_cultist(M.mind)
+			new /obj/effect/temp_visual/religion/pulse(M.loc)
+			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
 		else
-			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
-		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
+			to_chat(user, "<span class='danger'>Жезл наказывает вас за ложное использование.</span>")
+			new /obj/effect/temp_visual/religion/pulse(user.loc)
+			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
+			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
+			M.confused += 10
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
