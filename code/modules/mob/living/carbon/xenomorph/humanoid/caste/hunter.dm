@@ -1,12 +1,11 @@
 /mob/living/carbon/xenomorph/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
-	maxHealth = 180
-	health = 180
+	maxHealth = 220
+	health = 220
 	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alienh_s"	//default invisibility
-	plasma_rate = 5
 	heal_rate = 3
 
 /mob/living/carbon/xenomorph/humanoid/hunter/atom_init()

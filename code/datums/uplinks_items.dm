@@ -767,6 +767,12 @@
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 
+/datum/uplink_item/badass/syndiedonuts
+	name = "Syndicate Donuts"
+	desc = "Special offer from Waffle Co., the box of 6 delicious donuts! But be careful, some of them are posioned!"
+	item = /obj/item/weapon/storage/fancy/donut_box/traitor
+	cost = 2
+
 /datum/uplink_item/badass/syndiecash
 	name = "Syndicate Briefcase Full of Cash"
 	desc = "A secure briefcase containing 5000 space credits. Useful for bribing personnel, or purchasing goods and services at lucrative prices. \

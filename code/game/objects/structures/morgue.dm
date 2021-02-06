@@ -134,7 +134,7 @@
 					var/mob/M = A
 					M.instant_vision_update(0)
 			connected.icon_state = "morguet"
-			connected.dir = dir
+			connected.set_dir(dir)
 		else
 			qdel(connected)
 			connected = null
