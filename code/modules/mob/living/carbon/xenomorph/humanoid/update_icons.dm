@@ -8,7 +8,7 @@
 #define X_TOTAL_LAYERS			6
 /////////////////////////////////
 
-/mob/living/carbon/xenomorph/humanoid
+/mob/living/carbon/xenomorph
 	var/list/overlays_standing[X_TOTAL_LAYERS]
 
 /mob/living/carbon/xenomorph/humanoid/update_icons()
@@ -48,8 +48,8 @@
 			icon = alt_icon
 			alt_icon = old_icon
 
-		pixel_x = get_pixel_x_offset(lying)
-		pixel_y = get_pixel_y_offset(lying)
+		pixel_x = get_pixel_x_offset()
+		pixel_y = get_pixel_y_offset()
 
 		default_pixel_x = pixel_x
 		default_pixel_y = pixel_y
@@ -65,21 +65,18 @@
 	update_inv_l_hand(0)
 	update_inv_pockets(0)
 	update_hud()
-//	update_icons() //Handled in update_transform(), leaving this here as a reminder
 	update_transform()
 
 /mob/living/carbon/xenomorph/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
-	if(lying > 0)
-		lying = 90 //Anything else looks retarded
 	update_icons()
 	..()
 
+/mob/living/carbon/xenomorph/humanoid/get_lying_angle()	//so that the sprite does not unfold
+	return
 
 /mob/living/carbon/xenomorph/humanoid/update_hud()
 	//TODO
-	if (client)
-//		if(other)	client.screen |= hud_used.other		//Not used
-//		else		client.screen -= hud_used.other		//Not used
+	if(client)
 		client.screen |= contents
 
 
@@ -163,6 +160,15 @@
 	cut_overlay(overlays_standing[X_FIRE_LAYER])
 	if(on_fire)
 		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+		add_overlay(overlays_standing[X_FIRE_LAYER])
+		return
+	else
+		overlays_standing[X_FIRE_LAYER]		= null
+
+/mob/living/carbon/xenomorph/update_fire()
+	cut_overlay(overlays_standing[X_FIRE_LAYER])
+	if(on_fire)
+		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
 		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
 	else

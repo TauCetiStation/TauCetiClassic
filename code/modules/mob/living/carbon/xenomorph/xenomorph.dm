@@ -100,19 +100,16 @@
 			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(bodytemperature > 700)
+	if(bodytemperature > 360)
 		//Body temperature is too hot.
 		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
-			if(700 to 850)
+			if(400 to 600)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
-			if(850 to 1000)
+			if(600 to 800)
 				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-			if(1000 to INFINITY)
-				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
-				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+			if(800 to INFINITY)
+				apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 	else
 		clear_alert("alien_fire")
 
@@ -295,10 +292,6 @@ Hit Procs
 		else
 			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
-	/*if (!( src.hand ))
-		src.hands.dir = NORTH
-	else
-		src.hands.dir = SOUTH*/
 	return
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)

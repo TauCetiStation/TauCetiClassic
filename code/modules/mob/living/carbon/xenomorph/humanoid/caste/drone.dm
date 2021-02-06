@@ -17,27 +17,6 @@
 	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/resin,/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid)
 	. = ..()
 
-/mob/living/carbon/xenomorph/humanoid/drone/handle_hud_icons_health()
-	if(healths)
-		if (stat != DEAD)
-			switch(health)
-				if(120 to INFINITY)
-					healths.icon_state = "health0"
-				if(100 to 120)
-					healths.icon_state = "health1"
-				if(75 to 100)
-					healths.icon_state = "health2"
-				if(50 to 75)
-					healths.icon_state = "health3"
-				if(25 to 50)
-					healths.icon_state = "health4"
-				if(0 to 25)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
 //Drones use the same base as generic humanoids.
 //Drone verbs
 /mob/living/carbon/xenomorph/humanoid/drone/verb/evolve() // -- TLE
