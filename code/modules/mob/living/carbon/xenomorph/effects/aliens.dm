@@ -114,6 +114,7 @@
 		user.do_attack_animation(src)
 		user.visible_message("<span class='warning'>[user] destroys the [name]!</span>", self_message = "<span class='notice'>You easily destroy the [name].</span>")
 		health = 0
+		healthcheck()
 	else
 		user.visible_message("<span class='warning'>[user] claws at the [name]!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
 	return
