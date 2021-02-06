@@ -37,6 +37,7 @@
 /turf/unsimulated/desert
 	name = "sand"
 	icon_state = "asteroid"
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
@@ -377,6 +378,7 @@
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/ironsand/ex_act()
 	return 0
@@ -396,6 +398,7 @@
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return

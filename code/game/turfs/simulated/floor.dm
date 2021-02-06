@@ -47,6 +47,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	can_deconstruct = TRUE
 
 	var/datum/holy_turf/holy
 
@@ -633,7 +634,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		var/obj/item/weapon/weldingtool/W = C
 		if(!is_plating())
 			return
-		if(istype(src,/turf/simulated/floor/plating))
+		if(can_deconstruct != TRUE)
 			return
 		if(!W.use(0, user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")

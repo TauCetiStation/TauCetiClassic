@@ -4,6 +4,7 @@
 	var/turf/basetype = /turf/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
+	var/can_deconstruct = null
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
