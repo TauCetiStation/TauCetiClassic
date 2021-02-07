@@ -79,7 +79,7 @@ var/global/list/end_icons = list()
 var/endgame_info_logged = 0
 
 // Xenomorphs
-var/facehuggers_control_type = FACEHUGGERS_STATIC_AI
+var/facehuggers_control_type = FACEHUGGERS_PLAYABLE
 
 // Unsorted stuff
 var/global_message_cooldown = 1

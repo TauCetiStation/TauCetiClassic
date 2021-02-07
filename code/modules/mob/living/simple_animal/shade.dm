@@ -81,6 +81,8 @@
 	max_co2 = 0
 	unsuitable_atoms_damage = 0
 
+	typing_indicator_type = null
+
 	var/obj/item/weapon/nullrod/staff/container
 
 /mob/living/simple_animal/shade/god/Stat()
@@ -148,7 +150,7 @@
 
 	var/oldLoc = loc
 
-	dir = direct
+	set_dir(direct)
 	if(NewLoc)
 		if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 			return

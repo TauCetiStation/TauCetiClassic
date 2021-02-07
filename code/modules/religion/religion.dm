@@ -307,7 +307,7 @@
 			else if(istype(A, /turf/simulated/floor))
 				var/turf/simulated/floor/F = A
 				if(A.icon_state == "carpetsymbol")
-					A.dir = carpet_dir
+					A.set_dir(carpet_dir)
 				else if(istype(A, /turf/simulated/floor/carpet))
 					var/turf/simulated/floor/carpet/C = A
 					C.ChangeTurf(carpet_type)

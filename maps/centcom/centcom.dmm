@@ -1951,6 +1951,7 @@
 	},
 /obj/item/toy/crayon/spraycan,
 /obj/item/weapon/bikehorn/rubberducky,
+/obj/item/weapon/storage/fancy/donut_box/traitor,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},

@@ -558,7 +558,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.set_dir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -660,17 +660,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype)
-	if(!areatype) return null
-	if(istext(areatype)) areatype = text2path(areatype)
-	if(isarea(areatype))
+/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0)
+	if(istext(areatype))
+		areatype = text2path(areatype)
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
 
-	var/list/turfs = new/list()
-	for(var/area/N in all_areas)
-		if(istype(N, areatype))
-			for(var/turf/T in N) turfs += T
+	var/list/turfs = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/V in global.all_areas)
+			var/area/A = V
+			if(!cache[A.type])
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
+	else
+		for(var/V in global.all_areas)
+			var/area/A = V
+			if(A.type != areatype)
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -751,7 +767,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 					var/turf/X = T.MoveTurf(B)
 
-					X.dir = old_dir1
+					X.set_dir(old_dir1)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
@@ -904,7 +920,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							continue moving
 
 					var/turf/X = new T.type(B)
-					X.dir = old_dir1
+					X.set_dir(old_dir1)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 

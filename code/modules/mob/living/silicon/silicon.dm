@@ -3,6 +3,7 @@
 	robot_talk_understand = 1
 	voice_name = "synthesized voice"
 	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	typing_indicator_type = "machine"
 
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/list/def_sensor_huds
