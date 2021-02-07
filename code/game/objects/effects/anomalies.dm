@@ -210,6 +210,7 @@
 	need_bound = bound
 
 	enable()
+	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.")
 
 /obj/effect/anomaly/bluespace/cult_portal/Destroy()
 	disable()
