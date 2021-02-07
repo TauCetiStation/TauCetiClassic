@@ -37,7 +37,6 @@
 /turf/unsimulated/desert
 	name = "sand"
 	icon_state = "asteroid"
-	can_deconstruct = FALSE
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
