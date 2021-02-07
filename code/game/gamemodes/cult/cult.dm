@@ -85,7 +85,7 @@
 	if(!config.objectives_disabled)
 		memoize_cult_objectives(cult_mind)
 	else
-		to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span")
+		to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span>")
 
 /datum/game_mode/cult/proc/leader_setup(datum/mind/leader)
 	religion.add_member(leader.current, HOLY_ROLE_CULTMASTER)
