@@ -168,7 +168,7 @@
 
 	flick("make_[M.icon_state]", M)
 	sleep(9)
-	playsound(M, 'sound/effects/constructform.ogg', 50)
+	playsound(M, 'sound/effects/constructform.ogg', VOL_EFFECTS_MASTER)
 
 	M.key = S.key
 	S.cancel_camera()
