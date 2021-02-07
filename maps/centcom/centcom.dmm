@@ -5724,10 +5724,10 @@
 	},
 /area/velocity)
 "auI" = (
+/turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/turf/simulated/shuttle/plating,
 /area/velocity)
 "auJ" = (
 /turf/unsimulated/floor{
@@ -6152,10 +6152,10 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
 "awC" = (
+/turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f10"
 	},
-/turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "awD" = (
 /obj/item/weapon/scalpel/alien,
@@ -17606,10 +17606,10 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "dIb" = (
+/turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/turf/simulated/shuttle/plating,
 /area/velocity)
 "dJb" = (
 /obj/machinery/door/airlock/glass{
@@ -17951,10 +17951,10 @@
 	},
 /area/velocity)
 "enb" = (
+/turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
-/turf/simulated/shuttle/plating,
 /area/velocity)
 "eob" = (
 /obj/machinery/door/airlock/glass,
@@ -17973,10 +17973,10 @@
 	},
 /area/velocity)
 "eqb" = (
+/turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/turf/simulated/shuttle/plating,
 /area/velocity)
 "erb" = (
 /obj/structure/sign/mark{
@@ -19781,16 +19781,16 @@
 	},
 /area/centcom/evac)
 "hJb" = (
+/turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "hKb" = (
+/turf/simulated/shuttle/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f9"
 	},
-/turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "hLb" = (
 /turf/simulated/shuttle/floor{
@@ -19798,10 +19798,10 @@
 	},
 /area/centcom/evac)
 "hMb" = (
+/turf/simulated/shuttle/floor,
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f5"
 	},
-/turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "hNb" = (
 /turf/unsimulated/floor{
