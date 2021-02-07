@@ -11,11 +11,15 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(src.name == "alien drone")
-		src.name = text("alien drone ([rand(1, 1000)])")
-	src.real_name = src.name
+	name = "alien drone ([rand(1, 1000)])"
+	real_name = name
 	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/resin,/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid)
+	alien_list[ALIEN_DRONE] += src
 	. = ..()
+
+/mob/living/carbon/xenomorph/humanoid/drone/Destroy()
+	alien_list[ALIEN_DRONE] -= src
+	return ..()
 
 /mob/living/carbon/xenomorph/humanoid/drone/handle_hud_icons_health()
 	if(healths)
@@ -51,11 +55,11 @@
 
 	if(powerc(500))
 		// Queen check
-		var/no_queen = 1
-		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
-			if(Q.stat == DEAD || !Q.key && Q.has_brain())
+		var/no_queen = TRUE
+		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+			if(Q.stat == DEAD || !Q.key)
 				continue
-			no_queen = 0
+			no_queen = FALSE
 
 		if(src.has_brain_worms())
 			to_chat(src, "<span class='warning'>We cannot perform this ability at the present time!</span>")

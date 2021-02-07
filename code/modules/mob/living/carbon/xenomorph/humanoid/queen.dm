@@ -17,22 +17,14 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-
-	//there should only be one queen
-	for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
-		if(Q.stat == DEAD)
-			continue
-		if(Q.client)
-			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
-			break
-
-	real_name = src.name
+	name = "alien queen ([rand(1, 1000)])"
+	real_name = name
 	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid,/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin,/mob/living/carbon/xenomorph/humanoid/proc/resin,/mob/living/carbon/xenomorph/humanoid/proc/screech)
+	alien_list[ALIEN_QUEEN] += src
 	. = ..()
-	queen_list += src
 
 /mob/living/carbon/xenomorph/humanoid/queen/Destroy()
-	queen_list -= src
+	alien_list[ALIEN_QUEEN] -= src
 	return ..()
 
 /mob/living/carbon/xenomorph/humanoid/queen/handle_hud_icons_health()
