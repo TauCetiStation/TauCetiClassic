@@ -22,7 +22,7 @@
 	var/poweralm = 1
 	var/party = null
 	var/lightswitch = 1
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim or religion capture
 
 	var/eject = null
 

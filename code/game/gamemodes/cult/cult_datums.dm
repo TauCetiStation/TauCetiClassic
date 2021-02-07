@@ -189,7 +189,7 @@
 		return FALSE
 
 	var/area/area = get_area(holder)
-	if(is_centcom_level(user.z) || istype(area, /turf/space) || religion == area.religion)
+	if(!is_station_level(user.z) || !area.valid_territory || religion == area.religion)
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
 		return FALSE
 
