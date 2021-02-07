@@ -1,14 +1,10 @@
-/* Alien Effects!
+/* Alien structure!
  * Contains:
- *		effect/alien
+ *	structure/alien
  *		Resin
  *		Weeds
- *		Acid
  *		Egg
- */
-
-/*
- * effect/alien
+ *	effect/alien/Acid
  */
 
 #define WEED_SOUTH_EDGING 1
@@ -20,12 +16,36 @@
 	name = "alien thing"
 	desc = "theres something alien about this."
 	icon = 'icons/mob/xenomorph.dmi'
-//	unacidable = 1 //Aliens won't ment their own.
+	var/health = 0
 
+/obj/structure/alien/proc/healthcheck()
+	if(health <= 0)
+		qdel(src)
 
-/*
- * Resin
- */
+/obj/structure/alien/bullet_act(obj/item/projectile/Proj)
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
+	if(Proj.damage_type == BRUTE || Proj.damage_type == BURN)
+		apply_damage(Proj.damage)
+
+/obj/structure/alien/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.a_intent != INTENT_HARM)
+		return FALSE
+	if(!(W.flags & NOATTACKANIMATION))
+		user.do_attack_animation(src)
+	if(length(W.hitsound))
+		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
+	else
+		playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
+
+/obj/structure/alien/proc/apply_damage(value)
+	health = max(0, health - round(value))
+	healthcheck()
+
+// Resin
 /obj/structure/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
@@ -34,11 +54,9 @@
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
-	layer = 3.14
 	canSmoothWith = list(/obj/structure/alien/resin)
 	smooth = SMOOTH_TRUE
-
-	var/health = 250
+	health = 250
 	var/resintype = null
 
 /obj/structure/alien/resin/wall
@@ -53,7 +71,7 @@
 	desc = "Resin just thin enough to let light pass through."
 	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	opacity = FALSE
-	health = 160
+	health = 200
 	resintype = "membrane"
 	canSmoothWith = list(/obj/structure/alien/resin/wall, /obj/structure/alien/resin/membrane)
 
@@ -73,60 +91,32 @@
 	T.thermal_conductivity = initial(T.thermal_conductivity)
 	return ..()
 
-/obj/structure/alien/resin/proc/healthcheck()
-	if(health <= 0)
-		qdel(src)
-
-/obj/structure/alien/air_plant/bullet_act(obj/item/projectile/Proj)
-	. = ..()
-	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
-		return
-	health -= Proj.damage
-	healthcheck()
-
-/obj/structure/alien/resin/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			health-=50
-		if(2.0)
-			health-=50
-		if(3.0)
-			if (prob(50))
-				health-=50
-			else
-				health-=25
-	healthcheck()
-	return
-
-/obj/structure/alien/resin/blob_act()
-	health-=50
-	healthcheck()
-	return
-
 /obj/structure/alien/resin/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
 	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10
+	else if(isitem(AM))
+		var/obj/item/T = AM
+		tforce = T.throwforce
 	else
-		tforce = AM:throwforce
+		return
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	health = max(0, health - tforce)
-	healthcheck()
-	..()
+	apply_damage(tforce)
 	return
 
 /obj/structure/alien/resin/attack_hand(mob/user)
-	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if (HULK in user.mutations)
+	if(HULK in user.mutations)
+		if(user.a_intent != INTENT_HARM)
+			return FALSE
+		user.do_attack_animation(src)
 		user.visible_message("<span class='warning'>[user] destroys the [name]!</span>", self_message = "<span class='notice'>You easily destroy the [name].</span>")
 		health = 0
+		healthcheck()
 	else
 		user.visible_message("<span class='warning'>[user] claws at the [name]!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
-		health -= rand(5,10)
-	healthcheck()
 	return
 
 /obj/structure/alien/resin/attack_paw(mob/user)
@@ -139,20 +129,16 @@
 		return
 	user.visible_message("<span class='warning'>[usr] claws at the resin!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	health -= rand(40, 60)
+	apply_damage(rand(40, 60))
 	if(health <= 0)
 		user.visible_message("<span class='warning'>[usr] slices the [name] apart!</span>", self_message = "<span class='notice'>You slice the [name] to pieces.</span>")
-	healthcheck()
 	return
 
 /obj/structure/alien/resin/attackby(obj/item/weapon/W, mob/user)
-	var/aforce = W.force
-	user.SetNextMove(CLICK_CD_MELEE)
-	health = max(0, health - aforce)
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	healthcheck()
-	..()
-	return
+	. = ..()
+	if(!.)
+		return
+	apply_damage(W.force)
 
 /obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return 0
@@ -161,9 +147,7 @@
 	return !density
 
 
-/*
- * Weeds
- */
+//Weeds
 /obj/structure/alien/weeds
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
@@ -175,8 +159,7 @@
 	plane = FLOOR_PLANE
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/simulated/wall)
 	smooth = SMOOTH_MORE
-
-	var/health = 15
+	health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
 
 /obj/structure/alien/weeds/atom_init(mapload, node)
@@ -247,50 +230,22 @@
 				qdel(src)
 
 /obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
-	if(W.attack_verb.len)
-		visible_message("<span class='danger'>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
-	else
-		visible_message("<span class='danger'>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
-
+	. = ..()
+	if(!.)
+		return
 	var/damage = W.force / 4.0
-	user.SetNextMove(CLICK_CD_MELEE)
-
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-
 		if(WT.use(0, user))
 			damage = 15
-			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-
-	health -= damage
-	healthcheck()
-
-
-/obj/structure/alien/weeds/temperature_expose(null, temperature, volume)
-	if(temperature > T0C+200)
-		health -= 1 * temperature
-		healthcheck()
-
-/obj/structure/alien/weeds/proc/healthcheck()
-	if(health <= 0)
-		qdel(src)
+	apply_damage(damage)
 
 /obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		health -= 5
-		healthcheck()
+		apply_damage(15)
 
 /obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
 	return PROJECTILE_FORCE_MISS
-
-/*/obj/structure/alien/weeds/burn(fi_amount)
-	if (fi_amount > 18000)
-		spawn( 0 )
-			qdel(src)
-			return
-		return 0
-	return 1
-*/
 
 /obj/structure/alien/weeds/node
 	icon_state = "weednode"
@@ -321,10 +276,10 @@
 	desc = "Burbling corrossive stuff. I wouldn't want to touch it."
 	icon = 'icons/mob/xenomorph.dmi'
 	icon_state = "acid"
-
-	density = 0
-	opacity = 0
-	anchored = 1
+	layer = BELOW_MOB_LAYER
+	density = FALSE
+	opacity = FALSE
+	anchored = TRUE
 
 	var/atom/target
 	var/ticks = 0
@@ -396,7 +351,7 @@
 	density = FALSE
 	anchored = TRUE
 
-	var/health = 100
+	health = 100
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 
 /obj/structure/alien/egg/atom_init()
@@ -470,13 +425,6 @@
 			spawn(15)
 				status = BURST
 
-/obj/structure/alien/air_plant/bullet_act(obj/item/projectile/Proj)
-	. = ..()
-	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
-		return
-	health -= Proj.damage
-	healthcheck()
-
 /obj/structure/alien/egg/process()
 	if(prob(10))
 		var/turf/T = get_turf(src);
@@ -485,38 +433,27 @@
 		if(pressure < WARNING_LOW_PRESSURE)
 			if(prob(25))
 				audible_message("<span class='warning'>\The [src] is cracking!</span>")
-			health -= 5
-			healthcheck()
+			apply_damage(5)
 
 /obj/structure/alien/egg/attackby(obj/item/weapon/W, mob/user)
-	if(health <= 0)
+	. = ..()
+	if(!.)
 		return
-	if(W.attack_verb.len)
-		src.visible_message("<span class='danger'>\The [src] has been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
-	else
-		src.visible_message("<span class='danger'>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 	var/damage = W.force / 4.0
-	user.SetNextMove(CLICK_CD_MELEE)
-
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
-
 		if(WT.use(0, user))
 			damage = 15
-			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-
-	src.health -= damage
-	src.healthcheck()
+	apply_damage(damage)
 
 
-/obj/structure/alien/egg/proc/healthcheck()
+/obj/structure/alien/egg/healthcheck()
 	if(health <= 0)
 		Burst()
 
 /obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 500)
-		health -= 5
-		healthcheck()
+	if(exposed_temperature > 300)
+		apply_damage(25)
 
 #undef BURST
 #undef BURSTING
@@ -530,11 +467,9 @@
 	name = "strange plant"
 	desc = "Air restoring plant. Progressive aliens technologies..."
 	icon_state = "air_plant"
-
 	density = FALSE
 	anchored = TRUE
-
-	var/health = 15
+	health = 15
 	var/restoring_moles = MOLES_CELLSTANDARD/4
 
 /obj/structure/alien/air_plant/atom_init()
@@ -563,30 +498,16 @@
 		if(pressure < (ONE_ATMOSPHERE*0.90))//it's pretty sloppy, but never mind
 			environment.adjust_multi_temp("oxygen", restoring_moles*O2STANDARD, T20C, "nitrogen", restoring_moles*N2STANDARD, T20C)
 
-/obj/structure/alien/air_plant/proc/healthcheck()
-	if(health <= 0)
-		qdel(src)
-
 /obj/structure/alien/air_plant/attackby(obj/item/weapon/W, mob/user)
-	var/aforce = W.force
-	user.SetNextMove(CLICK_CD_MELEE)
-	health = max(0, health - aforce)
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	healthcheck()
-	..()
-	return
-
-/obj/structure/alien/air_plant/bullet_act(obj/item/projectile/Proj)
 	. = ..()
-	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+	if(!.)
 		return
-	health -= Proj.damage
-	healthcheck()
+	apply_damage(W.force)
+
 
 /obj/structure/alien/air_plant/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 500)
-		health -= 5
-		healthcheck()
+	if(exposed_temperature > 300)
+		apply_damage(15)
 
 #undef WEED_SOUTH_EDGING
 #undef WEED_NORTH_EDGING
