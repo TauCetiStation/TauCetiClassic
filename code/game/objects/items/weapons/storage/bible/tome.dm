@@ -37,7 +37,10 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
-		to_chat(user, "Вами нарисовано/всего <span class='cult'>[religion.runes_by_mob[user] ? religion.runes_by_mob[user] : "0"]</span>/[religion.max_runes_on_mob]")
+		var/list/L
+		if(religion.runes_by_mob[user])
+			L = religion.runes_by_mob[user]
+		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 	else
 		..()
 

@@ -115,13 +115,6 @@
 
 	cult_mind.special_role = "Cultist"
 
-/datum/game_mode/proc/get_talisman(_disposable)
-	var/datum/religion_rites/instant/communicate/rite = new
-	rite.religion = global.cult_religion
-	var/obj/item/weapon/paper/talisman/cult/T = new(null, global.cult_religion, rite)
-	T.disposable = _disposable
-	return T
-
 /datum/game_mode/cult/proc/equip_cultist_leader(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
@@ -131,7 +124,6 @@
 			to_chat(H, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.mutations.Remove(CLUMSY)
 
-	H.equip_to_slot_or_del(get_talisman(FALSE), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/device/cult_camera(H), SLOT_IN_BACKPACK)
 
 	global.cult_religion.give_tome(H)
@@ -145,7 +137,6 @@
 			to_chat(H, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.mutations.Remove(CLUMSY)
 
-	H.equip_to_slot_or_del(get_talisman(TRUE), SLOT_IN_BACKPACK)
 	H.equip_to_slot_or_del(new /obj/item/device/cult_camera(H), SLOT_IN_BACKPACK)
 
 	global.cult_religion.give_tome(H)
