@@ -326,7 +326,7 @@
 	user.take_bodypart_damage(2, 0)
 
 /datum/rune/cult/bloodboil
-	name = "Бладбоил"
+	name = "Кипение Крови"
 	words = list("destroy", "blood", "see")
 
 /datum/rune/cult/bloodboil/can_action(mob/living/carbon/user)

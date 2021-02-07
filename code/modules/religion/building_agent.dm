@@ -127,7 +127,7 @@
 	rune_type = /datum/rune/cult/wall
 
 /datum/building_agent/rune/cult/bloodboil
-	name = "Бладбоил"
+	name = "Кипение Крови"
 	rune_type = /datum/rune/cult/bloodboil
 
 /datum/building_agent/rune/cult/charge_pylons
