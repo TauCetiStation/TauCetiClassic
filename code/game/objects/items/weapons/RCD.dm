@@ -7,9 +7,6 @@ RCD
 	desc = "A device used to rapidly build walls/floor."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
-	opacity = 0
-	density = 0
-	anchored = 0.0
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
