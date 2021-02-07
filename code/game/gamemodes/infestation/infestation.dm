@@ -202,17 +202,10 @@
 			text += {"<tr><td><img src="logo_[tempstate].png"></td>"}
 			text += "<td style='color: red; font-weight: bold;'>Королева была убита!</td></tr>"
 
-	if(aliens["[ALIEN_DRONE]_live"] || aliens["[ALIEN_DRONE]_dead"])
-		text += generate_completion_text("drone", aliens["[ALIEN_DRONE]_live"], aliens["[ALIEN_DRONE]_dead"], aliens["[ALIEN_DRONE]_key"])
-
-	if(aliens["[ALIEN_SENTINEL]_live"] || aliens["[ALIEN_SENTINEL]_dead"])
-		text += generate_completion_text("sentinel", aliens["[ALIEN_SENTINEL]_live"], aliens["[ALIEN_SENTINEL]_dead"], aliens["[ALIEN_SENTINEL]_key"])
-
-	if(aliens["[ALIEN_HUNTER]_live"] || aliens["[ALIEN_HUNTER]_dead"])
-		text += generate_completion_text("hunter", aliens["[ALIEN_HUNTER]_live"], aliens["[ALIEN_HUNTER]_dead"], aliens["[ALIEN_HUNTER]_key"])
-
-	if(aliens["[ALIEN_LARVA]_live"] || aliens["[ALIEN_LARVA]_dead"])
-		text += generate_completion_text("larva", aliens["[ALIEN_LARVA]_live"], aliens["[ALIEN_LARVA]_dead"], aliens["[ALIEN_LARVA]_key"])
+	var/list/L = list(ALIEN_DRONE, ALIEN_SENTINEL, ALIEN_HUNTER, ALIEN_LARVA)
+	for(var/list_key in L)
+		if(aliens["[list_key]_live"] || aliens["[list_key]_dead"])
+			text += generate_completion_text(list_key, aliens["[list_key]_live"], aliens["[list_key]_dead"], aliens["[list_key]_key"])
 
 	text += "</table>"
 
@@ -229,19 +222,19 @@
 	var/xeno_icon_state_dead = ""
 	var/icon/I
 	switch(xeno)
-		if("drone")
+		if(ALIEN_DRONE)
 			xeno_name = "трутней"
 			xeno_icon_state_live = "aliend_running"
 			xeno_icon_state_dead = "aliend_dead"
-		if("sentinel")
+		if(ALIEN_SENTINEL)
 			xeno_name = "стражей"
 			xeno_icon_state_live = "aliens_running"
 			xeno_icon_state_dead = "aliens_dead"
-		if("hunter")
+		if(ALIEN_HUNTER)
 			xeno_name = "охотников"
 			xeno_icon_state_live = "alienh_running"
 			xeno_icon_state_dead = "alienh_dead"
-		if("larva")
+		if(ALIEN_LARVA)
 			xeno_name = "грудоломов"
 			xeno_icon_state_live = "larva0"
 			xeno_icon_state_dead = "larva0_dead"
