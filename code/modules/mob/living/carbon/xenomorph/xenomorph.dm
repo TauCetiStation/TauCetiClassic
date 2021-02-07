@@ -8,6 +8,8 @@
 
 	alien_talk_understand = 1
 	speak_emote = list("hisses")
+	typing_indicator_type = "alien"
+
 	var/nightvision = 1
 	var/storedPlasma = 250
 	var/max_plasma = 500

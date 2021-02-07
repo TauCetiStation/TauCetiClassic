@@ -9,6 +9,8 @@
 	health = 200
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
+	typing_indicator_type = "robot"
+
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
@@ -296,9 +298,6 @@
 			module_sprites["Acheron"] = "mechoid-Combat"
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
-
-	//languages
-	module.add_languages(src)
 
 	hands.icon_state = lowertext(modtype)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
