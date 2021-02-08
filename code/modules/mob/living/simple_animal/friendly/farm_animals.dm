@@ -192,7 +192,7 @@
 		if(amount_grown >= 100)
 			if(buckled)
 				buckled.unbuckle_mob(src)
-			new /mob/living/simple_animal/chicken(get_turf(src))
+			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
 var/const/MAX_CHICKENS = 50
