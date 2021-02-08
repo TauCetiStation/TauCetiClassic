@@ -180,21 +180,21 @@
 			var/resulthealth = (health / maxHealth) * 100
 			switch(resulthealth)
 				if(90 to 100)
-					src.healths.icon_state = "health0"
+					healths.icon_state = "health0"
 				if(72 to 90)
-					src.healths.icon_state = "health1"
+					healths.icon_state = "health1"
 				if(54 to 72)
-					src.healths.icon_state = "health2"
+					healths.icon_state = "health2"
 				if(36 to 54)
-					src.healths.icon_state = "health3"
+					healths.icon_state = "health3"
 				if(18 to 36)
-					src.healths.icon_state = "health4"
+					healths.icon_state = "health4"
 				if(0 to 18)
-					src.healths.icon_state = "health5"
+					healths.icon_state = "health5"
 				else
-					src.healths.icon_state = "health6"
+					healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health7"
+			healths.icon_state = "health7"
 
 /mob/living/carbon/xenomorph/proc/handle_stomach()
 	spawn(0)

@@ -40,7 +40,7 @@
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
-	verbs.Add(/mob/living/carbon/xenomorph/proc/hide)
+	verbs += /mob/living/carbon/xenomorph/proc/hide
 	alien_list[ALIEN_FACEHAGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()

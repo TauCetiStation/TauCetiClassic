@@ -24,7 +24,7 @@ var/list/mechtoys = list(
 	anchored = 1
 	layer = 4
 	explosion_resistance = 5
-	var/list/mob_can_pass = list(
+	var/list/can_pass_types = list(
 		/mob/living/carbon/monkey,
 		/mob/living/carbon/slime,
 		/mob/living/simple_animal/mouse,
@@ -62,9 +62,8 @@ var/list/mechtoys = list(
 	return ..()
 
 /obj/structure/plasticflaps/proc/check_pass(mob/M)
-	for(var/T in mob_can_pass)
-		if(istype(M, T))
-			return TRUE
+	if(M.type in can_pass_types)
+		return TRUE
 	return FALSE
 
 /obj/structure/plasticflaps/ex_act(severity)
