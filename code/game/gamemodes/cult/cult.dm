@@ -8,11 +8,11 @@
 	role_type = ROLE_CULTIST
 	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
-	// TEST FOR DEBUGGING OF THE GAME OF CULT OF BLOOD
-	required_players = 0
-	required_players_bundles = 0
-	// REMEMBER IT!!!!
-	required_enemies = 0
+
+	required_players = 5
+	required_players_bundles = 20
+
+	required_enemies = 3
 	recommended_enemies = 3
 
 	antag_hud_type = ANTAG_HUD_CULT
