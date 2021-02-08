@@ -14,16 +14,15 @@
 	if(amount_grown >= max_grown)
 		var/queen = FALSE
 		var/drone = FALSE
-		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
+		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
 			if(Q.stat == DEAD || !Q.key)
 				continue
 			queen = TRUE
-		for(var/mob/living/carbon/xenomorph/A in alien_list)
+		for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_DRONE])
 			if(A.stat == DEAD || !A.key)
 				continue
-			if(isxenodrone(A))
-				drone = TRUE
-				break	//we don't care how many drones there are
+			drone = TRUE
+			break	//we don't care how many drones there are
 
 		var/evolve_now = null
 		var/alien_caste = null

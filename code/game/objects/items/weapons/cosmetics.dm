@@ -331,7 +331,7 @@
 			LAZYSET(char_render_holders, "[D]", O)
 			barber.client.screen |= O
 		O.appearance = MA
-		O.dir = D
+		O.set_dir(D)
 		O.screen_loc = "barber_preview_map:[pos],0"
 
 /obj/item/weapon/scissors/proc/clear_character_previews()

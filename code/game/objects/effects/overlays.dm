@@ -6,6 +6,12 @@
 /obj/effect/overlay/attackby()
 	return
 
+/obj/effect/overlay/singularity_act()
+	return
+
+/obj/effect/overlay/singularity_pull()
+	return
+
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='icons/effects/beam.dmi'
@@ -50,12 +56,6 @@
 	pixel_x += rand(-10, 10)
 	pixel_y += rand(-10, 10)
 
-/obj/effect/overlay/singularity_act()
-	return
-
-/obj/effect/overlay/singularity_pull()
-	return
-
 /obj/effect/overlay/slice
 	name = "Slice"
 	icon = 'icons/effects/effects.dmi'
@@ -76,3 +76,14 @@
 	if(icon_modifier)
 		icon_state += icon_modifier
 	QDEL_IN(src, 27)
+
+/obj/effect/overlay/typing_indicator
+	icon = 'icons/mob/talk.dmi'
+	icon_state = "default0"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	layer = MOB_LAYER + 1
+
+/obj/effect/overlay/typing_indicator/atom_init(mapload, indi_icon)
+	. = ..()
+	icon_state = indi_icon

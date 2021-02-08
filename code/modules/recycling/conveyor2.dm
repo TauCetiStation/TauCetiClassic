@@ -45,7 +45,7 @@
 /obj/machinery/conveyor/atom_init(mapload, newdir)
 	. = ..()
 	if(newdir)
-		dir = newdir
+		set_dir(newdir)
 	update_move_direction()
 
 /obj/machinery/conveyor/proc/update_move_direction()
@@ -131,7 +131,7 @@
 	if(iswrench(I))
 		if(!(stat & BROKEN))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			dir = turn(dir,-45)
+			set_dir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 			return

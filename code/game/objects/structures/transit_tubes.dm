@@ -158,7 +158,7 @@
 			nexttube = tube
 			break
 	if(!nexttube)
-		pod.dir = turn(pod.dir, 180)
+		pod.set_dir(turn(pod.dir, 180))
 
 	if(icon_state == "closed" && pod)
 		pod.follow_tube()
@@ -308,13 +308,13 @@
 				break
 
 		if(current_tube == null)
-			dir = next_dir
+			set_dir(next_dir)
 			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
-		dir = next_dir
+		set_dir(next_dir)
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
@@ -379,14 +379,14 @@
 								station.open_animation()
 
 						else if(direction in station.directions())
-							dir = direction
+							set_dir(direction)
 							station.launch_pod()
 					return
 
 			for(var/obj/structure/transit_tube/tube in loc)
 				if(dir in tube.directions())
 					if(tube.has_exit(direction))
-						dir = direction
+						set_dir(direction)
 						return
 
 
