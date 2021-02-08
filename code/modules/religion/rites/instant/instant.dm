@@ -78,7 +78,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob
-	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD])
+	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD] || H.my_religion)
 		to_chat(user, "<span class='warning'>Неподходящее тело.</span>")
 		return FALSE
 	if(!global.cult_religion.mode.is_convertable_to_cult(H.mind))
