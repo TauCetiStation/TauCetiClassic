@@ -156,10 +156,19 @@
 		overlays_standing[TARGETED_LAYER]	= null
 	if(update_icons)		update_icons()
 
+/mob/living/carbon/xenomorph/humanoid/queen/update_fire()
+	cut_overlay(overlays_standing[X_FIRE_LAYER])
+	if(on_fire)
+		overlays_standing[X_FIRE_LAYER]		= image("icon" = 'icons/mob/alienqueen.dmi', "icon_state" = "queen_fire")
+		add_overlay(overlays_standing[X_FIRE_LAYER])
+		return
+	else
+		overlays_standing[X_FIRE_LAYER]		= null
+
 /mob/living/carbon/xenomorph/humanoid/update_fire()
 	cut_overlay(overlays_standing[X_FIRE_LAYER])
 	if(on_fire)
-		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing")
+		overlays_standing[X_FIRE_LAYER]		= image("icon" = 'icons/mob/OnFire.dmi', "icon_state" = "Standing")
 		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
 	else
@@ -168,7 +177,7 @@
 /mob/living/carbon/xenomorph/update_fire()
 	cut_overlay(overlays_standing[X_FIRE_LAYER])
 	if(on_fire)
-		overlays_standing[X_FIRE_LAYER]		= image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning")
+		overlays_standing[X_FIRE_LAYER]		= image("icon" = 'icons/mob/OnFire.dmi', "icon_state" = "Generic_mob_burning")
 		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
 	else
