@@ -190,7 +190,9 @@
 	if(!stat)
 		amount_grown += rand(1,2)
 		if(amount_grown >= 100)
-			new /mob/living/simple_animal/chicken(src.loc)
+			if(buckled)
+				buckled.unbuckle_mob(src)
+			new /mob/living/simple_animal/chicken(get_turf(src))
 			qdel(src)
 
 var/const/MAX_CHICKENS = 50
