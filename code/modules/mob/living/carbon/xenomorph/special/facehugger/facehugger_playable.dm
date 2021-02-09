@@ -371,7 +371,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud = new /obj/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "leap"
-	hud.name = "Прыгнуть на лицо"
+	hud.name = "Leap at face"
 	hud.master = src
 
 	assailant.put_in_active_hand(src)
