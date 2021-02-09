@@ -157,4 +157,3 @@
 		new /obj/structure/reagent_dispensers/hazard( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
-	return
