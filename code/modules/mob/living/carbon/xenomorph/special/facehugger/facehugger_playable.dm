@@ -226,6 +226,9 @@ This is chestburster mechanic for damaging
 /obj/item/weapon/larva_bite/proc/throw_held()
 	return null
 
+/obj/item/weapon/larva_bite/attack_self(mob/user)
+	s_click()
+
 /obj/item/weapon/larva_bite/proc/synch()
 	if(affecting)
 		if(chestburster.r_hand == src)
