@@ -320,6 +320,7 @@
 
 /obj/structure/reagent_dispensers/hazard/atom_init()
 	. = ..()
+	reagents.clear_reagents()
 	reagents.add_reagent("lexorin", 200)
 	reagents.add_reagent("mindbreaker", 200)
 	reagents.add_reagent("alphaamanitin", 200)
@@ -328,3 +329,4 @@
 	reagents.add_reagent("fuel", 200)
 	reagents.add_reagent("condensedcapsaicin", 200)
 	reagents.add_reagent("stoxin", 200)
+

@@ -855,6 +855,8 @@
 	name = "hazmat hybrid helmet"
 	desc = "Anyone wearing this should not be considered human."
 	icon_state = "rig0-hazmat"
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	unacidable = TRUE
 	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
@@ -868,6 +870,7 @@
 	item_state = "syndie_hazmat"
 	item_color = "rig-hazmat"
 	slowdown = 1.4
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	unacidable = TRUE
 	allowed = list(/obj/item/device/flashlight,
