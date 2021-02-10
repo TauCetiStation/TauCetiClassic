@@ -5848,11 +5848,13 @@
 /area/station/security/brig)
 "ajR" = (
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "escape"
+/obj/machinery/door/airlock/glass{
+	name = "Escape Hall"
 	},
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/exit)
 "ajS" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access = list(10,63)
@@ -10211,6 +10213,10 @@
 	},
 /turf/space,
 /area/shuttle/mining/station)
+"aqN" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "aqO" = (
 /obj/structure/object_wall/mining{
 	icon_state = "1-2"
@@ -11760,6 +11766,16 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/cold_room)
+"atL" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "redcorner"
+	},
+/area/station/hallway/secondary/entry)
 "atM" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -12971,7 +12987,7 @@
 /obj/effect/landmark/sound_source/shuttle_docking,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "escape"
+	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
 "awc" = (
@@ -21253,7 +21269,10 @@
 	name = "Escape Hall"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
 /area/station/hallway/secondary/exit)
 "aLC" = (
 /obj/machinery/door/firedoor,
@@ -36504,7 +36523,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "escape"
+	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
 "bnl" = (
@@ -38410,8 +38429,12 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 9;
+	dir = 8;
 	icon_state = "escape"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warningline"
 	},
 /area/station/hallway/secondary/exit)
 "bqP" = (
@@ -39694,13 +39717,9 @@
 /area/station/medical/sleeper)
 "btk" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "escape"
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
 "btl" = (
@@ -71864,7 +71883,7 @@
 "hvb" = (
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "escape"
+	icon_state = "warning"
 	},
 /area/station/hallway/secondary/exit)
 "hvE" = (
@@ -77620,7 +77639,7 @@
 "qaa" = (
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "escapecorner"
+	icon_state = "warningcorner"
 	},
 /area/station/hallway/secondary/exit)
 "qab" = (
@@ -97311,7 +97330,7 @@ tSb
 bnL
 bvK
 aLB
-ajR
+btk
 aFF
 aTB
 brU
@@ -97568,7 +97587,7 @@ brN
 bne
 bvO
 aLC
-ajR
+aqN
 atE
 atE
 boh
@@ -97824,8 +97843,8 @@ aVq
 brl
 aVq
 aJL
-aLC
-btk
+ajR
+atL
 btF
 aUO
 bud
