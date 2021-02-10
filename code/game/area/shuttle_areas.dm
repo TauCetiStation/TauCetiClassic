@@ -175,17 +175,6 @@
 	name = "Transport Shuttle"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 
-//Alien pod
-/area/shuttle/alien/base
-	icon_state = "shuttle"
-	name = "Alien Shuttle Base"
-	requires_power = 1
-
-/area/shuttle/alien/mine
-	icon_state = "shuttle"
-	name = "Alien Shuttle Mine"
-	requires_power = 1
-
 //Special Ops Shuttle
 /area/shuttle/specops/centcom
 	name = "Special Ops Shuttle"

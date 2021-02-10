@@ -26,7 +26,9 @@
 	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'
 
 /obj/structure/object_wall/standart
-	icon = 'code/modules/locations/shuttles/shuttle.dmi'
+	layer = 2
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall1"
 
 /obj/structure/object_wall/pod
 	icon = 'code/modules/locations/shuttles/pod.dmi'

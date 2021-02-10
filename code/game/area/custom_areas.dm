@@ -9,12 +9,6 @@
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
-//Alien base
-/area/custom/alien
-	name = "Alien base"
-	icon_state = "yellow"
-	requires_power = 0
-
 //SYNDICATES
 /area/custom/syndicate_mothership
 	name = "Syndicate Mothership"

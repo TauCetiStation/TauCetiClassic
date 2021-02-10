@@ -348,3 +348,10 @@
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
+
+// Reinforced Walls Types
+
+/turf/simulated/wall/r_wall/s_wall
+	name = "strong wall"
+	desc = "A huge chunk of strong metal used to seperate rooms."
+	icon = 'icons/turf/walls/riveted.dmi'
