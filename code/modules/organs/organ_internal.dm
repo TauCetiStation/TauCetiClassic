@@ -564,7 +564,7 @@
 		else if((glut & GLUT_SMALLER) && owner.mob_size > L.mob_size) // Anything we're larger than
 			return DEVOUR_SLOW
 
-	else if(istype(food, /obj/item) && !istype(food, /obj/item/weapon/holder)) //Don't eat holders. They are special.
+	else if(istype(food, /obj/item) && !isholder(food)) //Don't eat holders. They are special.
 		var/obj/item/I = food
 		var/cost = I.get_storage_cost()
 		if(cost != ITEM_SIZE_NO_CONTAINER)
