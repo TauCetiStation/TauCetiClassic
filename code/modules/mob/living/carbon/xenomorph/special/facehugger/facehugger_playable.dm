@@ -370,6 +370,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	. = ..()
 	assailant = loc
 	affecting = victim
+	assailant.SetNextMove(CLICK_CD_ACTION)
 
 	hud = new /obj/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
