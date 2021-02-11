@@ -13615,7 +13615,7 @@
 	},
 /area/station/security/lawoffice)
 "axx" = (
-/obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped,
+/obj/item/weapon/reagent_containers/monkeycube/wrapped,
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/item/clothing/gloves/latex,
 /obj/structure/table/glass,
