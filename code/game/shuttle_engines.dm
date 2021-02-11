@@ -32,6 +32,16 @@
 	icon_state = "propulsion"
 	opacity = 1
 
+/obj/structure/shuttle/engine/propulsion/large_engine
+	name = "large propulsion"
+	icon_state = "large_engine"
+	icon = 'icons/turf/64x64.dmi'
+
+/obj/structure/shuttle/engine/propulsion/huge_engine
+	name = "huge propulsion"
+	icon_state = "huge_engine"
+	icon = 'icons/turf/96x96.dmi'
+
 /obj/structure/shuttle/engine/propulsion/burst
 	name = "burst"
 

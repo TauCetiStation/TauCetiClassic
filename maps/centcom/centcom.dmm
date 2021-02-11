@@ -589,9 +589,8 @@
 /turf/space,
 /area/space)
 "abr" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "burst_l"
+/obj/structure/window/shuttle{
+	icon_state = "window_gray"
 	},
 /turf/space,
 /area/space)
@@ -613,6 +612,32 @@
 /area/custom/wizard_station)
 "abu" = (
 /obj/effect/landmark/blockway,
+/turf/space,
+/area/space)
+"abv" = (
+/obj/structure/window/shuttle,
+/turf/space,
+/area/space)
+"abw" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "heater1"
+	},
+/turf/space,
+/area/space)
+"abx" = (
+/obj/structure/shuttle/engine/propulsion/large_engine{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"aby" = (
+/obj/structure/shuttle/engine/propulsion/huge_engine{
+	dir = 4
+	},
 /turf/space,
 /area/space)
 "abC" = (
@@ -4173,7 +4198,7 @@
 /turf/space,
 /area/space)
 "apA" = (
-/turf/simulated/wall/r_wall/s_wall,
+/turf/simulated/wall/r_wall/strong_wall,
 /area/space)
 "apD" = (
 /obj/item/weapon/storage/box/lights/mixed,
@@ -41162,9 +41187,9 @@ aaM
 aaM
 aaM
 aaM
+abr
 aaM
-aaM
-aaM
+abv
 aaM
 aaM
 aaM
@@ -42189,7 +42214,7 @@ aaM
 aaM
 aaM
 aaM
-apA
+aaM
 apA
 aaM
 apS
@@ -42446,7 +42471,7 @@ aaM
 aaM
 aaM
 aaM
-apA
+aaM
 apA
 aaM
 apS
@@ -43732,21 +43757,21 @@ aYG
 aYG
 aaM
 aaM
-aaM
-aaM
 aqH
 aaM
+abw
+abw
 aaM
-apS
-apS
-apS
+abw
+abw
+abw
 aaM
 aaM
-apS
-apS
-apS
-apS
-apS
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -43989,19 +44014,19 @@ aYG
 aYG
 aaM
 aaM
-aaM
-aaM
 aqK
 aaM
 aaM
-aaM
-abr
-aaM
+abx
 aaM
 aaM
 aaM
+aby
 aaM
-abr
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM

@@ -351,7 +351,7 @@
 
 // Reinforced Walls Types
 
-/turf/simulated/wall/r_wall/s_wall
+/turf/simulated/wall/r_wall/strong_wall
 	name = "strong wall"
 	desc = "A huge chunk of strong metal used to seperate rooms."
 	icon = 'icons/turf/walls/riveted.dmi'

@@ -106,7 +106,6 @@
 					<A href='?src=\ref[src];secretsfun=eagles'>Egalitarian Station Mode</A><BR>
 					<h4>Shuttles</h4>
 					<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
-					<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
 					<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 					<h4>Misc</h4>
 					<A href='?src=\ref[src];secretsfun=gravity'>Toggle Gravity</A><BR>
@@ -317,13 +316,6 @@
 			move_ferry()
 			message_admins("<span class='notice'>[key_name_admin(usr)] moved the centcom ferry</span>")
 			log_admin("[key_name(usr)] moved the centcom ferry")
-		// Move Alien Dinghy
-		if("movealienship")
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","ShX")
-			move_alien_ship()
-			message_admins("<span class='notice'>[key_name_admin(usr)] moved the alien dinghy</span>")
-			log_admin("[key_name(usr)] moved the alien dinghy")
 		/*
 		// Move Mining Shuttle
 		if("moveminingshuttle")
