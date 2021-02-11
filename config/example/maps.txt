@@ -20,5 +20,8 @@ endmap
 map gamma
 endmap
 
+map alienstation
+endmap
+
 map testmap
 endmap
