@@ -11,3 +11,8 @@
 	. = ..()
 	pixel_x = rand(-10.0, 10) //Randomizes postion
 	pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/digest_act(obj/item/organ/internal/stomach/S)
+	if(!reagents.total_volume)
+		health = 0
+	return ..()

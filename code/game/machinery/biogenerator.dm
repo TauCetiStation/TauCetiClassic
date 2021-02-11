@@ -215,7 +215,7 @@
 			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("monkey")
 			if(check_cost(250/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+			else new/obj/item/weapon/reagent_containers/monkeycube(src.loc)
 		if("ez")
 			if (check_cost(10/efficiency)) return 0
 			else new/obj/item/nutrient/ez(src.loc)

@@ -1057,7 +1057,7 @@
 
 /datum/chemical_reaction/slimemonkey/on_reaction(datum/reagents/holder)
 	for(var/i = 1, i <= 3, i++)
-		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = new /obj/item/weapon/reagent_containers/food/snacks/monkeycube
+		var/obj/item/weapon/reagent_containers/monkeycube/M = new /obj/item/weapon/reagent_containers/monkeycube
 		M.loc = get_turf_loc(holder.my_atom)
 
 //Green

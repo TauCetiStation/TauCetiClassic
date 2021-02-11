@@ -126,7 +126,7 @@
 				connected_recycler.connected_consoles += src
 				to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+	else if(istype(O, /obj/item/weapon/reagent_containers/monkeycube))
 		monkeys++
 		to_chat(user, "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>")
 		qdel(O)
@@ -135,7 +135,7 @@
 		var/obj/item/weapon/storage/P = O
 		var/loaded = FALSE
 		for(var/obj/G in P.contents)
-			if(istype(G, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+			if(istype(G, /obj/item/weapon/reagent_containers/monkeycube))
 				loaded = TRUE
 				monkeys++
 				qdel(G)

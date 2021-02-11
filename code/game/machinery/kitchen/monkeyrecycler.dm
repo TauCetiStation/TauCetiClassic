@@ -121,7 +121,7 @@
 		playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(loc)
+			new /obj/item/weapon/reagent_containers/monkeycube/wrapped(loc)
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")

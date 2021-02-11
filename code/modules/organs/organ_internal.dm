@@ -337,7 +337,7 @@
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	
+
 	if(!C)
 		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
@@ -463,7 +463,7 @@
 /obj/item/organ/internal/stomach/proc/can_eat_atom(atom/movable/food)
 	return get_devour_time(food)
 
-/obj/item/organ/internal/stomach/proc/is_full(atom/movable/food)
+/obj/item/organ/internal/stomach/proc/get_fullness(atom/movable/food)
 	var/total = round(reagents.total_volume / 10)
 	for(var/A in contents + food)
 		if(ismob(A))
@@ -472,9 +472,11 @@
 		else if(isobj(A))
 			var/obj/item/I = A
 			total += I.get_storage_cost()
+	return total
 
-		if(total > stomach_capacity)
-			return TRUE
+/obj/item/organ/internal/stomach/proc/is_full(atom/movable/food)
+	if(get_fullness(food) > stomach_capacity)
+		return TRUE
 	return FALSE
 
 /obj/item/organ/internal/stomach/return_air()
@@ -548,7 +550,7 @@
 		else if(digestion_product)
 			S.reagents.add_reagent(digestion_product, damage)
 
-	if(S.health <= 0)
+	if(health <= 0)
 		for(var/obj/item/I in contents)
 			I.forceMove(S)
 		qdel(src)

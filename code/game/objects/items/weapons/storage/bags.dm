@@ -171,7 +171,7 @@
 	max_storage_space = 100
 	w_class = ITEM_SIZE_NORMAL
 	max_w_class = ITEM_SIZE_NORMAL
-	can_hold = list(/obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/blood,/obj/item/weapon/reagent_containers/food/snacks/monkeycube,/obj/item/organ)
+	can_hold = list(/obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/blood,/obj/item/weapon/reagent_containers/monkeycube,/obj/item/organ)
 
 
 // -----------------------------

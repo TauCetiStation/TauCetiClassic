@@ -344,7 +344,7 @@
 /datum/recipe/microwave/monkeysdelight
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1, "flour" = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/monkeycube,
+		/obj/item/weapon/reagent_containers/monkeycube,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
