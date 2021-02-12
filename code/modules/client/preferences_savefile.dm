@@ -261,6 +261,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ambientocclusion"]	>> ambientocclusion
 	S["tooltip"]			>> tooltip
 	S["tooltip_loc"]		>> tooltip_loc
+	S["tooltip_font"]		>> tooltip_font
 
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
@@ -350,6 +351,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ambientocclusion"]	<< ambientocclusion
 	S["tooltip"]			<< tooltip
 	S["tooltip_loc"]		<< tooltip_loc
+	S["tooltip_font"]		<< tooltip_font
 
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy

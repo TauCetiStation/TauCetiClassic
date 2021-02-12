@@ -300,7 +300,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 	set desc = "Toggle Font of Names of Items"
 
-	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Times", "serif", "Verdana", "Comic Sans MS")
+	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Times", "serif", "Verdana")
 	prefs.tooltip_font = input(usr, "Font of Names of Items:") as anything in fonts
 
 	prefs.save_preferences()

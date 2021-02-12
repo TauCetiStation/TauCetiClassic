@@ -5,17 +5,16 @@
 	icon = 'icons/misc/tooltip.dmi'
 	icon_state = "transparent"
 	screen_loc = TOOLTIP_NORTH
-	plane = HUD_PLANE
-	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE + 1
+	layer = ABOVE_HUD_LAYER + 1
 	maptext_width = 999
 	maptext_x = -385
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/state = TRUE
-	var/maptext_style = "font-size: 10pt;"
 
 /obj/screen/tooltip/proc/SetMapText(newValue, font, forcedFontColor = "#ffffff")
-	var/style = "font-family:'[font]';color:[forcedFontColor];text-shadow: 0 2px 2px [invertHTMLcolor(forcedFontColor)];[maptext_style];"
-	maptext = "<center><span style=\"[style]\">[newValue]</span></center>"
+	var/style = "font-family:'[font]'; color:[forcedFontColor]; -dm-text-outline: 1px [invertHTMLcolor(forcedFontColor)]; font-weight: bold; font-size: 8pt;;"
+	maptext = "<center><span style=\"[style]\">[uppertext(newValue)]</span></center>"
 
 /obj/screen/tooltip/proc/set_state(_state)
 	state = _state
@@ -34,4 +33,4 @@
 	if(tooltip?.state)
 		var/text_in_tooltip = hoverOn.get_name()
 		screen |= tooltip
-		tooltip.SetMapText(text_in_tooltip, prefs.tooltip_font, color)
+		tooltip.SetMapText(text_in_tooltip, prefs.tooltip_font)
