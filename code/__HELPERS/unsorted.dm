@@ -1516,7 +1516,7 @@ var/list/WALLITEMS = typecacheof(list(
 	return contains(location.loc)
 
 //Inverts the colour of an HTML string
-/proc/invertHTML(HTMLstring)
+/proc/invertHTMLcolor(HTMLstring)
 	if(!istext(HTMLstring))
 		CRASH("Given non-text argument!")
 	else if(length(HTMLstring) != 7)
