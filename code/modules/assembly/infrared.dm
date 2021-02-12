@@ -72,7 +72,7 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 		I.master = src
 		I.density = 1
-		I.dir = dir
+		I.set_dir(dir)
 		first = I
 		step(I, I.dir)
 		if(first)
@@ -89,7 +89,7 @@
 /obj/item/device/assembly/infra/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/t = dir
 	. = ..()
-	dir = t
+	set_dir(t)
 	qdel(first)
 
 /obj/item/device/assembly/infra/holder_movement()
@@ -166,7 +166,7 @@
 	if(usr.incapacitated())
 		return
 
-	dir = turn(dir, 90)
+	set_dir(turn(dir, 90))
 	return
 
 
@@ -214,7 +214,7 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)
 		I.master = master
 		I.density = 1
-		I.dir = dir
+		I.set_dir(dir)
 		I.previous = src
 		next = I
 		step(I, I.dir)
