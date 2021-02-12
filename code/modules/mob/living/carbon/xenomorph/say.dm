@@ -23,7 +23,7 @@
 			alien_talk(message)
 			return
 
-	if(stat != CONSCIOUS)
+	if(stat == CONSCIOUS)
 		playsound(src, pick(SOUNDIN_XENOMORPH_TALK), VOL_EFFECTS_MASTER, 45) // So aliens can hiss while they hiss yo/N
 		return ..(message, xeno_language, sanitize = 0)
 
@@ -52,11 +52,12 @@
 	var/tag = isxenoqueen(src) ? "hive_queen" : "hive"
 
 	var/rendered = "<span class='[tag]'>УЛЕЙ: <i>[name] шепчет, \"[message]\"</i></span>"
-	for(var/mob/living/carbon/xenomorph/S in alien_list)
-		if(!S.client)
-			continue
-		if(S.stat == CONSCIOUS)
-			S.show_message(rendered, SHOWMSG_AUDIO)
+	for(var/key in alien_list)
+		for(var/mob/living/carbon/xenomorph/S in alien_list[key])
+			if(!S.client)
+				continue
+			if(S.stat == CONSCIOUS)
+				S.show_message(rendered, SHOWMSG_AUDIO)
 
 	for(var/mob/M in observer_list)
 		if(!M.client)

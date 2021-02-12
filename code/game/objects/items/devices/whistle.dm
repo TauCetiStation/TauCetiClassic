@@ -30,7 +30,7 @@
 		for(var/mob/M in viewers(user, null))
 			if ((M.client && !( M.blinded )))
 				halt_recipients.Add(M.client)
-		var/image/I = image('icons/mob/talk.dmi', user, "halt", MOB_LAYER+1)
+		var/image/I = image('icons/mob/talk.dmi', user, "halt", MOB_LAYER + 1)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		flick_overlay(I, halt_recipients, 14)
