@@ -26,3 +26,6 @@
 
 /obj/machinery/door/poddoor/shutters/syndi/ex_act()
 	return
+
+/obj/machinery/door/poddoor/shutters/three_to_four
+	icon = 'icons/obj/doors/blastdoors_shutters.dmi'

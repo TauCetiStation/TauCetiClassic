@@ -380,3 +380,12 @@
 	overlays_file = 'icons/obj/doors/airlocks/multi_tile2/overlays.dmi'
 
 	assembly_type = /obj/structure/door_assembly/multi_tile
+
+/*******************
+* Three to four
+*/
+
+/obj/machinery/door/airlock/personal
+	name		  = "personal door"
+	icon		  = 'icons/obj/doors/airlocks/three_to_four/personaldoor.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/three_to_four/overlays.dmi'

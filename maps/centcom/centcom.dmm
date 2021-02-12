@@ -2365,6 +2365,34 @@
 	icon_state = "neutralcorner"
 	},
 /area/space)
+"aft" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik1"
+	},
+/turf/space,
+/area/space)
+"afu" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik2"
+	},
+/turf/space,
+/area/space)
+"afv" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik3"
+	},
+/turf/space,
+/area/space)
+"afw" = (
+/obj/structure/object_wall/novik,
+/turf/space,
+/area/space)
+"afx" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik5"
+	},
+/turf/space,
+/area/space)
 "afy" = (
 /obj/machinery/flasher{
 	id = "shutflash";
@@ -2383,6 +2411,18 @@
 /obj/structure/window/reinforced,
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"afA" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik8"
+	},
+/turf/space,
+/area/space)
+"afB" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik9"
+	},
+/turf/space,
+/area/space)
 "afC" = (
 /obj/machinery/light{
 	dir = 4
@@ -2416,6 +2456,36 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"afG" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik21"
+	},
+/turf/space,
+/area/space)
+"afH" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik22"
+	},
+/turf/space,
+/area/space)
+"afI" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik23"
+	},
+/turf/space,
+/area/space)
+"afJ" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik25"
+	},
+/turf/space,
+/area/space)
+"afK" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik27"
+	},
+/turf/space,
+/area/space)
 "afL" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Waiting Room"
@@ -2424,6 +2494,30 @@
 	icon_state = "floor"
 	},
 /area/centcom/evac)
+"afM" = (
+/obj/structure/object_wall/novik{
+	icon_state = "leftengine_1"
+	},
+/turf/space,
+/area/space)
+"afN" = (
+/obj/structure/object_wall/novik{
+	icon_state = "leftengine_2"
+	},
+/turf/space,
+/area/space)
+"afO" = (
+/obj/structure/object_wall/novik{
+	icon_state = "leftengine_3"
+	},
+/turf/space,
+/area/space)
+"afP" = (
+/obj/structure/object_wall/novik{
+	icon_state = "rightengine_1"
+	},
+/turf/space,
+/area/space)
 "afQ" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -2433,6 +2527,60 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
+"afR" = (
+/obj/structure/object_wall/novik{
+	icon_state = "rightengine_2"
+	},
+/turf/space,
+/area/space)
+"afS" = (
+/obj/structure/object_wall/novik{
+	icon_state = "rightengine_3"
+	},
+/turf/space,
+/area/space)
+"afT" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_rightengine"
+	},
+/turf/space,
+/area/space)
+"afU" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_leftengine"
+	},
+/turf/space,
+/area/space)
+"afV" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_inner_s_w"
+	},
+/turf/space,
+/area/space)
+"afW" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_inner_t_right"
+	},
+/turf/space,
+/area/space)
+"afX" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_inner_t_left"
+	},
+/turf/space,
+/area/space)
+"afY" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_inner_w_1"
+	},
+/turf/space,
+/area/space)
+"afZ" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_white_t_up"
+	},
+/turf/space,
+/area/space)
 "aga" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -2451,12 +2599,61 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"agc" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"agd" = (
+/turf/simulated/floor/plating,
+/area/space)
+"age" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"agf" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik20"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"agg" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik27";
+	name = "shuttle window";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"agh" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik25"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"agi" = (
+/obj/machinery/door/airlock/maintenance_hatch,
+/turf/simulated/floor/plating,
+/area/space)
 "agj" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agk" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_inner_w_1"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "agl" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -2468,6 +2665,27 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agn" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik22"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"ago" = (
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
+"agp" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik23"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"agq" = (
+/obj/structure/object_wall/novik,
+/turf/simulated/floor/plating,
+/area/space)
 "agr" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "19,10";
@@ -2482,6 +2700,24 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"agt" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/syndicate{
+	name = "not suspicious looking toolbox"
+	},
+/obj/item/device/multitool{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/device/assembly/signaler{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/item/weapon/stock_parts/cell/high,
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
 "agu" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "3,9"
@@ -2577,6 +2813,11 @@
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agJ" = (
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor6"
+	},
+/area/space)
 "agK" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "6,8"
@@ -2589,6 +2830,11 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"agM" = (
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor5"
+	},
+/area/space)
 "agN" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "17,8";
@@ -2692,6 +2938,11 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahe" = (
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor7"
+	},
+/area/space)
 "ahf" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "18,7";
@@ -2699,6 +2950,21 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahg" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/adv,
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
 "ahh" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "1,6"
@@ -2725,6 +2991,12 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahl" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik5"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "ahm" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -2750,6 +3022,17 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ahq" = (
+/obj/machinery/door/airlock/personal{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/three_to_four{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor14"
+	},
+/area/space)
 "ahr" = (
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
@@ -2829,6 +3112,11 @@
 /obj/structure/closet/wagon,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
+"ahE" = (
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor3"
+	},
+/area/space)
 "ahF" = (
 /turf/simulated/mineral,
 /area/space)
@@ -2868,6 +3156,12 @@
 	icon_state = "diagonalWall3"
 	},
 /area/custom/syndicate_mothership)
+"ahL" = (
+/obj/structure/stool/bed/chair/schair/dropship,
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
 "ahM" = (
 /obj/machinery/light,
 /mob/living/simple_animal/hostile/tribesman{
@@ -2916,6 +3210,22 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate_elite/mothership)
+"ahS" = (
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
+"ahT" = (
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
 "ahU" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -2929,6 +3239,27 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/centcom/evac)
+"ahW" = (
+/obj/structure/sign/warning/docking,
+/turf/simulated/wall/r_wall/strong_wall,
+/area/space)
+"ahX" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/bodybag/cryobag,
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
+"ahY" = (
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor4"
+	},
+/area/space)
 "ahZ" = (
 /obj/structure/table,
 /turf/simulated/shuttle/floor{
@@ -2991,6 +3322,11 @@
 	icon_state = "black"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"aig" = (
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor8"
+	},
+/area/space)
 "aih" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -3045,6 +3381,39 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"aio" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/device/radio{
+	pixel_x = 4
+	},
+/obj/item/device/radio/off{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/device/radio/off{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/welding,
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor15"
+	},
+/area/space)
+"aip" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_leftengine"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"aiq" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "air" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -3154,6 +3523,24 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
+"aiE" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik9"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"aiF" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik_rightengine"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"aiG" = (
+/obj/structure/object_wall/novik{
+	icon_state = "leftengine_3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "aiH" = (
 /turf/space,
 /area/custom/syndicate_mothership/elite_squad)
@@ -3190,6 +3577,12 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"aiL" = (
+/obj/structure/object_wall/novik{
+	icon_state = "rightengine_3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "aiM" = (
 /turf/unsimulated/floor{
 	icon_state = "floor4"
@@ -3216,6 +3609,12 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership)
+"aiQ" = (
+/obj/structure/object_wall/novik{
+	icon_state = "leftengine_2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "aiR" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/syndie,
@@ -3236,12 +3635,36 @@
 	icon_state = "grimy"
 	},
 /area/custom/syndicate_mothership)
+"aiU" = (
+/obj/structure/object_wall/novik{
+	icon_state = "rightengine_2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "aiV" = (
 /obj/effect/landmark/syndie_gateway,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"aiW" = (
+/obj/structure/object_wall/novik{
+	icon_state = "leftengine_1"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"aiX" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik1"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"aiY" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "aiZ" = (
 /obj/structure/stool/bed/chair/metal/red,
 /turf/unsimulated/floor{
@@ -3256,6 +3679,13 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership)
+"ajb" = (
+/obj/machinery/door/airlock/personal,
+/obj/machinery/door/poddoor/shutters/three_to_four,
+/turf/simulated/shuttle/floor/cm_shuttles{
+	icon_state = "floor3"
+	},
+/area/space)
 "ajc" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/syndie,
@@ -3284,6 +3714,12 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"ajf" = (
+/obj/structure/object_wall/novik{
+	icon_state = "novik3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "ajg" = (
 /obj/machinery/door/airlock/external{
 	name = "Shuttle Airlock";
@@ -3316,6 +3752,12 @@
 	name = "plating"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"ajj" = (
+/obj/structure/object_wall/novik{
+	icon_state = "rightengine_1"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "ajk" = (
 /obj/machinery/gateway{
 	dir = 4
@@ -3324,6 +3766,12 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"ajl" = (
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
 "ajm" = (
 /obj/machinery/light{
 	dir = 8
@@ -3407,6 +3855,14 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate_elite/mothership)
+"ajx" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
 "ajy" = (
 /obj/machinery/gateway{
 	dir = 6
@@ -3427,6 +3883,40 @@
 "ajA" = (
 /turf/simulated/floor/plating/airless,
 /area/shuttle/syndicate_elite/mothership)
+"ajB" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ajC" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ajD" = (
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/space)
+"ajE" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "Stairs2_wide"
+	},
+/area/space)
+"ajF" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/space)
 "ajG" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/soda,
@@ -3464,6 +3954,12 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"ajL" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "stairs_middle"
+	},
+/area/space)
 "ajM" = (
 /obj/effect/landmark/droppod_spawn{
 	pods_spawned = 1
@@ -3487,6 +3983,34 @@
 	icon_state = "white"
 	},
 /area/custom/syndicate_mothership)
+"ajP" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/r_wall/strong_wall,
+/area/space)
+"ajQ" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/multi_tile/glass{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/space)
+"ajR" = (
+/obj/structure/sign/poster/official/space_cops{
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
+"ajS" = (
+/obj/structure/sign/poster/official/enlist{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
 "ajT" = (
 /obj/effect/landmark/droppod_spawn{
 	pods_spawned = 2
@@ -3608,6 +4132,13 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate/start)
+"akf" = (
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/space)
 "akg" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 8
@@ -3745,6 +4276,21 @@
 	icon_state = "black"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"akA" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "Stairs_wide"
+	},
+/area/space)
+"akB" = (
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
 "akC" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "16,4";
@@ -3777,6 +4323,12 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"akH" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
 "akI" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "9,3"
@@ -3830,6 +4382,12 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
+"akP" = (
+/obj/effect/decal/turf_decal/warning_stripes,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
 "akQ" = (
 /turf/unsimulated/floor{
 	icon_state = "bar"
@@ -3906,6 +4464,14 @@
 	},
 /turf/space,
 /area/shuttle/transport1/centcom)
+"ala" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space)
 "alb" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -4025,6 +4591,13 @@
 	icon_state = "diagonalWall3"
 	},
 /area/shuttle/syndicate/start)
+"alq" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "alr" = (
 /turf/space,
 /turf/simulated/shuttle/wall{
@@ -4040,6 +4613,35 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
+"alt" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"alu" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"alv" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Aurora entrance hatch"
+	},
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
+"alw" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/space)
 "alx" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
@@ -4085,6 +4687,19 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
+"alC" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
 "alD" = (
 /obj/structure/table,
 /obj/item/weapon/tank/jetpack/oxygen/harness,
@@ -4135,6 +4750,14 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"alJ" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
 "alK" = (
 /obj/structure/sink{
 	dir = 8;
@@ -4336,6 +4959,18 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
+"amg" = (
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
+	},
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 1
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
 "amh" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/o2,
@@ -4500,6 +5135,24 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/syndicate/start)
+"amw" = (
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
+"amx" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
 "amy" = (
 /obj/machinery/vending/snack{
 	name = "hacked Getmore Chocolate Corp";
@@ -4634,6 +5287,23 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"amK" = (
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
+"amL" = (
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
 "amM" = (
 /obj/machinery/vending/cigarette{
 	name = "hacked Cigarette machine";
@@ -4643,6 +5313,115 @@
 	icon_state = "bar"
 	},
 /area/custom/syndicate_mothership)
+"amN" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1;
+	icon_state = "burst_r"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amO" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1;
+	icon_state = "burst_l"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amP" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "heater1"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amQ" = (
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 10
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
+"amR" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
+"amS" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 4
+	},
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
+"amT" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 8
+	},
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
+"amU" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
+"amV" = (
+/obj/structure/stool/bed/chair/schair/dropship{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 6
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6";
+	name = "Aurora floor"
+	},
+/area/space)
+"amW" = (
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amX" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amY" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
 "amZ" = (
 /obj/machinery/computer/intruder_station,
 /turf/unsimulated/floor{
@@ -4650,6 +5429,14 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership)
+"ana" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
 "anb" = (
 /obj/machinery/door/window{
 	dir = 1;
@@ -4669,6 +5456,53 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
+"and" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
+"ane" = (
+/obj/structure/stool/bed/chair/schair/dropship/pilot,
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
+"anf" = (
+/obj/structure/table/reinforced,
+/obj/item/device/radio/off{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/device/radio/off{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
+"ang" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray";
+	layer = 3.3
+	},
+/turf/simulated/shuttle/floor4{
+	name = "Aurora floor"
+	},
+/area/space)
 "anp" = (
 /obj/machinery/atmospherics/components/unary/tank/phoron{
 	dir = 4
@@ -48258,7 +49092,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 apA
 apA
@@ -48272,6 +49105,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -48515,7 +49349,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 acX
 adB
@@ -48529,6 +49362,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -48772,7 +49606,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 acY
 acY
@@ -48786,6 +49619,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -49029,7 +49863,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 acZ
 acZ
@@ -49043,6 +49876,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -49286,7 +50120,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 ada
 adC
@@ -49300,6 +50133,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -49543,7 +50377,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 add
 adD
@@ -49557,6 +50390,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -49800,7 +50634,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 ade
 adE
@@ -49814,6 +50647,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -50057,7 +50891,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 adf
 adE
@@ -50071,6 +50904,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -50314,7 +51148,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 adh
 adE
@@ -50328,6 +51161,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -50571,7 +51405,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 adi
 adE
@@ -50585,6 +51418,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -50828,7 +51662,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 adw
 adF
@@ -50842,6 +51675,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -51080,7 +51914,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 apA
 apA
@@ -51099,6 +51932,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -51337,7 +52171,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abz
 abJ
@@ -51356,6 +52189,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -51594,7 +52428,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abA
 abK
@@ -51613,6 +52446,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -51851,7 +52685,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abB
 abL
@@ -51870,6 +52703,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -52108,7 +52942,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abD
 abD
@@ -52127,6 +52960,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -52365,7 +53199,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abD
 abD
@@ -52384,6 +53217,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -52622,7 +53456,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abE
 abE
@@ -52641,6 +53474,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -52879,7 +53713,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abF
 abM
@@ -52898,6 +53731,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -53136,7 +53970,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abG
 abN
@@ -53155,6 +53988,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -53393,7 +54227,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abH
 abO
@@ -53412,6 +54245,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -53650,7 +54484,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 apA
 abI
@@ -53669,6 +54502,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -53907,7 +54741,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abI
 abI
@@ -53926,6 +54759,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -54164,7 +54998,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abI
 abI
@@ -54183,6 +55016,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -54421,7 +55255,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 abI
 abI
@@ -54440,6 +55273,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -54678,7 +55512,6 @@ aaM
 aaM
 aaM
 aaM
-aaM
 apA
 apA
 apA
@@ -54697,6 +55530,7 @@ afr
 afr
 afs
 apA
+aaM
 aaM
 aaM
 aaM
@@ -54935,24 +55769,24 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agi
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -55192,24 +56026,24 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+agi
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -55449,24 +56283,24 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+agd
+agd
+agd
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -55714,16 +56548,16 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+apA
+apA
+apA
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -55975,12 +56809,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -56232,12 +57066,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -56489,12 +57323,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -56746,12 +57580,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -57003,12 +57837,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -57260,12 +58094,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -57517,12 +58351,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -57774,12 +58608,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -58031,12 +58865,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -58288,12 +59122,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -58545,12 +59379,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -58802,12 +59636,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -59059,12 +59893,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -59316,12 +60150,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+aeY
+afr
+afr
+afs
+apA
 aaM
 aaM
 aaM
@@ -59573,12 +60407,12 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+ajD
+afr
+afr
+akf
+apA
 aaM
 aaM
 aaM
@@ -59829,14 +60663,14 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+apA
+apA
+ajF
+ajQ
+apA
+apA
+apA
 aaM
 aaM
 aaM
@@ -60072,50 +60906,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+ajl
+ajE
+ajL
+ajL
+akA
+ajl
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
 aaM
 "}
 (139,1,1) = {"
@@ -60329,50 +61163,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+apA
 aaM
 "}
 (140,1,1) = {"
@@ -60586,50 +61420,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+apA
 aaM
 "}
 (141,1,1) = {"
@@ -60843,50 +61677,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+ajx
+adE
+adE
+adE
+adE
+adE
+akH
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+ajx
+adE
+apA
 aaM
 "}
 (142,1,1) = {"
@@ -61100,50 +61934,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+ahW
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+ahW
+apA
+apA
+agd
+agd
+apA
+agd
+agd
+agd
+apA
+agd
+agd
+agd
+ahW
+agd
+agd
+apA
+apA
+ahW
+ajB
+adE
+apA
 aaM
 "}
 (143,1,1) = {"
@@ -61357,50 +62191,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+ajB
+adE
+apA
 aaM
 "}
 (144,1,1) = {"
@@ -61614,50 +62448,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agf
+agq
+ahq
+agq
+agq
+agq
+ahq
+agq
+aip
+aiG
+aiQ
+aiW
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+ajB
+adE
+apA
 aaM
 "}
 (145,1,1) = {"
@@ -61871,50 +62705,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agk
+agt
+ago
+ahS
+ahS
+ahS
+ago
+ahX
+aiq
+agq
+agq
+aiX
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (146,1,1) = {"
@@ -62128,50 +62962,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agf
+agn
+agJ
+ahE
+ahE
+ahE
+ahE
+ahE
+ahY
+ahS
+ahS
+ahS
+aiY
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+alt
+alt
+alt
+amW
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (147,1,1) = {"
@@ -62385,50 +63219,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agg
+ago
+agM
+ahL
+ahL
+ahL
+ahL
+ahL
+agM
+ahE
+ahE
+ahE
+ajb
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+amN
+amP
+alt
+alt
+amW
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (148,1,1) = {"
@@ -62642,50 +63476,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agh
+agp
+ahe
+ahE
+ahE
+ahE
+ahE
+ahE
+aig
+ahT
+ahT
+ahT
+aiY
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+amO
+amP
+alt
+alt
+alt
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (149,1,1) = {"
@@ -62899,50 +63733,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agk
+ahg
+ago
+ahT
+ahT
+ahT
+ago
+aio
+aiE
+ahl
+ahl
+ajf
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+alq
+alt
+alt
+alt
+alt
+alt
+alt
+alt
+alt
+agd
+agd
+alq
+alt
+amW
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (150,1,1) = {"
@@ -63156,50 +63990,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agh
+ahl
+ahq
+ahl
+ahl
+ahl
+ahq
+ahl
+aiF
+aiL
+aiU
+ajj
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+alq
+alt
+alw
+amw
+amw
+amw
+amQ
+alw
+alt
+alt
+alv
+alv
+alt
+alt
+alt
+alt
+amW
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (151,1,1) = {"
@@ -63413,50 +64247,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+alt
+alt
+alw
+amx
+amx
+amx
+amR
+amw
+amw
+amw
+amY
+amY
+amw
+amw
+amw
+alt
+alt
+amW
+agd
+ajB
+adE
+apA
 aaM
 "}
 (152,1,1) = {"
@@ -63670,50 +64504,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+ahW
+ajB
+adE
+adE
+ajR
+adE
+adE
+akP
+alt
+alt
+alC
+amx
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+alt
+and
+alt
+amW
+ajB
+adE
+apA
 aaM
 "}
 (153,1,1) = {"
@@ -63927,50 +64761,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+ajC
+adE
+adE
+apA
+adE
+adE
+akP
+agd
+alv
+alJ
+amK
+amK
+amx
+amS
+amL
+amL
+amL
+amL
+amL
+amL
+amx
+amK
+alt
+ane
+amK
+ang
+ajB
+adE
+apA
 aaM
 "}
 (154,1,1) = {"
@@ -64184,50 +65018,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+ajP
+apA
+apA
+akB
+akP
+agd
+alv
+alJ
+amK
+amK
+amx
+alw
+alt
+alt
+alt
+alt
+alt
+alt
+amx
+amK
+alv
+amK
+amK
+ang
+ajB
+adE
+apA
 aaM
 "}
 (155,1,1) = {"
@@ -64441,50 +65275,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+agc
+ajx
+adE
+adE
+apA
+adE
+adE
+akP
+agd
+alv
+alJ
+amK
+amK
+amx
+amT
+amw
+amw
+amw
+amw
+amw
+amw
+amx
+amK
+alt
+ane
+amK
+ang
+ajB
+adE
+apA
 aaM
 "}
 (156,1,1) = {"
@@ -64698,50 +65532,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+ahW
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+ajB
+adE
+adE
+ajS
+adE
+adE
+akP
+alt
+alt
+amg
+amx
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+amK
+alt
+anf
+alt
+amX
+ajB
+adE
+apA
 aaM
 "}
 (157,1,1) = {"
@@ -64955,50 +65789,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+alt
+alt
+alw
+amx
+amx
+amx
+amU
+amL
+amL
+amL
+ana
+ana
+amL
+amL
+amL
+alt
+alt
+amX
+agd
+ajB
+adE
+apA
 aaM
 "}
 (158,1,1) = {"
@@ -65212,50 +66046,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agf
+agq
+ahq
+agq
+agq
+agq
+ahq
+agq
+aip
+aiG
+aiQ
+aiW
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+alu
+alt
+alw
+amL
+amL
+amL
+amV
+alw
+alt
+alt
+alv
+alv
+alt
+alt
+alt
+alt
+amX
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (159,1,1) = {"
@@ -65469,50 +66303,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agk
+agt
+ago
+ahS
+ahS
+ahS
+ago
+ahX
+aiq
+agq
+agq
+aiX
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+alu
+alt
+alt
+alt
+alt
+alt
+alt
+alt
+alt
+agd
+agd
+alu
+alt
+amX
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (160,1,1) = {"
@@ -65726,50 +66560,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agf
+agn
+agJ
+ahE
+ahE
+ahE
+ahE
+ahE
+ahY
+ahS
+ahS
+ahS
+aiY
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+amN
+amP
+alt
+alt
+alt
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (161,1,1) = {"
@@ -65983,50 +66817,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agg
+ago
+agM
+ahL
+ahL
+ahL
+ahL
+ahL
+agM
+ahE
+ahE
+ahE
+ajb
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+amO
+amP
+alt
+alt
+amX
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (162,1,1) = {"
@@ -66240,50 +67074,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agh
+agp
+ahe
+ahE
+ahE
+ahE
+ahE
+ahE
+aig
+ahT
+ahT
+ahT
+aiY
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+alt
+alt
+alt
+amX
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (163,1,1) = {"
@@ -66488,59 +67322,59 @@ aaM
 aaM
 aaM
 aaM
+aft
+aaM
+afK
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agk
+ahg
+ago
+ahT
+ahT
+ahT
+ago
+aio
+aiE
+ahl
+ahl
+ajf
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+apA
 aaM
 "}
 (164,1,1) = {"
@@ -66754,50 +67588,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agh
+ahl
+ahq
+ahl
+ahl
+ahl
+ahq
+ahl
+aiF
+aiL
+aiU
+ajj
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+ajB
+adE
+apA
 aaM
 "}
 (165,1,1) = {"
@@ -67002,59 +67836,59 @@ aaM
 aaM
 aaM
 aaM
+afu
+aaM
+afM
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+ajB
+adE
+apA
 aaM
 "}
 (166,1,1) = {"
@@ -67268,50 +68102,50 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+apA
+agd
+agd
+agd
+agd
+agd
+agd
+ahW
+ajB
+adE
+adE
+adE
+adE
+adE
+akP
+ahW
+apA
+apA
+agd
+agd
+apA
+agd
+agd
+agd
+ahW
+agd
+agd
+agd
+apA
+agd
+agd
+apA
+apA
+ahW
+ajB
+adE
+apA
 aaM
 "}
 (167,1,1) = {"
@@ -67516,59 +68350,59 @@ aaM
 aaM
 aaM
 aaM
+afv
+aaM
+afN
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+ajC
+adE
+adE
+adE
+adE
+adE
+ala
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+age
+ajC
+adE
+apA
 aaM
 "}
 (168,1,1) = {"
@@ -67777,55 +68611,55 @@ aaM
 aaM
 aaM
 aaM
+afV
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+apA
 aaM
 "}
 (169,1,1) = {"
@@ -68030,59 +68864,59 @@ aaM
 aaM
 aaM
 aaM
+afw
+aaM
+afO
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+adE
+apA
 aaM
 "}
 (170,1,1) = {"
@@ -68291,55 +69125,55 @@ aaM
 aaM
 aaM
 aaM
+afW
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
+apA
 aaM
 "}
 (171,1,1) = {"
@@ -68544,9 +69378,9 @@ aaM
 aaM
 aaM
 aaM
+afx
 aaM
-aaM
-aaM
+afP
 aaM
 aaM
 aaM
@@ -68805,7 +69639,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+afX
 aaM
 aaM
 aaM
@@ -69058,9 +69892,9 @@ aaM
 aaM
 aaM
 aaM
+afA
 aaM
-aaM
-aaM
+afR
 aaM
 aaM
 aaM
@@ -69319,7 +70153,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+afY
 aaM
 aaM
 aaM
@@ -69572,9 +70406,9 @@ aaM
 aaM
 aaM
 aaM
+afB
 aaM
-aaM
-aaM
+afS
 aaM
 aaM
 aaM
@@ -69833,7 +70667,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+afZ
 aaM
 aaM
 aaM
@@ -70086,9 +70920,9 @@ aaM
 aaM
 aaM
 aaM
+afG
 aaM
-aaM
-aaM
+afT
 aaM
 aaM
 aaM
@@ -70600,9 +71434,9 @@ aaM
 aaM
 aaM
 aaM
+afH
 aaM
-aaM
-aaM
+afU
 aaM
 aaM
 aaM
@@ -71114,9 +71948,9 @@ aaM
 aaM
 aaM
 aaM
+afI
 aaM
-aaM
-aaM
+afw
 aaM
 aaM
 aaM
@@ -71628,9 +72462,9 @@ aaM
 aaM
 aaM
 aaM
+afJ
 aaM
-aaM
-aaM
+afw
 aaM
 aaM
 aaM

@@ -237,6 +237,27 @@
 	else
 		cut_overlay(sarmrest)
 
+// Dropship Chair
+
+/obj/structure/stool/bed/chair/schair/dropship
+	name = "passenger dropship seat"
+	icon_state = "shuttle_chair"
+	var/cmarmrest = null
+
+/obj/structure/stool/bed/chair/schair/dropship/atom_init()
+	cmarmrest = image("icons/obj/objects.dmi", "shuttle_bars", layer = FLY_LAYER)
+	. = ..()
+
+/obj/structure/stool/bed/chair/schair/dropship/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		add_overlay(cmarmrest)
+	else
+		cut_overlay(cmarmrest)
+
+/obj/structure/stool/bed/chair/schair/dropship/pilot
+	name = "pilot dropship seat"
+	icon_state = "pilot_chair"
+
 // Chair types
 /obj/structure/stool/bed/chair/wood/normal
 	icon_state = "wooden_chair"

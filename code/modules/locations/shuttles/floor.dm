@@ -14,6 +14,11 @@
 	icon = 'code/modules/locations/shuttles/erokez.dmi'
 	icon_state = "floor1"
 
+/turf/simulated/shuttle/floor/cm_shuttles
+	name = "floor"
+	icon = 'code/modules/locations/shuttles/cm_shuttles.dmi'
+	icon_state = "floor1"
+
 /turf/simulated/shuttle/floor/cargo
 	name = "floor"
 	icon = 'code/modules/locations/shuttles/cargofloor.dmi'
