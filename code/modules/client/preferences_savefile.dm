@@ -260,7 +260,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
 	S["tooltip"]			>> tooltip
-	S["tooltip_loc"]		>> tooltip_loc
+	S["tooltip_size"]		>> tooltip_size
 	S["tooltip_font"]		>> tooltip_font
 
 	//TGUI
@@ -350,7 +350,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
 	S["tooltip"]			<< tooltip
-	S["tooltip_loc"]		<< tooltip_loc
+	S["tooltip_size"]		<< tooltip_size
 	S["tooltip_font"]		<< tooltip_font
 
 	//TGUI

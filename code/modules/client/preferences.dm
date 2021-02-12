@@ -36,8 +36,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 	var/tooltip = TRUE
-	var/tooltip_font = "System"
-	var/tooltip_loc = TOOLTIP_NORTH
+	var/tooltip_font = "Small Fonts"
+	var/tooltip_size = 8
 
 	//TGUI
 	var/tgui_fancy = TRUE

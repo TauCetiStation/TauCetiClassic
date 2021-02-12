@@ -93,8 +93,8 @@
 	. +=					"<td><a href='?_src_=prefs;preference=change_font_tooltip'><b>Change</b></a></td>"
 	. += 				"</tr>"
 	. +=				"<tr>"
-	. += 					"<td width='45%'>Change Names Loc:</td>"
-	. +=					"<td><a href='?_src_=prefs;preference=change_tooltip_loc'><b>[tooltip_loc == TOOLTIP_NORTH ? "Top" : "Bottom"]</b></a></td>"
+	. += 					"<td width='45%'>Change Names Size:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_size_tooltip'><b>[tooltip_size]</b></a></td>"
 	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
@@ -145,8 +145,8 @@
 		if("tooltip_show")
 			parent?.toggle_tooltip()
 
-		if("change_tooltip_loc")
-			parent?.change_loc_tooltip()
+		if("change_size_tooltip")
+			parent?.change_size_tooltip()
 
 		if("change_font_tooltip")
 			parent?.change_font_tooltip()

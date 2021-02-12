@@ -280,7 +280,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	feedback_add_details("admin_verb", "TFTGUI")
 
 /client/verb/toggle_tooltip()
-	set name = "Show/Hide Name of Items"
+	set name = "Tooltip: Show/Hide"
 	set category = "Preferences"
 	set desc = "Toggle Name of Items"
 
@@ -296,7 +296,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	feedback_add_details("admin_verb", "TTIP")
 
 /client/verb/change_font_tooltip()
-	set name = "Change Font of Names"
+	set name = "Tooltip: Change Font"
 	set category = "Preferences"
 	set desc = "Toggle Font of Names of Items"
 
@@ -306,16 +306,13 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "FTIP")
 
-/client/verb/change_loc_tooltip()
-	set name = "Change Loc of Names"
+/client/verb/change_size_tooltip()
+	set name = "Tooltip: Change Size"
 	set category = "Preferences"
-	set desc = "Change Loc of Names of Items"
+	set desc = "Change Sizr of Names of Items"
 
-	if(prefs.tooltip_loc == TOOLTIP_NORTH)
-		prefs.tooltip_loc = TOOLTIP_SOUTH
-	else
-		prefs.tooltip_loc = TOOLTIP_NORTH
+	prefs.tooltip_size = input(usr, "Введите размер Названий Предметов") as num
 
-	tooltip.screen_loc = prefs.tooltip_loc
+	tooltip.font_size = prefs.tooltip_size
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "LTIP")

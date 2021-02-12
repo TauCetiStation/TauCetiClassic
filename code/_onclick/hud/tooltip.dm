@@ -11,9 +11,10 @@
 	maptext_x = -385
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/state = TRUE
+	var/font_size = 8
 
 /obj/screen/tooltip/proc/SetMapText(newValue, font, forcedFontColor = "#ffffff")
-	var/style = "font-family:'[font]'; color:[forcedFontColor]; -dm-text-outline: 1px [invertHTMLcolor(forcedFontColor)]; font-weight: bold; font-size: 8pt;;"
+	var/style = "font-family:'[font]'; color:[forcedFontColor]; -dm-text-outline: 1px [invertHTMLcolor(forcedFontColor)]; font-weight: bold; font-size: [font_size]px;"
 	maptext = "<center><span style=\"[style]\">[uppertext(newValue)]</span></center>"
 
 /obj/screen/tooltip/proc/set_state(_state)
