@@ -1,6 +1,7 @@
 /datum/event/anomaly/cult_portal
 	var/max_constructs
 	announcement = new /datum/announcement/centcomm/anomaly/bluespace
+	anomaly_type = /obj/effect/anomaly/bluespace/cult_portal
 
 /datum/event/anomaly/cult_portal/setup()
 	startWhen = rand(50, 150)
@@ -10,12 +11,15 @@
 	impact_area = findEventArea()
 
 /datum/event/anomaly/cult_portal/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
-	if(T)
-		var/obj/effect/anomaly/bluespace/cult_portal/C = new(T, TRUE)
-		newAnomaly = C
-		C.spawns = max_constructs
-		C.send_request_to_ghost()
+	var/list/turfs = get_area_turfs(impact_area)
+	if(!turfs)
+		return
+
+	var/turf/T = pick(turfs)
+	var/obj/effect/anomaly/bluespace/cult_portal/C = new(T, TRUE)
+	newAnomaly = C
+	C.spawns = max_constructs
+	C.send_request_to_ghost()
 
 /datum/event/anomaly/cult_portal/end()
 	var/obj/effect/anomaly/bluespace/cult_portal/C = newAnomaly
@@ -39,13 +43,10 @@
 	for(var/i in 1 to 50)
 		impact_area = findEventArea()
 		var/list/turfs = get_area_turfs(impact_area)
-		if(!turfs.len)
-			message_admins("В [impact_area] нету турфов. Это баг, сообщите кодерам про это.")
+		if(!turfs)
 			continue
 		var/turf/T = pick(turfs)
-		if(T)
-			var/obj/effect/anomaly/bluespace/cult_portal/C = new(T)
-			newAnomaly += C
+		newAnomaly += new anomaly_type(T)
 		sleep(3 SECONDS)
 
 /datum/event/anomaly/cult_portal/massive/tick()

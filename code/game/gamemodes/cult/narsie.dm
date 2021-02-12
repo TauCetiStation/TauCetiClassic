@@ -50,11 +50,8 @@
 	narsie_spawn_animation()
 
 	// Force event
-	var/datum/event_container/portals_event = new /datum/event_container/major
-	for(var/datum/event_meta/E in portals_event.available_events)
-		if(ispath(E.event_type, /datum/event/anomaly/cult_portal/massive))
-			log_debug("Force starting event '[E.name]' of severity [severity_to_string[E.severity]].")
-			new E.event_type(E)
+	new /datum/event/anomaly/cult_portal/massive(new /datum/event_meta(EVENT_LEVEL_MAJOR, "Massive Cult Portals"))
+	log_debug("Force starting event for nar-sie 'Massive Cult Portals'.")
 
 	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.5), 70)
 
