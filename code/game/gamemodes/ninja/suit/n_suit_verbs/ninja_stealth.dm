@@ -69,6 +69,7 @@
 
 		s_active=FALSE
 		U.invisibility = 0
+		HideHuds(U)
 		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
 		if(U.mind.protector_role)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
