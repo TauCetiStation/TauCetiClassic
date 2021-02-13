@@ -26,6 +26,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	speed = 4
+	typing_indicator_type = "machine"
 
 	animalistic = FALSE
 	has_arm = TRUE

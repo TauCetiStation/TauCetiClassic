@@ -119,7 +119,7 @@
 		if(mob.control_object.density)
 			step(mob.control_object,direct)
 			if(!mob.control_object)	return
-			mob.control_object.dir = direct
+			mob.control_object.set_dir(direct)
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
@@ -300,18 +300,26 @@
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
+	if(camera_move(direct))
+		return FALSE
 	return Move(n, direct)
 
-/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	//Camera control: arrow keys.
-	if (machine && istype(machine, /obj/machinery/computer/security))
+/mob/proc/camera_move(Dir = 0)
+	if(stat || restrained())
+		return FALSE
+
+	if(machine && istype(machine, /obj/machinery/computer/security))
+		if(!Adjacent(machine) || !machine.is_interactable())
+			return FALSE
 		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.current)
+		var/turf/T = get_turf(console.active_camera)
 		for(var/i;i<10;i++)
 			T = get_step(T, Dir)
 		console.jump_on_click(src, T)
-		return FALSE
+		return TRUE
+	return FALSE
 
+/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (pinned.len)
 		return FALSE
 
@@ -328,7 +336,7 @@
 	switch(L.incorporeal_move)
 		if(1)
 			L.loc = get_step(L, direct)
-			L.dir = direct
+			L.set_dir(direct)
 		if(2)
 			if(prob(50))
 				var/locx
@@ -368,7 +376,7 @@
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
-			L.dir = direct
+			L.set_dir(direct)
 	return 1
 
 

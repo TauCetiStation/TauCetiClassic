@@ -44,7 +44,7 @@
 			visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 	else
 		..()
@@ -57,7 +57,7 @@
 			emote(pick("chases its tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
@@ -86,7 +86,7 @@
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(1,src))
 		if(prob(50))
 			for(var/i in list(1,2,4,8,4,2,1,2))
-				dir = i
+				set_dir(i)
 				sleep(1)
 		if(prob(40))
 			src.visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)

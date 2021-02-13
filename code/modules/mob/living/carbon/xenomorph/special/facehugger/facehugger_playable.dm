@@ -36,11 +36,15 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "alien facehugger")
-		name = "alien facehugger ([rand(1, 1000)])"
+	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
+	alien_list[ALIEN_FACEHAGGER] += src
+
+/mob/living/carbon/xenomorph/facehugger/Destroy()
+	alien_list[ALIEN_FACEHAGGER] -= src
+	return ..()
 
 /mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
 	..()
@@ -184,8 +188,9 @@ This is chestburster mechanic for damaging
 
 /obj/screen/larva_bite/Click()
 	var/obj/item/weapon/larva_bite/G = master
-	G.s_click(src)
-	return 1
+	if(G)
+		G.s_click(src)
+		return TRUE
 
 /obj/screen/larva_bite/attack_hand()
 	return
@@ -256,6 +261,8 @@ This is chestburster mechanic for damaging
 		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
+			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
+			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
 			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			H.death()
 			// we're fucked. no chance to revive a person
@@ -277,6 +284,7 @@ This is chestburster mechanic for damaging
 		if(M.stat == DEAD)
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
+			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
 			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
@@ -333,8 +341,9 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/screen/fh_grab/Click()
 	var/obj/item/weapon/fh_grab/G = master
-	G.s_click(src)
-	return TRUE
+	if(G)
+		G.s_click(src)
+		return TRUE
 
 /obj/screen/fh_grab/attack_hand()
 	return
@@ -493,7 +502,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 					FH_mask.canremove = FALSE
 				assailant.visible_message("<span class='danger'>[assailant] has tightened \his tail on [affecting]'s neck!</span>")
 				assailant.next_move = world.time + 10
-				//affecting.losebreath += 1
 			else
 				assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
 				hud.icon_state = "grab/neck"

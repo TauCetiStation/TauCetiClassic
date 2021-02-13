@@ -222,8 +222,9 @@
 
 	else if(href_list["reset_techology"])
 		var/choice = alert("Techology Deletion", "Are you sure you want to delete this techology? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
-			temp_server.files.forget_techology( temp_server.files.researched_tech[href_list["reset_design"]] )
+		var/techology = temp_server.files.researched_tech[href_list["reset_techology"]]
+		if(choice == "Continue" && techology)
+			temp_server.files.forget_techology(techology)
 
 	updateUsrDialog()
 
