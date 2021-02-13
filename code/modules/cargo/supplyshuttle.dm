@@ -24,13 +24,6 @@ var/list/mechtoys = list(
 	anchored = 1
 	layer = 4
 	explosion_resistance = 5
-	var/list/can_pass_types = list(
-		/mob/living/carbon/monkey,
-		/mob/living/carbon/slime,
-		/mob/living/simple_animal/mouse,
-		/mob/living/silicon/robot/drone,
-		/mob/living/carbon/xenomorph/facehugger,
-		/mob/living/carbon/xenomorph/larva)
 
 /obj/structure/plasticflaps/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(istype(caller, /obj/machinery/bot/mulebot))
@@ -44,11 +37,13 @@ var/list/mechtoys = list(
 	return TRUE
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
+	if(istype(A) && A.checkpass(PASSGLASS)) // for laser projectile
 		return prob(60)
+	if(istype(A) && A.checkpass(PASSTABLE))
+		return TRUE
 
 	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob) //if it's a bed/chair and someone is buckled, it will not pass
 		return FALSE
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
@@ -57,14 +52,9 @@ var/list/mechtoys = list(
 			return TRUE
 		if(istype(M, /mob/living/simple_animal/hostile))
 			return FALSE
-		if(!M.lying && !check_pass(M))  //If your not laying down, or a small creature, no pass.
+		if(!M.lying) //If your not laying down, or a small creature, no pass.
 			return FALSE
 	return ..()
-
-/obj/structure/plasticflaps/proc/check_pass(mob/M)
-	if(M.type in can_pass_types)
-		return TRUE
-	return FALSE
 
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
