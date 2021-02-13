@@ -196,6 +196,7 @@
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "portal"
 	light_color = "#ff69b4"
+	layer = INFRONT_MOB_LAYER
 	var/next_spawn = 0
 	var/spawn_cd = 30 SECONDS
 	var/spawns = -1
