@@ -37,10 +37,11 @@ var/list/mechtoys = list(
 	return TRUE
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS)) // for laser projectile
-		return prob(60)
-	if(istype(A) && A.checkpass(PASSTABLE))
-		return TRUE
+	if(istype(A)
+		if(A.checkpass(PASSGLASS)) // for laser projectile
+			return prob(60)
+		if(A.checkpass(PASSTABLE))
+			return TRUE
 
 	var/obj/structure/stool/bed/B = A
 	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob) //if it's a bed/chair and someone is buckled, it will not pass
