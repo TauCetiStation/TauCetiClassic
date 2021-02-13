@@ -129,7 +129,7 @@
 		return ..()
 
 /obj/structure/window/reinforced/holowindow/shatter(display_message = 1)
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_WINDOW_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
@@ -168,7 +168,7 @@
 
 /obj/machinery/door/window/holowindoor/shatter(display_message = 1)
 	src.density = 0
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_WINDOW_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
 	qdel(src)
