@@ -37,7 +37,7 @@ var/list/mechtoys = list(
 	return TRUE
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
-	if(istype(A)
+	if(istype(A))
 		if(A.checkpass(PASSGLASS)) // for laser projectile
 			return prob(60)
 		if(A.checkpass(PASSTABLE))
