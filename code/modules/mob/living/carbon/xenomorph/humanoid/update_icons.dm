@@ -171,8 +171,7 @@
 		overlays_standing[X_FIRE_LAYER] = image(icon = 'icons/mob/alienqueen.dmi', icon_state = "queen_fire")
 		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
-	else
-		overlays_standing[X_FIRE_LAYER] = null
+	overlays_standing[X_FIRE_LAYER] = null
 
 /mob/living/carbon/xenomorph/humanoid/update_fire()
 	cut_overlay(overlays_standing[X_FIRE_LAYER])
@@ -180,8 +179,7 @@
 		overlays_standing[X_FIRE_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "Standing")
 		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
-	else
-		overlays_standing[X_FIRE_LAYER] = null
+	overlays_standing[X_FIRE_LAYER] = null
 
 /mob/living/carbon/xenomorph/update_fire()
 	cut_overlay(overlays_standing[X_FIRE_LAYER])
@@ -189,8 +187,7 @@
 		overlays_standing[X_FIRE_LAYER] = image(icon = 'icons/mob/OnFire.dmi', icon_state = "Generic_mob_burning")
 		add_overlay(overlays_standing[X_FIRE_LAYER])
 		return
-	else
-		overlays_standing[X_FIRE_LAYER] = null
+	overlays_standing[X_FIRE_LAYER] = null
 
 //Xeno Overlays Indexes//////////
 #undef X_HEAD_LAYER
