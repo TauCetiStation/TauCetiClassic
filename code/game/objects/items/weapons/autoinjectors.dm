@@ -3,6 +3,7 @@
 	name = "combat autoinjector"
 	desc = "Younger brother of combat autoinjector."
 	icon_state = "stimpen"
+	item_state = "autoinjector_empty"
 	volume = 10
 	list_reagents = list("synaptizine" = 1, "hyperzine" = 2.5, "oxycodone" = 2.5, "anti_toxin" = 5)
 
@@ -10,6 +11,7 @@
 	name = "Bicaridine autoinjector"
 	desc = "For physical injuries."
 	icon_state = "autobrut"
+	item_state = "autobrut"
 	volume = 20
 	list_reagents = list("bicaridine" = 20)
 
@@ -17,6 +19,7 @@
 	name = "Dermaline autoinjector"
 	desc = "For burns."
 	icon_state = "autoburn"
+	item_state = "autoburn"
 	volume = 15
 	list_reagents = list("dermaline" = 15)
 
@@ -24,6 +27,7 @@
 	name = "Tramadol autoinjector"
 	desc = "Painkiller."
 	icon_state = "autopainkiller"
+	item_state = "autopainkiller"
 	volume = 15
 	list_reagents = list("tramadol" = 15)
 
@@ -31,6 +35,7 @@
 	name = "Anti-toxins autoinjector"
 	desc = "Neutralizes many common toxins."
 	icon_state = "autoantitox"
+	item_state = "autoantitox"
 	volume = 20
 	list_reagents = list("anti_toxin" = 20)
 
@@ -38,6 +43,7 @@
 	name = "Improved stimpack"
 	desc = "It does not contain caffeine"
 	icon_state = "auto_minig_t2"
+	item_state = "autoburn"
 	volume = 20
 	list_reagents = list("hyperzine" = 3, "paracetamol" = 10, "tricordrazine" = 7)
 
@@ -53,6 +59,7 @@
 	name = "Advanced stimpack"
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
+	item_state = "autobrut"
 	volume = 25
 	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10)
 
@@ -67,6 +74,7 @@
 	name = "Nutriment autoinjector"
 	desc = "To satisfy hunger."
 	icon_state = "auto_nutriment"
+	item_state = "auto_nutriment"
 	volume = 10
 	list_reagents = list("nutriment" = 10)
 
@@ -74,5 +82,6 @@
 	name = "Bone-R"
 	desc = "Getting your bones repaired. Use carefully."
 	icon_state = "bonepen"
+	item_state = "bonepen"
 	volume = 30
 	list_reagents = list("nanocalcium" = 30)

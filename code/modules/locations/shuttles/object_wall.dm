@@ -49,6 +49,10 @@
 	icon = 'code/modules/locations/shuttles/cm_shuttles.dmi'
 	icon_state = "novik4"
 
-/obj/structure/object_wall/novik/anhios //anxious
+/obj/structure/object_wall/anhios
 	icon = 'code/modules/locations/shuttles/cm_shuttles.dmi'
 	icon_state = "anh4"
+
+/obj/structure/object_wall/evac
+	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	icon_state = "9,1"

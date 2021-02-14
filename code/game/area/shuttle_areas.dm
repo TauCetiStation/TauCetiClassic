@@ -87,7 +87,7 @@
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "Emergency Shuttle Transit"
 	icon_state = "shuttle"
-	parallax_movedir = WEST
+	parallax_movedir = NORTH
 
 //Escape Pod One
 /area/shuttle/escape_pod1
