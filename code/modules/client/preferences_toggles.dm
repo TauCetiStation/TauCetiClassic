@@ -300,8 +300,17 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 	set desc = "Toggle Font of Names of Items"
 
-	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Times", "serif", "Verdana")
-	prefs.tooltip_font = input(usr, "Font of Names of Items:") as anything in fonts
+	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Serif", "Verdana", "Custom Font")
+
+	var/font = input(usr, "Font of Names of Items:") as null|anything in fonts
+
+	if(font == "Custom Font")
+		font = sanitize(input("Enter the font that you have on your computer:", "Font") as null|text)
+
+	if(!font)
+		return
+
+	prefs.tooltip_font = font
 
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "FTIP")
