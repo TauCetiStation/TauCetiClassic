@@ -51,6 +51,7 @@
 	M.set_dir(dir)
 	buckled_mob = M
 	post_buckle_mob(M)
+	playsound(src, 'sound/effects/mob_buckle.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M)
 
