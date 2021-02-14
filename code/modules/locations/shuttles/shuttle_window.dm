@@ -45,9 +45,15 @@
 		return ..()
 
 /obj/structure/window/reinforced/shuttle/mining
+	name = "shuttle window"
 	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'
 	dir = SOUTHWEST
 	icon_state = "1"
+
+/obj/structure/window/reinforced/shuttle/evac
+	name = "shuttle window"
+	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	dir = SOUTHWEST
 
 /obj/structure/window/reinforced/shuttle/default
 	name = "shuttle window"
