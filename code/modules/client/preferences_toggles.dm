@@ -309,7 +309,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 /client/verb/change_size_tooltip()
 	set name = "Tooltip: Change Size"
 	set category = "Preferences"
-	set desc = "Change Sizr of Names of Items"
+	set desc = "Change Size of Names of Items"
 
 	prefs.tooltip_size = input(usr, "Введите размер Названий Предметов") as num
 
