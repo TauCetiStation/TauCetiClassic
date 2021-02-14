@@ -302,7 +302,8 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Serif", "Verdana", "Custom Font")
 
-	var/font = input(usr, "Font of Names of Items:") as null|anything in fonts
+	var/default = (prefs.tooltip_font in fonts) ? prefs.tooltip_font : "Custom Font"
+	var/font = input(usr, "Font of Names of Items:", "Font", default) as null|anything in fonts
 
 	if(font == "Custom Font")
 		font = sanitize(input("Enter the font that you have on your computer:", "Font") as null|text)
