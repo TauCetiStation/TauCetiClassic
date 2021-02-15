@@ -55,43 +55,6 @@
 		temp_change = (temperature - current)
 		return temp_change
 
-/*
-/mob/living/carbon/xenomorph/proc/get_thermal_protection()
-	var/thermal_protection = 1.0
-	//Handle normal clothing
-	if(head && (head.body_parts_covered & HEAD))
-		thermal_protection += 0.5
-	if(wear_suit && (wear_suit.body_parts_covered & UPPER_TORSO))
-		thermal_protection += 0.5
-	if(wear_suit && (wear_suit.body_parts_covered & LEGS))
-		thermal_protection += 0.2
-	if(wear_suit && (wear_suit.body_parts_covered & ARMS))
-		thermal_protection += 0.2
-	if(wear_suit && (wear_suit.body_parts_covered & HANDS))
-		thermal_protection += 0.2
-	if(wear_suit && (wear_suit.flags & SUITSPACE))
-		thermal_protection += 3
-	if(COLD_RESISTANCE in mutations)
-		thermal_protection += 5
-
-	return thermal_protection
-
-/mob/living/carbon/xenomorph/proc/add_fire_protection(temp)
-	var/fire_prot = 0
-	if(head)
-		if(head.protective_temperature > temp)
-			fire_prot += (head.protective_temperature/10)
-	if(wear_mask)
-		if(wear_mask.protective_temperature > temp)
-			fire_prot += (wear_mask.protective_temperature/10)
-	if(wear_suit)
-		if(wear_suit.protective_temperature > temp)
-			fire_prot += (wear_suit.protective_temperature/10)
-
-
-	return fire_prot
-*/
-
 /mob/living/carbon/xenomorph/proc/handle_regular_status_updates()
 	updatehealth()
 
@@ -212,7 +175,27 @@
 	..()
 
 /mob/living/carbon/xenomorph/proc/handle_hud_icons_health()
-	return
+	if(!healths)
+		return
+	if(stat != DEAD)
+		var/resulthealth = (health / maxHealth) * 100
+		switch(resulthealth)
+			if(90 to 100)
+				healths.icon_state = "health0"
+			if(72 to 90)
+				healths.icon_state = "health1"
+			if(54 to 72)
+				healths.icon_state = "health2"
+			if(36 to 54)
+				healths.icon_state = "health3"
+			if(18 to 36)
+				healths.icon_state = "health4"
+			if(0 to 18)
+				healths.icon_state = "health5"
+			else
+				healths.icon_state = "health6"
+	else
+		healths.icon_state = "health7"
 
 /mob/living/carbon/xenomorph/proc/handle_stomach()
 	spawn(0)
@@ -236,6 +219,6 @@
 /mob/living/carbon/xenomorph/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(6)
+	adjustFireLoss(12)
 	return
 //END FIRE CODE
