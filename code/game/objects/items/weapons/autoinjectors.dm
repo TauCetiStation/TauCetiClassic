@@ -73,8 +73,8 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment
 	name = "Nutriment autoinjector"
 	desc = "To satisfy hunger."
-	icon_state = "auto_nutriment"
-	item_state = "auto_nutriment"
+	icon_state = "autonutriment"
+	item_state = "autonutriment"
 	volume = 10
 	list_reagents = list("nutriment" = 10)
 
