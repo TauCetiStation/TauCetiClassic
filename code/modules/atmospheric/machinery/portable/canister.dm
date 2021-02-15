@@ -369,6 +369,9 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/is_operational_topic()
 	return TRUE
 
+/obj/machinery/portable_atmospherics/canister/tgui_state(mob/user)
+	return global.physical_state
+
 /obj/machinery/portable_atmospherics/canister/tgui_act(action, params)
 	. = ..()
 	if(. || issilicon(usr))

@@ -1,9 +1,9 @@
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
 	desc = "For shuttle control."
-	icon_state = "shuttle"
-	state_broken_preset = "commb"
-	state_nopower_preset = "comm0"
+	icon_state = "erokEz"
+	state_broken_preset = "erokEzb"
+	state_nopower_preset = "erokEz0"
 	var/auth_need = 3.0
 	var/list/authorized = list()
 

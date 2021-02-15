@@ -180,8 +180,14 @@
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
+
+		var/track_button
 		var/turf/T = get_turf(speaker)
-		track = "[FOLLOW_OR_TURF_LINK(src, speaker, T)] [speaker_name]"
+		if(T)
+			track_button = FOLLOW_OR_TURF_LINK(src, speaker, T)
+		else
+			track_button = FOLLOW_LINK(src, speaker)
+		track = "[track_button] [speaker_name]"
 
 	if(isliving(src))
 		message = highlight_traitor_codewords(message, src.mind)
