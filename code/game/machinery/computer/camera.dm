@@ -107,7 +107,7 @@
 		var/c_tag = params["name"]
 		var/list/cameras = get_cached_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
-		
+
 		switch_to_camera(selected_camera)
 
 		return TRUE
@@ -222,7 +222,7 @@
 /obj/machinery/computer/security/proc/get_cached_cameras()
 	if (isnull(camera_cache))
 		camera_cache = get_available_cameras()
-	
+
 	return camera_cache
 
 /obj/machinery/computer/security/tgui_data()
@@ -346,6 +346,20 @@
 	name = "pilot camera monitor"
 	desc = "Console used by fighter pilot to monitor the battlefield."
 	network = list("shiv")
+
+/obj/machinery/computer/security/sulaco
+	name = "Sulaco camera monitor"
+	desc = "Used to access the various cameras on the sulaco."
+	network = list("Sulaco")
+
+/obj/machinery/computer/security/sulaco/marines
+	name = "marines head mounted camera monitor"
+	desc = "Used to access the built-in cameras in helmets."
+	network = list("Marines")
+	icon_state = "explosive"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
+	light_color = "#a91515"
 
 /obj/machinery/computer/security/abductor_ag
 	name = "agent observation monitor"
