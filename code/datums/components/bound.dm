@@ -143,14 +143,22 @@
 	if(dist == -1 && newLoc == T)
 		dist = 0
 	if(dist < min_dist || dist > max_dist)
-		SEND_SIGNAL(bound_to, COMSIG_SHOW_RADIUS, parent)
-		if(hide_radius_timer)
-			deltimer(hide_radius_timer)
-		hide_radius_timer = addtimer(CALLBACK(src, .proc/radius_hide), 20, TIMER_STOPPABLE)
+		try_show_radius()
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	return NONE
 
-/datum/component/bounded/proc/radius_hide()
+/datum/component/bounded/proc/try_show_radius()
+	if(!ismob(parent))
+		return
+
+	var/mob/M = parent
+	if(M.client)
+		SEND_SIGNAL(bound_to, COMSIG_SHOW_RADIUS, parent)
+		if(hide_radius_timer)
+			deltimer(hide_radius_timer)
+		hide_radius_timer = addtimer(CALLBACK(src, .proc/hide_radius), 20, TIMER_STOPPABLE)
+
+/datum/component/bounded/proc/hide_radius()
 	SEND_SIGNAL(bound_to, COMSIG_HIDE_RADIUS)
 
 /datum/component/bounded/proc/on_bound_destroyed(force, qdel_hint)
