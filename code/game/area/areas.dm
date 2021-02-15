@@ -142,9 +142,9 @@ var/list/ghostteleportlocs = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
 				if(state == 1)
-					C.network.Remove("Power Alarms")
+					C.remove_network("Power Alarms")
 				else
-					C.network.Add("Power Alarms")
+					C.add_network("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -174,7 +174,7 @@ var/list/ghostteleportlocs = list()
 
 		if (danger_level < 2 && atmosalm >= 2)
 			for(var/obj/machinery/camera/C in src)
-				C.network.Remove("Atmosphere Alarms")
+				C.remove_network("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -186,7 +186,7 @@ var/list/ghostteleportlocs = list()
 			var/list/cameras = list()
 			for(var/obj/machinery/camera/C in src)
 				cameras += C
-				C.network.Add("Atmosphere Alarms")
+				C.add_network("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -238,7 +238,7 @@ var/list/ghostteleportlocs = list()
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras.Add(C)
-			C.network.Add("Fire Alarms")
+			C.add_network("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer.client)
 				continue
@@ -257,7 +257,7 @@ var/list/ghostteleportlocs = list()
 				else if(D.density)
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 		for (var/obj/machinery/camera/C in src)
-			C.network.Remove("Fire Alarms")
+			C.remove_network("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer.client)
 				continue
