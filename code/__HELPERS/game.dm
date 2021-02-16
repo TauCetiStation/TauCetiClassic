@@ -24,7 +24,13 @@
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
-	return 0
+	return null
+
+/proc/get_area_type(type) //get area by its name
+	for(var/area/A in all_areas)
+		if(A.type == type)
+			return A
+	return null
 
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
