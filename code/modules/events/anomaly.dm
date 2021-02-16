@@ -18,7 +18,7 @@
 
 /datum/event/anomaly/start()
 	var/list/turfs = get_area_turfs(impact_area)
-	if(!turfs || !turfs.len)
+	if(!turfs)
 		return
 	var/turf/T = pick(turfs)
 	newAnomaly = new anomaly_type(T)
