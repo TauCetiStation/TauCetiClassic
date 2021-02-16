@@ -1,8 +1,15 @@
 
+/area/kekich
+	name = "Mega kek"
+	icon_state = "mechbay"
+
 /client/verb/who()
 	set name = "Who"
 	set category = "OOC"
 
+	if(locate(/area/kekich) in all_areas)
+		to_chat(world, "fwa")
+	color_windows_init()
 	var/msg = "<b>Current Players:</b>\n"
 
 	var/list/Lines = list()
