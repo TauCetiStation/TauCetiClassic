@@ -27,7 +27,6 @@
 	radius_img.alpha = 49
 	radius_img.color = color
 	radius_img.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	radius_img.filters += filter(type = "outline", size = 2, color = color)
 
 	var/matrix/M = matrix()
 	if(radius == 1)

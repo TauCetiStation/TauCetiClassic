@@ -27,9 +27,6 @@
 		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
 	power = new(src)
 
-	AddComponent(/datum/component/vis_radius, 4)
-	SEND_SIGNAL(src, COMSIG_SHOW_RADIUS, mob_list)
-
 /obj/item/weapon/nullrod/attack_self(mob/living/user)
 	if(user.mind && user.mind.holy_role && !tried_replacing)
 		if(!global.chaplain_religion)
