@@ -1,10 +1,11 @@
 /datum/component/vis_radius
+	// This is an invisible object that will follow bounded object
 	var/obj/effect/overlay/radius_obj
 	var/image/radius_img
 
 /datum/component/vis_radius/Initialize(radius, icon_state = "radius", color = COLOR_RED)
 	RegisterSignal(parent, COMSIG_SHOW_RADIUS, .proc/show_radius)
-	RegisterSignal(parent, list(COMSIG_HIDE_RADIUS, COMSIG_COMPONENT_REMOVING), .proc/hide_radius)
+	RegisterSignal(parent, COMSIG_HIDE_RADIUS, .proc/hide_radius)
 
 	setup_radius(radius, icon_state, color)
 
@@ -39,4 +40,4 @@
 	radius_obj.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/group, "visible_radius", radius_img, mob_or_mobs)
 
 /datum/component/vis_radius/proc/hide_radius()
-	radius_obj.remove_alt_appearance("visible_radius")
+	radius_obj?.remove_alt_appearance("visible_radius")

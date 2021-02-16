@@ -22,6 +22,9 @@
 	var/min_dist = 0
 	var/max_dist = 0
 
+	// Does the component have a visible radius?
+	var/vis_radius = FALSE
+
 	// This callback can be used to customize how out-of-bounds situations are
 	// resolved. Return TRUE if the situation was resolved.
 	// This component will pass itself into it.
@@ -29,10 +32,11 @@
 	// Time to hide visible raduis
 	var/hide_radius_timer
 
-/datum/component/bounded/Initialize(atom/_bound_to, _min_dist, _max_dist, datum/callback/_resolve_callback, tips = TRUE, vis_radius = TRUE)
+/datum/component/bounded/Initialize(atom/_bound_to, _min_dist, _max_dist, datum/callback/_resolve_callback, tips = TRUE, _vis_radius = TRUE)
 	bound_to = _bound_to
 	min_dist = _min_dist
 	max_dist = _max_dist
+	vis_radius = _vis_radius
 
 	resolve_callback = _resolve_callback
 
@@ -60,7 +64,9 @@
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(BOUNDED_TIP))
 	SEND_SIGNAL(bound_to, COMSIG_TIPS_REMOVE, list(BOUNDS_TIP(src)))
 
-	deltimer(hide_radius_timer)
+	if(vis_radius)
+		qdel(bound_to.GetComponent(/datum/component/vis_radius))
+		deltimer(hide_radius_timer)
 
 	bound_to = null
 	return ..()
