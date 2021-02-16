@@ -26,7 +26,7 @@
 	minimum_distance = 3
 	speed = 8
 	projectiletype = /obj/item/projectile/beam/xray
-	projectilesound = 'sound/weapons/guns/fire_pulse.ogg'
+	projectilesound = 'sound/weapons/guns/gunpulse_laser3.ogg'
 	destroy_surroundings = FALSE
 	faction = "malf_drone"
 	animalistic = FALSE
