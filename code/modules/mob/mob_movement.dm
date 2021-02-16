@@ -300,18 +300,26 @@
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
+	if(camera_move(direct))
+		return FALSE
 	return Move(n, direct)
 
-/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
-	//Camera control: arrow keys.
-	if (machine && istype(machine, /obj/machinery/computer/security))
+/mob/proc/camera_move(Dir = 0)
+	if(stat || restrained())
+		return FALSE
+
+	if(machine && istype(machine, /obj/machinery/computer/security))
+		if(!Adjacent(machine) || !machine.is_interactable())
+			return FALSE
 		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.current)
+		var/turf/T = get_turf(console.active_camera)
 		for(var/i;i<10;i++)
 			T = get_step(T, Dir)
 		console.jump_on_click(src, T)
-		return FALSE
+		return TRUE
+	return FALSE
 
+/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (pinned.len)
 		return FALSE
 
