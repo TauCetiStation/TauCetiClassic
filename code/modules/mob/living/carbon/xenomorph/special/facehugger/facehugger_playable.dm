@@ -1,9 +1,8 @@
-#define UPGRADE_TAIL_TIMER	100
-
 //Grab levels
-#define GRAB_UPGRADING	5
-#define GRAB_EMBRYO		6
-#define GRAB_IMPREGNATE	7
+#define GRAB_LEAP		1
+#define GRAB_UPGRADING	2
+#define GRAB_EMBRYO		3
+#define GRAB_IMPREGNATE	4
 
 #define BITE_COOLDOWN 20
 
@@ -356,9 +355,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 	name = "grab"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	var/obj/screen/fh_grab/hud = null
+	var/obj/screen/cooldown_overlay/cooldown = null
 	var/mob/affecting = null	//target
 	var/mob/assailant = null	//facehagger
-	var/state = GRAB_PASSIVE
+	var/state = GRAB_LEAP
 
 	layer = 21
 	abstract = 1
@@ -370,13 +370,14 @@ When we finish, facehugger's player will be transfered inside embryo.
 	. = ..()
 	assailant = loc
 	affecting = victim
-	assailant.SetNextMove(CLICK_CD_ACTION)
 
 	hud = new /obj/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
+	cooldown = new /obj/screen/cooldown_overlay(src, hud)
+	cooldown.start_cooldown(2)
 
 	assailant.put_in_active_hand(src)
 	affecting.grabbed_by += src
@@ -386,6 +387,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 /obj/item/weapon/fh_grab/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(hud)
+	QDEL_NULL(cooldown)
 	affecting = null
 	assailant = null
 	return ..()
@@ -416,10 +418,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 		affecting.hand = 1
 		affecting.drop_item()
 		affecting.hand = h
-		if(assailant.next_move < world.time)
+		if(!cooldown.on_cooldown)
 			state = GRAB_EMBRYO
-			hud.icon_state = "grab/impreg"
-			hud.name = "impregnate"
 
 	if(state > GRAB_EMBRYO)
 		affecting.Paralyse(MAX_IMPREGNATION_TIME / 6)
@@ -435,6 +435,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 			hugger.host_is_dead()
 		qdel(src)
 		return
+	if(cooldown.on_cooldown)
+		return
 	if(state == GRAB_UPGRADING || state == GRAB_IMPREGNATE)
 		return
 	if(assailant.next_move > world.time)
@@ -442,7 +444,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(assailant.lying)
 		return
 	if(istype(assailant.loc, /turf))
-		state = GRAB_PASSIVE
+		state = GRAB_LEAP
 
 	if(get_dist(assailant, affecting) > 1)
 		to_chat(assailant, "Too far.")
@@ -471,14 +473,13 @@ When we finish, facehugger's player will be transfered inside embryo.
 		qdel(src)
 		return
 
-	assailant.SetNextMove(CLICK_CD_GRAB)
-
 	switch(state)
-		if(GRAB_PASSIVE)
+		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
+			cooldown.start_cooldown(3)
 			state = GRAB_UPGRADING
-			hud.icon_state = "cooldown"
-			hud.name = "await"
+			hud.icon_state = "grab/impreg"
+			hud.name = "impregnate"
 			FH.leap_at_face(affecting)
 		if(GRAB_EMBRYO)
 			assailant.visible_message("<span class='danger'>extends its proboscis deep inside [affecting]'s mouth!</span>")
@@ -521,7 +522,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	return TRUE
 
-
 /obj/item/weapon/fh_grab/attack(mob/M, mob/user)
 	if(!affecting)
 		return
@@ -530,8 +530,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		s_click(hud)
 		return
 
-#undef UPGRADE_TAIL_TIMER
-
+#undef GRAB_LEAP
 #undef GRAB_UPGRADING
 #undef GRAB_EMBRYO
 #undef GRAB_IMPREGNATE
