@@ -177,9 +177,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
 
-/area/station/hallway/secondary/entry
+/area/station/hallway/secondary/arrival
 	name = "Arrival Shuttle Hallway"
+	icon_state = "arrival"
+
+/area/station/hallway/secondary/entry
+	name = "Entry Shuttles Hallway"
 	icon_state = "entry"
+
+/area/station/hallway/secondary/mine_sci_shuttle
+	name = "Asteroid Shuttle Hallway"
+	icon_state = "mine_sci_shuttle"
 
 /area/station/hallway/secondary/Podbay
 	name = "Pod bay"
