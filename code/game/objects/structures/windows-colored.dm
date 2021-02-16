@@ -1,10 +1,8 @@
-var/global/wcCommon
-
 //for all window/New and door/window/New
 /proc/color_windows(area = "common")
-	var/list/common = list("#379963", "#0d8395", "#58b5c3", "#49e46e", "#8fcf44", "#cc99ff", "#ff6600", "#3399ff", "#969696", "#ffffff")
+	var/static/wcCommon
 	if(!wcCommon)
-		wcCommon = pick(common)
+		wcCommon = pick(list("#379963", "#0d8395", "#58b5c3", "#49e46e", "#8fcf44", "#cc99ff", "#ff6600", "#3399ff", "#969696", "#ffffff"))
 	return wcCommon
 
 /proc/painting_objects(list/possible_areas, color)
