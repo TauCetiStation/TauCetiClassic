@@ -110,7 +110,7 @@
 	speak_chance = initial(speak_chance)
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/death()
-	visible_message("<span class='notice'>[bicon(src)] [src] разваливается, оставляя после себя некоторые свои комплектующие...</span>")
+	visible_message("<span class='notice'>[bicon(src)] [src] разваливается на части.</span>")
 	..()
 	qdel(src)
 
