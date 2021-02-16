@@ -9,14 +9,12 @@
 		announcement.play(impact_area)
 
 /datum/event/anomaly/setup()
-	while(TRUE)
-		impact_area = findEventArea()
-		if(!impact_area)
-			continue
-		var/list/turf_test = get_area_turfs(impact_area)
-		if(!turf_test || !turf_test.len)
-			continue
-		break
+	impact_area = findEventArea()
+	if(!impact_area)
+		CRASH("No valid areas for anomaly found.")
+	var/list/turf_test = get_area_turfs(impact_area)
+	if(!turf_test)
+		CRASH("Anomaly : No valid turfs found for [impact_area] - [impact_area.type]")
 
 /datum/event/anomaly/start()
 	var/list/turfs = get_area_turfs(impact_area)
