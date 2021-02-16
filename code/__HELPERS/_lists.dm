@@ -715,6 +715,15 @@
 					L[T] = TRUE
 		return L
 
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
+
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -760,22 +769,27 @@
 
 	return TRUE
 
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
+
 /proc/is_associative_list(list/L)
-    var/index = 0
-    for(var/key in L)
-        index++
+	var/index = 0
+	for(var/key in L)
+		index++
 
-        var/value = null
-        // if key not num we can check L[key] without fear of "out of bound"
-        // else compare to index to prevent runtime error in e.g. list(5, 1)
-        // L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
-        if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
-            value = L[key]
+		var/value = null
+		// if key not num we can check L[key] without fear of "out of bound"
+		// else compare to index to prevent runtime error in e.g. list(5, 1)
+		// L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
+		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+			value = L[key]
 
-        if(!isnull(value))
-            return TRUE
+		if(!isnull(value))
+			return TRUE
 
-    return FALSE
+	return FALSE
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null

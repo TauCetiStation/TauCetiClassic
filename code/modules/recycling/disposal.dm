@@ -285,6 +285,9 @@
 
 	return data
 
+/obj/machinery/disposal/tgui_state(mob/user)
+	return global.physical_state
+
 /obj/machinery/disposal/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return
