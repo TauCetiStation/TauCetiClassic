@@ -18,14 +18,6 @@ var/global/list/active_alternate_appearances = list()
 
 /atom/proc/update_all_alt_apperance()
 	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA)
-			continue
-		AA.update_alt_appearance(src)
-
-/atom/proc/update_alt_appearance_by_type(type)
-	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA || !istype(AA, type))
-			continue
 		AA.update_alt_appearance(src)
 
 /**
