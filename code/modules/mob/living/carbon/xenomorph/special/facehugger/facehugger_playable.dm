@@ -142,10 +142,7 @@
 		icon_state = "facehugger"
 
 /mob/living/carbon/xenomorph/facehugger/update_hud()
-	//TODO
-	if (client)
-//		if(other)	client.screen |= hud_used.other		//Not used
-//		else		client.screen -= hud_used.other		//Not used
+	if(client)
 		client.screen |= contents
 
 /mob/living/carbon/xenomorph/facehugger/can_pickup(obj/O)
@@ -363,12 +360,13 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.name = "Leap at face"
 	hud.master = src
 	cooldown = new /obj/screen/cooldown_overlay(src, hud)
-	cooldown.start_cooldown(2)
+	cooldown.start_cooldown(3)
 
 	assailant.put_in_active_hand(src)
 	affecting.grabbed_by += src
 	synch()
 	affecting.LAssailant = assailant
+	assailant.update_hud()
 
 /obj/item/weapon/fh_grab/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -421,11 +419,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 			hugger.host_is_dead()
 		qdel(src)
 		return
-	if(cooldown.on_cooldown)
-		return
-	if(state == GRAB_UPGRADING || state == GRAB_IMPREGNATE)
-		return
-	if(assailant.next_move > world.time)
+	if(cooldown.on_cooldown || state == GRAB_IMPREGNATE)
 		return
 	if(assailant.lying)
 		return
@@ -462,7 +456,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
-			cooldown.start_cooldown(3)
+			cooldown.start_cooldown(5)
 			state = GRAB_UPGRADING
 			hud.icon_state = "grab/impreg"
 			hud.name = "impregnate"

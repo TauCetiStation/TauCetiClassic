@@ -701,10 +701,8 @@
 	name = ""
 	icon_state = "cooldown"
 	pixel_y = 4
-	maptext_y = 1
-	maptext_x = 1
-	mouse_opacity = 0
-	appearance_flags = RESET_COLOR | LONG_GLIDE | PIXEL_SCALE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = RESET_COLOR | PIXEL_SCALE | RESET_TRANSFORM | KEEP_TOGETHER | RESET_ALPHA
 	vis_flags = VIS_INHERIT_ID
 	var/cooldown_time = 0
 	var/on_cooldown = FALSE
@@ -715,30 +713,27 @@
 	parent_button = button
 
 /obj/screen/cooldown_overlay/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	parent_button.color = rgb(255,255,255,255)
-	parent_button.vis_contents -= src
+	stop_cooldown()
 	return ..()
 
 /obj/screen/cooldown_overlay/proc/start_cooldown(delay)
 	on_cooldown = TRUE
-	parent_button.color = rgb(128, 0, 0, 128)
+	parent_button.color = "#8000007c"
 	parent_button.vis_contents += src
-	cooldown_time = delay
-	set_maptext(delay)
-	START_PROCESSING(SSobj, src)
+	if(delay)
+		cooldown_time = delay
+	set_maptext(cooldown_time)
+	if(!cooldown_time)
+		stop_cooldown()
+	else
+		cooldown_time--
+		addtimer(CALLBACK(src, .proc/start_cooldown), 1 SECOND)
 
 /obj/screen/cooldown_overlay/proc/stop_cooldown()
-	STOP_PROCESSING(SSobj, src)
-	on_cooldown =FALSE
-	parent_button.color = rgb(255,255,255,255)
+	on_cooldown = FALSE
+	cooldown_time = 0
+	parent_button.color = "#ffffffff"
 	parent_button.vis_contents -= src
 
-/obj/screen/cooldown_overlay/process()
-	cooldown_time--
-	set_maptext(cooldown_time)
-	if(cooldown_time < 1)
-		stop_cooldown()
-
 /obj/screen/cooldown_overlay/proc/set_maptext(time)
-	maptext = {"<div style="font-size:6pt;font:'Arial Black';text-align:center;">[time]</div>"}
+	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
