@@ -723,11 +723,15 @@
 	if(delay)
 		cooldown_time = delay
 	set_maptext(cooldown_time)
-	if(!cooldown_time)
+	addtimer(CALLBACK(src, .proc/tick), 1 SECOND)
+
+/obj/screen/cooldown_overlay/proc/tick()
+	if(cooldown_time == 0)
 		stop_cooldown()
-	else
-		cooldown_time--
-		addtimer(CALLBACK(src, .proc/start_cooldown), 1 SECOND)
+		return
+	cooldown_time--
+	set_maptext(cooldown_time)
+	addtimer(CALLBACK(src, .proc/tick), 1 SECOND)
 
 /obj/screen/cooldown_overlay/proc/stop_cooldown()
 	on_cooldown = FALSE
