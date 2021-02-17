@@ -422,8 +422,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
 		var/obj/item/organ/external/stump/S = new(null)
-		S.set_owner(owner, src)
-		S.insert_organ(owner)
+		S.insert_organ(owner, null, src)
 	owner.updatehealth()
 
 	if(!should_delete)

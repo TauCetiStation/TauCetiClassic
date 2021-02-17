@@ -160,7 +160,6 @@
 			target.key = B.brainmob.key
 		target.dna = B.brainmob.dna
 	var/obj/item/organ/internal/brain/brain = new(null)
-	brain.set_owner(target)
 	brain.insert_organ(target)
 	qdel(tool)
 

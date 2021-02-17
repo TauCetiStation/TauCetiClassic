@@ -163,13 +163,11 @@
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
 		var/obj/item/organ/external/O = new path(null)
-		O.set_owner(H)
 		O.insert_organ(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
 		var/obj/item/organ/internal/O = new path(null)
-		O.set_owner(H)
 		O.insert_organ(H)
 
 	if(flags[IS_SYNTHETIC])

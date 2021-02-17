@@ -28,6 +28,8 @@
 	owner = H
 
 /obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
+	set_owner(H)
+
 	STOP_PROCESSING(SSobj, src)
 
 	if(parent_bodypart)
