@@ -377,10 +377,10 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if(status == "amputated" && BP)
 			qdel(BP)
-		else if(status == "cyborg" && BP)
-			var/zone = BP.body_zone
-			qdel(BP)
-			switch(zone)
+		else if(status == "cyborg")
+			if(BP)
+				qdel(BP)
+			switch(name)
 				if(BP_L_ARM)
 					var/obj/item/organ/external/l_arm/robot/R = new(null)
 					R.set_owner(character)
