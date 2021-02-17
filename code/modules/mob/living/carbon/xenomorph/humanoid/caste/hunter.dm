@@ -1,8 +1,8 @@
 /mob/living/carbon/xenomorph/humanoid/hunter
 	name = "alien hunter"
 	caste = "h"
-	maxHealth = 220
-	health = 220
+	maxHealth = 180
+	health = 180
 	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alienh_s"	//default invisibility
@@ -28,27 +28,6 @@
 		hud_used.move_intent.icon_state = "running"
 		m_intent = MOVE_INTENT_RUN	//get out of invisibility if plasma runs out
 	..()
-
-/mob/living/carbon/xenomorph/humanoid/hunter/handle_hud_icons_health()
-	if (healths)
-		if (stat != DEAD)
-			switch(health)
-				if(150 to INFINITY)
-					healths.icon_state = "health0"
-				if(120 to 150)
-					healths.icon_state = "health1"
-				if(90 to 120)
-					healths.icon_state = "health2"
-				if(60 to 90)
-					healths.icon_state = "health3"
-				if(30 to 60)
-					healths.icon_state = "health4"
-				if(0 to 30)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
 
 //Hunter verbs
 
