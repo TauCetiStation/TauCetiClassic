@@ -9,9 +9,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/melee/cultblade/proc/only_cultists(datum/source, mob/M)
-	if(iscultist(M))
-		return TRUE
-	return FALSE
+	return iscultist(M)
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(iscultist(user))

@@ -70,7 +70,7 @@
 	var/datum/religion_rites/standing/rite = parent
 
 	var/list/L = item_sacrifice(AOG, sacrifice_type)
-	if(L.len == 0)
+	if(!L.len)
 		to_chat(user, "<span class='warning'>You need more items for sacrifice to perform [rite.name]!</span>")
 		clear_lists()
 		return COMPONENT_CHECK_FAILED
