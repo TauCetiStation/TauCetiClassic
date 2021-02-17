@@ -7,9 +7,9 @@
 
 /proc/painting_objects(list/possible_areas, color)
 	for(var/type in possible_areas)
-		for(var/obj/structure/window/W in get_area_type(type))
+		for(var/obj/structure/window/W in get_area_by_type(type))
 			W.color = color
-		for(var/obj/machinery/door/window/D in get_area_type(type))
+		for(var/obj/machinery/door/window/D in get_area_by_type(type))
 			D.color = color
 
 //replaces color in some area

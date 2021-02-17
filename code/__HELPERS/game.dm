@@ -26,11 +26,8 @@
 			return A
 	return null
 
-/proc/get_area_type(type) //get area by its name
-	var/area/A = locate(type) in all_areas
-	if(A)
-		return A
-	return null
+/proc/get_area_by_type(type) //get area by its type
+	return locate(type) in all_areas
 
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
