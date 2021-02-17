@@ -43,7 +43,7 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Нар-си восстал в [A.name]. По всей станции скоро появятся его порталы, нажмимая на них, вы можете стать каким-то конструктом.")
+		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.")
 	INVOKE_ASYNC(src, .proc/begin_the_end)
 
 /obj/singularity/narsie/large/proc/begin_the_end()
