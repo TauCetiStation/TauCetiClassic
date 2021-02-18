@@ -12,19 +12,18 @@
 	locked = TRUE
 	var/attempts = 3
 	var/successful_numbers = 0
-	var/list/possible_numbers = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
 	var/list/buttons_pressed = list(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
 	var/list/code = list()
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
+	var/list/possible_numbers = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
 	for (var/i in 1 to 3) // generate code
 		code += pick_n_take(possible_numbers)
 
 /obj/structure/closet/crate/secure/loot/proc/GetReward(loot_quality)
 	visible_message("<span class='notice'>Издавая звук, ящик открывается!</span>")
 	locked = FALSE
-	cut_overlays()
 	add_overlay(greenlight)
 	switch(loot_quality)
 		if(GOOD_LOOT)

@@ -245,6 +245,11 @@
 	var/target = the_target
 	visible_message("<span class='warning'><b>[src]</b> [ranged_message] at [target]!</span>")
 
+	INVOKE_ASYNC(src, .proc/start_shoot, target)
+
+	ranged_cooldown = ranged_cooldown_cap
+
+/mob/living/simple_animal/hostile/proc/start_shoot(the_target)
 	var/tturf
 	for(var/i in 1 to amount_shoot)
 		tturf = get_turf(target) // need for refresh target location between shoots
@@ -252,8 +257,6 @@
 		if(casingtype)
 			new casingtype(get_turf(src))
 		sleep(4)
-
-	ranged_cooldown = ranged_cooldown_cap
 
 /mob/living/simple_animal/hostile/proc/Shoot(target, start, user, bullet = 0)
 	if(target == start)

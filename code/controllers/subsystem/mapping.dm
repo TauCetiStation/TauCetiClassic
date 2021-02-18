@@ -51,8 +51,6 @@ SUBSYSTEM_DEF(mapping)
 	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
 		make_mining_asteroid_secret(3)
 
-#undef MAX_MINING_SECRET_ROOM
-
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
 		var/datum/ore_distribution/distro = new
@@ -145,8 +143,6 @@ SUBSYSTEM_DEF(mapping)
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
-
-#undef SPACE_STRUCTURES_AMOUNT
 
 #define INIT_ANNOUNCE(X) info(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
@@ -258,3 +254,6 @@ SUBSYSTEM_DEF(mapping)
 
 	next_map_config = VM
 	return TRUE
+
+#undef SPACE_STRUCTURES_AMOUNT
+#undef MAX_MINING_SECRET_ROOM
