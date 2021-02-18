@@ -16960,11 +16960,7 @@
 	},
 /area/centcom/control)
 "aLC" = (
-/obj/structure/closet/secure_closet/CMO,
-/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
-/obj/item/weapon/gun/energy/taser/stunrevolver{
-	name = "Skippy"
-	},
+/mob/living/simple_animal/cat/Runtime,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -16988,6 +16984,17 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
+"aLE" = (
+/obj/structure/closet/secure_closet/CMO,
+/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
+/obj/item/weapon/gun/energy/taser/stunrevolver{
+	name = "Glamor"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/space)
 "aLF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Teleport Room";
@@ -48119,7 +48126,7 @@ aKv
 aKM
 aKU
 aLt
-aKU
+aLC
 apA
 aaM
 aaM
@@ -48633,7 +48640,7 @@ apA
 aKV
 aLa
 aLv
-aLC
+aLE
 apA
 aaM
 aaM

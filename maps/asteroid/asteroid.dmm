@@ -1365,20 +1365,20 @@
 	dir = 9;
 	icon_state = "pwall"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "df" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
 	icon_state = "pwall"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "dg" = (
 /turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	dir = 10;
 	icon_state = "pwall"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "dh" = (
 /obj/item/stack/rods,
 /turf/simulated/floor/airless{
@@ -1648,7 +1648,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "dF" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -1656,19 +1656,19 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "dG" = (
 /obj/structure/alien/weeds,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "dH" = (
 /obj/machinery/door/airlock/hatch,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "dI" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -1917,14 +1917,14 @@
 	dir = 5;
 	icon_state = "pwall"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "eg" = (
 /turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "pwall"
 	},
-/area/shuttle/alien/mine)
+/area/asteroid/mine/abandoned)
 "eh" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor/airless{
