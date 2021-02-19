@@ -595,7 +595,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/datum/dirt_cover/doodle_color = new /datum/dirt_cover(pick(subtypesof(/datum/dirt_cover)))
 
 	var/max_length = 50
-	var/message = sanitize(input(src, "Напишите сообщение. Оно должно быть более 50 символов.", "Писание кровью", ""))
+	var/message = sanitize(input(src, "Напишите сообщение. Оно не должно быть более 50 символов.", "Писание кровью", ""))
 
 	if(message)
 		var/turf/simulated/T = get_turf(src)
