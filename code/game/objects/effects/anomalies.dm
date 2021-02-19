@@ -292,7 +292,7 @@
 				70; /mob/living/simple_animal/construct/builder,\
 				1;  /mob/living/simple_animal/construct/behemoth)
 		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
-		spawns -= 1
+		spawns--
 
 	if(spawns == 0)
 		disable()
