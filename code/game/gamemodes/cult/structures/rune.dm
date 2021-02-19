@@ -66,7 +66,7 @@
 		qdel(src)
 		return
 	if(istype(I, /obj/item/weapon/nullrod) && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='notice'>Вы разрушаете мерзкую магию мертвящем полем [I].</span>")
+		to_chat(user, "<span class='notice'>Вы разрушаете мерзкую магию силой [I].</span>")
 		qdel(src)
 		return
 

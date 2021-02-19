@@ -76,7 +76,7 @@
 	return ..()
 
 /datum/game_mode/cult/proc/cultist_setup(datum/mind/cult_mind)
-	religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST)
+	religion.add_member(cult_mind.current, CULT_ROLE_HIGHPRIEST)
 	add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
 
 	equip_cultist(cult_mind.current)
@@ -88,7 +88,7 @@
 		to_chat(cult_mind.current, "<span class ='blue'>Не нарушайте правила и по любому вопросу пишите в adminhelp.</span>")
 
 /datum/game_mode/cult/proc/leader_setup(datum/mind/leader)
-	religion.add_member(leader.current, HOLY_ROLE_CULTMASTER)
+	religion.add_member(leader.current, CULT_ROLE_MASTER)
 	add_antag_hud(antag_hud_type, leader_hud_name, leader.current)
 
 	equip_cultist_leader(leader.current)
@@ -149,7 +149,7 @@
 		create_religion(/datum/religion/cult)
 
 	if(global.cult_religion.mode.is_convertable_to_cult(cult_mind))
-		if(global.cult_religion.add_member(cult_mind.current, HOLY_ROLE_HIGHPRIEST))
+		if(global.cult_religion.add_member(cult_mind.current, CULT_ROLE_HIGHPRIEST))
 			cult_mind.current.Paralyse(5)
 			add_antag_hud(ANTAG_HUD_CULT, "hudcultist", cult_mind.current)
 			return TRUE
