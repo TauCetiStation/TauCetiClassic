@@ -122,6 +122,9 @@
 		data["holding"] = null
 	return data
 
+/obj/machinery/portable_atmospherics/powered/scrubber/tgui_state(mob/user)
+	return global.physical_state
+
 /obj/machinery/portable_atmospherics/powered/scrubber/tgui_act(action, params)
 	. = ..()
 	if(.)

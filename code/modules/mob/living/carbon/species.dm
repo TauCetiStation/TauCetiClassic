@@ -141,6 +141,9 @@
 	// What movesets do these species grant.
 	var/list/moveset_types
 
+	// Bubble can be changed depending on species
+	var/typing_indicator_type = "default"
+
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()

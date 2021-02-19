@@ -5,8 +5,6 @@
 #define MAIN_SCREEN 0
 #define ERROR_SCREEN 1
 
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // Brig Door control displays.
 //  Description: This is a controls the timer for the brig doors, displays the timer on itself and

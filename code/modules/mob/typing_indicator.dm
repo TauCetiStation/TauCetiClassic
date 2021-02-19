@@ -1,24 +1,16 @@
-/mob/var/typing = FALSE
-
-/mob/var/image/typing_indicator
-
-/mob/proc/set_typing_indicator(state, indi_icon = "typing")
+/mob/proc/set_typing_indicator(state)
 	if(!typing_indicator)
-		typing_indicator = image('icons/mob/talk.dmi', indi_icon)
-		typing_indicator.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		typing_indicator.layer = MOB_LAYER + 1
+		typing_indicator = new(null, "[typing_indicator_type]0")
 
-	if(typing_indicator.icon_state != indi_icon)
-		if(typing && state)
-			cut_overlay(typing_indicator)
-		typing_indicator.icon_state = indi_icon
+	if(typing_indicator.icon_state != "[typing_indicator_type]0")
+		typing_indicator.icon_state = "[typing_indicator_type]0"
 
 	if(state)
 		if(client && !stat)
-			add_overlay(typing_indicator)
+			vis_contents += typing_indicator
 			typing = TRUE
 	else
-		cut_overlay(typing_indicator)
+		vis_contents -= typing_indicator
 		typing = FALSE
 
 /mob/verb/say_wrapper()

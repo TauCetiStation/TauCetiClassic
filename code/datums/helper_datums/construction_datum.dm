@@ -4,7 +4,7 @@
 /datum/construction
 	var/list/steps
 	var/atom/holder
-	var/result
+	var/result_type
 	var/list/steps_desc
 
 /datum/construction/New(atom)
@@ -56,8 +56,8 @@
 	return 0
 
 /datum/construction/proc/spawn_result()
-	if(result)
-		new result(get_turf(holder))
+	if(result_type)
+		new result_type(get_turf(holder))
 		qdel(holder)
 	return
 

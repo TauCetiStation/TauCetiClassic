@@ -12,7 +12,7 @@
 	var/datum/dirt_cover/dirt_overlay  //style reasons
 
 	var/last_bumped = 0
-	var/pass_flags = 0
+	var/pass_flags = NONE
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 	var/simulated = 1 //filter for actions - used by lighting overlays
@@ -78,6 +78,8 @@
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -298,6 +300,8 @@
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
+	if(.)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 /atom/proc/relaymove()
 	return
@@ -306,6 +310,9 @@
 	return
 
 /atom/proc/blob_act()
+	return
+
+/atom/proc/airlock_crush_act()
 	return
 
 /atom/proc/fire_act()

@@ -373,6 +373,10 @@ table {
 	width:100%;
 }
 
+table.collapsing {
+	width:auto
+}
+
 th {
 	text-align: left;
 }
