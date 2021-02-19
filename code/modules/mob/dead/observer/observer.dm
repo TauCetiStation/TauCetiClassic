@@ -581,7 +581,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if (usr != src)
-		return TRUE //something is terribly wrong
+		return //something is terribly wrong
 
 	var/ghosts_can_write
 	if(global.cult_religion)
