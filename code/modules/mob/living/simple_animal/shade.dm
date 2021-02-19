@@ -200,7 +200,7 @@
 		to_chat(usr, "Эта зона под вашим контролем.")
 	else if(isnull(A.religion))
 		to_chat(usr, "Нейтральная зона.")
-	else if(!isnull(A.religion) && A.religion != usr.my_religion)
+	else if(A.religion != usr.my_religion)
 		to_chat(usr, "Зона захвачена кем-то другим.")
 
 /mob/living/simple_animal/shade/god/resist()
