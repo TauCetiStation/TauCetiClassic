@@ -219,7 +219,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["religion"]    << religion
 
 	if(current_version < 32)
-		popup(parent, "Ваш персонаж ([real_name]) был несовместим изменёнными частями тела. У этого персонажа части тела восстановлены до обычного состояния.", "Preferences")
+		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
 		organ_data = list()
 		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES))
 			organ_data[i] = null
