@@ -87,7 +87,7 @@
 /datum/religion/cult/New()
 	..()
 	// Init anomalys
-	var/area/area = locate(/area/custom/cult)
+	var/area/area = get_area_by_type(/area/custom/cult)
 	for(var/i in 1 to max_spawned_anomalies)
 		var/turf/T = get_turf(pick(area.contents))
 		var/anom = pick(strange_anomalies)
@@ -99,9 +99,8 @@
 		coord_started_anomalies += C
 	next_anomaly = world.time + spawn_anomaly_cd
 
-	var/area/A = locate(/area/custom/cult)
-	RegisterSignal(A, list(COMSIG_AREA_ENTERED), .proc/area_entered)
-	RegisterSignal(A, list(COMSIG_AREA_EXITED), .proc/area_exited)
+	RegisterSignal(area, list(COMSIG_AREA_ENTERED), .proc/area_entered)
+	RegisterSignal(area, list(COMSIG_AREA_EXITED), .proc/area_exited)
 
 	START_PROCESSING(SSreligion, src)
 
