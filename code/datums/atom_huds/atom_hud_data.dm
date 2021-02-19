@@ -368,6 +368,4 @@
 ~~~~~~~~~~~~~*/
 /mob/proc/set_holy_hud()
 	var/image/holder = hud_list[HOLY_HUD]
-	holder.icon_state = ""
-	if(my_religion)
-		holder.icon_state = my_religion.symbol_icon_state
+	holder.icon_state = my_religion?.symbol_icon_state
