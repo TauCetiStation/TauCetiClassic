@@ -279,7 +279,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(data_hud)
 		data_hud = !data_hud
-		show_data_huds()
+		remove_data_huds()
 		to_chat(src, "<span class='info'><B>HUDs Disabled</B></span>")
 	else
 		data_hud = !data_hud
