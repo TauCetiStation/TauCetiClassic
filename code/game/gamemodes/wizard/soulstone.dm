@@ -1,3 +1,7 @@
+#define SOULSTONE_VICTIM    "victim"
+#define SOULSTONE_CONSTRUCT "construct"
+#define SOULSTONE_SHADE     "shade"
+
 /obj/item/device/soulstone
 	name = "Soul Stone Shard"
 	icon = 'icons/obj/wizard.dmi'
@@ -36,7 +40,7 @@
 
 	H.log_combat(user, "soul-captured via [name]")
 
-	transfer_soul("VICTIM", H, user)
+	transfer_soul(SOULSTONE_VICTIM, H, user)
 	return
 
 ///////////////////Options for using captured souls///////////////////////////////////////
@@ -79,11 +83,11 @@
 
 /obj/item/device/soulstone/proc/transfer_soul(choice, target, mob/user)
 	switch(choice)
-		if("VICTIM")
+		if(SOULSTONE_VICTIM)
 			capture_victim(target, user)
-		if("SHADE")
+		if(SOULSTONE_SHADE)
 			capture_shade(target, user)
-		if("CONSTRUCT")
+		if(SOULSTONE_CONSTRUCT)
 			if(!class_images)
 				gen_images()
 			create_construct(target, user)
@@ -194,4 +198,4 @@
 /obj/structure/constructshell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/soulstone))
 		var/obj/item/device/soulstone/S = I
-		S.transfer_soul("CONSTRUCT", src, user)
+		S.transfer_soul(SOULSTONE_CONSTRUCT, src, user)

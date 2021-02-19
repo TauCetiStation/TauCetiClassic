@@ -207,7 +207,7 @@
 			var/obj/item/device/soulstone/S = I
 			if(S.imprinted == "empty")
 				S.imprinted = brainmob.name
-				S.transfer_soul("SHADE", brainmob, user)
+				S.transfer_soul(SOULSTONE_SHADE, brainmob, user)
 
 		else if(istype(I, /obj/item/weapon/storage/bible)) //force kick god from staff
 			if(brainmob)
