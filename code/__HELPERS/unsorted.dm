@@ -349,7 +349,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				else
 					name += " \[dead\]"
 			pois[name] = M
-			to_chat(world, "[M]")
 
 	if(!mobs_only)
 		for(var/atom/A in poi_list)
