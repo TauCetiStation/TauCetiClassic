@@ -606,7 +606,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		for(var/obj/effect/decal/cleanable/blood/writing/W in T)
 			num_doodles++
 		if(num_doodles > 4)
-			to_chat(src, "<span class='warning'>Нехватает места для еще одной надписи.</span>")
+			to_chat(src, "<span class='warning'>Не хватает места для еще одной надписи.</span>")
 			return
 
 		if(length_char(message) > max_length)
