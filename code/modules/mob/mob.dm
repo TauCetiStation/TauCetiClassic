@@ -20,7 +20,7 @@
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 /mob/atom_init()
 	spawn()
