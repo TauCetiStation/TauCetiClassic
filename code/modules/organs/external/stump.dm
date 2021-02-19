@@ -4,7 +4,7 @@
 	icon_state = ""
 	is_stump = TRUE
 
-/obj/item/organ/external/stump/atom_init(mapload, mob/living/carbon/human/H, obj/item/organ/external/limb)
+/obj/item/organ/external/stump/insert_organ(mob/living/carbon/human/H, surgically, obj/item/organ/external/limb)
 	if(istype(limb))
 		name = "[limb.is_robotic()?"mechanical ":""]stump of \a [limb.name]"
 		limb_layer = limb.limb_layer
@@ -14,7 +14,7 @@
 		artery_name = "mangled [limb.artery_name]"
 		arterial_bleed_severity = limb.arterial_bleed_severity
 		regen_bodypart_penalty = limb.regen_bodypart_penalty
-	. = ..(mapload, H)
+	..()
 
 /obj/item/organ/external/stump/update_sprite()
 	return
@@ -58,4 +58,5 @@
 		var/bodypart_type = owner.species.has_bodypart[body_zone]
 		qdel(src)
 		if(bodypart_type)
-			new bodypart_type(null, owner)
+			var/obj/item/organ/external/E = new bodypart_type(null)
+			E.insert_organ(owner)
