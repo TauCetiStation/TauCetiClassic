@@ -1,3 +1,7 @@
+#define CHAPEL_LOOK  "Chapel looks"
+#define RUNES        "Runes"
+#define CONSTRUCTION "Construction"
+
 /obj/item/weapon/storage/bible/tome
 	name = "book"
 	icon = 'icons/obj/cult.dmi'
@@ -29,9 +33,9 @@
 
 /obj/item/weapon/storage/bible/tome/atom_init()
 	. = ..()
-	rad_choices["Chapel looks"] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left")
-	rad_choices["Runes"] = image(icon = 'icons/obj/rune.dmi', icon_state = "[rand(1, 6)]")
-	rad_choices["Construction"] = image(icon = 'icons/turf/walls/cult/runed_anim.dmi', icon_state = "box")
+	rad_choices[CHAPEL_LOOK] = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left")
+	rad_choices[RUNES] = image(icon = 'icons/obj/rune.dmi', icon_state = "[rand(1, 6)]")
+	rad_choices[CONSTRUCTION] = image(icon = 'icons/turf/walls/cult/runed_anim.dmi', icon_state = "box")
 
 /obj/item/weapon/storage/bible/tome/examine(mob/user)
 	if((iscultist(user) || isobserver(user)) && religion)
@@ -216,17 +220,19 @@
 
 /obj/item/weapon/storage/bible/tome/proc/choice_bible_func(mob/user)
 	var/list/temp_images = list()
-	var/list/choices = list("Chapel looks", "Runes", "Construction")
+	var/list/choices = list(CHAPEL_LOOK, RUNES, CONSTRUCTION)
+	if(user.mind.holy_role != CULT_ROLE_MASTER)
+		choices -= CHAPEL_LOOK
 	for(var/choose in choices)
 		temp_images[choose] += rad_choices[choose]
 
 	var/choice = show_radial_menu(user, src, temp_images, tooltips = TRUE, require_near = TRUE)
 	switch(choice)
-		if("Chapel looks")
+		if(CHAPEL_LOOK)
 			change_chapel_looks(user)
-		if("Runes")
+		if(RUNES)
 			scribe_rune(user)
-		if("Construction")
+		if(CONSTRUCTION)
 			building(user)
 
 /obj/item/weapon/storage/bible/tome/proc/get_agent_radial_menu(list/datum/building_agent/BA, mob/user)
@@ -243,3 +249,7 @@
 		to_chat(user, "<span class='warning'>Вы можете строить только внутри зоны, подконтрольной вашей религией.</span>")
 		return FALSE
 	return TRUE
+
+#undef CHAPEL_LOOK
+#undef RUNES
+#undef CONSTRUCTION
