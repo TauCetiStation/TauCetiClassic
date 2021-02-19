@@ -1500,7 +1500,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return
 
 	var/max_length = bloody_hands * 30 //tweeter style
-	var/message = sanitize(input(src, "Напишите сообщение. Оно должно быть более [max_length] символов.", "Писание кровью", ""))
+	var/message = sanitize(input(src, "Напишите сообщение. Оно не должно быть более [max_length] символов.", "Писание кровью", ""))
 
 	if(message)
 		var/turf/simulated/T = get_step(src, dir)
