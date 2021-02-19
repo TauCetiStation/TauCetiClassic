@@ -1,8 +1,6 @@
-
-var/list/word_to_uristrune_table = null
-
 /proc/word_to_uristrune_bit(word)
-	if(word_to_uristrune_table == null)
+	var/static/list/word_to_uristrune_table
+	if(!word_to_uristrune_table)
 		word_to_uristrune_table = list()
 
 		var/bit = 1
