@@ -59,4 +59,4 @@
 		qdel(src)
 		if(bodypart_type)
 			var/obj/item/organ/external/E = new bodypart_type(null)
-			E.insert_organ(onwer)
+			E.insert_organ(owner)
