@@ -253,7 +253,7 @@
 			text += "<br>Create a cult religion <a href='?src=\ref[src];cult=religion'>create</a>"
 		else if(istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
-		else if(global.cult_religion?.is_member(current))
+		else if(global.cult_religion.is_member(current))
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=heaven'>teleport to heaven</a>|<a href='?src=\ref[src];cult=cheating_cult'>cheating religion</a>."
 /*
