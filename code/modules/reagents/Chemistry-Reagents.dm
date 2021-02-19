@@ -96,7 +96,7 @@
 // This doesn't even work, start EUGH
 
 // Called after add_reagents creates a new reagent.
-/datum/reagent/proc/on_new(data)
+/datum/reagent/proc/on_new()
 	handle_religions()
 	return
 
