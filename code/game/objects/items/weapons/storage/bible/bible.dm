@@ -80,7 +80,7 @@
 	return ..()
 
 /obj/item/weapon/storage/bible/attack_self(mob/user)
-	if(user.mind && user.mind.holy_role && user.my_religion)
+	if(user.mind?.holy_role && !iscultist(user))
 		change_chapel_looks(user)
 		return
 
