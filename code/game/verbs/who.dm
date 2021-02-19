@@ -71,54 +71,61 @@
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, msg)
 
+#define SW_ADMINS     1
+#define SW_MENTORS    2
+#define SW_DEVELOPERS 3
+#define SW_NAME    1
+#define SW_WHOTEXT 2
+#define SW_COUNT   3
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
 
-	var/list/messages = list("", "")
-	var/list/num_online = list(0, 0)
-	if(holder)
-		for(var/client/C in admins)
-			if(C.ckey in stealth_keys)
-				continue
-			if(C.holder.fakekey && !(R_ADMIN & holder.rights))
-				continue
-			messages[1] += "&emsp;[C] is a [C.holder.rank]"
-			if(C.holder.fakekey)
-				messages[1] += " <i>(as [C.holder.fakekey])</i>"
-			if(isobserver(C.mob))
-				messages[1] += " - Observing"
-			else if(isnewplayer(C.mob))
-				messages[1] += " - Lobby"
-			else
-				messages[1] += " - Playing"
-			if(C.is_afk())
-				messages[1] += " (AFK)"
-			messages[1] += "\n"
-			num_online[1]++
-		for(var/client/C in mentors)
-			messages[2] += "&emsp;[C] is a Mentor"
-			if(isobserver(C.mob))
-				messages[2] += " - Observing"
-			else if(isnewplayer(C.mob))
-				messages[2] += " - Lobby"
-			else
-				messages[2] += " - Playing"
-			if(C.is_afk())
-				messages[2] += " (AFK)"
-			messages[2] += "\n"
-			num_online[2]++
-	else
-		for(var/client/C in admins)
-			if(C.ckey in stealth_keys)
-				continue
-			if(!C.holder.fakekey)
-				messages[1] += "&emsp;[C] is a [C.holder.rank]\n"
-				num_online[1]++
-		for(var/client/C in mentors)
-			messages[2] += "&emsp;[C] is a Mentor\n"
-			num_online[2]++
+	var/list/staffwho[3][3]
+	staffwho[SW_ADMINS][SW_NAME] = "Admins"
+	staffwho[SW_MENTORS][SW_NAME] = "Mentors"
+	staffwho[SW_DEVELOPERS][SW_NAME] = "Developers"
 
-	messages[1]  = num_online[1] ? "<b>Current Admins ([num_online[1]]):</b>\n" + messages[1] : "<b>No Admins online</b>\n"
-	messages[1] += num_online[2] ? "\n<b>Current Mentors ([num_online[2]]):</b>\n" + messages[2] : "\n<b>No Mentors online</b>\n"
-	to_chat(src, messages[1])
+	for(var/client/C in admins|mentors)
+		if(C.ckey in stealth_keys)
+			continue
+		if(C.holder.fakekey && !(R_ADMIN & holder.rights))
+			continue
+		var/extra = ""
+		if(holder)
+			if(C.holder.fakekey)
+				extra += " <i>(as [C.holder.fakekey])</i>"
+			if(isobserver(C.mob))
+				extra += " - Observing"
+			else if(isnewplayer(C.mob))
+				extra += " - Lobby"
+			else
+				extra += " - Playing"
+			if(C.is_afk())
+				extra += " (AFK)"
+		if(mentors[C.ckey])
+			staffwho[SW_MENTORS][SW_WHOTEXT] = "&emsp;[C] is a Mentor[extra]<br>"
+			staffwho[SW_MENTORS][SW_COUNT]++
+		if(R_ADMIN & C.holder.rights)
+			staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+			staffwho[SW_ADMINS][SW_COUNT]++
+		else if(R_DEBUG & C.holder.rights)
+			staffwho[SW_DEVELOPERS][SW_WHOTEXT] = "&emsp;[C] is a [C.holder.rank][extra]<br>"
+			staffwho[SW_DEVELOPERS][SW_COUNT]++
+		else
+			staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+			staffwho[SW_ADMINS][SW_COUNT]++
+
+	for(var/staff in staffwho)
+		if(!staff[SW_COUNT])
+			to_chat(src, "<b>No [staff[SW_NAME]] online</b><br>")
+			continue
+		to_chat(src, "<b>Current [staff[SW_NAME]] ([staff[SW_COUNT]]):</b><br>[staff[SW_WHOTEXT]]")
+	return // https://secure.byond.com/forum/post/2072419
+
+#undef SW_ADMINS
+#undef SW_MENTORS
+#undef SW_DEVELOPERS
+#undef SW_NAME
+#undef SW_WHOTEXT
+#undef SW_COUNT
