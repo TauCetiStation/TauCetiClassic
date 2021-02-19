@@ -203,7 +203,7 @@ var/global/list/image/splatter_cache=list()
 	add_overlay(giblets)
 
 /obj/effect/decal/cleanable/blood/gibs/up
-	icon_state = "gib1" // for mapeditor
+	icon_state = "gibup1" // for mapeditor
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
 
 /obj/effect/decal/cleanable/blood/gibs/down
