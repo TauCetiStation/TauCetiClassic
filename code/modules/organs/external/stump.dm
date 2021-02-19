@@ -58,4 +58,5 @@
 		var/bodypart_type = owner.species.has_bodypart[body_zone]
 		qdel(src)
 		if(bodypart_type)
-			new bodypart_type(null, owner)
+			var/obj/item/organ/external/E = new bodypart_type(null)
+			E.insert_organ(onwer)
