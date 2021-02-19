@@ -280,7 +280,7 @@
 	if(!candidates.len)
 		return
 
-	while(candidates.len || spawns != 0)
+	while(candidates.len && spawns != 0)
 		var/mob/slave = pick_n_take(candidates)
 		if(!slave) // I dont know why or how it can be null, but it can be null
 			continue
