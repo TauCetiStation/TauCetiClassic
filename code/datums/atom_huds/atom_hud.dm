@@ -59,7 +59,6 @@ var/global/list/huds[24]
 		return
 	if (absolute || !--hudusers[M])
 		UnregisterSignal(M, COMSIG_PARENT_QDELETED)
-	if (!--hudusers[M])
 		hudusers -= M
 		if(next_time_allowed[M])
 			next_time_allowed -= M
