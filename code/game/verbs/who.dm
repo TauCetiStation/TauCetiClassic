@@ -85,7 +85,7 @@
 #define SW_ALL_PARAMS 3 //update this, if add more params
 
 #define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
-#define SW_INCREMENT(GROUP, CKEY, RANK, EXTRA) staffwho[GROUP][SW_WHOTEXT] = SW_TR(CKEY, RANK, EXTRA);staffwho[GROUP][SW_COUNT]++
+#define SW_INCREMENT(GROUP, CKEY, RANK, EXTRA) staffwho[GROUP][SW_WHOTEXT] += SW_TR(CKEY, RANK, EXTRA);staffwho[GROUP][SW_COUNT]++
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
