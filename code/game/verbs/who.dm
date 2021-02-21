@@ -73,7 +73,8 @@
 
 #define SW_ADMINS     1
 #define SW_MENTORS    2
-#define SW_DEVELOPERS 3
+#define SW_XENOVISORS 3
+#define SW_DEVELOPERS 4
 #define SW_NAME    1
 #define SW_WHOTEXT 2
 #define SW_COUNT   3
@@ -81,9 +82,10 @@
 	set category = "Admin"
 	set name = "Staffwho"
 
-	var/list/staffwho[3][3]
+	var/list/staffwho[4][3]
 	staffwho[SW_ADMINS][SW_NAME] = "Admins"
 	staffwho[SW_MENTORS][SW_NAME] = "Mentors"
+	staffwho[SW_XENOVISORS][SW_NAME] = "Xenovisors"
 	staffwho[SW_DEVELOPERS][SW_NAME] = "Developers"
 
 	for(var/client/C in admins|mentors)
@@ -106,15 +108,19 @@
 		if(mentors[C.ckey])
 			staffwho[SW_MENTORS][SW_WHOTEXT] = "&emsp;[C] is a Mentor[extra]<br>"
 			staffwho[SW_MENTORS][SW_COUNT]++
-		if(R_ADMIN & C.holder.rights)
+		if(R_BAN & C.holder.rights)
 			staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
 			staffwho[SW_ADMINS][SW_COUNT]++
 		else if(R_DEBUG & C.holder.rights)
 			staffwho[SW_DEVELOPERS][SW_WHOTEXT] = "&emsp;[C] is a [C.holder.rank][extra]<br>"
 			staffwho[SW_DEVELOPERS][SW_COUNT]++
+		else if(R_WHITELIST & C.holder.rights)
+			staffwho[SW_XENOVISORS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+			staffwho[SW_XENOVISORS][SW_COUNT]++
 		else
 			staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
 			staffwho[SW_ADMINS][SW_COUNT]++
+
 
 	for(var/staff in staffwho)
 		if(!staff[SW_COUNT])
@@ -125,6 +131,7 @@
 
 #undef SW_ADMINS
 #undef SW_MENTORS
+#undef SW_XENOVISORS
 #undef SW_DEVELOPERS
 #undef SW_NAME
 #undef SW_WHOTEXT
