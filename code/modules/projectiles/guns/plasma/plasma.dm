@@ -40,7 +40,6 @@
 	icon_state = "plasma104_stg"
 	item_state = "plasma104_stg"
 	origin_tech = "combat=4;magnets=3"
-	fire_sound = 'sound/weapons/guns/plasma10_shotgun.ogg'
 
 	overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_massive_shot.ogg'
 

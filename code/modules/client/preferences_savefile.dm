@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 31
+#define SAVEFILE_VERSION_MAX 32
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -217,6 +217,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["citizenship"] << citizenship
 		S["faction"]     << faction
 		S["religion"]    << religion
+
+	if(current_version < 32)
+		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
+		organ_data = list()
+		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES))
+			organ_data[i] = null
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)

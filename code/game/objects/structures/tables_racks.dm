@@ -420,7 +420,7 @@
 	canconnect = FALSE
 	update_adjacent()
 
-	playsound(src, pick(SOUNDIN_WINDOW_SHATTER), VOL_EFFECTS_MASTER)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] breaks!</span>", "<span class='danger'>You hear breaking glass.</span>")
 
 	var/T = get_turf(src)

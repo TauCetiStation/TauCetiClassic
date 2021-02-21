@@ -137,7 +137,7 @@
 	else
 		lawupdate = 0
 
-	playsound(src, 'sound/effects/robot_initialization.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+	playsound(src, 'sound/voice/liveagain.ogg', VOL_EFFECTS_MASTER)
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
@@ -318,7 +318,6 @@
 	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
 	if(new_icon_state)
 		icon_state = module_sprites[new_icon_state]
-		playsound(src, 'sound/effects/robot_reset_module.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 
 	radio.config(module.channels)
 

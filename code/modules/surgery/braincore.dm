@@ -159,7 +159,8 @@
 		else
 			target.key = B.brainmob.key
 		target.dna = B.brainmob.dna
-	new /obj/item/organ/internal/brain(null, target)
+	var/obj/item/organ/internal/brain/brain = new(null)
+	brain.insert_organ(target)
 	qdel(tool)
 
 /datum/surgery_step/brain/insert_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
