@@ -133,7 +133,6 @@
 		msg += "[staff[SW_WHOTEXT]]"
 	msg = "<table class='staffwho'>[msg]</table>"
 	to_chat(src, msg)
-	return // https://secure.byond.com/forum/post/2072419
 
 #undef SW_ADMINS
 #undef SW_MENTORS
