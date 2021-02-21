@@ -77,16 +77,19 @@
 #define SW_MENTORS    2
 #define SW_XENOVISORS 3
 #define SW_DEVELOPERS 4
-#define SW_NAME    1
-#define SW_WHOTEXT 2
-#define SW_COUNT   3
+#define SW_ALL_GROUPS 4 //update this, if add more staff groups
+
+#define SW_NAME       1
+#define SW_WHOTEXT    2
+#define SW_COUNT      3
+#define SW_ALL_PARAMS 3 //update this, if add more params
 
 #define SW_TR(CKEY, RANK, EXTRA) "<tr><td>[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
 
-	var/list/staffwho[4][3]
+	var/list/staffwho[SW_ALL_GROUPS][SW_ALL_PARAMS]
 	staffwho[SW_ADMINS][SW_NAME] = "Admins"
 	staffwho[SW_MENTORS][SW_NAME] = "Mentors"
 	staffwho[SW_XENOVISORS][SW_NAME] = "Xenovisors"
@@ -129,7 +132,7 @@
 	var/msg
 	for(var/staff in staffwho)
 		if(!staff[SW_COUNT])
-			msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><span style='color:black' class='fas fa-times'></span> <b>No [staff[SW_NAME]] online</b></td></tr>"
+			msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><span style='color:black' class='fas fa-times'></span	> <b>No [staff[SW_NAME]] online</b></td></tr>"
 			continue
 		msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><b>Current [staff[SW_NAME]] ([staff[SW_COUNT]])</b></td></tr>"
 		msg += "[staff[SW_WHOTEXT]]"
@@ -145,3 +148,5 @@
 #undef SW_WHOTEXT
 #undef SW_COUNT
 #undef SW_TR
+#undef SW_ALL_GROUPS
+#undef SW_ALL_PARAMS
