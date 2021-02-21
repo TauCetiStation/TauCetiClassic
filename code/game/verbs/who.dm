@@ -84,13 +84,14 @@
 #define SW_COUNT      3
 #define SW_ALL_PARAMS 3 //update this, if add more params
 
-#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
+#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
+#define SW_INCREMENT(GROUP, CKEY, RANK, EXTRA) staffwho[GROUP][SW_WHOTEXT] = SW_TR(CKEY, RANK, EXTRA);staffwho[GROUP][SW_COUNT]++
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
 
 	var/list/staffwho[SW_ALL_GROUPS][SW_ALL_PARAMS]
-	staffwho[SW_ADMINS][SW_NAME] = "Admins"
+	staffwho[SW_ADMINS][SW_NAME] = "Admins" // update browserOutput.css, if change this
 	staffwho[SW_MENTORS][SW_NAME] = "Mentors"
 	staffwho[SW_XENOVISORS][SW_NAME] = "Xenovisors"
 	staffwho[SW_DEVELOPERS][SW_NAME] = "Developers"
@@ -113,28 +114,22 @@
 			if(C.is_afk())
 				extra += " (AFK - [C.inactivity2text()])"
 		if(C.ckey in mentor_ckeys)
-			staffwho[SW_MENTORS][SW_WHOTEXT] = SW_TR(C, "Mentor", extra)
-			staffwho[SW_MENTORS][SW_COUNT]++
+			SW_INCREMENT(SW_MENTORS, C, "Mentor", extra)
 		if(C.holder)
 			if(R_BAN & C.holder.rights)
-				staffwho[SW_ADMINS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
-				staffwho[SW_ADMINS][SW_COUNT]++
+				SW_INCREMENT(SW_ADMINS, C, C.holder.rank, extra)
 			else if(R_DEBUG & C.holder.rights)
-				staffwho[SW_DEVELOPERS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
-				staffwho[SW_DEVELOPERS][SW_COUNT]++
+				SW_INCREMENT(SW_DEVELOPERS, C, C.holder.rank, extra)
 			else if(R_WHITELIST & C.holder.rights)
-				staffwho[SW_XENOVISORS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
-				staffwho[SW_XENOVISORS][SW_COUNT]++
+				SW_INCREMENT(SW_XENOVISORS, C, C.holder.rank, extra)
 			else
-				staffwho[SW_ADMINS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
-				staffwho[SW_ADMINS][SW_COUNT]++
+				SW_INCREMENT(SW_ADMINS, C, C.holder.rank, extra)
 
 	var/msg
 	for(var/staff in staffwho)
+		msg += "<tr><th class='[staff[SW_NAME]]' colspan='3'>[staff[SW_NAME]]—[staff[SW_COUNT] || 0]</td></tr>"
 		if(!staff[SW_COUNT])
-			msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><span style='color:black' class='fas fa-times'></span> <b>No [staff[SW_NAME]] online</b></td></tr>"
 			continue
-		msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><b>Current [staff[SW_NAME]] ([staff[SW_COUNT]])</b></td></tr>"
 		msg += "[staff[SW_WHOTEXT]]"
 	msg = "<table class='staffwho'>[msg]</table>"
 	to_chat(src, msg)
@@ -148,5 +143,6 @@
 #undef SW_WHOTEXT
 #undef SW_COUNT
 #undef SW_TR
+#undef SW_INCREMENT
 #undef SW_ALL_GROUPS
 #undef SW_ALL_PARAMS
