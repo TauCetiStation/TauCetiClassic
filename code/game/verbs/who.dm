@@ -55,6 +55,8 @@
 
 			if(is_special_character(C.mob))
 				entry += " - <b><font color='red'>Antagonist</font></b>"
+			if(C.is_afk())
+				entry += " (AFK - [C.inactivity2text()])"
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
 	else
@@ -104,7 +106,7 @@
 			else
 				extra += " - Playing"
 			if(C.is_afk())
-				extra += " (AFK)"
+				extra += " (AFK - [C.inactivity2text()])"
 		if(C.ckey in mentor_ckeys)
 			staffwho[SW_MENTORS][SW_WHOTEXT] = "&emsp;[C] is a <b>Mentor</b>[extra]<br>"
 			staffwho[SW_MENTORS][SW_COUNT]++
