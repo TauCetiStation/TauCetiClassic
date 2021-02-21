@@ -132,7 +132,7 @@
 	var/msg
 	for(var/staff in staffwho)
 		if(!staff[SW_COUNT])
-			msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><span style='color:black' class='fas fa-times'></span> <b>No [staff[SW_NAME]] online</b></td></tr>"
+			msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><span style='color:black' class='fas fa-close'></span> <b>No [staff[SW_NAME]] online</b></td></tr>"
 			continue
 		msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><b>Current [staff[SW_NAME]] ([staff[SW_COUNT]])</b></td></tr>"
 		msg += "[staff[SW_WHOTEXT]]"
