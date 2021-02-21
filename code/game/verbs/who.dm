@@ -127,7 +127,7 @@
 
 	var/msg
 	for(var/staff in staffwho)
-		msg += "<tr><th class='[staff[SW_NAME]]' colspan='3'>[staff[SW_NAME]]—[staff[SW_COUNT] || 0]</td></tr>"
+		msg += "<tr><th class='[staff[SW_NAME]]' colspan='3'>[staff[SW_NAME]] — [staff[SW_COUNT] || 0]</td></tr>"
 		if(!staff[SW_COUNT])
 			continue
 		msg += "[staff[SW_WHOTEXT]]"
