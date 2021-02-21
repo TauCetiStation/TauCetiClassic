@@ -428,10 +428,7 @@ table.staffwho {
 table.staffwho td, table.staffwho th {
 	margin:0;
 	padding: 2px 4px;
-	font-size: 14px;
-}
-table.staffwho td:first-child{
-	font-weight: bold;
+	font-size: 13px;
 }
 
 table.staffwho th {
