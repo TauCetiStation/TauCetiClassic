@@ -91,11 +91,11 @@
 	for(var/client/C in admins|mentors)
 		if(C.ckey in stealth_keys)
 			continue
-		if(C.holder.fakekey && !(R_ADMIN & holder.rights))
+		if(C.holder?.fakekey && !(R_ADMIN & holder.rights))
 			continue
 		var/extra = ""
 		if(holder)
-			if(C.holder.fakekey)
+			if(C.holder?.fakekey)
 				extra += " <i>(as [C.holder.fakekey])</i>"
 			if(isobserver(C.mob))
 				extra += " - Observing"
@@ -105,21 +105,22 @@
 				extra += " - Playing"
 			if(C.is_afk())
 				extra += " (AFK)"
-		if(mentors[C.ckey])
-			staffwho[SW_MENTORS][SW_WHOTEXT] = "&emsp;[C] is a Mentor[extra]<br>"
+		if(C.ckey in mentor_ckeys)
+			staffwho[SW_MENTORS][SW_WHOTEXT] = "&emsp;[C] is a <b>Mentor</b>[extra]<br>"
 			staffwho[SW_MENTORS][SW_COUNT]++
-		if(R_BAN & C.holder.rights)
-			staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
-			staffwho[SW_ADMINS][SW_COUNT]++
-		else if(R_DEBUG & C.holder.rights)
-			staffwho[SW_DEVELOPERS][SW_WHOTEXT] = "&emsp;[C] is a [C.holder.rank][extra]<br>"
-			staffwho[SW_DEVELOPERS][SW_COUNT]++
-		else if(R_WHITELIST & C.holder.rights)
-			staffwho[SW_XENOVISORS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
-			staffwho[SW_XENOVISORS][SW_COUNT]++
-		else
-			staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
-			staffwho[SW_ADMINS][SW_COUNT]++
+		if(C.holder)
+			if(R_BAN & C.holder.rights)
+				staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_ADMINS][SW_COUNT]++
+			else if(R_DEBUG & C.holder.rights)
+				staffwho[SW_DEVELOPERS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_DEVELOPERS][SW_COUNT]++
+			else if(R_WHITELIST & C.holder.rights)
+				staffwho[SW_XENOVISORS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_XENOVISORS][SW_COUNT]++
+			else
+				staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_ADMINS][SW_COUNT]++
 
 
 	for(var/staff in staffwho)
