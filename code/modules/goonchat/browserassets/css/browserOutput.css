@@ -418,3 +418,20 @@ h1.alert, h2.alert	{color: #000000;}
 }
 .embedded_tip:hover .embedded_tip-text{display: block;}
 .embedded_tip-mark{font-style: italic;}
+
+
+table.staffwho {
+	border-spacing: 0;
+	border-collapse:collapse;
+	color: #333;
+}
+table.staffwho td, table.staffwho th {
+	padding: 6px 13px;
+	border: 1px solid #dfe2e5;
+}
+table.staffwho th {color:white}
+table.staffwho .Admins    {background:#E67E22;}
+table.staffwho .Mentors   {background:#E91E63;}
+table.staffwho .Developers{background:#5E5ED1;}
+table.staffwho .Xenovisors{background:#2ECC71;}
+

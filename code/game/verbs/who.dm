@@ -80,6 +80,8 @@
 #define SW_NAME    1
 #define SW_WHOTEXT 2
 #define SW_COUNT   3
+
+#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
@@ -98,38 +100,41 @@
 		var/extra = ""
 		if(holder)
 			if(C.holder?.fakekey)
-				extra += " <i>(as [C.holder.fakekey])</i>"
+				extra += "<i>(as [C.holder.fakekey])</i> "
 			if(isobserver(C.mob))
-				extra += " - Observing"
+				extra += "Observing"
 			else if(isnewplayer(C.mob))
-				extra += " - Lobby"
+				extra += "Lobby"
 			else
-				extra += " - Playing"
+				extra += "Playing"
 			if(C.is_afk())
 				extra += " (AFK - [C.inactivity2text()])"
 		if(C.ckey in mentor_ckeys)
-			staffwho[SW_MENTORS][SW_WHOTEXT] = "&emsp;[C] is a <b>Mentor</b>[extra]<br>"
+			staffwho[SW_MENTORS][SW_WHOTEXT] = SW_TR(C, "Mentor", extra)
 			staffwho[SW_MENTORS][SW_COUNT]++
 		if(C.holder)
 			if(R_BAN & C.holder.rights)
-				staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_ADMINS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
 				staffwho[SW_ADMINS][SW_COUNT]++
 			else if(R_DEBUG & C.holder.rights)
-				staffwho[SW_DEVELOPERS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_DEVELOPERS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
 				staffwho[SW_DEVELOPERS][SW_COUNT]++
 			else if(R_WHITELIST & C.holder.rights)
-				staffwho[SW_XENOVISORS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_XENOVISORS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
 				staffwho[SW_XENOVISORS][SW_COUNT]++
 			else
-				staffwho[SW_ADMINS][SW_WHOTEXT] = "&emsp;[C] is a <b>[C.holder.rank]</b>[extra]<br>"
+				staffwho[SW_ADMINS][SW_WHOTEXT] = SW_TR(C, C.holder.rank, extra)
 				staffwho[SW_ADMINS][SW_COUNT]++
 
-
+	var/msg
 	for(var/staff in staffwho)
 		if(!staff[SW_COUNT])
-			to_chat(src, "<b>No [staff[SW_NAME]] online</b><br>")
+			msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><b>No [staff[SW_NAME]] online</b></td></tr>"
 			continue
-		to_chat(src, "<b>Current [staff[SW_NAME]] ([staff[SW_COUNT]]):</b><br>[staff[SW_WHOTEXT]]")
+		msg += "<tr><th colspan='3' class='[staff[SW_NAME]]'><b>Current [staff[SW_NAME]] ([staff[SW_COUNT]]):</b></td></tr>"
+		msg += "[staff[SW_WHOTEXT]]"
+	msg = "<table class='staffwho'>[msg]</table>"
+	to_chat(src, msg)
 	return // https://secure.byond.com/forum/post/2072419
 
 #undef SW_ADMINS
@@ -139,3 +144,4 @@
 #undef SW_NAME
 #undef SW_WHOTEXT
 #undef SW_COUNT
+#undef SW_TR
