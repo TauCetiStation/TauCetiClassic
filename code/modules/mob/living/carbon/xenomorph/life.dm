@@ -13,9 +13,6 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		//stuff in the stomach
-		handle_stomach()
-
 		update_icons()
 
 	//Apparently, the person who wrote this code designed it so that
@@ -196,24 +193,6 @@
 				healths.icon_state = "health6"
 	else
 		healths.icon_state = "health7"
-
-/mob/living/carbon/xenomorph/proc/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
-				stomach_contents.Remove(M)
-				continue
-			if(istype(M, /mob/living/carbon) && stat != DEAD)
-				if(M.stat == DEAD)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmobs.times_fired%3==1)
-					if(!(status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
-
 
 ///FIRE CODE
 /mob/living/carbon/xenomorph/handle_fire()

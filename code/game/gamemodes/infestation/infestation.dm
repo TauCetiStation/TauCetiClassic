@@ -70,6 +70,7 @@
 
 		var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
 		xeno.transfer_to(L)
+		QDEL_NULL(xeno.original)
 		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", L)
 		greet_xeno(xeno)
 	return ..()
