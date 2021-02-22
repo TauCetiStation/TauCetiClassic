@@ -88,6 +88,11 @@
 /datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
 	if(istype(target, /turf/space))
 		return
+
+	var/obj/effect/rune/rand_rune = locate(holder.type) in target
+	if(istype(rand_rune?.power, /datum/rune/cult/teleport/teleport_from_heaven))
+		return
+
 	var/obj/effect/rune/R = new(target, religion, user)
 	R.power = new /datum/rune/cult/teleport/teleport_from_heaven(R, get_turf(holder))
 	R.power.religion = religion
