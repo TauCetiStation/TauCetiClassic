@@ -14,6 +14,7 @@
 /obj/effect/rune/atom_init(mapload, datum/religion/R, mob/user)
 	. = ..()
 	if(R)
+		ASSERT(user)
 		creator = user
 		religion = R
 		religion.runes += src

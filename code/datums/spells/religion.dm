@@ -370,8 +370,8 @@
 			hgibs(usr.loc)
 
 /obj/effect/proc_holder/spell/dumbfire/scribe_rune
-	name = "Rune"
-	desc = "Scribe the rune you remember"
+	name = "Руна"
+	desc = "Рисовать запомненную руну."
 
 	charge_max = 1 MINUTE
 
@@ -380,6 +380,7 @@
 	clothes_req = 0
 
 	action_icon_state = "rune"
+	action_background_icon_state = "bg_cult"
 
 	var/datum/building_agent/rune/agent
 
@@ -388,30 +389,42 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/dumbfire/scribe_rune/cast()
-	var/obj/effect/rune/R = new agent.building_type(get_turf(usr), usr.my_religion)
+	if(!usr.my_religion)
+		usr.RemoveSpell(src)
+		return
+
+	if(usr.my_religion.runes_by_mob[usr])
+		var/list/L = usr.my_religion.runes_by_mob[usr]
+		if(L.len > usr.my_religion.max_runes_on_mob)
+			to_chat(usr, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
+			return
+
+	var/obj/effect/rune/R = new agent.building_type(get_turf(usr), usr.my_religion, usr)
 	var/datum/rune/rune = new agent.rune_type(R)
+	rune.religion = usr.my_religion
 	R.power = rune
 	R.icon = get_uristrune_cult(TRUE, rune.words)
 
 /obj/effect/proc_holder/spell/dumbfire/memorize_rune
-	name = "Memorize rune"
-	desc = "Remember the rune and draw without books"
+	name = "Запомнить руну"
+	desc = "Запоминает руну и позволяет её рисовать без тома."
 
 	range = 0
 	invocation = "none"
 	clothes_req = 0
 
 	action_icon_state = "rune"
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/dumbfire/memorize_rune/cast()
-	usr.RemoveSpell(src)
-
 	if(!usr.my_religion)
+		usr.RemoveSpell(src)
 		return
 
-	var/datum/building_agent/rune/B = input("Select a rune", name, "") as anything in usr.my_religion.available_runes
+	var/datum/building_agent/rune/B = input("Выберите руну", name, "") as anything in usr.my_religion.available_runes
 
 	var/obj/effect/proc_holder/spell/dumbfire/scribe_rune/S = new
 	S.agent = B
 	S.name = initial(B.name)
 	usr.AddSpell(S)
+	usr.RemoveSpell(src)

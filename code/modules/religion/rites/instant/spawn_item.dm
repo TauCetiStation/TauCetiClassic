@@ -33,7 +33,7 @@
 	name = "Призыв Камня Душ"
 	desc = "Призывает камень душ для заблудших лярв."
 	ritual_length = (5 SECONDS)
-	invoke_msg = "За всё паранормальное!!!"
+	invoke_msg = "Призываю древний артефакт!!!"
 	favor_cost = 150
 	spawn_type = /obj/item/device/soulstone
 
@@ -45,7 +45,7 @@
 	name = "Призыв Оболочки"
 	desc = "Призывает пустую оболочку для пойманных лярв."
 	ritual_length = (5 SECONDS)
-	invoke_msg = "За всё паранормальное!!!"
+	invoke_msg = "Призываю оболочку!!!"
 	favor_cost = 50
 	spawn_type = /obj/structure/constructshell
 
