@@ -451,8 +451,9 @@
 
 /obj/item/organ/internal/stomach/atom_init()
 	. = ..()
-	reagents.total_volume = owner.species.stomach_capacity * 10
-	stomach_capacity = owner.species.stomach_capacity
+	if(owner)
+		reagents.total_volume = owner.species.stomach_capacity * 10
+		stomach_capacity = owner.species.stomach_capacity
 
 /obj/item/organ/internal/stomach/Destroy()
 	for(var/atom/movable/AM in contents)
