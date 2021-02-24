@@ -52,11 +52,12 @@
 	var/tag = isxenoqueen(src) ? "hive_queen" : "hive"
 
 	var/rendered = "<span class='[tag]'>УЛЕЙ: <i>[name] шепчет, \"[message]\"</i></span>"
-	for(var/mob/living/carbon/xenomorph/S in alien_list)
-		if(!S.client)
-			continue
-		if(S.stat == CONSCIOUS)
-			S.show_message(rendered, SHOWMSG_AUDIO)
+	for(var/key in alien_list)
+		for(var/mob/living/carbon/xenomorph/S in alien_list[key])
+			if(!S.client)
+				continue
+			if(S.stat == CONSCIOUS)
+				S.show_message(rendered, SHOWMSG_AUDIO)
 
 	for(var/mob/M in observer_list)
 		if(!M.client)

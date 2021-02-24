@@ -37,11 +37,16 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "alien facehugger")
-		name = "alien facehugger ([rand(1, 1000)])"
+	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
+	verbs += /mob/living/carbon/xenomorph/proc/hide
+	alien_list[ALIEN_FACEHAGGER] += src
+
+/mob/living/carbon/xenomorph/facehugger/Destroy()
+	alien_list[ALIEN_FACEHAGGER] -= src
+	return ..()
 
 /mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
 	..()
@@ -59,21 +64,6 @@
 	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
-
-/mob/living/carbon/xenomorph/facehugger/verb/hide()
-	set name = "Hide"
-	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Alien"
-
-	if(stat != CONSCIOUS)
-		return
-
-	if (layer != TURF_LAYER + 0.2)
-		layer = TURF_LAYER + 0.2
-		visible_message("<span class='danger'>[src] scurries to the ground!</span>", "<span class='notice'>You are now hiding.</span>")
-	else
-		layer = MOB_LAYER
-		visible_message("<span class='warning'>[src] slowly peaks up from the ground...</span>", "<span class='notice'>You have stopped hiding.</span>")
 
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
@@ -150,7 +140,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
-	else if(lying || resting)
+	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "facehugger_inactive"
 	else
 		icon_state = "facehugger"

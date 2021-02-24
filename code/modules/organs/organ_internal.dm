@@ -292,8 +292,8 @@
 	name = "accumulator"
 	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/atom_init()
-	. = ..()
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+	..()
 	new/obj/item/weapon/stock_parts/cell/crap/(src)
 	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
 

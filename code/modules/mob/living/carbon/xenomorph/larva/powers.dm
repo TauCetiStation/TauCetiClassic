@@ -1,25 +1,3 @@
-
-/mob/living/carbon/xenomorph/larva/verb/hide()
-	set name = "Спрятаться"
-	set desc = "Позволяет прятаться под столами и другими предметами. Включается и отключается."
-	set category = "Alien"
-
-	if(incapacitated())
-		return
-
-	if (layer != TURF_LAYER+0.2)
-		layer = TURF_LAYER+0.2
-		to_chat(src, text("<span class='notice'>Сейчас вы прячетесь.</span>"))
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				to_chat(O, text("[] исчезает.", src))
-	else
-		layer = MOB_LAYER
-		to_chat(src, text("<span class='notice'>Вы больше не прячетесь.</span>"))
-		for(var/mob/O in oviewers(src, null))
-			if ((O.client && !( O.blinded )))
-				to_chat(O, text("[] появляется.", src))
-
 /mob/living/carbon/xenomorph/larva/verb/evolve()
 	set name = "Эволюция"
 	set desc = "Превратиться во взрослого ксеноморфа."
@@ -36,16 +14,15 @@
 	if(amount_grown >= max_grown)
 		var/queen = FALSE
 		var/drone = FALSE
-		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in queen_list)
+		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
 			if(Q.stat == DEAD || !Q.key)
 				continue
 			queen = TRUE
-		for(var/mob/living/carbon/xenomorph/A in alien_list)
+		for(var/mob/living/carbon/xenomorph/A in alien_list[ALIEN_DRONE])
 			if(A.stat == DEAD || !A.key)
 				continue
-			if(isxenodrone(A))
-				drone = TRUE
-				break	//we don't care how many drones there are
+			drone = TRUE
+			break	//we don't care how many drones there are
 
 		var/evolve_now = null
 		var/alien_caste = null

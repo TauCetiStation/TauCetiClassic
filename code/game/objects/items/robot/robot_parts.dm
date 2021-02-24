@@ -317,14 +317,13 @@
 
 /obj/item/robot_parts/head/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/flash))
-		if(istype(user, /mob/living/silicon/robot))
-			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
-			return
-		else if(flash1 && flash2)
+		if(flash1 && flash2)
 			to_chat(user, "<span class='info'>You have already inserted the eyes!</span>")
 			return
+		if(!user.drop_item(src))
+			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
+			return
 		else
-			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='info'>You insert the flash into the eye socket!</span>")
 			if(flash1)
 				flash2 = I

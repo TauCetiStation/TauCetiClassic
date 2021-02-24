@@ -66,6 +66,7 @@
 /turf/simulated/floor/plating/ironsand/junkyard
 	var/dug = 0
 	has_resources = 1
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/ironsand/junkyard/surround_by_scrap()
 	if(prob(1))

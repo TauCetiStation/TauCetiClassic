@@ -503,6 +503,7 @@
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
 	basetype = /turf/simulated/floor/plating/airless/asteroid
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
