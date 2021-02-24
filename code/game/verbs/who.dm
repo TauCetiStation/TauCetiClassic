@@ -126,14 +126,12 @@
 				SW_INCREMENT(SW_ADMINS, C, C.holder.rank, extra)
 
 	var/msg
-	var/staff_online = FALSE
 	for(var/staff in staffwho)
 		if(!staff[SW_COUNT])
 			continue
-		staff_online = TRUE
 		msg += "<tr><th class='[staff[SW_NAME]]' colspan='3'>[staff[SW_NAME]] — [staff[SW_COUNT] || 0]</td></tr>"
 		msg += "[staff[SW_WHOTEXT]]"
-	if(!staff_online)
+	if(!msg)
 		msg = "<b>No Staff Online</b>"
 	else
 		msg = "<table class='staffwho'>[msg]</table>"
