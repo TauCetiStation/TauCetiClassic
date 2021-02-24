@@ -92,6 +92,7 @@
 	singular_name = "gauze length"
 	desc = "Some sterile gauze to wrap around bloody stumps."
 	icon_state = "brutepack"
+	item_state = "brutepack"
 	origin_tech = "biotech=1"
 
 	repeating = TRUE
@@ -155,6 +156,7 @@
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
+	item_state = "ointment"
 	origin_tech = "biotech=1"
 
 	repeating = TRUE
@@ -216,6 +218,7 @@
 	singular_name = "advanced trauma kit"
 	desc = "An advanced trauma kit for severe injuries."
 	icon_state = "traumakit"
+	item_state = "traumakit"
 	heal_brute = 12
 	amount = 6
 	max_amount = 6
@@ -224,9 +227,6 @@
 	other_delay = 10
 
 	repeating = TRUE
-
-/obj/item/stack/medical/advanced/bruise_pack/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
 
 /obj/item/stack/medical/advanced/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -278,6 +278,7 @@
 	singular_name = "advanced burn kit"
 	desc = "An advanced treatment kit for severe burns."
 	icon_state = "burnkit"
+	item_state = "burnkit"
 	amount = 6
 	max_amount = 6
 	heal_burn = 12
@@ -286,9 +287,6 @@
 	other_delay = 10
 
 	repeating = TRUE
-
-/obj/item/stack/medical/advanced/ointment/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
 
 /obj/item/stack/medical/advanced/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -320,6 +318,7 @@
 	name = "medical splints"
 	singular_name = "medical splint"
 	icon_state = "splint"
+	item_state = "splint"
 	amount = 5
 	max_amount = 5
 	w_class = ITEM_SIZE_SMALL
