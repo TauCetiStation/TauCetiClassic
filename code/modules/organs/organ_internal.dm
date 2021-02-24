@@ -449,11 +449,10 @@
 /obj/item/organ/internal/stomach/vox
 	name = "gizzard"
 
-/obj/item/organ/internal/stomach/atom_init()
+/obj/item/organ/internal/stomach/insert_organ()
 	. = ..()
-	if(owner)
-		reagents.total_volume = owner.species.stomach_capacity * 10
-		stomach_capacity = owner.species.stomach_capacity
+	reagents.total_volume = owner.species.stomach_capacity * 10
+	stomach_capacity = owner.species.stomach_capacity
 
 /obj/item/organ/internal/stomach/Destroy()
 	for(var/atom/movable/AM in contents)
