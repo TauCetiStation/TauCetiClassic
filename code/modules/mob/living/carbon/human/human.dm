@@ -29,6 +29,56 @@
 
 	moveset_type = /datum/combat_moveset/human
 
+/mob/living/carbon/human/atom_init(mapload, new_species)
+
+	dna = new
+	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
+
+	if(!species)
+		if(new_species)
+			set_species(new_species, FALSE, TRUE)
+		else
+			set_species()
+
+	if(species) // Just to be sure.
+		metabolism_factor = species.metabolism_mod
+		butcher_results = species.butcher_drops.Copy()
+
+	dna.species = species.name
+
+	var/datum/reagents/R = new/datum/reagents(1000)
+	reagents = R
+	R.my_atom = src
+
+	. = ..()
+
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
+	human_list += src
+
+	if(dna)
+		dna.real_name = real_name
+
+	handcrafting = new()
+
+	verbs += /mob/living/carbon/proc/crawl
+
+	prev_gender = gender // Debug for plural genders
+	make_blood()
+	regenerate_icons()
+
+/mob/living/carbon/human/Destroy()
+	human_list -= src
+	if(my_master)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
+		my_master = null
+	if(my_golem)
+		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+		golem_hud.remove_from_hud(src)
+		my_golem.death()
+	my_golem = null
+	return ..()
+
 /mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
 	. = ..(mapload, SKRELL)
@@ -90,56 +140,6 @@
 
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
-
-/mob/living/carbon/human/atom_init(mapload, new_species)
-
-	dna = new
-	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
-
-	if(!species)
-		if(new_species)
-			set_species(new_species, FALSE, TRUE)
-		else
-			set_species()
-
-	if(species) // Just to be sure.
-		metabolism_factor = species.metabolism_mod
-		butcher_results = species.butcher_drops.Copy()
-
-	dna.species = species.name
-
-	var/datum/reagents/R = new/datum/reagents(1000)
-	reagents = R
-	R.my_atom = src
-
-	. = ..()
-
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
-	human_list += src
-
-	if(dna)
-		dna.real_name = real_name
-
-	handcrafting = new()
-
-	verbs += /mob/living/carbon/proc/crawl
-
-	prev_gender = gender // Debug for plural genders
-	make_blood()
-	regenerate_icons()
-
-/mob/living/carbon/human/Destroy()
-	human_list -= src
-	if(my_master)
-		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
-		golem_hud.remove_from_hud(src)
-		my_master = null
-	if(my_golem)
-		var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
-		golem_hud.remove_from_hud(src)
-		my_golem.death()
-	my_golem = null
-	return ..()
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
