@@ -338,10 +338,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 	name = "grab"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	var/obj/screen/fh_grab/hud = null
-	var/obj/screen/cooldown_overlay/cooldown = null
 	var/mob/affecting = null	//target
 	var/mob/assailant = null	//facehagger
 	var/state = GRAB_LEAP
+	var/on_cooldown = FALSE
 
 	layer = 21
 	abstract = 1
@@ -359,8 +359,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
-	cooldown = new /obj/screen/cooldown_overlay(src, hud)
-	cooldown.start_cooldown(3)
+	start_cooldown(hud, 3, CALLBACK(src, .proc/reset_cooldown))
+	on_cooldown = TRUE
 
 	assailant.put_in_active_hand(src)
 	affecting.grabbed_by += src
@@ -371,13 +371,15 @@ When we finish, facehugger's player will be transfered inside embryo.
 /obj/item/weapon/fh_grab/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(hud)
-	QDEL_NULL(cooldown)
 	affecting = null
 	assailant = null
 	return ..()
 
 /obj/item/weapon/fh_grab/proc/throw_held()
 	return null
+
+/obj/item/weapon/fh_grab/proc/reset_cooldown()
+	on_cooldown = FALSE
 
 /obj/item/weapon/fh_grab/attack_self(mob/user)
 	s_click()
@@ -402,7 +404,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 		affecting.hand = 1
 		affecting.drop_item()
 		affecting.hand = h
-		if(!cooldown.on_cooldown)
+		if(!on_cooldown)
 			state = GRAB_EMBRYO
 
 	if(state > GRAB_EMBRYO)
@@ -419,7 +421,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 			hugger.host_is_dead()
 		qdel(src)
 		return
-	if(cooldown.on_cooldown || state == GRAB_IMPREGNATE)
+	if(on_cooldown || state == GRAB_IMPREGNATE)
 		return
 	if(assailant.lying)
 		return
@@ -456,7 +458,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 	switch(state)
 		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
-			cooldown.start_cooldown(5)
+			start_cooldown(hud, 5, CALLBACK(src, .proc/reset_cooldown))
+			on_cooldown = TRUE
 			state = GRAB_UPGRADING
 			hud.icon_state = "grab/impreg"
 			hud.name = "impregnate"

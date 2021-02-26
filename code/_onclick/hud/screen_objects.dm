@@ -705,8 +705,8 @@
 	appearance_flags = RESET_COLOR | PIXEL_SCALE | RESET_TRANSFORM | KEEP_TOGETHER | RESET_ALPHA
 	vis_flags = VIS_INHERIT_ID
 	var/cooldown_time = 0
-	var/on_cooldown = FALSE
-	var/obj/screen/parent_button
+	var/obj/screen/parent_button = null
+	var/datum/callback/callback = null
 
 /obj/screen/cooldown_overlay/atom_init(mapload, button)
 	. = ..()
@@ -717,7 +717,6 @@
 	return ..()
 
 /obj/screen/cooldown_overlay/proc/start_cooldown(delay)
-	on_cooldown = TRUE
 	parent_button.color = "#8000007c"
 	parent_button.vis_contents += src
 	if(delay)
@@ -734,10 +733,17 @@
 	addtimer(CALLBACK(src, .proc/tick), 1 SECOND)
 
 /obj/screen/cooldown_overlay/proc/stop_cooldown()
-	on_cooldown = FALSE
 	cooldown_time = 0
 	parent_button.color = "#ffffffff"
 	parent_button.vis_contents -= src
+	if(callback)
+		callback.Invoke()
 
 /obj/screen/cooldown_overlay/proc/set_maptext(time)
 	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
+
+/proc/start_cooldown(button, time, callback)
+	var/obj/screen/cooldown_overlay/cooldown = new(button, button)
+	if(callback)
+		cooldown.callback = callback
+	cooldown.start_cooldown(time)
