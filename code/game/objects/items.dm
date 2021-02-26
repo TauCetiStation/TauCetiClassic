@@ -79,6 +79,7 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -362,6 +363,7 @@
 	if(!user.can_pickup(src))
 		return
 
+	remove_outline()
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -396,6 +398,7 @@
 		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
+	remove_outline()
 	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
@@ -1013,3 +1016,45 @@ var/global/list/items_blood_overlay_by_type = list()
 			AA.theImage.layer = layer
 			AA.theImage.plane = plane
 			AA.theImage.appearance_flags = appearance_flags
+
+/obj/item/MouseEntered()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	apply_outline()
+
+/obj/item/MouseExited()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	remove_outline()
+
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(src != over)
+		remove_outline()
+
+
+/client/var/list/image/outlined_item = list()
+/obj/item/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/obj/item/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src

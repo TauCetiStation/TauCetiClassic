@@ -238,3 +238,8 @@
 
 /// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
 #define COMSIG_MOB_MOD_UPDATE "mob_mod_update"
+
+/// send this signal to add /datum/component/vis_radius to a list of mobs or one mob: (mob/mob_or_mobs)
+#define COMSIG_SHOW_RADIUS "show_radius"
+/// send this signal to remove /datum/component/vis_radius to a mobs: ()
+#define COMSIG_HIDE_RADIUS "hide_radius"

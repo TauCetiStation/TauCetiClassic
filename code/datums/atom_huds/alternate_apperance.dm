@@ -115,7 +115,10 @@ var/global/list/active_alternate_appearances = list()
 		ghost_image.alpha = 128
 		ghost_image.pixel_x = theImage.pixel_x
 		ghost_image.pixel_y = theImage.pixel_y
-		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image)
+		ghost_image.color = theImage.color
+		ghost_image.plane = theImage.plane
+		ghost_image.transform = theImage.transform
+		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
@@ -206,6 +209,22 @@ var/global/list/active_alternate_appearances = list()
 
 /datum/atom_hud/alternate_appearance/basic/one_person/mobShouldSee(mob/M)
 	if(M == seer)
+		return TRUE
+	return FALSE
+
+/datum/atom_hud/alternate_appearance/basic/group
+	var/list/seers
+	add_ghost_version = TRUE
+
+/datum/atom_hud/alternate_appearance/basic/group/New(key, image/I, mob_or_mobs)
+	..(key, I, FALSE)
+	var/list/mobs = islist(mob_or_mobs) ? mob_or_mobs : list(mob_or_mobs)
+	seers = mobs
+	for(var/mob/M in seers)
+		add_hud_to(M)
+
+/datum/atom_hud/alternate_appearance/basic/group/mobShouldSee(mob/M)
+	if(M in seers)
 		return TRUE
 	return FALSE
 

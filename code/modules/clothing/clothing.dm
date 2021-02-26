@@ -180,6 +180,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 
 /obj/item/clothing/MouseDrop(obj/over_object)
+	. = ..()
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.

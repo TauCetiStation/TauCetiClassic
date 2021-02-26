@@ -47,6 +47,7 @@
 	selected = "CR"
 
 /obj/item/weapon/game_kit/MouseDrop(mob/user)
+	. = ..()
 	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
 		interact(user)
 
