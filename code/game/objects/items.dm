@@ -370,6 +370,7 @@
 	if(!user.can_pickup(src))
 		return
 
+	remove_outline()
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -404,6 +405,7 @@
 		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
+	remove_outline()
 	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
@@ -1012,3 +1014,45 @@ var/global/list/items_blood_overlay_by_type = list()
 
 /obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	return
+
+/obj/item/MouseEntered()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	apply_outline()
+
+/obj/item/MouseExited()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	remove_outline()
+
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(src != over)
+		remove_outline()
+
+
+/client/var/list/image/outlined_item = list()
+/obj/item/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/obj/item/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src
