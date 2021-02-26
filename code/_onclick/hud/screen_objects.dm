@@ -705,8 +705,9 @@
 	appearance_flags = RESET_COLOR | PIXEL_SCALE | RESET_TRANSFORM | KEEP_TOGETHER | RESET_ALPHA
 	vis_flags = VIS_INHERIT_ID
 	var/cooldown_time = 0
-	var/obj/screen/parent_button = null
-	var/datum/callback/callback = null
+	var/obj/screen/parent_button
+	var/datum/callback/callback
+	var/timer
 
 /obj/screen/cooldown_overlay/atom_init(mapload, button)
 	. = ..()
@@ -714,6 +715,7 @@
 
 /obj/screen/cooldown_overlay/Destroy()
 	stop_cooldown()
+	deltimer(timer)
 	return ..()
 
 /obj/screen/cooldown_overlay/proc/start_cooldown(delay)
@@ -722,7 +724,7 @@
 	if(delay)
 		cooldown_time = delay
 	set_maptext(cooldown_time)
-	addtimer(CALLBACK(src, .proc/tick), 1 SECOND)
+	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
 /obj/screen/cooldown_overlay/proc/tick()
 	if(cooldown_time == 0)
@@ -730,7 +732,7 @@
 		return
 	cooldown_time--
 	set_maptext(cooldown_time)
-	addtimer(CALLBACK(src, .proc/tick), 1 SECOND)
+	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
 
 /obj/screen/cooldown_overlay/proc/stop_cooldown()
 	cooldown_time = 0
@@ -742,8 +744,9 @@
 /obj/screen/cooldown_overlay/proc/set_maptext(time)
 	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
 
-/proc/start_cooldown(button, time, callback)
+/proc/start_cooldown(obj/screen/button, time, datum/callback/callback)
 	var/obj/screen/cooldown_overlay/cooldown = new(button, button)
 	if(callback)
 		cooldown.callback = callback
 	cooldown.start_cooldown(time)
+	return cooldown
