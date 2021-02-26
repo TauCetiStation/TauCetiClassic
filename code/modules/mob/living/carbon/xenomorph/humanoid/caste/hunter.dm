@@ -6,17 +6,20 @@
 	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alienh_s"	//default invisibility
-	plasma_rate = 5
 	heal_rate = 3
 
 /mob/living/carbon/xenomorph/humanoid/hunter/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "alien hunter")
-		name = text("alien hunter ([rand(1, 1000)])")
+	name = "alien hunter ([rand(1, 1000)])"
 	real_name = name
+	alien_list[ALIEN_HUNTER] += src
 	. = ..()
+
+/mob/living/carbon/xenomorph/humanoid/hunter/Destroy()
+	alien_list[ALIEN_HUNTER] -= src
+	return ..()
 
 /mob/living/carbon/xenomorph/humanoid/hunter/handle_environment()
 	if(icon_state == "alienh_s")	//if the hunter is invisible
@@ -26,55 +29,7 @@
 		m_intent = MOVE_INTENT_RUN	//get out of invisibility if plasma runs out
 	..()
 
-/mob/living/carbon/xenomorph/humanoid/hunter/handle_hud_icons_health()
-	if (healths)
-		if (stat != DEAD)
-			switch(health)
-				if(150 to INFINITY)
-					healths.icon_state = "health0"
-				if(120 to 150)
-					healths.icon_state = "health1"
-				if(90 to 120)
-					healths.icon_state = "health2"
-				if(60 to 90)
-					healths.icon_state = "health3"
-				if(30 to 60)
-					healths.icon_state = "health4"
-				if(0 to 30)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
-
 //Hunter verbs
-/*
-/mob/living/carbon/xenomorph/humanoid/hunter/verb/invis()
-	set name = "Invisibility (50)"
-	set desc = "Makes you invisible for 15 seconds."
-	set category = "Alien"
-
-	if(alien_invis)
-		update_icons()
-	else
-		if(powerc(50))
-			adjustToxLoss(-50)
-			alien_invis = 1.0
-			update_icons()
-			to_chat(src, "<span class='notice'>You are now invisible.</span>")
-			for(var/mob/O in oviewers(src, null))
-				O.show_messageold(text("<span class='warning'><B>[src] fades into the surroundings!</B></span>"), 1)
-			spawn(250)
-				if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
-					alien_invis = 0.0
-					update_icons()
-					to_chat(src, "<span class='notice'>You are no longer invisible.</span>")
-	return
-*/
-
-//Hunter verbs
-
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
 	if(resting)

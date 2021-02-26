@@ -61,7 +61,7 @@ This is so anime it hurts. But that's the point.*/
 
 				handle_teleport_grab(picked, U)
 				U.loc = picked
-				U.dir = target.dir
+				U.set_dir(target.dir)
 
 				spawn(0)
 					spark_system.start()

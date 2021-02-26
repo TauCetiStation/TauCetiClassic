@@ -4,7 +4,8 @@
 	children = list(
 		/datum/asset/simple/jquery,
 		/datum/asset/simple/goonchat,
-		/datum/asset/simple/fontawesome
+		/datum/asset/simple/fontawesome,
+		/datum/asset/simple/error_handler_js
 	)
 
 /datum/asset/simple/tgui
@@ -23,7 +24,6 @@
 		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
 		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
 		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
 		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
 	)
@@ -89,6 +89,11 @@
 		"none.png" = 'icons/obj/chess/board_none.png'
 	)
 
+/datum/asset/simple/error_handler_js
+	assets = list(
+		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js'
+	)
+
 /datum/asset/nanoui
 	var/list/common = list()
 
@@ -102,8 +107,8 @@
 		"nano/templates/"
 	)
 
-	var/assets = list(
-		"error_handler.js" = 'code/modules/error_handler_js/error_handler.js',
+	var/children = list(
+		/datum/asset/simple/error_handler_js
 	)
 
 /datum/asset/nanoui/register()
@@ -122,16 +127,15 @@
 				if(fexists(path + filename))
 					register_asset(filename, fcopy_rsc(path + filename))
 
-	for(var/asset_name in assets)
-		register_asset(asset_name, assets[asset_name])
-
 /datum/asset/nanoui/send(client, uncommon)
 	if(!islist(uncommon))
 		uncommon = list(uncommon)
 
 	send_asset_list(client, uncommon)
 	send_asset_list(client, common)
-	send_asset_list(client, assets)
+	for(var/type in children)
+		var/datum/asset/A = get_asset_datum(type)
+		A.send(client)
 
 /datum/asset/spritesheet/vending
 	name = "vending"

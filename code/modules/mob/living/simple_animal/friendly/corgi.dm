@@ -42,7 +42,7 @@
 			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 	else
 		..()
@@ -101,7 +101,7 @@
 			emote("me",1,pick("dances around","chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 
 /mob/living/simple_animal/corgi/borgi

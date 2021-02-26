@@ -29,12 +29,6 @@
 
 	moveset_type = /datum/combat_moveset/human
 
-/mob/living/carbon/human/dummy
-	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
-
-INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
-
 /mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
 	. = ..(mapload, SKRELL)
@@ -104,7 +98,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(!species)
 		if(new_species)
-			set_species(new_species, null, TRUE)
+			set_species(new_species, FALSE, TRUE)
 		else
 			set_species()
 
@@ -265,6 +259,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/weapon_message = "Explosive Blast"
 	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
+
+/mob/living/carbon/human/airlock_crush_act()
+	..()
+	emote("scream")
 
 /mob/living/carbon/human/singularity_act()
 	var/gain = 20
@@ -1407,7 +1405,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
 
-/mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = null)
+/mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
 
 	if(!new_species)
 		if(dna.species)
@@ -1440,7 +1438,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		b_skin = 0
 
 	if(force_organs || !bodyparts.len)
-		species.create_organs(src, deleteOld = TRUE)
+		species.create_organs(src, TRUE)
 	else
 		apply_recolor()
 
@@ -1450,6 +1448,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(species.additional_languages)
 		for(var/A in species.additional_languages)
 			add_language(A)
+
+	typing_indicator_type = species.typing_indicator_type
 
 	species.handle_post_spawn(src)
 	species.on_gain(src)
@@ -2047,8 +2047,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	last_massage = world.time
 
-	if(op_stage.ribcage != 2 && prob(5))
-		var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
+	var/obj/item/organ/external/BP = get_bodypart(Heart.parent_bodypart)
+	if (((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2) && prob(5))
 		BP.fracture()
 		to_chat(user, "<span class='warning'>You hear cracking in [src]'s [BP]!.</span>")
 

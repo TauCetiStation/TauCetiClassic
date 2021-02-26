@@ -91,3 +91,11 @@
 	var/list/topiclimiter
 
 	var/bwoink_sound = 'sound/effects/adminhelp.ogg'
+
+	/**
+	 * Assoc list with all the active maps - when a screen obj is added to
+	 * a map, it's put in here as well.
+	 *
+	 * Format: list(<mapname> = list(/obj/screen))
+	 */
+	var/list/screen_maps = list()

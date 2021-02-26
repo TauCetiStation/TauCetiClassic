@@ -54,6 +54,7 @@
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H)
+	set waitfor = FALSE
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 
@@ -165,7 +166,7 @@
 /proc/get_id_photo(mob/living/carbon/human/H, show_directions = list(SOUTH))
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P = H.client.prefs
-	return get_flat_human_icon(null, J, P, show_directions)
+	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
 
 /proc/find_general_record(field, value)
 	return find_record(field, value, data_core.general)

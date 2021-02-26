@@ -260,7 +260,7 @@ var/global/list/icon_state_allowed_cache = list()
 	desc = O.desc
 	icon = O.icon
 	icon_state = O.icon_state
-	dir = O.dir
+	set_dir(O.dir)
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"

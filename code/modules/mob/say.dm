@@ -135,7 +135,7 @@
 	return get_turf(src)
 
 /proc/say_test(text)
-	var/ending = copytext(text, -1)
+	var/ending = copytext_char(text, -1)
 	if (ending == "?")
 		return "1"
 	else if (ending == "!")

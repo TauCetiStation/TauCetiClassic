@@ -121,7 +121,7 @@
 		if(light_amount <= 3)
 			if(prob(max(1,L.scp_mark * 4)))
 				src.loc = T
-				src.dir = L.dir
+				src.set_dir(L.dir)
 				playsound(L, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 				L.gib()
 				did_move = 1
@@ -155,7 +155,7 @@
 		if(!no_where_to_jump)
 			target_turf.scp_was_here = 1
 			loc = target_turf
-			dir = pick(cardinal)
+			set_dir(pick(cardinal))
 			playsound(src, 'sound/effects/scp_move.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/simple_animal/special/scp173/death()

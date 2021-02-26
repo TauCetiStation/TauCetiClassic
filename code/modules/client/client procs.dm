@@ -581,6 +581,10 @@ var/list/blacklisted_builds = list(
 /client/proc/is_afk(duration = config.afk_time_bracket)
 	return inactivity > duration
 
+/client/proc/inactivity2text()
+	var/seconds = inactivity / 10
+	return "[round(seconds / 60)] minute\s, [seconds % 60] second\s"
+
 // Send resources to the client.
 /client/proc/send_resources()
 	// Most assets are now handled through asset_cache.dm
@@ -622,7 +626,7 @@ var/list/blacklisted_builds = list(
 			LAZYSET(char_render_holders, "[D]", O)
 			screen |= O
 		O.appearance = MA
-		O.dir = D
+		O.set_dir(D)
 		O.underlays += image('icons/turf/floors.dmi', "floor")
 		O.screen_loc = "character_preview_map:0,[pos]"
 

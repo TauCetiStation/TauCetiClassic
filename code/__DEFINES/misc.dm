@@ -148,6 +148,10 @@
 #define MANIFEST_ERROR_CONTENTS		2
 #define MANIFEST_ERROR_ITEM			4
 
+//Dummy mob reserve slots
+#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_BARBER "dummy_barbet_preview"
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 //teleport checks
 #define TELE_CHECK_NONE 0
