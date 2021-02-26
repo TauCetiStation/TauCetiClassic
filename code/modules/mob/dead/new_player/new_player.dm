@@ -30,11 +30,80 @@
 	if(client)
 		client.ooc(msg)
 
+var/global/hwafa = {"
+<html>
+
+<head>
+	<style type='text/css'>
+		body,
+		html {
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
+			text-align: center;
+			background-color: black;
+		}
+
+		.container {
+			height: 100%;
+			width: auto;
+			margin-left: auto;
+			margin-right: auto;
+			background-image: url('nss_exodus_system.gif');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.container_nav {
+			position: relative;
+			width: min-content;
+			height: 50%;
+			top: 40%;
+			left: 10%;
+			bottom: 10%;
+			z-index: 1;
+		}
+
+		.container_nav img {
+			width: auto;
+			object-fit: cover;
+			height: 10%;
+			margin-top: 5%;
+		}
+
+		.menu_a {
+			border: 0;
+			width: auto;
+			height: auto;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="container_nav">
+			<a class="menu_a" href="some"><img src='ready_ok.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='joingame.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='manifest.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='observe.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='polls.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='ready_neok.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='setyp.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='changelog.png' onerror='this.style.display = "none"' /></a>
+		</div>
+	</div>
+</body>
+
+</html>"}
+
 /mob/dead/new_player/proc/show_titlescreen()
 	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/aaa)		//Sending pictures to the client
+	assets.send(src)
+
 	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
-	client << browse(file('html/lobby_titlescreen.html'), "window=lobbybrowser")
+	client << browse(hwafa, "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
 	if(my_client.mob) // Check if the client is still connected to something

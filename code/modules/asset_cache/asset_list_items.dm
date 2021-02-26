@@ -70,6 +70,12 @@
 		"dislike_clck.png" = 'icons/newscaster_icons/dislike_clck.png'
 	)
 
+/datum/asset/simple/aaa
+	assets = list(
+		"nss_exodus_system.gif" = 'icons/lobby/nss_exodus_system.gif',
+		"ready_ok.png" = 'icons/lobby/ready_ok.png',
+	)
+
 /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
