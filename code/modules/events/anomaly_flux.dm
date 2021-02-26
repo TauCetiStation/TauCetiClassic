@@ -2,14 +2,8 @@
 	startWhen = 3
 	announceWhen = 20
 	endWhen = 80
-
-/datum/event/anomaly/anomaly_flux/announce()
-	command_alert("Localized hyper-energetic flux wave detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", sound = "fluxanom")
-
-/datum/event/anomaly/anomaly_flux/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
-	if(T)
-		newAnomaly = new /obj/effect/anomaly/flux(T)
+	announcement = new /datum/announcement/centcomm/anomaly/flux
+	anomaly_type = /obj/effect/anomaly/flux
 
 /datum/event/anomaly/anomaly_flux/end()
 	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to blow up.

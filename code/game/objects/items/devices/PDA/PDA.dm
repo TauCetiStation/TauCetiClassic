@@ -342,7 +342,7 @@
 			HTML += addtext("<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=",index["target"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
 
 	var/datum/browser/popup = new(usr, "log", "AI PDA Message Log", 400, 444)
-	popup.set_window_options("border=1;can_resize=1;can_close=1;can_minimize=0")
+	popup.set_window_options("border=1;can_minimize=0")
 	popup.set_content(HTML)
 	popup.open()
 
@@ -735,7 +735,7 @@
 		if ("Edit")
 			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
 			if (in_range(src, U) && loc == U && mode == 1)
-				note = html_decode(n)
+				note = n
 				notehtml = note
 				note = replacetext(note, "\n", "<br>")
 			else
@@ -860,7 +860,7 @@
 						break
 
 			var/datum/signal/signal = src.telecomms_process()
-			
+
 			if(signal && signal.data["done"])
 				useTC = TRUE
 			if(!useMS || !useTC)
@@ -1233,7 +1233,7 @@
 			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
-	
+
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		if(H.wear_id == src)

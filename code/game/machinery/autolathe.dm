@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 var/global/list/autolathe_recipes = list( \
 		/* screwdriver removed*/ \
 		new /obj/item/weapon/reagent_containers/glass/bucket(), \
@@ -148,8 +146,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/coeff = 2 ** prod_coeff
 	var/dat
 
-	dat = "<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color='#24b6bbff'><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>"
-	dat += "<div class='statusDisplay'>"
+	dat = "<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<span class='blue'><B>Glass Amount:</B></span> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>"
+	dat += "<div class='Section'>"
 	dat += "<table>"
 	var/list/objs = list()
 	objs += src.L
@@ -157,7 +155,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 		objs += src.LL
 	for(var/obj/t in objs)
 		dat += "<tr>"
-		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[t.type]", "/obj/item/", ""), "/", "-")]"></span></td>"}
+		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[t.type]", "[/obj/item]/", ""), "/", "-")]"></span></td>"}
 		dat += "<td>"
 		if (istype(t, /obj/item/stack))
 			var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"

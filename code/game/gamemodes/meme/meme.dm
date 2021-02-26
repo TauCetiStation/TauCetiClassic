@@ -6,7 +6,7 @@
 	config_tag = "meme"
 	role_type = ROLE_MEME
 	required_players = 6
-	required_players_secret = 15
+	required_players_bundles = 15
 	restricted_jobs = list("AI", "Cyborg")
 	required_enemies = 1
 	recommended_enemies = 3 // need at least a meme and a host
@@ -46,7 +46,7 @@
 
 	if (antag_candidates.len < meme_number)
 		meme_number = antag_candidates.len
-	
+
 	while(meme_number > 0)
 		var/datum/mind/meme = pick(antag_candidates)
 		modePlayer += meme
@@ -204,6 +204,6 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "meme", "html" = text))
-		text = "<div class='block'>[text]</div>"
-		
+		text = "<div class='Section'>[text]</div>"
+
 	return text

@@ -143,12 +143,12 @@
 	return ..()
 
 /obj/item/weapon/nullrod/staff/proc/show_god(mob/M)
-	if(M.client && god_image)
-		M.client.images += god_image
+	if(god_image)
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "god_staff", god_image, M)
 
 /obj/item/weapon/nullrod/staff/proc/hide_god(mob/M)
-	if(M.client && god_image)
-		M.client.images -= god_image
+	if(god_image)
+		brainmob.remove_alt_appearance("god_staff")
 
 /obj/item/weapon/nullrod/staff/equipped(mob/user, slot)
 	..()
@@ -265,10 +265,7 @@
 
 	icon_state = "talking_staffsoul"
 
-	var/image/I = image(brainmob.icon, brainmob.icon_state)
-	I.loc = brainmob
-	I.appearance = brainmob
-	god_image = I
+	god_image = image(brainmob.icon, brainmob, brainmob.icon_state)
 
 	brainmob.container = src
 	brainmob.AddComponent(/datum/component/bounded, src, 0, 3)
@@ -343,12 +340,14 @@
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
 
 /obj/item/weapon/nullrod/forcefield_staff/equipped(mob/living/user, slot)
+	..()
 	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND || slot == SLOT_BACK)
 		activate(user)
 	else if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
 		deactivate(user)
 
 /obj/item/weapon/nullrod/forcefield_staff/dropped(mob/living/user)
+	..()
 	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
 		deactivate(user)
 
@@ -404,11 +403,13 @@
 	return ..()
 
 /obj/item/weapon/claymore/religion/dropped()
+	..()
 	QDEL_NULL(shield)
 	remove_holy_outline()
 	force = def_force
 
 /obj/item/weapon/claymore/religion/equipped(mob/user, slot)
+	..()
 	if(user.mind.holy_role)
 		force = holy_force
 		if(!have_outline && can_spawn_shield)

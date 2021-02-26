@@ -7,7 +7,9 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	hud_possible = list(ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+
+	typing_indicator_type = "robot"
 
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
@@ -52,7 +54,6 @@
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
-	var/viewalerts = 0
 	var/modtype = "Default"
 	var/lower_mod = 0
 	var/jetpack = 0
@@ -119,7 +120,7 @@
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
-	
+
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/init(laws_type, ai_link)
@@ -163,7 +164,7 @@
 				"Engineering" = "Engineering",
 				"Surgeon" = "medicalrobot",
 				"Crisis" = "Medbot",
-				"Miner" = "Miner",
+				"Miner" = "Miner_old",
 				"Janitor" = "JanBot2",
 				"Service" = "Service",
 				"Security" = "secborg",
@@ -216,6 +217,7 @@
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
 			module_sprites["Acheron"] = "mechoid-Science"
+			give_hud(DATA_HUD_MINER)
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -228,8 +230,7 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
-			sensor_huds = def_sensor_huds
-			sensor_huds += DATA_HUD_MINER
+			give_hud(DATA_HUD_MINER)
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
@@ -258,6 +259,8 @@
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
+			if(camera && ("Robots" in camera.network))
+				camera.add_network("Security")
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
@@ -271,7 +274,7 @@
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && ("Robots" in camera.network))
-				camera.add_network("Engineering")
+				camera.add_network("Engineering Robots")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Custom"] = "custom_astra_t3"
@@ -295,9 +298,6 @@
 			module_sprites["Acheron"] = "mechoid-Combat"
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
-
-	//languages
-	module.add_languages(src)
 
 	hands.icon_state = lowertext(modtype)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
@@ -372,16 +372,13 @@
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
-				dat += "<NOBR>"
 				dat += text("-- [area_name]")
 				if (alarm.sources.len > 1)
 					dat += text("- [alarm.sources.len] sources")
-				dat += "</NOBR><BR>\n"
+				dat += "<BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-
-	viewalerts = 1
 
 	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
 	popup.set_content(dat)
@@ -447,7 +444,7 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(SSticker && SSticker.mode.name == "AI malfunction")
+	if(SSticker && SSticker.mode && SSticker.mode.name == "AI malfunction")
 		var/datum/game_mode/malfunction/malf = SSticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if(connected_ai)
@@ -473,14 +470,17 @@
 		if(module)
 			var/obj/item/weapon/tank/jetpack/current_jetpack = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
-				stat("Internal Atmosphere Info", current_jetpack.name)
-				stat("Tank Pressure", current_jetpack.air_contents.return_pressure())
+				stat("Internal Atmosphere Info: [current_jetpack.name]")
+				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
 /mob/living/silicon/robot/restrained()
 	return 0
 
+/mob/living/silicon/robot/airlock_crush_act()
+	..()
+	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)
@@ -523,7 +523,7 @@
 
 	if (!has_alarm)
 		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
-//		if (viewalerts) robot_alerts()
+
 	return has_alarm
 
 
@@ -922,12 +922,7 @@
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
 			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
-/*
-		if(activated(obj))
-			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
-		else
-			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
-*/
+
 	var/datum/browser/popup = new(src, "robotmod", "Modules")
 	popup.set_content(dat)
 	popup.open()

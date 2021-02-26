@@ -96,7 +96,7 @@
 			src.loc = loc
 
 		if(dir)
-			src.dir = dir
+			src.set_dir(dir)
 
 		buildstage = 0
 		wiresexposed = 1
@@ -494,7 +494,7 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/obj/machinery/alarm/proc/populate_status(var/data)
+/obj/machinery/alarm/proc/populate_status(data)
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	var/total = environment.total_moles
@@ -515,7 +515,7 @@
 	data["target_temperature"] = "[target_temperature - T0C]C"
 	data["thermoregulation"] = allow_regulate
 
-/obj/machinery/alarm/proc/populate_controls(var/list/data)
+/obj/machinery/alarm/proc/populate_controls(list/data)
 	switch(screen)
 		if(AALARM_SCREEN_MAIN)
 			data["mode"] = mode
@@ -1184,7 +1184,7 @@ FIRE ALARM
 		src.loc = loc
 
 	if(dir)
-		src.dir = dir
+		src.set_dir(dir)
 
 	if(building)
 		buildstage = 0

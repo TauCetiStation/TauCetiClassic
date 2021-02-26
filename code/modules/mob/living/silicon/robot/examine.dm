@@ -20,7 +20,7 @@
 
 	if(!has_power)
 		msg += "<span class='warning'>It appears to be running on backup power.</span>\n"
-	
+
 	if(fire_stacks > 0)
 		msg += "It is covered in something flammable.\n"
 	if(fire_stacks < 0)

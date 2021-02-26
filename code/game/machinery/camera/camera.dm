@@ -40,7 +40,7 @@
 	CA.forceMove(src)
 	assembly = CA
 	assembly.state = 4
-	
+
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
@@ -65,6 +65,7 @@
 			bug.current = null
 		bug = null
 	cameranet.cameras -= src
+	invalidateCameraCache()
 	var/list/open_networks = difflist(network, RESTRICTED_CAMERA_NETWORKS)
 	if(open_networks.len)
 		cameranet.removeCamera(src)
@@ -322,13 +323,13 @@
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
-					src.dir = SOUTH
+					src.set_dir(SOUTH)
 				if(SOUTH)
-					src.dir = NORTH
+					src.set_dir(NORTH)
 				if(WEST)
-					src.dir = EAST
+					src.set_dir(EAST)
 				if(EAST)
-					src.dir = WEST
+					src.set_dir(WEST)
 			break
 
 //Return a working camera that can see a given mob

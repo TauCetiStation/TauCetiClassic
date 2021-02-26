@@ -79,6 +79,12 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
+/mob/living/simple_animal/Login()
+	..()
+	blinded = FALSE
+	stat = CONSCIOUS
+	update_canmove()
+
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
 
@@ -123,12 +129,6 @@
 
 	// Health
 	if(stat == DEAD)
-		if(health > 0)
-			icon_state = icon_living
-			dead_mob_list -= src
-			alive_mob_list += src
-			stat = CONSCIOUS
-			density = 1
 		return 0
 
 	else if(health < 1)
@@ -245,6 +245,11 @@
 	..()
 	icon_state = icon_living
 
+/mob/living/simple_animal/revive()
+	..()
+	density = initial(density)
+	mouse_opacity = initial(mouse_opacity)
+
 /mob/living/simple_animal/gib()
 	if(icon_gib)
 		flick(icon_gib, src)
@@ -284,6 +289,8 @@
 	stat = DEAD
 	health = 0
 	density = 0
+	med_hud_set_health()
+	med_hud_set_status()
 	return ..()
 
 /mob/living/simple_animal/ex_act(severity)
@@ -363,7 +370,7 @@
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
 
-/mob/living/simple_animal/say(var/message)
+/mob/living/simple_animal/say(message)
 	if(stat)
 		return
 

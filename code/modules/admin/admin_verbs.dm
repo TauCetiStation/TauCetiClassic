@@ -71,7 +71,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
 	/client/proc/debug_variables, 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
-	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud
+	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
+	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
 	)
 var/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
@@ -152,6 +153,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/adminchangemap,
 	)
 var/list/admin_verbs_debug = list(
+	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
@@ -598,7 +600,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a spell to a mob."
 	var/list/spell_names = list()
 	for(var/v in spells)
-	//	"/obj/effect/proc_holder/spell/" 30 symbols ~Intercross21
+	//	"[/obj/effect/proc_holder/spell]/" 30 symbols ~Intercross21
 		spell_names.Add(copytext("[v]", 31, 0))
 	var/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_names
 	if(!S) return
@@ -614,7 +616,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a (tg-style) Disease to a mob."
 	var/list/disease_names = list()
 	for(var/v in diseases)
-	//	"/datum/disease/" 15 symbols ~Intercross
+	//	"[/datum/disease]/" 15 symbols ~Intercross
 		disease_names.Add(copytext("[v]", 16, 0))
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in disease_names
 	if(!D) return
@@ -861,12 +863,10 @@ var/list/admin_verbs_hideable = list(
 	M.update_body()
 	M.check_dna(M)
 
-/client/proc/show_player_notes()
+/client/proc/show_player_notes(key as text)
 	set name = "Show Player Notes"
-	set category = "Admin"
-	if(holder)
-		holder.show_player_notes()
-	return
+	set category = "Logs"
+	holder?.show_player_notes(key)
 
 /client/proc/free_slot()
 	set name = "Free Job Slot"
@@ -891,7 +891,7 @@ var/list/admin_verbs_hideable = list(
 
 	if(!check_rights(R_ADMIN))
 		return
-	
+
 	if(isobserver(usr))
 		var/mob/dead/observer/O = usr
 		if(O.data_hud)
@@ -1090,9 +1090,9 @@ var/list/admin_verbs_hideable = list(
 		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
 		if(new_count)
 			blobwincount = new_count
-	log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-	message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
-	feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
 //////////////////////////////

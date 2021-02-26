@@ -54,6 +54,17 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/status_display_last_mode
 
+		//announce stuff
+	var/datum/announcement/station/shuttle/crew_called/announce_crew_called = new
+	var/datum/announcement/station/shuttle/crew_recalled/announce_crew_recalled = new
+	var/datum/announcement/station/shuttle/crew_docked/announce_crew_docked = new
+	var/datum/announcement/station/shuttle/crew_left/announce_crew_left = new
+
+	var/datum/announcement/station/shuttle/emer_called/announce_emer_called = new
+	var/datum/announcement/station/shuttle/emer_recalled/announce_emer_recalled = new
+	var/datum/announcement/station/shuttle/emer_docked/announce_emer_docked = new
+	var/datum/announcement/station/shuttle/emer_left/announce_emer_left = new
+
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
@@ -118,7 +129,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
+					shake_mobs_in_area(end_location, SOUTH)
 
 					dock_act(end_location, "shuttle_escape")
 					dock_act(/area/centcom/evac, "shuttle_escape")
@@ -228,9 +239,9 @@ SUBSYSTEM_DEF(shuttle)
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
-					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.", sound = "emer_shut_docked")
+					announce_emer_docked.play()
 				else
-					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.", sound = "crew_shut_docked")
+					announce_crew_docked.play()
 
 				world.send2bridge(
 					type = list(BRIDGE_ROUNDSTAT),
@@ -271,7 +282,6 @@ SUBSYSTEM_DEF(shuttle)
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
 				//if(alert == 1)
-				//	captain_announce("Departing...")
 				//	sleep(100)
 				// Turn on the star effects
 
@@ -288,14 +298,14 @@ SUBSYSTEM_DEF(shuttle)
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-				end_location.parallax_movedir = WEST
+				end_location.parallax_movedir = NORTH
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				shake_mobs_in_area(end_location, EAST)
+				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
@@ -347,9 +357,9 @@ SUBSYSTEM_DEF(shuttle)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 					shake_mobs_in_area(end_location, EAST)
 
-					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "emer_shut_left")
+					announce_emer_left.play()
 				else
-					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "crew_shut_left")
+					announce_crew_left.play()
 
 				return 1
 
@@ -605,13 +615,13 @@ SUBSYSTEM_DEF(shuttle)
 		if(alert == 0)
 			if(timeleft >= get_shuttle_arrive_time())
 				return
-			captain_announce("The emergency shuttle has been recalled.", sound = "emer_shut_recalled")
+			announce_emer_recalled.play()
 			setdirection(-1)
 			online = 1
 
 			return
 		else //makes it possible to send shuttle back.
-			captain_announce("The shuttle has been recalled.", sound = "crew_shut_recalled")
+			announce_crew_recalled.play()
 			setdirection(-1)
 			online = 1
 			alert = 0 // set alert back to 0 after an admin recall

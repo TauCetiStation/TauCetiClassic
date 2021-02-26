@@ -178,11 +178,11 @@
 		..()
 
 /obj/item/weapon/haircomb //sparklysheep's comb
-	name = "purple comb"
-	desc = "A pristine purple comb made from flexible plastic."
+	name = "black comb"
+	desc = "A pristine black comb made from flexible plastic."
 	w_class = ITEM_SIZE_TINY
 	icon = 'icons/obj/items.dmi'
-	icon_state = "purplecomb"
+	icon_state = "blackcomb"
 	item_state = "purplecomb"
 
 /obj/item/weapon/haircomb/attack_self(mob/user)
@@ -234,7 +234,7 @@
 	return hash
 
 /obj/item/weapon/scissors/proc/make_mannequin(mob/living/carbon/human/H)
-	var/mob/living/carbon/human/dummy/mannequin = new(null, H.species.name)
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_BARBER, H.species)
 	mannequin.gender = H.gender
 	mannequin.age = H.age
 	mannequin.b_type = H.b_type
@@ -319,7 +319,7 @@
 	if(!MA)
 		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
 		MA = new /mutable_appearance(mannequin)
-		qdel(mannequin)
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_BARBER)
 		LAZYSET(scissors_icon_cache, hash, MA)
 
 	var/pos = 0
@@ -331,7 +331,7 @@
 			LAZYSET(char_render_holders, "[D]", O)
 			barber.client.screen |= O
 		O.appearance = MA
-		O.dir = D
+		O.set_dir(D)
 		O.screen_loc = "barber_preview_map:[pos],0"
 
 /obj/item/weapon/scissors/proc/clear_character_previews()
@@ -372,12 +372,9 @@
 	dat += "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>"
 	dat += haircutlist
 
-	var/datum/browser/popup = new(barber, "barber_window", "Grooming", ntheme = CSS_THEME_LIGHT)
-	popup.set_window_options("can_resize=0")
+	var/datum/browser/popup = new(barber, "barber_window", "Grooming", nref = src, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(barber, "barber_window", src)
 	return
 
 /obj/item/weapon/scissors/proc/dohaircut()

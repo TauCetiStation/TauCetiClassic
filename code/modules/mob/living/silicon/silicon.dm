@@ -2,7 +2,8 @@
 	gender = NEUTER
 	robot_talk_understand = 1
 	voice_name = "synthesized voice"
-	hud_possible = list(ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	typing_indicator_type = "machine"
 
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/list/def_sensor_huds
@@ -132,8 +133,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(src, "airoster")
-
 //can't inject synths
 /mob/living/silicon/try_inject(mob/user, error_msg)
 	if(error_msg)
@@ -210,3 +209,9 @@
 	if(show_message)
 		to_chat(user, "<span class='alert'>[src]'s outer shell is too tough.</span>")
 	return FALSE
+
+/mob/living/silicon/proc/give_hud(hud, reset_to_def = TRUE)
+	if(reset_to_def)
+		sensor_huds = def_sensor_huds
+
+	sensor_huds += hud

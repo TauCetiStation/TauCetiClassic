@@ -34,6 +34,14 @@
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
 
+/obj/effect/forcefield/magic/mime/atom_init()
+	. = ..()
+	var/image/I = image('icons/turf/walls/riveted.dmi', src, "box")
+	I.override = TRUE
+	I.alpha = 160
+	I.layer = INFRONT_MOB_LAYER
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/mime, "mime_wall", I)
+
 ///////////////////////////////
 
 /client/proc/mimespeak()

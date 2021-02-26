@@ -55,7 +55,7 @@
 		anchored = 0
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/atom_init(mapload, amt = 1, d = 0)
-	dir = d //Setting this direction means you won't get torched by your own flamethrower.
+	set_dir(d) //Setting this direction means you won't get torched by your own flamethrower.
 	. = ..()
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Spread()

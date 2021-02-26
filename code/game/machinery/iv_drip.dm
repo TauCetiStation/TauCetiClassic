@@ -156,9 +156,10 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(isliving(usr) && usr.stat != DEAD)
+	if(isliving(usr) && !usr.incapacitated())
 		mode = !mode
 		to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
+		update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)
 	..()

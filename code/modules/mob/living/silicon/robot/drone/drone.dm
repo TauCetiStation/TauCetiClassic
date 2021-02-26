@@ -14,7 +14,8 @@
 	density = 0
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
-	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_BATT_HUD)
+	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, DIAG_BATT_HUD)
+	typing_indicator_type = "machine"
 
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
@@ -36,7 +37,7 @@
 	drone_list += src
 
 	if(camera && ("Robots" in camera.network))
-		camera.add_network("Engineering")
+		camera.add_network("Engineering Robots")
 
 	//They are unable to be upgraded, so let's give them a bit of a better battery.
 	cell.maxcharge = 10000
@@ -64,7 +65,7 @@
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
-	
+
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
@@ -114,7 +115,7 @@
 
 //Drones can only use binary and say emotes. NOTHING else.
 //TBD, fix up boilerplate. ~ Z
-/mob/living/silicon/robot/drone/say(var/message)
+/mob/living/silicon/robot/drone/say(message)
 
 	if (!message)
 		return
@@ -299,7 +300,7 @@
 		break
 
 /mob/living/silicon/robot/drone/transfer_personality(client/candidate)
-	if(!candidate) 
+	if(!candidate)
 		return
 
 	ckey = candidate.ckey

@@ -119,9 +119,9 @@
 		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
 
 /obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity, params)
-	var/turf/T = target
-	if(get_dist(T, user) > 1)
+	if(!proximity)
 		return
+	var/turf/T = target
 	if(!istype(T, /turf/simulated/wall))
 		return
 	var/ndir = get_dir(user, T)
@@ -137,7 +137,7 @@
 		PF.framed = I
 	if(frame_glass)
 		PF.frame_glass = TRUE
-	PF.dir = ndir
+	PF.set_dir(ndir)
 	PF.update_icon()
 	qdel(src)
 	return

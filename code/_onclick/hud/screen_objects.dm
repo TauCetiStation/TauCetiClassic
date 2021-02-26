@@ -16,6 +16,8 @@
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
 	appearance_flags = APPEARANCE_UI
+	var/assigned_map
+	var/del_on_map_removal = TRUE
 
 /obj/screen/Destroy()
 	master = null
@@ -24,7 +26,7 @@
 /obj/screen/text
 	icon = null
 	icon_state = null
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "CENTER-7,CENTER-7"
 	maptext_height = 480
 	maptext_width = 480

@@ -5,7 +5,7 @@
 	state_broken_preset = "atmosb"
 	state_nopower_preset = "atmos0"
 	light_color = "#e6ffff"
-	circuit = "/obj/item/weapon/circuitboard/area_atmos"
+	circuit = /obj/item/weapon/circuitboard/area_atmos
 
 	var/list/connectedscrubbers = new()
 	var/status = ""

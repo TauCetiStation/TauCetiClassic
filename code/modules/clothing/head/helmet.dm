@@ -12,6 +12,8 @@
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
 	w_class = ITEM_SIZE_NORMAL
+	force = 5
+	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 
 /obj/item/clothing/head/helmet/warden
 	name = "warden's helmet"
@@ -28,6 +30,8 @@
 	flags_inv = HIDEEARS
 	body_parts_covered = 0
 	siemens_coefficient = 0.8
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/helmet/HoS/dermal
 	name = "dermal armour patch"
@@ -157,6 +161,8 @@
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
 	item_state = "helmet"
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
@@ -192,3 +198,24 @@
 	icon_state = "SS_Helmet"
 	item_state = "helmet"
 	item_color = "SS_Helmet"
+
+/obj/item/clothing/head/helmet/syndilight
+	name = "light helmet"
+	desc = "Light and far less armored than it's assault counterpart, this helmet is used by stealthy operators."
+	icon_state = "lighthelmet"
+	item_state = "lighthelmet"
+	armor = list(melee = 50, bullet = 60, laser = 45,energy = 50, bomb = 35, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault
+	name = "assault helmet"
+	desc = "Stylish black and red helmet with armored protective visor."
+	icon_state = "assaulthelmet_b"
+	item_state = "assaulthelmet_b"
+	armor = list(melee = 55, bullet = 60, laser = 50, energy = 70, bomb = 50, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault/alternate
+	icon_state = "assaulthelmet"
+	item_state = "assaulthelmet"
+

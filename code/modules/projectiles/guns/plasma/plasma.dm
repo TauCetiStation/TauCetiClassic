@@ -1,5 +1,5 @@
 // Here's the math used for plasma weapon shot consumption.
-// We balance this number over "/obj/item/weapon/stock_parts/cell/super" which is used as default cell type in magazine.
+// We balance this number over "[/obj/item/weapon/stock_parts/cell/super]" which is used as default cell type in magazine.
 // This battery provides 20000 cell charge, and we want 25 shots for carbine (as it was before this rework).
 // So we take this number and divide it by number of shots, and get charge consumption per shot
 // 20000 / number_of_shots = 800, incase of carbine.

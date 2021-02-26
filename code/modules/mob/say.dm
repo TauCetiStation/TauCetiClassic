@@ -60,16 +60,17 @@
 	var/rendered = "<span class='game deadsay linkify emojify'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[message]\"</span></span>"
 
 	for(var/mob/M in player_list)
+		var/tracker = "[FOLLOW_LINK(M, src)] "
 		if(isnewplayer(M))
 			continue
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
-			to_chat(M, rendered)
+			to_chat(M, tracker + rendered)
 			continue
 
 		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD) ) // Show the message to admins with deadchat toggled on
-			to_chat(M, rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
+			to_chat(M, tracker + rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 
 
 	return
@@ -92,8 +93,6 @@
 		if(isAI(src) && ispAI(other))
 			return 1
 		if(istype(other, src.type) || istype(src, other.type))
-			return 1
-		if(src.alien_talk_understand && other.alien_talk_understand)
 			return 1
 		return 0
 
@@ -136,7 +135,7 @@
 	return get_turf(src)
 
 /proc/say_test(text)
-	var/ending = copytext(text, -1)
+	var/ending = copytext_char(text, -1)
 	if (ending == "?")
 		return "1"
 	else if (ending == "!")

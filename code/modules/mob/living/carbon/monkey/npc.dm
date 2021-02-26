@@ -51,7 +51,7 @@
 				hiding_behind = null
 				hid_behind = 0
 
-			if(loc == prevloc) dir = get_dir(src, npc_fleeing)
+			if(loc == prevloc) set_dir(get_dir(src, npc_fleeing))
 		else
 			if(prob(33) && canmove && isturf(loc))
 				step(src, pick(cardinal))

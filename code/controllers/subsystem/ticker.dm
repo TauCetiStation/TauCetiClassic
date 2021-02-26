@@ -61,12 +61,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	global.syndicate_code_phrase = generate_code_phrase()
 	global.syndicate_code_response = generate_code_phrase()
-	if(config.rus_language)
-		global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
-		global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
-	else
-		global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0061-\u007A") // English chars only
-		global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0061-\u007A") // English chars only
+	global.code_phrase_highlight_rule = generate_code_regex(global.syndicate_code_phrase, @"\u0430-\u0451") // Russian chars only
+	global.code_response_highlight_rule = generate_code_regex(global.syndicate_code_response, @"\u0430-\u0451") // Russian chars only
 
 	setupFactions()
 	..()
@@ -306,7 +302,7 @@ SUBSYSTEM_DEF(ticker)
 	var/summary = "summary_selfdes"
 	if(mode && !override)
 		override = mode.name
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
 	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
@@ -453,7 +449,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(silicon_list.len)
 		ai_completions += "<h2>Silicons Laws</h2>"
-		ai_completions += "<div class='block'>"
+		ai_completions += "<div class='Section'>"
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer)
 				continue
@@ -496,7 +492,7 @@ SUBSYSTEM_DEF(ticker)
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
-			ai_completions += "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
+			ai_completions += "<br><B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
 
 		ai_completions += "</div>"
 
@@ -505,7 +501,7 @@ SUBSYSTEM_DEF(ticker)
 	ai_completions += "<br><h2>Mode Result</h2>"
 
 	if(mode.completion_text)//extendet has empty completion text
-		ai_completions += "<div class='block'>[mode.completion_text]</div>"
+		ai_completions += "<div class='Section'>[mode.completion_text]</div>"
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))

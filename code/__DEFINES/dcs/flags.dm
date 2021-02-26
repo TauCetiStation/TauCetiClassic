@@ -1,5 +1,5 @@
 /// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
-/// `parent` must not be modified if this is to be returned.\
+/// `parent` must not be modified if this is to be returned.
 /// This will be noted in the runtime logs
 #define COMPONENT_INCOMPATIBLE 1
 /// Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it for any reason can not be applied.

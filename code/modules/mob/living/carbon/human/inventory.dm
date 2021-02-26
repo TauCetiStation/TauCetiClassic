@@ -192,6 +192,7 @@
 				internals.icon_state = "internal0"
 			internal = null
 		update_inv_wear_mask()
+		sec_hud_set_security_status()
 	else if (W == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
@@ -268,6 +269,7 @@
 				update_hair()
 			W.equipped(src, slot)
 			update_inv_wear_mask()
+			sec_hud_set_security_status()
 		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 			update_inv_handcuffed()
@@ -393,3 +395,39 @@
 	if(!has_bodypart(BP_R_ARM))
 		return FALSE
 	return ..()
+
+//delete all equipment without dropping anything
+/mob/living/carbon/human/proc/delete_equipment()
+	for(var/slot in get_all_slots())//order matters, dependant slots go first
+		qdel(slot)
+
+/mob/living/carbon/human/proc/get_all_slots()
+	. = get_head_slots() | get_body_slots()
+
+/mob/living/carbon/human/proc/get_body_slots()
+	return list(
+		back,
+		s_store,
+		handcuffed,
+		legcuffed,
+		wear_suit,
+		gloves,
+		shoes,
+		belt,
+		wear_id,
+		l_store,
+		r_store,
+		w_uniform,
+		l_hand,
+		r_hand
+		)
+
+/mob/living/carbon/human/proc/get_head_slots()
+	return list(
+		head,
+		wear_mask,
+		neck,
+		glasses,
+		l_ear,
+		r_ear
+		)

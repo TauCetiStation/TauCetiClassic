@@ -132,8 +132,6 @@
 	var/datum/browser/popup = new(user, "mob[real_name]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "mob[real_name]")
 	return
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
@@ -770,7 +768,7 @@
 	memory_saved = 1 //At this point nothing is saved
 	. = ..()
 
-/mob/living/simple_animal/parrot/say(var/message)
+/mob/living/simple_animal/parrot/say(message)
 
 	if(stat || !message)
 		return

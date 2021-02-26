@@ -186,7 +186,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name, type = list(BRIDGE_ADMINALERT), mention = BRIDGE_MENTION_HERE)
 
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-		
+
 		world.send2bridge(
 			type = list(BRIDGE_ADMINLOG),
 			attachment_title = "**Ticket #[id]** created by **[key_name(initiator)]**",
@@ -260,7 +260,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
-		X.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		X.mob.playsound_local(null, X.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		window_flash(X)
 		to_chat(X, admin_msg)
 
@@ -335,7 +335,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	state = AHELP_RESOLVED
 	global.ahelp_tickets.ListInsert(src)
 
-	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/giveadminhelpverb, initiator_ckey), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
@@ -355,7 +355,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		return
 
 	if(initiator)
-		initiator.giveadminhelpverb()
+		giveadminhelpverb(initiator.ckey)
 
 		initiator.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
@@ -494,7 +494,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	else
 		return FALSE
 
-/client/proc/giveadminhelpverb()
+/proc/giveadminhelpverb(ckey)
 	ahelp_tickets.ckey_cooldown_holder[ckey] = 0
 
 /client/verb/adminhelp()

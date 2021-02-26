@@ -9,7 +9,7 @@
 	density = 1
 	blocks_air = 1
 	temperature = TCMB
-	hud_possible = list(MINE_HUD)
+	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
 	var/last_act = 0
@@ -69,7 +69,7 @@
 	if(hud_list)
 		return
 	prepare_huds()
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	mine.add_to_hud(src)
 	set_mine_hud()
 
@@ -228,6 +228,7 @@
 				excavate_find(5, finds[1])
 			else if(prob(50))
 				finds.Remove(finds[1])
+				set_mine_hud()
 				if(prob(50))
 					artifact_debris()
 
@@ -359,8 +360,8 @@
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 
-	
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
 
@@ -404,6 +405,7 @@
 				qdel(W)
 
 	finds.Remove(F)
+	set_mine_hud()
 
 
 /turf/simulated/mineral/proc/artifact_debris(severity = 0)
@@ -501,6 +503,7 @@
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
 	basetype = /turf/simulated/floor/plating/airless/asteroid
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
@@ -641,7 +644,7 @@
 		icon_state = "asteroid_stone_[rand(1,10)]"
 
 	//I dont know how, but it gets into hudatoms
-	var/datum/atom_hud/data/mine/mine = global.huds[DATA_HUD_MINER]
+	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
 		mine.remove_from_hud(src)
 

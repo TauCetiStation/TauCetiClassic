@@ -125,8 +125,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "guestpass")
-
 
 /obj/machinery/computer/guestpass/Topic(href, href_list)
 	. = ..()

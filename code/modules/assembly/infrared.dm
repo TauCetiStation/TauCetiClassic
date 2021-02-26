@@ -72,7 +72,7 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(T)
 		I.master = src
 		I.density = 1
-		I.dir = dir
+		I.set_dir(dir)
 		first = I
 		step(I, I.dir)
 		if(first)
@@ -89,7 +89,7 @@
 /obj/item/device/assembly/infra/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/t = dir
 	. = ..()
-	dir = t
+	set_dir(t)
 	qdel(first)
 
 /obj/item/device/assembly/infra/holder_movement()
@@ -120,13 +120,10 @@
 		user.set_machine(src)
 		var/dat = "<TT><B>Status</B>: [on ? "<A href='?src=\ref[src];state=0'>On</A>" : "<A href='?src=\ref[src];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=\ref[src];visible=0'>Visible</A>" : "<A href='?src=\ref[src];visible=1'>Invisible</A>"]<BR>\n</TT>"
 		dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-		dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
 
 		var/datum/browser/popup = new(user, "infra", "Infrared Laser")
 		popup.set_content(dat)
 		popup.open()
-
-		onclose(user, "infra")
 		return
 
 /obj/item/device/assembly/infra/Topic(href, href_list)
@@ -169,7 +166,7 @@
 	if(usr.incapacitated())
 		return
 
-	dir = turn(dir, 90)
+	set_dir(turn(dir, 90))
 	return
 
 
@@ -217,7 +214,7 @@
 		var/obj/effect/beam/i_beam/I = new /obj/effect/beam/i_beam(loc)
 		I.master = master
 		I.density = 1
-		I.dir = dir
+		I.set_dir(dir)
 		I.previous = src
 		next = I
 		step(I, I.dir)

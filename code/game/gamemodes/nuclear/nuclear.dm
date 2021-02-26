@@ -8,7 +8,7 @@
 	config_tag = "nuclear"
 	role_type = ROLE_OPERATIVE
 	required_players = 15
-	required_players_secret = 25
+	required_players_bundles = 25
 	required_enemies = 2
 	recommended_enemies = 6
 	antag_hud_type = ANTAG_HUD_OPS
@@ -323,7 +323,7 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "nuclear", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

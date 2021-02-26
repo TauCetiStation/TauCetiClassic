@@ -404,9 +404,9 @@
 	assignment = "Captain"
 
 /obj/item/weapon/card/id/captains_spare/atom_init()
-	var/datum/job/captain/J = new/datum/job/captain
-	access = J.get_access()
 	. = ..()
+	var/datum/job/captain/J = SSjob.GetJob("Captain")
+	access = J.get_access()
 
 /obj/item/weapon/card/id/centcom
 	name = "CentCom. ID"
@@ -414,11 +414,12 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
+	rank = "NanoTrasen Representative"
 	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/centcom/atom_init()
-	access = get_all_centcom_access()
 	. = ..()
+	access = get_all_accesses() + get_all_centcom_access()
 
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
@@ -429,17 +430,10 @@
 	assignment = "General"
 
 /obj/item/weapon/card/id/velocity/atom_init()
+	. = ..()
 	access = get_all_centcom_access()
-	. = ..()
 
-/obj/item/weapon/card/id/ert
-	name = "CentCom. ID"
+/obj/item/weapon/card/id/centcom/ert
 	icon_state = "ert"
-	registered_name = "Central Command"
 	assignment = "Emergency Response Team"
-	customizable_view = TRAITOR_VIEW
-
-/obj/item/weapon/card/id/ert/atom_init()
-	access = get_all_accesses()
-	access += get_all_centcom_access()
-	. = ..()
+	rank = "Emergency Response Team"

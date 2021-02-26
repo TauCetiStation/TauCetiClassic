@@ -5,14 +5,12 @@
   * Delete a mob
   *
   * Removes mob from the following global lists
-  * * GLOB.mob_list
-  * * GLOB.dead_mob_list
-  * * GLOB.alive_mob_list
+  * * global.mob_list
+  * * global.dead_mob_list
+  * * global.alive_mob_list
   * Clears alerts for this mob
   *
   * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
@@ -23,12 +21,12 @@
 	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 /mob/atom_init()
 	spawn()
-		if(client) animate(client, color = null, time = 0)
+		if(client)
+			animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -36,6 +34,10 @@
 		alive_mob_list += src
 	. = ..()
 	prepare_huds()
+	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
+		if(!AA)
+			continue
+		AA.update_alt_appearance(src)
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -463,11 +465,6 @@
 	return
 
 /mob/Topic(href, href_list)
-	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
-		unset_machine()
-		src << browse(null, t1)
-
 	if (href_list["refresh"])
 		if(machine && in_range(src, usr))
 			show_inv(machine)
@@ -795,9 +792,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
-	dir = ndir
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
-		buckled.dir = ndir
+		buckled.set_dir(ndir)
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
 	return 1

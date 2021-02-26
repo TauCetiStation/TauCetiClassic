@@ -13,7 +13,7 @@
 	name = "Flora reconstitution console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
-	circuit = "/obj/item/weapon/circuitboard/reconstitutor"
+	circuit = /obj/item/weapon/circuitboard/reconstitutor
 	req_access = list(access_xenoarch) //Only used for record deletion right now. //xenoarch couldn't use it when it was access_heads
 	var/obj/machinery/clonepod/pod1 = 1 //Linked cloning pod.
 	var/last_used = 0 // We don't want seeds getting spammed
@@ -99,9 +99,9 @@
 		pod1 = locate() in orange(1, src)
 
 	if(!pod1)
-		dat += "<b><font color=red>Unable to locate cloning pod.</font></b><br>"
+		dat += "<span class='red bold'>Unable to locate cloning pod.</span><br>"
 	else if(istype(pod1))
-		dat += "<b><font color=green>Cloning pod connected.</font></b><br>"
+		dat += "<span class='green bold'>Cloning pod connected.</span><br>"
 
 	dat += "<table border=1>"
 	dat += "<tr>"
@@ -163,20 +163,13 @@
 
 	dat += "<br>"
 	dat += "<hr>"
-	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
 
 	var/datum/browser/popup = new(user, "reconstitutor", "Garland Corp genetic reconstitutor", 600, 500)
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=reconstitutor")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

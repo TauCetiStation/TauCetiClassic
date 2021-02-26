@@ -42,7 +42,6 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
-	var/viewalerts = 0
 	var/lawcheck[1]
 	var/holohack = FALSE
 	var/datum/AI_Module/active_module = null
@@ -131,7 +130,9 @@ var/list/ai_verbs_default = list(
 		"NT" = "ai-nanotrasen",
 		"Gentoo" = "ai-gentoo",
 		"Hal 9000" = "ai-hal",
-)
+	)
+
+	var/datum/announcement/station/command/ai/announcement = new
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
@@ -217,7 +218,7 @@ var/list/ai_verbs_default = list(
 			job = "AI"
 
 	create_eye()
-	
+
 	new /obj/machinery/ai_powersupply(src)
 
 	ai_list += src
@@ -310,27 +311,24 @@ var/list/ai_verbs_default = list(
 
 	var/dat = ""
 	for (var/cat in alarms)
-		dat += text("<B>[]</B><BR>\n", cat)
+		dat += "<B>[cat]</B><BR>"
 		var/list/alarmlist = alarms[cat]
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
-				dat += "<NOBR>"
 
-				var/cameratext = ""
+				var/cameratext
 				if (alarm.cameras)
 					for (var/obj/machinery/camera/I in alarm.cameras)
-						cameratext += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (cameratext=="") ? "" : " | ", src, I, I.c_tag)
-				dat += text("-- [] ([])", alarm.area.name, (cameratext)? cameratext : "No Camera")
+						cameratext += "<br>---- <A HREF=?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
+				dat += "-- [alarm.area.name] [cameratext ? cameratext : "No Camera"]"
 
 				if (alarm.sources.len > 1)
 					dat += text(" - [] sources", alarm.sources.len)
-				dat += "</NOBR><BR>\n"
+				dat += "<BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-
-	viewalerts = 1
 
 	var/datum/browser/popup = new(src, "window=aialerts", "Current Station Alerts")
 	popup.set_content(dat)
@@ -362,13 +360,17 @@ var/list/ai_verbs_default = list(
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
 	var/input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message)
+	if(message_cooldown)
+		to_chat(src, "Please allow one minute to pass between announcements.")
+		return
+	
 	if(!input)
 		return
 
 	if(check_unable(AI_CHECK_WIRELESS | AI_CHECK_RADIO))
 		return
 
-	captain_announce(input, "A.I. Announcement", src.name, "aiannounce")
+	announcement.play(src, input)
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
 	message_admins("[key_name_admin(usr)] has made an AI announcement.")
 	message_cooldown = 1
@@ -488,12 +490,6 @@ var/list/ai_verbs_default = list(
 	if(usr != src)
 		return
 	..()
-	if (href_list["mach_close"])
-		if (href_list["mach_close"] == "aialerts")
-			viewalerts = 0
-		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
@@ -613,16 +609,11 @@ var/list/ai_verbs_default = list(
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 
-	if(viewalerts)
-		show_alerts()
-
 /mob/living/silicon/ai/cancelAlarm(class, area/A, source)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
 		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
-		if(viewalerts)
-			show_alerts()
 
 	return has_alarm
 

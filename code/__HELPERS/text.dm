@@ -37,7 +37,7 @@
 		// You should always consider this with any text processing work
 		// More: http://www.byond.com/docs/ref/info.html#/{notes}/Unicode
 		//       http://www.byond.com/forum/post/2520672
-		input = stip_non_ascii(input)
+		input = strip_non_ascii(input)
 	else
 		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
 		// codes from https://www.compart.com/en/unicode/category/
@@ -182,7 +182,7 @@
  * Text modification
  */
 
-/proc/replace_characters(var/t,var/list/repl_chars)
+/proc/replace_characters(t, list/repl_chars)
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
 	return t
@@ -249,7 +249,7 @@
 		M += capitalize(w)
 	return jointext(M, " ")
 
-/proc/stip_non_ascii(text)
+/proc/strip_non_ascii(text)
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
@@ -375,10 +375,10 @@
 
 	return t
 
-// Fix for pre-513 cyrillic text that Byond in 513 wrongly convert as 
+// Fix for pre-513 cyrillic text that Byond in 513 wrongly convert as
 // ISO-8859-5 -> utf-8 instead of Windows-1251 -> utf-8
 // Byond choises first encoding based on server locale, this fix for ru_RU
-// On you locale this fix may not work and you should change or 
+// On you locale this fix may not work and you should change or
 // drop this proc completly if you not have any pre-513 cyrillics
 // Does nothing with standart latin
 // ...
@@ -409,7 +409,7 @@
 				new_char = "р"
 			if(1056 to 1119)
 				new_char = ascii2text(ascii_char - 16)*/
-		
+
 		// win1251 -> unicode
 		if(ascii_char <= 255 && ascii_char >= 192)
 			new_char = ascii2text(ascii_char + 848)
@@ -419,3 +419,18 @@
 		new_text += new_char
 
 	return new_text
+
+/proc/russian_plural(n, one, two, five)
+	if(!five)
+		five = two
+	n = abs(n) % 100
+	if(5 <= n && n <= 20)
+		return five
+	n %= 10
+	switch(n)
+		if(1)
+			return one
+		if(2 to 4)
+			return two
+		else
+			return five

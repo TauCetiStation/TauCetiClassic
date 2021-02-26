@@ -68,7 +68,7 @@ Made by Xhuis
 	config_tag = "shadowling"
 	role_type = ROLE_SHADOWLING
 	required_players = 30
-	required_players_secret = 25
+	required_players_bundles = 25
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_name = "hudshadowling"
@@ -230,6 +230,6 @@ Made by Xhuis
 
 	if(text)
 		antagonists_completion += list(list("mode" = "shadowling", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text

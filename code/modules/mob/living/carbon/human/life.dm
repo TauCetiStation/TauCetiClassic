@@ -85,9 +85,6 @@
 
 			handle_virus_updates()
 
-			//stuff in the stomach
-			handle_stomach()
-
 			handle_shock()
 
 			handle_pain()
@@ -150,7 +147,7 @@
 
 	return 1 - pressure_adjustment_coefficient	//want 0 to be bad protection, 1 to be good protection
 
-/mob/living/carbon/human/calculate_affecting_pressure(var/pressure)
+/mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	..()
 	var/pressure_difference = abs( pressure - ONE_ATMOSPHERE )
 
@@ -182,10 +179,7 @@
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						if(config.rus_language)
-							say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "ПИДАРА-АС", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ","А НУ ИДИ СЮДА","УРОД"))
-						else
-							say(pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS"))
+						say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "ПИДАРА-АС", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ","А НУ ИДИ СЮДА","УРОД"))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				pixel_x += rand(-2,2)
@@ -246,22 +240,13 @@
 
 			if(13 to 18)
 				if(getBrainLoss() >= 60 && !HAS_TRAIT(src, TRAIT_STRONGMIND))
-					if(config.rus_language)//TODO:CYRILLIC dictionary?
-						switch(rand(1, 3))
-							if(1)
-								say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
-							if(2)
-								say(pick("Как минять руки?","ебучие фурри!", "Подебил", "Проклятые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
-							if(3)
-								emote("drool")
-					else
-						switch(rand(1, 3))
-							if(1)
-								say(pick("IM A PONY NEEEEEEIIIIIIIIIGH", "without oxigen blob don't evoluate?", "CAPTAINS A COMDOM", "[pick("", "that faggot traitor")] [pick("joerge", "george", "gorge", "gdoruge")] [pick("mellens", "melons", "mwrlins")] is grifing me HAL;P!!!", "can u give me [pick("telikesis","halk","eppilapse")]?", "THe saiyans screwed", "Bi is THE BEST OF BOTH WORLDS>", "I WANNA PET TEH monkeyS", "stop grifing me!!!!", "SOTP IT#"))
-							if(2)
-								say(pick("FUS RO DAH","fucking 4rries!", "stat me", ">my face", "roll it easy!", "waaaaaagh!!!", "red wonz go fasta", "FOR TEH EMPRAH", "lol2cat", "dem dwarfs man, dem dwarfs", "SPESS MAHREENS", "hwee did eet fhor khayosss", "lifelike texture ;_;", "luv can bloooom", "PACKETS!!!"))
-							if(3)
-								emote("drool")
+					switch(rand(1, 3))
+						if(1)
+							say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
+						if(2)
+							say(pick("Как минять руки?","ебучие фурри!", "Подебил", "Проклятые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
+						if(3)
+							emote("drool")
 
 /mob/living/carbon/human/proc/handle_mutations_and_radiation()
 
@@ -914,7 +899,7 @@
 	return min(1,thermal_protection)
 
 /*
-/mob/living/carbon/human/proc/add_fire_protection(var/temp)
+/mob/living/carbon/human/proc/add_fire_protection(temp)
 	var/fire_prot = 0
 	if(head)
 		if(head.protective_temperature > temp)
@@ -1426,19 +1411,17 @@
 						healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 		if(nutrition_icon)
-			switch(get_nutrition())
-				if(NUTRITION_LEVEL_FULL to INFINITY)
-					nutrition_icon.icon_state = "fat"
-				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-					nutrition_icon.icon_state = "full"
-				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-					nutrition_icon.icon_state = "well_fed"
-				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-					nutrition_icon.icon_state = "fed"
-				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-					nutrition_icon.icon_state = "hungry"
-				else
-					nutrition_icon.icon_state = "starving"
+			var/full_perc // Nutrition pecentage
+			var/fullness_icon = species.flags[IS_SYNTHETIC] ? "lowcell" : "burger"
+			var/get_nutrition_max
+			if (species.flags[IS_SYNTHETIC])
+				var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+				var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
+				get_nutrition_max = I.maxcharge
+			else
+				get_nutrition_max = NUTRITION_LEVEL_FAT
+			full_perc = clamp(((get_nutrition() / get_nutrition_max) * 100), NUTRITION_PERCENT_ZERO, NUTRITION_PERCENT_MAX)
+			nutrition_icon.icon_state = "[fullness_icon][CEILING(full_perc, 20)]"
 
 		if(pressure)
 			pressure.icon_state = "pressure[pressure_alert]"
@@ -1471,7 +1454,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/welding) )
 			var/obj/item/clothing/glasses/welding/O = glasses
 			if(!O.up && tinted_weldhelh)
-				impaired = max(impaired, 1)
+				impaired = max(impaired, 2)
 
 		if(eye_blurry)
 			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
@@ -1604,23 +1587,6 @@
 				V.dead = 1
 
 	return
-
-/mob/living/carbon/human/proc/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
-				stomach_contents.Remove(M)
-				continue
-			if(istype(M, /mob/living/carbon) && stat != DEAD)
-				if(M.stat == DEAD)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmobs.times_fired%3==1)
-					if(!(M.status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
 
 /mob/living/carbon/human/proc/handle_changeling()
 	if(mind && mind.changeling)

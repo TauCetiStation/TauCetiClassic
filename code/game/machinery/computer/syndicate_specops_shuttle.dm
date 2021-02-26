@@ -1,7 +1,7 @@
 //Config stuff
 #define SYNDICATE_ELITE_MOVETIME 600	//Time to station is milliseconds. 60 seconds, enough time for everyone to be on the shuttle before it leaves.
-#define SYNDICATE_ELITE_STATION_AREATYPE "/area/shuttle/syndicate_elite/station" //Type of the spec ops shuttle area for station
-#define SYNDICATE_ELITE_DOCK_AREATYPE "/area/shuttle/syndicate_elite/mothership"	//Type of the spec ops shuttle area for dock
+#define SYNDICATE_ELITE_STATION_AREATYPE /area/shuttle/syndicate_elite/station //Type of the spec ops shuttle area for station
+#define SYNDICATE_ELITE_DOCK_AREATYPE /area/shuttle/syndicate_elite/mothership	//Type of the spec ops shuttle area for dock
 
 var/syndicate_elite_shuttle_moving_to_station = FALSE
 var/syndicate_elite_shuttle_moving_to_mothership = FALSE
@@ -123,14 +123,11 @@ var/syndicate_elite_shuttle_timeleft = 0
 		dat = temp
 	else
 		dat  = {"\nLocation: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Departing for [station_name] in ([syndicate_elite_shuttle_timeleft] seconds.)":syndicate_elite_shuttle_at_station ? "Station":"Dock"]<BR>
-			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*The Syndicate Elite shuttle is already leaving.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Return shuttle to mothership</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]
-			\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*The Syndicate Elite shuttle is already leaving.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Return shuttle to mothership</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]"}
 
 	var/datum/browser/popup = new(user, "computer", "Special Operations Shuttle", 575, 450)
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "computer")
 
 /obj/machinery/computer/syndicate_elite_shuttle/Topic(href, href_list)
 	. = ..()

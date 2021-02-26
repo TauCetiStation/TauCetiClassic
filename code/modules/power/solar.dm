@@ -40,7 +40,7 @@
 	..()
 	SSsun.solars.Remove(src)
 
-/obj/machinery/power/solar/connect_to_network(var/process)
+/obj/machinery/power/solar/connect_to_network(process)
 	var/to_return = ..()
 	if(process)
 		SSsun.solars.Add(src)
@@ -104,7 +104,7 @@
 		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
 		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
-		src.dir = angle2dir(adir)
+		src.set_dir(angle2dir(adir))
 	return
 
 
@@ -398,21 +398,13 @@
 			t += "<A href='?src=\ref[src];trackdir=1'>CW</A> <B>CCW</B><BR>"
 		if(1)
 			t += "<B>CW</B> <A href='?src=\ref[src];trackdir=-1'>CCW</A><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 
 	var/datum/browser/popup = new(user, "solcon", "Solar Generator Control")
 	popup.set_content(t)
 	popup.open()
 
-	onclose(user, "solcon")
-
 
 /obj/machinery/power/solar_control/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=solcon")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

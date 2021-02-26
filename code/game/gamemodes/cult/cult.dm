@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 
@@ -26,7 +24,7 @@
 	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
 	required_players = 5
-	required_players_secret = 20
+	required_players_bundles = 20
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudcultist"
 
@@ -310,6 +308,6 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "cult", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text

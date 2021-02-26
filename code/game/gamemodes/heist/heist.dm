@@ -20,7 +20,7 @@
 	config_tag = "heist"
 	role_type = ROLE_RAIDER
 	required_players = 15
-	required_players_secret = 25
+	required_players_bundles = 25
 	required_enemies = 4
 	recommended_enemies = 6
 
@@ -138,7 +138,7 @@
 		raider.objectives = raid_objectives
 		greet_vox(raider)
 
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
+	for(var/atom/movable/AM in get_area_by_type(/area/shuttle/vox/arkship))
 		heist_recursive_price_reset(AM)
 
 	return ..()
@@ -272,7 +272,7 @@
 				sav_score = 0
 			if(max_score > sav_score)
 				S["HeistMaxScore"] << num2text(heist_rob_total,9)
-			for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
+			for(var/atom/movable/AM in get_area_by_type(/area/shuttle/vox/arkship))
 				if(AM.get_price())
 					var/count = 0
 					S["[AM.type]"] >> count
@@ -308,7 +308,7 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "heist", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

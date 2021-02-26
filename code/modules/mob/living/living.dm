@@ -7,12 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/medical/medhud in global.huds)
-		medhud.add_to_hud(src)
-	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
-	diaghud.add_to_hud(src)
-	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
-	sechud.add_to_hud(src)
+	for(var/datum/atom_hud/data/hud in global.huds)
+		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
@@ -216,10 +212,9 @@
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
-		src.adjustOxyLoss(src.health + 200)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+		adjustOxyLoss(health - config.health_threshold_dead)
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
-
+		death()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -405,6 +400,18 @@
 	gib()
 	return(gain)
 
+/mob/living/airlock_crush_act()
+	var/turf/mob_turf = get_turf(src)
+	for(var/dir in cardinal)
+		var/turf/new_turf = get_step(mob_turf, dir)
+		if(Move(new_turf))
+			break
+	AdjustStunned(5)
+	AdjustWeakened(5)
+	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
+	visible_message("<span class='red'>[src] was crushed by the door.</span>",
+					"<span class='danger'>The door crushed you.</span>")
+
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 
@@ -507,6 +514,7 @@
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
+	suiciding = FALSE
 
 	if(pinned.len)
 		for(var/obj/O in pinned)
@@ -530,7 +538,7 @@
 			H.restore_blood()
 			H.full_prosthetic = null
 			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart.heart_normalize()
+			Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	cure_all_viruses()
@@ -1006,11 +1014,9 @@
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
-		spawn(0)
-			sleep(25)
-			if(src)
-				clear_fullscreen("flash", 25)
-		return 1
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		return TRUE
+	return FALSE
 
 /mob/living/proc/has_brain()
 	return TRUE
@@ -1063,24 +1069,53 @@
 	var/final_pixel_y = default_pixel_y
 	..(A, final_pixel_y)
 
+	var/list/viewing = list()
+	for(var/mob/M in viewers(A))
+		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+			viewing |= M.client
+
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
 	if(hand)
 		if(l_hand)
+			if(l_hand.alternate_appearances)
+				viewing = alternate_attack_animation(l_hand, A, viewing)
 			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
 	else
 		if(r_hand)
+			if(r_hand.alternate_appearances)
+				viewing = alternate_attack_animation(r_hand, A, viewing)
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		var/list/viewing = list()
-		for(var/mob/M in viewers(A))
-			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
-				viewing |= M.client
+
 		flick_overlay(I,viewing,5)
 		I.pixel_z = 16 //lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
+
+// returns a new list of viewers without viewers with alternate_appearance
+/mob/living/proc/alternate_attack_animation(obj/item/item, atom/target, list/viewing)
+	if(item.alternate_appearances)
+		var/image/I
+		for(var/key in item.alternate_appearances)
+			var/list/alt_viewing = list()
+			var/datum/atom_hud/alternate_appearance/basic/AA = item.alternate_appearances[key]
+			for(var/client/C in viewing)
+				if(!(C.mob in AA.hudusers))
+					continue
+				alt_viewing += C
+				viewing -= C
+
+			I = image(AA.theImage.icon, target, AA.theImage.icon_state, target.layer+1)
+			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+			flick_overlay(I, alt_viewing, 5)
+			I.pixel_z = 16
+			animate(I, pixel_z = 0, alpha = 125, time = 3)
+	return viewing
 
 /mob/living/Stat()
 	..()
@@ -1137,7 +1172,7 @@
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
 		return
-	if(butcher_results.len)
+	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
 				new path(src.loc)

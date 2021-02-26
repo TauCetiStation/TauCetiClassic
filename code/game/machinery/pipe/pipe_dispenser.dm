@@ -71,8 +71,6 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-	onclose(user, "pipedispenser")
-
 /obj/machinery/pipedispenser/is_operational_topic()
 	return TRUE
 
@@ -146,7 +144,7 @@
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
-/obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
+/obj/machinery/pipedispenser/disposal/Crossed(obj/structure/disposalconstruct/pipe as obj)
 	if(istype(pipe) && !pipe.anchored)
 		qdel(pipe)
 
