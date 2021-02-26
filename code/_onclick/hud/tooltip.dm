@@ -28,10 +28,9 @@
 		tooltip.set_state(TRUE)
 
 /client/MouseEntered(atom/hoverOn, location, control, params)
-	if(!prefs.tooltip)
-		return
-
-	if(tooltip?.state)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(prefs.tooltip && tooltip?.state)
 		var/text_in_tooltip = hoverOn.get_name()
 		screen |= tooltip
 		tooltip.SetMapText(text_in_tooltip, prefs.tooltip_font)
