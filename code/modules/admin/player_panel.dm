@@ -586,13 +586,23 @@
 		if(mutiny)
 			dat += mutiny.check_antagonists_ui(src)
 
+		if(istype(SSticker.mode, /datum/game_mode/infestation))
+			var/datum/game_mode/infestation/inf = SSticker.mode
+			var/data = inf.count_alien_percent()
+			dat += "<br><table><tr><td><B>Статистика</B></td><td></td></tr>"
+			dat += "<tr><td>Экипаж:</td><td>[data[TOTAL_HUMAN]]</td></tr>"
+			dat += "<tr><td>Взрослые ксеноморфы:</td><td>[data[TOTAL_ALIEN]]</td></tr>"
+			dat += "<tr><td>Процент победы:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
+
 		if(alien_list.len)
-			var/list/datum/mind/alien_mind = list()
-			for(var/mob/living/carbon/xenomorph/A in alien_list)
-				if(A.stat == DEAD || !A.mind)
-					continue
-				alien_mind += A.mind
-			dat += check_role_table("Xenomorphs", alien_mind, src, FALSE)
+			for(var/key in alien_list)
+				var/list/datum/mind/alien_minds = list()
+				for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+					if(A.stat == DEAD || !A.mind)
+						continue
+					alien_minds += A.mind
+				if(alien_minds.len)
+					dat += check_role_table(key, alien_minds, src, FALSE)
 
 		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 400, 500)
 		popup.set_content(dat)

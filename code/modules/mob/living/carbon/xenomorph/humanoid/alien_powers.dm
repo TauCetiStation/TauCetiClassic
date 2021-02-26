@@ -326,23 +326,6 @@ Doesn't work on other aliens/AI.*/
 				new /obj/structure/stool/bed/nest(loc)
 	return
 
-/mob/living/carbon/xenomorph/humanoid/verb/regurgitate()
-	set name = "Regurgitate"
-	set desc = "Empties the contents of your stomach."
-	set category = "Alien"
-
-	if(powerc())
-		if(stomach_contents.len)
-			for(var/mob/M in src)
-				if(M in stomach_contents)
-					if(!do_mob(usr, usr))
-						return
-					stomach_contents.Remove(M)
-					M.loc = loc
-					M.Paralyse(2)
-			src.visible_message("<span class='warning'>[src] hurls out the contents of their stomach!</span>")
-	return
-
 /mob/living/carbon/xenomorph/humanoid/verb/air_plant()
 	set name = "Plant Air Generator (250)"
 	set desc = "Plants some alien weeds."
