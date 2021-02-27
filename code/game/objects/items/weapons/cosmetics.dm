@@ -234,7 +234,10 @@
 	return hash
 
 /obj/item/weapon/scissors/proc/make_mannequin(mob/living/carbon/human/H)
-	var/mob/living/carbon/human/dummy/mannequin = new(null, H.species.name)
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_BARBER, H.species.name)
+
+	mannequin.set_species(H.species.name)
+
 	mannequin.gender = H.gender
 	mannequin.age = H.age
 	mannequin.b_type = H.b_type
@@ -319,7 +322,7 @@
 	if(!MA)
 		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
 		MA = new /mutable_appearance(mannequin)
-		qdel(mannequin)
+		unset_busy_human_dummy(DUMMY_HUMAN_SLOT_BARBER)
 		LAZYSET(scissors_icon_cache, hash, MA)
 
 	var/pos = 0
