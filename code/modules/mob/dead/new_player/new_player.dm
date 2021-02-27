@@ -44,6 +44,10 @@ var/global/lobby_html = {"
 			background-color: black;
 		}
 
+		img {
+			border-style:none;
+		}
+
 		.container {
 			height: 100%;
 			width: auto;
@@ -76,6 +80,11 @@ var/global/lobby_html = {"
 			width: auto;
 			height: auto;
 		}
+
+		.menu_a:hover {
+			border-bottom: 2px solid white;
+		}
+
 	</style>
 </head>
 
