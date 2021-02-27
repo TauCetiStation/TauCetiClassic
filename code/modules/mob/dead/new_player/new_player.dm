@@ -32,77 +32,68 @@
 
 var/global/lobby_html = {"
 <html>
-
 <head>
-	<style type='text/css'>
-		body,
-		html {
-			margin: 0;
-			height: 100%;
-			overflow: hidden;
-			text-align: center;
-			background-color: black;
-		}
+    <style type='text/css'>
+        body,
+        html {
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+            background-color: black;
+        }
 
-		img {
-			border-style:none;
-		}
+        img {
+            border-style:none;
+        }
 
-		.container {
-			height: 100%;
-			width: auto;
-			margin-left: auto;
-			margin-right: auto;
-			background-image: url('nss_exodus_system.gif');
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
+        .fone{
+            position: absolute;
+            object-fit: contain;
+            width: auto;
+            height: 100%;
+            left: 0;
+            z-index: 0;
+        }
 
-		.container_nav {
-			position: relative;
-			width: min-content;
-			height: 50%;
-			top: 40%;
-			left: 10%;
-			bottom: 10%;
-			z-index: 1;
-		}
+        .container_nav {
+            position: fixed;
+            height: 50%;
+            width: 50%;
+            z-index: 1;
+            float: left;
+            margin-top: 600px;
+            margin-left: 100px;
+        }
 
-		.container_nav img {
-			width: auto;
-			object-fit: cover;
-			height: 10%;
-			margin-top: 5%;
-		}
+        .container_nav img {
+            margin-right: 100%;
+        }
 
-		.menu_a {
-			border: 0;
-			width: auto;
-			height: auto;
-		}
+        .menu_a {
+            position: relative;
+            float: left;
+        }
 
-		.menu_a:hover {
-			border-bottom: 2px solid white;
-		}
+        .menu_a:hover {
+            border-left: 2px solid white;
+        }
 
-	</style>
+    </style>
 </head>
 
 <body>
-	<div class="container">
-		<div class="container_nav">
-			<a class="menu_a" href="some"><img src='ready_ok.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='joingame.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='manifest.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='observe.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='polls.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='ready_neok.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='setup.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='changelog.png' onerror='this.style.display = "none"' /></a>
-		</div>
-	</div>
+    <img src="titlescreen.gif" class="fone" alt="">
+    <div class="container_nav">
+        <a class="menu_a" href="some"><img src='ready_ok.png' onerror='this.style.display = "none"' /></a>
+        <a class="menu_a" href="some"><img src='joingame.png' onerror='this.style.display = "none"' /></a>
+        <a class="menu_a" href="some"><img src='manifest.png' onerror='this.style.display = "none"' /></a>
+        <a class="menu_a" href="some"><img src='observe.png' onerror='this.style.display = "none"' /></a>
+        <a class="menu_a" href="some"><img src='polls.png' onerror='this.style.display = "none"' /></a>
+        <a class="menu_a" href="some"><img src='ready_neok.png' onerror='this.style.display = "none"' /></a>
+        <a class="menu_a" href="some"><img src='setup.png' onerror='this.style.display = "none"' /></a>
+        <a class="menu_a" href="some"><img src='changelog.png' onerror='this.style.display = "none"' /></a>
+    </div>
 </body>
-
 </html>"}
 
 /mob/dead/new_player/proc/show_titlescreen()
