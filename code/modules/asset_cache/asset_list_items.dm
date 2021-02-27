@@ -72,7 +72,6 @@
 
 /datum/asset/simple/lobby
 	assets = list(
-		"nss_exodus_system.gif" = 'icons/lobby/nss_exodus_system.gif',
 		"ready_ok.png" = 'icons/lobby/ready_ok.png',
 		"ready_neok.png" = 'icons/lobby/ready_neok.png',
 		"setup.png" = 'icons/lobby/setup.png',
@@ -80,7 +79,6 @@
 		"joingame.png" = 'icons/lobby/joingame.png',
 		"manifest.png" = 'icons/lobby/manifest.png',
 		"observe.png" = 'icons/lobby/observe.png',
-		"polls.png" = 'icons/lobby/polls.png',
 	)
 
 /datum/asset/simple/chess

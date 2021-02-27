@@ -16,7 +16,7 @@
 
 	sight |= SEE_TURFS
 
-	new_player_panel()
+	show_titlescreen()
 	playsound_lobbymusic()
 	show_titlescreen()
 //	handle_privacy_poll() // commented cause polls are kinda broken now, needs refactoring
