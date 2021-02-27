@@ -389,7 +389,7 @@
 	if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
 		user.remove_from_mob(O)
-		nutrilevel = 10
+		nutrilevel = min(nutrilevel + 10, maxnutri)
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
 		to_chat(user, "You replace the nutrient solution in [src].")
