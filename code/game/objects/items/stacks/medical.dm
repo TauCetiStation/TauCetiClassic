@@ -228,6 +228,9 @@
 
 	repeating = TRUE
 
+/obj/item/stack/medical/advanced/bruise_pack/update_icon()
+	icon_state = "[initial(icon_state)][amount]"
+
 /obj/item/stack/medical/advanced/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
 	playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
@@ -287,6 +290,10 @@
 	other_delay = 10
 
 	repeating = TRUE
+
+
+/obj/item/stack/medical/advanced/ointment/update_icon()
+	icon_state = "[initial(icon_state)][amount]"
 
 /obj/item/stack/medical/advanced/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
