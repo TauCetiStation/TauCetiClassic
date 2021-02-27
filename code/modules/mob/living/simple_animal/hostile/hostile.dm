@@ -252,7 +252,7 @@
 /mob/living/simple_animal/hostile/proc/start_shoot(the_target)
 	var/tturf
 	for(var/i in 1 to amount_shoot)
-		tturf = get_turf(target) // need for refresh target location between shoots
+		tturf = get_turf(the_target) // need for refresh target location between shoots
 		Shoot(tturf, src.loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))

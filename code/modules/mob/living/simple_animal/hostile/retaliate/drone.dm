@@ -1,7 +1,7 @@
 
 //malfunctioning combat drones
 /mob/living/simple_animal/hostile/retaliate/malf_drone
-	name = "боевой дрон"
+	name = "Боевой дрон"
 	desc = "Автоматический боевой дрон, вооруженный новейшим вооружением и обладающий высокой прочностью корпуса."
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "drone_100"
