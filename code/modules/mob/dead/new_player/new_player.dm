@@ -30,7 +30,7 @@
 	if(client)
 		client.ooc(msg)
 
-var/global/hwafa = {"
+var/global/lobby_html = {"
 <html>
 
 <head>
@@ -88,7 +88,7 @@ var/global/hwafa = {"
 			<a class="menu_a" href="some"><img src='observe.png' onerror='this.style.display = "none"' /></a>
 			<a class="menu_a" href="some"><img src='polls.png' onerror='this.style.display = "none"' /></a>
 			<a class="menu_a" href="some"><img src='ready_neok.png' onerror='this.style.display = "none"' /></a>
-			<a class="menu_a" href="some"><img src='setyp.png' onerror='this.style.display = "none"' /></a>
+			<a class="menu_a" href="some"><img src='setup.png' onerror='this.style.display = "none"' /></a>
 			<a class="menu_a" href="some"><img src='changelog.png' onerror='this.style.display = "none"' /></a>
 		</div>
 	</div>
@@ -99,11 +99,11 @@ var/global/hwafa = {"
 /mob/dead/new_player/proc/show_titlescreen()
 	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/aaa)		//Sending pictures to the client
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby) //Sending pictures to the client
 	assets.send(src)
 
 	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
-	client << browse(hwafa, "window=lobbybrowser")
+	client << browse(lobby_html, "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
 	if(my_client.mob) // Check if the client is still connected to something
