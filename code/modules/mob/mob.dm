@@ -1008,8 +1008,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
-
-		H.shock_stage += 20
+		if(!H.species.flags[NO_PAIN])
+			H.shock_stage += 20
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
