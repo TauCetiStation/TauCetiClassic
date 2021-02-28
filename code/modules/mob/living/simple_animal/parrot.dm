@@ -47,7 +47,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
 	response_harm   = "swats the"
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	universal_speak = 1
 
 	has_head = TRUE
