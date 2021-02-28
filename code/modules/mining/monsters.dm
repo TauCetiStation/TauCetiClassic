@@ -33,7 +33,7 @@
 	if(!stat)
 		Aggro()
 	if(P.damage < 30)
-		P.damage = (P.damage / 3)
+		P.damage /= 3
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 
 	return ..()
@@ -65,7 +65,7 @@
 	move_to_delay = 20
 	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
-	ranged = 1
+	ranged = TRUE
 	ranged_message = "stares"
 	ranged_cooldown_cap = 20
 	throw_message = "does nothing against the hard shell of"
@@ -81,6 +81,7 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	loot_list = list(/obj/item/weapon/ore/diamond = 5)
+
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
@@ -100,29 +101,24 @@
 			if(L.bodytemperature > 261)
 				L.bodytemperature = 261
 				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
-	return
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib()
-		if(2.0)
-			adjustBruteLoss(140)
-		if(3.0)
-			adjustBruteLoss(110)
+		if(2)
+			adjustBruteLoss(maxHealth * 0.8)
+		if(3)
+			adjustBruteLoss(maxHealth * 0.4)
 
 ////////////Drone(miniBoss)/////////////
 
 /mob/living/simple_animal/hostile/retaliate/malf_drone/mining
-	health = 500
-	maxHealth = 500
+	health = 400
+	maxHealth = 400
 	faction = "mining"
-	projectiletype = /obj/item/projectile/beam/drone/mining
+	projectiletype = /obj/item/projectile/beam/xray
 
-
-
-/obj/item/projectile/beam/drone/mining
-	damage = 20
 
 ////////////////Goldgrub////////////////
 
@@ -150,13 +146,15 @@
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
 	search_objects = 1
-	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver, /obj/item/weapon/ore/phoron,
-						  /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/iron, /obj/item/weapon/ore/clown)
 
 	var/list/ore_types_eaten = list()
-	var/alerted = 0
+	var/alerted = FALSE
 	var/ore_eaten = 1
 	var/chase_time = 100
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/atom_init()
+	. = ..()
+	wanted_objects = subtypesof(/obj/item/weapon/ore)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
@@ -165,6 +163,7 @@
 			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
 			stance = HOSTILE_STANCE_ATTACK
 			return
+
 		if(isliving(target) && !search_objects)
 			Aggro()
 			stance = HOSTILE_STANCE_ATTACK
@@ -172,8 +171,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			Burrow()
-			return
-	return
+
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -193,16 +191,20 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
-		alerted = 1
+		alerted = TRUE
 		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
 	if(alerted)
 		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		var/turftype = get_turf(src)
+		if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
+			var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+			A.gets_dug()
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
-	if(!ore_eaten || ore_types_eaten.len == 0)
+	if(!ore_eaten || !ore_types_eaten.len)
 		return
 	visible_message("<span class='danger'>[src] spits up the contents of its stomach before dying!</span>")
 	var/counter
@@ -216,7 +218,7 @@
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death()
-	alerted = 0
+	alerted = FALSE
 	Reward()
 	..()
 
@@ -234,7 +236,7 @@
 	icon_gib = "syndicate_gib"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 14
-	ranged = 1
+	ranged = TRUE
 	vision_range = 5
 	aggro_vision_range = 9
 	idle_vision_range = 5
@@ -257,7 +259,6 @@
 	A.GiveTarget(target)
 	A.friends = friends
 	A.faction = faction
-	return
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/AttackingTarget()
 	OpenFire()
@@ -274,7 +275,7 @@
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Hivelod_core"
-	var/inert = 0
+	var/inert = FALSE
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/corpse
 
 /obj/item/asteroid/hivelord_core/attackby(obj/item/I, mob/user)
@@ -302,27 +303,27 @@
 	addtimer(CALLBACK(src, .proc/make_inert), 1200)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
-	inert = 1
+	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 	icon_state = "Hivelord_dead"
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
+	if(inert)
+		to_chat(user, "<span class='notice'>[src] have become inert, its healing properties are no more.</span>")
+		return
+
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(inert)
-			to_chat(user, "<span class='notice'>[src] have become inert, its healing properties are no more.</span>")
+		if(H.stat == DEAD)
+			to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 			return
+		if(H != user)
+			H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 		else
-			if(H.stat == DEAD)
-				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
-				return
-			if(H != user)
-				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
-			else
-				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-			H.revive()
-			qdel(src)
-	..()
+			to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
+		H.revive()
+		qdel(src)
+	return ..()
 
 
 ////////////////Hivelordbrood////////////////
@@ -377,7 +378,7 @@
 	attack_sound = list('sound/weapons/punch4.ogg')
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 40
-	ranged = 1
+	ranged = TRUE
 	ranged_cooldown = 2 //By default, start the Goliath with his cooldown off so that people can run away quickly on first sight
 	ranged_cooldown_cap = 8
 	friendly = "wails at"
@@ -409,11 +410,10 @@
 	var/tturf = get_turf(target)
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
-		new /obj/effect/goliath_tentacle/original(tturf)
+		new /obj/effect/goliath_tentacle/original(tturf, melee_damage)
 		ranged_cooldown = ranged_cooldown_cap
 		icon_state = icon_aggro
 		pre_attack = 0
-	return
 
 /mob/living/simple_animal/hostile/asteroid/goliath/adjustBruteLoss(damage)
 	ranged_cooldown--
@@ -425,19 +425,23 @@
 	handle_preattack()
 	if(icon_state != icon_aggro)
 		icon_state = icon_aggro
-	return
 
 /obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
+	var/strength
 
-/obj/effect/goliath_tentacle/atom_init()
+/obj/effect/goliath_tentacle/atom_init(mapload, mob_damage)
 	. = ..()
+	strength = mob_damage
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
 		M.GetDrilled()
+	if(istype(turftype, /turf/simulated/floor/plating/airless/asteroid))
+		var/turf/simulated/floor/plating/airless/asteroid/A = turftype
+		A.gets_dug()
 	addtimer(CALLBACK(src, .proc/Trip), 20)
 
 /obj/effect/goliath_tentacle/original
@@ -449,12 +453,14 @@
 		var/spawndir = pick(directions)
 		directions -= spawndir
 		var/turf/T = get_step(src, spawndir)
-		new /obj/effect/goliath_tentacle(T)
+		new /obj/effect/goliath_tentacle(T, strength)
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)
-		M.Weaken(3)
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
+		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+		M.Weaken(strength * 0.1)
+		M.adjustBruteLoss(strength * 0.4) // 40% pure damage of Goliath force
 	qdel(src)
 
 /obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
@@ -505,4 +511,3 @@
 				qdel(src)
 			else
 				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
-				return

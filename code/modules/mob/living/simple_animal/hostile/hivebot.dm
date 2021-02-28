@@ -35,13 +35,13 @@
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "Hivebot"
 	desc = "A smallish robot, this one is armed!"
-	ranged = 1
+	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/hivebot/rapid
-	ranged = 1
-	rapid = 1
+	ranged = TRUE
+	amount_shoot = 3
 	retreat_distance = 5
 	minimum_distance = 5
 
@@ -49,7 +49,7 @@
 	name = "Strong Hivebot"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 80
-	ranged = 1
+	ranged = TRUE
 
 /mob/living/simple_animal/hostile/hivebot/death()
 	..()
@@ -70,7 +70,7 @@
 	health = 200
 	maxHealth = 200
 	status_flags = 0
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	var/bot_type = "norm"
 	var/bot_amt = 10
 	var/spawn_delay = 600
