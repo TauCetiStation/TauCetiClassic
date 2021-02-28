@@ -22,22 +22,22 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 			}
 
 			.fone{
-				position: absolute;
+				position: relative;
 				object-fit: contain;
-				width: auto;
+				width: 100%;
 				height: 100%;
+				top:-35%;
 				left: 0;
 				z-index: 0;
 			}
 
 			.container_nav {
-				position: fixed;
-				height: 50%;
-				width: 50%;
+				position: relative;
+				height: 35%;
+				width: min-content;
 				z-index: 1;
-				float: left;
-				margin-top: 600px;
-				margin-left: 100px;
+				left: 10%;
+				top: 60%;
 			}
 
 			.container_nav img {
@@ -47,7 +47,6 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
 			.menu_a {
 				position: relative;
-				float: left;
 			}
 
 			.menu_a:hover {
@@ -57,7 +56,6 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		</style>
 	</head>
 	<body>
-	<img src="titlescreen.gif" class="fone" alt="">
 	<div class="container_nav">
 	<a class="menu_a" href='?src=\ref[src];lobby_setup=1'><img src='setup.png' onerror='this.style.display = "none"' /></a>
 	"}
@@ -74,5 +72,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'><img src='observe.png' onerror='this.style.display = "none"' /></a>"}
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'><img src='changelog.png' onerror='this.style.display = "none"' /></a>"}
 
-	dat += "</div></body></html>"
+	dat += "</div>"
+	dat += {"<img src="titlescreen.gif" class="fone" alt="">"}
+	dat += "</body></html>"
 	return dat
