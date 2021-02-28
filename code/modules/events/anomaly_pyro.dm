@@ -3,11 +3,7 @@
 	announceWhen = 3
 	endWhen = 110
 	announcement = new /datum/announcement/centcomm/anomaly/pyro
-
-/datum/event/anomaly/anomaly_pyro/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
-	if(T)
-		newAnomaly = new /obj/effect/anomaly/pyro(T)
+	anomaly_type = /obj/effect/anomaly/pyro
 
 /datum/event/anomaly/anomaly_pyro/tick()
 	if(QDELETED(newAnomaly))

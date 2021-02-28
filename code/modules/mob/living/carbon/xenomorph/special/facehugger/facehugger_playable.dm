@@ -36,11 +36,16 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "alien facehugger")
-		name = "alien facehugger ([rand(1, 1000)])"
+	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
+	verbs += /mob/living/carbon/xenomorph/proc/hide
+	alien_list[ALIEN_FACEHAGGER] += src
+
+/mob/living/carbon/xenomorph/facehugger/Destroy()
+	alien_list[ALIEN_FACEHAGGER] -= src
+	return ..()
 
 /mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
 	..()
@@ -58,21 +63,6 @@
 	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
-
-/mob/living/carbon/xenomorph/facehugger/verb/hide()
-	set name = "Hide"
-	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Alien"
-
-	if(stat != CONSCIOUS)
-		return
-
-	if (layer != TURF_LAYER + 0.2)
-		layer = TURF_LAYER + 0.2
-		visible_message("<span class='danger'>[src] scurries to the ground!</span>", "<span class='notice'>You are now hiding.</span>")
-	else
-		layer = MOB_LAYER
-		visible_message("<span class='warning'>[src] slowly peaks up from the ground...</span>", "<span class='notice'>You have stopped hiding.</span>")
 
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
@@ -149,7 +139,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
-	else if(lying || resting)
+	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "facehugger_inactive"
 	else
 		icon_state = "facehugger"
@@ -184,8 +174,9 @@ This is chestburster mechanic for damaging
 
 /obj/screen/larva_bite/Click()
 	var/obj/item/weapon/larva_bite/G = master
-	G.s_click(src)
-	return 1
+	if(G)
+		G.s_click(src)
+		return TRUE
 
 /obj/screen/larva_bite/attack_hand()
 	return
@@ -256,6 +247,8 @@ This is chestburster mechanic for damaging
 		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
+			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
+			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
 			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			H.death()
 			// we're fucked. no chance to revive a person
@@ -277,6 +270,7 @@ This is chestburster mechanic for damaging
 		if(M.stat == DEAD)
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
+			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
 			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
@@ -333,8 +327,9 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/screen/fh_grab/Click()
 	var/obj/item/weapon/fh_grab/G = master
-	G.s_click(src)
-	return TRUE
+	if(G)
+		G.s_click(src)
+		return TRUE
 
 /obj/screen/fh_grab/attack_hand()
 	return
@@ -493,7 +488,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 					FH_mask.canremove = FALSE
 				assailant.visible_message("<span class='danger'>[assailant] has tightened \his tail on [affecting]'s neck!</span>")
 				assailant.next_move = world.time + 10
-				//affecting.losebreath += 1
 			else
 				assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
 				hud.icon_state = "grab/neck"

@@ -55,7 +55,7 @@
 	icon_dead = "aliens_l"
 	health = 120
 	melee_damage = 15
-	ranged = 1
+	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/neurotox
@@ -70,13 +70,13 @@
 	health = 250
 	maxHealth = 250
 	melee_damage = 15
-	ranged = 1
+	ranged = TRUE
+	amount_shoot = 3
 	move_to_delay = 3
 	retreat_distance = 5
 	minimum_distance = 5
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
-	rapid = 1
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/xenomorph/queen/large

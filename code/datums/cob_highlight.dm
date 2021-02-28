@@ -124,7 +124,7 @@
 	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
 		playsound(M, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
-		A.dir = build_direction
+		A.set_dir(build_direction)
 		using_this.use(from_recipe.req_amount)
 		A.add_fingerprint(M)
 		b_overlay.maptext = COB_HINT

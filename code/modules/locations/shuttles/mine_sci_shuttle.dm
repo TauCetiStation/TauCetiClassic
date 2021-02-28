@@ -84,7 +84,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	if(istype(get_turf(src),M_S_SHUTTLE_FLOOR) &&\
 		   is_type_in_list(my_area,list(STATION_DOCK, MINE_DOCK, SCI_DOCK))) //if we build console not in shuttle area
 		autopilot = src
-		dir = WEST
+		set_dir(WEST)
 		if(!mine_sci_curr_location)
 			mine_sci_curr_location = my_area
 
@@ -114,7 +114,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		var/area/transit_location = locate(/area/shuttle/mining/transit)
 
 		if(istype(mine_sci_curr_location, STATION_DOCK))
-			SSshuttle.undock_act(/area/station/hallway/secondary/entry, "stat_dock")
+			SSshuttle.undock_act(/area/station/hallway/secondary/mine_sci_shuttle, "stat_dock")
 			SSshuttle.undock_act(mine_sci_curr_location)
 		else if(istype(mine_sci_curr_location, MINE_DOCK))
 			SSshuttle.undock_act(/area/asteroid/mine/production, "mine_dock")
@@ -157,7 +157,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		SSshuttle.shake_mobs_in_area(destination, EAST)
 
 		if(istype(destination, STATION_DOCK))
-			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "stat_dock")
+			SSshuttle.dock_act(/area/station/hallway/secondary/mine_sci_shuttle, "stat_dock")
 			SSshuttle.dock_act(destination)
 		else if(istype(destination, MINE_DOCK))
 			SSshuttle.dock_act(/area/asteroid/mine/production, "mine_dock")

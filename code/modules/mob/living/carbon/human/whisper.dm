@@ -121,12 +121,10 @@
 	for(var/mob/M in eavesdropping)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/speech_bubble_test = say_test(message)
-	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
+	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	spawn(0)
-		flick_overlay(I, speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src)

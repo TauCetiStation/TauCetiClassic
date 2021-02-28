@@ -89,6 +89,9 @@
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
+/// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
+#define COMSIG_ATOM_CHANGE_DIR "change_dir"
+
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
@@ -217,3 +220,8 @@
 
 /// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
 #define COMSIG_MOB_MOD_UPDATE "mob_mod_update"
+
+/// send this signal to add /datum/component/vis_radius to a list of mobs or one mob: (mob/mob_or_mobs)
+#define COMSIG_SHOW_RADIUS "show_radius"
+/// send this signal to remove /datum/component/vis_radius to a mobs: ()
+#define COMSIG_HIDE_RADIUS "hide_radius"
