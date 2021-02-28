@@ -61,18 +61,34 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		if(!ready)
-			dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img src='ready_neok.png' onerror='this.style.display = "none"' /></a>"}
-		else
-			dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=2'><img src='ready_ok.png' onerror='this.style.display = "none"' /></a>"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src='ready_neok.png' onClick="imgsrc()" onerror='this.style.display = "none"' /></a>
+		"}
 	else
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'><img src='manifest.png' onerror='this.style.display = "none"' /></a>"}
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'><img src='joingame.png' onerror='this.style.display = "none"' /></a>"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'><img src='manifest.png' onerror='this.style.display = "none"' /></a>
+		"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'><img src='joingame.png' onerror='this.style.display = "none"' /></a>
+		"}
 
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'><img src='observe.png' onerror='this.style.display = "none"' /></a>"}
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'><img src='changelog.png' onerror='this.style.display = "none"' /></a>"}
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'><img src='observe.png' onerror='this.style.display = "none"' /></a>
+	"}
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'><img src='changelog.png' onerror='this.style.display = "none"' /></a>
+	"}
 
 	dat += "</div>"
+	dat += {"
+		<script language="JavaScript">
+			var i=0;
+			var image=document.getElementById("image");
+			var imgs=new Array('ready_neok.png', 'ready_ok.png');
+			var j=imgs.length;
+			function imgsrc() {
+				i++;
+				if (i == imgs.length)
+					i = 0;
+				image.src = imgs\[i\];
+			}
+		</script>
+	"}
 	dat += {"<img src="titlescreen.gif" class="fone" alt="">"}
 	dat += "</body></html>"
 	return dat

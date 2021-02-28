@@ -80,7 +80,6 @@
 			return
 		if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
 			ready = !ready
-			show_titlescreen()
 		return
 
 	if(href_list["lobby_observe"])
@@ -157,8 +156,8 @@
 			client.prefs.process_link(src, href_list)
 		return
 
-	else if(!href_list["lobby_join"])
-		show_titlescreen()
+	else
+		to_chat(src, "Locked! You are ready.")
 		return
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
