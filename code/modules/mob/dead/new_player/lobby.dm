@@ -80,7 +80,6 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 			var i=0;
 			var image=document.getElementById("image");
 			var imgs=new Array('ready_neok.png', 'ready_ok.png');
-			var j=imgs.length;
 			function imgsrc() {
 				i++;
 				if (i == imgs.length)
