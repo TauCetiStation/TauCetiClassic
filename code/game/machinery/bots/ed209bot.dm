@@ -13,6 +13,7 @@
 	idcheck = 1 //If false, all station IDs are authorized for weapons.
 	check_records = 1 //Does it check security records? Checks arrest status and existence of record
 	var/projectile = null//Holder for projectile type, to avoid so many else if chains
+	var/on_timer_id
 
 	var/lasertag_color = ""
 
@@ -486,19 +487,27 @@
 	if(!did_something)
 		return ..()
 
+
 /obj/machinery/bot/secbot/ed209/proc/turn_on_cb()
-	if (src)
-		turn_on()
-		update_icon()
+	on_timer_id = null
+	turn_on()
+
+/obj/machinery/bot/secbot/ed209/turn_on()
+	if (!isnull(on_timer_id))
+		return
+	return ..()
+
+/obj/machinery/bot/secbot/ed209/Destroy()
+	deltimer(on_timer_id)
+	return ..()
 
 /obj/machinery/bot/secbot/ed209/bullet_act(obj/item/projectile/Proj)
 	if(on && istype(Proj, /obj/item/projectile/beam/lasertag))
 		var/obj/item/projectile/beam/lasertag/L = Proj
 		if(L.lasertag_color != lasertag_color)
 			turn_off()
-			update_icon()
 			qdel(Proj)
-			addtimer(CALLBACK(src, .proc/turn_on_cb), 100)
+			on_timer_id = addtimer(CALLBACK(src, .proc/turn_on_cb), 100, TIMER_STOPPABLE)
 		return
 	return ..()
 
