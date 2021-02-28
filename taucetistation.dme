@@ -1150,6 +1150,7 @@
 #include "code\modules\atmospheric\ZAS\Turf.dm"
 #include "code\modules\atmospheric\ZAS\Variable Settings.dm"
 #include "code\modules\atmospheric\ZAS\Zone.dm"
+#include "code\modules\autolathe\recipes.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\corpse.dm"
 #include "code\modules\awaymissions\exile.dm"
