@@ -1303,7 +1303,7 @@
 /area/shuttle/escape/centcom)
 "adx" = (
 /turf/unsimulated/wall,
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "ady" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -1315,7 +1315,7 @@
 /turf/unsimulated/floor{
 	icon_state = "gcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "adA" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -1643,13 +1643,13 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aes" = (
 /obj/machinery/teleport/hub,
 /turf/unsimulated/floor{
 	icon_state = "gcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aet" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/backpack/satchel/norm,
@@ -1657,18 +1657,18 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeu" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aev" = (
 /turf/unsimulated/floor{
 	icon_state = "gcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aew" = (
 /obj/structure/table/reinforced,
 /obj/item/device/paicard,
@@ -1676,7 +1676,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aex" = (
 /obj/effect/landmark{
 	name = "ninja"
@@ -1685,7 +1685,7 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aey" = (
 /obj/machinery/light/small{
 	brightness_color = "#008000"
@@ -1694,15 +1694,15 @@
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aez" = (
 /turf/unsimulated/wall/fakeglass,
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeA" = (
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeB" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice,
@@ -1729,7 +1729,7 @@
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeF" = (
 /obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "shuttle_escape"
@@ -1750,26 +1750,26 @@
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeI" = (
 /obj/machinery/computer/teleporter,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeJ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/backpack/satchel/norm,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeK" = (
 /obj/machinery/teleport/hub,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
-/area/centcom/ninjaspawn)
+/area/custom/ninjaspawn)
 "aeT" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,18"

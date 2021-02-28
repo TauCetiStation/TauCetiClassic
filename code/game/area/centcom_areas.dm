@@ -64,10 +64,5 @@
 	name = "Thunderdome (Observer.)"
 	icon_state = "purple"
 
-/area/centcom/ninjaspawn
-	name = "Space Dojo"
-	icon_state = "red"
-	requires_power = 0
-
 // CENTCOM AREA LIST
 var/list/centcom_areas_typecache = typecacheof(centcom_shuttle_areas + typesof(/area/centcom))
