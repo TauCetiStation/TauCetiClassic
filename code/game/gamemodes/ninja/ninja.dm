@@ -5,10 +5,10 @@
 	config_tag = "ninja"
 	role_type = ROLE_NINJA
 	restricted_jobs = list("Cyborg", "AI")
-	required_players = 10 //Can be adjusted later, should suffice for now.
-	required_players_bundles = 15
-	required_enemies = 2
-	recommended_enemies = 2
+	required_players = 0 //Can be adjusted later, should suffice for now.
+	required_players_bundles = 0
+	required_enemies = 0
+	recommended_enemies = 0
 	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "hudninja"
 
@@ -23,7 +23,7 @@
 	if (!..())
 		return FALSE
 	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "carpspawn")
+		if(L.name == "ninja")
 			return TRUE
 	return FALSE
 
@@ -49,7 +49,7 @@
 /datum/game_mode/ninja/pre_setup()
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "carpspawn")
+		if(L.name == "ninja")
 			ninjastart.Add(L)
 	for(var/datum/mind/ninja in ninjas)
 		ninja.current << browse(null, "window=playersetup")

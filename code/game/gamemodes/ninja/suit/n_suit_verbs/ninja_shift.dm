@@ -6,9 +6,13 @@
 	set category = null//So it does not show up on the panel but can still be right-clicked.
 	set src = usr.contents//Fixes verbs not attaching properly for objects. Praise the DM reference guide!
 
+
 	var/C = 40
 	if(!ninjacost(C,1))
 		var/mob/living/carbon/human/U = affecting
+		if(is_centcom_level(U.z))
+			to_chat(U, "Your VOID-shift device is malfunctioning.")
+			return
 		var/turf/mobloc = get_turf(U.loc)//To make sure that certain things work properly below.
 		if((!T.density)&&istype(mobloc, /turf))
 			spawn(0)
