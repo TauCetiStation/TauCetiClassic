@@ -511,8 +511,8 @@
 		return
 	return ..()
 
-/obj/machinery/bot/secbot/ed209/bluetag/atom_init() // If desired, you spawn red and bluetag bots easily
-	return ..(get_turf(src), null, "blue")
+/obj/machinery/bot/secbot/ed209/bluetag
+	lasertag_color = "blue"
 
-/obj/machinery/bot/secbot/ed209/redtag/atom_init()
-	return ..(get_turf(src), null, "red")
+/obj/machinery/bot/secbot/ed209/redtag
+	lasertag_color = "red"
