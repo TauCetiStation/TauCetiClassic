@@ -37,12 +37,12 @@
 		return
 	switch(href_list["action"])
 		if ("create_area")
-			if (get_area_type()!=AREA_SPACE)
+			if (get_area_by_type()!=AREA_SPACE)
 				interact()
 				return
 			create_area()
 		if ("edit_area")
-			if (get_area_type()!=AREA_STATION)
+			if (get_area_by_type()!=AREA_STATION)
 				interact()
 				return
 			edit_area()
@@ -50,7 +50,7 @@
 /obj/item/blueprints/interact()
 	var/area/A = get_area()
 	var/text = "<small>Property of Nanotrasen. For heads of staff only. Store in high-secure storage.</small><hr>"
-	switch (get_area_type())
+	switch (get_area_by_type())
 		if (AREA_SPACE)
 			text += {"
 <p>According the blueprints, you are now in <b>outer space</b>.  Hold your breath.</p>
@@ -78,7 +78,7 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = T.loc
 	return A
 
-/obj/item/blueprints/proc/get_area_type(area/A = get_area())
+/obj/item/blueprints/proc/get_area_by_type(area/A = get_area())
 	if (istype(A, /area/space))
 		return AREA_SPACE
 	if (istype(A, /area/awaymission/junkyard))
@@ -183,7 +183,7 @@ move an amendment</a> to the drawing.</p>
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (istype(T2, /turf/simulated/shuttle))
 		return BORDER_SPACE
-	if (get_area_type(T2.loc)!=AREA_SPACE)
+	if (get_area_by_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))
 		return BORDER_2NDTILE

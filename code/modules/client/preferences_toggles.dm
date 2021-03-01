@@ -278,3 +278,28 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.tgui_fancy = !prefs.tgui_fancy
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "TFTGUI")
+
+
+/client/verb/toggle_outline()
+	set name = "Toggle Outline"
+	set category = "Preferences"
+	set desc = "Toggle Outline"
+
+	prefs.outline_enabled = !prefs.outline_enabled
+	prefs.save_preferences()
+	to_chat(src, "Outline is [prefs.outline_enabled ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TO")
+
+
+/client/verb/change_outline_color()
+	set name = "Change Outline Color"
+	set category = "Preferences"
+	set desc = "Change Outline Color"
+
+	var/pickedOutlineColor = input(usr, "Choose your outline color.", "General Preference", prefs.outline_color) as color|null
+	if(!pickedOutlineColor)
+		return
+	prefs.outline_color = pickedOutlineColor
+	prefs.save_preferences()
+	to_chat(src, "Outline color changed.")
+	feedback_add_details("admin_verb", "COC")

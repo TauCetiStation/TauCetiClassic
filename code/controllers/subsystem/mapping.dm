@@ -1,5 +1,6 @@
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMOUNT 7
+#define MAX_MINING_SECRET_ROOM 5
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
@@ -11,7 +12,6 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
-	var/const/max_secret_rooms = 3
 	var/list/spawned_structures = list()
 	var/list/reserved_space = list()
 
@@ -48,8 +48,8 @@ SUBSYSTEM_DEF(mapping)
 	..()
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
-	for(var/i in 1 to max_secret_rooms)
-		make_mining_asteroid_secret()
+	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
+		make_mining_asteroid_secret(3)
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
@@ -143,8 +143,6 @@ SUBSYSTEM_DEF(mapping)
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
-
-#undef SPACE_STRUCTURES_AMOUNT
 
 #define INIT_ANNOUNCE(X) info(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
@@ -256,3 +254,6 @@ SUBSYSTEM_DEF(mapping)
 
 	next_map_config = VM
 	return TRUE
+
+#undef SPACE_STRUCTURES_AMOUNT
+#undef MAX_MINING_SECRET_ROOM

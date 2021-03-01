@@ -71,6 +71,7 @@
 		..()
 
 /obj/item/weapon/defibrillator/MouseDrop()
+	. = ..()
 	if(ismob(loc))
 		if(!CanMouseDrop(src))
 			return
