@@ -46,14 +46,14 @@
 	if(!ckey && stat == CONSCIOUS && prob(0.5))
 		stat = UNCONSCIOUS
 		icon_state = "mouse_[body_color]_sleep"
-		wander = 0
+		wander = FALSE
 		speak_chance = 0
 		//snuffles
 	else if(stat == UNCONSCIOUS)
 		if(ckey || prob(1))
 			stat = CONSCIOUS
 			icon_state = "mouse_[body_color]"
-			wander = 1
+			wander = TRUE
 		else if(prob(5))
 			emote("snuffles")
 
