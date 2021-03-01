@@ -212,7 +212,7 @@
 		to_chat(ninja.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
-/datum/game_mode/ninja/auto_declare_completion()
+/datum/game_mode/ninja/text_to_completion()
 	var/text = ""
 	if(ninjas.len)
 		text += printlogo("ninja", "ninjas")
@@ -246,9 +246,5 @@
 				else
 					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
-
-	if(text)
-		antagonists_completion += list(list("mode" = "ninja", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text

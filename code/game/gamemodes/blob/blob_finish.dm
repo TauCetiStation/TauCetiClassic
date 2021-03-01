@@ -38,7 +38,7 @@
 	..()
 	return 1
 
-/datum/game_mode/blob/auto_declare_completion()
+/datum/game_mode/blob/text_to_completion()
 	var/text = ""
 	if(SSticker.mode.infected_crew.len)
 		text += "<b>The blob[(SSticker.mode.infected_crew.len > 1 ? "s were" : " was")]:</b>"
@@ -69,9 +69,5 @@
 					text += "<br><FONT color='red'><b>The blob has failed!</b></FONT>"
 					feedback_add_details("blob_success","FAIL")
 				text += "<br>"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "blob", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text

@@ -551,8 +551,20 @@ Implants;
 	text += {"<img src="logo_[tempstate].png"> <b>The [antagname] were:</b> <img src="logo_[tempstate].png">"}
 	return text
 
-/datum/game_mode/proc/auto_declare_completion()
+/datum/game_mode/proc/get_stat_template(text)
+	return list("mode" = name, "html" = text)
+
+/datum/game_mode/proc/text_to_completion()
 	return
+
+/datum/game_mode/proc/auto_declare_completion()
+	var/text = text_to_completion()
+
+	if(text)
+		antagonists_completion += list(get_stat_template(text))
+		text = "<div class='Section'>[text]</div>"
+
+	return text
 
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)

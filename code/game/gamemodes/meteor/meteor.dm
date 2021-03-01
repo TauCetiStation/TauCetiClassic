@@ -33,7 +33,7 @@
 	spawn() spawn_meteors(6)
 
 
-/datum/game_mode/meteor/declare_completion()
+/datum/game_mode/meteor/text_to_completion()
 	var/text = ""
 	var/survivors = 0
 	completion_text += "<h3>Meteor mode resume:</h3>"

@@ -215,7 +215,7 @@ Made by Xhuis
 	return 1
 
 
-/datum/game_mode/shadowling/auto_declare_completion()
+/datum/game_mode/shadowling/text_to_completion()
 	var/text = ""
 	if(shadows.len)
 		text += printlogo("shadowling", "shadowlings")
@@ -227,9 +227,5 @@ Made by Xhuis
 			for(var/datum/mind/thrall in thralls)
 				text += printplayerwithicon(thrall)
 			text += "<br>"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "shadowling", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text

@@ -302,7 +302,7 @@
 		text += "Someone from them is <b>dead</b>. "
 	return text
 
-/datum/game_mode/abduction/auto_declare_completion()
+/datum/game_mode/abduction/text_to_completion()
 	var/text = ""
 	if(abductors.len)
 		text += printlogo("abductor", "abductors")
@@ -340,10 +340,6 @@
 			for(var/datum/mind/abductee_mind in abductees)
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
-
-	if(text)
-		antagonists_completion += list(list("mode" = "abduction", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

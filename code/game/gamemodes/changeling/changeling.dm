@@ -197,7 +197,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 	return 1
 
-/datum/game_mode/changeling/auto_declare_completion()
+/datum/game_mode/changeling/text_to_completion()
 	var/text = ""
 	if(changelings.len)
 		var/icon/logoa = icon('icons/mob/mob.dmi', "change-logoa")
@@ -258,10 +258,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 						text += "<br>[entry]"
 				else
 					text += "<br>The Changeling was a smooth operator this round (did not purchase any uplink items)"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "changeling", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

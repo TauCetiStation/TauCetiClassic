@@ -176,7 +176,7 @@
 		completion_text += "</div>"
 	..()
 
-/datum/game_mode/infestation/auto_declare_completion()
+/datum/game_mode/infestation/text_to_completion()
 
 	if(SSticker && !istype(SSticker.mode, /datum/game_mode/infestation))
 		return
@@ -209,10 +209,6 @@
 			text += generate_completion_text(list_key, aliens["[list_key]_live"], aliens["[list_key]_dead"], aliens["[list_key]_key"])
 
 	text += "</table>"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "infestation", "html" = text))	//to logs
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

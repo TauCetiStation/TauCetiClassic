@@ -170,7 +170,7 @@
 	else
 		return 1
 
-/datum/game_mode/meme/auto_declare_completion()
+/datum/game_mode/meme/text_to_completion()
 	var/text = ""
 	for(var/datum/mind/meme in memes)
 		var/memewin = TRUE
@@ -201,9 +201,5 @@
 		else
 			text += "<b>The meme has failed!</b>"
 			feedback_add_details("meme_success","FAIL")
-
-	if(text)
-		antagonists_completion += list(list("mode" = "meme", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text

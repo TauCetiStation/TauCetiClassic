@@ -191,7 +191,7 @@
 
 	killer.add_language("Sy-Code", 1)
 
-/datum/game_mode/traitor/auto_declare_completion()
+/datum/game_mode/traitor/text_to_completion()
 	var/text = ""
 	if(traitors.len)
 		text += printlogo("synd", "traitors")
@@ -240,9 +240,6 @@
 		for(var/reconverted in SSticker.reconverted_antags)
 			text += printplayerwithicon(SSticker.reconverted_antags[reconverted])
 			text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
-	if(text)
-		antagonists_completion += list(list("mode" = "traitor", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

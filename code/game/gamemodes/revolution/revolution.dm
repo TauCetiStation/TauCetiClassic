@@ -280,7 +280,7 @@
 	..()
 	return 1
 
-/datum/game_mode/revolution/auto_declare_completion()
+/datum/game_mode/revolution/text_to_completion()
 	var/list/targets = list()
 
 	var/text = ""
@@ -389,9 +389,5 @@
 			text += ")"
 			if(target)
 				text += "</span>"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "revolution", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text

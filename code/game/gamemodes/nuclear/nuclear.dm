@@ -305,7 +305,7 @@
 	return 1
 
 
-/datum/game_mode/nuclear/auto_declare_completion()
+/datum/game_mode/nuclear/text_to_completion()
 	var/text = ""
 	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
 		text += printlogo("nuke", "syndicate operatives")
@@ -320,10 +320,6 @@
 					text += "<br>[entry]TC(s)"
 			else
 				text += "<br>The nukeops were smooth operators this round (did not purchase any uplink items)."
-
-	if(text)
-		antagonists_completion += list(list("mode" = "nuclear", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

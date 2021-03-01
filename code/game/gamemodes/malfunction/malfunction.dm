@@ -281,7 +281,7 @@
 	return 1
 
 
-/datum/game_mode/malfunction/auto_declare_completion()
+/datum/game_mode/malfunction/text_to_completion()
 	var/text = ""
 	if( malf_ai.len || istype(SSticker.mode,/datum/game_mode/malfunction) )
 		text += "<b>The malfunctioning AI were:</b>"
@@ -306,10 +306,6 @@
 				text += {"<br><img src="logo_[tempstate].png"> <b>[malf.key]</b> was <b>[malf.name]</b> ("}
 				text += "hardware destroyed"
 			text += ")"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "malfunction", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

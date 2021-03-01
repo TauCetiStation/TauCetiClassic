@@ -369,7 +369,7 @@
 	..()
 	return 1
 
-/datum/game_mode/gang/auto_declare_completion()
+/datum/game_mode/gang/text_to_completion()
 	var/winner
 	var/text = ""
 	var/datum/game_mode/gang/game_mode = SSticker.mode
@@ -396,10 +396,6 @@
 			text += gang_membership_report(B_bosses)
 			text += "<br>The [gang_name("B")] Gangsters were:"
 			text += gang_membership_report(B_gang)
-
-	if(text)
-		antagonists_completion += list(list("mode" = "gang", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

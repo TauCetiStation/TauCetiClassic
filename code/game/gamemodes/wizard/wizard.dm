@@ -238,7 +238,7 @@
 	return 1
 
 
-/datum/game_mode/wizard/auto_declare_completion()
+/datum/game_mode/wizard/text_to_completion()
 	var/text = ""
 	if(wizards.len)
 		text += printlogo("wizard", "wizards/witches")
@@ -278,10 +278,6 @@
 							text += ", "
 						i++
 				text += "<br>"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "wizard", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 

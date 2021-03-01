@@ -485,7 +485,10 @@ var/global/list/datum/mind/borers = list()
 		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
-/datum/game_mode/borer/auto_declare_completion()
+/datum/game_mode/borer
+	name = "borers"
+
+/datum/game_mode/borer/text_to_completion()
 	var/text = ""
 	if(borers.len)
 		text += "<b>The borers were:</b>"
@@ -513,9 +516,5 @@ var/global/list/datum/mind/borers = list()
 					text += "<br><FONT color='red'><b>The borer has failed!</b></FONT>"
 					feedback_add_details("borer_success","FAIL")
 				text += "<br>"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "borer", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text

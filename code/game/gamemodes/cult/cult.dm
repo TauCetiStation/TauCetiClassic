@@ -299,15 +299,11 @@
 	..()
 	return 1
 
-/datum/game_mode/cult/auto_declare_completion()
+/datum/game_mode/cult/text_to_completion()
 	var/text = ""
 	if( cult.len || (SSticker && istype(SSticker.mode,/datum/game_mode/cult)) )
 		text += printlogo("cult", "cultists")
 		for(var/datum/mind/cultist in cult)
 			text += printplayerwithicon(cultist)
-
-	if(text)
-		antagonists_completion += list(list("mode" = "cult", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text

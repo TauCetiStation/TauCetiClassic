@@ -257,7 +257,7 @@
 	..()
 	return 1
 
-/datum/game_mode/heist/auto_declare_completion()
+/datum/game_mode/heist/text_to_completion()
 	var/text =""
 	if(raiders.len)
 		var/loot_savefile = "data/pirate_loot.sav" //loot statistics
@@ -305,10 +305,6 @@
 				text += {"<br><img src="logo_[tempstate].png"> [raider.key] was [raider.name] ("}
 				text += "body destroyed"
 			text += ")"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "heist", "html" = text))
-		text = "<div class='Section'>[text]</div>"
 
 	return text
 
