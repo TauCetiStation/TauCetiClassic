@@ -63,7 +63,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src=[ready ? 'ready_ok.png' : 'ready_neok.png'] /></a>
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src=[ready ? "ready_ok.png" : "ready_neok.png"] /></a>
 	"}
 	else
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'><img src='manifest.png' /></a>
