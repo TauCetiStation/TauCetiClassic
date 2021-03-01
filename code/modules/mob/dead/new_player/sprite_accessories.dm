@@ -1624,13 +1624,13 @@
 	icon_state = "vox_shortquills"
 	species_allowed = list(VOX)
 
-/datum/sprite_accessory/hair/vox_yasu
-	name = "Yasu"
-	icon_state = "vox_yasu"
+/datum/sprite_accessory/hair/vox_punk
+	name = "Punk Razor"
+	icon_state = "vox_punk"
 	species_allowed = list(VOX)
 
 /datum/sprite_accessory/hair/vox_razor
-	name = "Razor"
+	name = "Big Knife"
 	icon_state = "vox_razor"
 	species_allowed = list(VOX)
 
@@ -1639,9 +1639,29 @@
 	icon_state = "vox_kingly"
 	species_allowed = list(VOX)
 
-/datum/sprite_accessory/hair/vox_badhead
-	name = "Badhead"
-	icon_state = "vox_badhead"
+/datum/sprite_accessory/hair/vox_bayonet
+	name = "Bayonet"
+	icon_state = "vox_bayonet"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_rome
+	name = "Rome Razor"
+	icon_state = "vox_rome"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_kinglyq
+	name = "Kingly Quills"
+	icon_state = "vox_kinglyq"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_whip
+	name = "Whip Quills"
+	icon_state = "vox_whip"
+	species_allowed = list(VOX)
+
+/datum/sprite_accessory/hair/vox_long
+	name = "Long Quills"
+	icon_state = "vox_long"
 	species_allowed = list(VOX)
 
 /datum/sprite_accessory/facial_hair/taj_sideburns

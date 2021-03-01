@@ -2,7 +2,7 @@
 	name = "host brain"
 	real_name = "host brain"
 
-/mob/living/captive_brain/say(var/message)
+/mob/living/captive_brain/say(message)
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
@@ -43,11 +43,11 @@
 	icon_dead = "brainslug_dead"
 	speed = 5
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	attacktext = "nips"
 	friendly = "prods"
-	wander = 0
+	wander = FALSE
 	pass_flags = PASSTABLE
 	ventcrawler = 2
 
@@ -111,7 +111,7 @@
 				if(prob(host.brainloss/20))
 					host.say("*[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
 
-/mob/living/simple_animal/borer/say(var/message)
+/mob/living/simple_animal/borer/say(message)
 
 	message = capitalize(sanitize(message))
 

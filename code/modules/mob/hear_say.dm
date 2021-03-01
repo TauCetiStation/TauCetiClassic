@@ -45,7 +45,7 @@
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
+		track = FOLLOW_LINK(src, speaker)
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
@@ -180,7 +180,14 @@
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> [speaker_name]"
+
+		var/track_button
+		var/turf/T = get_turf(speaker)
+		if(T)
+			track_button = FOLLOW_OR_TURF_LINK(src, speaker, T)
+		else
+			track_button = FOLLOW_LINK(src, speaker)
+		track = "[track_button] [speaker_name]"
 
 	if(isliving(src))
 		message = highlight_traitor_codewords(message, src.mind)

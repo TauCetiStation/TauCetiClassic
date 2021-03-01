@@ -103,8 +103,9 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
-	if(mind && mind.current)
-		mind.current.med_hud_set_status()
+	if(mind && mind.current && isliving(mind.current))
+		var/mob/living/M = mind.current
+		M.med_hud_set_status()
 	QDEL_NULL(adminMulti)
 	return ..()
 
@@ -118,10 +119,23 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	return ..()
 
 /mob/dead/observer/Topic(href, href_list)
+	if(usr != src)
+		return
+
 	if(href_list["track"])
 		var/mob/target = locate(href_list["track"]) in mob_list
-		if(target)
+		if(istype(target) && (target != src))
 			ManualFollow(target)
+			return
+
+	if(href_list["x"] && href_list["y"] && href_list["z"])
+		var/tx = text2num(href_list["x"])
+		var/ty = text2num(href_list["y"])
+		var/tz = text2num(href_list["z"])
+		var/turf/target = locate(tx, ty, tz)
+		if(istype(target))
+			forceMove(target)
+			return
 
 	if(href_list["ghostplayerobservejump"])
 		var/atom/movable/target = locate(href_list["ghostplayerobservejump"])
@@ -162,6 +176,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 					qdel(M)
 			return
 		var/mob/dead/observer/ghost = new(src)	//Transfer safety to observer spawning proc.
+		SStgui.on_transfer(src, ghost)
 		ghost.can_reenter_corpse = can_reenter_corpse
 		ghost.timeofdeath = src.timeofdeath //BS12 EDIT
 		ghost.key = key
@@ -209,7 +224,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = TRUE
-	dir = Dir
+	set_dir(Dir)
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -254,6 +269,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && mind.current.key[1] != "@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>")
 		return
+	SStgui.on_transfer(src, mind.current)
 	mind.current.key = key
 	return 1
 
@@ -385,7 +401,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target, orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	dir = SOUTH // Reset dir so the right directional sprites show up
+	set_dir(SOUTH) // Reset dir so the right directional sprites show up
 	..()
 
 /mob/dead/observer/stop_orbit()
