@@ -8,6 +8,8 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	var/dat = {"
 	<html>
 	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<style type='text/css'>
 			body,
 			html {
@@ -57,21 +59,21 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	</head>
 	<body>
 	<div class="container_nav">
-	<a class="menu_a" href='?src=\ref[src];lobby_setup=1'><img src='setup.png' onerror='this.style.display = "none"' /></a>
+	<a class="menu_a" href='?src=\ref[src];lobby_setup=1'><img src='setup.png' /></a>
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src='ready_neok.png' onClick="imgsrc()" onerror='this.style.display = "none"' /></a>
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src='ready_neok.png' onClick="imgsrc()" /></a>
 		"}
 	else
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'><img src='manifest.png' onerror='this.style.display = "none"' /></a>
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'><img src='manifest.png' /></a>
 		"}
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'><img src='joingame.png' onerror='this.style.display = "none"' /></a>
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'><img src='joingame.png' /></a>
 		"}
 
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'><img src='observe.png' onerror='this.style.display = "none"' /></a>
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'><img src='observe.png' /></a>
 	"}
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'><img src='changelog.png' onerror='this.style.display = "none"' /></a>
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'><img src='changelog.png' /></a>
 	"}
 
 	dat += "</div>"
