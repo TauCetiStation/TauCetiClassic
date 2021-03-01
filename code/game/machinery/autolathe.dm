@@ -199,7 +199,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 			if(max_multiplier > 1)
 				dat += " <A href='?src=\ref[src];make=\ref[r];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
 		else
-			var/title = "[r.name] ([r.metal_amount] m /[r.glass_amount] g)"
+			var/title = "[r.name] ([r.metal_amount / coeff] m /[r.glass_amount / coeff] g)"
 			if(m_amount < r.metal_amount / coeff || g_amount < r.glass_amount / coeff)
 				dat += title
 				continue
