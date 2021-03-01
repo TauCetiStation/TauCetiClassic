@@ -11,6 +11,13 @@
 	var/obj/item/borg/upgrade/jetpack = null
 	var/list/stacktypes
 
+/obj/item/weapon/robot_module/atom_init()
+	. = ..()
+
+	var/mob/living/silicon/robot/R = loc
+
+	add_languages(R)
+
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -341,6 +348,12 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
 
+/obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
+	//basic set+Sy-Code
+	. = ..()
+
+	R.add_language("Sy-Code", TRUE)
+
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"
 
@@ -360,10 +373,11 @@
 
 /obj/item/weapon/robot_module/science/atom_init()
 	. = ..()
+	modules += new /obj/item/weapon/gripper/science(src)
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/device/assembly/signaler(src)
 	modules += new /obj/item/device/ano_scanner(src)
-
+	modules += new /obj/item/device/science_tool(src)
 //To fuck anomalies up
 
 	modules += new /obj/item/device/reagent_scanner/adv(src)
@@ -376,12 +390,13 @@
 
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/scalpel(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src) //To unfuck xenobiology up
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher(src) //To unfuck xenobiology up
 
 	modules += new /obj/item/weapon/crowbar/red(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/screwdriver(src)
 	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/device/multitool(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
 
 	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up

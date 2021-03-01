@@ -14,7 +14,7 @@
 
 /obj/machinery/atmospherics/var/debug = 0
 
-/client/proc/atmos_toggle_debug(var/obj/machinery/atmospherics/M in range(world.view))
+/client/proc/atmos_toggle_debug(obj/machinery/atmospherics/M in range(world.view))
 	set name = "Toggle Debug Messages"
 	set category = "Debug"
 	M.debug = !M.debug
@@ -410,7 +410,7 @@
 	return specific_power
 
 //Calculates the amount of power needed to move one mole of a certain gas from source to sink.
-/proc/calculate_specific_power_gas(var/gasid, datum/gas_mixture/source, datum/gas_mixture/sink)
+/proc/calculate_specific_power_gas(gasid, datum/gas_mixture/source, datum/gas_mixture/sink)
 	//Calculate the amount of energy required
 	var/air_temperature = (sink.temperature > 0) ? sink.temperature : source.temperature
 	var/specific_entropy = sink.specific_entropy_gas(gasid) - source.specific_entropy_gas(gasid) //sink is gaining moles, source is loosing

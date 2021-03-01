@@ -177,21 +177,23 @@ var/global/maint_all_access_priority = FALSE    // Set only by keycard auth. If 
                                                 // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
 var/global/timer_maint_revoke_id = 0
 
-/proc/make_maint_all_access(var/priority = FALSE)
+/proc/make_maint_all_access(priority = FALSE)
 	if(priority)
 		maint_all_access_priority = TRUE
 
 	change_maintenance_access(TRUE)
-	captain_announce("The maintenance access requirement has been revoked on all airlocks.")
+	var/datum/announcement/station/maint_revoke/announcement = new
+	announcement.play()
 
-/proc/revoke_maint_all_access(var/priority = FALSE)
+/proc/revoke_maint_all_access(priority = FALSE)
 	if(priority)
 		maint_all_access_priority = FALSE
 	if(maint_all_access_priority)	// We must use keycard auth
 		return
 
 	change_maintenance_access(FALSE)
-	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
+	var/datum/announcement/station/maint_readd/announcement = new
+	announcement.play()
 
 /proc/change_maintenance_access(allow_state)
 	for(var/area/station/maintenance/M in all_areas)

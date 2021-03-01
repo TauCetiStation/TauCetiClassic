@@ -19,12 +19,6 @@
 		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
 
-/*/obj/screen/xenomorph/nightvision/Click()
-	var/mob/living/carbon/xenomorph/A = usr
-	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
-	if(T)
-		T.fire(A)*/
-
 /obj/screen/xenomorph/neurotoxin
 	name = "toggle neurotoxin"
 	icon_state = "neurotoxin0"
@@ -43,7 +37,7 @@
 
 	using = new /obj/screen()
 	using.name = "act_intent"
-	using.dir = SOUTHWEST
+	using.set_dir(SOUTHWEST)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
@@ -107,7 +101,7 @@
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
-	using.dir = SOUTHWEST
+	using.set_dir(SOUTHWEST)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
@@ -127,7 +121,7 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "r_hand"
-	inv_box.dir = WEST
+	inv_box.set_dir(WEST)
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
 	inv_box.icon_state = "hand_r_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
@@ -141,7 +135,7 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "l_hand"
-	inv_box.dir = EAST
+	inv_box.set_dir(EAST)
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
 	inv_box.icon_state = "hand_l_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
@@ -155,7 +149,7 @@
 
 	using = new /obj/screen/inventory()
 	using.name = "hand"
-	using.dir = SOUTH
+	using.set_dir(SOUTH)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
@@ -165,7 +159,7 @@
 
 	using = new /obj/screen/inventory()
 	using.name = "hand"
-	using.dir = SOUTH
+	using.set_dir(SOUTH)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
@@ -207,6 +201,8 @@
 	mymob.xenomorph_plasma_display.icon_state = "power_display3"
 	mymob.xenomorph_plasma_display.name = "plasma stored"
 	mymob.xenomorph_plasma_display.screen_loc = ui_alienplasmadisplay
+	var/mob/living/carbon/xenomorph/X = mymob
+	X.updatePlasmaDisplay()
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'

@@ -205,7 +205,7 @@ SUBSYSTEM_DEF(stickyban)
 
 
 /datum/controller/subsystem/stickyban/proc/add(ckey, list/ban)
-	// Add new stickyban, no cheks input arguments!
+	// Add new stickyban, no checks input arguments!
 	if (import_raw_stickyban_to_db(ckey, ban))
 		ban[BANKEY_FROMDB] = TRUE
 	world.SetConfig("ban", ckey, list2stickyban(ban))
@@ -458,7 +458,7 @@ SUBSYSTEM_DEF(stickyban)
 	var/list/ckeys_list = SSstickyban.get_cached_sticky_banned_ckeys()
 	return ckeys_list ? ckeys_list : sortList(world.GetConfig("ban"))
 
-/proc/get_stickyban_from_ckey(var/ckey)
+/proc/get_stickyban_from_ckey(ckey)
 	// Return list of stickybans for client with by ckey
 	// If nothig found or error return null
 	// Update cache on timer

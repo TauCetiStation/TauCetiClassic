@@ -337,10 +337,10 @@ var/list/slot_equipment_priority = list(
 	return list(mouth)
 
 //Returns the item equipped to the specified slot, if any.
-/mob/proc/get_equipped_item(var/slot)
+/mob/proc/get_equipped_item(slot)
 	return null
 
-/mob/living/carbon/get_equipped_item(var/slot)
+/mob/living/carbon/get_equipped_item(slot)
 	switch(slot)
 		if(SLOT_BACK) return back
 		if(SLOT_WEAR_MASK) return wear_mask
@@ -348,7 +348,7 @@ var/list/slot_equipment_priority = list(
 		if(SLOT_R_HAND) return r_hand
 	return null
 
-/mob/living/carbon/human/get_equipped_item(var/slot)
+/mob/living/carbon/human/get_equipped_item(slot)
 	switch(slot)
 		if(SLOT_BELT) return belt
 		if(SLOT_L_EAR) return l_ear

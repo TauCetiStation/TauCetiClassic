@@ -37,9 +37,24 @@
 
 	C.screen |= (C.parallax_layers)
 
+	var/obj/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
+
+	PM.color = list(
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		1, 1, 1, 1,
+		0, 0, 0, 0
+		)
+
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
 	C.screen -= (C.parallax_layers_cached)
+
+	var/obj/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
+
+	PM.color = initial(PM.color)
+
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
@@ -227,7 +242,7 @@
 	blend_mode = BLEND_ADD
 	plane = PLANE_SPACE_PARALLAX
 	screen_loc = "CENTER-7,CENTER-7"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/parallax_layer/New(loc, view, _icon)
 	if(_icon)

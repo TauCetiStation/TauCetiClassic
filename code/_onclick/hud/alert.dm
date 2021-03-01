@@ -194,6 +194,19 @@
 	icon_state = "alien_fire"
 	alerttooltipstyle = "alien"
 
+/obj/screen/alert/alien_embryo
+	name = "Медленное развитие эмбриона"
+	desc = "Носитель не находится в гнезде. Ваша скорость развития снижена."
+	icon_state = "alien_embryo"
+	alerttooltipstyle = "alien"
+
+/obj/screen/alert/alien_queen
+	name = "Низкая скорость роста"
+	desc = "Королева вне зоны видимости. Ваша скорость роста снижена."
+	icon_state = "alien_queen"
+	alerttooltipstyle = "alien"
+
+//changeling
 /obj/screen/alert/regen_stasis
 	name = "Regenerative Stasis"
 	desc = "You has entered in statis. Just wait a little bit."

@@ -306,7 +306,7 @@
 			if("singulo")
 				icon_state = "singulo"
 				name = "Singulo"
-				desc = "A blue-space beverage."
+				desc = "A bluespace beverage."
 			if("alliescocktail")
 				icon_state = "alliescocktail"
 				name = "Allies cocktail"

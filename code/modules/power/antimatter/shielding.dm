@@ -211,7 +211,6 @@
 	throw_speed = 1
 	throw_range = 2
 	m_amt = 100
-	w_amt = 2000
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
 	if(ismultitool(I) && istype(loc, /turf))

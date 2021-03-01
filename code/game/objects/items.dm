@@ -79,6 +79,7 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -201,12 +202,13 @@
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
 		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-		switch(Heart.heart_status)
-			if(HEART_FAILURE)
-				message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
-			if(HEART_FIBR)
-				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
-		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
+		if(Heart)
+			switch(Heart.heart_status)
+				if(HEART_FAILURE)
+					message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
+				if(HEART_FIBR)
+					message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
+			message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(!output_to_chat)
 		message += "</BODY></HTML>"
@@ -361,6 +363,7 @@
 	if(!user.can_pickup(src))
 		return
 
+	remove_outline()
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -395,6 +398,7 @@
 		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
+	remove_outline()
 	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
@@ -1003,3 +1007,45 @@ var/global/list/items_blood_overlay_by_type = list()
 
 /obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	return
+
+/obj/item/MouseEntered()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	apply_outline()
+
+/obj/item/MouseExited()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	remove_outline()
+
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(src != over)
+		remove_outline()
+
+
+/client/var/list/image/outlined_item = list()
+/obj/item/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/obj/item/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src
