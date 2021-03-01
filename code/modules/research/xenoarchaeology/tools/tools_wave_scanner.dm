@@ -123,6 +123,7 @@
 	..()
 
 /obj/item/device/wave_scanner_backpack/MouseDrop()
+	. = ..()
 	if(ismob(loc))
 		if(!CanMouseDrop(src))
 			return
