@@ -238,7 +238,7 @@
 	return 1
 
 
-/datum/game_mode/proc/auto_declare_completion_wizard()
+/datum/game_mode/wizard/auto_declare_completion()
 	var/text = ""
 	if(wizards.len)
 		text += printlogo("wizard", "wizards/witches")

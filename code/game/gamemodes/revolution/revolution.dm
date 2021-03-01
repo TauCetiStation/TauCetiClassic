@@ -280,7 +280,7 @@
 	..()
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_revolution()
+/datum/game_mode/revolution/auto_declare_completion()
 	var/list/targets = list()
 
 	var/text = ""

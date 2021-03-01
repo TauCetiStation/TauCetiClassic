@@ -503,10 +503,7 @@ SUBSYSTEM_DEF(ticker)
 	if(mode.completion_text)//extendet has empty completion text
 		ai_completions += "<div class='Section'>[mode.completion_text]</div>"
 
-	//calls auto_declare_completion_* for all modes
-	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
-			ai_completions += "[call(mode, handler)()]"
+	ai_completions += mode.auto_declare_completion()
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()

@@ -197,7 +197,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	..()
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_changeling()
+/datum/game_mode/changeling/auto_declare_completion()
 	var/text = ""
 	if(changelings.len)
 		var/icon/logoa = icon('icons/mob/mob.dmi', "change-logoa")

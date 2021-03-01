@@ -215,7 +215,7 @@ Made by Xhuis
 	return 1
 
 
-/datum/game_mode/proc/auto_declare_completion_shadowling()
+/datum/game_mode/shadowling/auto_declare_completion()
 	var/text = ""
 	if(shadows.len)
 		text += printlogo("shadowling", "shadowlings")

@@ -170,7 +170,7 @@
 	else
 		return 1
 
-/datum/game_mode/proc/auto_declare_completion_meme()
+/datum/game_mode/meme/auto_declare_completion()
 	var/text = ""
 	for(var/datum/mind/meme in memes)
 		var/memewin = TRUE

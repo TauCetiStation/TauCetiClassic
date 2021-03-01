@@ -299,7 +299,7 @@
 	..()
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_cult()
+/datum/game_mode/cult/auto_declare_completion()
 	var/text = ""
 	if( cult.len || (SSticker && istype(SSticker.mode,/datum/game_mode/cult)) )
 		text += printlogo("cult", "cultists")

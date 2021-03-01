@@ -369,7 +369,7 @@
 	..()
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_gang()
+/datum/game_mode/gang/auto_declare_completion()
 	var/winner
 	var/text = ""
 	var/datum/game_mode/gang/game_mode = SSticker.mode

@@ -485,7 +485,7 @@ var/global/list/datum/mind/borers = list()
 		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
-/datum/game_mode/proc/auto_declare_completion_borer()
+/datum/game_mode/borer/auto_declare_completion()
 	var/text = ""
 	if(borers.len)
 		text += "<b>The borers were:</b>"

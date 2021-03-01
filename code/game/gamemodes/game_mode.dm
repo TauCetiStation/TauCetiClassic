@@ -551,6 +551,9 @@ Implants;
 	text += {"<img src="logo_[tempstate].png"> <b>The [antagname] were:</b> <img src="logo_[tempstate].png">"}
 	return text
 
+/datum/game_mode/proc/auto_declare_completion()
+	return
+
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
 	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]

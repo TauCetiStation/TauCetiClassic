@@ -212,7 +212,7 @@
 		to_chat(ninja.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 
-/datum/game_mode/proc/auto_declare_completion_ninja()
+/datum/game_mode/ninja/auto_declare_completion()
 	var/text = ""
 	if(ninjas.len)
 		text += printlogo("ninja", "ninjas")

@@ -38,7 +38,7 @@
 	..()
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_blob()
+/datum/game_mode/blob/auto_declare_completion()
 	var/text = ""
 	if(SSticker.mode.infected_crew.len)
 		text += "<b>The blob[(SSticker.mode.infected_crew.len > 1 ? "s were" : " was")]:</b>"
