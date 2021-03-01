@@ -63,13 +63,13 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src='ready_neok.png' onClick="imgsrc()" /></a>
-		"}
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src=[ready ? 'ready_ok.png' : 'ready_neok.png'] /></a>
+	"}
 	else
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'><img src='manifest.png' /></a>
-		"}
+	"}
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'><img src='joingame.png' /></a>
-		"}
+	"}
 
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'><img src='observe.png' /></a>
 	"}
@@ -78,17 +78,17 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
 	dat += "</div>"
 	dat += {"
-		<script language="JavaScript">
-			var i=0;
-			var image=document.getElementById("image");
-			var imgs=new Array('ready_neok.png', 'ready_ok.png');
-			function imgsrc() {
-				i++;
-				if (i == imgs.length)
-					i = 0;
-				image.src = imgs\[i\];
-			}
-		</script>
+	<script language="JavaScript">
+		var i=0;
+		var image=document.getElementById("image");
+		var imgs=new Array('ready_neok.png', 'ready_ok.png');
+		function imgsrc() {
+			i++;
+			if (i == imgs.length)
+				i = 0;
+			image.src = imgs\[i\];
+		}
+	</script>
 	"}
 	dat += {"<img src="titlescreen.gif" class="fone" alt="">"}
 	dat += "</body></html>"
