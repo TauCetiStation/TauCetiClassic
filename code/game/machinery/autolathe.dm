@@ -1,82 +1,107 @@
+/datum/autolathe_recipe
+	var/name = "recipe"
+	var/result
+	var/metal_amount = 0
+	var/glass_amount = 0
+
+/datum/autolathe_recipe/stack
+	var/max_res_amount = 50
+
+/proc/path_to_ar(obj/path)
+	var/datum/autolathe_recipe/recipe
+	if(ispath(path, /obj/item/stack))
+		recipe = new /datum/autolathe_recipe/stack
+		var/datum/autolathe_recipe/stack/S = recipe
+		var/obj/item/stack/PS = path
+		S.max_res_amount = initial(PS.max_amount)
+	else
+		recipe = new /datum/autolathe_recipe
+	recipe.name = initial(path.name)
+	recipe.result = path
+	recipe.metal_amount = initial(path.m_amt)
+	recipe.glass_amount = initial(path.g_amt)
+	return recipe
+
+#define R(path) path_to_ar(path)
 var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
-	new /datum/autolathe_recipe/bucket,
-	new /datum/autolathe_recipe/crowbar,
-	new /datum/autolathe_recipe/flashlight,
-	new /datum/autolathe_recipe/extinguisher,
-	new /datum/autolathe_recipe/multitool,
-	new /datum/autolathe_recipe/t_scanner,
-	new /datum/autolathe_recipe/analyzer,
-	new /datum/autolathe_recipe/plant_analyzer,
-	new /datum/autolathe_recipe/healthanalyzer,
-	new /datum/autolathe_recipe/weldingtool,
-	new /datum/autolathe_recipe/screwdriver,
-	new /datum/autolathe_recipe/wirecutters,
-	new /datum/autolathe_recipe/wrench,
-	new /datum/autolathe_recipe/welding_helmet,
-	new /datum/autolathe_recipe/console_screen,
-	new /datum/autolathe_recipe/airlock_electronics,
-	new /datum/autolathe_recipe/airalarm_electronics,
-	new /datum/autolathe_recipe/firealarm_electronics,
-	new /datum/autolathe_recipe/power_control,
-	new /datum/autolathe_recipe/stack/metal,
-	new /datum/autolathe_recipe/stack/glass,
-	new /datum/autolathe_recipe/stack/rglass,
-	new /datum/autolathe_recipe/stack/rods,
-	new /datum/autolathe_recipe/rcd_ammo,
-	new /datum/autolathe_recipe/kitchenknife,
-	new /datum/autolathe_recipe/scalpel,
-	new /datum/autolathe_recipe/circular_saw,
-	new /datum/autolathe_recipe/surgicaldrill,
-	new /datum/autolathe_recipe/retractor,
-	new /datum/autolathe_recipe/cautery,
-	new /datum/autolathe_recipe/hemostat,
-	new /datum/autolathe_recipe/beaker,
-	new /datum/autolathe_recipe/large,
-	new /datum/autolathe_recipe/vial,
-	new /datum/autolathe_recipe/syringe,
-	new /datum/autolathe_recipe/beanbag,
-	new /datum/autolathe_recipe/c45r,
-	new /datum/autolathe_recipe/c9mmr,
-	new /datum/autolathe_recipe/taperecorder,
-	new /datum/autolathe_recipe/igniter,
-	new /datum/autolathe_recipe/signaler,
-	new /datum/autolathe_recipe/headset,
-	new /datum/autolathe_recipe/voice,
-	new /datum/autolathe_recipe/radio,
-	new /datum/autolathe_recipe/infra,
-	new /datum/autolathe_recipe/timer,
-	new /datum/autolathe_recipe/prox_sensor,
-	new /datum/autolathe_recipe/tube,
-	new /datum/autolathe_recipe/bulb,
-	new /datum/autolathe_recipe/ashtray,
-	new /datum/autolathe_recipe/camera_assembly,
-	new /datum/autolathe_recipe/shovel,
-	new /datum/autolathe_recipe/minihoe,
-	new /datum/autolathe_recipe/hand_labeler,
-	new /datum/autolathe_recipe/destTagger,
-	new /datum/autolathe_recipe/toy_gun,
-	new /datum/autolathe_recipe/toy_gun_ammo,
-	new /datum/autolathe_recipe/random,
-	new /datum/autolathe_recipe/newscaster_frame,
-	new /datum/autolathe_recipe/tabletop_assistant,
+	R(/obj/item/weapon/reagent_containers/glass/bucket),
+	R(/obj/item/weapon/crowbar),
+	R(/obj/item/device/flashlight),
+	R(/obj/item/weapon/reagent_containers/spray/extinguisher),
+	R(/obj/item/device/multitool),
+	R(/obj/item/device/t_scanner),
+	R(/obj/item/device/analyzer),
+	R(/obj/item/device/plant_analyzer),
+	R(/obj/item/device/healthanalyzer),
+	R(/obj/item/weapon/weldingtool),
+	R(/obj/item/weapon/screwdriver),
+	R(/obj/item/weapon/wirecutters),
+	R(/obj/item/weapon/wrench),
+	R(/obj/item/clothing/head/welding),
+	R(/obj/item/weapon/stock_parts/console_screen),
+	R(/obj/item/weapon/airlock_electronics),
+	R(/obj/item/weapon/airalarm_electronics),
+	R(/obj/item/weapon/firealarm_electronics),
+	R(/obj/item/weapon/module/power_control),
+	R(/obj/item/stack/sheet/metal),
+	R(/obj/item/stack/sheet/glass),
+	R(/obj/item/stack/sheet/rglass),
+	R(/obj/item/stack/rods),
+	R(/obj/item/weapon/rcd_ammo),
+	R(/obj/item/weapon/kitchenknife),
+	R(/obj/item/weapon/scalpel),
+	R(/obj/item/weapon/circular_saw),
+	R(/obj/item/weapon/surgicaldrill),
+	R(/obj/item/weapon/retractor),
+	R(/obj/item/weapon/cautery),
+	R(/obj/item/weapon/hemostat),
+	R(/obj/item/weapon/reagent_containers/glass/beaker),
+	R(/obj/item/weapon/reagent_containers/glass/beaker/large),
+	R(/obj/item/weapon/reagent_containers/glass/beaker/vial),
+	R(/obj/item/weapon/reagent_containers/syringe),
+	R(/obj/item/ammo_casing/shotgun/beanbag),
+	R(/obj/item/ammo_box/c45r),
+	R(/obj/item/ammo_box/c9mmr),
+	R(/obj/item/device/taperecorder),
+	R(/obj/item/device/assembly/igniter),
+	R(/obj/item/device/assembly/signaler),
+	R(/obj/item/device/radio/headset),
+	R(/obj/item/device/assembly/voice),
+	R(/obj/item/device/radio/off),
+	R(/obj/item/device/assembly/infra),
+	R(/obj/item/device/assembly/timer),
+	R(/obj/item/device/assembly/prox_sensor),
+	R(/obj/item/weapon/light/tube),
+	R(/obj/item/weapon/light/bulb),
+	R(/obj/item/ashtray/glass),
+	R(/obj/item/weapon/camera_assembly),
+	R(/obj/item/weapon/shovel),
+	R(/obj/item/weapon/minihoe),
+	R(/obj/item/weapon/hand_labeler),
+	R(/obj/item/device/destTagger),
+	R(/obj/item/toy/gun),
+	R(/obj/item/toy/ammo/gun),
+	R(/obj/item/weapon/game_kit/random),
+	R(/obj/item/newscaster_frame),
+	R(/obj/item/device/tabletop_assistant),
 )
 
 var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
-	new /datum/autolathe_recipe/full,
-	new /datum/autolathe_recipe/rcd,
-	new /datum/autolathe_recipe/electropack,
-	new /datum/autolathe_recipe/largetank,
-	new /datum/autolathe_recipe/handcuffs,
-	new /datum/autolathe_recipe/a357,
-	new /datum/autolathe_recipe/c45,
-	new /datum/autolathe_recipe/c9mm,
-	new /datum/autolathe_recipe/shotgun,
-	new /datum/autolathe_recipe/dart,
-	new /datum/autolathe_recipe/buckshot,
-	new /datum/autolathe_recipe/harmonica,
-	new /datum/autolathe_recipe/bell,
+	R(/obj/item/weapon/flamethrower/full),
+	R(/obj/item/weapon/rcd),
+	R(/obj/item/device/radio/electropack),
+	R(/obj/item/weapon/weldingtool/largetank),
+	R(/obj/item/weapon/handcuffs),
+	R(/obj/item/ammo_box/a357),
+	R(/obj/item/ammo_box/c45),
+	R(/obj/item/ammo_box/c9mm),
+	R(/obj/item/ammo_casing/shotgun),
+	R(/obj/item/ammo_casing/shotgun/dart),
+	R(/obj/item/ammo_casing/shotgun/buckshot),
+	R(/obj/item/device/harmonica),
+	R(/obj/item/weapon/bell),
 )
-
+#undef R
 var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden
 
 /obj/machinery/autolathe
