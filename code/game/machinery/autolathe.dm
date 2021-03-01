@@ -322,7 +322,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		// critical exploit fix start -walter0o
 		var/datum/autolathe_recipe/recipe = locate(href_list["make"])
 
-		if(!recipe || !istype(recipe))
+		if(!istype(recipe))
 			return FALSE
 
 		var/list/datum/autolathe_recipe/recipes
