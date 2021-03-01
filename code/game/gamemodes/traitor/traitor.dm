@@ -191,7 +191,7 @@
 
 	killer.add_language("Sy-Code", 1)
 
-/datum/game_mode/traitor/text_to_completion()
+/datum/game_mode/traitor/text_for_completion()
 	var/text = ""
 	if(traitors.len)
 		text += printlogo("synd", "traitors")

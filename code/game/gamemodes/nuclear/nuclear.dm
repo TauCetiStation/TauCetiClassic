@@ -305,7 +305,7 @@
 	return 1
 
 
-/datum/game_mode/nuclear/text_to_completion()
+/datum/game_mode/nuclear/text_for_completion()
 	var/text = ""
 	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
 		text += printlogo("nuke", "syndicate operatives")

@@ -302,7 +302,7 @@
 		text += "Someone from them is <b>dead</b>. "
 	return text
 
-/datum/game_mode/abduction/text_to_completion()
+/datum/game_mode/abduction/text_for_completion()
 	var/text = ""
 	if(abductors.len)
 		text += printlogo("abductor", "abductors")

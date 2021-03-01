@@ -554,11 +554,11 @@ Implants;
 /datum/game_mode/proc/get_stat_template(text)
 	return list("mode" = name, "html" = text)
 
-/datum/game_mode/proc/text_to_completion()
+/datum/game_mode/proc/text_for_completion()
 	return
 
 /datum/game_mode/proc/auto_declare_completion()
-	var/text = text_to_completion()
+	var/text = text_for_completion()
 
 	if(text)
 		antagonists_completion += list(get_stat_template(text))

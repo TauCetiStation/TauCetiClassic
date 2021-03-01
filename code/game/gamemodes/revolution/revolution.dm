@@ -280,7 +280,7 @@
 	..()
 	return 1
 
-/datum/game_mode/revolution/text_to_completion()
+/datum/game_mode/revolution/text_for_completion()
 	var/list/targets = list()
 
 	var/text = ""

@@ -286,7 +286,7 @@ VOX HEIST ROUNDTYPE
 	..()
 	return TRUE
 
-/datum/game_mode/heist/text_to_completion()
+/datum/game_mode/heist/text_for_completion()
 	var/text = ""
 	if(raiders.len)
 		var/check_return = 0

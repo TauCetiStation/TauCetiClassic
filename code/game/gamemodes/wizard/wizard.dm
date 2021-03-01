@@ -238,7 +238,7 @@
 	return 1
 
 
-/datum/game_mode/wizard/text_to_completion()
+/datum/game_mode/wizard/text_for_completion()
 	var/text = ""
 	if(wizards.len)
 		text += printlogo("wizard", "wizards/witches")

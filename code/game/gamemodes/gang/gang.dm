@@ -369,7 +369,7 @@
 	..()
 	return 1
 
-/datum/game_mode/gang/text_to_completion()
+/datum/game_mode/gang/text_for_completion()
 	var/winner
 	var/text = ""
 	var/datum/game_mode/gang/game_mode = SSticker.mode

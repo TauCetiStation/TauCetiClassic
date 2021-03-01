@@ -281,7 +281,7 @@
 	return 1
 
 
-/datum/game_mode/malfunction/text_to_completion()
+/datum/game_mode/malfunction/text_for_completion()
 	var/text = ""
 	if( malf_ai.len || istype(SSticker.mode,/datum/game_mode/malfunction) )
 		text += "<b>The malfunctioning AI were:</b>"

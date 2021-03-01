@@ -149,7 +149,7 @@
 		return 1
 
 
-/datum/game_mode/anti_revolution/text_to_completion()
+/datum/game_mode/anti_revolution/text_for_completion()
 
 	var/text = ""
 	if(finished == 2)

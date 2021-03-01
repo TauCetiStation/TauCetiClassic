@@ -176,7 +176,7 @@
 		completion_text += "</div>"
 	..()
 
-/datum/game_mode/infestation/text_to_completion()
+/datum/game_mode/infestation/text_for_completion()
 
 	if(SSticker && !istype(SSticker.mode, /datum/game_mode/infestation))
 		return

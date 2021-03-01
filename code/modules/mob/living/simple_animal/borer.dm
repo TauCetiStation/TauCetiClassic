@@ -488,7 +488,7 @@ var/global/list/datum/mind/borers = list()
 /datum/game_mode/borer
 	name = "borers"
 
-/datum/game_mode/borer/text_to_completion()
+/datum/game_mode/borer/text_for_completion()
 	var/text = ""
 	if(borers.len)
 		text += "<b>The borers were:</b>"

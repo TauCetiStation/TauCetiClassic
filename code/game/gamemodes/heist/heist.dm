@@ -257,7 +257,7 @@
 	..()
 	return 1
 
-/datum/game_mode/heist/text_to_completion()
+/datum/game_mode/heist/text_for_completion()
 	var/text =""
 	if(raiders.len)
 		var/loot_savefile = "data/pirate_loot.sav" //loot statistics
