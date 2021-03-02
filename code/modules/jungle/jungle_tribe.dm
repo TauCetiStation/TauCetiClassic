@@ -59,13 +59,13 @@
 	emote_see = list("bends down to examine something")
 	melee_damage = 10
 	turns_per_move = 1
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	var/my_type = 1
 
 /mob/living/simple_animal/hostile/tribesman/atom_init()
 	. = ..()
 	//if(prob(33)) - this mob has no projectiletype var set, and causes runtime when trying to shoot non existent spears.
-	//	ranged = 1
+	//	ranged = TRUE
 
 	icon_state = "native[my_type]"
 	icon_living = "native[my_type]"
