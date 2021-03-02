@@ -6,8 +6,6 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
-
-
 	<html>
 		<head>
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,6 +21,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					overflow: hidden;
 					text-align: center;
 					background-color: black;
+					-ms-user-select: none;
 				}
 
 				img {
@@ -31,9 +30,9 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
 				.fone{
 					position: relative;
-					object-fit: contain;
-					width: 100vh;
-					height: 100%;
+					width: 100%;
+					min-width: 100vh;
+					height: 100vh;
 					top:-50vh;
 					left: 0;
 					z-index: 0;
@@ -60,7 +59,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					font-family: "Fixedsys";
 					font-weight: lighter;
 					text-decoration: none;
-					width: 100%;
+					width: 25%;
 					text-align: left;
 					color:white;
 					margin-right: 100%;
@@ -70,7 +69,6 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					line-height: 4vh;
 					height: 4vh;
 					letter-spacing: 1px;
-					vertical-align: middle;
 				}
 
 				.menu_a:hover {
