@@ -392,7 +392,7 @@
 		nutrilevel = min(nutrilevel + 10, maxnutri)
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
-		to_chat(user, "You replace the nutrient solution in [src].")
+		to_chat(user, "You adding the nutrient solution in [src].")
 		playsound(src, 'sound/items/cork_and_liquid.ogg', VOL_EFFECTS_MASTER, 90)
 		qdel(O)
 		update_icon()
