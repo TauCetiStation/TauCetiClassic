@@ -73,13 +73,6 @@
 /datum/asset/simple/lobby
 	assets = list(
 		"FixedsysExcelsior3.01Regular.ttf" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
-		"ready_ok.png" = 'icons/lobby/ready_ok.png',
-		"ready_neok.png" = 'icons/lobby/ready_neok.png',
-		"setup.png" = 'icons/lobby/setup.png',
-		"changelog.png" = 'icons/lobby/changelog.png',
-		"joingame.png" = 'icons/lobby/joingame.png',
-		"manifest.png" = 'icons/lobby/manifest.png',
-		"observe.png" = 'icons/lobby/observe.png',
 	)
 
 /datum/asset/simple/chess

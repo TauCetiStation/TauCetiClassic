@@ -6,90 +6,115 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
+
+
 	<html>
-	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<style type='text/css'>
-			body,
-			html {
-				margin: 0;
-				overflow: hidden;
-				text-align: center;
-				background-color: black;
-			}
+		<head>
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<style type='text/css'>
+				@font-face {
+					font-family: "Fixedsys";
+					src: url("FixedsysExcelsior3.01Regular.ttf");
+				}
+				body,
+				html {
+					margin: 0;
+					overflow: hidden;
+					text-align: center;
+					background-color: black;
+				}
 
-			img {
-				border-style:none;
-			}
+				img {
+					border-style:none;
+				}
 
-			.fone{
-				position: relative;
-				object-fit: contain;
-				width: 100%;
-				height: 100%;
-				top:-35%;
-				left: 0;
-				z-index: 0;
-			}
+				.fone{
+					position: relative;
+					object-fit: contain;
+					width: 100vh;
+					height: 100%;
+					top:-50vh;
+					left: 0;
+					z-index: 0;
+				}
 
-			.container_nav {
-				position: relative;
-				height: 35%;
-				width: min-content;
-				z-index: 1;
-				left: 10%;
-				top: 60%;
-			}
+				.container{
+					height: 100%;
+					width: 100vh;
+					margin-left: auto;
+					margin-right: auto;
+				}
 
-			.container_nav img {
-				margin-right: 100%;
-				width: 300px;
-			}
+				.container_nav {
+					position: relative;
+					margin-top: auto;
+					height: 50vh;
+					top: 70vh;
+					left:10%;
+					z-index: 1;
+				}
 
-			.menu_a {
-				position: relative;
-			}
+				.menu_a {
+					display: inline-block;
+					font-family: "Fixedsys";
+					font-weight: lighter;
+					text-decoration: none;
+					width: 100%;
+					text-align: left;
+					color:white;
+					margin-right: 100%;
+					margin-top: 0.5vh;
+					padding-left: 6px;
+					font-size: 4vh;
+					line-height: 4vh;
+					height: 4vh;
+					letter-spacing: 1px;
+					vertical-align: middle;
+				}
 
-			.menu_a:hover {
-				border-left: 2px solid white;
-			}
+				.menu_a:hover {
+					border-left: 3px solid white;
+					font-weight: bolder;
+					padding-left: 3px;
+				}
 
-		</style>
-	</head>
-	<body>
-	<div class="container_nav">
-	<a class="menu_a" href='?src=\ref[src];lobby_setup=1'><img src='setup.png' /></a>
+			</style>
+		</head>
+		<body>
+			<div class="container">
+				<div class="container_nav">
+				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>SETUP</a>
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_ready=1'><img id="image" src=[ready ? "ready_ok.png" : "ready_neok.png"] /></a>
+		dat += {"<a id="ready" class="menu_a" href='?src=\ref[src];lobby_ready=1' >READY ☒</a>
 	"}
 	else
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'><img src='manifest.png' /></a>
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>
 	"}
-		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'><img src='joingame.png' /></a>
+		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>
 	"}
 
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'><img src='observe.png' /></a>
+	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>
 	"}
-	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'><img src='changelog.png' /></a>
+	dat += {"<br><br><a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>
 	"}
 
 	dat += "</div>"
+	dat += {"<img src="titlescreen.gif" class="fone" alt="">"}
 	dat += {"
 	<script language="JavaScript">
 		var i=0;
-		var image=document.getElementById("image");
-		var imgs=new Array('ready_neok.png', 'ready_ok.png');
+		var mark=document.getElementById("ready");
+		var marks=new Array('READY ☒', 'READY ☑');
 		function imgsrc() {
 			i++;
-			if (i == imgs.length)
+			if (i == marks.length)
 				i = 0;
-			image.src = imgs\[i\];
+			mark.textContent = marks\[i\];
 		}
 	</script>
 	"}
-	dat += {"<img src="titlescreen.gif" class="fone" alt="">"}
-	dat += "</body></html>"
+	dat += "</div></body></html>"
 	return dat
