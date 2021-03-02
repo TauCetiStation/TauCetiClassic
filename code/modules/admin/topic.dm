@@ -733,19 +733,13 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MEME];jobban4=\ref[M]'>[ROLE_MEME]</a></td>"
 
-		//Mutineer
-		if(jobban_isbanned(M, ROLE_MUTINEER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_MUTINEER];jobban4=\ref[M]'>[ROLE_MUTINEER]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MUTINEER];jobban4=\ref[M]'>[ROLE_MUTINEER]</a></td>"
-
-		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
-
 		//Shadowling
 		if(jobban_isbanned(M, ROLE_SHADOWLING) || isbanned_dept)
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Abductor
 		if(jobban_isbanned(M, ROLE_ABDUCTOR) || isbanned_dept)
