@@ -66,37 +66,7 @@ var/global/list/all_objectives = list()
 	return OBJECTIVE_WIN
 
 
-
-
-/datum/objective/mutiny/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-
-/datum/objective/mutiny/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/mutiny/check_completion()
-	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
-			return OBJECTIVE_WIN
-		var/turf/T = get_turf(target.current)
-		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
-			return OBJECTIVE_HALFWIN
-		return OBJECTIVE_LOSS
-	return OBJECTIVE_WIN
-
-
-/datum/objective/mutiny/rp/find_target()
+/datum/objective/rp_rev/find_target()
 	..()
 	if(target && target.current)
 		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [target.assigned_role]."
@@ -105,7 +75,7 @@ var/global/list/all_objectives = list()
 	return target
 
 
-/datum/objective/mutiny/rp/find_target_by_role(role, role_type=0)
+/datum/objective/rp_rev/find_target_by_role(role, role_type=0)
 	..(role, role_type)
 	if(target && target.current)
 		explanation_text = "Capture, convert or exile from station [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]. Assassinate if you have no choice."
@@ -114,7 +84,7 @@ var/global/list/all_objectives = list()
 	return target
 
 	// less violent rev objectives
-/datum/objective/mutiny/rp/check_completion()
+/datum/objective/rp_rev/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD)
 			return OBJECTIVE_HALFWIN
@@ -129,94 +99,6 @@ var/global/list/all_objectives = list()
 
 		return OBJECTIVE_LOSS
 
-	return OBJECTIVE_WIN
-
-/datum/objective/anti_revolution/execute/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [target.assigned_role] has extracted confidential information above their clearance. Execute \him[target.current]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-
-/datum/objective/anti_revolution/execute/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] has extracted confidential information above their clearance. Execute \him[target.current]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/execute/check_completion()
-	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current))
-			return OBJECTIVE_WIN
-		return OBJECTIVE_LOSS
-	return OBJECTIVE_WIN
-
-/datum/objective/anti_revolution/brig
-	var/already_completed = 0
-
-/datum/objective/anti_revolution/brig/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "Brig [target.current.real_name], the [target.assigned_role] for 20 minutes to set an example."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-
-/datum/objective/anti_revolution/brig/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "Brig [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] for 20 minutes to set an example."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/brig/check_completion()
-	if(already_completed)
-		return OBJECTIVE_WIN
-
-	if(target && target.current)
-		if(target.current.stat == DEAD)
-			return OBJECTIVE_LOSS
-		if(target.is_brigged(10 * 60 * 10))
-			already_completed = 1
-			return OBJECTIVE_WIN
-		return OBJECTIVE_LOSS
-	return OBJECTIVE_LOSS
-
-/datum/objective/anti_revolution/demote/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/demote/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/demote/check_completion()
-	if(target && target.current && istype(target,/mob/living/carbon/human))
-		var/obj/item/weapon/card/id/I = target.current:wear_id
-		if(istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/P = I
-			I = P.id
-
-		if(!istype(I)) return OBJECTIVE_WIN
-
-		if(I.assignment == "Test Subject")
-			return OBJECTIVE_WIN
-		else
-			return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 
 /datum/objective/debrain/find_target()//I want braaaainssss

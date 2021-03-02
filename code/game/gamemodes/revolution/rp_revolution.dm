@@ -78,7 +78,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		if(!config.objectives_disabled)
 			for(var/datum/mind/head_mind in heads)
-				var/datum/objective/mutiny/rp/rev_obj = new
+				var/datum/objective/rp_rev/rev_obj = new
 				rev_obj.owner = rev_mind
 				rev_obj.target = head_mind
 				rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
@@ -225,7 +225,7 @@
 	if(!config.objectives_disabled)
 		var/list/heads = get_living_heads()
 		for(var/datum/mind/head_mind in heads)
-			var/datum/objective/mutiny/rev_obj = new
+			var/datum/objective/rp_rev/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = head_mind
 			rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
@@ -318,7 +318,7 @@
 					head_revolutionaries += H.mind
 					revolutionaries -= H.mind
 					for(var/datum/mind/head_mind in heads)
-						var/datum/objective/mutiny/rp/rev_obj = new
+						var/datum/objective/rp_rev/rev_obj = new
 						rev_obj.owner = H.mind
 						rev_obj.target = head_mind
 						rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
@@ -387,7 +387,7 @@
 		heads += M
 
 		for(var/datum/mind/rev_mind in head_revolutionaries)
-			var/datum/objective/mutiny/rp/rev_obj = new
+			var/datum/objective/rp_rev/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Capture, convert or exile from station [M.name], the [M.mind.assigned_role]. Assassinate if you have no choice."

@@ -746,8 +746,8 @@
 					// copy targets
 					var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 					if (valid_head)
-						for (var/datum/objective/mutiny/O in valid_head.objectives)
-							var/datum/objective/mutiny/rev_obj = new
+						for (var/datum/objective/rp_rev/O in valid_head.objectives)
+							var/datum/objective/rp_rev/rev_obj = new
 							rev_obj.owner = src
 							rev_obj.target = O.target
 							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
@@ -1430,8 +1430,8 @@
 		// copy targets
 		var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 		if (valid_head)
-			for (var/datum/objective/mutiny/O in valid_head.objectives)
-				var/datum/objective/mutiny/rev_obj = new
+			for (var/datum/objective/rp_rev/O in valid_head.objectives)
+				var/datum/objective/rp_rev/rev_obj = new
 				rev_obj.owner = src
 				rev_obj.target = O.target
 				rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
