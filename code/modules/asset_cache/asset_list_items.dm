@@ -72,6 +72,7 @@
 
 /datum/asset/simple/lobby
 	assets = list(
+		"v4shim.css" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
 		"ready_ok.png" = 'icons/lobby/ready_ok.png',
 		"ready_neok.png" = 'icons/lobby/ready_neok.png',
 		"setup.png" = 'icons/lobby/setup.png',
