@@ -582,10 +582,6 @@
 		if(SSticker.mode.traitors.len)
 			dat += check_role_table("Traitors", SSticker.mode.traitors, src)
 
-		var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()
-		if(mutiny)
-			dat += mutiny.check_antagonists_ui(src)
-
 		if(istype(SSticker.mode, /datum/game_mode/infestation))
 			var/datum/game_mode/infestation/inf = SSticker.mode
 			var/data = inf.count_alien_percent()

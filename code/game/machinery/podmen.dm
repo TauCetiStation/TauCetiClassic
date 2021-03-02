@@ -115,11 +115,6 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 		podman.real_name = realName
 	podman.dna.real_name = podman.real_name
 
-	// Update mode specific HUD icons.
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.update_icon(podman.mind)
-
 	switch(SSticker.mode.name)
 		if ("cult")
 			if (podman.mind in SSticker.mode:cult)

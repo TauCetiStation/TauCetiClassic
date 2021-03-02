@@ -252,9 +252,6 @@
 				cell_component.installed = 1
 
 			feedback_inc("cyborg_birth",1)
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.borgify_directive(O)
 			O.Namepick()
 
 			qdel(src)
