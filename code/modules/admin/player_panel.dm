@@ -351,8 +351,6 @@
 			dat += "<td>Monkey</td>"
 		else if(isxeno(M))
 			dat += "<td>Alien</td>"
-		else if(istype(M, /mob/living/parasite/meme))
-			dat += "<td>Meme</td>"
 		else if(istype(M, /mob/living/parasite/essence))
 			dat += "<td>Changelling Essence</td>"
 		else
@@ -481,26 +479,6 @@
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><span class='red'>(DEAD)</span></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(SSticker.mode.memes.len) //Меме
-			dat += "<br><table cellspacing=5><tr><td><B>Memes</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/meme in SSticker.mode.memes)
-				var/mob/living/parasite/meme/M = meme.current
-				if(M)
-					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.key]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><span class='red'>(DEAD)</span></b>" : ""]</td>"
-					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-					dat += "<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"
-					// need this check because the meme may be possessing someone right now
-					if(istype(M))
-						dat += "\t<td>Attuned: "
-						for(var/mob/attuned in M.indoctrinated)
-							if(attuned.key)
-								dat += "[attuned.real_name]([attuned.key]) "
-							else
-								dat += "[attuned.real_name] "
-					else
-						dat += "<tr><td><i>Meme not found!</i></td></tr>"
 			dat += "</table>"
 
 		if(SSticker.mode.shadows.len)

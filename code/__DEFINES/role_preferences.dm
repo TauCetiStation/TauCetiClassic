@@ -16,7 +16,6 @@
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
 #define ROLE_PLANT             "Diona"
-#define ROLE_MEME              "Meme"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_GHOSTLY           "Ghostly Roles"
@@ -37,7 +36,6 @@ var/global/list/special_roles = list(
 	ROLE_BLOB ,
 	ROLE_NINJA,
 	ROLE_RAIDER,
-	ROLE_MEME,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
 	ROLE_GHOSTLY,

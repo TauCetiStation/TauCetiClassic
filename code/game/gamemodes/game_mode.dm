@@ -261,8 +261,7 @@ Implants;
 										"Vox Raider",
 										"Raider",
 										"Abductor scientist",
-										"Abductor agent",
-										"Meme"
+										"Abductor agent"
 										)
 		var/special_role = man.mind.special_role
 		if (special_role in invisible_roles)

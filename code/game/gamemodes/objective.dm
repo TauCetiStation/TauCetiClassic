@@ -717,68 +717,6 @@ var/global/list/all_objectives = list()
 	else
 		return OBJECTIVE_LOSS
 
-
-
-/* Isn't suited for global objectives
-//---------CULTIST----------
-/datum/objective/eldergod
-	explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
-
-/datum/objective/eldergod/check_completion()
-	if(eldergod) //global var, defined in rune4.dm
-		return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
-/datum/objective/survivecult
-	var/num_cult
-	explanation_text = "Our knowledge must live on. Make sure at least 5 acolytes escape on the shuttle to spread their work on an another station."
-
-/datum/objective/survivecult/check_completion()
-	if(SSshuttle.location<2)
-		return OBJECTIVE_LOSS
-	var/cultists_escaped = 0
-	var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
-	for(var/turf/T in	get_area_turfs(C.type))
-		for(var/mob/living/carbon/H in T)
-			if(iscultist(H))
-				cultists_escaped++
-	if(cultists_escaped>=5)
-		return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
-/datum/objective/sacrifice/proc/find_target() //stolen from traitor target objective
- //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
-	var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
-	if(possible_targets.len > 0)
-		sacrifice_target = pick(possible_targets)
-	if(sacrifice_target && sacrifice_target.current)
-		explanation_text = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
-	else
-		explanation_text = "Free Objective"
-	return sacrifice_target
-
-/datum/objective/sacrifice/check_completion() //again, calling on a global list defined in rune15.dm
-	if(sacrifice_target.current in sacrificed)
-		return OBJECTIVE_WIN
-	else
-		return OBJECTIVE_LOSS
-//-------ENDOF CULTIST------
-*/
-
-//Meme objectives
-/datum/objective/meme_attune/proc/gen_amount_goal(lowbound = 4, highbound = 6)
-	target_amount = rand (lowbound,highbound)
-	explanation_text = "Attune [target_amount] humanoid brains."
-	return target_amount
-
-/datum/objective/meme_attune/check_completion()
-	if(owner?.current)
-		if (istype(owner.current, /mob/living/parasite/meme))
-			var/mob/living/parasite/meme/M = owner.current
-			if (M.indoctrinated.len >= target_amount)
-				return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
 //Borer objective(s).
 /datum/objective/borer_survive
 	explanation_text = "Survive in a host until the end of the round."
@@ -834,8 +772,6 @@ var/global/list/all_objectives = list()
 	if(target && target.current)
 		if (target.current.stat == DEAD)
 			return FALSE // They're dead. Fail.
-		//if (!target.current.restrained())
-		//	return OBJECTIVE_LOSS // They're loose. Close but no cigar.
 		if(get_area(target) == locate(/area/shuttle/vox/arkship))
 			return TRUE
 	else
@@ -939,43 +875,6 @@ var/global/list/all_objectives = list()
 	if(total_amount >= target_amount)
 		return TRUE
 	return FALSE
-/*
-var/heist_rob_total = 0
-/proc/heist_recursive_price_check(atom/movable/AM,loop=0)
-	loop++
-	if(loop > 15) return
-	heist_rob_total += AM.get_price()
-	if(AM.contents && AM.contents.len)
-		for(var/atom/movable/I in AM.contents)
-			heist_rob_total += I.get_price()
-			if(I.contents && I.contents.len)
-				heist_recursive_price_check(I,loop)
-/proc/heist_recursive_price_reset(atom/movable/AM,loop=0)
-	loop++
-	if(loop > 15) return
-	AM.price = 0
-	if(AM.contents && AM.contents.len)
-		for(var/atom/movable/I in AM.contents)
-			I.price = 0
-			if(I.contents && I.contents.len)
-				heist_recursive_price_reset(I,loop)
-/proc/heist_get_shuttle_price()
-	heist_rob_total = 0
-	var/area/A = get_area(locate(/obj/effect/landmark/heist/aurora))
-	if(A)
-		for(var/atom/movable/AM in A)
-			heist_recursive_price_check(AM)
-/datum/objective/heist/robbery/choose_target()
-	target = "valuables"
-	target_amount = 1000000
-	explanation_text = "Ransack the station for any valuables."
-/datum/objective/heist/robbery/check_completion()
-	heist_rob_total = 0
-	for(var/atom/movable/AM in get_area_by_type(/area/shuttle/vox/arkship))
-		heist_recursive_price_check(AM)
-	if(heist_rob_total >= target_amount) return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS*/
-
 /datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 

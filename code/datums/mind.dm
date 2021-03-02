@@ -1670,10 +1670,6 @@
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
 
-/mob/living/parasite/meme/mind_initialize() //Just in case
-	..()
-	mind.assigned_role = "meme"
-
 //BLOB
 /mob/camera/blob/mind_initialize()
 	..()

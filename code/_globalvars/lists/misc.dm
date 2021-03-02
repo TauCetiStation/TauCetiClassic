@@ -24,7 +24,6 @@ var/list/roles_ingame_minute_unlock = list(
 	ROLE_WIZARD = 2880,
 	ROLE_ERT = 1440,
 	ROLE_REV = 1440,
-	ROLE_MEME = 4320,
 	ROLE_DRONE = 1440,
 	ROLE_CULTIST = 3600,
 	ROLE_BLOB = 2880,
