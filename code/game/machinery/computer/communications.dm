@@ -524,7 +524,7 @@
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
 		return
-	if((SSticker.mode.name == "blob")||(SSticker.mode.name == "meteor"))//why??
+	if((SSticker.mode.name == "blob"))//why??
 		to_chat(user, "The console is not responding.")
 		return
 
