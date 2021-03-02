@@ -5025,8 +5025,6 @@
 	},
 /turf/simulated/shuttle/floor/cargo,
 /area/shuttle/supply/velocity)
-"aqh" = (
-/area/start)
 "aqi" = (
 /obj/structure/closet/acloset,
 /turf/unsimulated/floor{
@@ -24146,7 +24144,7 @@ anM
 anM
 anM
 anM
-aqh
+anM
 aaM
 aaM
 aaM
