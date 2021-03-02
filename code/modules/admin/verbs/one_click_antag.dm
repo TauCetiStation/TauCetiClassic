@@ -119,7 +119,7 @@
 
 /datum/admins/proc/makeRevs()
 
-	var/datum/game_mode/revolution/temp = new
+	var/datum/game_mode/rp_revolution/temp = new
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
 

@@ -143,7 +143,7 @@
 
 	var/list/sections = list(
 		"implant",
-		"revolution",
+		"rp-revolution",
 		"gang",
 		"cult",
 		"wizard",
@@ -174,7 +174,7 @@
 		sections["implant"] = text
 		/** REVOLUTION ***/
 		text = "revolution"
-		if (SSticker.mode.config_tag=="revolution")
+		if (SSticker.mode.config_tag=="rp-revolution")
 			text += uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
@@ -762,36 +762,6 @@
 				SSticker.mode.forge_revolutionary_objectives(src)
 				SSticker.mode.greet_revolutionary(src,0)
 				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
-
-			if("flash")
-				if (!SSticker.mode.equip_revolutionary(current))
-					to_chat(usr, "<span class='warning'>Spawning flash failed!</span>")
-
-			if("takeflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='warning'>Deleting flash failed!</span>")
-				qdel(flash)
-
-			if("repairflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='warning'>Repairing flash failed!</span>")
-				else
-					flash.broken = 0
-
-			if("reequip")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				qdel(flash)
-				take_uplink()
-				var/fail = 0
-				fail |= !SSticker.mode.equip_traitor(current, 1)
-				fail |= !SSticker.mode.equip_revolutionary(current)
-				if (fail)
-					to_chat(usr, "<span class='warning'>Reequipping revolutionary goes wrong!</span>")
 
 	else if (href_list["gang"])
 		switch(href_list["gang"])
@@ -1477,9 +1447,6 @@
 	var/obj/item/device/flash/flash = locate() in L
 	qdel(flash)
 	take_uplink()
-	var/fail = 0
-//	fail |= !SSticker.mode.equip_traitor(current, 1)
-	fail |= !SSticker.mode.equip_revolutionary(current)
 
 /datum/mind/proc/make_Gang(gang)
 	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"

@@ -123,11 +123,6 @@ var/global/list/all_objectives = list()
 		if(target.current:handcuffed || !ishuman(target.current))
 			return OBJECTIVE_WIN
 
-		// Check if they're converted
-		if(istype(SSticker.mode, /datum/game_mode/revolution))
-			if(target in SSticker.mode:revolutionaries)
-				return OBJECTIVE_WIN
-
 		var/turf/T = get_turf(target.current)
 		if(T && !is_station_level(T.z))
 			return OBJECTIVE_WIN

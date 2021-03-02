@@ -24,3 +24,16 @@
 	ammo_type = /obj/item/ammo_casing/c45/nonlethal
 	caliber = ".45"
 	max_ammo = 12
+
+/obj/item/ammo_casing/a556/nonlethal
+	desc = "A 5.56mm bullet casing."
+	projectile_type = /obj/item/projectile/bullet/weakbullet/nl_rifle
+
+/obj/item/ammo_casing/c45/nonlethal
+	desc = "A .45 bullet casing."
+	caliber = ".45"
+	projectile_type = /obj/item/projectile/bullet/weakbullet/nl_rifle
+
+/obj/item/projectile/bullet/weakbullet/nl_rifle
+	stutter = 10
+	agony = 55

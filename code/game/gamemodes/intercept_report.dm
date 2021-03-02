@@ -57,7 +57,7 @@
 
 /datum/intercept_text/proc/build(mode_type, datum/mind/correct_person)
 	switch(mode_type)
-		if("revolution")
+		if("rp-revolution")
 			src.text = ""
 			src.build_rev(correct_person)
 			return src.text
