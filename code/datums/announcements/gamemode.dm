@@ -2,9 +2,6 @@
 /datum/announcement/centcomm/malf
 	subtitle = "Network Monitoring"
 
-/datum/announcement/station/gang
-	subtitle = "Station Firewall"
-
 
 /* Blob */
 /datum/announcement/centcomm/blob/outbreak5
@@ -22,33 +19,6 @@
 	name = "Blob: Blob Critical Mass"
 	subtitle = "Biohazard Alert"
 	message = "Biohazard has reached critical mass. Station loss is imminent."
-
-/* Epidemic */
-/datum/announcement/centcomm/epidemic/cruiser
-	name = "Epidemic: Cruiser"
-	subtitle = "Station Early Warning System"
-	message = "Inbound cruiser detected on collision course. Scans indicate the ship to be armed and ready to fire. Estimated time of arrival: 5 minutes."
-/datum/announcement/centcomm/epidemic/cruiser/play()
-	subtitle = "[station_name()] Early Warning System"
-	..()
-
-/* Mutiny */
-/datum/announcement/centcomm/mutiny/reveal
-	name = "Mutiny: Directive Reveal"
-	subtitle = "Emergency Transmission"
-	message = "Incoming emergency directive: Captain's office fax machine, Space Station 13."
-/datum/announcement/centcomm/mutiny/reveal/play()
-	message = "Incoming emergency directive: Captain's office fax machine, [station_name()]."
-	..()
-
-/datum/announcement/centcomm/mutiny/noert
-	name = "Mutiny: ERT is busy"
-	subtitle = "Emergency Transmission"
-	message = "The presence of ERP in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time."
-/datum/announcement/centcomm/mutiny/noert/play(reason)
-	if(reason)
-		message = "The presence of [reason] in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time."
-	..()
 
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
