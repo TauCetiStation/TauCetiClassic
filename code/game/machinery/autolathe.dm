@@ -1,6 +1,6 @@
 /datum/autolathe_recipe
-	var/name = "recipe"
-	var/result
+	var/name
+	var/result_type
 	var/metal_amount = 0
 	var/glass_amount = 0
 
@@ -17,7 +17,7 @@
 	else
 		recipe = new /datum/autolathe_recipe
 	recipe.name = initial(path.name)
-	recipe.result = path
+	recipe.result_type = path
 	recipe.metal_amount = initial(path.m_amt)
 	recipe.glass_amount = initial(path.g_amt)
 	return recipe
@@ -179,9 +179,9 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	for(var/datum/autolathe_recipe/r in recipes)
 		dat += "<tr>"
-		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[r.result]", "[/obj/item]/", ""), "/", "-")]"></span></td>"}
+		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[r.result_type]", "[/obj/item]/", ""), "/", "-")]"></span></td>"}
 		dat += "<td>"
-		if(ispath(r, /datum/autolathe_recipe/stack))
+		if(istype(r, /datum/autolathe_recipe/stack))
 			var/title = "[r.name] ([r.metal_amount] m /[r.glass_amount] g)"
 			if(m_amount < r.metal_amount || g_amount < r.glass_amount)
 				dat += title
@@ -363,13 +363,13 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				if(istype(recipe, /datum/autolathe_recipe/stack))
 					m_amount -= recipe.metal_amount * multiplier
 					g_amount -= recipe.glass_amount * multiplier
-					var/obj/new_item = new recipe.result(T)
+					var/obj/new_item = new recipe.result_type(T)
 					var/obj/item/stack/S = new_item
 					S.set_amount(multiplier)
 				else
 					m_amount -= recipe.metal_amount / coeff
 					g_amount -= recipe.glass_amount / coeff
-					var/obj/new_item = new recipe.result(T)
+					var/obj/new_item = new recipe.result_type(T)
 					new_item.m_amt /= coeff
 					new_item.g_amt /= coeff
 				if(m_amount < 0)
