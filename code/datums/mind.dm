@@ -49,6 +49,7 @@
 	var/list/datum/objective/objectives = list()
 	var/list/datum/objective/special_verbs = list()
 	var/syndicate_awareness = SYNDICATE_UNAWARE
+	var/list/antag_roles = list()		// All the antag roles we have.
 
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
@@ -57,7 +58,6 @@
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
-	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 
 	var/rev_cooldown = 0
@@ -1186,6 +1186,23 @@
 	special_role = null
 
 */
+
+// /datum/role and other game_mode--
+/datum/mind/proc/GetRole(role_id)
+	if (role_id in antag_roles)
+		return antag_roles[role_id]
+	return FALSE
+
+/datum/mind/proc/GetRoleByType(type)
+	for(var/datum/role/R in antag_roles)
+		if(istype(R, type))
+			return R
+
+/datum/mind/proc/GetFactionFromRole(role_id)
+	var/datum/role/R = GetRole(role_id)
+	if(R)
+		return R.GetFaction()
+	return FALSE
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.get_contents()

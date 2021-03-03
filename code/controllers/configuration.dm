@@ -230,9 +230,9 @@ var/list/net_announcer_secret = list()
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
 				log_misc("Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				if(M.playable_mode)
-					src.modes += M.config_tag
-					src.mode_names[M.config_tag] = M.name
-					src.probabilities[M.config_tag] = M.probability
+					src.modes += initial(M.name)
+					src.mode_names[initial(M.name)] = initial(M.name)
+					src.probabilities[initial(M.name)] = initial(M.probability)
 				if (M.votable)
 					src.votable_modes += M.config_tag
 		qdel(M)

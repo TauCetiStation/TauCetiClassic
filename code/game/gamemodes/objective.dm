@@ -2,6 +2,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
+	var/datum/faction/faction = null 	// Is the objective faction-wide?
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
@@ -38,7 +39,11 @@ var/global/list/all_objectives = list()
 			target = possible_target
 			break
 
+/datum/objective/proc/extra_info()
+	return
 
+/datum/objective/proc/shuttle_docked()
+	return
 
 /datum/objective/assassinate/find_target()
 	..()

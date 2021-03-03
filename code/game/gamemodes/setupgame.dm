@@ -90,19 +90,3 @@
 					warning("DNA2: Gene [gene.name] trying to add to already assigned gene block list (used by [english_list(assigned_gene_blocks[block])])")
 				assigned_gene_blocks[block] = gene
 	//testing("DNA2: [numsToAssign.len] blocks are unused: [english_list(numsToAssign)]") //##Z2
-
-/proc/setupFactions()
-
-	// Populate the factions list:
-	for(var/x in typesof(/datum/faction))
-		var/datum/faction/F = new x
-		if(!F.name)
-			qdel(F)
-			continue
-		else
-			SSticker.factions.Add(F)
-			SSticker.availablefactions.Add(F)
-
-	// Populate the syndicate coalition:
-	for(var/datum/faction/syndicate/S in SSticker.factions)
-		SSticker.syndicate_coalition.Add(S)

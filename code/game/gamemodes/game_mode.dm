@@ -1,21 +1,34 @@
 /*
- * GAMEMODES (by Rastaf0)
- *
- * In the new mode system all special roles are fully supported.
- * You can have proper wizards/traitors/changelings/cultists during any mode.
- * Only two things really depends on gamemode:
- * 1. Starting roles, equipment and preparations
- * 2. Conditions of finishing the round.
- *
- */
-
+	Gamemode datums
+		Used for co-ordinating factions in a round, what factions should be in operation, etc.
+	@name: String: The name of the gamemode, e.g. Changelings
+	@factions: List(reference): What factions are currently in operation in the gamemode
+	@factions_allowed: List(object): what factions will the gamemode start with, or attempt to start with
+	@minimum_player_count: Integer: Minimum required players to start the gamemode
+	@admin_override: Overrides certain checks such as the one above to force-start a gamemode
+	@roles_allowed: List(object): What roles will the gamemode start with, or attempt to start with
+	@probability: Integer: How likely it is to roll this gamemode
+	@votable: Boolean: If this mode can be voted for
+	@orphaned_roles: List(reference): List of faction-less roles currently in the gamemode
+*/
 
 /datum/game_mode
 	var/name = "invalid"
-	var/config_tag = null
-	var/votable = 1
-	var/playable_mode = 1
+
+
+	var/list/factions = list()
+	var/list/factions_allowed = list()
+	var/minimum_player_count
+	var/admin_override //Overrides checks such as minimum_player_count to
+	var/list/roles_allowed = list()
 	var/probability = 0
+	var/votable = TRUE
+	var/list/orphaned_roles = list()
+	var/dat = ""
+
+
+	var/config_tag = null
+	var/playable_mode = 1
 	var/modeset = null        // if game_mode in modeset
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
@@ -314,10 +327,6 @@ Implants;
 			comm.messagetext.Add(intercepttext)
 
 	announcement_ping.play()
-
-/*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-	if(security_level < SEC_LEVEL_BLUE)
-		set_security_level(SEC_LEVEL_BLUE)*/
 
 /datum/game_mode/proc/can_be_antag(datum/mind/player, role)
 	if(restricted_jobs)
