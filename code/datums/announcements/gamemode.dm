@@ -113,16 +113,3 @@
 	name = "Malf: Announce №4"
 	message = "We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>"
 	sound = "malf4"
-
-/* Gang */
-/datum/announcement/station/gang/breach
-	name = "Gang: Dominator Activation"
-	message = "Network breach detected somewhere on the station. Some Gang is attempting to seize control of the station!"
-/datum/announcement/station/gang/breach/play(area/A, gang)
-	if(A && gang)
-		message = "Network breach detected in [initial(A.name)]. The [gang_name(gang)] Gang is attempting to seize control of the station!"
-	..()
-
-/datum/announcement/station/gang/multiple
-	name = "Gang: Multiple Dominators"
-	message = "Multiple station takeover attempts have made simultaneously. Conflicting hostile runtimes appears to have delayed both attempts."

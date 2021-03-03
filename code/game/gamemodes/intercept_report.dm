@@ -61,10 +61,6 @@
 			src.text = ""
 			src.build_rev(correct_person)
 			return src.text
-		if("gang")
-			src.text = ""
-			src.build_gang(correct_person)
-			return src.text
 		if("cult")
 			src.text = ""
 			src.build_cult(correct_person)

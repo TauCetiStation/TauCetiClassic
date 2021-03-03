@@ -75,11 +75,6 @@
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
 					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
-			if("12")
-				message_admins("[key_name(usr)] started a gang war.")
-				log_admin("[key_name(usr)] started a gang war.")
-				if(!src.makeGangsters())
-					to_chat(usr, "<span class='danger'>Unfortunatly there were not enough candidates available.</span>")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"] || href_list["dbsearchbantype"])
 		var/adminckey = href_list["dbsearchadmin"]
