@@ -56,6 +56,12 @@
 
 
 	B.change_to(/obj/effect/blob/shield)
+
+	if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
+		var/datum/faction/blob_conglomerate/BC = mind.faction
+		if(istype(BC.stat_datum, /datum/stat/faction/blob))
+			var/datum/stat/faction/blob/BS = BC.stat_datum
+			BS.built_structures.shields++
 	return
 
 
@@ -93,6 +99,11 @@
 	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
 		R.overmind = src
+		if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
+			var/datum/faction/blob_conglomerate/BC = mind.faction
+			if(istype(BC.stat_datum, /datum/stat/faction/blob))
+				var/datum/stat/faction/blob/BS = BC.stat_datum
+				BS.built_structures.resgens++
 
 	return
 
@@ -126,6 +137,12 @@
 
 
 	B.change_to(/obj/effect/blob/node)
+
+	if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
+		var/datum/faction/blob_conglomerate/BC = mind.faction
+		if(istype(BC.stat_datum, /datum/stat/faction/blob))
+			var/datum/stat/faction/blob/BS = BC.stat_datum
+			BS.built_structures.nodes++
 	return
 
 
@@ -157,6 +174,12 @@
 		return
 
 	B.change_to(/obj/effect/blob/factory)
+
+	if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
+		var/datum/faction/blob_conglomerate/BC = mind.faction
+		if(istype(BC.stat_datum, /datum/stat/faction/blob))
+			var/datum/stat/faction/blob/BS = BC.stat_datum
+			BS.built_structures.factories++
 	return
 
 

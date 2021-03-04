@@ -145,7 +145,7 @@
 //////////////////////////////////////
 //Checks if the revs have won or not//
 //////////////////////////////////////
-/datum/game_mode/rp_revolution/check_win()
+/datum/game_mode/rp_revolution/check_finished()
 	if(check_rev_victory())
 		finished = 1
 	else if(check_heads_victory())
@@ -363,8 +363,6 @@
 
 	checkwin_counter++
 	if(checkwin_counter >= 5)
-		if(!finished)
-			SSticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 

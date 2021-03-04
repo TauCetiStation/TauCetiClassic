@@ -32,7 +32,7 @@ var/list/factions_with_hud_icons = list()
 	var/late_role
 	var/required_pref = ""
 	var/list/restricted_species = list()
-	var/list/members = list()
+	var/list/datum/role/members = list()
 	var/max_roles = 0
 	var/accept_latejoiners = FALSE
 	var/datum/objective_holder/objective_holder
@@ -50,17 +50,20 @@ var/list/factions_with_hud_icons = list()
 	// This datum represents all data that is exported to the statistics file at the end of the round.
 	// If you want to store faction-specific data as statistics, you'll need to define your own datum.
 	// See dynamic_stats.dm
-	//var/datum/stat/faction/stat_datum = null
-	//var/datum/stat/faction/stat_datum_type = /datum/stat/faction
+	var/datum/stat/faction/stat_datum = null
+	var/datum/stat/faction/stat_datum_type = /datum/stat/faction
 
 /datum/faction/New()
 	..()
 	objective_holder = new
 	objective_holder.faction = src
 	if (hud_icons.len)
-		factions_with_hud_icons.Add(src)
+		factions_with_hud_icons += src
 
 	//stat_datum = new stat_datum_type()
+
+/datum/faction/proc/setup()
+	return
 
 /datum/faction/proc/OnPostSetup()
 	for(var/datum/role/R in members)
@@ -87,7 +90,8 @@ var/list/factions_with_hud_icons = list()
 	for(var/datum/role/R in members)
 		R.AnnounceObjectives()
 
-/datum/faction/proc/shuttle_docked(state)
+/datum/faction/proc/ShuttleDocked(state)
+	return
 
 /datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
 	for(var/datum/role/R in members)
@@ -117,14 +121,20 @@ var/list/factions_with_hud_icons = list()
 	return R
 
 /datum/faction/proc/HandleRecruitedRole(datum/role/R)
-	SSticker.mode.orphaned_roles.Remove(R)
-	members.Add(R)
-	R.faction = src
+	SSticker.mode.orphaned_roles -= R
+	add_role(R)
 
 /datum/faction/proc/HandleRemovedRole(datum/role/R)
-	R.faction.members.Remove(R)
+	SSticker.mode.orphaned_roles += R
+	remove_role(R)
+
+/datum/faction/proc/add_role(datum/role/R)
+	members += R
+	R.faction = src
+
+/datum/faction/proc/remove_role(datum/role/R)
+	members -= R
 	R.faction = null
-	SSticker.mode.orphaned_roles.Add(R)
 	if(leader == R)
 		leader = null
 
@@ -208,7 +218,7 @@ var/list/factions_with_hud_icons = list()
 	return win
 
 /datum/faction/proc/GetObjectivesMenuHeader() //Returns what will show when the factions objective completion is summarized
-	var/icon/logo = icon('icons/mob/mob.dmi', "[logo_state]-logo")
+	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	var/header = {"<img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[name]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'><br>"}
 	return header
 
@@ -279,7 +289,7 @@ var/list/factions_with_hud_icons = list()
 	if (!(O in objective_holder.objectives))
 		WARNING("Trying to remove an objective ([O]) to faction ([src]) who never had it.")
 		return FALSE
-	objective_holder.objectives.Remove(O)
+	objective_holder.objectives -= O
 	O.faction = null
 	qdel(O)
 

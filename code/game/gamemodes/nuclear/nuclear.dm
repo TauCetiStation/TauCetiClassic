@@ -214,7 +214,7 @@
 	return 1
 
 
-/datum/game_mode/nuclear/check_win()
+/datum/game_mode/nuclear/check_finished()
 	if (nukes_left == 0)
 		return 1
 	return ..()

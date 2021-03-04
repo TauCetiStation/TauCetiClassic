@@ -18,6 +18,8 @@
 	var/victory_in_progress = FALSE
 	var/static/added_to_blobminds = FALSE
 
+	var/datum/faction/blob_conglomerate/b_congl
+
 	var/datum/announcement/centcomm/blob/critical/announcement = new
 
 /mob/camera/blob/atom_init()
@@ -25,7 +27,6 @@
 	name = new_name
 	real_name = new_name
 	. = ..()
-	START_PROCESSING(SSobj, src)
 
 /mob/camera/blob/Login()
 	..()
@@ -35,7 +36,6 @@
 	blob_help()
 	if(!added_to_blobminds)
 		added_to_blobminds = TRUE
-		SSticker.mode.infected_crew |= mind
 
 		var/list/datum/objective/objectives = list(
 			new /datum/objective/blob_takeover()
@@ -67,24 +67,6 @@
 /mob/camera/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
-
-
-/mob/camera/blob/process()
-	if(blob_core && !victory_in_progress && (blobs.len >= blobwincount))
-		victory_in_progress = TRUE
-		announcement.play()
-		set_security_level("delta")
-		max_blob_points = INFINITY
-		blob_points = INFINITY
-		if(!istype(SSticker.mode,/datum/game_mode/blob))
-			addtimer(CALLBACK(src, .proc/victory), 450)
-
-/mob/camera/blob/proc/victory()
-	SSticker.force_ending = TRUE
-
-/mob/camera/blob/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /mob/camera/blob/say(message)
 	if (!message)
@@ -130,7 +112,7 @@
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-		stat(null, "Progress: [blobs.len]/[blobwincount]")
+		stat(null, "Progress: [blobs.len]/[b_congl.blobwincount]")
 		stat(null, "Total Nodes: [blob_nodes.len]")
 		stat(null, "Total Cores: [blob_cores.len]")
 

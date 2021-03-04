@@ -65,7 +65,6 @@
 	if(SSticker && SSticker.mode)
 //		world.log << "k"
 		sql_report_death(src)
-		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	if(my_golem)
 		my_golem.death()
 	if(my_master)

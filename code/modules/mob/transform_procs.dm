@@ -599,4 +599,15 @@
 	//Not in here? Must be untested!
 	return 1
 
-
+/mob/living/carbon/human/proc/Blobize()
+	if (notransform)
+		return
+	var/obj/effect/blob/core/new_blob = new /obj/effect/blob/core (loc)
+	if(!client)
+		for(var/mob/dead/observer/G in player_list)
+			if(ckey == "@[G.ckey]")
+				new_blob.create_overmind(G.client , 1)
+				break
+	else
+		new_blob.create_overmind(src.client , 1)
+	gib(src)

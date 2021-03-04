@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			var/mode_finished = mode.check_finished() || (SSshuttle.location == 2 && SSshuttle.alert == 1) || force_ending
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_ending
 			if(!mode.explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
@@ -158,15 +158,15 @@ SUBSYSTEM_DEF(ticker)
 		ooc_allowed = FALSE
 
 	var/init_start = world.timeofday
+
 	//Create and announce mode
 	if(config.is_hidden_gamemode(master_mode))
 		hide_mode = 1
 
 	var/list/datum/game_mode/runnable_modes
-	if (config.is_modeset(master_mode))
-		runnable_modes = config.get_runnable_modes(master_mode)
-
-		if (runnable_modes.len==0)
+	if((master_mode=="random"))
+		runnable_modes = config.get_runnable_modes()
+		if (runnable_modes.len == 0)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again
@@ -174,52 +174,41 @@ SUBSYSTEM_DEF(ticker)
 			if(gamemode_vote)
 				gamemode_vote.reset_next_vote()
 			return 0
-
-		// hiding forced gamemode in secret
-		if(master_mode == "secret" && secret_force_mode != "secret")
-			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
-			smode.modeset = master_mode
-			if(!smode.can_start())
-				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.</span>")
-			else
-				mode = smode
-
+		if(secret_force_mode != "secret")
+			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
+			if(M.can_start())
+				src.mode = config.pick_mode(secret_force_mode)
 		SSjob.ResetOccupations()
-		if(!src.mode)
-			src.mode = pickweight(runnable_modes)
-		if(src.mode)
-			var/mtype = src.mode.type
-			src.mode = new mtype
-			src.mode.modeset = master_mode
-
+		if(!mode)
+			mode = pickweight(runnable_modes)
+		if(mode)
+			mode = new mode.type
 	else
-		// master_mode is config tag of gamemode
-		src.mode = config.pick_mode(master_mode)
+		mode = config.pick_mode(master_mode)
 
-	// Before assign the crew setup antag roles without crew jobs
-	if (!src.mode.assign_outsider_antag_roles())
-		message_admins("<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players needed.")
-		qdel(mode)
-		mode = null
+	mode = new mode.type
+
+	if (!mode.can_start())
+		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.minimum_player_count] players needed. Reverting to pre-game lobby.")
+		del(mode)
 		current_state = GAME_STATE_PREGAME
-		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		SSjob.ResetOccupations()
 		return 0
 
 	//Configure mode and assign player to special mode stuff
 	SSjob.DivideOccupations() //Distribute jobs
-	var/can_continue = src.mode.pre_setup()//Setup special modes
+	var/can_continue = mode.Setup()//Setup special modes
 	if(!can_continue)
-		message_admins("Preparation phase for [mode.name] has failed.")
-		qdel(mode)
-		mode = null
 		current_state = GAME_STATE_PREGAME
 		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
+		log_admin("The gamemode setup for [mode.name] errored out.")
+		world.log << "The gamemode setup for [mode.name] errored out."
+		del(mode)
 		SSjob.ResetOccupations()
 		return 0
 
 	if(!hide_mode)
-		src.mode.announce()
+		mode.announce()
 
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
@@ -259,7 +248,7 @@ SUBSYSTEM_DEF(ticker)
 	Holiday_Game_Start()
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
-		mode.post_setup()
+		mode.PostSetup()
 		for(var/mob/dead/new_player/N in new_player_list)
 			if(N.client)
 				N.new_player_panel_proc()
@@ -271,13 +260,6 @@ SUBSYSTEM_DEF(ticker)
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
-
-		/*var/admins_number = 0 //For slack maybe?
-		for(var/client/C)
-			if(C.holder)
-				admins_number++
-		if(admins_number == 0)
-			send2adminirc("Round has started with no admins online.")*/
 
 	return 1
 
@@ -501,6 +483,8 @@ SUBSYSTEM_DEF(ticker)
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()
+
+	mode.ShuttleDocked(location)
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
 	for(var/datum/atom_hud/antag/H in global.huds)

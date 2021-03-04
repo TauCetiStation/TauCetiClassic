@@ -227,14 +227,14 @@ var/list/net_announcer_secret = list()
 		var/datum/game_mode/M = new T()
 
 		if (M.config_tag)
-			if(!(M.config_tag in modes))		// ensure each mode is added only once
+			if(!(initial(M.name) in modes))		// ensure each mode is added only once
 				log_misc("Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				if(M.playable_mode)
 					src.modes += initial(M.name)
 					src.mode_names[initial(M.name)] = initial(M.name)
 					src.probabilities[initial(M.name)] = initial(M.probability)
-				if (M.votable)
-					src.votable_modes += M.config_tag
+				if (initial(M.votable))
+					src.votable_modes += initial(M.name)
 		qdel(M)
 	src.votable_modes += "secret"
 
@@ -827,46 +827,20 @@ var/list/net_announcer_secret = list()
 /datum/configuration/proc/is_mode_allowed(g_mode_tag)
 	return (g_mode_tag && (g_mode_tag in modes))
 
-// check_ready - if true only ready players count
-/datum/configuration/proc/get_runnable_modes(modeset="random", check_ready=TRUE)
+/datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
+	for (var/T in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = new T()
-		M.modeset = modeset
-		// log_debug("[T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
-		if (!is_mode_allowed(M.config_tag))
-			qdel(M)
+		if (!(M.name in modes))
+			del(M)
 			continue
-		if (is_custom_modeset(M.config_tag))
-			qdel(M)
+		if (probabilities[M.name]<=0)
+			del(M)
 			continue
-		if(!modeset || modeset == "random" || modeset == "secret")
-			if(global.master_last_mode && global.secret_force_mode == "secret" && modeset == "secret")
-				if(M.name != "AutoTraitor" && M.name == global.master_last_mode)
-					qdel(M)
-					continue
-			if (probabilities[M.config_tag]<=0)
-				qdel(M)
-				continue
-		else if (is_custom_modeset(modeset))
-			switch(modeset)
-				if("bs12")
-					switch(M.config_tag)
-						if("traitorchan","traitor","blob","heist","infestation","ninja","rp-revolution","shadowling")
-							qdel(M)
-							continue
-				if("tau classic")
-					switch(M.config_tag)
-						if("traitor","blob","extended","heist","infestation","ninja","rp-revolution","shadowling")
-							qdel(M)
-							continue
-		var/mod_prob = probabilities[M.config_tag]
-		if (is_custom_modeset(modeset))
-			mod_prob = 1
-		if (((!check_ready) && M.potential_runnable()) || (check_ready && M.can_start()))
-			runnable_modes[M] = mod_prob
-			// log_debug("runnable_mode\[[runnable_modes.len]\] = [M.config_tag] [mod_prob]")
+		if (M.can_start())
+			runnable_modes[M] = probabilities[M.name]
 	return runnable_modes
+
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)

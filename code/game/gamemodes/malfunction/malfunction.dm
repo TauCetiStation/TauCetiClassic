@@ -108,8 +108,6 @@
 	if(apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
 		AI_win_timeleft -= (apcs / APC_MIN_TO_MALF_DECLARE) * seconds //Victory timer now de-increments almost normally
 	..()
-	if(AI_win_timeleft <= 0)
-		check_win()
 
 	if(malf_mode_declared)
 		return
@@ -129,7 +127,7 @@
 		takeover()
 
 
-/datum/game_mode/malfunction/check_win()
+/datum/game_mode/malfunction/check_finished()
 	if (AI_win_timeleft <= 0 && !station_captured)
 		station_captured = TRUE
 		capture_the_station()

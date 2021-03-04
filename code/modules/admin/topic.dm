@@ -6,10 +6,6 @@
 		message_admins("[key_name_admin(usr)] has attempted to override the admin panel!")
 		return
 
-	if(SSticker.mode && SSticker.mode.check_antagonists_topic(href, href_list))
-		check_antagonists()
-		return
-
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return

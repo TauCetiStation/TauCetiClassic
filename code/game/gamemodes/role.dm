@@ -59,18 +59,17 @@
 	// Jobs that cannot be this antag.
 	var/list/restricted_jobs = list()
 
-	// Jobs that have a much lower chance to be this antag.
-	var/list/protected_jobs = list()
 	var/protected_traitor_prob = PROB_PROTECTED_REGULAR
 
 	// Jobs that can only be this antag
 	var/list/required_jobs=list()
 
+	// Specie flags that for any amount of reasons can cause this role to not be available.
+	// TO-DO: use traits? ~Luduk
+	var/list/restricted_species_flags = list()
+
 	// Antag IDs that cannot be used with this antag type. (cultists can't be wizard, etc)
 	var/list/protected_antags=list()
-
-	// Antags protected from becoming host
-	var/list/protected_host_antags=list()
 
 	// If set, sets special_role to this
 	var/special_role=null
@@ -109,8 +108,6 @@
 
 	var/list/greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
-	var/wikiroute
-
 	var/list/current_powers = list()
 	var/list/available_powers = list()		//holds instances of each power
 	var/datum/power_holder/power_holder
@@ -122,20 +119,21 @@
 	//var/datum/stat/role/stat_datum = null
 	//var/datum/stat/role/stat_datum_type = /datum/stat/role
 
-/datum/role/New(var/datum/mind/M, var/datum/faction/fac=null, var/new_id, var/override = FALSE)
+/datum/role/New(datum/mind/M, datum/faction/fac=null, new_id, override = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	// Link faction.
 	faction=fac
 	if(!faction)
 		SSticker.mode.orphaned_roles += src
 	else
-		faction.members += src
+		faction.add_role(src)
 
 	if(new_id)
 		id = new_id
 
 	if(M && !AssignToRole(M, override))
 		Drop()
-		return 0
+		return FALSE
 
 	if(!plural_name)
 		plural_name="[name]s"
@@ -143,15 +141,15 @@
 	objectives.owner = M
 	//stat_datum = new stat_datum_type()
 
-	return 1
+	return TRUE
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = 0, msg_admins = TRUE)
 	if(!istype(M) && !override)
 		stack_trace("M is [M.type]!")
-		return 0
+		return FALSE
 	if(!CanBeAssigned(M) && !override)
 		stack_trace("[M.name] was to be assigned to [name] but failed CanBeAssigned!")
-		return 0
+		return FALSE
 
 	antag = M
 	M.antag_roles.Add(id)
@@ -162,7 +160,7 @@
 
 	if (!OnPreSetup())
 		return FALSE
-	return 1
+	return TRUE
 
 /datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
 	M.antag_roles[id] = null
@@ -184,44 +182,41 @@
 	qdel(src)
 
 // Scaling, should fuck with min/max players.
-// Return 1 on success, 0 on failure.
+// Return TRUE on success, FALSE on failure.
 /datum/role/proc/calculateRoleNumbers()
-	return 1
+	return TRUE
 
 // General sanity checks before assigning antag.
-// Return 1 on success, 0 on failure.
+// Return TRUE on success, FALSE on failure.
 /datum/role/proc/CanBeAssigned(datum/mind/M)
-	if(restricted_jobs.len>0)
+	if(restricted_jobs.len > 0)
 		if(M.assigned_role in restricted_jobs)
-			return 0
+			return FALSE
 
-	if(protected_antags.len>0)
+	if(protected_antags.len > 0)
 		for(var/forbidden_role in protected_antags)
 			if(forbidden_role in M.antag_roles)
-				return 0
+				return FALSE
 
-	if(required_jobs.len>0)
+	if(required_jobs.len > 0)
 		if(!(M.assigned_role in required_jobs))
-			return 0
+			return FALSE
+
+	var/datum/preferences/prefs = M.current.client.prefs
+	var/datum/species/S = all_species[prefs.species]
+
+	if(!S.can_be_role(name))
+		return FALSE
+
+	for(var/specie_flag in restricted_species_flags)
+		if(S.flags[specie_flag])
+			return FALSE
 
 	if(is_type_in_list(src, M.antag_roles)) //No double double agent agent
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
-// General sanity checks before assigning host.
-// Return 1 on success, 0 on failure.
-/datum/role/proc/CanBeHost(datum/mind/M)
-	if(protected_jobs.len>0)
-		if(M.assigned_role in protected_jobs)
-			return 0
-
-	if(protected_antags.len>0)
-		for(var/forbidden_role in protected_host_antags)
-			if(forbidden_role in M.antag_roles)
-				return 0
-	return 1
-
-// Return 1 on success, 0 on failure.
+// Return TRUE on success, FALSE on failure.
 /datum/role/proc/OnPreSetup()
 	if(special_role)
 		antag.special_role=special_role
@@ -230,11 +225,11 @@
 		if(job)
 			job.current_positions--
 		antag.assigned_role="MODE"
-	return 1
+	return TRUE
 
-// Return 1 on success, 0 on failure.
+// Return TRUE on success, FALSE on failure.
 /datum/role/proc/OnPostSetup(laterole = FALSE)
-	return 1
+	return TRUE
 
 /datum/role/proc/update_antag_hud()
 	return
@@ -270,7 +265,7 @@
 	return dat
 
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE,datum/admins/A)
-	var/icon/logo = icon('icons/mob/mob.dmi', "[logo_state]-logo")
+	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	if(!antag || !antag.current)
 		return
 	var/mob/M = antag.current
@@ -290,7 +285,7 @@
 	if(!greeting)
 		return
 
-	var/icon/logo = icon('icons/mob/mob.dmi', "[logo_state]-logo")
+	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	switch(greeting)
 		if (GREET_CUSTOM)
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>[custom]</B>")
@@ -326,7 +321,7 @@
 		var/tempstate = end_icons.len
 		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>"
 
-	var/icon/logo = icon('icons/mob/mob.dmi', "[logo_state]-logo")
+	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[antag.key]</b> was <b>[antag.name]</b> ("
 	if(M)
 		if(!antag.GetRole(id))
@@ -375,7 +370,7 @@
 	return dat
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
-	var/icon/logo = icon('icons/mob/mob.dmi', "[logo_state]-logo")
+	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	var/text = "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
@@ -415,23 +410,23 @@
 /datum/role/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
 		to_chat(usr, "You are not an admin.")
-		return 0
+		return FALSE
 
 	if(!href_list["mind"])
 		to_chat(usr, "<span class='warning'>BUG: mind variable not specified in Topic([href])!</span>")
-		return 1
+		return TRUE
 	var/datum/mind/M = locate(href_list["mind"])
 	if(!M)
 		return
 	RoleTopic(href, href_list, M, check_rights(R_ADMIN))
 
 // USE THIS INSTEAD (global)
-/datum/role/proc/RoleTopic(href, href_list, var/datum/mind/M, var/admin_auth)
+/datum/role/proc/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 
-/datum/role/proc/shuttle_docked(state)
+/datum/role/proc/ShuttleDocked(state)
 	if(objectives.objectives.len)
 		for(var/datum/objective/O in objectives.objectives)
-			O.shuttle_docked(state)
+			O.ShuttleDocked(state)
 
 /datum/role/proc/AnnounceObjectives()
 	var/text = ""

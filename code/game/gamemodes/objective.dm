@@ -42,7 +42,10 @@ var/global/list/all_objectives = list()
 /datum/objective/proc/extra_info()
 	return
 
-/datum/objective/proc/shuttle_docked()
+/datum/objective/proc/PostAppend()
+	return TRUE
+
+/datum/objective/proc/ShuttleDocked()
 	return
 
 /datum/objective/assassinate/find_target()
@@ -749,9 +752,18 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	return OBJECTIVE_WIN
 
 /datum/objective/blob_takeover
-	explanation_text = "Reach critical mass!"
+	explanation_text = "We must grow and expand. Fill this station with our spores. Cover X station tiles."
+	var/invade_tiles = 0
+
+/datum/objective/blob_takeover/PostAppend()
+	var/datum/faction/blob_conglomerate/F = faction
+	if (!istype(F))
+		return FALSE
+	invade_tiles = F.blobwincount
+	explanation_text = "We must grow and expand. Fill this station with our spores. Cover [invade_tiles] station tiles."
+	return TRUE
 
 /datum/objective/blob_takeover/check_completion()
-	if(blobs.len >= blobwincount)
+	if(blobs.len >= invade_tiles * 0.95)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS

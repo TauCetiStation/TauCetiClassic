@@ -1069,11 +1069,15 @@ var/list/admin_verbs_hideable = list(
 	set name = "Change Blobs to Win"
 	set category = "Event"
 	if(holder)
-		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		var/datum/faction/blob_conglomerate/conglomerate = find_active_faction_by_type(/datum/faction/blob_conglomerate)
+		if(!conglomerate)
+			return
+
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", conglomerate.blobwincount) as num|null
 		if(new_count)
-			blobwincount = new_count
-			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			conglomerate.blobwincount = new_count
+			log_admin("[key_name(usr)] changed blobwincount to [conglomerate.blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [conglomerate.blobwincount]")
 			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

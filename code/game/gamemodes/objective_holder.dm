@@ -10,6 +10,8 @@
 		O.owner = M
 	if(F)
 		O.faction = F
+	if(O.PostAppend())
+		return TRUE
 	else
 		objectives.Remove(O)
 		qdel(O)

@@ -1,3 +1,9 @@
+//Few global vars to track the blob
+var/blob_tiles_grown_total = 0
+var/global/list/blobs = list()
+var/global/list/blob_cores = list()
+var/global/list/blob_nodes = list()
+
 /obj/effect/blob/core
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
@@ -84,10 +90,36 @@
 	else
 		C = new_overmind
 
-	if(C)
-		var/mob/camera/blob/B = new(src.loc)
-		B.key = C.key
-		B.blob_core = src
-		src.overmind = B
-		return 1
-	return 0
+	if(!C)
+		return
+	var/mob/camera/blob/B = new(src.loc)
+	B.key = C.key
+	B.blob_core = src
+	src.overmind = B
+
+	var/datum/faction/blob_conglomerate/conglomerate = find_active_faction_by_type(/datum/faction/blob_conglomerate)
+	if(conglomerate) //Faction exists
+		if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
+			var/ded = TRUE
+			if(conglomerate.members.len)
+				for(var/datum/role/R in conglomerate.members)
+					if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
+						ded = FALSE
+						break
+			if(ded)
+				conglomerate.HandleNewMind(B.mind)
+			else
+				conglomerate.HandleRecruitedMind(B.mind)
+
+	else //No faction? Make one and you're the overmind.
+		conglomerate = SSticker.mode.CreateFaction(/datum/faction/blob_conglomerate)
+		if(conglomerate)
+			conglomerate.HandleNewMind(B.mind)
+	B.b_congl = conglomerate
+
+	if(icon_state == "cerebrate")
+		icon_state = "core"
+		flick("morph_cerebrate",src)
+
+		return TRUE
+	return FALSE

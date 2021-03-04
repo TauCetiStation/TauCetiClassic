@@ -25,6 +25,7 @@
 	for(var/atom/A in loc)
 		A.blob_act()
 	update_nearby_tiles()
+	blob_tiles_grown_total++
 
 /obj/effect/blob/Destroy()
 	blobs -= src

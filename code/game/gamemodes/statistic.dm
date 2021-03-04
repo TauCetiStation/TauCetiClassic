@@ -182,3 +182,25 @@ var/datum/stat_collector/stat_collection = new
 	key = ckey(M.key)
 	name = STRIP_NEWLINE(M.name)
 	assignment = STRIP_NEWLINE(M.assigned_job)
+
+/datum/stat/faction/blob
+	// count of all blob tiles grown, includes structures built on top of blob tiles
+	var/blobs_grown_total = 0
+	// same as above, but only living blob tiles
+	var/blobs_round_end = 0
+	// count of all built structures
+	var/datum/stat/faction_data/blob/structure_counts/built_structures = new
+
+/datum/stat/faction/blob/generate_statistics(var/datum/faction/blob_conglomerate/BF)
+	..(BF)
+	//we're using global pre-existing global vars here: structure counts are collected
+	//throughout the round elsewhere
+	blobs_grown_total = blob_tiles_grown_total
+	blobs_round_end = blobs.len
+
+/datum/stat/faction_data/blob/structure_counts
+	var/factories = 0
+	var/nodes = 0
+	var/resgens = 0
+	var/shields = 0
+	var/cores = 0
