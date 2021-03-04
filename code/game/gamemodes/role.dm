@@ -140,7 +140,7 @@
 
 	objectives.owner = M
 	//stat_datum = new stat_datum_type()
-
+	..()
 	return TRUE
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = 0, msg_admins = TRUE)
