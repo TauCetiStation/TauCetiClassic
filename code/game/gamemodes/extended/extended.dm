@@ -1,7 +1,7 @@
 /datum/game_mode/extended
 	name = "extended"
 	config_tag = "extended"
-	required_players = 0
+	minimum_player_count = 0
 
 	votable = 1
 

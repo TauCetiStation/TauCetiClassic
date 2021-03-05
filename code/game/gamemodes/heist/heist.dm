@@ -9,8 +9,8 @@ VOX HEIST ROUNDTYPE
 	name = "heist"
 	config_tag = "heist"
 	role_type = ROLE_RAIDER
-	required_players = 15
-	required_players_bundles = 15
+	minimum_player_count = 15
+	minimum_players_bundles = 15
 	required_enemies = 4
 	recommended_enemies = 6
 
@@ -48,7 +48,7 @@ VOX HEIST ROUNDTYPE
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
-		modePlayer += new_raider
+
 		antag_candidates -= new_raider
 		raider_num--
 

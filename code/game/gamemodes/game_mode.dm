@@ -27,77 +27,20 @@
 
 	var/config_tag = null
 	var/playable_mode = 1
-	var/modeset = null        // if game_mode in modeset
-	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
-	var/explosion_in_progress = 0 //sit back and relax
-	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
 	var/mode_result = "undefined"
-	var/list/datum/mind/modePlayer = new // list of current antags.
+
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")	// Jobs that can't be traitors because
 
-	// Specie flags that for any amount of reasons can cause this role to not be available.
-	// TO-DO: use traits? ~Luduk
-	var/list/restricted_species_flags = list()
-
-	var/required_players = 0 // Minimum number of players, if game mode is forced
-	var/required_players_bundles = 0 //Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
-	var/list/restricted_jobs_autotraitor = list("Cyborg", "Security Officer", "Warden", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")
-	var/autotraitor_delay = 15 MINUTES // how often to try to add new traitors.
-	var/role_type = null
 	var/newscaster_announcements = null
 	var/ert_disabled = 0
 
-	var/check_ready = TRUE
-
 	var/antag_hud_type
 	var/antag_hud_name
-
-	var/uplink_welcome = "Syndicate Uplink Console:"
-	var/uplink_uses = 20
-	var/uplink_items = {"Highly Visible and Dangerous Weapons;
-/obj/item/weapon/gun/projectile/revolver/syndie:6:Revolver;
-/obj/item/ammo_box/a357:2:Ammo-357;
-/obj/item/weapon/gun/energy/crossbow:5:Energy Crossbow;
-/obj/item/weapon/melee/energy/sword:4:Energy Sword;
-/obj/item/weapon/storage/box/syndicate:10:Syndicate Bundle;
-/obj/item/weapon/storage/box/emps:3:5 EMP Grenades;
-Whitespace:Seperator;
-Stealthy and Inconspicuous Weapons;
-/obj/item/weapon/pen/paralysis:3:Paralysis Pen;
-/obj/item/weapon/soap/syndie:1:Syndicate Soap;
-/obj/item/weapon/cartridge/syndicate:3:Detomatix PDA Cartridge;
-Whitespace:Seperator;
-Stealth and Camouflage Items;
-/obj/item/weapon/storage/box/syndie_kit/chameleon:3:Chameleon Kit;
-/obj/item/clothing/shoes/syndigaloshes:2:No-Slip Syndicate Shoes;
-/obj/item/weapon/card/id/syndicate:2:Agent ID card;
-/obj/item/clothing/mask/gas/voice:4:Voice Changer;
-/obj/item/device/chameleon:4:Chameleon-Projector;
-Whitespace:Seperator;
-Devices and Tools;
-/obj/item/weapon/card/emag:3:Cryptographic Sequencer;
-/obj/item/weapon/storage/toolbox/syndicate:1:Fully Loaded Toolbox;
-/obj/item/weapon/storage/box/syndie_kit/space:3:Space Suit;
-/obj/item/clothing/glasses/thermal/syndi:3:Thermal Imaging Glasses;
-/obj/item/device/encryptionkey/binary:3:Binary Translator Key;
-/obj/item/weapon/aiModule/freeform/syndicate:7:Hacked AI Upload Module;
-/obj/item/weapon/plastique:2:C-4 (Destroys walls);
-/obj/item/device/powersink:5:Powersink (DANGER!);
-/obj/item/device/radio/beacon/syndicate:7:Singularity Beacon (DANGER!);
-/obj/item/weapon/circuitboard/teleporter:20:Teleporter Circuit Board;
-Whitespace:Seperator;
-Implants;
-/obj/item/weapon/storage/box/syndie_kit/imp_freedom:3:Freedom Implant;
-/obj/item/weapon/storage/box/syndie_kit/imp_uplink:10:Uplink Implant (Contains 5 Telecrystals);
-/obj/item/weapon/storage/box/syndie_kit/imp_explosive:6:Explosive Implant (DANGER!);
-/obj/item/weapon/storage/box/syndie_kit/imp_compress:4:Compressed Matter Implant;Whitespace:Seperator;
-(Pointless) Badassery;
-/obj/item/toy/syndicateballoon:10:For showing that You Are The BOSS (Useless Balloon);"}
 
 /datum/game_mode/proc/announce()
 	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
@@ -105,7 +48,7 @@ Implants;
 /datum/game_mode/proc/get_player_count()
 	var/players = 0
 	for(var/mob/dead/new_player/P in new_player_list)
-		if(P.client && (!check_ready || P.ready))
+		if(P.client && P.ready)
 			players++
 
 	return players
@@ -252,6 +195,8 @@ Implants;
 		warning("Role killed itself or was otherwise missing!")
 		return FALSE
 
+	newRole.is_roundstart_role = TRUE
+
 	if(!newRole.AssignToRole(P.mind))
 		warning("Role refused mind and dropped!")
 		newRole.Drop()
@@ -281,7 +226,7 @@ Implants;
 
 	var/list/exclude_autotraitor_for = list("extended", "sandbox") // config_tag var
 	if(!(initial(name) in exclude_autotraitor_for))
-		addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
+		addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)

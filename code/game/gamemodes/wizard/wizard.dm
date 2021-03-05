@@ -6,8 +6,8 @@
 	name = "wizard"
 	config_tag = "wizard"
 	role_type = ROLE_WIZARD
-	required_players = 2
-	required_players_bundles = 10
+	minimum_player_count = 2
+	minimum_players_bundles = 10
 	required_enemies = 1
 	recommended_enemies = 1
 	antag_hud_type = ANTAG_HUD_WIZ
@@ -32,7 +32,7 @@
 		return FALSE
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
-	modePlayer += wizard
+
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current

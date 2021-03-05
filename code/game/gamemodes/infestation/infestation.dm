@@ -10,8 +10,8 @@
 	name = "infestation"
 	config_tag = "infestation"
 	role_type = ROLE_ALIEN
-	required_players = 20
-	required_players_bundles = 15
+	minimum_player_count = 20
+	minimum_players_bundles = 15
 	required_enemies = 2
 	recommended_enemies = 4
 	votable = 0
@@ -137,7 +137,7 @@
 /datum/game_mode/infestation/declare_completion()
 	completion_text += "<h3>Итоги режима ксеноморфы:</h3>"
 	var/data = count_alien_percent()
-	if(station_was_nuked)
+	if(SSticker.station_was_nuked)
 		mode_result = "loss - station was nuked"
 		feedback_set_details("round_end_result", mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Станция была уничтожена!</span>"

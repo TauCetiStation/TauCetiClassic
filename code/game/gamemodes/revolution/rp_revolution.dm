@@ -9,8 +9,8 @@
 	config_tag = "rp-revolution"
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
-	required_players = 4
-	required_players_bundles = 20
+	minimum_player_count = 4
+	minimum_players_bundles = 20
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_type = ANTAG_HUD_REV
@@ -91,7 +91,7 @@
 		rev_mind.current.verbs += /mob/living/carbon/human/proc/RevConvert
 		equip_traitor(rev_mind.current, 1) //changing how revs get assigned their uplink so they can get PDA uplinks. --NEO
 
-	modePlayer += head_revolutionaries
+
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = 1
 	return ..()

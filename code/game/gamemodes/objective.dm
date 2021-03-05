@@ -14,6 +14,7 @@ var/global/list/all_objectives = list()
 	all_objectives |= src
 	if(text)
 		explanation_text = text
+	find_target()
 
 /datum/objective/Destroy()
 	all_objectives -= src
@@ -547,7 +548,9 @@ var/global/list/all_objectives = list()
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 
-
+/datum/objective/absorb/New()
+	..()
+	gen_amount_goal(2, 3)
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)

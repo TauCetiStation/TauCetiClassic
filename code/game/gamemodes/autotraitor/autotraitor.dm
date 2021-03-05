@@ -75,7 +75,7 @@
 		return
 
 	if(SSshuttle.online)//shuttle in the way, but may be revoked
-		addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
+		addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
 		return
 
 	//message_admins("Performing AutoTraitor Check")
@@ -96,7 +96,7 @@
 		if(!player.mind || !player.client)
 			possible_autotraitor -= player
 			continue
-		for(var/job in restricted_jobs_autotraitor)
+		for(var/job in list("Cyborg", "Security Officer", "Security Cadet", "Warden", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
 			if(player.mind.assigned_role == job)
 				possible_autotraitor -= player
 
@@ -123,7 +123,7 @@
 			message_admins("Making a new Traitor.")
 			if(!possible_autotraitor.len)
 				message_admins("No potential traitors.  Cancelling new traitor.")
-				addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
+				addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
 				return
 			var/mob/living/newtraitor = pick(possible_autotraitor)
 			//message_admins("[newtraitor.real_name] is the new Traitor.")
@@ -155,7 +155,7 @@
 	//else
 		//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
 
-	addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
+	addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
 
 
 

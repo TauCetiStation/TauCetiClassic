@@ -7,8 +7,8 @@
 	name = "AI malfunction"
 	config_tag = "malfunction"
 	role_type = ROLE_MALF
-	required_players = 1
-	required_players_bundles = 20
+	minimum_player_count = 1
+	minimum_players_bundles = 20
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -210,7 +210,7 @@
 		cur_AI.client.screen.Cut()
 		if(!malf_turf)
 			malf_turf = get_turf(cur_AI)
-	explosion_in_progress = TRUE
+	SSticker.explosion_in_progress = TRUE
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/AI/DeltaBOOM.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "Self-destructing in 10")
@@ -223,8 +223,8 @@
 	if(malf_turf)
 		sleep(20)
 		explosion(malf_turf, 15, 70, 200)
-	station_was_nuked = TRUE
-	explosion_in_progress = FALSE
+	SSticker.station_was_nuked = TRUE
+	SSticker.explosion_in_progress = FALSE
 
 
 /datum/game_mode/malfunction/declare_completion()
@@ -232,45 +232,45 @@
 	var/crew_evacuated = (SSshuttle.location==2)
 	completion_text += "<h3>Malfunction mode resume:</h3>"
 
-	if(station_captured &&						station_was_nuked)
+	if(station_captured &&						SSticker.station_was_nuked)
 		mode_result = "win - AI win - nuke"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
 		completion_text += "<br><b>Everyone was killed by the self-destruct!</b>"
 		score["roleswon"]++
 
-	else if(station_captured && malf_dead &&	!station_was_nuked)
+	else if(station_captured && malf_dead &&	!SSticker.station_was_nuked)
 		mode_result = "halfwin - AI killed, staff lost control"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		completion_text += "<br><b>The AI has been killed!</b> The staff has lose control over the station."
 
-	else if(station_captured && !malf_dead &&	!station_was_nuked)
+	else if(station_captured && !malf_dead &&	!SSticker.station_was_nuked)
 		mode_result = "win - AI win - no explosion"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
 		completion_text += "<br><b>The AI has chosen not to explode you all!</b>"
 		score["roleswon"]++
 
-	else if(!station_captured && station_was_nuked)
+	else if(!station_captured && SSticker.station_was_nuked)
 		mode_result = "halfwin - everyone killed by nuke"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		completion_text += "<br><b>Everyone was killed by the nuclear blast!</b>"
 
-	else if(!station_captured && malf_dead &&	!station_was_nuked)
+	else if(!station_captured && malf_dead &&	!SSticker.station_was_nuked)
 		mode_result = "loss - staff win"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Human Victory.</span>"
 		completion_text += "<br><b>The AI has been killed!</b> The staff is victorious."
 
-	else if(!station_captured && !malf_dead &&	!station_was_nuked && crew_evacuated)
+	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && crew_evacuated)
 		mode_result = "halfwin - evacuated"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		completion_text += "<br><b>The Corporation has lose [station_name()]! All survived personnel will be fired!</b>"
 
-	else if(!station_captured && !malf_dead &&	!station_was_nuked && !crew_evacuated)
+	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && !crew_evacuated)
 		mode_result = "nalfwin - interrupted"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"

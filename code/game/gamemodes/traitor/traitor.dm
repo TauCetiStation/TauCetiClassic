@@ -8,9 +8,9 @@
 	role_type = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
 	protected_jobs = list("Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")//AI", Currently out of the list as malf does not work for shit
-	required_players = 1
+	minimum_player_count = 1
 	required_enemies = 1
-	required_players_bundles = 1
+	minimum_players_bundles = 1
 	recommended_enemies = 4
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
@@ -67,7 +67,7 @@
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
 			greet_traitor(traitor)
-	modePlayer += traitors
+
 	return ..()
 
 /datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)

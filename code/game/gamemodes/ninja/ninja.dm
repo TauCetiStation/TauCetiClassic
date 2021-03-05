@@ -5,8 +5,8 @@
 	config_tag = "ninja"
 	role_type = ROLE_NINJA
 	restricted_jobs = list("Cyborg", "AI")
-	required_players = 10 //Can be adjusted later, should suffice for now.
-	required_players_bundles = 15
+	minimum_player_count = 10 //Can be adjusted later, should suffice for now.
+	minimum_players_bundles = 15
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_type = ANTAG_HUD_NINJA
@@ -38,7 +38,7 @@
 		if(ninja_number == 1)
 			ninja.protector_role = TRUE
 		ninjas += ninja
-		modePlayer += ninja
+
 		ninja.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		ninja.special_role = "Ninja"
 		ninja.original = ninja.current

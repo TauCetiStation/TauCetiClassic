@@ -37,6 +37,10 @@ SUBSYSTEM_DEF(ticker)
 
 	var/force_ending = FALSE
 
+	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
+	var/explosion_in_progress = FALSE //sit back and relax
+	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
+
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
 	/*
@@ -98,7 +102,7 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_ending
-			if(!mode.explosion_in_progress && mode_finished)
+			if(!explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
 				spawn(50)
@@ -121,7 +125,7 @@ SUBSYSTEM_DEF(ticker)
 
 					drop_round_stats()
 
-					if (mode.station_was_nuked)
+					if (station_was_nuked)
 						feedback_set_details("end_proper","nuke")
 						if(!delay_end)
 							to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
@@ -133,7 +137,7 @@ SUBSYSTEM_DEF(ticker)
 					if(!delay_end)
 						sleep(restart_timeout)
 						if(!delay_end)
-							world.Reboot(end_state = mode.station_was_nuked ? "nuke" : "proper completion") //Can be upgraded to remove unneded sleep here.
+							world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion") //Can be upgraded to remove unneded sleep here.
 						else
 							to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
 							world.send2bridge(
@@ -409,7 +413,7 @@ SUBSYSTEM_DEF(ticker)
 	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
 
 	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B>")
-	to_chat(world, "<BR>[TAB]Station Integrity: <B>[mode.station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
+	to_chat(world, "<BR>[TAB]Station Integrity: <B>[station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
 	if(joined_player_list.len)
 		to_chat(world, "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")
 		if(station_evacuated)

@@ -4,8 +4,8 @@
 	role_type = ROLE_CHANGELING
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
-	required_players = 3
-	required_players_bundles = 25
+	minimum_player_count = 3
+	minimum_players_bundles = 25
 	required_enemies = 2
 	recommended_enemies = 3
 
@@ -28,7 +28,7 @@
 		var/datum/mind/changeling = pick(antag_candidates)
 		//possible_changelings-=changeling
 		changelings += changeling
-		modePlayer += changelings
+
 		return ..()
 	else
 		return 0

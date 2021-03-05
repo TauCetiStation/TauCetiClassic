@@ -23,8 +23,8 @@
 	role_type = ROLE_CULTIST
 	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
-	required_players = 5
-	required_players_bundles = 20
+	minimum_player_count = 5
+	minimum_players_bundles = 20
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudcultist"
 
@@ -85,7 +85,7 @@
 
 
 /datum/game_mode/cult/post_setup()
-	modePlayer += cult
+
 	if("sacrifice" in objectives)
 		var/list/possible_targets = get_unconvertables()
 		listclearnulls(possible_targets)

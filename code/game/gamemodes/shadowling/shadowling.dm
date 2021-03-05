@@ -67,8 +67,8 @@ Made by Xhuis
 	name = "shadowling"
 	config_tag = "shadowling"
 	role_type = ROLE_SHADOWLING
-	required_players = 30
-	required_players_bundles = 25
+	minimum_player_count = 30
+	minimum_players_bundles = 25
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_name = "hudshadowling"
@@ -106,7 +106,7 @@ Made by Xhuis
 		var/datum/mind/shadow = pick(antag_candidates)
 		shadows += shadow
 		antag_candidates -= shadow
-		modePlayer += shadow
+
 		shadow.special_role = "shadowling"
 		shadowlings--
 	return TRUE

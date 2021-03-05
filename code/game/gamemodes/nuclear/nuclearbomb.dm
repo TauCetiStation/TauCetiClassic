@@ -357,8 +357,8 @@ var/bomb_set
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
-	if (SSticker && SSticker.mode)
-		SSticker.mode.explosion_in_progress = 1
+	if (SSticker)
+		SSticker.explosion_in_progress = 1
 	sleep(100)
 
 	enter_allowed = 0
@@ -382,27 +382,26 @@ var/bomb_set
 				SSticker.mode:syndies_didnt_escape = is_station_level(syndie_location.z)
 			SSticker.mode:nuke_off_station = off_station
 		SSticker.station_explosion_cinematic(off_station,null)
-		if(SSticker.mode)
-			SSticker.mode.explosion_in_progress = 0
-			if(SSticker.mode.name == "nuclear emergency")
-				SSticker.mode:nukes_left --
-			else
-				to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
+		SSticker.explosion_in_progress = 0
+		if(SSticker.mode.name == "nuclear emergency")
+			SSticker.mode:nukes_left --
+		else
+			to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
 
-			SSticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
-															//kinda shit but I couldn't  get permission to do what I wanted to do.
+		SSticker.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
+														//kinda shit but I couldn't  get permission to do what I wanted to do.
 
-			if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-				to_chat(world, "<B>Resetting in 45 seconds!</B>")
+		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+			to_chat(world, "<B>Resetting in 45 seconds!</B>")
 
-				feedback_set_details("end_error","nuke - unhandled ending")
+			feedback_set_details("end_error","nuke - unhandled ending")
 
-				if(blackbox)
-					blackbox.save_all_data_to_sql()
-				sleep(450)
-				log_game("Rebooting due to nuclear detonation")
-				world.Reboot(end_state = "nuke - unhandled ending")
-				return
+			if(blackbox)
+				blackbox.save_all_data_to_sql()
+			sleep(450)
+			log_game("Rebooting due to nuclear detonation")
+			world.Reboot(end_state = "nuke - unhandled ending")
+			return
 	return
 
 /obj/machinery/nuclearbomb/MouseDrop_T(mob/living/M, mob/living/user)

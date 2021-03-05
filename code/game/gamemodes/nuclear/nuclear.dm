@@ -7,8 +7,8 @@
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	role_type = ROLE_OPERATIVE
-	required_players = 15
-	required_players_bundles = 25
+	minimum_player_count = 15
+	minimum_players_bundles = 25
 	required_enemies = 2
 	recommended_enemies = 6
 	antag_hud_type = ANTAG_HUD_OPS
@@ -246,26 +246,26 @@
 	//derp //Used for tracking if the syndies actually haul the nuke to the station	//no
 	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
-	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
+	if      (!disk_rescued &&  SSticker.station_was_nuked &&          !syndies_didnt_escape)
 		mode_result = "win - syndicate nuke"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Syndicate Major Victory!</span>"
 		completion_text += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"
 		score["roleswon"]++
 
-	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
+	else if (!disk_rescued &&  SSticker.station_was_nuked &&           syndies_didnt_escape)
 		mode_result = "halfwin - syndicate nuke - did not evacuate in time"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Total Annihilation</span>"
 		completion_text += "<br><b>Gorlex Maradeurs operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</b> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
+	else if (!disk_rescued && !SSticker.station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
 		mode_result = "halfwin - blew wrong station"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Crew Minor Victory</span>"
 		completion_text += "<br><b>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't [station_name()].</b> Next time, don't lose the disk!"
 
-	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
+	else if (!disk_rescued && !SSticker.station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
 		mode_result = "halfwin - blew wrong station - did not evacuate in time"
 		feedback_set_details("round_end_result",mode_result)
 		completion_text += "<span style='font-color: red; font-weight: bold;'>Gorlex Maradeurs span earned Darwin Award!</span>"

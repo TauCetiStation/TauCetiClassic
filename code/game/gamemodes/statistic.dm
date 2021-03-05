@@ -85,7 +85,7 @@ var/datum/stat_collector/stat_collection = new
 	round_start_time = time2text(round_start_time, STAT_TIMESTAMP_FORMAT)
 	round_end_time   = time2text(world.realtime,   STAT_TIMESTAMP_FORMAT)
 	map_name = SSmapping.config.map_name
-	nuked = SSticker.mode.station_was_nuked
+	nuked = SSticker.station_was_nuked
 	station_name = station_name()
 
 #undef STAT_TIMESTAMP_FORMAT

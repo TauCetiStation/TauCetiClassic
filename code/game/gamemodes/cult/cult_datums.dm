@@ -230,7 +230,7 @@ var/list/cult_runes = list()
 	if(length(acolytes) < 9)
 		return fizzle(user)
 
-	if(SSticker.mode.nar_sie_has_risen)
+	if(SSticker.nar_sie_has_risen)
 		for(var/mob/living/carbon/C in acolytes)
 			to_chat(C, "<font size='4'><span class='danger'>I am already here!</span></font>")
 			return
@@ -239,7 +239,7 @@ var/list/cult_runes = list()
 	var/datum/game_mode/cult/cur_mode = SSticker.mode
 	for(var/objective in cur_mode.objectives)
 		if(objective == "eldergod")
-			SSticker.mode.nar_sie_has_risen = TRUE
+			SSticker.nar_sie_has_risen = TRUE
 			cur_mode.eldergod = FALSE
 			new /obj/singularity/narsie/large(get_turf(holder))
 			return

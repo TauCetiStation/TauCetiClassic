@@ -77,6 +77,8 @@
 	// The required preference for this role
 	var/required_pref = ""
 
+	var/is_roundstart_role = FALSE
+
 	// If set, assigned role is set to MODE to prevent job assignment.
 	var/disallow_job=0
 
