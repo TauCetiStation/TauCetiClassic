@@ -271,7 +271,7 @@
 	icon_state = "pylon_glow"
 	icon_living = "pylon"
 	ranged = TRUE
-	rapid = TRUE
+	amount_shoot = 5
 	projectiletype = /obj/item/projectile/energy/scatter
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	ranged_cooldown = 5
