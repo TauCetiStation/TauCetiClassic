@@ -110,7 +110,6 @@
 
 	var/list/current_powers = list()
 	var/list/available_powers = list()		//holds instances of each power
-	var/datum/power_holder/power_holder
 	var/powerpoints = 0
 
 	// This datum represents all data that is exported to the statistics file at the end of the round.
@@ -301,11 +300,9 @@
 /datum/role/proc/GetFaction()
 	return faction
 
-/datum/role/proc/Declare()
-	var/win = 1
+/datum/role/proc/printplayerwithicon(mob/M)
 	var/text = ""
-	var/mob/M = antag.current
-	if (!M)
+	if(!M)
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "sprotch")
 		text += "<img src='data:image/png;base64,[icon2base64(sprotch)]' style='position:relative; top:10px;'/>"
 	else
@@ -334,8 +331,19 @@
 			text += " as <b>[antag.current.real_name]</b>"
 	else
 		text += "body destroyed"
-		win = 0
 	text += ")"
+
+	return text
+
+/datum/role/proc/Declare()
+	var/win = TRUE
+	var/text = ""
+	var/mob/M = antag.current
+
+	if(!M)
+		win = FALSE
+
+	text = printplayerwithicon(M)
 
 	if(objectives.objectives.len > 0)
 		var/count = 1
@@ -345,7 +353,7 @@
 			text += "<B>Objective #[count]</B>: [objective.explanation_text] [successful ? "<font color='green'><B>Success!</B></font>" : "<font color='red'>Fail.</font>"]"
 			feedback_add_details("[id]_objective","[objective.type]|[successful ? "SUCCESS" : "FAIL"]")
 			if(!successful) //If one objective fails, then you did not win.
-				win = 0
+				win = FALSE
 			if (count < objectives.objectives.len)
 				text += "<br>"
 			count++
@@ -356,7 +364,6 @@
 			else
 				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
 				feedback_add_details("[id]_success","FAIL")
-	if(objectives.objectives.len > 0)
 		text += "</ul>"
 
 	stat_collection.add_role(src, win)

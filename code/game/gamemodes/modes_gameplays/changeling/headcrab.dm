@@ -22,11 +22,12 @@
 		S.Weaken(3)
 
 	// Prevents having Regenerate verb after rebirth.
-	M.changeling.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in M.changeling.purchasedpowers
+	var/datum/role/changeling/C = M.GetRole(CHANGELING)
+	C.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
 
 	// In case we did it out of stasis
-	if (M.changeling.instatis)
-		M.changeling.instatis = FALSE
+	if (C.instatis)
+		C.instatis = FALSE
 		user.fake_death = FALSE
 
 	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
@@ -79,7 +80,8 @@
 			BP.hidden = egg
 		if(origin)
 			egg.origin = origin
-			if(origin.changeling)
+			var/datum/role/changeling/C = origin.GetRole(CHANGELING)
+			if(C)
 				for(var/mob/living/parasite/essence/E in src)
 					E.loc = egg
 					if(E.client)
@@ -119,14 +121,15 @@
 	if(origin && origin.current && origin.current.stat != DEAD)
 		return
 	origin.transfer_to(M)
-	if(origin.changeling)
-		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-		M.changeling_update_languages(origin.changeling.absorbed_languages)
+	var/datum/role/changeling/C = origin.GetRole(CHANGELING)
+	if(C)
+		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		M.changeling_update_languages(C.absorbed_languages)
 		for(var/mob/living/parasite/essence/E in src)
 			E.enter_host(M)
 	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
-		C.gib()
-		playsound(C, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
+		var/mob/living/carbon/carbon = loc
+		carbon.gib()
+		playsound(carbon, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
 
 #undef EGG_INCUBATION_TIME

@@ -23,8 +23,9 @@
 	user.digitalcamo = !user.digitalcamo
 
 	spawn(0)
-		while(user && user.digitalcamo && user.mind && user.mind.changeling)
-			user.mind.changeling.chem_charges = max(user.mind.changeling.chem_charges - 1, 0)
+		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		while(user && user.digitalcamo && C)
+			C.chem_charges = max(C.chem_charges - 1, 0)
 			sleep(40)
 
 	feedback_add_details("changeling_powers","CAM")

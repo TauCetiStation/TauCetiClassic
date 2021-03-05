@@ -10,7 +10,7 @@
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
 	for(var/mob/living/M in hearers(4, user))
 		if(iscarbon(M))
-			if(!M.mind || !M.mind.changeling)
+			if(!ischangeling(M))
 				M.ear_deaf += 30
 				M.confused += 20
 				M.make_jittery(500)

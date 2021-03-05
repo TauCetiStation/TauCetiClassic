@@ -530,7 +530,7 @@
 		var/mob/living/carbon/human/H = L
 		if(H.dna && H.dna.species)
 			species = "<span clas=='notice'>[H.species.name]</span>"
-		if(L.mind && L.mind.changeling)
+		if(ischangeling(L))
 			species = "<span class='warning'>Changeling lifeform</span>"
 	to_chat(user, "<span class='notice'>Probing result: </span>[species]")
 

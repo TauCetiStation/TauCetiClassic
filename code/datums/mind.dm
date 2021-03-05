@@ -60,8 +60,6 @@
 
 	var/has_been_rev = 0//Tracks if this mind has been a rev or not
 
-	var/datum/changeling/changeling		//changeling holder
-
 	var/rev_cooldown = 0
 
 	// the world.time since the mob has been brigged, or -1 if not at all
@@ -88,11 +86,17 @@
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
+	var/mob/old_character = current
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
+
 	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
+
+	for(var/role in antag_roles)
+		var/datum/role/R = antag_roles[role]
+		R.PostMindTransfer(new_character, old_character)
 
 	if(active)
 		new_character.key = key		//now transfer the key to link the client to our new body
@@ -256,7 +260,8 @@
 			text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			if( changeling && changeling.absorbed_dna.len && (current.real_name != changeling.absorbed_dna[1]) )
+			var/datum/role/changeling/C = GetRole(CHANGELING)
+			if( C && C.absorbed_dna.len && (current.real_name != C.absorbed_dna[1]) )
 				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance</a>"
 		else
 			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
@@ -813,9 +818,9 @@
 					special_role = null
 					remove_antag_hud(ANTAG_HUD_CHANGELING, current)
 					current.remove_changeling_powers()
-				//	current.verbs -= /datum/changeling/proc/EvolutionMenu
-					if(changeling)
-						qdel(changeling)
+					var/datum/role/changeling/C = GetRole(CHANGELING)
+					if(C)
+						qdel(C)
 					to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>")
 					log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
@@ -835,10 +840,11 @@
 				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
 
 			if("initialdna")
-				if( !changeling || !changeling.absorbed_dna.len )
+				var/datum/role/changeling/C = GetRole(CHANGELING)
+				if( !C || !C.absorbed_dna.len )
 					to_chat(usr, "<span class='warning'>Resetting DNA failed!</span>")
 				else
-					current.dna = changeling.absorbed_dna[1]
+					current.dna = C.absorbed_dna[1]
 					current.real_name = current.dna.real_name
 					current.UpdateAppearance()
 					domutcheck(current, null)

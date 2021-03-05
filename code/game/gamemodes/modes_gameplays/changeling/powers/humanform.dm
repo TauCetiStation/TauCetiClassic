@@ -7,7 +7,7 @@
 	max_genetic_damage = 20
 
 /obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
 		names += "[DNA.real_name]"
@@ -22,7 +22,7 @@
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
 
 	user.dna = chosen_dna.Clone()
-	user.mind.changeling.purchasedpowers -= src
+	changeling.purchasedpowers -= src
 	user.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 	feedback_add_details("changeling_powers","LFT")
 

@@ -1,21 +1,26 @@
 #define CHANGELING_STATPANEL_STATS(BYOND) \
-	if(mind && mind.changeling) \
+	if(ischangeling(src)) \
 	{ \
-		stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]"); \
-		stat("Genetic Damage Time", mind.changeling.geneticdamage); \
-		stat("Absorbed DNA", mind.changeling.absorbedcount); \
+		var/datum/role/changeling/C = mind.GetRole(CHANGELING); \
+		stat("Chemical Storage", "[C.chem_charges]/[C.chem_storage]"); \
+		stat("Genetic Damage Time", C.geneticdamage); \
+		stat("Absorbed DNA", C.absorbedcount); \
 	}
 
 
 #define CHANGELING_STATPANEL_POWERS(BYOND) \
-	if(mind && mind.changeling && mind.changeling.purchasedpowers.len) \
+	if(ischangeling(src)) \
 	{ \
-		for(var/P in mind.changeling.purchasedpowers) \
+		var/datum/role/changeling/C = mind.GetRole(CHANGELING); \
+		if(C.purchasedpowers.len) \
 		{ \
-			var/obj/effect/proc_holder/changeling/S = P; \
-			if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
+			for(var/P in C.purchasedpowers) \
 			{ \
-				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
+				var/obj/effect/proc_holder/changeling/S = P; \
+				if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
+				{ \
+					statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
+				} \
 			} \
 		} \
 	}

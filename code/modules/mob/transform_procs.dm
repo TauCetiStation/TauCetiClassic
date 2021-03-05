@@ -125,9 +125,10 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		if(O.mind.changeling)
-			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
-			O.changeling_update_languages(O.mind.changeling.absorbed_languages)
+		var/datum/role/changeling/C = O.mind.GetRole(CHANGELING)
+		if(C)
+			C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
 
@@ -266,8 +267,9 @@
 	if(mind)
 		mind.transfer_to(O)
 
-		if(O.mind.changeling)
-			O.changeling_update_languages(O.mind.changeling.absorbed_languages)
+		var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+		if(C)
+			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
 

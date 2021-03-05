@@ -33,11 +33,3 @@
 	else
 		return 0
 
-/datum/game_mode/traitor/changeling/post_setup()
-	for(var/datum/mind/changeling in changelings)
-		grant_changeling_powers(changeling.current)
-		changeling.special_role = "Changeling"
-		if(!config.objectives_disabled)
-			forge_changeling_objectives(changeling)
-		greet_changeling(changeling)
-	return ..()

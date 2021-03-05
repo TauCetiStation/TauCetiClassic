@@ -10,7 +10,7 @@
 	if(!..())
 		return
 
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	if(changeling.isabsorbing)
 		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return
@@ -27,7 +27,7 @@
 	return changeling.can_absorb_dna(user,target)
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/living/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
 	changeling.isabsorbing = 1
@@ -75,27 +75,28 @@
 		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
 
-		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
-			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
-			changeling.absorbedcount += target.mind.changeling.absorbedcount
-			if(target.mind.changeling.absorbed_dna)
-				for(var/dna_data in target.mind.changeling.absorbed_dna)	//steal all their loot
+		var/datum/role/changeling/C = target.mind.GetRole(CHANGELING)
+		if(C)//If the target was a changeling, suck out their extra juice and objective points!
+			changeling.chem_charges += min(C.chem_charges, changeling.chem_storage)
+			changeling.absorbedcount += C.absorbedcount
+			if(C.absorbed_dna)
+				for(var/dna_data in C.absorbed_dna)	//steal all their loot
 					if(dna_data in changeling.absorbed_dna)
 						continue
 					changeling.absorbed_dna += dna_data
-				target.mind.changeling.absorbed_dna.len = 1
-			for(var/mob/living/parasite/essence/E in target.mind.changeling.essences)
+				C.absorbed_dna.len = 1
+			for(var/mob/living/parasite/essence/E in C.essences)
 				E.flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
 				E.self_voice = FALSE
 				if(E.phantom)
 					E.phantom.hide_phantom()
 				E.changeling = changeling
 				E.transfer(user)
-			target.mind.changeling.essences.Cut()
+			C.essences.Cut()
 
 
-			changeling.geneticpoints += target.mind.changeling.geneticpoints
-			target.mind.changeling.absorbedcount = 0
+			changeling.geneticpoints += C.geneticpoints
+			C.absorbedcount = 0
 		new /mob/living/parasite/essence(user, user, target)
 
 	else
@@ -111,13 +112,13 @@
 	return 1
 
 //Absorbs the target DNA.
-/datum/changeling/proc/absorb_dna(mob/living/carbon/T)
+/datum/role/changeling/proc/absorb_dna(mob/living/carbon/T)
 	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
 	absorbed_dna |= T.dna //And add the target DNA to our absorbed list.
 	absorbedcount++ //all that done, let's increment the objective counter.
 
 //Checks if the target DNA is valid and absorbable.
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/C)
+/datum/role/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/C)
 	if(C)
 		if(!ishuman(C))
 			to_chat(U, "<span class='warning'>[C] is too simple for absorption.</span>")

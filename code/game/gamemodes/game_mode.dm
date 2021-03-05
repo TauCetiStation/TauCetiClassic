@@ -192,15 +192,19 @@ Implants;
 
 /*=====ROLE RELATED STUFF=====*/
 
-/datum/game_mode/proc/CreateRoles() //Must return 1 in some way, else the gamemode is scrapped.
+/datum/game_mode/proc/setup_num_of_roles()
+	return
+
+/datum/game_mode/proc/CreateRoles() //Must return TRUE in some way, else the gamemode is scrapped.
 	if(!roles_allowed.len) //No roles to handle
-		return 1
+		return TRUE
+	setup_num_of_roles()
 	for(var/role in roles_allowed)
 		if(isnum(roles_allowed[role]))
 			return CreateStrictNumOfRoles(role, roles_allowed[role])
 		else
 			CreateNumOfRoles(role, FilterAvailablePlayers(role))
-			return 1
+			return TRUE
 
 /datum/game_mode/proc/CreateNumOfRoles(datum/role/R, list/candidates)
 	if(!candidates || !candidates.len)
@@ -307,17 +311,17 @@ Implants;
 
 /datum/game_mode/proc/GetScoreboard()
 	dat += "<h2>Factions & Roles</h2>"
-	var/exist = 0
+	var/exist = FALSE
 	for(var/datum/faction/F in factions)
 		if (F.members.len > 0)
-			exist = 1
+			exist = TRUE
 			dat += F.GetObjectivesMenuHeader()
 			dat += F.GetScoreboard()
 			dat += "<HR>"
 	if (orphaned_roles.len > 0)
 		dat += "<FONT size = 2><B>Independents:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)
-		exist = 1
+		exist = TRUE
 		dat += R.GetScoreboard()
 	if (!exist)
 		dat += "(none)"

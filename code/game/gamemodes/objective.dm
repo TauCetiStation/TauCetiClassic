@@ -567,10 +567,11 @@ var/global/list/all_objectives = list()
 	return target_amount
 
 /datum/objective/absorb/check_completion()
-	if(owner && owner.changeling && owner.changeling.absorbed_dna && (owner.changeling.absorbedcount >= target_amount))
-		return OBJECTIVE_WIN
-	else
-		return OBJECTIVE_LOSS
+	if(owner)
+		var/datum/role/changeling/C = owner.GetRole(CHANGELING)
+		if(C && C.absorbed_dna && (C.absorbedcount >= target_amount))
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 //Borer objective(s).
 /datum/objective/borer_survive

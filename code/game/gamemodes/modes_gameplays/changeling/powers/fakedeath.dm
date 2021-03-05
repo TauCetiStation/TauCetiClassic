@@ -34,7 +34,8 @@
 
 	if(NOCLONE in user.mutations)
 		to_chat(user, "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>")
-		user.mind.changeling.instatis = FALSE
+		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		C.instatis = FALSE
 		user.fake_death = FALSE
 		return
 	else
@@ -45,11 +46,14 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/fakedeath/proc/give_revive_ability(mob/living/user)
-	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
-		user.mind.changeling.instatis = FALSE
+	if(!ischangeling(user))
+		return
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	if(C?.purchasedpowers)
+		C.instatis = FALSE
 		user.fake_death = FALSE
 		user.clear_alert("regen_stasis")
-		for(var/mob/M in user.mind.changeling.essences)
+		for(var/mob/M in C.essences)
 			M.clear_alert("regen_stasis")
 
 		if(user.stat != DEAD) //Player was resurrected before stasis completion
@@ -60,12 +64,13 @@
 				to_chat(user, "<span class='notice'>We could not regenerate. something wrong with our DNA.</span>")
 			else
 				to_chat(user, "<span class='notice'>We are ready to regenerate.</span>")
-				user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
+				C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
-	if(user.mind.changeling.instatis) //We already regenerating, no need to start second time in a row.
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	if(C.instatis) //We already regenerating, no need to start second time in a row.
 		return
-	if(locate(/obj/effect/proc_holder/changeling/revive) in user.mind.changeling.purchasedpowers)
+	if(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)
 		to_chat(user, "<span class='notice'>We already prepared our ability.</span>")
 		return
 	if(user.fake_death)
@@ -73,13 +78,13 @@
 	if(user.stat != DEAD)
 		if(alert("Are we sure we wish to fake our death?",null,"Yes","No") == "No")
 			return
-	if(user.mind.changeling.instatis) //In case if user clicked ability several times without making a choice.
+	if(C.instatis) //In case if user clicked ability several times without making a choice.
 		return
 	if(!..())
 		return
-	user.mind.changeling.instatis = TRUE
+	C.instatis = TRUE
 	user.throw_alert("regen_stasis", /obj/screen/alert/regen_stasis)
-	for(var/mob/M in user.mind.changeling.essences)
+	for(var/mob/M in C.essences)
 		M.throw_alert("regen_stasis", /obj/screen/alert/regen_stasis)
 	if(user.stat == DEAD)//In case player gave answer too late
 		user.fake_death = FALSE

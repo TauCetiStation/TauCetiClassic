@@ -3,7 +3,7 @@
 	factions_allowed = list(/datum/faction/blob_conglomerate)
 
 	minimum_player_count = 30
-	required_players_bundles = 25
+	minimum_players_bundles = 25
 
 /datum/game_mode/blob/announce()
 	to_chat(world, "<B>The current game mode is - <font color='green'>Blob</font>!</B>")

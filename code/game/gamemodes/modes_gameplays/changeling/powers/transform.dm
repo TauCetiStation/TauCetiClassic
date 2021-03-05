@@ -10,7 +10,7 @@
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	var/datum/dna/chosen_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 
 	if(!chosen_dna)
@@ -26,7 +26,7 @@
 	feedback_add_details("changeling_powers","TR")
 	return 1
 
-/datum/changeling/proc/select_dna(prompt, title)
+/datum/role/changeling/proc/select_dna(prompt, title)
 	var/list/names = list()
 	for(var/datum/dna/DNA in absorbed_dna)
 		names += "[DNA.real_name]"

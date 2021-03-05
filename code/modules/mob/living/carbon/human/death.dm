@@ -112,8 +112,8 @@
 			tod = null // These lines prevent reanimation if head was cut and then sewn back, you can only clone these bodies
 			timeofdeath = 0
 
-		if(BP.brainmob && BP.brainmob.mind && BP.brainmob.mind.changeling) //cuz fuck runtimes
-			var/datum/changeling/Host = BP.brainmob.mind.changeling
+		if(BP.brainmob && ischangeling(BP.brainmob)) //cuz fuck runtimes
+			var/datum/role/changeling/Host = BP.brainmob.mind.GetRole(CHANGELING)
 			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
 				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 					if(istype(crab))

@@ -119,9 +119,6 @@
 
 	handle_regular_hud_updates()
 
-	//Updates the number of stored chemicals for powers and essentials
-	handle_changeling()
-
 	//Species-specific update.
 	if(species)
 		species.on_life(src)
@@ -1495,13 +1492,6 @@
 				remoteview_target = null
 				reset_view(null)
 
-
-		if(mind && mind.changeling)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
-
 	..()
 
 	return 1
@@ -1587,10 +1577,6 @@
 				V.dead = 1
 
 	return
-
-/mob/living/carbon/human/proc/handle_changeling()
-	if(mind && mind.changeling)
-		mind.changeling.regenerate()
 
 /mob/living/carbon/human/handle_shock()
 	..()

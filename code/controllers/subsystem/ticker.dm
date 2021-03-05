@@ -469,7 +469,7 @@ SUBSYSTEM_DEF(ticker)
 
 		ai_completions += "</div>"
 
-	mode.declare_completion()//To declare normal completion.
+	ai_completions += mode.declare_completion() //To declare normal completion.
 
 	ai_completions += "<br><h2>Mode Result</h2>"
 

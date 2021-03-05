@@ -8,9 +8,9 @@ var/list/sting_paths
 
 
 /obj/effect/proc_holder/changeling/evolution_menu/Click()
-	if(!usr || !usr.mind || !usr.mind.changeling)
+	if(!usr || !ischangeling(usr))
 		return
-	var/datum/changeling/changeling = usr.mind.changeling
+	var/datum/role/changeling/changeling = usr.mind.GetRole(CHANGELING)
 
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
@@ -21,7 +21,7 @@ var/list/sting_paths
 	popup.open()
 
 
-/obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(datum/changeling/changeling)
+/obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(datum/role/changeling/changeling)
 	var/dat
 	dat +="<html><head><title>Changling Evolution Menu</title></head>"
 
@@ -288,17 +288,18 @@ var/list/sting_paths
 
 /obj/effect/proc_holder/changeling/evolution_menu/Topic(href, href_list)
 	..()
-	if(!(iscarbon(usr) && usr.mind && usr.mind.changeling))
+	if(!(iscarbon(usr) && ischangeling(usr)))
 		return
 
+	var/datum/role/changeling/C = usr.mind.GetRole(CHANGELING)
 	if(href_list["P"])
-		usr.mind.changeling.purchasePower(usr, href_list["P"])
-	var/dat = create_menu(usr.mind.changeling)
+		C.purchasePower(usr, href_list["P"])
+	var/dat = create_menu(C)
 	var/datum/browser/popup = new(usr, "window=powers", "Evolution menu", 600, 700, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
 	popup.open()
 
-/datum/changeling/proc/purchasePower(mob/living/carbon/user, sting_name)
+/datum/role/changeling/proc/purchasePower(mob/living/carbon/user, sting_name)
 
 	var/obj/effect/proc_holder/changeling/thepower = null
 
@@ -328,62 +329,40 @@ var/list/sting_paths
 	geneticpoints -= thepower.genomecost
 	purchasedpowers += thepower
 	thepower.on_purchase(user)
-/*
-//Restores our verbs. It will only restore verbs allowed during lesser (monkey) form if we are not human
-/mob/proc/make_changeling()
 
-	if(!mind)				return
-	if(!mind.changeling)	mind.changeling = new /datum/changeling(gender)
-	verbs += /datum/changeling/proc/EvolutionMenu
-
-	var/lesser_form = !ishuman(src)
-
-	if(!powerinstances.len)
-		for(var/P in powers)
-			powerinstances += new P()
-
-	// Code to auto-purchase free powers.
-	for(var/datum/power/changeling/P in powerinstances)
-		if(!P.genomecost) // Is it free?
-			if(!(P in mind.changeling.purchasedpowers)) // Do we not have it already?
-				mind.changeling.purchasePower(mind, P.name, 0)// Purchase it. Don't remake our verbs, we're doing it after this.
-
-	for(var/datum/power/changeling/P in mind.changeling.purchasedpowers)
-		if(P.isVerb)
-			if(lesser_form && !P.allowduringlesserform)	continue
-			if(!(P in src.verbs))
-				src.verbs += P.verbpath
-
-	mind.changeling.absorbed_dna |= dna
-*/
+//Call this proc after changeling mind-transfers (ex. lesserform)
 /mob/proc/make_changeling()
 	if(!mind)
 		return
+
 	if(!ishuman(src) && !ismonkey(src))
 		return
-	if(!mind.changeling)
-		mind.changeling = new /datum/changeling(gender)
+
+	var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+	if(!C)
+		return
+
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
-	if(mind.changeling.purchasedpowers)
+	if(C.purchasedpowers)
 		remove_changeling_powers(1)
 	// purchase free powers.
 	for(var/path in sting_paths)
 		var/obj/effect/proc_holder/changeling/S = new path()
 		if(!S.genomecost)
-			if(!mind.changeling.has_sting(S))
-				mind.changeling.purchasedpowers+=S
+			if(!C.has_sting(S))
+				C.purchasedpowers+=S
 				S.on_purchase(src)
 
-	mind.changeling.absorbed_dna |= dna
+	C.absorbed_dna |= dna
 
 	var/mob/living/carbon/human/H = src
 	if(istype(H))
-		mind.changeling.absorbed_species += H.species.name
+		C.absorbed_species += H.species.name
 
 	for(var/language in languages)
-		if(!(language in mind.changeling.absorbed_languages))
-			mind.changeling.absorbed_languages += language
+		if(!(language in C.absorbed_languages))
+			C.absorbed_languages += language
 	return 1
 
 //Used to dump the languages from the changeling datum into the actual mob.
@@ -395,7 +374,7 @@ var/list/sting_paths
 
 	return
 
-/datum/changeling/proc/reset()
+/datum/role/changeling/proc/reset()
 	chosen_sting = null
 	geneticpoints = initial(geneticpoints)
 	sting_range = initial(sting_range)
@@ -406,19 +385,20 @@ var/list/sting_paths
 
 /mob/proc/remove_changeling_powers(keep_free_powers=0)
 	if(ishuman(src) || ismonkey(src))
-		if(mind && mind.changeling)
+		if(ischangeling(src))
 			digitalcamo = 0
 			if(digitaldisguise)
 				digitaldisguise.override = 0
-			mind.changeling.reset()
-			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
+			var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+			C.reset()
+			for(var/obj/effect/proc_holder/changeling/p in C.purchasedpowers)
 				if(!(p.genomecost == 0 && keep_free_powers))
-					mind.changeling.purchasedpowers -= p
+					C.purchasedpowers -= p
 		if(hud_used)
 			hud_used.lingstingdisplay.icon_state = null
 			hud_used.lingstingdisplay.invisibility = 101
 
-/datum/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
+/datum/role/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
 		if(power.name == P.name)
 			return 1

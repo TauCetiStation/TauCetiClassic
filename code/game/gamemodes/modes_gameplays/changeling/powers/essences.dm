@@ -2,7 +2,7 @@
 	alpha = 127
 	icon = 'icons/mob/human.dmi'
 	stat = DEAD
-	var/datum/changeling/changeling
+	var/datum/role/changeling/changeling
 	var/flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
@@ -13,7 +13,7 @@
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
 	. = ..()
-	changeling = host.mind.changeling
+	changeling = host.mind.GetRole(CHANGELING)
 	changeling.essences += src
 	name = victim.mind.name
 	victim.mind.transfer_to(src)
@@ -101,9 +101,10 @@
 		message = copytext_char(message, 3) // deleting prefix
 		var/n_message = sanitize(message)
 		for(var/mob/M in mob_list)
-			if(M.mind && M.mind.changeling)
+			if(ischangeling(M))
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
-				for(var/mob in M.mind.changeling.essences)
+				var/datum/role/changeling/C = M.mind.GetRole(CHANGELING)
+				for(var/mob in C.essences)
 					to_chat(mob, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
 			else if(isobserver(M) && M.client)
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
@@ -257,7 +258,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	if(!changeling || changeling.controled_by)
 		return
 	var/dat = ""
@@ -313,9 +314,9 @@
 	popup.open()
 
 /mob/living/carbon/proc/delegate_body_to_essence(mob/living/parasite/essence/E)
-	if(!mind || !mind.changeling)
+	if(!ischangeling(src))
 		return FALSE
-	var/datum/changeling/changeling = mind.changeling
+	var/datum/role/changeling/changeling = mind.GetRole(CHANGELING)
 	var/changing_changeling_key = TRUE
 	if(changeling.delegating)
 		return FALSE
@@ -343,19 +344,22 @@
 	changeling.delegating = FALSE
 
 /obj/effect/proc_holder/changeling/manage_essencies/Topic(href, href_list)
-	if(!usr.mind || !usr.mind.changeling || usr.mind.changeling.controled_by)
+	if(!ischangeling(usr))
+		return
+	var/datum/role/changeling/C = usr.mind.GetRole(CHANGELING)
+	if(C.controled_by)
 		return
 	if(href_list["share_body"])
 		var/mob/living/parasite/essence/M = locate(href_list["share_body"])
-		var/mob/living/carbon/C = usr
-		C.delegate_body_to_essence(M)
+		var/mob/living/carbon/carbon = usr
+		carbon.delegate_body_to_essence(M)
 	else if(href_list["trusted"])
 		var/T = locate(href_list["trusted"])
-		if(T == usr.mind.changeling.trusted_entity)
-			usr.mind.changeling.trusted_entity = null
+		if(T == C.trusted_entity)
+			C.trusted_entity = null
 		else
-			usr.mind.changeling.trusted_entity = T
-			usr.mind.changeling.trusted_entity.flags_allowed = ESSENCE_ALL
+			C.trusted_entity = T
+			C.trusted_entity.flags_allowed = ESSENCE_ALL
 	else if(href_list["permissions"])
 		var/T = locate(href_list["permissions"])
 		if(T == choosen_essence)

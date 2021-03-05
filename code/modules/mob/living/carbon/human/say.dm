@@ -176,32 +176,35 @@
 				robot_talk(message)
 			return
 		if("changeling")
-			if(mind && mind.changeling)
+			if(ischangeling(src))
+				var/datum/role/changeling/C = mind.GetRole(CHANGELING)
 				var/n_message = message
-				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
 				for(var/mob/Changeling in mob_list)
-					if(Changeling.mind && Changeling.mind.changeling)
-						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-						for(var/M in Changeling.mind.changeling.essences)
-							to_chat(M, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+					if(ischangeling(Changeling))
+						to_chat(Changeling, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
+						var/datum/role/changeling/CC = Changeling.mind.GetRole(CHANGELING)
+						for(var/M in CC.essences)
+							to_chat(M, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
 
 					else if(isobserver(Changeling))
-						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
 			return
 		if("alientalk")
-			if(mind && mind.changeling)
+			if(ischangeling(src))
+				var/datum/role/changeling/C = mind.GetRole(CHANGELING)
 				var/n_message = message
-				for(var/M in mind.changeling.essences)
-					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+				for(var/M in C.essences)
+					to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
 
 				for(var/mob/M in observer_list)
 					if(!M.client)
 						continue //skip monkeys, leavers and new players
 					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-						to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+						to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
 
-				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
+				to_chat(src, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
 			return
 		else
 			if(message_mode)
@@ -255,8 +258,10 @@
 			return V.voice
 		else
 			return name
-	if(mind && mind.changeling && mind.changeling.mimicing)
-		return mind.changeling.mimicing
+	if(ischangeling(src))
+		var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+		if(C.mimicing)
+			return C.mimicing
 	if(special_voice)
 		return special_voice
 	return real_name

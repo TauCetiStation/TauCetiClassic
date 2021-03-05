@@ -7,6 +7,6 @@
 
 /obj/effect/proc_holder/changeling/glands/on_purchase(mob/user)
 	..()
-	var/datum/changeling/changeling=user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	changeling.chem_storage += 25
 	return

@@ -6,9 +6,10 @@
 
 /obj/effect/proc_holder/changeling/sting/Click()
 	var/mob/user = usr
-	if(!user || !user.mind || !user.mind.changeling)
+	if(!user || !ischangeling(user))
 		return
-	if(!(user.mind.changeling.chosen_sting))
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	if(!(C.chosen_sting))
 		set_sting(user)
 	else
 		unset_sting(user)
@@ -16,36 +17,38 @@
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
-	user.mind.changeling.chosen_sting = src
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	C.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
-	user.mind.changeling.chosen_sting = null
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	C.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
 	user.hud_used.lingstingdisplay.invisibility = 101
 
 /mob/living/carbon/proc/unset_sting()
-	if(mind && mind.changeling && mind.changeling.chosen_sting)
-		src.mind.changeling.chosen_sting.unset_sting(src)
+	var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+	if(C && C.chosen_sting)
+		C.chosen_sting.unset_sting(src)
 
 /obj/effect/proc_holder/changeling/sting/can_sting(mob/user, mob/target)
-
-
 	if(!..())
 		return
-	if(!user.mind.changeling.chosen_sting)
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	if(!C.chosen_sting)
 		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = FALSE))
+	if(!AStar(user, target.loc, /turf/proc/Distance, C.sting_range, simulated_only = FALSE))
 		return //hope this ancient magic still works
-	if(target.mind && target.mind.changeling)
+	if(ischangeling(target))
 		sting_feedback(user,target)
-		take_chemical_cost(user.mind.changeling)
+		take_chemical_cost(C)
 		return
 	return 1
 
@@ -56,7 +59,7 @@
 		to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	else
 		to_chat(user, "<span class='notice'>We stealthily shoot [target.name] with sting.</span>")
-	if(target.mind && target.mind.changeling)
+	if(ischangeling(target))
 		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	//	add_logs(user, target, "unsuccessfully stung")
 	target.log_combat(user, "stinged with [name]")
@@ -72,7 +75,8 @@
 			if(I.flags & THICKMATERIAL)
 				to_chat(user, "<span class='warning'>We broke our sting about our's armor!</span>")
 				unset_sting(user)
-				user.mind.changeling.chem_charges -= rand(5,10)
+				var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+				C.chem_charges -= rand(5,10)
 				H.drip(10)
 				return 1
 	if(ishuman(target))
@@ -89,7 +93,8 @@
 					var/mob/living/carbon/human/HU = user
 					HU.drip(10)
 			unset_sting(user)
-			user.mind.changeling.chem_charges -= rand(5,10)
+			var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+			C.chem_charges -= rand(5,10)
 
 			return 1
 		else
@@ -140,7 +145,7 @@
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
 	var/mob/user = usr
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
 		names += "[DNA.real_name]"
@@ -185,12 +190,13 @@
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/living/carbon/target)
 	if(..())
-		return user.mind.changeling.can_absorb_dna(user, target)
+		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		return C.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	if(sting_fail(user,target))
 		return 0
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 
 	target.dna.real_name = target.real_name
 	changeling.absorbed_dna |= target.dna
@@ -199,7 +205,7 @@
 		changeling.absorbed_species += target.species.name
 
 	for(var/language in target.languages)
-		if(!(language in user.mind.changeling.absorbed_languages))
+		if(!(language in changeling.absorbed_languages))
 			changeling.absorbed_languages += language
 
 	user.changeling_update_languages(changeling.absorbed_languages)

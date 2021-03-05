@@ -1,6 +1,3 @@
-// HIVE MIND UPLOAD/DOWNLOAD DNA
-var/list/datum/dna/hivemind_bank = list()
-
 /obj/effect/proc_holder/changeling/hivemind_upload
 	name = "Hive Channel"
 	desc = "Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
@@ -8,10 +5,14 @@ var/list/datum/dna/hivemind_bank = list()
 	genomecost = 0
 
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	if(!changeling.faction)
+		return
+
+	var/datum/faction/changeling/hivemind = changeling.faction
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
-		if(!(DNA in hivemind_bank))
+		if(!(DNA in hivemind.hivemind_bank))
 			names += DNA.real_name
 
 	if(names.len <= 0)
@@ -26,7 +27,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!chosen_dna)
 		return
 
-	hivemind_bank += chosen_dna
+	hivemind.hivemind_bank += chosen_dna
 	to_chat(user, "<span class='notice'>We channel the DNA of [chosen_name] to the air.</span>")
 	feedback_add_details("changeling_powers","HU")
 	return 1
@@ -36,20 +37,15 @@ var/list/datum/dna/hivemind_bank = list()
 	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
 	chemical_cost = 20
 	genomecost = 0
-/*
-/obj/effect/proc_holder/changeling/hivemind_download/can_sting(mob/living/carbon/user)
-	if(!..())
-		return
-	var/datum/changeling/changeling = user.mind.changeling
-	if(changeling.absorbed_dna[1] == user.dna)//If our current DNA is the stalest, we gotta ditch it.
-		to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
-		return
-	return 1
-*/
+
 /obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
-	var/datum/changeling/changeling = user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	if(!changeling.faction)
+		return
+
+	var/datum/faction/changeling/hivemind = changeling.faction
 	var/list/names = list()
-	for(var/datum/dna/DNA in hivemind_bank)
+	for(var/datum/dna/DNA in hivemind.hivemind_bank)
 		if(!(DNA in changeling.absorbed_dna))
 			names[DNA.real_name] = DNA
 

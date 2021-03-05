@@ -5,7 +5,8 @@
 
 //Revive from regenerative stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
-	user.mind.changeling.purchasedpowers -= src
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	C.purchasedpowers -= src
 	if(user.stat == DEAD)
 		dead_mob_list -= user
 		alive_mob_list += user
@@ -27,10 +28,12 @@
 	if(NOCLONE in user.mutations)
 		to_chat(user, "<span class='notice'>We could not regenerate. Something wrong with our DNA.</span>")
 		user.fake_death = 0
-		user.mind.changeling.purchasedpowers -= src //We dont need that power from now anyway.
+		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		C.purchasedpowers -= src //We dont need that power from now anyway.
 		return
 	if(user.stat != DEAD)//We are alive when using this... Why do we need to keep this ability and even rejuvenate, if revive must used from dead state?
-		user.mind.changeling.purchasedpowers -= src  //If we somehow acquired it, remove upon clicking, to prevent stasis breaking
+		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		C.purchasedpowers -= src  //If we somehow acquired it, remove upon clicking, to prevent stasis breaking
 		to_chat(user, "<span class='notice'>We need to stop any life activity in our body.</span>")
 		return
 	return ..()

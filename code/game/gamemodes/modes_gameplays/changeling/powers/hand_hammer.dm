@@ -31,12 +31,15 @@
 
 
 /obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)
-	if(!user.mind || !user.mind.changeling)
+	if(!ischangeling(user))
 		return 0
-	if(user.mind.changeling.chem_charges < req_chem)
+	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	if(!C)
+		return 0
+	if(C.chem_charges < req_chem)
 		to_chat(user, "<span class='warning'>We require at least [req_chem] units of chemicals to do that!</span>")
 		return 0
-	user.mind.changeling.chem_charges -= req_chem
+	C.chem_charges -= req_chem
 	return 1
 
 /obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, def_zone)

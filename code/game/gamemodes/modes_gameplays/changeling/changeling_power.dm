@@ -16,14 +16,14 @@
 
 /obj/effect/proc_holder/changeling/Click()
 	var/mob/user = usr
-	if(!user || !user.mind || !user.mind.changeling)
+	if(!user || !ischangeling(user))
 		return
 	try_to_sting(user)
 
 /obj/effect/proc_holder/changeling/proc/try_to_sting(mob/user, mob/target)
 	if(!can_sting(user, target))
 		return
-	var/datum/changeling/c = user.mind.changeling
+	var/datum/role/changeling/c = user.mind.GetRole(CHANGELING)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
 		take_chemical_cost(c)
@@ -34,7 +34,7 @@
 /obj/effect/proc_holder/changeling/proc/sting_feedback(mob/user, mob/target)
 	return 0
 
-/obj/effect/proc_holder/changeling/proc/take_chemical_cost(datum/changeling/changeling)
+/obj/effect/proc_holder/changeling/proc/take_chemical_cost(datum/role/changeling/changeling)
 	changeling.chem_charges -= chemical_cost
 	changeling.geneticdamage += genetic_damage
 
@@ -45,7 +45,7 @@
 	if(req_human && !ishuman(user))
 		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return 0
-	var/datum/changeling/c = user.mind.changeling
+	var/datum/role/changeling/c = user.mind.GetRole(CHANGELING)
 	if(c.chem_charges<chemical_cost)
 		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return 0

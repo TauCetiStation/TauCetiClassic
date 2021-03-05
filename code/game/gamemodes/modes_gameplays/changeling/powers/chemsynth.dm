@@ -7,6 +7,6 @@
 
 /obj/effect/proc_holder/changeling/chemicalsynth/on_purchase(mob/user)
 	..()
-	var/datum/changeling/changeling=user.mind.changeling
+	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
 	changeling.chem_recharge_rate *= 2
 	return

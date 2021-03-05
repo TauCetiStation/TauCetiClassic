@@ -47,11 +47,13 @@
 	to_chat(owner, "<span class='notice'>We feel oddly exposed.</span>")
 	owner.alpha = 255
 	STOP_PROCESSING(SSobj, src)
-	owner.mind.changeling.chem_recharge_slowdown -= 0.25
+	var/datum/role/changeling/C = owner.mind.GetRole(CHANGELING)
+	C.chem_recharge_slowdown -= 0.25
 	owner.invisibility = 0
 
 /obj/effect/proc_holder/changeling/chameleon_skin/proc/turn_on()
 	to_chat(owner, "<span class='notice'>We feel one with our surroundings.</span>")
 	owner.alpha = 200
 	START_PROCESSING(SSobj, src)
-	owner.mind.changeling.chem_recharge_slowdown += 0.25
+	var/datum/role/changeling/C = owner.mind.GetRole(CHANGELING)
+	C.chem_recharge_slowdown += 0.25
