@@ -14,3 +14,5 @@
 #define DS2TICKS(DS) (DS/world.tick_lag)
 
 #define TICKS2DS(T) (T TICKS)
+
+#define UNTIL(X) while(!(X)) stoplag()

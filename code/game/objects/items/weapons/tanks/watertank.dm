@@ -75,6 +75,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/MouseDrop()
+	. = ..()
 	if(ismob(loc))
 		if(!CanMouseDrop(src))
 			return

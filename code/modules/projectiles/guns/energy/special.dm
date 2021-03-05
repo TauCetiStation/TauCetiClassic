@@ -229,7 +229,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "relsotron"
 	item_state = "relsotron"
-	origin_tech = null
+	origin_tech = "combat=5;materials=4;powerstorage=4;magnets=4;engineering=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/rails)
 	fire_delay = 20
 	w_class = ITEM_SIZE_NORMAL
