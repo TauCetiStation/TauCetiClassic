@@ -10,7 +10,7 @@
 	var/found_faction = null
 	if(R.GetFaction())
 		return R.GetFaction()
-	if(SSticker && SSticker.mode && SSticker.mode.factions.len)
+	if(SSticker?.mode?.factions?.len)
 		var/success = FALSE
 		for(var/datum/faction/F in SSticker.mode.factions)
 			for(var/datum/role/RR in F.members)
@@ -34,3 +34,14 @@
 /proc/find_active_faction_by_typeandmember(fac_type, datum/role/R, datum/mind/M)
 	var/list/found_factions = find_active_factions_by_member(R, M)
 	return locate(fac_type) in found_factions
+
+/proc/find_unique_objectives(list/new_objectives, list/old_objectives)
+	var/list/uniques = list()
+	for (var/datum/objective/new_objective in new_objectives)
+		var/is_unique = TRUE
+		for (var/datum/objective/old_objective in old_objectives)
+			if (old_objective.type == new_objective.type)
+				is_unique = FALSE
+		if (is_unique)
+			uniques.Add(new_objective)
+	return uniques

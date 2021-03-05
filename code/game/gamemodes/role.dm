@@ -373,40 +373,41 @@
 	return text
 
 /datum/role/proc/extraPanelButtons()
-	var/dat = ""
-	//example:
-	//dat = " - <a href='?src=\ref[M];spawnpoint=\ref[src]'>(move to spawn)</a>"
-	return dat
+	return ""
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	var/text = "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
+
+	if (objectives.objectives.len)
+		text += "<b>personal objectives</b><br><ul>"
+	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
+	if (objectives.objectives.len)
+		text += "</ul>"
+
 	text += "<br>faction: "
 	if (faction)
 		text += faction.name
 	else
 		text += "<i>none</i> <br/>"
+
 	if (admin_edit)
 		text += " - "
 		if (faction)
 			text += "<a href='?src=\ref[M];role_edit=\ref[src];remove_from_faction=1'>(remove)</a>"
 		else
 			text += "<a href='?src=\ref[M];role_edit=\ref[src];add_to_faction=1'>(add)</a>"
+
 	text += "<br>"
-	if (objectives.objectives.len)
-		text += "<b>personal objectives</b><br><ul>"
-	text += objectives.GetObjectiveString(0,admin_edit,M, src)
-	if (objectives.objectives.len)
-		text += "</ul>"
-	if (faction && faction.objective_holder)
+	if (faction?.objective_holder)
 		if (faction.objective_holder.objectives.len)
 			if (objectives.objectives.len)
 				text += "<br>"
 			text += "<b>faction objectives</b><ul>"
 			text += "<br/>"
-		text += faction.objective_holder.GetObjectiveString(0,admin_edit,M)
+		text += faction.objective_holder.GetObjectiveString(FALSE, admin_edit, M)
 		if (faction.objective_holder.objectives.len)
 			text += "</ul>"
 	text += "<br>"

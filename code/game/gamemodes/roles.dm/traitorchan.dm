@@ -1,0 +1,1 @@
+/datum/role/changeling/traitor

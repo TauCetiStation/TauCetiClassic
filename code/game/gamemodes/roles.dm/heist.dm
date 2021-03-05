@@ -1,0 +1,1 @@
+/datum/role/equip_vox_raider

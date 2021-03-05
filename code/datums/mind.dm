@@ -125,13 +125,11 @@
 	var/output = "<B>[current.real_name]'s Memory</B><HR>"
 	output += memory
 
-	if(objectives.len>0)
-		output += "<HR><B>Objectives:</B>"
-
-		var/obj_count = 1
-		for(var/datum/objective/objective in objectives)
-			output += "<br><B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+	if(antag_roles.len)
+		for(var/role in antag_roles)
+			var/datum/role/R = antag_roles[role]
+			output += R.GetMemory(src,FALSE)//preventing edits
+		output += "<hr>"
 
 	var/datum/browser/popup = new(recipient, "window=memory")
 	popup.set_content(output)
@@ -144,22 +142,14 @@
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
+	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];job_edit=1'>Edit</a><br>"
 	out += "Factions and special roles:<br>"
 
 	var/list/sections = list(
 		"implant",
-		"rp-revolution",
-		"cult",
-		"wizard",
-		"changeling",
-		"nuclear",
-		"shadowling",
-		"abductor",
-		"traitor", // "traitorchan",
-		"monkey",
-		"malfunction",
+		"roles",
 	)
+
 	var/text = ""
 	var/mob/living/carbon/human/H = current
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
@@ -177,6 +167,23 @@
 		else
 			text = "Loyalty Implant: Don't implant that monkey!</br>"
 		sections["implant"] = text
+
+	if(current && current.client)
+		out += "Desires roles: [current.client.GetRolePrefs()]<BR>"
+	else
+		out += "Body destroyed or logged out."
+
+	out += "<font size='5'><b>Roles and Factions</b></font><br>"
+	if(!antag_roles.len)
+		out += "<i>This mob has no roles.</i><br>"
+	else
+		for(var/role in antag_roles)
+			var/datum/role/R = antag_roles[role]
+			out += R.GetMemory(src, TRUE) //allowing edits
+
+	out += "<br><a href='?src=\ref[src];add_role=1'>(add a new role)</a>"
+
+/*
 		/** REVOLUTION ***/
 		text = "revolution"
 		if (SSticker.mode.config_tag=="rp-revolution")
@@ -423,10 +430,6 @@
 		if (sections[SSticker.mode.config_tag])
 			out += sections[SSticker.mode.config_tag]+"<br>"
 		sections -= SSticker.mode.config_tag
-	for (var/i in sections)
-		if (sections[i])
-			out += sections[i]+"<br>"
-
 
 	if (((src in SSticker.mode.head_revolutionaries) || \
 		(src in SSticker.mode.traitors)              || \
@@ -448,19 +451,15 @@
 		out += text
 
 	out += "<br>"
+*/
+
+	for(var/i in sections)
+		if(sections[i])
+			out += sections[i]+"<br>"
 
 	out += "<b>Memory:</b><br>"
 	out += memory
 	out += "<br><a href='?src=\ref[src];memory_edit=1'>Edit memory</a><br>"
-	out += "Objectives:<br>"
-	if (objectives.len == 0)
-		out += "EMPTY<br>"
-	else
-		var/obj_count = 1
-		for(var/datum/objective/objective in objectives)
-			out += "<B>[obj_count]</B>: [objective.explanation_text] <a class='[objective.completed ? "green" : "red"]' href='?src=\ref[src];obj_edit=\ref[objective]'>Edit</a> <a href='?src=\ref[src];obj_delete=\ref[objective]'>Delete</a> <a href='?src=\ref[src];obj_completed=\ref[objective]'>Toggle Completion</a><br>"
-			obj_count++
-	out += "<a href='?src=\ref[src];obj_add=1'>Add objective</a><br><br>"
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
@@ -472,10 +471,109 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in joblist
-		if (!new_role) return
-		assigned_role = new_role
+	if (href_list["job_edit"])
+		var/new_job = input("Select new job", "Assigned job", assigned_role) as null|anything in get_all_jobs()
+		if (!new_job)
+			return
+		assigned_role = new_job
+
+	if (href_list["greet_role"])
+		var/datum/role/R = locate(href_list["greet_role"])
+		var/chosen_greeting
+		var/custom_greeting
+		if (R.greets.len)
+			chosen_greeting = input("Choose a greeting", "Assigned role", null) as null|anything in R.greets
+			if (chosen_greeting == GREET_CUSTOM)
+				custom_greeting = input("Choose a custom greeting", "Assigned role", "") as null|text
+
+			if ((chosen_greeting && chosen_greeting != GREET_CUSTOM) || (chosen_greeting == GREET_CUSTOM && custom_greeting))
+				R.Greet(chosen_greeting,custom_greeting)
+
+	if (href_list["add_role"])
+		var/list/available_roles = list()
+		for(var/role in subtypesof(/datum/role))
+			var/datum/role/R = role
+			if (initial(R.id) && !(initial(R.id) in antag_roles))
+				available_roles.Add(initial(R.id))
+				available_roles[initial(R.id)] = R
+
+		if(!available_roles.len)
+			alert("This mob already has every available roles! Geez, calm down!", "Assigned role")
+			return
+
+		var/new_role = input("Select new role", "Assigned role", null) as null|anything in available_roles
+		if (!new_role)
+			return
+
+		var/joined_faction
+		var/list/all_factions = list()
+		if (alert("Do you want that role to be part of a faction?", "Assigned role", "Yes", "No") == "Yes")
+			all_factions = get_faction_list()
+			joined_faction = input("Select new faction", "Assigned faction", null) as null|anything in all_factions
+
+
+		var/role_type = available_roles[new_role]
+		var/datum/role/newRole = new role_type
+		if(!newRole)
+			WARNING("Role killed itself or was otherwise missing!")
+			return
+
+		var/chosen_greeting
+		var/custom_greeting
+		if (newRole.greets.len)
+			if (alert("Do you want to greet them as their new role?", "Assigned role", "Yes", "No") == "Yes")
+				chosen_greeting = input("Choose a greeting", "Assigned role", null) as null|anything in newRole.greets
+				if (chosen_greeting == "custom")
+					custom_greeting = input("Choose a custom greeting", "Assigned role", "") as null|text
+
+		if(!newRole.AssignToRole(src,1))//it shouldn't fail since we're using our admin powers to force the role
+			newRole.Drop()//but just in case
+			return
+
+		if (joined_faction && joined_faction != "-----")
+			if (joined_faction == "NEW CUSTOM FACTION")
+				to_chat(usr, "<span class='danger'>Sorry, that feature is not coded yet. - Deity Link</span>")
+			else if (istype(all_factions[joined_faction], /datum/faction))//we got an existing faction
+				var/datum/faction/joined = all_factions[joined_faction]
+				joined.HandleRecruitedRole(newRole)
+			else //we got an inexisting faction, gotta create it first!
+				var/datum/faction/joined = SSticker.mode.CreateFaction(all_factions[joined_faction], null, 1)
+				if (joined)
+					joined.HandleRecruitedRole(newRole)
+
+		newRole.OnPostSetup()
+		if ((chosen_greeting && chosen_greeting != "custom") || (chosen_greeting == "custom" && custom_greeting))
+			newRole.Greet(chosen_greeting,custom_greeting)
+
+	else if(href_list["role_edit"])
+		var/datum/role/R = locate(href_list["role_edit"])
+
+		if(href_list["remove_role"])
+			R.Drop()
+
+		else if(href_list["remove_from_faction"])
+			if(!R.faction)
+				to_chat(usr, "<span class='warning'>Can't leave a faction when you already don't belong to any! (This message shouldn't have to appear. Tell a coder.)</span>")
+			else if(R in R.faction.members)
+				R.faction.HandleRemovedRole(R)
+
+		else if(href_list["add_to_faction"])
+			if(R.faction)
+				to_chat(usr, "<span class='warning'>A role can only belong to one faction! (This message shouldn't have to appear. Tell a coder.)</span>")
+			else
+				var/list/all_factions = get_faction_list()
+				var/join_faction = input("Select new faction", "Assigned faction", null) as null|anything in all_factions
+				if(!join_faction || join_faction == "-----")
+					return
+				else if(join_faction == "NEW CUSTOM FACTION")
+					to_chat(usr, "<span class='danger'>Sorry, that feature is not coded yet. - Deity Link</span>")
+				else if(istype(all_factions[join_faction], /datum/faction))//we got an existing faction
+					var/datum/faction/joined = all_factions[join_faction]
+					joined.HandleRecruitedRole(R)
+				else //we got an inexisting faction, gotta create it first!
+					var/datum/faction/joined = SSticker.mode.CreateFaction(all_factions[join_faction], null, 1)
+					if(joined)
+						joined.HandleRecruitedRole(R)
 
 	else if (href_list["memory_edit"])
 		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
@@ -483,133 +581,104 @@
 			return
 		memory = new_memo
 
-	else if (href_list["obj_edit"] || href_list["obj_add"])
-		var/datum/objective/objective
-		var/objective_pos
-		var/def_value
+	else if (href_list["obj_add"])
+		var/datum/objective_holder/obj_holder = locate(href_list["obj_holder"])
 
-		if (href_list["obj_edit"])
-			objective = locate(href_list["obj_edit"])
-			if (!objective) return
-			objective_pos = objectives.Find(objective)
+		var/list/available_objectives = list()
 
-			//Text strings are easy to manipulate. Revised for simplicity.
-			var/temp_obj_type = "[objective.type]"//Convert path into a text string.
-			def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
-			if(!def_value)//If it's a custom objective, it will be an empty string.
-				def_value = "custom"
+		for(var/objective_type in subtypesof(/datum/objective))
+			var/datum/objective/O = objective_type
+			available_objectives.Add(O.type)
+			available_objectives[O.type] = O
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "dehead", "protect", "prevent", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
-		if (!new_obj_type) return
+		var/new_obj = input("Select a new objective", "New Objective", null) as null|anything in available_objectives
 
-		var/datum/objective/new_objective = null
+		if(new_obj == null)
+			return
+		var/obj_type = available_objectives[new_obj]
 
-		switch (new_obj_type)
-			if ("assassinate","protect","debrain", "dehead", "harm", "brig")
-				//To determine what to name the objective in explanation text.
-				var/objective_type = "[capitalize(new_obj_type)]"
+		var/datum/objective/new_objective = new obj_type(usr, obj_holder.faction)
+		if (alert("Add the objective to a fraction?", "Yes", "No") == "Yes")
+			var/datum/faction/fac = input("To which faction shall we give this?", "Faction-wide objective", null) as null|anything in SSticker.mode.factions
+			fac.handleNewObjective(new_objective)
+			message_admins("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
+			log_admin("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
+			edit_memory()
+			return TRUE // It's a faction objective, let's not move any further.
 
-				var/list/possible_targets = list("Free objective")
-				for(var/datum/mind/possible_target in SSticker.minds)
-					if ((possible_target != src) && istype(possible_target.current, /mob/living/carbon/human))
-						possible_targets += possible_target.current
+		if (obj_holder.owner)//so objectives won't target their owners.
+			new_objective.owner = obj_holder.owner
 
-				var/mob/def_target = null
-				if (objective?.target && is_type_in_list(objective, list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain)))
-					def_target = objective.target.current
-
-				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
-				if (!new_target) return
-
-				var/objective_path = text2path("/datum/objective/[new_obj_type]")
-				if (new_target == "Free objective")
-					new_objective = new objective_path
-					new_objective.owner = src
-					new_objective:target = null
-					new_objective.explanation_text = "Free objective"
-				else
-					new_objective = new objective_path
-					new_objective.owner = src
-					new_objective:target = new_target:mind
-					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
-					new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
-
-			if ("prevent")
-				new_objective = new /datum/objective/block
-				new_objective.owner = src
-
-			if ("hijack")
-				new_objective = new /datum/objective/hijack
-				new_objective.owner = src
-
-			if ("escape")
-				new_objective = new /datum/objective/escape
-				new_objective.owner = src
-
-			if ("survive")
-				new_objective = new /datum/objective/survive
-				new_objective.owner = src
-
-			if ("nuclear")
-				new_objective = new /datum/objective/nuclear
-				new_objective.owner = src
-
-			if ("steal")
-				if (!istype(objective, /datum/objective/steal))
-					new_objective = new /datum/objective/steal
-					new_objective.owner = src
-				else
-					new_objective = objective
-				var/datum/objective/steal/steal = new_objective
-				if (!steal.select_target())
-					return
-
-			if("download","capture","absorb")
-				var/def_num
-				if(objective&&objective.type==text2path("/datum/objective/[new_obj_type]"))
-					def_num = objective.target_amount
-
-				var/target_number = input("Input target number:", "Objective", def_num) as num|null
-				if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
-					return
-
-				switch(new_obj_type)
-					if("download")
-						new_objective = new /datum/objective/download
-						new_objective.explanation_text = "Download [target_number] research levels."
-					if("capture")
-						new_objective = new /datum/objective/capture
-						new_objective.explanation_text = "Accumulate [target_number] capture points."
-					if("absorb")
-						new_objective = new /datum/objective/absorb
-						new_objective.explanation_text = "Absorb [target_number] compatible genomes."
-				new_objective.owner = src
-				new_objective.target_amount = target_number
-
-			if ("custom")
-				var/expl = sanitize(input("Custom objective:", "Objective", objective ? input_default(objective.explanation_text) : "") as text|null)
-				if (!expl) return
-				new_objective = new /datum/objective
-				new_objective.owner = src
-				new_objective.explanation_text = expl
-
-		if (!new_objective) return
-
-		if (objective)
-			objectives -= objective
-			objectives.Insert(objective_pos, new_objective)
-		else
-			objectives += new_objective
+		if (obj_holder.owner)
+			obj_holder.AddObjective(new_objective, src)
+			message_admins("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [new_objective.explanation_text]")
+			log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [new_objective.explanation_text]")
+		else if (new_objective.faction && istype(new_objective, /datum/objective/custom)) //is it a custom objective with a faction modifier?
+			new_objective.faction.AppendObjective(new_objective)
+			message_admins("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
+			log_admin("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
+		else if (obj_holder.faction) //or is it just an explicit faction obj?
+			obj_holder.faction.AppendObjective(new_objective)
+			message_admins("[usr.key]/([usr.name]) gave \the [obj_holder.faction.ID] the objective: [new_objective.explanation_text]")
+			log_admin("[usr.key]/([usr.name]) gave \the [obj_holder.faction.ID] the objective: [new_objective.explanation_text]")
 
 	else if (href_list["obj_delete"])
 		var/datum/objective/objective = locate(href_list["obj_delete"])
-		if(!istype(objective))	return
-		objectives -= objective
+		var/datum/objective_holder/obj_holder = locate(href_list["obj_holder"])
+
+		ASSERT(istype(objective) && istype(obj_holder))
+
+		if (obj_holder.owner)
+			log_admin("[usr.key]/([usr.name]) removed [key]/([name])'s objective ([objective.explanation_text])")
+		else if (obj_holder.faction)
+			message_admins("[usr.key]/([usr.name]) removed \the [obj_holder.faction.ID]'s objective ([objective.explanation_text])")
+			log_admin("[usr.key]/([usr.name]) removed \the [obj_holder.faction.ID]'s objective ([objective.explanation_text])")
+			objective.faction.handleRemovedObjective(objective)
+
+		obj_holder.objectives.Remove(objective)
 
 	else if(href_list["obj_completed"])
 		var/datum/objective/objective = locate(href_list["obj_completed"])
-		if(!istype(objective))	return
-		objective.completed = !objective.completed
+
+		ASSERT(istype(objective))
+
+		objective.completed = OBJECTIVE_WIN
+		log_admin("[usr.key]/([usr.name]) toggled [key]/([name]) [objective.explanation_text] to [objective.completed ? "completed" : "incomplete"]")
+
+	else if(href_list["obj_gen"])
+		var/owner = locate(href_list["obj_owner"])
+		if(istype(owner, /datum/role))
+			var/datum/role/R = owner
+			var/list/prev_objectives = R.objectives.objectives.Copy()
+			R.ForgeObjectives()
+			var/list/unique_objectives_role = find_unique_objectives(R.objectives.objectives, prev_objectives)
+			if (!unique_objectives_role.len)
+				alert(usr, "No new objectives generated.", "Alert", "OK")
+			else
+				for (var/datum/objective/objective in unique_objectives_role)
+					log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [objective.explanation_text]")
+		else if(istype(owner, /datum/faction))
+			var/datum/faction/F = owner
+			var/list/faction_objectives = F.GetObjectives()
+			var/list/prev_objectives = faction_objectives.Copy()
+			F.forgeObjectives()
+			var/list/unique_objectives_faction = find_unique_objectives(F.GetObjectives(), prev_objectives)
+			if (!unique_objectives_faction.len)
+				alert(usr, "No new objectives generated.", "Alert", "OK")
+			else
+				for (var/datum/objective/objective in unique_objectives_faction)
+					message_admins("[usr.key]/([usr.name]) gave \the [F.ID] the objective: [objective.explanation_text]")
+					log_admin("[usr.key]/([usr.name]) gave \the [F.ID] the objective: [objective.explanation_text]")
+
+	else if(href_list["role"]) //Something role specific
+		var/datum/role/R = locate(href_list["role"])
+		R.Topic(href, href_list)
+
+	else if (href_list["obj_announce"])
+		to_chat(src.current, "<span class='notice'>Your objectives are:</span>")
+		for (var/role in antag_roles)
+			var/datum/role/R = antag_roles[role]
+			R.AnnounceObjectives()
 
 	else if(href_list["implant"])
 		var/mob/living/carbon/human/H = current
@@ -809,45 +878,6 @@
 				if(!config.objectives_disabled)
 					SSticker.mode.forge_wizard_objectives(src)
 					to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
-
-	else if (href_list["changeling"])
-		switch(href_list["changeling"])
-			if("clear")
-				if(src in SSticker.mode.changelings)
-					SSticker.mode.changelings -= src
-					special_role = null
-					remove_antag_hud(ANTAG_HUD_CHANGELING, current)
-					current.remove_changeling_powers()
-					var/datum/role/changeling/C = GetRole(CHANGELING)
-					if(C)
-						qdel(C)
-					to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>")
-					log_admin("[key_name(usr)] has de-changeling'ed [current].")
-			if("changeling")
-				if(!(src in SSticker.mode.changelings))
-					SSticker.mode.changelings += src
-					SSticker.mode.grant_changeling_powers(current)
-					special_role = "Changeling"
-					to_chat(current, "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>")
-					current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					if(config.objectives_disabled)
-						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-					log_admin("[key_name(usr)] has changeling'ed [current].")
-					add_antag_hud(ANTAG_HUD_CHANGELING, "changeling", current)
-			if("autoobjectives")
-				if(!config.objectives_disabled)
-					SSticker.mode.forge_changeling_objectives(src)
-				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
-
-			if("initialdna")
-				var/datum/role/changeling/C = GetRole(CHANGELING)
-				if( !C || !C.absorbed_dna.len )
-					to_chat(usr, "<span class='warning'>Resetting DNA failed!</span>")
-				else
-					current.dna = C.absorbed_dna[1]
-					current.real_name = current.dna.real_name
-					current.UpdateAppearance()
-					domutcheck(current, null)
 
 	else if (href_list["nuclear"])
 		var/mob/living/carbon/human/H = current
@@ -1155,49 +1185,11 @@
 				if (!SSticker.mode.equip_traitor(current, !(src in SSticker.mode.traitors)))
 					to_chat(usr, "<span class='warning'>Equipping a syndicate failed!</span>")
 
-	else if (href_list["obj_announce"])
-		var/obj_count = 1
-		to_chat(current, "<span class='notice'>Your current objectives:</span>")
-		for(var/datum/objective/objective in objectives)
-			to_chat(current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
-
 	edit_memory()
-/*
-/datum/mind/proc/clear_memory(silent = 1)
-	var/datum/game_mode/current_mode = SSticker.mode
-
-	// remove traitor uplinks
-	var/list/L = current.get_contents()
-	for (var/t in L)
-		if (istype(t, /obj/item/device/pda))
-			if (t:uplink) qdel(t:uplink)
-			t:uplink = null
-		else if (istype(t, /obj/item/device/radio))
-			if (t:traitorradio) qdel(t:traitorradio)
-			t:traitorradio = null
-			t:traitor_frequency = 0.0
-		else if (istype(t, /obj/item/weapon/SWF_uplink) || istype(t, /obj/item/weapon/syndicate_uplink))
-			if (t:origradio)
-				var/obj/item/device/radio/R = t:origradio
-				R.loc = current.loc
-				R.traitorradio = null
-				R.traitor_frequency = 0.0
-			qdel(t)
-
-	// remove wizards spells
-	//If there are more special powers that need removal, they can be procced into here./N
-	current.spellremove(current)
-
-	// clear memory
-	memory = ""
-	special_role = null
-
-*/
 
 // /datum/role and other game_mode--
 /datum/mind/proc/GetRole(role_id)
-	if (role_id in antag_roles)
+	if(role_id in antag_roles)
 		return antag_roles[role_id]
 	return FALSE
 
@@ -1214,8 +1206,8 @@
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.get_contents()
-	for (var/obj/item/I in L)
-		if (I.hidden_uplink)
+	for(var/obj/item/I in L)
+		if(I.hidden_uplink)
 			return I.hidden_uplink
 	return null
 
@@ -1276,15 +1268,6 @@
 		qdel(H.w_uniform)
 
 		SSticker.mode.equip_syndicate(current)
-
-/datum/mind/proc/make_Changling()
-	if(!(src in SSticker.mode.changelings))
-		SSticker.mode.changelings += src
-		SSticker.mode.grant_changeling_powers(current)
-		special_role = "Changeling"
-		if(!config.objectives_disabled)
-			SSticker.mode.forge_changeling_objectives(src)
-		SSticker.mode.greet_changeling(src)
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in SSticker.mode.wizards))
@@ -1435,6 +1418,95 @@
 				L = agent_landmarks[team]
 				H.loc = L.loc
 
+/datum/admins/proc/makeAntag(datum/role/R, datum/faction/F, count = 1, recruitment_source = FROM_PLAYERS)
+	var/role_req
+	var/role_name
+	if(F)
+		role_req = initial(F.required_pref)
+		role_name = initial(F.name)
+	else if(R)
+		role_req = initial(R.required_pref)
+		role_name = initial(R.name)
+
+	var/list/mob/candidates
+	if(recruitment_source == FROM_PLAYERS)
+		candidates = pollGhostCandidates("Do you want to be [F ? "in" : "a"] [role_name]?", role_req, role_req, 100)
+	else
+		candidates = pollGhostCandidates("Do you want to be [F ? "in" : "a"] [role_name]?", role_req, role_req, 100, player_list)
+
+	var/recruit_count = 0
+	if(!candidates.len)
+		return FALSE
+
+	candidates = shuffle(candidates)
+
+	if(F)
+		var/datum/faction/FF = find_active_faction_by_type(F)
+		if(!FF)
+			FF = SSticker.mode.CreateFaction(F, FALSE, TRUE)
+			if(!FF)
+				return FALSE
+			var/mob/H = pick(candidates)
+			candidates.Remove(H)
+			if(isobserver(H))
+				H = makeBody(H)
+			var/datum/mind/M = H.mind
+			if(FF.HandleNewMind(M))
+				var/datum/role/RR = FF.get_member_by_mind(M)
+				RR.OnPostSetup()
+				RR.Greet(GREET_LATEJOIN)
+				message_admins("[key_name(H)] has been recruited as leader of [FF.name] via create antagonist verb.")
+				recruit_count++
+				count--
+
+		while(count > 0 && candidates.len)
+			count--
+			var/mob/living/carbon/human/H = pick(candidates)
+			candidates.Remove(H)
+			if(initial(F.initial_role) in H.mind.antag_roles) // Ex: a head rev being made a revolutionary.
+				continue
+			if(isobserver(H))
+				H = makeBody(H)
+			var/datum/mind/M = H.mind
+			message_admins("polling if [key_name(H)] wants to become a member of [FF.name]")
+			if(FF.HandleRecruitedMind(M))
+				var/datum/role/RR = FF.get_member_by_mind(M)
+				RR.OnPostSetup()
+				RR.Greet(GREET_LATEJOIN)
+				message_admins("[key_name(H)] has been recruited as recruit of [FF.name] via create antagonist verb.")
+				recruit_count++
+
+		FF.OnPostSetup()
+		FF.forgeObjectives()
+
+		return recruit_count
+
+	else if(R)
+		while(count > 0 && candidates.len)
+			count--
+			var/mob/H = pick(candidates)
+			candidates.Remove(H)
+			if(isobserver(H))
+				H = makeBody(H)
+			var/datum/mind/M = H.mind
+			if(M.GetRole(initial(R.id)))
+				continue
+			var/datum/role/newRole = new R
+			message_admins("polling if [key_name(H)] wants to become a [newRole.name]")
+			if(!newRole)
+				continue
+
+			if(!newRole.AssignToRole(M))
+				newRole.Drop()
+				continue
+			newRole.OnPostSetup()
+			newRole.ForgeObjectives()
+			newRole.Greet(GREET_LATEJOIN)
+			message_admins("[key_name(H)] has been made into a [newRole.name] via create antagonist verb.")
+			recruit_count++
+
+	return recruit_count
+
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
 	if(!spell.action)
@@ -1466,6 +1538,21 @@
 			spell.action.background_icon_state = spell.action_background_icon_state
 		spell.action.Grant(new_character)
 	return
+
+/datum/mind/proc/get_faction_list()
+	var/list/all_factions = list()
+	for(var/datum/faction/F in SSticker.mode.factions)
+		all_factions.Add(F.name)
+		all_factions[F.name] = F
+	all_factions += "-----"
+	for(var/factiontype in subtypesof(/datum/faction))
+		var/datum/faction/F = factiontype
+		if (!(initial(F.name) in all_factions))
+			all_factions.Add(initial(F.name))
+			all_factions[initial(F.name)] = F
+	all_factions += "-----"
+	all_factions += "NEW CUSTOM FACTION"
+	return all_factions
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

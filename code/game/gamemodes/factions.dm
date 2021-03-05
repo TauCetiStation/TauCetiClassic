@@ -43,7 +43,6 @@ var/list/factions_with_hud_icons = list()
 	var/datum/role/leader
 	var/list/faction_scoreboard_data = list()
 	var/stage = FACTION_DORMANT //role_datums_defines.dm
-	var/playlist
 
 	var/minor_victory = FALSE
 
@@ -227,7 +226,7 @@ var/list/factions_with_hud_icons = list()
 	dat += GetObjectivesMenuHeader()
 	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A><br>"
 	dat += "<br><b>Faction objectives</b><br>"
-	dat += objective_holder.GetObjectiveString(0,1,A)
+	dat += objective_holder.GetObjectiveString(FALSE, TRUE, A)
 	dat += "<br> - <b>Members</b> - <br>"
 	if(!members.len)
 		dat += "<i>Unpopulated</i>"

@@ -86,37 +86,6 @@
 
 	return 0
 
-
-/datum/admins/proc/makeChanglings()
-
-	var/datum/game_mode/changeling/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_CHANGELING in applicant.client.prefs.be_role)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_CHANGELING))
-							if(!(applicant.job in temp.restricted_jobs))
-								candidates += applicant
-
-	if(candidates.len)
-		var/numChanglings = min(candidates.len, 3)
-
-		for(var/i = 0, i<numChanglings, i++)
-			H = pick(candidates)
-			H.mind.make_Changling()
-			candidates.Remove(H)
-
-		return 1
-
-	return 0
-
 /datum/admins/proc/makeRevs()
 
 	var/datum/game_mode/rp_revolution/temp = new

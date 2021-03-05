@@ -88,16 +88,14 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
 
-	var/list/possible_bad_dudes = list(
-		current_mode.traitors,current_mode.head_revolutionaries,
-		current_mode.head_revolutionaries,
-		current_mode.cult,current_mode.wizards,
-		current_mode.changelings,current_mode.syndicates
-		)
-	for(var/list in possible_bad_dudes)//For every possible antagonist type.
-		for(current_mind in list)//For each mind in that list.
-			if(current_mind.current && current_mind.current.stat != DEAD)//If they are not destroyed and not dead.
-				antagonist_list += current_mind//Add them.
+	var/list/possible_bad_dudes = subtypesof(/datum/faction)
+	for(var/type in possible_bad_dudes)
+		var/datum/faction/F = find_active_faction_by_type(type)
+		if(!F)
+			continue
+		for(var/datum/role/R in F.members)
+			if(R.antag.current && R.antag.current.stat != DEAD)
+				antagonist_list += R.antag
 
 	if(protagonist_list.len)//If the mind is both a protagonist and antagonist.
 		for(current_mind in protagonist_list)

@@ -118,3 +118,24 @@
 				. += "<br><b>#[++i]</b>: [C.name]"
 	else
 		. += "<br>Changeling was too autistic and did't buy anything."
+
+/datum/role/changeling/extraPanelButtons()
+	var/dat = ""
+	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];changeling_autoobjectives=1;'>Randomize objectives!</a><br>"
+	if(absorbed_dna.len && (antag.current.real_name != absorbed_dna[1]) )
+		dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];changeling_initialdna=1'>Transform to initial appearance</a><br>"
+	return dat
+
+/datum/role/changeling/RoleTopic(href, href_list, datum/mind/M, admin_auth)
+	if(href_list["changeling_autoobjectives"])
+		ForgeObjectives()
+		to_chat(usr, "<span class='notice'>The objectives for changeling [M.key] have been generated. You can edit them and anounce manually.</span>")
+
+	if(href_list["changeling_initialdna"])
+		if(!absorbed_dna.len)
+			to_chat(usr, "<span class='warning'>Resetting DNA failed!</span>")
+		else
+			antag.current.dna = absorbed_dna[1]
+			antag.current.real_name = antag.current.dna.real_name
+			antag.current.UpdateAppearance()
+			domutcheck(antag.current, null)

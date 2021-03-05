@@ -562,7 +562,7 @@ var/global/list/all_objectives = list()
 					n_p ++
 		else if (SSticker.current_state == GAME_STATE_PLAYING)
 			for(var/mob/living/carbon/human/P in human_list)
-				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
+				if(P.client && !ischangeling(P) && P.mind!=owner)
 					n_p ++
 		target_amount = min(target_amount, n_p)
 
@@ -771,3 +771,16 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	if(blobs.len >= invade_tiles * 0.95)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/custom
+	explanation_text = "Just be yourself"
+	completed = OBJECTIVE_WIN
+
+//if user passed - means that this will be called as an explicit custom objective and will require user input
+/datum/objective/custom/New(mob/user, datum/faction/faction)
+	if(!user)
+		return
+	if(faction)
+		src.faction = faction
+	var/txt = input(user, "What should be the text of this objective?", "Custom objective", "Just be yourself")
+	explanation_text = txt

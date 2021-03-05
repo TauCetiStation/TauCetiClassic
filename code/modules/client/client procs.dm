@@ -679,3 +679,12 @@ var/list/blacklisted_builds = list(
 	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
 
 	return byond_registration
+
+/client/proc/GetRolePrefs()
+	var/list/roleprefs = list()
+	for(var/role_id in antag_roles)
+		if(role_id in prefs.be_role)
+			roleprefs += role_id
+	if(!roleprefs.len)
+		return "none"
+	return english_list(roleprefs)

@@ -1,0 +1,1 @@
+/datum/role/malf_unit
