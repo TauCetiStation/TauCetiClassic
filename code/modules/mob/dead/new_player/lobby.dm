@@ -29,28 +29,28 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 				}
 
 				.fone{
-					position: relative;
-					width: 100%;
-					min-width: 100vh;
-					height: 100vh;
-					top:-50vh;
-					left: 0;
+					position: absolute;
+					width: auto;
+					height: 100vmin;
+					min-width: 100vmin;
+					min-height: 100vmin;
+					top: 50%;
+					left:50%;
+					transform: translate(-50%, -50%);
 					z-index: 0;
 				}
 
-				.container{
-					height: 100%;
-					width: 100vh;
-					margin-left: auto;
-					margin-right: auto;
-				}
-
 				.container_nav {
-					position: relative;
-					margin-top: auto;
-					height: 50vh;
-					top: 70vh;
-					left:10%;
+					position: absolute;
+					width: auto;
+					min-width: 100vmin;
+					min-height: 50vmin;
+					padding-left: 10vmin;
+					padding-top: 60vmin;
+					box-sizing: border-box;
+					top: 50%;
+					left:50%;
+					transform: translate(-50%, -50%);
 					z-index: 1;
 				}
 
@@ -63,11 +63,11 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 					text-align: left;
 					color:white;
 					margin-right: 100%;
-					margin-top: 0.5vh;
+					margin-top: 5px;
 					padding-left: 6px;
-					font-size: 4vh;
-					line-height: 4vh;
-					height: 4vh;
+					font-size: 4vmin;
+					line-height: 4vmin;
+					height: 4vmin;
 					letter-spacing: 1px;
 				}
 
