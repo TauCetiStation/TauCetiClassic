@@ -1,3 +1,8 @@
+#define MIN_TUNNEL_LENGTH 20
+#define MAX_TUNNEL_LENGTH 60
+#define DISTANCE_BEETWEEN_MOSTERS 16
+#define CRATE_DROP_CHANCE 0.5 // 1 in 200
+
 /**********************Mineral deposits**************************/
 /turf/simulated/mineral
 	name = "Rock"
@@ -373,7 +378,7 @@
 		F.update_overlays()
 
 
-	if(rand(1,500) == 1)
+	if(prob(CRATE_DROP_CHANCE))
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
 		new /obj/structure/closet/crate/secure/loot(src)
 
@@ -507,14 +512,12 @@
 
 /turf/simulated/floor/plating/airless/asteroid/cave
 	var/length = 20
-	var/mob_spawn_list = list("Goldgrub" = 4, "Goliath" = 10, "Basilisk" = 8, "Hivelord" = 6, "Drone" = 2)
-	var/sanity = 1
+	var/mob_spawn_list = list("Goliath" = 5, "Basilisk" = 4, "Hivelord" = 3, "Goldgrub" = 2, "Drone" = 1)
+	var/sanity = TRUE
 
 /turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
-
-	// If length (arg2) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!length)
-		src.length = rand(25, 50)
+		src.length = rand(MIN_TUNNEL_LENGTH, MAX_TUNNEL_LENGTH)
 	else
 		src.length = length
 
@@ -577,14 +580,17 @@
 			dir = angle2dir(dir2angle(dir) + next_angle)
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
-	for(var/turf/S in range(2,T))
+	for(var/turf/S in range(2, T))
 		if(istype(S, /turf/space) || istype(S.loc, /area/asteroid/mine/explored))
-			sanity = 0
+			sanity = FALSE
 			break
+
 	if(!sanity)
 		return
 
-	SpawnMonster(T)
+	if(prob(30))
+		SpawnMonster(T)
+
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		t = new basetype(T)
@@ -594,27 +600,24 @@
 		t.update_overlays_full()
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
-	if(prob(30))
-		if(istype(loc, /area/asteroid/mine/explored))
-			return
-		for(var/atom/A in range(15,T))//Lowers chance of mob clumps
-			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
-				return
-		var/randumb = pickweight(mob_spawn_list)
-		switch(randumb)
-			if("Goliath")
-				new /mob/living/simple_animal/hostile/asteroid/goliath(T)
-			if("Goldgrub")
-				new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
-			if("Basilisk")
-				new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
-			if("Hivelord")
-				new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
-			if("Drone")
-				new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
-		if(prob(20))
-		 new /obj/machinery/artifact/bluespace_crystal(T)
-	return
+	if(istype(loc, /area/asteroid/mine/explored))
+		return
+	for(var/mob/living/simple_animal/hostile/A in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of mob clumps
+		return
+	var/randumb = pickweight(mob_spawn_list)
+	switch(randumb)
+		if("Goliath")
+			new /mob/living/simple_animal/hostile/asteroid/goliath(T)
+		if("Goldgrub")
+			new /mob/living/simple_animal/hostile/asteroid/goldgrub(T)
+		if("Basilisk")
+			new /mob/living/simple_animal/hostile/asteroid/basilisk(T)
+		if("Hivelord")
+			new /mob/living/simple_animal/hostile/asteroid/hivelord(T)
+		if("Drone")
+			new /mob/living/simple_animal/hostile/retaliate/malf_drone/mining(T)
+	if(prob(20))
+		new /obj/machinery/artifact/bluespace_crystal(T)
 
 /**********************Asteroid**************************/
 
@@ -641,7 +644,7 @@
 	//	seedName = pick(list("1","2","3","4"))
 	//	seedAmt = rand(1,4)
 	if(prob(20))
-		icon_state = "asteroid_stone_[rand(1,10)]"
+		icon_state = "asteroid_stone_[rand(1, 10)]"
 
 	//I dont know how, but it gets into hudatoms
 	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
@@ -708,9 +711,9 @@
 	if(!W || !user)
 		return 0
 
-	if ((istype(W, /obj/item/weapon/shovel)))
+	if (istype(W, /obj/item/weapon/shovel))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!isturf(T))
 			return
 
 		if (dug)
@@ -748,7 +751,6 @@
 	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
-	return
 
 /turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()
@@ -763,3 +765,8 @@
 				attackby(R.module_state_3,R)
 			else
 				return
+
+#undef MIN_TUNNEL_LENGTH
+#undef MAX_TUNNEL_LENGTH
+#undef DISTANCE_BEETWEEN_MOSTERS
+#undef CRATE_DROP_CHANCE
