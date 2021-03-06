@@ -302,7 +302,7 @@
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
 			qdel(current_hugger)
-			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+			// TODO: ЛЯРВЫ ТОЖЕ ПОЛУЧАЮТ /datum/role/alient вместе с худом
 		target.unEquip(src)
 		target.status_flags |= XENO_HOST
 		target.med_hud_set_status()

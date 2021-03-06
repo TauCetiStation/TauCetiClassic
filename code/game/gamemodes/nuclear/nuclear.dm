@@ -177,7 +177,6 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1, boss=0)
-	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", syndicate.current)
 	if (you_are)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>")
 	if(boss)
@@ -196,7 +195,6 @@
 /datum/game_mode/proc/remove_nuclear(mob/M)
 	syndicates -= M
 	M.mind.special_role = null
-	remove_antag_hud(ANTAG_HUD_OPS, M)
 	M.mind.remove_objectives()
 	M.mind.current.faction = "neutral"
 

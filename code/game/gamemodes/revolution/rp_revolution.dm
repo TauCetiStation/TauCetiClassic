@@ -98,7 +98,6 @@
 
 /datum/game_mode/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
-	add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
 	if (you_are)
 		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	if(!config.objectives_disabled)
@@ -179,7 +178,6 @@
 	revolutionaries += rev_mind
 	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
 	rev_mind.special_role = "Revolutionary"
-	add_antag_hud(antag_hud_type, "hudrevolutionary", rev_mind.current)
 	if(config.objectives_disabled)
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return 1
@@ -191,7 +189,6 @@
 	if(rev_mind in revolutionaries)
 		revolutionaries -= rev_mind
 		rev_mind.special_role = null
-		remove_antag_hud(ANTAG_HUD_REV, rev_mind.current)
 
 
 		if(beingborged)
@@ -209,7 +206,6 @@
 				to_chat(M, "[rev_mind.current] looks like they just remembered their real allegiance!")
 
 /datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
-	add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", rev_mind.current)
 	var/obj_count = 1
 	if (you_are)
 		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
@@ -325,8 +321,6 @@
 						H.mind.objectives += rev_obj
 
 					H.verbs += /mob/living/carbon/human/proc/RevConvert
-					add_antag_hud(antag_hud_type, antag_hud_name, H)
-
 					to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
 					added_heads = 1
 					break

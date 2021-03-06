@@ -230,7 +230,6 @@
 		if(src.mind)
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"
-				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", src)
 				SSticker.mode.traitors += src.mind
 
 	if (src.cell)

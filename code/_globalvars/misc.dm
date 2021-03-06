@@ -64,6 +64,8 @@ var/list/score=list(
 	"dmgestkey"     = 0
 )
 
+var/list/greek_pronunciation = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
+
 //line format: key, name, title, desc
 var/global/list/achievements = list()
 

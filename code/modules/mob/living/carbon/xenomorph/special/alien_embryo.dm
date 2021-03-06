@@ -172,7 +172,7 @@ This is emryo growth procs
 			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
-		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+		// TODO: ЛЯРВЫ ТОЖЕ ПОЛУЧАЮТ /datum/role/alient вместе с худом
 		new_xeno.update_icons()
 		new_xeno.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
 

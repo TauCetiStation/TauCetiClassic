@@ -97,9 +97,8 @@
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return 0
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(user)
-	var/mob/living/carbon/human/H = user
-	return H.agent
+/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(mob/living/carbon/human/user)
+	return isabductoragent(user)
 
 /obj/item/clothing/suit/armor/abductor/vest/attack_self(mob/user)
 	if(!AbductorCheck(user))
@@ -152,9 +151,8 @@
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return 0
 
-/obj/item/device/abductor/proc/ScientistCheck(user)
-	var/mob/living/carbon/human/H = user
-	return H.scientist
+/obj/item/device/abductor/proc/ScientistCheck(mob/living/carbon/human/user)
+	return isabductorsci(user)
 
 /obj/item/device/abductor/gizmo
 	name = "science tool"
@@ -447,9 +445,8 @@
 		return 0
 	return 1
 
-/obj/item/weapon/abductor_baton/proc/AgentCheck(user)
-	var/mob/living/carbon/human/H = user
-	return H.agent
+/obj/item/weapon/abductor_baton/proc/AgentCheck(mob/living/carbon/human/user)
+	return isabductoragent(user)
 
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
 	if(!IsAbductor(user))

@@ -126,7 +126,6 @@ Made by Xhuis
 	return ..()
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	add_antag_hud(ANTAG_HUD_SHADOW, "hudshadowling", shadow.current)
 	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
 	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
 	to_chat(shadow.current, "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>")
@@ -163,7 +162,6 @@ Made by Xhuis
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> [objective_explanation]"
 		to_chat(new_thrall_mind.current, "<b>The objectives of the shadowlings:</b> [objective_explanation]")
-		add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", H)
 		H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 		return 1
 

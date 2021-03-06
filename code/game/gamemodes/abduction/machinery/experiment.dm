@@ -175,16 +175,14 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
-		var/objtype = pick(typesof(/datum/objective/abductee) - /datum/objective/abductee)
-		var/datum/objective/abductee/O = new objtype()
-		SSticker.mode.abductees += H.mind
-		H.mind.add_antag_hud(ANTAG_HUD_ABDUCTOR, "abductee", H)
-		H.mind.objectives += O
-		var/obj_count = 1
-		to_chat(H, "<span class='notice'>Your current objectives:</span>")
-		for(var/datum/objective/objective in H.mind.objectives)
-			to_chat(H, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
+
+		var/datum/faction/abductors/req_f
+		for(var/datum/faction/abductors/F in find_active_all_faction_by_type(/datum/faction/abductors))
+			if(F.team_number == team)
+				req_f = F
+				break
+
+		req_f.abductees += SSticker.mode.CreateRole(/datum/role/abducted, H)
 		for(var/obj/item/gland/G in H)
 			G.Start()
 			point_reward++
@@ -214,7 +212,6 @@
 	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
 	H.drop_from_inventory(handcuffs)
 	qdel(handcuffs)
-	return
 
 /obj/machinery/abductor/experiment/update_icon()
 	if(state_open)

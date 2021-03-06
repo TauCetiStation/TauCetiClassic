@@ -50,6 +50,10 @@
 
 	var/plural_name = null
 
+	var/antag_hud_type
+
+	var/antag_hud_name
+
 	// role name assigned to the antag's potential uplink
 	var/name_for_uplink = null
 
@@ -94,7 +98,7 @@
 	// Local
 	//////////////////////////////
 	// Actual antag
-	var/datum/mind/antag=null
+	var/datum/mind/antag = null
 	var/destroyed = FALSE //Whether or not it has been gibbed
 
 	var/list/uplink_items_bought = list() //migrated from mind, used in GetScoreboard()
@@ -120,10 +124,10 @@
 	//var/datum/stat/role/stat_datum = null
 	//var/datum/stat/role/stat_datum_type = /datum/stat/role
 
-/datum/role/New(datum/mind/M, datum/faction/fac=null, new_id, override = FALSE)
+/datum/role/New(datum/mind/M, datum/faction/fac, new_id, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	// Link faction.
-	faction=fac
+	faction = fac
 	if(!faction)
 		SSticker.mode.orphaned_roles += src
 	else
@@ -153,6 +157,7 @@
 		return FALSE
 
 	antag = M
+	add_antag_hud()
 	M.antag_roles.Add(id)
 	M.antag_roles[id] = src
 	objectives.owner = M
@@ -166,6 +171,7 @@
 /datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	remove_antag_hud()
 	if(msg_admins)
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_JMP(M.current)]" : ""]")
 	antag = null
@@ -173,7 +179,7 @@
 // Destroy this role
 /datum/role/proc/Drop()
 	if(faction && (src in faction.members))
-		faction.members.Remove(src)
+		faction.remove_role(src)
 
 	if(!faction)
 		SSticker.mode.orphaned_roles.Remove(src)
@@ -282,9 +288,10 @@
 	 - <a href='?_src_=holder;traitor=\ref[M]'>(role panel)</a>"}
 
 
-/datum/role/proc/Greet(greeting,custom)
+/datum/role/proc/Greet(greeting, custom)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!greeting)
-		return
+		return FALSE
 
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	switch(greeting)
@@ -292,6 +299,9 @@
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>[custom]</B>")
 		else
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetObjectivesMenuHeader()]":"."]</B>")
+
+	return TRUE
+
 
 /datum/role/proc/PreMindTransfer(mob/living/old_character)
 	return
@@ -475,3 +485,15 @@
 // What do they display on the player StatPanel ?
 /datum/role/proc/StatPanel()
 	return ""
+
+// Adds the specified antag hud to the player. Usually called in an antag datum file
+/datum/role/proc/add_antag_hud()
+	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+	hud.join_hud(antag.current)
+	set_antag_hud(antag.current, antag_hud_name)
+
+// Removes the specified antag hud from the player. Usually called in an antag datum file
+/datum/role/proc/remove_antag_hud()
+	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+	hud.leave_hud(antag.current)
+	set_antag_hud(antag.current, null)

@@ -35,7 +35,6 @@
 	var/mob/living/carbon/human/newtraitor = pick(possible_traitors)
 	SSticker.mode.equip_traitor(newtraitor)
 	SSticker.mode.syndicates += newtraitor.mind
-	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", newtraitor)
 	to_chat(newtraitor, "<span class='userdanger'> <B>ATTENTION:</B> You hear a call from Syndicate...</span>")
 	to_chat(newtraitor, "<B>You are now a special traitor.</B>")
 	newtraitor.mind.special_role = "Syndicate"

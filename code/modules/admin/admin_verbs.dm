@@ -1069,7 +1069,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Change Blobs to Win"
 	set category = "Event"
 	if(holder)
-		var/datum/faction/blob_conglomerate/conglomerate = find_active_faction_by_type(/datum/faction/blob_conglomerate)
+		var/datum/faction/blob_conglomerate/conglomerate = find_active_first_faction_by_type(/datum/faction/blob_conglomerate)
 		if(!conglomerate)
 			return
 

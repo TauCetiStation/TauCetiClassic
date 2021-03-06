@@ -1,7 +1,12 @@
 /datum/role/changeling
-	name = "Changeling"
+	name = CHANGELING
 	id = CHANGELING
-	required_pref = CHANGELING
+	required_pref = ROLE_CHANGELING
+	special_role = CHANGELING
+
+	antag_hud_type = ANTAG_HUD_CHANGELING
+	antag_hud_name = "changeling"
+
 	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	protected_traitor_prob = PROB_PROTECTED_RARE
 	logo_state = "change-logoa"
@@ -31,8 +36,6 @@
 	var/mob/living/parasite/essence/controled_by
 	var/delegating = FALSE
 
-	var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
-
 /datum/role/changeling/New()
 	. = ..()
 	if(.)
@@ -48,27 +51,27 @@
 		honorific = "Ms."
 	else
 		honorific = "Mr."
-	if(possible_changeling_IDs.len)
-		changelingID = pick(possible_changeling_IDs)
+	if(greek_pronunciation.len)
+		changelingID = pick(greek_pronunciation)
 		if(changelingID == "Tau") // yeah, cuz we can
 			geneticpoints++
-		possible_changeling_IDs -= changelingID
+		greek_pronunciation -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
 
 /datum/role/changeling/Greet(greeting, custom)
-	if(!greeting)
-		return
+	if(!..())
+		return FALSE
 
 	antag.current.playsound_local(null, 'sound/antag/ling_aler.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
-	to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are a Changeling.</span>")
 	to_chat(antag.current, "<span class='danger'>Use say \":g message\" to communicate with your fellow changelings. Remember: you get all of their absorbed DNA if you absorb them.</span>")
 
 	if(antag.current.mind && antag.current.mind.assigned_role == "Clown")
 		to_chat(antag.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 		antag.current.mutations.Remove(CLUMSY)
+
+	return TRUE
 
 /datum/role/changeling/ForgeObjectives()
 	AppendObjective(/datum/objective/absorb)
@@ -131,7 +134,7 @@
 		ForgeObjectives()
 		to_chat(usr, "<span class='notice'>The objectives for changeling [M.key] have been generated. You can edit them and anounce manually.</span>")
 
-	if(href_list["changeling_initialdna"])
+	else if(href_list["changeling_initialdna"])
 		if(!absorbed_dna.len)
 			to_chat(usr, "<span class='warning'>Resetting DNA failed!</span>")
 		else

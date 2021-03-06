@@ -35,8 +35,9 @@
 
 	stat_datum_type = /datum/stat/faction/blob
 
-/datum/faction/blob_conglomerate/setup()
-	max_roles = max(round(num_players()/PLAYER_PER_BLOB_CORE, 1), 1)
+/datum/faction/blob_conglomerate/can_setup(num_players)
+	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
+	return TRUE
 
 // -- Victory procs --
 /datum/faction/blob_conglomerate/check_win()

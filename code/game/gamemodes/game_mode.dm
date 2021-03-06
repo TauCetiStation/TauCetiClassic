@@ -92,6 +92,9 @@
 		if(islist(Fac))
 			var/list/L = Fac
 			CreateFactions(L, FALSE)
+		else if(isnum(factions_allowed[Fac]))
+			for(var/i in 1 to factions_allowed[Fac])
+				CreateFaction(Fac, pc)
 		else
 			CreateFaction(Fac, pc)
 	if(populate_factions)
@@ -100,9 +103,7 @@
 /datum/game_mode/proc/CreateFaction(Fac, population, override = 0)
 	var/datum/faction/F = new Fac
 	if(F.can_setup(population) || override)
-		F.setup()
 		factions += F
-		factions_allowed -= F
 		return F
 	else
 		warning("Faction ([F]) could not set up properly with given population.")
@@ -149,24 +150,24 @@
 			CreateNumOfRoles(role, FilterAvailablePlayers(role))
 			return TRUE
 
-/datum/game_mode/proc/CreateNumOfRoles(datum/role/R, list/candidates)
+/datum/game_mode/proc/CreateNumOfRoles(role_type, list/candidates)
 	if(!candidates || !candidates.len)
-		WARNING("ran out of available players to fill role [R]!")
+		WARNING("ran out of available players to fill role [role_type]!")
 		return
 	for(var/mob/M in candidates)
-		CreateRole(R, M)
+		CreateRole(role_type, M)
 
-/datum/game_mode/proc/CreateStrictNumOfRoles(datum/role/R, num)
+/datum/game_mode/proc/CreateStrictNumOfRoles(role_type, num)
 	var/number_of_roles = 0
-	var/list/available_players = FilterAvailablePlayers(R)
+	var/list/available_players = FilterAvailablePlayers(role_type)
 	for(var/i = 0 to num)
 		if(!available_players.len)
-			WARNING("ran out of available players to fill role [R]!")
+			WARNING("ran out of available players to fill role [role_type]!")
 			break
 		shuffle(available_players)
 		var/mob/dead/new_player/P = pick(available_players)
 		available_players.Remove(P)
-		if(!CreateRole(R, P))
+		if(!CreateRole(role_type, P))
 			i--
 			continue
 		number_of_roles++ // Get the roles we created
@@ -176,20 +177,20 @@
 /datum/game_mode/proc/CreateBasicRole(type_role)
 	return new type_role
 
-/datum/game_mode/proc/FilterAvailablePlayers(datum/role/R, list/players_to_choose = get_ready_players())
+/datum/game_mode/proc/FilterAvailablePlayers(datum/role/role_type, list/players_to_choose = get_ready_players())
 	for(var/mob/dead/new_player/P in players_to_choose)
 		if(!P.client || !P.mind)
 			players_to_choose.Remove(P)
 			continue
-		if(!P.client.prefs.be_role.Find(initial(R.required_pref)) || jobban_isbanned(P, initial(R.required_pref)) || role_available_in_minutes(P, initial(R.required_pref)))
+		if(!P.client.prefs.be_role.Find(initial(role_type.required_pref)) || jobban_isbanned(P, initial(role_type.required_pref)) || role_available_in_minutes(P, initial(role_type.required_pref)))
 			players_to_choose.Remove(P)
 			continue
 	if(!players_to_choose.len)
-		warning("No available players for [R]")
+		warning("No available players for [role_type]")
 	return players_to_choose
 
-/datum/game_mode/proc/CreateRole(datum/role/R, mob/P)
-	var/datum/role/newRole = CreateBasicRole(R)
+/datum/game_mode/proc/CreateRole(role_type, mob/P)
+	var/datum/role/newRole = CreateBasicRole(role_type)
 
 	if(!newRole)
 		warning("Role killed itself or was otherwise missing!")
@@ -202,7 +203,7 @@
 		newRole.Drop()
 		return FALSE
 
-	return TRUE
+	return newRole
 
 /datum/game_mode/proc/latespawn(mob/mob) //Check factions, see if anyone wants a latejoiner
 	var/list/possible_factions = list()
@@ -297,7 +298,7 @@
 	for(var/datum/role/R in orphaned_roles)
 		if (R.check_win())
 			return TRUE
-	if(SSshuttle.location == SHUTTLE_AT_CENTCOM || SSticker.station_was_nuked)
+	if(SSticker.station_was_nuked)
 		return TRUE
 	return FALSE
 
@@ -360,15 +361,3 @@
 	for(var/client/M in admins)
 		if(M.holder)
 			to_chat(M, msg)
-
-// Adds the specified antag hud to the player. Usually called in an antag datum file
-/datum/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
-	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
-	hud.join_hud(mob_override)
-	set_antag_hud(mob_override, antag_hud_name)
-
-// Removes the specified antag hud from the player. Usually called in an antag datum file
-/datum/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
-	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
-	hud.leave_hud(mob_override)
-	set_antag_hud(mob_override, null)

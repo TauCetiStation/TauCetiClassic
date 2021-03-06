@@ -13,8 +13,9 @@
 	//Hivemind Bank, contains a list of DNA that changelings can share and use.
 	var/list/hivemind_bank = list()
 
-/datum/faction/changeling/setup()
-	max_roles = 1 + round(num_players() / 10)
+/datum/faction/changeling/can_setup(num_players)
+	max_roles = 1 + round(num_players / 10)
+	return TRUE
 
 /datum/faction/changeling/GetObjectivesMenuHeader()
 	var/icon/logo_left = icon('icons/misc/logos.dmi', "change-logoa")

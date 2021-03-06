@@ -1,8 +1,22 @@
 
-/proc/find_active_faction_by_type(faction_type)
+/proc/find_active_first_faction_by_type(faction_type)
 	if(!SSticker || !SSticker.mode)
 		return null
 	return locate(faction_type) in SSticker.mode.factions
+
+/proc/find_active_all_faction_by_type(faction_type)
+	if(!SSticker || !SSticker.mode)
+		return null
+
+	var/list/L = list()
+	for(var/datum/faction/F in SSticker.mode.factions)
+		if(istype(F, faction_type))
+			L += F
+
+	if(!L.len)
+		return null
+
+	return L
 
 /proc/find_active_faction_by_member(datum/role/R, datum/mind/M)
 	if(!R)
@@ -31,7 +45,7 @@
 				break
 	return found_factions
 
-/proc/find_active_faction_by_typeandmember(fac_type, datum/role/R, datum/mind/M)
+/proc/find_active_first_faction_by_typeandmember(fac_type, datum/role/R, datum/mind/M)
 	var/list/found_factions = find_active_factions_by_member(R, M)
 	return locate(fac_type) in found_factions
 

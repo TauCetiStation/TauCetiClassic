@@ -60,7 +60,7 @@
 			CRASH("new_xeno = null. Chosen caste: [alien_caste].")
 		if(mind)
 			mind.transfer_to(new_xeno)
-			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+			// TODO: ЛЯРВЫ ТОЖЕ ПОЛУЧАЮТ /datum/role/alient вместе с худом
 			qdel(src)
 		return
 	else

@@ -2,20 +2,23 @@
 /obj/machinery/abductor
 	var/team = 0
 
+// Machinery
+/obj/machinery/abductor/atom_init()
+	. = ..()
+	abductor_machinery_list += src
+
+/obj/machinery/abductor/Destroy()
+	abductor_machinery_list -= src
+	return ..()
+
 /obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
-	if(!H.species)
-		return FALSE
-	return H.species.name == ABDUCTOR
+	return H.species?.name == ABDUCTOR
 
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
-	if(H.species.name == ABDUCTOR)
-		return H.agent
-	return FALSE
+	return isabductoragent(H)
 
 /obj/machinery/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	if(H.species.name == ABDUCTOR)
-		return H.scientist
-	return FALSE
+	return isabductorsci(H)
 
 //*************-Console-*************//
 

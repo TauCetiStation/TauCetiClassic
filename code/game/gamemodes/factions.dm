@@ -53,6 +53,7 @@ var/list/factions_with_hud_icons = list()
 	var/datum/stat/faction/stat_datum_type = /datum/stat/faction
 
 /datum/faction/New()
+	SHOULD_CALL_PARENT(TRUE)
 	..()
 	objective_holder = new
 	objective_holder.faction = src
@@ -61,10 +62,8 @@ var/list/factions_with_hud_icons = list()
 
 	//stat_datum = new stat_datum_type()
 
-/datum/faction/proc/setup()
-	return
-
 /datum/faction/proc/OnPostSetup()
+	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		R.OnPostSetup()
 
@@ -72,40 +71,46 @@ var/list/factions_with_hud_icons = list()
 	for(var/datum/role/R in members)
 		var/datum/game_mode/G = SSticker.mode
 		G.orphaned_roles += R
-		members -= R
+		remove_role(R)
 	qdel(objective_holder)
 	//var/datum/game_mode/dynamic/D = SSticker.mode
 	//D.factions -= src
 	qdel(src)
 
 //Initialization proc, checks if the faction can be made given the current amount of players and/or other possibilites
-/datum/faction/proc/can_setup()
+/datum/faction/proc/can_setup(num_players)
 	return TRUE
 
 //For when you want your faction to have specific objectives (Vampire, suck blood. Cult, sacrifice the head of personnel's dog, etc.)
 /datum/faction/proc/forgeObjectives()
 
 /datum/faction/proc/AnnounceObjectives()
+	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		R.AnnounceObjectives()
 
 /datum/faction/proc/ShuttleDocked(state)
 	return
 
+/datum/faction/proc/get_initrole_type()
+	return initroletype
+
 /datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
+	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
-			return 0
+			return null
 	if(M.GetRole(initial_role))
 		WARNING("Mind already had a role of [initial_role]!")
-		return 0
+		return null
 	var/datum/role/newRole = new initroletype(null, src, initial_role)
 	if(!newRole.AssignToRole(M))
 		newRole.Drop()
-		return 0
+		return null
 	return newRole
 
 /datum/faction/proc/HandleRecruitedMind(datum/mind/M, override = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
 			return R
@@ -120,24 +125,29 @@ var/list/factions_with_hud_icons = list()
 	return R
 
 /datum/faction/proc/HandleRecruitedRole(datum/role/R)
+	SHOULD_CALL_PARENT(TRUE)
 	SSticker.mode.orphaned_roles -= R
 	add_role(R)
 
 /datum/faction/proc/HandleRemovedRole(datum/role/R)
+	SHOULD_CALL_PARENT(TRUE)
 	SSticker.mode.orphaned_roles += R
 	remove_role(R)
 
 /datum/faction/proc/add_role(datum/role/R)
+	SHOULD_CALL_PARENT(TRUE)
 	members += R
 	R.faction = src
 
 /datum/faction/proc/remove_role(datum/role/R)
+	SHOULD_CALL_PARENT(TRUE)
 	members -= R
 	R.faction = null
 	if(leader == R)
 		leader = null
 
 /datum/faction/proc/AppendObjective(objective_type,duplicates=0)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!duplicates && locate(objective_type) in objective_holder.GetObjectives())
 		return FALSE
 	var/datum/objective/O
@@ -156,6 +166,7 @@ var/list/factions_with_hud_icons = list()
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
 /datum/faction/proc/GetScoreboard()
+	SHOULD_CALL_PARENT(TRUE)
 	var/count = 1
 	var/score_results = ""
 	if(objective_holder.objectives.len > 0)
@@ -168,7 +179,7 @@ var/list/factions_with_hud_icons = list()
 			count++
 			if (count <= objective_holder.objectives.len)
 				score_results += "<br>"
-	if (count>1)
+	if (count > 1)
 		if (IsSuccessful())
 			score_results += "<br><font color='green'><B>\The [name] was successful!</B></font>"
 			feedback_add_details("[ID]_success","SUCCESS")
@@ -198,6 +209,7 @@ var/list/factions_with_hud_icons = list()
 	return score_results
 
 /datum/faction/Topic(href, href_list)
+	SHOULD_CALL_PARENT(TRUE)
 	..()
 	if(href_list["destroyfac"])
 		if(!check_rights(R_ADMIN))
@@ -222,6 +234,7 @@ var/list/factions_with_hud_icons = list()
 	return header
 
 /datum/faction/proc/AdminPanelEntry(datum/admins/A)
+	SHOULD_CALL_PARENT(TRUE)
 	var/dat = "<br>"
 	dat += GetObjectivesMenuHeader()
 	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A><br>"
@@ -268,6 +281,7 @@ var/list/factions_with_hud_icons = list()
 // Generic proc for added/removed faction objectives
 // Override this in the proper faction if you need to notify the players or if the objective is important.
 /datum/faction/proc/handleNewObjective(datum/objective/O)
+	SHOULD_CALL_PARENT(TRUE)
 	ASSERT(O)
 	O.faction = src
 	if(O in objective_holder.objectives)
@@ -284,6 +298,7 @@ var/list/factions_with_hud_icons = list()
 	return TRUE
 
 /datum/faction/proc/handleRemovedObjective(datum/objective/O)
+	SHOULD_CALL_PARENT(TRUE)
 	ASSERT(O)
 	if (!(O in objective_holder.objectives))
 		WARNING("Trying to remove an objective ([O]) to faction ([src]) who never had it.")
@@ -293,6 +308,7 @@ var/list/factions_with_hud_icons = list()
 	qdel(O)
 
 /datum/faction/proc/Declare()
+	SHOULD_CALL_PARENT(TRUE)
 	var/dat = GetObjectivesMenuHeader()
 	dat += "<br><b>Faction objectives</b><br>"
 	dat += CheckObjectives()

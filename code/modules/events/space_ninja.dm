@@ -90,7 +90,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	var/list/possible_bad_dudes = subtypesof(/datum/faction)
 	for(var/type in possible_bad_dudes)
-		var/datum/faction/F = find_active_faction_by_type(type)
+		var/datum/faction/F = find_active_first_faction_by_type(type)
 		if(!F)
 			continue
 		for(var/datum/role/R in F.members)

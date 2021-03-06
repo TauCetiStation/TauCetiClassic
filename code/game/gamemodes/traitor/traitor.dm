@@ -145,7 +145,6 @@
 			traitor.objectives += dehead_objective
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
-	add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor.current)
 	to_chat(traitor.current, "<B><font size=3 color=red>You are the traitor.</font></B>")
 	if (!config.objectives_disabled)
 		var/obj_count = 1
@@ -169,7 +168,6 @@
 /datum/game_mode/proc/remove_traitor(datum/mind/M)
 	traitors -= M
 	M.special_role = null
-	remove_antag_hud(antag_hud_type, M.current)
 	M.syndicate_awareness = SYNDICATE_UNAWARE
 	if(isAI(M.current))
 		var/mob/living/silicon/ai/A = M.current

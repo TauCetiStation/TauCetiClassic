@@ -325,22 +325,6 @@
 
 		sections["shadowling"] = text
 
-		/** ABDUCTORS **/
-		text = "abductor"
-		if(SSticker.mode.config_tag == "abductor")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if(src in SSticker.mode.abductors)
-			text += "<b>ABDUCTOR</b>|<a href='?src=\ref[src];abductor=clear'>human</a>"
-			text += "|<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
-		else
-			text += "<a href='?src=\ref[src];abductor=abductor'>abductor</a>|<b>human</b>"
-		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_role))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-		sections["abductor"] = text
-
 	/** TRAITOR ***/
 	text = "traitor"
 	if (SSticker.mode.config_tag=="traitor" || SSticker.mode.config_tag=="traitorchan")
@@ -708,55 +692,26 @@
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
 			 and it just activated!</B></FONT></span>")
-			if(src in SSticker.mode.revolutionaries)
-				special_role = null
-				SSticker.mode.revolutionaries -= src
-				remove_antag_hud(ANTAG_HUD_REV, current)
-				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove \
-				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
-			if(!is_mind_shield && (src in SSticker.mode.head_revolutionaries))
-				special_role = null
-				SSticker.mode.head_revolutionaries -=src
-				remove_antag_hud(ANTAG_HUD_REV, current)
-				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
-				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
-			if(src in SSticker.mode.cult)
-				SSticker.mode.cult -= src
-				remove_antag_hud(ANTAG_HUD_REV, current)
-				special_role = null
-				var/datum/game_mode/cult/cult = SSticker.mode
-				if (istype(cult))
-					cult.memoize_cult_objectives(src)
-				to_chat(current, "<span class='warning'><FONT size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all\
-				 thoughts about being in a cult.  Have a productive day!</B></FONT></span>")
-				memory = ""
-			if(!is_mind_shield && (src in SSticker.mode.traitors))
-				SSticker.mode.traitors -= src
-				special_role = null
-				remove_antag_hud(ANTAG_HUD_TRAITOR, current)
-				to_chat(current, "<span class='warning'><FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT></span>")
-				log_admin("[key_name(usr)] has de-traitor'ed [current].")
+			for(var/type in list(TRAITOR, CULTIST, HEADREV, REV))
+				if(is_mind_shield && (type == HEADREV || type == TRAITOR))
+					continue
+				var/datum/role/R = GetRole(type)
+				R.RemoveFromRole(src)
+
+			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
+
 
 	else if (href_list["revolution"])
 		switch(href_list["revolution"])
 			if("clear")
-				if(src in SSticker.mode.revolutionaries)
-					SSticker.mode.revolutionaries -= src
-					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary!</B></FONT></span>")
-					remove_antag_hud(ANTAG_HUD_REV, current)
-					special_role = null
-				if(src in SSticker.mode.head_revolutionaries)
-					SSticker.mode.head_revolutionaries -= src
-					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a head revolutionary!</B></FONT></span>")
-					special_role = null
-					remove_antag_hud(ANTAG_HUD_REV, current)
-					current.verbs -= /mob/living/carbon/human/proc/RevConvert
+				for(var/type in list(HEADREV, REV))
+					var/datum/role/R = GetRole(type)
+					R.RemoveFromRole(src)
 				log_admin("[key_name(usr)] has de-rev'ed [current].")
 
 			if("rev")
 				if(src in SSticker.mode.head_revolutionaries)
 					SSticker.mode.head_revolutionaries -= src
-					add_antag_hud(ANTAG_HUD_REV, "hudrevolutionary", current)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT></span>")
 				else if(!(src in SSticker.mode.revolutionaries))
 					to_chat(current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
@@ -764,14 +719,13 @@
 				else
 					return
 				SSticker.mode.revolutionaries += src
-				add_antag_hud(ANTAG_HUD_REV, "hudrevolutionary", current)
 				special_role = "Revolutionary"
 				log_admin("[key_name(usr)] has rev'ed [current].")
 
 			if("headrev")
 				if(src in SSticker.mode.revolutionaries)
 					SSticker.mode.revolutionaries -= src
-					add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", current)
+
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT></span>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 				else if(!(src in SSticker.mode.head_revolutionaries))
@@ -811,13 +765,13 @@
 							cult.memoize_cult_objectives(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>")
 					memory = ""
-					remove_antag_hud(ANTAG_HUD_CULT, current)
+
 					log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
 				if(!(src in SSticker.mode.cult))
 					SSticker.mode.cult += src
 					special_role = "Cultist"
-					add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
+
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 					to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -856,7 +810,7 @@
 				if(src in SSticker.mode.wizards)
 					SSticker.mode.wizards -= src
 					special_role = null
-					remove_antag_hud(ANTAG_HUD_WIZ, current)
+
 					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-wizard'ed [current].")
@@ -864,7 +818,7 @@
 				if(!(src in SSticker.mode.wizards))
 					SSticker.mode.wizards += src
 					special_role = "Wizard"
-					add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", current)
+
 					to_chat(current, "<B><span class='warning'>You are the Space Wizard!</span></B>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name(usr)] has wizard'ed [current].")
@@ -888,7 +842,7 @@
 					SSticker.mode.remove_nuclear(src)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-nuke op'ed [current].")
-					remove_antag_hud(ANTAG_HUD_OPS, current)
+
 			if("nuclear")
 				if(!(src in SSticker.mode.syndicates))
 					SSticker.mode.syndicates += src
@@ -939,7 +893,7 @@
 			if("clear")
 				if(src in SSticker.mode.traitors)
 					SSticker.mode.remove_traitor(src)
-					remove_antag_hud(ANTAG_HUD_TRAITOR, current)
+
 					if(isAI(current))
 						to_chat(current, "<span class='warning'><FONT size = 3><B>Bzzzt..Bzzt..Error..Error..Syndicate law is corrupted.. Shutdown laws system.. Restart.. Load Standart NT Laws.</B></FONT></span>")
 						var/mob/living/silicon/ai/AI = current
@@ -972,7 +926,7 @@
 					special_role = "traitor"
 					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
 					current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", current)
+
 					log_admin("[key_name(usr)] has traitor'ed [current].")
 					if (config.objectives_disabled)
 						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
@@ -993,7 +947,7 @@
 				if(src in SSticker.mode.shadows)
 					SSticker.mode.shadows -= src
 					special_role = null
-					remove_antag_hud(ANTAG_HUD_SHADOW, current)
+
 					to_chat(current, "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>")
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
@@ -1002,7 +956,7 @@
 				else if(src in SSticker.mode.thralls)
 					SSticker.mode.thralls -= src
 					special_role = null
-					remove_antag_hud(ANTAG_HUD_SHADOW, current)
+
 					to_chat(current, "<span class='userdanger'>You have been brainwashed! You are no longer a thrall!</span>")
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
 					log_admin("[key_name(usr)] has de-thrall'ed [current].")
@@ -1012,7 +966,7 @@
 					return
 				SSticker.mode.shadows += src
 				special_role = "shadowling"
-				add_antag_hud(ANTAG_HUD_SHADOW, "hudshadowling", current)
+
 				to_chat(current, "<span class='deadsay'><b>You notice a brightening around you. No, it isn't that. The shadows grow, darken, swirl. The darkness has a new welcome for you, and you realize with a \
 				start that you can't be human. No, you are a shadowling, a harbringer of the shadows! Your alien abilities have been unlocked from within, and you may both commune with your allies and use \
 				a chrysalis to reveal your true form. You are to ascend at all costs.</b></span>")
@@ -1025,41 +979,12 @@
 					return
 				SSticker.mode.add_thrall(src)
 				special_role = "thrall"
-				add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", current)
+
 				to_chat(current, "<span class='deadsay'>All at once it becomes clear to you. Where others see darkness, you see an ally. You realize that the shadows are not dead and dark as one would think, but \
 				living, and breathing, and <b>eating</b>. Their children, the Shadowlings, are to be obeyed and protected at all costs.</span>")
 				to_chat(current, "<span class='danger'>You may use the Hivemind Commune ability to communicate with your fellow enlightened ones.</span>")
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
-
-	else if(href_list["abductor"])
-		switch(href_list["abductor"])
-			if("clear")
-				to_chat(usr, "Not implemented yet. Sorry!") // Mmm, nice!
-				remove_antag_hud(ANTAG_HUD_ABDUCTOR, current)
-			if("abductor")
-				if(!ishuman(current))
-					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
-					return
-				make_Abductor()
-				add_antag_hud(ANTAG_HUD_ABDUCTOR, "abductor", current)
-				current.regenerate_icons()
-				log_admin("[key_name(usr)] turned [current] into abductor.")
-			if("equip")
-				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
-				if(gear)
-					for (var/obj/item/I in current)
-						if (istype(I, /obj/item/weapon/implant))
-							continue
-						qdel(I)
-					var/datum/game_mode/abduction/temp = new
-					temp.equip_common(current)
-					if(gear=="Agent")
-						temp.equip_agent(current)
-						current.regenerate_icons()
-					else
-						temp.equip_scientist(current)
-						current.regenerate_icons()
 
 	else if (href_list["monkey"])
 		var/mob/living/L = current
@@ -1226,7 +1151,7 @@
 		cur_AI.show_laws()
 		to_chat(cur_AI, "<span class='bold'>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</span>")
 		special_role = "malfunction"
-		add_antag_hud(ANTAG_HUD_MALF, "hudmalai", cur_AI)
+
 		cur_AI.icon_state = "ai-malf"
 		cur_AI.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
@@ -1290,7 +1215,7 @@
 /datum/mind/proc/make_Cultist()
 	if(!(src in SSticker.mode.cult))
 		SSticker.mode.cult += src
-		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
+
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 		var/datum/game_mode/cult/cult = SSticker.mode
@@ -1374,50 +1299,6 @@
 
 	return (duration <= world.time - brigged_since)
 
-/datum/mind/proc/make_Abductor()
-	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
-	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
-	if(!role || !team || !teleport)
-		return
-	if(!ishuman(current))
-		return
-	SSticker.mode.abductors |= src
-	var/datum/objective/experiment/O = new
-	O.owner = src
-	objectives += O
-	var/mob/living/carbon/human/abductor/H = current
-	var/datum/mind/M = H.mind
-	H.set_species(ABDUCTOR)
-	switch(role)
-		if("Agent")
-			H.agent = 1
-			M.assigned_role = "MODE"
-		if("Scientist")
-			H.scientist = 1
-			M.assigned_role = "MODE"
-	H.team = team
-	var/list/obj/effect/landmark/abductor/agent_landmarks = new
-	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
-	agent_landmarks.len = 4
-	scientist_landmarks.len = 4
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
-			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
-			scientist_landmarks[text2num(A.team)] = A
-	var/obj/effect/landmark/L
-	if(teleport=="Yes")
-		switch(role)
-			if("Agent")
-				H.agent = 1
-				L = agent_landmarks[team]
-				H.loc = L.loc
-			if("Scientist")
-				H.scientist = 1
-				L = agent_landmarks[team]
-				H.loc = L.loc
-
 /datum/admins/proc/makeAntag(datum/role/R, datum/faction/F, count = 1, recruitment_source = FROM_PLAYERS)
 	var/role_req
 	var/role_name
@@ -1432,7 +1313,7 @@
 	if(recruitment_source == FROM_PLAYERS)
 		candidates = pollGhostCandidates("Do you want to be [F ? "in" : "a"] [role_name]?", role_req, role_req, 100)
 	else
-		candidates = pollGhostCandidates("Do you want to be [F ? "in" : "a"] [role_name]?", role_req, role_req, 100, player_list)
+		candidates = pollCandidates("Do you want to be [F ? "in" : "a"] [role_name]?", role_req, role_req, 100, player_list)
 
 	var/recruit_count = 0
 	if(!candidates.len)
@@ -1441,7 +1322,7 @@
 	candidates = shuffle(candidates)
 
 	if(F)
-		var/datum/faction/FF = find_active_faction_by_type(F)
+		var/datum/faction/FF = find_active_first_faction_by_type(F)
 		if(!FF)
 			FF = SSticker.mode.CreateFaction(F, FALSE, TRUE)
 			if(!FF)
@@ -1645,19 +1526,16 @@
 	..()
 	mind.assigned_role = "Artificer"
 	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
 	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
 
 /mob/living/simple_animal/vox/armalis/mind_initialize()
 	..()

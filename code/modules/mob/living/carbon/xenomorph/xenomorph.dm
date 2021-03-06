@@ -32,10 +32,6 @@
 	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
 
-/mob/living/carbon/xenomorph/Destroy()
-	remove_antag_hud(ANTAG_HUD_ALIEN_EMBRYO, src)
-	return ..()
-
 /mob/living/carbon/xenomorph/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()

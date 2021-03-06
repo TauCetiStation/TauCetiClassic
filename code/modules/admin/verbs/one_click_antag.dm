@@ -367,7 +367,6 @@
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
-	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
 	SSticker.mode.traitors += new_syndicate_commando.mind
@@ -484,63 +483,3 @@
 	new_vox.equip_vox_raider()
 
 	return new_vox
-
-/datum/admins/proc/makeAbductorTeam()
-	var/list/mob/dead/observer/candidates = list()
-	var/time_passed = world.time
-
-	for(var/mob/dead/observer/G in player_list)
-		spawn(0)
-			switch(alert(G,"Do you wish to be considered for Abductor Team?","Please answer in 30 seconds!","Yes","No"))
-				if("Yes")
-					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-						return
-					candidates += G
-				if("No")
-					return
-				else
-					return
-	sleep(300)
-
-	for(var/mob/dead/observer/G in candidates)
-		if(!G.key)
-			candidates.Remove(G)
-
-	if(candidates.len >= 2)
-		var/number =  SSticker.mode.abductor_teams + 1
-
-		var/datum/game_mode/abduction/temp
-		if(SSticker.mode.config_tag == "abduction")
-			temp = SSticker.mode
-		else
-			temp = new
-
-		var/agent_mind = pick(candidates)
-		candidates -= agent_mind
-		var/scientist_mind = pick(candidates)
-
-		var/mob/living/carbon/human/agent=makeBody(agent_mind)
-		var/mob/living/carbon/human/scientist=makeBody(scientist_mind)
-
-		agent_mind = agent.mind
-		scientist_mind = scientist.mind
-
-		temp.scientists.len = number
-		temp.agents.len = number
-		temp.abductors.len = 2*number
-		temp.team_objectives.len = number
-		temp.team_names.len = number
-		temp.scientists[number] = scientist_mind
-		temp.agents[number] = agent_mind
-		temp.abductors = list(agent_mind,scientist_mind)
-		temp.make_abductor_team(number)
-		temp.post_setup_team(number)
-		SSticker.mode.abductors += temp.abductors
-		SSticker.mode.abductor_teams++
-
-		if(SSticker.mode.config_tag != "abduction")
-			SSticker.mode.abductors |= temp.abductors
-
-		return 1
-	else
-		return

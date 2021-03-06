@@ -140,6 +140,10 @@
 
 #define hasFactionIcons(H) (H.mind && H.mind.hasFactionsWithHUDIcons())
 
+#define isabductorsci(H) (H.mind ? H.mind.GetRole(ABDUCTOR_SCI) : FALSE)
+
+#define isabductoragent(H) (H.mind ? H.mind.GetRole(ABDUCTOR_AGENT) : FALSE)
+
 #define isvampire(H) (H.mind ? H.mind.GetRole(VAMPIRE) : FALSE)
 
 #define isthrall(H) (H.mind ? H.mind.GetRole(THRALL) : FALSE)
