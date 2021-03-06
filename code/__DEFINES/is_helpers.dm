@@ -144,35 +144,21 @@
 
 #define isabductoragent(H) (H.mind ? H.mind.GetRole(ABDUCTOR_AGENT) : FALSE)
 
-#define isvampire(H) (H.mind ? H.mind.GetRole(VAMPIRE) : FALSE)
-
 #define isthrall(H) (H.mind ? H.mind.GetRole(THRALL) : FALSE)
 
 #define is_cultist(H) (H.mind ? H.mind.GetRole(CULTIST) : FALSE)
 
-#define ischiefcultist(H) (H.mind ? H.mind.GetRole(CHIEF_CULTIST) : FALSE)
-
-#define isnewcultist(H) (iscultist(H) || ischiefcultist(H))
-
-#define isstreamer(H) (H.mind && H.mind.GetRole(STREAMER))
-
 #define isvoxraider(H) (H.mind && H.mind.GetRole(VOXRAIDER))
-
-#define islegacycultist(H) (H.mind && H.mind.GetRole(LEGACY_CULTIST))
-
-#define isanycultist(H) (H.mind && (H.mind.GetRole(LEGACY_CULTIST) || H.mind.GetRole(CULTIST)))
 
 #define ischangeling(H) (H.mind && H.mind.GetRole(CHANGELING))
 
 #define isrev(H) (isrevnothead(H) || isrevhead(H))
 
-#define isrevnothead(H) (H.mind && H.mind.GetRole(REV))
+#define isrev(H) (H.mind && H.mind.GetRole(REV))
 
 #define isrevhead(H) (H.mind && H.mind.GetRole(HEADREV))
 
 #define istraitor(H) (H.mind && H.mind.GetRole(TRAITOR))
-
-#define ischallenger(H) (H.mind && H.mind.GetRole(CHALLENGER))
 
 #define iselitesyndie(H) (H.mind && H.mind.GetRole(SYNDIESQUADIE))
 
@@ -180,34 +166,10 @@
 
 #define isnukeop(H) (H.mind && H.mind.GetRole(NUKE_OP))
 
-#define issyndicate(H) (H.mind && (H.mind.GetRole(TRAITOR) ||  H.mind.GetRole(SYNDIESQUADIE) || H.mind.GetRole(NUKE_OP) || H.mind.GetRole(CHALLENGER)))
-
 #define iswizard(H) (H.mind && H.mind.GetRole(WIZARD))
-
-#define isapprentice(H) (H.mind && H.mind.GetRole(WIZAPP))
-
-#define isbadmonkey(H) ((/datum/disease/jungle_fever in H.viruses) || (H.mind && H.mind.GetRole(MADMONKEY)))
 
 #define isdeathsquad(H) (H.mind && H.mind.GetRole(DEATHSQUADIE))
 
-#define isbomberman(H) (H.mind && H.mind.GetRole(BOMBERMAN))
-
-#define ishighlander(H) (H.mind && H.mind.GetRole(HIGHLANDER))
-
-#define issurvivor(H) (H.mind && H.mind.GetRole(SURVIVOR))
-
-#define iscrusader(H) (H.mind && H.mind.GetRole(CRUSADER))
-
-#define ismagician(H) (H.mind && H.mind.GetRole(MAGICIAN))
-
 #define isninja(H) (H.mind && H.mind.GetRole(NINJA))
 
-#define isrambler(H) (H.mind && H.mind.GetRole(RAMBLER))
-
-#define isloosecatbeast(H) (H.mind && H.mind.GetRole(CATBEAST))
-
 #define isERT(H) (H.mind && H.mind.GetRole(RESPONDER))
-
-#define isclownling(H) (H.mind && H.mind.GetRole(CLOWN_LING))
-
-#define istagmime(H) (H.mind && H.mind.GetRole(TAG_MIME))
