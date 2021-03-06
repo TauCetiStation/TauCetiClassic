@@ -16,3 +16,12 @@
 #define MAX_EMBRYO_GROWTH 40
 #define MAX_EMBRYO_STAGE 5
 #define FULL_EMBRYO_GROWTH MAX_EMBRYO_GROWTH * MAX_EMBRYO_STAGE
+
+//Facehugger's control type
+#define FACEHUGGERS_STATIC_AI     0   // don't move by themselves
+#define FACEHUGGERS_DYNAMIC_AI    1   // controlled by simple AI
+#define FACEHUGGERS_PLAYABLE      2   // controlled by players
+
+//Time it takes to impregnate someone with facehugger
+#define MIN_IMPREGNATION_TIME 220
+#define MAX_IMPREGNATION_TIME 250
