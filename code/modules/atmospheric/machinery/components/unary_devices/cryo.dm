@@ -171,11 +171,11 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Кто-то внутри [src]!")
+			to_chat(user, "Кто-то внутри криогенной камеры!")
 		else
 			to_chat(user, "Вы едва можете различить форму того, что плавает в криогенной камере.")
 	else
-		to_chat(user, "[src] выглядит пустым.")
+		to_chat(user, "[src] выглядит пустой.")
 
  /**
   * The ui_interact proc is used to open and update Nano UIs
@@ -250,7 +250,7 @@
 		to_chat(user, "<span class='warning'>Вы без понятия что с этим делать.</span>")
 		return
 
-	if(user == occupant || (user.stat && !isobserver(user)))
+	if(user == occupant)
 		return
 
 	if(!user.incapacitated() && in_range(user, src))
@@ -262,7 +262,7 @@
 		to_chat(user, "<span class='warning'>Вы без понятия что с этим делать.</span>")
 		return
 
-	if(user == occupant || (user.stat && !isobserver(user)))
+	if(user == occupant)
 		return
 
 	if(!user.incapacitated() && in_range(user, src))
@@ -302,15 +302,15 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			to_chat(user, "<span class='warning'>Мерный стакан уже загружен в криогенную камеру!</span>")
+			to_chat(user, "<span class='warning'>Сосуд уже загружен в криогенную камеру!</span>")
 			return
 		if(!user.drop_item())
 			return
 		beaker = I
 		I.forceMove(src)
 		user.visible_message(
-			"[user] помещает мерный стакан в криогенную камеру.",
-			"<span class='notice'>Вы помещаете мерный стакан в криогенную камеру.</span>")
+			"[user] помещает сосуд в криогенную камеру.",
+			"<span class='notice'>Вы помещаете сосуд в криогенную камеру.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
