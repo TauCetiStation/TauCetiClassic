@@ -65,3 +65,8 @@
 /area/custom/tophat
 	name = "Tophat"
 	icon_state = "tophat-room"
+
+/area/custom/ninjaspawn
+	name = "Space Dojo"
+	icon_state = "red"
+	requires_power = 0
