@@ -351,7 +351,8 @@
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
 		user.update_inv_head()
-		team = user.team
+		var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
+		team = A.get_team_num()
 		helm_cam = new /obj/machinery/camera(src)
 		helm_cam.c_tag = "[user.real_name] Cam"
 		helm_cam.replace_networks(list("Abductor[team]"))

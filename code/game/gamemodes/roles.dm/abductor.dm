@@ -39,6 +39,10 @@
 
 	return TRUE
 
+/datum/role/abductor/proc/get_team_num()
+	var/datum/faction/abductors/A = faction
+	return A.team_number
+
 /datum/role/abductor/agent
 	name = "Agent"
 	id = ABDUCTOR_AGENT

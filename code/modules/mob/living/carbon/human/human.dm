@@ -14,7 +14,6 @@
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-	// TODO: убрать эту залупу
 	var/team = 0
 
 	var/metadata

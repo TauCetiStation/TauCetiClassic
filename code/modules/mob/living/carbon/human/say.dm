@@ -84,16 +84,18 @@
 				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
+				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 				var/sm = sanitize(message)
 				for(var/mob/living/carbon/human/H in human_list)
 					if(H.species.name != ABDUCTOR)
 						continue
-					if(user.team != H.team)
+					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)
+					if(!(human in A.faction.members))
 						continue
-					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
+					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
 				for(var/mob/M in observer_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
+					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
