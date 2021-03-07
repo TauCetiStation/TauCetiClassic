@@ -157,6 +157,7 @@
 #include "code\_onclick\hud\radial.dm"
 #include "code\_onclick\hud\robot.dm"
 #include "code\_onclick\hud\screen_objects.dm"
+#include "code\_onclick\hud\tooltip.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\controller.dm"
