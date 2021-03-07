@@ -15,10 +15,19 @@
 
 	stun = 0
 	weaken = 0
-	stutter = 10
-	agony = 120
+	stutter = 5
+	agony = 40
 	damage_type = HALLOSS
 	//Damage will be handled on the MOB side, to prevent window shattering.
+
+/obj/item/projectile/energy/electrode/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	if(ismob(target))
+		s.set_up(1, 0, target)
+	else
+		s.set_up(2, 0, src)
+	s.start()
+	return ..()
 
 /obj/item/projectile/energy/declone
 	name = "declone"
