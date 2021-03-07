@@ -25,6 +25,7 @@
 #define ABDUCTOR_SCI "abductor_sci"
 #define ABDUCTED "abducted"
 #define TRAITOR "traitor"
+#define TRAITORCHAN "traitorchan"
 #define CHANGELING "changeling"
 #define THRALL "thrall"
 #define WIZARD "wizard"

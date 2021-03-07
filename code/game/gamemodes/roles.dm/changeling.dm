@@ -41,7 +41,7 @@
 	if(.)
 		set_changelingID()
 
-/datum/role/changeling/OnPostSetup(var/laterole = FALSE)
+/datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
 	antag.current.make_changeling()
 

@@ -113,10 +113,7 @@
 
 	return TRUE
 
-/datum/role/syndicate/traitor/OnPostSetup(laterole)
-	. = ..()
-
-	var/mob/living/carbon/human/traitor_mob = antag.current
+/datum/role/syndicate/traitor/proc/equip_traitor(mob/living/carbon/human/traitor_mob)
 	if (!istype(traitor_mob))
 		return
 
@@ -148,6 +145,11 @@
 	if(M && M != traitor_mob)
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+
+/datum/role/syndicate/traitor/OnPostSetup(laterole)
+	. = ..()
+
+	equip_traitor(antag.current)
 
 /datum/role/syndicate/traitor/GetScoreboard()
 	. = ..()
