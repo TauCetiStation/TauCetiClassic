@@ -1,5 +1,6 @@
 /mob/dead/new_player/Logout()
 	ready = 0
+	client << output(ready, "lobbybrowser:imgsrc")
 	if(my_client)
 		hide_titlescreen()
 		my_client = null

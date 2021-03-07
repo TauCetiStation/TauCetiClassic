@@ -85,7 +85,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 	"}
 
 	if(!SSticker || SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += {"<a id="ready" class="menu_a" href='?src=\ref[src];lobby_ready=1' >READY ☒</a>
+		dat += {"<a id="ready" class="menu_a" href='?src=\ref[src];lobby_ready=1'>[ready ? "READY ☑" : "READY ☒"]</a>
 	"}
 	else
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>
@@ -105,11 +105,17 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		var i=0;
 		var mark=document.getElementById("ready");
 		var marks=new Array('READY ☒', 'READY ☑');
-		function imgsrc() {
-			i++;
-			if (i == marks.length)
-				i = 0;
-			mark.textContent = marks\[i\];
+		function imgsrc(setReady) {
+			if(setReady) {
+				i = setReady;
+				mark.textContent = marks\[i\];
+			}
+			else {
+				i++;
+				if (i == marks.length)
+					i = 0;
+				mark.textContent = marks\[i\];
+			}
 		}
 	</script>
 	"}

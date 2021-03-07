@@ -100,7 +100,6 @@ var/list/admin_verbs_sounds = list(
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/change_title_screen,
-	/client/proc/reset_title_screen,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
@@ -721,28 +720,23 @@ var/list/admin_verbs_hideable = list(
 	if(!check_rights(R_FUN))
 		return
 
-	var/file = input(usr) as icon|null
-	if(!file)
-		return
-	global.current_lobby_screen = file
+	log_admin("[key_name(usr)] try change the title screen.")
+	message_admins("[key_name_admin(usr)] try change the title screen.")
+	feedback_add_details("admin_verb", "CTS")
+
+	switch(alert(usr, "How change Title Screen?", "Title Screen", "Change", "Reset", "Cancel"))
+		if("Change")
+			var/file = input(usr) as icon|null
+			if(!file)
+				return
+			change_lobbyscreen(file)
+		if("Reset")
+			change_lobbyscreen()
+		if("Cancel")
+			return
+
 	for(var/mob/dead/new_player/N in new_player_list)
 		N.show_titlescreen()
-	log_admin("[key_name(usr)] changed the title screen.")
-	message_admins("[key_name_admin(usr)] changed the title screen.")
-	feedback_add_details("admin_verb", "CTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/reset_title_screen()
-	set name = "Title Screen: Reset"
-	set category = "Fun"
-
-	if(!check_rights(R_FUN))
-		return
-
-	SSmapping.change_lobbyscreen()
-
-	log_admin("[key_name(usr)] reset the title screen.")
-	message_admins("[key_name_admin(usr)] reset the title screen.")
-	feedback_add_details("admin_verb", "RTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/object_talk(msg as text) // -- TLE
 	set category = "Special Verbs"
