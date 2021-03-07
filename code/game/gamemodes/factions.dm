@@ -181,13 +181,13 @@ var/list/factions_with_hud_icons = list()
 				score_results += "<br>"
 	if (count > 1)
 		if (IsSuccessful())
-			score_results += "<br><font color='green'><B>\The [name] was successful!</B></font>"
+			score_results += "<br><font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
 			feedback_add_details("[ID]_success","SUCCESS")
 		else if (minor_victory)
-			score_results += "<br><font color='green'><B>\The [name] has achieved a minor victory.</B> [minorVictoryText()]</font>"
+			score_results += "<br><font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
 			feedback_add_details("[ID]_success","MINOR_VICTORY")
 		else
-			score_results += "<br><span class='red'><B>\The [name] has failed.</B></span>"
+			score_results += "<br><span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
 			feedback_add_details("[ID]_success","FAIL")
 
 	if(objective_holder.objectives.len > 0)
@@ -215,9 +215,9 @@ var/list/factions_with_hud_icons = list()
 		if(!check_rights(R_ADMIN))
 			message_admins("[usr] tried to destroy a faction without permissions.")
 			return
-		if(alert(usr, "Are you sure you want to destroy [name]?",  "Destroy Faction" , "Yes" , "No") != "Yes")
+		if(alert(usr, "Are you sure you want to destroy [capitalize(name)]?",  "Destroy Faction" , "Yes" , "No") != "Yes")
 			return
-		message_admins("[key_name(usr)] destroyed faction [name].")
+		message_admins("[key_name(usr)] destroyed faction [capitalize(name)].")
 		Dismantle()
 
 /datum/faction/proc/IsSuccessful()
@@ -230,7 +230,7 @@ var/list/factions_with_hud_icons = list()
 
 /datum/faction/proc/GetObjectivesMenuHeader() //Returns what will show when the factions objective completion is summarized
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
-	var/header = {"<img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[name]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'><br>"}
+	var/header = {"<img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'><br>"}
 	return header
 
 /datum/faction/proc/AdminPanelEntry(datum/admins/A)

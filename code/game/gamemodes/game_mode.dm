@@ -124,15 +124,19 @@
 		for(var/mob/dead/new_player/P in available_players)
 			if(F.max_roles && F.members.len >= F.max_roles)
 				break
-			if(!P.client || !P.mind)
-				continue
-			if(!P.client.prefs.be_role.Find(F.required_pref) || jobban_isbanned(P, F.required_pref) || role_available_in_minutes(P, F.required_pref))
+			if(!can_join_faction(P, F))
 				continue
 			if(!F.HandleNewMind(P.mind))
 				stack_trace("[P.mind] failed [F] HandleNewMind!")
 				continue
 	return TRUE
 
+/datum/game_mode/proc/can_join_faction(mob/P, datum/faction/F)
+	if(!P.client || !P.mind)
+		return FALSE
+	if(!P.client.prefs.be_role.Find(F.required_pref) || jobban_isbanned(P, F.required_pref) || role_available_in_minutes(P, F.required_pref))
+		return FALSE
+	return TRUE
 
 /*=====ROLE RELATED STUFF=====*/
 
@@ -210,9 +214,7 @@
 	for(var/datum/faction/F in factions)
 		if(F.max_roles && F.members.len >= F.max_roles)
 			continue
-		if(!mob.client || !mob.mind)
-			continue
-		if(!mob.client.prefs.be_role.Find(F.required_pref) || jobban_isbanned(mob, F.required_pref) || role_available_in_minutes(mob, F.required_pref))
+		if(!can_join_faction(mob, F))
 			continue
 		if(F.accept_latejoiners)
 			possible_factions.Add(F)
@@ -227,7 +229,7 @@
 
 	var/list/exclude_autotraitor_for = list("extended", "sandbox") // config_tag var
 	if(!(initial(name) in exclude_autotraitor_for))
-		addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
+		CreateFaction(/datum/faction/syndicate/traitor/auto, num_players())
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)

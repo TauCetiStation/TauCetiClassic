@@ -398,7 +398,7 @@
 
 	text += "<br>faction: "
 	if (faction)
-		text += faction.name
+		text += capitalize(faction.name)
 	else
 		text += "<i>none</i> <br/>"
 

@@ -151,7 +151,7 @@ var/datum/stat_collector/stat_collection = new
 
 /datum/stat/faction/proc/generate_statistics(datum/faction/F)
 	id = F.ID
-	name = F.name
+	name = capitalize(F.name)
 	desc = F.desc
 	faction_type = F.type
 	stage = F.stage

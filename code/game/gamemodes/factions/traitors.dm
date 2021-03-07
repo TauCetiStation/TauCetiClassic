@@ -6,7 +6,7 @@
 	logo_state = "nuke-logo"
 
 /datum/faction/syndicate/traitor
-	name = "Syndicate agents"
+	name = TRAITOR
 	ID = TRAITOR
 	initial_role = TRAITOR
 	late_role = TRAITOR
@@ -26,22 +26,4 @@
 	else
 		max_roles = max(1, min(num_players, traitors_possible))
 
-	return TRUE
-
-/datum/faction/syndicate/traitor/auto
-	accept_latejoiners = TRUE
-
-/datum/faction/syndicate/traitor/auto/can_setup(num_players)
-	. = ..()
-	var/max_traitors = 1
-	var/traitor_prob = 0
-	max_traitors = round(num_players / 10) + 1
-	traitor_prob = (num_players - (max_traitors - 1) * 10) * 10
-
-	if(config.traitor_scaling)
-		max_roles = max_traitors - 1 + prob(traitor_prob)
-		log_game("Number of traitors: [max_roles]")
-		message_admins("Players counted: [num_players]  Number of traitors chosen: [max_roles]")
-	else
-		max_roles = max(1, min(num_players, traitors_possible))
 	return TRUE
