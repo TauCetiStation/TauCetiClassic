@@ -73,7 +73,7 @@
 
 	return TRUE
 
-/datum/role/changeling/ForgeObjectives()
+/datum/role/changeling/forgeObjectives()
 	AppendObjective(/datum/objective/absorb)
 	AppendObjective(/datum/objective/assassinate)
 	AppendObjective(/datum/objective/steal)
@@ -131,7 +131,7 @@
 
 /datum/role/changeling/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	if(href_list["changeling_autoobjectives"])
-		ForgeObjectives()
+		forgeObjectives()
 		to_chat(usr, "<span class='notice'>The objectives for changeling [M.key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["changeling_initialdna"])

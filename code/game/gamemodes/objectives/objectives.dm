@@ -681,10 +681,9 @@ var/global/list/all_objectives = list()
 		if(total_amount >= target_amount)
 			return TRUE
 
-	var/datum/game_mode/heist/H = SSticker.mode
-	for(var/datum/mind/raider in H.raiders)
-		if(raider.current)
-			for(var/obj/O in raider.current.get_contents())
+	for(var/datum/role/raider in faction.members)
+		if(raider.antag.current)
+			for(var/obj/O in raider.antag.current.get_contents())
 				if(istype(O,target))
 					total_amount++
 				if(total_amount >= target_amount)
@@ -722,10 +721,9 @@ var/global/list/all_objectives = list()
 					S = I
 					total_amount += S.get_amount()
 
-	var/datum/game_mode/heist/H = SSticker.mode
-	for(var/datum/mind/raider in H.raiders)
-		if(raider.current)
-			for(var/obj/item/O in raider.current.get_contents())
+	for(var/datum/role/raider in faction.members)
+		if(raider.antag.current)
+			for(var/obj/item/O in raider.antag.current.get_contents())
 				if(istype(O,/obj/item/stack/sheet))
 					if(O.name == target)
 						var/obj/item/stack/sheet/S = O
@@ -738,7 +736,7 @@ var/global/list/all_objectives = list()
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 
 /datum/objective/heist/inviolate_crew/check_completion()
-	var/datum/game_mode/heist/H = SSticker.mode
+	var/datum/faction/heist/H = faction
 	if(H.is_raider_crew_safe())
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS

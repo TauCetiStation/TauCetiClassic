@@ -19,7 +19,7 @@
 		else
 			AppendObjective(/datum/objective/dehead, TRUE)
 
-/datum/role/syndicate/traitor/ForgeObjectives()
+/datum/role/syndicate/traitor/forgeObjectives()
 	if(istype(antag.current, /mob/living/silicon))
 		AppendObjective(/datum/objective/assassinate, TRUE)
 		AppendObjective(/datum/objective/assassinate, TRUE)
@@ -164,13 +164,13 @@
 
 /datum/role/syndicate/traitor/wishgtanter
 
-/datum/role/syndicate/traitor/wishgtanter/ForgeObjectives()
+/datum/role/syndicate/traitor/wishgtanter/forgeObjectives()
 	AppendObjective(/datum/objective/custom/wishgtanter)
 	AppendObjective(/datum/objective/escape)
 
 /datum/role/syndicate/traitor/syndbeacon
 
-/datum/role/syndicate/traitor/syndbeacon/ForgeObjectives()
+/datum/role/syndicate/traitor/syndbeacon/forgeObjectives()
 	AppendObjective(/datum/objective/silence)
 
 /datum/role/syndicate/traitor/syndcall

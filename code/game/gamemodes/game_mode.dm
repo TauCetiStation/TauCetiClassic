@@ -243,7 +243,7 @@
 		F.forgeObjectives()
 		F.OnPostSetup()
 	for(var/datum/role/R in orphaned_roles)
-		R.ForgeObjectives()
+		R.forgeObjectives()
 		R.AnnounceObjectives()
 		R.OnPostSetup()
 

@@ -237,29 +237,6 @@
 			text += "|Disabled in Prefs"
 		sections["wizard"] = text
 
-		/** CHANGELING ***/
-		text = "changeling"
-		if (SSticker.mode.config_tag=="changeling" || SSticker.mode.config_tag=="traitorchan")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (src in SSticker.mode.changelings)
-			text += "<b>YES</b>|<a href='?src=\ref[src];changeling=clear'>no</a>"
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			var/datum/role/changeling/C = GetRole(CHANGELING)
-			if( C && C.absorbed_dna.len && (current.real_name != C.absorbed_dna[1]) )
-				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance</a>"
-		else
-			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a>|<b>NO</b>"
-//			var/datum/game_mode/changeling/changeling = SSticker.mode
-//			if (istype(changeling) && changeling.changelingdeath)
-//				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
-		if(current && current.client && (ROLE_CHANGELING in current.client.prefs.be_role))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-		sections["changeling"] = text
-
 		/** NUCLEAR ***/
 		text = "nuclear"
 		if (SSticker.mode.config_tag=="nuclear")
@@ -567,7 +544,7 @@
 		if(istype(owner, /datum/role))
 			var/datum/role/R = owner
 			var/list/prev_objectives = R.objectives.objectives.Copy()
-			R.ForgeObjectives()
+			R.forgeObjectives()
 			var/list/unique_objectives_role = find_unique_objectives(R.objectives.objectives, prev_objectives)
 			if (!unique_objectives_role.len)
 				alert(usr, "No new objectives generated.", "Alert", "OK")
@@ -1151,7 +1128,7 @@
 				newRole.Drop()
 				continue
 			newRole.OnPostSetup()
-			newRole.ForgeObjectives()
+			newRole.forgeObjectives()
 			newRole.Greet(GREET_LATEJOIN)
 			message_admins("[key_name(H)] has been made into a [newRole.name] via create antagonist verb.")
 			recruit_count++

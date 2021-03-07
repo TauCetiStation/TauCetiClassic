@@ -1,6 +1,5 @@
-var/global/vox_tick = 1
-
 /mob/living/carbon/human/proc/equip_vox_raider()
+	var/static/vox_tick = 1
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate
 	R.set_frequency(SYND_FREQ) // Same frequency as the syndicate team in Nuke mode.

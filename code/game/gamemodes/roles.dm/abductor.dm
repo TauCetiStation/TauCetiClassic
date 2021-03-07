@@ -123,5 +123,5 @@
 	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductee"
 
-/datum/role/abducted/ForgeObjectives()
+/datum/role/abducted/forgeObjectives()
 	AppendObjective(pick(typesof(/datum/objective/abductee) - /datum/objective/abductee))

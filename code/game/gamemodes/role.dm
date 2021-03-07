@@ -248,7 +248,7 @@
 	return
 
 // Create objectives here.
-/datum/role/proc/ForgeObjectives()
+/datum/role/proc/forgeObjectives()
 	return
 
 /datum/role/proc/AppendObjective(objective_type,duplicates=0)
