@@ -119,40 +119,6 @@
 
 	return 0
 
-
-/datum/admins/proc/makeCult()
-
-	var/datum/game_mode/cult/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_CULTIST in applicant.client.prefs.be_role)
-			if(applicant.stat == CONSCIOUS)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_CULTIST))
-							if(!(applicant.job in temp.restricted_jobs))
-								candidates += applicant
-
-	if(candidates.len)
-		var/numCultists = min(candidates.len, 4)
-
-		for(var/i = 0, i<numCultists, i++)
-			H = pick(candidates)
-			H.mind.make_Cultist()
-			candidates.Remove(H)
-			temp.grant_runeword(H)
-
-		return 1
-
-	return 0
-
-
-
 /datum/admins/proc/makeNukeTeam()
 
 	var/list/mob/dead/observer/candidates = list()

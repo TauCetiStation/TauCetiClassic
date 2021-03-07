@@ -6,7 +6,7 @@
 
 // Faction IDs
 #define ABDUCTORS "abductor team"
-#define BLOODCULT "cult of Nar-Sie"
+#define BLOODCULT "Cult Of Blood"
 #define REVOLUTION "revolution"
 //#define ERT "emergency response team"
 #define DEATHSQUAD "Nanotrasen deathsquad"
@@ -17,7 +17,6 @@
 #define BLOBCONGLOMERATE "blob conglomerate"
 #define SPIDERCLAN "spider clan"
 #define XENOMORPH_HIVE "alien hivemind"
-//-------
 #define HIVEMIND "changeling hivemind"
 #define WIZFEDERATION "wizard federation"
 // Role IDs
@@ -43,7 +42,6 @@
 #define BLOBOVERMIND "blob overmind"
 #define BLOBCEREBRATE "blob cerebrate"
 #define XENOMORPH "alien"
-#define PRISONER "prisoner"
 
 #define GREET_DEFAULT		"default"
 #define GREET_ROUNDSTART	"roundstart"

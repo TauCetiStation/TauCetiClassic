@@ -134,7 +134,7 @@
 
 #define isfaction(A) (istype(A, /datum/faction))
 
-#define isrole(type, H) (H.mind && H.mind.GetRole(type))
+#define isrole(type, H) (H.mind ? H.mind.GetRole(type) : FALSE)
 
 #define isanyantag(H) (H.mind && H.mind.antag_roles.len)
 
@@ -146,30 +146,30 @@
 
 #define isthrall(H) (H.mind ? H.mind.GetRole(THRALL) : FALSE)
 
-#define is_cultist(H) (H.mind ? H.mind.GetRole(CULTIST) : FALSE)
+#define iscultist(H) (H.mind ? H.mind.GetRole(CULTIST) : FALSE)
 
-#define isvoxraider(H) (H.mind && H.mind.GetRole(VOXRAIDER))
+#define isvoxraider(H) (H.mind ? H.mind.GetRole(VOXRAIDER) : FALSE)
 
-#define ischangeling(H) (H.mind && H.mind.GetRole(CHANGELING))
+#define ischangeling(H) (H.mind ? H.mind.GetRole(CHANGELING) : FALSE)
 
 #define isanyrev(H) (isrevnothead(H) || isrevhead(H))
 
-#define isrev(H) (H.mind && H.mind.GetRole(REV))
+#define isrev(H) (H.mind ? H.mind.GetRole(REV) : FALSE)
 
-#define isrevhead(H) (H.mind && H.mind.GetRole(HEADREV))
+#define isrevhead(H) (H.mind ? H.mind.GetRole(HEADREV) : FALSE)
 
-#define istraitor(H) (H.mind && H.mind.GetRole(TRAITOR))
+#define istraitor(H) (H.mind ? H.mind.GetRole(TRAITOR) : FALSE)
 
-#define iselitesyndie(H) (H.mind && H.mind.GetRole(SYNDIESQUADIE))
+#define iselitesyndie(H) (H.mind ? H.mind.GetRole(SYNDIESQUADIE) : FALSE)
 
-#define ismalf(H) (H.mind && H.mind.GetRole(MALF))
+#define ismalf(H) (H.mind ? H.mind.GetRole(MALF) : FALSE)
 
-#define isnukeop(H) (H.mind && H.mind.GetRole(NUKE_OP))
+#define isnukeop(H) (H.mind ? H.mind.GetRole(NUKE_OP) : FALSE)
 
-#define iswizard(H) (H.mind && H.mind.GetRole(WIZARD))
+#define iswizard(H) (H.mind ? H.mind.GetRole(WIZARD) : FALSE)
 
-#define isdeathsquad(H) (H.mind && H.mind.GetRole(DEATHSQUADIE))
+#define isdeathsquad(H) (H.mind ? H.mind.GetRole(DEATHSQUADIE) : FALSE)
 
-#define isninja(H) (H.mind && H.mind.GetRole(NINJA))
+#define isninja(H) (H.mind ? H.mind.GetRole(NINJA) : FALSE)
 
-#define isERT(H) (H.mind && H.mind.GetRole(RESPONDER))
+#define isERT(H) (H.mind ? H.mind.GetRole(RESPONDER) : FALSE)

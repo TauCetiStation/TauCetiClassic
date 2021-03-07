@@ -25,7 +25,7 @@
 	if(H.mind && (H.mind in SSticker.mode.revolutionaries))
 		SSticker.mode.remove_revolutionary(H.mind)
 
-	if(H.mind && (H.mind in SSticker.mode.cult))
+	if(iscultist(H))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 	else

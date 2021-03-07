@@ -206,8 +206,8 @@ var/list/cult_runes = list()
 				to_chat(user, "<span class='cult'This soul is too young for your God!</span>")
 
 			if(passed)
-				SSticker.mode.add_cultist(M.mind)
-				M.mind.special_role = "Cultist"
+				var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+				cult.HandleRecruitedMind(M.mind)
 				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
 					One above all else. Bring It back.</span>")
 			else
@@ -236,15 +236,15 @@ var/list/cult_runes = list()
 			return
 	if(!istype(SSticker.mode, /datum/game_mode/cult))
 		return
-	var/datum/game_mode/cult/cur_mode = SSticker.mode
-	for(var/objective in cur_mode.objectives)
-		if(objective == "eldergod")
+
+	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+	for(var/datum/objective/O in cult.objective_holder.GetObjectives())
+		if(istype(O, /datum/objective/cult/summon_narsie))
 			SSticker.nar_sie_has_risen = TRUE
-			cur_mode.eldergod = FALSE
 			new /obj/singularity/narsie/large(get_turf(holder))
 			return
-	cur_mode.eldertry += 1
-	switch(cur_mode.eldertry)
+	cult.eldertry += 1
+	switch(cult.eldertry)
 		if(1)
 			for(var/mob/living/carbon/C in acolytes)
 				to_chat(C, "<font size='3'><span class='danger'>I have no interest in coming to your world.</span></font>")
@@ -260,7 +260,7 @@ var/list/cult_runes = list()
 			for(var/mob/living/carbon/C in acolytes)
 				C.gib()
 			to_chat(world, "<font size='15'><span class='danger'>FUCK YOU!!!</span></font>")
-			cur_mode.eldertry = 0
+			cult.eldertry = 0
 
 
 /datum/cult/emp
@@ -365,9 +365,10 @@ var/list/cult_runes = list()
 	var/mob/living/carbon/human/body_to_sacrifice
 
 	var/datum/mind/sacrifice_target
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = SSticker.mode
-		sacrifice_target = cur_mode.sacrifice_target
+	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+	if(cult)
+		for(var/datum/objective/cult/sacrifice/S in cult.objective_holder.GetObjectives())
+			sacrifice_target = S.target
 
 	for(var/mob/living/carbon/human/M in holder.loc)
 		if(M.stat != DEAD)
@@ -400,7 +401,7 @@ var/list/cult_runes = list()
 
 	corpse_to_raise.revive()
 	playsound(holder, 'sound/magic/cult_revive.ogg', VOL_EFFECTS_MASTER)
-	SSticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
+	cult.HandleRecruitedMind(corpse_to_raise.mind)
 
 
 	user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
@@ -573,7 +574,8 @@ var/list/cult_runes = list()
 	D.g_eyes = 200
 	D.underwear = 0
 	D.key = ghost.key
-	SSticker.mode.add_cultist(D.mind)
+	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+	cult.HandleRecruitedMind(D.mind)
 	D.mind.special_role = "Cultist"
 	dummies += D
 	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
@@ -638,9 +640,10 @@ var/list/cult_runes = list()
 
 /datum/cult/freedom/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in SSticker.mode.cult)
-		if(iscarbon(H.current))
-			cultists += H.current
+	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+	for(var/datum/role/R in cult.members)
+		if(iscarbon(R.antag.current))
+			cultists += R.antag.current
 	var/list/acolytes = nearest_cultists()
 	var/amount_of_acolytes = length(acolytes)
 	if(amount_of_acolytes < 3)
@@ -743,11 +746,12 @@ var/list/cult_runes = list()
 	var/list/victims = list()
 	var/datum/mind/sacrifice_target
 
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		var/datum/game_mode/cult/cur_mode = SSticker.mode
-		sacrifice_target = cur_mode.sacrifice_target
+	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+	if(cult)
+		for(var/datum/objective/cult/sacrifice/S in cult.objective_holder.GetObjectives())
+			sacrifice_target = S.target
 
-	for(var/target in holder.loc)
+	for(var/mob/target in holder.loc)
 		if(ishuman(target) && !iscultist(target))
 			victims[target] = 80
 		else if(ismonkey(target))
@@ -772,8 +776,7 @@ var/list/cult_runes = list()
 
 	for(var/mob/H in victims)
 		if(sacrifice_target && sacrifice_target == H.mind)
-			var/datum/game_mode/cult/cur_mode = SSticker.mode // we checked our mode earlier
-			cur_mode.sacrificed += H.mind
+			cult.sacrificed += H.mind
 			if(isrobot(H))
 				H.dust() //To prevent the MMI from remaining
 			else
@@ -784,7 +787,7 @@ var/list/cult_runes = list()
 			var/prob_divider = max(1 + H.stat, 2)
 			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice.</span>")
 			if(prob(victims[H] / prob_divider))
-				SSticker.mode.grant_runeword(user)
+				cult.grant_runeword(user)
 			else
 				to_chat(user, "<span class='cult'>However, this soul was not enough to gain His favor.</span>")
 
@@ -822,9 +825,10 @@ var/list/cult_runes = list()
 	if(!input)
 		busy = FALSE
 		return fizzle(user)
-	for(var/datum/mind/H in SSticker.mode.cult)
-		if(H.current)
-			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
+	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+	for(var/datum/role/R in cult.members)
+		if(R.antag.current)
+			to_chat(R.antag.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
 
 	playsound(holder, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
 	holder_reaction(user, input)
@@ -837,9 +841,10 @@ var/list/cult_runes = list()
 
 /datum/cult/summon/action(mob/living/carbon/user)
 	var/list/cultists = list()
-	for(var/datum/mind/H in SSticker.mode.cult)
-		if (iscarbon(H.current))
-			cultists += H.current
+	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+	for(var/datum/role/R in cult.members)
+		if(iscarbon(R.antag.current))
+			cultists += R.antag.current
 
 	var/list/acolytes = nearest_cultists()
 	var/acolytes_amount = length(acolytes)

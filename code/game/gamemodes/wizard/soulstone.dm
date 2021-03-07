@@ -151,10 +151,9 @@
 						var/mob/living/simple_animal/construct/armoured/Z = new /mob/living/simple_animal/construct/armoured (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
-							if(SSticker.mode.name == "cult")
-								SSticker.mode:add_cultist(Z.mind)
-							else
-								SSticker.mode.cult+=Z.mind
+							var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+							if(cult)
+								cult.HandleRecruitedMind(Z.mind)
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
@@ -165,10 +164,9 @@
 						var/mob/living/simple_animal/construct/wraith/Z = new /mob/living/simple_animal/construct/wraith (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
-							if(SSticker.mode.name == "cult")
-								SSticker.mode:add_cultist(Z.mind)
-							else
-								SSticker.mode.cult+=Z.mind
+							var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+							if(cult)
+								cult.HandleRecruitedMind(Z.mind)
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
@@ -179,10 +177,9 @@
 						var/mob/living/simple_animal/construct/builder/Z = new /mob/living/simple_animal/construct/builder (get_turf(T.loc))
 						Z.key = A.key
 						if(iscultist(U))
-							if(SSticker.mode.name == "cult")
-								SSticker.mode:add_cultist(Z.mind)
-							else
-								SSticker.mode.cult+=Z.mind
+							var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
+							if(cult)
+								cult.HandleRecruitedMind(Z.mind)
 						to_chat(Z, "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>")
 						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
 						Z.cancel_camera()

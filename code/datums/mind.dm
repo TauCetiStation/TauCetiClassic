@@ -75,6 +75,10 @@
 	creation_time = world.time
 
 /datum/mind/proc/transfer_to(mob/new_character)
+	for(var/role in antag_roles)
+		var/datum/role/R = antag_roles[role]
+		R.PreMindTransfer(current)
+
 	if(current)					//remove ourself from our old body's mind variable
 		SStgui.on_transfer(current, new_character)
 		current.mind = null
@@ -214,28 +218,6 @@
 		else
 			text += "|Disabled in Prefs"
 		sections["revolution"] = text
-
-		/** CULT ***/
-		text = "cult"
-		if (SSticker.mode.config_tag=="cult")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
-			text += "<B>LOYAL EMPLOYEE</B>|cultist"
-		else if (src in SSticker.mode.cult)
-			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
-/*
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
-*/
-		else
-			text += "<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_role))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-		sections["cult"] = text
 
 		/** WIZARD ***/
 		text = "wizard"
@@ -704,55 +686,6 @@
 				SSticker.mode.greet_revolutionary(src,0)
 				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
 
-	else if (href_list["cult"])
-		switch(href_list["cult"])
-			if("clear")
-				if(src in SSticker.mode.cult)
-					SSticker.mode.cult -= src
-					special_role = null
-					var/datum/game_mode/cult/cult = SSticker.mode
-					if (istype(cult))
-						if(!config.objectives_disabled)
-							cult.memoize_cult_objectives(src)
-					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a cultist!</B></FONT></span>")
-					memory = ""
-
-					log_admin("[key_name(usr)] has de-cult'ed [current].")
-			if("cultist")
-				if(!(src in SSticker.mode.cult))
-					SSticker.mode.cult += src
-					special_role = "Cultist"
-
-					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
-					to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-					var/datum/game_mode/cult/cult = SSticker.mode
-					if (istype(cult))
-						if(!config.objectives_disabled)
-							cult.memoize_cult_objectives(src)
-					log_admin("[key_name(usr)] has cult'ed [current].")
-			if("tome")
-				var/mob/living/carbon/human/H = current
-				if (istype(H))
-					var/obj/item/weapon/book/tome/T = new(H)
-
-					var/list/slots = list (
-						"backpack" = SLOT_IN_BACKPACK,
-						"left pocket" = SLOT_L_STORE,
-						"right pocket" = SLOT_R_STORE,
-						"left hand" = SLOT_L_HAND,
-						"right hand" = SLOT_R_HAND,
-					)
-					var/where = H.equip_in_one_of_slots(T, slots)
-					if (!where)
-						to_chat(usr, "<span class='warning'>Spawning tome failed!</span>")
-					else
-						to_chat(H, "A tome, a message from your new master, appears in your [where].")
-
-			if("amulet")
-				if (!SSticker.mode.equip_cultist(current))
-					to_chat(usr, "<span class='warning'>Spawning amulet failed!</span>")
-
 	else if (href_list["wizard"])
 
 
@@ -1083,42 +1016,6 @@
 		SSticker.mode.name_wizard(current)
 		SSticker.mode.forge_wizard_objectives(src)
 		SSticker.mode.greet_wizard(src)
-
-
-/datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.cult += src
-
-		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
-		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/game_mode/cult/cult = SSticker.mode
-		if (istype(cult))
-			cult.memoize_cult_objectives(src)
-		else
-			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
-			to_chat(current, "<B>Objective #1</B>: [explanation]")
-			current.memory += "<B>Objective #1</B>: [explanation]<BR>"
-			to_chat(current, "The convert rune is join blood self")
-			current.memory += "The convert rune is join blood self<BR>"
-
-	var/mob/living/carbon/human/H = current
-	if (istype(H))
-		var/obj/item/weapon/book/tome/T = new(H)
-
-		var/list/slots = list (
-			"backpack" = SLOT_IN_BACKPACK,
-			"left pocket" = SLOT_L_STORE,
-			"right pocket" = SLOT_R_STORE,
-			"left hand" = SLOT_L_HAND,
-			"right hand" = SLOT_R_HAND,
-		)
-		var/where = H.equip_in_one_of_slots(T, slots)
-		if (!where)
-		else
-			to_chat(H, "A tome, a message from your new master, appears in your [where].")
-
-	if (!SSticker.mode.equip_cultist(current))
-		to_chat(H, "Spawning an amulet from your Master failed.")
 
 /datum/mind/proc/make_Rev()
 	if (SSticker.mode.head_revolutionaries.len>0)

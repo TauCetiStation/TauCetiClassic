@@ -133,8 +133,10 @@
 					return
 
 				if(M.brainmob.mind)
-					SSticker.mode.remove_cultist(M.brainmob.mind, 1)
-					SSticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+					var/datum/role/cultist/C = M.brainmob.mind.GetRole(CULTIST)
+					C.RemoveFromRole(M.brainmob.mind)
+					var/datum/role/revolution/R = M.brainmob.mind.GetRole(REV)
+					R.RemoveFromRole(M.brainmob.mind)
 
 				user.drop_item()
 				M.loc = src

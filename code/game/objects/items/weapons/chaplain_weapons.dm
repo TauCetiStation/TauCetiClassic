@@ -73,7 +73,12 @@
 	last_process = world.time
 	var/turf/turf = get_turf(loc)
 	for(var/A in range(6, turf))
-		if(iscultist(A) || is_type_in_typecache(A, scum))
+		if(ismob(A))
+			var/mob/M = A
+			if(iscultist(M))
+				set_light(3)
+				addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+		if(is_type_in_typecache(A, scum))
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
@@ -91,10 +96,11 @@
 		return
 
 	if (M.stat != DEAD)
-		if((M.mind in SSticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
+		if(iscultist(M) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
 			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
 			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
-			SSticker.mode.remove_cultist(M.mind)
+			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+			C.RemoveFromRole(M.mind)
 		else
 			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
 		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")

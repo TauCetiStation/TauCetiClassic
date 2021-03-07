@@ -83,6 +83,7 @@ var/list/factions_with_hud_icons = list()
 
 //For when you want your faction to have specific objectives (Vampire, suck blood. Cult, sacrifice the head of personnel's dog, etc.)
 /datum/faction/proc/forgeObjectives()
+	return
 
 /datum/faction/proc/AnnounceObjectives()
 	SHOULD_CALL_PARENT(TRUE)
@@ -120,7 +121,7 @@ var/list/factions_with_hud_icons = list()
 	var/datum/role/R = new roletype(null,src,late_role) // Add him to our roles
 	if(!R.AssignToRole(M, override))
 		R.Drop()
-		return 0
+		return null
 	R.OnPostSetup()
 	return R
 

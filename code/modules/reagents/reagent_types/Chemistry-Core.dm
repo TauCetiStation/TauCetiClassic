@@ -98,7 +98,8 @@
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && prob(10))
-		SSticker.mode.remove_cultist(M.mind)
+		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+		C.RemoveFromRole(M.mind)
 		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
 				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 

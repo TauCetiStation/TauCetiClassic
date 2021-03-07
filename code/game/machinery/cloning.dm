@@ -207,9 +207,6 @@
 	for(var/V in R.quirks)
 		new V(H)
 
-	if (H.mind in SSticker.mode.cult)
-		SSticker.mode.add_cultist(src.occupant.mind)
-
 	// -- End mode specific stuff
 
 	if(!R.dna)
