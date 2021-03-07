@@ -15,7 +15,6 @@
 
 	votable = 0
 
-	uplink_welcome = "Wizardly Uplink Console:"
 	uplink_uses = 20
 
 	var/finished = 0

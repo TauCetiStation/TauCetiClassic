@@ -55,37 +55,6 @@
 	return 0
 
 
-/datum/admins/proc/makeTraitors()
-	var/datum/game_mode/traitor/temp = new
-
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_TRAITOR in applicant.client.prefs.be_role)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_TRAITOR))
-							if(!(applicant.job in temp.restricted_jobs))
-								candidates += applicant
-
-	if(candidates.len)
-		var/numTraitors = min(candidates.len, 3)
-
-		for(var/i = 0, i<numTraitors, i++)
-			H = pick(candidates)
-			H.mind.make_Traitor()
-			candidates.Remove(H)
-
-		return 1
-
-
-	return 0
-
 /datum/admins/proc/makeRevs()
 
 	var/datum/game_mode/rp_revolution/temp = new
@@ -368,8 +337,6 @@
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
 
-	//Adds them to current traitor list. Which is really the extra antagonist list.
-	SSticker.mode.traitors += new_syndicate_commando.mind
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
 	return new_syndicate_commando
@@ -479,7 +446,6 @@
 		M.cortical_stacks[new_vox.mind] = I
 		M.raiders[new_vox.mind] = I
 
-	SSticker.mode.traitors += new_vox.mind
 	new_vox.equip_vox_raider()
 
 	return new_vox

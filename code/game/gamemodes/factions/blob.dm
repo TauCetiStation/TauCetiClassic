@@ -68,6 +68,7 @@
 		stage(FACTION_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
+	..()
 	CountFloors()
 	forgeObjectives()
 	AnnounceObjectives()

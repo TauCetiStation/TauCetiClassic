@@ -86,8 +86,9 @@
 			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
 			stat_collection.uplink_purchase(src, I, user)
 			if(user.mind)
-				user.mind.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
-				user.mind.spent_TC += cost
+				var/datum/role/syndicate/S = user.mind.GetRoleByType(/datum/role/syndicate)
+				S.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename]"}
+				S.spent_TC += cost
 		U.interact(user)
 
 		return 1

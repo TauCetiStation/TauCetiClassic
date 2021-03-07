@@ -18,7 +18,6 @@
 
 	votable = 0
 
-	uplink_welcome = "AntagCorp Uplink Console:"
 	uplink_uses = 14
 
 	newscaster_announcements = /datum/news_announcement/revolution_inciting_event

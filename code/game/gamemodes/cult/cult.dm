@@ -33,7 +33,6 @@
 
 	votable = 0
 
-	uplink_welcome = "Nar-Sie Uplink Console:"
 	uplink_uses = 20
 
 	restricted_species_flags = list(NO_BLOOD)

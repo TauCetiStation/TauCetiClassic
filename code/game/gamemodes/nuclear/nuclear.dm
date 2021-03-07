@@ -16,7 +16,6 @@
 
 	votable = 0
 
-	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 20
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!

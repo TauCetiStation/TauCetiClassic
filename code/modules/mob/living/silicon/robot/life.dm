@@ -230,7 +230,6 @@
 		if(src.mind)
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"
-				SSticker.mode.traitors += src.mind
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge

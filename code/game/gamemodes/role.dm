@@ -101,9 +101,6 @@
 	var/datum/mind/antag = null
 	var/destroyed = FALSE //Whether or not it has been gibbed
 
-	var/list/uplink_items_bought = list() //migrated from mind, used in GetScoreboard()
-	var/list/artifacts_bought = list() //migrated from mind
-
 	// The host (set if NEED_HOST)
 	var/datum/mind/host=null
 
@@ -166,6 +163,9 @@
 
 	if (!OnPreSetup())
 		return FALSE
+
+	Greet()
+
 	return TRUE
 
 /datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
@@ -226,12 +226,12 @@
 // Return TRUE on success, FALSE on failure.
 /datum/role/proc/OnPreSetup()
 	if(special_role)
-		antag.special_role=special_role
+		antag.special_role = special_role
 	if(disallow_job)
 		var/datum/job/job = SSjob.GetJob(antag.assigned_role)
 		if(job)
 			job.current_positions--
-		antag.assigned_role="MODE"
+		antag.assigned_role = "MODE"
 	return TRUE
 
 // Return TRUE on success, FALSE on failure.
@@ -289,7 +289,6 @@
 
 
 /datum/role/proc/Greet(greeting, custom)
-	SHOULD_CALL_PARENT(TRUE)
 	if(!greeting)
 		return FALSE
 

@@ -1,1 +1,1 @@
-/datum/role/syndicate
+/datum/role/syndicate/operative

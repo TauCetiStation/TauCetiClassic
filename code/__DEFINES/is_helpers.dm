@@ -152,7 +152,7 @@
 
 #define ischangeling(H) (H.mind && H.mind.GetRole(CHANGELING))
 
-#define isrev(H) (isrevnothead(H) || isrevhead(H))
+#define isanyrev(H) (isrevnothead(H) || isrevhead(H))
 
 #define isrev(H) (H.mind && H.mind.GetRole(REV))
 

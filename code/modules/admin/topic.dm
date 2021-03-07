@@ -37,7 +37,7 @@
 		switch(href_list["makeAntag"])
 			if("1")
 				message_admins("[key_name(usr)] has attempted to spawn [count] traitors.")
-				var/success = makeAntag(/datum/role/traitor, null, count, FROM_PLAYERS)
+				var/success = makeAntag(/datum/role/syndicate/traitor, null, count, FROM_PLAYERS)
 				message_admins("[success] number of traitors made.")
 				to_chat(usr, "<span class='notice'>[success] number of traitors made.</span>")
 			if("2")

@@ -75,7 +75,6 @@
 	if(!antag || istype(antag.current,/mob/camera/blob))
 		return FALSE
 
-	to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are infected by the Blob!</br></span>")
 	to_chat(antag.current, "<span class='warning'>Your body is ready to give spawn to a new blob core which will eat this station.</span>")
 	to_chat(antag.current, "<span class='warning'>Find a good location to spawn the core and then take control and overwhelm the station!</span>")
 	to_chat(antag.current, "<span class='warning'>When you have found a location, wait until you spawn; this will happen automatically and you cannot speed up the process.</span>")

@@ -30,6 +30,7 @@
 			special_role == "Cultist" && prob(30) || \
 			special_role == "Head Revolutionary" && prob(30) || \
 			special_role == "Shadowling" && prob(20))
+
 			suspects += man
 
 			// If they're a traitor or likewise, give them extra TC in exchange.
@@ -37,7 +38,9 @@
 			if(suplink)
 				var/extra = 8
 				suplink.uses += extra
-				if(man.mind) man.mind.total_TC += extra
+				var/datum/role/syndicate/S = man.mind.GetRoleByType(/datum/role/syndicate)
+				if(man.mind)
+					S.total_TC += extra
 				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
 			else
 				// Give them a warning!
@@ -169,5 +172,6 @@
 				dudes += man
 			else if(man.client.prefs.nanotrasen_relation == "Skeptical" && prob(50))
 				dudes += man
-	if(dudes.len == 0) return null
+	if(dudes.len == 0)
+		return null
 	return pick(dudes)

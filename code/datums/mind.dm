@@ -67,9 +67,6 @@
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
-	var/list/uplink_items_bought = list()
-	var/total_TC = 0
-	var/spent_TC = 0
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
 
@@ -325,33 +322,6 @@
 
 		sections["shadowling"] = text
 
-	/** TRAITOR ***/
-	text = "traitor"
-	if (SSticker.mode.config_tag=="traitor" || SSticker.mode.config_tag=="traitorchan")
-		text = uppertext(text)
-	text = "<i><b>[text]</b></i>: "
-	if(ishuman(current))
-		if (isloyal(H))
-			text +="traitor|<b>LOYAL EMPLOYEE</b>"
-		else
-			if (src in SSticker.mode.traitors)
-				text += "<b>TRAITOR</b>|<a href='?src=\ref[src];traitor=clear'>Employee</a>"
-				if (objectives.len==0)
-					text += "<br>Objectives are empty! <a href='?src=\ref[src];traitor=autoobjectives'>Randomize</a>!"
-			else
-				text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>Employee</b>"
-	else if(isAI(current))
-		if (src in SSticker.mode.traitors)
-			text += "<b>SYNDICATE AI</b>|<a href='?src=\ref[src];traitor=clear'>nt ai</a>"
-		else
-			text += "<a href='?src=\ref[src];traitor=traitor'>syndicate AI</a>|<b>NT AI</b>"
-
-	if(current && current.client && (ROLE_TRAITOR in current.client.prefs.be_role))
-		text += "|Enabled in Prefs"
-	else
-		text += "|Disabled in Prefs"
-	sections["traitor"] = text
-
 	/** MONKEY ***/
 	if (istype(current, /mob/living/carbon))
 		text = "monkey"
@@ -414,25 +384,6 @@
 		if (sections[SSticker.mode.config_tag])
 			out += sections[SSticker.mode.config_tag]+"<br>"
 		sections -= SSticker.mode.config_tag
-
-	if (((src in SSticker.mode.head_revolutionaries) || \
-		(src in SSticker.mode.traitors)              || \
-		(src in SSticker.mode.syndicates))           && \
-		istype(current,/mob/living/carbon/human)      )
-
-		text = "Uplink: <a href='?src=\ref[src];common=uplink'>give</a>"
-		var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
-		var/crystals
-		if (suplink)
-			crystals = suplink.uses
-		if (suplink)
-			text += "|<a href='?src=\ref[src];common=takeuplink'>take</a>"
-			if (usr.client.holder.rights & R_FUN)
-				text += ", <a href='?src=\ref[src];common=crystals'>[crystals]</a> crystals"
-			else
-				text += ", [crystals] crystals"
-		text += "." //hiel grammar
-		out += text
 
 	out += "<br>"
 */
@@ -888,57 +839,6 @@
 				else
 					to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
 
-	else if (href_list["traitor"])
-		switch(href_list["traitor"])
-			if("clear")
-				if(src in SSticker.mode.traitors)
-					SSticker.mode.remove_traitor(src)
-
-					if(isAI(current))
-						to_chat(current, "<span class='warning'><FONT size = 3><B>Bzzzt..Bzzt..Error..Error..Syndicate law is corrupted.. Shutdown laws system.. Restart.. Load Standart NT Laws.</B></FONT></span>")
-						var/mob/living/silicon/ai/AI = current
-						AI.set_zeroth_law(null)
-						AI.laws.zeroth_borg = null
-						for (var/mob/living/silicon/robot/R in AI.connected_robots)
-							if(R.emagged)
-								R.emagged = 0
-								R.set_zeroth_law(null)
-								if (R.module)
-									if (R.activated(R.module.emag))
-										R.module_active = null
-									if(R.module_state_1 == R.module.emag)
-										R.module_state_1 = null
-										R.contents -= R.module.emag
-									else if(R.module_state_2 == R.module.emag)
-										R.module_state_2 = null
-										R.contents -= R.module.emag
-									else if(R.module_state_3 == R.module.emag)
-										R.module_state_3 = null
-										R.contents -= R.module.emag
-
-					else if(ishuman(current))
-						to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a traitor!</B></FONT></span>")
-					log_admin("[key_name(usr)] has de-traitor'ed [current].")
-
-			if("traitor")
-				if(!(src in SSticker.mode.traitors))
-					SSticker.mode.traitors += src
-					special_role = "traitor"
-					to_chat(current, "<B><span class='warning'>You are a traitor!</span></B>")
-					current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-					log_admin("[key_name(usr)] has traitor'ed [current].")
-					if (config.objectives_disabled)
-						to_chat(current, "<i>You have been turned into an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
-					if(istype(current, /mob/living/silicon))
-						var/mob/living/silicon/A = current
-						call(/datum/game_mode/proc/add_law_zero)(A)
-						A.show_laws()
-
-			if("autoobjectives")
-				if (!config.objectives_disabled)
-					SSticker.mode.forge_traitor_objectives(src)
-					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
 
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
@@ -1091,24 +991,6 @@
 			if("undress")
 				for(var/obj/item/W in current)
 					current.drop_from_inventory(W)
-			if("takeuplink")
-				take_uplink()
-				memory = null//Remove any memory they may have had.
-			if("crystals")
-				if (usr.client.holder.rights & R_FUN)
-					var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
-					var/crystals
-					if (suplink)
-						crystals = suplink.uses
-					crystals = input("Amount of telecrystals for [key]","Syndicate uplink", crystals) as null|num
-					if (!isnull(crystals))
-						if (suplink)
-							var/diff = crystals - suplink.uses
-							suplink.uses = crystals
-							total_TC += diff
-			if("uplink")
-				if (!SSticker.mode.equip_traitor(current, !(src in SSticker.mode.traitors)))
-					to_chat(usr, "<span class='warning'>Equipping a syndicate failed!</span>")
 
 	edit_memory()
 
@@ -1154,15 +1036,6 @@
 
 		cur_AI.icon_state = "ai-malf"
 		cur_AI.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/datum/mind/proc/make_Traitor()
-	if(!(src in SSticker.mode.traitors))
-		SSticker.mode.traitors += src
-		special_role = "traitor"
-		if (!config.objectives_disabled)
-			SSticker.mode.forge_traitor_objectives(src)
-		SSticker.mode.finalize_traitor(src)
-		SSticker.mode.greet_traitor(src)
 
 /datum/mind/proc/make_Nuke()
 	if(!(src in SSticker.mode.syndicates))

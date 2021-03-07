@@ -5,7 +5,6 @@
 
 	votable = 1
 
-	uplink_welcome = "Syndicate Uplink Console:"
 	uplink_uses = 20
 
 /datum/game_mode/announce()

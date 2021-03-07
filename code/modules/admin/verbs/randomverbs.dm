@@ -555,57 +555,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/admin = key_name_admin(src)
 	var/player_key = G_found.key
 
-	//Now for special roles and equipment.
-	switch(new_character.mind.special_role)
-		if("traitor")
-			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			SSticker.mode.equip_traitor(new_character)
-		if("Wizard")
-			new_character.loc = pick(wizardstart)
-			//SSticker.mode.learn_basic_spells(new_character)
-			SSticker.mode.equip_wizard(new_character)
-		if("Syndicate")
-			var/obj/effect/landmark/synd_spawn = locate("landmark*Syndicate-Spawn")
-			if(synd_spawn)
-				new_character.loc = get_turf(synd_spawn)
-			call(/datum/game_mode/proc/equip_syndicate)(new_character)
-		if("Ninja")
-			new_character.equip_space_ninja()
-			new_character.internal = new_character.s_store
-			new_character.internals.icon_state = "internal1"
-			if(ninjastart.len == 0)
-				to_chat(new_character, "<B><span class='warning'>A proper starting location for you could not be found, please report this bug!</span></B>")
-				to_chat(new_character, "<B><span class='warning'>Attempting to place at a carpspawn.</span></B>")
-				for(var/obj/effect/landmark/L in landmarks_list)
-					if(L.name == "carpspawn")
-						ninjastart.Add(L)
-				if(ninjastart.len == 0 && latejoin.len > 0)
-					to_chat(new_character, "<B><span class='warning'>Still no spawneable locations could be found. Defaulting to latejoin.</span></B>")
-					new_character.loc = pick(latejoin)
-				else if (ninjastart.len == 0)
-					to_chat(new_character, "<B><span class='warning'>Still no spawneable locations could be found. Aborting.</span></B>")
+	for(var/role in new_character.mind.antag_roles)
+		var/datum/role/R = new_character.mind.GetRole(role)
+		R.OnPostSetup()
 
-		if("Death Commando")//Leaves them at late-join spawn.
-			new_character.equip_death_commando()
-			new_character.internal = new_character.s_store
-			new_character.internals.icon_state = "internal1"
-		else//They may also be a cyborg or AI.
-			switch(new_character.mind.assigned_role)
-				if("Cyborg")//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						call(/datum/game_mode/proc/add_law_zero)(new_character)
-				if("AI")
-					new_character = new_character.AIize()
-					if(new_character.mind.special_role=="traitor")
-						call(/datum/game_mode/proc/add_law_zero)(new_character)
-				//Add aliens.
-				else
-					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
+	SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
 
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.
-		if(!record_found&&new_character.mind.assigned_role!="MODE")//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.
+		if(!record_found && new_character.mind.assigned_role != "MODE")//If there are no records for them. If they have a record, this info is already in there. MODE people are not announced anyway.
 			//Power to the user!
 			if(alert(new_character,"Warning: No data core entry detected. Would you like to announce the arrival of this character by adding them to various databases, such as medical records?",,"No","Yes")=="Yes")
 				data_core.manifest_inject(new_character)

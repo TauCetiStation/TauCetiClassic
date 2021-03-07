@@ -125,34 +125,11 @@
 				message_admins("No potential traitors.  Cancelling new traitor.")
 				addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
 				return
+
 			var/mob/living/newtraitor = pick(possible_autotraitor)
-			//message_admins("[newtraitor.real_name] is the new Traitor.")
+			SSticker.mode.CreateRole(/datum/role/syndicate/traitor, newtraitor)
 
-			if (!config.objectives_disabled)
-				forge_traitor_objectives(newtraitor.mind)
-
-			if(istype(newtraitor, /mob/living/silicon))
-				add_law_zero(newtraitor)
-			else
-				equip_traitor(newtraitor)
-
-			traitors += newtraitor.mind
 			to_chat(newtraitor, "<span class='warning'><B>ATTENTION:</B></span> It is time to pay your debt to the Syndicate...")
-			to_chat(newtraitor, "<B>You are now a traitor.</B>")
-			newtraitor.mind.special_role = "traitor"
-
-			var/obj_count = 1
-			to_chat(newtraitor, "<span class='notice'>Your current objectives:</span>")
-			if(!config.objectives_disabled)
-				for(var/datum/objective/objective in newtraitor.mind.objectives)
-					to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-					obj_count++
-			else
-				to_chat(newtraitor, "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
-		//else
-			//message_admins("No new traitor being added.")
-	//else
-		//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
 
 	addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
 

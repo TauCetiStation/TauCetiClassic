@@ -67,19 +67,15 @@
 	if(.)
 		if(M.mind)
 			var/cleared_role = TRUE
-			switch(M.mind.special_role)
-				if("traitor")
-					SSticker.mode.remove_traitor(M.mind)
-					M.mind.remove_objectives()
-				if("Syndicate")
-					SSticker.mode.remove_nuclear(M.mind)
-					M.mind.remove_objectives()
-				else
-					cleared_role = FALSE
+			var/datum/role/syndicate/S = M.mind.GetRoleByType(/datum/role/syndicate)
+			if(S)
+				S.RemoveFromRole(M.mind)
+			else
+				cleared_role = FALSE
+
 			if(cleared_role)
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
 				to_chat(M, "<span class='danger'>You were implanted with [src] and now you must serve NT. Your old mission doesn't matter now.</span>")
-				SSticker.reconverted_antags[M.key] = M.mind
 
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")

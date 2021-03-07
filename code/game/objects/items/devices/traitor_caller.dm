@@ -33,17 +33,5 @@
 		return
 
 	var/mob/living/carbon/human/newtraitor = pick(possible_traitors)
-	SSticker.mode.equip_traitor(newtraitor)
-	SSticker.mode.syndicates += newtraitor.mind
-	to_chat(newtraitor, "<span class='userdanger'> <B>ATTENTION:</B> You hear a call from Syndicate...</span>")
-	to_chat(newtraitor, "<B>You are now a special traitor.</B>")
-	newtraitor.mind.special_role = "Syndicate"
-	SSticker.mode.forge_syndicate_objectives(newtraitor.mind)
-	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), SLOT_R_STORE)
-	to_chat(newtraitor, "<span class='notice'> Your current objectives:</span>")
-	var/obj_count = 1
-	for(var/datum/objective/objective in newtraitor.mind.objectives)
-		to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
-
+	SSticker.mode.CreateRole(/datum/role/syndicate/traitor/syndcall, newtraitor)
 
