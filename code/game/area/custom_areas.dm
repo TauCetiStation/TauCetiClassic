@@ -81,3 +81,8 @@
 		'sound/ambience/ambiruin5.ogg',
 		'sound/ambience/ambiruin6.ogg',
 	)
+
+/area/custom/ninjaspawn
+	name = "Space Dojo"
+	icon_state = "red"
+	requires_power = 0
