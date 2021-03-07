@@ -202,7 +202,7 @@
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
-	if(character.mind.assigned_role == "AI")
+	if(rank == "AI")
 
 		// IsJobAvailable for AI checks that there is an empty core available in this list
 		var/obj/structure/AIcore/deactivated/C = empty_playable_ai_cores[1]
@@ -230,7 +230,7 @@
 
 	//SSticker.mode.latespawn(character)
 
-	if(character.mind.assigned_role != "Cyborg")
+	if(rank != "Cyborg")
 		data_core.manifest_inject(character)
 		SSticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 	//	AnnounceArrival(character, rank)
