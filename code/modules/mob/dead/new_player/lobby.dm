@@ -80,8 +80,7 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 			</style>
 		</head>
 		<body>
-			<div class="container">
-				<div class="container_nav">
+			<div class="container_nav">
 				<a class="menu_a" href='?src=\ref[src];lobby_setup=1'>SETUP</a>
 	"}
 
@@ -114,5 +113,5 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 		}
 	</script>
 	"}
-	dat += "</div></body></html>"
+	dat += "</body></html>"
 	return dat
