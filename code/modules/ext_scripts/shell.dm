@@ -11,7 +11,9 @@
 	var/shelleo_id
 	var/out_file = ""
 	var/err_file = ""
-	if(world.system_type == UNIX)
+	var/static/list/interpreters = list("[MS_WINDOWS]" = "cmd /c", "[UNIX]" = "sh -c")
+	var/interpreter = interpreters["[world.system_type]"]
+	if(interpreter)
 		for(var/seo_id in shelleo_ids)
 			if(!shelleo_ids[seo_id])
 				shelleo_ids[seo_id] = TRUE
@@ -23,7 +25,10 @@
 			shelleo_ids[shelleo_id] = TRUE
 		out_file = "[SHELLEO_NAME][shelleo_id][SHELLEO_OUT]"
 		err_file = "[SHELLEO_NAME][shelleo_id][SHELLEO_ERR]"
-		errorcode = shell("[command] > [out_file] 2> [err_file]")
+		if(world.system_type == UNIX)
+			errorcode = shell("[interpreter] \"[replacetext(command, "\"", "\\\"")]\" > [out_file] 2> [err_file]")
+		else
+			errorcode = shell("[interpreter] \"[command]\" > [out_file] 2> [err_file]")
 		if(fexists(out_file))
 			stdout = file2text(out_file)
 			fdel(out_file)
