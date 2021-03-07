@@ -1301,12 +1301,21 @@
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"adx" = (
+/turf/unsimulated/wall,
+/area/custom/ninjaspawn)
 "ady" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"adz" = (
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
+	},
+/area/custom/ninjaspawn)
 "adA" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -1628,6 +1637,72 @@
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
+"aer" = (
+/obj/machinery/teleport/station,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"aes" = (
+/obj/machinery/teleport/hub,
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
+	},
+/area/custom/ninjaspawn)
+"aet" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/backpack/satchel/norm,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"aeu" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"aev" = (
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
+	},
+/area/custom/ninjaspawn)
+"aew" = (
+/obj/structure/table/reinforced,
+/obj/item/device/paicard,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"aex" = (
+/obj/effect/landmark{
+	name = "ninja"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"aey" = (
+/obj/machinery/light/small{
+	brightness_color = "#008000"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
+"aez" = (
+/turf/unsimulated/wall/fakeglass,
+/area/custom/ninjaspawn)
+"aeA" = (
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
 "aeB" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice,
@@ -1646,6 +1721,15 @@
 "aeD" = (
 /turf/unsimulated/wall,
 /area/space)
+"aeE" = (
+/obj/machinery/light/small{
+	brightness_color = "#ff0000";
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
 "aeF" = (
 /obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "shuttle_escape"
@@ -1660,6 +1744,32 @@
 	icon_state = "dark"
 	},
 /area/velocity)
+"aeH" = (
+/obj/structure/table/reinforced,
+/obj/item/device/paicard,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
+"aeI" = (
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
+"aeJ" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/backpack/satchel/norm,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
+"aeK" = (
+/obj/machinery/teleport/hub,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
 "aeT" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,18"
@@ -59503,11 +59613,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -59759,13 +59869,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aev
+aez
+aeA
+adx
+adx
 aaM
 aaM
 aaM
@@ -60015,15 +60125,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aet
+aeu
+aez
+aeu
+aeH
+adx
+adx
 aaM
 aaM
 aaM
@@ -60272,15 +60382,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adz
+aeu
+aev
+aez
+aeE
+aeA
+aeI
+adx
 aaM
 aaM
 aaM
@@ -60529,15 +60639,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+aer
+aev
+aex
+aez
+aex
+aeu
+aer
+adx
 aaM
 aaM
 aaM
@@ -60786,15 +60896,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+aes
+aev
+aey
+aez
+aeu
+aeA
+aeK
+adx
 aaM
 aaM
 aaM
@@ -61043,15 +61153,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aew
+aev
+aez
+aeu
+aeJ
+adx
+adx
 aaM
 aaM
 aaM
@@ -61301,13 +61411,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aev
+aez
+aeA
+adx
+adx
 aaM
 aaM
 aaM
@@ -61559,11 +61669,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
