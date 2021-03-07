@@ -1301,16 +1301,8 @@
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adx" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 26
-	},
-/obj/item/device/radio/electropack,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "purplecorner"
-	},
-/area/space)
+/turf/unsimulated/wall,
+/area/custom/ninjaspawn)
 "ady" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -1318,24 +1310,11 @@
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adz" = (
-/obj/structure/cable,
-/obj/machinery/door_control{
-	id = "misclab_sulaco2";
-	name = "Test Chamber Blast Doors";
-	pixel_x = 30;
-	pixel_y = -2
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
 	},
-/obj/machinery/door_control{
-	id = "misclab_sulaco1";
-	name = "Test Chamber Blast Doors";
-	pixel_x = 30;
-	pixel_y = 8
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "purplecorner"
-	},
-/area/space)
+/area/custom/ninjaspawn)
 "adA" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -1658,99 +1637,71 @@
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "aer" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
+/obj/machinery/teleport/station,
+/turf/unsimulated/floor{
 	dir = 8;
-	icon_state = "purplecorner"
+	icon_state = "vault"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aes" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+/obj/machinery/teleport/hub,
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "purplecorner"
-	},
-/area/space)
+/area/custom/ninjaspawn)
 "aet" = (
-/obj/effect/decal/turf_decal/warning_stripes{
-	dir = 4
-	},
-/turf/simulated/floor{
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/backpack/satchel/norm,
+/turf/unsimulated/floor{
 	dir = 8;
-	icon_state = "purplecorner"
+	icon_state = "vault"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aeu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "misclab_sulaco2";
-	name = "Test Chamber Blast Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/engine,
-/area/space)
+/area/custom/ninjaspawn)
 "aev" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellowcorners"
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aew" = (
-/obj/effect/decal/turf_decal/warning_stripes/corner,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellowcorners"
+/obj/structure/table/reinforced,
+/obj/item/device/paicard,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aex" = (
-/obj/effect/decal/turf_decal/warning_stripes,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellowcorners"
+/obj/effect/landmark{
+	name = "ninja"
 	},
-/area/space)
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/custom/ninjaspawn)
 "aey" = (
-/obj/effect/decal/turf_decal/warning_stripes,
-/obj/machinery/door_control{
-	id = "Mechbay_sulaco";
-	name = "Mech Bay Door Control";
-	pixel_x = 26;
-	pixel_y = -26
+/obj/machinery/light/small{
+	brightness_color = "#008000"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellowcorners"
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aez" = (
-/obj/effect/decal/turf_decal/warning_stripes/corner{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellowcorners"
-	},
-/area/space)
+/turf/unsimulated/wall/fakeglass,
+/area/custom/ninjaspawn)
 "aeA" = (
-/obj/effect/decal/turf_decal/warning_stripes/corner{
-	dir = 8
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
 	},
-/obj/item/weapon/caution/cone{
-	pixel_x = -4
-	},
-/turf/simulated/floor/plating,
-/area/space)
+/area/custom/ninjaspawn)
 "aeB" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice,
@@ -1770,10 +1721,14 @@
 /turf/unsimulated/wall,
 /area/space)
 "aeE" = (
-/obj/effect/decal/turf_decal/warning_stripes/corner,
-/obj/item/weapon/caution/cone,
-/turf/simulated/floor/plating,
-/area/space)
+/obj/machinery/light/small{
+	brightness_color = "#ff0000";
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
 "aeF" = (
 /obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "shuttle_escape"
@@ -1789,35 +1744,31 @@
 	},
 /area/velocity)
 "aeH" = (
-/obj/item/weapon/twohanded/flora/random,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "purple"
+/obj/structure/table/reinforced,
+/obj/item/device/paicard,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aeI" = (
-/turf/simulated/floor{
-	icon_state = "purple"
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aeJ" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "purple"
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/backpack/satchel/norm,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
 	},
-/area/space)
+/area/custom/ninjaspawn)
 "aeK" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/machinery/teleport/hub,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
 	},
-/obj/effect/decal/turf_decal/warning_stripes/corner{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "purple"
-	},
-/area/space)
+/area/custom/ninjaspawn)
 "aeL" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5260,6 +5211,24 @@
 /turf/simulated/shuttle/floor4{
 	name = "Aurora floor"
 	},
+/area/space)
+"anh" = (
+/obj/effect/decal/turf_decal/warning_stripes,
+/obj/machinery/door_control{
+	id = "Mechbay_sulaco";
+	name = "Mech Bay Door Control";
+	pixel_x = 26;
+	pixel_y = -26
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"ani" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner,
+/obj/item/weapon/caution/cone,
+/turf/simulated/floor/plating,
 /area/space)
 "anj" = (
 /obj/machinery/computer/security/sulaco{
@@ -24811,6 +24780,31 @@
 /obj/machinery/door/poddoor,
 /turf/simulated/floor/plating,
 /area/space)
+"bdL" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "purple"
+	},
+/area/space)
+"bdM" = (
+/obj/structure/cable,
+/obj/machinery/door_control{
+	id = "misclab_sulaco2";
+	name = "Test Chamber Blast Doors";
+	pixel_x = 30;
+	pixel_y = -2
+	},
+/obj/machinery/door_control{
+	id = "misclab_sulaco1";
+	name = "Test Chamber Blast Doors";
+	pixel_x = 30;
+	pixel_y = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "purplecorner"
+	},
+/area/space)
 "bdN" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/unsimulated/floor{
@@ -24869,6 +24863,38 @@
 	icon_state = "alien5"
 	},
 /area/custom/abductor_ship)
+"bdX" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"bdY" = (
+/turf/simulated/floor{
+	icon_state = "purple"
+	},
+/area/space)
+"bdZ" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner{
+	dir = 8
+	},
+/obj/item/weapon/caution/cone{
+	pixel_x = -4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"bea" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "purplecorner"
+	},
+/area/space)
 "beb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "velocity_1";
@@ -24879,6 +24905,76 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"bec" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "misclab_sulaco2";
+	name = "Test Chamber Blast Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/engine,
+/area/space)
+"bed" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"bee" = (
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "purple"
+	},
+/area/space)
+"bef" = (
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "purplecorner"
+	},
+/area/space)
+"beg" = (
+/obj/effect/decal/turf_decal/warning_stripes{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "purplecorner"
+	},
+/area/space)
+"beh" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 26
+	},
+/obj/item/device/radio/electropack,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "purplecorner"
+	},
+/area/space)
+"bei" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/effect/decal/turf_decal/warning_stripes/corner{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "purple"
+	},
+/area/space)
 "bej" = (
 /obj/machinery/abductor/experiment{
 	team = 3
@@ -24923,6 +25019,20 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
+"bep" = (
+/obj/effect/decal/turf_decal/warning_stripes,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"beq" = (
+/obj/effect/decal/turf_decal/warning_stripes/corner,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellowcorners"
+	},
+/area/space)
 "bet" = (
 /obj/machinery/computer/security/abductor_ag{
 	team = 3
@@ -40404,7 +40514,7 @@ aqs
 anl
 apj
 apj
-aev
+bed
 aeN
 aAC
 agd
@@ -40661,7 +40771,7 @@ apB
 apB
 anO
 anO
-aew
+beq
 aeO
 afg
 auY
@@ -40918,7 +41028,7 @@ arL
 arL
 anO
 anO
-aex
+bep
 aeP
 afc
 auY
@@ -41175,7 +41285,7 @@ aqs
 anl
 anO
 anO
-aey
+anh
 aeP
 afd
 auY
@@ -41432,7 +41542,7 @@ anU
 aoG
 anO
 anO
-aez
+bdX
 apA
 afg
 auY
@@ -43231,7 +43341,7 @@ arB
 arB
 apk
 aoN
-aeH
+bee
 aMN
 afn
 auY
@@ -43487,8 +43597,8 @@ arh
 arh
 arh
 arh
-aer
-aeI
+bea
+bdY
 art
 afn
 auY
@@ -43740,12 +43850,12 @@ aqU
 anZ
 aos
 arh
-adx
+beh
 anX
 aor
 aqz
-aes
-aeJ
+bef
+bdL
 arm
 afo
 auY
@@ -44002,7 +44112,7 @@ aok
 aqV
 aoq
 arh
-aeI
+bdY
 any
 afo
 auY
@@ -44259,7 +44369,7 @@ arh
 arh
 arh
 arh
-aeI
+bdY
 aeN
 afq
 auY
@@ -44516,7 +44626,7 @@ arh
 arh
 arh
 arh
-aeI
+bdY
 aeO
 afn
 auY
@@ -44768,12 +44878,12 @@ aqe
 ape
 anT
 anR
-adz
+bdM
 apJ
 anT
 aqe
-aet
-aeK
+beg
+bei
 apA
 afn
 auY
@@ -45286,7 +45396,7 @@ apA
 aoW
 ary
 anA
-aeu
+bec
 aoW
 apA
 afn
@@ -55811,7 +55921,7 @@ agd
 agd
 auE
 auW
-aeA
+bdZ
 aMd
 aZK
 aZK
@@ -56325,7 +56435,7 @@ agd
 agd
 auE
 aHc
-aeE
+ani
 agc
 aZJ
 aZJ
@@ -67924,11 +68034,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -68180,13 +68290,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aev
+aez
+aeA
+adx
+adx
 aaM
 aaM
 aaM
@@ -68436,15 +68546,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aet
+aeu
+aez
+aeu
+aeH
+adx
+adx
 aaM
 aaM
 aaM
@@ -68693,15 +68803,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adz
+aeu
+aev
+aez
+aeE
+aeA
+aeI
+adx
 aaM
 aaM
 aaM
@@ -68950,15 +69060,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+aer
+aev
+aex
+aez
+aex
+aeu
+aer
+adx
 aaM
 aaM
 aaM
@@ -69207,15 +69317,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+aes
+aev
+aey
+aez
+aeu
+aeA
+aeK
+adx
 aaM
 aaM
 aaM
@@ -69464,15 +69574,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aew
+aev
+aez
+aeu
+aeJ
+adx
+adx
 aaM
 aaM
 aaM
@@ -69722,13 +69832,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+aev
+aez
+aeA
+adx
+adx
 aaM
 aaM
 aaM
@@ -69980,11 +70090,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM

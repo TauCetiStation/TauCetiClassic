@@ -21,7 +21,7 @@
 
 	universal_speak =1
 
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	animate_movement = SYNC_STEPS
 
 	minbodytemp = 0

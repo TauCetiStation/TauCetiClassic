@@ -170,7 +170,6 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
-
 		Moved(oldloc, 0)
 		return TRUE
 	return FALSE
