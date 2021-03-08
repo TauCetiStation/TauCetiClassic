@@ -194,7 +194,7 @@
 	if(istype(target, /obj/singularity))
 		var/obj/singularity/S = target
 		S.deduce_energy(600)
-
+		empulse(S, 4, 10)
 /obj/item/projectile/neurotoxin
 	name = "neurotoxin"
 	icon_state = "energy2"
