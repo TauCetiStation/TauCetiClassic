@@ -68674,10 +68674,10 @@
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/parrot/Poly,
 /obj/machinery/alarm{
 	pixel_y = 28
 	},
+/mob/living/simple_animal/parrot/Poly,
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
 "cNc" = (
@@ -71209,6 +71209,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/item/weapon/storage/lockbox/anti_singulo,
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
 "gyb" = (

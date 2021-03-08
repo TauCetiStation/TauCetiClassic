@@ -175,7 +175,13 @@
 	desc = "A EMP rocket designed to be fired from a launcher."
 	icon_state = "rocket-emp"
 	projectile_type = /obj/item/projectile/missile/emp
-	caliber = "rocket"
+
+/obj/item/ammo_casing/caseless/rocket/anti_singulo
+	name = "AS rocket shell"
+	desc = "A special type of rocket designed to destroy gravitational singularities via bluespace manipulation."
+	icon_state = "rocket-as"
+	projectile_type = /obj/item/projectile/anti_singulo
+	caliber = "rocket_as"
 
 /obj/item/ammo_casing/chameleon
 	name = "chameleon bullets"

@@ -179,6 +179,21 @@
 	empulse(target, 4, 10)
 	return 1
 
+/obj/item/projectile/anti_singulo
+	name = "singularity buster charge"
+	icon_state = "ice_1"
+	light_color = "#00ffff"
+	light_power = 2
+	light_range = 2
+	damage = 10
+	damage_type = BURN
+	sharp = 0
+	edge = 0
+
+/obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(istype(target, /obj/singularity))
+		var/obj/singularity/S = target
+		S.deduce_energy(300)
 
 /obj/item/projectile/neurotoxin
 	name = "neurotoxin"
