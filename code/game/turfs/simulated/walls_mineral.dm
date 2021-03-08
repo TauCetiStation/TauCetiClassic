@@ -1,6 +1,6 @@
 /turf/simulated/wall/mineral
 	name = "mineral wall"
-	desc = "Этого не может быть."
+	desc = "Этого не должно быть."
 	icon_state = "box"
 	canSmoothWith = null
 	smooth = SMOOTH_TRUE

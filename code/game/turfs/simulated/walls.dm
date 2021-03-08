@@ -273,7 +273,7 @@
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
 			else
-				to_chat(M, "<span class='info'>Стена слишком прочная для вас, чтобы вы могли ее уничтожить.</span>")
+				to_chat(M, "<span class='info'>Стена слишком прочная, чтобы вы могли ее уничтожить.</span>")
 		else
 			if (prob(40) || rotting)
 				to_chat(M, text("<span class='notice'>Вы пробиваете стену насквозь.</span>"))

@@ -30,7 +30,7 @@
 	if(user.is_busy()) return
 	if(istype (W,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='warning'><B>[src]</B> атакован <B>[user]!</B></span>")
+		visible_message("<span class='warning'><B>Каркас</B> атакован <B>[user]!</B></span>")
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(C.use_charge(user, 1) && prob(40))
@@ -38,21 +38,21 @@
 			qdel(src)
 	else if(iswrench(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
-			to_chat(user, "<span class='notice'>Разбираем каркас...</span>")
+			to_chat(user, "<span class='notice'>Вы начинаете разбирать каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
 				if(!src) return
 				to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 		else if(!anchored)
-			to_chat(user, "<span class='notice'>Фиксируем каркас...</span>")
+			to_chat(user, "<span class='notice'>Вы начинаете фиксировать каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
 				to_chat(user, "<span class='notice'>Вы зафиксировали каркас!</span>")
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		to_chat(user, "<span class='notice'>Режем каркас на куски</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете разрезать каркас на куски.</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы разрезали каркас!</span>")
@@ -60,19 +60,19 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
-		to_chat(user, "<span class='notice'>Вы сверлите сквозь каркас!</span>")
+		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)
 
 	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
-		to_chat(user, "<span class='notice'>Ослабляем поддерживающие опоры...</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете ослаблять поддерживающие опоры.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы ослабили поддерживающие опоры!</span>")
 			state = 1
 
 	else if(iswirecutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
-		to_chat(user, "<span class='notice'>Удаляем поддерживающие опоры...</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие опоры.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы удалили поддерживающие опоры!</span>")
@@ -80,7 +80,7 @@
 			qdel(src)
 
 	else if(iscrowbar(W) && state == 0 && anchored )
-		to_chat(user, "<span class='notice'>Смещаем каркас...</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете смещать каркас.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы сместили каркас!</span>")
@@ -102,7 +102,7 @@
 				else
 					if(S.get_amount() < 2)
 						return ..()
-					to_chat(user, "<span class='notice'>Добавляем металл...</span>")
+					to_chat(user, "<span class='notice'>Вы начинаете добавлять металл.</span>")
 					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 						to_chat(user, "<span class='notice'>Вы добавили металл!</span>")
 						var/turf/Tsrc = get_turf(src)
@@ -123,7 +123,7 @@
 					if (istype (src, /obj/structure/girder/reinforced))
 						if(S.get_amount() < 1)
 							return ..()
-						to_chat(user, "<span class='notice'>Завершаем укрепленную стену....</span>")
+						to_chat(user, "<span class='notice'>Вы завершаете укрепленную стену.</span>")
 						if(S.use_tool(src, user, 50, amount = 1, volume = 100))
 							to_chat(user, "<span class='notice'>Стена полностью укреплена!</span>")
 							var/turf/Tsrc = get_turf(src)
@@ -135,7 +135,7 @@
 					else
 						if(S.get_amount() < 1)
 							return ..()
-						to_chat(user, "<span class='notice'>Укрепляем каркас...</span>")
+						to_chat(user, "<span class='notice'>Вы начинаете укреплять каркас.</span>")
 						if(S.use_tool(src, user, 60, amount = 1, volume = 100))
 							to_chat(user, "<span class='notice'>Каркас укреплен!</span>")
 							new/obj/structure/girder/reinforced( src.loc )
@@ -156,7 +156,7 @@
 			else
 				if(S.get_amount() < 2)
 					return ..()
-				to_chat(user, "<span class='notice'>Добавляем материал...</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете добавлять материал.</span>")
 				if(S.use_tool(src, user, 40, amount = 2, volume = 100))
 					to_chat(user, "<span class='notice'>Вы добавили материал!</span>")
 					var/turf/Tsrc = get_turf(src)
@@ -241,21 +241,21 @@
 	if(user.is_busy(src))
 		return
 	if(iswrench(W))
-		to_chat(user, "<span class='notice'>Разбираем каркас...</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете разбирать каркас.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
 			new /obj/effect/decal/remains/human(get_turf(src))
 			qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		to_chat(user, "<span class='notice'>Режем каркас на куски...</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете разрезать каркас на куски.</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			to_chat(user, "<span class='notice'>Вы разрезали каркас!</span>")
 		new /obj/effect/decal/remains/human(get_turf(src))
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
-		to_chat(user, "<span class='notice'>Вы сверлите сквозь каркас!</span>")
+		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
 		new /obj/effect/decal/remains/human(get_turf(src))
 		qdel(src)
 
