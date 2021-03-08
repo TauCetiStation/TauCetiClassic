@@ -103,7 +103,7 @@
 	desc = "Lockbox containing experimental rocket launcher to deal with little problems."
 	req_access = list(access_engine_equip)
 
-obj/item/weapon/storage/lockbox/anti_singulo/atom_init()
+/obj/item/weapon/storage/lockbox/anti_singulo/atom_init()
 	. = ..()
 	for (var/i in 1 to 3)
 		new /obj/item/ammo_casing/caseless/rocket/anti_singulo(src)

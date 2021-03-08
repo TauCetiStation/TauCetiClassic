@@ -984,7 +984,20 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Disposal Dispenser Crate"
 	group = "Engineering"
-	access = access_atmospherics
+	access = access_engine
+
+
+
+/datum/supply_pack/anti_singulo
+	name = "Singularity Buster Rockets crate"
+	cost = 5000
+	contains  = list(/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+					/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+					/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+					/obj/item/ammo_casing/caseless/rocket/anti_singulo)
+	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_name = "Singularity Buster Rockets Crate"
+	group = "Engineering"
 
 //----------------------------------------------
 //------------MEDICAL / SCIENCE-----------------
