@@ -5135,9 +5135,6 @@
 	},
 /turf/simulated/shuttle/floor/cargo,
 /area/shuttle/supply/velocity)
-"aqh" = (
-/turf/unsimulated/wall/splashscreen,
-/area/start)
 "aqi" = (
 /obj/structure/closet/acloset,
 /turf/unsimulated/floor{
@@ -24257,7 +24254,7 @@ anM
 anM
 anM
 anM
-aqh
+anM
 aaM
 aaM
 aaM
