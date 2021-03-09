@@ -34,8 +34,8 @@
 	var/max_roles = 0
 	var/accept_latejoiners = FALSE
 	var/datum/objective_holder/objective_holder
-	var/datum/role/initroletype = /datum/role
-	var/datum/role/roletype = /datum/role
+	var/datum/role/initroletype
+	var/datum/role/roletype
 	var/logo_state
 	var/list/hud_icons = list()
 	var/datum/role/leader
@@ -90,6 +90,13 @@
 	return
 
 /datum/faction/proc/get_initrole_type()
+	if(!isnull(initroletype))
+		return initroletype
+	return roletype
+
+/datum/faction/proc/get_role_type()
+	if(!isnull(roletype))
+		return roletype
 	return initroletype
 
 /datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
@@ -100,7 +107,8 @@
 	if(M.GetRole(initial_role))
 		WARNING("Mind already had a role of [initial_role]!")
 		return null
-	var/datum/role/newRole = new initroletype(null, src, initial_role)
+	var/role_type = get_initrole_type()
+	var/datum/role/newRole = new role_type(null, src, initial_role)
 	if(!newRole.AssignToRole(M))
 		newRole.Drop()
 		return null
@@ -114,7 +122,8 @@
 	if(M.GetRole(late_role))
 		WARNING("Mind already had a role of [late_role]!")
 		return (M.GetRole(late_role))
-	var/datum/role/R = new roletype(null,src,late_role) // Add him to our roles
+	var/role_type = get_role_type()
+	var/datum/role/R = new role_type(null,src,late_role) // Add him to our roles
 	if(!R.AssignToRole(M, override))
 		R.Drop()
 		return null

@@ -434,7 +434,9 @@
 
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
-	// TODO: ЛЯРВЫ ТОЖЕ ПОЛУЧАЮТ /datum/role/alient вместе с худом
+	var/datum/faction/infestation/I = find_active_first_faction_by_type(/datum/faction/infestation)
+	if(I)
+		I.HandleRecruitedMind(new_xeno.mind)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	spawn(0)//To prevent the proc from returning null.
