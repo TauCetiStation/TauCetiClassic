@@ -22,8 +22,6 @@
 	@faction_icon: icon file reference: Where the icon is stored (currently most are stored in logos.dmi)
 */
 
-var/list/factions_with_hud_icons = list()
-
 /datum/faction
 	var/name = "unknown faction"
 	var/ID = null
@@ -57,8 +55,6 @@ var/list/factions_with_hud_icons = list()
 	..()
 	objective_holder = new
 	objective_holder.faction = src
-	if (hud_icons.len)
-		factions_with_hud_icons += src
 
 	//stat_datum = new stat_datum_type()
 

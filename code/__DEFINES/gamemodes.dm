@@ -41,7 +41,7 @@
 #define VOXRAIDER "vox raider"
 #define BLOBOVERMIND "blob overmind"
 #define BLOBCEREBRATE "blob cerebrate"
-#define XENOMORPH "alien"
+#define XENOMORPH "xenomorph"
 
 #define GREET_DEFAULT		"default"
 #define GREET_ROUNDSTART	"roundstart"
