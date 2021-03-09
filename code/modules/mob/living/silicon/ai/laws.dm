@@ -23,7 +23,6 @@
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.set_zeroth_law(law, law_borg)
-	// TODO: ЛЯРВЫ ТОЖЕ ПОЛУЧАЮТ /datum/role/alient вместе с худом
 
 /mob/living/silicon/ai/proc/add_inherent_law(law)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)

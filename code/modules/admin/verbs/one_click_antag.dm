@@ -33,28 +33,6 @@
 	popup.open()
 	return
 
-
-/datum/admins/proc/makeMalfAImode()
-
-	var/list/mob/living/silicon/AIs = list()
-	var/mob/living/silicon/malfAI = null
-	var/datum/mind/themind = null
-
-	for(var/mob/living/silicon/ai/ai in player_list)
-		if(ai.client)
-			AIs += ai
-
-	if(AIs.len)
-		malfAI = pick(AIs)
-
-	if(malfAI)
-		themind = malfAI.mind
-		themind.make_AI_Malf()
-		return 1
-
-	return 0
-
-
 /datum/admins/proc/makeRevs()
 
 	var/datum/game_mode/rp_revolution/temp = new

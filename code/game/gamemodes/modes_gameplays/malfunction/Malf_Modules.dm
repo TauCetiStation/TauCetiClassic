@@ -116,7 +116,7 @@ robot_fabricator
 	set category = "Malfunction"
 	set name = "System Override"
 	set desc = "Start the victory timer."
-	var/datum/game_mode/malfunction/cur_malf = SSticker.mode
+	var/datum/faction/malf_silicons/cur_malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
 	if(!istype(cur_malf))
 		to_chat(src, "<span class='red'>You cannot begin a takeover in this round type!</span>")
 		return
@@ -124,12 +124,13 @@ robot_fabricator
 		to_chat(src,"<span class='notice'>You've already begun your takeover.</span>")
 		return
 	if(cur_malf.apcs < APC_MIN_TO_MALF_DECLARE)
-		to_chat(src,"<span class='red'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [SSticker.mode:apcs] APCs so far.</span>")
+		to_chat(src,"<span class='red'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [cur_malf.apcs] APCs so far.</span>")
 		return
 	if(cur_malf.AI_malf_revealed < 4)
-		if(alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [SSticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
+		if(alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [cur_malf.apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 			return
-		cur_malf.announce_forth.play()
+		var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+		announce_forth.play()
 
 	cur_malf.takeover()
 
@@ -141,7 +142,7 @@ robot_fabricator
 	set category = "Malfunction"
 	set name = "Explode"
 	set desc = "Station go boom."
-	var/datum/game_mode/malfunction/cur_malf = SSticker.mode
+	var/datum/faction/malf_silicons/cur_malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
 	if(!istype(cur_malf))
 		to_chat(src, "Uh oh, wrong game mode. Please contact a coder.")
 		return
@@ -303,7 +304,7 @@ robot_fabricator
 	only_for_malf_gamemode = TRUE
 
 /datum/AI_Module/small/interhack/BuyedNewHandle()
-	var/datum/game_mode/malfunction/cur_malf = SSticker.mode
+	var/datum/faction/malf_silicons/cur_malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
 	if(!istype(cur_malf)) //Is it possible? Probably not
 		qdel(src)
 		return

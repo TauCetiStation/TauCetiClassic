@@ -66,7 +66,7 @@
 	var/protected_traitor_prob = PROB_PROTECTED_REGULAR
 
 	// Jobs that can only be this antag
-	var/list/required_jobs=list()
+	var/list/required_jobs = list()
 
 	// Specie flags that for any amount of reasons can cause this role to not be available.
 	// TO-DO: use traits? ~Luduk
@@ -237,9 +237,6 @@
 // Return TRUE on success, FALSE on failure.
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	return TRUE
-
-/datum/role/proc/update_antag_hud()
-	return
 
 /datum/role/process()
 	return

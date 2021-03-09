@@ -303,47 +303,6 @@
 			text += "healthy|infected|human|<b>OTHER</b>"
 		sections["monkey"] = text
 
-
-	/** SILICON ***/
-
-	if (istype(current, /mob/living/silicon))
-		text = "silicon"
-		if (SSticker.mode.config_tag=="malfunction")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/silicon/ai))
-			if (src in SSticker.mode.malf_ai)
-				text += "<b>MALF</b>|<a href='?src=\ref[src];silicon=unmalf'>not malf</a>"
-			else
-				text += "<a href='?src=\ref[src];silicon=malf'>malf</a>|<b>NOT MALF</b>"
-		var/mob/living/silicon/robot/robot = current
-		if (istype(robot) && robot.emagged)
-			text += "<br>Cyborg: Is emagged! <a href='?src=\ref[src];silicon=unemag'>Unemag!</a><br>0th law: [robot.laws.zeroth]"
-		var/mob/living/silicon/ai/ai = current
-		if (istype(ai) && ai.connected_robots.len)
-			var/n_e_robots = 0
-			for (var/mob/living/silicon/robot/R in ai.connected_robots)
-				if (R.emagged)
-					n_e_robots++
-			text += "<br>[n_e_robots] of [ai.connected_robots.len] slaved cyborgs are emagged. <a href='?src=\ref[src];silicon=unemagcyborgs'>Unemag</a>"
-		if(current && current.client && (ROLE_MALF in current.client.prefs.be_role))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-		sections["malfunction"] = text
-
-	if (SSticker.mode.config_tag == "traitorchan")
-		if (sections["traitor"])
-			out += sections["traitor"]+"<br>"
-		if (sections["changeling"])
-			out += sections["changeling"]+"<br>"
-		sections -= "traitor"
-		sections -= "changeling"
-	else
-		if (sections[SSticker.mode.config_tag])
-			out += sections[SSticker.mode.config_tag]+"<br>"
-		sections -= SSticker.mode.config_tag
-
 	out += "<br>"
 */
 
@@ -838,64 +797,6 @@
 						M = M.humanize()
 						src = M.mind
 
-	else if (href_list["silicon"])
-		switch(href_list["silicon"])
-			if("unmalf")
-				if(src in SSticker.mode.malf_ai)
-					var/mob/living/silicon/ai/current_ai = current
-					SSticker.mode.malf_ai -= src
-					special_role = null
-
-					for(var/datum/AI_Module/module in current_ai.current_modules)
-						qdel(module)
-
-					current_ai.laws = new /datum/ai_laws/nanotrasen
-					current_ai.show_laws()
-					current_ai.icon_state = "ai"
-
-					to_chat(current_ai, "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>")
-					log_admin("[key_name(usr)] has de-malf'ed [current].")
-
-			if("malf")
-				make_AI_Malf()
-				log_admin("[key_name(usr)] has malf'ed [current].")
-
-			if("unemag")
-				var/mob/living/silicon/robot/R = current
-				if (istype(R))
-					R.emagged = 0
-					if (R.activated(R.module.emag))
-						R.module_active = null
-					if(R.module_state_1 == R.module.emag)
-						R.module_state_1 = null
-						R.contents -= R.module.emag
-					else if(R.module_state_2 == R.module.emag)
-						R.module_state_2 = null
-						R.contents -= R.module.emag
-					else if(R.module_state_3 == R.module.emag)
-						R.module_state_3 = null
-						R.contents -= R.module.emag
-					log_admin("[key_name(usr)] has unemag'ed [R].")
-
-			if("unemagcyborgs")
-				if (istype(current, /mob/living/silicon/ai))
-					var/mob/living/silicon/ai/ai = current
-					for (var/mob/living/silicon/robot/R in ai.connected_robots)
-						R.emagged = 0
-						if (R.module)
-							if (R.activated(R.module.emag))
-								R.module_active = null
-							if(R.module_state_1 == R.module.emag)
-								R.module_state_1 = null
-								R.contents -= R.module.emag
-							else if(R.module_state_2 == R.module.emag)
-								R.module_state_2 = null
-								R.contents -= R.module.emag
-							else if(R.module_state_3 == R.module.emag)
-								R.module_state_3 = null
-								R.contents -= R.module.emag
-					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
-
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -932,20 +833,6 @@
 	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
 	if(H)
 		qdel(H)
-
-/datum/mind/proc/make_AI_Malf()
-	if(!(src in SSticker.mode.malf_ai))
-		SSticker.mode.malf_ai += src
-		var/mob/living/silicon/ai/cur_AI = current
-		new /datum/AI_Module/module_picker(cur_AI)
-		new /datum/AI_Module/takeover(cur_AI)
-		cur_AI.laws = new /datum/ai_laws/malfunction
-		cur_AI.show_laws()
-		to_chat(cur_AI, "<span class='bold'>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</span>")
-		special_role = "malfunction"
-
-		cur_AI.icon_state = "ai-malf"
-		cur_AI.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/mind/proc/make_Nuke()
 	if(!(src in SSticker.mode.syndicates))

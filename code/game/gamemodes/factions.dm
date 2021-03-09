@@ -163,7 +163,6 @@
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
 /datum/faction/proc/GetScoreboard()
-	SHOULD_CALL_PARENT(TRUE)
 	var/count = 1
 	var/score_results = ""
 	if(objective_holder.objectives.len > 0)
