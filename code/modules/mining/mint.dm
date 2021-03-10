@@ -71,7 +71,7 @@
 
 /obj/machinery/mineral/mint/ui_interact(user)
 
-	var/dat = "<b>Coin Press</b><br>"
+	var/dat = ""
 
 	if (!input)
 		dat += text("input connection status: ")
@@ -138,7 +138,10 @@
 
 	dat += text("<br><br>In total this machine produced <font color='green'><b>[newCoins]</b></font> coins.")
 	dat += text("<br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
-	user << browse("[entity_ja(dat)]", "window=mint")
+
+	var/datum/browser/popup = new(user, "mint", "Coin Press")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	. = ..()

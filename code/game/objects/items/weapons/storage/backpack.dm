@@ -87,6 +87,12 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "cultpack"
 
+/obj/item/weapon/storage/backpack/chaplain
+	name = "chaplain's backpack"
+	desc = "A comfy capacious backpack for magic toys."
+	icon_state = "chaplain_backpack"
+	item_state = "chaplain_backpack"
+
 /obj/item/weapon/storage/backpack/clown
 	name = "Giggles von Honkerton"
 	desc = "It's a backpack made by Honk! Co."
@@ -315,7 +321,7 @@
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 
-/obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
+/obj/item/weapon/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
 		invisibility = 101
 		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.

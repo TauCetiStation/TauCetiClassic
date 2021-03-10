@@ -19,7 +19,7 @@
 							//2 - require card and manual login
 
 /datum/money_account/proc/adjust_money(amount)
-	money = CLAMP(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
+	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
 /datum/money_account/proc/set_salary(amount, ratio = 1)
 	owner_salary = amount * ratio

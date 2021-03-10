@@ -13,6 +13,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Permissions Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -53,7 +54,7 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=editrights;size=600x500")
+	usr << browse(output,"window=editrights;size=600x500")
 
 /datum/admins/proc/add_admin()
 	if(!usr.client)
@@ -139,6 +140,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Permissions modification panel</title>
 <script>
 function send_rights() {
@@ -167,7 +169,7 @@ var elements = document.getElementsByName('rights');
 <input type="button" value="Apply" onclick="send_rights()" />
 </html>
 "}
-	usr << browse(entity_ja(output),"window=change_permissions;size=250x380;")
+	usr << browse(output,"window=change_permissions;size=250x380;")
 
 
 /datum/admins/proc/change_permissions(adm_ckey, new_rights)

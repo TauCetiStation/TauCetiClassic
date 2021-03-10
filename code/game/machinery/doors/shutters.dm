@@ -21,5 +21,8 @@
 
 /obj/machinery/door/poddoor/shutters/syndi
 
+/obj/machinery/door/poddoor/shutters/syndi/emag_act(mob/user)
+	return FALSE
+
 /obj/machinery/door/poddoor/shutters/syndi/ex_act()
 	return

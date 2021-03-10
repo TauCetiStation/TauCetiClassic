@@ -132,10 +132,10 @@
 	dat += text("Current unclaimed points: [points]<br>")
 
 	if(istype(inserted_id))
-		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>")
-		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points.</A><br>")
+		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>")
+		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points</a><br>")
 	else
-		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>")
+		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>")
 
 	for(var/O in stack_list)
 		s = stack_list[O]
@@ -144,7 +144,7 @@
 				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
+	dat += text("<br><div class='Section'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
@@ -232,13 +232,14 @@
 
 /**********************Mining Equipment Locker**************************/
 
-/obj/machinery/mineral/equipment_locker
+/obj/machinery/mineral/equipment_vendor
 	name = "mining equipment locker"
 	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = 1
 	anchored = 1.0
+	var/static/list/selection_items
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
 		new /datum/data/mining_equipment("Stimpack",			     /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,   100),
@@ -253,8 +254,11 @@
 		new /datum/data/mining_equipment("Point card",    	         /obj/item/weapon/card/mining_point_card,               			    500),
 		new /datum/data/mining_equipment("Space first-aid kit",      /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,            1000),
 		new /datum/data/mining_equipment("Accelerator upgrade",      /obj/item/kinetic_upgrade/speed,										2500),
+		new /datum/data/mining_equipment("Standart capsule",         /obj/item/weapon/survivalcapsule, 										3000),
 		new /datum/data/mining_equipment("Space cash",    	         /obj/item/weapon/spacecash/c1000,                    			        5000),
-		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000)
+		new /datum/data/mining_equipment("Improved capsule",    	 /obj/item/weapon/survivalcapsule/improved,								6000),
+		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000),
+		new /datum/data/mining_equipment("Elite capsule(Bar)",    	 /obj/item/weapon/survivalcapsule/elite,                    	        12000)
 		)
 
 /datum/data/mining_equipment
@@ -288,13 +292,13 @@
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
 	var/dat
-	dat +="<div class='statusDisplay'>"
+	dat +="<div class='Section'>"
 	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID.</A><br>"
+		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>"
 	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
+		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>"
 	dat += "</div>"
 	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
 	for(var/datum/data/mining_equipment/prize in prize_list)
@@ -305,7 +309,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/mineral/equipment_locker/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -337,7 +341,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/mineral/equipment_locker/attackby(obj/item/I, mob/user)
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -358,11 +362,21 @@
 		return 1
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/voucher, redeemer)
+/obj/machinery/mineral/equipment_vendor/proc/populate_selection()
+	selection_items = list(
+	"Resonator kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
+	"Kinetic Accelerator" = image(icon = 'icons/obj/mining/hand_tools.dmi', icon_state = "kineticgun100"),
+	"Mining Drone" = image(icon = 'icons/obj/aibots.dmi', icon_state = "mining_drone"),
+	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining")
+	)
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
 		return
 	voucher.in_use = 1
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") in list("Resonator kit", "Kinetic Accelerator", "Mining Drone","Special Mining Rig", "Cancel")
+	if(!selection_items)
+		populate_selection()
+	var/selection = show_radial_menu(redeemer, src, selection_items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer))
 		voucher.in_use = 0
 		return
@@ -380,7 +394,7 @@
 			return
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_locker/ex_act()
+/obj/machinery/mineral/equipment_vendor/ex_act()
 	return
 
 
@@ -432,7 +446,7 @@
 
 /obj/item/device/wormhole_jaunter
 	name = "wormhole jaunter"
-	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to blue space for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
+	desc = "A single use device harnessing outdated wormhole technology, Nanotrasen has since turned its eyes to bluespace for more accurate teleportation. The wormholes it creates are unpleasant to travel through, to say the least."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Jaunter"
 	item_state = "electronic"
@@ -461,7 +475,7 @@
 			return
 		if(!chosen_beacon)
 			chosen_beacon = pick(L)
-		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon)
+		var/obj/effect/portal/jaunt_tunnel/J = new /obj/effect/portal/jaunt_tunnel(get_turf(src), chosen_beacon)
 		spawn(100) qdel(J)	//Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
@@ -478,13 +492,13 @@
 	else
 		return ..()
 
-/obj/effect/portal/wormhole/jaunt_tunnel
+/obj/effect/portal/jaunt_tunnel
 	name = "jaunt tunnel"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "bhole3"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "bluespace_wormhole_enter"
 	desc = "A stable hole in the universe made by a wormhole jaunter. Turbulent doesn't even begin to describe how rough passage through one of these is, but at least it will always get you somewhere near a beacon."
 
-/obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
+/obj/effect/portal/jaunt_tunnel/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))
 		return
 	if(istype(M, /atom/movable))
@@ -536,7 +550,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	layer = 4.1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/resonance_damage = 30
 	var/creator = null
 
@@ -604,12 +618,12 @@
 
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
-	desc = "Robot used to support the miners can be configured to search and collect ore or destroy monsters."
+	desc = "This robot is used to support the miners and can search and collect ore or defend itself from wildlife."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = "neutral"
 	var/emagged = 0
 	light_power = 2
@@ -623,7 +637,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
-	wander = 0
+	wander = FALSE
 	idle_vision_range = 6
 	move_to_delay = 7
 	retreat_distance = 2
@@ -634,22 +648,11 @@
 	environment_smash = 0
 	attacktext = "drill"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
-	ranged = 1
+	ranged = TRUE
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 2
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
-	wanted_objects = list(/obj/item/weapon/ore/diamond,
-						  /obj/item/weapon/ore/glass,
-						  /obj/item/weapon/ore/gold,
-						  /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/phoron,
-						  /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/uranium,
-						  /obj/item/weapon/ore/coal,
-						  /obj/item/weapon/ore/osmium,
-						  /obj/item/weapon/ore/hydrogen,
-						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
 	if(iswelder(I))
@@ -657,15 +660,15 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.use(0, user) && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
-				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
+				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
-				to_chat(user, "<span class='info'>You start repair some of the armor on [src].</span>")
+				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
 				if(W.use_tool(src, user, 20, volume = 50))
 					health += 15
-					to_chat(user, "<span class='info'>You repaired some of the armor on [src].</span>")
+					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return
 	..()
 
@@ -678,10 +681,10 @@
 	new /obj/effect/decal/remains/robot(src.loc)
 	DropOre()
 	qdel(src)
-	return
 
 /mob/living/simple_animal/hostile/mining_drone/atom_init()
 	. = ..()
+	wanted_objects = subtypesof(/obj/item/weapon/ore)
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
@@ -694,21 +697,21 @@
 			to_chat(attacker, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
-	stop_automated_movement_when_pulled = 1
+	stop_automated_movement_when_pulled = TRUE
 	idle_vision_range = 9
 	search_objects = 2
-	wander = 1
-	ranged = 0
+	wander = TRUE
+	ranged = FALSE
 	minimum_distance = 1
 	retreat_distance = null
 	icon_state = "mining_drone"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	idle_vision_range = 6
 	search_objects = 0
-	wander = 0
-	ranged = 1
+	wander = FALSE
+	ranged = TRUE
 	retreat_distance = 2
 	minimum_distance = 3
 	icon_state = "mining_drone_offense"
@@ -769,7 +772,7 @@
 		else
 			msg += "<span class='warning'><B>It looks severely dented!</B></span>\n"
 	else
-		msg += "<span class='notice'>It looks without dents.</span>\n"
+		msg += "<span class='notice'>It looks undamaged.</span>\n"
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
@@ -800,6 +803,28 @@
 	throw_range = 5
 	var/loaded = 1
 
+/obj/item/weapon/lazarus_injector/proc/revive(mob/living/target, mob/living/user)
+	if(istype(target, /mob/living/simple_animal))
+		var/mob/living/simple_animal/M = target
+		if(M.stat == DEAD)
+			M.faction = "lazarus"
+			M.revive()
+			if(istype(target, /mob/living/simple_animal/hostile))
+				var/mob/living/simple_animal/hostile/H = M
+				H.friends += user
+				log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
+			loaded = FALSE
+			user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
+			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "lazarus_empty"
+			return
+		else
+			to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
+			return
+	else
+		to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
+		return
+
 /obj/item/weapon/lazarus_injector/attack(mob/living/M, mob/living/user, def_zone)
 	if(!..())
 		return TRUE
@@ -807,27 +832,8 @@
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living) && proximity)
-		if(istype(target, /mob/living/simple_animal))
-			var/mob/living/simple_animal/M = target
-			if(M.stat == DEAD)
-				M.faction = "lazarus"
-				M.revive()
-				if(istype(target, /mob/living/simple_animal/hostile))
-					var/mob/living/simple_animal/hostile/H = M
-					H.friends += user
-					log_game("[key_name(user)] has revived hostile mob [target] with a lazarus injector")
-				loaded = 0
-				user.visible_message("<span class='notice'>[user] injects [M] with [src], reviving it.</span>")
-				playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
-				icon_state = "lazarus_empty"
-				return
-			else
-				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
-				return
-		else
-			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
-			return
+	if(isliving(target) && proximity)
+		revive(target, user)
 
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
@@ -849,6 +855,8 @@
 	var/loaded = 1
 
 /obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!loaded)
 		return
 	if(istype(target, /obj/item/clothing/suit/space))

@@ -10,6 +10,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Whitelist Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -32,7 +33,7 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=whitelist;size=600x500")
+	usr << browse(output,"window=whitelist;size=600x500")
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
@@ -45,6 +46,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Whitelist Panel for [user_ckey]</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -81,7 +83,7 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=whitelist_user;size=750x500")
+	usr << browse(output,"window=whitelist_user;size=750x500")
 
 /datum/admins/proc/whitelist_add_user()
 	if(!check_rights(R_WHITELIST))

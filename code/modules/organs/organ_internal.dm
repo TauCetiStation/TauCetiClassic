@@ -154,6 +154,8 @@
 	var/bruised_loss = 3
 
 /obj/item/organ/internal/heart/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	if(is_broken())
 		return
 
@@ -168,12 +170,19 @@
 	if(pumping_volume > 0)
 		lungs.add_refrigerant(pumping_volume)
 
+/obj/item/organ/internal/heart/vox
+	parent_bodypart = BP_GROIN
+
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	organ_tag = O_LUNGS
 	parent_bodypart = BP_CHEST
 
 	var/has_gills = FALSE
+
+/obj/item/organ/internal/lungs/vox
+	name = "air capillary sack"
+	parent_bodypart = BP_GROIN
 
 /obj/item/organ/internal/lungs/skrell
 	name = "respiration sac"
@@ -236,6 +245,8 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	var/temp_gain = owner.species.synth_temp_gain
 
 	if(refrigerant > 0 && !is_broken())
@@ -274,12 +285,17 @@
 /obj/item/organ/internal/liver/diona
 	name = "chlorophyll sac"
 
+/obj/item/organ/internal/liver/vox
+	name = "waste tract"
+
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
+	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/atom_init()
-	. = ..()
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+	..()
 	new/obj/item/weapon/stock_parts/cell/crap/(src)
+	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -321,21 +337,40 @@
 
 /obj/item/organ/internal/liver/ipc/process()
 	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
-	if(damage && C)
+	
+	if(!C)
+		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
+		owner.SetParalysis(2)
+		owner.eye_blurry = 2
+		owner.silent = 2
+		return
+	if(damage)
 		C.charge = owner.nutrition
 		if(owner.nutrition > (C.maxcharge - damage * 5))
 			owner.nutrition = C.maxcharge - damage * 5
-	else if(!C)
-		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
-			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
-		owner.SetParalysis(5)
-		owner.eye_blurry = 5
-		owner.silent = 5
+	if(owner.nutrition < 1)
+		owner.SetParalysis(2)
+		if(accumulator_warning < world.time)
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% LOW CHARGE. SHUTTING DOWN.</span>")
+			accumulator_warning = world.time + 15 SECONDS
+
+/obj/item/organ/internal/liver/ipc/proc/ipc_cell_explode()
+	var/obj/item/weapon/stock_parts/cell/C = locate() in src
+	if(!C)
+		return
+	var/turf/T = get_turf(owner.loc)
+	if(owner.nutrition > (C.maxcharge * 1.2))
+		explosion(T, 1, 0, 1, 1)
+		C.ex_act(1.0)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
 	organ_tag = O_KIDNEYS
 	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/kidneys/vox
+	name = "filtration bladder"
 
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
@@ -355,6 +390,8 @@
 	var/next_warning = 0
 
 /obj/item/organ/internal/kidneys/ipc/process()
+	if(owner.nutrition < 1)
+		return
 	if(next_warning > world.time)
 		return
 	next_warning = world.time + 10 SECONDS
@@ -367,7 +404,7 @@
 			if(!first)
 				damage_report += "\n"
 			first = FALSE
-			damage_report += "<span class='warning'><b>%[uppertext_(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext_(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
+			damage_report += "<span class='warning'><b>%[uppertext(IO.name)]%</b> INJURY DETECTED. CEASE DAMAGE TO <b>%[uppertext(IO.name)]%</b>. REQUEST ASSISTANCE.</span>"
 
 	if(damage_report != "")
 		to_chat(owner, damage_report)

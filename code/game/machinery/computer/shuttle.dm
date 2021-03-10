@@ -1,9 +1,9 @@
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
 	desc = "For shuttle control."
-	icon_state = "shuttle"
-	state_broken_preset = "commb"
-	state_nopower_preset = "comm0"
+	icon_state = "erokEz"
+	state_broken_preset = "erokEzb"
+	state_nopower_preset = "erokEz0"
 	var/auth_need = 3.0
 	var/list/authorized = list()
 
@@ -12,7 +12,7 @@
 
 /obj/machinery/computer/shuttle/attackby(obj/item/weapon/card/W, mob/user)
 	if(stat & (BROKEN|NOPOWER))	return
-	if ((!( istype(W, /obj/item/weapon/card) ) || !( ticker ) || SSshuttle.location != 1 || !( user )))	return
+	if ((!( istype(W, /obj/item/weapon/card) ) || !( SSticker ) || SSshuttle.location != 1 || !( user )))	return
 	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if (istype(W, /obj/item/device/pda))
 			var/obj/item/device/pda/pda = W

@@ -61,7 +61,7 @@
 		to_chat(user, "This device is busy.")
 		return
 
-	var/dat = "<h1>Keycard Authentication Device</h1>"
+	var/dat = ""
 
 	dat += "This device is used to trigger some high security events. It requires the simultaneous swipe of two high-level ID cards."
 	dat += "<br><hr><br>"
@@ -75,11 +75,17 @@
 		dat += "<li><A href='?src=\ref[src];triggerevent=Grant Emergency Maintenance Access'>Grant Emergency Maintenance Access</A></li>"
 		dat += "<li><A href='?src=\ref[src];triggerevent=Revoke Emergency Maintenance Access'>Revoke Emergency Maintenance Access</A></li>"
 		dat += "</ul>"
-		user << browse(entity_ja(dat), "window=keycard_auth;size=500x250")
+
+		var/datum/browser/popup = new(user, "keycard_auth", "Keycard Authentication Device", 500, 250)
+		popup.set_content(dat)
+		popup.open()
 	if(screen == 2)
 		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
 		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
-		user << browse(entity_ja(dat), "window=keycard_auth;size=500x250")
+
+		var/datum/browser/popup = new(user, "keycard_auth", "Keycard Authentication Device", 500, 250)
+		popup.set_content(dat)
+		popup.open()
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)
@@ -165,27 +171,29 @@
 
 /obj/machinery/keycard_auth/proc/is_ert_blocked()
 	if(config.ert_admin_call_only) return 1
-	return ticker.mode && ticker.mode.ert_disabled
+	return SSticker.mode && SSticker.mode.ert_disabled
 
 var/global/maint_all_access_priority = FALSE    // Set only by keycard auth. If true, maint
                                                 // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
 var/global/timer_maint_revoke_id = 0
 
-/proc/make_maint_all_access(var/priority = FALSE)
+/proc/make_maint_all_access(priority = FALSE)
 	if(priority)
 		maint_all_access_priority = TRUE
 
 	change_maintenance_access(TRUE)
-	captain_announce("The maintenance access requirement has been revoked on all airlocks.")
+	var/datum/announcement/station/maint_revoke/announcement = new
+	announcement.play()
 
-/proc/revoke_maint_all_access(var/priority = FALSE)
+/proc/revoke_maint_all_access(priority = FALSE)
 	if(priority)
 		maint_all_access_priority = FALSE
 	if(maint_all_access_priority)	// We must use keycard auth
 		return
 
 	change_maintenance_access(FALSE)
-	captain_announce("The maintenance access requirement has been readded on all maintenance airlocks.")
+	var/datum/announcement/station/maint_readd/announcement = new
+	announcement.play()
 
 /proc/change_maintenance_access(allow_state)
 	for(var/area/station/maintenance/M in all_areas)

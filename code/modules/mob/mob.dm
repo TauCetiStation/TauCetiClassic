@@ -1,15 +1,16 @@
+/mob
+	hud_possible = list(ANTAG_HUD)
+
 /**
   * Delete a mob
   *
   * Removes mob from the following global lists
-  * * GLOB.mob_list
-  * * GLOB.dead_mob_list
-  * * GLOB.alive_mob_list
+  * * global.mob_list
+  * * global.dead_mob_list
+  * * global.alive_mob_list
   * Clears alerts for this mob
   *
   * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
@@ -20,18 +21,23 @@
 	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 /mob/atom_init()
 	spawn()
-		if(client) animate(client, color = null, time = 0)
+		if(client)
+			animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
 	else
 		alive_mob_list += src
 	. = ..()
+	prepare_huds()
+	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
+		if(!AA)
+			continue
+		AA.update_alt_appearance(src)
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -205,7 +211,7 @@
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
 	var/list/grabs = GetGrabs()
-	if(!LAZYLEN(grabs))
+	if(!length(grabs))
 		if(!L)
 			return null
 		else
@@ -259,7 +265,7 @@
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = sanitize(msg)
+	msg = replacetext(sanitize(msg, extra = FALSE), "\n", "<br>")
 
 	if(msg && mind)
 		mind.store_memory(msg)
@@ -289,10 +295,10 @@
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
 		var/msg = flavor_text
-		if(lentext(msg) <= 40)
+		if(length_char(msg) <= 40)
 			return "<span class='notice'>[msg]</span>"
 		else
-			return "<span class='notice'>[copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></span>"
+			return "<span class='notice'>[copytext_char(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a></span>"
 
 //mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view())
@@ -347,10 +353,10 @@
 	if(!abandon_allowed)
 		to_chat(usr, "<span class='notice'>Respawn is disabled.</span>")
 		return
-	if(stat != DEAD || !ticker)
+	if(stat != DEAD || !SSticker)
 		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
-	if(ticker && istype(ticker.mode, /datum/game_mode/meteor))
+	if(SSticker && istype(SSticker.mode, /datum/game_mode/meteor))
 		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
 		return
 	else
@@ -440,7 +446,7 @@
 	set category = "OOC"
 	reset_view(null)
 	unset_machine()
-	if(istype(src, /mob/living))
+	if(isliving(src))
 		var/mob/living/M = src
 		if(M.cameraFollow)
 			M.cameraFollow = null
@@ -459,19 +465,14 @@
 	return
 
 /mob/Topic(href, href_list)
-	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
-		unset_machine()
-		src << browse(null, t1)
-
 	if (href_list["refresh"])
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
 	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, entity_ja(flavor_text)), text("window=[];size=500x200", name))
-		onclose(usr, "[name]")
-
+		var/datum/browser/popup = new(usr, "window=flavor [name]", "Flavor [name]", 500, 200, ntheme = CSS_THEME_LIGHT)
+		popup.set_content(flavor_text)
+		popup.open()
 	return
 
 
@@ -667,8 +668,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(client.holder)
 				if (config.registration_panic_bunker_age)
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
-				if(ticker.mode && ticker.mode.config_tag == "malfunction")
-					var/datum/game_mode/malfunction/GM = ticker.mode
+				if(SSticker.mode && SSticker.mode.config_tag == "malfunction")
+					var/datum/game_mode/malfunction/GM = SSticker.mode
 					if(GM.malf_mode_declared)
 						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
@@ -695,7 +696,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 						stat("Failsafe Controller:", "ERROR")
 					if(Master)
 						stat(null)
-						for(var/datum/subsystem/SS in Master.subsystems)
+						for(var/datum/controller/subsystem/SS in Master.subsystems)
 							SS.stat_entry()
 					cameranet.stat_entry()
 
@@ -791,9 +792,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
-	dir = ndir
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
-		buckled.dir = ndir
+		buckled.set_dir(ndir)
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
 	return 1
@@ -1004,6 +1005,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					BP = limb
 
 		BP.implants -= selection
+		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
@@ -1026,13 +1028,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 			anchored = 0
 	return 1
 
-/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+///Get the ghost of this mob (from the mind)
+/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
-		for(var/mob/dead/observer/G in observer_list)
-			if(G.mind == mind)
-				if(G.can_reenter_corpse || even_if_they_cant_reenter)
-					return G
-				break
+		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
@@ -1153,3 +1152,24 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Return null if mob of this type can not scramble messages.
 /mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)
+
+/**
+  * Prepare the huds for this atom
+  *
+  * Goes through hud_possible list and adds the images to the hud_list variable (if not already
+  * cached)
+  */
+/atom/proc/prepare_huds()
+	if(hud_list || !hud_possible)
+		return
+
+	hud_list = list()
+	for(var/hud in hud_possible)
+		var/hint = hud_possible[hud]
+		switch(hint)
+			if(HUD_LIST_LIST)
+				hud_list[hud] = list()
+			else
+				var/image/I = image('icons/mob/hud.dmi', src, "")
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				hud_list[hud] = I

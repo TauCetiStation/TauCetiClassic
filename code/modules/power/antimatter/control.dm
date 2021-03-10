@@ -44,7 +44,7 @@
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
 		explosion(get_turf(src),8,12,18,12)
-		if(src) del(src)
+		if(src) qdel(src)
 
 	if(update_shield_icons && !shield_icon_delay)
 		check_shield_icons()
@@ -263,9 +263,7 @@
 			user << browse(null, "window=AMcontrol")
 			return
 
-	var/dat = ""
-	dat += "AntiMatter Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	var/dat
 	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	dat += "<A href='?src=\ref[src];refreshicons=1'>Force Shielding Update</A><BR><BR>"
 	dat += "Status: [(active?"Injecting":"Standby")] <BR>"
@@ -288,17 +286,12 @@
 		dat += "- Injecting: [fuel_injection] units<BR>"
 		dat += "- <A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-
-	user << browse(entity_ja(dat), "window=AMcontrol;size=420x500")
-	onclose(user, "AMcontrol")
+	var/datum/browser/popup = new(user, "AMcontrol", "AntiMatter Control Panel", 420, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=AMcontrol")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

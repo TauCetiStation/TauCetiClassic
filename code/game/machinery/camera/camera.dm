@@ -40,7 +40,7 @@
 	CA.forceMove(src)
 	assembly = CA
 	assembly.state = 4
-	
+
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
@@ -65,6 +65,7 @@
 			bug.current = null
 		bug = null
 	cameranet.cameras -= src
+	invalidateCameraCache()
 	var/list/open_networks = difflist(network, RESTRICTED_CAMERA_NETWORKS)
 	if(open_networks.len)
 		cameranet.removeCamera(src)
@@ -200,12 +201,22 @@
 			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras...")
-			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
+
+			var/dat = "<TT>[info]</TT>"
+			var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
+			popup.set_content(dat)
+			popup.open()
+
 		for(var/mob/O in player_list)
 			if(O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras...")
-				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
-	else if(istype(W, /obj/item/device/camera_bug))
+
+				var/dat = "<TT>[info]</TT>"
+				var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
+				popup.set_content(dat)
+				popup.open()
+
+	else if (istype(W, /obj/item/device/camera_bug))
 		if(!src.can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional</span>")
 			return
@@ -312,13 +323,13 @@
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
-					src.dir = SOUTH
+					src.set_dir(SOUTH)
 				if(SOUTH)
-					src.dir = NORTH
+					src.set_dir(NORTH)
 				if(WEST)
-					src.dir = EAST
+					src.set_dir(EAST)
 				if(EAST)
-					src.dir = WEST
+					src.set_dir(WEST)
 			break
 
 //Return a working camera that can see a given mob

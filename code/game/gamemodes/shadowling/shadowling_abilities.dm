@@ -143,7 +143,7 @@
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
 	var/thrallsPresent = 0
 	var/mob/living/carbon/human/user = usr
-	for(var/datum/mind/mindToCount in ticker.mode.thralls)
+	for(var/datum/mind/mindToCount in SSticker.mode.thralls)
 		thrallsPresent++
 	if(thrallsPresent >= 5 && (user.dna.species != SHADOWLING))
 		to_chat(user, "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>")
@@ -203,6 +203,7 @@
 							if(L.implanted)
 								qdel(L)
 								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
+						target.sec_hud_set_implants()
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
@@ -221,8 +222,9 @@
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
 		target.setOxyLoss(0) //In case the shadowling was choking them out
-		ticker.mode.add_thrall(target.mind)
+		SSticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "thrall"
+		add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", target)
 		//var/datum/mind/thrall_mind = target.mind
 		//thrall_mind.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind //Lets thralls hive-chat
 
@@ -591,8 +593,9 @@
 		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
-		ticker.mode.add_thrall(target.mind)
+		SSticker.mode.add_thrall(target.mind)
 		target.mind.special_role = "thrall"
+		add_antag_hud(ANTAG_HUD_SHADOW, "hudthrall", target)
 		target.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 
 

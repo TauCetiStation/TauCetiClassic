@@ -1,6 +1,6 @@
 /atom/movable
 	layer = 3
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
@@ -61,6 +61,7 @@
 		return
 
 	var/atom/oldloc = loc
+	var/old_dir = dir
 
 	if(loc != NewLoc)
 		if (!(Dir & (Dir - 1))) //Cardinal move
@@ -100,6 +101,9 @@
 
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc,Dir)) //movement failed due to buckled mob
 		. = 0
+
+	if(dir != old_dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 	if(.)
 		Moved(oldloc, Dir)
@@ -166,7 +170,6 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
-
 		Moved(oldloc, 0)
 		return TRUE
 	return FALSE

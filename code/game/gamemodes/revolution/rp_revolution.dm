@@ -6,9 +6,11 @@
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	required_players = 4
-	required_players_secret = 20
+	required_players_bundles = 20
 	required_enemies = 2
 	recommended_enemies = 2
+	antag_hud_type = ANTAG_HUD_REV
+	antag_hud_name = "hudheadrevolutionary"
 
 	votable = 0
 
@@ -78,7 +80,7 @@
 				rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
 				rev_mind.objectives += rev_obj
 
-		update_all_rev_icons()
+
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
@@ -92,6 +94,7 @@
 
 /datum/game_mode/rp_revolution/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
+	add_antag_hud(antag_hud_type, antag_hud_name, rev_mind.current)
 	if (you_are)
 		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
 	if(!config.objectives_disabled)
@@ -172,10 +175,9 @@
 	revolutionaries += rev_mind
 	to_chat(rev_mind.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
 	rev_mind.special_role = "Revolutionary"
+	add_antag_hud(antag_hud_type, "hudrevolutionary", rev_mind.current)
 	if(config.objectives_disabled)
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-	update_all_rev_icons()
-	H.hud_updateflag |= 1 << SPECIALROLE_HUD
 	return 1
 
 //////////////////////////////////////////////////////////////////////
@@ -224,8 +226,8 @@
 		to_chat(src, "<span class='warning'>There doesn't appear to be anyone available for you to convert here.</span>")
 		return
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
-	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
-		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
+	if(((src.mind in SSticker.mode:head_revolutionaries) || (src.mind in SSticker.mode:revolutionaries)))
+		if((M.mind in SSticker.mode:head_revolutionaries) || (M.mind in SSticker.mode:revolutionaries))
 			to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 		else if(ismindshielded(M))
 			to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
@@ -240,7 +242,7 @@
 			message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
-				ticker.mode:add_revolutionary(M.mind)
+				SSticker.mode:add_revolutionary(M.mind)
 				to_chat(M, "<span class='notice'>You join the revolution!</span>")
 				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 			else if(choice == "No!")
@@ -254,27 +256,29 @@
 		tried_to_add_revheads = world.time+50
 		var/active_revs = 0
 		for(var/datum/mind/rev_mind in head_revolutionaries)
-			if(rev_mind.current && rev_mind.current.client && rev_mind.current.client.inactivity <= 10*60*20) // 20 minutes inactivity are OK
+			if(rev_mind.current && rev_mind.current.client && rev_mind.current.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 				active_revs++
 
 		if(active_revs == 0)
 			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = 0
-			for(var/mob/living/carbon/human/H in human_list) if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 10*60*20 && (H.mind in revolutionaries))
-				head_revolutionaries += H.mind
-				for(var/datum/mind/head_mind in heads)
-					var/datum/objective/mutiny/rp/rev_obj = new
-					rev_obj.owner = H.mind
-					rev_obj.target = head_mind
-					rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
-					H.mind.objectives += rev_obj
+			for(var/mob/living/carbon/human/H in human_list)
+				if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 20 MINUTES && (H.mind in revolutionaries))
+					head_revolutionaries += H.mind
+					revolutionaries -= H.mind
+					for(var/datum/mind/head_mind in heads)
+						var/datum/objective/mutiny/rp/rev_obj = new
+						rev_obj.owner = H.mind
+						rev_obj.target = head_mind
+						rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+						H.mind.objectives += rev_obj
 
-				update_all_rev_icons()
-				H.verbs += /mob/living/carbon/human/proc/RevConvert
+					H.verbs += /mob/living/carbon/human/proc/RevConvert
+					add_antag_hud(antag_hud_type, antag_hud_name, H)
 
-				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
-				added_heads = 1
-				break
+					to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
+					added_heads = 1
+					break
 
 			if(added_heads)
 				log_admin("Managed to add new heads of revolution.")
@@ -287,14 +291,14 @@
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		src.command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
 			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = 0.5	//halve the salary of all professions except leading
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
-			if(person["rank"] in command_positions)
+			if(person["rank"] in excluded_rank)
 				continue
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
@@ -309,7 +313,7 @@
 	checkwin_counter++
 	if(checkwin_counter >= 5)
 		if(!finished)
-			ticker.mode.check_win()
+			SSticker.mode.check_win()
 		checkwin_counter = 0
 	return 0
 
@@ -324,7 +328,7 @@
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /datum/game_mode/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)

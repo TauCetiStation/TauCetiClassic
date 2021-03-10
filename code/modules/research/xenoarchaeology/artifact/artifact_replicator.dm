@@ -97,9 +97,9 @@
 			var/spawn_type = pop(spawning_types)
 			var/obj/spawned_obj = new spawn_type(src.loc)
 			if(source_material)
-				if(lentext(source_material.name) < MAX_MESSAGE_LEN)
+				if(length_char(source_material.name) < MAX_MESSAGE_LEN)
 					spawned_obj.name = "[source_material] " +  spawned_obj.name
-				if(lentext(source_material.desc) < MAX_MESSAGE_LEN * 2)
+				if(length_char(source_material.desc) < MAX_MESSAGE_LEN * 2)
 					if(spawned_obj.desc)
 						spawned_obj.desc += " It is made of [source_material]."
 					else
@@ -124,7 +124,9 @@
 	for(var/index=1, index<=construction.len, index++)
 		dat += "<A href='?src=\ref[src];activate=[index]'>\[[construction[index]]\]</a><br>"
 
-	user << browse(entity_ja(dat), "window=alien_replicator")
+	var/datum/browser/popup = new(user, "alien_replicator")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
 	user.drop_item()

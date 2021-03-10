@@ -42,18 +42,18 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(!owner)
 		return
 
-	var/datum/asset/goonchat = get_asset_datum(/datum/asset/simple/goonchat)
-	goonchat.register()
+	var/datum/asset/goonchat = get_asset_datum(/datum/asset/group/goonchat)
 	goonchat.send(owner)
 	owner << browse('code/modules/goonchat/browserassets/html/browserOutput.html', "window=browseroutput")
 
-/datum/chatOutput/Topic(var/href, var/list/href_list)
+/datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
 		return 1
 
+	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
 	for(var/key in href_list)
-		if(length(key) > 7 && findtext(key, "param"))
+		if(length(key) > 7 && findtext(key, "param")) // 7 is the amount of characters in the basic param key template.
 			var/param_name = copytext(key, 7, -1)
 			var/item = href_list[key]
 			params[param_name] = item
@@ -61,10 +61,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/data
 	switch(href_list["proc"])
 		if("doneLoading")
-			data = doneLoading(arglist(params))
+			doneLoading()
 
 		if("ping")
-			data = ping(arglist(params))
+			data = ping()
 
 		if("analyzeClientData")
 			analyzeClientData(arglist(params))
@@ -73,7 +73,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		ehjax_send(data = data)
 
 /datum/chatOutput/proc/doneLoading()
-	if(loaded)
+	if(!owner || loaded)
 		return
 
 	loaded = TRUE
@@ -107,7 +107,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	ehjax_send(data = emojiJson)
 
 
-/datum/chatOutput/proc/ehjax_send(var/client/C = owner, var/window = "browseroutput", var/data)
+/datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
@@ -177,7 +177,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(var/icon/icon, var/iconKey = "misc")
+/proc/icon2base64(icon/icon, iconKey = "misc")
 	if (!isicon(icon)) return 0
 
 	iconCache[iconKey] << icon
@@ -185,7 +185,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/bicon(var/obj, var/use_class = 1)
+/proc/bicon(obj, use_class = 1)
 	var/class = use_class ? "class='icon misc'" : null
 	if (!obj)
 		return
@@ -237,8 +237,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", ENTITY_TAB)
-
-	//message = entity_ja(message)//moved to js
 
 	if(islist(target))
 		var/encoded = url_encode(message)

@@ -3,6 +3,7 @@
 	name = OUTFIT_JOB_NAME("Chief Medical Officer")
 
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
+	uniform_f = /obj/item/clothing/under/rank/chief_medical_officer/skirt
 	shoes = /obj/item/clothing/shoes/brown
 	suit = /obj/item/clothing/suit/storage/labcoat/cmo
 
@@ -19,6 +20,7 @@
 	name = OUTFIT_JOB_NAME("Medical Doctor")
 
 	uniform = /obj/item/clothing/under/rank/medical
+	uniform_f =/obj/item/clothing/under/rank/medical/skirt
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/labcoat
 
@@ -53,6 +55,7 @@
 	name = OUTFIT_JOB_NAME("Nurse")
 
 	uniform = /obj/item/clothing/under/rank/medical/purple
+	uniform_f = /obj/item/clothing/under/rank/nurse
 	shoes = /obj/item/clothing/shoes/white
 
 	belt = /obj/item/device/pda/medical
@@ -64,12 +67,10 @@
 	back_style = BACKPACK_STYLE_MEDICAL
 
 /datum/outfit/job/nurse/pre_equip(mob/living/carbon/human/H)
-	if(H.gender == FEMALE)
+	if(H.use_skirt)
 		if(prob(50))
 			uniform_f = /obj/item/clothing/under/rank/nursesuit
-		else
-			uniform_f = /obj/item/clothing/under/rank/nurse
-		head = /obj/item/clothing/head/nursehat	
+		head = /obj/item/clothing/head/nursehat
 
 
 // PARAMEDIC OUTFIT
@@ -92,6 +93,7 @@
 	name = OUTFIT_JOB_NAME("Chemist")
 
 	uniform = /obj/item/clothing/under/rank/chemist
+	uniform_f = /obj/item/clothing/under/rank/chemist/skirt
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/labcoat/chemist
 
@@ -105,8 +107,9 @@
 	name = OUTFIT_JOB_NAME("Geneticist")
 
 	uniform = /obj/item/clothing/under/rank/geneticist
+	uniform_f = /obj/item/clothing/under/rank/geneticist/skirt
 	shoes = /obj/item/clothing/shoes/white
-	suit =/obj/item/clothing/suit/storage/labcoat/genetics 
+	suit = /obj/item/clothing/suit/storage/labcoat/genetics
 	suit_store = /obj/item/device/flashlight/pen
 
 	belt = /obj/item/device/pda/geneticist
@@ -119,6 +122,7 @@
 	name = OUTFIT_JOB_NAME("Virologist")
 
 	uniform =/obj/item/clothing/under/rank/virologist
+	uniform_f = /obj/item/clothing/under/rank/virologist/skirt
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/labcoat/virologist

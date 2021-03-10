@@ -32,7 +32,7 @@
 	client.screen = list()				//remove hud items just in case
 	if(hud_used)
 		qdel(hud_used)		//remove the hud objects
-	hud_used = new /datum/hud(src)
+	hud_used = new hud_type(src)
 	client.pixel_x = 0
 	client.pixel_y = 0
 	next_move = 1
@@ -56,7 +56,18 @@
 	blocker.alpha = 255
 	blocker.layer = ABOVE_HUD_LAYER
 	blocker.plane = ABOVE_HUD_PLANE
-	blocker.mouse_opacity = 0
+	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	// atom_huds
+	reload_huds()
+
+	//Reload alternate appearances
+	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
+		if(!AA)
+			continue
+		AA.update_alt_appearance(src)
+
+	add_click_catcher()
 
 	client.screen += blocker
 

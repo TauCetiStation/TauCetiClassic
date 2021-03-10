@@ -6,7 +6,7 @@
 	config_tag = "meme"
 	role_type = ROLE_MEME
 	required_players = 6
-	required_players_secret = 15
+	required_players_bundles = 15
 	restricted_jobs = list("AI", "Cyborg")
 	required_enemies = 1
 	recommended_enemies = 3 // need at least a meme and a host
@@ -42,11 +42,11 @@
 	if (!..())
 		return FALSE
 
-	var/meme_number = CLAMP((global.player_list.len/13), required_enemies, recommended_enemies)
+	var/meme_number = clamp((global.player_list.len/13), required_enemies, recommended_enemies)
 
 	if (antag_candidates.len < meme_number)
 		meme_number = antag_candidates.len
-	
+
 	while(meme_number > 0)
 		var/datum/mind/meme = pick(antag_candidates)
 		modePlayer += meme
@@ -64,7 +64,7 @@
 /datum/game_mode/meme/post_setup()
 	var/list/possible_hosts = list()
 	var/datum/mind/target = null
-	for(var/datum/mind/possible_host in ticker.minds)
+	for(var/datum/mind/possible_host in SSticker.minds)
 		if(possible_host.assigned_role != "MODE" && ishuman(possible_host.current) && (possible_host.current.stat != DEAD))
 			possible_hosts += possible_host
 	if(!(possible_hosts.len))
@@ -204,6 +204,6 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "meme", "html" = text))
-		text = "<div class='block'>[text]</div>"
-		
+		text = "<div class='Section'>[text]</div>"
+
 	return text

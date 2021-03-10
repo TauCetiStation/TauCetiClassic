@@ -126,7 +126,7 @@
 
 	var/loot
 	var/list/suits = list(
-		/obj/item/clothing/suit/wintercoat/captain,
+		/obj/item/clothing/suit/hooded/wintercoat/captain,
 		/obj/item/clothing/suit/storage/labcoat,
 		/obj/item/clothing/suit/storage/det_suit,
 		/obj/item/clothing/suit/storage/hazardvest,

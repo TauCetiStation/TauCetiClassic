@@ -1,10 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	return istype(M) && M.mind && SSticker && SSticker.mode && (M.mind in SSticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
@@ -26,7 +24,9 @@
 	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
 	required_players = 5
-	required_players_secret = 20
+	required_players_bundles = 20
+	antag_hud_type = ANTAG_HUD_CULT
+	antag_hud_name = "hudcultist"
 
 	required_enemies = 3
 	recommended_enemies = 4
@@ -97,7 +97,7 @@
 
 		listclearnulls(possible_targets)
 
-		if(LAZYLEN(possible_targets))
+		if(length(possible_targets))
 			sacrifice_target = pick(possible_targets)
 
 	for(var/datum/mind/cult_mind in cult)
@@ -109,10 +109,10 @@
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
-	update_all_cult_icons()
+		add_antag_hud(antag_hud_type, antag_hud_name, cult_mind.current)
+
 
 	return ..()
-
 
 /datum/game_mode/cult/proc/memoize_cult_objectives(datum/mind/cult_mind)
 	for(var/obj_count = 1,obj_count <= objectives.len,obj_count++)
@@ -186,7 +186,8 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
 		cult += cult_mind
-		update_cult_icons_added(cult_mind)
+		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", cult_mind.current)
+
 		return 1
 
 
@@ -200,54 +201,12 @@
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1)
 	if(cult_mind in cult)
 		cult -= cult_mind
+		remove_antag_hud(ANTAG_HUD_CULT, cult_mind.current)
 		cult_mind.current.Paralyse(5)
 		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
 		cult_mind.memory = ""
-		update_cult_icons_removed(cult_mind)
 		if(show_message)
 			cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</span></FONT>")
-
-/datum/game_mode/proc/update_all_cult_icons()
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			for(var/image/I in cultist.current.client.images)
-				if(I.icon_state == "cult")
-					cultist.current.client.images -= I
-					qdel(I)
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			for(var/datum/mind/cultist_1 in cult)
-				if(cultist_1.current)
-					var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
-					cultist.current.client.images += I
-
-
-/datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	if(!cult_mind.current)
-		return 0
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
-			cultist.current.client.images += I
-		if(cult_mind.current.client)
-			var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
-			cult_mind.current.client.images += J
-
-/datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	if(!cult_mind.current)
-		return 0
-	for(var/datum/mind/cultist in cult)
-		if(cultist.current && cultist.current.client)
-			for(var/image/I in cultist.current.client.images)
-				if(I.icon_state == "cult" && I.loc == cult_mind.current)
-					cultist.current.client.images -= I
-					qdel(I)
-	if(cult_mind.current.client)
-		for(var/image/I in cult_mind.current.client.images)
-			if(I.icon_state == "cult")
-				cult_mind.current.client.images -= I
-				qdel(I)
-
 
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
@@ -342,13 +301,13 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
-	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
+	if( cult.len || (SSticker && istype(SSticker.mode,/datum/game_mode/cult)) )
 		text += printlogo("cult", "cultists")
 		for(var/datum/mind/cultist in cult)
 			text += printplayerwithicon(cultist)
 
 	if(text)
 		antagonists_completion += list(list("mode" = "cult", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text

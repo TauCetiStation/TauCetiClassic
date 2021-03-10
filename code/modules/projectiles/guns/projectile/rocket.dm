@@ -22,6 +22,7 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/MouseDrop(obj/over_object)
+	. = ..()
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
@@ -54,6 +55,7 @@
 	return ..(1, 1)
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/dropped(mob/user)
+	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/revolver/rocketlauncher/O = user.get_inactive_hand()

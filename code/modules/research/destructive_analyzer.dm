@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /*
 Destructive Analyzer
 
@@ -27,10 +25,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 	for(var/obj/item/weapon/stock_parts/S in component_parts)
 		T += S.rating
 	decon_mod = T
-
-/obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)

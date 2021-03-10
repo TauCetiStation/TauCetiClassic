@@ -33,7 +33,7 @@
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/captain(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	#endif
@@ -128,7 +128,7 @@
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/melee/telebaton(src)
-	new /obj/item/weapon/gun/energy/gun/head(src)
+	new /obj/item/weapon/gun/energy/gun/hos(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/airbag(src)
@@ -136,7 +136,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/projectile/glock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -168,7 +168,7 @@
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/clothing/glasses/sunglasses/sechud(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash(src)
@@ -182,7 +182,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/projectile/glock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -214,7 +214,7 @@
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/glasses/sunglasses/sechud(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/device/hailer(src)
 	new /obj/item/device/flashlight/flare(src)
@@ -223,7 +223,7 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/projectile/glock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/ushanka(src)
 	#endif

@@ -74,7 +74,7 @@
 			//var/pip = query.item[2]
 			//var/pcid = query.item[3]
 			var/ackey = query.item[4]
-			var/reason = initial_ja(query.item[5])
+			var/reason = query.item[5]
 			var/expiration = query.item[6]
 			var/duration = query.item[7]
 			var/bantime = query.item[8]
@@ -135,9 +135,9 @@
 				// Then next ban drop from Config after limit
 				// When ban not in DB clearing matches too
 				// DB restore after sometime rouge bans
-				if (LAZYLEN(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + LAZYLEN(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
-					LAZYLEN(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
+				if (length(cached_ban[BANKEY_MATCHES_THIS_ROUND]) + length(cached_ban[BANKEY_PENDING_MATCHES]) > STICKYBAN_MAX_MATCHES || \
+					length(cached_ban[BANKEY_EXISTING_USER_MATCHES]) > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
+					length(cached_ban[BANKEY_ADMIN_MATCHES_THIS_ROUND]) > STICKYBAN_MAX_ADMIN_MATCHES)
 					var/action
 					if (byond_ban[BANKEY_FROMDB])
 						cached_ban[BANKEY_TIMEOUT] = TRUE
@@ -166,7 +166,7 @@
 					return null
 		if (byond_ban[BANKEY_FROMDB])
 			// update matches DB cache
-			INVOKE_ASYNC(SSstickyban, /datum/subsystem/stickyban/proc.update_matches, banned_ckey, ckey, address, computer_id)
+			INVOKE_ASYNC(SSstickyban, /datum/controller/subsystem/stickyban/proc.update_matches, banned_ckey, ckey, address, computer_id)
 		if (is_admin)
 			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [banned_ckey]")
 			return null

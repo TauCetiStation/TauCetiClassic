@@ -97,8 +97,10 @@
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
 		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
-	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=juicer")
-	onclose(user, "juicer")
+
+	var/datum/browser/popup = new(user, "juicer", "Juicer")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 
 /obj/machinery/juicer/Topic(href, href_list)

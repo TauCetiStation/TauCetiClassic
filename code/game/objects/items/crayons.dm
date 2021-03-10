@@ -44,9 +44,9 @@
 
 /obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
 	var/occupying_gang
-	if(territory.type in (ticker.mode.A_territory | ticker.mode.A_territory_new))
+	if(territory.type in (SSticker.mode.A_territory | SSticker.mode.A_territory_new))
 		occupying_gang = gang_name("A")
-	if(territory.type in (ticker.mode.B_territory | ticker.mode.B_territory_new))
+	if(territory.type in (SSticker.mode.B_territory | SSticker.mode.B_territory_new))
 		occupying_gang = gang_name("B")
 	if(occupying_gang)
 		to_chat(user, "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
@@ -116,9 +116,9 @@
 		var/gangID
 		if(gang)
 			//Determine gang affiliation
-			if(user.mind in (ticker.mode.A_bosses | ticker.mode.A_gang))
+			if(user.mind in (SSticker.mode.A_bosses | SSticker.mode.A_gang))
 				gangID = "A"
-			else if(user.mind in (ticker.mode.B_bosses | ticker.mode.B_gang))
+			else if(user.mind in (SSticker.mode.B_bosses | SSticker.mode.B_gang))
 				gangID = "B"
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.

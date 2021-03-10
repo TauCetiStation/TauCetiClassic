@@ -1,8 +1,6 @@
 var/global/list/baked_smooth_icons = list()
 
-var/datum/subsystem/icon_smooth/SSicon_smooth
-
-/datum/subsystem/icon_smooth
+SUBSYSTEM_DEF(icon_smooth)
 	name = "Icon Smoothing"
 	init_order = SS_INIT_ICON_SMOOTH
 	wait = SS_WAIT_ICON_SMOOTH
@@ -12,10 +10,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
 
-/datum/subsystem/icon_smooth/New()
-	NEW_SS_GLOBAL(SSicon_smooth)
-
-/datum/subsystem/icon_smooth/fire()
+/datum/controller/subsystem/icon_smooth/fire()
 	var/list/cached = smooth_queue
 	while(cached.len)
 		var/atom/A = cached[cached.len]
@@ -34,7 +29,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 		else
 			can_fire = FALSE
 
-/datum/subsystem/icon_smooth/Initialize()
+/datum/controller/subsystem/icon_smooth/Initialize()
 	for(var/zlevel in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_CENTCOM, ZTRAIT_MINING, ZTRAIT_SPACE_RUINS)))
 		smooth_zlevel(zlevel, TRUE)
 	var/queue = smooth_queue

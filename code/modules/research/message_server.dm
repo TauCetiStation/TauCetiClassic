@@ -3,7 +3,7 @@
 	var/sender = "Unspecified" //name of the sender
 	var/message = "Blank" //transferred message
 
-/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "")
+/datum/data_pda_msg/New(param_rec = "",param_sender = "",param_message = "")
 
 	if(param_rec)
 		recipient = param_rec
@@ -20,7 +20,7 @@
 	var/id_auth = "Unauthenticated"
 	var/priority = "Normal"
 
-/datum/data_rc_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_stamp = "",var/param_id_auth = "",var/param_priority)
+/datum/data_rc_msg/New(param_rec = "",param_sender = "",param_message = "",param_stamp = "",param_id_auth = "",param_priority)
 	if(param_rec)
 		rec_dpt = param_rec
 	if(param_sender)
@@ -89,6 +89,31 @@
 
 /obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
+	var/authmsg = "[message]<br>"
+	if(id_auth)
+		authmsg += "[id_auth]<br>"
+	if(stamp)
+		authmsg += "[stamp]<br>"
+	for(var/obj/machinery/requests_console/Console in requests_console_list)
+		if(ckey(Console.department) == ckey(recipient))
+			switch(priority)
+				if(2)		//High priority
+					if(Console.newmessagepriority < 2)
+						Console.newmessagepriority = 2
+						Console.icon_state = "req_comp2"
+					if(!Console.silent)
+						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [sender]'")
+					Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></FONT></B><BR>[authmsg]"
+				else		// Normal priority
+					if(Console.newmessagepriority < 1)
+						Console.newmessagepriority = 1
+						Console.icon_state = "req_comp1"
+					if(!Console.silent)
+						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'Message from [sender]'")
+					Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></B><BR>[message]"
+			Console.set_light(2)
 
 /obj/machinery/message_server/attack_hand(user)
 	. = ..()
@@ -116,7 +141,7 @@
 	var/value
 	var/details
 
-/datum/feedback_variable/New(var/param_variable,var/param_value = 0)
+/datum/feedback_variable/New(param_variable,param_value = 0)
 	variable = param_variable
 	value = param_value
 

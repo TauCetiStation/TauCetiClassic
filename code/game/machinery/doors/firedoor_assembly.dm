@@ -65,4 +65,4 @@
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel.</span>")
 	else
-		..(C, user)
+		return ..()

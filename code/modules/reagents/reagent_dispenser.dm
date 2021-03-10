@@ -83,16 +83,18 @@
 		qdel(src)
 
 /obj/structure/reagent_dispensers/proc/leak(amount)
-	if (reagents.total_volume == 0)
+	if(reagents.total_volume == 0)
 		return
-	var/datum/reagents/R = new/datum/reagents(amount)
-	reagents.trans_to(R, amount)
-	R.reaction(loc)
+	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount)
+	D.reagents.reaction(get_turf(D))
+	for(var/atom/A in get_turf(D))
+		D.reagents.reaction(A)
+	QDEL_IN(D, 1 SECOND)
 
 /obj/structure/reagent_dispensers/process()
 	if(!src) return
 	if(modded)
-		leak(2)
+		leak(amount_per_transfer_from_this * 0.1)
 	else
 		STOP_PROCESSING(SSobj, src)
 

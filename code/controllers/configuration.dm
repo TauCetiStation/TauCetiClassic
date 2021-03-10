@@ -26,18 +26,15 @@ var/list/net_announcer_secret = list()
 	var/log_js_error = 0				   // same but for client side js errors
 	var/log_initialization = 0			// same but for debug init logs
 	var/log_qdel = 0						// same but for debug qdel logs
+	var/log_asset = 0
+	var/log_tgui = 0
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
-	var/allow_vote_restart = 0 			// allow votes to restart
 	var/ert_admin_call_only = 0
-	var/allow_vote_mode = 0				// allow votes to change mode
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_spawning = 1		// allows admin item spawning
 	var/allow_admin_rev = 1				// allows admin revives
-	var/vote_delay = 6000				// minimum time between voting sessions (deciseconds, 10 minute default)
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
-	var/vote_no_default = 0				// vote does not default to nochange/norestart (tbi)
-	var/vote_no_dead = 0				// dead people can't vote (tbi)
 //	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
@@ -87,8 +84,6 @@ var/list/net_announcer_secret = list()
 
 	var/disable_player_mice = 0
 	var/uneducated_mice = 0 //Set to 1 to prevent newly-spawned mice from understanding human speech
-
-	var/rus_language = 0
 
 	var/deathtime_required = 18000	//30 minutes
 
@@ -149,6 +144,22 @@ var/list/net_announcer_secret = list()
 	var/slime_delay = 0
 	var/animal_delay = 0
 
+	// Event settings
+	var/expected_round_length = 90 MINUTES
+	// If the first delay has a custom start time
+	// No custom time
+	var/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null,
+									EVENT_LEVEL_MODERATE = null,
+									EVENT_LEVEL_MAJOR = list("lower" = 80 MINUTES, "upper" = 100 MINUTES))
+	// The lowest delay until next event
+	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE  = 10 MINUTES,
+									  EVENT_LEVEL_MODERATE = 30 MINUTES,
+									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
+	// The upper delay until next event
+	var/list/event_delay_upper = list(EVENT_LEVEL_MUNDANE  = 15 MINUTES,
+									  EVENT_LEVEL_MODERATE = 45 MINUTES,
+									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
+
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
@@ -204,6 +215,9 @@ var/list/net_announcer_secret = list()
 
 	var/sandbox = FALSE
 	var/list/net_announcers = list() // List of network announcers on
+
+	var/minutetopiclimit = 100
+	var/secondtopiclimit = 10
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -335,6 +349,12 @@ var/list/net_announcer_secret = list()
 				if ("log_qdel")
 					config.log_qdel = 1
 
+				if ("log_asset")
+					config.log_asset = 1
+
+				if ("log_tgui")
+					config.log_tgui = 1
+
 				if ("log_runtime")
 					config.log_runtime = 1
 
@@ -344,12 +364,6 @@ var/list/net_announcer_secret = list()
 				if("allow_admin_ooccolor")
 					config.allow_admin_ooccolor = 1
 
-				if ("allow_vote_restart")
-					config.allow_vote_restart = 1
-
-				if ("allow_vote_mode")
-					config.allow_vote_mode = 1
-
 				if ("allow_admin_jump")
 					config.allow_admin_jump = 1
 
@@ -358,15 +372,6 @@ var/list/net_announcer_secret = list()
 
 				if ("allow_admin_spawning")
 					config.allow_admin_spawning = 1
-
-				if ("no_dead_vote")
-					config.vote_no_dead = 1
-
-				if ("default_no_vote")
-					config.vote_no_default = 1
-
-				if ("vote_delay")
-					config.vote_delay = text2num(value)
 
 				if ("vote_period")
 					config.vote_period = text2num(value)
@@ -580,9 +585,6 @@ var/list/net_announcer_secret = list()
 				if("deathtime_required")
 					config.deathtime_required = text2num(value)
 
-				if("rus_language")
-					config.rus_language = 1
-
 				if("allow_drone_spawn")
 					config.allow_drone_spawn = text2num(value)
 
@@ -591,6 +593,34 @@ var/list/net_announcer_secret = list()
 
 				if("max_maint_drones")
 					config.max_maint_drones = text2num(value)
+
+				if("expected_round_length")
+					config.expected_round_length = text2num(value) MINUTES
+
+				if("event_delay_lower")
+					var/values = text2numlist(value, ";")
+					config.event_delay_lower[EVENT_LEVEL_MUNDANE] = values[1] MINUTES
+					config.event_delay_lower[EVENT_LEVEL_MODERATE] = values[2] MINUTES
+					config.event_delay_lower[EVENT_LEVEL_MAJOR] = values[3] MINUTES
+
+				if("event_delay_upper")
+					var/values = text2numlist(value, ";")
+					config.event_delay_upper[EVENT_LEVEL_MUNDANE] = values[1] MINUTES
+					config.event_delay_upper[EVENT_LEVEL_MODERATE] = values[2] MINUTES
+					config.event_delay_upper[EVENT_LEVEL_MAJOR] = values[3] MINUTES
+
+				if("event_custom_start_mundane")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MUNDANE] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
+				if("event_custom_start_moderate")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MODERATE] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
+				if("event_custom_start_major")
+					var/values = text2numlist(value, ";")
+					config.event_first_run[EVENT_LEVEL_MAJOR] = list("lower" = values[1] MINUTES, "upper" = values[2] MINUTES)
+
 				// Bay new things are below
 				if("use_overmap")
 					config.use_overmap = 1
@@ -669,6 +699,12 @@ var/list/net_announcer_secret = list()
 
 				if("ooc_round_only")
 					config.ooc_round_only = TRUE
+
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

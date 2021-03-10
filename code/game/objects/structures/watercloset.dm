@@ -304,7 +304,7 @@
 	icon_state = "mist"
 	layer = MOB_LAYER + 1
 	anchored = 1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/machinery/shower/attack_hand(mob/user)
 	. = ..()
@@ -682,6 +682,7 @@
 
 /obj/structure/sink/puddle	//splishy splashy ^_^
 	name = "puddle"
+	desc = "The puddle looks infinitely deep and infinitely lonely on the space station."
 	icon_state = "puddle"
 
 /obj/structure/sink/puddle/attack_hand(mob/M)

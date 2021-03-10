@@ -43,7 +43,7 @@
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
-/datum/disease2/disease/proc/addeffect(var/datum/disease2/effectholder/holder)
+/datum/disease2/disease/proc/addeffect(datum/disease2/effectholder/holder)
 	if(holder == null)
 		return
 	if(effects.len < max_symptoms)
@@ -152,12 +152,13 @@
 	for(var/mob/living/carbon/M in oview(radius,mob))
 		if(airborne_can_reach(get_turf(mob), get_turf(M)))
 			infect_virus2(M,src)
+			mob.med_hud_set_status()
 
 /datum/disease2/disease/proc/cure(mob/living/carbon/mob)
 	for(var/datum/disease2/effectholder/e in effects)
 		e.effect.deactivate(mob, e, src)
 	mob.virus2.Remove("[uniqueID]")
-	mob.hud_updateflag |= 1 << STATUS_HUD
+	mob.med_hud_set_status()
 
 /datum/disease2/disease/proc/getcopy()
 	var/datum/disease2/disease/disease = new /datum/disease2/disease

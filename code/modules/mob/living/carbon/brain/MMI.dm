@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
@@ -66,8 +64,9 @@
 		return
 
 	else if(brainmob)
-		I.attack(brainmob, user)//Oh noooeeeee
-		return
+		// Oh noooeeeee
+		user.SetNextMove(CLICK_CD_MELEE)
+		return I.attack(brainmob, user)
 
 	return ..()
 

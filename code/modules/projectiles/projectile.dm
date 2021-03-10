@@ -17,7 +17,7 @@
 	unacidable = 1
 	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
@@ -41,7 +41,6 @@
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/fake = 0 //Fake projectile won't spam chat for admins with useless logs
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
-	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 	var/paused = FALSE //for suspending the projectile midair
 		//Effects
@@ -266,7 +265,7 @@
 
 	spawn while(src && src.loc)
 		if(paused)
-			sleep(1)
+			stoplag(1)
 			continue
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours
@@ -329,7 +328,7 @@
 	effect_transform.Scale(trajectory.return_hypotenuse(), 1)
 	effect_transform.Turn(-trajectory.return_angle())		//no idea why this has to be inverted, but it works
 
-/obj/item/projectile/proc/muzzle_effect(var/matrix/T)
+/obj/item/projectile/proc/muzzle_effect(matrix/T)
 	if(silenced)
 		return
 

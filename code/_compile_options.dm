@@ -16,9 +16,9 @@
 //#define NEWYEARCONTENT		// Closets use this to spawn items like santa clothes. // TODO: convert this to holiday event?
 
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 512
+#define MIN_COMPILER_VERSION 513
 #if DM_VERSION < MIN_COMPILER_VERSION
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 512 or higher
+#error You need version 513 or higher
 #endif

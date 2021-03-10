@@ -390,7 +390,7 @@
 
 /obj/item/clothing/under/dress/dress_party
 	name = "party dress"
-	desc = "The party doesn’t start ’til you walk in, so make an entrance no one can ignore."
+	desc = "The party doesn't start 'til you walk in, so make an entrance no one can ignore."
 	icon_state = "dress_party"
 	item_color = "dress_party"
 
@@ -503,6 +503,11 @@
 	item_state = "r_suit"
 	item_color = "officertanclothes"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/rank/cadet/skirt
+	name = "security cadet's jumpskirt"
+	icon_state = "officertanskirt"
+	item_color = "officertanskirt"
 
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."

@@ -13,10 +13,10 @@
 	//var/uneatable = list(/turf/space, /obj/effect/overlay, /mob/living/simple_animal/construct)
 
 
-/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
+/datum/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			to_chat(O, "<span class='ghostalert'>[message]</span>")
+			to_chat(O, "<span class='ghostalert'>[FOLLOW_LINK(O, src)] [message]</span>")
 			if(ghost_sound)
 				O.playsound_local(null, ghost_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
@@ -27,7 +27,7 @@
 	icon_state = "smoke"
 	opacity = 1
 	anchored = 0.0
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 6.0
 	//Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
@@ -146,16 +146,21 @@
 
 /obj/singularity/narsie/large/atom_init()
 	. = ..()
-	to_chat(world, "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>")
-	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			to_chat(M, "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>")
+			M.playsound_local(null, pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'), VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.")
+	INVOKE_ASYNC(src, .proc/begin_the_end)
+
+/obj/singularity/narsie/large/proc/begin_the_end()
 	narsie_spawn_animation()
 	invisibility = 60
 
-	addtimer(CALLBACK(SSshuttle, /datum/subsystem/shuttle.proc/incall, 0.5), 70)
+	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.5), 70)
 
 /obj/singularity/narsie/large/attack_ghost(mob/living/user)
 	if(!(src in view()))
@@ -292,7 +297,7 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/effects/narsie_spawn_anim.dmi'
-	dir = SOUTH
+	set_dir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)

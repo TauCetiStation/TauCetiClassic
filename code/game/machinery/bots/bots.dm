@@ -132,10 +132,6 @@
 	..()
 	healthcheck()
 
-/obj/machinery/bot/meteorhit()
-	src.explode()
-	return
-
 /obj/machinery/bot/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff
 	healthcheck()
@@ -167,7 +163,7 @@
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
 	pulse2.anchored = 1
-	pulse2.dir = pick(cardinal)
+	pulse2.set_dir(pick(cardinal))
 
 	spawn(10)
 		qdel(pulse2)

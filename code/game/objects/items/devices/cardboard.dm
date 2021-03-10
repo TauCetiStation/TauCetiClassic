@@ -9,6 +9,7 @@
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/painting = FALSE
 	var/lastattacker = null
+	var/static/list/coloring
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
@@ -58,13 +59,34 @@
 	if(prob(P.damage))
 		push_over()
 
+/obj/item/cardboard_cutout/proc/populate_selection()
+	coloring = list(
+			"Assistant" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_greytide"),
+			"Clown" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_clown"),
+			"Mime" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_mime"),
+			"Traitor" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_traitor"),
+			"Nuke Op" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "[pick("cutout_flukecombat", "cutout_flukespace")]"),
+			"Cultist" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_cultist"),
+			"Revolutionary" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_viva"),
+			"Wizard" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_wizard"),
+			"Shadowling" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_shadowling"),
+			"Xenomorph" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_fukken_xeno"),
+			"Deathsquad Officer" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_deathsquad"),
+			"Ian" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_ian")
+			)
+
+
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!user)
 		return
 	if(pushed_over)
 		to_chat(user,"<span class='warning'>Right [src] first!</span>")
 		return
-	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
+
+	if(!coloring)
+		populate_selection()
+
+	var/new_appearance = show_radial_menu(user, src, coloring, radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!new_appearance || !crayon)
 		return
 	if(!user.Adjacent(src))

@@ -34,13 +34,6 @@
 	if(!CanEat(user, M, src, "drink")) return
 
 	if(M == user)
-
-		if(istype(M,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
-				return
-
 		if(isliving(M))
 			var/mob/living/L = M
 			if(taste)
@@ -53,12 +46,6 @@
 		update_icon()
 		return 1
 	else
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-			if(H.species.flags[IS_SYNTHETIC])
-				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")
-				return
-
 		user.visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
 		if(!do_mob(user, M)) return
 		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")

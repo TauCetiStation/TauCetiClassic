@@ -110,6 +110,8 @@
 		else
 	return
 
+/obj/structure/table/airlock_crush_act()
+	destroy()
 
 /obj/structure/table/blob_act()
 	if(prob(75))
@@ -272,7 +274,7 @@
 
 	return ..()
 
-/obj/structure/table/proc/straight_table_check(var/direction)
+/obj/structure/table/proc/straight_table_check(direction)
 	var/obj/structure/table/T
 	for(var/angle in list(-90,90))
 		T = locate() in get_step(src.loc,turn(direction,angle))
@@ -351,7 +353,7 @@
 		if (!A.anchored)
 			A.throw_at(pick(targets),1,1)
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -400,7 +402,7 @@
 	if( !straight_table_check(turn(direction,90)) || !straight_table_check(turn(direction,-90)) )
 		return 0
 
-	dir = direction
+	set_dir(direction)
 	if(dir != NORTH)
 		layer = 5
 	flipped = 1
@@ -474,6 +476,9 @@
 	shatter()
 	qdel(G)
 	return TRUE
+
+/obj/structure/table/glass/airlock_crush_act()
+	shatter()
 
 /*
  * Wooden tables
@@ -606,6 +611,9 @@
 				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
 
+/obj/structure/rack/airlock_crush_act()
+	destroy()
+
 /obj/structure/rack/blob_act()
 	if(prob(75))
 		qdel(src)
@@ -656,10 +664,6 @@
 	playsound(src, "sparks", VOL_EFFECTS_MASTER)
 	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
 	destroy()
-
-/obj/structure/rack/meteorhit(obj/O)
-	qdel(src)
-
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)

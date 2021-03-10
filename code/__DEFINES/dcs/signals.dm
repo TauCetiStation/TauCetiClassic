@@ -55,6 +55,8 @@
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
+/// from base of mob/living/carbon/human/electrocute_act(): (shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+#define COMSIG_ATOM_ELECTROCUTE_ACT "atom_electrocute_act"
 /// from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
@@ -87,6 +89,9 @@
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
+/// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
+#define COMSIG_ATOM_CHANGE_DIR "change_dir"
+
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
@@ -117,6 +122,10 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/equipped(): (/mob/equipper, slot)
+#define COMSIG_ITEM_EQUIPPED "item_equip"
+///from base of obj/item/dropped(): (mob/user)
+#define COMSIG_ITEM_DROPPED "item_drop"
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
 /// from base of mob/CtrlClickOn(): (atom/target, mob/user)
@@ -131,6 +140,18 @@
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
+
+// hand_like /obj/item signals
+/// check if item is hand_like: ()
+#define COMSIG_HAND_IS "hand_is"
+/// from mob/living/silicon/robot/ClickOn(): (atom/T, mob/user, params)
+#define COMSIG_HAND_ATTACK "hand_attack"
+/// from mob/living/silicon/robot/drop_item(): (atom/T, mob/user)
+#define COMSIG_HAND_DROP_ITEM "hand_drop_item"
+/// from mob/living/silicon/robot/put_in_active_hand(): (obj/item/I, mob/user)
+#define COMSIG_HAND_PUT_IN "hand_put_in"
+/// from mob/living/silicon/robot/get_active_hand(): (mob/user)
+#define COMSIG_HAND_GET_ITEM "hand_get_item"
 
 // mob signals
 /// from  base of mob/ClickOn(): (atom/target, params)
@@ -172,6 +193,10 @@
 /// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
 #define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
 	#define COMPONENT_ATTACK_SHIELDED 1
+// from mob/living/learn_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_LEARN_COMBO "learn_combo"
+// from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_FORGET_COMBO "forget_combo"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
@@ -195,3 +220,8 @@
 
 /// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
 #define COMSIG_MOB_MOD_UPDATE "mob_mod_update"
+
+/// send this signal to add /datum/component/vis_radius to a list of mobs or one mob: (mob/mob_or_mobs)
+#define COMSIG_SHOW_RADIUS "show_radius"
+/// send this signal to remove /datum/component/vis_radius to a mobs: ()
+#define COMSIG_HIDE_RADIUS "hide_radius"

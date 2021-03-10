@@ -22,7 +22,7 @@
 	max_co2 = 0
 	max_tox = 0
 	speed = -1
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = 0
 	faction = "cult"
 	status_flags = CANPUSH
@@ -77,6 +77,8 @@
 	max_co2 = 0
 	unsuitable_atoms_damage = 0
 
+	typing_indicator_type = null
+
 	var/obj/item/weapon/nullrod/staff/container
 
 	var/datum/religion/my_religion
@@ -106,11 +108,6 @@
 		my_religion.remove_deity(src)
 
 	return ..()
-
-/mob/living/simple_animal/shade/god/Login()
-	..()
-	stat = CONSCIOUS
-	blinded = FALSE
 
 /mob/living/simple_animal/shade/god/Life()
 	..()
@@ -151,7 +148,7 @@
 
 	var/oldLoc = loc
 
-	dir = direct
+	set_dir(direct)
 	if(NewLoc)
 		if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 			return
@@ -186,11 +183,11 @@
 	set name = "View Crew Manifest"
 	set category = "Deity"
 
-	var/dat
-	dat += "<h4>Crew Manifest</h4>"
-	dat += data_core.get_manifest()
+	var/dat = data_core.get_manifest()
 
-	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
+	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/simple_animal/shade/god/resist()
 	. = ..()

@@ -30,6 +30,7 @@
 	R.icon_state = "robot"
 	qdel(R.module)
 	R.module = null
+	R.sensor_huds = R.def_sensor_huds
 	R.camera.remove_networks(list("Engineering","Medical","MINE"))
 	R.updatename("Default")
 	R.status_flags |= CANPUSH

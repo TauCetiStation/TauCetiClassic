@@ -58,6 +58,7 @@
 #define ADMIN_PP(user)  "(<a href='?_src_=holder;adminplayeropts=\ref[user]'>PP</a>)"
 #define ADMIN_SM(user) "(<a href='?_src_=holder;subtlemessage=\ref[user]'>SM</a>)"
 #define ADMIN_TP(user) "(<a href='?_src_=holder;traitor=\ref[user]'>TP</a>)"
+#define ADMIN_KICK(user) "(<a href='?_src_=holder;boot2=\ref[user]'>KICK</a>)"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
 #define ADMIN_PPJMPFLW(user) "[ADMIN_PP(user)] [ADMIN_FLW(user)] [ADMIN_JMP(user)]"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)]"
@@ -76,8 +77,8 @@
 #define BANKEY_TYPE      "type" //The ban's type, if any. It can be "sticky", "session", or "time"
 #define BANKEY_CKEY      "ckey" // Ckey of banned user
 #define BANKEY_REASON    "reason" // The reason the ban was implemented; Admin only
-#define BANKEY_MSG       "message" // A message to display to the user. 
-#define BANKEY_KEYS      "keys" // Other keys caught in a sticky ban. 
+#define BANKEY_MSG       "message" // A message to display to the user.
+#define BANKEY_KEYS      "keys" // Other keys caught in a sticky ban.
 #define BANKEY_IP        "IP" // Other IP addresses caught in a sticky ban.
 #define BANKEY_CID       "computer_id" // Other computer_id values caught in a sticky ban.
 #define BANKEY_TIME      "time" // The number of seconds remaining in the ban.

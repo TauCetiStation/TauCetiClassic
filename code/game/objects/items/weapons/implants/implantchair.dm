@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/machinery/implantchair
 	name = "loyalty implanter"
 	desc = "Used to implant occupants with loyalty implants."
@@ -40,8 +38,10 @@
 	if(src.occupant)
 		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
 	user.set_machine(src)
-	user << browse(entity_ja(dat), "window=implant")
-	onclose(user, "implant")
+
+	var/datum/browser/popup = new(user, "implant")
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/implantchair/Topic(href, href_list)

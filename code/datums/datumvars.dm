@@ -202,14 +202,7 @@
 
 	body += "</tr></td></table>"
 
-	var/formatted_type = text("[D.type]")
-	if(length(formatted_type) > 25)
-		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
-		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
+	var/formatted_type = replacetext("[D.type]", "/", "<wbr>/")
 
 	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
 
@@ -319,7 +312,7 @@
 
 	body += "</ol>"
 
-	var/html = "<html><head>"
+	var/html = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
 	if (title)
 		html += "<title>[title]</title>"
 	html += {"<style>
@@ -346,7 +339,7 @@ body
 
 	html += "</body></html>"
 
-	usr << browse(entity_ja(html), "window=variables\ref[D];size=475x650")
+	usr << browse(html, "window=variables\ref[D];size=475x650")
 
 	return
 
@@ -721,8 +714,8 @@ body
 			return
 
 		switch(href_list["rotatedir"])
-			if("right")	A.dir = turn(A.dir, -45)
-			if("left")	A.dir = turn(A.dir, 45)
+			if("right")	A.set_dir(turn(A.dir, -45))
+			if("left")	A.set_dir(turn(A.dir, 45))
 		href_list["datumrefresh"] = href_list["rotatedatum"]
 
 	else if(href_list["makemonkey"])
@@ -1042,7 +1035,7 @@ body
 			return
 
 		var/mob/C = locate(href_list["setckey"])
-		if(C.ckey && copytext(C.ckey, 1, 2) != "@")
+		if(C.ckey && C.ckey[1] != "@")
 			if(alert("This mob already controlled by [C.ckey]. Are you sure you want to continue?",,"Cancel","Continue") != "Continue")
 				return
 

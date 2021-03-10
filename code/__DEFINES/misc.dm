@@ -33,7 +33,7 @@
 //2 = reduced hud (just hands and intent switcher)
 //3 = no hud (for screenshots)
 
-//ticker.current_state values
+//SSticker.current_state values
 #define GAME_STATE_STARTUP		0
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
@@ -83,6 +83,10 @@
 
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
+
+#define EVENT_LEVEL_MUNDANE 1
+#define EVENT_LEVEL_MODERATE 2
+#define EVENT_LEVEL_MAJOR 3
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
@@ -144,6 +148,10 @@
 #define MANIFEST_ERROR_CONTENTS		2
 #define MANIFEST_ERROR_ITEM			4
 
+//Dummy mob reserve slots
+#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_BARBER "dummy_barbet_preview"
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 //teleport checks
 #define TELE_CHECK_NONE 0
@@ -196,20 +204,13 @@
 #define MOUSE_OPACITY_OPAQUE        2
 
 // Used in browser.dm for common.css style.
-#define CSS_THEME_LIGHT "theme_light"
-#define CSS_THEME_DARK "theme_dark"
+#define CSS_THEME_LIGHT     "theme_light"
+#define CSS_THEME_DARK      "theme_dark"
+#define CSS_THEME_SYNDICATE "theme_syndicate"
+#define CSS_THEME_ABDUCTOR  "theme_abductor"
 
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
-
-//Facehugger's control type
-#define FACEHUGGERS_STATIC_AI     0   // don't move by themselves
-#define FACEHUGGERS_DYNAMIC_AI    1   // controlled by simple AI
-#define FACEHUGGERS_PLAYABLE      2   // controlled by players
-
-//Time it takes to impregnate someone with facehugger
-#define MIN_IMPREGNATION_TIME 200
-#define MAX_IMPREGNATION_TIME 250
 
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 
@@ -219,18 +220,22 @@
 
 ///Compile all the overlays for an atom from the cache lists
 #define COMPILE_OVERLAYS(A)\
-	if (TRUE) {\
-		var/list/ad = A.add_overlays;\
-		var/list/rm = A.remove_overlays;\
-		if(LAZYLEN(rm)){\
-			A.overlays -= rm;\
-			rm.Cut();\
+	var/list/ad = A.add_overlays;\
+	var/list/rm = A.remove_overlays;\
+	if(length(rm)){\
+		A.overlays -= rm;\
+		rm.Cut();\
+	}\
+	if(length(ad)){\
+		A.overlays |= ad;\
+		ad.Cut();\
+	}\
+	for(var/I in A.alternate_appearances){\
+		var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
+		if(AA.transfer_overlays){\
+			AA.copy_overlays(A, TRUE);\
 		}\
-		if(LAZYLEN(ad)){\
-			A.overlays |= ad;\
-			ad.Cut();\
-		}\
-		A.flags_2 &= ~OVERLAY_QUEUED_2;\
-		if(isturf(A)){SSdemo.mark_turf(A);}\
-		if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
-	}
+	}\
+	A.flags_2 &= ~OVERLAY_QUEUED_2;\
+	if(isturf(A)){SSdemo.mark_turf(A);}\
+	if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\

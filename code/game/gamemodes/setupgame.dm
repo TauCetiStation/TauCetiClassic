@@ -16,7 +16,7 @@
 //	testing("[name] assigned to block #[assigned].")
 	return assigned
 
-/datum/subsystem/atoms/proc/setupGenetics()
+/datum/controller/subsystem/atoms/proc/setupGenetics()
 
 	if (prob(50))
 		// Currently unused.  Will revisit. - N3X
@@ -100,9 +100,9 @@
 			qdel(F)
 			continue
 		else
-			ticker.factions.Add(F)
-			ticker.availablefactions.Add(F)
+			SSticker.factions.Add(F)
+			SSticker.availablefactions.Add(F)
 
 	// Populate the syndicate coalition:
-	for(var/datum/faction/syndicate/S in ticker.factions)
-		ticker.syndicate_coalition.Add(S)
+	for(var/datum/faction/syndicate/S in SSticker.factions)
+		SSticker.syndicate_coalition.Add(S)

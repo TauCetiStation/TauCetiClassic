@@ -319,7 +319,6 @@
 	var/output = "<div align='center'><table width='90%'><tr>"
 
 	output += "<td width='35%' align='center'>"
-	output += "<h1>Banning panel</h1>"
 	output += "</td>"
 
 	output += "<td width='65%' align='center' bgcolor='#f9f9f9'>"
@@ -413,13 +412,13 @@
 				if(playercid)
 					cidsearch  = "AND computerid = '[playercid]' "
 			else
-				if(adminckey && lentext(adminckey) > 3)
+				if(adminckey && length(adminckey) > 3)
 					adminsearch = "AND a_ckey LIKE '[adminckey]%' "
-				if(playerckey && lentext(playerckey) > 3)
+				if(playerckey && length(playerckey) > 3)
 					playersearch = "AND ckey LIKE '[playerckey]%' "
-				if(playerip && lentext(playerip) > 3)
+				if(playerip && length(playerip) > 3)
 					ipsearch  = "AND ip LIKE '[playerip]%' "
-				if(playercid && lentext(playercid) > 7)
+				if(playercid && length(playercid) > 7)
 					cidsearch  = "AND computerid LIKE '[playercid]%' "
 
 			if(dbbantype)
@@ -435,7 +434,7 @@
 					else
 						bantypesearch += "'PERMABAN' "
 
-			var/DBQuery/select_query = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, ip, computerid FROM erro_ban WHERE 1 [playersearch] [adminsearch] [ipsearch] [cidsearch] [bantypesearch] ORDER BY bantime DESC LIMIT 100")
+			var/DBQuery/select_query = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits, ip, computerid, round_id FROM erro_ban WHERE 1 [playersearch] [adminsearch] [ipsearch] [cidsearch] [bantypesearch] ORDER BY bantime DESC LIMIT 100")
 			select_query.Execute()
 
 			while(select_query.NextRow())
@@ -454,6 +453,7 @@
 				var/edits = select_query.item[13]
 				var/ip = select_query.item[14]
 				var/cid = select_query.item[15]
+				var/rid = select_query.item[16]
 
 				var/lcolor = blcolor
 				var/dcolor = bdcolor
@@ -475,7 +475,7 @@
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center'>[typedesc]</td>"
 				output += "<td align='center'><b>[ckey]</b></td>"
-				output += "<td align='center'>[bantime]</td>"
+				output += "<td align='center'>#[rid], [bantime]</td>"
 				output += "<td align='center'><b>[ackey]</b></td>"
 				output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=\ref[src];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
 				output += "</tr>"
@@ -503,7 +503,9 @@
 
 			output += "</table></div>"
 
-	usr << browse(entity_ja(output),"window=lookupbans;size=900x700")
+	var/datum/browser/popup = new(usr, "window=lookupbans", "Banning panel", 900, 700, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(output)
+	popup.open()
 
 //Version of DB_ban_record that can be used without holder.
 /proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)

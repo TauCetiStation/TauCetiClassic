@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/constructable_frame //Made into a seperate type to make future revisions easier.
 	name = "machine frame"
 	icon = 'icons/obj/stock_parts.dmi'
@@ -414,7 +412,6 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "programming=2;materials=2"
 	board_type = "machine"
 	req_components = list(
-							/obj/item/weapon/circuitboard/color_mixer = 1,
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1)
 

@@ -31,6 +31,106 @@
 	//Item currently being held.
 	var/obj/item/wrapped = null
 
+
+/obj/item/weapon/gripper/atom_init()
+	. = ..()
+	RegisterSignal(src, list(COMSIG_HAND_IS), .proc/is_hand)
+	RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
+	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
+	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), .proc/put_in)
+	RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), .proc/get_item)
+
+/obj/item/weapon/gripper/Destroy()
+	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
+                               COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN, COMSIG_HAND_GET_ITEM))
+
+	return ..()
+
+
+/obj/item/weapon/gripper/proc/is_hand(datum/source, atom/T, mob/user, params)
+	return TRUE
+
+/obj/item/weapon/gripper/proc/clear_wrapped()
+	wrapped = null
+
+/obj/item/weapon/gripper/proc/wrap(obj/item/I)
+	wrapped = I
+	I.forceMove(src)
+	RegisterSignal(I, list(COMSIG_PARENT_PREQDELETED), .proc/clear_wrapped)
+
+/obj/item/weapon/gripper/proc/attack_as_hand(datum/source, atom/T, mob/user, params)
+	if(wrapped)
+		return
+
+	if(!(isturf(user.loc) && (isturf(T) || isturf(T.loc)) && T.Adjacent(user)))
+		return
+
+	//disable intent actions with mobs
+	if(ismob(T))
+		return
+
+	//handling opened apc with cell
+	if(istype(T, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/A = T
+		if(A.opened)
+			if(A.cell)
+
+				wrap(A.cell)
+
+				A.cell.add_fingerprint(user)
+				A.cell.updateicon()
+				A.cell = null
+
+				A.charging = FALSE
+				A.update_icon()
+
+				user.visible_message("<span class='warning'>[user] removes the power cell from [A]!</span>", "You remove the power cell.")
+				return
+
+	T.attack_hand(user)
+	return
+
+/obj/item/weapon/gripper/proc/drop_item(datum/source, atom/T, mob/user)
+	if(!wrapped)
+		return FALSE
+	var/obj/item/I = wrapped
+	if(T)
+		I.forceMove(T)
+	else
+		I.forceMove(get_turf(user))
+	UnregisterSignal(wrapped, list(COMSIG_PARENT_PREQDELETED))
+	wrapped = null
+	return TRUE
+
+/obj/item/weapon/gripper/proc/put_in(datum/source, obj/item/I, mob/user)
+	//Check if the item in gripper
+	if(wrapped)
+		return FALSE
+
+	//Check if the item is blacklisted.
+	var/grab = FALSE
+	for(var/typepath in can_hold)
+		if(istype(I, typepath))
+			grab = TRUE
+			break
+
+	//We can grab the item, finally.
+	if(grab)
+		if(user.pulling == I)
+			user.stop_pulling()
+		wrap(I)
+		to_chat(user, "You collect \the [I].")
+		return TRUE
+
+	to_chat(user, "<span class='warning'>Your gripper cannot hold \the [I].</span>")
+	return FALSE
+
+/obj/item/weapon/gripper/proc/get_item(datum/source, mob/user)
+	if(wrapped)
+		return wrapped
+	return src //return src to signal COMSIG_HAND_ATTACK
+
+
 /obj/item/weapon/gripper/paperwork
 	name = "paperwork gripper"
 	desc = "A simple grasping tool for clerical work."
@@ -68,6 +168,32 @@
 		/obj/item/weapon/reagent_containers/food
 		)
 
+/obj/item/weapon/gripper/science
+	name = "science gripper"
+	desc = "A complex grasping tool for science work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/tank,
+		/obj/item/device/assembly/signaler,
+		/obj/item/device/gps,
+		/obj/item/weapon/reagent_containers/food/snacks/monkeycube,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/sheet/mineral,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/weapon/circuitboard,
+		/obj/item/device/mmi,
+		/obj/item/brain,
+		/obj/item/device/mmi/posibrain,
+		/obj/item/robot_parts,
+		/obj/item/weapon/stock_parts,
+		/obj/item/device/flash
+		)
+
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
 	if(wrapped)
@@ -80,7 +206,7 @@
 		if(QDELETED(wrapped))
 			wrapped = null
 
-/obj/item/weapon/gripper/verb/drop_item()
+/obj/item/weapon/gripper/verb/drop_item_verb()
 
 	set name = "Drop Item"
 	set desc = "Release an item from your magnetic gripper."
@@ -97,7 +223,8 @@
 		return
 
 	to_chat(src.loc, "<span class='warning'>You drop \the [wrapped].</span>")
-	wrapped.loc = get_turf(src)
+	var/obj/item/I = wrapped
+	I.forceMove(get_turf(src))
 	wrapped = null
 	//update_icon()
 
@@ -105,74 +232,7 @@
 	return
 
 /obj/item/weapon/gripper/afterattack(atom/target, mob/user, proximity, params)
-
-	if(!target || !proximity) //Target is invalid or we are not adjacent.
-		return
-
-	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
-	if(!wrapped)
-		for(var/obj/item/thing in src.contents)
-			wrapped = thing
-			break
-
-	if(wrapped) //Already have an item.
-
-		wrapped.loc = user
-		//Pass the attack on to the target.
-		target.attackby(wrapped,user)
-
-		if(wrapped && src && wrapped.loc == user)
-			wrapped.loc = src
-
-		//Sanity/item use checks.
-
-		if(!wrapped || !user)
-			return
-
-		if(wrapped.loc != src.loc)
-			wrapped = null
-			return
-
-	if(istype(target,/obj/item)) //Check that we're not pocketing a mob.
-
-		//...and that the item is not in a container.
-		if(!isturf(target.loc))
-			return
-
-		var/obj/item/I = target
-
-		//Check if the item is blacklisted.
-		var/grab = 0
-		for(var/typepath in can_hold)
-			if(istype(I,typepath))
-				grab = 1
-				break
-
-		//We can grab the item, finally.
-		if(grab)
-			to_chat(user, "You collect \the [I].")
-			I.loc = src
-			wrapped = I
-			return
-		else
-			to_chat(user, "<span class='warning'>Your gripper cannot hold \the [target].</span>")
-
-	else if(istype(target,/obj/machinery/power/apc))
-		var/obj/machinery/power/apc/A = target
-		if(A.opened)
-			if(A.cell)
-
-				wrapped = A.cell
-
-				A.cell.add_fingerprint(user)
-				A.cell.updateicon()
-				A.cell.loc = src
-				A.cell = null
-
-				A.charging = 0
-				A.update_icon()
-
-				user.visible_message("<span class='warning'>[user] removes the power cell from [A]!</span>", "You remove the power cell.")
+	return
 
 //TODO: Matter decompiler.
 /obj/item/weapon/matter_decompiler
@@ -314,7 +374,7 @@
 	if(!module)
 		module = new /obj/item/weapon/robot_module/drone(src)
 
-	var/dat = "<HEAD><TITLE>Drone modules</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
@@ -356,7 +416,9 @@
 
 	dat += resources
 
-	src << browse(entity_ja(dat), "window=robotmod")
+	var/datum/browser/popup = new(src, "robotmod", "Drone modules")
+	popup.set_content(dat)
+	popup.open()
 
 //Putting the decompiler here to avoid doing list checks every tick.
 /mob/living/silicon/robot/drone/use_power()

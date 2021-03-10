@@ -70,7 +70,8 @@
 
 	if(!holder && !current_ticket)	//no ticket? https://www.youtube.com/watch?v=iHSPf6x1Fdo
 		to_chat(src, "<font color='red'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</font>")
-		to_chat(src, "<font color='blue'>Message: [msg]</font>")
+		if(msg)
+			to_chat(src, "<font color='blue'>Message: [msg]</font>")
 		return
 
 	var/client/recipient
@@ -131,7 +132,7 @@
 				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 		//play the receiving admin the adminhelp sound (if they have them enabled)
-		recipient.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		recipient.mob.playsound_local(null, recipient.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
@@ -140,10 +141,7 @@
 
 			to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 			to_chat(recipient, "<font color='red'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></font>")
-			if(config.rus_language)
-				to_chat(recipient, "<font color='red'><i>[CYRILLIC_AHELPCLICKNAME]</i></font>")
-			else
-				to_chat(recipient, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
+			to_chat(recipient, "<font color='red'><i>Нажмите на имя администратора для ответа.</i></font>")
 			to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></font>")
 
 			admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [msg]</font>")

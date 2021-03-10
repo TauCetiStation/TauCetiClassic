@@ -60,6 +60,7 @@
 /atom/movable/var/datum/orbit/orbiting = null
 /atom/var/list/orbiters = null
 
+/atom/movable/var/cached_transform = null
 //A: atom to orbit
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -76,6 +77,7 @@
 	if (!orbiting) //something failed, and our orbit datum deleted itself
 		return
 	var/matrix/initial_transform = matrix(transform)
+	cached_transform = initial_transform
 
 	//Head first!
 	if (pre_rotation)
@@ -92,12 +94,10 @@
 
 	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
 
-	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
-	transform = initial_transform
-
 /atom/movable/proc/stop_orbit()
 	SpinAnimation(0, 0)
 	qdel(orbiting)
+	transform = cached_transform
 
 /atom/Destroy()
 	. = ..()

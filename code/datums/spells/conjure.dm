@@ -3,7 +3,6 @@
 	desc = "This spell conjures objs of the specified types in range."
 
 	var/list/summon_type = list() //determines what exactly will be summoned
-	//should be text, like list("/obj/machinery/bot/secbot/ed209")
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
@@ -30,7 +29,7 @@
 			for(var/atom/A in previous_objects)
 				qdel(A)
 				previous_objects -= A
-		for(var/i in 0 to summon_amt)
+		for(var/i in 1 to summon_amt)
 			if(!targets.len)
 				break
 			var/summoned_object_type = pick(summon_type)

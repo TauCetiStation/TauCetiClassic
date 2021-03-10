@@ -257,7 +257,7 @@
 		qdel(O)
 	else if(istype(O,/obj/effect/spacevine))
 		if(prob(50))
-			del(O) //Kills kudzu too.
+			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
@@ -702,6 +702,7 @@
 			W.layer = initial(W.layer)
 			W.loc = M.loc
 			W.dropped(M)
+		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
 		new_mob.a_intent = INTENT_HARM
 		new_mob.universal_speak = 1

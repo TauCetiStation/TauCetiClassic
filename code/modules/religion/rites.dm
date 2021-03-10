@@ -7,7 +7,7 @@
 	var/name = "religious rite"
 	/// Description of the religious rite
 	var/desc = "immm gonna rooon"
-	/// Ritе of this religion
+	/// Rite of this religion
 	var/datum/religion/religion
 	/// Just unique tip when examine altar
 	var/list/tips = list()
@@ -90,13 +90,13 @@
 
 // Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!required_checks(user, AOG))
-		return FALSE
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_RITE_INVOKE_EFFECT, user, AOG)
 	return TRUE
 
 // Will not work if ritual_invocations is null.
 /datum/religion_rites/proc/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_RITE_ON_INVOCATION, user, AOG, stage)
 
 /datum/religion_rites/proc/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
@@ -104,4 +104,5 @@
 
 // Additional checks in performing rite
 /datum/religion_rites/proc/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
+	SHOULD_CALL_PARENT(TRUE)
 	return !(SEND_SIGNAL(src, COMSIG_RITE_REQUIRED_CHECK, user, AOG) & COMPONENT_CHECK_FAILED)

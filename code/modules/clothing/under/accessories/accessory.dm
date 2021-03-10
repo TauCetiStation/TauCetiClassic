@@ -155,6 +155,19 @@
 				return
 	return ..(M, user)
 
+/obj/item/clothing/accessory/bronze_cross
+    name = "bronze cross"
+    desc = "That's a little bronze cross for wearing under the clothes."
+    icon_state = "bronze_cross"
+    item_state = "bronze_cross"
+    item_color = "bronze_cross"
+
+/obj/item/clothing/accessory/metal_cross
+    name = "metal cross"
+    desc = "That's a little metal cross for wearing under the clothes."
+    icon_state = "metal_cross"
+    item_state = "metal_cross"
+    item_color = "metal_cross"
 
 //Medals
 /obj/item/clothing/accessory/medal
@@ -163,12 +176,6 @@
 	icon_state = "bronze"
 	item_color = "bronze"
 	layer_priority = 0.1
-
-/obj/item/clothing/accessory/holy
-    name = "holy cross"
-    desc = "Time to take the Jerusalem!"
-    icon_state = "holycross"
-    item_color = "holycross"
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"

@@ -63,13 +63,13 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			sleep(10)
 			animate(holder_obj, pixel_z = 10, time = 10)
 			var/obj/effect/BPs = new /obj/effect(get_turf(AM))
-			BPs.icon = 'code/modules/anomaly/anomalies.dmi'
+			BPs.icon = 'icons/effects/anomalies.dmi'
 			BPs.icon_state = "bluespace"
-			BPs.mouse_opacity = 0
+			BPs.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			var/obj/effect/BPe = new /obj/effect(extraction_point)
-			BPe.icon = 'code/modules/anomaly/anomalies.dmi'
+			BPe.icon = 'icons/effects/anomalies.dmi'
 			BPe.icon_state = "bluespace"
-			BPe.mouse_opacity = 0
+			BPe.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			sleep(10)
 			animate(holder_obj, pixel_z = 15, time = 10)
 			sleep(10)

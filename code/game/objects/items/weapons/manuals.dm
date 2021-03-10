@@ -8,7 +8,8 @@
 
 /obj/item/weapon/book/manual/wiki
 	var/wiki_page = ""
-	window_size = "970x710"
+	window_width = 970
+	window_height = 710
 
 /obj/item/weapon/book/manual/wiki/atom_init()
 	..()
@@ -19,6 +20,7 @@
 		dat = {"
 
 			<html><head>
+			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			<style>
 				html, body, iframe {
 					padding: 0px; margin: 0px;
@@ -230,6 +232,7 @@
 
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -320,6 +323,7 @@
 	title = "The Ins and Outs of Apiculture - A Precise Art"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -353,6 +357,7 @@
 
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 21px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}

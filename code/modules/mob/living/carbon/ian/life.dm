@@ -32,15 +32,15 @@
 
 				if(movement_target) // Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
-						dir = WEST
+						set_dir(WEST)
 					else if (movement_target.loc.x > src.x)
-						dir = EAST
+						set_dir(EAST)
 					else if (movement_target.loc.y < src.y)
-						dir = SOUTH
+						set_dir(SOUTH)
 					else if (movement_target.loc.y > src.y)
-						dir = NORTH
+						set_dir(NORTH)
 					else
-						dir = SOUTH
+						set_dir(SOUTH)
 
 					if(isturf(movement_target.loc) )
 						movement_target.attack_animal(src)
@@ -51,7 +51,7 @@
 		if(prob(1))
 			emote("me",1,pick("dances around","chases its tail"))
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-				dir = i
+				set_dir(i)
 				sleep(1)
 
 	//Movement - this, speaking, simple_animal_A.I. code - should be converted into A.I. datum later on, for now - dirty copypasta of simple_animal.dm Life() proc.
@@ -100,7 +100,7 @@
 						emote(pick(emote_hear),2)
 
 	if (stat != DEAD && !IS_IN_STASIS(src))
-		if(SSmob.times_fired%4==2)
+		if(SSmobs.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
 			breathe()
 		else if(isobj(loc)) //Still give containing object the chance to interact
@@ -285,9 +285,9 @@
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
 		var/ratio = (breath.gas["phoron"]/safe_phoron_max) * 10
-		//adjustToxLoss(CLAMP(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
+		//adjustToxLoss(clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(reagents)
-			reagents.add_reagent("toxin", CLAMP(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		phoron_alert = TRUE
 	else
 		phoron_alert = FALSE
@@ -518,6 +518,7 @@
 		stat = CONSCIOUS
 	else
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+		med_hud_set_health()
 
 /mob/living/carbon/ian/proc/handle_regular_status_updates()
 	if(stat == DEAD)
@@ -621,7 +622,7 @@
 	tod = worldtime2text()
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	if(ticker.mode)
-		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
+	if(SSticker.mode)
+		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

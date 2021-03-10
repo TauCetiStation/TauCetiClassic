@@ -220,7 +220,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 		/* Quick introduction:
 			This new radio system uses a very robust FTL signaling technology unoriginally
-			dubbed "subspace" which is somewhat similar to 'blue-space' but can't
+			dubbed "subspace" which is somewhat similar to 'bluespace' but can't
 			actually transmit large mass. Headsets are the only radio devices capable
 			of sending subspace transmissions to the Communications Satellite.
 
@@ -511,7 +511,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				part_a_span = "deptradio"
 
 			var/part_a = "<span class='[part_a_span]'><span class='name'>"
-			var/part_b = "</span><b> [bicon(src)]\[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
+			var/part_b = "</span><b> \[[freq_text]\]</b> <span class='message'>" // Tweaked for security headsets -- TLE
 			var/part_c = "</span></span>"
 
 			var/quotedmsg = M.say_quote(message)
@@ -794,7 +794,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!on)
 		return
 
-	var/dat = "<html><head><title>[src]</title></head><body><TT>"
+	var/dat = "<TT>"
 	dat += {"
 				Speaker: [listening ? "<A href='byond://?src=\ref[src];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src];listen=1'>Disengaged</A>"]<BR>
 				Frequency:
@@ -809,8 +809,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
 			dat+=text_sec_channel(ch_name, channels[ch_name])
-	user << browse(entity_ja(dat), "window=radio")
-	onclose(user, "radio")
+
+	var/datum/browser/popup = new(user, "radio", "[src]")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 

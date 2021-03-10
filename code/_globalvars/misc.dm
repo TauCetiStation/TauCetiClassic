@@ -78,7 +78,7 @@ var/global/list/end_icons = list()
 var/endgame_info_logged = 0
 
 // Xenomorphs
-var/facehuggers_control_type = FACEHUGGERS_STATIC_AI
+var/facehuggers_control_type = FACEHUGGERS_PLAYABLE
 
 // Unsorted stuff
 var/global_message_cooldown = 1
@@ -98,3 +98,6 @@ var/list/ignore_vision_inside = list(
 
 // Is initiated in setup_religions(). Used to save all info about chaplain's religion.
 var/global/datum/religion/chaplain/chaplain_religion
+
+var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
+var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.

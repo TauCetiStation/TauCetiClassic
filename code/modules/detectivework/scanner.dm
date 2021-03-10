@@ -64,8 +64,7 @@
 	return
 
 /obj/item/device/detective_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
-	if(loc != user)
+	if(!proximity)
 		return
 	if(istype(target, /obj/machinery/computer/forensic_scanning)) //breaks shit.
 		return
@@ -109,7 +108,7 @@
 		var/list/complete_prints = list()
 		for(var/i in target.fingerprints)
 			var/print = target.fingerprints[i]
-			if(stringpercent(print) <= FINGERPRINT_COMPLETE)
+			if(stringpercent_ascii(print) <= FINGERPRINT_COMPLETE)
 				complete_prints += print
 		if(complete_prints.len < 1)
 			to_chat(user, "<span class='notice'>&nbsp;&nbsp;No intact prints found</span>")
@@ -153,7 +152,7 @@
 			if(!merged_print)
 				data_prints[print] = A.fingerprints[print]
 			else
-				data_prints[print] = stringmerge(data_prints[print],A.fingerprints[print])
+				data_prints[print] = stringmerge_ascii(data_prints[print],A.fingerprints[print])
 
 		//Now the fibers
 		var/list/fibers = data_entry[2]

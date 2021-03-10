@@ -15,10 +15,10 @@ var/can_call_ert
 	if(!holder)
 		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
 		return
-	if(!ticker)
+	if(!SSticker)
 		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
-	if(ticker.current_state == 1)
+	if(SSticker.current_state == 1)
 		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 	if(send_emergency_team)
@@ -141,11 +141,13 @@ var/can_call_ert
 
 	// there's only a certain chance a team will be sent
 	if(!prob(send_team_chance))
-		command_alert("It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time.", "Central Command", "noert")
+		var/datum/announcement/centcomm/noert/announcement = new
+		announcement.play()
 		can_call_ert = 0 // Only one call per round, ladies.
 		return
 
-	command_alert("It would appear that an emergency response team was requested for [station_name()]. We will prepare and send one as soon as possible.", "Central Command", "yesert")
+	var/datum/announcement/centcomm/yesert/announcement = new
+	announcement.play()
 	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1
 
@@ -195,22 +197,24 @@ var/can_call_ert
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-//hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
-	if(new_hstyle)
-		M.h_style = new_hstyle
-
-	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
-	if(new_fstyle)
-		M.f_style = new_fstyle
-
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
 		else
 			M.gender = FEMALE
+
+	//hair
+	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	if(new_hstyle)
+		M.h_style = new_hstyle
+
+	// facial hair
+	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	if(new_fstyle)
+		M.f_style = new_fstyle
+
+
 	//M.rebuild_appearance()
 	M.apply_recolor()
 	M.update_hair()
@@ -229,8 +233,9 @@ var/can_call_ert
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
-	if(!(M.mind in ticker.minds))
-		ticker.minds += M.mind//Adds them to regular mind list.
+	M.mind.add_antag_hud(ANTAG_HUD_ERT, "hudoperative", M)
+	if(!(M.mind in SSticker.minds))
+		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = spawn_location
 	M.equip_strike_team(leader_selected)
 	return M
@@ -247,7 +252,7 @@ var/can_call_ert
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
 
 	if(leader_selected)
-		var/obj/item/weapon/card/id/ert/W = new(src)
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
 		W.rank = "Emergency Response Team Leader"
 		W.registered_name = real_name
@@ -255,15 +260,11 @@ var/can_call_ert
 		W.icon_state = "ert-leader"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	else
-		var/obj/item/weapon/card/id/ert/W = new(src)
-		W.assignment = "Emergency Response Team"
-		W.rank = "Emergency Response Team"
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
-		W.icon_state = "ert"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
-	START_PROCESSING(SSobj, L)
 	return 1

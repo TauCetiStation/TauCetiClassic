@@ -1,6 +1,4 @@
-var/datum/subsystem/spacedrift/SSspacedrift
-
-/datum/subsystem/spacedrift
+SUBSYSTEM_DEF(spacedrift)
 	name = "Space Drift"
 
 	priority = SS_PRIORITY_SPACEDRIFT
@@ -11,15 +9,11 @@ var/datum/subsystem/spacedrift/SSspacedrift
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/subsystem/spacedrift/New()
-	NEW_SS_GLOBAL(SSspacedrift)
-
-
-/datum/subsystem/spacedrift/stat_entry()
+/datum/controller/subsystem/spacedrift/stat_entry()
 	..("P:[processing.len]")
 
 
-/datum/subsystem/spacedrift/fire(resumed = 0)
+/datum/controller/subsystem/spacedrift/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
@@ -59,7 +53,7 @@ var/datum/subsystem/spacedrift/SSspacedrift
 		if (AM.loc == old_loc)
 			AM.inertia_dir = 0
 
-		AM.dir = old_dir
+		AM.set_dir(old_dir)
 		AM.inertia_last_loc = AM.loc
 		if (MC_TICK_CHECK)
 			return

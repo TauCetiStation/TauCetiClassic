@@ -13,28 +13,31 @@ var/global/list/frozen_items = list()
 //Main cryopod console.
 
 /obj/machinery/computer/cryopod
-	name = "cryogenic oversight console"
+	name = "Cryogenic Oversight Console"
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cellconsole"
-	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
+	circuit = /obj/item/weapon/circuitboard/cryopodcontrol
 	var/mode = null
 
 /obj/machinery/computer/cryopod/ui_interact(mob/user)
-	if(!ticker)
+	if(!SSticker)
 		return
 
 	var/dat
 
-	dat += "<hr/><br/><b>Cryogenic Oversight Control</b><br/>"
-	dat += "<i>Welcome, [user.real_name].</i><br/><br/><hr/>"
-	dat += "<a href='?src=\ref[src];log=1'>View storage log</a>.<br>"
-	dat += "<a href='?src=\ref[src];item=1'>Recover object</a>.<br>"
-	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
-	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a>.<br/><hr/>"
+	dat += "<div class='Section__title'>Cryogenic Oversight Control</div>"
+	dat += "<div class='Section'>"
+	dat += "<i>Welcome, [user.real_name].</i><br/><br/>"
+	dat += "<a href='?src=\ref[src];log=1'>View storage log</a><br>"
+	dat += "<a href='?src=\ref[src];item=1'>Recover object</a><br>"
+	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a><br>"
+	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a><br/>"
+	dat += "</div>"
 
-	user << browse(entity_ja(dat), "window=cryopod_console")
-	onclose(user, "cryopod_console")
+	var/datum/browser/popup = new(user, "window=cryopod_console", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
 	. = ..()
@@ -50,7 +53,9 @@ var/global/list/frozen_items = list()
 			dat += "[person]<br/>"
 		dat += "<hr/>"
 
-		user << browse(entity_ja(dat), "window=cryolog")
+		var/datum/browser/popup = new(user, "window=cryolog", src.name + ": Log")
+		popup.set_content(dat)
+		popup.open()
 
 	else if(href_list["item"])
 
@@ -203,8 +208,8 @@ var/global/list/frozen_items = list()
 					qdel(occupant.mind.objectives)
 					occupant.mind.special_role = null
 				else
-					if(ticker.mode.name == "AutoTraitor")
-						var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
+					if(SSticker.mode.name == "AutoTraitor")
+						var/datum/game_mode/traitor/autotraitor/current_mode = SSticker.mode
 						current_mode.possible_traitors.Remove(occupant)*/
 
 			// Delete them from datacore.

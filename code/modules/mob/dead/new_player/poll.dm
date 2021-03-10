@@ -39,7 +39,10 @@
 
 	output += "</div>"
 
-	src << browse(entity_ja(output),"window=privacypoll;size=600x500")
+	var/datum/browser/popup = new(src, "privacypoll", null, 600, 500)
+	popup.set_content(output)
+	popup.open()
+
 	return
 
 
@@ -76,8 +79,9 @@
 
 		output += "</table>"
 
-		src << browse(entity_ja(output),"window=playerpolllist;size=500x300")
-
+		var/datum/browser/popup = new(src, "playerpolllist", null, 500, 300)
+		popup.set_content(output)
+		popup.open()
 
 
 /mob/dead/new_player/proc/poll_player(pollid = -1)
@@ -159,7 +163,9 @@
 
 				output += "</div>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x250")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 250)
+				popup.set_content(output)
+				popup.open()
 
 			//Polls with a text input
 			if("TEXT")
@@ -201,7 +207,9 @@
 				else
 					output += "[vote_text]"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x500")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 500)
+				popup.set_content(output)
+				popup.open()
 
 			//Polls with a text input
 			if("NUMVAL")
@@ -272,7 +280,11 @@
 					output += "<p><input type='submit' value='Submit'>"
 					output += "</form>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x500")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 500)
+				popup.set_content(output)
+				popup.open()
+
+
 			if("MULTICHOICE")
 				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
 				voted_query.Execute()
@@ -334,7 +346,10 @@
 
 				output += "</div>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x250")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 250)
+				popup.set_content(output)
+				popup.open()
+
 		return
 
 /mob/dead/new_player/proc/vote_on_poll(pollid = -1, optionid = -1, multichoice = 0)

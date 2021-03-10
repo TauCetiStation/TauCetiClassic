@@ -26,7 +26,7 @@ var/list/editing_item_oldname_list = list()
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
 	var/editing_item_oldname = editing_item_oldname_list[user.client.ckey]
 
-	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style>body{background-color: #F5ECDD}</style>"
@@ -124,7 +124,7 @@ var/list/editing_item_oldname_list = list()
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
-	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(dat, "window=edit_custom_item;size=400x600;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link_fluff(mob/user, list/href_list)
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -357,6 +357,7 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -381,7 +382,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems;size=600x500")
+	usr << browse(output,"window=customitems;size=600x500")
 
 /datum/admins/proc/customs_items_add(target_ckey = null)
 	if(!check_rights(R_PERMISSIONS))
@@ -392,16 +393,16 @@ var/list/editing_item_oldname_list = list()
 		if(!target_ckey)
 			return
 
-	var/ammount = input(usr,"type in ammount (can be negative):","Ammount", 1) as null|num
-	if(!ammount)
+	var/amount = input(usr,"type in amount (can be negative):","Amount", 1) as null|num
+	if(!amount)
 		return
-	ammount = round(ammount)
+	amount = round(amount)
 
-	var/reason = input(usr, "([target_ckey] [ammount > 0 ? "+" : ""][ammount]) type in reason:", "Reason") as null|text
+	var/reason = input(usr, "([target_ckey] [amount > 0 ? "+" : ""][amount]) type in reason:", "Reason") as null|text
 	if(!reason)
 		return
 
-	add_custom_items_history(target_ckey, usr.ckey, reason, ammount)
+	add_custom_items_history(target_ckey, usr.ckey, reason, amount)
 	customitems_panel()
 	customs_items_history(target_ckey)
 
@@ -418,6 +419,7 @@ var/list/editing_item_oldname_list = list()
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Custom Items Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -426,7 +428,7 @@ var/list/editing_item_oldname_list = list()
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
 <th text-align:center;'>[user_ckey] <a class='small' href='?src=\ref[src];custom_items=addckey;ckey=[user_ckey]'>\[+\]</a></th>
-<th text-align:center;'>Ammount</th>
+<th text-align:center;'>Amount</th>
 <th text-align:center;'>Reason</th>
 <th text-align:center;'>Added by</th>
 </tr>
@@ -436,7 +438,7 @@ var/list/editing_item_oldname_list = list()
 	for(var/datum/custom_items_history/entry in history)
 		output += "<tr>"
 		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=history_remove;ckey=[user_ckey];index=[i]'>DELETE</a></td>"
-		output += "<td style='text-align:center;'>[entry.ammount]</td>"
+		output += "<td style='text-align:center;'>[entry.amount]</td>"
 		output += "<td style='text-align:center;'>[sanitize(entry.reason)]</td>"
 		output += "<td style='text-align:center;'>[entry.admin_ckey]</td>"
 		output += "</tr>"
@@ -448,7 +450,7 @@ var/list/editing_item_oldname_list = list()
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=customitems_history;size=600x500")
+	usr << browse(output,"window=customitems_history;size=600x500")
 
 /datum/admins/proc/customs_items_remove(target_ckey, index)
 	if(!check_rights(R_PERMISSIONS))

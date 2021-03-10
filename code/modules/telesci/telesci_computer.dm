@@ -115,40 +115,40 @@
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
-		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
+		t += "<div class='Section'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
 		if(inserted_gps)
 			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
 			t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
 		else
-			t += "<span class='linkOff'>Eject GPS</span>"
-			t += "<span class='linkOff'>Set GPS memory</span>"
-		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
+			t += "<span class='disabled'>Eject GPS</span>"
+			t += "<span class='disabled'>Set GPS memory</span>"
+		t += "<div class='Section'>[temp_msg]</div><BR>"
 		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
+		t += "<div class='Section'>[rotation]°</div>"
 		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
-		t += "<span class='linkOn'>Set Power</span>"
-		t += "<div class='statusDisplay'>"
+		t += "<div class='Section'>[angle]°</div>"
+		t += "<span class='selected'>Set Power</span>"
+		t += "<div class='Section'>"
 
 		for(var/i = 1; i <= power_options.len; i++)
 			if(power == power_options[i])
-				t += "<span class='linkOn'>[power_options[i]]</span>"
+				t += "<span class='selected'>[power_options[i]]</span>"
 				continue
 			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
 		t += "</div>"
 
 		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
-		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
+		t += "<div class='Section'>[z_co ? z_co : "NULL"]</div>"
 
 		if(active_wormhole)
-			t += "<BR><span class='linkOff'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
+			t += "<BR><span class='disabled'>Open Wormhole</span><A href='?src=\ref[src];close_teleport=1'>Close Wormhole</A>"
 		else
-			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='linkOff'>Close Wormhole</span>"
+			t += "<BR><A href='?src=\ref[src];open_teleport=1'>Open Wormhole</A><span class='disabled'>Close Wormhole</span>"
 		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
-		t += "<BR><div class='statusDisplay'>"
+		t += "<BR><div class='Section'>"
 		if(!last_tele_data)
 			t += "No teleport data found."
 		else
@@ -207,15 +207,15 @@
 		return
 
 	if(telepad)
-		var/truePower = CLAMP(power + power_off, 1, 1000)
+		var/truePower = clamp(power + power_off, 1, 1000)
 		var/trueRotation = rotation + rotation_off
-		var/trueAngle = CLAMP(angle + angle_off, 1, 90)
+		var/trueAngle = clamp(angle + angle_off, 1, 90)
 
 		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
 		last_tele_data = proj_data
 
-		var/trueX = CLAMP(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = CLAMP(round(proj_data.dest_y, 1), 1, world.maxy)
+		var/trueX = clamp(round(proj_data.dest_x, 1), 1, world.maxx)
+		var/trueY = clamp(round(proj_data.dest_y, 1), 1, world.maxy)
 		var/spawn_time = round(proj_data.time) * 10
 
 		var/turf/target = locate(trueX, trueY, z_co)
@@ -319,14 +319,14 @@
 		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
 		if(!..()) // Check after we input a value, as they could've moved after they entered something
 			return
-		rotation = CLAMP(new_rot, -900, 900)
+		rotation = clamp(new_rot, -900, 900)
 		rotation = round(rotation, 0.01)
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(!..())
 			return
-		angle = CLAMP(round(new_angle, 0.1), 1, 9999)
+		angle = clamp(round(new_angle, 0.1), 1, 9999)
 
 	if(href_list["setpower"])
 		var/index = href_list["setpower"]
@@ -338,7 +338,7 @@
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(!..())
 			return
-		z_co = CLAMP(round(new_z), 1, 10)
+		z_co = clamp(round(new_z), 1, 10)
 
 	if(href_list["ejectGPS"])
 		inserted_gps.loc = loc
@@ -370,7 +370,7 @@
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	if(telepad)
-		teles_left = CLAMP(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
+		teles_left = clamp(crystals.len * telepad.efficiency * 4 + rand(-5, 0), 0, 65)
 	else
 		teles_left = 0
 	angle_off = rand(-25, 25)

@@ -13,7 +13,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 	for(var/line in Lines)
 		if(!length(line))
 			continue
-		if(copytext(line,1,2) == "#")
+		if(line[1] == "#")
 			continue
 
 		var/list/List = splittext(line,"+")
@@ -75,7 +75,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		//process each line seperately
 		for(var/line in Lines)
 			if(!length(line))				continue
-			if(copytext(line,1,2) == "#")	continue
+			if(line[1] == "#")	continue
 
 			//Split the line at every "-"
 			var/list/List = splittext(line, "-")

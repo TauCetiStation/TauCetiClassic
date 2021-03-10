@@ -39,6 +39,18 @@ var/list/fuel_injectors = list()
 		else
 			Inject()
 
+/obj/machinery/fusion_fuel_injector/verb/rotate()
+	set name = "Rotate"
+	set category = "Object"
+	set src in oview(1)
+
+	if (usr.incapacitated())
+		return
+	if (anchored)
+		to_chat(usr,"<span class='notice'>It is fastened to the floor!</span>")
+		return
+	set_dir(turn(dir, 90))
+
 /obj/machinery/fusion_fuel_injector/attackby(obj/item/W, mob/user)
 
 	if(ismultitool(W))

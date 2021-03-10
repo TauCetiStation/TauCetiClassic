@@ -78,8 +78,9 @@
 			if("To Kill")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."
-				ticker.mode.traitors += user.mind
+				SSticker.mode.traitors += user.mind
 				user.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", user)
 				var/datum/objective/hijack/hijack = new
 				hijack.owner = user.mind
 				user.mind.objectives += hijack
@@ -137,7 +138,7 @@
 		s.start()
 		explosion(mob, 1, 0, 0, 0)
 		spawn(0)
-			del(src)
+			qdel(src)
 
 /obj/effect/meatgrinder
 	name = "Meat Grinder"

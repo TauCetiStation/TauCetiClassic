@@ -11,7 +11,9 @@
 	required_enemies = 2
 	recommended_enemies = 2
 	required_players = 25
-	required_players_secret = 25
+	required_players_bundles = 25
+	antag_hud_type = ANTAG_HUD_ABDUCTOR
+	antag_hud_name = "abductor"
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/datum/mind/scientists = list()
@@ -127,6 +129,8 @@
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
 		H.regenerate_icons()
+		add_antag_hud(antag_hud_type, antag_hud_name, scientist.current)
+		add_antag_hud(antag_hud_type, antag_hud_name, agent.current)
 
 	return ..()
 
@@ -257,7 +261,7 @@
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
 				SSshuttle.incall(0.5)
-				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+				SSshuttle.announce_emer_called.play()
 				finished = 1
 				return ..()
 	return ..()
@@ -339,7 +343,7 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "abduction", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

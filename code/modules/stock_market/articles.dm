@@ -4,16 +4,6 @@
 /proc/vowel()
 	return pick("A", "E", "I", "O", "U")
 
-/proc/ucfirst(S)
-	return "[uppertext(ascii2text(text2ascii(S, 1)))][copytext(S, 2)]"
-
-/proc/ucfirsts(S)
-	var/list/L = splittext(S, " ")
-	var/list/M = list()
-	for (var/P in L)
-		M += ucfirst(P)
-	return jointext(M, " ")
-
 var/global/list/FrozenAccounts = list()
 
 /proc/list_frozen()
@@ -122,4 +112,4 @@ var/global/list/FrozenAccounts = list()
 		T_list[I] = list(product_tokens[I])
 	for (var/I in T_list)
 		token_string = replacetext(token_string, "%[I]%", pick(T_list[I]))
-	return ucfirst(token_string)
+	return capitalize(token_string)

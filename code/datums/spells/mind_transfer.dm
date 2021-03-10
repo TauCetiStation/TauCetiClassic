@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/mind_transfer
-	name = "Mind Transfer"
-	desc = "This spell allows the user to switch bodies with a target."
+	name = "Обмен Разумом"
+	desc = "Позволяет поменяться телом с целью."
 
 	school = "transmutation"
 	charge_max = 1800
@@ -62,6 +62,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		for(var/obj/item/weapon/implant/mindshield/L in target)
 			if(L.implanted && L.imp_in == target)
 				qdel(L)
+		target.sec_hud_set_implants()
 		target.adjustBrainLoss(15)
 		user.Paralyse(paralysis_amount_caster)
 		target.Paralyse(paralysis_amount_victim)

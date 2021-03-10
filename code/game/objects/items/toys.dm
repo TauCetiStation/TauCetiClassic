@@ -167,7 +167,7 @@
 /obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
 	if (proximity)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)
@@ -418,7 +418,7 @@
 	if(locate(/obj/structure/table, loc))
 		return
 
-	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+	else if(istype(target, /obj/structure/reagent_dispensers/watertank) && proximity)
 		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You refill your flower!</span>")
 		return
@@ -969,6 +969,7 @@ Owl & Griffin toys
 		return ..()
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/M = usr
 	if(!ishuman(usr) || usr.incapacitated())
 		return
@@ -1012,10 +1013,9 @@ Owl & Griffin toys
 /obj/item/toy/cardhand/interact(mob/user)
 	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
-		dat += "<A href='?src=\ref[src];pick=[t]'>A [t].</A><BR>"
+		dat += "<A href='?src=\ref[src];pick=[t]'>A [t]</a><BR>"
 	dat += "Which card will you remove next?"
 	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
 

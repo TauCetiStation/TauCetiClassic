@@ -27,10 +27,10 @@
 		return list(0, 0, 0, 0)
 
 	var/list/colors = list(0, 0, 0, 0)
-	colors[1] = hex2num(copytext(color, 2, 4))
-	colors[2] = hex2num(copytext(color, 4, 6))
-	colors[3] = hex2num(copytext(color, 6, 8))
-	colors[4] = (length(color) > 7)? hex2num(copytext(color, 8, 10)) : 255
+	colors[1] = HEX_VAL_RED(color)
+	colors[2] = HEX_VAL_GREEN(color)
+	colors[3] = HEX_VAL_BLUE(color)
+	colors[4] = (length(color) > 7)? HEX_VAL_ALPHA(color) : 255
 
 	return colors
 

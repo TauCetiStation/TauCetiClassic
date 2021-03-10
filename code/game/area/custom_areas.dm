@@ -30,6 +30,10 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+/area/custom/syndicate_mothership/armory
+	name = "Syndicate Armory"
+	icon_state = "syndie-armory"
+
 /area/custom/syndicate_mothership/droppod_garage
 	name = "Drop pod garage"
 
@@ -61,3 +65,9 @@
 /area/custom/tophat
 	name = "Tophat"
 	icon_state = "tophat-room"
+
+/area/custom/ninjaspawn
+	name = "Space Dojo"
+	icon_state = "red"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED

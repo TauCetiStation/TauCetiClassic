@@ -141,7 +141,7 @@
 	name = (name_action + name_part1 + name_part2)
 
 /obj/machinery/computer/arcade/ui_interact(mob/user)
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+	var/dat
 
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
@@ -158,8 +158,9 @@
 
 	dat += "</b></center>"
 
-	user << browse(entity_ja(dat), "window=arcade")
-	onclose(user, "arcade")
+	var/datum/browser/popup = new(user, "arcade", "[name]", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
 	. = ..()
@@ -208,10 +209,6 @@
 			src.updateUsrDialog()
 			sleep(10)
 			src.arcade_action()
-
-	if (href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
 		temp = "New Round"

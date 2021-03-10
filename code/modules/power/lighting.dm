@@ -8,6 +8,11 @@
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
+#ifdef NEWYEARCONTENT
+    #define LAMP_BRIGHTNESS 1.5
+#else
+    #define LAMP_BRIGHTNESS 2
+#endif
 
 
 
@@ -50,7 +55,7 @@
 			newlight = new /obj/machinery/light_construct/small(constrloc)
 		if("tube")
 			newlight = new /obj/machinery/light_construct(constrloc)
-	newlight.dir = constrdir
+	newlight.set_dir(constrdir)
 	newlight.fingerprints = src.fingerprints
 	newlight.fingerprintshidden = src.fingerprintshidden
 	newlight.fingerprintslast = src.fingerprintslast
@@ -169,7 +174,7 @@
 				if ("bulb")
 					newlight = new /obj/machinery/light/small/built(src.loc)
 
-			newlight.dir = src.dir
+			newlight.set_dir(src.dir)
 			src.transfer_fingerprints_to(newlight)
 			qdel(src)
 			return
@@ -204,7 +209,7 @@
 	var/on_gs = 0
 	var/static_power_used = 0
 	var/brightness_range = 7	// luminosity when on, also used in power calculation
-	var/brightness_power = 2
+	var/brightness_power = LAMP_BRIGHTNESS
 	var/brightness_color = "#ffffff"
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -228,7 +233,7 @@
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
-	brightness_power = 2
+	brightness_power = LAMP_BRIGHTNESS
 	brightness_color = "#a0a080"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
@@ -457,7 +462,7 @@
 				if("bulb")
 					newlight = new /obj/machinery/light_construct/small(src.loc)
 					newlight.icon_state = "bulb-construct-stage2"
-			newlight.dir = src.dir
+			newlight.set_dir(src.dir)
 			newlight.stage = 2
 			newlight.fingerprints = src.fingerprints
 			newlight.fingerprintshidden = src.fingerprintshidden
@@ -550,7 +555,7 @@
 		else
 			prot = 1
 
-		if(prot > 0 || (COLD_RESISTANCE in user.mutations))
+		if(prot > 0 || (COLD_RESISTANCE in user.mutations) || H.species.flags[IS_SYNTHETIC])
 			to_chat(user, "You remove the light [fitting]")
 		else if(TK in user.mutations)
 			to_chat(user, "You telekinetically remove the light [fitting].")

@@ -205,7 +205,6 @@
 			druggy = max(druggy-1, 0)
 	return 1
 
-
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	if(!client)
 		return 0

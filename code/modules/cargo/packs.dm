@@ -356,6 +356,22 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	access = access_teleporter
 	group = "Security"
 
+/datum/supply_pack/investigation
+	name = "Investigation Crate"
+	cost = 1500
+	contains = list(/obj/item/weapon/autopsy_scanner,
+					/obj/item/weapon/scalpel,
+					/obj/item/device/detective_scanner,
+					/obj/item/device/taperecorder,
+					/obj/item/clothing/gloves/latex,
+					/obj/item/clothing/suit/storage/labcoat,
+					/obj/item/clothing/mask/surgical,
+					/obj/item/weapon/storage/box/evidence
+					 )
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Investigation Crate"
+	group = "Security"
+
 //----------------------------------------------
 //-----------------HOSPITALITY------------------
 //----------------------------------------------
@@ -1013,7 +1029,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	cost = 2500
 	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Virus sample crate"
-	access = access_cmo
+	access = access_virology
 	group = "Medical / Science"
 
 /datum/supply_pack/coolanttank
@@ -1668,7 +1684,8 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 					/obj/item/clothing/suit/wcoat,
 					/obj/item/clothing/suit/hastur,
 					/obj/item/clothing/suit/holidaypriest,
-					/obj/item/clothing/suit/nun,
+					/obj/item/clothing/suit/hooded/skhima,
+					/obj/item/clothing/suit/hooded/nun,
 					/obj/item/clothing/suit/imperium_monk,
 					/obj/item/clothing/suit/ianshirt,
 					/obj/item/clothing/under/gimmick/rank/captain/suit,

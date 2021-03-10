@@ -15,7 +15,7 @@
 					continue
 				if (copytext(line, 1, 2) == ";")
 					continue
-				var/ckey = copytext(line, 1, length(line)+1)
+				var/ckey = copytext(line, 1)
 				mentor_ckeys += ckey
 				mentors += directory[ckey]
 	else

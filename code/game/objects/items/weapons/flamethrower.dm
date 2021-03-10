@@ -61,6 +61,8 @@
 		item_state = "flamethrower_0"
 
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, proximity, params)
+	if(!can_see(user, target))
+		return
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)
@@ -120,15 +122,20 @@
 	if(!ptank)
 		to_chat(user, "<span class='notice'>Attach a phoron tank first!</span>")
 		return
-	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
-	user << browse(entity_ja(dat), "window=flamethrower;size=600x300")
-	onclose(user, "flamethrower")
+	var/dat = "<TT><B>Flamethrower "
+	if(lit)
+		dat += "<A class='red' HREF='?src=\ref[src];light=1'>Lit</a>"
+	else
+		dat += "<A HREF='?src=\ref[src];light=1'>Unlit</a>"
+
+	dat += "</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A></TT>"
+
+	var/datum/browser/popup = new(user, "flamethrower", null, 600, 300)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/item/weapon/flamethrower/Topic(href,href_list[])
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=flamethrower")
-		return
 	if(usr.incapacitated())	return
 	usr.set_machine(src)
 	if(href_list["light"])
@@ -140,7 +147,7 @@
 			START_PROCESSING(SSobj, src)
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
-		throw_amount = CLAMP(throw_amount, 1, 10)
+		throw_amount = clamp(throw_amount, 1, 10)
 	if(href_list["remove"])
 		if(!ptank)	return
 		usr.put_in_hands(ptank)
@@ -196,7 +203,7 @@
 /obj/item/weapon/flamethrower/full/atom_init()
 	. = ..()
 	weldtool = new /obj/item/weapon/weldingtool(src)
-	weldtool.status = 0
+	weldtool.secured = FALSE
 	igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1
@@ -225,6 +232,7 @@
 	var/obj/item/weapon/weldpack/M2_fuelback/Connected_tank = null
 
 /obj/item/weapon/flamethrower_M2/dropped(mob/user)
+	..()
 	if(user)
 		Connected_tank.unequip(user)
 		Connected_tank = null
@@ -270,6 +278,8 @@
 	return
 
 /obj/item/weapon/flamethrower_M2/afterattack(atom/target, mob/user, proximity, params)
+	if(!can_see(user, target))
+		return
 	// Make sure our user is still holding us
 	if(user && user.get_active_hand() == src)
 		var/turf/target_turf = get_turf(target)

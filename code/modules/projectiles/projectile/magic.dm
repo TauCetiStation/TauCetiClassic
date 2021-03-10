@@ -43,6 +43,7 @@
 			W.plane = initial(W.plane)
 			W.loc = M.loc
 			W.dropped(M)
+	M.sec_hud_set_implants()
 
 	var/mob/living/new_mob
 

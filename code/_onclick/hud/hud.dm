@@ -172,7 +172,7 @@ var/global/list/available_ui_styles = list(
 	else if(isrobot(mymob))
 		robot_hud()
 	else if(isobserver(mymob))
-		ghost_hud()
+		show_hud(HUD_STYLE_STANDARD)
 	else if(isovermind(mymob))
 		blob_hud()
 	else if(isessence(mymob))
@@ -284,12 +284,12 @@ var/global/list/available_ui_styles = list(
 		mymob.client.screen += PM
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12(var/full = 0 as null)
+/mob/verb/button_pressed_F12()
 	set name = "F12"
 	set hidden = 1
 
 	if(hud_used && client)
-		if(ishuman(src))
+		if(ishuman(src) || isobserver(src))
 			hud_used.show_hud() //Shows the next hud preset
 			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else

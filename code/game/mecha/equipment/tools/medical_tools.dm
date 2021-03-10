@@ -119,7 +119,7 @@
 	if(F.get("eject"))
 		go_out()
 	if(F.get("view_stats"))
-		chassis.occupant << browse(entity_ja(get_occupant_stats()),"window=msleeper")
+		chassis.occupant << browse(get_occupant_stats(),"window=msleeper")
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(F.get("inject"))
@@ -131,6 +131,7 @@
 		return
 	return {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<title>[occupant] statistics</title>
 				<script language='javascript' type='text/javascript'>
 				[js_byjax]
@@ -213,7 +214,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist()
 	go_out()
 
-/datum/global_iterator/mech_sleeper/process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
+/datum/global_iterator/mech_sleeper/process(obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
 	if(!S.chassis)
 		S.set_ready_state(1)
 		return stop()
@@ -225,6 +226,10 @@
 	var/mob/living/carbon/M = S.occupant
 	if(!M)
 		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags[IS_SYNTHETIC])
+			return
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
@@ -527,7 +532,7 @@
 			log_message("Reagent processing started.")
 		return
 	if(F.get("show_reagents"))
-		chassis.occupant << browse(entity_ja(get_reagents_page()),"window=msyringegun")
+		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
 	if(F.get("purge_reagent"))
 		var/reagent = F.get("purge_reagent")
 		if(reagent)
@@ -541,6 +546,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
 						<head>
+						<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 						<title>Reagent Synthesizer</title>
 						<script language='javascript' type='text/javascript'>
 						[js_byjax]
@@ -659,7 +665,7 @@
 /datum/global_iterator/mech_synth
 	delay = 100
 
-/datum/global_iterator/mech_synth/process(var/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/S)
+/datum/global_iterator/mech_synth/process(obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/S)
 	if(!S.chassis)
 		return stop()
 	var/energy_drain = S.energy_drain*10

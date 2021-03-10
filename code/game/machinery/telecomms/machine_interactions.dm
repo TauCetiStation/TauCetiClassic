@@ -1,6 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-
 /*
 
 	All telecommunications interactions:
@@ -34,7 +31,7 @@
 	var/obj/item/device/multitool/P = get_multitool(user)
 
 	var/dat
-	dat = "<font face = \"Courier\"><HEAD><TITLE>[src.name]</TITLE></HEAD><center><H3>[src.name] Access</H3></center>"
+	dat = "<font face = \"Courier\">"
 	dat += "<br>[temp]<br>"
 	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[src.toggled ? "On" : "Off"]</a>"
 	if(on && toggled)
@@ -84,8 +81,10 @@
 
 	dat += "</font>"
 	temp = ""
-	user << browse(entity_ja(dat), "window=tcommachine;size=520x500;can_resize=0")
-	onclose(user, "tcommachine")
+
+	var/datum/browser/popup = new(user, "tcommachine", "[src.name] Access", 520, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 // Off-Site Relays

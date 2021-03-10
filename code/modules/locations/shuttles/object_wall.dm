@@ -1,4 +1,4 @@
-//костыль, в будущем что-то сделать с этим
+//РєРѕСЃС‚С‹Р»СЊ, РІ Р±СѓРґСѓС‰РµРј С‡С‚Рѕ-С‚Рѕ СЃРґРµР»Р°С‚СЊ СЃ СЌС‚РёРј
 /obj/structure/object_wall
 	name = "shuttle wall"
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
@@ -42,3 +42,7 @@
 /obj/structure/object_wall/cargo
 	icon = 'code/modules/locations/shuttles/cargo.dmi'
 	icon_state = "0,5"
+
+/obj/structure/object_wall/evac
+	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	icon_state = "9,1"

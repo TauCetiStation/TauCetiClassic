@@ -17,7 +17,7 @@
 /obj/item/weapon/weldpack/attackby(obj/item/I, mob/user, params)
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/T = I
-		if(T.welding & prob(50))
+		if(T.isOn() & prob(50))
 			message_admins("[key_name_admin(user)] triggered a welding kit explosion. [ADMIN_JMP(user)]")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
@@ -26,7 +26,7 @@
 				qdel(src)
 			return
 		else
-			if(T.welding)
+			if(T.isOn())
 				to_chat(user, "<span class='warning'>That was close!</span>")
 			reagents.trans_to(I, T.max_fuel)
 			to_chat(user, "<span class='notice'>Welder refilled!</span>")
@@ -36,12 +36,14 @@
 	to_chat(user, "<span class='notice'>The tank scoffs at your insolence.  It only provides services to welders.</span>")
 
 /obj/item/weapon/weldpack/afterattack(atom/target, mob/user, proximity, params)
-	if (istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,target) <= 1 && src.reagents.total_volume < max_fuel)
+	if(!proximity)
+		return
+	if(istype(target, /obj/structure/reagent_dispensers/fueltank) && src.reagents.total_volume < max_fuel)
 		target.reagents.trans_to(src, max_fuel)
 		to_chat(user, "<span class='notice'>You crack the cap off the top of the pack and fill it back up again from the tank.</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 		return
-	else if (istype(target, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,target) <= 1 && src.reagents.total_volume == max_fuel)
+	else if(istype(target, /obj/structure/reagent_dispensers/fueltank) && src.reagents.total_volume == max_fuel)
 		to_chat(user, "<span class='notice'>The pack is already full!</span>")
 		return
 
@@ -60,7 +62,7 @@
 /obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/I, mob/user, params)
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/T = I
-		if(T.welding)
+		if(T.isOn())
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. [ADMIN_JMP(user)]")
 			log_game("[key_name(user)] triggered a flamethrower back explosion.")
 			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
@@ -102,6 +104,7 @@
 		time.equip(user, src)
 
 /obj/item/weapon/weldpack/M2_fuelback/dropped(mob/user)
+	..()
 	if(user)
 		if(Connected_Flamethrower)
 			Connected_Flamethrower.unequip(user)
