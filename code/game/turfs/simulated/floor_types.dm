@@ -47,14 +47,14 @@
 
 /turf/simulated/floor/goonplaque
 	name = "Comemmorative Plaque";
-	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding.";
+	desc = "\"Это металлический диск в честь наших товарищей на станциях G4407. Недеемся модель TG4407 сможет служить на ваше благо.\" Ниже выцарапано грубое изображение метеор и космонавта. Космонавт смеется. Метеор взрывается.";
 	icon_state = "plaque";
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(iswrench(C))
 		if(user.is_busy(src))
 			return
-		to_chat(user, "<span class='notice'>Removing rods...</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете удалять стержни.</span>")
 		if(C.use_tool(src, user, 30, volume = 80))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
@@ -272,7 +272,7 @@
 		eye_blind += rand(20, 25)
 		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, -4)
 	if(!eye_blind)
-		to_chat(src, "<span class='userdanger'>BF%AO@DAT-T[pick("@$%!", "-TEN-TEN%#!", "ENTION")]YAW$!$@@&@CRITI[pick("CAL-CAL", "CAL", "-TI-TI^$#&&@!")]!TAQQ@%@OV[pick("ERL", "ER-ER-ER", "-OAD-D")]%#^WW@ZF%^#D</span>")
+		to_chat(src, "<span class='userdanger'>БФ%АО@ДАН-Н[pick("@$%!", "-ДЕСЯТЬ-ДЕСЯТЬ%#!", "ЗАПИСЬ")]ЯВВ$!$@@&@КРИТИ[pick("CAL-CAL", "CAL", "-ТИ-ТИ^$#&&@!")]!ЗАКК@%@ОКО[pick("ОШБК", "ОШИ-ШИБ-ОШКА", "-OAD-D")]%#^ВВ@ЗФ%^#Д</span>")
 		playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
 		eye_blind += rand(5, 10)
 
@@ -408,7 +408,7 @@
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
-	desc = "Cats really don't like these things."
+	desc = "Кошки очень не любят такие покрытия."
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT

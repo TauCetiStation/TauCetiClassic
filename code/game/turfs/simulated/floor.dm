@@ -516,23 +516,23 @@ var/list/wood_icons = list("wood","wood-broken")
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
+				to_chat(user, "<span class='notice'>Вы заменили лампочку.</span>")
 			else
-				to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
+				to_chat(user, "<span class='notice'>Лампочка выглядит целой, нет нужды заменять ее.</span>")
 
 	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
-			to_chat(user, "<span class='warning'>You remove the broken plating.</span>")
+			to_chat(user, "<span class='warning'>Вы удалили поврежденное покрытие.</span>")
 		else
 			if(is_wood_floor())
-				to_chat(user, "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>")
+				to_chat(user, "<span class='warning'>Вы с трудом отдираете доски, ломая их в процессе.</span>")
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>You remove the [I.name].</span>")
+				to_chat(user, "<span class='warning'>Вы демонтируете световой пол.</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -546,7 +546,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				return
 			else
 				if(is_wood_floor())
-					to_chat(user, "<span class='warning'>You unscrew the planks.</span>")
+					to_chat(user, "<span class='warning'>Вы открутили доски.</span>")
 					new floor_type(src)
 
 			make_plating()
@@ -564,22 +564,22 @@ var/list/wood_icons = list("wood","wood-broken")
 			if (R.get_amount() >= 2)
 				if(user.is_busy(src))
 					return
-				to_chat(user, "<span class='notice'>Reinforcing the floor...</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять пол.</span>")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					return
 			else
-				to_chat(user, "<span class='warning'>You need more rods.</span>")
+				to_chat(user, "<span class='warning'>Нужно больше стержней.</span>")
 		else if (is_catwalk())
-			to_chat(user, "<span class='warning'>The entire thing is 100% rods already, it doesn't need any more.</span>")
+			to_chat(user, "<span class='warning'>Объект на 100% завершен, стержней больше не нужно.</span>")
 		else
-			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
+			to_chat(user, "<span class='warning'>Сначала нужно удалить покрытие.</span>")
 		return
 
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
-			to_chat(user, "<span class='warning'>The catwalk is too primitive to support tiling.</span>")
+			to_chat(user, "<span class='warning'>Помост не приспособлен для установки на нем покрытия.</span>")
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -607,7 +607,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
-				to_chat(user, "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>")
+				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы поддерживать покрытие. Используйте сварочный аппарат для ремонта.</span>")
 
 
 	if(iscoil(C))
@@ -619,16 +619,16 @@ var/list/wood_icons = list("wood","wood-broken")
 					return
 			coil.turf_place(src, user)
 		else
-			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
+			to_chat(user, "<span class='warning'>Сначала нужно удалить покрытие.</span>")
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			to_chat(user, "<span class='notice'>You shovel the grass.</span>")
+			to_chat(user, "<span class='notice'>Вы вскапываете траву.</span>")
 			make_plating()
 		else
-			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
+			to_chat(user, "<span class='warning'>Это нельзя вскопать.</span>")
 
 	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/W = C
@@ -637,20 +637,22 @@ var/list/wood_icons = list("wood","wood-broken")
 		if(!can_deconstruct)
 			return
 		if(!W.use(0, user))
-			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 			return
 		if(user.a_intent == INTENT_HELP)
 			if(!broken && !burnt)
 				return
-			to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
+			to_chat(user, "<span class='warning'>Вы отремонтировали немного вмятин.</span>")
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			icon_state = "plating"
 			burnt = 0
 			broken = 0
 		else
-			to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
+			to_chat(user, "<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>")
+			visible_message("<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>")
 			if(W.use_tool(src, user, 100, 3, 100))
-				to_chat(user, "<span class='notice'>You remove the plating.</span>")
+				to_chat(user, "<span class='warning'>Вы разобрали обшивку!</span>")
+				visible_message("<span class='warning'><B>[user]</B> разобрал обшивку! По ту сторону открытый космос!</span>")
 				new /obj/item/stack/tile/plasteel(src)
 				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT
