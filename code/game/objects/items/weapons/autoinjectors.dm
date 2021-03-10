@@ -1,6 +1,6 @@
 //AUTOINJECTOR
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat
-	name = "combat autoinjector"
+	name = "Combat autoinjector"
 	desc = "Younger brother of combat autoinjector."
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
@@ -64,7 +64,7 @@
 	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
-	name = "leporazine autoinjector"
+	name = "Leporazine autoinjector"
 	desc = "Leporazine can be use to stabilize an individuals body temperature."
 	icon_state = "autoinjector"
 	volume = 15

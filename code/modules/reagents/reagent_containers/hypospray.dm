@@ -49,7 +49,7 @@
 
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
-	name = "autoinjector"
+	name = "Inaprovaline autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
 	icon_state = "autoinjector"
 	item_state = "autoinjector"
