@@ -1530,3 +1530,31 @@ var/list/WALLITEMS = typecacheof(list(
 		return 1
 
 	return contains(location.loc)
+
+//Inverts the colour of an HTML string
+/proc/invertHTMLcolor(HTMLstring)
+	if(!istext(HTMLstring))
+		CRASH("Given non-text argument!")
+	else if(length(HTMLstring) != 7)
+		CRASH("Given non-HTML argument!")
+	else if(length_char(HTMLstring) != 7)
+		CRASH("Given non-hex symbols in argument!")
+	var/textr = copytext(HTMLstring, 2, 4)
+	var/textg = copytext(HTMLstring, 4, 6)
+	var/textb = copytext(HTMLstring, 6, 8)
+	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
+
+/proc/change_lobbyscreen(new_screen)
+	if(new_screen)
+		global.current_lobby_screen = new_screen
+	else
+		var/newyear
+		#ifdef NEWYEARCONTENT
+		global.current_lobby_screen = pick(global.new_year_screens)
+		newyear = TRUE
+		#endif
+		if(!newyear)
+			global.current_lobby_screen = pick(global.lobby_screens)
+
+	for(var/mob/dead/new_player/N in new_player_list)
+		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)

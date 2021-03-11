@@ -4,6 +4,7 @@
 		mind.active = TRUE
 		mind.current = src
 
+	my_client = client
 	..()
 
 	if(join_motd)
@@ -15,6 +16,6 @@
 
 	sight |= SEE_TURFS
 
-	new_player_panel()
+	show_titlescreen()
 	playsound_lobbymusic()
 //	handle_privacy_poll() // commented cause polls are kinda broken now, needs refactoring
