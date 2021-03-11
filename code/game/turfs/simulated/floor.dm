@@ -642,7 +642,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		if(user.a_intent == INTENT_HELP)
 			if(!broken && !burnt)
 				return
-			to_chat(user, "<span class='warning'>Вы отремонтировали немного вмятин.</span>")
+			to_chat(user, "<span class='warning'>Вы отремонтировали несколько вмятин.</span>")
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			icon_state = "plating"
 			burnt = 0

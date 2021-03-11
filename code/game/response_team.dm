@@ -52,7 +52,7 @@ var/can_call_ert
 			to_chat(usr, "An emergency response team has already been sent.")
 			return */
 		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
-			to_chat(usr, "<span class='danger'>Вы забанены и не можете вступить в группу быстрого реагирования!</span>")
+			to_chat(usr, "<span class='danger'>У вас джоббан. Вы не можете вступить в группу быстрого реагирования!</span>")
 			return
 
 		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
