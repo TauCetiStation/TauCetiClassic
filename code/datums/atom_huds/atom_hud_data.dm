@@ -60,6 +60,9 @@
 /datum/atom_hud/golem
 	hud_icons = list(GOLEM_MASTER_HUD)
 
+/datum/atom_hud/embryo
+	hud_icons = list(ALIEN_EMBRYO_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
