@@ -193,8 +193,11 @@
 /obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(istype(target, /obj/singularity))
 		var/obj/singularity/S = target
-		S.deduce_energy(600)
 		empulse(S, 4, 10)
+		for(var/mob/living/carbon/H in viewers(S))
+			H.apply_effect(20, IRRADIATE, 0)
+		S.deduce_energy(600)
+
 /obj/item/projectile/neurotoxin
 	name = "neurotoxin"
 	icon_state = "energy2"
