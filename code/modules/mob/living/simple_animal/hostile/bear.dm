@@ -17,7 +17,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 60
 	health = 60
 	melee_damage = 25
@@ -63,7 +63,7 @@
 	switch(stance)
 
 		if(HOSTILE_STANCE_TIRED)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			stance_step++
 			if(stance_step >= 10) //rests for 10 ticks
 				if(target && (target in ListTargets(10)))
@@ -72,14 +72,14 @@
 					stance = HOSTILE_STANCE_IDLE
 
 		if(HOSTILE_STANCE_ALERT)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			var/found_mob = 0
 			if(target && (target in ListTargets(10)))
 				if(CanAttack(target))
 					stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 					stance_step++
 					found_mob = 1
-					src.dir = get_dir(src,target)	//Keep staring at the mob
+					src.set_dir(get_dir(src,target))	//Keep staring at the mob
 
 					if(stance_step in list(1,4,7)) //every 3 ticks
 						var/action = pick( list( "growls at [target]", "stares angrily at [target]", "prepares to attack [target]", "closely watches [target]" ) )

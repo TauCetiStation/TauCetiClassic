@@ -232,7 +232,7 @@
 
 /**********************Mining Equipment Locker**************************/
 
-/obj/machinery/mineral/equipment_locker
+/obj/machinery/mineral/equipment_vendor
 	name = "mining equipment locker"
 	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
@@ -292,7 +292,7 @@
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
+/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
 	var/dat
 	dat +="<div class='Section'>"
 	if(istype(inserted_id))
@@ -309,7 +309,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/mineral/equipment_locker/Topic(href, href_list)
+/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -341,7 +341,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/mineral/equipment_locker/attackby(obj/item/I, mob/user)
+/obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -362,7 +362,7 @@
 		return 1
 	..()
 
-/obj/machinery/mineral/equipment_locker/proc/populate_selection()
+/obj/machinery/mineral/equipment_vendor/proc/populate_selection()
 	selection_items = list(
 	"Resonator kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
 	"Kinetic Accelerator" = image(icon = 'icons/obj/mining/hand_tools.dmi', icon_state = "kineticgun100"),
@@ -370,7 +370,7 @@
 	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining")
 	)
 
-/obj/machinery/mineral/equipment_locker/proc/RedeemVoucher(obj/voucher, redeemer)
+/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/voucher, redeemer)
 	if(voucher.in_use)
 		return
 	voucher.in_use = 1
@@ -394,7 +394,7 @@
 			return
 	qdel(voucher)
 
-/obj/machinery/mineral/equipment_locker/ex_act()
+/obj/machinery/mineral/equipment_vendor/ex_act()
 	return
 
 
@@ -637,7 +637,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
-	wander = 0
+	wander = FALSE
 	idle_vision_range = 6
 	move_to_delay = 7
 	retreat_distance = 2
@@ -648,22 +648,11 @@
 	environment_smash = 0
 	attacktext = "drill"
 	attack_sound = list('sound/weapons/circsawhit.ogg')
-	ranged = 1
+	ranged = TRUE
 	ranged_message = "shoots"
 	ranged_cooldown_cap = 2
 	projectiletype = /obj/item/projectile/kinetic
 	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
-	wanted_objects = list(/obj/item/weapon/ore/diamond,
-						  /obj/item/weapon/ore/glass,
-						  /obj/item/weapon/ore/gold,
-						  /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/phoron,
-						  /obj/item/weapon/ore/silver,
-						  /obj/item/weapon/ore/uranium,
-						  /obj/item/weapon/ore/coal,
-						  /obj/item/weapon/ore/osmium,
-						  /obj/item/weapon/ore/hydrogen,
-						  /obj/item/weapon/ore/clown)
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
 	if(iswelder(I))
@@ -692,10 +681,10 @@
 	new /obj/effect/decal/remains/robot(src.loc)
 	DropOre()
 	qdel(src)
-	return
 
 /mob/living/simple_animal/hostile/mining_drone/atom_init()
 	. = ..()
+	wanted_objects = subtypesof(/obj/item/weapon/ore)
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
@@ -708,21 +697,21 @@
 			to_chat(attacker, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
-	stop_automated_movement_when_pulled = 1
+	stop_automated_movement_when_pulled = TRUE
 	idle_vision_range = 9
 	search_objects = 2
-	wander = 1
-	ranged = 0
+	wander = TRUE
+	ranged = FALSE
 	minimum_distance = 1
 	retreat_distance = null
 	icon_state = "mining_drone"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	idle_vision_range = 6
 	search_objects = 0
-	wander = 0
-	ranged = 1
+	wander = FALSE
+	ranged = TRUE
 	retreat_distance = 2
 	minimum_distance = 3
 	icon_state = "mining_drone_offense"

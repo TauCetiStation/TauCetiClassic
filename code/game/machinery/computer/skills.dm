@@ -11,7 +11,7 @@
 	state_nopower_preset = "laptop0"
 	light_color = "#00b000"
 	req_one_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/skills"
+	circuit = /obj/item/weapon/circuitboard/skills
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/obj/item/weapon/card/id/scan = null  //current id card inside machine

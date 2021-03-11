@@ -49,30 +49,9 @@
 			return
 		var/tile = get_turf(get_step(essence.phantom, direction))
 		if(get_dist(tile, essence.host) < 8)
-			essence.phantom.dir = direction
+			essence.phantom.set_dir(direction)
 			essence.phantom.loc = tile
 		return
-	if(user in src.stomach_contents)
-		if(prob(40))
-			audible_message("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>", hearing_distance = 4)
-			var/obj/item/I = user.get_active_hand()
-			if(I && I.force)
-				var/d = rand(round(I.force / 4), I.force)
-				if(istype(src, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
-					BP.take_damage(d, 0)
-					H.updatehealth()
-				else
-					src.take_bodypart_damage(d)
-				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>")
-				playsound(user, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-
-				if(prob(src.getBruteLoss() - 50))
-					for(var/atom/movable/A in stomach_contents)
-						A.loc = loc
-						stomach_contents.Remove(A)
-					src.gib()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/attacker)
 	if(istype(attacker, /mob/living/simple_animal/headcrab))
@@ -83,8 +62,6 @@
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
-		if(M in src.stomach_contents)
-			src.stomach_contents.Remove(M)
 		M.loc = src.loc
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
@@ -105,8 +82,6 @@
 
 /mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
 	if(istype(attacker))
-		if(attacker in stomach_contents)
-			return	//you cannot beat from the stomach
 		var/spread = TRUE
 		if(ishuman(attacker))
 			var/mob/living/carbon/human/H = attacker

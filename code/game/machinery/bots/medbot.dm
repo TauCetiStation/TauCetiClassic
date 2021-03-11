@@ -62,10 +62,6 @@
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/weapon/firstaid_arm_assembly/atom_init_late()
-	if(skin)
-		add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
-
 /obj/machinery/bot/medbot/atom_init()
 	..()
 	botcard = new /obj/item/weapon/card/id(src)
@@ -76,10 +72,6 @@
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/bot/medbot/atom_init_late()
-	if(skin)
-		add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -215,12 +207,19 @@
 
 /obj/machinery/bot/medbot/emag_act(mob/user)
 	..()
+
+	var/list/viewing = list()
+	for(var/mob/H in viewers(src))
+		if(H.client)
+			viewing += H.client
+	flick_overlay(image(icon, src, "medibot_spark"), viewing, 4)
+
 	if(open && !locked)
 		if(user)
 			to_chat(user, "<span class='warning'>You short out [src]'s reagent synthesis circuits.</span>")
 		spawn(0)
 			audible_message("<span class='warning'><B>[src] buzzes oddly!</B></span>")
-		flick("medibot_spark", src)
+
 		patient = null
 		if(user)
 			oldpatient = user
@@ -563,9 +562,15 @@
 		A.skin = "tox"
 	else if(istype(src,/obj/item/weapon/storage/firstaid/o2))
 		A.skin = "o2"
+	else if(istype(src,/obj/item/weapon/storage/firstaid/adv))
+		A.skin = "adv"
+	else if(istype(src,/obj/item/weapon/storage/firstaid/tactical))
+		A.skin = "bezerk"
 
 	user.put_in_hands(A)
 	to_chat(user, "<span class='notice'>You add \the [I] to the first aid kit.</span>")
+	if(A.skin)
+		A.add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[A.skin]"))
 	qdel(I)
 	qdel(src)
 
@@ -599,6 +604,8 @@
 				var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot(T)
 				S.skin = skin
 				S.name = created_name
+				if(skin)
+					S.add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
 				qdel(src)
 				did_something = TRUE
 

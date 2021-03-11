@@ -91,7 +91,7 @@
 	item_state = "c20r"
 	w_class = ITEM_SIZE_LARGE
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
+	cell_type = /obj/item/weapon/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
@@ -229,7 +229,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "relsotron"
 	item_state = "relsotron"
-	origin_tech = null
+	origin_tech = "combat=5;materials=4;powerstorage=4;magnets=4;engineering=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/rails)
 	fire_delay = 20
 	w_class = ITEM_SIZE_NORMAL

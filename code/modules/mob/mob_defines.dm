@@ -236,3 +236,8 @@
 
 	var/list/progressbars = null //for stacking do_after bars
 	var/is_moving = FALSE
+
+	// Mob typing indication
+	var/typing = FALSE
+	var/obj/effect/overlay/typing_indicator/typing_indicator
+	var/typing_indicator_type = "default"

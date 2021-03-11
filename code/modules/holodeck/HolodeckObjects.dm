@@ -399,7 +399,7 @@
 		faction = "neutral"
 		melee_damage = 0
 		//wall_smash = 0
-		destroy_surroundings = 0
+		destroy_surroundings = FALSE
 	else
 		faction = "carp"
 		melee_damage = initial(melee_damage)

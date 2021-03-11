@@ -71,7 +71,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
 	/client/proc/debug_variables, 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
-	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud
+	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
+	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
 	)
 var/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
@@ -98,6 +99,7 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/stop_server_sound
 	)
 var/list/admin_verbs_fun = list(
+	/client/proc/change_title_screen,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
@@ -598,7 +600,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a spell to a mob."
 	var/list/spell_names = list()
 	for(var/v in spells)
-	//	"/obj/effect/proc_holder/spell/" 30 symbols ~Intercross21
+	//	"[/obj/effect/proc_holder/spell]/" 30 symbols ~Intercross21
 		spell_names.Add(copytext("[v]", 31, 0))
 	var/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_names
 	if(!S) return
@@ -614,7 +616,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a (tg-style) Disease to a mob."
 	var/list/disease_names = list()
 	for(var/v in diseases)
-	//	"/datum/disease/" 15 symbols ~Intercross
+	//	"[/datum/disease]/" 15 symbols ~Intercross
 		disease_names.Add(copytext("[v]", 16, 0))
 	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in disease_names
 	if(!D) return
@@ -710,6 +712,31 @@ var/list/admin_verbs_hideable = list(
 	if(src.mob)
 		togglebuildmode(src.mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/change_title_screen()
+	set name = "Title Screen: Change"
+	set category = "Fun"
+
+	if(!check_rights(R_FUN))
+		return
+
+	log_admin("[key_name(usr)] try change the title screen.")
+	message_admins("[key_name_admin(usr)] try change the title screen.")
+	feedback_add_details("admin_verb", "CTS")
+
+	switch(alert(usr, "How change Title Screen?", "Title Screen", "Change", "Reset", "Cancel"))
+		if("Change")
+			var/file = input(usr) as icon|null
+			if(!file)
+				return
+			change_lobbyscreen(file)
+		if("Reset")
+			change_lobbyscreen()
+		if("Cancel")
+			return
+
+	for(var/mob/dead/new_player/N in new_player_list)
+		N.show_titlescreen()
 
 /client/proc/object_talk(msg as text) // -- TLE
 	set category = "Special Verbs"

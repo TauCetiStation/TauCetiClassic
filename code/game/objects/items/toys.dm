@@ -969,6 +969,7 @@ Owl & Griffin toys
 		return ..()
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
+	. = ..()
 	var/mob/M = usr
 	if(!ishuman(usr) || usr.incapacitated())
 		return

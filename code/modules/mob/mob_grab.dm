@@ -535,13 +535,6 @@
 						user.visible_message("<span class='warning'>[user] punches [H] in the gut, trying to make them puke.</span>")
 						if(prob(chance_to_force_vomit))
 							H.vomit(punched=TRUE)
-//					else if(hit_zone != BP_HEAD)
-//						if(state < GRAB_NECK)
-//							assailant << "<span class='warning'>You require a better grab to do this.</span>"
-//							return
-//						if(affecting:grab_joint(assailant))
-//							playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-//							return
 					else
 						if(affecting.lying)
 							return
@@ -587,37 +580,6 @@
 					else
 						to_chat(assailant, "<span class='warning'>You are already pinning [affecting] to the ground.</span>")
 						return
-
-	if(M == assailant && state >= GRAB_AGGRESSIVE)
-		if( (ishuman(user) && HAS_TRAIT(user, TRAIT_FAT) && ismonkey(affecting) ) || ( isxeno(user) && iscarbon(affecting) ) )
-			var/mob/living/carbon/attacker = user
-			user.visible_message("<span class='danger'>[user] is attempting to devour [affecting]!</span>")
-			if(istype(user, /mob/living/carbon/xenomorph/humanoid/hunter))
-				if(!do_mob(user, affecting))
-					return
-			else
-				if(!do_mob(user, affecting, 100))
-					return
-			user.visible_message("<span class='danger'>[user] devours [affecting]!</span>")
-			if(isxeno(user))
-				if(affecting.stat == DEAD)
-					affecting.gib()
-					if(attacker.health >= attacker.maxHealth - attacker.getCloneLoss())
-						attacker.adjustToxLoss(100)
-						to_chat(attacker, "<span class='notice'>You gain some plasma.</span>")
-					else
-						attacker.adjustBruteLoss(-100)
-						attacker.adjustFireLoss(-100)
-						attacker.adjustOxyLoss(-100)
-						attacker.adjustCloneLoss(-100)
-						to_chat(attacker, "<span class='notice'>You feel better.</span>")
-				else
-					affecting.loc = user
-					attacker.stomach_contents.Add(affecting)
-			else
-				affecting.loc = user
-				attacker.stomach_contents.Add(affecting)
-			qdel(src)
 
 /obj/item/weapon/grab/Destroy()
 	. = ..()

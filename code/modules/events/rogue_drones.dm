@@ -44,7 +44,7 @@
 		sparks.set_up(3, 0, D.loc)
 		sparks.start()
 		D.z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
-		D.has_loot = 0
+		D.has_loot = FALSE
 
 		qdel(D)
 		num_recovered++
