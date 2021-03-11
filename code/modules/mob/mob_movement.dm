@@ -279,8 +279,6 @@
 			T = get_step(T, Dir)
 		console.jump_on_click(src, T)
 		return FALSE
-		return TRUE
-	return FALSE
 
 /mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (pinned.len)
