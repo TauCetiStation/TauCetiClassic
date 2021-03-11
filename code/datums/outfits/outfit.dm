@@ -18,6 +18,7 @@
 
 	var/uniform = null    /// Type path of item to go in uniform slot
 	var/uniform_f = null    /// Type path of item to go in uniform slot	(female)
+	var/accessory = null
 	var/suit = null       /// Type path of item to go in suit slot
 	var/gloves = null     /// Type path of item to go in gloves slot
 	var/shoes = null      /// Type path of item to go in shoes slot
@@ -43,7 +44,6 @@
 	var/r_pocket_back = null   /// Type path of item in the backpack. Otherwise for right pocket slot
 
 	var/back = null       /// Type path of item to go in back slot
-
 	var/list/back_style = BACKPACK_STYLE_COMMON
 
 	var/list/backpack_contents = list() /// list of items that should go in the backpack of the user. Format of this list should be: list(path=count,otherpath=count)

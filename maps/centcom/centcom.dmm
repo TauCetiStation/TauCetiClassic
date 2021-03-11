@@ -4246,6 +4246,19 @@
 "alu" = (
 /turf/unsimulated/wall/fakeglass,
 /area/space)
+"alv" = (
+/obj/effect/landmark/ertspawn,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
+"alw" = (
+/obj/machinery/light,
+/obj/effect/landmark/ertspawn,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "alx" = (
 /obj/machinery/computer/telecrystals/uplinker,
 /turf/unsimulated/floor{
@@ -52333,9 +52346,9 @@ aAM
 aAM
 aAM
 aAM
-aAM
-aAM
-aAM
+alv
+alv
+alv
 aEJ
 gZb
 gZb
@@ -52590,9 +52603,9 @@ aAM
 aBK
 aBK
 aAM
-aAM
-aAM
-aAM
+alv
+alv
+alv
 aEK
 bBb
 bBb
@@ -52847,9 +52860,9 @@ aBK
 aCk
 aCk
 aBK
-aAM
-aAM
-aAM
+alv
+alv
+alv
 aAm
 aAm
 bDb
@@ -53104,9 +53117,9 @@ aBL
 aFn
 aCl
 aDo
-aAM
-aAM
-aAM
+alv
+alv
+alv
 gSb
 aAM
 gqb
@@ -53361,9 +53374,9 @@ aBL
 aCl
 bub
 aDo
-aAM
-aAM
-aAM
+alv
+alv
+alv
 gSb
 aAM
 aAM
@@ -53618,9 +53631,9 @@ aBK
 aCm
 aCm
 aBK
-aAM
-aAM
-aEp
+alv
+alv
+alw
 aAm
 aAm
 aFu
@@ -53875,8 +53888,8 @@ aAM
 aBK
 aBK
 aAM
-aAM
-aAM
+alv
+alv
 aAM
 aAm
 aFd

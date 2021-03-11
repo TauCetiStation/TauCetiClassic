@@ -1739,8 +1739,8 @@
 		if(!istype(M))
 			return
 
-		ticker.mode.distress_cancelled = TRUE
-		captain_announce("The distress signal has not received a response.", "Distress Beacon")
+		SSticker.mode.distress_cancelled = TRUE
+		announce("The distress signal has not received a response.", "Distress Beacon")
 		log_admin("[key_name(usr)] has denied a distress beacon, requested by [key_name(M)]")
 		message_admins(" has denied a distress beacon, requested by ")
 
@@ -1750,11 +1750,11 @@
 		if(!istype(M))
 			return
 
-		if(!ticker?.mode || ticker.mode.waiting_for_candidates)
+		if(!SSticker?.mode || SSticker.mode.waiting_for_candidates)
 			return
 
 		var/list/valid_calls = list("Random")
-		for(var/datum/emergency_call/E in ticker.mode.all_calls) //Loop through all potential candidates
+		for(var/datum/emergency_call/E in SSticker.mode.all_calls) //Loop through all potential candidates
 			if(E.probability < 1) //Those that are meant to be admin-only
 				continue
 
@@ -1763,9 +1763,9 @@
 		var/chosen_call = input(usr, "Select a distress to send", "Emergency Response") as null|anything in valid_calls
 
 		if(chosen_call == "Random")
-			ticker.mode.activate_distress()
+			SSticker.mode.activate_distress()
 		else
-			ticker.mode.activate_distress(chosen_call)
+			SSticker.mode.activate_distress(chosen_call)
 
 		log_admin("[key_name(usr)] has sent a [chosen_call] distress beacon early, requested by [key_name(M)]")
 		message_admins("[key_name(usr)] has sent a [chosen_call] distress beacon early, requested by [key_name(M)]")

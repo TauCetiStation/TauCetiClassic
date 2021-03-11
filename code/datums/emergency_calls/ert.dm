@@ -39,36 +39,26 @@
 		return
 
 	if(medics < max_medics)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), SLOT_W_UNIFORM)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), SLOT_GLOVES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
+		H.equipOutfit(/datum/outfit/ert/nt/medic)
 		to_chat(H, "<span class='notice'>You are a Nanotrasen medic assigned to this Nanotrasen contractor team to respond to the distress signal sent out nearby. Keep your squad alive in this fight!</span>")
 		medics++
 		return
 
-	if(prob(40))
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), SLOT_W_UNIFORM)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), SLOT_GLOVES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
+	if(prob(30))
+		H.equipOutfit(/datum/outfit/ert/security/shotgun)
 		to_chat(H, "<span class='notice'>You are a Nanotrasen point-man assigned to this team to respond to the distress signal sent out nearby. Be the avanguard of your squad!</span>")
 		return
 
 	if(prob(30))
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), SLOT_W_UNIFORM)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), SLOT_GLOVES)
-		H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
+		H.equipOutfit(/datum/outfit/ert/security/sniper)
 		to_chat(H, "<span class='notice'>You are a Nanotrasen heavy sniper assigned to this team to respond to the distress signal sent out nearby. Support your squad with long ranged firepower!</span>")
 		return
 
 	if(prob(30))
+		H.equipOutfit(/datum/outfit/ert/nt/engineer)
 		to_chat(H, "<span class='notice'>You are a Nanotrasen combat engineer assigned to this team to respond to the distress signal sent out nearby. Make a way to victory for your squad!</span>")
 		return
+	else
+		H.equipOutfit(/datum/outfit/ert/security)
 
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), SLOT_W_UNIFORM)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), SLOT_GLOVES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
 	to_chat(H, "<span class='notice'>You are a Nanotrasen contractor assigned to this team to respond to the TGMC distress signal sent out nearby. Assist your team and protect NT's interests whenever possible!</span>")

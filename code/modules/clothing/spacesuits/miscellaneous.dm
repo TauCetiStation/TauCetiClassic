@@ -17,6 +17,8 @@
 	force = 0
 	hitsound = list()
 
+/obj/item/clothing/head/helmet/space/deathsquad/doomguy
+		armor = list(melee = 99, bullet = 99, laser = 99,energy = 99, bomb = 99, bio = 99, rad = 99)
 //Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
 	name = "Santa's hat"

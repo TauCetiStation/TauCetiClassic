@@ -55,7 +55,7 @@
 	return chosen_call
 
 /datum/emergency_call/proc/show_join_message()
-	if(!mob_max || !ticker?.mode) //Not a joinable distress call.
+	if(!mob_max || !SSticker?.mode) //Not a joinable distress call.
 		return
 
 	for(var/i in observer_list)
@@ -67,7 +67,7 @@
 /datum/game_mode/proc/activate_distress(datum/emergency_call/chosen_call)
 	picked_call = chosen_call || get_random_call()
 
-	if(ticker?.mode?.waiting_for_candidates) //It's already been activated
+	if(SSticker?.mode?.waiting_for_candidates) //It's already been activated
 		return FALSE
 
 	picked_call.mob_max = rand(5, 15)
@@ -80,13 +80,13 @@
 	set category = "Ghost"
 	set desc = "Join an ongoing distress call response. You must be ghosted to do this."
 
-	var/datum/emergency_call/distress = ticker?.mode?.picked_call //Just to simplify things a bit
+	var/datum/emergency_call/distress = SSticker?.mode?.picked_call //Just to simplify things a bit
 
 	if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
 		to_chat(usr, "<span class='danger'>You are jobbanned from the emergency reponse team!</span>")
 		return
 
-	if(!istype(distress) || !ticker.mode.waiting_for_candidates || distress.mob_max < 1)
+	if(!istype(distress) || !SSticker.mode.waiting_for_candidates || distress.mob_max < 1)
 		to_chat(usr, "<span class='warning'>No distress beacons that need candidates are active. You will be notified if that changes.</span>")
 		return
 /*
@@ -114,21 +114,21 @@
 		cooldown_timer = null
 	members = list()
 	candidates = list()
-	ticker.mode.waiting_for_candidates = FALSE
-	ticker.mode.on_distress_cooldown = FALSE
+	SSticker.mode.waiting_for_candidates = FALSE
+	SSticker.mode.on_distress_cooldown = FALSE
 	message_admins("Distress beacon: [name] has been reset.")
 
 /datum/emergency_call/proc/activate(announce = TRUE)
-	if(!ticker?.mode) //Something horribly wrong with the gamemode ticker
+	if(!SSticker?.mode) //Something horribly wrong with the gamemode SSticker
 		message_admins("Distress beacon: [name] attempted to activate but no gamemode exists")
 		return FALSE
 
-	if(ticker.mode.on_distress_cooldown) //It's already been called.
+	if(SSticker.mode.on_distress_cooldown) //It's already been called.
 		message_admins("Distress beacon: [name] attempted to activate but distress is on cooldown")
 		return FALSE
 
 	if(mob_max > 0)
-		ticker.mode.waiting_for_candidates = TRUE
+		SSticker.mode.waiting_for_candidates = TRUE
 
 	show_join_message() //Show our potential candidates the message to let them join.
 	message_admins("Distress beacon: '[name]' activated. Looking for candidates.")
@@ -136,13 +136,13 @@
 	if(announce)
 		priority_announce("A distress beacon has been launched from the [Station.", "Priority Alert", sound = 'sound/AI/distressbeacon.ogg')
 */
-	ticker.mode.on_distress_cooldown = TRUE
+	SSticker.mode.on_distress_cooldown = TRUE
 
 	candidate_timer = addtimer(CALLBACK(src, .proc/do_activate, announce), 1 MINUTES, TIMER_STOPPABLE)
 
 /datum/emergency_call/proc/do_activate(announce = TRUE)
 	candidate_timer = null
-	ticker.mode.waiting_for_candidates = FALSE
+	SSticker.mode.waiting_for_candidates = FALSE
 
 	var/list/valid_candidates = list()
 
@@ -156,15 +156,13 @@
 
 	if(length(valid_candidates) < mob_min)
 		message_admins("Aborting distress beacon [name], not enough candidates. Found: [length(valid_candidates)]. Minimum required: [mob_min].")
-		ticker.mode.waiting_for_candidates = FALSE
+		SSticker.mode.waiting_for_candidates = FALSE
 		members = list() //Empty the members list.
 		candidates = list()
 
-		if(announce)
-			captain_announce("The distress signal has not received a response, the launch tubes are now recalibrating.", "Distress Beacon")
 
-		ticker.mode.picked_call = null
-		ticker.mode.on_distress_cooldown = TRUE
+		SSticker.mode.picked_call = null
+		SSticker.mode.on_distress_cooldown = TRUE
 
 		return
 

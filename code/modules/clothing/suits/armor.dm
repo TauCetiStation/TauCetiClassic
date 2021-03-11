@@ -155,6 +155,8 @@
 	flags_inv = 0
 	body_parts_covered = UPPER_TORSO|ARMS
 
+/obj/item/clothing/suit/armor/swat/doomguy
+	armor = list(melee = 89, bullet = 94, laser = 99,energy = 99, bomb = 99, bio = 99, rad = 99)
 
 /obj/item/clothing/suit/armor/det_suit
 	name = "armor"

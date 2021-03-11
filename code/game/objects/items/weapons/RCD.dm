@@ -215,3 +215,6 @@ RCD
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000
+
+/obj/item/weapon/rcd/loaded
+	matter = 30
