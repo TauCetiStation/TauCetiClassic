@@ -142,7 +142,6 @@
 /mob/living/carbon/human/skeleton/atom_init(mapload)
 	. = ..(mapload, SKELETON)
 
-<<<<<<< HEAD
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -194,8 +193,6 @@
 	my_golem = null
 	return ..()
 
-=======
->>>>>>> c8c3de179b39e3ca28684d30e1b15398f32bc80f
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
 	..()
