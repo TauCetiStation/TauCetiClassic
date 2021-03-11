@@ -195,13 +195,13 @@ This is emryo growth procs
 
 //only aliens will see this HUD
 /obj/item/alien_embryo/proc/add_infected_hud()
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_to_hud(affected_mob)
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = "infected[stage]"
 
 /obj/item/alien_embryo/proc/remove_infected_hud()
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
-	hud.leave_hud(affected_mob)
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
+	hud.remove_hud_from(affected_mob)
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = null
