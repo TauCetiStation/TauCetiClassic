@@ -279,8 +279,6 @@
 			T = get_step(T, Dir)
 		console.jump_on_click(src, T)
 		return FALSE
-		else
-			move_grabs(Dir)
 		return TRUE
 	return FALSE
 
@@ -308,6 +306,8 @@
 								step(M, get_dir(M.loc, T))
 								if(G.affecting.is_moving)
 									G.affecting.is_moving = FALSE
+		else
+			move_grabs(Dir)
 	return ..()
 
 /mob/proc/move_grabs(Dir)
