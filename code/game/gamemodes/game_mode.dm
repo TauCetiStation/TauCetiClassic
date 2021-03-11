@@ -241,6 +241,7 @@
 
 	for(var/datum/faction/F in factions)
 		F.forgeObjectives()
+		F.AnnounceObjectives()
 		F.OnPostSetup()
 	for(var/datum/role/R in orphaned_roles)
 		R.forgeObjectives()

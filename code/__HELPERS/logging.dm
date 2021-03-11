@@ -224,12 +224,14 @@
 		temprole = Mind.special_role
 		objectives = ""
 		if(temprole)							//if they are an antagonist of some sort.
-			if(Mind.objectives.len)
-				for(var/datum/objective/O in Mind.objectives)
-					if(length(objectives))
-						objectives += " | "
-					objectives += "[O.explanation_text]"
-				objectives = " \[[objectives]\]"
+			for(var/role in Mind.antag_roles)
+				var/datum/role/R = antag_roles[role]
+				if(R.objectives.objectives.len)
+					for(var/datum/objective/O in R.objectives.GetObjectives())
+						if(length(objectives))
+							objectives += " | "
+						objectives += "[O.explanation_text]"
+					objectives = " \[[objectives]\]"
 
 			if(temprole in total_antagonists)	//If the role exists already, add the name to it
 				total_antagonists[temprole] += "\n, [Mind.name]([Mind.key])[objectives]"

@@ -6,7 +6,6 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	role_type = ROLE_OPERATIVE
 	minimum_player_count = 15
 	minimum_players_bundles = 25
 	required_enemies = 2
@@ -15,8 +14,6 @@
 	antag_hud_name = "hudsyndicate"
 
 	votable = 0
-
-	uplink_uses = 20
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -172,7 +169,6 @@
 		return
 	var/datum/objective/nuclear/syndobj = new
 	syndobj.owner = syndicate
-	syndicate.objectives += syndobj
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1, boss=0)
@@ -182,13 +178,6 @@
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
 	var/obj_count = 1
 	syndicate.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-	if(!config.objectives_disabled)
-		for(var/datum/objective/objective in syndicate.objectives)
-			to_chat(syndicate.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
-	else
-		to_chat(syndicate.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return
 
 /datum/game_mode/proc/remove_nuclear(mob/M)

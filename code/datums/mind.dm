@@ -46,8 +46,7 @@
 
 	var/datum/job/assigned_job
 
-	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
+	var/list/special_verbs = list()
 	var/syndicate_awareness = SYNDICATE_UNAWARE
 	var/list/antag_roles = list()		// All the antag roles we have.
 
@@ -111,16 +110,6 @@
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
-
-/*
-	Removes antag objectives
-*/
-
-/datum/mind/proc/remove_objectives()
-	if(objectives.len)
-		for(var/datum/objective/O in objectives)
-			objectives -= O
-			qdel(O)
 
 /datum/mind/proc/show_memory(mob/recipient)
 	var/output = "<B>[current.real_name]'s Memory</B><HR>"
@@ -605,12 +594,11 @@
 					// copy targets
 					var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 					if (valid_head)
-						for (var/datum/objective/rp_rev/O in valid_head.objectives)
+						for (var/datum/objective/rp_rev/O in objectives)
 							var/datum/objective/rp_rev/rev_obj = new
 							rev_obj.owner = src
 							rev_obj.target = O.target
 							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
-							objectives += rev_obj
 						SSticker.mode.greet_revolutionary(src,0)
 				current.verbs += /mob/living/carbon/human/proc/RevConvert
 				SSticker.mode.head_revolutionaries += src
@@ -886,12 +874,11 @@
 		// copy targets
 		var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 		if (valid_head)
-			for (var/datum/objective/rp_rev/O in valid_head.objectives)
+			for (var/datum/objective/rp_rev/O in objectives)
 				var/datum/objective/rp_rev/rev_obj = new
 				rev_obj.owner = src
 				rev_obj.target = O.target
 				rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
-				objectives += rev_obj
 			SSticker.mode.greet_revolutionary(src,0)
 	SSticker.mode.head_revolutionaries += src
 	special_role = "Head Revolutionary"

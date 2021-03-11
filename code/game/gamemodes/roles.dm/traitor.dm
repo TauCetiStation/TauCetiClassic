@@ -124,7 +124,8 @@
 
 	give_uplink(traitor_mob, 20)
 
-	for(var/datum/objective/dehead/D in traitor_mob.mind.objectives)
+	var/datum/role/R = traitor_mob.mind.GetRole(TRAITOR)
+	for(var/datum/objective/dehead/D in R.objectives.GetObjectives())
 		var/obj/item/device/biocan/B = new (traitor_mob.loc)
 		var/list/slots = list (
 		"backpack" = SLOT_IN_BACKPACK,

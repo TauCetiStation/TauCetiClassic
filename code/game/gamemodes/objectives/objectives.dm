@@ -14,7 +14,7 @@ var/global/list/all_objectives = list()
 	all_objectives |= src
 	if(text)
 		explanation_text = text
-	find_target()
+	target = find_target()
 
 /datum/objective/Destroy()
 	all_objectives -= src
@@ -485,7 +485,11 @@ var/global/list/all_objectives = list()
 					return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
+/datum/objective/download
 
+/datum/objective/download/New()
+	..()
+	gen_amount_goal()
 
 /datum/objective/download/proc/gen_amount_goal()
 	target_amount = rand(10,20)

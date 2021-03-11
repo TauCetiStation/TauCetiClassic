@@ -16,7 +16,6 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
-	var/static/added_to_blobminds = FALSE
 
 	var/datum/faction/blob_conglomerate/b_congl
 
@@ -34,21 +33,6 @@
 	update_health_hud()
 	add_points(0)
 	blob_help()
-	if(!added_to_blobminds)
-		added_to_blobminds = TRUE
-
-		var/list/datum/objective/objectives = list(
-			new /datum/objective/blob_takeover()
-			)
-		for(var/datum/objective/O in objectives)
-			O.owner = mind
-		mind.objectives = objectives
-
-		var/obj_count = 1
-		to_chat(src, "<span class = 'notice'><B>Your current objectives:</B></span>")
-		for(var/datum/objective/objective in mind.objectives)
-			to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
 
 /mob/camera/blob/proc/blob_help()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")

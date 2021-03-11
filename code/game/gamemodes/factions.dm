@@ -188,6 +188,7 @@
 		if (IsSuccessful())
 			score_results += "<br><font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
 			feedback_add_details("[ID]_success","SUCCESS")
+			score["roleswon"]++
 		else if (minor_victory)
 			score_results += "<br><font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
 			feedback_add_details("[ID]_success","MINOR_VICTORY")

@@ -248,7 +248,7 @@
 /datum/role/proc/forgeObjectives()
 	return
 
-/datum/role/proc/AppendObjective(objective_type,duplicates=0)
+/datum/role/proc/AppendObjective(objective_type, duplicates = 0)
 	if(!duplicates && locate(objective_type) in objectives)
 		return FALSE
 	var/datum/objective/O
@@ -257,7 +257,7 @@
 	else
 		O = new objective_type
 	if(objectives.AddObjective(O, antag))
-		return TRUE
+		return O
 	return FALSE
 
 /datum/role/proc/ReturnObjectivesString(check_success = FALSE, check_name = TRUE)
@@ -286,9 +286,6 @@
 
 
 /datum/role/proc/Greet(greeting, custom)
-	if(!greeting)
-		return FALSE
-
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	switch(greeting)
 		if (GREET_CUSTOM)
@@ -369,6 +366,7 @@
 			if(win)
 				text += "<br><font color='green'><B>\The [name] was successful!</B></font>"
 				feedback_add_details("[id]_success","SUCCESS")
+				score["roleswon"]++
 			else
 				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
 				feedback_add_details("[id]_success","FAIL")

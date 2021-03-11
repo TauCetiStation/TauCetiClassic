@@ -5,7 +5,6 @@
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
-	role_type = ROLE_WIZARD
 	minimum_player_count = 2
 	minimum_players_bundles = 10
 	required_enemies = 1
@@ -14,8 +13,6 @@
 	antag_hud_name = "hudwizard"
 
 	votable = 0
-
-	uplink_uses = 20
 
 	var/finished = 0
 
@@ -65,45 +62,36 @@
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = wizard
 			kill_objective.find_target()
-			wizard.objectives += kill_objective
 
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
+			if (!(locate(/datum/objective/survive) in objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = wizard
-				wizard.objectives += survive_objective
 
 		if(31 to 60)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = wizard
 			steal_objective.find_target()
-			wizard.objectives += steal_objective
 
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
+			if (!(locate(/datum/objective/survive) in objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = wizard
-				wizard.objectives += survive_objective
 
 		if(61 to 99)
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = wizard
 			kill_objective.find_target()
-			wizard.objectives += kill_objective
 
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = wizard
 			steal_objective.find_target()
-			wizard.objectives += steal_objective
 
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
+			if (!(locate(/datum/objective/survive) in objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = wizard
-				wizard.objectives += survive_objective
 
 		else
 			if (!(locate(/datum/objective/hijack) in wizard.objectives))
 				var/datum/objective/hijack/hijack_objective = new
-				hijack_objective.owner = wizard
-				wizard.objectives += hijack_objective
 	return
 
 
@@ -132,14 +120,6 @@
 	if (you_are)
 		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
 	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
-	if(!config.objectives_disabled)
-		var/obj_count = 1
-		for(var/datum/objective/objective in wizard.objectives)
-			to_chat(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
-	else
-		to_chat(wizard.current, "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-	return
 
 
 /*/datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
@@ -218,7 +198,7 @@
 			prefinal_text = "<span>Wizard <b>[wizard.name]</b> <i>([wizard.key])</i> has been <span style='color: red; font-weight: bold;'>killed</span> by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span><br>"
 		else
 			var/failed = 0
-			for(var/datum/objective/objective in wizard.objectives)
+			for(var/datum/objective/objective in objectives)
 				if(!objective.check_completion())
 					failed = 1
 			if(!failed)
@@ -246,24 +226,6 @@
 
 			var/count = 1
 			var/wizardwin = 1
-			if(!config.objectives_disabled)
-				for(var/datum/objective/objective in wizard.objectives)
-					if(objective.check_completion())
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
-						feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
-					else
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
-						feedback_add_details("wizard_objective","[objective.type]|FAIL")
-						wizardwin = 0
-					count++
-
-				if(wizard.current && wizard.current.stat!=2 && wizardwin)
-					text += "<br><FONT color='green'><b>The wizard was successful!</b></FONT>"
-					feedback_add_details("wizard_success","SUCCESS")
-					score["roleswon"]++
-				else
-					text += "<br><FONT color='red'><b>The wizard has failed!</b></FONT>"
-					feedback_add_details("wizard_success","FAIL")
 				if(wizard.current && wizard.current.spell_list)
 					text += "<br><b>[wizard.name] used the following spells: </b>"
 					var/i = 1

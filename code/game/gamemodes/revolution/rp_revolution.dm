@@ -7,7 +7,6 @@
 /datum/game_mode/rp_revolution
 	name = "rp-revolution"
 	config_tag = "rp-revolution"
-	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	minimum_player_count = 4
 	minimum_players_bundles = 20
@@ -81,8 +80,6 @@
 				rev_obj.owner = rev_mind
 				rev_obj.target = head_mind
 				rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
-				rev_mind.objectives += rev_obj
-
 
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)

@@ -23,6 +23,12 @@
 /datum/objective_holder/proc/FindObjective(datum/objective/O)
 	return locate(O) in objectives
 
+/datum/objective_holder/proc/RemoveObjective(datum/objective/O)
+	var/datum/objective/object = FindObjective(O)
+	if(!object)
+		return
+	objectives -= object
+
 #define OBJ_SUCCES "<font color='green'>SUCCESS</font>"
 #define OBJ_HALF "<font color='yellow'>HALF</font>"
 #define OBJ_FAILURE "<font color='red'>FAILURE</font>"

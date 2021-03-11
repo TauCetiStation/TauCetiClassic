@@ -75,6 +75,7 @@
 
 /proc/create_space_ninja(obj/spawn_point)
 	var/mob/living/carbon/human/new_ninja = new(spawn_point.loc)
+	SSticker.mode.CreateRole(/datum/role/ninja, new_ninja)
 	var/ninja_title = pick(ninja_titles)
 	var/ninja_name = pick(ninja_names)
 	new_ninja.gender = pick(MALE, FEMALE)

@@ -45,8 +45,7 @@ var/global/list/empty_playable_ai_cores = list()
 	if(mind)
 		var/job = mind.assigned_role
 		SSjob.FreeRole(job)
-		if(mind.objectives.len)
-			qdel(mind.objectives)
+		if(isanyantag(src))
 			mind.special_role = null
 
 	timeofdeath = world.time
