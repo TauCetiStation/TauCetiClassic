@@ -38,6 +38,8 @@
 #define GOLEM_MASTER_HUD	"17"
 // Artifact huds
 #define MINE_ARTIFACT_HUD	"18"
+//Alien embryo hud
+#define ALIEN_EMBRYO_HUD	"19"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -51,6 +53,7 @@
 #define DATA_HUD_DIAGNOSTIC				3
 #define DATA_HUD_BROKEN					20
 #define DATA_HUD_MINER					21
+#define DATA_HUD_GOLEM					14
 
 //antag HUD defines
 #define ANTAG_HUD_CULT          4
@@ -63,12 +66,12 @@
 #define ANTAG_HUD_CHANGELING    11
 #define ANTAG_HUD_ABDUCTOR      12
 #define ANTAG_HUD_GANGSTER      13
-#define ANTAG_HUD_GOLEM         14
 #define ANTAG_HUD_ALIEN         15
 #define ANTAG_HUD_DEATHCOM      16
 #define ANTAG_HUD_ERT           17
 #define ANTAG_HUD_MALF          18
 #define ANTAG_HUD_ZOMB          19
+#define ANTAG_HUD_ALIEN_EMBRYO	23
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

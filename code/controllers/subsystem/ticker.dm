@@ -302,7 +302,7 @@ SUBSYSTEM_DEF(ticker)
 	var/summary = "summary_selfdes"
 	if(mode && !override)
 		override = mode.name
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
 	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
@@ -492,7 +492,7 @@ SUBSYSTEM_DEF(ticker)
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
-			ai_completions += "<B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
+			ai_completions += "<br><B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
 
 		ai_completions += "</div>"
 

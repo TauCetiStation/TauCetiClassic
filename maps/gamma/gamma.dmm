@@ -1331,7 +1331,7 @@
 	},
 /area/station/civilian/bar)
 "abY" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
@@ -1430,7 +1430,7 @@
 	},
 /area/station/civilian/bar)
 "acg" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -1908,7 +1908,7 @@
 	},
 /area/station/maintenance/bridge)
 "adb" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -1922,7 +1922,7 @@
 	},
 /area/station/civilian/bar)
 "adc" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/item/device/radio/intercom{
 	pixel_x = 25
 	},
@@ -2233,7 +2233,7 @@
 	},
 /area/station/civilian/chapel)
 "adF" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -3400,7 +3400,7 @@
 /turf/simulated/wall,
 /area/station/cargo/miningoffice)
 "ajf" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4555,7 +4555,7 @@
 	},
 /area/station/civilian/chapel)
 "aBk" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -4901,7 +4901,7 @@
 	},
 /area/station/rnd/lab)
 "aGK" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7543,8 +7543,11 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/engine/airmix,
-/area/station/engineering/atmos)
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/station/engineering/drone_fabrication)
 "bye" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/engineering/glass{
@@ -8005,7 +8008,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -9030,6 +9033,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -21877,10 +21884,6 @@
 	},
 /area/station/maintenance/science)
 "fVW" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -23081,7 +23084,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "gqH" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormone)
 "gqZ" = (
@@ -23682,7 +23685,7 @@
 	pixel_y = 30
 	},
 /obj/structure/table,
-/obj/structure/flora/plant/deskleaf,
+/obj/item/weapon/twohanded/flora/deskleaf,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -24034,8 +24037,10 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/turf/simulated/floor/engine/phoron,
-/area/station/engineering/atmos)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/sppodconstr)
 "gGK" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -25703,17 +25708,15 @@
 	},
 /area/station/security/forensic_office)
 "hhE" = (
-/obj/machinery/computer/security/engineering{
-	dir = 8;
-	name = "Drone Monitoring Cameras";
-	network = list("Engineering")
-	},
 /obj/machinery/camera{
 	c_tag = "Drone Fabrication";
 	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/computer/security/engineering/drone{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -25885,7 +25888,7 @@
 	},
 /area/station/security/warden)
 "hkf" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormfour)
 "hki" = (
@@ -27062,6 +27065,9 @@
 /obj/structure/reagent_dispensers/cleaner{
 	pixel_y = -32
 	},
+/obj/item/weapon/grenade/chem_grenade/antiweed,
+/obj/item/weapon/grenade/chem_grenade/antiweed,
+/obj/item/weapon/grenade/chem_grenade/antiweed,
 /turf/simulated/floor,
 /area/station/civilian/janitor)
 "hDL" = (
@@ -27892,7 +27898,7 @@
 /turf/simulated/floor,
 /area/station/rnd/storage)
 "hUF" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -28197,7 +28203,7 @@
 /turf/space,
 /area/space)
 "hZP" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/item/device/radio/intercom{
 	pixel_x = 25
 	},
@@ -29278,7 +29284,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "itu" = (
-/obj/structure/flora/plant,
+/obj/item/weapon/twohanded/flora,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -32415,7 +32421,7 @@
 /area/station/civilian/chapel)
 "jvi" = (
 /obj/effect/decal/cleanable/blood/oil,
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "jvj" = (
@@ -33593,7 +33599,7 @@
 	},
 /area/station/civilian/chapel)
 "jKL" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
@@ -35622,7 +35628,7 @@
 	},
 /area/station/aisat)
 "ktX" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Medbay West APC";
@@ -35783,7 +35789,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "kvO" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kvS" = (
@@ -36041,7 +36047,7 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/hallway/primary/bridgehall)
 "kze" = (
-/obj/structure/flora/plant,
+/obj/item/weapon/twohanded/flora,
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -38640,7 +38646,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -39286,6 +39292,10 @@
 "lzU" = (
 /obj/structure/dryer{
 	pixel_y = 22
+	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -42405,7 +42415,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "muS" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -43357,6 +43367,10 @@
 /area/space)
 "mMg" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -44698,7 +44712,7 @@
 	},
 /area/station/tcommsat/chamber)
 "ngH" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-25"
 	},
 /turf/simulated/floor/plating,
@@ -48343,6 +48357,10 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/simulated/floor{
 	icon_state = "damaged1"
 	},
@@ -48654,7 +48672,7 @@
 /turf/space/shuttle,
 /area/shuttle/escape_pod1/station)
 "owT" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Second Room APC";
@@ -48839,7 +48857,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "oAN" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/camera{
 	c_tag = "Vacant Office";
 	dir = 4
@@ -49013,7 +49031,7 @@
 /area/station/rnd/hallway)
 "oDl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor/carpet{
 	icon_state = "bcarpet09"
 	},
@@ -54156,7 +54174,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "qko" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Third Room APC";
@@ -55608,7 +55626,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "qGI" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -56670,7 +56688,7 @@
 	},
 /area/station/civilian/gym)
 "qZg" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-25"
 	},
 /turf/simulated/floor/wood,
@@ -56926,10 +56944,6 @@
 	},
 /area/station/medical/medbreak)
 "rcN" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -57509,7 +57523,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -59570,7 +59584,7 @@
 /obj/structure/sign/departments/evac{
 	pixel_y = 32
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
@@ -64100,7 +64114,7 @@
 	},
 /area/station/civilian/chapel/altar)
 "tuz" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-25"
 	},
 /turf/simulated/floor/plating,
@@ -64802,7 +64816,7 @@
 	},
 /area/station/ai_monitored/eva)
 "tFV" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -65283,7 +65297,7 @@
 	network = list("SS13","Medical");
 	pixel_y = -22
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor/carpet,
 /area/station/medical/psych)
 "tNd" = (
@@ -66097,7 +66111,7 @@
 /turf/simulated/floor,
 /area/station/cargo/office)
 "tZU" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -67910,7 +67924,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -69934,7 +69948,7 @@
 	},
 /area/station/medical/cryo)
 "vlV" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -70042,7 +70056,7 @@
 /obj/structure/closet/fireaxecabinet{
 	pixel_x = 32
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -70156,10 +70170,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /mob/living/simple_animal/mouse,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "vqj" = (
@@ -71883,7 +71897,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "vMs" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-25"
 	},
 /obj/structure/sign/poster/official/random{
@@ -72672,7 +72686,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "vYs" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -73873,7 +73887,7 @@
 	},
 /area/station/rnd/mixing)
 "wrF" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 28
 	},
@@ -74364,7 +74378,7 @@
 	},
 /area/station/security/main)
 "wFw" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -74641,7 +74655,7 @@
 	dir = 5;
 	network = list("SS13","Medical")
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -24
@@ -76418,7 +76432,7 @@
 	},
 /area/station/tcommsat/chamber)
 "xor" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "xot" = (
@@ -78205,7 +78219,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
@@ -119956,7 +119970,7 @@ hDL
 iTm
 pkh
 bap
-gVR
+byc
 iTm
 xEm
 ewU
@@ -125394,7 +125408,7 @@ aXU
 oTt
 dXI
 qpP
-dXI
+gGE
 wqq
 oGl
 lbU
@@ -127142,7 +127156,7 @@ msG
 erP
 kgl
 tCq
-byc
+kgl
 erP
 neq
 oLP
@@ -127401,7 +127415,7 @@ kgl
 uJt
 kgl
 erP
-gGE
+neq
 taq
 neq
 erP

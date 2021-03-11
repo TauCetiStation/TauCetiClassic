@@ -237,12 +237,9 @@
 					var/robot = ""
 					var/splint = ""
 					var/arterial_bleeding = ""
-					var/lung_ruptured = ""
 					var/rejecting = ""
 					if(BP.status & ORGAN_ARTERY_CUT)
 						arterial_bleeding = "<br>Arterial bleeding"
-					if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
-						lung_ruptured = "Lung ruptured:"
 					if(BP.status & ORGAN_SPLINTED)
 						splint = "Splinted:"
 					if(BP.status & ORGAN_BLEEDING)
@@ -283,8 +280,8 @@
 					if(!AN && !open && !infected & !imp)
 						AN = "None:"
 					if(!(BP.is_stump))
-						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
-						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
+						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -312,6 +309,10 @@
 							organ_status = "Heart Failure:"
 						else if(Heart.heart_status == HEART_FIBR)
 							organ_status = "Heart Fibrillation:"
+
+					if(istype(IO, /obj/item/organ/internal/lungs))
+						if(occupant.is_lung_ruptured())
+							organ_status = "Lung ruptured:"
 
 					switch (IO.germ_level)
 						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)

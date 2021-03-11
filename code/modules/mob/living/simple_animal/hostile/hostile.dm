@@ -16,7 +16,7 @@
 	var/break_stuff_probability = 10
 	stop_automated_movement_when_pulled = 0
 	var/destroy_surroundings = 1
-	mouse_opacity = 2 //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
+	mouse_opacity = MOUSE_OPACITY_OPAQUE //This makes it easier to hit hostile mobs, you only need to click on their tile, and is set back to 1 when they die
 	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
 
 	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
@@ -236,7 +236,7 @@
 
 /mob/living/simple_animal/hostile/death()
 	LoseAggro()
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	..()
 	walk(src, 0)
 

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 // reserving some numbers for later special antigens
 var/global/const/ANTIGEN_A  = 1
 var/global/const/ANTIGEN_B  = 2

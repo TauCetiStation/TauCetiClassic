@@ -2,7 +2,7 @@
 	gender = NEUTER
 	robot_talk_understand = 1
 	voice_name = "synthesized voice"
-	hud_possible = list(ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/list/def_sensor_huds
@@ -208,3 +208,9 @@
 	if(show_message)
 		to_chat(user, "<span class='alert'>[src]'s outer shell is too tough.</span>")
 	return FALSE
+
+/mob/living/silicon/proc/give_hud(hud, reset_to_def = TRUE)
+	if(reset_to_def)
+		sensor_huds = def_sensor_huds
+
+	sensor_huds += hud

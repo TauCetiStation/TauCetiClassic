@@ -177,5 +177,6 @@
 
 	H.mind.holy_role = HOLY_ROLE_PRIEST
 	H.mutations.Add(CLUMSY)
+	H.mind.assigned_role = "Clown"
 	AOG.sect.on_conversion(H)
 	return TRUE

@@ -6,7 +6,7 @@
 	role_type = ROLE_REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	required_players = 4
-	required_players_secret = 20
+	required_players_bundles = 20
 	required_enemies = 2
 	recommended_enemies = 2
 	antag_hud_type = ANTAG_HUD_REV
@@ -256,26 +256,29 @@
 		tried_to_add_revheads = world.time+50
 		var/active_revs = 0
 		for(var/datum/mind/rev_mind in head_revolutionaries)
-			if(rev_mind.current && rev_mind.current.client && rev_mind.current.client.inactivity <= 10*60*20) // 20 minutes inactivity are OK
+			if(rev_mind.current && rev_mind.current.client && rev_mind.current.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 				active_revs++
 
 		if(active_revs == 0)
 			log_debug("There are zero active heads of revolution, trying to add some..")
 			var/added_heads = 0
-			for(var/mob/living/carbon/human/H in human_list) if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 10*60*20 && (H.mind in revolutionaries))
-				head_revolutionaries += H.mind
-				for(var/datum/mind/head_mind in heads)
-					var/datum/objective/mutiny/rp/rev_obj = new
-					rev_obj.owner = H.mind
-					rev_obj.target = head_mind
-					rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
-					H.mind.objectives += rev_obj
+			for(var/mob/living/carbon/human/H in human_list)
+				if(H.stat != DEAD && H.client && H.mind && H.client.inactivity <= 20 MINUTES && (H.mind in revolutionaries))
+					head_revolutionaries += H.mind
+					revolutionaries -= H.mind
+					for(var/datum/mind/head_mind in heads)
+						var/datum/objective/mutiny/rp/rev_obj = new
+						rev_obj.owner = H.mind
+						rev_obj.target = head_mind
+						rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+						H.mind.objectives += rev_obj
 
-				H.verbs += /mob/living/carbon/human/proc/RevConvert
+					H.verbs += /mob/living/carbon/human/proc/RevConvert
+					add_antag_hud(antag_hud_type, antag_hud_name, H)
 
-				to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
-				added_heads = 1
-				break
+					to_chat(H, "<span class='warning'>Congratulations, yer heads of revolution are all gone now, so yer earned yourself a promotion.</span>")
+					added_heads = 1
+					break
 
 			if(added_heads)
 				log_admin("Managed to add new heads of revolution.")
@@ -288,14 +291,14 @@
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		src.command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 		for(var/datum/job/J in SSjob.occupations)
 			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = 0.5	//halve the salary of all professions except leading
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
-			if(person["rank"] in command_positions)
+			if(person["rank"] in excluded_rank)
 				continue
 			var/datum/money_account/account = person["acc_datum"]
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
@@ -325,7 +328,7 @@
 			comm.messagetitle.Add("Cent. Com. Announcement")
 			comm.messagetext.Add(message)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /datum/game_mode/rp_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
