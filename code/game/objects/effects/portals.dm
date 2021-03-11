@@ -106,7 +106,7 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		var/bad_effects = 0
-		if(H.species.flags[IS_SYNTHETIC])
+		if(H.species.flags in list(IS_SYNTHETIC, DIONA, IPC, SKELETON, SHADOWLING, GOLEM, ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI, SLIME))
 			return
 		if(prob(20))
 			bad_effects += 1
