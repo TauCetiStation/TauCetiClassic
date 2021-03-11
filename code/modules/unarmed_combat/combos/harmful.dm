@@ -1,4 +1,3 @@
-
 /datum/combat_combo/uppercut
 	name = COMBO_UPPERCUT
 	desc = "A move where you lunge your fist from below into opponent's chin, knocking their helmet off."
