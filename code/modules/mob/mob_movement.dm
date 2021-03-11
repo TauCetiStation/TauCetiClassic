@@ -285,7 +285,7 @@
 				G.affecting.is_moving = TRUE
 				if(M)
 					if(G.state == GRAB_NECK)
-						Dir = reverse_direction(Dir)
+						Dir = turn(Dir, 180)
 					if(get_dist(src, M) <= 1 || M.loc == src.loc)
 						var/turf/T = src.loc
 						. = ..()

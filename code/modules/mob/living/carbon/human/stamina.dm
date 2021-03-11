@@ -12,7 +12,6 @@
 	if(!hud_used || !hud_used.staminadisplay)
 		return
 	if(isnull(maxStamina))
-		//hud_used.staminadisplay.invisibility = 101
 		return
 	if(getStamina() == maxStamina)
 		hud_used.staminadisplay.invisibility = 101

@@ -370,7 +370,7 @@
 	var/atom/oldLoc = target.loc
 	var/obj/item/weapon/grab/G = locate() in target
 	if(G && G.state == GRAB_NECK)
-		step(target, reverse_direction(center.dir))
+		step(target, turn(center.dir, 180))
 	else
 		step(target, center.dir)
 	if(target.loc != oldLoc)
