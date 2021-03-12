@@ -24,7 +24,7 @@ var/can_call_ert
 	if(send_emergency_team)
 		to_chat(usr, "<span class='warning'>Центральное командование уже отправило группу экстренного реагирования!</span>")
 		return
-	if(alert("Вы правда хотите отправить группу экстренного реагирвоания?",,"Да","Нет") != "Да")
+	if(alert("Вы правда хотите отправить группу экстренного реагирования?",,"Да","Нет") != "Да")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
 		switch(alert("На станции не введен красный код. Вы все еще хотите отправить группу экстренного реагирования?",,"Да","Нет"))
@@ -35,7 +35,7 @@ var/can_call_ert
 		return
 
 	message_admins("[key_name_admin(usr)] отправляет группу экстренного реагирования.", 1)
-	log_admin("[key_name(usr)] использовал Отправить группу экстренного реагирования.")
+	log_admin("[key_name(usr)] used Dispatch Response Team.")
 	feedback_set_details("ERT", "Admin dispatch")
 	trigger_armed_response_team(1)
 
@@ -46,7 +46,7 @@ var/can_call_ert
 
 	if(isobserver(usr) || isnewplayer(usr) || ismouse(usr) || isbrain(usr) || usr.is_dead())
 		if(!send_emergency_team)
-			to_chat(usr, "В данный момент нет вызванной группы экстренного реагирвоания.")
+			to_chat(usr, "В данный момент нет вызванной группы экстренного реагирования.")
 			return
 	/*	if(admin_emergency_team)
 			to_chat(usr, "An emergency response team has already been sent.")
@@ -57,16 +57,16 @@ var/can_call_ert
 
 		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
 		if(available_in_minutes)
-			to_chat(usr, "<span class='notice'>Эта роль будет открыта через [available_in_minutes] минут (e.g.: you gain minutes while playing).</span>")
+			to_chat(usr, "<span class='notice'>Эта роль будет открыта через [russian_plural(available_in_minutes, "[available_in_minutes] минуту", "[available_in_minutes] минуты", "[available_in_minutes] минут")] (вы получаете минуты, когда играете).</span>")
 			return
 
 		if(response_team_members.len > 5)
-			to_chat(usr, "Группа экстренного реагирвоания уже заполнена!")
+			to_chat(usr, "Группа экстренного реагирования уже заполнена!")
 
 
 		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
 			L.name = null//Reserving the place.
-			var/new_name = sanitize_safe(input(usr, "Введите имя","Name") as null|text, MAX_LNAME_LEN)
+			var/new_name = sanitize_safe(input(usr, "Введите имя","Имя") as null|text, MAX_LNAME_LEN)
 			if(!new_name)//Somebody changed his mind, place is available again.
 				L.name = "Commando"
 				return
@@ -163,25 +163,25 @@ var/can_call_ert
 
 	//todo: god damn this.
 	//make it a panel, like in character creation
-	var/new_facial = input("Выберите цвет растительности на лице.", "Character Generation") as color
+	var/new_facial = input("Выберите цвет растительности на лице.", "Создание персонажа") as color
 	if(new_facial)
 		M.r_facial = hex2num(copytext(new_facial, 2, 4))
 		M.g_facial = hex2num(copytext(new_facial, 4, 6))
 		M.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input("Выберите цвет прически.", "Character Generation") as color
+	var/new_hair = input("Выберите цвет прически.", "Создание персонажа") as color
 	if(new_facial)
 		M.r_hair = hex2num(copytext(new_hair, 2, 4))
 		M.g_hair = hex2num(copytext(new_hair, 4, 6))
 		M.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-	var/new_eyes = input("Выберите цвет глаз.", "Character Generation") as color
+	var/new_eyes = input("Выберите цвет глаз.", "Создание персонажа") as color
 	if(new_eyes)
 		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
 		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input("Выберите тон кожи: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input("Выберите тон кожи: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Создание персонажа")  as text
 
 	if (!new_tone)
 		new_tone = 35
@@ -198,7 +198,7 @@ var/can_call_ert
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-	var/new_gender = alert(usr, "Выберите пол.", "Character Generation", "Мужской", "Женский")
+	var/new_gender = alert(usr, "Выберите пол.", "Создание персонажа", "Мужской", "Женский")
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
@@ -206,12 +206,12 @@ var/can_call_ert
 			M.gender = FEMALE
 
 	//hair
-	var/new_hstyle = input(usr, "Выберите прическу", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	var/new_hstyle = input(usr, "Выберите прическу", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
 	if(new_hstyle)
 		M.h_style = new_hstyle
 
 	// facial hair
-	var/new_fstyle = input(usr, "Выберите стиль лицевой растительности", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	var/new_fstyle = input(usr, "Выберите стиль лицевой растительности", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
 	if(new_fstyle)
 		M.f_style = new_fstyle
 

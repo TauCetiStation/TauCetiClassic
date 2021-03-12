@@ -652,7 +652,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			visible_message("<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>")
 			if(W.use_tool(src, user, 100, 3, 100))
 				to_chat(user, "<span class='warning'>Вы разобрали обшивку!</span>")
-				visible_message("<span class='warning'><B>[user]</B> разобрал обшивку! По ту сторону открытый космос!</span>")
+				visible_message("<span class='warning'> Обшивка разобрана <B>[user]</B>! По ту сторону открытый космос!</span>")
 				new /obj/item/stack/tile/plasteel(src)
 				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT
