@@ -70,6 +70,11 @@
 		"dislike_clck.png" = 'icons/newscaster_icons/dislike_clck.png'
 	)
 
+/datum/asset/simple/lobby
+	assets = list(
+		"FixedsysExcelsior3.01Regular.ttf" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
+	)
+
 /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
@@ -156,9 +161,10 @@
 
 /datum/asset/spritesheet/autolathe/register()
 	var/list/recipes = global.autolathe_recipes + global.autolathe_recipes_hidden
-	for (var/obj/item in recipes)
-		var/icon/I = icon(item.icon, item.icon_state) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
-		var/imgid = replacetext(replacetext("[item.type]", "[/obj/item]/", ""), "/", "-")
+	for (var/datum/autolathe_recipe/r in recipes)
+		var/obj/item = r.result_type
+		var/icon/I = icon(initial(item.icon), initial(item.icon_state)) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
 		insert_icon_in_list(imgid, I)
 	return ..()
 
