@@ -213,11 +213,6 @@
 	// var/slimy_color_filter
 	var/slimy_outline_filter
 
-/datum/component/mob_modifier/slimy/Destroy()
-	// QDEL_NULL(slimy_color_filter)
-	QDEL_NULL(slimy_outline_filter)
-	return ..()
-
 /datum/component/mob_modifier/slimy/apply(update = FALSE)
 	. = ..()
 	if(!.)
