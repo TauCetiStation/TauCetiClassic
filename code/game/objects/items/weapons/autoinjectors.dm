@@ -1,6 +1,6 @@
 //AUTOINJECTOR
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat
-	name = "Combat autoinjector"
+	name = "combat autoinjector"
 	desc = "Younger brother of combat autoinjector."
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
@@ -8,7 +8,7 @@
 	list_reagents = list("synaptizine" = 1, "hyperzine" = 2.5, "oxycodone" = 2.5, "anti_toxin" = 5)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine
-	name = "Bicaridine autoinjector"
+	name = "bicaridine autoinjector"
 	desc = "For physical injuries."
 	icon_state = "autobrut"
 	item_state = "autobrut"
@@ -16,7 +16,7 @@
 	list_reagents = list("bicaridine" = 20)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline
-	name = "Dermaline autoinjector"
+	name = "dermaline autoinjector"
 	desc = "For burns."
 	icon_state = "autoburn"
 	item_state = "autoburn"
@@ -24,7 +24,7 @@
 	list_reagents = list("dermaline" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol
-	name = "Tramadol autoinjector"
+	name = "tramadol autoinjector"
 	desc = "Painkiller."
 	icon_state = "autopainkiller"
 	item_state = "autopainkiller"
@@ -32,7 +32,7 @@
 	list_reagents = list("tramadol" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
-	name = "Anti-toxins autoinjector"
+	name = "anti-toxin autoinjector"
 	desc = "Neutralizes many common toxins."
 	icon_state = "autoantitox"
 	item_state = "autoantitox"
@@ -40,7 +40,7 @@
 	list_reagents = list("anti_toxin" = 20)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp
-	name = "Improved stimpack"
+	name = "improved stimpack"
 	desc = "It does not contain caffeine"
 	icon_state = "auto_minig_t2"
 	item_state = "autoburn"
@@ -56,7 +56,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv
-	name = "Advanced stimpack"
+	name = "advanced stimpack"
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
 	item_state = "autobrut"
@@ -64,14 +64,14 @@
 	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
-	name = "Leporazine autoinjector"
+	name = "leporazine autoinjector"
 	desc = "Leporazine can be use to stabilize an individuals body temperature."
 	icon_state = "autoinjector"
 	volume = 15
 	list_reagents = list("leporazine" = 15)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment
-	name = "Nutriment autoinjector"
+	name = "nutriment autoinjector"
 	desc = "To satisfy hunger."
 	icon_state = "autonutriment"
 	item_state = "autonutriment"
