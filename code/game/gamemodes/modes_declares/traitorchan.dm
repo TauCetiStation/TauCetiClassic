@@ -1,6 +1,6 @@
 /datum/game_mode/traitorchan
 	name = "TraitorChan"
-	factions_allowed = list(/datum/faction/syndicate/traitor/traitorchan)
+	factions_allowed = list(/datum/faction/traitor/traitorchan)
 	minimum_player_count = 3
 	minimum_players_bundles = 25
 

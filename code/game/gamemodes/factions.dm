@@ -171,11 +171,29 @@
 /datum/faction/proc/CheckObjectives()
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
+/datum/faction/proc/custom_result()
+	return
+
 /datum/faction/proc/GetScoreboard()
 	var/count = 1
 	var/score_results = ""
 	if(objective_holder.objectives.len > 0)
 		score_results += "<ul>"
+		var/custom_result = custom_result()
+		if(custom_result)
+			score_results += custom_result
+		else
+			if (IsSuccessful())
+				score_results += "<br><font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
+				feedback_add_details("[ID]_success","SUCCESS")
+				score["roleswon"]++
+			else if (minor_victory)
+				score_results += "<br><font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
+				feedback_add_details("[ID]_success","MINOR_VICTORY")
+			else
+				score_results += "<br><span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
+				feedback_add_details("[ID]_success","FAIL")
+
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			var/successful = objective.check_completion()
 			objective.extra_info()
@@ -184,17 +202,6 @@
 			count++
 			if (count <= objective_holder.objectives.len)
 				score_results += "<br>"
-	if (count > 1)
-		if (IsSuccessful())
-			score_results += "<br><font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
-			feedback_add_details("[ID]_success","SUCCESS")
-			score["roleswon"]++
-		else if (minor_victory)
-			score_results += "<br><font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
-			feedback_add_details("[ID]_success","MINOR_VICTORY")
-		else
-			score_results += "<br><span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
-			feedback_add_details("[ID]_success","FAIL")
 
 	if(objective_holder.objectives.len > 0)
 		score_results += "</ul>"

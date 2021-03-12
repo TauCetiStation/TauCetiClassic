@@ -268,7 +268,7 @@
 	dat += objectives.GetObjectiveString(check_success)
 	return dat
 
-/datum/role/proc/AdminPanelEntry(show_logo = FALSE,datum/admins/A)
+/datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/admins/A)
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	if(!antag || !antag.current)
 		return

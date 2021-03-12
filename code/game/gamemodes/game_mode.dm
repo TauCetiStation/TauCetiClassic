@@ -229,7 +229,7 @@
 
 	var/list/exclude_autotraitor_for = list("extended", "sandbox") // config_tag var
 	if(!(initial(name) in exclude_autotraitor_for))
-		CreateFaction(/datum/faction/syndicate/traitor/auto, num_players())
+		CreateFaction(/datum/faction/traitor/auto, num_players())
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)

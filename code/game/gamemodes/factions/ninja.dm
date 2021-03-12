@@ -23,7 +23,6 @@
 	return FALSE
 
 /datum/faction/ninja/OnPostSetup()
-	..()
 	for(var/obj/effect/landmark/L in landmarks_list)
 		if(L.name == "ninja")
 			ninjastart.Add(L)
@@ -31,6 +30,7 @@
 		var/start_point = pick(ninjastart)
 		ninjastart -= start_point
 		role.antag.current.forceMove(start_point)
+	return ..()
 
 /datum/faction/ninja/check_win()
 	. = ..()

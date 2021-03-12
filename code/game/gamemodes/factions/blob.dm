@@ -68,7 +68,6 @@
 		stage(FACTION_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
-	..()
 	CountFloors()
 	forgeObjectives()
 	AnnounceObjectives()
@@ -76,6 +75,7 @@
 	start.count()
 	prelude_announcement = world.time + rand(WAIT_TIME_PHASE1,2*WAIT_TIME_PHASE1)
 	outbreak_announcement = world.time + rand(WAIT_TIME_PHASE2,2*WAIT_TIME_PHASE2)
+	return ..()
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
 	var/floor_count = 0

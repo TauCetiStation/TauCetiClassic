@@ -31,9 +31,9 @@
 	return TRUE
 
 /datum/faction/malf_silicons/OnPostSetup()
-	. = ..()
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = TRUE
+	return ..()
 
 /datum/faction/malf_silicons/proc/takeover()
 	malf_mode_declared = TRUE
@@ -145,8 +145,7 @@
 	SSticker.station_was_nuked = TRUE
 	SSticker.explosion_in_progress = FALSE
 
-
-/datum/faction/malf_silicons/GetScoreboard()
+/datum/faction/malf_silicons/custom_result()
 	var/malf_dead = is_malf_ai_dead()
 	var/crew_evacuated = (SSshuttle.location==2)
 	var/dat = ""
@@ -197,6 +196,10 @@
 		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		dat += "<br><b>Round was mysteriously interrupted!</b>"
 
+	return dat
+
+/datum/faction/malf_silicons/GetScoreboard()
+	var/dat = ""
 	dat += "<b>The malfunctioning AI were:</b>"
 
 	for(var/datum/role/malfAI/role in members)
@@ -219,5 +222,6 @@
 			dat += {"<br><img src="logo_[tempstate].png"> <b>[role.antag.key]</b> was <b>[role.antag.name]</b> ("}
 			dat += "hardware destroyed"
 		dat += ")"
+	return dat
 
 #undef INTERCEPT_APCS

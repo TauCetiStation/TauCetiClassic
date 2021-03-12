@@ -15,6 +15,15 @@
 
 	var/last_check = 0
 
+/datum/faction/infestation/AdminPanelEntry(datum/admins/A)
+	var/dat = ..()
+	var/data = count_alien_percent()
+	dat += "<br><table><tr><td><B>Статистика</B></td><td></td></tr>"
+	dat += "<tr><td>Экипаж:</td><td>[data[TOTAL_HUMAN]]</td></tr>"
+	dat += "<tr><td>Взрослые ксеноморфы:</td><td>[data[TOTAL_ALIEN]]</td></tr>"
+	dat += "<tr><td>Процент победы:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
+	return dat
+
 /datum/faction/infestation/can_setup(num_players)
 	if(!..())
 		return FALSE
@@ -23,7 +32,6 @@
 	return FALSE
 
 /datum/faction/infestation/OnPostSetup()
-	. = ..()
 	for(var/check_spawn in xeno_spawn)
 		var/turf/T = get_turf(check_spawn)
 		if(T.loc.name == "Construction Area")
@@ -42,6 +50,7 @@
 		var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
 		role.antag.transfer_to(L)
 		QDEL_NULL(role.antag.original)
+	return ..()
 
 /datum/faction/infestation/proc/count_hive_power(in_detail = FALSE)
 	var/count = 0

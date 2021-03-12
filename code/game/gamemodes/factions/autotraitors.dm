@@ -1,10 +1,10 @@
 #define SPAWN_CD 15 MINUTES
 
-/datum/faction/syndicate/traitor/auto
+/datum/faction/traitor/auto
 	accept_latejoiners = TRUE
 	var/next_try = 0
 
-/datum/faction/syndicate/traitor/auto/can_setup(num_players)
+/datum/faction/traitor/auto/can_setup(num_players)
 	. = ..()
 
 	var/max_traitors = 1
@@ -22,7 +22,7 @@
 	abandon_allowed = 1
 	return TRUE
 
-/datum/faction/syndicate/traitor/auto/proc/traitorcheckloop()
+/datum/faction/traitor/auto/proc/traitorcheckloop()
 	if(SSshuttle.departed)
 		return
 
@@ -73,8 +73,8 @@
 
 	addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
 
-/datum/faction/syndicate/traitor/auto/OnPostSetup()
-	. = ..()
+/datum/faction/traitor/auto/OnPostSetup()
 	addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
+	return ..()
 
 #undef SPAWN_CD

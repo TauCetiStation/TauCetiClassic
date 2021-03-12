@@ -39,7 +39,6 @@
 	AppendObjective(/datum/objective/heist/inviolate_death)
 
 /datum/faction/heist/OnPostSetup()
-	. = ..()
 	//Build a list of spawn points.
 	var/list/turf/raider_spawn = list()
 
@@ -56,6 +55,7 @@
 
 		R.antag.current.forceMove(raider_spawn[index])
 		index++
+	return ..()
 
 /datum/faction/heist/GetScoreboard()
 	var/list/objectives = objective_holder.GetObjectives()

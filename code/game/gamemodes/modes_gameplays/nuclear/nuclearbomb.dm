@@ -376,15 +376,16 @@ var/bomb_set
 		off_station = 2
 
 	if(SSticker)
-		if(SSticker.mode && SSticker.mode.name == "nuclear emergency")
+		var/datum/faction/nuclear/N = find_active_first_faction_by_type(/datum/faction/nuclear)
+		if(N)
 			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
 			if(syndie_location)
-				SSticker.mode:syndies_didnt_escape = is_station_level(syndie_location.z)
-			SSticker.mode:nuke_off_station = off_station
+				N.syndies_didnt_escape = is_station_level(syndie_location.z)
+			N.nuke_off_station = off_station
 		SSticker.station_explosion_cinematic(off_station,null)
 		SSticker.explosion_in_progress = 0
-		if(SSticker.mode.name == "nuclear emergency")
-			SSticker.mode:nukes_left --
+		if(N)
+			N.nukes_left = FALSE
 		else
 			to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
 

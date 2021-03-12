@@ -19,6 +19,7 @@
 #define XENOMORPH_HIVE "alien hivemind"
 #define HIVEMIND "changeling hivemind"
 #define WIZFEDERATION "wizard federation"
+
 // Role IDs
 #define ABDUCTOR_AGENT "abductor_agent"
 #define ABDUCTOR_SCI "abductor_sci"

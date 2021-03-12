@@ -356,7 +356,12 @@ var/global/list/all_objectives = list()
 /datum/objective/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
 
-
+/datum/objective/nuclear/check_completion()
+	if(..())
+		return TRUE
+	if(SSticker.explosion_in_progress || SSticker.station_was_nuked)
+		return TRUE
+	return FALSE
 
 /datum/objective/steal
 	var/obj/item/steal_target

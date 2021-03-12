@@ -11,8 +11,6 @@
 			score["crew_dead"] += 1
 
 	for (var/mob/living/carbon/human/I in human_list)
-//		for (var/datum/ailment/disease/V in I.ailments)
-//			if (!V.vaccine && !V.spread != "Remissive") score["disease"]++
 		if (I.stat == DEAD && is_station_level(I.z))
 			score["crew_dead"] += 1
 		if (I.job == "Clown")
@@ -21,19 +19,6 @@
 					score["clownabuse"]++
 
 	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
-
-/*
-	moved to /game_mode/proc/declare_completion, where we already count players
-	for(var/mob/living/player in alive_mob_list)
-		if (player.client)
-			var/turf/location = get_turf(player.loc)
-			if (location in escape_zone)
-				score["crew_escaped"] += 1*/
-//					player.unlock_medal("100M Dash", 1)
-//				player.unlock_medal("Survivor", 1)
-//				for (var/obj/item/weapon/gnomechompski/G in player.get_contents())
-//					player.unlock_medal("Guardin' gnome", 1)
-
 
 	var/cashscore = 0
 	var/dmgscore = 0
@@ -44,17 +29,12 @@
 		dmgscore = 0
 		var/turf/location = get_turf(E.loc)
 		if(location in escape_zone) // Escapee Scores
-			//for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
-			//	cashscore += C1.money
-
 			if(E.mind && E.mind.initial_account)
 				cashscore += E.mind.initial_account.money
 
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
 				cashscore += C2.worth
 
-//			for(var/datum/data/record/Ba in data_core.bank)
-//				if(Ba.fields["name"] == E.real_name) cashscore += Ba.fields["current_money"]
 			if (cashscore > score["richestcash"])
 				score["richestcash"] = cashscore
 				score["richestname"] = E.real_name
@@ -68,35 +48,22 @@
 				score["dmgestkey"] = E.key
 
 	var/nukedpenalty = 1000
-	if (SSticker.mode.config_tag == "nuclear")
-		var/datum/game_mode/nuclear/GM = SSticker.mode
+	var/datum/faction/nuclear/N = find_active_first_faction_by_type(/datum/faction/nuclear)
+	if (N)
 		var/foecount = 0
-		for(var/datum/mind/M in GM.syndicates)
+		for(var/datum/role/role in N.members)
 			foecount++
-			if (!M || !M.current)
+			if (!role.antag || !role.antag.current)
 				score["opkilled"]++
 				continue
-			var/turf/T = M.current.loc
+			var/turf/T = role.antag.current.loc
 			if (T && istype(T.loc, /area/station/security/brig))
 				score["arrested"] += 1
-			else if (M.current.stat == DEAD)
+			else if (role.antag.current.stat == DEAD)
 				score["opkilled"]++
 		if(foecount == score["arrested"])
 			score["allarrested"] = 1
 
-/*
-		score["disc"] = 1
-		for(var/obj/item/weapon/disk/nuclear/A in not_world)
-			if(A.loc != /mob/living/carbon) continue
-			var/turf/location = get_turf(A.loc)
-			var/area/bad_zone1 = locate(/area)
-			var/area/bad_zone2 = locate(/area/shuttle/syndicate)
-			var/area/bad_zone3 = locate(/area/custom/wizard_station)
-			if (location in bad_zone1) score["disc"] = 0
-			if (location in bad_zone2) score["disc"] = 0
-			if (location in bad_zone3) score["disc"] = 0
-			if (A.loc.z != ZLEVEL_STATION) score["disc"] = 0
-*/
 		if (score["nuked"])
 			for (var/obj/machinery/nuclearbomb/NUKE in poi_list)
 				//if (NUKE.r_code == "Nope") continue
@@ -247,14 +214,12 @@
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
 	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
-	if (SSticker.mode.name == "nuclear emergency")
-		var/foecount = 0
+	var/datum/faction/nuclear/nuke = find_active_first_faction_by_type(/datum/faction/nuclear)
+	if (nuke)
+		var/foecount = N.members
 		var/crewcount = 0
 		var/diskdat = ""
 		var/bombdat = null
-		var/datum/game_mode/nuclear/GM = SSticker.mode
-		for(var/datum/mind/M in GM.syndicates)
-			foecount++
 		for(var/mob/living/C in alive_mob_list)
 			if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai))
 				continue
@@ -304,7 +269,6 @@
 		<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
 		<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
-//		<B>Nuclear Disk Secure:</B> [score["disc"] ? "Yes" : "No"] ([score["disc"] * 500] Points)<BR>
 	if (SSticker.mode.name == "rp-revolution")
 		var/foecount = 0
 		var/comcount = 0

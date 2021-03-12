@@ -226,29 +226,6 @@
 			text += "|Disabled in Prefs"
 		sections["wizard"] = text
 
-		/** NUCLEAR ***/
-		text = "nuclear"
-		if (SSticker.mode.config_tag=="nuclear")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (src in SSticker.mode.syndicates)
-			text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
-			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
-			var/code
-			for (var/obj/machinery/nuclearbomb/bombue in poi_list)
-				if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
-					code = bombue.r_code
-					break
-			if (code)
-				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code</a>"
-		else
-			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
-		if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_role))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-		sections["nuclear"] = text
-
 		/** SHADOWLING **/
 		text = "shadowling"
 		if(SSticker.mode.config_tag == "shadowling")
@@ -641,62 +618,6 @@
 					SSticker.mode.forge_wizard_objectives(src)
 					to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
 
-	else if (href_list["nuclear"])
-		var/mob/living/carbon/human/H = current
-
-		switch(href_list["nuclear"])
-			if("clear")
-				if(src in SSticker.mode.syndicates)
-					SSticker.mode.remove_nuclear(src)
-					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a syndicate operative!</B></FONT></span>")
-					log_admin("[key_name(usr)] has de-nuke op'ed [current].")
-
-			if("nuclear")
-				if(!(src in SSticker.mode.syndicates))
-					SSticker.mode.syndicates += src
-					if (SSticker.mode.syndicates.len==1)
-						SSticker.mode.prepare_syndicate_leader(src)
-					else
-						current.real_name = "Gorlex Maradeurs Operative #[SSticker.mode.syndicates.len-1]"
-					special_role = "Syndicate"
-					current.faction = "syndicate"
-					to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
-
-					if(config.objectives_disabled)
-						to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-					else
-						SSticker.mode.forge_syndicate_objectives(src)
-					SSticker.mode.greet_syndicate(src)
-					log_admin("[key_name(usr)] has nuke op'ed [current].")
-			if("lair")
-				current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
-			if("dressup")
-				qdel(H.belt)
-				qdel(H.back)
-				qdel(H.l_ear)
-				qdel(H.r_ear)
-				qdel(H.gloves)
-				qdel(H.head)
-				qdel(H.shoes)
-				qdel(H.wear_id)
-				qdel(H.wear_suit)
-				qdel(H.w_uniform)
-
-				if (!SSticker.mode.equip_syndicate(current))
-					to_chat(usr, "<span class='warning'>Equipping a syndicate failed!</span>")
-			if("tellcode")
-				var/code
-				for (var/obj/machinery/nuclearbomb/bombue in poi_list)
-					if (length(bombue.r_code) <= 5 && bombue.r_code != "LOLNO" && bombue.r_code != "ADMIN")
-						code = bombue.r_code
-						break
-				if (code)
-					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0)
-					to_chat(current, "The nuclear authorization code is: <B>[code]</B>")
-				else
-					to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
-
-
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
@@ -821,36 +742,6 @@
 	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
 	if(H)
 		qdel(H)
-
-/datum/mind/proc/make_Nuke()
-	if(!(src in SSticker.mode.syndicates))
-		SSticker.mode.syndicates += src
-		if (SSticker.mode.syndicates.len==1)
-			SSticker.mode.prepare_syndicate_leader(src)
-		else
-			current.real_name = "Gorlex Maradeurs Operative #[SSticker.mode.syndicates.len-1]"
-		special_role = "Syndicate"
-		current.faction = "syndicate"
-		assigned_role = "MODE"
-		to_chat(current, "<span class='notice'>You are a Gorlex Maradeurs agent!</span>")
-		SSticker.mode.forge_syndicate_objectives(src)
-		SSticker.mode.greet_syndicate(src)
-
-		current.loc = get_turf(locate("landmark*Syndicate-Spawn"))
-
-		var/mob/living/carbon/human/H = current
-		qdel(H.belt)
-		qdel(H.back)
-		qdel(H.l_ear)
-		qdel(H.r_ear)
-		qdel(H.gloves)
-		qdel(H.head)
-		qdel(H.shoes)
-		qdel(H.wear_id)
-		qdel(H.wear_suit)
-		qdel(H.w_uniform)
-
-		SSticker.mode.equip_syndicate(current)
 
 /datum/mind/proc/make_Wizard()
 	if(!(src in SSticker.mode.wizards))

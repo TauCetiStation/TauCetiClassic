@@ -411,7 +411,7 @@
 		dat += "<h3>Other Roles</h3>"
 		if(SSticker.mode.orphaned_roles.len)
 			for(var/datum/role/R in SSticker.mode.orphaned_roles)
-				dat += R.AdminPanelEntry(TRUE,src)//show logos
+				dat += R.AdminPanelEntry(TRUE, src)//show logos
 				dat += "<br>"
 		else
 			dat += "<i>No orphaned roles are currently active.</i>"

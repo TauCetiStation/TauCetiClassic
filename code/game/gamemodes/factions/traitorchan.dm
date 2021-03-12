@@ -1,4 +1,4 @@
-/datum/faction/syndicate/traitor/traitorchan
+/datum/faction/traitor/traitorchan
 	name = TRAITORCHAN
 	ID = TRAITORCHAN
 	initial_role = TRAITORCHAN
