@@ -97,6 +97,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_range = 5
 	origin_tech = "materials=1"
 	sheettype = "sandstone"
+	can_be_wall = TRUE
 
 
 /obj/item/stack/sheet/mineral/sandstone/atom_init()
@@ -112,6 +113,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=6"
 	perunit = 3750
 	sheettype = "diamond"
+	can_be_wall = TRUE
 
 
 /obj/item/stack/sheet/mineral/diamond/atom_init()
@@ -127,6 +129,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=5"
 	perunit = 2000
 	sheettype = "uranium"
+	can_be_wall = TRUE
 
 
 /obj/item/stack/sheet/mineral/uranium/atom_init()
@@ -143,6 +146,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	perunit = 2000
 	sheettype = "phoron"
 	is_fusion_fuel = TRUE
+	can_be_wall = TRUE
 
 
 /obj/item/stack/sheet/mineral/phoron/atom_init()
@@ -182,6 +186,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=4"
 	perunit = 2000
 	sheettype = "gold"
+	can_be_wall = TRUE
 
 
 
@@ -198,6 +203,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=3"
 	perunit = 2000
 	sheettype = "silver"
+	can_be_wall = TRUE
 
 
 

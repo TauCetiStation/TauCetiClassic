@@ -144,7 +144,7 @@
 
 		if(S.sheettype)
 			var/M = S.sheettype
-			if (!(M in list("gold", "diamond", "uranium", "silver", "sandstone", "phoron")))
+			if (!S.can_be_wall)
 				return
 			if(!anchored)
 				if(!S.use(2))
