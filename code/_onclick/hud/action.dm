@@ -119,6 +119,10 @@
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
 
+/obj/screen/movable/action_button/Destroy()
+	owner = null
+	return ..()
+
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
