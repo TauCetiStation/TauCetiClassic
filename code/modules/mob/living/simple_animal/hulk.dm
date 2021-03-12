@@ -22,7 +22,7 @@
 
 	speed = 1
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1

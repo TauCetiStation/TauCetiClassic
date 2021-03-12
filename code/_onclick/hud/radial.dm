@@ -89,6 +89,10 @@ var/global/list/radial_menus = list()
 	Reset()
 	hide()
 	QDEL_NULL(custom_check_callback)
+	elements = null
+	current_user = null
+	close_button = null
+	anchor = null
 	return ..()
 
 //If we swap to vis_contens inventory these will need a redo

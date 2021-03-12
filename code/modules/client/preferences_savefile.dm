@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 31
+#define SAVEFILE_VERSION_MAX 32
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -218,6 +218,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["faction"]     << faction
 		S["religion"]    << religion
 
+	if(current_version < 32)
+		popup(parent, "Части тела вашего персонажа ([real_name]) несовместимы с текущей версией. Части тела данного персонажа восстановлены до обычного состояния.", "Preferences")
+		organ_data = list()
+		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES))
+			organ_data[i] = null
+
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
 	if(!parent)
@@ -291,6 +297,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
+	S["tooltip"]			>> tooltip
+	S["tooltip_size"]		>> tooltip_size
+	S["tooltip_font"]		>> tooltip_font
+	S["outline_enabled"]	>> outline_enabled
+	S["outline_color"]		>> outline_color
 
 	// Custom hotkeys
 	S["key_bindings"]		>> key_bindings
@@ -335,6 +346,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
+	tooltip_size = sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
+	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
+	outline_color = normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -382,9 +397,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+	S["tooltip"]			<< tooltip
+	S["tooltip_size"]		<< tooltip_size
+	S["tooltip_font"]		<< tooltip_font
+
 
 	// Custom hotkeys
 	S["key_bindings"]		<< key_bindings
+
+	S["outline_enabled"]	<< outline_enabled
+	S["outline_color"]		<< outline_color
 
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy

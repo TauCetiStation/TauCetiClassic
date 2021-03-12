@@ -128,7 +128,7 @@
 	else
 		coffin_side.layer = 3.95
 
-	M.dir = WEST
+	M.set_dir(WEST)
 	// why tf do I need to cut overlay to update a layer?
 	cut_overlay(coffin_side)
 	add_overlay(coffin_side)
@@ -149,6 +149,6 @@
 	if(.)
 		// so the body doesn't spin in it's grave
 		// unless required to!
-		buckled_mob.dir = saved_dir
+		buckled_mob.set_dir(saved_dir)
 
 #undef LYING_ANIM_COOLDOWN

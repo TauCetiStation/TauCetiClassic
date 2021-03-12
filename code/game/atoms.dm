@@ -12,7 +12,7 @@
 	var/datum/dirt_cover/dirt_overlay  //style reasons
 
 	var/last_bumped = 0
-	var/pass_flags = 0
+	var/pass_flags = NONE
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 	var/simulated = 1 //filter for actions - used by lighting overlays
@@ -300,6 +300,8 @@
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
+	if(.)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 /atom/proc/relaymove()
 	return
@@ -308,6 +310,9 @@
 	return
 
 /atom/proc/blob_act()
+	return
+
+/atom/proc/airlock_crush_act()
 	return
 
 /atom/proc/fire_act()
@@ -691,3 +696,12 @@
 				AA.theImage.layer = layer
 				AA.theImage.plane = plane
 				AA.theImage.appearance_flags = appearance_flags
+
+/atom/proc/get_name(mob/user)
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+			if(!AA.alternate_obj || !(user in AA.hudusers))
+				continue
+			return AA.alternate_obj.name
+	return name
