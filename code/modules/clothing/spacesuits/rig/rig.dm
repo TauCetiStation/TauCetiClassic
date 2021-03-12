@@ -764,7 +764,7 @@
 	var/combat_slowdown = 0
 
 /obj/item/clothing/suit/space/rig/syndi/AltClick(mob/user)
-	if(!istype(wearer) || wearer.wear_suit != src)
+	if(wearer?.wear_suit != src)
 		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
 		return
 	toggle_mode()
