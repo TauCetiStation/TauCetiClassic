@@ -77,12 +77,11 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	Their directives also influence behavior. At least in theory.*/
 	var/side = pick(NANOTRASEN_SIDE, SYNDICATE_SIDE)
 
-	var/datum/game_mode/current_mode = SSticker.mode
 	var/datum/mind/current_mind
 	var/list/xeno_list = list()//Aliens.
 	var/list/commando_list = list()//Commandos.
 	var/list/antagonist_list = list()//The main bad guys. Evil minds that plot destruction.
-	var/list/protagonist_list = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
+	var/list/protagonist_list = get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
@@ -138,7 +137,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	In either case, it's a good idea to spawn the ninja with a semi-random set of objectives.
 	*/
 	if(!ninja.objectives.objectives.len)//If mission was not set.
-		var/list/current_minds//List being looked on in the following code.
+		var/list/current_minds //List being looked on in the following code.
 		var/side_list = (side == NANOTRASEN_SIDE) ? NANOTRASEN_ENEMIES_LIST : SYNDICATE_ENEMIES_LIST//For logic gating.
 		var/list/hostile_targets = list()//The guys actually picked for the assassination or whatever.
 		var/list/friendly_targets = list()//The guys the ninja must protect.

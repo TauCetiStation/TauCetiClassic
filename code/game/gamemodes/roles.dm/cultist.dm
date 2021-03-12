@@ -26,10 +26,10 @@
 	antag.current.Paralyse(5)
 
 /datum/role/cultist/RemoveFromRole(datum/mind/M, msg_admins)
-	. = ..()
 	antag.current.Paralyse(5)
 	to_chat(antag.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
 	antag.memory = ""
+	return ..()
 
 /datum/role/cultist/proc/equip_cultist(mob/living/carbon/human/mob)
 	if(!istype(mob))

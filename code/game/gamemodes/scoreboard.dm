@@ -79,18 +79,18 @@
 				else
 					nukedpenalty = 10000
 
-	if (SSticker.mode.config_tag == "rp-revolution")
-		var/datum/game_mode/rp_revolution/GM = SSticker.mode
+	var/datum/faction/revolution/rev = find_active_first_faction_by_type(/datum/faction/revolution)
+	if(rev)
 		var/foecount = 0
-		for(var/datum/mind/M in GM.head_revolutionaries)
+		for(var/datum/role/syndicate/rev_leader/lead in rev.members)
 			foecount++
-			if (!M || !M.current)
+			if (!lead?.antag?.current)
 				score["opkilled"]++
 				continue
-			var/turf/T = M.current.loc
+			var/turf/T = lead.antag.current.loc
 			if (istype(T.loc, /area/station/security/brig))
 				score["arrested"] += 1
-			else if (M.current.stat == DEAD)
+			else if (lead.antag.current.stat == DEAD)
 				score["opkilled"]++
 		if(foecount == score["arrested"])
 			score["allarrested"] = 1
@@ -151,7 +151,7 @@
 	var/plaguepoints = score["disease"] * 30
 
 	// Mode Specific
-	if (SSticker.mode.config_tag == "nuclear")
+	if (find_active_first_faction_by_type(/datum/faction/nuclear))
 		if (score["disc"])
 			score["crewscore"] += 500
 		var/killpoints = score["opkilled"] * 250
@@ -161,7 +161,7 @@
 		if (score["nuked"])
 			score["crewscore"] -= nukedpenalty
 
-	if (SSticker.mode.config_tag == "rp-revolution")
+	if (find_active_first_faction_by_type(/datum/faction/revolution))
 		var/arrestpoints = score["arrested"] * 1000
 		var/killpoints = score["opkilled"] * 500
 		var/comdeadpts = score["deadcommand"] * 500
@@ -216,7 +216,7 @@
 	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
 	var/datum/faction/nuclear/nuke = find_active_first_faction_by_type(/datum/faction/nuclear)
 	if (nuke)
-		var/foecount = N.members
+		var/foecount = nuke.members
 		var/crewcount = 0
 		var/diskdat = ""
 		var/bombdat = null
@@ -269,16 +269,19 @@
 		<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
 		<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
 		<HR>"}
-	if (SSticker.mode.name == "rp-revolution")
+
+	var/datum/faction/revolution/viva = find_active_first_faction_by_type(/datum/faction/revolution)
+	if(viva)
 		var/foecount = 0
 		var/comcount = 0
 		var/revcount = 0
 		var/loycount = 0
-		var/datum/game_mode/rp_revolution/GM = SSticker.mode
-		for(var/datum/mind/M in GM.head_revolutionaries)
-			if (M.current && M.current.stat != DEAD) foecount++
-		for(var/datum/mind/M in GM.revolutionaries)
-			if (M.current && M.current.stat != DEAD) revcount++
+		for(var/datum/role/syndicate/rev_leader/lead in viva.members)
+			if (lead.antag?.current?.stat != DEAD)
+				foecount++
+		for(var/datum/role/rev/rev in viva.members)
+			if (rev.antag?.current?.stat != DEAD)
+				revcount++
 		for(var/mob/living/carbon/human/player in human_list)
 			if(player.mind)
 				var/role = player.mind.assigned_role
@@ -286,7 +289,7 @@
 					if (player.stat != DEAD)
 						comcount++
 				else
-					if(player.mind in GM.revolutionaries)
+					if(isrev(player))
 						continue
 					loycount++
 		for(var/mob/living/silicon/X in silicon_list)

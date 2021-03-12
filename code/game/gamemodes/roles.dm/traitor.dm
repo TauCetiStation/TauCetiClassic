@@ -52,41 +52,6 @@
 
 	killer.add_language("Sy-Code", 1)
 
-/datum/role/syndicate/traitor/proc/give_intel(mob/living/traitor_mob)
-	ASSERT(traitor_mob)
-	give_codewords(traitor_mob)
-	ASSERT(traitor_mob.mind)
-
-/datum/role/syndicate/traitor/proc/give_codewords(mob/living/traitor_mob)
-	var/code_words = 0
-	if(prob(80))
-		ASSERT(global.syndicate_code_phrase.len)
-		to_chat(traitor_mob, "<u><b>Your employers provided you with the following information on how to identify possible allies:</b></u>")
-		var/code_phrase = "<b>Code Phrase</b>: [codewords2string(global.syndicate_code_phrase)]"
-		to_chat(traitor_mob, code_phrase)
-		traitor_mob.mind.store_memory(code_phrase)
-		traitor_mob.mind.syndicate_awareness = SYNDICATE_PHRASES
-
-		code_words += 1
-
-	if(prob(80))
-		ASSERT(global.syndicate_code_response.len)
-		var/code_response = "<b>Code Response</b>: [codewords2string(global.syndicate_code_response)]"
-		to_chat(traitor_mob, code_response)
-		traitor_mob.mind.store_memory(code_response)
-		traitor_mob.mind.syndicate_awareness = SYNDICATE_RESPONSE
-
-		code_words += 1
-
-	switch(code_words)
-		if(0)
-			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")
-		if(1) // half
-			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-		if(2)
-			traitor_mob.mind.syndicate_awareness = SYNDICATE_AWARE
-			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-
 /datum/role/syndicate/traitor/Greet(greeting, custom)
 	if (istype(antag.current, /mob/living/silicon))
 		add_law_zero(antag.current)
@@ -112,40 +77,6 @@
 
 
 	return TRUE
-
-/datum/role/syndicate/traitor/proc/equip_traitor(mob/living/carbon/human/traitor_mob)
-	if (!istype(traitor_mob))
-		return
-
-	. = TRUE
-	if (antag?.assigned_role == "Clown")
-		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		traitor_mob.mutations.Remove(CLUMSY)
-
-	give_uplink(traitor_mob, 20)
-
-	var/datum/role/R = traitor_mob.mind.GetRole(TRAITOR)
-	for(var/datum/objective/dehead/D in R.objectives.GetObjectives())
-		var/obj/item/device/biocan/B = new (traitor_mob.loc)
-		var/list/slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"left hand" = SLOT_L_HAND,
-		"right hand" = SLOT_R_HAND,
-		)
-		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
-		traitor_mob.update_icons()
-		if (!where)
-			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
-		else
-			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
-
-	give_intel(traitor_mob)
-
-	// Tell them about people they might want to contact.
-	var/mob/living/carbon/human/M = get_nt_opposed()
-	if(M && M != traitor_mob)
-		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
-		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
 /datum/role/syndicate/traitor/OnPostSetup(laterole)
 	. = ..()

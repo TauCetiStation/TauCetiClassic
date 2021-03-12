@@ -142,16 +142,6 @@
 
 	return 0
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
-/datum/game_mode/proc/get_living_heads()
-	var/list/heads = list()
-	for(var/mob/living/carbon/human/player in human_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
-	return heads
-
 
 ////////////////////////////
 //Keeps track of all heads//

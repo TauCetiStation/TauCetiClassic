@@ -57,10 +57,6 @@
 
 	var/list/spell_list = list()
 
-	var/has_been_rev = 0//Tracks if this mind has been a rev or not
-
-	var/rev_cooldown = 0
-
 	// the world.time since the mob has been brigged, or -1 if not at all
 	var/brigged_since = -1
 
@@ -174,40 +170,6 @@
 	out += "<br><a href='?src=\ref[src];add_role=1'>(add a new role)</a>"
 
 /*
-		/** REVOLUTION ***/
-		text = "revolution"
-		if (SSticker.mode.config_tag=="rp-revolution")
-			text += uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
-			text += "<b>LOYAL EMPLOYEE</b>|headrev|rev"
-		else if (src in SSticker.mode.head_revolutionaries)
-			text += "<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/flash/flash = locate() in L
-			if (flash)
-				if(!flash.broken)
-					text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>."
-				else
-					text += "|<a href='?src=\ref[src];revolution=takeflash'>take</a>|<a href='?src=\ref[src];revolution=repairflash'>repair</a>."
-			else
-				text += "."
-
-			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
-		else if (src in SSticker.mode.revolutionaries)
-			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
-		else
-			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
-		if(current && current.client && (ROLE_REV in current.client.prefs.be_role))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-		sections["revolution"] = text
-
 		/** WIZARD ***/
 		text = "wizard"
 		if (SSticker.mode.config_tag=="wizard")
@@ -535,58 +497,6 @@
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 
-
-	else if (href_list["revolution"])
-		switch(href_list["revolution"])
-			if("clear")
-				for(var/type in list(HEADREV, REV))
-					var/datum/role/R = GetRole(type)
-					R.RemoveFromRole(src)
-				log_admin("[key_name(usr)] has de-rev'ed [current].")
-
-			if("rev")
-				if(src in SSticker.mode.head_revolutionaries)
-					SSticker.mode.head_revolutionaries -= src
-					to_chat(current, "<span class='warning'><FONT size = 3><B>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</B></FONT></span>")
-				else if(!(src in SSticker.mode.revolutionaries))
-					to_chat(current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
-					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-				else
-					return
-				SSticker.mode.revolutionaries += src
-				special_role = "Revolutionary"
-				log_admin("[key_name(usr)] has rev'ed [current].")
-
-			if("headrev")
-				if(src in SSticker.mode.revolutionaries)
-					SSticker.mode.revolutionaries -= src
-
-					to_chat(current, "<span class='warning'><FONT size = 3><B>You have proved your devotion to revoltion! You are a head revolutionary now!</B></FONT></span>")
-					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-				else if(!(src in SSticker.mode.head_revolutionaries))
-					to_chat(current, "<span class='notice'>You are a member of the revolutionaries' leadership now!</span>")
-				else
-					return
-				if (SSticker.mode.head_revolutionaries.len>0)
-					// copy targets
-					var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
-					if (valid_head)
-						for (var/datum/objective/rp_rev/O in objectives)
-							var/datum/objective/rp_rev/rev_obj = new
-							rev_obj.owner = src
-							rev_obj.target = O.target
-							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
-						SSticker.mode.greet_revolutionary(src,0)
-				current.verbs += /mob/living/carbon/human/proc/RevConvert
-				SSticker.mode.head_revolutionaries += src
-				special_role = "Head Revolutionary"
-				log_admin("[key_name(usr)] has head-rev'ed [current].")
-
-			if("autoobjectives")
-				SSticker.mode.forge_revolutionary_objectives(src)
-				SSticker.mode.greet_revolutionary(src,0)
-				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
-
 	else if (href_list["wizard"])
 
 
@@ -759,28 +669,6 @@
 		SSticker.mode.name_wizard(current)
 		SSticker.mode.forge_wizard_objectives(src)
 		SSticker.mode.greet_wizard(src)
-
-/datum/mind/proc/make_Rev()
-	if (SSticker.mode.head_revolutionaries.len>0)
-		// copy targets
-		var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
-		if (valid_head)
-			for (var/datum/objective/rp_rev/O in objectives)
-				var/datum/objective/rp_rev/rev_obj = new
-				rev_obj.owner = src
-				rev_obj.target = O.target
-				rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
-			SSticker.mode.greet_revolutionary(src,0)
-	SSticker.mode.head_revolutionaries += src
-	special_role = "Head Revolutionary"
-
-	SSticker.mode.forge_revolutionary_objectives(src)
-	SSticker.mode.greet_revolutionary(src,0)
-
-	var/list/L = current.get_contents()
-	var/obj/item/device/flash/flash = locate() in L
-	qdel(flash)
-	take_uplink()
 
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly

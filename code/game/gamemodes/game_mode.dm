@@ -212,12 +212,13 @@
 /datum/game_mode/proc/latespawn(mob/mob) //Check factions, see if anyone wants a latejoiner
 	var/list/possible_factions = list()
 	for(var/datum/faction/F in factions)
+		F.latespawn(mob)
 		if(F.max_roles && F.members.len >= F.max_roles)
 			continue
 		if(!can_join_faction(mob, F))
 			continue
 		if(F.accept_latejoiners)
-			possible_factions.Add(F)
+			possible_factions += F
 	if(possible_factions.len)
 		var/datum/faction/F = pick(possible_factions)
 		F.HandleRecruitedMind(mob.mind)

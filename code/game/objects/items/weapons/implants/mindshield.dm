@@ -18,12 +18,13 @@
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
-	if(H.mind && (H.mind in (SSticker.mode.head_revolutionaries)) || is_shadow_or_thrall(H)|| H.mind.special_role == "Wizard")
+	if(H.mind && (isrevhead(H) || is_shadow_or_thrall(H)|| iswizard(H)))
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 
-	if(H.mind && (H.mind in SSticker.mode.revolutionaries))
-		SSticker.mode.remove_revolutionary(H.mind)
+	if(H.mind && isrev(H))
+		var/datum/role/R = H.mind.GetRole(REV)
+		R.RemoveFromRole(H.mind)
 
 	if(iscultist(H))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")

@@ -133,10 +133,9 @@
 					return
 
 				if(M.brainmob.mind)
-					var/datum/role/cultist/C = M.brainmob.mind.GetRole(CULTIST)
-					C.RemoveFromRole(M.brainmob.mind)
-					var/datum/role/revolution/R = M.brainmob.mind.GetRole(REV)
-					R.RemoveFromRole(M.brainmob.mind)
+					for(var/role in list(CULTIST, REV, HEADREV))
+						var/datum/role/R = M.brainmob.mind.GetRole(role)
+						R.RemoveFromRole(M.brainmob.mind)
 
 				user.drop_item()
 				M.loc = src

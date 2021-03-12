@@ -123,7 +123,7 @@
 		WARNING("Mind already had a role of [late_role]!")
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
-	var/datum/role/R = new role_type(null,src,late_role) // Add him to our roles
+	var/datum/role/R = new role_type(null, src, late_role) // Add him to our roles
 	if(!R.AssignToRole(M, override))
 		R.Drop()
 		return null
@@ -172,7 +172,7 @@
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
 /datum/faction/proc/custom_result()
-	return
+	return ""
 
 /datum/faction/proc/GetScoreboard()
 	var/count = 1
@@ -331,6 +331,9 @@
 		dat += i
 
 	return dat
+
+/datum/faction/proc/latespawn(mob/M)
+	return
 
 /**
 	Should the faction make any changes to everybodies statpanel (EVERYBODIES, NOT JUST THE MEMBERS), put it here

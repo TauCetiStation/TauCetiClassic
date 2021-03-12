@@ -30,7 +30,6 @@
 	to_chat(antag.current, "When you feel you have enough APCs under your control, you may begin the takeover attempt.")
 
 /datum/role/malfAI/RemoveFromRole(datum/mind/M, msg_admins)
-	. = ..()
 	var/mob/living/silicon/ai/current_ai = M.current
 	M.special_role = null
 
@@ -43,6 +42,7 @@
 
 	to_chat(current_ai, "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>")
 	log_admin("[key_name(usr)] has de-malf'ed [M.current].")
+	return ..()
 
 /datum/role/malfAI/extraPanelButtons()
 	. = ..()
