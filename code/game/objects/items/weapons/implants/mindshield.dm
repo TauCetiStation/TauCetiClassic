@@ -18,7 +18,7 @@
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
-	if(H.mind && (isrevhead(H) || is_shadow_or_thrall(H)|| iswizard(H)))
+	if(H.mind && (isrevhead(H) || isshadowling(H) || isshadowthrall(H)|| iswizard(H)))
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 

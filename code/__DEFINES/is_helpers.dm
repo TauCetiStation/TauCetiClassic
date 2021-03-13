@@ -144,7 +144,9 @@
 
 #define isabductoragent(H) (H.mind ? H.mind.GetRole(ABDUCTOR_AGENT) : FALSE)
 
-#define isthrall(H) (H.mind ? H.mind.GetRole(THRALL) : FALSE)
+#define isshadowling(H) (H.mind ? H.mind.GetRole(SHADOW) : FALSE)
+
+#define isshadowthrall(H) (H.mind ? H.mind.GetRole(SHADOW_THRALL) : FALSE)
 
 #define iscultist(H) (H.mind ? H.mind.GetRole(CULTIST) : FALSE)
 

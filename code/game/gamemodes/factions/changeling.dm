@@ -4,7 +4,7 @@
 	initial_role = CHANGELING
 	late_role = CHANGELING
 	required_pref = CHANGELING
-	roletype = /datum/role/changeling
+	initroletype = /datum/role/changeling
 	desc = "An almost parasitic, shapeshifting entity that assumes the identity of its victims. Commonly used as smart bioweapons by the syndicate,\
 	or simply wandering malignant vagrants happening upon a meal of identity that can carry them to further feeding grounds."
 

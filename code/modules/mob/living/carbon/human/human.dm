@@ -123,14 +123,14 @@
 	update_mutantrace()
 	regenerate_icons()
 
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-	spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
-	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/glare)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow_walk)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)

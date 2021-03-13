@@ -35,7 +35,7 @@
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
-		spell_list += new spell(src)
+		AddSpell(new spell(src))
 
 	var/obj/effect/effect/forcefield/rune/R = new
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)

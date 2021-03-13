@@ -13,16 +13,12 @@ SUBSYSTEM_DEF(ticker)
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
-	var/event_time = null
-	var/event = 0
 
 	var/login_music			// music played in pregame lobby
 
-	var/list/datum/mind/minds = list()//The people in the game. Used for objective tracking.
+	var/list/datum/mind/minds = list() //The people in the game. Used for objective tracking.
 
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
-
-	var/list/reconverted_antags = list()
 
 	var/delay_end = 0						//if set to nonzero, the round will not restart on it's own
 
@@ -34,8 +30,6 @@ SUBSYSTEM_DEF(ticker)
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
 	var/obj/screen/cinematic = null
-
-	var/force_ending = FALSE
 
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
@@ -101,7 +95,7 @@ SUBSYSTEM_DEF(ticker)
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
-			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1) || force_ending
+			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
 			if(!explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				declare_completion()
@@ -481,11 +475,6 @@ SUBSYSTEM_DEF(ticker)
 
 	if(mode.completion_text)//extendet has empty completion text
 		ai_completions += "<div class='Section'>[mode.completion_text]</div>"
-
-	//calls auto_declare_completion_* for all modes
-	for(var/handler in typesof(/datum/game_mode/proc))
-		if (findtext("[handler]","auto_declare_completion_"))
-			ai_completions += "[call(mode, handler)()]"
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()

@@ -19,7 +19,7 @@
 
 	initial_role = CULTIST
 	late_role = CULTIST
-	roletype = /datum/role/cultist
+	initroletype = /datum/role/cultist
 
 	max_roles = 4
 

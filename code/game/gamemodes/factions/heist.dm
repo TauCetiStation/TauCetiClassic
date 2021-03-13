@@ -4,7 +4,7 @@
 	initial_role = VOXRAIDER
 	late_role = VOXRAIDER
 	required_pref = ROLE_RAIDER
-	roletype = /datum/role/vox_raider
+	initroletype = /datum/role/vox_raider
 	max_roles = 6
 	desc = "An almost parasitic, shapeshifting entity that assumes the identity of its victims. Commonly used as smart bioweapons by the syndicate,\
 	or simply wandering malignant vagrants happening upon a meal of identity that can carry them to further feeding grounds."

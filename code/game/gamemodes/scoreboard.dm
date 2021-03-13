@@ -117,11 +117,17 @@
 			score["mess"] += 3
 		if (istype(M, /obj/effect/decal/cleanable/blood))
 			score["mess"] += 1
-//		if (istype(M, /obj/effect/decal/cleanable/greenpuke)) score["mess"] += 1
-//		if (istype(M, /obj/effect/decal/cleanable/poop)) score["mess"] += 1 // What the literal fuck Paradise. Jesus christ no. - Iamgoofball
-//		if (istype(M, /obj/decal/cleanable/urine)) score["mess"] += 1
 		if (istype(M, /obj/effect/decal/cleanable/vomit))
 			score["mess"] += 1
+
+	// How many antags did we reconvert using loyalty implant.
+	for(var/datum/faction/faction in SSticker.mode.factions)
+		for(var/datum/role/reconverted in faction.members)
+			if(!reconverted.antag)
+				score["rec_antags"]++
+	for(var/datum/role/reconverted in SSticker.mode.orphaned_roles)
+		if(!reconverted.antag)
+			score["rec_antags"]++
 
 	//Research Levels
 	var/research_levels = 0

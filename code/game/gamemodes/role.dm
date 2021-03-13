@@ -234,7 +234,7 @@
 
 // Return TRUE on success, FALSE on failure.
 /datum/role/proc/OnPostSetup(laterole = FALSE)
-	return TRUE
+	return
 
 /datum/role/process()
 	return
@@ -341,6 +341,13 @@
 /datum/role/proc/Declare()
 	var/win = TRUE
 	var/text = ""
+
+	if(!antag)
+		text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
+		win = FALSE
+		stat_collection.add_role(src, win)
+		return text
+
 	var/mob/M = antag.current
 
 	if(!M)

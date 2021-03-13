@@ -4,7 +4,7 @@
 
 	initial_role = NINJA
 	late_role = NINJA
-	roletype = /datum/role/ninja
+	initroletype = /datum/role/ninja
 
 	max_roles = 2
 

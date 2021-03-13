@@ -9,7 +9,7 @@
 
 	initial_role = NUKE_OP
 	late_role = NUKE_OP
-	roletype = /datum/role/syndicate/operative
+	initroletype = /datum/role/syndicate/operative
 
 	max_roles = 6
 

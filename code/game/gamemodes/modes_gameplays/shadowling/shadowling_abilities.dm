@@ -14,7 +14,7 @@
 		if(target.stat)
 			charge_counter = charge_max
 			return
-		if(is_shadow_or_thrall(target))
+		if(isshadowling(target) || isshadowthrall(target))
 			to_chat(usr, "<span class='danger'>You don't see why you would want to paralyze an ally.</span>")
 			charge_counter = charge_max
 			return
@@ -115,7 +115,7 @@
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
-			if(is_shadow_or_thrall(target))
+			if(isshadowling(target) || isshadowthrall(target))
 				if(target == usr) //No message for the user, of course
 					continue
 				else
@@ -143,7 +143,8 @@
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
 	var/thrallsPresent = 0
 	var/mob/living/carbon/human/user = usr
-	for(var/datum/mind/mindToCount in SSticker.mode.thralls)
+	var/datum/faction/shadowlings/faction = find_active_first_faction_by_type(/datum/faction/shadowlings)
+	for(var/datum/role/thrall/mindToCount in faction.members)
 		thrallsPresent++
 	if(thrallsPresent >= 5 && (user.dna.species != SHADOWLING))
 		to_chat(user, "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>")
@@ -162,7 +163,7 @@
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
-		if(is_shadow_or_thrall(target))
+		if(isshadowling(target) || isshadowthrall(target))
 			to_chat(usr, "<span class='warning'>You can not enthrall allies.</span>")
 			charge_counter = charge_max
 			return
@@ -222,8 +223,7 @@
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
 		target.setOxyLoss(0) //In case the shadowling was choking them out
-		SSticker.mode.add_thrall(target.mind)
-		target.mind.special_role = "thrall"
+		faction.HandleRecruitedMind(target.mind)
 
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
@@ -242,7 +242,7 @@
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
 		for(var/mob/M in mob_list)
-			if(is_shadow_or_thrall(M) || isobserver(M))
+			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
 				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
 
 
@@ -301,7 +301,7 @@
 		to_chat(user, "<span class='shadowling'><b>You focus your telepathic energies abound, harnessing and drawing together the strength of your thralls.</b></span>")
 
 		for(M in alive_mob_list)
-			if(is_thrall(M))
+			if(isshadowthrall(M))
 				thralls++
 				to_chat(M, "<span class='shadowling'>You feel hooks sink into your mind and pull.</span>")
 
@@ -313,23 +313,23 @@
 			blind_smoke_acquired = 1
 			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \
 			</i></span>")
-			user.spell_list += new /obj/effect/proc_holder/spell/targeted/blindness_smoke
+			user.AddSpell(new /obj/effect/proc_holder/spell/targeted/blindness_smoke)
 
 		if(thralls >= 5 && !drainLifeAcquired)
 			drainLifeAcquired = 1
 			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Drain Life</b> ability. You can now drain the health of nearby humans to heal yourself.</i></span>")
-			user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/drainLife
+			user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/drainLife)
 
 		if(thralls >= 7 && !screech_acquired)
 			screech_acquired = 1
 			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Sonic Screech</b> ability. This ability will shatter nearby windows and deafen enemies, plus stunning silicon lifeforms.</i></span>")
-			user.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech
+			user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech)
 
 		if(thralls >= 9 && !reviveThrallAcquired)
 			reviveThrallAcquired = 1
 			to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
 			with no bodily defects.</i></span>")
-			user.spell_list += new /obj/effect/proc_holder/spell/targeted/reviveThrall
+			user.AddSpell(new /obj/effect/proc_holder/spell/targeted/reviveThrall)
 
 		if(thralls < victory_threshold)
 			to_chat(user, "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>")
@@ -338,7 +338,7 @@
 			to_chat(usr, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></b></span>")
 			to_chat(usr, "<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>")
 			for(M in alive_mob_list)
-				if(is_shadow(M))
+				if(isshadowling(M))
 					M.mind.current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch //In case a shadowling hasn't hatched
 					M.mind.current.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 					for(var/obj/effect/proc_holder/spell/targeted/collective_mind/spell_to_remove in M.spell_list)
@@ -382,7 +382,7 @@
 
 /datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M)
 	..()
-	if(!is_shadow_or_thrall(M))
+	if(!isshadowling(M) || !isshadowthrall(M))
 		to_chat(M, "<span class='warning bold'>You breathe in the black smoke, and your eyes burn horribly!</span>")
 		M.eye_blind = 5
 		if(prob(25))
@@ -409,7 +409,7 @@
 
 	for(var/turf/T in targets)
 		for(var/mob/target in T.contents)
-			if(is_shadow_or_thrall(target))
+			if(isshadowling(target) || isshadowthrall(target))
 				if(target == usr) //No message for the user, of course
 					continue
 				else
@@ -479,7 +479,7 @@
 
 /obj/effect/proc_holder/spell/targeted/reviveThrall/cast(list/targets)
 	for(var/mob/living/carbon/human/thrallToRevive in targets)
-		if(!is_thrall(thrallToRevive))
+		if(!isshadowthrall(thrallToRevive))
 			to_chat(usr, "<span class='warning'>[thrallToRevive] is not a thrall.</span>")
 			charge_counter = charge_max
 			return
@@ -529,7 +529,7 @@
 		return
 
 	for(var/mob/boom in targets)
-		if(is_shadow_or_thrall(boom))
+		if(isshadowling(boom) || isshadowthrall(boom))
 			to_chat(usr, "<span class='warning'>Making an ally explode seems unwise.</span>")
 			charge_counter = charge_max
 			return
@@ -565,7 +565,7 @@
 		return
 
 	for(var/mob/living/carbon/human/target in targets)
-		if(is_shadow_or_thrall(target))
+		if(isshadowling(target) || isshadowthrall(target))
 			to_chat(usr, "<span class='warning'>You cannot enthrall an ally.</span>")
 			charge_counter = charge_max
 			return
@@ -589,10 +589,8 @@
 		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
-		SSticker.mode.add_thrall(target.mind)
-		target.mind.special_role = "thrall"
-		target.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-
+		var/datum/faction/shadowlings/faction = find_active_first_faction_by_type(/datum/faction/shadowlings)
+		faction.HandleRecruitedMind(target.mind)
 
 
 /obj/effect/proc_holder/spell/targeted/shadowling_phase_shift
@@ -640,7 +638,7 @@
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
-			if(is_shadow_or_thrall(target))
+			if(isshadowling(target) || isshadowthrall(target))
 				if(target == usr) //No message for the user, of course
 					continue
 				else
@@ -669,7 +667,7 @@
 		if(!text)
 			return
 		for(var/mob/M in mob_list)
-			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
+			if(isshadowling(M) || isshadowthrall(M) || (M in dead_mob_list))
 				to_chat(M, "<font size=4><span class='shadowling'><b>\[Hive Chat\]<i> [usr.real_name] (ASCENDANT)</i>: [sanitize(text)]</b></font></span>")//Bigger text for ascendants.
 
 

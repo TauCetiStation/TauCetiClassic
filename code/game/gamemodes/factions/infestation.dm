@@ -9,7 +9,7 @@
 
 	initial_role = XENOMORPH
 	late_role = XENOMORPH
-	roletype = /datum/role/alien
+	initroletype = /datum/role/alien
 
 	max_roles = 4
 

@@ -98,6 +98,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='warning'>You can't evolve here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
+			var/datum/faction/shadowlings/faction = find_active_first_faction_by_type(/datum/faction/shadowlings)
 			usr.notransform = TRUE
 			usr.Stun(34)
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \
@@ -112,18 +113,16 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 								"<span class='shadowling'>You feel yourself beginning to mutate.</span>")
 
 			sleep(20)
-			if(!SSticker.mode.shadowling_ascended)
+			if(!faction.shadowling_ascended)
 				to_chat(usr, "<span class='shadowling'>It isn't enough. Time to draw upon your thralls.</span>")
 			else
 				to_chat(usr, "<span class='shadowling'>After some telepathic searching, you find the reservoir of life energy from the thralls and tap into it.</span>")
 
 			sleep(50)
 			for(var/mob/M in mob_list)
-				if(is_thrall(M) && !SSticker.mode.shadowling_ascended)
+				if(isshadowthrall(M) && !faction.shadowling_ascended)
 					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
 									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
-
-					SSticker.mode.thralls -= M.mind //To prevent message spam
 					M.death(0)
 
 			to_chat(usr, "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>")
@@ -145,12 +144,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				A.overload_lighting()
 			var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(usr.loc)
 			A.spell_list = list()
-			A.spell_list += new /obj/effect/proc_holder/spell/targeted/annihilate
-			A.spell_list += new /obj/effect/proc_holder/spell/targeted/hypnosis
-			A.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_phase_shift
-			A.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/glacial_blast
-			A.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant
-			A.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit
+			A.AddSpell(new /obj/effect/proc_holder/spell/targeted/annihilate)
+			A.AddSpell(new /obj/effect/proc_holder/spell/targeted/hypnosis)
+			A.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_phase_shift)
+			A.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/glacial_blast)
+			A.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant)
+			A.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit)
 			usr.mind.transfer_to(A)
 			A.name = usr.real_name
 			if(A.real_name)
@@ -159,8 +158,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			usr.flags |= GODMODE
 			usr.notransform = TRUE
 			sleep(50)
-			if(!SSticker.mode.shadowling_ascended)
+			if(!faction.shadowling_ascended)
 				SSshuttle.incall(0.3)
 				SSshuttle.announce_emer_called.play()
-			SSticker.mode.shadowling_ascended = 1
+			faction.shadowling_ascended = TRUE
 			qdel(usr)

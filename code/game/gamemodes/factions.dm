@@ -9,8 +9,6 @@
 	@initial_role: String(DEFINE): On initial setup via gamemode or faction creation, set the new minds role ID to this.
 	@late_role: String(DEFINE): On later recruitment, set the new minds role ID to this. TRAITOR for example
 	@required_pref: String(DEFINE): What preference is required to be recruited to this faction.
-	@restricted_species: list(String): Only species on this list can be part of this faction
-		(Vox Raiders, Skellington Pirates, Bewildering Basfellians, etc.)
 	@members: List(Reference): Who is a member of this faction - ROLES, NOT MINDS
 	@max_roles: Integer: How many members this faction is limited to. Set to 0 for no limit
 	@accept_latejoiners: Boolean: Whether or not this faction accepts newspawn latejoiners
@@ -29,7 +27,6 @@
 	var/initial_role
 	var/late_role
 	var/required_pref = ""
-	var/list/restricted_species = list()
 	var/list/datum/role/members = list()
 	var/max_roles = 0
 	var/accept_latejoiners = FALSE

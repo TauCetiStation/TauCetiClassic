@@ -19,6 +19,10 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define LIGHT_DAM_THRESHOLD 3
+#define LIGHT_HEAL_THRESHOLD 3
+#define LIGHT_DAMAGE_TAKEN 10
+
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
 
@@ -1696,3 +1700,7 @@
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
+
+#undef LIGHT_DAM_THRESHOLD
+#undef LIGHT_HEAL_THRESHOLD
+#undef LIGHT_DAMAGE_TAKEN
