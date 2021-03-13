@@ -13,9 +13,10 @@ var/global/list/huds[23]
 	huds[DATA_HUD_MEDICAL] = new/datum/atom_hud/data/medical
 	huds[DATA_HUD_MEDICAL_ADV] = new/datum/atom_hud/data/medical/adv
 	huds[DATA_HUD_DIAGNOSTIC] = new/datum/atom_hud/data/diagnostic
-	huds[DATA_HUD_MINER] = new/datum/atom_hud/data/mine
+	huds[DATA_HUD_BROKEN] = new/datum/atom_hud/data/broken
+	huds[DATA_HUD_MINER] = new/datum/atom_hud/mine
 	huds[DATA_HUD_GOLEM] = new/datum/atom_hud/golem
-	huds[DATA_HUD_BROKEN] = new/datum/atom_hud/broken
+	huds[DATA_HUD_EMBRYO] = new/datum/atom_hud/embryo
 	huds[ANTAG_HUD_CULT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_REV] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_OPS] = new/datum/atom_hud/antag
@@ -31,7 +32,6 @@ var/global/list/huds[23]
 	huds[ANTAG_HUD_ERT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_MALF] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ZOMB] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_ALIEN_EMBRYO] = new/datum/atom_hud/antag/embryo
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud

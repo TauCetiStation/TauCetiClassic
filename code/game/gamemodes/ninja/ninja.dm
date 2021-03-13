@@ -23,7 +23,7 @@
 	if (!..())
 		return FALSE
 	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "carpspawn")
+		if(L.name == "ninja")
 			return TRUE
 	return FALSE
 
@@ -49,7 +49,7 @@
 /datum/game_mode/ninja/pre_setup()
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "carpspawn")
+		if(L.name == "ninja")
 			ninjastart.Add(L)
 	for(var/datum/mind/ninja in ninjas)
 		ninja.current << browse(null, "window=playersetup")

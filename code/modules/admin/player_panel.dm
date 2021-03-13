@@ -577,7 +577,7 @@
 			dat += check_role_table("Ninjas", SSticker.mode.ninjas, src)
 
 		if(SSticker.mode.cult.len)
-			dat += check_role_table("Cultists", SSticker.mode.cult, src, 0)
+			dat += check_role_table("Cultists", SSticker.mode.cult, src, FALSE)
 
 		if(SSticker.mode.traitors.len)
 			dat += check_role_table("Traitors", SSticker.mode.traitors, src)
@@ -586,13 +586,31 @@
 		if(mutiny)
 			dat += mutiny.check_antagonists_ui(src)
 
+		if(istype(SSticker.mode, /datum/game_mode/infestation))
+			var/datum/game_mode/infestation/inf = SSticker.mode
+			var/data = inf.count_alien_percent()
+			dat += "<br><table><tr><td><B>Статистика</B></td><td></td></tr>"
+			dat += "<tr><td>Экипаж:</td><td>[data[TOTAL_HUMAN]]</td></tr>"
+			dat += "<tr><td>Взрослые ксеноморфы:</td><td>[data[TOTAL_ALIEN]]</td></tr>"
+			dat += "<tr><td>Процент победы:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
+
+		if(alien_list.len)
+			for(var/key in alien_list)
+				var/list/datum/mind/alien_minds = list()
+				for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+					if(A.stat == DEAD || !A.mind)
+						continue
+					alien_minds += A.mind
+				if(alien_minds.len)
+					dat += check_role_table(key, alien_minds, src, FALSE)
+
 		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 400, 500)
 		popup.set_content(dat)
 		popup.open()
 	else
 		alert("The game hasn't started yet!")
 
-/proc/check_role_table(name, list/members, admins, show_objectives=1)
+/proc/check_role_table(name, list/members, admins, show_objectives = TRUE)
 	var/txt = "<br><table cellspacing=5><tr><td><b>[name]</b></td><td></td></tr>"
 	for(var/datum/mind/M in members)
 		txt += check_role_table_row(M.current, admins, show_objectives)

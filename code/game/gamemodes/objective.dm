@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 var/global/list/all_objectives = list()
 
 /datum/objective
@@ -884,7 +883,7 @@ var/global/list/all_objectives = list()
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/O in locate(/area/shuttle/vox/arkship))
+	for(var/obj/O in get_area_by_type(/area/shuttle/vox/arkship))
 		if(istype(O,target)) total_amount++
 		for(var/obj/I in O.contents)
 			if(istype(I, target))
@@ -920,7 +919,7 @@ var/global/list/all_objectives = list()
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/item/O in locate(/area/shuttle/vox/arkship))
+	for(var/obj/item/O in get_area_by_type(/area/shuttle/vox/arkship))
 
 		var/obj/item/stack/sheet/S
 		if(istype(O, /obj/item/stack/sheet))
@@ -977,7 +976,7 @@ var/heist_rob_total = 0
 	explanation_text = "Ransack the station for any valuables."
 /datum/objective/heist/robbery/check_completion()
 	heist_rob_total = 0
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
+	for(var/atom/movable/AM in get_area_by_type(/area/shuttle/vox/arkship))
 		heist_recursive_price_check(AM)
 	if(heist_rob_total >= target_amount) return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS*/

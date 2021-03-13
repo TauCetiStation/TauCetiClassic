@@ -10,6 +10,8 @@
 	. += 				"<tr><td colspan='3'><a href='?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
 	. +=				"<tr><td>TGUI Window Mode:</b> <a href='?_src_=prefs;preference=tgui_fancy'><b>[tgui_fancy ? "Fancy (default)" : "Compatible (slower)"]</a></td></tr>"
 	. += 				"<tr><td>TGUI Window Placement:</b> <a href='?_src_=prefs;preference=tgui_lock'><b>[tgui_lock ? "Primary Monitor" : "Free (default)"]</a></td></tr>"
+	. += 				"<tr><td>Outline: <a href='?_src_=prefs;preference=outline_enabled'>[outline_enabled ? "Enabled" : "Disabled"]</a><br>"
+	. += 				"<tr><td>Outline Color: <span style='border:1px solid #161616; background-color: [outline_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
 	if(config.allow_Metadata)
 		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext_char(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
 	//if(user.client) TG
@@ -84,6 +86,18 @@
 	. += 					"<td width='45%'>Progress Bar:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_progbar'><b>[(toggles & SHOW_PROGBAR) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Name of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=tooltip_show'><b>[tooltip ? "Hide" : "Show"]</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Font of Names of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_font_tooltip'><b>Change</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Names Size:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_size_tooltip'><b>[tooltip_size]</b></a></td>"
+	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 	"</tr>"
@@ -129,6 +143,23 @@
 
 		if("tgui_lock")
 			tgui_lock = !tgui_lock
+
+		if("tooltip_show")
+			parent?.toggle_tooltip()
+
+		if("change_size_tooltip")
+			parent?.change_size_tooltip()
+
+		if("change_font_tooltip")
+			parent?.change_font_tooltip()
+
+		if("outline_enabled")
+			outline_enabled = !outline_enabled
+
+		if("outline_color")
+			var/pickedOutlineColor = input(user, "Choose your outline color.", "General Preference", outline_color) as color|null
+			if(pickedOutlineColor)
+				outline_color = pickedOutlineColor
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)

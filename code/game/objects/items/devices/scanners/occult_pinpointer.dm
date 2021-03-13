@@ -46,6 +46,6 @@
 		if(!target)
 			icon_state = "locnull"
 			return
-	dir = get_dir(src,target)
+	set_dir(get_dir(src,target))
 	if(get_dist(src,target))
 		icon_state = "locon"

@@ -15,6 +15,7 @@
 /obj/item/weapon/storage/firstaid/tactical
 	name = "first-aid kit"
 	icon_state = "bezerk"
+	item_state = "firstaid-syndi"
 	desc = "I hope you've got insurance."
 	max_w_class = ITEM_SIZE_NORMAL
 

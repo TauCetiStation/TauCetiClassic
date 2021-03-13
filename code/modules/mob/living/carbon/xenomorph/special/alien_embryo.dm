@@ -12,7 +12,7 @@ This is emryo growth procs
 	var/controlled_by_ai = TRUE
 	var/growth_counter = 0
 	var/stage = 0
-	var/full_growth_counter = 0
+	var/next_growth_limit = MAX_EMBRYO_GROWTH
 
 /obj/item/alien_embryo/atom_init()
 	..()
@@ -32,6 +32,8 @@ This is emryo growth procs
 		STOP_PROCESSING(SSobj, src)
 		remove_infected_hud()
 		affected_mob.med_hud_set_status()
+	if(baby)
+		baby.clear_alert("alien_embryo")
 	affected_mob = null
 	baby = null
 	return ..()
@@ -50,6 +52,7 @@ This is emryo growth procs
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 		return FALSE
+
 	if(!controlled_by_ai)
 		if(istype(loc, /turf) || !(contents.len))
 			if(baby)
@@ -59,6 +62,7 @@ This is emryo growth procs
 				baby.reset_view()
 			qdel(src)
 			return FALSE
+
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
@@ -77,12 +81,26 @@ This is emryo growth procs
 						baby.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
 				qdel(src)
 				return
-		if(growth_counter > MAX_EMBRYO_GROWTH)
+		if(growth_counter >= next_growth_limit)
 			stage++
-			growth_counter = 0
+			next_growth_limit += MAX_EMBRYO_GROWTH
 			add_infected_hud()
-	growth_counter++
-	full_growth_counter++
+//increase the growth rate if the host is buckled to the alien nest
+	var/growth_rate = 1
+	if(affected_mob.buckled && istype(affected_mob.buckled, /obj/structure/stool/bed/nest))
+		growth_rate = 3
+
+	if(baby && baby.client)
+		if(growth_rate == 1)
+			baby.throw_alert("alien_embryo", /obj/screen/alert/alien_embryo)
+		else
+			baby.clear_alert("alien_embryo")
+
+	var/diff = FULL_EMBRYO_GROWTH - growth_counter
+	if(diff < growth_rate)
+		growth_counter += diff	//so as not to go beyond the growth counter
+	else
+		growth_counter += growth_rate
 
 	switch(stage)
 		if(2)
@@ -140,7 +158,8 @@ This is emryo growth procs
 
 		if(!larva_candidate)
 			stage = 4 // mission failed we'll get em next time
-			growth_counter = 0
+			growth_counter -= MAX_EMBRYO_GROWTH
+			next_growth_limit -= MAX_EMBRYO_GROWTH
 			START_PROCESSING(SSobj, src)
 			return
 
@@ -155,7 +174,7 @@ This is emryo growth procs
 		new_xeno.key = larva_candidate
 		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		new_xeno.update_icons()
-		new_xeno.playsound_local(null, 'sound/voice/xenomorph/big_hiss.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
+		new_xeno.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
 		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
@@ -176,13 +195,13 @@ This is emryo growth procs
 
 //only aliens will see this HUD
 /obj/item/alien_embryo/proc/add_infected_hud()
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_to_hud(affected_mob)
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = "infected[stage]"
 
 /obj/item/alien_embryo/proc/remove_infected_hud()
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
-	hud.leave_hud(affected_mob)
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
+	hud.remove_hud_from(affected_mob)
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = null

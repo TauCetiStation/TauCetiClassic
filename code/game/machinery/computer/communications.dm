@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 // The communications computer
 /obj/machinery/computer/communications
 	name = "Communications Console"
@@ -564,3 +562,11 @@
 			status_signal.data["picture_state"] = data1
 
 	frequency.post_signal(src, status_signal)
+
+
+/obj/machinery/computer/communications/evac
+	name = "Shuttle communications console"
+	desc = "This can be used for various important functions."
+	icon_state = "erokez"
+	state_broken_preset = "erokezb"
+	state_nopower_preset = "erokez0"

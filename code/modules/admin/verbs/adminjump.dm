@@ -33,7 +33,7 @@
 		alert("Admin jumping disabled")
 	return
 
-/client/proc/jumptomob(mob/M in mob_list)
+/client/proc/jumptomob(mob/M in (global.mob_list - global.dummy_mob_list))
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -100,7 +100,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/Getmob(mob/M in mob_list)
+/client/proc/Getmob(mob/M in (global.mob_list - global.dummy_mob_list))
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport."

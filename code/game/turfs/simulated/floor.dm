@@ -47,6 +47,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	can_deconstruct = TRUE
 
 	var/datum/holy_turf/holy
 
@@ -630,18 +631,28 @@ var/list/wood_icons = list("wood","wood-broken")
 			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
 
 	if(iswelder(C))
-		var/obj/item/weapon/weldingtool/welder = C
-		if(welder.isOn() && (is_plating()))
-			if(broken || burnt)
-				if(welder.use(0,user))
-					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
-					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-					icon_state = "plating"
-					burnt = 0
-					broken = 0
-				else
-					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-
+		var/obj/item/weapon/weldingtool/W = C
+		if(!is_plating())
+			return
+		if(!can_deconstruct)
+			return
+		if(!W.use(0, user))
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			return
+		if(user.a_intent == INTENT_HELP)
+			if(!broken && !burnt)
+				return
+			to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "plating"
+			burnt = 0
+			broken = 0
+		else
+			to_chat(user, "<span class='notice'>You begin slicing through the plating.</span>")
+			if(W.use_tool(src, user, 100, 3, 100))
+				to_chat(user, "<span class='notice'>You remove the plating.</span>")
+				new /obj/item/stack/tile/plasteel(src)
+				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK
