@@ -142,9 +142,21 @@
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
+/datum/role/syndicate/proc/find_syndicate_uplink(mob/living/carbon/human/human)
+	var/list/L = human.get_contents()
+	for(var/obj/item/I in L)
+		if(I.hidden_uplink)
+			return I.hidden_uplink
+	return null
+
+/datum/role/syndicate/proc/take_uplink(mob/living/carbon/human/human)
+	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink(human)
+	if(H)
+		qdel(H)
+
 /datum/role/syndicate/extraPanelButtons()
 	var/dat = ""
-	var/obj/item/device/uplink/hidden/guplink = antag.find_syndicate_uplink()
+	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(antag.current)
 	if(guplink)
 		dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];telecrystalsSet=1;'>Telecrystals: [guplink.uses](Set telecrystals)</a><br>"
 		dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];removeuplink=1;'>(Remove uplink)</a><br>"
@@ -157,7 +169,7 @@
 		give_uplink(antag.current, 20, src)
 
 	if(href_list["telecrystalsSet"])
-		var/obj/item/device/uplink/hidden/guplink = M.find_syndicate_uplink()
+		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(M.current)
 		var/amount = input("What would you like to set their crystal count to?", "Their current count is [guplink.uses]") as null|num
 		if(!isnull(amount))
 			if(guplink)
@@ -166,6 +178,6 @@
 				total_TC += diff
 
 	if(href_list["removeuplink"])
-		M.take_uplink()
+		take_uplink(M.current)
 		antag.memory = null
 		to_chat(M.current, "<span class='warning'>You have been stripped of your uplink.</span>")

@@ -8,7 +8,6 @@
 	antag_hud_name = "changeling"
 
 	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	protected_traitor_prob = PROB_PROTECTED_RARE
 	logo_state = "change-logoa"
 
 	var/list/absorbed_dna = list()

@@ -34,11 +34,11 @@
 			suspects += man
 
 			// If they're a traitor or likewise, give them extra TC in exchange.
-			var/obj/item/device/uplink/hidden/suplink = man.mind.find_syndicate_uplink()
+			var/datum/role/syndicate/S = man.mind.GetRoleByType(/datum/role/syndicate)
+			var/obj/item/device/uplink/hidden/suplink = S.find_syndicate_uplink(S.antag.current)
 			if(suplink)
 				var/extra = 8
 				suplink.uses += extra
-				var/datum/role/syndicate/S = man.mind.GetRoleByType(/datum/role/syndicate)
 				if(man.mind)
 					S.total_TC += extra
 				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")

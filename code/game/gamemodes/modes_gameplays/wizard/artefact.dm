@@ -150,7 +150,10 @@
 	var/wizard_name = "Grand Magus"
 	if(wizard)
 		wizard_name = wizard.name
-	if(M.mind.special_role == "traitor")
+	var/datum/role/wizard/wiz_role = wizard.GetRole(WIZARD)
+	var/datum/faction/wizards/federation = wiz_role.GetFaction()
+	federation.HandleRecruitedMind(M.mind)
+	if(istraitor(M))
 		to_chat(M, "<span class='notice'>You succeed in getting those precious powers from that fool. Now it's time to show [master] what you are realy after.</span>")
 	else
 		to_chat(M, "<span class='notice'>You are [master]'s apprentice! You are bound by magic contract to follow their orders and help them in accomplishing their goals.</span>")
@@ -183,18 +186,15 @@
 				to_chat(M, "<span class='notice'>Studying under [wizard_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.</span>")
 	equip_apprentice(M)
 	if(wizard && wizard.current)
-		if(M.mind.special_role == "traitor")  //Because traitors gonna trait. Besides, mage with dualsaber and revolver is a bit too OP for this station
-			var/datum/objective/protect/new_objective = new /datum/objective/assassinate
+		var/datum/role/wiz_app = M.mind.GetRole(WIZ_APPRENTICE)
+		if(istraitor(M))  //Because traitors gonna trait. Besides, mage with dualsaber and revolver is a bit too OP for this station
+			var/datum/objective/assassinate/new_objective = wiz_app.AppendObjective(/datum/objective/assassinate)
 			new_objective.explanation_text = "Assassinate [wizard.current.real_name], the wizard."
-			new_objective.owner = M.mind
 			new_objective.target = wizard
-			M.mind.objectives += new_objective
 		else
-			var/datum/objective/protect/new_objective = new /datum/objective/protect
+			var/datum/objective/protect/new_objective = wiz_app.AppendObjective(/datum/objective/protect)
 			new_objective.explanation_text = "Protect [wizard.current.real_name], the wizard."
-			new_objective.owner = M.mind
 			new_objective.target = wizard
-			M.mind.objectives += new_objective
 	uses--
 	previous_users += M.mind
 	playsound(M, 'sound/effects/magic.ogg', VOL_EFFECTS_MASTER)

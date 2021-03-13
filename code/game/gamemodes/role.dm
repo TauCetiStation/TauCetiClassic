@@ -63,8 +63,6 @@
 	// Jobs that cannot be this antag.
 	var/list/restricted_jobs = list()
 
-	var/protected_traitor_prob = PROB_PROTECTED_REGULAR
-
 	// Jobs that can only be this antag
 	var/list/required_jobs = list()
 

@@ -494,16 +494,15 @@ var/global/list/datum/mind/borers = list()
 
 			var/count = 1
 			var/borerwin = 1
-			if(!config.objectives_disabled)
-				for(var/datum/objective/objective in borer.objectives)
-					if(objective.check_completion())
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
-						feedback_add_details("borer_objective","[objective.type]|SUCCESS")
-					else
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
-						feedback_add_details("borer_objective","[objective.type]|FAIL")
-						borerwin = 0
-					count++
+			for(var/datum/objective/objective in borer.objectives)
+				if(objective.check_completion())
+					text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+					feedback_add_details("borer_objective","[objective.type]|SUCCESS")
+				else
+					text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+					feedback_add_details("borer_objective","[objective.type]|FAIL")
+					borerwin = 0
+				count++
 
 				if(borer.current && borer.current.stat!=2 && borerwin)
 					text += "<br><FONT color='green'><b>The borer was successful!</b></FONT>"

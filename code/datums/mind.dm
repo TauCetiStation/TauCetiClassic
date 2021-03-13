@@ -170,23 +170,6 @@
 	out += "<br><a href='?src=\ref[src];add_role=1'>(add a new role)</a>"
 
 /*
-		/** WIZARD ***/
-		text = "wizard"
-		if (SSticker.mode.config_tag=="wizard")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (src in SSticker.mode.wizards)
-			text += "<b>YES</b>|<a href='?src=\ref[src];wizard=clear'>no</a>"
-			text += "<br><a href='?src=\ref[src];wizard=lair'>To lair</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];wizard=dressup'>dress up</a>, <a href='?src=\ref[src];wizard=name'>let choose name</a>."
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];wizard=autoobjectives'>Randomize!</a>"
-		else
-			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
-		if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_role))
-			text += "|Enabled in Prefs"
-		else
-			text += "|Disabled in Prefs"
-		sections["wizard"] = text
 
 		/** SHADOWLING **/
 		text = "shadowling"
@@ -497,41 +480,10 @@
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 
-	else if (href_list["wizard"])
-
-
-		switch(href_list["wizard"])
-			if("clear")
-				if(src in SSticker.mode.wizards)
-					SSticker.mode.wizards -= src
-					special_role = null
-
-					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
-					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
-					log_admin("[key_name(usr)] has de-wizard'ed [current].")
-			if("wizard")
-				if(!(src in SSticker.mode.wizards))
-					SSticker.mode.wizards += src
-					special_role = "Wizard"
-
-					to_chat(current, "<B><span class='warning'>You are the Space Wizard!</span></B>")
-					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
-					log_admin("[key_name(usr)] has wizard'ed [current].")
-			if("lair")
-				current.loc = pick(wizardstart)
-			if("dressup")
-				SSticker.mode.equip_wizard(current)
-			if("name")
-				SSticker.mode.name_wizard(current)
-			if("autoobjectives")
-				if(!config.objectives_disabled)
-					SSticker.mode.forge_wizard_objectives(src)
-					to_chat(usr, "<span class='notice'>The objectives for wizard [key] have been generated. You can edit them and anounce manually.</span>")
-
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
-				current.spellremove(current)
+				spellremove()
 				if(src in SSticker.mode.shadows)
 					SSticker.mode.shadows -= src
 					special_role = null
@@ -640,35 +592,6 @@
 	if(R)
 		return R.GetFaction()
 	return FALSE
-
-/datum/mind/proc/find_syndicate_uplink()
-	var/list/L = current.get_contents()
-	for(var/obj/item/I in L)
-		if(I.hidden_uplink)
-			return I.hidden_uplink
-	return null
-
-/datum/mind/proc/take_uplink()
-	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink()
-	if(H)
-		qdel(H)
-
-/datum/mind/proc/make_Wizard()
-	if(!(src in SSticker.mode.wizards))
-		SSticker.mode.wizards += src
-		special_role = "Wizard"
-		assigned_role = "MODE"
-		//SSticker.mode.learn_basic_spells(current)
-		if(!wizardstart.len)
-			current.loc = pick(latejoin)
-			to_chat(current, "HOT INSERTION, GO GO GO")
-		else
-			current.loc = pick(wizardstart)
-
-		SSticker.mode.equip_wizard(current)
-		SSticker.mode.name_wizard(current)
-		SSticker.mode.forge_wizard_objectives(src)
-		SSticker.mode.greet_wizard(src)
 
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
@@ -799,6 +722,12 @@
 		spell.action.background_icon_state = spell.action_background_icon_state
 	spell.action.Grant(current)
 	return
+
+/datum/mind/proc/spellremove()
+	for(var/obj/effect/proc_holder/spell/spell_to_remove in current.spell_list)
+		qdel(spell_to_remove)
+	current.spell_list.Cut()
+	spell_list.Cut()
 
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && isliving(current))

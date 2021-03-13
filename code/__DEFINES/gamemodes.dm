@@ -29,6 +29,7 @@
 #define CHANGELING "changeling"
 #define THRALL "thrall"
 #define WIZARD "wizard"
+#define WIZ_APPRENTICE "wizard apprentice"
 #define CULTIST "cultist"
 #define NUKE_OP "nuclear operative"
 #define NUKE_OP_LEADER "nuclear operative leader"
@@ -85,43 +86,7 @@
 #define FROM_GHOSTS 1
 #define FROM_PLAYERS 2
 
-// -- Revs
-
-#define ADD_REVOLUTIONARY_FAIL_IS_COMMAND -1
-#define ADD_REVOLUTIONARY_FAIL_IS_JOBBANNED -2
-#define ADD_REVOLUTIONARY_FAIL_IS_IMPLANTED -3
-#define ADD_REVOLUTIONARY_FAIL_IS_REV -4
-
-// -- Protected roles
-
-#define PROB_PROTECTED_REGULAR 50
-#define PROB_PROTECTED_RARE    80
-
-#define FACTION_FAILURE -1
-
 // -- The paper
 
 #define INTERCEPT_TIME_LOW 10 MINUTES
 #define INTERCEPT_TIME_HIGH 18 MINUTES
-
-// -- Injection delays (in ticks, ie, you need the /20 to get the real result)
-
-#define LATEJOIN_DELAY_MIN (5 MINUTES)/20
-#define LATEJOIN_DELAY_MAX (30 MINUTES)/20
-
-#define MIDROUND_DELAY_MIN (15 MINUTES)/20
-#define MIDROUND_DELAY_MAX (50 MINUTES)/20
-
-// -- Rulesets flags
-
-#define HIGHLANDER_RULESET 1
-#define TRAITOR_RULESET 2
-#define MINOR_RULESET 4
-
-// -- Distribution "modes"
-
-#define LORENTZ "Lorentz distribution"
-#define GAUSS "Normal distribution"
-#define DIRAC "Rigged threat number"
-#define EXPONENTIAL "Peaceful bias"
-#define UNIFORM "Uniform distribution"
