@@ -69,7 +69,6 @@
 	melee_damage = 0
 	faction = "Station"
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	invisibility = INVISIBILITY_OBSERVER
 	universal_understand = TRUE

@@ -108,6 +108,9 @@
 		if(C.contents.len)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Камень душ полон! Используйте или освободите душу внутри камня.")
 			return
+		if(H.species.flags[IS_SYNTHETIC])
+			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Неподходящая цель.")
+			return
 
 	for(var/obj/item/W in H)
 		H.drop_from_inventory(W)

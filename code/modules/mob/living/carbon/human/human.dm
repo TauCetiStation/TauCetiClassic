@@ -1506,7 +1506,7 @@
 		for(var/obj/effect/decal/cleanable/blood/writing/W in T)
 			num_doodles++
 		if(num_doodles > 4)
-			to_chat(src, "<span class='warning'>Нехватает места для еще одной надписи.</span>")
+			to_chat(src, "<span class='warning'>Недостаточно места для еще одной надписи.</span>")
 			return
 
 		var/used_blood_amount = round(length(message) / 30, 1)
