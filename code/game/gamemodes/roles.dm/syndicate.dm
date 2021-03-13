@@ -24,6 +24,7 @@
 	var/nuclear_outfit = /datum/outfit/nuclear
 
 /datum/role/syndicate/operative/OnPostSetup(laterole)
+	. = ..()
 	antag.current.faction = "syndicate"
 	antag.current.real_name = "Gorlex Maradeurs Operative"
 

@@ -1,5 +1,5 @@
 /datum/game_mode/ninja
-	name = "ninja"
+	name = "Ninja"
 
 	roles_allowed = list(/datum/faction/ninja)
 

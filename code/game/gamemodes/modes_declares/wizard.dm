@@ -1,5 +1,5 @@
 /datum/game_mode/wizard
-	name = "wizard"
+	name = "Wizard"
 
 	factions_allowed = list(/datum/faction/wizards)
 

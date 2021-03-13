@@ -1,6 +1,7 @@
 #define SPAWN_CD 15 MINUTES
 
 /datum/faction/traitor/auto
+	name = "AutoTraitors"
 	accept_latejoiners = TRUE
 	var/next_try = 0
 

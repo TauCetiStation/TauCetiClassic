@@ -276,6 +276,7 @@
 				if ((!( SSticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
+				SSshuttle.shuttlealert(1)
 				SSshuttle.announce_emer_called.play()
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='notice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")

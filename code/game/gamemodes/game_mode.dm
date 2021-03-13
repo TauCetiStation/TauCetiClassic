@@ -12,38 +12,54 @@
 */
 
 /datum/game_mode
-	var/name = "invalid"
+	var/name
 	var/list/factions_allowed = list()
 	var/list/roles_allowed = list()
 	var/minimum_player_count
 	var/minimum_players_bundles
-	var/votable = FALSE
-	var/probability = 0
+	var/probability = 50
 
 	var/newscaster_announcements = null
 
 	var/completition_text = ""
 
-	var/required_enemies = 0
-
 	var/list/factions = list()
 	var/list/orphaned_roles = list()
 
 /datum/game_mode/proc/announce()
-	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
+	return
 
-/datum/game_mode/proc/get_player_count()
+/datum/game_mode/proc/get_player_count(check_ready = TRUE)
 	var/players = 0
 	for(var/mob/dead/new_player/P in new_player_list)
-		if(P.client && P.ready)
+		if(P.client && (!check_ready || P.ready))
 			players++
 
 	return players
 
-/datum/game_mode/proc/can_start()
-	if(minimum_player_count == 0)
+/datum/game_mode/proc/get_ready_players(check_ready = TRUE)
+	var/list/players = list()
+	for(var/mob/dead/new_player/P in player_list)
+		if(P.client && (!check_ready || P.ready))
+			players.Add(P)
+
+	return players
+
+/datum/game_mode/proc/can_start(check_ready = TRUE)
+	if(minimum_player_count == 0 && get_ready_players(check_ready))
 		return TRUE
-	if(minimum_player_count < get_player_count())
+	if(get_player_count(check_ready) < minimum_player_count)
+		return FALSE
+	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) <= minimum_players_bundles)
+		return FALSE
+	if(!CanPopulateFaction(check_ready))
+		return FALSE
+	return TRUE
+
+/datum/game_mode/proc/potential_runnable()
+	if(!can_start(FALSE))
+		return FALSE
+	if(!CanPopulateFaction(FALSE))
 		return FALSE
 	return TRUE
 
@@ -56,7 +72,7 @@
 	return
 
 /datum/game_mode/proc/Setup()
-	if(minimum_player_count && minimum_player_count < get_player_count())
+	if(!can_start())
 		TearDown()
 		return FALSE
 	SetupFactions()
@@ -107,6 +123,19 @@
 			already in another faction
 */
 
+/datum/game_mode/proc/CanPopulateFaction(check_ready = TRUE)
+	var/list/L = get_ready_players(check_ready)
+	for(var/type in factions_allowed)
+		var/datum/faction/F = new type()
+		var/can_be = L.len
+		for(var/mob/M in L)
+			if(!can_join_faction(M, F))
+				can_be--
+		if(can_be < F.min_roles)
+			return FALSE
+		qdel(F)
+	return TRUE
+
 /datum/game_mode/proc/PopulateFactions()
 	var/list/available_players = get_ready_players()
 	for(var/datum/faction/F in factions)
@@ -114,6 +143,7 @@
 			if(F.max_roles && F.members.len >= F.max_roles)
 				break
 			if(!can_join_faction(P, F))
+				to_chat(world, "f(!can_join_fa")
 				continue
 			if(!F.HandleNewMind(P.mind))
 				stack_trace("[P.mind] failed [F] HandleNewMind!")
@@ -126,6 +156,7 @@
 	if(!P.client || !P.mind)
 		return FALSE
 	if(!P.client.prefs.be_role.Find(F.required_pref) || jobban_isbanned(P, F.required_pref) || role_available_in_minutes(P, F.required_pref))
+		to_chat(world, "[F.required_pref] - [P.client.prefs.be_role.Find(F.required_pref)] - [jobban_isbanned(P, F.required_pref)] - [role_available_in_minutes(P, F.required_pref)]")
 		return FALSE
 	return TRUE
 
@@ -219,8 +250,8 @@
 
 	addtimer(CALLBACK(src, .proc/send_intercept), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
-	var/list/exclude_autotraitor_for = list("extended", "sandbox")
-	if(!(initial(name) in exclude_autotraitor_for))
+	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended)
+	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
@@ -232,10 +263,13 @@
 	start_state.count(1)
 
 	for(var/datum/faction/F in factions)
+		for(var/datum/role/R in F.members)
+			R.Greet()
 		F.forgeObjectives()
 		F.AnnounceObjectives()
 		F.OnPostSetup()
 	for(var/datum/role/R in orphaned_roles)
+		R.Greet()
 		R.forgeObjectives()
 		R.AnnounceObjectives()
 		R.OnPostSetup()
@@ -270,14 +304,6 @@
 	count_survivors()
 
 	return completition_text
-
-/datum/game_mode/proc/get_ready_players()
-	var/list/players = list()
-	for(var/mob/dead/new_player/P in player_list)
-		if(P.client && P.ready)
-			players.Add(P)
-
-	return players
 
 
 /datum/game_mode/process()

@@ -1,5 +1,5 @@
 /datum/game_mode/extended
-	name = "extended"
+	name = "Extended"
 	minimum_player_count = 0
 
 /datum/game_mode/announce()

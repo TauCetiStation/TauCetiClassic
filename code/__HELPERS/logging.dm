@@ -225,7 +225,7 @@
 		objectives = ""
 		if(temprole)							//if they are an antagonist of some sort.
 			for(var/role in Mind.antag_roles)
-				var/datum/role/R = antag_roles[role]
+				var/datum/role/R = Mind.antag_roles[role]
 				if(R.objectives.objectives.len)
 					for(var/datum/objective/O in R.objectives.GetObjectives())
 						if(length(objectives))

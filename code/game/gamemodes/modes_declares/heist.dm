@@ -1,6 +1,6 @@
 
 /datum/game_mode/heist
-	name = "heist"
+	name = "Heist"
 
 	factions_allowed = list(/datum/faction/heist)
 

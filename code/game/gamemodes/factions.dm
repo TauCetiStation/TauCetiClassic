@@ -66,8 +66,8 @@
 		G.orphaned_roles += R
 		remove_role(R)
 	qdel(objective_holder)
-	//var/datum/game_mode/dynamic/D = SSticker.mode
-	//D.factions -= src
+	var/datum/game_mode/G = SSticker.mode
+	G.factions -= src
 	qdel(src)
 
 //Initialization proc, checks if the faction can be made given the current amount of players and/or other possibilites
@@ -190,6 +190,7 @@
 				score_results += "<br><span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
 				feedback_add_details("[ID]_success","FAIL")
 
+		score_results += "<br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			var/successful = objective.check_completion()
 			objective.extra_info()
@@ -199,11 +200,12 @@
 			if (count <= objective_holder.objectives.len)
 				score_results += "<br>"
 
-	if(objective_holder.objectives.len > 0)
 		score_results += "</ul>"
 
 	antagonists_completion = list(list("faction" = ID, "html" = score_results))
-	score_results += "<FONT size = 2><B>members:</B></FONT><br>"
+
+	score_results += "<ul>"
+	score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
 	var/i = 1
 	for(var/datum/role/R in members)
 		var/results = R.GetScoreboard()
@@ -213,9 +215,10 @@
 			if (i < members.len)
 				score_results += "<br>"
 		i++
+	score_results += "</ul>"
 
 	stat_collection.add_faction(src)
-
+	score_results += "<br>"
 	return score_results
 
 /datum/faction/Topic(href, href_list)
@@ -240,7 +243,7 @@
 
 /datum/faction/proc/GetObjectivesMenuHeader() //Returns what will show when the factions objective completion is summarized
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
-	var/header = {"<img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'><br>"}
+	var/header = {"<img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'>"}
 	return header
 
 /datum/faction/proc/AdminPanelEntry(datum/admins/A)
@@ -248,15 +251,18 @@
 	var/dat = ""
 	dat += GetObjectivesMenuHeader()
 	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A><br>"
-	dat += "<br><b>Faction objectives</b><br>"
-	dat += objective_holder.GetObjectiveString(FALSE, FALSE, A)
-	dat += " - <b>Members</b> - <br>"
+	var/fac_objects = objective_holder.GetObjectiveString(FALSE, FALSE, A)
+	if(fac_objects)
+		dat += "<b>Faction objectives</b><br>"
+		dat += fac_objects
+
+	dat += " - <b>Members</b> - "
 	if(!members.len)
-		dat += "<i>Unpopulated</i>"
+		dat += "<br><i>Unpopulated</i><br>"
 	else
 		for(var/datum/role/R in members)
-			dat += R.AdminPanelEntry()
 			dat += "<br>"
+			dat += R.AdminPanelEntry()
 	return dat
 
 /datum/faction/process()

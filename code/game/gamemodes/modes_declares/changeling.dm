@@ -1,5 +1,5 @@
 /datum/game_mode/changeling
-	name = "changeling"
+	name = "Changeling"
 	factions_allowed = list(/datum/faction/changeling)
 
 	minimum_player_count = 2

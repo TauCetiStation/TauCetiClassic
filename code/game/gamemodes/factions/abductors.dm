@@ -3,9 +3,12 @@
 	name = ABDUCTORS
 	ID = ABDUCTORS
 	logo_state = "abductor-logo"
+	required_pref = ROLE_ABDUCTOR
 
 	initroletype = /datum/role/abductor/agent
 	initial_role = ABDUCTOR
+
+	logo_state = "abductor-logo"
 
 	max_roles = 2
 

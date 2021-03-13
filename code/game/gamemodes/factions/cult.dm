@@ -27,6 +27,12 @@
 	var/list/sacrificed = list()
 	var/eldertry = 0
 
+/datum/faction/cult/HandleRecruitedMind(datum/mind/M, override)
+	if(!..())
+		return FALSE
+	M.current.Paralyse(5)
+	return TRUE
+
 /datum/faction/cult/forgeObjectives()
 	. = ..()
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult)

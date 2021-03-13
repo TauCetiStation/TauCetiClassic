@@ -1,5 +1,5 @@
 /datum/game_mode/nuclear
-	name = "nuclear emergency"
+	name = "Nuclear Emergency"
 
 	factions_allowed = list(/datum/faction/nuclear)
 

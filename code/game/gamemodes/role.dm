@@ -105,7 +105,6 @@
 		return FALSE
 
 	antag = M
-	add_antag_hud()
 	M.antag_roles.Add(id)
 	M.antag_roles[id] = src
 	objectives.owner = M
@@ -114,8 +113,6 @@
 
 	if (!OnPreSetup())
 		return FALSE
-
-	Greet()
 
 	return TRUE
 
@@ -180,7 +177,8 @@
 
 // Return TRUE on success, FALSE on failure.
 /datum/role/proc/OnPostSetup(laterole = FALSE)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	add_antag_hud()
 
 /datum/role/process()
 	return
@@ -221,7 +219,7 @@
 	 - <a href='?_src_=holder;traitor=\ref[M]'>(role panel)</a>"}
 
 
-/datum/role/proc/Greet(greeting, custom)
+/datum/role/proc/Greet(greeting = GREET_DEFAULT, custom)
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	switch(greeting)
 		if (GREET_CUSTOM)
@@ -332,22 +330,21 @@
 	return ""
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
-	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
+	var/icon/logo = logo_state ? icon('icons/misc/logos.dmi', logo_state) : null
 	var/text = "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
 
 	if (objectives.objectives.len)
-		text += "<b>personal objectives</b><br><ul>"
+		text += "<br><b>personal objectives</b><br><ul>"
 	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
 	if (objectives.objectives.len)
 		text += "</ul>"
 
-	text += "<br>faction: "
 	if (faction)
-		text += capitalize(faction.name)
+		text += "<br>[faction.GetObjectivesMenuHeader()]"
 	else
-		text += "<i>none</i> <br/>"
+		text += "<br><i>None Faction</i>"
 
 	if (admin_edit)
 		text += " - "

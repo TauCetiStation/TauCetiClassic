@@ -157,14 +157,14 @@ SUBSYSTEM_DEF(ticker)
 
 	var/init_start = world.timeofday
 
-	//Create and announce mode
-	if(config.is_hidden_gamemode(master_mode))
-		hide_mode = 1
+	if(config.is_bundle_by_name(master_mode))
+		var/datum/modesbundle/master_bundle = config.get_bundle_by_name(master_mode)
+		//Create and announce mode
+		if(config.is_hidden_gamemode(master_bundle))
+			hide_mode = TRUE
 
-	var/list/datum/game_mode/runnable_modes
-	if((master_mode=="random"))
-		runnable_modes = config.get_runnable_modes()
-		if (runnable_modes.len == 0)
+		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(master_bundle)
+		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again
@@ -172,19 +172,25 @@ SUBSYSTEM_DEF(ticker)
 			if(gamemode_vote)
 				gamemode_vote.reset_next_vote()
 			return 0
-		if(secret_force_mode != "secret")
-			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
-			if(M.can_start())
-				mode = config.pick_mode(secret_force_mode)
+
+		// hiding forced gamemode in secret
+		if(istype(master_bundle, /datum/modesbundle/all/secret) && secret_force_mode != "secret")
+			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
+			if(!smode.can_start())
+				var/datum/faction/type = smode.factions_allowed[1]
+				message_admins("<span class='notice'>Unable to force secret [secret_force_mode]. [smode.minimum_player_count] players and [initial(type.min_roles)] eligible antagonists needed.</span>")
+			else
+				mode = smode
+
 		SSjob.ResetOccupations()
 		if(!mode)
 			mode = pickweight(runnable_modes)
 		if(mode)
-			mode = new mode.type
+			var/mtype = mode.type
+			mode = new mtype
+
 	else
 		mode = config.pick_mode(master_mode)
-
-	mode = new mode.type
 
 	if (!mode.can_start())
 		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.minimum_player_count] players needed. Reverting to pre-game lobby.")
@@ -469,7 +475,6 @@ SUBSYSTEM_DEF(ticker)
 
 		ai_completions += "</div>"
 
-	ai_completions += "<br><h2>Mode Result</h2>"
 	ai_completions += mode.declare_completion() //To declare normal completion.
 
 	//Print a list of antagonists to the server log

@@ -1,5 +1,5 @@
 /datum/game_mode/rp_revolution
-	name = "rp-revolution"
+	name = "Revolution"
 
 	factions_allowed = list(/datum/faction/revolution)
 

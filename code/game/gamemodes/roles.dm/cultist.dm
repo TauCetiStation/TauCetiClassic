@@ -21,10 +21,6 @@
 
 	return TRUE
 
-/datum/role/cultist/Greet(greeting, custom)
-	. = ..()
-	antag.current.Paralyse(5)
-
 /datum/role/cultist/RemoveFromRole(datum/mind/M, msg_admins)
 	antag.current.Paralyse(5)
 	to_chat(antag.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
@@ -62,7 +58,7 @@
 	. = ..()
 	equip_cultist(antag.current)
 	var/datum/faction/cult/C = faction
-	C.grant_runeword(antag.current)
+	C?.grant_runeword(antag.current)
 
 /datum/role/cultist/extraPanelButtons()
 	var/dat = ""

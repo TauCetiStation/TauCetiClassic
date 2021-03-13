@@ -68,6 +68,7 @@
 	wizard_mob.update_icons()
 
 /datum/role/wizard/OnPostSetup(laterole)
+	. = ..()
 	equip_wizard(antag.current)
 	INVOKE_ASYNC(src, .proc/name_wizard, antag.current)
 

@@ -406,6 +406,7 @@
 		if(SSticker.mode.factions.len)
 			for(var/datum/faction/F in SSticker.mode.factions)
 				dat += F.AdminPanelEntry(src)
+				dat += "<br>"
 		else
 			dat += "<i>No factions are currently active.</i>"
 		dat += "<h3>Other Roles</h3>"
@@ -416,7 +417,7 @@
 		else
 			dat += "<i>No orphaned roles are currently active.</i>"
 
-		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 400, 500)
+		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 700, 700)
 		popup.set_content(dat)
 		popup.open()
 	else

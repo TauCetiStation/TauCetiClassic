@@ -129,10 +129,10 @@
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];job_edit=1'>Edit</a><br>"
-	out += "Factions and special roles:<br>"
 
 	var/list/sections = list(
 		"implant",
+		"prefs",
 		"roles",
 	)
 
@@ -155,19 +155,21 @@
 		sections["implant"] = text
 
 	if(current && current.client)
-		out += "Desires roles: [current.client.GetRolePrefs()]<BR>"
+		text = "Desires roles: [current.client.GetRolePrefs()]<BR>"
 	else
-		out += "Body destroyed or logged out."
+		text = "Body destroyed or logged out."
+	sections["roles"] = text
 
-	out += "<font size='5'><b>Roles and Factions</b></font><br>"
+	text = "<font size='5'><b>Roles and Factions</b></font><br>"
 	if(!antag_roles.len)
-		out += "<i>This mob has no roles.</i><br>"
+		text += "<i>This mob has no roles.</i><br>"
 	else
 		for(var/role in antag_roles)
 			var/datum/role/R = antag_roles[role]
-			out += R.GetMemory(src, TRUE) //allowing edits
+			text += R.GetMemory(src, TRUE) //allowing edits
 
-	out += "<br><a href='?src=\ref[src];add_role=1'>(add a new role)</a>"
+	text += "<br><a href='?src=\ref[src];add_role=1'>(add a new role)</a>"
+	sections["prefs"] = text
 
 	for(var/i in sections)
 		if(sections[i])
@@ -179,7 +181,7 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	var/datum/browser/popup = new(usr, "window=edit_memory", "Memory", 400, 500)
+	var/datum/browser/popup = new(usr, "window=edit_memory", "Memory", 700, 700)
 	popup.set_content(out)
 	popup.open()
 
@@ -313,8 +315,8 @@
 		var/obj_type = available_objectives[new_obj]
 
 		var/datum/objective/new_objective = new obj_type(usr, obj_holder.faction)
-		if (alert("Add the objective to a fraction?", "Yes", "No") == "Yes")
-			var/datum/faction/fac = input("To which faction shall we give this?", "Faction-wide objective", null) as null|anything in SSticker.mode.factions
+		if (alert("Add the objective to a fraction?", "Faction" ,"Yes", "No") == "Yes")
+			var/datum/faction/fac = input("To which faction shall we give this?", "Faction-wide objective", null) as anything in SSticker.mode.factions
 			fac.handleNewObjective(new_objective)
 			message_admins("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
 			log_admin("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
@@ -427,7 +429,7 @@
 				if(is_mind_shield && (type == HEADREV || type == TRAITOR))
 					continue
 				var/datum/role/R = GetRole(type)
-				R.RemoveFromRole(src)
+				R?.RemoveFromRole(src)
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 

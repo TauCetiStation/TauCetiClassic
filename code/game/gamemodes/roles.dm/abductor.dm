@@ -5,6 +5,8 @@
 	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductor"
 
+	logo_state = "abductor-logo"
+
 /datum/role/abductor/Greet(greeting, custom)
 	if(!..())
 		return FALSE

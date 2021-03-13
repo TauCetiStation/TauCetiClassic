@@ -1,5 +1,5 @@
 /datum/game_mode/malfunction
-	name = "AI malfunction"
+	name = "AI Malfunction"
 
 	factions_allowed = list(/datum/faction/malf_silicons)
 

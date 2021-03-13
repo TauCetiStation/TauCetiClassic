@@ -49,7 +49,6 @@ var/list/net_announcer_secret = list()
 	var/antag_hud_restricted = 0                    // Ghosts that turn on Antagovision cannot rejoin the round.
 	var/list/mode_names = list()
 	var/list/modes = list()				// allowed modes
-	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
 	var/allow_random_events = 0			// enables random events mid-round when set to 1
@@ -219,21 +218,13 @@ var/list/net_announcer_secret = list()
 	var/secondtopiclimit = 10
 
 /datum/configuration/New()
-	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
-	for (var/T in L)
-		// I wish I didn't have to instance the game modes in order to look up
-		// their information, but it is the only way (at least that I know of).
-		var/datum/game_mode/M = new T()
-
-		if(!(initial(M.name) in modes))		// ensure each mode is added only once
-			log_misc("Adding game mode [M.name] to configuration.")
+	for (var/type in subtypesof(/datum/game_mode))
+		var/datum/game_mode/M = type
+		if(initial(M.name) && !(initial(M.name) in modes))
+			log_misc("Adding game mode [initial(M.name)] to configuration.")
 			modes += initial(M.name)
 			mode_names[initial(M.name)] = initial(M.name)
 			probabilities[initial(M.name)] = initial(M.probability)
-			if (initial(M.votable))
-				votable_modes += initial(M.name)
-		qdel(M)
-	votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
@@ -799,40 +790,47 @@ var/list/net_announcer_secret = list()
 				log_misc("Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/pick_mode(mode_name)
-	// I wish I didn't have to instance the game modes in order to look up
-	// their information, but it is the only way (at least that I know of).
-	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
-		var/datum/game_mode/M = new T()
+	for (var/type in subtypesof(/datum/game_mode))
+		var/datum/game_mode/M = new type()
 		if (M.name == mode_name)
 			return M
-		qdel(M)
 	return new /datum/game_mode/extended()
 
-/datum/configuration/proc/is_hidden_gamemode(g_mode)
-	return (g_mode && (g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+/datum/configuration/proc/get_bundle_by_name(name)
+	for(var/type in subtypesof(/datum/modesbundle))
+		var/datum/modesbundle/M = type
+		if(initial(M.name) == name)
+			return new M
+	return null
 
-/datum/configuration/proc/is_modeset(g_mode)
-	return (g_mode && (g_mode=="random" || g_mode=="secret" || g_mode=="bs12" || g_mode=="tau classic"))
+/datum/configuration/proc/is_bundle_by_name(name)
+	for(var/type in subtypesof(/datum/modesbundle))
+		var/datum/modesbundle/M = type
+		if(initial(M.name) == name && initial(M.votable))
+			return TRUE
+	return FALSE
 
-/datum/configuration/proc/is_custom_modeset(g_mode)
-	return (g_mode && (g_mode=="bs12" || g_mode=="tau classic"))
+/datum/configuration/proc/is_hidden_gamemode(datum/modesbundle/bundle)
+	return bundle.hidden
 
-// As argument accpet config tag of gamemode, not name
-/datum/configuration/proc/is_mode_allowed(g_mode_tag)
-	return (g_mode_tag && (g_mode_tag in modes))
+/datum/configuration/proc/is_custom_modeset(datum/modesbundle/bundle)
+	return istype(bundle, /datum/modesbundle/tauclassic) || istype(bundle, /datum/modesbundle/bs12)
 
-/datum/configuration/proc/get_runnable_modes()
-	var/list/datum/game_mode/runnable_modes = new
-	for (var/T in subtypesof(/datum/game_mode))
-		var/datum/game_mode/M = new T()
-		if (!(M.name in modes))
-			del(M)
+/datum/configuration/proc/get_runnable_modes(datum/modesbundle/bundle)
+	var/list/datum/game_mode/runnable_modes = list()
+	for (var/type in bundle.possible_gamemodes)
+		var/datum/game_mode/M = new type()
+		if (!name || !(M.name in modes))
+			qdel(M)
 			continue
-		if (probabilities[M.name]<=0)
-			del(M)
+		if (probabilities[M.name] <= 0)
+			qdel(M)
 			continue
+		var/mod_prob = probabilities[M.name]
+		if (is_custom_modeset(bundle))
+			mod_prob = 100
 		if (M.can_start())
-			runnable_modes[M] = probabilities[M.name]
+			runnable_modes[M] = mod_prob
 	return runnable_modes
 
 

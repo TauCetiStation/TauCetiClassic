@@ -1,5 +1,5 @@
 /datum/game_mode/shadowling
-	name = "shadowling"
+	name = "Shadowling"
 
 	factions_allowed = list(/datum/faction/shadowlings)
 

@@ -20,6 +20,7 @@
 	to_chat(antag.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://wiki.taucetistation.org/Shadowling</b><br>")
 
 /datum/role/shadowling/OnPostSetup(laterole)
+	. = ..()
 	var/mob/living/carbon/human/S = antag.current
 
 	if(antag.assigned_role == "Clown")
