@@ -229,7 +229,7 @@
 			src.connected_ai = null
 		if(src.mind)
 			if(!src.mind.special_role)
-				src.mind.special_role = "traitor"
+				src.mind.special_role = TRAITOR
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge

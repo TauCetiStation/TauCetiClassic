@@ -16,20 +16,15 @@
 		var/special_role = man.mind.special_role
 		if (special_role in invisible_roles)
 			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
-		for(var/spec_role in gang_name_pool)
-			if (special_role == "[spec_role] Gang (A) Boss")
-				continue
-			if (special_role == "[spec_role] Gang (B) Boss")
-				continue
 		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
 		// Antags
-		else if(special_role == "traitor" && prob(40) || \
-			special_role == "Changeling" && prob(50) || \
-			special_role == "Cultist" && prob(30) || \
-			special_role == "Head Revolutionary" && prob(30) || \
-			special_role == "Shadowling" && prob(20))
+		else if(special_role == TRAITOR && prob(40) || \
+			special_role == CHANGELING && prob(50) || \
+			special_role == CULTIST && prob(30) || \
+			special_role == HEADREV && prob(30) || \
+			special_role == SHADOW && prob(20))
 
 			suspects += man
 

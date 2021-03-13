@@ -153,24 +153,6 @@ var/syndicate_name = null
 	syndicate_name = name
 	return name
 
-var/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron")
-var/gang_A_name = null
-var/gang_B_name = null
-/proc/gang_name(gang)
-	if(!gang_A_name || !gang_B_name)
-		gang_A_name = pick(gang_name_pool)
-		gang_name_pool -= gang_A_name
-		gang_B_name = pick(gang_name_pool)
-		gang_name_pool -= gang_B_name
-
-	if(gang == "A")
-		if(gang_A_name)
-			return gang_A_name
-	if(gang == "B")
-		if(gang_B_name)
-			return gang_B_name
-
-
 //Traitors and traitor silicons will get these. Revs will not.
 var/global/list/syndicate_code_phrase = list() //Code phrase for traitors.
 var/global/list/syndicate_code_response = list() //Code response for traitors.

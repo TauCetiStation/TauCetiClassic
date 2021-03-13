@@ -141,8 +141,6 @@
 
 	//Creates mind stuff.
 	new_syndicate_commando.mind_initialize()
-	new_syndicate_commando.mind.assigned_role = "MODE"
-	new_syndicate_commando.mind.special_role = "Syndicate Commando"
 
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 

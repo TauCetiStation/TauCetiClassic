@@ -269,7 +269,7 @@
 		announcement_ion_storm.play()
 
 	for(var/mob/living/silicon/ai/target in ai_list)
-		if(target.mind.special_role == "traitor")
+		if(istraitor(target))
 			continue
 		target.overload_ai_system()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

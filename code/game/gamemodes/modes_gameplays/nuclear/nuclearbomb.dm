@@ -178,7 +178,7 @@ var/bomb_set
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
 		var/turf/current_location = get_turf(user)//What turf is the user on?
-		if((!current_location || is_centcom_level(current_location.z)) && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+		if((!current_location || is_centcom_level(current_location.z)) && isnukeop(user))//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
 			return
 		if (!istype(get_area(src), /area/station)) // If outside of station

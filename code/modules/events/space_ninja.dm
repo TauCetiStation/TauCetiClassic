@@ -124,7 +124,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	if(sent_strike_team && side == SYNDICATE_SIDE && antagonist_list.len)//If a strike team was sent, murder them all like a champ.
 		for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
-			if(current_mind && current_mind.special_role == "Death Commando")
+			if(isdeathsquad(current_mind.current))
 				commando_list += current_mind
 		if(commando_list.len)//If there are living commandos still in play.
 			for(var/mob/living/carbon/human/commando in commando_list)

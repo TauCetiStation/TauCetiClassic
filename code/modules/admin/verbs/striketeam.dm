@@ -119,8 +119,6 @@ var/global/sent_strike_team = FALSE
 
 	// Creates mind stuff
 	new_commando.mind_initialize()
-	new_commando.mind.assigned_role = "MODE"
-	new_commando.mind.special_role = "Death Commando"
 	new_commando.equip_death_commando(is_leader)
 	var/datum/faction/strike_team/deathsquad/D = find_active_first_faction_by_type(/datum/faction/strike_team/deathsquad)
 	if(D)

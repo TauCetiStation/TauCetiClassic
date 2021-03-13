@@ -303,9 +303,8 @@
 		var/list/available_objectives = list()
 
 		for(var/objective_type in subtypesof(/datum/objective))
-			var/datum/objective/O = objective_type
-			available_objectives.Add(O.type)
-			available_objectives[O.type] = O
+			available_objectives.Add(objective_type)
+			available_objectives[objective_type] = objective_type
 
 		var/new_obj = input("Select a new objective", "New Objective", null) as null|anything in available_objectives
 

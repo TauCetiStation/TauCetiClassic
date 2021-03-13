@@ -90,10 +90,6 @@
 
 /mob/living/carbon/human/proc/create_mind_space_ninja()
 	mind_initialize()
-	mind.assigned_role = "MODE"
-	mind.special_role = "Ninja"
-
-	//SSticker.mode.ninjas |= mind
 	return 1
 
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.

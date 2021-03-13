@@ -576,7 +576,6 @@ var/list/cult_runes = list()
 	D.key = ghost.key
 	var/datum/faction/cult/cult = find_active_first_faction_by_type(/datum/faction/cult)
 	cult.HandleRecruitedMind(D.mind)
-	D.mind.special_role = "Cultist"
 	dummies += D
 	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
 		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.	Assist your new compatriots in their \

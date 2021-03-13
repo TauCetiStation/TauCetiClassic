@@ -244,12 +244,12 @@
 
 /datum/faction/proc/AdminPanelEntry(datum/admins/A)
 	SHOULD_CALL_PARENT(TRUE)
-	var/dat = "<br>"
+	var/dat = ""
 	dat += GetObjectivesMenuHeader()
 	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A><br>"
 	dat += "<br><b>Faction objectives</b><br>"
-	dat += objective_holder.GetObjectiveString(FALSE, TRUE, A)
-	dat += "<br> - <b>Members</b> - <br>"
+	dat += objective_holder.GetObjectiveString(FALSE, FALSE, A)
+	dat += " - <b>Members</b> - <br>"
 	if(!members.len)
 		dat += "<i>Unpopulated</i>"
 	else

@@ -18,7 +18,7 @@
 		message_admins("[key_name_admin(user, 1)] summoned [summon_type ? "magic" : "guns"]!")
 		log_game("[key_name(user)] summoned [summon_type ? "magic" : "guns"]!")
 	for(var/mob/living/carbon/human/H in player_list)
-		if(H.stat == DEAD || !H.client || (H.mind && H.mind.special_role == "Wizard")) continue
+		if(H.stat == DEAD || !H.client || iswizard(H)) continue
 		if(!summon_type)
 			var/randomizeguns = pick(gunslist)
 			H.put_in_hands(new randomizeguns(H))

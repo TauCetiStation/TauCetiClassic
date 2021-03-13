@@ -13,9 +13,9 @@
 
 
 	var/permitted = 0
-	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
+	var/list/allowed = list(NUKE_OP,TRAITOR,WIZARD,HEADREV,CULTIST,CHANGELING)
 	for(var/T in allowed)
-		if(mind.special_role == T)
+		if(isrole(T, src))
 			permitted = 1
 			break
 

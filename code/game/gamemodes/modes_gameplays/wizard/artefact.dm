@@ -122,7 +122,7 @@
 	if(!ishuman(usr))
 		return 1
 	var/mob/living/carbon/human/H = usr
-	if(H.mind.special_role == "Wizard")
+	if(iswizard(H))
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 
