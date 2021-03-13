@@ -124,7 +124,6 @@
 	if(!R.AssignToRole(M, override))
 		R.Drop()
 		return null
-	R.OnPostSetup()
 	return R
 
 /datum/faction/proc/HandleRecruitedRole(datum/role/R)

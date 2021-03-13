@@ -1,0 +1,26 @@
+/datum/role/death_commando
+	name = RESPONDER
+	id = RESPONDER
+	special_role = RESPONDER
+
+	logo_state = "death-logo"
+	antag_hud_type = ANTAG_HUD_DEATHCOM
+	antag_hud_name = "huddeathsquad"
+
+/datum/role/emergency_responder
+	name = DEATHSQUADIE
+	id = DEATHSQUADIE
+	special_role = DEATHSQUADIE
+
+	logo_state = "ert-logo"
+	antag_hud_type = ANTAG_HUD_ERT
+	antag_hud_name = "hudoperative"
+
+/datum/role/syndicate_elite_commando
+	name = SYNDIESQUADIE
+	id = SYNDIESQUADIE
+	special_role = SYNDIESQUADIE
+
+	logo_state = "elite-logo"
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "hudsyndicate"

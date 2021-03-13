@@ -182,7 +182,7 @@
 				req_f = F
 				break
 
-		req_f.abductees += SSticker.mode.CreateRole(/datum/role/abducted, H)
+		req_f.abductees += create_and_setup_role(/datum/role/abducted, H)
 		for(var/obj/item/gland/G in H)
 			G.Start()
 			point_reward++

@@ -67,7 +67,7 @@
 				return
 
 			var/mob/living/newtraitor = pick(possible_autotraitor)
-			SSticker.mode.CreateRole(/datum/role/syndicate/traitor, newtraitor)
+			create_and_setup_role(/datum/role/syndicate/traitor, newtraitor)
 
 			to_chat(newtraitor, "<span class='warning'><B>ATTENTION:</B></span> It is time to pay your debt to the Syndicate...")
 

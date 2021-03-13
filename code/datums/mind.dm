@@ -486,21 +486,21 @@
 
 	return (duration <= world.time - brigged_since)
 
-/datum/admins/proc/makeAntag(datum/role/R, datum/faction/F, count = 1, recruitment_source = FROM_PLAYERS)
+/datum/admins/proc/makeAntag(datum/role/role_type, datum/faction/fac_type, count = 1, recruitment_source = FROM_PLAYERS)
 	var/role_req
 	var/role_name
-	if(F)
-		role_req = initial(F.required_pref)
-		role_name = initial(F.name)
-	else if(R)
-		role_req = initial(R.required_pref)
-		role_name = initial(R.name)
+	if(fac_type)
+		role_req = initial(fac_type.required_pref)
+		role_name = initial(fac_type.name)
+	else if(role_type)
+		role_req = initial(role_type.required_pref)
+		role_name = initial(role_type.name)
 
 	var/list/mob/candidates
 	if(recruitment_source == FROM_PLAYERS)
-		candidates = pollGhostCandidates("Do you want to be [F ? "in" : "a"] [role_name]?", role_req, role_req, 100)
+		candidates = pollGhostCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100)
 	else
-		candidates = pollCandidates("Do you want to be [F ? "in" : "a"] [role_name]?", role_req, role_req, 100, player_list)
+		candidates = pollCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100, player_list)
 
 	var/recruit_count = 0
 	if(!candidates.len)
@@ -508,10 +508,10 @@
 
 	candidates = shuffle(candidates)
 
-	if(F)
-		var/datum/faction/FF = find_active_first_faction_by_type(F)
+	if(fac_type)
+		var/datum/faction/FF = find_active_first_faction_by_type(fac_type)
 		if(!FF)
-			FF = SSticker.mode.CreateFaction(F, FALSE, TRUE)
+			FF = SSticker.mode.CreateFaction(fac_type, FALSE, TRUE)
 			if(!FF)
 				return FALSE
 			var/mob/H = pick(candidates)
@@ -531,7 +531,7 @@
 			count--
 			var/mob/living/carbon/human/H = pick(candidates)
 			candidates.Remove(H)
-			if(initial(F.initial_role) in H.mind.antag_roles) // Ex: a head rev being made a revolutionary.
+			if(initial(fac_type.initial_role) in H.mind.antag_roles) // Ex: a head rev being made a revolutionary.
 				continue
 			if(isobserver(H))
 				H = makeBody(H)
@@ -549,7 +549,7 @@
 
 		return recruit_count
 
-	else if(R)
+	else if(role_type)
 		while(count > 0 && candidates.len)
 			count--
 			var/mob/H = pick(candidates)
@@ -557,9 +557,9 @@
 			if(isobserver(H))
 				H = makeBody(H)
 			var/datum/mind/M = H.mind
-			if(M.GetRole(initial(R.id)))
+			if(M.GetRole(initial(role_type.id)))
 				continue
-			var/datum/role/newRole = new R
+			var/datum/role/newRole = new role_type
 			message_admins("polling if [key_name(H)] wants to become a [newRole.name]")
 			if(!newRole)
 				continue

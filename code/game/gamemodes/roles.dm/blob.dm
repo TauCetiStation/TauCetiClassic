@@ -27,7 +27,6 @@
 
 /datum/role/blob_overmind/OnPostSetup(laterole = FALSE)
 	. = ..()
-	AnnounceObjectives()
 	SSshuttle.always_fake_recall = TRUE
 
 /datum/role/blob_overmind/process()

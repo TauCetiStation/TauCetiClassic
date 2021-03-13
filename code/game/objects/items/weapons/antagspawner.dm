@@ -38,4 +38,4 @@
 	S.start()
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
-	SSticker.mode.CreateRole(/datum/role/syndicate/operative, R)
+	create_and_setup_role(/datum/role/syndicate/operative, R, FALSE)

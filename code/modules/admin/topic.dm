@@ -72,7 +72,7 @@
 				to_chat(usr, "<span class='notice'>[success] number of aliens made.</span>")
 			if("10")
 				message_admins("[key_name(usr)] has spawned deathsquad.")
-				var/success = makeAntag(null, /datum/faction/deathsquad, count, FROM_GHOSTS)
+				var/success = makeAntag(null, /datum/faction/strike_team/deathsquad, count, FROM_GHOSTS)
 				message_admins("[success] number of deathsquads made.")
 				to_chat(usr, "<span class='notice'>[success] number of deathsquads made.</span>")
 			if("11")

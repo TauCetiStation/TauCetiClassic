@@ -60,6 +60,6 @@
 
 		user.update_mutations()
 
-		SSticker.mode.CreateRole(/datum/role/syndicate/traitor/wishgtanter, user)
+		create_and_setup_role(/datum/role/syndicate/traitor/wishgtanter, user)
 
 		to_chat(user, "You have a very bad feeling about this.")

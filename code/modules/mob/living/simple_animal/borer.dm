@@ -461,4 +461,4 @@
 	mind = candidate.mob.mind
 	ckey = candidate.ckey
 
-	SSticker.mode.CreateRole(/datum/role/borer, src)
+	create_and_setup_role(/datum/role/borer, src)

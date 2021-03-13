@@ -7,7 +7,7 @@
 		if(H.stat == DEAD || !(H.client)) continue
 		if(is_special_character(H)) continue
 
-		SSticker.mode.CreateRole(/datum/role/syndicate/traitor/syndbeacon, H)
+		create_and_setup_role(/datum/role/syndicate/traitor/syndbeacon, H)
 
 		for (var/obj/item/I in H)
 			if (istype(I, /obj/item/weapon/implant))

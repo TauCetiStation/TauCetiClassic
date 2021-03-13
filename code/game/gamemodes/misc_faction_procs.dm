@@ -59,3 +59,24 @@
 		if (is_unique)
 			uniques.Add(new_objective)
 	return uniques
+
+/proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE)
+	if(recruit)
+		faction.HandleRecruitedMind(M.mind)
+	else
+		faction.HandleNewMind(M.mind)
+
+	var/datum/role/R
+	if(recruit)
+		R = M.mind.GetRole(faction.roletype)
+	else
+		R = M.mind.GetRole(faction.initroletype)
+	R.forgeObjectives()
+	R.AnnounceObjectives()
+
+/proc/create_and_setup_role(role_type, mob/P, post_setup = TRUE)
+	var/datum/role/R = SSticker.mode.CreateRole(role_type, P)
+	R.forgeObjectives()
+	R.AnnounceObjectives()
+	if(post_setup)
+		R.OnPostSetup()

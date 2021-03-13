@@ -64,6 +64,8 @@ var/global/sent_strike_team = FALSE
 
 	var/is_leader_seleceted = FALSE
 
+	var/datum/faction/strike_team/deathsquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/deathsquad)
+	S.forgeObjectives(input)
 	// Spawns commandos and equips them.
 	for (var/obj/effect/landmark/L in landmarks_list)
 		if (!commandos.len)
@@ -120,6 +122,9 @@ var/global/sent_strike_team = FALSE
 	new_commando.mind.assigned_role = "MODE"
 	new_commando.mind.special_role = "Death Commando"
 	new_commando.equip_death_commando(is_leader)
+	var/datum/faction/strike_team/deathsquad/D = find_active_first_faction_by_type(/datum/faction/strike_team/deathsquad)
+	if(D)
+		add_faction_member(D, new_commando, FALSE)
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(is_leader)
@@ -129,7 +134,7 @@ var/global/sent_strike_team = FALSE
 		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), SLOT_W_UNIFORM)
 	else
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), SLOT_W_UNIFORM)
-		
+
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(src), SLOT_SHOES)
 	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), SLOT_WEAR_SUIT)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)

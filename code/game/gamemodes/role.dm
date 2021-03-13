@@ -51,7 +51,6 @@
 	var/plural_name = null
 
 	var/antag_hud_type
-
 	var/antag_hud_name
 
 	// role name assigned to the antag's potential uplink

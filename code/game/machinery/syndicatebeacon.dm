@@ -68,7 +68,7 @@
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
-			var/datum/role/syndicate/traitor/wishgtanter/T = SSticker.mode.CreateRole(/datum/role/syndicate/traitor/syndbeacon, N)
+			var/datum/role/syndicate/traitor/wishgtanter/T = create_and_setup_role(/datum/role/syndicate/traitor/syndbeacon, N)
 			T.Greet(GREET_SYNDBEACON)
 
 	src.updateUsrDialog()
