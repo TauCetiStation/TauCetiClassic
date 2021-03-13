@@ -63,6 +63,9 @@
 /datum/atom_hud/holy
 	hud_icons = list(HOLY_HUD)
 
+/datum/atom_hud/embryo
+	hud_icons = list(ALIEN_EMBRYO_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*

@@ -86,3 +86,4 @@
 	name = "Space Dojo"
 	icon_state = "red"
 	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
