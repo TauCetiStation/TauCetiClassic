@@ -362,7 +362,6 @@ SUBSYSTEM_DEF(job)
 			player.ready = 0
 			player.client << output(player.ready, "lobbybrowser:imgsrc")
 			unassigned -= player
-			SSticker.mode.antag_candidates -= player.mind
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 	return 1
 

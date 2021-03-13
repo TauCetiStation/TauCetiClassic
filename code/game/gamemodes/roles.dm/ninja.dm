@@ -3,6 +3,7 @@
 	id = NINJA
 	required_pref = ROLE_NINJA
 	special_role = NINJA
+	disallow_job = TRUE
 
 	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "hudninja"

@@ -3,6 +3,7 @@
 	id = XENOMORPH
 	required_pref = ROLE_ALIEN
 	special_role = XENOMORPH
+	disallow_job = TRUE
 
 	logo_state = "xeno-logo"
 

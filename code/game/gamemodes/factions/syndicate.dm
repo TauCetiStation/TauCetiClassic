@@ -17,7 +17,6 @@
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 
-	var/leader_created = FALSE
 	var/nuke_code
 
 /datum/faction/nuclear/AdminPanelEntry()
@@ -49,8 +48,7 @@
 	return dat
 
 /datum/faction/nuclear/get_initrole_type()
-	if(!leader_created)
-		leader_created = TRUE
+	if(!leader)
 		return /datum/role/syndicate/operative/leader
 	return ..()
 
@@ -71,6 +69,12 @@
 		if (spwn_synd && spwn_comm)
 			return TRUE
 	return FALSE
+
+/datum/faction/nuclear/HandleNewMind(datum/mind/M)
+	if(..())
+		var/datum/role/R = locate(/datum/role/syndicate/operative/leader) in members
+		if(R)
+			leader = R
 
 /datum/faction/nuclear/OnPostSetup()
 	var/list/turf/synd_spawn = list()
@@ -139,38 +143,47 @@
 		dat += "<span style='font-color: red; font-weight: bold;'>Syndicate Major Victory!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"
 		score["roleswon"]++
+		feedback_add_details("[ID]_success","SUCCESS")
 
 	else if (!disk_rescued &&  SSticker.station_was_nuked &&           syndies_didnt_escape)
 		dat += "<span style='font-color: red; font-weight: bold;'>Total Annihilation</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</b> Next time, don't lose the disk!"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if (!disk_rescued && !SSticker.station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
 		dat += "<span style='font-color: red; font-weight: bold;'>Crew Minor Victory</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't [station_name()].</b> Next time, don't lose the disk!"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if (!disk_rescued && !SSticker.station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
 		dat += "<span style='font-color: red; font-weight: bold;'>Gorlex Maradeurs span earned Darwin Award!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives blew up something that wasn't [station_name()] and got caught in the explosion.</b> Next time, don't lose the disk!"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if ( disk_rescued                                         && is_operatives_are_dead())
 		dat += "<span style='font-color: red; font-weight: bold;'>Crew Major Victory!</span>"
 		dat += "<br><b>The Research Staff has saved the disc and killed the Gorlex Maradeurs Operatives</b>"
+		feedback_add_details("[ID]_success","FAIL")
 
 	else if ( disk_rescued                                        )
 		dat += "<span style='font-color: red; font-weight: bold;'>Crew Major Victory</span>"
 		dat += "<br><b>The Research Staff has saved the disc and stopped the Gorlex Maradeurs Operatives!</b>"
+		feedback_add_details("[ID]_success","FAIL")
 
 	else if (!disk_rescued                                         && is_operatives_are_dead())
 		dat += "<span style='font-color: red; font-weight: bold;'>Syndicate Minor Victory!</span>"
 		dat += "<br><b>The Research Staff failed to secure the authentication disk but did manage to kill most of the Gorlex Maradeurs Operatives!</b>"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if (!disk_rescued                                         &&  crew_evacuated)
 		dat += "<span style='font-color: red; font-weight: bold;'>Syndicate Minor Victory!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</b> Next time, don't lose the disk!"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if (!disk_rescued                                         && !crew_evacuated)
 		dat += "<span style='font-color: red; font-weight: bold;'>Neutral Victory</span>"
 		dat += "<br><b>Round was mysteriously interrupted!</b>"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	return dat
 

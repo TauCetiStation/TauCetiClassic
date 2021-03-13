@@ -108,7 +108,7 @@ SUBSYSTEM_DEF(ticker)
 						blackbox.save_all_data_to_sql()
 
 					if(dbcon.IsConnected())
-						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.mode_result)]' WHERE id = [round_id]")
+						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(SSticker.mode.get_mode_result())]' WHERE id = [round_id]")
 						query_round_game_mode.Execute()
 
 					world.send2bridge(
@@ -175,7 +175,7 @@ SUBSYSTEM_DEF(ticker)
 		if(secret_force_mode != "secret")
 			var/datum/game_mode/M = config.pick_mode(secret_force_mode)
 			if(M.can_start())
-				src.mode = config.pick_mode(secret_force_mode)
+				mode = config.pick_mode(secret_force_mode)
 		SSjob.ResetOccupations()
 		if(!mode)
 			mode = pickweight(runnable_modes)
@@ -196,7 +196,7 @@ SUBSYSTEM_DEF(ticker)
 
 	//Configure mode and assign player to special mode stuff
 	SSjob.DivideOccupations() //Distribute jobs
-	var/can_continue = mode.Setup()//Setup special modes
+	var/can_continue = mode.Setup() //Setup special modes
 	if(!can_continue)
 		current_state = GAME_STATE_PREGAME
 		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
@@ -469,12 +469,8 @@ SUBSYSTEM_DEF(ticker)
 
 		ai_completions += "</div>"
 
-	ai_completions += mode.declare_completion() //To declare normal completion.
-
 	ai_completions += "<br><h2>Mode Result</h2>"
-
-	if(mode.completion_text)//extendet has empty completion text
-		ai_completions += "<div class='Section'>[mode.completion_text]</div>"
+	ai_completions += mode.declare_completion() //To declare normal completion.
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()

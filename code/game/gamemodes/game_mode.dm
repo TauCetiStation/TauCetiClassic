@@ -17,30 +17,17 @@
 	var/list/roles_allowed = list()
 	var/minimum_player_count
 	var/minimum_players_bundles
-	var/votable = TRUE
+	var/votable = FALSE
 	var/probability = 0
+
+	var/newscaster_announcements = null
+
+	var/completition_text = ""
+
+	var/required_enemies = 0
 
 	var/list/factions = list()
 	var/list/orphaned_roles = list()
-	var/dat = ""
-
-
-	var/config_tag = null
-	var/playable_mode = 1
-	var/completion_text = ""
-	var/mode_result = "undefined"
-
-	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
-	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")	// Jobs that can't be traitors because
-
-	var/required_enemies = 0
-	var/recommended_enemies = 0
-	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
-	var/newscaster_announcements = null
-	var/ert_disabled = 0
-
-	var/antag_hud_type
-	var/antag_hud_name
 
 /datum/game_mode/proc/announce()
 	to_chat(world, "<B>Notice</B>: [src] did not define announce()")
@@ -54,7 +41,9 @@
 	return players
 
 /datum/game_mode/proc/can_start()
-	if(minimum_player_count && minimum_player_count < get_player_count())
+	if(minimum_player_count == 0)
+		return TRUE
+	if(minimum_player_count < get_player_count())
 		return FALSE
 	return TRUE
 
@@ -129,6 +118,8 @@
 			if(!F.HandleNewMind(P.mind))
 				stack_trace("[P.mind] failed [F] HandleNewMind!")
 				continue
+		if(F.members.len < F.min_roles)
+			return FALSE
 	return TRUE
 
 /datum/game_mode/proc/can_join_faction(mob/P, datum/faction/F)
@@ -228,7 +219,7 @@
 
 	addtimer(CALLBACK(src, .proc/send_intercept), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
-	var/list/exclude_autotraitor_for = list("extended", "sandbox") // config_tag var
+	var/list/exclude_autotraitor_for = list("extended", "sandbox")
 	if(!(initial(name) in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 
@@ -260,25 +251,25 @@
 	return
 
 /datum/game_mode/proc/GetScoreboard()
-	dat += "<h2>Factions & Roles</h2>"
+	completition_text += "<h2>Factions & Roles</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
 		if (F.members.len > 0)
 			exist = TRUE
-			dat += F.GetObjectivesMenuHeader()
-			dat += F.GetScoreboard()
-			dat += "<HR>"
+			completition_text += F.GetObjectivesMenuHeader()
+			completition_text += F.GetScoreboard()
+			completition_text += "<HR>"
 	if (orphaned_roles.len > 0)
-		dat += "<FONT size = 2><B>Independents:</B></FONT><br>"
+		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)
 		exist = TRUE
-		dat += R.GetScoreboard()
+		completition_text += R.GetScoreboard()
 	if (!exist)
-		dat += "(none)"
+		completition_text += "(none)"
 
 	count_survivors()
 
-	return dat
+	return completition_text
 
 /datum/game_mode/proc/get_ready_players()
 	var/list/players = list()
@@ -311,6 +302,26 @@
 
 /datum/game_mode/proc/mob_destroyed(mob/M)
 	return
+
+/datum/game_mode/proc/get_mode_result()
+	if(factions_allowed.len)
+		for(var/type in factions_allowed)
+			var/list/datum/faction/game_mode_factions = find_active_all_faction_by_type(type)
+			for(var/datum/faction/faction in game_mode_factions)
+				if(!faction.IsSuccessful())
+					return "loose"
+
+	if(roles_allowed.len)
+		for(var/type in roles_allowed)
+			var/list/datum/role/game_mode_roles = list()
+			for(var/datum/role/R in orphaned_roles)
+				if(istype(R, type) && R.is_roundstart_role)
+					game_mode_roles += R
+			for(var/datum/role/R in game_mode_roles)
+				if(!R.IsSuccessful())
+					return "loose"
+
+	return "win"
 
 //////////////////////////
 //Reports player logouts//

@@ -149,52 +149,44 @@
 	var/malf_dead = is_malf_ai_dead()
 	var/crew_evacuated = (SSshuttle.location==2)
 	var/dat = ""
-	var/mode_result
 	dat += "<h3>Malfunction mode resume:</h3>"
 
 	if(station_captured &&						SSticker.station_was_nuked)
-		mode_result = "win - AI win - nuke"
-		feedback_set_details("round_end_result",mode_result)
 		dat += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
 		dat += "<br><b>Everyone was killed by the self-destruct!</b>"
+		feedback_add_details("[ID]_success","SUCCESS")
 		score["roleswon"]++
 
 	else if(station_captured && malf_dead &&	!SSticker.station_was_nuked)
-		mode_result = "halfwin - AI killed, staff lost control"
-		feedback_set_details("round_end_result",mode_result)
 		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		dat += "<br><b>The AI has been killed!</b> The staff has lose control over the station."
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if(station_captured && !malf_dead &&	!SSticker.station_was_nuked)
-		mode_result = "win - AI win - no explosion"
-		feedback_set_details("round_end_result",mode_result)
 		dat += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
 		dat += "<br><b>The AI has chosen not to explode you all!</b>"
+		feedback_add_details("[ID]_success","SUCCESS")
 		score["roleswon"]++
 
 	else if(!station_captured && SSticker.station_was_nuked)
-		mode_result = "halfwin - everyone killed by nuke"
-		feedback_set_details("round_end_result",mode_result)
 		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		dat += "<br><b>Everyone was killed by the nuclear blast!</b>"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if(!station_captured && malf_dead &&	!SSticker.station_was_nuked)
-		mode_result = "loss - staff win"
-		feedback_set_details("round_end_result",mode_result)
 		dat += "<span style='color: red; font-weight: bold;'>Human Victory.</span>"
 		dat += "<br><b>The AI has been killed!</b> The staff is victorious."
+		feedback_add_details("[ID]_success","FAIL")
 
 	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && crew_evacuated)
-		mode_result = "halfwin - evacuated"
-		feedback_set_details("round_end_result",mode_result)
 		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		dat += "<br><b>The Corporation has lose [station_name()]! All survived personnel will be fired!</b>"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && !crew_evacuated)
-		mode_result = "nalfwin - interrupted"
-		feedback_set_details("round_end_result",mode_result)
 		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
 		dat += "<br><b>Round was mysteriously interrupted!</b>"
+		feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	return dat
 

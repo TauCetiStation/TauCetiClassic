@@ -75,13 +75,15 @@
 
 		if(alive_heads >= dead_heads)
 			dat += "<span style='color: green; font-weight: bold;'>The heads of staff were overthrown! The revolutionaries win! It's a clear victory!</span>"
+			feedback_add_details("[ID]_success","SUCCESS")
+			score["roleswon"]++
 		else
 			dat += "<span style='color: orange; font-weight: bold;'>The heads of staff were overthrown, but many heads died. The revolutionaries win, but lose support.</span>"
-
-		score["roleswon"]++
+			feedback_add_details("[ID]_success","MINOR_VICTORY")
 
 	else
 		dat += "<span style='color: red; font-weight: bold;'>The heads of staff managed to stop the revolution!</span>"
+		feedback_add_details("[ID]_success","FAIL")
 	return dat
 
 /datum/faction/revolution/latespawn(mob/M)

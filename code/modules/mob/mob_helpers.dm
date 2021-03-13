@@ -1,30 +1,3 @@
-#define CHANGELING_STATPANEL_STATS(BYOND) \
-	if(ischangeling(src)) \
-	{ \
-		var/datum/role/changeling/C = mind.GetRole(CHANGELING); \
-		stat("Chemical Storage", "[C.chem_charges]/[C.chem_storage]"); \
-		stat("Genetic Damage Time", C.geneticdamage); \
-		stat("Absorbed DNA", C.absorbedcount); \
-	}
-
-
-#define CHANGELING_STATPANEL_POWERS(BYOND) \
-	if(ischangeling(src)) \
-	{ \
-		var/datum/role/changeling/C = mind.GetRole(CHANGELING); \
-		if(C.purchasedpowers.len) \
-		{ \
-			for(var/P in C.purchasedpowers) \
-			{ \
-				var/obj/effect/proc_holder/changeling/S = P; \
-				if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
-				{ \
-					statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
-				} \
-			} \
-		} \
-	}
-
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 

@@ -7,17 +7,9 @@
 	@id: String: The unique ID of the role
 	@name: String: The name of the role (Traitor, Changeling)
 	@plural_name: String: The name of a multitude of this role (Traitors, Changelings)
-	@flags: BITFLAGS: Various flags associated with the role. (NEED_HOST means a host is required for the role.)
-	@protection_jobs: list(String): Jobs that can not have this role.
-	@protected_antags: list(String): Antagonists that can not have this role. (Cultists can't be wizards)
-	@protected_host_roles: list(String): Antag IDs that can not be the host of this role (Wizards can have apprentices, but apprentices can't have apprentices)
 	@disallow_job: Boolean: If this role is recruited to at roundstart, the person recruited is not assigned a position on station (Wizard, Nuke Op, Vox Raider)
-	@min_players: int: minimum amount of players that can have this role (4 cultists)
-	@max_players: int: maximum amount of players that can have this role (No more than 5 nuclear operatives)
 	@faction: Faction: What faction this role is associated with.
-	@minds: List(mind): The minds associated with this role (Wizards and their apprentices, Nuclear operatives and their commander)
 	@antag: mind: The actual antag mind.
-	@host: mind: The host, used in such things like cortical borers (Where the antag and host mind can swap at any time)
 	@objectives: Objective Holder: Where the objectives associated with the role will go.
 
 		###PROCS###
@@ -39,84 +31,46 @@
 #define ROLE_GOOD     			8 // Role is not actually an antag. (Used for GetAllBadMinds() etc)
 
 /datum/role
-	//////////////////////////////
-	// "Static" vars
-	//////////////////////////////
 	// Unique ID of the definition.
-	var/id = null
-
+	var/id
 	// Displayed name of the antag type
-	var/name = null
+	var/name
+	var/plural_name
+	// If set, sets special_role to this
+	var/special_role
 
-	var/plural_name = null
-
+	// for atom_hud
 	var/antag_hud_type
 	var/antag_hud_name
 
-	// role name assigned to the antag's potential uplink
-	var/name_for_uplink = null
-
-	// Various flags and things.
-	var/flags = 0
-
 	// Jobs that cannot be this antag.
 	var/list/restricted_jobs = list()
-
 	// Jobs that can only be this antag
 	var/list/required_jobs = list()
-
-	// Specie flags that for any amount of reasons can cause this role to not be available.
-	// TO-DO: use traits? ~Luduk
+	// Specie flags that for any amount of reasons can cause this role to not be available. TODO: use traits? ~Luduk
 	var/list/restricted_species_flags = list()
-
-	// Antag IDs that cannot be used with this antag type. (cultists can't be wizard, etc)
-	var/list/protected_antags=list()
-
-	// If set, sets special_role to this
-	var/special_role=null
-
 	// The required preference for this role
 	var/required_pref = ""
+	// If set, assigned role is set to MODE to prevent job assignment.
+	var/disallow_job = FALSE
 
 	var/is_roundstart_role = FALSE
-
-	// If set, assigned role is set to MODE to prevent job assignment.
-	var/disallow_job=0
-
-	var/min_players=0
-	var/max_players=0
-
-	// Assigned faction.
-	var/datum/faction/faction = null
-
-	var/list/minds = list()
-
-	//////////////////////////////
-	// Local
-	//////////////////////////////
-	// Actual antag
-	var/datum/mind/antag = null
-	var/destroyed = FALSE //Whether or not it has been gibbed
-
-	// The host (set if NEED_HOST)
-	var/datum/mind/host=null
-
-	// Objectives
-	var/datum/objective_holder/objectives=new
-
 	var/logo_state
 
-	var/list/greets = list(GREET_DEFAULT,GREET_CUSTOM)
+	// Assigned faction.
+	var/datum/faction/faction
+	// Actual antag
+	var/datum/mind/antag
+	// Objectives
+	var/datum/objective_holder/objectives = new
 
-	var/list/current_powers = list()
-	var/list/available_powers = list()		//holds instances of each power
-	var/powerpoints = 0
+	var/list/greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
 	// This datum represents all data that is exported to the statistics file at the end of the round.
 	// If you want to store faction-specific data as statistics, you'll need to define your own datum.
 	// See dynamic_stats.dm
-	//var/datum/stat/role/stat_datum = null
-	//var/datum/stat/role/stat_datum_type = /datum/stat/role
+	var/datum/stat/role/stat_datum = null
+	var/datum/stat/role/stat_datum_type = /datum/stat/role
 
 /datum/role/New(datum/mind/M, datum/faction/fac, new_id, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -185,22 +139,15 @@
 		RemoveFromRole(antag)
 	qdel(src)
 
-// Scaling, should fuck with min/max players.
-// Return TRUE on success, FALSE on failure.
-/datum/role/proc/calculateRoleNumbers()
-	return TRUE
-
 // General sanity checks before assigning antag.
 // Return TRUE on success, FALSE on failure.
 /datum/role/proc/CanBeAssigned(datum/mind/M)
+	if(M.assigned_role in list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
+		return FALSE
+
 	if(restricted_jobs.len > 0)
 		if(M.assigned_role in restricted_jobs)
 			return FALSE
-
-	if(protected_antags.len > 0)
-		for(var/forbidden_role in protected_antags)
-			if(forbidden_role in M.antag_roles)
-				return FALSE
 
 	if(required_jobs.len > 0)
 		if(!(M.assigned_role in required_jobs))
@@ -257,14 +204,6 @@
 		return O
 	return FALSE
 
-/datum/role/proc/ReturnObjectivesString(check_success = FALSE, check_name = TRUE)
-	var/dat = ""
-	if(check_name)
-		var/datum/mind/N = antag
-		dat += "<br>[N] - [N.name]<br>"
-	dat += objectives.GetObjectiveString(check_success)
-	return dat
-
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/admins/A)
 	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
 	if(!antag || !antag.current)
@@ -301,6 +240,14 @@
 
 /datum/role/proc/GetFaction()
 	return faction
+
+/datum/role/proc/IsSuccessful()
+	var/win = TRUE
+	if(objectives.objectives.len > 0)
+		for (var/datum/objective/objective in objectives.GetObjectives())
+			if(!objective.check_completion())
+				win = FALSE
+	return win
 
 /datum/role/proc/printplayerwithicon(mob/M)
 	var/text = ""
@@ -376,6 +323,7 @@
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
 
+	antagonists_completion = list(list("role" = id, "html" = text))
 	stat_collection.add_role(src, win)
 
 	return text
@@ -465,9 +413,6 @@
 			text += "</ul>"
 	to_chat(antag.current, text)
 
-/datum/role/proc/GetMemoryHeader()
-	return name
-
 // -- Custom reagent reaction for your antag - now in a (somewhat) maintable fashion
 
 /datum/role/proc/handle_reagent(reagent_id)
@@ -475,10 +420,6 @@
 
 /datum/role/proc/handle_splashed_reagent(reagent_id)
 	return
-
-//Does the role have special clothing restrictions?
-/datum/role/proc/can_wear(obj/item/clothing/C)
-	return TRUE
 
 // What do they display on the player StatPanel ?
 /datum/role/proc/StatPanel()

@@ -12,6 +12,7 @@
 	name = NUKE_OP
 	id = NUKE_OP
 	special_role = NUKE_OP
+	disallow_job = TRUE
 
 	required_pref = ROLE_OPERATIVE
 
@@ -79,10 +80,7 @@
 		P.info = "The nuclear authorization code is: <b>[N.nuke_code]</b>"
 		P.name = "nuclear bomb code"
 		P.update_icon()
-		if (SSticker.mode.config_tag=="nuclear")
-			P.loc = antag.current.loc
-		else
-			var/mob/living/carbon/human/H = antag.current
-			P.loc = H.loc
-			H.equip_to_slot_or_del(P, SLOT_R_STORE, 0)
-			H.update_icons()
+		var/mob/living/carbon/human/H = antag.current
+		P.loc = H.loc
+		H.equip_to_slot_or_del(P, SLOT_R_STORE, 0)
+		H.update_icons()

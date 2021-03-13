@@ -2,6 +2,7 @@
 	name = WIZARD
 	id = WIZARD
 	special_role = WIZARD
+	disallow_job = TRUE
 
 	required_pref = ROLE_WIZARD
 

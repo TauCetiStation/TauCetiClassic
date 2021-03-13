@@ -1,12 +1,10 @@
 
 var/datum/stat_collector/stat_collection = new
 
-
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
 #define STAT_OUTPUT_VERSION "1.4.0"
-#define STAT_OUTPUT_DIR "data/statfiles/"
 
 /datum/stat_collector
 	var/const/data_revision = STAT_OUTPUT_VERSION
@@ -88,12 +86,29 @@ var/datum/stat_collector/stat_collection = new
 	nuked = SSticker.station_was_nuked
 	station_name = station_name()
 
+/datum/stat_collector/proc/get_valid_file(extension = "json")
+	var/filename_date = time2text(round_start_time, "YYYY-MM-DD")
+	var/uniquefilename = time2text(round_start_time, "hhmmss")
+	// Iterate until we have an unused file.
+	while(fexists(file(("[global.log_directory]statistics-[filename_date].[uniquefilename].[extension]"))))
+		uniquefilename = "[uniquefilename].dupe"
+	return file("[global.log_directory]statistics-[filename_date].[uniquefilename].[extension]")
+
+/datum/stat_collector/proc/Process()
+	var/statfile = get_valid_file("json")
+
+	do_post_round_checks()
+
+	to_chat(world, "Writing statistics to file")
+	var/start_time = world.realtime
+	var/jsonout = datum2json(src)
+	statfile << jsonout
+	world.log << "Statistics written to file in [(start_time - world.realtime)/10] seconds."
+
 #undef STAT_TIMESTAMP_FORMAT
 
 /datum/stat
 	// Hello. Nothing to see here.
-
-/datum/stat/dynamic_mode
 
 // General role-related stats
 /datum/stat/role
@@ -104,7 +119,7 @@ var/datum/stat_collector/stat_collection = new
 	var/list/objectives = list()
 	var/victory = FALSE
 
-/datum/stat/role/proc/generate_statistics(datum/role/R, victorious)
+/datum/stat/role/proc/generate_statistics(datum/role/R)
 	name = R.name
 	if(R.faction)
 		faction_id = R.faction.ID
@@ -112,7 +127,7 @@ var/datum/stat_collector/stat_collection = new
 		faction_id = 0
 	mind_name = STRIP_NEWLINE(R.antag.name)
 	mind_key = ckey(R.antag.key)
-	victory = victorious
+	victory = R.IsSuccessful()
 
 	for(var/datum/objective/O in R.objectives.GetObjectives())
 		objectives.Add(new /datum/stat/role_objective(O))
@@ -157,7 +172,7 @@ var/datum/stat_collector/stat_collection = new
 	stage = F.stage
 	// I could combine these victory values, but I'd rather have future-proofing
 	minor_victory = F.minor_victory
-	victory = F.check_win()
+	victory = F.IsSuccessful()
 
 /datum/stat/uplink_purchase_stat
 	var/itemtype = null

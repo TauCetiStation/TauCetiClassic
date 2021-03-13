@@ -12,8 +12,6 @@
 
 	logo_state = "ninja-logo"
 
-	var/finished = FALSE
-
 /datum/faction/ninja/can_setup(num_players)
 	if (!..())
 		return FALSE
@@ -46,5 +44,5 @@
 	if(ninjas_alive)
 		return FALSE
 	else
-		finished = 1
+		stage = FACTION_ENDGAME
 		return TRUE

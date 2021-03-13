@@ -141,3 +141,13 @@
 			antag.current.real_name = antag.current.dna.real_name
 			antag.current.UpdateAppearance()
 			domutcheck(antag.current, null)
+
+/datum/role/changeling/StatPanel()
+	stat("Chemical Storage", "[chem_charges]/[chem_storage]")
+	stat("Genetic Damage Time", geneticdamage)
+	stat("Absorbed DNA", absorbedcount)
+	if(purchasedpowers.len)
+		for(var/P in purchasedpowers)
+			var/obj/effect/proc_holder/changeling/S = P
+			if(S.chemical_cost >= 0 && S.can_be_used_by(src))
+				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S)

@@ -11,35 +11,35 @@
 	@required_pref: String(DEFINE): What preference is required to be recruited to this faction.
 	@members: List(Reference): Who is a member of this faction - ROLES, NOT MINDS
 	@max_roles: Integer: How many members this faction is limited to. Set to 0 for no limit
+	@min_roles: Integer: how many members this faction should be in it at the time of creating the game_mode
 	@accept_latejoiners: Boolean: Whether or not this faction accepts newspawn latejoiners
-	@objectives: objectives datum: What are the goals of this faction?
+	@objective_holder: objectives datum: What are the goals of this faction?
 	@faction_scoreboard_data: This is intended to be used on GetScoreboard() to list things like nuclear ops purchases.
-
-	//TODO LATER
-	@faction_icon_state: String: The image name of the icon that appears next to people of this faction
-	@faction_icon: icon file reference: Where the icon is stored (currently most are stored in logos.dmi)
 */
 
 /datum/faction
 	var/name = "unknown faction"
 	var/ID = null
 	var/desc = "This faction is bound to do something nefarious"
-	var/initial_role
-	var/late_role
 	var/required_pref = ""
-	var/list/datum/role/members = list()
-	var/max_roles = 0
-	var/accept_latejoiners = FALSE
-	var/datum/objective_holder/objective_holder
-	var/datum/role/initroletype
-	var/datum/role/roletype
-	var/logo_state
-	var/list/hud_icons = list()
-	var/datum/role/leader
-	var/list/faction_scoreboard_data = list()
-	var/stage = FACTION_DORMANT //role_datums_defines.dm
 
+	var/max_roles = 0
+	var/min_roles = 0
+	var/accept_latejoiners = FALSE
+
+	var/datum/role/leader
+	var/initial_role
+	var/datum/role/initroletype
+	var/late_role
+	var/datum/role/roletype
+
+	var/logo_state
+	var/stage = FACTION_DORMANT //role_datums_defines.dm
 	var/minor_victory = FALSE
+	var/list/faction_scoreboard_data = list()
+
+	var/list/datum/role/members = list()
+	var/datum/objective_holder/objective_holder
 
 	// This datum represents all data that is exported to the statistics file at the end of the round.
 	// If you want to store faction-specific data as statistics, you'll need to define your own datum.
@@ -202,6 +202,7 @@
 	if(objective_holder.objectives.len > 0)
 		score_results += "</ul>"
 
+	antagonists_completion = list(list("faction" = ID, "html" = score_results))
 	score_results += "<FONT size = 2><B>members:</B></FONT><br>"
 	var/i = 1
 	for(var/datum/role/R in members)

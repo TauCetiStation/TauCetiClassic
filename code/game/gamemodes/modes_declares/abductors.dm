@@ -16,8 +16,9 @@
 			scientist_landmarks[text2num(A.team)] = A
 
 /datum/game_mode/abduction/SetupFactions()
+	var/players = get_player_count()
 	var/abductor_teams = max(1, min(MAX_ABDUCTOR_TEAMS, round(num_players() / ABDUCTOR_SCALING_COEFF)))
-	var/possible_teams = max(1, round(antag_candidates.len / 2))
+	var/possible_teams = max(1, round(players / 2))
 	abductor_teams = min(abductor_teams,possible_teams)
 	factions_allowed[/datum/faction/abductors] = abductor_teams
 

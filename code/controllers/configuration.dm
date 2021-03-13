@@ -225,17 +225,15 @@ var/list/net_announcer_secret = list()
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
 
-		if (M.config_tag)
-			if(!(initial(M.name) in modes))		// ensure each mode is added only once
-				log_misc("Adding game mode [M.name] ([M.config_tag]) to configuration.")
-				if(M.playable_mode)
-					src.modes += initial(M.name)
-					src.mode_names[initial(M.name)] = initial(M.name)
-					src.probabilities[initial(M.name)] = initial(M.probability)
-				if (initial(M.votable))
-					src.votable_modes += initial(M.name)
+		if(!(initial(M.name) in modes))		// ensure each mode is added only once
+			log_misc("Adding game mode [M.name] to configuration.")
+			modes += initial(M.name)
+			mode_names[initial(M.name)] = initial(M.name)
+			probabilities[initial(M.name)] = initial(M.probability)
+			if (initial(M.votable))
+				votable_modes += initial(M.name)
 		qdel(M)
-	src.votable_modes += "secret"
+	votable_modes += "secret"
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
@@ -805,7 +803,7 @@ var/list/net_announcer_secret = list()
 	// their information, but it is the only way (at least that I know of).
 	for (var/T in (typesof(/datum/game_mode) - /datum/game_mode))
 		var/datum/game_mode/M = new T()
-		if (M.config_tag && M.config_tag == mode_name)
+		if (M.name == mode_name)
 			return M
 		qdel(M)
 	return new /datum/game_mode/extended()
