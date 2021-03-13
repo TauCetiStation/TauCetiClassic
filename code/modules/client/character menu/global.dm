@@ -86,6 +86,18 @@
 	. += 					"<td width='45%'>Progress Bar:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_progbar'><b>[(toggles & SHOW_PROGBAR) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Name of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=tooltip_show'><b>[tooltip ? "Hide" : "Show"]</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Font of Names of Items:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_font_tooltip'><b>Change</b></a></td>"
+	. += 				"</tr>"
+	. +=				"<tr>"
+	. += 					"<td width='45%'>Change Names Size:</td>"
+	. +=					"<td><a href='?_src_=prefs;preference=change_size_tooltip'><b>[tooltip_size]</b></a></td>"
+	. += 				"</tr>"
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 	"</tr>"
@@ -132,8 +144,18 @@
 		if("tgui_lock")
 			tgui_lock = !tgui_lock
 
+		if("tooltip_show")
+			parent?.toggle_tooltip()
+
+		if("change_size_tooltip")
+			parent?.change_size_tooltip()
+
+		if("change_font_tooltip")
+			parent?.change_font_tooltip()
+
 		if("outline_enabled")
 			outline_enabled = !outline_enabled
+
 		if("outline_color")
 			var/pickedOutlineColor = input(user, "Choose your outline color.", "General Preference", outline_color) as color|null
 			if(pickedOutlineColor)

@@ -765,3 +765,57 @@
 /obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
+
+/obj/screen/cooldown_overlay
+	name = ""
+	icon_state = "cooldown"
+	pixel_y = 4
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = RESET_COLOR | PIXEL_SCALE | RESET_TRANSFORM | KEEP_TOGETHER | RESET_ALPHA
+	vis_flags = VIS_INHERIT_ID
+	var/cooldown_time = 0
+	var/obj/screen/parent_button
+	var/datum/callback/callback
+	var/timer
+
+/obj/screen/cooldown_overlay/atom_init(mapload, button)
+	. = ..()
+	parent_button = button
+
+/obj/screen/cooldown_overlay/Destroy()
+	stop_cooldown()
+	deltimer(timer)
+	return ..()
+
+/obj/screen/cooldown_overlay/proc/start_cooldown(delay)
+	parent_button.color = "#8000007c"
+	parent_button.vis_contents += src
+	if(delay)
+		cooldown_time = delay
+	set_maptext(cooldown_time)
+	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+
+/obj/screen/cooldown_overlay/proc/tick()
+	if(cooldown_time == 0)
+		stop_cooldown()
+		return
+	cooldown_time--
+	set_maptext(cooldown_time)
+	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+
+/obj/screen/cooldown_overlay/proc/stop_cooldown()
+	cooldown_time = 0
+	parent_button.color = "#ffffffff"
+	parent_button.vis_contents -= src
+	if(callback)
+		callback.Invoke()
+
+/obj/screen/cooldown_overlay/proc/set_maptext(time)
+	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
+
+/proc/start_cooldown(obj/screen/button, time, datum/callback/callback)
+	var/obj/screen/cooldown_overlay/cooldown = new(button, button)
+	if(callback)
+		cooldown.callback = callback
+	cooldown.start_cooldown(time)
+	return cooldown

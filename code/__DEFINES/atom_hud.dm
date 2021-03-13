@@ -54,6 +54,7 @@
 #define DATA_HUD_BROKEN					19
 #define DATA_HUD_MINER					20
 #define DATA_HUD_GOLEM					13
+#define DATA_HUD_EMBRYO					22
 
 //antag HUD defines
 #define ANTAG_HUD_CULT          4
@@ -70,7 +71,6 @@
 #define ANTAG_HUD_ERT           16
 #define ANTAG_HUD_MALF          17
 #define ANTAG_HUD_ZOMB          18
-#define ANTAG_HUD_ALIEN_EMBRYO	22
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

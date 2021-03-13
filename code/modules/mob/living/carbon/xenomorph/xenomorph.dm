@@ -29,8 +29,13 @@
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
+
+/mob/living/carbon/xenomorph/Destroy()
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
+	hud.remove_hud_from(src)
+	return ..()
 
 /mob/living/carbon/xenomorph/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
