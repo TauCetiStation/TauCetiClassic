@@ -28,6 +28,7 @@
 #define TRAITOR "traitor"
 #define TRAITORCHAN "traitorchan"
 #define CHANGELING "changeling"
+#define BORER "cortical borer"
 #define SHADOW "shadowling"
 #define SHADOW_THRALL "thrall"
 #define WIZARD "wizard"
