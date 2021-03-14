@@ -111,7 +111,7 @@
 			C.create_anomalys(TRUE)
 
 /datum/rune/cult/teleport/teleport_from_heaven
-	name = "Teleport from HEAVEN"
+	name = "Телепорт из РАЯ"
 	var/turf/destination
 	words = list("travel", "self", "technology")
 
@@ -126,6 +126,17 @@
 /datum/rune/cult/teleport/teleport_from_heaven/action(mob/living/carbon/user)
 	teleporting(destination, user)
 
+/datum/rune/cult/teleport/random_teleport
+	name = "Телепорт на станцию"
+	words = list("travel", "other", "self")
+
+/datum/rune/cult/teleport/random_teleport/action(mob/living/carbon/user)
+	teleporting(findEventArea(), user)
+
+/datum/rune/cult/teleport/random_teleport/after_tp(turf/target, mob/user, list/companions)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.Paralyse(5)
 
 /datum/rune/cult/teleport/teleport
 	name = "Телепорт"

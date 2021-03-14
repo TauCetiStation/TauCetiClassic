@@ -125,6 +125,7 @@
 
 	deconverting = TRUE
 	if(!do_after(user, 50, target = M))
+		deconverting = FALSE
 		return
 	deconverting = FALSE
 
