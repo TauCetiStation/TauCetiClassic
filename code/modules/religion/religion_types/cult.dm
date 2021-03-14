@@ -115,10 +115,12 @@
 
 	if(next_spook < world.time)
 		if(!humans_in_heaven.len)
-			next_spook = world.time + 5 MINUTES
+			next_spook = world.time + spook_cd
 			return
 		var/mob/living/carbon/human/H = pick(humans_in_heaven)
-		if(H?.mind?.holy_role && prob(80))
+		if(!H || !H.mind)
+			return
+		if(H.mind.holy_role && prob(80))
 			return
 
 		if(prob(20)) // sound
@@ -161,6 +163,7 @@
 		else if(prob(1)) // 6/100000000 chance, or 0,000006% wow
 			H.say(pick(possible_human_phrases))
 
+		removeNullsFromList(humans_in_heaven)
 		next_spook = world.time + spook_cd
 
 /datum/religion/cult/proc/give_tome(mob/living/carbon/human/cultist)
