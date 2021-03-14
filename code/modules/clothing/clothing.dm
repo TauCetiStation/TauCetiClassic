@@ -180,6 +180,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 
 /obj/item/clothing/MouseDrop(obj/over_object)
+	. = ..()
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
@@ -259,7 +260,7 @@ var/global/list/icon_state_allowed_cache = list()
 	desc = O.desc
 	icon = O.icon
 	icon_state = O.icon_state
-	dir = O.dir
+	set_dir(O.dir)
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -280,7 +281,15 @@ var/global/list/icon_state_allowed_cache = list()
 	var/invisa_view = 0
 	// Standart hud type
 	var/list/hud_types
+	// Default huds for fix
+	var/list/def_hud_types
 	var/mob/living/carbon/glasses_user
+
+/obj/item/clothing/glasses/atom_init()
+	. = ..()
+	if(hud_types)
+		def_hud_types = hud_types
+
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -432,7 +441,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
-	
+
 /obj/item/clothing/suit/space
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."

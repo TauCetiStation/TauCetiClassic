@@ -154,3 +154,18 @@
 	name = "Mr. Deempisi portrait"
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
 	icon_state = "monkey_painting"
+
+/obj/structure/sign/shuttle_medbay
+	name = "medbay sign"
+	desc = "High-tech screen, showing you where shuttle medbay is."
+	icon_state = "shuttlemed"
+
+/obj/structure/sign/shuttle_brig
+	name = "brig sign"
+	desc = "High-tech screen, showing you where shuttle brig is."
+	icon_state = "shuttlebrig"
+
+/obj/structure/sign/shuttle_eng
+	name = "engineering sign"
+	desc = "High-tech screen, showing you where shuttle engineering is."
+	icon_state = "shuttleng"

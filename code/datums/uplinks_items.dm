@@ -379,6 +379,13 @@
 	cost = 10
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/ammo/chemicals
+	name = "Chemical Warfare Tank"
+	desc = "A tank of chemicals to refuel your urge to deliver slow and painful death to others."
+	item = /obj/item/device/radio/beacon/syndicate_chemicals
+	cost = 10
+	uplink_types = list("nuclear")
+
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons
@@ -758,6 +765,12 @@
 	name = "Syndicate Smokes"
 	desc = "Strong flavor, dense smoke, infused with tricordazine."
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
+	cost = 2
+
+/datum/uplink_item/badass/syndiedonuts
+	name = "Syndicate Donuts"
+	desc = "Special offer from Waffle Co., the box of 6 delicious donuts! But be careful, some of them are posioned!"
+	item = /obj/item/weapon/storage/fancy/donut_box/traitor
 	cost = 2
 
 /datum/uplink_item/badass/syndiecash

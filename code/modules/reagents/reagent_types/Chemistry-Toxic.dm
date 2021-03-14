@@ -257,7 +257,7 @@
 		qdel(O)
 	else if(istype(O,/obj/effect/spacevine))
 		if(prob(50))
-			del(O) //Kills kudzu too.
+			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
