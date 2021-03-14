@@ -532,7 +532,7 @@ var/list/wood_icons = list("wood","wood-broken")
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>Вы демонтируете световой пол.</span>")
+				to_chat(user, "<span class='warning'>Вы демонтируете пол.</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -649,10 +649,10 @@ var/list/wood_icons = list("wood","wood-broken")
 			broken = 0
 		else
 			to_chat(user, "<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>")
-			visible_message("<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>")
+			visible_message("<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>", blind_message = "<span class='warning'>Вы слышите звуки разрезания обшивки! По ту сторону должен быть открытый космос!</span>", viewing_distance = 5)
 			if(W.use_tool(src, user, 100, 3, 100))
 				to_chat(user, "<span class='warning'>Вы разобрали обшивку!</span>")
-				visible_message("<span class='warning'> Обшивка разобрана <B>[user]</B>! По ту сторону открытый космос!</span>")
+				visible_message("<span class='warning'> Обшивка разобрана <B>[user]</B>! По ту сторону открытый космос!</span>", blind_message = "<span class='warning'>Вы слышите, что обшивка была разрезана на части! По ту сторону должен быть открытый космос!</span>", viewing_distance = 5)
 				new /obj/item/stack/tile/plasteel(src)
 				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT

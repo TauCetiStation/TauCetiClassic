@@ -8,7 +8,7 @@ var/ert_base_chance = 10 // Default base chance. Will be incremented by incremen
 var/can_call_ert
 
 /client/proc/response_team()
-	set name = "Отправить группу экстренного реагирования"
+	set name = "Dispatch Emergency Response Team"
 	set category = "Special Verbs"
 	set desc = "Отправляет группу экстренного реагирования на станцию."
 
