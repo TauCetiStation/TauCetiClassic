@@ -118,6 +118,9 @@ GUEST_BAN
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 #SERVER server.net:port
 
+## site address
+# SITEURL http://example.com
+
 ## forum address
 # FORUMURL http://example.com
 

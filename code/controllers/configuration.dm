@@ -91,6 +91,7 @@ var/list/net_announcer_secret = list()
 
 	var/server
 	var/banappeals
+	var/siteurl
 	var/wikiurl
 	var/forumurl
 	var/media_base_url = "http://example.org"
@@ -392,6 +393,9 @@ var/list/net_announcer_secret = list()
 
 				if ("wikiurl")
 					config.wikiurl = value
+
+				if ("siteurl")
+					config.siteurl = value
 
 				if ("forumurl")
 					config.forumurl = value
