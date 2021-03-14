@@ -158,6 +158,7 @@
 
 	scribing = TRUE
 	if(!do_after(H, scribe_time, target = get_turf(H)))
+		scribing = FALSE
 		return
 	scribing = FALSE
 
