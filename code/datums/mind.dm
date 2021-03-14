@@ -922,7 +922,7 @@
 					SSticker.mode.wizards -= src
 					special_role = null
 					remove_antag_hud(ANTAG_HUD_WIZ, current)
-					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
+					current.spellremove(current)
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
