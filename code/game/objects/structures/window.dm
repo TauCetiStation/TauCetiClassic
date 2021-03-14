@@ -580,3 +580,46 @@
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
 	return ..()
+
+/////// Three to Four windows
+
+/obj/structure/window/window3to4/basic
+	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
+	icon_state = "window_3to4"
+	basestate = "window_3to4"
+
+/obj/structure/window/window3to4/reinforced
+	name = "reinforced window"
+	desc = "It looks rather strong. Might take a few good hits to shatter it."
+	icon_state = "rwindow_3to4"
+	basestate = "rwindow_3to4"
+	maxhealth = 100.0
+	reinf = 1
+	damage_threshold = 15
+
+/obj/structure/window/window3to4/reinforced/hull
+	name = "hull window"
+	can_be_unanchored = FALSE
+	maxhealth = 9999
+	damage_threshold = 500
+
+/obj/structure/window/window3to4/reinforced/tinted
+	name = "tinted window"
+	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
+	icon_state = "twindow_3to4"
+	basestate = "twindow_3to4"
+	opacity = 1
+
+/obj/structure/window/window3to4/reinforced/tinted/frosted
+	name = "frosted window"
+	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
+	icon_state = "fwindow_3to4"
+	basestate = "fwindow_3to4"
+	maxhealth = 30.0
+	damage_threshold = 0
+
+/* /obj/structure/window/window3to4/proc/update_layer()
+	if(dir == NORTH)
+		layer = 2.6 //To make the window look normal
+	else if(dir == SOUTH || dir == WEST || dir == EAST)
+		layer = 3.2 */

@@ -458,3 +458,22 @@
 	dir = SOUTH
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
+
+// Three to Four windowdoor
+
+/obj/machinery/door/window/windoor_3to4
+	icon = 'icons/obj/doors/windoor_3to4.dmi'
+	icon_state = "left"
+	base_state = "left"
+
+/obj/machinery/door/window/windoor_3to4/hull
+	name = "hull windoor"
+	icon = 'icons/obj/doors/windoor_3to4.dmi'
+	icon_state = "left"
+	base_state = "left"
+	health = 9999.0
+
+/obj/machinery/door/window/windoor_3to4/brigdoor
+	icon = 'icons/obj/doors/windoor_3to4.dmi'
+	icon_state = "leftsecure"
+	base_state = "leftsecure"
