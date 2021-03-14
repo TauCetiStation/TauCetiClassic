@@ -388,14 +388,14 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				to_chat(user, "<span class='notice'>Вы удалили внешнее покрытие.</span>")
 				dismantle_wall()
-				visible_message("<span class='warning'>Стена разобрана на части благодаря [user]!</span>", blind_message = "<span class='warning'>Вы слышите, что металл был разрезан на части.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, что металл был разрезан на части.</span>", viewing_distance = 5)
 		return
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		if(user.is_busy(src))
 			return
-		to_chat(user, "<span class='notice'>Вы сверлите сквозь стену.</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете сверлить сквозь стену.</span>")
 		if(W.use_tool(src, user, 60, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
@@ -405,7 +405,7 @@
 			if(user.loc == T && user.get_active_hand() == W)
 				to_chat(user, "<span class='notice'>Вы просверлили последнюю укрепленную пластину.</span>")
 				dismantle_wall()
-				visible_message("<span class='warning'>Стена была просверлена благодаря [user]!</span>", blind_message = "<span class='warning'>Вы слышите скрежет металла.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] завершает сверлить стену!</span>", blind_message = "<span class='warning'>Вы слышите скрежет металла.</span>", viewing_distance = 5)
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -426,11 +426,11 @@
 				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 				dismantle_wall(1)
-				visible_message("<span class='warning'>Стена разобрана на части благодаря [user]!</span>", blind_message = "<span class='warning'>Вы слышите летящие искры и металл, разрезанный на части.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите летящие искры и металл, разрезанный на части.</span>", viewing_distance = 5)
 		return
 	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='danger'>Стена атакована [user]!</span>")
+		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
 		if(C.use_charge(user))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)

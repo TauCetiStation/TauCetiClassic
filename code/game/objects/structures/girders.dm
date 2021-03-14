@@ -30,7 +30,7 @@
 	if(user.is_busy()) return
 	if(istype (W,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='warning'><B>Каркас</B> атакован <B>[user]!</B></span>")
+		visible_message("<span class='warning'><B>[user]</B> бьет каркас!</span>")
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(C.use_charge(user, 1) && prob(40))
@@ -45,9 +45,9 @@
 				new /obj/item/stack/sheet/metal(get_turf(src))
 				qdel(src)
 		else if(!anchored)
-			to_chat(user, "<span class='notice'>Вы начинаете фиксировать каркас.</span>")
+			to_chat(user, "<span class='notice'>Вы начинаете фиксировать каркас к полу.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
-				to_chat(user, "<span class='notice'>Вы зафиксировали каркас!</span>")
+				to_chat(user, "<span class='notice'>Вы зафиксировали каркас в пол!</span>")
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
@@ -125,7 +125,7 @@
 							return ..()
 						to_chat(user, "<span class='notice'>Вы завершаете укрепленную стену.</span>")
 						if(S.use_tool(src, user, 50, amount = 1, volume = 100))
-							to_chat(user, "<span class='notice'>Стена полностью укреплена!</span>")
+							to_chat(user, "<span class='notice'>Укрепленная стена завершена!</span>")
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
 							for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)

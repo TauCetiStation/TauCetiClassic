@@ -66,7 +66,7 @@
 				rotting = 0
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
-			to_chat(user, "<span class='notice'>Укрепленная стена рассыпается под воздействием [W.name].</span>")
+			to_chat(user, "<span class='notice'>Укрепленная стена рассыпается под воздействием предмета.</span>")
 			src.dismantle_wall()
 			return
 
@@ -256,14 +256,14 @@
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.do_attack_animation(src)
-		visible_message("<span class='warning'><B>Укрепленная стена</B> атакована <B>[user]!</B></span>")
+		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</B></span>")
 		if(C.use_charge(user, 4))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			take_damage(pick(10, 20, 30))
 		return
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
-		to_chat(user, "<span class='notice'>Вы сверлите сквозь укрепленную стену.</span>")
+		to_chat(user, "<span class='notice'>Вы начинаете сверлить сквозь укрепленную стену.</span>")
 
 		if(W.use_tool(src, user, 200, volume = 50))
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)

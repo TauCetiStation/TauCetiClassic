@@ -1,13 +1,13 @@
 /turf/simulated/wall/mineral
 	name = "mineral wall"
-	desc = "Этого не должно быть."
+	desc = "This shouldn't exist."
 	icon_state = "box"
 	canSmoothWith = null
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/mineral/uranium
 	name = "uranium wall"
-	desc = "Стена с урановым покрытием. Определенно плохая идея."
+	desc = "Стена с урановым покрытием. Наверное, это плохая идея."
 	icon = 'icons/turf/walls/has_false_walls/uranium_wall.dmi'
 	mineral = "uranium"
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
