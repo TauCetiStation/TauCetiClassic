@@ -1309,6 +1309,8 @@
 /area/shuttle/escape/centcom)
 "adz" = (
 /obj/structure/curtain/black,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/cult,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "adA" = (
@@ -61970,11 +61972,11 @@ aaM
 aaM
 adx
 wtx
-bZH
+yea
 yea
 wfy
 wfy
-bZH
+yea
 wtx
 adx
 aaM
@@ -64281,7 +64283,7 @@ aaM
 aaM
 adx
 wtx
-pJt
+wfy
 tqh
 wtx
 yea
@@ -64289,7 +64291,7 @@ wfy
 yea
 wtx
 xYF
-pJt
+wfy
 wtx
 adx
 aaM
@@ -64537,7 +64539,7 @@ aaM
 aaM
 adx
 wtx
-pJt
+wfy
 wfy
 yea
 yea
@@ -64547,7 +64549,7 @@ yea
 yea
 yea
 wfy
-pJt
+wfy
 wtx
 adx
 aaM
@@ -64793,7 +64795,7 @@ aaM
 aaM
 aaM
 adx
-pJt
+wfy
 wfy
 yea
 yea
@@ -64805,7 +64807,7 @@ yea
 yea
 yea
 wfy
-pJt
+wfy
 adx
 aaM
 aaM
@@ -65585,7 +65587,7 @@ wfy
 yea
 wfy
 yea
-pJt
+wfy
 adx
 aaM
 aaM
@@ -66099,7 +66101,7 @@ wfy
 yea
 wfy
 yea
-pJt
+wfy
 adx
 aaM
 aaM
@@ -66849,7 +66851,7 @@ aaM
 aaM
 aaM
 adx
-pJt
+wfy
 wfy
 yea
 yea
@@ -66861,7 +66863,7 @@ yea
 yea
 yea
 wfy
-pJt
+wfy
 adx
 aaM
 aaM
@@ -67107,7 +67109,7 @@ aaM
 aaM
 adx
 wtx
-pJt
+wfy
 wfy
 yea
 yea
@@ -67117,7 +67119,7 @@ yea
 yea
 yea
 wfy
-pJt
+wfy
 wtx
 adx
 aaM
@@ -67365,7 +67367,7 @@ aaM
 aaM
 adx
 wtx
-pJt
+wfy
 xYF
 wtx
 yea
@@ -67373,7 +67375,7 @@ wfy
 yea
 wtx
 tqh
-pJt
+wfy
 wtx
 adx
 aaM
@@ -70707,13 +70709,13 @@ aaM
 aaM
 aaM
 adx
-pJt
+wfy
 wfy
 bsi
 cKX
 bsi
 wfy
-pJt
+wfy
 adx
 aaM
 aaM
