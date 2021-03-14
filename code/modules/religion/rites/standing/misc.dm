@@ -221,7 +221,7 @@
 	playsound(AOG, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/mob/living/carbon/M in hearers(4, get_turf(AOG)))
-		if(M.mind.holy_role)
+		if(M?.mind?.holy_role)
 			M.make_jittery(50)
 		else
 			M.confused += 10 * divine_power

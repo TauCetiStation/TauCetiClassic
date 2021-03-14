@@ -582,7 +582,7 @@
 	M.mind?.holy_role = HOLY_ROLE_HIGHPRIEST
 	give_god_spells(M)
 	var/datum/atom_hud/holy/hud = global.huds[DATA_HUD_HOLY]
-	hud.add_hud_to(src)
+	hud.add_hud_to(M)
 
 /datum/religion/proc/remove_deity(mob/M)
 	active_deities -= M
