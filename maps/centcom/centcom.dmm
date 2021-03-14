@@ -1299,8 +1299,8 @@
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adx" = (
-/turf/unsimulated/wall,
-/area/custom/ninjaspawn)
+/turf/unsimulated/wall/cult/runed/anim,
+/area/space)
 "ady" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -1308,11 +1308,9 @@
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adz" = (
-/obj/machinery/computer/teleporter,
-/turf/unsimulated/floor{
-	icon_state = "gcircuit"
-	},
-/area/custom/ninjaspawn)
+/obj/structure/curtain/black,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "adA" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -1635,19 +1633,28 @@
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "aer" = (
+/turf/unsimulated/wall,
+/area/custom/ninjaspawn)
+"aes" = (
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
+	},
+/area/custom/ninjaspawn)
+"aet" = (
 /obj/machinery/teleport/station,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aes" = (
+"aeu" = (
 /obj/machinery/teleport/hub,
 /turf/unsimulated/floor{
 	icon_state = "gcircuit"
 	},
 /area/custom/ninjaspawn)
-"aet" = (
+"aev" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/backpack/satchel/norm,
 /turf/unsimulated/floor{
@@ -1655,18 +1662,18 @@
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aeu" = (
+"aew" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aev" = (
+"aex" = (
 /turf/unsimulated/floor{
 	icon_state = "gcircuit"
 	},
 /area/custom/ninjaspawn)
-"aew" = (
+"aey" = (
 /obj/structure/table/reinforced,
 /obj/item/device/paicard,
 /turf/unsimulated/floor{
@@ -1674,7 +1681,7 @@
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aex" = (
+"aez" = (
 /obj/effect/landmark{
 	name = "ninja"
 	},
@@ -1683,21 +1690,13 @@
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aey" = (
+"aeA" = (
 /obj/machinery/light/small{
 	brightness_color = "#008000"
 	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
-	},
-/area/custom/ninjaspawn)
-"aez" = (
-/turf/unsimulated/wall/fakeglass,
-/area/custom/ninjaspawn)
-"aeA" = (
-/turf/unsimulated/floor{
-	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeB" = (
@@ -1719,13 +1718,7 @@
 /turf/unsimulated/wall,
 /area/space)
 "aeE" = (
-/obj/machinery/light/small{
-	brightness_color = "#ff0000";
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "rcircuit"
-	},
+/turf/unsimulated/wall/fakeglass,
 /area/custom/ninjaspawn)
 "aeF" = (
 /obj/machinery/door/unpowered/shuttle/pod{
@@ -1742,27 +1735,29 @@
 	},
 /area/velocity)
 "aeH" = (
-/obj/structure/table/reinforced,
-/obj/item/device/paicard,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeI" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/light/small{
+	brightness_color = "#ff0000";
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeJ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/backpack/satchel/norm,
+/obj/item/device/paicard,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeK" = (
-/obj/machinery/teleport/hub,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/backpack/satchel/norm,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
@@ -18412,13 +18407,11 @@
 	},
 /area/velocity)
 "dHm" = (
-/obj/structure/bookcase{
-	name = "Forbidden Knowledge"
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
 	},
-/obj/item/weapon/book/manual/wiki/cult,
-/obj/item/weapon/book/manual/wiki/cult,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
+/area/custom/ninjaspawn)
 "dIb" = (
 /turf/simulated/shuttle/plating,
 /turf/simulated/shuttle/wall{
@@ -21602,6 +21595,12 @@
 	icon_state = "brown"
 	},
 /area/centcom/holding)
+"jZp" = (
+/obj/machinery/teleport/hub,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
 "kab" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -56838,11 +56837,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aer
+aer
+aer
 aaM
 aaM
 aaM
@@ -57094,13 +57093,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aex
+aeE
+aeH
+aer
+aer
 aaM
 aaM
 aaM
@@ -57350,15 +57349,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aev
+aew
+aeE
+aew
+aeJ
+aer
+aer
 aaM
 aaM
 aaM
@@ -57607,15 +57606,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aes
+aew
+aex
+aeE
+aeI
+aeH
+dHm
+aer
 aaM
 aaM
 aaM
@@ -57864,15 +57863,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aet
+aex
+aez
+aeE
+aez
+aew
+aet
+aer
 aaM
 aaM
 aaM
@@ -58121,15 +58120,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aeu
+aex
+aeA
+aeE
+aew
+aeH
+jZp
+aer
 aaM
 aaM
 aaM
@@ -58378,15 +58377,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aey
+aex
+aeE
+aew
+aeK
+aer
+aer
 aaM
 aaM
 aaM
@@ -58636,13 +58635,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aex
+aeE
+aeH
+aer
+aer
 aaM
 aaM
 aaM
@@ -58894,11 +58893,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aer
+aer
+aer
 aaM
 aaM
 aaM
@@ -59920,11 +59919,11 @@ aaM
 aaM
 aaM
 aaM
-adx
-adx
-adx
-adx
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60176,13 +60175,13 @@ aaM
 aaM
 aaM
 aaM
-adx
-adx
-aev
-aez
-aeA
-adx
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60432,15 +60431,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-adx
-aet
-aeu
-aez
-aeu
-aeH
-adx
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60689,15 +60688,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-adz
-aeu
-aev
-aez
-aeE
-aeA
-aeI
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60946,15 +60945,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-aer
-aev
-aex
-aez
-aex
-aeu
-aer
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61203,15 +61202,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-aes
-aev
-aey
-aez
-aeu
-aeA
-aeK
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61457,18 +61456,18 @@ aaM
 aaM
 aaM
 aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
-adx
-adx
-aew
-aev
-aez
-aeu
-aeJ
-adx
-adx
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61713,18 +61712,18 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 adx
+wtx
+adz
+bVy
+adz
+wtx
 adx
-aev
-aez
-aeA
-adx
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61969,18 +61968,18 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 adx
+wtx
+bZH
+yea
+wfy
+wfy
+bZH
+wtx
 adx
-adx
-adx
-adx
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -62226,7 +62225,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 nyj
 wfy
 wfy
@@ -62234,7 +62233,7 @@ wfy
 wfy
 wfy
 nyj
-wtx
+adx
 aaM
 aaM
 aaM
@@ -62483,7 +62482,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 bVy
 wfy
 yea
@@ -62491,7 +62490,7 @@ wfy
 wfy
 yea
 bVy
-wtx
+adx
 aaM
 aaM
 aaM
@@ -62740,7 +62739,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 nyj
 yea
 wfy
@@ -62748,7 +62747,7 @@ wfy
 yea
 wfy
 nyj
-wtx
+adx
 aaM
 aaM
 aaM
@@ -62997,7 +62996,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 cgI
 wfy
@@ -63005,7 +63004,7 @@ wfy
 wfy
 djY
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -63255,13 +63254,13 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 kxC
 yea
 wfy
 wfy
 eVX
-wtx
+adx
 aaM
 aaM
 aaM
@@ -63512,13 +63511,13 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
+adx
+adx
 wtx
 mQF
 wtx
-wtx
-wtx
+adx
+adx
 aaM
 aaM
 aaM
@@ -63770,11 +63769,11 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wfy
 wfy
 wfy
-wtx
+adx
 aaM
 aaM
 aaM
@@ -64024,17 +64023,17 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
 yea
 wfy
 yea
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -64280,7 +64279,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 pJt
 tqh
@@ -64292,7 +64291,7 @@ wtx
 xYF
 pJt
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -64536,7 +64535,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 pJt
 wfy
@@ -64550,7 +64549,7 @@ yea
 wfy
 pJt
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -64793,7 +64792,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 pJt
 wfy
 yea
@@ -64807,14 +64806,14 @@ yea
 yea
 wfy
 pJt
-wtx
+adx
 aaM
 aaM
-wtx
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -65042,15 +65041,15 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
-wtx
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
+adx
+adx
+adx
 aaM
-wtx
+adx
 wfy
 yea
 yea
@@ -65064,15 +65063,15 @@ yea
 yea
 yea
 wfy
-wtx
+adx
 aaM
 wtx
 wtx
-hsL
-dHm
+dAj
+wfy
 hsL
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -65298,7 +65297,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 azx
 bry
@@ -65306,7 +65305,7 @@ bFc
 bOm
 azx
 wtx
-wtx
+adx
 wtx
 wtx
 yea
@@ -65321,8 +65320,8 @@ qDT
 yea
 yea
 wtx
-wtx
-wtx
+adx
+adx
 wtx
 bsi
 yea
@@ -65330,7 +65329,7 @@ wfy
 yea
 bsi
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -65555,7 +65554,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 bsi
 aZI
 aZI
@@ -65587,7 +65586,7 @@ yea
 wfy
 yea
 pJt
-wtx
+adx
 aaM
 aaM
 aaM
@@ -65812,7 +65811,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 tqh
 wfy
 aZI
@@ -65844,7 +65843,7 @@ dSA
 yea
 wfy
 tqh
-wtx
+adx
 aaM
 aaM
 aaM
@@ -66069,7 +66068,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 bsi
 bqK
 wfy
@@ -66101,7 +66100,7 @@ yea
 wfy
 yea
 pJt
-wtx
+adx
 aaM
 aaM
 aaM
@@ -66326,7 +66325,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 wfy
 buc
@@ -66334,7 +66333,7 @@ bLC
 bSj
 aZI
 wtx
-wtx
+adx
 wtx
 wtx
 yea
@@ -66349,8 +66348,8 @@ qDT
 yea
 yea
 wtx
-wtx
-wtx
+adx
+adx
 wtx
 bsi
 yea
@@ -66358,7 +66357,7 @@ wfy
 yea
 bsi
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -66584,15 +66583,15 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
-wtx
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
+adx
+adx
+adx
 aaM
-wtx
+adx
 wfy
 yea
 yea
@@ -66606,15 +66605,15 @@ yea
 yea
 yea
 wfy
-wtx
+adx
 aaM
-wtx
+adx
 wtx
 dAj
-hsL
+wfy
 hsL
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -66849,7 +66848,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 pJt
 wfy
 yea
@@ -66863,14 +66862,14 @@ yea
 yea
 wfy
 pJt
-wtx
+adx
 aaM
 aaM
-wtx
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -67106,7 +67105,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 pJt
 wfy
@@ -67120,7 +67119,7 @@ yea
 wfy
 pJt
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -67364,7 +67363,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 pJt
 xYF
@@ -67376,7 +67375,7 @@ wtx
 tqh
 pJt
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -67622,17 +67621,17 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
 yea
 wfy
 yea
-wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -67882,11 +67881,11 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wfy
 wfy
 wfy
-wtx
+adx
 aaM
 aaM
 aaM
@@ -68139,11 +68138,11 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 mQF
 wtx
-wtx
+adx
 aaM
 aaM
 aaM
@@ -68396,11 +68395,11 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 hCi
 wfy
 cTM
-wtx
+adx
 aaM
 aaM
 aaM
@@ -68653,11 +68652,11 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 scL
 vaz
 cZu
-wtx
+adx
 aaM
 aaM
 aaM
@@ -68910,11 +68909,11 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 cvG
 yea
 bsi
-wtx
+adx
 aaM
 aaM
 aaM
@@ -69167,11 +69166,11 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 cEu
 vaz
 pJt
-wtx
+adx
 aaM
 aaM
 aaM
@@ -69422,15 +69421,15 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wtx
 wtx
 wtx
 cNr
 wtx
-wtx
-wtx
-wtx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -69679,7 +69678,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wfy
 wfy
 yea
@@ -69687,7 +69686,7 @@ vaz
 wfy
 vaz
 yea
-wtx
+adx
 aaM
 aaM
 aaM
@@ -69936,7 +69935,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 vaz
 cua
 vaz
@@ -69944,7 +69943,7 @@ qOG
 wfy
 vDJ
 vaz
-wtx
+adx
 aaM
 aaM
 aaM
@@ -70193,7 +70192,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wfy
 idX
 vDJ
@@ -70201,7 +70200,7 @@ cTm
 vaz
 idX
 cua
-wtx
+adx
 aaM
 aaM
 aaM
@@ -70450,7 +70449,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 cdy
 wfy
 wfy
@@ -70458,7 +70457,7 @@ wfy
 fXQ
 yea
 wfy
-wtx
+adx
 aaM
 aaM
 aaM
@@ -70707,7 +70706,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 pJt
 wfy
 bsi
@@ -70715,7 +70714,7 @@ cKX
 bsi
 wfy
 pJt
-wtx
+adx
 aaM
 aaM
 aaM
@@ -70964,15 +70963,15 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
-mQF
-wtx
-wtx
+adx
 wtx
 mQF
 wtx
 wtx
+wtx
+mQF
+wtx
+adx
 aaM
 aaM
 aaM
@@ -71221,7 +71220,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 vLb
 vaz
 wfy
@@ -71229,7 +71228,7 @@ wtx
 wfy
 dlr
 vaz
-wtx
+adx
 aaM
 aaM
 aaM
@@ -71478,7 +71477,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 wfy
 idX
 mzq
@@ -71486,7 +71485,7 @@ wtx
 wfy
 dmc
 vLb
-wtx
+adx
 aaM
 aaM
 aaM
@@ -71735,7 +71734,7 @@ aaM
 aaM
 aaM
 aaM
-wtx
+adx
 vDJ
 wfy
 cIK
@@ -71743,7 +71742,7 @@ wtx
 dcv
 mzq
 wfy
-wtx
+adx
 aaM
 aaM
 aaM
@@ -71992,15 +71991,15 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
-bHV
-wtx
-wtx
+adx
 wtx
 bHV
 wtx
+adx
 wtx
+bHV
+wtx
+adx
 aaM
 aaM
 aaM
@@ -72250,13 +72249,13 @@ aaM
 aaM
 aaM
 aaM
-wtx
-wtx
-wtx
+adx
+adx
+adx
 aaM
-wtx
-wtx
-wtx
+adx
+adx
+adx
 aaM
 aaM
 aaM
