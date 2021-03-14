@@ -312,3 +312,21 @@
 /obj/structure/reagent_dispensers/cleaner/atom_init()
 	. = ..()
 	reagents.add_reagent("cleaner", 1000)
+
+/obj/structure/reagent_dispensers/hazard
+	name = "inconspicuous tank"
+	desc = "An unmarked tank, holding many mysteries."
+	icon_state = "unmarkedtank"
+
+/obj/structure/reagent_dispensers/hazard/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("lexorin", 200)
+	reagents.add_reagent("mindbreaker", 200)
+	reagents.add_reagent("alphaamanitin", 200)
+	reagents.add_reagent("space_drugs", 200)
+	reagents.add_reagent("pacid", 200)
+	reagents.add_reagent("fuel", 200)
+	reagents.add_reagent("condensedcapsaicin", 200)
+	reagents.add_reagent("stoxin", 200)
+

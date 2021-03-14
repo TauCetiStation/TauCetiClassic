@@ -1,7 +1,6 @@
 var/round_id = 0
 var/base_commit_sha = 0
 
-#define RECOMMENDED_VERSION 512
 /world/New()
 #ifdef DEBUG
 	enable_debugger()
@@ -383,12 +382,13 @@ var/shutdown_processed = FALSE
 		s += "<b>[config.server_name]</b> &#8212; "
 
 	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://tauceti.ru\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "site"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
+
+	if (config && config.siteurl)
+		s += " ("
+		s += "<a href=\"[config.siteurl]\">" //Change this to wherever you want the hub to link to.
+		s += "site"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+		s += "</a>"
+		s += ")"
 
 	var/list/features = list()
 

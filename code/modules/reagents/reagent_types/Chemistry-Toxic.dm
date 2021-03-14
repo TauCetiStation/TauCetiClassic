@@ -261,16 +261,53 @@
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
-	src = null
-	if(iscarbon(M))
+	if(!iscarbon(M))
+		return
+
+	if(!ishuman(M))
 		var/mob/living/carbon/C = M
-		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason ~~(What could possible double it, if the toxpwr = 1 :hmm: :thinking:)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.dna)
-					if(H.species.flags[IS_PLANT]) //plantmen take a LOT of damage
-						H.adjustToxLoss(50)
+		if((method == INGEST) || C.wear_mask)
+			return
+		C.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/mob/living/carbon/human/H = M
+
+	if(!H.species.flags[IS_PLANT])
+		if((method == INGEST) || H.wear_mask || !H.need_breathe()) // different behaviour only for inhaling
+			return
+		H.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/brute = toxpwr * 5 //plantmen take a LOT of damage
+	var/burn = toxpwr * 4
+
+	if(method == INGEST)
+		var/capped = min(volume, 5)
+		H.take_bodypart_damage(brute * capped, burn * capped)
+		return
+
+	var/list/bodyparts = H.get_damageable_bodyparts()
+	if(!bodyparts.len)
+		return
+
+	var/covered = get_human_covering(H)
+	var/list/targets = list()
+
+	for(var/obj/item/organ/external/BP in bodyparts) // get uncovered bodyparts
+		if(covered & BP.body_part)
+			continue
+		targets += BP
+
+	if(!targets.len)
+		return
+	var/coef = min(volume / 3, 5) * 2
+	brute *= coef
+	burn *= coef
+
+	for(var/obj/item/organ/external/BP in targets)
+		BP.take_damage(brute, burn)
+
 
 /datum/reagent/toxin/stoxin
 	name = "Sleep Toxin"
