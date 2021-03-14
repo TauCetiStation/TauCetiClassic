@@ -1,7 +1,6 @@
 var/round_id = 0
 var/base_commit_sha = 0
 
-#define RECOMMENDED_VERSION 512
 /world/New()
 #ifdef DEBUG
 	enable_debugger()

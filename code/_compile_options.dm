@@ -22,3 +22,5 @@
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
 #error You need version 513 or higher
 #endif
+
+#define RECOMMENDED_VERSION 513
