@@ -19,6 +19,7 @@
 	var/end_research_time
 
 	var/current_research = "Nothing"
+	var/datum/building_agent/tech/choosed_tech
 	var/tech_timer
 
 	var/list/pylon_around
@@ -29,6 +30,9 @@
 	pylon_around = null
 	if(tech_timer)
 		deltimer(tech_timer)
+	if(choosed_tech)
+		choosed_tech.researching = FALSE
+		choosed_tech = null
 	return ..()
 
 /obj/structure/cult/tech_table/examine(mob/user, distance)
@@ -79,8 +83,8 @@
 	for(var/datum/building_agent/B in uniq_images)
 		B.name = "[initial(B.name)] [B.get_costs()]"
 
-	var/datum/building_agent/choosed_tech = show_radial_menu(user, src, uniq_images, tooltips = TRUE, require_near = TRUE)
-	if(!choosed_tech)
+	choosed_tech = show_radial_menu(user, src, uniq_images, tooltips = TRUE, require_near = TRUE)
+	if(!choosed_tech || choosed_tech.researching)
 		return
 	if(!religion.check_costs(choosed_tech.favor_cost, choosed_tech.piety_cost, user))
 		return
@@ -88,6 +92,7 @@
 	to_chat(user, "<span class='notice'>Вы начали изучение [initial(choosed_tech.name)].</span>")
 
 	current_research = initial(choosed_tech.name)
+	choosed_tech.researching = TRUE
 	start_activity(CALLBACK(src, .proc/research_tech, choosed_tech))
 
 /obj/structure/cult/tech_table/proc/research_tech(datum/building_agent/tech/choosed_tech)

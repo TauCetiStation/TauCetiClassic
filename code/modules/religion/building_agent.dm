@@ -143,6 +143,7 @@
 /datum/building_agent/tech
 	var/icon
 	var/icon_state
+	var/researching = FALSE
 
 /datum/building_agent/tech/cult
 /datum/building_agent/tech/cult/memorize_rune
