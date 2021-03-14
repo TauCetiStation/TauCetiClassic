@@ -11,8 +11,6 @@
   * Clears alerts for this mob
   *
   * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
@@ -23,8 +21,7 @@
 	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	return ..()
 
 /mob/atom_init()
 	spawn()

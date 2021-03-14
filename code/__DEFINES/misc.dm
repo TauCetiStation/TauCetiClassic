@@ -148,6 +148,10 @@
 #define MANIFEST_ERROR_CONTENTS		2
 #define MANIFEST_ERROR_ITEM			4
 
+//Dummy mob reserve slots
+#define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+#define DUMMY_HUMAN_SLOT_BARBER "dummy_barbet_preview"
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 //teleport checks
 #define TELE_CHECK_NONE 0
@@ -207,15 +211,6 @@
 
 #define BYOND_JOIN_LINK "byond://[BYOND_SERVER_ADDRESS]"
 #define BYOND_SERVER_ADDRESS config.server ? "[config.server]" : "[world.address]:[world.port]"
-
-//Facehugger's control type
-#define FACEHUGGERS_STATIC_AI     0   // don't move by themselves
-#define FACEHUGGERS_DYNAMIC_AI    1   // controlled by simple AI
-#define FACEHUGGERS_PLAYABLE      2   // controlled by players
-
-//Time it takes to impregnate someone with facehugger
-#define MIN_IMPREGNATION_TIME 200
-#define MAX_IMPREGNATION_TIME 250
 
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 

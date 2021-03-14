@@ -51,6 +51,8 @@
 /obj/machinery/door/Destroy()
 	density = 0
 	update_nearby_tiles()
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_from_hud(src)
 	return ..()
 
 //process()

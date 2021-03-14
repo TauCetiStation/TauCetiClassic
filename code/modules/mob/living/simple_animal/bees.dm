@@ -102,7 +102,7 @@
 			feral = -10
 			target_mob = null
 			target_turf = null
-			wander = 1
+			wander = TRUE
 
 		for(var/mob/living/simple_animal/bee/B in src.loc)
 			if(B == src)
@@ -136,7 +136,7 @@
 		if(target_mob)
 			if(target_mob in view(src,7))
 				target_turf = get_turf(target_mob)
-				wander = 0
+				wander = FALSE
 
 			else // My target's gone! But I might still be pissed! You there. You look like a good stinging target!
 				for(var/mob/living/carbon/G in view(src,7))
@@ -150,7 +150,7 @@
 					src.visible_message("<span class='notice'>The bees swarm after [target_mob]!</span>")
 			if(src.loc == target_turf)
 				target_turf = null
-				wander = 1
+				wander = TRUE
 		else
 			//find some flowers, harvest
 			//angry bee swarms don't hang around

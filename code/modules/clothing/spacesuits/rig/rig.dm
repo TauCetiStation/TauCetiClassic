@@ -868,6 +868,40 @@
 	item_state = "syndicate-commander"
 	item_color = "rig-syndie_elitcom"
 
+/obj/item/clothing/head/helmet/space/rig/syndi/hazmat
+	name = "hazmat hybrid helmet"
+	desc = "Anyone wearing this should not be considered human."
+	icon_state = "rig0-hazmat"
+	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+	unacidable = TRUE
+	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
+	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
+	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
+	glowtype = "terrohazmat"
+	rig_type = "hazmat"
+
+/obj/item/clothing/suit/space/rig/syndi/hazmat
+	name = "hazmat hybrid suit"
+	desc = "Menacing space suit painted in blood-red colors resembling an outdated hazmat suit. Designed for chemical and psychological warfare."
+	icon_state = "rig-hazmat-space"
+	item_state = "syndie_hazmat"
+	item_color = "rig-hazmat"
+	slowdown = 1.4
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
+	unacidable = TRUE
+	allowed = list(/obj/item/device/flashlight,
+	               /obj/item/weapon/tank,
+	               /obj/item/device/suit_cooling_unit,
+	               /obj/item/weapon/gun,
+	               /obj/item/ammo_box/magazine,
+	               /obj/item/ammo_casing,
+	               /obj/item/weapon/melee/baton,
+	               /obj/item/weapon/melee/energy/sword,
+	               /obj/item/weapon/handcuffs)
+	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
+	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
+
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
 	name = "gem-encrusted hardsuit helmet"
