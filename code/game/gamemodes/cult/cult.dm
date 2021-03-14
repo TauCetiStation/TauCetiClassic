@@ -161,7 +161,7 @@
 		memoize_cult_objectives(cult_mind)
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = TRUE)
-	if(global.cult_religion.remove_member(cult_mind.current))
+	if(global.cult_religion?.remove_member(cult_mind.current))
 		remove_antag_hud(ANTAG_HUD_CULT, cult_mind.current)
 		cult_mind.current.Paralyse(5)
 		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
