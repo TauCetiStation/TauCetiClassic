@@ -648,6 +648,13 @@
 	flags = BLOCKHAIR | THICKMATERIAL | PHORONGUARD
 	light_color = "#00f397"
 
+/obj/item/clothing/head/helmet/space/rig/syndi/AltClick(mob/user)
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || wearer.head != src)
+		to_chat(usr, "<span class='warning'>The helmet is not being worn.</span>")
+		return
+	toggle()
+
 /obj/item/clothing/head/helmet/space/rig/syndi/equipped(mob/user, slot)
 	. = ..()
 	if(slot == SLOT_HEAD)
@@ -756,6 +763,12 @@
 	var/space_armor = list(melee = 60, bullet = 55, laser = 45, energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_slowdown = 0
 
+/obj/item/clothing/suit/space/rig/syndi/AltClick(mob/user)
+	if(wearer?.wear_suit != src)
+		to_chat(usr, "<span class='warning'>The hardsuit is not being worn.</span>")
+		return
+	toggle_mode()
+
 /obj/item/clothing/suit/space/rig/syndi/update_icon(mob/user)
 	..()
 	icon_state = "[item_color]-[combat_mode ? "combat" : "space"]"
@@ -771,6 +784,10 @@
 
 	if(!usr.incapacitated())
 		combat_mode = !combat_mode
+		var/obj/item/clothing/head/helmet/space/rig/syndi/H = helmet
+		if(istype(H))
+			if(H.combat_mode != combat_mode)
+				H.toggle()
 		if(combat_mode)
 			canremove = FALSE
 			can_breach = FALSE
