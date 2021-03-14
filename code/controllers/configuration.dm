@@ -41,9 +41,7 @@ var/list/net_announcer_secret = list()
 	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
-	var/allow_Metadata = 1				// Metadata is supported.
 	var/fps = 20
-	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
 	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
 	var/antag_hud_restricted = 0                    // Ghosts that turn on Antagovision cannot rejoin the round.
@@ -87,12 +85,11 @@ var/list/net_announcer_secret = list()
 
 	var/usealienwhitelist = 0
 	var/use_alien_job_restriction = 0
-	var/limitalienplayers = 0
-	var/alien_to_human_ratio = 0.5
 	var/list/whitelisted_species_by_time = list()
 
 	var/server
 	var/banappeals
+	var/siteurl
 	var/wikiurl
 	var/forumurl
 	var/media_base_url = "http://example.org"
@@ -105,14 +102,6 @@ var/list/net_announcer_secret = list()
 	var/changelog_hash_link = ""
 
 	var/repository_link = ""
-
-	//Alert level description
-	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
-	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
-	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
-	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
-	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
 	var/forbid_singulo_possession = 0
 
@@ -165,8 +154,8 @@ var/list/net_announcer_secret = list()
 
 	var/add_player_age_value = 4320 //default minuts added with admin "Increase player age" button. 4320 minutes = 72 hours = 3 days
 
-	var/byond_version_min = 0
-	var/byond_version_recommend = 0
+	var/byond_version_min = RECOMMENDED_VERSION
+	var/byond_version_recommend = RECOMMENDED_VERSION
 
 	var/simultaneous_pm_warning_timeout = 100
 
@@ -180,7 +169,6 @@ var/list/net_announcer_secret = list()
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
 
 	var/guard_email = null
@@ -394,6 +382,9 @@ var/list/net_announcer_secret = list()
 				if ("wikiurl")
 					config.wikiurl = value
 
+				if ("siteurl")
+					config.siteurl = value
+
 				if ("forumurl")
 					config.forumurl = value
 
@@ -426,9 +417,6 @@ var/list/net_announcer_secret = list()
 
 				if ("feature_object_spell_system")
 					config.feature_object_spell_system = 1
-
-				if ("allow_metadata")
-					config.allow_Metadata = 1
 
 				if ("traitor_scaling")
 					config.traitor_scaling = 1
@@ -463,24 +451,6 @@ var/list/net_announcer_secret = list()
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 
-				if("alert_red_upto")
-					config.alert_desc_red_upto = value
-
-				if("alert_red_downto")
-					config.alert_desc_red_downto = value
-
-				if("alert_blue_downto")
-					config.alert_desc_blue_downto = value
-
-				if("alert_blue_upto")
-					config.alert_desc_blue_upto = value
-
-				if("alert_green")
-					config.alert_desc_green = value
-
-				if("alert_delta")
-					config.alert_desc_delta = value
-
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
 
@@ -499,9 +469,6 @@ var/list/net_announcer_secret = list()
 					config.antag_hud_allowed = 1
 				if("antag_hud_restricted")
 					config.antag_hud_restricted = 1
-
-				if("socket_talk")
-					socket_talk = text2num(value)
 
 				if("humans_need_surnames")
 					humans_need_surnames = 1
@@ -529,10 +496,6 @@ var/list/net_announcer_secret = list()
 							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
 					else
 						log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
-
-				if("alien_player_ratio")
-					limitalienplayers = 1
-					alien_to_human_ratio = text2num(value)
 
 				if("assistant_maint")
 					config.assistant_maint = 1
@@ -612,9 +575,6 @@ var/list/net_announcer_secret = list()
 
 				if("chat_bridge")
 					config.chat_bridge = value
-
-				if("antigrief_alarm_level")
-					config.antigrief_alarm_level = value
 
 				if("check_randomizer")
 					config.check_randomizer = value
