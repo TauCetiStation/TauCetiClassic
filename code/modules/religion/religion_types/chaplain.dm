@@ -17,19 +17,19 @@
 
 	// Default is /datum/bible_info/custom, if one is not specified here.
 	bible_info_by_name = list(
-		"Christianity" = /datum/bible_info/bible,
-		"Satanism" = /datum/bible_info/satanism,
-		"Yog'Sotherie" = /datum/bible_info/necronomicon,
-		"Islam" = /datum/bible_info/islam,
-		"Scientology" = /datum/bible_info/scientology,
-		"Chaos" = /datum/bible_info/book_of_lorgar,
-		"Imperium" = /datum/bible_info/book_of_lorgar/imperial_truth,
-		"Toolboxia" = /datum/bible_info/toolbox,
-		"Science" = /datum/bible_info/science,
-		"Tecnologism" = /datum/bible_info/techno,
-		"Clownism" = /datum/bible_info/scrapbook,
-		"Buddhism" = /datum/bible_info/bible/buddhism,
-		"Atheism" = /datum/bible_info/atheist,
+		"Christianity" = /datum/bible_info/chaplain/bible,
+		"Satanism" = /datum/bible_info/chaplain/satanism,
+		"Yog'Sotherie" = /datum/bible_info/chaplain/necronomicon,
+		"Islam" = /datum/bible_info/chaplain/islam,
+		"Scientology" = /datum/bible_info/chaplain/scientology,
+		"Chaos" = /datum/bible_info/chaplain/book_of_lorgar,
+		"Imperium" = /datum/bible_info/chaplain/book_of_lorgar/imperial_truth,
+		"Toolboxia" = /datum/bible_info/chaplain/toolbox,
+		"Science" = /datum/bible_info/chaplain/science,
+		"Tecnologism" = /datum/bible_info/chaplain/techno,
+		"Clownism" = /datum/bible_info/chaplain/scrapbook,
+		"Buddhism" = /datum/bible_info/chaplain/bible/buddhism,
+		"Atheism" = /datum/bible_info/chaplain/atheist,
 	)
 
 	// Is required to have a "Default" as a fallback.
@@ -95,7 +95,7 @@
 
 /datum/religion/chaplain/proc/gen_pos_bible_variants()
 	var/list/variants = list()
-	for(var/info_type in subtypesof(/datum/bible_info))
+	for(var/info_type in subtypesof(/datum/bible_info/chaplain))
 		var/datum/bible_info/BB = new info_type(src)
 		if(!BB.name)
 			continue
@@ -104,7 +104,7 @@
 
 /datum/religion/chaplain/proc/gen_bible_variants()
 	bible_skins = list()
-	for(var/info_type in subtypesof(/datum/bible_info))
+	for(var/info_type in subtypesof(/datum/bible_info/chaplain))
 		var/datum/bible_info/BI = info_type
 		if(!initial(BI.name))
 			continue

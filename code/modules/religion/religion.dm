@@ -159,7 +159,7 @@
 	setup_religions()
 
 	area_types = typesof(area_type)
-	religify_area()
+	religify_area(null, null, null, TRUE)
 
 /datum/religion/process()
 	if(passive_favor_gain == 0.0)
@@ -207,7 +207,7 @@
 		var/info_type = bible_info_by_name[name]
 		bible_info = new info_type(src)
 	else
-		bible_info = new /datum/bible_info/custom(src)
+		bible_info = new /datum/bible_info/chaplain/custom(src)
 
 /datum/religion/proc/gen_altar_variants()
 	altar_skins = list()
@@ -288,10 +288,10 @@
 		carpet_type = carpet_type_by_name["Default"]
 
 // This proc converts all related objects in area_type to this reigion's liking.
-/datum/religion/proc/religify(_area_type = area_type, datum/callback/after_action, mob/user)
-	var/area/area = locate(_area_type)
-	if(user)
-		if(!istype(area.religion, type))
+/datum/religion/proc/religify(_area_type = area_type, datum/callback/after_action, mob/user, force = FALSE)
+	var/area/area = get_area_by_type(_area_type)
+	if(!istype(area.religion, type) && !force)
+		if(user)
 			to_chat(user, "<span class='warning'>[area] больше не под контролем вашей религии!</span>")
 		return FALSE
 
@@ -299,9 +299,9 @@
 	var/i = 0
 	for(var/atom/A in to_religify)
 		if(istype(A, /turf/simulated))
-			if(istype(A, /turf/simulated/wall))
-				var/turf/simulated/wall/W = A
-				if(wall_types)
+			if(wall_types)
+				if(istype(A, /turf/simulated/wall))
+					var/turf/simulated/wall/W = A
 					W.ChangeTurf(pick(wall_types))
 
 			else if(istype(A, /turf/simulated/floor))
@@ -339,8 +339,8 @@
 	return TRUE
 
 // This proc denotes the area of a particular religion
-/datum/religion/proc/religify_area(_area_type = area_type, datum/callback/after_action, mob/user)
-	if(!religify(_area_type, after_action, user))
+/datum/religion/proc/religify_area(_area_type = area_type, datum/callback/after_action, mob/user, force = FALSE)
+	if(!religify(_area_type, after_action, user, force))
 		return FALSE
 
 	var/list/areas = get_areas(_area_type)
