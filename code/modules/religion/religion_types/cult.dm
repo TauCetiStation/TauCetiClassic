@@ -121,6 +121,9 @@
 		if(!H || !H.mind)
 			return
 		if(H.mind.holy_role && prob(80))
+			if(prob(15) && iscultist(H)) // Heal
+				H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3))
+				log_game("[H] healed by Cult Heaven")
 			return
 
 		if(prob(20)) // sound

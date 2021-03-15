@@ -86,7 +86,7 @@
 	var/obj/item/target
 
 	for(var/obj/item/W in orange(3))
-		if(W.blessed != 0)
+		if(W.blessed == 0)
 			possible_targets[W] = image(W.icon, W.icon_state)
 
 	if(possible_targets.len == 0)

@@ -197,7 +197,7 @@
 	if(ispath(choice.building_type, /obj/structure/altar_of_gods))
 		var/turf/targeted_turf = get_step(src, user.dir)
 		for(var/obj/structure/altar_of_gods/altar in religion.altars)
-			if(get_dist(targeted_turf, get_turf(altar)) <= 70)
+			if(targeted_turf.z == altar.z && get_dist_euclidian(targeted_turf, get_turf(altar)) <= 70)
 				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого.</span>")
 				return
 
