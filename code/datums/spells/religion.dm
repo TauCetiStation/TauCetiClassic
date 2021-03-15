@@ -91,9 +91,13 @@
 
 	if(possible_targets.len == 0)
 		revert_cast()
+		to_chat(usr, "<span class='warning'>В небольшом радиусе возле вас не обнаружено подходящий предметов.</span>")
 		return
 
 	target = show_radial_menu(usr, usr, possible_targets, radius = 36, tooltips = TRUE)
+	if(!target)
+		revert_cast()
+		return
 
 	target.visible_message("<span class='notice'>[target] has been blessed by [usr]!</span>")
 	target.name = "blessed [target.name]"
