@@ -26,12 +26,12 @@
 /obj/structure/mineral_door/Bumped(atom/M)
 	if(close_state)
 		if(ismob(M))
-			var/mob/user = M
-			if(DoorChecks() && MobChecks(user))
-				add_fingerprint(user)
+			if(DoorChecks() && MobChecks(M))
+				add_fingerprint(M)
 				Open()
-		else if(istype(M, /obj/mecha) && DoorChecks())
-			Open()
+		else if(istype(M, /obj/mecha))
+			if(DoorChecks() && MechChecks(M))
+				Open()
 
 /obj/structure/mineral_door/attack_ai(mob/user)
 	if(isrobot(user) && get_dist(user, src) <= 1)
@@ -64,6 +64,9 @@
 		else
 			return TRUE
 	return FALSE
+
+/obj/structure/mineral_door/proc/MechChecks(obj/mecha/user)
+	return TRUE
 
 /obj/structure/mineral_door/proc/SwitchState()
 	if(close_state)

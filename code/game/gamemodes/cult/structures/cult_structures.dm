@@ -170,6 +170,15 @@
 
 	return TRUE
 
+/obj/structure/mineral_door/cult/MechChecks(obj/mecha/user)
+	if(!..())
+		return FALSE
+
+	if(!user.occupant.my_religion)
+		return FALSE
+
+	return TRUE
+
 // Just trash
 /obj/structure/cult/spacewhole
 	name = "abyss in space"
