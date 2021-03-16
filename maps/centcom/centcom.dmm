@@ -24385,7 +24385,7 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "wtx" = (
-/turf/unsimulated/wall/cult/runed/anim,
+/turf/simulated/wall/cult/runed/anim,
 /area/custom/cult)
 "wRz" = (
 /obj/structure/table/glass{
