@@ -344,7 +344,7 @@
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
-			to_chat(user, "<span class='notice'>Вы бьете стену лезвием; термит вспыхивает!</span>")
+			to_chat(user, "<span class='notice'>Вы бьете стену энергетическим мечом; термит вспыхивает!</span>")
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
@@ -413,7 +413,7 @@
 		var/obj/item/weapon/melee/energy/blade/EB = W
 
 		EB.spark_system.start()
-		to_chat(user, "<span class='notice'>Вы вонзаете лезвие в стену, начиная разрезать преграду.</span>")
+		to_chat(user, "<span class='notice'>Вы вонзаете энергетический меч в стену, начиная разрезать преграду.</span>")
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")

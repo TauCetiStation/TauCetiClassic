@@ -86,7 +86,7 @@
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
-			to_chat(user, "<span class='notice'>Вы бьете укрепленную стену лезвием; термит вспыхивает!</span>")
+			to_chat(user, "<span class='notice'>Вы бьете укрепленную стену энергетическим мечом; термит вспыхивает!</span>")
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
@@ -256,7 +256,7 @@
 	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
 		user.do_attack_animation(src)
-		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</B></span>")
+		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>")
 		if(C.use_charge(user, 4))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			take_damage(pick(10, 20, 30))
