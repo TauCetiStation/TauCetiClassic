@@ -2409,6 +2409,9 @@
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
 	},
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
