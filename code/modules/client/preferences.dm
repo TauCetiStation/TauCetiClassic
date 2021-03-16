@@ -35,6 +35,11 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+
+	var/tooltip = TRUE
+	var/tooltip_font = "Small Fonts"
+	var/tooltip_size = 8
+
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_BLUE_LIGHT
 
