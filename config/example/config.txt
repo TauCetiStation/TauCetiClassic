@@ -177,7 +177,7 @@ USE_ALIEN_JOB_RESTRICTION
 ## Required time to respawn after death
 #DEATHTIME_REQUIRED 18000
 
-## Path to the python2 executable on the system.  Leave blank for default.
+## Path to the python executable on the system.  Leave blank for default.
 ## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
 #PYTHON_PATH
 
