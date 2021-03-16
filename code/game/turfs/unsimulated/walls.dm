@@ -2,6 +2,7 @@
 	name = "wall"
 	icon = 'icons/turf/walls/riveted.dmi'
 	icon_state = "box"
+	plane = GAME_PLANE
 	opacity = 1
 	density = 1
 	smooth = SMOOTH_TRUE
