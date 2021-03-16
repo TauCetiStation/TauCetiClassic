@@ -272,8 +272,8 @@
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
-	text += printlogo("cult", "cultists")
-	if(global.cult_religion.members.len)
+	if(global.cult_religion?.members.len)
+		text += printlogo("cult", "cultists")
 		for(var/mob/cultist in global.cult_religion.members)
 			if((cultist.mind && cultist.ckey) || (cultist.mind in global.cult_religion.mode.started_cultists))
 				text += printplayerwithicon(cultist.mind)
