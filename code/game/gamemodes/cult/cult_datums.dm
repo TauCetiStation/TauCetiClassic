@@ -221,7 +221,7 @@
 	var/datum/announcement/station/cult/capture_area/announce = new
 	announce.play(area)
 	statue = new(get_turf(holder), holder)
-	religion.religify_area(area.type, CALLBACK(src, .proc/capture_iteration))
+	religion.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
 	already_use = FALSE
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)

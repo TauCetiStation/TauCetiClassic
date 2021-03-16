@@ -298,44 +298,14 @@
 	var/list/to_religify = get_area_all_atoms(_area_type)
 	var/i = 0
 	for(var/atom/A in to_religify)
-		if(istype(A, /turf/simulated))
-			if(wall_types)
-				if(istype(A, /turf/simulated/wall))
-					var/turf/simulated/wall/W = A
-					W.ChangeTurf(pick(wall_types))
+		var/atom_changed = FALSE
+		if(A.atom_religify(src))
+			atom_changed = TRUE
 
-			else if(istype(A, /turf/simulated/floor))
-				var/turf/simulated/floor/F = A
-				if(A.icon_state == "carpetsymbol")
-					A.set_dir(carpet_dir)
-				else if(istype(A, /turf/simulated/floor/carpet))
-					var/turf/simulated/floor/carpet/C = A
-					C.ChangeTurf(carpet_type)
-				else if(floor_types)
-					F.ChangeTurf(pick(floor_types))
-
-		else if(istype(A, /obj/structure/stool/bed/chair/pew))
-			var/obj/structure/stool/bed/chair/pew/P = A
-			P.pew_icon = pews_icon_state
-			P.update_icon()
-
-		else if(istype(A, /obj/structure/altar_of_gods))
-			var/obj/structure/altar_of_gods/G = A
-			G.religion = src
-			altars += G
-			G.icon_state = altar_icon_state
-			G.update_icon()
-
-		else if(door_types && (istype(A, /obj/machinery/door/airlock) || istype(A, /obj/structure/mineral_door)))
-			var/type = pick(door_types)
-			new type(get_turf(A))
-			qdel(A)
 		i++
-
-		if(after_action)
+		if(after_action && atom_changed)
 			if(!after_action.Invoke(i, to_religify))
 				return FALSE
-
 	return TRUE
 
 // This proc denotes the area of a particular religion

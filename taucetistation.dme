@@ -1862,6 +1862,7 @@
 #include "code\modules\recycling\disposal.dm"
 #include "code\modules\recycling\sortingmachinery.dm"
 #include "code\modules\religion\aspect.dm"
+#include "code\modules\religion\atoms_religify.dm"
 #include "code\modules\religion\bible_info.dm"
 #include "code\modules\religion\building_agent.dm"
 #include "code\modules\religion\holy_turf.dm"
