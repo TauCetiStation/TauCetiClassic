@@ -200,6 +200,10 @@
 	icon_state = "chair_blue"
 	behind = "chair_behind_blue"
 
+/obj/structure/stool/bed/chair/metal/purple
+	icon_state = "chair_purple"
+	behind = "chair_behind_purple"
+
 /obj/structure/stool/bed/chair/metal/yellow
 	icon_state = "chair_yellow"
 	behind = "chair_behind_yellow"

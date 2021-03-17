@@ -111,6 +111,10 @@
 	opacity = FALSE
 	glass   = TRUE
 
+/obj/machinery/door/airlock/neutral/glass
+	opacity = FALSE
+	glass   = TRUE
+
 
 /*************************
 * Station airlocks mineral
