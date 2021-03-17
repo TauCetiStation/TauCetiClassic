@@ -99,3 +99,31 @@
 	name = "shotgun shells box (beanbag)"
 	icon_state = "beanbag_box"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
+/obj/item/ammo_box/eight_shells
+	name = "shotgun shells box (slug)"
+	icon_state = "slugs"
+	ammo_type = /obj/item/ammo_casing/shotgun
+	caliber = "shotgun"
+	multiple_sprites = 2
+	max_ammo = 8
+
+/obj/item/ammo_box/eight_shells/buckshot
+	name = "shotgun shells box (buckshot)"
+	icon_state = "buckshot"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
+/obj/item/ammo_box/eight_shells/beanbag
+	name = "shotgun shells box (beanbag)"
+	icon_state = "beanbag"
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
+/obj/item/ammo_box/eight_shells/incendiary
+	name = "shotgun shells box (incendiary)"
+	icon_state = "incendiary"
+	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
+
+/obj/item/ammo_box/eight_shells/dart
+	name = "shotgun shells box (dart)"
+	icon_state = "dartbox"
+	ammo_type = /obj/item/ammo_casing/shotgun/dart
