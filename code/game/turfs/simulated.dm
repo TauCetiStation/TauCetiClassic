@@ -181,10 +181,11 @@
 		UpdateSlip()
 
 /turf/simulated/proc/UpdateSlip()
-	switch(wet)
+	return
+	/*switch(wet)
 		if(WATER_FLOOR)
 			AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 		if(LUBE_FLOOR)
 			AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
 		else
-			qdel(GetComponent(/datum/component/slippery))
+			qdel(GetComponent(/datum/component/slippery))*/

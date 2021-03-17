@@ -138,7 +138,7 @@
 
 /obj/item/device/pda/clown/atom_init()
 	. = ..()
-	AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, .proc/AfterSlip))
+	//AddComponent(/datum/component/slippery, 4, NONE, CALLBACK(src, .proc/AfterSlip))
 
 /obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != owner))

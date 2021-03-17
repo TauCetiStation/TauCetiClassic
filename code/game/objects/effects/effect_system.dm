@@ -487,8 +487,9 @@ steam.start() -- spawns the effect
 	addtimer(CALLBACK(src, .proc/disolve_stage, 1), 3 + metal * 3)
 
 /obj/effect/effect/foam/proc/MakeSlippery()
-	if(!metal)
-		AddComponent(/datum/component/slippery, 5)
+	return
+	/*if(!metal)
+		AddComponent(/datum/component/slippery, 5)*/
 
 /obj/effect/effect/foam/proc/disolve_stage(stage)
 	switch(stage)
