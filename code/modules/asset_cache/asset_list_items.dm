@@ -70,6 +70,11 @@
 		"dislike_clck.png" = 'icons/newscaster_icons/dislike_clck.png'
 	)
 
+/datum/asset/simple/lobby
+	assets = list(
+		"FixedsysExcelsior3.01Regular.ttf" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
+	)
+
 /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',

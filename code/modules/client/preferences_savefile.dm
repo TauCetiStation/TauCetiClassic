@@ -265,6 +265,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
+	S["tooltip"]			>> tooltip
+	S["tooltip_size"]		>> tooltip_size
+	S["tooltip_font"]		>> tooltip_font
 	S["outline_enabled"]	>> outline_enabled
 	S["outline_color"]		>> outline_color
 
@@ -306,6 +309,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
+	tooltip_size = sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
 	outline_color = normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	if(!cid_list)
@@ -355,6 +360,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+	S["tooltip"]			<< tooltip
+	S["tooltip_size"]		<< tooltip_size
+	S["tooltip_font"]		<< tooltip_font
+
 	S["outline_enabled"]	<< outline_enabled
 	S["outline_color"]		<< outline_color
 	//TGUI
