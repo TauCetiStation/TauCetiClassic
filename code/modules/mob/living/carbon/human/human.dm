@@ -1056,7 +1056,7 @@
 	set waitfor = FALSE
 
 	if(species.flags[NO_VOMIT])
-		return // Machines, golems, shadowlings and abductors don't throw up.
+		return // Machines, golems, shadowlings, skeletons, dionaea and abductors don't throw up.
 
 	if(!lastpuke)
 		lastpuke = TRUE

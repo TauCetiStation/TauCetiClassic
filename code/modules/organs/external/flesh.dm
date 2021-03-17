@@ -17,6 +17,7 @@
 
 /datum/bodypart_controller/Destroy()
 	BP = null
+	return ..()
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you

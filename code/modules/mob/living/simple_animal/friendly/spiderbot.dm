@@ -21,7 +21,7 @@
 	icon_dead = "spiderbot-smashed"
 	universal_speak = 1 //Temp until these are rewritten.
 
-	wander = 0
+	wander = FALSE
 
 	health = 10
 	maxHealth = 10
