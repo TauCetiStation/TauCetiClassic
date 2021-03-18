@@ -583,9 +583,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (usr != src)
 		return //something is terribly wrong
 
-	var/ghosts_can_write
+	var/ghosts_can_write = FALSE
 	if(global.cult_religion)
-		if(global.cult_religion.members.len > config.cult_ghostwriter_req_cultists)
+		var/count = 0
+		for(var/mob/M in global.cult_religion.members)
+			if(M && M.mind && M.ckey && M.stat != DEAD)
+				count++
+
+		if(count > config.cult_ghostwriter_req_cultists)
 			ghosts_can_write = TRUE
 
 	if(!ghosts_can_write)
