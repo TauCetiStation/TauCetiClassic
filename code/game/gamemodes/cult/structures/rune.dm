@@ -78,6 +78,8 @@
 
 /obj/effect/rune/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
+	if(get_dist(user, src) > 1) // anti-telekinesis
+		return
 	if(!iscultist(user))
 		if(prob(user.getBrainLoss()))
 			user.say(pick("Хаккрутйу гопоенйим.", "Храсаи пивроиашан.", "Фирййи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Миуф хон внор'с.", "Вакабаи хий фен йусших."))
