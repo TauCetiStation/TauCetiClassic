@@ -99,7 +99,9 @@
 	for(var/client/C in admins|mentors)
 		if(C.ckey in stealth_keys)
 			continue
-		if(C.holder?.fakekey && !(R_ADMIN & holder.rights))
+		if(!C.holder)
+			continue
+		if(C.holder.fakekey && !(R_ADMIN & holder.rights))
 			continue
 		var/extra = ""
 		if(holder)
