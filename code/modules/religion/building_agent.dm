@@ -179,7 +179,7 @@
 	piety_cost = 50
 
 /datum/building_agent/tech/cult/more_runes
-	name = "Увеличение Максимума Рун на 10"
+	name = "Увеличение Максимума Рун на 5"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "3"
 	building_type = /datum/religion_tech/cult/more_runes

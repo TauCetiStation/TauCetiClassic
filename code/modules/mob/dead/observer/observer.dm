@@ -597,7 +597,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='red'>Вуаль еще не ослабла.</span>")
 		return
 
-	var/datum/dirt_cover/doodle_color = new /datum/dirt_cover(pick(subtypesof(/datum/dirt_cover)))
+	var/datum/dirt_cover/color = new pick(subtypesof(/datum/dirt_cover))
+	var/datum/dirt_cover/doodle_color = new /datum/dirt_cover(color)
+	qdel(color)
 
 	var/max_length = 50
 	var/message = sanitize(input(src, "Напишите сообщение. Оно не должно быть более 50 символов.", "Писание кровью", ""))
