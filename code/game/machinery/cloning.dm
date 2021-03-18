@@ -212,8 +212,6 @@
 	if(mode)
 		mode.update_icon(H)
 
-	SSticker.mode.add_cultist(occupant.mind)
-
 	// -- End mode specific stuff
 
 	if(!R.dna)
