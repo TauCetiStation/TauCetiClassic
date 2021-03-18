@@ -108,7 +108,7 @@
 	)
 
 	needed_aspects = list(
-		ASPECT_SPAWN = 3,
+		ASPECT_SPAWN = 2,
 		ASPECT_RESCUE = 1,
 	)
 

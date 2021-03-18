@@ -139,8 +139,9 @@
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_preset = list(
 		/datum/aspect/death = 1,
-		/datum/aspect/lightbending/darkness = 1,
+		/datum/aspect/rescue = 1,
 		/datum/aspect/chaos = 1,
+		/datum/aspect/mystic = 1,
 		/datum/aspect/conjure = 2,
 	)
 
