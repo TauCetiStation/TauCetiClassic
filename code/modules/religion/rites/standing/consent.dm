@@ -202,10 +202,14 @@
 	name = "Божественное Приглашение"
 	desc = "Заставляет человека поверить в Бога."
 	ritual_length = (40 SECONDS)
-	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
-						"...From our mother to our ears we got the gift of horns...",
-						"...From our mother to our feet we walk on we got the shoes of length...")
-	invoke_msg = "...And from our mothers gift to you, we grant you the power of HONK!"
+	ritual_invocations = list("Send peace, love, and unquestioning love to...",
+						"...all that is good into the hearts of him and our children...",
+						"...do not allow any of my family to be separated...",
+						"...and to suffer a painful separation...",
+						"...to die prematurely and suddenly without repentance....",
+						"...Yes, and we will singly and separately, openly and secretly...",
+						"...glorify Your Holy Name always, now and ever, and to the ages of ages....",)
+	invoke_msg = "...Don't be afraid, little flock! I am with you and no one else on you!"
 	favor_cost = 250
 
 	consent_msg = "Do you believe in God?"
