@@ -403,6 +403,7 @@
 	if(!input)
 		return
 	if(!user.my_religion)
+		usr.RemoveSpell(src)
 		return
 	for(var/mob/M in global.mob_list)
 		if(user.my_religion.is_member(M) || isobserver(M))
