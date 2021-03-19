@@ -53,7 +53,7 @@
 
 /datum/religion_rites/pedestals/cult/cult_portal
 	name = "Призыв Портала"
-	desc = "Ваши подданые прийду."
+	desc = "Ваши подданные придут."
 	ritual_length = (1 MINUTE)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 1000
