@@ -45,7 +45,7 @@
 
 /obj/structure/altar_of_gods/atom_religify(datum/religion/R)
 	religion = R
-	R.altars += src
+	R.altars |= src
 	if(R.altar_icon_state != icon_state)
 		icon_state = R.altar_icon_state
 		update_icon()

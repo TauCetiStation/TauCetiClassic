@@ -228,7 +228,7 @@
 	var/obj/item/weapon/storage/bible/B = I
 	if(!religion)
 		religion = B.religion
-		religion.altars += src
+		religion.altars |= src
 
 	var/list/available_options = generate_available_sects(user)
 	if(!available_options)
@@ -377,6 +377,6 @@
 
 /obj/structure/altar_of_gods/proc/setup_altar(datum/religion/R)
 	religion = R
-	religion.altars += src
+	religion.altars |= src
 	choosing_sects = TRUE
 	chosen_aspect = TRUE
