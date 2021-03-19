@@ -41,7 +41,10 @@
 	healthcheck()
 
 /obj/structure/cult/attack_paw(mob/living/user)
-	return attack_hand(user)
+	if(ishuman(user))
+		return attack_hand(user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/cult/proc/healthcheck()
 	if(health <= 0)
