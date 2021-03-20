@@ -57,7 +57,7 @@
 		return FALSE
 	hgibs(get_turf(AOG), human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [pick(religion.deity_names)]!</span>")
-	var/mob/living/silicon/robot/R = human2borg.Robotize(religion.bible_info.borg_name, religion.bible_info.laws_type, FALSE)
+	var/mob/living/silicon/robot/R = human2borg.Robotize(religion.bible_info.borg_name, religion.bible_info.laws_type, FALSE, religion)
 	religion.add_member(R, HOLY_ROLE_PRIEST)
 	return TRUE
 
