@@ -636,6 +636,9 @@ var/list/wood_icons = list("wood","wood-broken")
 			return
 		if(!can_deconstruct)
 			return
+		if([station_name()] != ASO Exodus) //For Colonial Marines (costil, need a normal fix)
+			to_chat(user, "<span class='warning'>Это очень плохая идея.</span>")
+			return
 		if(!W.use(0, user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return

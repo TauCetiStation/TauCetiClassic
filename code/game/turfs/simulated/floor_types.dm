@@ -457,3 +457,7 @@
 	return TRUE
 
 /turf/simulated/floor/exodus
+
+/turf/simulated/floor/sulaco
+	icon = 'icons/turf/sulaco.dmi'
+	icon_state = "default"
