@@ -282,15 +282,14 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		if(g_amt)
 			amount = min(amount, round((max_g_amount - g_amount) / g_amt))
 			flick("autolathe_r",src)//plays glass insertion animation
-	else
-		if(istype(I, /obj/item/ammo_box))
-			m_amt = 0
-			g_amt = 0
-			var/obj/item/ammo_box/ammobox = I
-			if(ammobox.stored_ammo.len)
-				for(var/obj/item/ammo_casing/ammo_type in ammobox.stored_ammo)
-					m_amt += ammo_type.m_amt
-					g_amt += ammo_type.g_amt
+	else if(istype(I, /obj/item/ammo_box))
+		m_amt = 0
+		g_amt = 0
+		var/obj/item/ammo_box/ammobox = I
+		if(ammobox.stored_ammo.len)
+			for(var/obj/item/ammo_casing/ammo_type in ammobox.stored_ammo)
+				m_amt += ammo_type.m_amt
+				g_amt += ammo_type.g_amt
 	m_amt *= amount
 	g_amt *= amount
 
