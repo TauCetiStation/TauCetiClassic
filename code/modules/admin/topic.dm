@@ -267,7 +267,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if( SSticker.mode.name == "blob" )
+		if(istype(SSticker.mode, /datum/game_mode/blob))
 			alert("You can't call the shuttle during blob!")
 			return
 

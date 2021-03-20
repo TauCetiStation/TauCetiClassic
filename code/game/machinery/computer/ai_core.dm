@@ -218,8 +218,8 @@ That prevents a few funky behaviors.
 						if(C.contents.len)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
-								var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+							var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+							if(malf)
 								for (var/datum/role/malfAI/malfai in malf.members)
 									if (T.mind == malfai.antag)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")//Do ho ho ho~
@@ -241,12 +241,12 @@ That prevents a few funky behaviors.
 						if(C.AI)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
-								var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
-								for (var/datum/role/malfAI/malfai in malf.members)
-									if (T.mind == malfai.antag)
-										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
-										return
+							var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+							if(malf)
+							for (var/datum/role/malfAI/malfai in malf.members)
+								if (T.mind == malfai.antag)
+									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
+									return
 							if(T.stat)//If the ai is dead/dying.
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.name] data core is corrupted. Unable to install.")
 							else

@@ -103,7 +103,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(SSticker.mode.name == "rp-revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(istype(SSticker.mode, /datum/game_mode/rp_revolution) || istype(SSticker.mode, /datum/game_mode/malfunction) || sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)

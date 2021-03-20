@@ -35,7 +35,7 @@ AI MODULES
 			to_chat(usr, "You haven't selected an AI to transmit laws to!")
 			return
 
-		if(SSticker && SSticker.mode && SSticker.mode.name == "blob")
+		if(SSticker?.mode && istype(SSticker.mode, /datum/game_mode/blob))
 			to_chat(usr, "Law uploads have been disabled by NanoTrasen!")
 			return
 

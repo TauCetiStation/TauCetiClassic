@@ -466,7 +466,7 @@
 		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
-	if(SSticker.mode.name == "blob")
+	if(istype(SSticker.mode, /datum/game_mode/blob))
 		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 		return
 
@@ -505,7 +505,7 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(SSticker.mode.name == "blob")
+		if(istype(SSticker.mode, /datum/game_mode/blob))
 			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
 
@@ -524,7 +524,7 @@
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
 		return
-	if((SSticker.mode.name == "blob"))//why??
+	if(istype(SSticker.mode, /datum/game_mode/blob))//why??
 		to_chat(user, "The console is not responding.")
 		return
 

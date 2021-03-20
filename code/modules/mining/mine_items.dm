@@ -137,7 +137,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	if(href_list["move"])
-		//if(SSticker.mode.name == "blob")
+		//if(istype(SSticker.mode, /datum/game_mode/blob))
 		//	if(SSticker.mode:declared)
 		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
 		//		return

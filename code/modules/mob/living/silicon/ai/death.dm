@@ -38,7 +38,7 @@
 			break
 		callshuttle++
 
-	if(SSticker.mode.name == "rp-revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(istype(SSticker.mode, /datum/game_mode/rp_revolution) || istype(SSticker.mode, /datum/game_mode/malfunction) || sent_strike_team)
 		callshuttle = 0
 
 	if(callshuttle == 3) //if all three conditions are met
