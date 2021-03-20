@@ -103,7 +103,7 @@
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!ishuman(user))
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return ""
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")

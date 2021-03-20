@@ -30,7 +30,7 @@
 
 	if (user.incapacitated())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!ishuman(usr))
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
@@ -42,7 +42,7 @@
 		return
 	if (user.incapacitated())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!ishuman(usr))
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!isobj(target))

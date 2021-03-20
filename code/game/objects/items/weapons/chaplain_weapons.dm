@@ -83,7 +83,7 @@
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
+	if(!ishuman(user))
 		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
 		return
 

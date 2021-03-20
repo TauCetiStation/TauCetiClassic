@@ -213,7 +213,7 @@
 	if(!isobj(target))
 		return
 	var/obj/O = target
-	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
+	if(!ishuman(user))
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	switch(mode)

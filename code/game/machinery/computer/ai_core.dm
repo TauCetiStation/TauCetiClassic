@@ -243,10 +243,10 @@ That prevents a few funky behaviors.
 						else
 							var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
 							if(malf)
-							for (var/datum/role/malfAI/malfai in malf.members)
-								if (T.mind == malfai.antag)
-									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
-									return
+								for (var/datum/role/malfAI/malfai in malf.members)
+									if (T.mind == malfai.antag)
+										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
+										return
 							if(T.stat)//If the ai is dead/dying.
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.name] data core is corrupted. Unable to install.")
 							else

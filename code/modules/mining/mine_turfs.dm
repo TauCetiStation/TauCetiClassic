@@ -160,8 +160,7 @@
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
+	if(!ishuman(user))
 		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
