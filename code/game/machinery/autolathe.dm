@@ -10,16 +10,18 @@
 /proc/path_to_ar(obj/path)
 	var/obj/P = path
 	var/amount = 1
-	var/datum/autolathe_recipe/recipe = new
+	var/datum/autolathe_recipe/recipe
 	if(ispath(path, /obj/item/stack))
 		recipe = new /datum/autolathe_recipe/stack
 		var/datum/autolathe_recipe/stack/S = recipe
 		var/obj/item/stack/PS = path
 		S.max_res_amount = initial(PS.max_amount)
-	else if(ispath(path, /obj/item/ammo_box))
-		var/obj/item/ammo_box/ammobox = path
-		amount = initial(ammobox.max_ammo)
-		P = initial(ammobox.ammo_type)
+	else
+		recipe = new /datum/autolathe_recipe
+		if(ispath(path, /obj/item/ammo_box))
+			var/obj/item/ammo_box/ammobox = path
+			amount = initial(ammobox.max_ammo)
+			P = initial(ammobox.ammo_type)
 	recipe.name = initial(path.name)
 	recipe.result_type = path
 	recipe.metal_amount = initial(P.m_amt) * amount
