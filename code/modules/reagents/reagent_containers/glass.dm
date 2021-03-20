@@ -286,8 +286,8 @@
 	g_amt = 0
 	w_class = ITEM_SIZE_NORMAL
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,20,30,50,70)
-	volume = 70
+	possible_transfer_amounts = list(10,20,30,200,400)
+	volume = 400
 	flags = OPENCONTAINER
 	body_parts_covered = HEAD
 	slot_flags = SLOT_FLAGS_HEAD
