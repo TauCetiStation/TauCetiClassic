@@ -13,29 +13,32 @@
 		qdel(M)
 	return L
 
-// /datum/game_mode/abduction,
-// /datum/game_mode/blob,
-// /datum/game_mode/changeling,
-// /datum/game_mode/cult,
-// /datum/game_mode/extended,
-// /datum/game_mode/heist,
-// /datum/game_mode/infestation,
-// /datum/game_mode/malfunction,
-// /datum/game_mode/ninja,
-// /datum/game_mode/nuclear,
-// /datum/game_mode/rp_revolution,
-// /datum/game_mode/shadowling,
-// /datum/game_mode/traitorchan,
-// /datum/game_mode/traitor,
-// /datum/game_mode/wizard,
+/*
+All gamemodes
+	/datum/game_mode/abduction,
+	/datum/game_mode/blob,
+	/datum/game_mode/changeling,
+	/datum/game_mode/cult,
+	/datum/game_mode/extended,
+	/datum/game_mode/heist,
+	/datum/game_mode/infestation,
+	/datum/game_mode/malfunction,
+	/datum/game_mode/ninja,
+	/datum/game_mode/nuclear,
+	/datum/game_mode/rp_revolution,
+	/datum/game_mode/shadowling,
+	/datum/game_mode/traitorchan,
+	/datum/game_mode/traitor,
+	/datum/game_mode/wizard,
+*/
 
 /datum/modesbundle/extended
-	name = "extended"
+	name = "Extended"
 	hidden = FALSE
 	possible_gamemodes = list(/datum/game_mode/extended)
 
 /datum/modesbundle/tauclassic
-	name = "tau classic"
+	name = "Tau Classic"
 	possible_gamemodes = list(
 		/datum/game_mode/abduction,
 		/datum/game_mode/changeling,
@@ -47,7 +50,7 @@
 	)
 
 /datum/modesbundle/bs12
-	name = "bs12"
+	name = "BS12"
 	possible_gamemodes = list(
 		/datum/game_mode/abduction,
 		/datum/game_mode/changeling,
@@ -59,7 +62,7 @@
 	)
 
 /datum/modesbundle/all
-	name = "random"
+	name = "Random"
 	votable = FALSE
 
 /datum/modesbundle/all/New()
@@ -69,5 +72,5 @@
 			possible_gamemodes += type
 
 /datum/modesbundle/all/secret
-	name = "secret"
+	name = "Secret"
 	votable = TRUE

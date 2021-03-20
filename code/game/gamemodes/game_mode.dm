@@ -5,9 +5,9 @@
 	@factions: List(reference): What factions are currently in operation in the gamemode
 	@factions_allowed: List(object): what factions will the gamemode start with, or attempt to start with
 	@minimum_player_count: Integer: Minimum required players to start the gamemode
+	@minimum_players_bundles: Integer: Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
 	@roles_allowed: List(object): What roles will the gamemode start with, or attempt to start with
 	@probability: Integer: How likely it is to roll this gamemode
-	@votable: Boolean: If this mode can be voted for
 	@orphaned_roles: List(reference): List of faction-less roles currently in the gamemode
 */
 

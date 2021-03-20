@@ -401,7 +401,6 @@
 #include "code\game\gamemodes\objective_holder.dm"
 #include "code\game\gamemodes\role.dm"
 #include "code\game\gamemodes\scoreboard.dm"
-#include "code\game\gamemodes\setupgame.dm"
 #include "code\game\gamemodes\statistic.dm"
 #include "code\game\gamemodes\factions\strike_teams.dm"
 #include "code\game\gamemodes\modes_declares\infestation.dm"
