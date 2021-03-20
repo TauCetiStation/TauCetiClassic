@@ -185,7 +185,7 @@
 	light_color = "#00ffff"
 	light_power = 2
 	light_range = 2
-	damage = 10
+	damage = 60
 	damage_type = BURN
 	sharp = 0
 	edge = 0
@@ -197,6 +197,7 @@
 		for(var/mob/living/carbon/H in viewers(S))
 			H.apply_effect(20, IRRADIATE, 0)
 		S.deduce_energy(600)
+	..()
 
 /obj/item/projectile/neurotoxin
 	name = "neurotoxin"
