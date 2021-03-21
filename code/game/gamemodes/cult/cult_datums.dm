@@ -186,6 +186,7 @@
 	if(tp_runes.len)
 		user.forceMove(get_turf(pick(tp_runes)))
 
+#define REQ_TURFS_TO_CAPTURE 40
 /datum/rune/cult/capture_area
 	name = "Захват Зоны"
 	words = list("join", "hell", "technology")
@@ -208,6 +209,16 @@
 	var/area/area = get_area(holder)
 	if(!is_station_level(user.z) || !area.valid_territory || religion == area.religion)
 		to_chat(user, "<span class='warning'>Эта зона уже под вашим контролем.</span>")
+		return FALSE
+
+	var/turfs = 0
+	for(var/turf/T in area)
+		if(turfs == REQ_TURFS_TO_CAPTURE)
+			break
+		turfs++
+
+	if(turfs < REQ_TURFS_TO_CAPTURE)
+		to_chat(user, "<span class='warning'>Эта зона слишком мала.</span>")
 		return FALSE
 
 	return TRUE
@@ -250,6 +261,7 @@
 	animate(I, alpha = 0, time = 30)
 
 	statue.shake_animation(0.5, per_obj_cd)
+#undef REQ_TURFS_TO_CAPTURE
 
 /datum/rune/cult/portal_beacon
 	name = "Маяк Портала Культа"

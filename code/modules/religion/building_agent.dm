@@ -61,7 +61,7 @@
 /datum/building_agent/structure/cult/pylon
 	name = "Пилон"
 	building_type = /obj/structure/cult/pylon
-	favor_cost = 100
+	favor_cost = 200
 	deconstruct_favor_cost = 50
 
 /datum/building_agent/structure/cult/door
@@ -159,7 +159,7 @@
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	building_type = /datum/religion_tech/cult/reusable_runes
-	favor_cost = 700
+	favor_cost = 600
 	piety_cost = 10
 
 /datum/building_agent/tech/cult/build_everywhere
@@ -191,22 +191,22 @@
 /datum/building_agent/tool/cult/tome
 	name = "Том"
 	building_type = /obj/item/weapon/storage/bible/tome
-	favor_cost = 100
+	favor_cost = 50
 
 /datum/building_agent/tool/cult/armor
 	name = "Набор Брони"
 	building_type = /obj/item/weapon/storage/backpack/cultpack/armor
-	favor_cost = 300
+	favor_cost = 200
 
 /datum/building_agent/tool/cult/blade
 	name = "Кровавая Месть"
 	building_type = /obj/item/weapon/melee/cultblade
-	favor_cost = 150
+	favor_cost = 100
 
 /datum/building_agent/tool/cult/space_armor
 	name = "Набор Космической Брони"
 	building_type = /obj/item/weapon/storage/backpack/cultpack/space_armor
-	favor_cost = 500
+	favor_cost = 300
 	piety_cost = 20
 
 /datum/building_agent/tool/cult/stone
