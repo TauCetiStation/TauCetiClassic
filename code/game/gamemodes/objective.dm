@@ -1019,6 +1019,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	explanation_text = "Захватите не менее 4 отсеков станции с помощью руны захвата зон."
 
 /datum/objective/cult/capture_areas/New()
+	need_capture = max(4, round(player_list.len * 0.1) + 1)
 	explanation_text = "Захватите не менее [need_capture] отсеков станции с помощью руны захвата зон."
 	..()
 
@@ -1027,22 +1028,5 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 
 /datum/objective/cult/capture_areas/check_completion()
 	if(cur_mode.religion.captured_areas.len - cur_mode.religion.area_types.len >= need_capture)
-		return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
-/datum/objective/cult/save_piety
-	var/piety_needed = 0
-	explanation_text = "Накопите и сохраните 10000 piety"
-
-/datum/objective/cult/save_piety/New()
-	piety_needed = round(player_list.len * 10)
-	explanation_text = "Накопите и сохраните [piety_needed] piety"
-	..()
-
-/datum/objective/cult/save_piety/find_target()
-	return
-
-/datum/objective/cult/save_piety/check_completion()
-	if(cur_mode.religion.piety >= piety_needed)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS

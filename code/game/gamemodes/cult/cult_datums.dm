@@ -190,17 +190,18 @@
 	name = "Захват Зоны"
 	words = list("join", "hell", "technology")
 	var/per_obj_cd = 1 SECONDS
-	var/static/already_use = FALSE
 	var/obj/structure/cult/statue/capture/statue
 
 /datum/rune/cult/capture_area/Destroy()
-	already_use = FALSE
+	var/datum/religion/cult/R = global.cult_religion
+	R.capturing_area = FALSE
 	if(!QDELETED(statue))
 		qdel(statue)
 	return ..()
 
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
-	if(already_use)
+	var/datum/religion/cult/R = global.cult_religion
+	if(R.capturing_area)
 		to_chat(user, "<span class='warning'>Вы уже захватываете зону.</span>")
 		return FALSE
 
@@ -217,12 +218,13 @@
 	if(!istype(religion, area.religion?.type) && istype(religion, user_area.religion?.type))
 		per_obj_cd = 0.5 SECONDS
 
-	already_use = TRUE
+	var/datum/religion/cult/R = global.cult_religion
+	R.capturing_area = TRUE
 	var/datum/announcement/station/cult/capture_area/announce = new
 	announce.play(area)
 	statue = new(get_turf(holder), holder)
-	religion.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
-	already_use = FALSE
+	R.religify_area(area.type, CALLBACK(src, .proc/capture_iteration), null, TRUE)
+	R.capturing_area = FALSE
 
 /datum/rune/cult/capture_area/proc/capture_iteration(i, list/all_items)
 	if(!holder || !src)

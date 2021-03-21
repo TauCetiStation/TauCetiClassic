@@ -689,8 +689,11 @@
 	if(!input)
 		return FALSE
 	for(var/mob/M in global.mob_list)
-		if(religion.is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[religion.style_text]'>Аколит [user.real_name]: [input]</span>")
+		var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
+		if(isobserver(M))
+			to_chat(M, "[FOLLOW_LINK(M, user)]] [text]")
+		if(user.my_religion.is_member(M))
+			to_chat(M, text)
 
 	playsound(AOG, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
 

@@ -118,6 +118,8 @@
 	var/list/obj/structure/altar_of_gods/altars = list()
 	// The whole composition of beings in religion. Contains any mobs, even dead and without mind.
 	var/list/mob/members = list()
+	// Used for cloning
+	var/list/datum/mind/members_minds = list()
 	// Easy access
 	var/datum/religion_sect/sect
 	// css
@@ -319,7 +321,7 @@
 			A.religion.captured_areas -= A
 		captured_areas += A
 		A.religion = src
-		passive_favor_gain = max(0, captured_areas.len - areas.len)
+		passive_favor_gain = max(0, captured_areas.len - area_types.len)
 	return TRUE
 
 // This proc returns a bible object of this religion, spawning it at a given location.
@@ -581,8 +583,10 @@
 		return FALSE
 
 	members |= M
+	if(M.mind)
+		members_minds |= M.mind
+		M.mind.holy_role = holy_role
 	M.my_religion = src
-	M.mind?.holy_role = holy_role
 	sect?.on_conversion(M)
 	if(symbol_icon_state)
 		give_hud(M)
@@ -598,7 +602,9 @@
 
 	members -= M
 	M.my_religion = initial(M.my_religion)
-	M.mind?.holy_role = initial(M.mind.holy_role)
+	if(M.mind)
+		M.mind.holy_role = initial(M.mind.holy_role)
+		members_minds -= M.mind
 	if(symbol_icon_state)
 		take_hud(M)
 	on_exit(M)

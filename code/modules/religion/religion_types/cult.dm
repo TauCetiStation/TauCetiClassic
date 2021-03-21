@@ -56,6 +56,8 @@
 	*/
 	// Just gamemode of cult
 	var/datum/game_mode/cult/mode
+	// Is the area captured by /datum/rune/cult/capture_area
+	var/capturing_area = FALSE
 
 	// Time to creation next anomalies
 	var/next_anomaly
@@ -122,7 +124,7 @@
 			return
 		if(H.mind.holy_role && prob(80))
 			if(prob(15) && iscultist(H)) // Heal
-				H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3))
+				H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 0), rand(-clamp(world.time**(1/3), 1, 30), 0), rand(-clamp(world.time**(1/3), 1, 30), 0))
 				log_game("[H] healed by Cult Heaven")
 			return
 
@@ -205,6 +207,10 @@
 	A.remove_alt_appearance("nar-sie_hall")
 
 /datum/religion/cult/on_entry(mob/M)
+	var/obj/effect/proc_holder/spell/targeted/communicate/spell = locate(/obj/effect/proc_holder/spell/targeted/communicate) in M.spell_list
+	if(spell)
+		M.RemoveSpell(spell)
+
 	var/type
 	if(ishuman(M))
 		type = /obj/effect/proc_holder/spell/targeted/communicate/fastener

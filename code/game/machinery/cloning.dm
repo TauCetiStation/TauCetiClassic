@@ -212,6 +212,10 @@
 	if(mode)
 		mode.update_icon(H)
 
+	if(global.cult_religion)
+		if(occupant.mind in global.cult_religion.members_minds)
+			global.cult_religion.add_member(occupant, occupant.mind.holy_role)
+
 	// -- End mode specific stuff
 
 	if(!R.dna)
