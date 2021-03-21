@@ -157,6 +157,7 @@
 	var/list/holy_turfs = list()
 
 /datum/religion/New()
+	all_religions += src
 	reset_religion()
 	setup_religions()
 
@@ -661,3 +662,8 @@
 			if(message)
 				C.say(message)
 	return acolytes
+
+/datum/religion/proc/send_message_to_members(message, name) // As a god
+	for(var/mob/M in global.mob_list)
+		if(is_member(M) || isobserver(M))
+			to_chat(M, "<span class='[style_text]'><font size='6'>[name]: [message]</font></span>")

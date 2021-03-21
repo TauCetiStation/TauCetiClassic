@@ -88,6 +88,7 @@
 
 /datum/religion/chaplain/setup_religions()
 	global.chaplain_religion = src
+	all_religions += src
 
 /datum/religion/chaplain/create_default()
 	name = pick(DEFAULT_RELIGION_NAMES)

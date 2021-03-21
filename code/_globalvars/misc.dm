@@ -101,6 +101,7 @@ var/list/ignore_vision_inside = list(
 var/global/datum/religion/chaplain/chaplain_religion
 // Cultists religion. You/I can change it?
 var/global/datum/religion/cult/cult_religion
+var/global/list/datum/religion/all_religions = list()
 
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
