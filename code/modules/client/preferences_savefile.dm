@@ -339,6 +339,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if (load_character())
 				save_character()
 		default_slot = old_default_slot
+		save_preferences()
 
 	return 1
 
