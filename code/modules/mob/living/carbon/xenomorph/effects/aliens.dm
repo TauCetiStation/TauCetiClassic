@@ -233,7 +233,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/damage = W.force / 4.0
+	var/damage = W.force
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
@@ -241,7 +241,7 @@
 	apply_damage(damage)
 
 /obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
+	if(exposed_temperature > 290)
 		apply_damage(15)
 
 /obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
@@ -426,20 +426,19 @@
 				status = BURST
 
 /obj/structure/alien/egg/process()
-	if(prob(10))
-		var/turf/T = get_turf(src);
-		var/datum/gas_mixture/environment = T.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure < WARNING_LOW_PRESSURE)
-			if(prob(25))
-				audible_message("<span class='warning'>\The [src] is cracking!</span>")
-			apply_damage(5)
+	var/turf/T = get_turf(src);
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure < WARNING_LOW_PRESSURE)
+		if(prob(25))
+			audible_message("<span class='warning'>\The [src] is cracking!</span>")
+		apply_damage(rand(1, 7))
 
 /obj/structure/alien/egg/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
 	if(!.)
 		return
-	var/damage = W.force / 4.0
+	var/damage = W.force
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
@@ -452,7 +451,7 @@
 		Burst()
 
 /obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
+	if(exposed_temperature > 290)
 		apply_damage(25)
 
 #undef BURST
@@ -460,9 +459,10 @@
 #undef GROWING
 #undef GROWN
 
-/*
- * Air generator
- */
+//Air generator
+
+ #define AIR_PLANT_PRESSURE	90	//kPa
+
 /obj/structure/alien/air_plant
 	name = "strange plant"
 	desc = "Air restoring plant. Progressive aliens technologies..."
@@ -470,7 +470,9 @@
 	density = FALSE
 	anchored = TRUE
 	health = 15
-	var/restoring_moles = MOLES_CELLSTANDARD/4
+	var/restoring_moles = MOLES_CELLSTANDARD / 4
+	var/animating = FALSE
+	var/pressure = 0
 
 /obj/structure/alien/air_plant/atom_init()
 	. = ..()
@@ -478,25 +480,28 @@
 	set_light(2, 1, "#24c1ff")
 
 /obj/structure/alien/air_plant/process()
-	if(prob(25))
-		var/turf/T = get_turf(src)
+	var/turf/T = get_turf(src)
 
-		if(istype(T, /turf/space) || istype(T, /turf/unsimulated))
-			qdel(src)
+	if(istype(T, /turf/space) || istype(T, /turf/unsimulated))
+		qdel(src)
 
-		var/datum/gas_mixture/environment = T.return_air()
-		var/pressure = environment.return_pressure()
+	var/datum/gas_mixture/environment = T.return_air()
+	pressure = round(environment.return_pressure())
 
-		//So aliens can detect dangerous pressure level for eggs
-		if(pressure < WARNING_LOW_PRESSURE)
-			if(light_color != "#ff6224")
-				set_light(2, 1, "#ff6224")
-		else if(light_color != "#24c1ff")
-			set_light(2, 1, "#24c1ff")
+	//So aliens can detect dangerous pressure level for eggs
+	if(pressure < AIR_PLANT_PRESSURE)
+		if(!animating)
+			animating = TRUE
+			set_light(2, 1, "#da3a3a")
+			animate(src, color = "#da3a3a", time = 5, loop = -1, LINEAR_EASING)
+	else if(animating)
+		animating = FALSE
+		set_light(2, 1, "#24c1ff")
+		color = initial(color)
 
-		//actually restoring air
-		if(pressure < (ONE_ATMOSPHERE*0.90))//it's pretty sloppy, but never mind
-			environment.adjust_multi_temp("oxygen", restoring_moles*O2STANDARD, T20C, "nitrogen", restoring_moles*N2STANDARD, T20C)
+	//actually restoring air
+	if(pressure < AIR_PLANT_PRESSURE)
+		environment.adjust_multi_temp("oxygen", restoring_moles*O2STANDARD, T20C, "nitrogen", restoring_moles*N2STANDARD, T20C)
 
 /obj/structure/alien/air_plant/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
@@ -504,11 +509,16 @@
 		return
 	apply_damage(W.force)
 
+/obj/structure/alien/air_plant/examine(mob/user)
+	..()
+	if(isxeno(user))
+		to_chat(user, "Сurrent ambient pressure: [pressure] kPa.")
 
 /obj/structure/alien/air_plant/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
+	if(exposed_temperature > 290)
 		apply_damage(15)
 
+#undef AIR_PLANT_PRESSURE
 #undef WEED_SOUTH_EDGING
 #undef WEED_NORTH_EDGING
 #undef WEED_WEST_EDGING

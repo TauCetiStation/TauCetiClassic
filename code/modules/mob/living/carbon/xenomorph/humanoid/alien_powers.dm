@@ -115,59 +115,21 @@ Doesn't work on other aliens/AI.*/
 			to_chat(src, "<span class='warning'>Target is too far away.</span>")
 	return
 
-/*
-/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin(mob/target in oview())
-	set name = "Spit Neurotoxin (50)"
-	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
-	set category = "Alien"
-
-	if(powerc(50))
-		if(isxeno(target))
-			to_chat(src, "<span class='notice'>Your allies are not a valid target.</span>")
-			return
-		adjustToxLoss(-50)
-		to_chat(src, "<span class='notice'>You spit neurotoxin at [target].</span>")
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				to_chat(O, "<span class='warning'>[src] spits neurotoxin at [target]!</span>")
-		//I'm not motivated enough to revise this. Prjectile code in general needs update.
-		var/turf/T = loc
-		var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
-
-		if(!U || !T)
-			return
-		while(U && !istype(U,/turf))
-			U = U.loc
-		if(!istype(T, /turf))
-			return
-		if (U == T)
-			usr.bullet_act(new /obj/item/projectile/energy/neurotoxin(usr.loc), ran_zone(zone_sel.selecting)
-			return
-		if(!istype(U, /turf))
-			return
-
-		var/obj/item/projectile/energy/neurotoxin/A = new /obj/item/projectile/energy/neurotoxin(usr.loc)
-		A.current = U
-		A.yo = U.y - T.y
-		A.xo = U.x - T.x
-		A.process()
-	return
-*/
-
 /mob/living/carbon/xenomorph/humanoid/proc/screech()
-	set name = "Screech!"
+	set name = "Screech! (200)"
 	set desc = "Emit a screech that stuns prey."
 	set category = "Alien"
 
-	if(stat)
-		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+	if(!powerc(200))
 		return
 
 	if(world.time < last_screech + screech_delay)
 		to_chat(src, "<span class='warning'>You're too tired to scream so loud again. You need [round((last_screech + screech_delay - world.time)/10)] seconds to rest...</span>")
 		return
 
+	adjustToxLoss(-200)
 	playsound(src, 'sound/voice/xenomorph/queen_roar.ogg', VOL_EFFECTS_MASTER)
+	create_shriekwave()
 	for(var/mob/living/carbon/human/H in oviewers())
 		if(H.sdisabilities & DEAF || H.stat == DEAD || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 			to_chat(H, "<span class='warning'>You feel strong vibrations and quiet noise...</span>")
@@ -267,14 +229,14 @@ Doesn't work on other aliens/AI.*/
 			adjustToxLoss(-50)
 			neurotoxin_next_shot = world.time  + neurotoxin_delay
 		if(ALIEN_ACID)
-			if(!powerc(75))
+			if(!powerc(100))
 				return
 			BB = new /obj/item/projectile/acid_special(usr.loc)
-			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 2)
-			adjustToxLoss(-75)
+			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 3)
+			adjustToxLoss(-100)
 
 	visible_message("<span class='danger'>[src] spits [BB.name] at [target]!</span>")
-
+	playsound(src, pick(SOUNDIN_XENOMORPH_SPLITACID), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	//prepare "bullet"
 	BB.original = target
 	BB.firer = src
@@ -299,6 +261,7 @@ Doesn't work on other aliens/AI.*/
                              || (locate(/obj/structure/mineral_door/resin) in get_turf(src))   || (locate(/obj/structure/alien/resin/wall) in get_turf(src)) \
                              || (locate(/obj/structure/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src))
                              // does anyone have an idea how to make it shorter?
+#define CHECK_WEEDS (locate(/obj/structure/alien/weeds) in get_turf(src))
 
 /mob/living/carbon/xenomorph/humanoid/proc/resin() // -- TLE
 	set name = "Secrete Resin (75)"
@@ -306,7 +269,11 @@ Doesn't work on other aliens/AI.*/
 	set category = "Alien"
 
 	if(ALREADY_STRUCTURE_THERE)
-		to_chat (src, "There is already a structure there.")
+		to_chat(src, "<span class='warning'>There is already a structure there.</span>")
+		return
+
+	if(!CHECK_WEEDS)
+		to_chat (src, "<span class='warning'>You can only build on weeds.</span>")
 		return
 
 	if(powerc(75, 1))
@@ -326,13 +293,17 @@ Doesn't work on other aliens/AI.*/
 				new /obj/structure/stool/bed/nest(loc)
 	return
 
-/mob/living/carbon/xenomorph/humanoid/verb/air_plant()
+/mob/living/carbon/xenomorph/humanoid/proc/air_plant()
 	set name = "Plant Air Generator (250)"
 	set desc = "Plants some alien weeds."
 	set category = "Alien"
 
 	if(ALREADY_STRUCTURE_THERE)
-		to_chat(src, "There is already a structure there.")
+		to_chat(src, "<span class='warning'>There is already a structure there.</span>")
+		return
+
+	if(!CHECK_WEEDS)
+		to_chat (src, "<span class='warning'>You can only build on weeds.</span>")
 		return
 
 	if(powerc(250, 1))
@@ -342,4 +313,26 @@ Doesn't work on other aliens/AI.*/
 		new /obj/structure/alien/air_plant(loc)
 	return
 
+//Queen verbs
+/mob/living/carbon/xenomorph/humanoid/queen/verb/lay_egg()
+
+	set name = "Lay Egg (75)"
+	set desc = "Lay an egg to produce huggers to impregnate prey with."
+	set category = "Alien"
+
+	if(locate(/obj/structure/alien/egg) in get_turf(src))
+		to_chat(src, "<span class='warning'>There's already an egg here.</span>")
+		return
+
+	if(!CHECK_WEEDS)
+		to_chat (src, "<span class='warning'>You can lay egg on weeds only.</span>")
+		return
+
+	if(powerc(75, 1))//Can't plant eggs on spess tiles. That's silly.
+		adjustToxLoss(-75)
+		visible_message("<span class='notice'><B>[src] has laid an egg!</B></span>")
+		new /obj/structure/alien/egg(loc)
+	return
+
 #undef ALREADY_STRUCTURE_THERE
+#undef CHECK_WEEDS

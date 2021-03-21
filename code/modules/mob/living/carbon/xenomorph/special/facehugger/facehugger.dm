@@ -334,6 +334,7 @@
 	stat = DEAD
 	STOP_PROCESSING(SSobj, src)
 
+	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] curls up into a ball!</span>")
 
 	return
