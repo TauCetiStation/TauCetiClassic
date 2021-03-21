@@ -437,7 +437,7 @@
 
 /obj/item/weapon/claymore/religion/equipped(mob/user, slot)
 	..()
-	if(user.mind.holy_role)
+	if(user.mind?.holy_role)
 		force = holy_force + blessed
 	else
 		force = def_force + blessed
