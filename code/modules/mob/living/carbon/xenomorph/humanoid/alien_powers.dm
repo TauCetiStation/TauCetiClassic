@@ -314,14 +314,13 @@ Doesn't work on other aliens/AI.*/
 	return
 
 //Queen verbs
-/mob/living/carbon/xenomorph/humanoid/queen/verb/lay_egg()
-
+/mob/living/carbon/xenomorph/humanoid/queen/proc/lay_egg()
 	set name = "Lay Egg (75)"
 	set desc = "Lay an egg to produce huggers to impregnate prey with."
 	set category = "Alien"
 
-	if(locate(/obj/structure/alien/egg) in get_turf(src))
-		to_chat(src, "<span class='warning'>There's already an egg here.</span>")
+	if(ALREADY_STRUCTURE_THERE)
+		to_chat(src, "<span class='warning'>There is already a structure there.</span>")
 		return
 
 	if(!CHECK_WEEDS)
@@ -332,7 +331,6 @@ Doesn't work on other aliens/AI.*/
 		adjustToxLoss(-75)
 		visible_message("<span class='notice'><B>[src] has laid an egg!</B></span>")
 		new /obj/structure/alien/egg(loc)
-	return
 
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS
