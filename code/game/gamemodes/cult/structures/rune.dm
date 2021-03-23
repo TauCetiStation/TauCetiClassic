@@ -74,6 +74,7 @@
 	return ..()
 
 /obj/effect/rune/attack_ghost(mob/dead/observer/user)
+	examine(user)
 	power?.ghost_action(user)
 
 /obj/effect/rune/attack_hand(mob/living/user)

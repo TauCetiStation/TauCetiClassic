@@ -56,13 +56,13 @@
 	desc = "Ваши подданные придут."
 	ritual_length = (1 MINUTE)
 	invoke_msg = "Venit ad nos!"
-	favor_cost = 1000
+	favor_cost = 1100
 
 	rules = list(
-		/obj/item/stack/sheet/mineral/phoron = 5,
 		/obj/item/stack/cable_coil = 3,
-		/obj/item/stack/sheet/plasteel = 3,
-		/obj/item/stack/sheet/metal = 5,
+		/obj/item/stack/sheet/metal = 10,
+		/obj/item/organ/external/l_leg = 1,
+		/obj/item/weapon/stock_parts/scanning_module = 2,
 		/obj/item/weapon/stock_parts/capacitor = 2,
 		/obj/item/weapon/stock_parts/micro_laser = 2,
 	)
