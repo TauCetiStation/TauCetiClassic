@@ -424,6 +424,15 @@
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 			return FALSE
+
+	if(istype(I, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/T = I
+		if(hidden_uplink)
+			hidden_uplink.uses += T.amount
+			T.use(T.amount)
+			to_chat(user, "<span class='notice'>You press [I] against your [src] and charge internal uplink.</span>")
+			return
+
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
