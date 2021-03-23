@@ -62,6 +62,8 @@
 		sacrifice_favor *= 0.5
 	if(!L.ckey)
 		sacrifice_favor  *= 0.5
+	if(iscultist(L))
+		sacrifice_favor *= 2
 
 	return sacrifice_favor
 
