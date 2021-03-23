@@ -1007,6 +1007,7 @@ var/list/admin_verbs_hideable = list(
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>")
+	mob.eject_from_wall()
 
 /client/proc/achievement()
 	set name = "Give Achievement"

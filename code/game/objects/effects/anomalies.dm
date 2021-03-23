@@ -239,12 +239,11 @@
 		coord_of_pylons[i % 2 == 0 ? 1 : 2] *= -1;
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/disable()
+	make_old(FALSE)
 	if(beams.len)
 		for(var/datum/beam/B in beams)
 			B.origin.icon_state = "pylon"
 			B.End()
-	if(!QDELING(src))
-		qdel(src)
 
 /obj/effect/anomaly/bluespace/cult_portal/anomalyEffect()
 	if(prob(20))
@@ -308,4 +307,4 @@
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))
 	if(need_bound)
-		C.AddComponent(/datum/component/bounded, src, 0, 6)
+		C.AddComponent(/datum/component/bounded, src, 0, 7)

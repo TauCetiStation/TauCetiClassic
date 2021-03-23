@@ -4,11 +4,11 @@
 	anomaly_type = /obj/effect/anomaly/bluespace/cult_portal
 
 /datum/event/anomaly/cult_portal/setup()
+	..()
 	startWhen = rand(50, 150)
 	announceWhen = startWhen + 5
 	endWhen = startWhen + 300
 	max_constructs = rand(4, 7)
-	impact_area = findEventArea()
 
 /datum/event/anomaly/cult_portal/start()
 	var/list/turfs = get_area_turfs(impact_area)
