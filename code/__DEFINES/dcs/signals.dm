@@ -46,6 +46,13 @@
 /// from base of reagent/reaction_turf(): (turf/T, volume)
 #define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"
 
+// /datum/species signals
+
+///from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
+#define COMSIG_SPECIES_GAIN "species_gain"
+///from datum/species/on_species_loss(): (datum/species/lost_species)
+#define COMSIG_SPECIES_LOSS "species_loss"
+
 // /client signals
 /// from base of client/Move(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_MOVE "client_move"

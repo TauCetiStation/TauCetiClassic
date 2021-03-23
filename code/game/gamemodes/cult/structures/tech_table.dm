@@ -15,10 +15,10 @@
 	var/static/list/category_images = list()
 
 	var/researching = FALSE
-	var/research_time = 15 MINUTES
+	var/research_time = 18 MINUTES
 	var/end_research_time
 
-	var/current_research = "Nothing"
+	var/current_research = "Ничего"
 	var/datum/building_agent/tech/choosed_tech
 	var/tech_timer
 
@@ -169,7 +169,7 @@
 		P.icon_state = "pylon_glow"
 		P.can_unwrench = FALSE
 	researching = TRUE
-	end_research_time = max(0, world.time + research_time - (pylon_around.len MINUTE))
+	end_research_time = max(1, world.time + research_time - sqrt(pylon_around.len)MINUTE)
 	can_unwrench = FALSE
 	tech_timer = addtimer(end_activity, research_time, TIMER_STOPPABLE)
 

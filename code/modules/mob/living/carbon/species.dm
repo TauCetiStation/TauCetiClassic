@@ -219,8 +219,12 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
-/datum/species/proc/on_loose(mob/living/carbon/human/H)
+	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
+
+/datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	H.remove_moveset_source(MOVESET_SPECIES)
+
+	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return

@@ -281,7 +281,12 @@
 		slave.visible_message("<span class='userdanger'>[slave] медленно превращается в пыль и кости.</span>", \
 				"<span class='userdanger'>Вы чувствуете боль, когда разрывается связь между вашей душой и этим гомункулом.</span>", \
 				"<span class='userdanger'>Вы слышите множество тихих падений песчинок.</span>")
+		UnregisterSignal(slave, COMSIG_ENTER_AREA)
 		slave.dust()
+
+/datum/religion_rites/instant/cult/proc/remove_curse(datum/species, mob/M, new_species)
+	if(new_species == SKELETON)
+		UnregisterSignal(M, COMSIG_ENTER_AREA)
 
 /datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
 	..()
@@ -315,6 +320,7 @@
 
 		slave_enter_area(H, area)
 		RegisterSignal(H, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
+		RegisterSignal(H.species, list(COMSIG_SPECIES_LOSS), .proc/remove_curse)
 	return TRUE
 
 /datum/religion_rites/instant/cult/freedom

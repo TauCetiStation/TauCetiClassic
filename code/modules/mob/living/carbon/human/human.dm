@@ -1420,7 +1420,7 @@
 		if(species.language)
 			remove_language(species.language)
 
-		species.on_loose(src)
+		species.on_loose(src, new_species)
 
 	species = all_species[new_species]
 	maxHealth = species.total_health
