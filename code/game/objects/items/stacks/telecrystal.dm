@@ -16,7 +16,7 @@
 				use(amount)
 				to_chat(user, "<span class='notice'>You press [src] onto yourself and charge your hidden uplink.</span>")
 
-	if(istype(target, /obj/item))
+	if(proximity && istype(target, /obj/item))
 		var/obj/item/I = target
 		if(I.hidden_uplink)
 			I.hidden_uplink.uses += amount
