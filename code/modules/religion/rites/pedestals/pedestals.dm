@@ -86,11 +86,14 @@
 
 /datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/AOG)
 	..()
+	var/spawned = FALSE
 	for(var/obj/effect/rune/R in religion.runes)
 		if(istype(R.power, /datum/rune/cult/portal_beacon))
 			new /obj/effect/anomaly/bluespace/cult_portal(R.loc, TRUE)
 			qdel(R)
-			return TRUE
+			spawned = TRUE
+	if(spawned)
+		return TRUE
 	return FALSE
 
 /datum/religion_rites/pedestals/cult/make_skeleton
