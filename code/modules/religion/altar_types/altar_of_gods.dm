@@ -225,11 +225,6 @@
 	if(chosen_aspect || choosing_sects)
 		return
 
-	var/obj/item/weapon/storage/bible/B = I
-	if(!religion)
-		religion = B.religion
-		religion.altars |= src
-
 	var/list/available_options = generate_available_sects(user)
 	if(!available_options)
 		return
@@ -237,8 +232,14 @@
 	choosing_sects = TRUE
 	var/sect_select = input(user, "Select a aspects preset", "Select a preset", null) in available_options
 	if(!Adjacent(user))
+		choosing_sects = FALSE
 		to_chat(user, "<span class='warning'>You are too far away!</span>")
 		return
+
+	var/obj/item/weapon/storage/bible/B = I
+	if(!religion)
+		religion = B.religion
+		religion.altars |= src
 
 	religion.sect = available_options[sect_select]
 
