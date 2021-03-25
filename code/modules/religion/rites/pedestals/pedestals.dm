@@ -120,7 +120,8 @@
 		return FALSE
 
 	if(!ishuman(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>На алтаре должен быть человек.</span>")
 		return FALSE
 
 	return TRUE

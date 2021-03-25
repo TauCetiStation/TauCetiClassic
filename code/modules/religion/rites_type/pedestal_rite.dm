@@ -40,12 +40,14 @@
 		return FALSE
 
 	if(pedestals.len < rules.len)
-		to_chat(user, "<span class='warning'>You need more [rules.len - pedestals.len] pedestals.</span>")
+		if(user)
+			to_chat(user, "<span class='warning'>You need more [rules.len - pedestals.len] pedestals.</span>")
 		return FALSE
 
 	for(var/obj/structure/pedestal/cult/P in involved_pedestals)
 		if(P.last_turf != get_turf(P))
-			to_chat(user, "<span class='warning'>The pedestal changed its first position.</span>")
+			if(user)
+				to_chat(user, "<span class='warning'>The pedestal changed its first position.</span>")
 			return FALSE
 
 	return TRUE
@@ -83,6 +85,8 @@
 			if(user)
 				to_chat(user, "<span class='warning'>The pylon's fastenings were loosened.</span>")
 			return FALSE
+	if(!can_start(user, AOG))
+		return FALSE
 	return TRUE
 
 /datum/religion_rites/pedestals/pre_start(mob/living/user, obj/AOG)
