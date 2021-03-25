@@ -9,8 +9,8 @@
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,50)
-	volume = 50
+	possible_transfer_amounts = list(5,10,15,25,30,60)
+	volume = 60
 	flags = OPENCONTAINER
 	action_button_name = "Switch Lid"
 	var/label_text = ""
@@ -184,8 +184,6 @@
 	item_state = "beaker"
 	m_amt = 0
 	g_amt = 500
-	volume = 60
-	possible_transfer_amounts = list(5,10,15,25,30,60)
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
@@ -232,9 +230,7 @@
 	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 60 units."
 	icon_state = "beakernoreact"
 	g_amt = 500
-	volume = 60
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,25,30,60)
 	flags = OPENCONTAINER | NOREACT
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
