@@ -583,6 +583,8 @@
 	if(is_member(M))
 		return FALSE
 
+	SEND_SIGNAL(src, COMSIG_REL_ADD_MEMBER, M, holy_role)
+
 	members |= M
 	if(M.mind)
 		members_minds |= M.mind

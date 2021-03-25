@@ -88,7 +88,3 @@
 /obj/item/projectile/energy/laser/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_LASERACT
-
-/obj/item/projectile/energy/scatter
-	icon_state = "scatterlaser"
-	damage = 5

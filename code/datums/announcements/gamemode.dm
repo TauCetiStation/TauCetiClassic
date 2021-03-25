@@ -129,10 +129,10 @@
 
 /* Cult */
 /datum/announcement/station/cult/capture_area
-	name = "Cult: Capture area"
-	subtitle = "Неавторизованная Блюспейс Активность"
-	message = "В зоне было обнаружено неизвестное блюспейс вторжение."
+	name = "Anomaly: Bluespace"
+	message = "Unstable bluespace anomaly detected on long range scanners. Expected location: unknown."
+	sound = "bluspaceanom"
 /datum/announcement/station/cult/capture_area/play(area/A)
 	if(A)
-		message = "В [A] была зафиксированная повышенная блюспейс активность. Эта аномалия может нести ущерб вашей жизни."
+		message = "Unstable bluespace anomaly detected on long range scanners. Expected location: [A.name]."
 	..()

@@ -393,7 +393,7 @@
 /datum/rune/cult/charge_pylons
 	name = "Активация Пилонов"
 	words = list("destroy", "other", "technology")
-	var/time_to_stop = 1 MINUTE
+	var/time_to_stop = 2 MINUTE
 
 /datum/rune/cult/charge_pylons/can_action(mob/living/carbon/user)
 	var/has_pylon = FALSE
@@ -417,6 +417,7 @@
 		charged.health = P.health
 		P.forceMove(charged)
 		all_pylons += charged
-		addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate, all_pylons), time_to_stop)
+		charged.RegisterSignal(religion, COMSIG_REL_ADD_MEMBER,  /mob/living/simple_animal/hostile/pylon.proc/add_friend)
+		charged.timer = addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate, all_pylons), time_to_stop, TIMER_STOPPABLE)
 
 	holder.visible_message("<span class='warning'>[russian_plural(all_pylons.len, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")

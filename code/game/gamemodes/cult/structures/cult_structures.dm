@@ -183,13 +183,16 @@
 	return TRUE
 
 // Just trash
-/obj/structure/cult/spacewhole
+/obj/structure/cult/anomaly
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
+/obj/structure/cult/anomaly/spacewhole
 	name = "abyss in space"
 	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "space"
 
-/obj/structure/cult/timewhole
+/obj/structure/cult/anomaly/timewhole
 	name = "abyss in time"
 	desc = "You feel a billion different looks when you gaze into emptiness."
 	icon = 'icons/obj/cult.dmi'
@@ -201,13 +204,13 @@
 	light_power = 30
 	light_range = 3
 
-/obj/structure/cult/orb
+/obj/structure/cult/anomaly/orb
 	name = "orb"
 	desc = "Strange circle."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "summoning_orb"
 
-/obj/structure/cult/shell
+/obj/structure/cult/anomaly/shell
 	name = "cursed shell"
 	desc = "It looks at you."
 	icon_state = "shuttlecurse"

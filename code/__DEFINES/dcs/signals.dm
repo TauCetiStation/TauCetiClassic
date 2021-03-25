@@ -38,6 +38,10 @@
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
 
+// /datum/religion signals
+/// from base of religion/add_membern(): (/mob, holy_role)
+#define COMSIG_REL_ADD_MEMBER "rite_on_chosen"
+
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)
 #define COMSIG_LIGHT_UPDATE_OBJECT "light_update_object"

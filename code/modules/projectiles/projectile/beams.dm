@@ -182,3 +182,23 @@
 /obj/item/projectile/beam/stun/atom_init()
 	. = ..()
 	proj_act_sound = null
+
+/obj/item/projectile/beam/cult_laser
+	name = "beam"
+	icon_state = "emitter"
+	damage = 5
+
+	muzzle_type = /obj/effect/projectile/emitter/muzzle/cult
+	tracer_type = /obj/effect/projectile/emitter/tracer/cult
+	impact_type = /obj/effect/projectile/emitter/impact/cult
+
+/obj/item/projectile/beam/cult_laser/atom_init()
+	. = ..()
+	def_zone = ran_zone()
+
+/obj/item/projectile/beam/cult_laser/CanPass(atom/movable/mover, turf/target, height, air_group)
+	if(!..())
+		return FALSE
+	if(istype(mover, /mob/living/simple_animal/hostile/pylon) || istype(mover, /obj/structure/cult/pylon))
+		return TRUE
+	return FALSE

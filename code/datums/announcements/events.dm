@@ -69,7 +69,7 @@
 
 /datum/announcement/centcomm/anomaly/massive_portals
 	name = "Anomaly: Many Bluespace Alerts"
-	message = "Внимание! Был зафиксирован кластер несанкционированных блюспейс сигнатур по площади станции! Сохраните целостность объекта."
+	message = "Внимание! Был зафиксирован кластер несанкционированных блюспейс сигнатур! Сохраните целостность объекта."
 	sound = "bluspaceanom"
 
 /datum/announcement/centcomm/anomaly/bluespace_trigger

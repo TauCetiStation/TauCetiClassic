@@ -213,7 +213,7 @@
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage = 3
+	melee_damage = 15
 	attacktext = "prodd"
 	speed = 0
 	environment_smash = 1
@@ -271,8 +271,8 @@
 	icon_state = "pylon_glow"
 	icon_living = "pylon"
 	ranged = TRUE
-	amount_shoot = 5
-	projectiletype = /obj/item/projectile/energy/scatter
+	amount_shoot = 3
+	projectiletype = /obj/item/projectile/beam/cult_laser
 	projectilesound = 'sound/weapons/guns/gunpulse_laser.ogg'
 	ranged_cooldown = 5
 	ranged_cooldown_cap = 0
@@ -284,6 +284,7 @@
 	stop_automated_movement = TRUE
 	canmove = FALSE
 	faction = "cult"
+	var/timer
 
 /mob/living/simple_animal/hostile/pylon/atom_init()
 	. = ..()
@@ -300,6 +301,17 @@
 		P.health = health
 		P.forceMove(loc)
 	qdel(src)
+
+/mob/living/simple_animal/hostile/pylon/proc/add_friend(datum/religion/R, mob/M, holy_role)
+	friends = R.members
+
+/mob/living/simple_animal/hostile/pylon/attackby(obj/item/I, mob/user, params)
+	if(iscultist(user))
+		if(istype(I, /obj/item/weapon/storage/bible/tome))
+			deactivate()
+			deltimer(timer)
+	else
+		return ..()
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
 	return FALSE
