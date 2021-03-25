@@ -255,7 +255,7 @@
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
 		else if(global.cult_religion.is_member(current))
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=heaven'>teleport to heaven</a>|<a href='?src=\ref[src];cult=cheating_cult'>cheating religion</a>."
+			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=heaven'>teleport to heaven</a>|<a href='?src=\ref[src];cult=cheating_cult'>cheating religion</a>|<a href='?src=\ref[src];cult=make_leader'>make leader</a>."
 /*
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
@@ -910,6 +910,10 @@
 				for(var/type in L)
 					L[type] = 1
 				global.cult_religion.add_aspects(L)
+			if("make_leader")
+				var/mob/living/carbon/human/H = current
+				H.mind.holy_role = CULT_ROLE_MASTER
+				add_antag_hud(ANTAG_HUD_CULT, "hudheadcultist", current)
 
 
 	else if (href_list["wizard"])
