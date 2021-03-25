@@ -229,11 +229,12 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 60 units."
 	icon_state = "beakernoreact"
 	g_amt = 500
-	volume = 50
+	volume = 60
 	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(5,10,15,25,30,60)
 	flags = OPENCONTAINER | NOREACT
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
