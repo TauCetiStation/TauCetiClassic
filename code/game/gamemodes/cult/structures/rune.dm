@@ -35,7 +35,7 @@
 
 /obj/effect/rune/Destroy()
 	QDEL_NULL(power)
-	if(religion)
+	if(religion && creator)
 		var/list/L = religion.runes_by_mob[creator]
 		L -= src
 		religion.runes -= src

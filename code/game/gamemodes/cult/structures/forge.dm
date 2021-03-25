@@ -18,7 +18,6 @@
 
 /obj/structure/cult/forge/Destroy()
 	QDEL_LIST(available_items)
-	QDEL_LIST_ASSOC(items_image)
 	return ..()
 
 /obj/structure/cult/forge/examine(mob/user, distance)
