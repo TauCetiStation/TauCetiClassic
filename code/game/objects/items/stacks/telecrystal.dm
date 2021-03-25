@@ -18,7 +18,7 @@
 				return
 
 /obj/item/stack/telecrystal/afterattack(atom/target, mob/user, proximity, params)
-	if(proximity && istype(target, /obj/item))
+	if(proximity && isitem(target))
 		var/obj/item/I = target
 		if(I.hidden_uplink)
 			I.hidden_uplink.uses += amount
