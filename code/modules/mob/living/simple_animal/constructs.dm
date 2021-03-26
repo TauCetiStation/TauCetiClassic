@@ -161,7 +161,7 @@
 	health = 50
 	response_harm = "viciously beats"
 	harm_intent_damage = 5
-	melee_damage = 5
+	melee_damage = 10
 	attacktext = "ramm"
 	speed = 0
 	environment_smash = 2
