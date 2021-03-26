@@ -189,7 +189,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/atom_init()
 	. = ..()
-	desc += "Can hold up to [volume] units."
+	desc += " Can hold up to [volume] units."
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
