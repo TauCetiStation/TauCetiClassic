@@ -1706,8 +1706,9 @@ other types of metals and chemistry for reagents).
 	category = list("Misc")
 
 /datum/design/bluespacebeaker/New()
+	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
-	desc += "Can hold up to [B.volume] units."
+	desc += "Can hold up to [initial(B.volume)] units."
 
 /datum/design/noreactbeaker
 	name = "cryostasis beaker"
@@ -1719,8 +1720,9 @@ other types of metals and chemistry for reagents).
 	category = list("Misc")
 
 /datum/design/noreactbeaker/New()
+	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
-	desc += "Can hold up to [B.volume] units."
+	desc += "Can hold up to [initial(B.volume)] units."
 
 /datum/design/defibrillators_back
 	name = "Defibrillators"
