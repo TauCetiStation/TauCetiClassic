@@ -41,7 +41,7 @@
 
 	var/datum/mechanic_tip/self_effect/effect_tip = new(src, effect_type)
 
-	parent.AddComponent(/datum/component/mechanic_desc, list(effect_tip))
+	parent.AddComponent(/datum/component/mechanic_desc, list(effect_tip), can_callback)
 
 /datum/component/self_effect/proc/can_effect(datum/source, mob/living/carbon/user)
 	if(!can_callback?.Invoke(source, user))

@@ -21,7 +21,7 @@
 
 /datum/component/rite/spawn_item/Initialize(_spawn_type, _count_items, _sacrifice_type, _adding_favor_per_item, _divine_power, datum/callback/_invoke_effect, datum/callback/_change_spawn_type, tip_text)
 	spawn_type = _spawn_type
-	count_items = _count_items * _divine_power
+	count_items = _count_items
 	sacrifice_type = _sacrifice_type
 	adding_favor_per_item = _adding_favor_per_item
 	invoke_effect = _invoke_effect
@@ -117,7 +117,9 @@
 				A.pixel_z = real_item.pixel_z
 				A.alpha = 20
 		else
-			for(var/count in 1 to count_items)
+			var/datum/religion_rites/standing/rite = parent
+			var/counts = count_items * rite.divine_power
+			for(var/count in 1 to counts)
 				// Spawn illusion of item
 				var/atom/A = mimic_item(fake, AOG)
 				spawning_item += A
