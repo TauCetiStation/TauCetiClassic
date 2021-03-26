@@ -93,7 +93,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/tungsten/atom_init()
 	. = ..()
-	reagents.add_reagent("tungsten",50)
+	reagents.add_reagent("tungsten",60)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/oxygen
@@ -101,7 +101,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/oxygen/atom_init()
 	. = ..()
-	reagents.add_reagent("oxygen",50)
+	reagents.add_reagent("oxygen",60)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/sodium
@@ -109,7 +109,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/sodium/atom_init()
 	. = ..()
-	reagents.add_reagent("sodium",50)
+	reagents.add_reagent("sodium",60)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/lithium
@@ -117,7 +117,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/lithium/atom_init()
 	. = ..()
-	reagents.add_reagent("lithium",50)
+	reagents.add_reagent("lithium",60)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
@@ -125,7 +125,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/water/atom_init()
 	. = ..()
-	reagents.add_reagent("water",50)
+	reagents.add_reagent("water",60)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
@@ -133,7 +133,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/water/atom_init()
 	. = ..()
-	reagents.add_reagent("water",50)
+	reagents.add_reagent("water",60)
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/fuel
@@ -141,5 +141,5 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/fuel/atom_init()
 	. = ..()
-	reagents.add_reagent("fuel",50)
+	reagents.add_reagent("fuel",60)
 	update_icon()
