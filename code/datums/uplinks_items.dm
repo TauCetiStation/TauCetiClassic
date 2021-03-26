@@ -750,6 +750,29 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
 
+// TELECRYSTALS
+
+/datum/uplink_item/telecrystals
+	category = "Telecrystals"
+
+/datum/uplink_item/telecrystals/one
+	name = "1 Telecrystal"
+	desc = "Withdraws one raw telecrystal to share with your killing buddies."
+	item = /obj/item/stack/telecrystal
+	cost = 1
+
+/datum/uplink_item/telecrystals/five
+	name = "5 Telecrystals"
+	desc = "Withdraws five raw telecrystals to gift to your lovely crime partner."
+	item = /obj/item/stack/telecrystal/five
+	cost = 5
+
+/datum/uplink_item/telecrystals/twenty
+	name = "20 Telecrystals"
+	desc = "Withdraws twenty raw telecrystals to wholly give yourself into hands of your accomplices."
+	item = /obj/item/stack/telecrystal/twenty
+	cost = 20
+
 // POINTLESS BADASSERY
 
 /datum/uplink_item/badass
