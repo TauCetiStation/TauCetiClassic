@@ -88,7 +88,7 @@
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
-#define GRAB_TRAIT		   "grab"
+#define GRAB_TRAIT         "grab"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
 
 #define FEAR_TRAIT         "fear"
