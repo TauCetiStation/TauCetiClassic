@@ -74,7 +74,7 @@
 
 	update_icon = 0
 	nutrition = 800 // 1200 = max
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 
 
 /mob/living/carbon/slime/atom_init()

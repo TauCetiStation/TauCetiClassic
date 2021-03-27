@@ -623,7 +623,7 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
-	w_class = SIZE_LARGE
+	mob_size = MOB_SMALL
 	digestion_product = "carbon"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	faction = "neutral"

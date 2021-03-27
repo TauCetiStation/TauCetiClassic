@@ -97,7 +97,7 @@
 	maxHealth = 65
 	health = 65
 	pixel_x = -16
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 
 	randomify = FALSE
 
@@ -110,7 +110,7 @@
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 
 	turns_per_move = 5
 	speed = -15

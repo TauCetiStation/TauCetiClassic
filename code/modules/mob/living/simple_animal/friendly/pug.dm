@@ -12,7 +12,7 @@
 	emote_see = list("shakes its head", "chases its tail","shivers")
 	speak_chance = 1
 	turns_per_move = 10
-	w_class = SIZE_LARGE
+	mob_size = MOB_SMALL
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/pug = 3)
 	response_help  = "pets"
 	response_disarm = "bops"

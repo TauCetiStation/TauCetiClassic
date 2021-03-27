@@ -9,7 +9,7 @@
 	can_be_pulled = FALSE
 	density = FALSE
 	digestion_product = null
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 
 	maxHealth = 100
 

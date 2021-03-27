@@ -76,7 +76,7 @@
 	attacktext = "discharg"
 	attack_sound = list('sound/weapons/blaster.ogg')
 	faction = "bluespace"
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 
 	health = 32
 	maxHealth = 32

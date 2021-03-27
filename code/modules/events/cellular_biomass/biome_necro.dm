@@ -65,7 +65,7 @@
 	desc = "This thing is fast!"
 	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 	faction = "necro"
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 	health = 60
 	maxHealth = 60
 	melee_damage = 15

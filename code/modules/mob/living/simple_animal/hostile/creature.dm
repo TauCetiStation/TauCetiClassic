@@ -8,7 +8,7 @@
 	health = 80
 	maxHealth = 80
 	melee_damage = 38
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 	attacktext = "chomp"
 	attack_sound = list('sound/weapons/bite.ogg')
 	faction = "creature"

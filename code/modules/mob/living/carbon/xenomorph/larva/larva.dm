@@ -11,7 +11,7 @@
 
 	density = 0
 	small = 1
-	w_class = SIZE_LARGE
+	mob_size = MOB_SMALL
 
 	var/amount_grown = 0
 	var/max_grown = 200

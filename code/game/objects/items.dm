@@ -1,7 +1,6 @@
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items.dmi'
-	w_class = SIZE_NORMAL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
 	var/item_state = null
@@ -16,6 +15,7 @@
 	var/usesound = null
 	var/wet = 0
 	var/digestion_product = null
+	var/w_class = SIZE_NORMAL
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE

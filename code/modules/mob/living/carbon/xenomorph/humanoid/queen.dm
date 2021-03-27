@@ -12,7 +12,7 @@
 	plasma_rate = 20
 	neurotoxin_delay = 10
 	ventcrawler = 0
-	w_class = SIZE_GARGANTUAN
+	mob_size = MOB_LARGE
 
 
 /mob/living/carbon/xenomorph/humanoid/queen/atom_init()

@@ -466,7 +466,12 @@
 /obj/item/organ/internal/stomach/proc/get_fullness(atom/movable/food)
 	var/total = round(reagents.total_volume / 10)
 	for(var/A in contents + food)
-		total += food.get_storage_cost()
+		if(ismob(A))
+			var/mob/M = A
+			total += M.mob_size
+		else if(isobj(A))
+			var/obj/item/I = A
+			total += I.get_storage_cost()
 	return total
 
 /obj/item/organ/internal/stomach/proc/is_full(atom/movable/food)
@@ -552,8 +557,24 @@
 
 /obj/item/organ/internal/stomach/proc/get_devour_time(atom/movable/food)
 	var/glut = owner.species.gluttonous
-	if(glut == GLUT_ANYTHING)
-		return DEVOUR_FAST
-	else if(glut >= food.w_class && !isholder(food))
-		return DEVOUR_SLOW
+	if(iscarbon(food) || isanimal(food))
+		var/mob/living/L = food
+		if(glut & GLUT_ANYTHING) // Eat anything ever
+			return DEVOUR_FAST
+		else if((glut & GLUT_TINY) && (L.mob_size <= MOB_TINY)) // Anything MOB_TINY or smaller
+			return DEVOUR_SLOW
+		else if((glut & GLUT_SMALLER) && owner.mob_size > L.mob_size) // Anything we're larger than
+			return DEVOUR_SLOW
+
+	else if(istype(food, /obj/item) && !isholder(food)) //Don't eat holders. They are special.
+		var/obj/item/I = food
+		var/cost = I.get_storage_cost()
+		if(cost != SIZE_NO_CONTAINER)
+			if(glut & GLUT_ITEM_ANYTHING)
+				return DEVOUR_FAST
+			else if((glut & GLUT_ITEM_TINY) && cost < 4)
+				return DEVOUR_SLOW
+			else if((glut & GLUT_ITEM_NORMAL) && cost <= 4)
+				return DEVOUR_SLOW
+
 	return FALSE
