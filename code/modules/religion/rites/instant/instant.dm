@@ -62,7 +62,7 @@
 		sacrifice_favor *= 0.5
 	if(!L.ckey)
 		sacrifice_favor  *= 0.5
-	if(iscultist(L))
+	if(iscultist(L) && !istype(L, /mob/living/carbon/human/homunculus))
 		sacrifice_favor *= 2
 
 	return sacrifice_favor
@@ -266,12 +266,15 @@
 
 	return TRUE
 
+/mob/living/carbon/human/homunculus
+	name = "homunculus of god"
+
 /datum/religion_rites/instant/cult/create_slave
 	name = "Создание Гомункула"
 	desc = "Создаёт гомункула, который может существовать только внутри территории религии."
 	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
 	invoke_msg = "Прийди же!!!"
-	favor_cost = 300
+	favor_cost = 325
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 2,
@@ -299,7 +302,7 @@
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	for(var/i in 1 to divine_power)
 		var/mob/M = pick(candidates)
-		var/mob/living/carbon/human/H = new(get_turf(AOG))
+		var/mob/living/carbon/human/homunculus/H = new(get_turf(AOG))
 		var/area/area = get_area(AOG)
 		H.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
 			"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
