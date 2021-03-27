@@ -1,6 +1,6 @@
 /* GAME MODES */
 /datum/announcement/centcomm/malf
-	subtitle = "Мониторинг Сети"
+	subtitle = "Сетевой Мониторинг"
 
 /datum/announcement/station/gang
 	subtitle = "Брандмауэр Станции"
@@ -48,7 +48,7 @@
 /datum/announcement/centcomm/mutiny/noert
 	name = "Mutiny: ERT is busy"
 	subtitle = "Черезвычайная Передача"
-	message = "Присутсвие ОБР в регионе требует все местные аварийные ресурсы. Сейчас отряд быстрого реагирования не может быть вызван."
+	message = "Присутсвие ЭРИ в регионе требует все местные аварийные ресурсы. Сейчас отряд быстрого реагирования не может быть вызван."
 /datum/announcement/centcomm/mutiny/noert/play(reason)
 	if(reason)
 		message = "Присутсвие [reason] в регионе требует все местные аварийные ресурсы. Сейчас отряд быстрого реагирования не может быть вызван."
