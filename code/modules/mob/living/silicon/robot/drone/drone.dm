@@ -335,7 +335,7 @@
 		..()
 	else if(istype(AM,/obj/item))
 		var/obj/item/O = AM
-		if(O.w_class > ITEM_SIZE_SMALL)
+		if(O.w_class > SIZE_SMALL)
 			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 			return
 		else

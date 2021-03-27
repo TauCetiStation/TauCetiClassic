@@ -7,7 +7,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
@@ -76,7 +76,7 @@
 	item_state = "miniFE"
 	hitsound = null // It is much lighter, after all.
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	force = 3.0
 	m_amt = 0
 

@@ -97,7 +97,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	item_state = "syndballoon"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_LARGE
 
 /*
  * Fake telebeacon
@@ -132,7 +132,7 @@
 	can_be_holstered = TRUE
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
 	m_amt = 3250
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7.0
@@ -186,7 +186,7 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "357-7"
 	flags = CONDUCT
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_TINY
 	m_amt = 500
 	var/amount_left = 7.0
 
@@ -208,7 +208,7 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 	can_be_holstered = TRUE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "struck", "hit")
 	var/bullets = 5
 
@@ -297,7 +297,7 @@
 	desc = "It's nerf or nothing! Ages 8 and up."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamdart"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_TINY
 
 /obj/effect/foam_dart_dummy
 	name = ""
@@ -318,7 +318,7 @@
 	icon_state = "sword0"
 	item_state = "sword0"
 	var/active = 0.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	flags = NOSHIELD
 	attack_verb = list("attacked", "struck", "hit")
 
@@ -329,13 +329,13 @@
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "swordblue"
 		src.item_state = "swordblue"
-		src.w_class = ITEM_SIZE_LARGE
+		src.w_class = SIZE_LARGE
 	else
 		to_chat(user, "<span class='notice'>You push the plastic blade back down into the handle.</span>")
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		src.icon_state = "sword0"
 		src.item_state = "sword0"
-		src.w_class = ITEM_SIZE_SMALL
+		src.w_class = SIZE_SMALL
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -355,7 +355,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /*
@@ -366,7 +366,7 @@
 	desc = "Wow!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_TINY
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
@@ -476,7 +476,7 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/cooldown = 0
 
 //all credit to skasi for toy mech fun ideas
@@ -560,7 +560,7 @@
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 
 /* NYET.
@@ -569,7 +569,7 @@
 	name = "toddler"
 	desc = "This baby looks almost real. Wait, did it just burp?"
 	force = 5
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_LARGE
 	slot_flags = SLOT_FLAGS_BACK
 */
 
@@ -591,7 +591,7 @@
 	desc = null
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoy"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 
@@ -793,7 +793,7 @@ Owl & Griffin toys
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/owl/attack_self(mob/user)
@@ -812,7 +812,7 @@ Owl & Griffin toys
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "griffinprize"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/griffin/attack_self(mob/user)
@@ -834,7 +834,7 @@ Owl & Griffin toys
 	desc = "A plastic model of a Nuclear Fission Explosive."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -859,7 +859,7 @@ Owl & Griffin toys
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor. Co is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor?"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
@@ -878,7 +878,7 @@ Owl & Griffin toys
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "deck"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/list/cards = list()
 	var/normal_deck_size = 52 // How many cards should be in the full deck.
 	var/list/integrity = list() // Is populated in atom_init(), determines which cards SHOULD be in the full deck.
@@ -1000,7 +1000,7 @@ Owl & Griffin toys
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "hand2"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_TINY
 	var/list/currenthand = list()
 	var/obj/item/toy/cards/parentdeck = null
 	var/choice = null
@@ -1084,7 +1084,7 @@ Owl & Griffin toys
 	desc = "A card."
 	icon = 'icons/obj/cards.dmi'
 	icon_state = "singlecard_down"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_TINY
 	var/cardname = null
 	var/obj/item/toy/cards/parentdeck = null
 	var/flipped = 0
@@ -1514,7 +1514,7 @@ Owl & Griffin toys
 	desc = "Mystical! Magical! Ages 8+!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "eight-ball"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/use_action = "shakes the ball"
 	var/last_time_used = 0
 	var/list/possible_answers = list("Definitely", "All signs point to yes.", "Most likely.", "Yes.", "Ask again later.", "Better not tell you now.", "Future Unclear.", "Maybe.", "Doubtful.", "No.", "Don't count on it.", "Never.")
@@ -1538,7 +1538,7 @@ Owl & Griffin toys
 	name = "Magic Conch Shell"
 	desc = "All hail the Magic Conch!"
 	icon_state = "conch"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	use_action = "pulls the string"
 	possible_answers = list("Yes.", "No.", "Try asking again.", "Nothing.", "I don't think so.", "Neither.", "Maybe someday.")
 	answer_sound = null
@@ -1560,7 +1560,7 @@ Owl & Griffin toys
 	desc = "A toy that makes 'mooo' when used."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "mooo"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/cooldown = FALSE
 
 /obj/item/toy/moocan/attack_self(mob/user)

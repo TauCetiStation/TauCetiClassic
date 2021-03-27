@@ -268,6 +268,6 @@
 /obj/item/device/toner
 	name = "toner cartridge"
 	icon_state = "tonercartridge"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/charges = 50
 	var/max_charges = 50

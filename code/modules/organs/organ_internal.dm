@@ -569,7 +569,7 @@
 	else if(istype(food, /obj/item) && !isholder(food)) //Don't eat holders. They are special.
 		var/obj/item/I = food
 		var/cost = I.get_storage_cost()
-		if(cost != ITEM_SIZE_NO_CONTAINER)
+		if(cost != SIZE_NO_CONTAINER)
 			if(glut & GLUT_ITEM_ANYTHING)
 				return DEVOUR_FAST
 			else if((glut & GLUT_ITEM_TINY) && cost < 4)

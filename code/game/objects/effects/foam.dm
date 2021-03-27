@@ -117,7 +117,7 @@
 
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
-		if(I.w_class <= ITEM_SIZE_TINY)
+		if(I.w_class <= SIZE_TINY)
 			return
 
 	if(isliving(AM))
@@ -137,7 +137,7 @@
 	disolve()
 
 /obj/effect/effect/aqueous_foam/attackby(obj/item/I, mob/user)
-	if(I.w_class > ITEM_SIZE_TINY)
+	if(I.w_class > SIZE_TINY)
 		disolve()
 
 /obj/effect/effect/aqueous_foam/proc/performAction()

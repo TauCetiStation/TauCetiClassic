@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "recaller"
 	item_state = "walkietalkie"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 	var/obj/machinery/gateway/center/stationgate
 	var/used = FALSE
 	var/opened = FALSE

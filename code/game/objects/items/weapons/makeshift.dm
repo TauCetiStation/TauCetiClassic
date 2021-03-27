@@ -4,7 +4,7 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_LARGE
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 10
 	force_wielded = 18 // Was 13, Buffed - RR
@@ -211,7 +211,7 @@
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
@@ -220,7 +220,7 @@
 	desc = "A rolled noose."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "noose_rolled"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/noose/attack_self(mob/user)
 	var/turf/user_turf = get_turf(user)
@@ -236,7 +236,7 @@
 	if(!do_after(user, 5 SECONDS, target = user))
 		return
 	N = new(user_turf)
-	N.layer = FLY_LAYER // because of bed/chair/atom_init 
+	N.layer = FLY_LAYER // because of bed/chair/atom_init
 	N.color = color
 	qdel(src)
 
@@ -265,7 +265,7 @@
 	var/delay_msg = 5 SECONDS
 	var/last_warn_msg = 0
 	force = 8
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_LARGE
 	throwforce = 5
 //	flags = NOSHIELD
 		//var/protest_text

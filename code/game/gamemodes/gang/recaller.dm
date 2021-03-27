@@ -5,7 +5,7 @@
 	icon_state = "gangtool"
 	item_state = "walkietalkie"
 	throwforce = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
