@@ -34,7 +34,7 @@
 	icon_dead = "parrot_dead"
 	pass_flags = PASSTABLE
 	small = 1
-	w_class = SIZE_SMALL
+	w_class = SIZE_TINY
 
 	speak = list("Hi","Hello!","Cracker?","BAWWWWK george mellons griffing me")
 	speak_emote = list("squawks","says","yells")

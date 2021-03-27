@@ -175,7 +175,7 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
-	w_class = SIZE_SMALL
+	w_class = SIZE_TINY
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -217,7 +217,7 @@ var/global/chicken_count = 0
 	var/body_color
 	pass_flags = PASSTABLE
 	small = 1
-	w_class = SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 	has_head = TRUE
 	has_leg = TRUE
