@@ -4,8 +4,8 @@
 	singular_name = "telecrystal"
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "telecrystal"
-	w_class = SIZE_TINY
-	full_w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_TINY
+	full_w_class = ITEM_SIZE_NORMAL
 	max_amount = 50
 
 /obj/item/stack/telecrystal/attack(atom/target, mob/user, proximity, params)
