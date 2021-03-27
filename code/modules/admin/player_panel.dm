@@ -576,7 +576,17 @@
 		if(SSticker.mode.ninjas.len)
 			dat += check_role_table("Ninjas", SSticker.mode.ninjas, src)
 
-		if(global.cult_religion?.members.len)
+		if(global.cult_religion)
+			var/zones_len = global.cult_religion.captured_areas.len
+			var/zones = "Нету"
+			if(global.cult_religion.captured_areas)
+				zones = ""
+				for(var/area/A in global.cult_religion.captured_areas)
+					if(zones_len == 1)
+						zones += "[A.name]"
+					else
+						zones += "[A.name], "
+			dat += "<br>Подконтрольные зоны культа([zones_len]): [zones]"
 			var/list/minds = list()
 			for(var/mob/M in global.cult_religion.members)
 				if(!ishuman(M) && !M.client)
