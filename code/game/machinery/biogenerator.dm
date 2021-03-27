@@ -162,16 +162,16 @@
 			dat += "</div>"
 			dat += "<h3>Pouches:</h3>"
 			dat += "<div class='Section'>"
-			dat += "Small generic pouch: <A href='?src=\ref[src];action=create;item=spounch'>Make</A> ([400/efficiency])<BR>"
-			dat += "Medium generic pouch: <A href='?src=\ref[src];action=create;item=mpounch'>Make</A> ([800/efficiency])<BR>"
-			dat += "Large generic pouch: <A href='?src=\ref[src];action=create;item=lpounch'>Make</A> ([1400/efficiency])<BR>"
-			dat += "Medical supply pouch: <A href='?src=\ref[src];action=create;item=medpouch'>Make</A> ([500/efficiency])<BR>"
-			dat += "Vial pouch: <A href='?src=\ref[src];action=create;item=vpounch'>Make</A> ([500/efficiency])<BR>"
-			dat += "Engineering tools pouch: <A href='?src=\ref[src];action=create;item=etpounch'>Make</A> ([650/efficiency])<BR>"
-			dat += "Engineering supply pouch: <A href='?src=\ref[src];action=create;item=espounch'>Make</A> ([650/efficiency])<BR>"
-			dat += "Ammo pouch: <A href='?src=\ref[src];action=create;item=apounch'>Make</A> ([700/efficiency])<BR>"
-			dat += "Pistol holster: <A href='?src=\ref[src];action=create;item=ppounch'>Make</A> ([700/efficiency])<BR>"
-			dat += "Baton sheath: <A href='?src=\ref[src];action=create;item=bpounch'>Make</A> ([700/efficiency])<BR>"
+			dat += "Small generic pouch: <A href='?src=\ref[src];action=create;item=spounch'>Make</A> ([200/efficiency])<BR>"
+			dat += "Medical supply pouch: <A href='?src=\ref[src];action=create;item=medpouch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Vial pouch: <A href='?src=\ref[src];action=create;item=vpounch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Engineering tools pouch: <A href='?src=\ref[src];action=create;item=etpounch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Engineering supply pouch: <A href='?src=\ref[src];action=create;item=espounch'>Make</A> ([300/efficiency])<BR>"
+			dat += "Ammo pouch: <A href='?src=\ref[src];action=create;item=apounch'>Make</A> ([350/efficiency])<BR>"
+			dat += "Pistol holster: <A href='?src=\ref[src];action=create;item=ppounch'>Make</A> ([350/efficiency])<BR>"
+			dat += "Baton sheath: <A href='?src=\ref[src];action=create;item=bpounch'>Make</A> ([350/efficiency])<BR>"
+			dat += "Medium generic pouch: <A href='?src=\ref[src];action=create;item=mpounch'>Make</A> ([500/efficiency])<BR>"
+			dat += "Large generic pouch: <A href='?src=\ref[src];action=create;item=lpounch'>Make</A> ([1000/efficiency])<BR>"
 			dat += "</div>"
 		else
 			dat += "<div class='Section'>No beaker inside, please insert beaker.</div>"
@@ -306,34 +306,34 @@
 			if (check_cost(400/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/cash(src.loc)
 		if("spounch")
-			if (check_cost(400/efficiency)) return 0
+			if (check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/small_generic(src.loc)
 		if("mpounch")
-			if (check_cost(800/efficiency)) return 0
+			if (check_cost(500/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/medium_generic(src.loc)
 		if("lpounch")
-			if (check_cost(1400/efficiency)) return 0
+			if (check_cost(1000/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/large_generic(src.loc)
 		if("medpouch")
-			if (check_cost(500/efficiency)) return 0
+			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/medical_supply(src.loc)
 		if("vpounch")
-			if (check_cost(500/efficiency)) return 0
+			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/flare/vial(src.loc)
 		if("etpounch")
-			if (check_cost(650/efficiency)) return 0
+			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/engineering_tools(src.loc)
 		if("espounch")
-			if (check_cost(650/efficiency)) return 0
+			if (check_cost(300/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/engineering_supply(src.loc)
 		if("apounch")
-			if (check_cost(700/efficiency)) return 0
+			if (check_cost(350/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/ammo(src.loc)
 		if("ppounch")
-			if (check_cost(700/efficiency)) return 0
+			if (check_cost(350/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/pistol_holster(src.loc)
 		if("bpounch")
-			if (check_cost(700/efficiency)) return 0
+			if (check_cost(350/efficiency)) return 0
 			else new/obj/item/weapon/storage/pouch/baton_holster(src.loc)
 		if("jacket")
 			if (check_cost(500/efficiency)) return 0
