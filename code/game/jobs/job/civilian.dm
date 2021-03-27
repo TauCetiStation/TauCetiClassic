@@ -232,7 +232,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
-	access = list(access_clown, access_theatre)
+	access = list(access_clown, access_theatre, access_maint_tunnels)
 	salary = 20
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
@@ -246,12 +246,12 @@
 	flag = MIME
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = -1
+	spawn_positions = -1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/mime
-	access = list(access_mime, access_theatre)
+	access = list(access_mime, access_theatre, access_maint_tunnels)
 	salary = 20
 	outfit = /datum/outfit/job/mime
 
