@@ -1,143 +1,145 @@
 /* EVENTS */
 /datum/announcement/centcomm/anomaly
-	subtitle = "Anomaly Alert"
+	subtitle = "Тревога. Аномалия"
 
 
 /datum/announcement/centcomm/anomaly/frost
 	name = "Anomaly: Frost"
-	message = "Atmospheric anomaly detected on long range scanners. Prepare for station temperature drop."
+	message = "На сканерах дальнего действия обнаружена атмосферная аномалия. Ожидается снижение температуры станции."
 
 /datum/announcement/centcomm/access_override
 	name = "Secret: Egalitarian"
-	message = "Centcomm airlock control override activated. Please take this time to get acquainted with your coworkers."
+	message = "Центком запустил сброс контроля доступа шлюзов. Пожалуйста, найдите время познакомиться с вашими коллегами."
 
 /datum/announcement/centcomm/anomaly/radstorm
 	name = "Anomaly: Radiation Belt"
-	message = "High levels of radiation detected near the station. Please report to the Med-bay if you feel strange. " + \
-			"The entire crew of the station is recommended to find shelter in the technical tunnels of the station. "
+	message = "Обнаружен высокий уровень радиации рядом с станцией. " + \
+			"Докладывайте в медотсек, если чувствуете себя необычно. " + \
+			"Всему экипажу станции рекомендуется укрыться в технических туннелях станции."
 	sound = "radiation"
 
 /datum/announcement/centcomm/anomaly/radstorm_passed
 	name = "Anomaly: Radiation Belt Passed"
-	message = "The station has passed the radiation belt. " + \
-			"Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly."
+	message = "Станция прошла радиационный пояс. " + \
+			"Просим доложить в медотсек, если вы чувствуете необычные симптомы. " + \
+			"Вскоре доступ к эксплуатационным отсекам будет закрыт."
 	sound = "radpassed"
 
 /datum/announcement/centcomm/anomaly/istorm
 	name = "Anomaly: Ion Storm"
-	message = "Ion storm detected near the station. Please check all AI-controlled equipment for errors."
+	message = "Обнаружен ионный шторм рядом со станцией. Просьба проверить всё подконтрольное ИИ оборудование на ошибки."
 	sound = "istorm"
 
 /datum/announcement/centcomm/bsa
 	name = "Secret: BSA Shot"
-	message = "Bluespace artillery fire detected. Brace for impact."
+	message = "Обнаружен огонь блюспейс артиллерии. Приготовиться к удару."
 	sound = "artillery"
 /datum/announcement/centcomm/bsa/play(area/A)
 	if(A)
-		message = "Bluespace artillery fire detected in [A.name]. Brace for impact."
+		message = "Обнаружен огонь блюспейс артиллерии на [A.name]. Приготовиться к удару."
 	..()
 
 /datum/announcement/centcomm/aliens
 	name = "Event: Infestation"
-	subtitle = "Lifesign Alert"
-	message = "Unidentified lifesigns detected coming aboard Space Station 13. Secure any exterior access, including ducting and ventilation."
+	subtitle = "Тревога. Формы Жизни"
+	message = "Неопределенные формы жизни замечены на КСН Исход. Закройте любые внешние доступны, включая трубопровод и вентиляцию."
 	sound = "lifesigns"
 /datum/announcement/centcomm/aliens/play()
-	message = "Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation."
+	message = "Неопределенные формы жизни замечены на [station_name()]. Перекройте все входы и выходы, включая трубопровод и вентиляцию."
 	..()
 
 /datum/announcement/centcomm/fungi
 	name = "Event: Fungi"
-	subtitle = "Biohazard Alert"
-	message = "Harmful fungi detected on station. Station structures may be contaminated."
+	subtitle = "Тревога. Биоугроза"
+	message = "Вредный грибок обнаружен на станции. Структура станции заражена."
 	sound = "fungi"
 
 /datum/announcement/centcomm/wormholes
 	name = "Event: Wormholes"
-	subtitle = "Anomaly Alert"
-	message = "Space-time anomalies detected on the station. It is recommended to avoid suspicious things or phenomena. There is no additional data."
+	subtitle = "Тревога. Аномалия"
+	message = "Космо-временная аномалия обнаружена на станции. Рекомендуется избегать подозрительных вещей и феноменов. Дополнительные данные отсутствуют."
 	sound = "wormholes"
 
 /datum/announcement/centcomm/anomaly/bluespace
 	name = "Anomaly: Bluespace"
-	message = "Unstable bluespace anomaly detected on long range scanners. Expected location: unknown."
+	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: неизвестно."
 	sound = "bluspaceanom"
 /datum/announcement/centcomm/anomaly/bluespace/play(area/A)
 	if(A)
-		message = "Unstable bluespace anomaly detected on long range scanners. Expected location: [A.name]."
+		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: [A.name]."
 	..()
 
 /datum/announcement/centcomm/anomaly/bluespace_trigger
 	name = "Anomaly: Bluespace Triggered"
-	message = "Massive bluespace translocation detected."
+	message = "Обнаружено массивное блюспейс перемещение."
 	sound = "bluspacetrans"
 
 /datum/announcement/centcomm/anomaly/flux
 	name = "Anomaly: Flux Wave"
-	message = "Localized hyper-energetic flux wave detected on long range scanners. Expected location: unknown."
+	message = "На сканерах дальнего действия зафиксирован гиперэнерегетический волновой поток. Ожидаемое место: неизвестно."
 	sound = "fluxanom"
 /datum/announcement/centcomm/anomaly/flux/play(area/A)
 	if(A)
-		message = "Localized hyper-energetic flux wave detected on long range scanners. Expected location: [A.name]."
+		message = "На сканерах дальнего действия зафиксирован гиперэнерегетический волновой поток. Ожидаемое место: [A.name]."
 	..()
 
 /datum/announcement/centcomm/anomaly/gravity
 	name = "Anomaly: Gravitational"
-	message = "Gravitational anomaly detected on long range scanners. Expected location: unknown."
+	message = "На сканерах дальнего действия обнаружена гравитационная аномалия. Ожидаемое место: неизвестно."
 	sound = "gravanom"
 /datum/announcement/centcomm/anomaly/gravity/play(area/A)
 	if(A)
-		message = "Gravitational anomaly detected on long range scanners. Expected location: [A.name]."
+		message = "На сканерах дальнего действия обнаружена гравитационная аномалия. Ожидаемое место: [A.name]."
 	..()
 
 /datum/announcement/centcomm/anomaly/pyro
 	name = "Anomaly: Pyroclastic"
-	message = "Pyroclastic anomaly detected on long range scanners. Expected location: unknown."
+	message = "На сканерах дальнего действия обнаружена пирокластическая аномалия. Ожидаемое место: неизвестно."
 	sound = "pyroanom"
 /datum/announcement/centcomm/anomaly/pyro/play(area/A)
 	if(A)
-		message = "Pyroclastic anomaly detected on long range scanners. Expected location: [A.name]."
+		message = "На сканерах дальнего действия обнаружена пирокластическая аномалия. Ожидаемое место: [A.name]."
 	..()
 
 /datum/announcement/centcomm/anomaly/vortex
 	name = "Anomaly: Vortex"
-	message = "Localized high-intensity vortex anomaly detected on long range scanners. Expected location: unknown."
+	message = "На сканерах дальнего действия зафиксирована высоко-интенсивная аномалия воронок. Ожидаемое место: неизвестно."
 	sound = "vortexanom"
 /datum/announcement/centcomm/anomaly/vortex/play(area/A)
 	if(A)
-		message = "Localized high-intensity vortex anomaly detected on long range scanners. Expected location: [A.name]."
+		message = "На сканерах дальнего действия зафиксирована высоко-интенсивная аномалия воронок. Ожидаемое место: [A.name]."
 	..()
 
 /datum/announcement/centcomm/brand
 	name = "Event: Brand Intelligence"
-	subtitle = "Machine Learning Alert"
-	message = "Rampant brand intelligence has been detected aboard Space Station 13, please stand-by."
+	subtitle = "Тревога. Машинное обучение"
+	message = "На борту КСН Исход обнаружен неконтролируемый брендовый интеллект, готовьтесь."
 	sound = "rampbrand"
 /datum/announcement/centcomm/brand/play()
-	message = "Rampant brand intelligence has been detected aboard [station_name()], please stand-by."
+	message = "На борту [station_name()] обнаружен неконтролируемый брендовый интеллект, готовьтесь."
 	..()
 
 /datum/announcement/centcomm/carp
 	name = "Event: Carp Migration"
-	subtitle = "Lifesign Alert"
-	message = "Unknown biological entities have been detected near Space Station 13, please stand-by."
+	subtitle = "Тревога. Формы жизни"
+	message = "Неизвестная форма жизни обнаружена вблизи КСН Исход, готовьтесь."
 	sound = "carps"
 /datum/announcement/centcomm/carp/play()
-	message = "Unknown biological entities have been detected near [station_name()], please stand-by."
+	message = "Неизвестная форма жизни обнаружена вблизи КСН Исход [station_name()], готовьтесь."
 	..()
 
 /datum/announcement/centcomm/carp_major
 	name = "Event: Major Carp Migration"
-	subtitle = "Lifesign Alert"
-	message = "Massive migration of unknown biological entities has been detected near Space Station 13, please stand-by."
+	subtitle = "Тревога. Формы жизни"
+	message = "Массовая миграция неизвестной формы жизни вблизи КСН Исход, готовьтесь."
 	sound = "carps"
 /datum/announcement/centcomm/carp_major/play()
-	message = "Massive migration of unknown biological entities has been detected near [station_name()], please stand-by."
+	message = "Массовая миграция неизвестной формы жизни вблизи [station_name()], готовьтесь."
 	..()
 
 /datum/announcement/centcomm/comms_blackout
 	name = "Event: Communication Blackout"
-	message = "Ionospheri:%ďż˝ MCayj^j<.3-BZZZZZZT"
+	message = "Ионносфе:%ďż˝ MCayj^j<.3-БЗЗЗЗТ"
 /datum/announcement/centcomm/comms_blackout/play(message)
 	if(message)
 		src.message = message
@@ -145,115 +147,115 @@
 
 /datum/announcement/centcomm/dust
 	name = "Event: Sand Storm"
-	subtitle = "Station Sensor Array"
-	message = "The Space Station 13 is now passing through a belt of space dust."
+	subtitle = "Сенсоры станции"
+	message = "КСН Исход сейчас проходит сквозь кольцо космической пыли."
 /datum/announcement/centcomm/dust/play()
-	subtitle = "[station_name()] Sensor Array"
-	message = "The [station_name()] is now passing through a belt of space dust."
+	subtitle = "Сенсоры [station_name()]"
+	message = "[station_name()] сейчас проходит сквозь кольцо космической пыли."
 	..()
 
 /datum/announcement/centcomm/dust_passed
 	name = "Event: Sand Storm Passed"
-	subtitle = "Station Sensor Array"
-	message = "The Space Station 13 has now passed through the belt of space dust."
+	subtitle = "Сенсоры станции"
+	message = "КСН Исход прошел сквозь кольцо космической пыли."
 /datum/announcement/centcomm/dust_passed/play()
-	subtitle = "[station_name()] Sensor Array"
-	message = "The [station_name()] has now passed through the belt of space dust."
+	subtitle = "Сенсоры [station_name()]"
+	message = "[station_name()] прошел сквозь кольцо космической пыли."
 	..()
 
 /datum/announcement/centcomm/estorm
 	name = "Event: Electrical Storm"
-	subtitle = "Electrical Storm Alert"
-	message = "An electrical storm has been detected in your area, please repair potential electronic overloads."
+	subtitle = "Тревога. Электрический Шторм"
+	message = "В вашей области обнаружен электрический шторм, пожалуйста, восстановите перегруженное оборудование."
 	sound = "estorm"
 
 /datum/announcement/centcomm/grid_off
 	name = "Event: Power Failure"
-	subtitle = "Critical Power Failure"
-	message = "Abnormal activity detected in Space Station 13 powernet. As a precautionary measure, " + \
-			"the station's power will be shut off for an indeterminate duration."
+	subtitle = "Критический Сбой Питания"
+	message = "Обнаружена необычная активность в сети питания КСН Исход. " + \
+			 "В предохранительных мерах питание станции будет отключено на неопределенный срок."
 	sound = "poweroff"
 /datum/announcement/centcomm/grid_off/play()
-	message = "Abnormal activity detected in [station_name()] powernet. As a precautionary measure, " + \
-			"the station's power will be shut off for an indeterminate duration."
+	message = "Обнаружена необычная активность в сети питания [station_name()]." + \
+			"В предохранительных мерах питание станции будет отключено на неопределенный срок."
 	..()
 
 /datum/announcement/centcomm/grid_on
 	name = "Event: Power Restored"
-	subtitle = "Power Systems Nominal"
-	message = "Power has been restored to Space Station 13. We apologize for the inconvenience."
+	subtitle = "Системы Питания в Норме"
+	message = "Питание будет восстановлено на КСН Исход. Приносим свои извинения за неудобство."
 	sound = "poweron"
 /datum/announcement/centcomm/grid_on/play()
-	message = "Power has been restored to [station_name()]. We apologize for the inconvenience."
+	message = "Питание будет восстановлено на [station_name()]. Приносим свои извинения за неудобство."
 	..()
 
 /datum/announcement/centcomm/grid_quick
 	name = "Secret: SMES Restored"
-	subtitle = "Power Systems Nominal"
-	message = "All SMESs on Space Station 13 have been recharged. We apologize for the inconvenience."
+	subtitle = "Системы Питания в Норме"
+	message = "Все СМЭХи на КСН Исход будут перезаряжены. Приносим свои извинения за неудобство."
 	sound = "poweron"
 /datum/announcement/centcomm/grid_quick/play()
-	message = "All SMESs on [station_name()] have been recharged. We apologize for the inconvenience."
+	message = "Все СМЭХи на [station_name()] будут перезаряжены. Приносим свои извинения за неудобство."
 	..()
 
 /datum/announcement/centcomm/irod
 	name = "Event: Immovable Rod"
-	subtitle = "General Alert"
-	message = "What the fuck was that?!"
+	subtitle = "Общая Тревога"
+	message = "Что это за хрень?!"
 
 /datum/announcement/centcomm/infestation
 	name = "Event: Vermin infestation"
-	subtitle = "Vermin infestation"
-	message = "Bioscans indicate that something have been breeding somewhere on the station. Clear them out, before this starts to affect productivity."
+	subtitle = "Заражение Паразитами"
+	message = "Биосканеры зафиксировали, что что-то размножается где-то на станции. Вычистите это, пока не начало влиять на производительность."
 /datum/announcement/centcomm/infestation/play(vermstring, locstring)
 	if(vermstring && locstring)
-		message = "Bioscans indicate that [vermstring] have been breeding in [locstring]. Clear them out, before this starts to affect productivity."
+		message = "Биосканеры зафиксировали, что [vermstring] размножается в [locstring]. Вычистите это, пока не начало влиять на производительность."
 	..()
 
 /datum/announcement/centcomm/meteor_wave
 	name = "Event: Meteor Wave"
-	subtitle = "Meteor Alert"
-	message = "Meteors have been detected on collision course with the station. The energy field generator is disabled or missing."
+	subtitle = "Тревога. Метеоры"
+	message = "Обнаружены метеоры на курсе столкновения со станцией. Генератор энергетического поля выключен или отсутствует."
 	sound = "meteors"
 
 /datum/announcement/centcomm/meteor_wave_passed
 	name = "Event: Meteor Wave Cleared"
-	subtitle = "Meteor Alert"
-	message = "The station has cleared the meteor storm."
+	subtitle = "Тревога. Метеоры"
+	message = "Станция прошла метеорный шторм."
 	sound = "meteorcleared"
 
 /datum/announcement/centcomm/meteor_shower
 	name = "Event: Meteor Shower"
-	subtitle = "Meteor Alert"
-	message = "The station is now in a meteor shower. The energy field generator is disabled or missing."
+	subtitle = "Тревога. Метеоры"
+	message = "Станция сейчас проходит метеорный поток. Генератор энергетического поля выключен или отсутствует."
 	sound = "meteors"
 
 /datum/announcement/centcomm/meteor_shower_passed
 	name = "Event: Meteor Shower Cleared"
-	subtitle = "Meteor Alert"
-	message = "The station has cleared the meteor shower"
+	subtitle = "Тревога. Метеоры"
+	message = "Станция прошла метеорный поток."
 	sound = "meteorcleared"
 
 /datum/announcement/centcomm/organ_failure
 	name = "Event: Organ Failure"
-	subtitle = "Biohazard Alert"
-	message = "Confirmed outbreak of level 7 biohazard aboard Space Station 13. All personnel must contain the outbreak."
+	subtitle = "Тревога. Биоугроза"
+	message = "Подтвержден 7 уровень биологической угрозы на борту станции. Всему персоналу предотвратить распространение заражения."
 	sound = "outbreak7"
 /datum/announcement/centcomm/organ_failure/play()
-	message = "Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak."
+	message = "Подтвержден 7 уровень биологической угрозы на борту [station_name()]. Всему персоналу предотвратить распространение заражения."
 
 /datum/announcement/centcomm/greytide
 	name = "Event: Grey Tide"
-	subtitle = "Security Alert"
-	message = "Malignant trojan detected in Space Station 13 imprisonment subroutines. Recommend station AI involvement."
+	subtitle = "Тревога Безопастности"
+	message = "В подпрограммах заключения КСН Исход обнаружен вирус. Рекомендуется привлечь ИИ."
 	sound = "greytide"
 /datum/announcement/centcomm/greytide/play()
-	message = "[pick("Gr3y.T1d3-type virus","Malignant trojan")] detected in [station_name()] imprisonment subroutines. Recommend station AI involvement."
+	message = "В подпрограммах заключения [station_name()] обнаружен [pick("Gr3y.T1d3","вредоностный троян")]. Рекомендуется привлечь ИИ."
 
 /datum/announcement/centcomm/icarus_lost
 	name = "Event: Icarus Lost"
-	subtitle = "Rogue drone alert"
-	message = "Contact has been lost with a combat drone wing operating out of the NMV Icarus. If any are sighted in the area, approach with caution."
+	subtitle = "Тревога. Сбойные дроны"
+	message = "На ВКН Икар был потерян контакт с боевым крылом дронов. При обнаружении их в этой области, приближаться с осторожностью."
 	sound = "icaruslost"
 /datum/announcement/centcomm/icarus_lost/play(message)
 	if(message)
@@ -262,8 +264,8 @@
 
 /datum/announcement/centcomm/icarus_recovered
 	name = "Event: Icarus Recovered"
-	subtitle = "Rogue drone alert"
-	message = "Icarus drone control reports the malfunctioning wing has been recovered safely."
+	subtitle = "Тревога. Сбойные дроны"
+	message = "Контроль дронов на ВКН Икар докладывает о восстановлении контроля над сбойным боевым крылом."
 /datum/announcement/centcomm/icarus_recovered/play(message)
 	if(message)
 		src.message = message

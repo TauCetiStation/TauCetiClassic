@@ -1,60 +1,64 @@
 /* GAME MODES */
 /datum/announcement/centcomm/malf
-	subtitle = "Network Monitoring"
+	subtitle = "Мониторинг Сети"
 
 /datum/announcement/station/gang
-	subtitle = "Station Firewall"
+	subtitle = "Брандмауэр Станции"
 
 
 /* Blob */
 /datum/announcement/centcomm/blob/outbreak5
 	name = "Blob: Level 5 Outbreak"
-	subtitle = "Biohazard Alert"
-	message = "Confirmed outbreak of level 5 biohazard aboard Space Station 13. " + \
-			"All personnel must contain the outbreak. The station crew isolation protocols are now active."
+	subtitle = "Тревога. Биоугроза"
+	message = "Подтвержден 5 уровень биологической угрозы на борту КСН Исход. " + \
+			"Всему персоналу предотвратить распространение заражения. " + \
+			"Активирован протокол изоляции экипажа станции."
 	sound = "outbreak5"
 /datum/announcement/centcomm/blob/outbreak5/play()
-	message = "Confirmed outbreak of level 5 biohazard aboard [station_name()]. " + \
-			"All personnel must contain the outbreak. The station crew isolation protocols are now active."
+	message = "Подтвержден 5 уровень биологической угрозы на борту [station_name()]. " + \
+			"Всему персоналу предотвратить распространение заражения. " + \
+			"Активирован протокол изоляции экипажа станции."
 	..()
 
 /datum/announcement/centcomm/blob/critical
 	name = "Blob: Blob Critical Mass"
-	subtitle = "Biohazard Alert"
-	message = "Biohazard has reached critical mass. Station loss is imminent."
+	subtitle = "Тревога. Биоугроза"
+	message = "Биологическая опасность достигла критической массы. Потеря станции неминуема."
 
 /* Epidemic */
 /datum/announcement/centcomm/epidemic/cruiser
 	name = "Epidemic: Cruiser"
-	subtitle = "Station Early Warning System"
-	message = "Inbound cruiser detected on collision course. Scans indicate the ship to be armed and ready to fire. Estimated time of arrival: 5 minutes."
+	subtitle = "Система Раннего Оповещения"
+	message = "Подлетающий крейсер обнаружен на встречном курсе. " + \
+			"Сканирование показывает наличие вооружения на борту и его готовность открыть огонь. " + \
+			"Время прибытия: 5 минут."
 /datum/announcement/centcomm/epidemic/cruiser/play()
-	subtitle = "[station_name()] Early Warning System"
+	subtitle = "Система Раннего Оповещения [station_name()]"
 	..()
 
 /* Mutiny */
 /datum/announcement/centcomm/mutiny/reveal
 	name = "Mutiny: Directive Reveal"
-	subtitle = "Emergency Transmission"
-	message = "Incoming emergency directive: Captain's office fax machine, Space Station 13."
+	subtitle = "Черезвычайная Передача"
+	message = "Входящая черезвычайная директива: факс в кабинете капитана, КСН Исход."
 /datum/announcement/centcomm/mutiny/reveal/play()
-	message = "Incoming emergency directive: Captain's office fax machine, [station_name()]."
+	message = "Входящая черезвычайная директива: факс в кабинете капитана, [station_name()]."
 	..()
 
 /datum/announcement/centcomm/mutiny/noert
 	name = "Mutiny: ERT is busy"
-	subtitle = "Emergency Transmission"
-	message = "The presence of ERP in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time."
+	subtitle = "Черезвычайная Передача"
+	message = "Присутсвие ОБР в регионе требует все местные аварийные ресурсы. Сейчас отряд быстрого реагирования не может быть вызван."
 /datum/announcement/centcomm/mutiny/noert/play(reason)
 	if(reason)
-		message = "The presence of [reason] in the region is tying up all available local emergency resources; emergency response teams cannot be called at this time."
+		message = "Присутсвие [reason] в регионе требует все местные аварийные ресурсы. Сейчас отряд быстрого реагирования не может быть вызван."
 	..()
 
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
 	name = "Nuclear: Declaration of War"
-	subtitle = "Declaration of War"
-	message = "The Syndicate has declared they intent to utterly destroy Space Station 13 with a nuclear device, and dares the crew to try and stop them."
+	subtitle = "Объявление Войны"
+	message = "Синдикат объявил, что намерен полностью уничтожить станцию с помощю ядерного устройства и весь экипаж, что будет попытается их остановить."
 /datum/announcement/centcomm/nuclear/war/play(message)
 	if(message)
 		src.message = message
@@ -71,12 +75,12 @@
 
 /datum/announcement/centcomm/vox/returns
 	name = "Vox: Shuttle Returns"
-	subtitle = "NSV Icarus"
-	message = "Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. " + \
-			"Looks like they're heading out of Space Station 13 at a rapid clip."
+	subtitle = "ВКН Икар"
+	message = "Ваши гости улетают, Исход - двигаются слишком быстро, мы не можем навестись на них. " + \
+			"Похоже они покидают систему без оглядки."
 /datum/announcement/centcomm/vox/returns/play()
-	message = "Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. " + \
-			"Looks like they're heading out of [system_name()] at a rapid clip."
+	message = "Ваши гости улетают, Исход - двигаются слишком быстро, мы не можем навестись на них. " + \
+			"Похоже они покидают [system_name()] без оглядки."
 
 /* Malfunction */
 /datum/announcement/centcomm/malf/declared
@@ -89,29 +93,29 @@
 
 /datum/announcement/centcomm/malf/first
 	name = "Malf: Announce №1"
-	message = "Caution, Space Station 13. We have detected abnormal behaviour in your network. " + \
-			"It seems someone is trying to hack your electronic systems. We will update you when we have more information."
+	message = "Внимание, КСН Исход. Мы фиксируем необычные показатели в вашей сети. " + \
+			"Кажется, кто-то пытается взломать ваши системы. Сообщим вам когда получим больше информации."
 	sound = "malf1"
 /datum/announcement/centcomm/malf/first/play()
-	message = "Caution, [station_name]. We have detected abnormal behaviour in your network. " + \
-			"It seems someone is trying to hack your electronic systems. We will update you when we have more information."
+	message = "Внимание, [station_name]. Мы фиксируем необычные показатели в вашей сети. " + \
+			"Кажется, кто-то пытается взломать ваши системы. Сообщим вам когда получим больше информации."
 	..()
 
 /datum/announcement/centcomm/malf/second
 	name = "Malf: Announce №2"
-	message = "We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. " + \
-			"We suggest checking all network control terminals. We will keep you updated on the situation."
+	message = "Мы начали отслеживать взломшика. Кто-бы это не делал, они находятся на самой станции. " + \
+			"Предлагаем проверить все терминалы, управляющие сетью. Будем держать вас в курсе."
 	sound = "malf2"
 
 /datum/announcement/centcomm/malf/third
 	name = "Malf: Announce №3"
-	message = "This is highly abnormal and somewhat concerning. " + \
-			"The intruder is too fast, he is evading our traces. No man could be this fast..."
+	message = "Это крайне не нормально и сильно беспокоит. " + \
+			"Взломшик слишком быстр, он обходит все попытки его выследить. Никто не может быть так быстр..."
 	sound = "malf3"
 
 /datum/announcement/centcomm/malf/fourth
 	name = "Malf: Announce №4"
-	message = "We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>"
+	message = "Мы отследили взломшик#, это каже@&# ва3) сист7ма ИИ, он# *#@амыает меха#7зм самоун@чт$#енiя. Оста*##ивте )то по*@!)$#&&@@  <СВЯЗЬ ПОТЕРЯНА>"
 	sound = "malf4"
 
 /* Gang */
