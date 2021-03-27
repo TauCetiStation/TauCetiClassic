@@ -271,7 +271,7 @@
 	desc = "Создаёт гомункула, который может существовать только внутри территории религии."
 	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
 	invoke_msg = "Прийди же!!!"
-	favor_cost = 200
+	favor_cost = 300
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 2,

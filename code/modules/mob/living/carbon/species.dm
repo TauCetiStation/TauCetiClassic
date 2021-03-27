@@ -958,7 +958,7 @@
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
-	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
+	H.status_flags &= ~(CANSTUN | CANPARALYSE)
 
 	return ..()
 
