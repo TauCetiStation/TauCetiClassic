@@ -2,6 +2,7 @@
 	density = 1
 	layer = 4.0
 	animate_movement = 2
+	w_class = SIZE_HUGE
 //	flags = NOREACT
 	var/datum/mind/mind
 

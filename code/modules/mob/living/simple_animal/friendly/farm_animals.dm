@@ -113,6 +113,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_GAINT
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	health = 50
 
@@ -174,6 +175,7 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
+	w_class = SIZE_SMALL
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -215,6 +217,7 @@ var/global/chicken_count = 0
 	var/body_color
 	pass_flags = PASSTABLE
 	small = 1
+	w_class = SIZE_TINY
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -286,6 +289,7 @@ var/global/chicken_count = 0
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
+	w_class = SIZE_LARGE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
 	health = 50
 

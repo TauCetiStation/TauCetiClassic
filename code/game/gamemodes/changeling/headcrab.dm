@@ -64,6 +64,7 @@
 	ventcrawler = 2
 	speed = -2
 	small = TRUE
+	w_class = SIZE_MINUSCULE
 	var/datum/mind/origin
 	var/egg_lain = FALSE
 

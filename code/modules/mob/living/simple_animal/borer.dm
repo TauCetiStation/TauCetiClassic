@@ -50,6 +50,7 @@
 	wander = FALSE
 	pass_flags = PASSTABLE
 	ventcrawler = 2
+	w_class = SIZE_MINUSCULE
 
 	var/used_dominate
 	var/chemicals = 10                      // Chemicals used for reproduction and spitting neurotoxin.

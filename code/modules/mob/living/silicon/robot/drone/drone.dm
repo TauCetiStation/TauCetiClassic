@@ -14,6 +14,7 @@
 	density = 0
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
+	w_class = SIZE_SMALL
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, DIAG_BATT_HUD)
 	typing_indicator_type = "machine"
 

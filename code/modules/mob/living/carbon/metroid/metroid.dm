@@ -73,6 +73,7 @@
 
 	update_icon = 0
 	nutrition = 800 // 1200 = max
+	w_class = SIZE_HUMAN
 
 
 /mob/living/carbon/slime/atom_init()
