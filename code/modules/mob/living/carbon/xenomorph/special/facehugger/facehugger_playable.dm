@@ -20,7 +20,6 @@
 	max_plasma = 50
 
 	density = FALSE
-	small = TRUE
 	w_class = SIZE_TINY
 
 	var/amount_grown = 0

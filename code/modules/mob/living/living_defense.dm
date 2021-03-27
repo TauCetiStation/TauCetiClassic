@@ -373,7 +373,7 @@
 
 // This proc guarantees no mouse vs queen tomfuckery.
 /mob/living/proc/is_bigger_than(mob/living/target)
-	if(target.small && !small)
+	if(target.w_class < SIZE_SMALL && w_class >= SIZE_SMALL)
 		return TRUE
 	if(maxHealth > target.maxHealth)
 		return TRUE
@@ -381,8 +381,8 @@
 
 /proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
 	var/ratio = dividend.maxHealth / divisor.maxHealth
-	if(dividend.small && !divisor.small)
+	if(dividend.w_class < SIZE_SMALL && divisor.w_class >= SIZE_SMALL)
 		ratio *= 0.5
-	else if(!dividend.small && divisor.small)
+	else if(dividend.w_class >= SIZE_SMALL && divisor.w_class < SIZE_SMALL)
 		ratio *= 2.0
 	return ratio

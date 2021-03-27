@@ -5,7 +5,6 @@
 	icon_living = "lizard"
 	icon_dead = "lizard_dead"
 	icon_gib = "lizard_gib"
-	small = TRUE
 	speak = list("hiss", "hiss", "hiss", "hiss", "hiss?", "hiss...")
 	speak_emote = list("hisses")
 	emote_hear = list("hisses")

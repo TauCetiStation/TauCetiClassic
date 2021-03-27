@@ -11,7 +11,6 @@
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE | PASSMOB
-	small = TRUE
 	w_class = SIZE_MINUSCULE
 	speak_chance = 1
 	melee_damage = 0
