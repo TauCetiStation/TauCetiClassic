@@ -373,7 +373,7 @@
 
 // This proc guarantees no mouse vs queen tomfuckery.
 /mob/living/proc/is_bigger_than(mob/living/target)
-	return mob_size > target.mob_size
+	return w_class > target.w_class
 
 /proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
-	return dividend.mob_size / divisor.mob_size
+	return dividend.w_class / divisor.w_class

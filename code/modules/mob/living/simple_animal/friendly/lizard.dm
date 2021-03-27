@@ -23,7 +23,7 @@
 	response_harm   = "stomps on"
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
-	mob_size = MOB_TINY
+	w_class = SIZE_SMALL
 
 	has_head = TRUE
 	has_leg = TRUE

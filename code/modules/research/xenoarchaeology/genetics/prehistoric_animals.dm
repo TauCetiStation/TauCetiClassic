@@ -10,7 +10,7 @@
 	maxHealth = 125
 	health = 125
 	speed = 2
-	mob_size = MOB_LARGE
+	w_class = SIZE_GARGANTUAN
 	melee_damage = 10
 	attacktext = "maul"
 	cold_damage_per_tick = 0
@@ -31,7 +31,7 @@
 	maxHealth = 25
 	health = 25
 	speed = 1
-	mob_size = MOB_SMALL
+	w_class = SIZE_LARGE
 	melee_damage = 5
 	attacktext = "goug"
 	cold_damage_per_tick = 0
@@ -52,7 +52,7 @@
 	maxHealth = 75
 	health = 75
 	speed = 1
-	mob_size = MOB_LARGE
+	w_class = SIZE_GARGANTUAN
 	melee_damage = 8
 	attacktext = "goug"
 	cold_damage_per_tick = 0
@@ -66,7 +66,7 @@
 	icon_state = "yithian"
 	icon_living = "yithian"
 	icon_dead = "yithian_dead"
-	mob_size = MOB_MINISCULE
+	w_class = SIZE_TINY
 	icon = 'code/modules/jungle/jungle.dmi'
 
 /mob/living/simple_animal/tindalos
@@ -75,5 +75,5 @@
 	icon_state = "tindalos"
 	icon_living = "tindalos"
 	icon_dead = "tindalos_dead"
-	mob_size = MOB_MINISCULE
+	w_class = SIZE_TINY
 	icon = 'code/modules/jungle/jungle.dmi'

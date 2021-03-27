@@ -8,7 +8,7 @@
 	icon_gib = "pine_1"
 	speak_chance = 0
 	turns_per_move = 5
-	mob_size = MOB_LARGE
+	w_class = SIZE_GARGANTUAN
 	digestion_product = "plantmatter"
 
 	response_help = "brushes the"

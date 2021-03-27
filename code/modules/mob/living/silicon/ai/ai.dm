@@ -38,7 +38,7 @@ var/list/ai_verbs_default = list(
 	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
 	shouldnt_see = list(/obj/effect/rune)
-	mob_size = MOB_LARGE
+	w_class = SIZE_GARGANTUAN
 	digestion_product = "carbon"
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/camera = null
@@ -365,7 +365,7 @@ var/list/ai_verbs_default = list(
 	if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
-	
+
 	if(!input)
 		return
 

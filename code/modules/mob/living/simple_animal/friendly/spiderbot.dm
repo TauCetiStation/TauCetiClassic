@@ -39,7 +39,7 @@
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
 	small = 1
-	mob_size = MOB_MINISCULE
+	w_class = SIZE_TINY
 	digestion_product = "carbon"
 	speak_emote = list("beeps","clicks","chirps")
 

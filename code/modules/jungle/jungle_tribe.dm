@@ -60,7 +60,7 @@
 	melee_damage = 10
 	turns_per_move = 1
 	stop_automated_movement_when_pulled = FALSE
-	mob_size= MOB_LARGE
+	w_class= SIZE_GARGANTUAN
 	digestion_product = "plantmatter"
 	var/my_type = 1
 

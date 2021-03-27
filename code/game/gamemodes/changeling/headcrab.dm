@@ -64,7 +64,7 @@
 	ventcrawler = 2
 	speed = -2
 	small = TRUE
-	mob_size = MOB_TINY
+	w_class = SIZE_SMALL
 	var/datum/mind/origin
 	var/egg_lain = FALSE
 

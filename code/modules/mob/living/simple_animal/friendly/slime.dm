@@ -35,7 +35,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
-	mob_size = MOB_LARGE
+	w_class = SIZE_GARGANTUAN
 	digestion_product = "slimejelly"
 	var/colour = "grey"
 

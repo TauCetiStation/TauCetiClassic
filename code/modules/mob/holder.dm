@@ -80,7 +80,7 @@
 	name = "mouse"
 	desc = "It's a small rodent."
 	icon_state = "mouse_gray"
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/holder/mouse/gray
 	icon_state = "mouse_gray"
@@ -95,7 +95,7 @@
 	name = "lizard"
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/holder/monkey
 	name = "monkey"

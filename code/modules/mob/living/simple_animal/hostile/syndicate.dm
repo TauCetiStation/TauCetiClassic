@@ -169,7 +169,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
-	mob_size= MOB_MINISCULE
+	w_class= SIZE_TINY
 	digestion_product = "carbon"
 	health = 15
 	maxHealth = 15

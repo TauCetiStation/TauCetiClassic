@@ -24,7 +24,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 	pull_size_ratio = 1.5
 	digestion_product = "protein"
-	mob_size = MOB_SMALL
+	w_class = SIZE_LARGE
 
 	moveset_type = /datum/combat_moveset/human
 

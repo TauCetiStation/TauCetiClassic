@@ -506,7 +506,13 @@
 		usr = null
 		remove_from_storage(A, loc)
 
-/obj/item/proc/get_storage_cost()
+/atom/movable/proc/get_storage_cost()
+	return FALSE
+
+/mob/living/get_storage_cost()
+	return base_storage_cost(w_class)
+
+/obj/item/get_storage_cost()
 	//If you want to prevent stuff above a certain w_class from being stored, use max_w_class
 	return base_storage_cost(w_class)
 

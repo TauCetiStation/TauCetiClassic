@@ -12,7 +12,7 @@
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE | PASSMOB
 	small = TRUE
-	mob_size = MOB_TINY
+	w_class = SIZE_SMALL
 	speak_chance = 1
 	melee_damage = 0
 	turns_per_move = 8

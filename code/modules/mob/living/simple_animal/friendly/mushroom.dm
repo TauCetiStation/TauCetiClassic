@@ -5,7 +5,7 @@
 	icon_living = "mushroom"
 	icon_dead = "mushroom_dead"
 	small = 1
-	mob_size = MOB_SMALL
+	w_class = SIZE_LARGE
 	digestion_product = "psilocybin"
 
 	speak_chance = 0
