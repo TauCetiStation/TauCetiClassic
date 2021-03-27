@@ -58,7 +58,7 @@
 /obj/item/weapon/reagent_containers/monkeycube/proc/Expand()
 	for(var/mob/M in viewers(src,7))
 		to_chat(M, "<span class='rose'>\The [src] expands!</span>")
-	new monkey_type(src)
+	new monkey_type(loc)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/monkeycube/proc/Unwrap(mob/user)
