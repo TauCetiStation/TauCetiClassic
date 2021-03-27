@@ -8,7 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
 	var/created_name = "Cleanbot"
 
 

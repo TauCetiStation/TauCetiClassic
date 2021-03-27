@@ -15,7 +15,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana_peel"
 	item_state = "banana_peel"
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -30,7 +30,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "h-banana_peel"
 	item_state = "h-banana_peel"
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -48,7 +48,7 @@
 	gender = PLURAL
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -192,7 +192,7 @@
 	icon_state = "bike_horn"
 	item_state = "bike_horn"
 	throwforce = 3
-	w_class = SIZE_TINY
+	w_class = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 15
 	attack_verb = list("HONKED")
@@ -236,7 +236,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "sound_button_on"
 	var/cooldown = FALSE
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	var/static/list/actions = list(
 		"Laugh" = image(icon = 'icons/obj/clothing/masks.dmi', icon_state = "clown"),
 		"Weapon shot" = image(icon = 'icons/obj/gun.dmi', icon_state = "taser"),

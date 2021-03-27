@@ -3,7 +3,7 @@
 	desc = "It can hold a few small and personal things."
 	max_storage_space = 10
 	icon_state = "wallet"
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/spacecash,
 		/obj/item/weapon/card,

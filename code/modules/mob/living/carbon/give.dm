@@ -13,7 +13,7 @@
 		to_chat(src, "<span class='red'>You can't give this to [name]</span>")
 		return
 	if(HULK in M.mutations)
-		if(I.w_class < SIZE_LARGE)
+		if(I.w_class < ITEM_SIZE_LARGE)
 			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
 			return
 	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))

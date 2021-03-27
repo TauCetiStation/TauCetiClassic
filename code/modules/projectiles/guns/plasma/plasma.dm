@@ -16,7 +16,7 @@
 	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"
-	w_class = SIZE_LARGE
+	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=3;magnets=2"
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
@@ -48,7 +48,7 @@
 		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge/massive
 		)
 
-	w_class = SIZE_HUGE
+	w_class = ITEM_SIZE_HUGE
 	fire_delay = 15
 	number_of_shots = 7 // It can be more than that (but no more than 1 extra), if there is a bit of charge left after 7th shot.
 	max_projectile_per_fire = 5

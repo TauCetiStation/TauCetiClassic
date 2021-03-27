@@ -185,7 +185,7 @@
 
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9.0

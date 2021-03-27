@@ -6,7 +6,7 @@
 	item_state = "" // no inhands
 	item_color = "bluetie"
 	slot_flags = SLOT_FLAGS_TIE
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 
 	var/slot = "decor"
 	var/obj/item/clothing/under/has_suit = null // the suit the tie may be attached to

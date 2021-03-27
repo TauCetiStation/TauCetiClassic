@@ -95,7 +95,7 @@
 	name = "package wrapper"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
-	w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
 	var/amount = 25.0
 
 
@@ -127,11 +127,11 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
-			if(P.w_class <= SIZE_TINY)
+			if(P.w_class <= ITEM_SIZE_TINY)
 				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= SIZE_SMALL)
+			else if (P.w_class <= ITEM_SIZE_SMALL)
 				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= SIZE_NORMAL)
+			else if (P.w_class <= ITEM_SIZE_NORMAL)
 				P.icon_state = "deliverycrate3"
 			else
 				P.icon_state = "deliverycrate4"
@@ -185,7 +185,7 @@
 	icon_state = "dest_tagger"
 	var/currTag = 0
 
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT

@@ -60,7 +60,7 @@
 	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."
 	icon_state = "hos_peakedcap"
 	item_state = "hos_peakedcap"
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 

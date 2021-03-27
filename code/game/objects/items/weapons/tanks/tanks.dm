@@ -7,7 +7,7 @@
 	icon = 'icons/obj/tank.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
-	w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
 
 	force = 5.0
 	throwforce = 10.0

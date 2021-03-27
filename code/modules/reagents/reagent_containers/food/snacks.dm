@@ -1599,7 +1599,7 @@
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable
-	w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
 	var/obj/item/weapon/storage/internal/sliceable/storage
 
 /obj/item/weapon/storage/internal/sliceable

@@ -18,7 +18,7 @@
  */
 /obj/item/weapon/kitchen/utensil
 	force = 0
-	w_class = SIZE_TINY
+	w_class = ITEM_SIZE_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
@@ -126,7 +126,7 @@
 	sharp = 1
 	edge = 1
 	force = 10.0
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
@@ -187,7 +187,7 @@
 	icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown-by-products."
 	force = 15.0
-	w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
 	throwforce = 8.0
 	throw_speed = 3
 	throw_range = 6
@@ -210,7 +210,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 7
-	w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
@@ -252,10 +252,10 @@
 	force = 8
 	throwforce = 12.0
 	throw_range = 5
-	w_class = SIZE_NORMAL
+	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 3000
-	max_w_class = SIZE_NORMAL
+	max_w_class = ITEM_SIZE_NORMAL
 	opened = TRUE
 	max_storage_space = 18
 	var/cooldown = 0
@@ -331,7 +331,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 3
-	w_class = SIZE_SMALL
+	w_class = ITEM_SIZE_SMALL
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "smashed")
 
 /obj/item/weapon/kitchen/mould/bear
