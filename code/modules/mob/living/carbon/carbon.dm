@@ -790,7 +790,7 @@
 			item_to_add = null
 
 		if(item_to_add && get_slot_ref(slot))
-			if(item_to_add.w_class > ITEM_SIZE_SMALL)
+			if(item_to_add.w_class > SIZE_TINY)
 				to_chat(usr, "<span class='red'>[src] is already wearing something. You need empty hand to take that off (or holding small item).</span>")
 				return
 			item_to_add = null

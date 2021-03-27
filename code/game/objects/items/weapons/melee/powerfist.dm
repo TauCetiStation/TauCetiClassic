@@ -8,7 +8,7 @@
 	force = 20
 	throwforce = 10
 	throw_range = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "combat=5;powerstorage=3;syndicate=3"
 	var/base_force = 0
 	var/fisto_setting = 1

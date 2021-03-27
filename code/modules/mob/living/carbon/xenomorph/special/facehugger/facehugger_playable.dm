@@ -191,7 +191,7 @@ This is chestburster mechanic for damaging
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_LARGE
 
 
 /obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
@@ -346,7 +346,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_LARGE
 
 
 /obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/pedalbag/verb/quick_empty()

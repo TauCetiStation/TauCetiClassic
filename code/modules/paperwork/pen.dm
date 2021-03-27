@@ -17,7 +17,7 @@
 	item_state = "pen"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_EARS
 	throwforce = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
@@ -183,7 +183,7 @@
 	else
 		on = 1
 		force = 18
-		w_class = ITEM_SIZE_NORMAL
+		w_class = SIZE_SMALL
 		edge = 1
 		name = "energy dagger"
 		hitsound = list('sound/weapons/blade1.ogg')

@@ -1,7 +1,7 @@
 /obj/item/device/traitor_caller
 	name = "Suspicious phone"
 	desc = "Make a call for to attract an extra agent at station"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "programming=4;materials=4"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_phone"

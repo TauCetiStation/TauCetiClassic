@@ -475,7 +475,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	layer = 4
 
 /obj/item/asteroid/goliath_hide/afterattack(atom/target, mob/user, proximity, params)

@@ -75,7 +75,7 @@
 /obj/item/weapon/medical/teleporter
 	name = "Body Teleporter"
 	desc = "A device used for teleporting injured(critical) or dead people."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gender = PLURAL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "medicon"

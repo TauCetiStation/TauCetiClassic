@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0

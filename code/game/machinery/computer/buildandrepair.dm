@@ -11,7 +11,7 @@
 /obj/item/weapon/circuitboard
 	density = 0
 	anchored = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"

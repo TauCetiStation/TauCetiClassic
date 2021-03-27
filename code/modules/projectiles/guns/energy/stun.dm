@@ -56,7 +56,7 @@
 	name = "foam dart crossbow"
 	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon_state = "crossbow"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "crossbow"
 	m_amt = 2000
 	origin_tech = "combat=2;magnets=2;syndicate=5"
@@ -92,7 +92,7 @@
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
 	desc = "A weapon favored by syndicate infiltration teams."
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	can_be_holstered = FALSE
 	force = 10
 	m_amt = 200000

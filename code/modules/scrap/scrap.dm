@@ -112,7 +112,7 @@ var/global/list/scrap_base_cache = list()
 		if(prob(66))
 			I.make_old()
 	loot = new(src)
-	loot.set_slots(slots = 7, slot_size = ITEM_SIZE_HUGE)
+	loot.set_slots(slots = 7, slot_size = SIZE_LARGE)
 	shuffle_loot()
 
 /obj/structure/scrap/Destroy()

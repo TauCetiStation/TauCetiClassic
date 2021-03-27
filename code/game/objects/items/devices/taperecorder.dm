@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorderidle"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 60
 	g_amt = 30
 	var/emagged = FALSE

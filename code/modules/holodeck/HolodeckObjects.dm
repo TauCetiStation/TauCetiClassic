@@ -191,7 +191,7 @@
 	throw_speed = 1
 	throw_range = 5
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = NOSHIELD | NOBLOODY
 	var/active = 0
 
@@ -224,13 +224,13 @@
 	if (active)
 		force = 30
 		icon_state = "sword[item_color]"
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = 3
 		icon_state = "sword0"
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
@@ -250,7 +250,7 @@
 	name = "basketball"
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	w_class = ITEM_SIZE_LARGE //Stops people from hiding it in their bags/pockets
+	w_class = SIZE_NORMAL //Stops people from hiding it in their bags/pockets
 
 /obj/structure/holohoop
 	name = "basketball hoop"

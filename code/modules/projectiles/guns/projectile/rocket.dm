@@ -3,7 +3,7 @@
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	icon_state = "rocket"
 	item_state = "rocket"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 5
 	flags =  CONDUCT
 	origin_tech = "combat=8;materials=5"

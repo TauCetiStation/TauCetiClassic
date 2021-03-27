@@ -19,7 +19,7 @@
 	m_amt = 10000
 	g_amt = 5000
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	usesound = 'sound/items/surgery/Retract.ogg'
 
@@ -34,7 +34,7 @@
 	m_amt = 5000
 	g_amt = 2500
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "pinched")
 	usesound = 'sound/items/surgery/Hemostat.ogg'
@@ -50,7 +50,7 @@
 	m_amt = 5000
 	g_amt = 2500
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("burnt")
 	usesound = 'sound/items/surgery/cautery.ogg'
@@ -69,7 +69,7 @@
 	g_amt = 10000
 	flags = CONDUCT
 	force = 15.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
 	usesound = 'sound/items/surgery/SurgDrill.ogg'
@@ -91,7 +91,7 @@
 	force = 10.0
 	sharp = 1
 	edge = 1
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
@@ -155,7 +155,7 @@
 	hitsound = list('sound/weapons/circsawhit.ogg')
 	flags = CONDUCT
 	force = 15.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 9.0
 	throw_speed = 3
 	throw_range = 5
@@ -174,7 +174,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone-gel"
 	force = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 1.0
 	usesound = 'sound/items/surgery/Bone_Gel.ogg'
 
@@ -185,7 +185,7 @@
 	force = 0
 	throwforce = 1.0
 	origin_tech = "materials=1;biotech=3"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/usage_amount = 10
 	usesound = 'sound/items/surgery/Fix-O-vein.ogg'
 
@@ -197,7 +197,7 @@
 	throwforce = 9.0
 	throw_speed = 3
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	attack_verb = list("attacked", "hit", "bludgeoned")
 	usesound = 'sound/items/surgery/BonSet.ogg'
 

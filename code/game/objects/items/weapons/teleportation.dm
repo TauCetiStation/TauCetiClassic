@@ -17,7 +17,7 @@
 	var/broadcasting = null
 	var/listening = 1.0
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -130,7 +130,7 @@ Frequency:
 	icon_state = "hand_tele"
 	item_state = "electronic"
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000

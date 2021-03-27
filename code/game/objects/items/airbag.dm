@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "airbag"
 	item_state = "syringe_kit"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 
 /obj/item/airbag/proc/deploy(mob/user)
