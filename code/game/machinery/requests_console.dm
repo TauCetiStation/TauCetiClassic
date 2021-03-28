@@ -1,17 +1,18 @@
 /******************** Requests Console ********************/
 /** Originally written by errorage, updated by: Carn, needs more work though. I just added some security fixes */
 
-var/req_console_assistance = list()
-var/req_console_supplies = list()
-var/req_console_information = list()
+var/list/req_console_assistance = list()
+var/list/req_console_supplies = list()
+var/list/req_console_information = list()
+var/list/departments_from_field = list()
 
 /obj/machinery/requests_console
-	name = "Requests Console"
-	desc = "A console intended to send requests to different departments on the station."
+	name = "Консоль Запросов"
+	desc = "Консоль предназначенна для отправки запросов в разные отделы станции."
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
-	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
+	var/department = "Неизвестный" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0
 		// 0 = none (not listed, can only repeplied to)
@@ -26,7 +27,6 @@ var/req_console_information = list()
 		// 0 = no new message
 		// 1 = normal priority
 		// 2 = high priority
-		// 3 = extreme priority - not implemented, will probably require some hacking... everything needs to have a hidden feature in this game.
 	var/screen = 0
 		// 0 = main menu,
 		// 1 = req. assistance,
@@ -51,8 +51,10 @@ var/req_console_information = list()
 	var/msgVerified = "" //Will contain the name of the person who varified it
 	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
 	var/message = "";
-	var/dpt = ""; //the department which will be receiving the message
+	var/to_dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
+	var/console_from_field  // "Консоль Запросов [console_from_field]" "Оповещение [console_from_field]"
+	var/list/departments = list() // Buffer for duplicate department filter
 	light_range = 0
 
 	var/datum/announcement/station/command/department/announcement = new
@@ -71,7 +73,10 @@ var/req_console_information = list()
 
 /obj/machinery/requests_console/atom_init()
 	. = ..()
-	name = "[department] Requests Console"
+	if(!console_from_field)
+		console_from_field = department
+	name = "Консоль Запросов [console_from_field]"
+	departments_from_field[department] = console_from_field
 	requests_console_list += src
 	//req_console_departments += department
 	switch(departmentType)
@@ -119,51 +124,40 @@ var/req_console_information = list()
 			req_console_information -= department
 	return ..()
 
+/obj/machinery/requests_console/proc/render_ui_deparments(header, list/list_deps)
+	. = text("[header]<BR><BR>")
+	for(var/dpt in list_deps)
+		if(dpt in departments)
+			continue
+		departments.Add(dpt)
+		var/enc_dpt = url_encode(dpt)
+		if (dpt != department)
+			. += text("[dpt] <A href='?src=\ref[src];write=[enc_dpt]'>Сообщение</A> ")
+			. += text("<A href='?src=\ref[src];write=[enc_dpt];priority=2'>Приоритетое</A>")
+			. += text("<BR>")
+	. += text("<BR><A href='?src=\ref[src];setScreen=0'>Назад</A><BR>")
+	departments.Cut()
+
 /obj/machinery/requests_console/ui_interact(user)
-	var/dat
-	dat = ""
+	var/dat = ""
 	if(!open)
 		switch(screen)
 			if(1)	//req. assistance
-				dat += text("Which department do you need assistance from?<BR><BR>")
-				for(var/dpt in req_console_assistance)
-					if (dpt != department)
-						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
-						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
-//						if (hackState == 1)
-//							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
-						dat += text(")<BR>")
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += render_ui_deparments("Из какого отдела вам нужна помощь?", req_console_assistance)
 
 			if(2)	//req. supplies
-				dat += text("Which department do you need supplies from?<BR><BR>")
-				for(var/dpt in req_console_supplies)
-					if (dpt != department)
-						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
-						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
-//						if (hackState == 1)
-//							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
-						dat += text(")<BR>")
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += render_ui_deparments("Из какого отдела вам нужны поставки?", req_console_supplies)
 
 			if(3)	//relay information
-				dat += text("Which department would you like to send information to?<BR><BR>")
-				for(var/dpt in req_console_information)
-					if (dpt != department)
-						dat += text("[dpt] (<A href='?src=\ref[src];write=[ckey(dpt)]'>Message</A> or ")
-						dat += text("<A href='?src=\ref[src];write=[ckey(dpt)];priority=2'>High Priority</A>")
-//						if (hackState == 1)
-//							dat += text(" or <A href='?src=\ref[src];write=[ckey(dpt)];priority=3'>EXTREME</A>)")
-						dat += text(")<BR>")
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += render_ui_deparments("В какой отдел вы хотите отправить сообщение?", req_console_information)
 
 			if(6)	//sent successfully
-				dat += text("<FONT COLOR='GREEN'>Message sent</FONT><BR><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
+				dat += text("<FONT COLOR='GREEN'>Сообщение отправлено</FONT><BR><BR>")
+				dat += text("<A href='?src=\ref[src];setScreen=0'>Продолжить</A><BR>")
 
 			if(7)	//unsuccessful; not sent
-				dat += text("<FONT COLOR='RED'>An error occurred. </FONT><BR><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Continue</A><BR>")
+				dat += text("<FONT COLOR='RED'>Произошла ошибка. </FONT><BR><BR>")
+				dat += text("<A href='?src=\ref[src];setScreen=0'>Продолжить</A><BR>")
 
 			if(8)	//view messages
 				for (var/obj/machinery/requests_console/Console in requests_console_list)
@@ -175,46 +169,46 @@ var/req_console_information = list()
 				icon_state = "req_comp0"
 				for(var/msg in messages)
 					dat += text("[msg]<BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=0'>Back to main menu</A><BR>")
+				dat += text("<A href='?src=\ref[src];setScreen=0'>Вернуться в главное меню</A><BR>")
 
 			if(9)	//authentication before sending
-				dat += text("<B>Message Authentication</B><BR><BR>")
-				dat += text("<b>Message for [dpt]: </b>[message]<BR><BR>")
-				dat += text("You may authenticate your message now by scanning your ID or your stamp<BR><BR>")
-				dat += text("Validated by: [msgVerified]<br>");
-				dat += text("Stamped by: [msgStamped]<br>");
-				dat += text("<A href='?src=\ref[src];department=[dpt]'>Send</A><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+				dat += text("<B>Авторизация Сообщения</B><BR><BR>")
+				dat += text("<b>Сообщение для [to_dpt]: </b>[message]<BR><BR>")
+				dat += text("Вы сейчас можите авторизировать ваше сообщение приложив ID или печать.<BR><BR>")
+				dat += text("Подтверждено: [msgVerified]<br>");
+				dat += text("Печать: [msgStamped]<br>");
+				dat += text("<A href='?src=\ref[src];department=[url_encode(to_dpt)]'>Отравить</A><BR>");
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Назад</A><BR>")
 
 			if(10)	//send announcement
-				dat += text("<B>Station wide announcement</B><BR><BR>")
+				dat += text("<B>Оповещение станции</B><BR><BR>")
 				if(announceAuth)
-					dat += text("<b>Authentication accepted</b><BR><BR>")
+					dat += text("<b>Авторизация принята</b><BR><BR>")
 				else
-					dat += text("Swipe your card to authenticate yourself.<BR><BR>")
-				dat += text("<b>Message: </b>[message] <A href='?src=\ref[src];writeAnnouncement=1'>Write</A><BR><BR>")
+					dat += text("Проведите вашей картой для авторизации.<BR><BR>")
+				dat += text("<b>Сообщение: </b>[message] <A href='?src=\ref[src];writeAnnouncement=1'>Написать</A><BR><BR>")
 				if (announceAuth && message)
-					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce</A><BR>");
-				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
+					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Отправить</A><BR>");
+				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Назад</A><BR>")
 
 			else	//main menu
 				screen = 0
 				announceAuth = 0
 				if (newmessagepriority == 1)
-					dat += text("<FONT COLOR='RED'>There are new messages</FONT><BR>")
+					dat += text("<FONT COLOR='RED'>Есть новые сообщения</FONT><BR>")
 				if (newmessagepriority == 2)
-					dat += text("<FONT COLOR='RED'><B>NEW PRIORITY MESSAGES</B></FONT><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=8'>View Messages</A><BR><BR>")
+					dat += text("<FONT COLOR='RED'><B>НОВОЕ ПРИОРИТЕТНОЕ СООБЩЕНИЕ</B></FONT><BR>")
+				dat += text("<A href='?src=\ref[src];setScreen=8'>Просмотр сообщений</A><BR><BR>")
 
-				dat += text("<A href='?src=\ref[src];setScreen=1'>Request Assistance</A><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=2'>Request Supplies</A><BR>")
-				dat += text("<A href='?src=\ref[src];setScreen=3'>Relay Anonymous Information</A><BR><BR>")
+				dat += text("<A href='?src=\ref[src];setScreen=1'>Запросить помощь</A><BR>")
+				dat += text("<A href='?src=\ref[src];setScreen=2'>Запросить поставку</A><BR>")
+				dat += text("<A href='?src=\ref[src];setScreen=3'>Передать информацию анонимно</A><BR><BR>")
 				if(announcementConsole)
-					dat += text("<A href='?src=\ref[src];setScreen=10'>Send station-wide announcement</A><BR><BR>")
+					dat += text("<A href='?src=\ref[src];setScreen=10'>Отправить оповещение станции</A><BR><BR>")
 				if (silent)
-					dat += text("Speaker <A href='?src=\ref[src];setSilent=0'>OFF</A>")
+					dat += text("Звук <A href='?src=\ref[src];setSilent=0'>ВЫКЛ</A>")
 				else
-					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
+					dat += text("Звук <A href='?src=\ref[src];setSilent=1'>ВКЛ</A>")
 
 		var/datum/browser/popup = new(user, "window=request_console", src.name)
 		popup.set_content(dat)
@@ -226,12 +220,12 @@ var/req_console_information = list()
 		return
 
 	if(href_list["write"])
-		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
+		to_dpt = href_list["write"]  //write contains the string of the receiving department's name
 
-		if(!dpt)
+		if(!to_dpt)
 			return
 
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
+		var/new_message = sanitize(input(usr, "Напишите ваше сообщение:", "Ожидание Ввода", ""))
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -241,14 +235,14 @@ var/req_console_information = list()
 				else
 					priority = -1
 		else
-			dpt = "";
+			to_dpt = "";
 			msgVerified = ""
 			msgStamped = ""
 			screen = 0
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", "") as null|message)
+		var/new_message = sanitize(input(usr, "Напишите ваше сообщение:", "Ожидание Ввода", "") as null|message)
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])
@@ -265,7 +259,7 @@ var/req_console_information = list()
 		if(!announcementConsole)
 			return FALSE
 
-		announcement.play(department, message)
+		announcement.play(console_from_field, message)
 
 		announceAuth = 0
 		message = ""
@@ -274,17 +268,26 @@ var/req_console_information = list()
 	if(href_list["department"] && message)
 		var/log_msg = message
 		var/pass = 0
+		var/list/auth_data = list()
+		var/recipient_from_field = href_list["department"]
+		if(recipient_from_field in departments_from_field)
+			recipient_from_field = departments_from_field[recipient_from_field]
+		if(msgVerified)
+			auth_data.Add(msgVerified)
+		if(msgStamped)
+			auth_data.Add(msgStamped)
+		var/auth = jointext(auth_data, "<BR>")
 		screen = 7 //if it's successful, this will get overrwritten (7 = unsufccessfull, 6 = successfull)
 		for(var/obj/machinery/message_server/MS in message_servers)
 			if(!MS.active)
 				continue
-			MS.send_rc_message(href_list["department"],department,log_msg,msgStamped,msgVerified,priority)
 			screen = 6
 			pass = 1
-			messages += "<B>Message sent to [dpt]</B><BR>[message]"
+			messages += "[worldtime2text()] <B>Отправлено для [recipient_from_field]:</B><BR><DIV class='Section'>[message]</DIV>[auth]"
+			MS.send_rc_message(href_list["department"], department, log_msg, msgStamped, msgVerified, priority, console_from_field)
 			break
 		if(!pass)
-			audible_message("[bicon(src)] *The Requests Console beeps: 'NOTICE: No server detected!'")
+			audible_message("[bicon(src)] *Консоль Запроса пикнула: 'ЗАМЕЧАНИЕ: Сервер не обнаружен!'")
 
 	//Handle screen switching
 	switch(text2num(href_list["setScreen"]))
@@ -312,7 +315,7 @@ var/req_console_information = list()
 				return FALSE
 			screen = 10
 		else		//main menu
-			dpt = ""
+			to_dpt = ""
 			msgVerified = ""
 			msgStamped = ""
 			message = ""
@@ -329,12 +332,11 @@ var/req_console_information = list()
 
 	updateUsrDialog()
 
-					//err... hacking code, which has no reason for existing... but anyway... it's supposed to unlock priority 3 messanging on that console (EXTREME priority...) the code for that actually exists.
 /obj/machinery/requests_console/attackby(obj/item/weapon/O, mob/user)
 	if (istype(O, /obj/item/weapon/card/id))
 		if(screen == 9)
 			var/obj/item/weapon/card/id/T = O
-			msgVerified = text("<font color='green'><b>Verified by [T.registered_name] ([T.assignment])</b></font>")
+			msgVerified = text("<font color='green'><b>Подтверждено [T.registered_name] ([T.assignment])</b></font>")
 			updateUsrDialog()
 		if(screen == 10)
 			var/obj/item/weapon/card/id/ID = O
@@ -342,11 +344,11 @@ var/req_console_information = list()
 				announceAuth = 1
 			else
 				announceAuth = 0
-				to_chat(user, "<span class='warning'>You are not authorized to send announcements.</span>")
+				to_chat(user, "<span class='warning'>Вы не авторизованы для отправки оповещений на станцию.</span>")
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
 		if(screen == 9)
 			var/obj/item/weapon/stamp/T = O
-			msgStamped = text("<font color='blue'><b>Stamped with the [T.name]</b></font>")
+			msgStamped = text("<font color='blue'><b>[T.name]</b></font>")
 			updateUsrDialog()
 	return

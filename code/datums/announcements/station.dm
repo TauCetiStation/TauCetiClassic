@@ -22,7 +22,7 @@
 /datum/announcement/station/command/department/play(department, message)
 	// TODO translate department name
 	if(department && message)
-		title = "[department] Announcement"
+		title = "Оповещение из [department]"
 	..(message)
 
 /datum/announcement/station/command/ai
@@ -46,7 +46,7 @@
 
 /datum/announcement/station/maint_revoke
 	name = "Alert: Maintenance Access Revoked"
-	message = "Был аннулирован доступ на все шлюзы."
+	message = "Был аннулирован обслуживающий доступ на все шлюзы."
 
 /datum/announcement/station/maint_readd
 	name = "Alert: Maintenance Access Readded"
