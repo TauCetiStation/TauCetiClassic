@@ -218,6 +218,7 @@
 	speed = 0
 	environment_smash = 1
 	see_in_dark = 7
+	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
@@ -231,7 +232,7 @@
 	if(istype(A, /turf/simulated/wall/cult))
 		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct))
+	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
