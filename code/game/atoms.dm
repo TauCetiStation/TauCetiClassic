@@ -603,11 +603,7 @@
 			lube |= SLIDE_ICE
 
 		if(lube & SLIDE)
-			step(C, olddir)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 1)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 2)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 3)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, C, olddir), 4)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
 			C.take_bodypart_damage(2) // Was 5 -- TLE
 		else if(lube & SLIDE_ICE)
 			var/has_NOSLIP = FALSE
@@ -616,7 +612,9 @@
 				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
 					has_NOSLIP = TRUE
 			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
-				step(C, olddir)
+				if(C.force_moving) //If we're already slipping extend it
+					qdel(C.force_moving)
+				new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 			else
 				C.inertia_dir = 0
 		return TRUE
