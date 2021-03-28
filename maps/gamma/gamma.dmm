@@ -122,7 +122,7 @@
 	pixel_y = -7
 	},
 /obj/machinery/requests_console{
-	department = "EVA";
+	department = "ВКД";
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -3762,8 +3762,8 @@
 "ahO" = (
 /obj/structure/rack,
 /obj/machinery/requests_console{
-	department = "Private Office";
-	name = "Private Office RC";
+	console_from_field = "Частного Офиса";
+	department = "Частный Офис";
 	pixel_x = -30
 	},
 /obj/item/weapon/storage/briefcase/centcomm{
@@ -5849,9 +5849,9 @@
 	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Research Director's Desk";
+	console_from_field = "Кабинета Научрука";
+	department = "Кабинет Научрука";
 	departmentType = 5;
-	name = "Research Director RC";
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -7821,7 +7821,8 @@
 /area/station/aisat)
 "bvD" = (
 /obj/machinery/requests_console{
-	department = "Cargo Bay";
+	console_from_field = "Грузового";
+	department = "Грузовой";
 	departmentType = 2;
 	pixel_x = -30
 	},
@@ -10810,9 +10811,9 @@
 "csf" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Bridge";
+	console_from_field = "Мостика";
+	department = "Мостик";
 	departmentType = 5;
-	name = "Bridge RC";
 	pixel_x = 30
 	},
 /turf/simulated/floor{
@@ -12031,7 +12032,8 @@
 /obj/item/weapon/folder/yellow,
 /obj/item/weapon/pen,
 /obj/machinery/requests_console{
-	department = "Cargo Bay";
+	console_from_field = "Грузового";
+	department = "Грузовой";
 	departmentType = 2;
 	pixel_x = -30
 	},
@@ -12662,7 +12664,8 @@
 	pixel_y = 4
 	},
 /obj/machinery/requests_console{
-	department = "Security";
+	console_from_field = "Службы Безопасности";
+	department = "Служба Безопасности";
 	departmentType = 5;
 	pixel_x = -30
 	},
@@ -14071,9 +14074,9 @@
 /area/station/medical/surgery)
 "drd" = (
 /obj/machinery/requests_console{
-	department = "Bar";
+	console_from_field = "Бара";
+	department = "Бар";
 	departmentType = 2;
-	name = "Bar RC";
 	pixel_y = 30
 	},
 /obj/machinery/light/small{
@@ -22411,8 +22414,8 @@
 	},
 /obj/item/device/flashlight/pen,
 /obj/machinery/requests_console{
-	department = "Genetics";
-	name = "Genetics Requests Console";
+	console_from_field = "Генетики";
+	department = "Генетика";
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -22672,9 +22675,9 @@
 	pixel_x = -1
 	},
 /obj/machinery/requests_console{
-	department = "Atmospherics";
+	console_from_field = "Атмосферного";
+	department = "Атмосферный";
 	departmentType = 4;
-	name = "Atmos RC";
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -28883,9 +28886,9 @@
 "icH" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Head of Personnel's Desk";
+	console_from_field = "Кабинета ГП";
+	department = "Кабинет ГП";
 	departmentType = 5;
-	name = "Head of Personnel RC";
 	pixel_x = 30
 	},
 /obj/structure/disposalpipe/segment,
@@ -29331,9 +29334,9 @@
 	dir = 4
 	},
 /obj/machinery/requests_console{
-	department = "Science";
+	console_from_field = "Научного";
+	department = "Научный";
 	departmentType = 2;
-	name = "Science Requests Console";
 	pixel_x = -30
 	},
 /obj/structure/disposalpipe/segment{
@@ -30896,7 +30899,8 @@
 "iKu" = (
 /obj/structure/table,
 /obj/machinery/requests_console{
-	department = "Kitchen";
+	console_from_field = "Кухни";
+	department = "Кухня";
 	departmentType = 2;
 	pixel_x = 30
 	},
@@ -32308,9 +32312,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/requests_console{
-	department = "Engineering";
+	console_from_field = "�?нженерного";
+	department = "�?нженерный";
 	departmentType = 4;
-	name = "Engineering RC";
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -32635,7 +32639,8 @@
 	pixel_y = 5
 	},
 /obj/machinery/requests_console{
-	department = "Hydroponics";
+	console_from_field = "Гидропоники";
+	department = "Гидропоника";
 	departmentType = 2;
 	pixel_x = -30
 	},
@@ -40327,9 +40332,9 @@
 /obj/structure/closet/secure_closet/hos,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Head of Security's Desk";
+	console_from_field = "Кабинета ГСБ";
+	department = "Кабинет ГСБ";
 	departmentType = 5;
-	name = "Head of Security RC";
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -41222,7 +41227,8 @@
 	eftpos_name = "Cargo Bay EFTPOS scanner"
 	},
 /obj/machinery/requests_console{
-	department = "Cargo Bay";
+	console_from_field = "Грузового";
+	department = "Грузовой";
 	departmentType = 2;
 	pixel_x = 30
 	},
@@ -43492,9 +43498,9 @@
 "mEB" = (
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/requests_console{
-	department = "Detective's Desk";
+	console_from_field = "Кабинета Детектива";
+	department = "Кабинет Детектива";
 	departmentType = 5;
-	name = "Detective RC";
 	pixel_x = 31
 	},
 /obj/structure/disposalpipe/segment{
@@ -44951,7 +44957,8 @@
 "nbb" = (
 /obj/structure/table,
 /obj/machinery/requests_console{
-	department = "Tool Storage";
+	console_from_field = "Склада �?нструментов";
+	department = "Склад �?нструментов";
 	pixel_x = 30
 	},
 /obj/item/weapon/stock_parts/cell/high,
@@ -45456,8 +45463,8 @@
 	dir = 8
 	},
 /obj/machinery/requests_console{
-	department = "Medbay";
-	name = "Medbay Requests Console";
+	console_from_field = "Медотсека";
+	department = "Медотсек";
 	pixel_y = 30
 	},
 /obj/machinery/light_switch{
@@ -45949,9 +45956,9 @@
 "nsl" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Bridge";
+	console_from_field = "Мостика";
+	department = "Мостик";
 	departmentType = 5;
-	name = "Bridge RC";
 	pixel_x = 30
 	},
 /turf/simulated/floor/wood,
@@ -46012,9 +46019,9 @@
 	amount = 50
 	},
 /obj/machinery/requests_console{
-	department = "Engineering";
+	console_from_field = "�?нженерного";
+	department = "�?нженерный";
 	departmentType = 4;
-	name = "Engineering RC";
 	pixel_y = 32
 	},
 /obj/item/stack/sheet/rglass{
@@ -47930,7 +47937,8 @@
 /area/station/hallway/primary/central)
 "nXu" = (
 /obj/machinery/requests_console{
-	department = "Security";
+	console_from_field = "Службы Безопасности";
+	department = "Служба Безопасности";
 	departmentType = 5;
 	pixel_x = -30
 	},
@@ -59847,9 +59855,9 @@
 "rRh" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Chief Engineer's Desk";
+	console_from_field = "Кабинета Г�?";
+	department = "Кабинет Г�?";
 	departmentType = 3;
-	name = "Chief Engineer RC";
 	pixel_x = -32
 	},
 /obj/structure/closet/secure_closet/engineering_chief,
@@ -61009,9 +61017,8 @@
 /area/station/civilian/hydroponics)
 "ski" = (
 /obj/machinery/requests_console{
-	department = "AI";
+	department = "�?�?";
 	departmentType = 5;
-	name = "AI Requests Console";
 	pixel_y = 32
 	},
 /turf/simulated/floor/whitegreed,
@@ -61220,7 +61227,8 @@
 	},
 /obj/machinery/cryopod/right,
 /obj/machinery/requests_console{
-	department = "Crew Quarters";
+	console_from_field = "Кают Экипажа";
+	department = "Каюты Экипажа";
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -61990,7 +61998,8 @@
 	pixel_y = -4
 	},
 /obj/machinery/requests_console{
-	department = "Chemistry Storage";
+	console_from_field = "Хим Склада";
+	department = "Хим Склад";
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -62278,9 +62287,9 @@
 	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Chief Medical Officer's Desk";
+	console_from_field = "Кабинета Главврача";
+	department = "Кабинет Главврача";
 	departmentType = 5;
-	name = "Chief Medical Officer RC";
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -65229,9 +65238,9 @@
 /obj/structure/table/woodentable,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Captain's Desk";
+	console_from_field = "Капитанского Кабинета";
+	department = "Кабинет Капитана";
 	departmentType = 5;
-	name = "Captain RC";
 	pixel_x = 30
 	},
 /obj/machinery/light{
@@ -66128,7 +66137,8 @@
 "tOD" = (
 /obj/structure/closet/jcloset,
 /obj/machinery/requests_console{
-	department = "Janitorial";
+	console_from_field = "Уборщицкой";
+	department = "Уборщицкая";
 	departmentType = 1;
 	pixel_y = 29
 	},
@@ -66649,7 +66659,8 @@
 /obj/item/clothing/glasses/meson,
 /obj/item/device/multitool,
 /obj/machinery/requests_console{
-	department = "Tech storage";
+	console_from_field = "Тех Склада";
+	department = "Тех Склад";
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
@@ -79726,7 +79737,8 @@
 /area/station/cargo/office)
 "yfN" = (
 /obj/machinery/requests_console{
-	department = "Chapel";
+	console_from_field = "Часовни";
+	department = "Часовня";
 	departmentType = 2;
 	pixel_y = 30
 	},

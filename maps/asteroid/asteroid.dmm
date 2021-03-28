@@ -1942,9 +1942,9 @@
 	pixel_y = 24
 	},
 /obj/machinery/requests_console{
-	department = "Science";
+	console_from_field = "Научного";
+	department = "Научный";
 	departmentType = 2;
-	name = "Science Requests Console";
 	pixel_x = -30
 	},
 /turf/simulated/floor,
