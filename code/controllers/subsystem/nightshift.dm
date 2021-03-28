@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(nightshift)
 	init_order = SS_INIT_NIGHTSHIFT
 	wait = SS_WAIT_NIGHTSHIFT
 	priority = SS_PRIORITY_NIGHTSHIFT
-	flags = SS_NO_FIRE // change to SS_NO_TICK_CHECK for dynamic ligthing changes
+	flags = SS_NO_FIRE
 
 	var/nightshift_active = FALSE
 	var/nightshift_start_time = 23
