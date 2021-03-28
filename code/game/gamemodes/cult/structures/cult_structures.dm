@@ -73,6 +73,19 @@
 	new /obj/item/stack/sheet/metal(loc)
 	return ..()
 
+/obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
+	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)
+	charged.maxHealth = health
+	charged.health = health
+	forceMove(charged)
+
+	if(time_to_stop)
+		charged.timer = addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate), time_to_stop, TIMER_STOPPABLE)
+
+	if(R)
+		charged.RegisterSignal(R, COMSIG_REL_ADD_MEMBER,  /mob/living/simple_animal/hostile/pylon.proc/add_friend)
+	return charged
+
 /obj/structure/cult/pylon_platform
 	name = "pylon platform"
 	desc = "Useless."

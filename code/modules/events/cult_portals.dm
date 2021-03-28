@@ -22,8 +22,9 @@
 	C.send_request_to_ghost()
 
 /datum/event/anomaly/cult_portal/end()
-	var/obj/effect/anomaly/bluespace/cult_portal/C = newAnomaly
-	C.disable()
+	if(newAnomaly)
+		var/obj/effect/anomaly/bluespace/cult_portal/C = newAnomaly
+		C.disable()
 
 /datum/event/anomaly/cult_portal/massive
 

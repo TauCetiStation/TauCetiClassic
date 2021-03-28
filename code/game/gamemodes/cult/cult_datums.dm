@@ -408,16 +408,11 @@
 	return TRUE
 
 /datum/rune/cult/charge_pylons/action(mob/living/carbon/user)
-	var/list/all_pylons = list()
+	var/pylons = 0
 	for(var/obj/structure/cult/pylon/P in oview(1, holder))
 		if(!P.anchored)
 			continue
-		var/mob/living/simple_animal/hostile/pylon/charged = new(P.loc)
-		charged.maxHealth = P.health
-		charged.health = P.health
-		P.forceMove(charged)
-		all_pylons += charged
-		charged.RegisterSignal(religion, COMSIG_REL_ADD_MEMBER,  /mob/living/simple_animal/hostile/pylon.proc/add_friend)
-		charged.timer = addtimer(CALLBACK(charged, /mob/living/simple_animal/hostile/pylon.proc/deactivate, all_pylons), time_to_stop, TIMER_STOPPABLE)
+		P.activate(time_to_stop, religion)
+		pylons++
 
-	holder.visible_message("<span class='warning'>[russian_plural(all_pylons.len, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")
+	holder.visible_message("<span class='warning'>[russian_plural(pylons, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")

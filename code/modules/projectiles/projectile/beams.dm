@@ -196,9 +196,7 @@
 	. = ..()
 	def_zone = ran_zone()
 
-/obj/item/projectile/beam/cult_laser/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!..())
+/obj/item/projectile/beam/cult_laser/Bump(atom/A, forced=0)
+	if(istype(A, /mob/living/simple_animal/hostile/pylon) || istype(A, /obj/structure/cult/pylon) || istype(A, /mob/living/simple_animal/construct) || istype(A, /obj/effect/anomaly/bluespace/cult_portal))
 		return FALSE
-	if(istype(mover, /mob/living/simple_animal/hostile/pylon) || istype(mover, /obj/structure/cult/pylon))
-		return TRUE
-	return FALSE
+	return ..()

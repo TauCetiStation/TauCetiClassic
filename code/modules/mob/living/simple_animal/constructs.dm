@@ -231,7 +231,7 @@
 	if(istype(A, /turf/simulated/wall/cult))
 		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult))
+	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))

@@ -197,12 +197,15 @@
 	icon_state = "portal"
 	light_color = "#ff69b4"
 	layer = INFRONT_MOB_LAYER
+
 	var/next_spawn = 0
 	var/spawn_cd = 30 SECONDS
 	var/spawns = -1
+	var/need_bound = FALSE
+
+	var/enabled = TRUE
 	var/coef_max_size = 0.3333 // When this coefficient decreases, the sprite size increases
 	var/old_size = 1
-	var/need_bound = FALSE
 	var/list/coord_of_pylons = list(1, 1)
 	var/list/beams = list()
 
@@ -217,6 +220,12 @@
 	disable()
 	return ..()
 
+/obj/effect/anomaly/bluespace/cult_portal/examine(mob/user, distance)
+	..()
+	if(spawns > -1) // otherwise infinite
+		if(isobserver(user) || iscultist(user))
+			to_chat(user, "Оболочек для будущих рабов осталось: [spawns]")
+
 /obj/effect/anomaly/bluespace/cult_portal/proc/enable()
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
@@ -230,15 +239,20 @@
 					M.gib()
 				else
 					qdel(obj)
-			var/obj/structure/pedestal/cult/P = new(F)
+			var/obj/structure/cult/pylon/P = new(F)
 			P.icon_state = "pylon_glow"
+			if(prob(30)) // activate() is return /mob/living/simple_animal/hostile/pylon and since there is dynamic typing, it works
+				P = P.activate(null, global.cult_religion)
 			var/datum/beam/B = P.Beam(src, "drainblood", time = INFINITY, beam_sleep_time = 1 MINUTE, beam_layer = 2.9)
 			beams += B
 
 		// Iterating through all possible coordinates
-		coord_of_pylons[i % 2 == 0 ? 1 : 2] *= -1;
+		coord_of_pylons[i % 2 == 0 ? 1 : 2] *= -1
+
+	enabled = TRUE
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/disable()
+	enabled = FALSE
 	make_old(FALSE)
 	if(beams.len)
 		for(var/datum/beam/B in beams)
@@ -257,6 +271,9 @@
 	do_teleport(user, locate(user.x, user.y, user.z), 10)
 
 /obj/effect/anomaly/bluespace/cult_portal/attack_ghost(mob/dead/observer/user)
+	if(!enabled)
+		to_chat(user, "<span class='warning'>Портал уже неактивен.</span>")
+		return
 	if(next_spawn > world.time)
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
@@ -286,9 +303,9 @@
 		var/type = pick(
 				200;/mob/living/simple_animal/construct/harvester,\
 				50; /mob/living/simple_animal/construct/wraith,\
-				30; /mob/living/simple_animal/construct/armoured,\
+				50; /mob/living/simple_animal/construct/armoured,\
 				40; /mob/living/simple_animal/construct/proteon,\
-				70; /mob/living/simple_animal/construct/builder,\
+				30; /mob/living/simple_animal/construct/builder,\
 				1;  /mob/living/simple_animal/construct/behemoth)
 		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
 		spawns--
