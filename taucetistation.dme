@@ -218,6 +218,7 @@
 #include "code\datums\datumvars.dm"
 #include "code\datums\dirt.dm"
 #include "code\datums\disease.dm"
+#include "code\datums\forced_movement.dm"
 #include "code\datums\map_config.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\modules.dm"
