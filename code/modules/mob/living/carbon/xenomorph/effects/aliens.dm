@@ -138,7 +138,7 @@
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/alien/resin/attack_alien(mob/user)
+/obj/structure/alien/resin/attack_alien(mob/user, damage)
 	..(user, rand(40, 60))
 
 /obj/structure/alien/resin/attackby(obj/item/weapon/W, mob/user)
@@ -247,7 +247,7 @@
 			damage = 15
 	apply_damage(damage)
 
-/obj/structure/alien/weeds/attack_alien(mob/user)
+/obj/structure/alien/weeds/attack_alien(mob/user, damage)
 	return
 
 /obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -392,7 +392,7 @@
 	to_chat(user, "It feels slimy.")
 	user.SetNextMove(CLICK_CD_MELEE)
 
-/obj/structure/alien/egg/attack_alien(mob/user)
+/obj/structure/alien/egg/attack_alien(mob/user, damage)
 	attack_paw(user)
 
 /obj/structure/alien/egg/proc/Grow()
@@ -523,7 +523,7 @@
 		return
 	apply_damage(W.force)
 
-/obj/structure/alien/air_plant/attack_alien(mob/user)
+/obj/structure/alien/air_plant/attack_alien(mob/user, damage)
 	..(user, 5)
 
 /obj/structure/alien/air_plant/examine(mob/user)
