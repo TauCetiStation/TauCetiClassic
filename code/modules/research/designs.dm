@@ -1698,21 +1698,31 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespacebeaker
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
+	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete."
 	id = "bluespacebeaker"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_PHORON = 3000, MAT_DIAMOND = 500)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = list("Misc")
 
+/datum/design/bluespacebeaker/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
+	desc += "Can hold up to [initial(B.volume)] units."
+
 /datum/design/noreactbeaker
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	desc = "A cryostasis beaker that allows for chemical storage without reactions."
 	id = "splitbeaker"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
+
+/datum/design/noreactbeaker/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
+	desc += "Can hold up to [initial(B.volume)] units."
 
 /datum/design/defibrillators_back
 	name = "Defibrillators"
