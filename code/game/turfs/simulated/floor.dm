@@ -564,7 +564,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			if (R.get_amount() >= 2)
 				if(user.is_busy(src))
 					return
-				to_chat(user, "<span class='notice'>Вы начинаете укреплять покрытие.</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять обшивку.</span>")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
