@@ -96,7 +96,7 @@
 				if(!anchored)
 					if(!S.use(2))
 						return
-					to_chat(user, "<span class='notice'>Вы сделали потайную дверь! Толкните чтобы открыть или закрыть проход.</span>")
+					to_chat(user, "<span class='notice'>Вы сделали потайную дверь! Толкните, чтобы открыть или закрыть проход.</span>")
 					new /obj/structure/falsewall (src.loc)
 					qdel(src)
 				else
@@ -116,7 +116,7 @@
 				if(!anchored)
 					if(!S.use(2))
 						return
-					to_chat(user, "<span class='notice'>Вы сделали потайную дверь! Толкните чтобы открыть или закрыть проход.</span>")
+					to_chat(user, "<span class='notice'>Вы сделали потайную дверь! Толкните, чтобы открыть или закрыть проход.</span>")
 					new /obj/structure/falsewall/reinforced(loc)
 					qdel(src)
 				else
