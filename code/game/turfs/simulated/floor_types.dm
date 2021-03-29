@@ -272,7 +272,7 @@
 		eye_blind += rand(20, 25)
 		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, -4)
 	if(!eye_blind)
-		to_chat(src, "<span class='userdanger'>БФ%АО@ДАН-Н[pick("@$%!", "-ДЕСЯТЬ-ДЕСЯТЬ%#!", "ЗАПИСЬ")]ЯВВ$!$@@&@КРИТИ[pick("CAL-CAL", "CAL", "-ТИ-ТИ^$#&&@!")]!ЗАКК@%@ОКО[pick("ОШБК", "ОШИ-ШИБ-ОШКА", "-OAD-D")]%#^ВВ@ЗФ%^#Д</span>")
+		to_chat(src, "<span class='userdanger'>БФ%ВО@ВНИ-И[pick("@$%!", "-МА-МАН%#!", "АНИЕ")]ЯВВ$!$@@&@КРИТИ[pick("ЧЕС-ЧЕС", "ЧЕС", "-КА-КА^$#&&@!")]!ЗЯКК@%@ПЕ[pick("РЕГРУЗ", "ГРУЗ-ГРУЗ-ГРУЗ", "-З-З-К-")]%#^ВВ@ЗФ%^#А</span>")
 		playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, 50, FALSE)
 		eye_blind += rand(5, 10)
 

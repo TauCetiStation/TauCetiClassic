@@ -516,13 +516,13 @@ var/list/wood_icons = list("wood","wood-broken")
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				to_chat(user, "<span class='notice'>Вы заменили лампочку.</span>")
+				to_chat(user, "<span class='notice'>Вы заменяете лампочку.</span>")
 			else
 				to_chat(user, "<span class='notice'>Лампочка выглядит целой, нет нужды заменять ее.</span>")
 
 	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
-			to_chat(user, "<span class='warning'>Вы удалили поврежденное покрытие.</span>")
+			to_chat(user, "<span class='warning'>Вы удаляете поврежденное покрытие.</span>")
 		else
 			if(is_wood_floor())
 				to_chat(user, "<span class='warning'>Вы с трудом отдираете доски, ломая их в процессе.</span>")
@@ -532,7 +532,7 @@ var/list/wood_icons = list("wood","wood-broken")
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>Вы демонтируете пол.</span>")
+				to_chat(user, "<span class='warning'>Вы демонтируете покрытие.</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -546,7 +546,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				return
 			else
 				if(is_wood_floor())
-					to_chat(user, "<span class='warning'>Вы открутили доски.</span>")
+					to_chat(user, "<span class='warning'>Вы откручиваете доски.</span>")
 					new floor_type(src)
 
 			make_plating()
@@ -564,7 +564,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			if (R.get_amount() >= 2)
 				if(user.is_busy(src))
 					return
-				to_chat(user, "<span class='notice'>Вы начинаете укреплять пол.</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять покрытие.</span>")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -607,7 +607,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
-				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы поддерживать покрытие. Используйте сварочный аппарат для ремонта.</span>")
+				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы выдержать покрытие. Используйте сварочный аппарат для ремонта.</span>")
 
 
 	if(iscoil(C))
@@ -642,17 +642,17 @@ var/list/wood_icons = list("wood","wood-broken")
 		if(user.a_intent == INTENT_HELP)
 			if(!broken && !burnt)
 				return
-			to_chat(user, "<span class='warning'>Вы отремонтировали несколько вмятин.</span>")
+			to_chat(user, "<span class='warning'>Вы ремонтируете обшивку.</span>")
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			icon_state = "plating"
 			burnt = 0
 			broken = 0
 		else
-			to_chat(user, "<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>")
-			visible_message("<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>", blind_message = "<span class='warning'>Вы слышите звуки разрезания обшивки! По ту сторону должен быть открытый космос!</span>", viewing_distance = 5)
+		//	to_chat(user, "<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>")
+			visible_message("<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>", blind_message = "<span class='warning'>Вы слышите звуки, будто разрезания обшивки! По ту сторону должен быть открытый космос!</span>", viewing_distance = 5)
 			if(W.use_tool(src, user, 100, 3, 100))
-				to_chat(user, "<span class='warning'>Вы разобрали обшивку!</span>")
-				visible_message("<span class='warning'> Обшивка разобрана <B>[user]</B>! По ту сторону открытый космос!</span>", blind_message = "<span class='warning'>Вы слышите, что обшивка была разрезана на части! По ту сторону должен быть открытый космос!</span>", viewing_distance = 5)
+		//		to_chat(user, "<span class='warning'>Вы разобрали обшивку!</span>")
+				visible_message("<span class='warning'> <B>[user]</B> завершает разборку обшивки! По ту сторону открытый космос!</span>", blind_message = "<span class='warning'>Звуки прекратились. Похоже, обшивка была разрезана на части! По ту сторону должен быть открытый космос!</span>", viewing_distance = 5)
 				new /obj/item/stack/tile/plasteel(src)
 				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT

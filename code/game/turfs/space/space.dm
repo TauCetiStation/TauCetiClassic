@@ -82,7 +82,7 @@
 			S.build(src)
 			return
 		else
-			to_chat(user, "<span class='warning'>Фундамент не может выдержать это покрытие.</span>")
+			to_chat(user, "<span class='warning'>Для обшивки нужна основа.</span>")
 
 
 // Ported from unstable r355

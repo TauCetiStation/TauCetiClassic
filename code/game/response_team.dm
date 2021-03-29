@@ -10,7 +10,7 @@ var/can_call_ert
 /client/proc/response_team()
 	set name = "Dispatch Emergency Response Team"
 	set category = "Special Verbs"
-	set desc = "Отправляет группу экстренного реагирования на станцию."
+	set desc = "Отправляет отряд быстрого реагирования на станцию."
 
 	if(!holder)
 		to_chat(usr, "<span class='warning'>Только администрация может использовать это.</span>")
@@ -22,46 +22,46 @@ var/can_call_ert
 		to_chat(usr, "<span class='warning'>Раунд еще не начался!</span>")
 		return
 	if(send_emergency_team)
-		to_chat(usr, "<span class='warning'>Центральное командование уже отправило группу экстренного реагирования!</span>")
+		to_chat(usr, "<span class='warning'>Центральное командование уже отправило отряд быстрого реагирования!</span>")
 		return
-	if(alert("Вы правда хотите отправить группу экстренного реагирования?",,"Да","Нет") != "Да")
+	if(alert("Вы хотите отправить отряд быстрого реагирования?",,"Да","Нет") != "Да")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
-		switch(alert("На станции не введен красный код. Вы все еще хотите отправить группу экстренного реагирования?",,"Да","Нет"))
+		switch(alert("На станции не введен красный код. Вы все еще хотите отправить отряд быстрого реагирования?",,"Да","Нет"))
 			if("Нет")
 				return
 	if(send_emergency_team)
 		to_chat(usr, "<span class='warning'>Похоже, кто-то уже опередил вас!</span>")
 		return
 
-	message_admins("[key_name_admin(usr)] отправляет группу экстренного реагирования.", 1)
+	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
 	log_admin("[key_name(usr)] used Dispatch Response Team.")
 	feedback_set_details("ERT", "Admin dispatch")
 	trigger_armed_response_team(1)
 
 
 /client/verb/JoinResponseTeam()
-	set name = "Вступить в группу экстренного реагирования"
+	set name = "Вступить в ОБР"
 	set category = "IC"
 
 	if(isobserver(usr) || isnewplayer(usr) || ismouse(usr) || isbrain(usr) || usr.is_dead())
 		if(!send_emergency_team)
-			to_chat(usr, "В данный момент нет вызванной группы экстренного реагирования.")
+			to_chat(usr, "В данный момент нет вызванного отряда быстрого реагирования.")
 			return
 	/*	if(admin_emergency_team)
 			to_chat(usr, "An emergency response team has already been sent.")
 			return */
 		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
-			to_chat(usr, "<span class='danger'>У вас джоббан. Вы не можете вступить в группу быстрого реагирования!</span>")
+			to_chat(usr, "<span class='danger'>Администрация запретила вам вступление в группу быстрого реагирования!</span>")
 			return
 
 		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
 		if(available_in_minutes)
-			to_chat(usr, "<span class='notice'>Эта роль будет открыта через [russian_plural(available_in_minutes, "[available_in_minutes] минуту", "[available_in_minutes] минуты", "[available_in_minutes] минут")] (вы получаете минуты, когда играете).</span>")
+			to_chat(usr, "<span class='notice'>Эта роль будет открыта через [russian_plural(available_in_minutes, "[available_in_minutes] минуту", "[available_in_minutes] минуты", "[available_in_minutes] минут")]. Продолжайте играть для получения доступа.</span>")
 			return
 
 		if(response_team_members.len > 5)
-			to_chat(usr, "Группа экстренного реагирования уже заполнена!")
+			to_chat(usr, "Отряд быстрого реагирования уже заполнен!")
 
 
 		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
@@ -77,12 +77,12 @@ var/can_call_ert
 			new_commando.key = usr.key
 			create_random_account_and_store_in_mind(new_commando)
 
-			to_chat(new_commando, "<span class='notice'>Вы являетесь [!leader_selected?"членом":"<B>ЛИДЕРОМ</B>"] группы экстренного реагирования, видом военного подразделения, под управлением ЦК.<BR>На станции [station_name()] (<B>[get_security_level()]</B>) код, ваша задача найти и устранить проблему.</span>")
-			to_chat(new_commando, "<b>Для начала вооружитесь и обсудите план со своей командой. Другие члены могут присоединиться позже, не выдвигайтесь, пока не будете полностью готовы.</b>")
+			to_chat(new_commando, "<span class='notice'>Вы являетесь [!leader_selected?"членом":"<B>ЛИДЕРОМ</B>"] отряда быстрого реагирования, видом военного подразделения, под управлением ЦК.<BR>На станции [station_name()] (<B>[get_security_level()]</B>) код, ваша задача найти и устранить проблему.</span>")
+			to_chat(new_commando, "<b>Для начала вооружитесь и обсудите план со своей командой. Другие члены могут присоединиться позже. Не выдвигайтесь, пока не будете полностью готовы.</b>")
 			if(!leader_selected)
-				to_chat(new_commando, "<b>Как член группы экстренного реагирования, вы отвечаете перед лидером и представителями ЦК с более высоким приоритетом и перед капитаном с более низким.</b>")
+				to_chat(new_commando, "<b>Как член отряда быстрого реагирования, вы отвечаете перед лидером и представителями ЦК с более высоким приоритетом и перед капитаном с более низким.</b>")
 			else
-				to_chat(new_commando, "<b>Как лидер группы экстренного реагирования, вы отвечаете только перед ЦК и перед капитаном с более низким приоритетом. Вы можете ослушаться приказа, если это поможет выполнению миссии. Рекомендуется координироваться с капитаном если возможно.</b>")
+				to_chat(new_commando, "<b>Как лидер отряда быстрого реагирования, вы отвечаете только перед ЦК и перед капитаном с более низким приоритетом. Вы можете ослушаться приказа, если это поможет выполнению миссии. Рекомендуется координироваться с капитаном, если возможно.</b>")
 			return
 
 	else
@@ -200,7 +200,7 @@ var/can_call_ert
 
 	var/new_gender = alert(usr, "Выберите пол.", "Создание персонажа", "Мужской", "Женский")
 	if (new_gender)
-		if(new_gender == "Male")
+		if(new_gender == "Мужской")
 			M.gender = MALE
 		else
 			M.gender = FEMALE
