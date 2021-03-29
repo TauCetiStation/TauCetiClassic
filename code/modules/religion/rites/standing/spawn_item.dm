@@ -142,6 +142,7 @@
 	animal.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
 	animal.real_name = M.name
 	religion.add_member(animal)
+	animal.universal_understand = TRUE
 	M.cancel_camera()
 	M.reset_view()
 
