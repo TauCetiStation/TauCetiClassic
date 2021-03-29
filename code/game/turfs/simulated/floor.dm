@@ -654,7 +654,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				"<span class='warning'>Вы слышите звуки будто разрезают обшивку! По ту сторону должен быть открытый космос!</span>",
 				viewing_distance = 5)
 			if(W.use_tool(src, user, 100, 3, 100))
-				visible_message(
+				usr.visible_message(
 					"<span class='warning'><B>[user]</B> завершает разборку обшивки!</span>",
 					"<span class='warning'>Вы разобрали обшивку!</span>",
 					"<span class='warning'>Звуки прекратились. Похоже, обшивка была разрезана на части!</span>",
