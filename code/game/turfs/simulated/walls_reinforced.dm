@@ -193,7 +193,7 @@
 		if(ANCHOR_BOLTS)
 			if (iswrench(W))
 
-				to_chat(user, "<span class='notice'>Вы начинаете ослаблять болты, которые закрепляют поддерживающие стержни в раме.</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете ослаблять болты, которые закрепляют поддерживающий каркас.</span>")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
@@ -201,7 +201,7 @@
 					if(d_state == ANCHOR_BOLTS && user.loc == T && user.get_active_hand() == W)
 						d_state = SUPPORT_RODS
 						update_icon()
-						to_chat(user, "<span class='notice'>Вы удалили болты, закрепляющие поддерживающие стержни.</span>")
+						to_chat(user, "<span class='notice'>Вы удалили болты, закрепляющие поддерживающий каркас.</span>")
 				return
 
 		if(SUPPORT_RODS)
@@ -209,7 +209,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
-					to_chat(user, "<span class='notice'>Вы начинаете разрезать поддерживающие стержни.</span>")
+					to_chat(user, "<span class='notice'>Вы начинаете разрезать поддерживающий каркас.</span>")
 					if(W.use_tool(src, user, 100, volume = 100))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
@@ -218,14 +218,14 @@
 							d_state = SHEATH
 							update_icon()
 							new /obj/item/stack/rods(src)
-							to_chat(user, "<span class='notice'>Вы убрали поддерживающие стержни.</span>")
+							to_chat(user, "<span class='notice'>Вы убрали поддерживающий каркас.</span>")
 				else
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
 			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
 
-				to_chat(user, "<span class='notice'>Вы начинаете разрезать поддерживающие стержни.</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете разрезать поддерживающий каркас.</span>")
 				if(W.use_tool(src, user, 70, volume = 100))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
@@ -234,7 +234,7 @@
 						d_state = SHEATH
 						update_icon()
 						new /obj/item/stack/rods(src)
-						to_chat(user, "<span class='notice'>Вы убрали поддерживающие стержни.</span>")
+						to_chat(user, "<span class='notice'>Вы убрали поддерживающий каркас.</span>")
 				return
 
 		if(SHEATH)

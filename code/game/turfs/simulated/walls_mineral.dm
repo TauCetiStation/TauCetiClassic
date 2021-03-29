@@ -41,7 +41,7 @@
 
 /turf/simulated/wall/mineral/gold
 	name = "gold wall"
-	desc = "Стена с золотым покрытием. SWAG!"
+	desc = "Стена с золотым покрытием. Оу-eeee!"
 	icon = 'icons/turf/walls/has_false_walls/gold_wall.dmi'
 	mineral = "gold"
 	sheet_type = /obj/item/stack/sheet/mineral/gold
