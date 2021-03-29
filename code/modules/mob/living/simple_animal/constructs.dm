@@ -58,6 +58,10 @@
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
+
+	if(w_class && w_class != SIZE_NO_CONTAINER)
+		msg += "This [get_size_flavor()] creature.\n"
+
 	msg += "*---------*</span>"
 	to_chat(user, msg)
 

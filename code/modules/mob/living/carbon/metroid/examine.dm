@@ -21,5 +21,8 @@
 			if(10)
 				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
 
+	if(w_class && w_class != SIZE_NO_CONTAINER)
+		msg += "This [get_size_flavor()] creature.\n"
+
 	msg += "*---------*</span>"
 	to_chat(user, msg)

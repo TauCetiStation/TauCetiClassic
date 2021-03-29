@@ -267,25 +267,11 @@
 
 /obj/item/examine(mob/user)
 	. = ..()
-	var/size
-	switch(src.w_class)
-		if(1.0)
-			size = "tiny"
-		if(2.0)
-			size = "small"
-		if(3.0)
-			size = "normal-sized"
-		if(4.0)
-			size = "bulky"
-		if(5.0)
-			size = "huge"
-		else
-
 	var/open_span  = "[src.wet ? "<span class='wet'>" : ""]"
 	var/close_span = "[src.wet ? "</span>" : ""]"
 	var/wet_status = "[src.wet ? " wet" : ""]"
 
-	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
+	to_chat(user, "[open_span]It's a[wet_status] [get_size_flavor()] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
 	if (!user || anchored)

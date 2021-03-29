@@ -706,3 +706,16 @@
 				continue
 			return AA.alternate_obj.name
 	return name
+
+/atom/proc/get_size_flavor()
+	switch(w_class)
+		if(SIZE_MINUSCULE)  return "minuscule"
+		if(SIZE_TINY)       return "tiny"
+		if(SIZE_SMALL)      return "small"
+		if(SIZE_NORMAL)     return "normal-sized"
+		if(SIZE_LARGE)      return "bulky"
+		if(SIZE_HUGE)       return "huge"
+		if(SIZE_HUMAN)      return "human-sized"
+		if(SIZE_GAINT)      return "gaint"
+		if(SIZE_GYGANT)     return "gygant"
+		if(SIZE_GARGANTUAN) return "excessively large"

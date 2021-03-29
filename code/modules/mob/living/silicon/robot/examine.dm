@@ -31,6 +31,10 @@
 			if(!src.client)	msg += "It appears to be in stand-by mode.\n" //afk
 		if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responding.</span>\n"
 		if(DEAD)			msg += "<span class='deadsay'>It looks completely unsalvageable.</span>\n"
+
+	if(w_class && w_class != SIZE_NO_CONTAINER)
+		msg += "This [get_size_flavor()] creature.\n"
+
 	msg += "*---------*</span>"
 
 	if(print_flavor_text()) msg += "\n[print_flavor_text()]\n"
