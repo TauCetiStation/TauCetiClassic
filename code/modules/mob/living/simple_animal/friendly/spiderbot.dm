@@ -38,7 +38,7 @@
 	var/obj/item/held_item = null //Storage for single item they can hold.
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
-	w_class = SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	speak_emote = list("beeps","clicks","chirps")
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
