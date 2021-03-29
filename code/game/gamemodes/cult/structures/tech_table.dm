@@ -173,9 +173,10 @@
 		P.icon_state = "pylon_glow"
 		P.can_unwrench = FALSE
 	researching = TRUE
-	end_research_time = max(1, world.time + research_time - sqrt(pylon_around.len)MINUTE)
+	var/time_reduce = sqrt(pylon_around.len)MINUTE
+	end_research_time = max(1, world.time + research_time - time_reduce)
 	can_unwrench = FALSE
-	tech_timer = addtimer(end_activity, research_time, TIMER_STOPPABLE)
+	tech_timer = addtimer(end_activity, research_time - time_reduce, TIMER_STOPPABLE)
 
 /obj/structure/cult/tech_table/proc/end_activity()
 	researching = FALSE
