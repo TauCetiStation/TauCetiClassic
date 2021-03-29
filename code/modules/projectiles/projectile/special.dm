@@ -191,13 +191,18 @@
 	edge = 0
 
 /obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /obj/singularity))
+	if(istype(target, /obj/singularity/energy_ball) || istype(target, /obj/singularity/scrap_ball))
+		return
+
+	else if(istype(target, /obj/singularity))
 		var/obj/singularity/S = target
 		empulse(S, 4, 10)
 		for(var/mob/living/carbon/H in viewers(S))
 			H.apply_effect(20, IRRADIATE, 0)
 		S.deduce_energy(600)
-	if(istype(target, /obj/singularity/narsie))
+		return
+
+	else if(istype(target, /obj/singularity/narsie))
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
 				to_chat(M, "<font size='15' color='red'><b>FOOLISH MORTALS! I AM A GOD. HOW CAN YOU KILL A GOD?</b></font>")
@@ -205,8 +210,7 @@
 				for(M in range(20))
 					M.gib()
 					return
-	if(istype(target, /obj/singularity/energy_ball) || istype(target, /obj/singularity/scrap_ball))
-		return
+
 	..()
 
 /obj/item/projectile/neurotoxin
