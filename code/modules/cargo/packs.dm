@@ -986,8 +986,6 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	group = "Engineering"
 	access = access_engine
 
-
-
 /datum/supply_pack/anti_singulo
 	name = "Singularity Buster Rockets crate"
 	cost = 5000

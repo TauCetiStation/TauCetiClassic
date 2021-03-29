@@ -197,6 +197,16 @@
 		for(var/mob/living/carbon/H in viewers(S))
 			H.apply_effect(20, IRRADIATE, 0)
 		S.deduce_energy(600)
+	if(istype(target, /obj/singularity/narsie))
+		for(var/mob/M in player_list)
+			if(!isnewplayer(M))
+				to_chat(M, "<font size='15' color='red'><b>FOOLISH MORTALS! I AM A GOD. HOW CAN YOU KILL A GOD?</b></font>")
+				M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
+				for(M in range(20))
+					M.gib()
+					return
+	if(istype(target, /obj/singularity/energy_ball) || istype(target, /obj/singularity/scrap_ball))
+		return
 	..()
 
 /obj/item/projectile/neurotoxin
