@@ -125,7 +125,7 @@
 /datum/religion_rites/standing/spawn_item/call_animal/proc/choose_spawn_type()
 	return pick(summon_type)
 
-/datum/religion_rites/standing/spawn_item/call_animal/modify_item(mob/animal)
+/datum/religion_rites/standing/spawn_item/call_animal/proc/call_ghost(mob/animal)
 	var/list/candidates = pollGhostCandidates("Do you want to become the Familiar of religion?", ROLE_GHOSTLY, IGNORE_FAMILIAR, 10 SECONDS)
 	if(!candidates.len)
 		return
@@ -144,6 +144,9 @@
 	religion.add_member(animal)
 	M.cancel_camera()
 	M.reset_view()
+
+/datum/religion_rites/standing/spawn_item/call_animal/modify_item(mob/animal)
+	INVOKE_ASYNC(src, .proc/call_ghost, animal)
 
 /datum/religion_rites/standing/spawn_item/call_animal/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
