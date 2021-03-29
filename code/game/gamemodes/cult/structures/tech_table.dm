@@ -89,6 +89,9 @@
 	if(!religion.check_costs(choosed_tech.favor_cost, choosed_tech.piety_cost, user))
 		return
 
+	religion.adjust_favor(-choosed_tech.favor_cost)
+	religion.adjust_piety(-choosed_tech.piety_cost)
+
 	to_chat(user, "<span class='notice'>Вы начали изучение [initial(choosed_tech.name)].</span>")
 
 	current_research = initial(choosed_tech.name)
@@ -119,6 +122,8 @@
 	if(!religion.check_costs(null, get_upgrade_cost(in_religion), user))
 		return
 
+	religion.adjust_piety(-get_upgrade_cost(in_religion))
+
 	to_chat(user, "<span class='notice'>Вы начали [in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)].</span>")
 	current_research = "[in_religion ? "улучшение" : "изучение"] [initial(choosed_aspect.name)]"
 	start_activity(CALLBACK(src, .proc/upgrade_aspect, choosed_aspect))
@@ -135,8 +140,7 @@
 /obj/structure/cult/tech_table/proc/get_upgrade_cost(datum/aspect/in_religion)
 	if(!in_religion)
 		return 300
-	else
-		return in_religion.power * 50
+	return in_religion.power * 50
 
 /obj/structure/cult/tech_table/proc/gen_category_images()
 	category_images = list(

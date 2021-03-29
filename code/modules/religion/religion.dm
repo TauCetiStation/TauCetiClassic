@@ -355,7 +355,8 @@
 	return favor
 
 /datum/religion/proc/adjust_piety(amount = 0)
-	amount = amount / 10
+	if(amount > 0) // when decrease you dont need it
+		amount = amount / 10
 	. = amount
 	if(piety + amount < 0)
 		. = piety
