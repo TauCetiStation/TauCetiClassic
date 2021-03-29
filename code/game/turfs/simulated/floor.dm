@@ -648,13 +648,13 @@ var/list/wood_icons = list("wood","wood-broken")
 			burnt = 0
 			broken = 0
 		else
-			usr.visible_message(
+			user.visible_message(
 				"<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>",
 				"<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>",
 				"<span class='warning'>Вы слышите звуки будто разрезают обшивку! По ту сторону должен быть открытый космос!</span>",
 				viewing_distance = 5)
 			if(W.use_tool(src, user, 100, 3, 100))
-				usr.visible_message(
+				user.visible_message(
 					"<span class='warning'><B>[user]</B> завершает разборку обшивки!</span>",
 					"<span class='warning'>Вы разобрали обшивку!</span>",
 					"<span class='warning'>Звуки прекратились. Похоже, обшивка была разрезана на части!</span>",
