@@ -58,6 +58,7 @@
 	var/charge_tick = 0
 	modifystate = 0
 	can_be_holstered = FALSE
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/gun/energy/gun/nuclear/atom_init()
 	. = ..()

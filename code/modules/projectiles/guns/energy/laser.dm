@@ -22,6 +22,7 @@
 	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/gun/energy/laser/classic
 	name = "laser carbine"
@@ -29,6 +30,7 @@
 	icon_state = "oldlaser"
 	icon_custom = null
 	fire_delay = 5
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/gun/energy/laser/tactifool
 	name = "laser rifle"
@@ -37,6 +39,7 @@
 	icon_custom = null
 	fire_delay = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/laser_pulse)
+	w_class = ITEM_SIZE_LARGE
 
 
 /obj/item/weapon/gun/energy/laser/classic/newshot()
@@ -131,6 +134,7 @@
 	item_state = null
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
+	w_class = ITEM_SIZE_LARGE
 
 	fire_delay = 20
 
