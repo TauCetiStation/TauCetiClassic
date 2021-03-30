@@ -239,6 +239,3 @@
 	A.flags_2 &= ~OVERLAY_QUEUED_2;\
 	if(isturf(A)){SSdemo.mark_turf(A);}\
 	if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
-
-// strips all newlines from a string, replacing them with null
-#define STRIP_NEWLINE(S) replacetextEx(S, "\n", null)
