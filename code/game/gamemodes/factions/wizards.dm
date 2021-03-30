@@ -3,7 +3,7 @@
 	ID = WIZFEDERATION
 	logo_state = "wizard-logo"
 
-	required_pref = ROLE_WIZARD
+	required_pref = WIZARD
 
 	initial_role = WIZARD
 	initroletype = /datum/role/wizard

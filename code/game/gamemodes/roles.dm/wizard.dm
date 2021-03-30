@@ -4,7 +4,7 @@
 	special_role = WIZARD
 	disallow_job = TRUE
 
-	required_pref = ROLE_WIZARD
+	required_pref = WIZARD
 
 	antag_hud_type = ANTAG_HUD_WIZ
 	antag_hud_name = "hudwizard"
@@ -127,7 +127,7 @@
 	id = WIZ_APPRENTICE
 	special_role = WIZ_APPRENTICE
 
-	required_pref = ROLE_WIZARD
+	required_pref = WIZARD
 
 	antag_hud_type = ANTAG_HUD_WIZ
 	antag_hud_name = "hudwizard"

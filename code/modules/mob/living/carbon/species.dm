@@ -517,7 +517,7 @@
 	min_age = 1
 	max_age = 100
 
-	prohibit_roles = list(CHANGELING, ROLE_WIZARD)
+	prohibit_roles = list(CHANGELING, WIZARD)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER

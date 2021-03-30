@@ -694,10 +694,10 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
 
 		//Wizard
-		if(jobban_isbanned(M, ROLE_WIZARD) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
+		if(jobban_isbanned(M, WIZARD) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[WIZARD];jobban4=\ref[M]'>[WIZARD]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[WIZARD];jobban4=\ref[M]'>[WIZARD]</a></td>"
 
 		//ERT
 		if(jobban_isbanned(M, ROLE_ERT) || isbanned_dept)

@@ -3,7 +3,7 @@
 //Any number of preferences could be.
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database! Jobbans also uses those defines!!
-#define ROLE_WIZARD            "Wizard"
+#define WIZARD            "Wizard"
 #define ROLE_MALF              "Malf AI"
 #define ROLE_REV               "Revolutionary"
 #define ROLE_ALIEN             "Xenomorph"
@@ -24,7 +24,7 @@ var/global/list/antag_roles = list(
 	TRAITOR,
 	NUKE_OP,
 	CHANGELING,
-	ROLE_WIZARD,
+	WIZARD,
 	ROLE_MALF,
 	ROLE_REV,
 	ROLE_ALIEN,
@@ -40,7 +40,7 @@ var/global/list/special_roles = list(
 	TRAITOR,
 	NUKE_OP,
 	CHANGELING,
-	ROLE_WIZARD,
+	WIZARD,
 	ROLE_MALF,
 	ROLE_REV,
 	ROLE_ALIEN,
