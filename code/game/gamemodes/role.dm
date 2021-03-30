@@ -364,6 +364,7 @@
 	if(!href_list["mind"])
 		to_chat(usr, "<span class='warning'>BUG: mind variable not specified in Topic([href])!</span>")
 		return TRUE
+
 	var/datum/mind/M = locate(href_list["mind"])
 	if(!M)
 		return

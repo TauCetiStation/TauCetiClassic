@@ -276,7 +276,7 @@
 	return
 
 /datum/game_mode/proc/GetScoreboard()
-	completition_text += "<h2>Factions & Roles</h2>"
+	completition_text = "<h2>Factions & Roles</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
 		if (F.members.len > 0)

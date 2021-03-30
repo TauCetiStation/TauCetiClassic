@@ -123,6 +123,9 @@
 	name = ABDUCTED
 	id = ABDUCTED
 	special_role = ABDUCTED
+
+	logo_state = "abductor-logo"
+
 	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductee"
 

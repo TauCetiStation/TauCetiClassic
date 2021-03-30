@@ -23,6 +23,22 @@ var/global/list/all_objectives = list()
 /datum/objective/proc/check_completion()
 	return completed
 
+#define OBJ_SUCCES "<font color='green'>SUCCESS</font>"
+#define OBJ_HALF "<font color='yellow'>HALF</font>"
+#define OBJ_FAILURE "<font color='red'>FAILURE</font>"
+/datum/objective/proc/completion_to_string()
+	if(completed == OBJECTIVE_WIN)
+		return OBJ_SUCCES
+	if(completed == OBJECTIVE_HALFWIN)
+		return OBJ_HALF
+	if(completed == OBJECTIVE_LOSS)
+		return OBJ_FAILURE
+	return "Error"
+
+#undef OBJ_SUCCES
+#undef OBJ_HALF
+#undef OBJ_FAILURE
+
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in SSticker.minds)

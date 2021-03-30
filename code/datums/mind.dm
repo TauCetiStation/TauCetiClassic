@@ -247,9 +247,7 @@
 			return
 
 		if (joined_faction && joined_faction != "-----")
-			if (joined_faction == "NEW CUSTOM FACTION")
-				to_chat(usr, "<span class='danger'>Sorry, that feature is not coded yet. - Deity Link</span>")
-			else if (istype(all_factions[joined_faction], /datum/faction))//we got an existing faction
+			if (istype(all_factions[joined_faction], /datum/faction))//we got an existing faction
 				var/datum/faction/joined = all_factions[joined_faction]
 				joined.HandleRecruitedRole(newRole)
 			else //we got an inexisting faction, gotta create it first!
@@ -281,9 +279,7 @@
 				var/join_faction = input("Select new faction", "Assigned faction", null) as null|anything in all_factions
 				if(!join_faction || join_faction == "-----")
 					return
-				else if(join_faction == "NEW CUSTOM FACTION")
-					to_chat(usr, "<span class='danger'>Sorry, that feature is not coded yet. - Deity Link</span>")
-				else if(istype(all_factions[join_faction], /datum/faction))//we got an existing faction
+				if(istype(all_factions[join_faction], /datum/faction))//we got an existing faction
 					var/datum/faction/joined = all_factions[join_faction]
 					joined.HandleRecruitedRole(R)
 				else //we got an inexisting faction, gotta create it first!
@@ -357,8 +353,15 @@
 
 		ASSERT(istype(objective))
 
-		objective.completed = OBJECTIVE_WIN
-		log_admin("[usr.key]/([usr.name]) toggled [key]/([name]) [objective.explanation_text] to [objective.completed ? "completed" : "incomplete"]")
+		if(objective.completed == OBJECTIVE_LOSS)
+			objective.completed = OBJECTIVE_HALFWIN
+		else if(objective.completed == OBJECTIVE_HALFWIN)
+			objective.completed = OBJECTIVE_WIN
+		else if(objective.completed == OBJECTIVE_WIN)
+			objective.completed = OBJECTIVE_LOSS
+
+		message_admins("[usr.key]/([usr.name]) toggled [key]/([name]) [objective.explanation_text] to [objective.completion_to_string()]")
+		log_admin("[usr.key]/([usr.name]) toggled [key]/([name]) [objective.explanation_text] to [objective.completion_to_string()]")
 
 	else if(href_list["obj_gen"])
 		var/owner = locate(href_list["obj_owner"])
@@ -624,7 +627,6 @@
 			all_factions.Add(initial(F.name))
 			all_factions[initial(F.name)] = F
 	all_factions += "-----"
-	all_factions += "NEW CUSTOM FACTION"
 	return all_factions
 
 /mob/proc/sync_mind()

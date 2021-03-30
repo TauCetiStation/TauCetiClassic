@@ -377,55 +377,14 @@ SUBSYSTEM_DEF(ticker)
 			if(!isnewplayer(M))
 				to_chat(M, "Captainship not forced on anyone.")
 
-//cursed code
-/datum/controller/subsystem/ticker/proc/declare_completion()
-	// Now you all can discuss the game.
-	if(config.ooc_round_only)
-		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
-		ooc_allowed = TRUE
+/datum/controller/subsystem/ticker/proc/generate_scoreboard()
+	var/completition = "<h1>Round End Information</h1><HR>"
+	completition += get_ai_completition()
+	completition += mode.declare_completion()
+	scoreboard(completition)
 
-	var/station_evacuated
-	if(SSshuttle.location > 0)
-		station_evacuated = 1
-	var/num_survivors = 0
-	var/num_escapees = 0
-
-	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
-
-	//Player status report
-	for(var/mob/Player in mob_list)//todo: remove in favour of /game_mode/proc/declare_completion
-		if(Player.mind && !isnewplayer(Player))
-			if(Player.stat != DEAD && !isbrain(Player))
-				num_survivors++
-				if(station_evacuated) //If the shuttle has already left the station
-					var/turf/playerTurf = get_turf(Player)
-					if(!is_centcom_level(playerTurf.z))
-						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
-					else
-						num_escapees++
-						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
-				else
-					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
-			else
-				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
-
-	//Round statistics report
-	var/datum/station_state/end_state = new /datum/station_state()
-	end_state.count()
-	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
-
-	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B>")
-	to_chat(world, "<BR>[TAB]Station Integrity: <B>[station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
-	if(joined_player_list.len)
-		to_chat(world, "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")
-		if(station_evacuated)
-			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
-		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
-	to_chat(world, "<BR>")
-
-	//Silicon laws report
-	var/ai_completions = "<h1>Round End Information</h1><HR>"
-
+/datum/controller/subsystem/ticker/proc/get_ai_completition()
+	var/ai_completions = ""
 	if(silicon_list.len)
 		ai_completions += "<h2>Silicons Laws</h2>"
 		ai_completions += "<div class='Section'>"
@@ -471,14 +430,61 @@ SUBSYSTEM_DEF(ticker)
 			ai_completions += "<BR>[robo.write_laws()]"
 
 		if(dronecount)
-			ai_completions += "<br><B>There [dronecount>1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
+			ai_completions += "<br><B>There [dronecount > 1 ? "were" : "was"] [dronecount] industrious maintenance [dronecount>1 ? "drones" : "drone"] this round.</B>"
 
 		ai_completions += "</div>"
+	return ai_completions
 
-	ai_completions += mode.declare_completion() //To declare normal completion.
+//cursed code
+/datum/controller/subsystem/ticker/proc/declare_completion()
+	// Now you all can discuss the game.
+	if(config.ooc_round_only)
+		to_chat(world, "<span class='notice bold'>The OOC channel has been globally enabled!</span>")
+		ooc_allowed = TRUE
+
+	var/station_evacuated
+	if(SSshuttle.location > 0)
+		station_evacuated = 1
+	var/num_survivors = 0
+	var/num_escapees = 0
+
+	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+
+	//Player status report
+	for(var/mob/Player in mob_list)
+		if(Player.mind && !isnewplayer(Player))
+			if(Player.stat != DEAD && !isbrain(Player))
+				num_survivors++
+				if(station_evacuated) //If the shuttle has already left the station
+					var/turf/playerTurf = get_turf(Player)
+					if(!is_centcom_level(playerTurf.z))
+						to_chat(Player, "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>")
+					else
+						num_escapees++
+						to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
+				else
+					to_chat(Player, "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>")
+			else
+				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
+
+	//Round statistics report
+	var/datum/station_state/end_state = new /datum/station_state()
+	end_state.count()
+	var/station_integrity = min(round( 100 * start_state.score(end_state), 0.1), 100)
+
+	to_chat(world, "<BR>[TAB]Shift Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[add_zero("[world.time / 10 % 60]", 2)]</B>")
+	to_chat(world, "<BR>[TAB]Station Integrity: <B>[station_was_nuked ? "<font color='red'>Destroyed</font>" : "[station_integrity]%"]</B>")
+	if(joined_player_list.len)
+		to_chat(world, "<BR>[TAB]Total Population: <B>[joined_player_list.len]</B>")
+		if(station_evacuated)
+			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
+		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
+	to_chat(world, "<BR>")
 
 	//Print a list of antagonists to the server log
 	antagonist_announce()
+
+	generate_scoreboard()
 
 	mode.ShuttleDocked(location)
 
@@ -490,8 +496,6 @@ SUBSYSTEM_DEF(ticker)
 
 	if(SSjunkyard)
 		SSjunkyard.save_stats()
-
-	scoreboard(ai_completions)
 
 	//Ask the event manager to print round end information
 	SSevents.RoundEnd()

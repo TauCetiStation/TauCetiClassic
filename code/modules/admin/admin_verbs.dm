@@ -155,6 +155,7 @@ var/list/admin_verbs_server = list(
 var/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -273,6 +274,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,

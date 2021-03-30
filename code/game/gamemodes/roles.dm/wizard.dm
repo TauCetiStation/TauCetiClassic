@@ -133,3 +133,18 @@
 	antag_hud_name = "hudwizard"
 
 	logo_state = "wizard-logo"
+
+/datum/role/wizard_apprentice/GetScoreboard()
+	. = ..()
+	if(antag.current && antag.current.spell_list)
+		. += "<br><b>[antag.name] used the following spells: </b>"
+		var/i = 1
+		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
+			var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
+			end_icons += spellicon
+			var/tempstate = end_icons.len
+			. += {"<br><img src="logo_[tempstate].png"> [S.name]"}
+			if(antag.current.spell_list.len > i)
+				. += ", "
+			i++
+	. += "<br>"
