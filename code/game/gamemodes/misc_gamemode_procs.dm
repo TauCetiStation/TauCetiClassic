@@ -3,28 +3,31 @@
 	intercepttext += "<B> In case you have misplaced your copy, attached is a list of personnel whom reliable sources&trade; suspect may be affiliated with the Syndicate:</B><br>"
 
 	var/list/suspects = list()
-	for(var/mob/living/carbon/human/man in player_list) if(man.client && man.mind)
+	for(var/mob/living/carbon/human/man in player_list)
+		if(!man.client || !man.mind)
+			continue
+
 		// NT relation option
-		var/list/invisible_roles = list("Wizard",
-										"Ninja",
-										"Syndicate",
-										"Vox Raider",
-										"Raider",
-										"Abductor scientist",
-										"Abductor agent"
-										)
-		var/special_role = man.mind.special_role
-		if (special_role in invisible_roles)
-			continue	//NT intelligence ruled out possiblity that those are too classy to pretend to be a crew.
+		var/list/invisible_roles = list(
+			WIZARD, NINJA, NUKE_OP,
+			NUKE_OP_LEADER, VOXRAIDER,
+			ABDUCTOR_AGENT, ABDUCTOR_SCI,
+			)
+
+		var/accept = TRUE
+		for(var/role in invisible_roles)
+			if(isrole(role, man))
+				accept = FALSE
+				break
+		if(!accept)
+			continue
+
 		if(man.client.prefs.nanotrasen_relation == "Opposed" && prob(50) || \
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
-		// Antags
-		else if(special_role == TRAITOR && prob(40) || \
-			special_role == CHANGELING && prob(50) || \
-			special_role == CULTIST && prob(30) || \
-			special_role == HEADREV && prob(30) || \
-			special_role == SHADOW && prob(20))
+
+		else if(istraitor(man) && prob(40) || ischangeling(man) && prob(50) || iscultist(man) && prob(30) || \
+				isrevhead(man) && prob(30) || isshadowling(man) && prob(20))
 
 			suspects += man
 

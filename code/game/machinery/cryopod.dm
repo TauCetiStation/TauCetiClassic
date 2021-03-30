@@ -195,10 +195,13 @@ var/global/list/frozen_items = list()
 							O.find_target()
 							if(!O.target)
 								all_objectives -= O
+								var/datum/faction/F
 								for(var/role in O.owner.antag_roles)
 									var/datum/role/R = O.owner.antag_roles[role]
 									R.objectives.RemoveObjective(O)
-								O.owner.faction?.objective_holder.RemoveObjective(O)
+									F = find_active_faction_by_member(role, O)
+									if(F)
+										F?.objective_holder.RemoveObjective(O)
 								qdel(O)
 
 			//Handle job slot/tater cleanup.

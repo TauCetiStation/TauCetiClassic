@@ -129,7 +129,7 @@
 			U.gloves.icon_state = "s-ninjan"
 			U.gloves.item_state = "s-ninjan"
 	else
-		if(U.mind.special_role!="Ninja")
+		if(!isninja(U))
 			to_chat(U, "<span class='warning'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 			U.gib()
 			return 0

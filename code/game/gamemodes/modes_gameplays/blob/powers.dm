@@ -57,7 +57,8 @@
 
 	B.change_to(/obj/effect/blob/shield)
 
-	if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
+	var/datum/faction/blob_conglomerate/B = find_active_first_faction_by_type(/datum/faction/blob_conglomerate)
+	if(B)
 		var/datum/faction/blob_conglomerate/BC = mind.faction
 		if(istype(BC.stat_datum, /datum/stat/faction/blob))
 			var/datum/stat/faction/blob/BS = BC.stat_datum

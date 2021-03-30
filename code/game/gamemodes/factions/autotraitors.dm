@@ -38,7 +38,7 @@
 	for(var/mob/living/player in living_list)
 		if (player.client && player.mind && player.stat != DEAD)
 			playercount++
-			if(player.mind.special_role)
+			if(isanyantag(player))
 				traitorcount++
 			else if((player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
 				if(!possible_autotraitor.len || !possible_autotraitor.Find(player))

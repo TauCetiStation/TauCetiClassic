@@ -50,8 +50,6 @@
 	var/syndicate_awareness = SYNDICATE_UNAWARE
 	var/list/antag_roles = list()		// All the antag roles we have.
 
-	var/datum/faction/faction 			//associated faction
-
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
 
@@ -652,10 +650,6 @@
 	..()
 	if(!mind.assigned_role)
 		mind.assigned_role = "default"	//default
-
-//MONKEY
-/mob/living/carbon/monkey/mind_initialize()
-	..()
 
 //slime
 /mob/living/carbon/slime/mind_initialize()

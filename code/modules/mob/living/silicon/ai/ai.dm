@@ -299,8 +299,9 @@ var/list/ai_verbs_default = list(
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
-	if(ismalf(src))
-		var/datum/faction/malf_silicons/malf = mind.faction
+	var/datum/role/malfAI/M = ismalf(src)
+	if(M)
+		var/datum/faction/malf_silicons/malf = M.GetFaction()
 		if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
 			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 

@@ -223,14 +223,6 @@
 		else
 			src.healths.icon_state = "health7"
 
-	if (src.syndicate && src.client)
-		if(src.connected_ai)
-			src.connected_ai.connected_robots -= src
-			src.connected_ai = null
-		if(src.mind)
-			if(!src.mind.special_role)
-				src.mind.special_role = TRAITOR
-
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
 		switch(cellcharge)
