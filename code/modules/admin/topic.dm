@@ -674,10 +674,10 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[NUKE_OP];jobban4=\ref[M]'>[NUKE_OP]</a></td>"
 
 		//Revolutionary
-		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
+		if(jobban_isbanned(M, REV) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[REV];jobban4=\ref[M]'>[REV]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[REV];jobban4=\ref[M]'>[REV]</a></td>"
 
 		//Raider (New heist)
 		if(jobban_isbanned(M, ROLE_RAIDER) || isbanned_dept)

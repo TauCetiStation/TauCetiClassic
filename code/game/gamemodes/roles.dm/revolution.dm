@@ -1,7 +1,7 @@
 /datum/role/rev
 	name = REV
 	id = REV
-	required_pref = ROLE_REV
+	required_pref = REV
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	logo_state = "rev-logo"
 
@@ -13,7 +13,7 @@
 		return FALSE
 	if(ismindshielded(M.current) || isloyal(M.current))
 		return FALSE
-	if(jobban_isbanned(M.current, ROLE_REV) || jobban_isbanned(M.current, "Syndicate") || role_available_in_minutes(M.current, ROLE_REV))
+	if(jobban_isbanned(M.current, REV) || jobban_isbanned(M.current, "Syndicate") || role_available_in_minutes(M.current, REV))
 		return FALSE
 	return TRUE
 
@@ -24,7 +24,7 @@
 /datum/role/syndicate/rev_leader
 	name = HEADREV
 	id = HEADREV
-	required_pref = ROLE_REV
+	required_pref = REV
 	logo_state = "rev_head-logo"
 
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
@@ -76,7 +76,7 @@
 		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 	else if(ismindshielded(M))
 		to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
-	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate") || role_available_in_minutes(M, ROLE_REV))
+	else if(jobban_isbanned(M, REV) || jobban_isbanned(M, "Syndicate") || role_available_in_minutes(M, REV))
 		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
 	else
 		var/datum/role/syndicate/rev_leader/lead = mind.GetRole(HEADREV)
