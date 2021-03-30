@@ -88,6 +88,13 @@
 		return roletype
 	return initroletype
 
+/datum/faction/proc/can_join_faction(mob/P)
+	if(!P.client || !P.mind)
+		return FALSE
+	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref))
+		return FALSE
+	return TRUE
+
 /datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)

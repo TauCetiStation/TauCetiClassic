@@ -129,7 +129,7 @@
 		var/datum/faction/F = new type()
 		var/can_be = L.len
 		for(var/mob/M in L)
-			if(!can_join_faction(M, F))
+			if(!F.can_join_faction(M))
 				can_be--
 		if(can_be < F.min_roles)
 			return FALSE
@@ -142,22 +142,13 @@
 		for(var/mob/dead/new_player/P in available_players)
 			if(F.max_roles && F.members.len >= F.max_roles)
 				break
-			if(!can_join_faction(P, F))
-				to_chat(world, "f(!can_join_fa")
+			if(!F.can_join_faction(P))
 				continue
 			if(!F.HandleNewMind(P.mind))
 				stack_trace("[P.mind] failed [F] HandleNewMind!")
 				continue
 		if(F.members.len < F.min_roles)
 			return FALSE
-	return TRUE
-
-/datum/game_mode/proc/can_join_faction(mob/P, datum/faction/F)
-	if(!P.client || !P.mind)
-		return FALSE
-	if(!P.client.prefs.be_role.Find(F.required_pref) || jobban_isbanned(P, F.required_pref) || role_available_in_minutes(P, F.required_pref))
-		to_chat(world, "[F.required_pref] - [P.client.prefs.be_role.Find(F.required_pref)] - [jobban_isbanned(P, F.required_pref)] - [role_available_in_minutes(P, F.required_pref)]")
-		return FALSE
 	return TRUE
 
 /*=====ROLE RELATED STUFF=====*/
@@ -237,7 +228,7 @@
 		F.latespawn(mob)
 		if(F.max_roles && F.members.len >= F.max_roles)
 			continue
-		if(!can_join_faction(mob, F))
+		if(!F.can_join_faction(mob))
 			continue
 		if(F.accept_latejoiners)
 			possible_factions += F

@@ -60,18 +60,6 @@
 #define GREET_AUTOTATOR		"autotator"
 #define GREET_SYNDBEACON	"syndbeacon"
 
-#define GREET_CONVERTED		"converted"
-#define GREET_PAMPHLET		"pamphlet"
-#define GREET_SOULSTONE		"soulstone"
-#define GREET_SOULBLADE		"soulblade"
-#define GREET_RESURRECT		"resurrect"
-#define GREET_SACRIFICE		"sacrifice"
-
-#define GREET_REVSQUAD_CONVERTED "revsquad"
-#define GREET_PROVOC_CONVERTED	 "provocateur"
-
-///////////////// ROLE TYPE DEFINES ///////////////////
-
 ///////////////// FACTION STAGES //////////////////////
 #define FACTION_DEFEATED	-1
 #define FACTION_DORMANT		0
@@ -79,13 +67,9 @@
 #define FACTION_ENDGAME		3
 #define FACTION_VICTORY		5
 
-#define MALF_CHOOSING_NUKE	4
-
 ////////////////////////////////////////////////////////////////////////////////
 
 // -- Objectives flags
-
-#define FACTION_OBJECTIVE 1
 
 #define FROM_GHOSTS 1
 #define FROM_PLAYERS 2
