@@ -1,7 +1,7 @@
 /datum/role/changeling
 	name = CHANGELING
 	id = CHANGELING
-	required_pref = ROLE_CHANGELING
+	required_pref = CHANGELING
 	special_role = CHANGELING
 
 	antag_hud_type = ANTAG_HUD_CHANGELING
