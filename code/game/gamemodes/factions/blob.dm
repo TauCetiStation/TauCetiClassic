@@ -33,8 +33,6 @@
 	var/prelude_announcement
 	var/outbreak_announcement
 
-	stat_datum_type = /datum/stat/faction/blob
-
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
 	return TRUE

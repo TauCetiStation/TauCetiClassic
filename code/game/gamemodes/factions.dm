@@ -41,19 +41,11 @@
 	var/list/datum/role/members = list()
 	var/datum/objective_holder/objective_holder
 
-	// This datum represents all data that is exported to the statistics file at the end of the round.
-	// If you want to store faction-specific data as statistics, you'll need to define your own datum.
-	// See dynamic_stats.dm
-	var/datum/stat/faction/stat_datum = null
-	var/datum/stat/faction/stat_datum_type = /datum/stat/faction
-
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()
 	objective_holder = new
 	objective_holder.faction = src
-
-	//stat_datum = new stat_datum_type()
 
 /datum/faction/proc/OnPostSetup()
 	SHOULD_CALL_PARENT(TRUE)
@@ -217,7 +209,6 @@
 		i++
 	score_results += "</ul>"
 
-	stat_collection.add_faction(src)
 	score_results += "<br>"
 	return score_results
 

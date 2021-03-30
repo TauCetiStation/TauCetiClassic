@@ -57,16 +57,6 @@
 
 	B.change_to(/obj/effect/blob/shield)
 
-	var/datum/faction/blob_conglomerate/B = find_active_first_faction_by_type(/datum/faction/blob_conglomerate)
-	if(B)
-		var/datum/faction/blob_conglomerate/BC = mind.faction
-		if(istype(BC.stat_datum, /datum/stat/faction/blob))
-			var/datum/stat/faction/blob/BS = BC.stat_datum
-			BS.built_structures.shields++
-	return
-
-
-
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
@@ -100,13 +90,6 @@
 	var/obj/effect/blob/resource/R = locate() in T
 	if(R)
 		R.overmind = src
-		if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
-			var/datum/faction/blob_conglomerate/BC = mind.faction
-			if(istype(BC.stat_datum, /datum/stat/faction/blob))
-				var/datum/stat/faction/blob/BS = BC.stat_datum
-				BS.built_structures.resgens++
-
-	return
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
@@ -139,14 +122,6 @@
 
 	B.change_to(/obj/effect/blob/node)
 
-	if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
-		var/datum/faction/blob_conglomerate/BC = mind.faction
-		if(istype(BC.stat_datum, /datum/stat/faction/blob))
-			var/datum/stat/faction/blob/BS = BC.stat_datum
-			BS.built_structures.nodes++
-	return
-
-
 /mob/camera/blob/verb/create_factory()
 	set category = "Blob"
 	set name = "Create Factory Blob (60)"
@@ -175,14 +150,6 @@
 		return
 
 	B.change_to(/obj/effect/blob/factory)
-
-	if(mind && istype(mind.faction, /datum/faction/blob_conglomerate))
-		var/datum/faction/blob_conglomerate/BC = mind.faction
-		if(istype(BC.stat_datum, /datum/stat/faction/blob))
-			var/datum/stat/faction/blob/BS = BC.stat_datum
-			BS.built_structures.factories++
-	return
-
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"

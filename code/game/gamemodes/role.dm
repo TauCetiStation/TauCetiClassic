@@ -66,12 +66,6 @@
 
 	var/list/greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
-	// This datum represents all data that is exported to the statistics file at the end of the round.
-	// If you want to store faction-specific data as statistics, you'll need to define your own datum.
-	// See dynamic_stats.dm
-	var/datum/stat/role/stat_datum = null
-	var/datum/stat/role/stat_datum_type = /datum/stat/role
-
 /datum/role/New(datum/mind/M, datum/faction/fac, new_id, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	// Link faction.
@@ -92,7 +86,6 @@
 		plural_name="[name]s"
 
 	objectives.owner = M
-	//stat_datum = new stat_datum_type()
 	..()
 	return TRUE
 
@@ -289,7 +282,6 @@
 	if(!antag)
 		text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
 		win = FALSE
-		stat_collection.add_role(src, win)
 		return text
 
 	var/mob/M = antag.current
@@ -322,7 +314,6 @@
 		text += "</ul>"
 
 	antagonists_completion = list(list("role" = id, "html" = text))
-	stat_collection.add_role(src, win)
 
 	return text
 
