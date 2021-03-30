@@ -656,10 +656,10 @@
 		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
 
 		//Traitor
-		if(jobban_isbanned(M, ROLE_TRAITOR) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
+		if(jobban_isbanned(M, TRAITOR) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[TRAITOR];jobban4=\ref[M]'>[TRAITOR]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[TRAITOR];jobban4=\ref[M]'>[TRAITOR]</a></td>"
 
 		//Changeling
 		if(jobban_isbanned(M, ROLE_CHANGELING) || isbanned_dept)
