@@ -14,7 +14,7 @@
 	return L
 
 /*
-All gamemodes
+	All gamemodes,
 	/datum/game_mode/abduction,
 	/datum/game_mode/blob,
 	/datum/game_mode/changeling,
