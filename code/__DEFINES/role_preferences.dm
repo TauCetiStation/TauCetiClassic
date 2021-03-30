@@ -7,7 +7,6 @@
 #define ROLE_PLANT             "Diona"
 #define ROLE_GHOSTLY           "Ghostly Roles"
 
-#define RESPONDER               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
 
 var/global/list/antag_roles = list(
@@ -35,7 +34,7 @@ var/global/list/special_roles = list(
 	REV,
 	XENOMORPH,
 	CULTIST,
-	BLOBOVERMIND ,
+	BLOBOVERMIND,
 	NINJA,
 	VOXRAIDER,
 	SHADOW,
