@@ -700,10 +700,10 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[WIZARD];jobban4=\ref[M]'>[WIZARD]</a></td>"
 
 		//ERT
-		if(jobban_isbanned(M, ROLE_ERT) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
+		if(jobban_isbanned(M, RESPONDER) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[RESPONDER];jobban4=\ref[M]'>[RESPONDER]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[RESPONDER];jobban4=\ref[M]'>[RESPONDER]</a></td>"
 
 		//Shadowling
 		if(jobban_isbanned(M, SHADOW) || isbanned_dept)
