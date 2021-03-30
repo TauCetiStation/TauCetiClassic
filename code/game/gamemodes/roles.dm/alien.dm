@@ -1,7 +1,7 @@
 /datum/role/alien
 	name = XENOMORPH
 	id = XENOMORPH
-	required_pref = ROLE_ALIEN
+	required_pref = XENOMORPH
 	special_role = XENOMORPH
 	disallow_job = TRUE
 

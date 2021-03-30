@@ -23,7 +23,7 @@
 		kill()
 		return
 
-	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", ROLE_ALIEN, IGNORE_BORER)
+	var/list/candidates = pollGhostCandidates("Borer Infestation! Do you want to play as a Cortical Borer?", XENOMORPH, IGNORE_BORER)
 
 	for(var/mob/M in candidates)
 		if(spawncount <= 0 || !vents.len)

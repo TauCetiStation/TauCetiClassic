@@ -5,7 +5,7 @@
 	ID = XENOMORPH_HIVE
 	logo_state = "xeno-logo"
 
-	required_pref = ROLE_ALIEN
+	required_pref = XENOMORPH
 
 	initial_role = XENOMORPH
 	late_role = XENOMORPH

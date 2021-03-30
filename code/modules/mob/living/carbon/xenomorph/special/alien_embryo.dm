@@ -146,14 +146,14 @@ This is emryo growth procs
 		// if we find no ghosts to become the alien. If the host has a client
 		// he will become the alien but if he doesn't then we will set the stage
 		// to 4, so we don't do a process heavy check everytime.
-		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", ROLE_ALIEN)
+		var/list/candidates = pollGhostCandidates("Would you like to be \a larva", XENOMORPH)
 
 		var/client/larva_candidate
 		if(candidates.len)
 			var/mob/candidate = pick(candidates)
 			larva_candidate = candidate.key
 		else if(affected_mob.client)
-			if((ROLE_ALIEN in affected_mob.client.prefs.be_role) && !jobban_isbanned(affected_mob.client, ROLE_ALIEN))
+			if((XENOMORPH in affected_mob.client.prefs.be_role) && !jobban_isbanned(affected_mob.client, XENOMORPH))
 				larva_candidate = affected_mob.key
 
 		if(!larva_candidate)

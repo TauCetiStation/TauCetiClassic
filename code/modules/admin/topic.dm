@@ -740,10 +740,10 @@
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Xenomorph
-		if(jobban_isbanned(M, ROLE_ALIEN) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
+		if(jobban_isbanned(M, XENOMORPH) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[XENOMORPH];jobban4=\ref[M]'>[XENOMORPH]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[XENOMORPH];jobban4=\ref[M]'>[XENOMORPH]</a></td>"
 
 		jobs += "</tr></table>"
 
