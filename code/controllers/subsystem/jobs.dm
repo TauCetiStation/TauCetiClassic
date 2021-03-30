@@ -213,7 +213,7 @@ SUBSYSTEM_DEF(job)
 		for(var/level in JP_LEVELS)
 			var/list/candidates = list()
 			if(istype(SSticker.mode, /datum/game_mode/malfunction))//Make sure they want to malf if its malf
-				candidates = FindOccupationCandidates(job, level, ROLE_MALF)
+				candidates = FindOccupationCandidates(job, level, MALF)
 			else
 				candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)
@@ -227,7 +227,7 @@ SUBSYSTEM_DEF(job)
 			for(var/mob/dead/new_player/player in unassigned)
 				if(jobban_isbanned(player, "AI"))
 					continue
-				if(ROLE_MALF in player.client.prefs.be_role)
+				if(MALF in player.client.prefs.be_role)
 					if(AssignRole(player, "AI"))
 						ai_selected++
 						break
