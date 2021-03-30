@@ -94,7 +94,7 @@
 	power.action_wrapper(user)
 
 /obj/effect/rune/attack_animal(mob/user)
-	if(!istype(user, /mob/living/simple_animal/construct))
+	if(!iscultist(user))
 		return
 
 	power.action_wrapper(user)
