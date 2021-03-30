@@ -66,7 +66,7 @@ Made by Xhuis
 /datum/game_mode/shadowling
 	name = "shadowling"
 	config_tag = "shadowling"
-	role_type = ROLE_SHADOWLING
+	role_type = SHADOW
 	required_players = 30
 	required_players_bundles = 25
 	required_enemies = 2

@@ -29,7 +29,7 @@ var/list/roles_ingame_minute_unlock = list(
 	BLOBOVERMIND = 2880,
 	NINJA = 4320,
 	MALF = 3600,
-	ROLE_SHADOWLING = 4320,
+	SHADOW = 4320,
 	ROLE_ABDUCTOR = 2880,
 	ROLE_GHOSTLY = 360,
 )

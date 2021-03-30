@@ -3,7 +3,7 @@
 	ID = SHADOWLINGS
 	logo_state = "shadowling-logo"
 
-	required_pref = ROLE_SHADOWLING
+	required_pref = SHADOW
 
 	initial_role = SHADOWLING
 	initroletype = /datum/role/shadowling

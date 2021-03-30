@@ -706,10 +706,10 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
 
 		//Shadowling
-		if(jobban_isbanned(M, ROLE_SHADOWLING) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
+		if(jobban_isbanned(M, SHADOW) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[SHADOW];jobban4=\ref[M]'>[SHADOW]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[SHADOW];jobban4=\ref[M]'>[SHADOW]</a></td>"
 
 		//Abductor
 		if(jobban_isbanned(M, ROLE_ABDUCTOR) || isbanned_dept)
