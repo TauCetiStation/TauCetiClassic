@@ -287,3 +287,17 @@
 	new /obj/item/clothing/suit/syndieshirt(src)
 	new /obj/item/toy/syndicateballoon(src)
 	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/chemical
+	name = "box (CH)"
+	desc = "Box containing Spacegeneva violation."
+	icon_state = "syndie_box"
+
+/obj/item/weapon/storage/box/syndie_kit/chemical/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/helmet/space/rig/syndi/hazmat(src)
+	new /obj/item/clothing/suit/space/rig/syndi/hazmat(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+	new /obj/item/weapon/reagent_containers/watertank_backpack/syndie(src)
+	new /obj/item/weapon/storage/box/matches(src)
+	make_exact_fit()

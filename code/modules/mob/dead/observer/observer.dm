@@ -544,7 +544,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "View Crew Manifest"
 	set category = "Ghost"
 
-	var/dat = data_core.get_manifest()
+	var/dat = data_core.html_manifest(OOC=1)
 
 	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)

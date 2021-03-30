@@ -267,7 +267,7 @@ SUBSYSTEM_DEF(ticker)
 		mode.post_setup()
 		for(var/mob/dead/new_player/N in new_player_list)
 			if(N.client)
-				N.new_player_panel_proc()
+				N.show_titlescreen()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later

@@ -379,6 +379,13 @@
 	cost = 10
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/ammo/chemicals
+	name = "Chemical Warfare Tank"
+	desc = "A tank of chemicals to refuel your urge to deliver slow and painful death to others."
+	item = /obj/item/device/radio/beacon/syndicate_chemicals
+	cost = 10
+	uplink_types = list("nuclear")
+
 // STEALTHY WEAPONS
 
 /datum/uplink_item/stealthy_weapons
@@ -736,6 +743,29 @@
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
+
+// TELECRYSTALS
+
+/datum/uplink_item/telecrystals
+	category = "Telecrystals"
+
+/datum/uplink_item/telecrystals/one
+	name = "1 Telecrystal"
+	desc = "Withdraws one raw telecrystal to share with your killing buddies."
+	item = /obj/item/stack/telecrystal
+	cost = 1
+
+/datum/uplink_item/telecrystals/five
+	name = "5 Telecrystals"
+	desc = "Withdraws five raw telecrystals to gift to your lovely crime partner."
+	item = /obj/item/stack/telecrystal/five
+	cost = 5
+
+/datum/uplink_item/telecrystals/twenty
+	name = "20 Telecrystals"
+	desc = "Withdraws twenty raw telecrystals to wholly give yourself into hands of your accomplices."
+	item = /obj/item/stack/telecrystal/twenty
+	cost = 20
 
 // POINTLESS BADASSERY
 

@@ -614,13 +614,10 @@
 	set category = "OOC"
 	set src in view()
 
-	if(config.allow_Metadata)
-		if(client)
-			to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
-		else
-			to_chat(usr, "[src] does not have any stored infomation!")
+	if(client)
+		to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 	else
-		to_chat(usr, "OOC Metadata is not supported by this server!")
+		to_chat(usr, "[src] does not have any stored infomation!")
 
 	return
 
