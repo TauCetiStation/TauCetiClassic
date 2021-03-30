@@ -84,6 +84,9 @@
 	if(!environment)
 		return
 
+	if(istype(loc, /obj/machinery/atmospherics/pipe))
+		return
+
 	var/loc_temp = get_temperature(environment)
 	var/pressure = environment.return_pressure()
 

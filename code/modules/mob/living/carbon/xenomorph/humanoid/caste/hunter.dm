@@ -29,7 +29,6 @@
 	..()
 
 //Hunter verbs
-
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
 	if(resting)
 		lay_down()
@@ -37,17 +36,18 @@
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
 	if(message)
-		to_chat(src, "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>")
+		if(leap_on_click)
+			to_chat(src, "<span class='noticealien'>You will now leap at enemies with a middle click!</span>")
+		else
+			to_chat(src, "<span class='noticealien'>You will no longer leap at enemies with a middle click!</span>")
 	else
 		return
 
-
-/mob/living/carbon/xenomorph/humanoid/hunter/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/humanoid/hunter/MiddleClickOn(atom/A, params)
 	if(next_move <= world.time && leap_on_click)
 		leap_at(A)
 	else
 		..()
-
 
 #define MAX_ALIEN_LEAP_DIST 7
 

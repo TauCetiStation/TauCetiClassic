@@ -38,15 +38,6 @@ This is emryo growth procs
 	baby = null
 	return ..()
 
-/obj/item/clothing/mask/facehugger/proc/host_is_dead()
-	if(current_hugger)
-		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-		var/atom/movable/mob_container
-		mob_container = FH
-		mob_container.forceMove(get_turf(src))
-		FH.reset_view()
-		qdel(src)
-
 /obj/item/alien_embryo/process()
 	if(!affected_mob) // The mob we were gestating in is straight up gone, we shouldn't be here
 		STOP_PROCESSING(SSobj, src)

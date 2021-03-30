@@ -417,8 +417,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 	if(affecting.stat == DEAD)
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			hugger.host_is_dead()
+		if(istype(hugger, /obj/item/clothing/mask/facehugger))
+			hugger.get_off()
 		qdel(src)
 		return
 	if(on_cooldown || state == GRAB_IMPREGNATE)
@@ -489,8 +489,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	if(affecting.stat == DEAD)
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			hugger.host_is_dead()
+		if(istype(hugger, /obj/item/clothing/mask/facehugger))
+			hugger.get_off()
 		if(iscarbon(affecting))
 			affecting.update_inv_wear_mask(1)
 		qdel(src)

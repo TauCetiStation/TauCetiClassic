@@ -32,21 +32,7 @@ Doesn't work on other aliens/AI.*/
 		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER, 33)
 		visible_message("<span class='notice'><B>[src]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 		new /obj/structure/alien/weeds/node(loc)
-	return
 
-/*
-/mob/living/carbon/xenomorph/humanoid/verb/ActivateHuggers()
-	set name = "Activate facehuggers (5)"
-	set desc = "Makes all nearby facehuggers activate."
-	set category = "Alien"
-
-	if(powerc(5))
-		adjustToxLoss(-5)
-		for(var/obj/item/clothing/mask/facehugger/F in range(8,src))
-			F.GoActive()
-		emote("roar")
-	return
-*/
 /mob/living/carbon/xenomorph/humanoid/verb/whisp(mob/M as mob in oview())
 	set name = "Whisper (10)"
 	set desc = "Whisper to someone."
@@ -59,7 +45,6 @@ Doesn't work on other aliens/AI.*/
 			log_say("AlienWhisper: [key_name(src)]->[key_name(M)] : [msg]")
 			to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head... <I>[msg]</I></span>")
 			to_chat(src, "<span class='noticealien'>You said: \"<I>[msg]</I>\" to [M]</span>")
-	return
 
 /mob/living/carbon/xenomorph/humanoid/verb/transfer_plasma(mob/living/carbon/xenomorph/M as mob in oview())
 	set name = "Transfer Plasma"
@@ -78,8 +63,6 @@ Doesn't work on other aliens/AI.*/
 					to_chat(src, "<span class='noticealien'>You have transfered [amount] plasma to [M]</span>")
 				else
 					to_chat(src, "<span class='warning'>You need to be closer.</span>")
-	return
-
 
 /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrossive Acid (200)"
@@ -113,7 +96,6 @@ Doesn't work on other aliens/AI.*/
 			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
 			to_chat(src, "<span class='warning'>Target is too far away.</span>")
-	return
 
 /mob/living/carbon/xenomorph/humanoid/proc/screech()
 	set name = "Screech! (200)"
@@ -164,18 +146,18 @@ Doesn't work on other aliens/AI.*/
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
 
-/mob/living/carbon/xenomorph/humanoid/proc/toggle_neurotoxin(message = 1)
+/mob/living/carbon/xenomorph/humanoid/proc/toggle_neurotoxin(message = TRUE)
 	switch(neurotoxin_on_click)
 
 		if(0)
 			neurotoxin_on_click = ALIEN_NEUROTOXIN
 			if(message)
-				to_chat(src, "<span class='noticealien'>You will now fire neurotoxin in enemies!</span>")
+				to_chat(src, "<span class='noticealien'>You will now fire neurotoxin in enemies with a middle click!</span>")
 
 		if(ALIEN_NEUROTOXIN)
 			neurotoxin_on_click = ALIEN_ACID
 			if(message)
-				to_chat(src, "<span class='noticealien'>You will now fire acid in enemies!</span>")
+				to_chat(src, "<span class='noticealien'>You will now fire acid in enemies with a middle click!</span>")
 
 		if(ALIEN_ACID)
 			neurotoxin_on_click = 0
@@ -183,16 +165,14 @@ Doesn't work on other aliens/AI.*/
 				to_chat(src, "<span class='noticealien'>You will not fire in enemies!</span>")
 	neurotoxin_icon.icon_state = "neurotoxin[neurotoxin_on_click]"
 	update_icons()
-	return
 
 /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin()
 	set name = "Spit Neurotoxin"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
 	set category = "Alien"
-	toggle_neurotoxin(1)
-	return
+	toggle_neurotoxin()
 
-/mob/living/carbon/xenomorph/humanoid/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/humanoid/MiddleClickOn(atom/A, params)
 	face_atom(A)
 	if(neurotoxin_on_click)
 		split_neurotoxin(A)
@@ -252,7 +232,6 @@ Doesn't work on other aliens/AI.*/
 		BB.process()
 
 	last_neurotoxin = world.time
-	return
 
 #undef ALIEN_NEUROTOXIN
 #undef ALIEN_ACID
@@ -268,17 +247,18 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
-	if(ALREADY_STRUCTURE_THERE)
-		to_chat(src, "<span class='warning'>There is already a structure there.</span>")
-		return
-
-	if(!CHECK_WEEDS)
-		to_chat (src, "<span class='warning'>You can only build on weeds.</span>")
-		return
-
 	if(powerc(75, 1))
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist
-		if(!choice || !powerc(75))	return
+		if(!choice || !powerc(75))
+			return
+		if(ALREADY_STRUCTURE_THERE)
+			to_chat(src, "<span class='warning'>There is already a structure there.</span>")
+			return
+		if(!CHECK_WEEDS)
+			to_chat (src, "<span class='warning'>You can only build on weeds.</span>")
+			return
+		if(!do_after(src, 4 SECONDS, target = src))
+			return
 		adjustToxLoss(-75)
 		visible_message("<span class='notice'><B>[src]</B> vomits up a thick purple substance and begins to shape it.</span>", "<span class='notice'>You shape a [choice].</span>")
 		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER)
@@ -291,7 +271,6 @@ Doesn't work on other aliens/AI.*/
 				new /obj/structure/alien/resin/membrane(loc)
 			if("resin nest")
 				new /obj/structure/stool/bed/nest(loc)
-	return
 
 /mob/living/carbon/xenomorph/humanoid/proc/air_plant()
 	set name = "Plant Air Generator (250)"
@@ -311,7 +290,6 @@ Doesn't work on other aliens/AI.*/
 		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'><B>[src]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 		new /obj/structure/alien/air_plant(loc)
-	return
 
 //Queen verbs
 /mob/living/carbon/xenomorph/humanoid/queen/proc/lay_egg()
