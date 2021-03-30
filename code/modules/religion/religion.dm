@@ -580,8 +580,11 @@
 	if(!ishuman(M))
 		hud.remove_hud_from(M)
 
+/datum/religion/proc/can_convert(mob/M)
+	return TRUE
+
 /datum/religion/proc/add_member(mob/M, holy_role)
-	if(is_member(M))
+	if(is_member(M) || !can_convert(M))
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_REL_ADD_MEMBER, M, holy_role)

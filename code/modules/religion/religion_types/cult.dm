@@ -219,6 +219,24 @@
 
 	M.AddSpell(new type(src))
 
+/datum/religion/cult/can_convert(mob/M)
+	if(M.my_religion)
+		return FALSE
+	if(ishuman(M))
+		if(M.mind.assigned_role == "Captain")
+			return FALSE
+		if(M.get_species() == GOLEM)
+			return FALSE
+	if(ismindshielded(M) || isloyal(M))
+		return FALSE
+	return TRUE
+
+/datum/religion/cult/add_member(mob/M, holy_role)
+	if(!..())
+		return FALSE
+	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", M)
+	return TRUE
+
 /datum/religion/cult/on_exit(mob/M)
 	for(var/obj/effect/proc_holder/spell/targeted/communicate/C in M.spell_list)
 		M.RemoveSpell(C)

@@ -83,7 +83,7 @@
 	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD] || H.my_religion)
 		to_chat(user, "<span class='warning'>Неподходящее тело.</span>")
 		return FALSE
-	if(!global.cult_religion.mode.is_convertable_to_cult(H.mind))
+	if(!global.cult_religion.can_convert(H))
 		to_chat(user, "<span class='warning'>Разум тела сопротивляется.</span>")
 		return FALSE
 	if(jobban_isbanned(H, ROLE_CULTIST))

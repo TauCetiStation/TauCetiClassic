@@ -126,7 +126,7 @@
 	return pick(summon_type)
 
 /datum/religion_rites/standing/spawn_item/call_animal/proc/call_ghost(mob/animal)
-	var/list/candidates = pollGhostCandidates("Do you want to become the Familiar of religion?", ROLE_GHOSTLY, IGNORE_FAMILIAR, 10 SECONDS)
+	var/list/candidates = pollGhostCandidates("Do you want to become the Familiar of [religion]?", ROLE_GHOSTLY, IGNORE_FAMILIAR, 10 SECONDS)
 	if(!candidates.len)
 		return
 	var/mob/M = pick(candidates)

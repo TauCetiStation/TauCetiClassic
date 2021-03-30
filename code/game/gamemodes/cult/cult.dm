@@ -148,11 +148,10 @@
 	if(!global.cult_religion)
 		create_religion(/datum/religion/cult)
 
-	if(global.cult_religion.mode.is_convertable_to_cult(cult_mind))
-		if(global.cult_religion.add_member(cult_mind.current, CULT_ROLE_HIGHPRIEST))
-			cult_mind.current.Paralyse(5)
-			add_antag_hud(ANTAG_HUD_CULT, "hudcultist", cult_mind.current)
-			return TRUE
+	if(global.cult_religion.add_member(cult_mind.current, CULT_ROLE_HIGHPRIEST))
+		cult_mind.current.Paralyse(5)
+		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", cult_mind.current)
+		return TRUE
 
 /datum/game_mode/cult/add_cultist(datum/mind/cult_mind) //INHERIT
 	if (!..(cult_mind))
@@ -169,24 +168,10 @@
 		if(show_message)
 			cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
 
-/datum/game_mode/cult/proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))
-		return FALSE
-	if(mind.current.my_religion)
-		return FALSE
-	if(ishuman(mind.current))
-		if(mind.assigned_role == "Captain")
-			return FALSE
-		if(mind.current.get_species() == GOLEM)
-			return FALSE
-	if(ismindshielded(mind.current) || isloyal(mind.current))
-		return FALSE
-	return TRUE
-
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!is_convertable_to_cult(player.mind))
+		if(!global.cult_religion?.can_convert(player))
 			ucs += player.mind
 	return ucs
 
@@ -275,7 +260,7 @@
 	if(global.cult_religion?.members.len)
 		text += printlogo("cult", "cultists")
 		for(var/mob/cultist in global.cult_religion.members)
-			if((cultist.mind && cultist.ckey) || (cultist.mind in global.cult_religion.mode.started_cultists))
+			if(cultist.mind || (cultist.mind in global.cult_religion.mode.started_cultists))
 				text += printplayerwithicon(cultist.mind)
 
 	if(text)
