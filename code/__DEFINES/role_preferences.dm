@@ -4,7 +4,6 @@
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database! Jobbans also uses those defines!!
 #define ROLE_PAI               "pAI"
-#define ROLE_RAIDER            "Raider"
 #define ROLE_PLANT             "Diona"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
@@ -24,7 +23,7 @@ var/global/list/antag_roles = list(
 	CULTIST,
 	BLOBOVERMIND,
 	NINJA,
-	ROLE_RAIDER,
+	VOXRAIDER,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
 )
@@ -40,7 +39,7 @@ var/global/list/special_roles = list(
 	CULTIST,
 	BLOBOVERMIND ,
 	NINJA,
-	ROLE_RAIDER,
+	VOXRAIDER,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
 	ROLE_GHOSTLY,

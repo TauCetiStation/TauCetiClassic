@@ -8,7 +8,7 @@ VOX HEIST ROUNDTYPE
 /datum/game_mode/heist
 	name = "heist"
 	config_tag = "heist"
-	role_type = ROLE_RAIDER
+	role_type = VOXRAIDER
 	required_players = 15
 	required_players_bundles = 15
 	required_enemies = 4

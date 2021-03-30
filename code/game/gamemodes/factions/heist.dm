@@ -3,7 +3,7 @@
 	ID = HEIST
 	initial_role = VOXRAIDER
 	late_role = VOXRAIDER
-	required_pref = ROLE_RAIDER
+	required_pref = VOXRAIDER
 	initroletype = /datum/role/vox_raider
 	max_roles = 6
 	desc = "An almost parasitic, shapeshifting entity that assumes the identity of its victims. Commonly used as smart bioweapons by the syndicate,\

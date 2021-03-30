@@ -1,7 +1,7 @@
 /datum/role/vox_raider
 	name = VOXRAIDER
 	id = VOXRAIDER
-	required_pref = ROLE_RAIDER
+	required_pref = VOXRAIDER
 	special_role = VOXRAIDER
 	disallow_job = TRUE
 

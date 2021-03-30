@@ -680,10 +680,10 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[REV];jobban4=\ref[M]'>[REV]</a></td>"
 
 		//Raider (New heist)
-		if(jobban_isbanned(M, ROLE_RAIDER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
+		if(jobban_isbanned(M, VOXRAIDER) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[VOXRAIDER];jobban4=\ref[M]'>[VOXRAIDER]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[VOXRAIDER];jobban4=\ref[M]'>[VOXRAIDER]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
