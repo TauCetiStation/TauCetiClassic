@@ -75,7 +75,7 @@
 
 /mob/living/silicon/robot/drone/init()
 	laws = new /datum/ai_laws/drone()
-	connected_ai = null
+	set_ai_link(null)
 
 	aiCamera = new/obj/item/device/camera/siliconcam/drone_camera(src)
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -233,7 +233,7 @@
 
 	emagged = 1
 	lawupdate = 0
-	connected_ai = null
+	set_ai_link(null)
 	clear_supplied_laws()
 	clear_inherent_laws()
 	laws = new /datum/ai_laws/syndicate_override
