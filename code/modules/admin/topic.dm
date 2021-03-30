@@ -668,10 +668,10 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_CHANGELING];jobban4=\ref[M]'>[ROLE_CHANGELING]</a></td>"
 
 		//Nuke Operative
-		if(jobban_isbanned(M, ROLE_OPERATIVE) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
+		if(jobban_isbanned(M, NUKE_OP) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[NUKE_OP];jobban4=\ref[M]'>[NUKE_OP]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[NUKE_OP];jobban4=\ref[M]'>[NUKE_OP]</a></td>"
 
 		//Revolutionary
 		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)

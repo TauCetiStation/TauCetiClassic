@@ -14,7 +14,7 @@
 	special_role = NUKE_OP
 	disallow_job = TRUE
 
-	required_pref = ROLE_OPERATIVE
+	required_pref = NUKE_OP
 
 	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "hudsyndicate"
