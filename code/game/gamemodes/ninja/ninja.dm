@@ -3,7 +3,7 @@
 /datum/game_mode/ninja
 	name = "ninja"
 	config_tag = "ninja"
-	role_type = ROLE_NINJA
+	role_type = NINJA
 	restricted_jobs = list("Cyborg", "AI")
 	required_players = 10 //Can be adjusted later, should suffice for now.
 	required_players_bundles = 15

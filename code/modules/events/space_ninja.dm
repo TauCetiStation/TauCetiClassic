@@ -21,12 +21,12 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		if(!candidates.len)
 			to_chat(usr, "<span class='warning'>[assign_key]'s mob not found</span>")
 			return
-		candidates = pollCandidates("The spider clan has a special mission for YOU! Would you like to play as space ninja?", ROLE_NINJA, ROLE_NINJA, group = candidates)
+		candidates = pollCandidates("The spider clan has a special mission for YOU! Would you like to play as space ninja?", NINJA, NINJA, group = candidates)
 		if(!candidates.len)
 			to_chat(usr, "<span class='warning'>The ninja ([assign_key]) did not accept the role in time</span>")
 			return
 	else
-		candidates = pollGhostCandidates("The spider clan has a mission for true space ninja. Would you like to play as one?", ROLE_NINJA, ROLE_NINJA)
+		candidates = pollGhostCandidates("The spider clan has a mission for true space ninja. Would you like to play as one?", NINJA, NINJA)
 		if(!candidates.len)
 			message_admins("Candidates for Space Ninja not found. Shutting down.")
 			return
