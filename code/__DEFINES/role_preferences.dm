@@ -4,7 +4,6 @@
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database! Jobbans also uses those defines!!
 #define ROLE_PAI               "pAI"
-#define ROLE_CULTIST           "Cultist"
 #define ROLE_BLOB              "Blob"
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
@@ -24,7 +23,7 @@ var/global/list/antag_roles = list(
 	MALF,
 	REV,
 	XENOMORPH,
-	ROLE_CULTIST,
+	CULTIST,
 	ROLE_BLOB,
 	ROLE_NINJA,
 	ROLE_RAIDER,
@@ -40,7 +39,7 @@ var/global/list/special_roles = list(
 	MALF,
 	REV,
 	XENOMORPH,
-	ROLE_CULTIST,
+	CULTIST,
 	ROLE_BLOB ,
 	ROLE_NINJA,
 	ROLE_RAIDER,

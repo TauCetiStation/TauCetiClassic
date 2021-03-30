@@ -15,7 +15,7 @@
 	ID = BLOODCULT
 	logo_state = "cult-logo"
 
-	required_pref = ROLE_CULTIST
+	required_pref = CULTIST
 
 	initial_role = CULTIST
 	late_role = CULTIST

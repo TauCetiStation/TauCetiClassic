@@ -688,10 +688,10 @@
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Cultist
-		if(jobban_isbanned(M, ROLE_CULTIST) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
+		if(jobban_isbanned(M, CULTIST) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[CULTIST];jobban4=\ref[M]'>[CULTIST]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[CULTIST];jobban4=\ref[M]'>[CULTIST]</a></td>"
 
 		//Wizard
 		if(jobban_isbanned(M, WIZARD) || isbanned_dept)
