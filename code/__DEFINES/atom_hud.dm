@@ -46,7 +46,7 @@
 #define HUD_LIST_LIST 1
 
 //data HUD (medhud, sechud) defines
-//Don't forget to update human/New() if you change these!
+// the numbers don't mean anything, as long as they are different
 #define DATA_HUD_SECURITY				1
 #define DATA_HUD_MEDICAL				2
 #define DATA_HUD_MEDICAL_ADV			3
@@ -66,12 +66,11 @@
 #define ANTAG_HUD_NINJA         15
 #define ANTAG_HUD_CHANGELING    16
 #define ANTAG_HUD_ABDUCTOR      17
-#define ANTAG_HUD_GANGSTER      18
-#define ANTAG_HUD_ALIEN         19
-#define ANTAG_HUD_DEATHCOM      20
-#define ANTAG_HUD_ERT           21
-#define ANTAG_HUD_MALF          22
-#define ANTAG_HUD_ZOMB          23
+#define ANTAG_HUD_ALIEN         18
+#define ANTAG_HUD_DEATHCOM      19
+#define ANTAG_HUD_ERT           20
+#define ANTAG_HUD_MALF          21
+#define ANTAG_HUD_ZOMB          22
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20
