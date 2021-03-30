@@ -712,10 +712,10 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[SHADOW];jobban4=\ref[M]'>[SHADOW]</a></td>"
 
 		//Abductor
-		if(jobban_isbanned(M, ROLE_ABDUCTOR) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
+		if(jobban_isbanned(M, ABDUCTOR_AGENT) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ABDUCTOR_AGENT];jobban4=\ref[M]'>[ABDUCTOR_AGENT]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ABDUCTOR_AGENT];jobban4=\ref[M]'>[ABDUCTOR_AGENT]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 

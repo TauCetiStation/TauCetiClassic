@@ -3,7 +3,7 @@
 	name = ABDUCTORS
 	ID = ABDUCTORS
 	logo_state = "abductor-logo"
-	required_pref = ROLE_ABDUCTOR
+	required_pref = ABDUCTOR_AGENT
 
 	initroletype = /datum/role/abductor/agent
 	initial_role = ABDUCTOR

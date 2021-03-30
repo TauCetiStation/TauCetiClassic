@@ -30,7 +30,7 @@ var/list/roles_ingame_minute_unlock = list(
 	NINJA = 4320,
 	MALF = 3600,
 	SHADOW = 4320,
-	ROLE_ABDUCTOR = 2880,
+	ABDUCTOR_AGENT = 2880,
 	ROLE_GHOSTLY = 360,
 )
 

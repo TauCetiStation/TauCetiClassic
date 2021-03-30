@@ -5,8 +5,7 @@
 //then you MUST update the database! Jobbans also uses those defines!!
 #define ROLE_PAI               "pAI"
 #define ROLE_PLANT             "Diona"
-#define SHADOW        "Shadowling"
-#define ROLE_ABDUCTOR          "Abductor"
+#define ABDUCTOR_AGENT          "Abductor"
 #define ROLE_GHOSTLY           "Ghostly Roles"
 
 #define ROLE_ERT               "Emergency Response Team"
@@ -25,7 +24,7 @@ var/global/list/antag_roles = list(
 	NINJA,
 	VOXRAIDER,
 	SHADOW,
-	ROLE_ABDUCTOR,
+	ABDUCTOR_AGENT,
 )
 
 var/global/list/special_roles = list(
@@ -41,7 +40,7 @@ var/global/list/special_roles = list(
 	NINJA,
 	VOXRAIDER,
 	SHADOW,
-	ROLE_ABDUCTOR,
+	ABDUCTOR_AGENT,
 	ROLE_GHOSTLY,
 )
 

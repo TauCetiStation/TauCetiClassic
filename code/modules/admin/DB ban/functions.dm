@@ -343,7 +343,7 @@
 		output += "<option value='[j]'>[j]</option>"
 	for(var/j in nonhuman_positions)
 		output += "<option value='[j]'>[j]</option>"
-	for(var/j in list(TRAITOR, CHANGELING, NUKE_OP, REV, VOXRAIDER, CULTIST, WIZARD, ROLE_ERT, SHADOW, ROLE_ABDUCTOR, NINJA, BLOBOVERMIND, MALF))
+	for(var/j in list(TRAITOR, CHANGELING, NUKE_OP, REV, VOXRAIDER, CULTIST, WIZARD, ROLE_ERT, SHADOW, ABDUCTOR_AGENT, NINJA, BLOBOVERMIND, MALF))
 		output += "<option value='[j]'>[j]</option>"
 	output += "</select></td></tr></table>"
 	output += "<b>Reason:<br></b><textarea name='dbbanreason' cols='50'></textarea><br>"
