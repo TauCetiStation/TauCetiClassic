@@ -43,7 +43,7 @@
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.set_slots(slots = 4, slot_size = ITEM_SIZE_SMALL)
 
-/obj/item/clothing/suit/storage/flak/marinad
+/obj/item/clothing/suit/marinad
 	name = "marine armor"
 	desc = "This thing will protect you from any angry flora or fauna."
 	icon_state = "marinad"
@@ -51,6 +51,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
+
 /obj/item/clothing/suit/armor/vest/warden
 	name = "Warden's jacket"
 	desc = "An armoured jacket with gold rank pips and livery."
