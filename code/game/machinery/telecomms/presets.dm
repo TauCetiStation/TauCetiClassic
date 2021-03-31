@@ -26,6 +26,7 @@
 
 /obj/machinery/telecomms/relay/preset/centcom
 	id = "Centcom Relay"
+	listening_level = 2
 	hide = 1
 	toggled = 1
 	//anchored = 1
