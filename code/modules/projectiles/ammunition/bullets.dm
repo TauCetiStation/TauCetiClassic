@@ -127,11 +127,6 @@
 	caliber = "40x46"
 	projectile_type = /obj/item/projectile/bullet/grenade/r4046
 
-/obj/item/ammo_casing/r4046/rubber
-	desc = "A 40x46mm grenade (rubber)."
-	icon_state = "r40x46"
-	projectile_type = /obj/item/projectile/bullet/grenade/r4046/rubber
-
 /obj/item/ammo_casing/r4046/chem/teargas
 	desc = "A 40x46mm grenade (teargas)."
 	icon_state = "gas40x46"

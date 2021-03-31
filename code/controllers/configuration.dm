@@ -812,12 +812,12 @@ var/list/net_announcer_secret = list()
 			switch(modeset)
 				if("bs12")
 					switch(M.config_tag)
-						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitorchan","traitor","blob","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 				if("tau classic")
 					switch(M.config_tag)
-						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitor","blob","extended","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 		var/mod_prob = probabilities[M.config_tag]

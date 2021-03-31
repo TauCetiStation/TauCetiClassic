@@ -1046,7 +1046,7 @@ var/global/BSACooldown = 0
 	if (!istype(M))
 		return 0
 	if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
-		if (SSticker.mode.config_tag == "revolution")
+		if (SSticker.mode.config_tag == "rp-revolution")
 			return 2
 		return 1
 	if(M.mind in SSticker.mode.cult)

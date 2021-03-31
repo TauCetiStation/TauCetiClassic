@@ -26,14 +26,17 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	update_manifest()
 
 /mob/living/silicon/Destroy()
 	silicon_list -= src
+	update_manifest()
 	return ..()
 
 /mob/living/silicon/death(gibbed)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	update_manifest()
 	return ..(gibbed)
 
 /mob/living/silicon/proc/show_laws()
@@ -126,7 +129,7 @@
 /mob/living/silicon/proc/show_station_manifest()
 	var/dat
 	if(data_core)
-		dat += data_core.get_manifest(1) // make it monochrome
+		dat += data_core.html_manifest(monochrome=1, silicon=1) // make it monochrome
 	dat += "<br>"
 
 	var/datum/browser/popup = new(src, "airoster", "Crew Manifest")
@@ -215,3 +218,6 @@
 		sensor_huds = def_sensor_huds
 
 	sensor_huds += hud
+
+/mob/living/silicon/proc/update_manifest()
+	Silicon_Manifest.Cut()

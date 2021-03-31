@@ -2,7 +2,7 @@
 #define TOTAL_HUMAN			1
 #define TOTAL_ALIEN			2
 #define ALIEN_PERCENT		3
-#define WIN_PERCENT			150
+#define WIN_PERCENT			190
 
 //alien list
 #define ALIEN_QUEEN			"Королева"
@@ -25,3 +25,6 @@
 //Time it takes to impregnate someone with facehugger
 #define MIN_IMPREGNATION_TIME 220
 #define MAX_IMPREGNATION_TIME 250
+
+//aliens pressure damage
+#define ALIEN_PRESSURE_DAMAGE 4
