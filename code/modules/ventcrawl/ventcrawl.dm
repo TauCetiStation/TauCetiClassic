@@ -157,6 +157,8 @@ var/list/ventcrawl_machinery = list(
 	//candrop = 0
 
 	for(var/X in totalMembers)
+		if(!X)
+			continue
 		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_image)
 			A.pipe_image = image(A, A.loc, dir = A.dir)

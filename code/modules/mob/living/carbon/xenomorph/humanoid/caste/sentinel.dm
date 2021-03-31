@@ -7,7 +7,6 @@
 	max_plasma = 300
 	icon_state = "aliens_s"
 	plasma_rate = 10
-	heal_rate = 3
 
 /mob/living/carbon/xenomorph/humanoid/sentinel/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -15,7 +14,7 @@
 	R.my_atom = src
 	name = "alien sentinel ([rand(1, 1000)])"
 	real_name = name
-	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid,/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin)
+	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin, /mob/living/carbon/xenomorph/humanoid/proc/air_plant)
 	alien_list[ALIEN_SENTINEL] += src
 	. = ..()
 

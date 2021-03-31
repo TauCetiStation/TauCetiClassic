@@ -173,11 +173,15 @@
 
 /obj/item/clothing/mask/facehugger/dropped()
 	..()
+	get_off()
+
 //If the facehugger was removed from the face and the player controls the facehugger
+/obj/item/clothing/mask/facehugger/proc/get_off()
 	if(current_hugger)
-		var/atom/movable/mob_container = current_hugger
-		mob_container.forceMove(get_turf(src))	//remove mob/facehugger from the /obj/facehugger
 		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
+		var/atom/movable/mob_container = FH
+		mob_container.forceMove(get_turf(src))	//remove mob/facehugger from the /obj/facehugger
+		current_hugger = null
 		FH.reset_view()
 		qdel(FH.get_active_hand())	//delete a grab
 		qdel(src)
@@ -301,7 +305,7 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
-			qdel(current_hugger)
+			QDEL_NULL(current_hugger)
 			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		target.unEquip(src)
 		target.status_flags |= XENO_HOST
@@ -334,9 +338,8 @@
 	stat = DEAD
 	STOP_PROCESSING(SSobj, src)
 
+	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] curls up into a ball!</span>")
-
-	return
 
 /obj/item/clothing/mask/facehugger/verb/hide_fh()
 	set name = "Спрятать"
