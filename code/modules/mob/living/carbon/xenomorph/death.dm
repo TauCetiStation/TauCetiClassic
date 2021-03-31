@@ -39,10 +39,6 @@
 
 	return ..(gibbed)
 
-/mob/living/carbon/xenomorph/humanoid/praetorian/death()
-	..()
-	praetorians = (praetorians+1)
-
 /mob/living/carbon/xenomorph/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null

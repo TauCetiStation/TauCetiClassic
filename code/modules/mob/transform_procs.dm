@@ -401,10 +401,6 @@
 
 		if(O.mmi) O.mmi.transfer_identity(src) //Does not transfer key/client.
 
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.borgify_directive(O)
-
 	O.Namepick()
 
 	. = O

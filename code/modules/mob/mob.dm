@@ -353,9 +353,6 @@
 	if(stat != DEAD || !SSticker)
 		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
-	if(SSticker && istype(SSticker.mode, /datum/game_mode/meteor))
-		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
-		return
 	else
 		var/deathtime = world.time - src.timeofdeath
 		if(istype(src,/mob/dead/observer))

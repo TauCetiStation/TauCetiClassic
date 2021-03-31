@@ -1012,6 +1012,23 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker";
+	req_access = list(3)
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/glock,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -1848,22 +1865,21 @@
 /area/station/rnd/tox_launch)
 "adf" = (
 /obj/structure/rack,
-/obj/machinery/light/small/emergency{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/plasma/p104sass{
-	pixel_y = 2
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/item/ammo_box/magazine/plasma,
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_y = -3
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2190,7 +2206,16 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/light/small/emergency,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker";
+	req_access = list(3)
+	},
+/obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -2235,33 +2260,24 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "adL" = (
-/obj/machinery/camera{
-	c_tag = "Armory";
-	dir = 4;
-	network = list("SS13","Security")
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
 /obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = 4
-	},
-/obj/item/weapon/gun/energy/gun,
-/obj/item/weapon/gun/energy/gun{
-	pixel_y = -4
-	},
-/obj/item/weapon/gun/energy/gun,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 6;
+	icon_state = "warndark"
 	},
-/area/station/security/warden)
+/area/station/security/armoury)
 "adM" = (
 /turf/simulated/wall,
 /area/station/security/brig)
@@ -2372,20 +2388,30 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/eva)
 "adX" = (
+/obj/machinery/camera{
+	c_tag = "Armory";
+	dir = 4;
+	network = list("SS13","Security")
+	},
 /obj/structure/rack,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/plasma{
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
+	},
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = 4
+	},
+/obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
 	},
-/obj/item/ammo_box/magazine/plasma,
+/obj/item/weapon/gun/energy/gun{
+	pixel_y = -4
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2401,9 +2427,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/gun/energy/ionrifle{
-	pixel_y = -3
-	},
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/laser,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3223,16 +3249,25 @@
 /area/station/security/warden)
 "afu" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced,
+/obj/machinery/light/small/emergency{
+	dir = 1
+	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
-	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/m79{
-	pixel_y = 6
+/obj/item/ammo_box/magazine/plasma,
+/obj/item/ammo_box/magazine/plasma,
+/obj/item/weapon/gun/plasma/p104sass{
+	pixel_y = 2
+	},
+/obj/item/weapon/gun/plasma{
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -3262,17 +3297,13 @@
 /obj/structure/rack,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
-	pixel_y = 4
-	},
-/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
-/obj/item/weapon/gun/projectile/shotgun/combat,
+/obj/item/weapon/gun/projectile/m79,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -4733,11 +4764,23 @@
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "ahW" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/hos,
-/turf/simulated/floor/carpet/red,
-/area/station/security/hos)
+/obj/structure/rack,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
+	pixel_y = 4
+	},
+/obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/security/warden)
 "ahX" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/skills,
@@ -15568,6 +15611,27 @@
 	icon_state = "platingdmg3"
 	},
 /area/station/maintenance/dormitory)
+"aAZ" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/rcd,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/alarm{
+	pixel_y = 28
+	},
+/mob/living/simple_animal/parrot/Poly,
+/turf/simulated/floor,
+/area/station/engineering/chiefs_office)
 "aBa" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -61982,6 +62046,17 @@
 	},
 /area/station/security/main)
 "ctH" = (
+/obj/structure/window/reinforced{
+	dir = 8;
+	req_access = list(72)
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker";
+	req_access = list(3)
+	},
+/obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -68660,26 +68735,12 @@
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "cMW" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/parrot/Poly,
-/obj/machinery/alarm{
-	pixel_y = 28
-	},
-/turf/simulated/floor,
-/area/station/engineering/chiefs_office)
+/obj/structure/table/woodentable,
+/obj/item/weapon/folder/red,
+/obj/item/weapon/stamp/hos,
+/obj/item/clothing/head/beret/sec/hos,
+/turf/simulated/floor/carpet/red,
+/area/station/security/hos)
 "cNc" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -69746,20 +69807,15 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/mine_sci_shuttle)
 "erb" = (
-/obj/machinery/firealarm{
+/obj/structure/window/reinforced,
+/obj/machinery/light/small/emergency,
+/obj/machinery/door/window/brigdoor{
 	dir = 1;
-	pixel_y = -24
+	name = "Weapons locker";
+	req_access = list(3)
 	},
-/obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
-	dir = 6;
 	icon_state = "warndark"
 	},
 /area/station/security/armoury)
@@ -110915,10 +110971,10 @@ dFb
 enb
 abp
 abl
-adL
+adX
 aem
 aeS
-afu
+afw
 adH
 agU
 ahM
@@ -111175,7 +111231,7 @@ abl
 adY
 aer
 aeV
-afw
+ahW
 adH
 aha
 ahJ
@@ -111277,7 +111333,7 @@ bNE
 bIZ
 cas
 crL
-cMW
+aAZ
 gqb
 gvb
 aVH
@@ -111427,9 +111483,9 @@ abl
 abN
 dFb
 acj
-ctH
+erb
 abl
-adX
+adf
 aep
 afj
 afv
@@ -111686,7 +111742,7 @@ dPb
 abj
 adG
 abl
-adf
+afu
 aep
 afr
 afR
@@ -112198,7 +112254,7 @@ abl
 abW
 cfv
 acA
-erb
+adL
 abl
 adZ
 aep
@@ -115547,7 +115603,7 @@ afB
 agd
 agv
 ahk
-ahW
+cMW
 aiz
 aje
 agg
