@@ -108,7 +108,8 @@
 
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
-	mode = SSticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/cult))
+		mode = SSticker.mode
 
 /datum/religion/cult/process()
 	adjust_favor(passive_favor_gain)

@@ -118,7 +118,7 @@
 	var/list/obj/structure/altar_of_gods/altars = list()
 	// The whole composition of beings in religion. Contains any mobs, even dead and without mind.
 	var/list/mob/members = list()
-	// Used for cloning
+	// Used for cloning and round result
 	var/list/datum/mind/members_minds = list()
 	// Easy access
 	var/datum/religion_sect/sect

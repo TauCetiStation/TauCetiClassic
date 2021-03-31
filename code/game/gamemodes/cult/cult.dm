@@ -259,9 +259,9 @@
 	var/text = ""
 	if(global.cult_religion?.members.len)
 		text += printlogo("cult", "cultists")
-		for(var/mob/cultist in global.cult_religion.members)
-			if(cultist.mind || (cultist.mind in global.cult_religion.mode.started_cultists))
-				text += printplayerwithicon(cultist.mind)
+		for(var/datum/mind/cult_mind in global.cult_religion.members_minds)
+			if(cult_mind)
+				text += printplayerwithicon(cult_mind)
 
 	if(text)
 		antagonists_completion += list(list("mode" = "cult", "html" = text))
