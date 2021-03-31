@@ -91,7 +91,7 @@
 
 	if(possible_targets.len == 0)
 		revert_cast()
-		to_chat(usr, "<span class='warning'>В небольшом радиусе возле вас не обнаружено подходящий предметов.</span>")
+		to_chat(usr, "<span class='warning'>Рядом с вами не обнаружено подходящих предметов.</span>")
 		return
 
 	target = show_radial_menu(usr, usr, possible_targets, radius = 36, tooltips = TRUE)

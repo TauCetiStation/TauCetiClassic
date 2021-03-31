@@ -7,6 +7,7 @@
 	description = "Если держа предмет в руке по нему нажать, то создастся [initial(type.name)]."
 
 
+
 /datum/component/self_effect
 	// Type of created object
 	var/effect_type
@@ -83,7 +84,7 @@
 /datum/component/self_effect/proc/scatter_effect()
 	if(isitem(effect))
 		var/obj/item/I = effect
-		if(I?.slot_equipped == SLOT_L_HAND || I?.slot_equipped == SLOT_R_HAND)
+		if(I && (I.slot_equipped == SLOT_L_HAND || I.slot_equipped == SLOT_R_HAND))
 			var/mob/M = I.loc
 			to_chat(M, "<span class='warning'>[effect] was scattered.</span>")
 
@@ -109,6 +110,7 @@
 		create_outline()
 
 /datum/component/self_effect/Destroy()
+	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SELF_TIP))
 	if(can_spawn_effect_timer)
 		deltimer(can_spawn_effect_timer)
 	return ..()

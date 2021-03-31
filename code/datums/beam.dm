@@ -164,6 +164,7 @@
 
 /obj/effect/ebeam/singularity_pull()
 	return
+
 /obj/effect/ebeam/singularity_act()
 	return
 
