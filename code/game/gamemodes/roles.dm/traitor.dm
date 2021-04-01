@@ -62,7 +62,7 @@
 	if(!greeting)
 		return
 
-	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
+	var/icon/logo = get_logo_icon()
 	switch(greeting)
 		if (GREET_ROUNDSTART)
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are a Syndicate agent, a Traitor.</span>")

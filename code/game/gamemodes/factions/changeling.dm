@@ -12,7 +12,7 @@
 	desc = "An almost parasitic, shapeshifting entity that assumes the identity of its victims. Commonly used as smart bioweapons by the syndicate,\
 	or simply wandering malignant vagrants happening upon a meal of identity that can carry them to further feeding grounds."
 
-	logo_state = "change-logoz"
+	logo_state = "change-logoa"
 
 	//Hivemind Bank, contains a list of DNA that changelings can share and use.
 	var/list/hivemind_bank = list()
@@ -22,7 +22,7 @@
 	return TRUE
 
 /datum/faction/changeling/GetObjectivesMenuHeader()
-	var/icon/logo_left = icon('icons/misc/logos.dmi', "change-logoa")
-	var/icon/logo_right = icon('icons/misc/logos.dmi', "change-logob")
+	var/icon/logo_left = get_logo_icon("change-logoa")
+	var/icon/logo_right = get_logo_icon("change-logob")
 	var/header = {"<img src='data:image/png;base64,[icon2base64(logo_left)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo_right)]' style='position:relative; top:10px;'>"}
 	return header

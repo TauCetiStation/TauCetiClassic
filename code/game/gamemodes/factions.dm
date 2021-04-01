@@ -52,6 +52,7 @@
 	for(var/datum/role/R in members)
 		R.OnPostSetup()
 
+// Destroy fraction and her members
 /datum/faction/proc/Dismantle()
 	for(var/datum/role/R in members)
 		var/datum/game_mode/G = SSticker.mode
@@ -95,6 +96,7 @@
 		return FALSE
 	return TRUE
 
+// Basically, they are members of the new faction
 /datum/faction/proc/HandleNewMind(datum/mind/M) //Used on faction creation
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
@@ -110,6 +112,7 @@
 		return null
 	return newRole
 
+// Basically, these are the new members of the faction during the round
 /datum/faction/proc/HandleRecruitedMind(datum/mind/M, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
@@ -239,9 +242,16 @@
 				win = FALSE
 	return win
 
+/datum/faction/proc/get_logo_icon(custom)
+	if(custom)
+		return icon('icons/misc/logos.dmi', custom)
+	if(logo_state)
+		return icon('icons/misc/logos.dmi', logo_state)
+	return icon('icons/misc/logos.dmi', "unknown-logo")
+
 /datum/faction/proc/GetObjectivesMenuHeader() //Returns what will show when the factions objective completion is summarized
-	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
-	var/header = {"<img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'>"}
+	var/icon/logo = get_logo_icon()
+	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'>"}
 	return header
 
 /datum/faction/proc/AdminPanelEntry(datum/admins/A)

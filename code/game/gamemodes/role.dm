@@ -190,8 +190,15 @@
 		return O
 	return FALSE
 
+/datum/role/proc/get_logo_icon(custom)
+	if(custom)
+		return icon('icons/misc/logos.dmi', custom)
+	if(logo_state)
+		return icon('icons/misc/logos.dmi', logo_state)
+	return icon('icons/misc/logos.dmi', "unknown-logo")
+
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/admins/A)
-	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
+	var/icon/logo = get_logo_icon()
 	if(!antag || !antag.current)
 		return
 	var/mob/M = antag.current
@@ -208,7 +215,7 @@
 
 
 /datum/role/proc/Greet(greeting = GREET_DEFAULT, custom)
-	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
+	var/icon/logo = get_logo_icon()
 	switch(greeting)
 		if (GREET_CUSTOM)
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>[custom]</B>")
@@ -253,7 +260,7 @@
 		var/tempstate = end_icons.len
 		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>"
 
-	var/icon/logo = icon('icons/misc/logos.dmi', logo_state)
+	var/icon/logo = get_logo_icon()
 	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[antag.key]</b> was <b>[antag.name]</b> ("
 	if(M)
 		if(!antag.GetRole(id))
@@ -316,7 +323,7 @@
 	return ""
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
-	var/icon/logo = logo_state ? icon('icons/misc/logos.dmi', logo_state) : null
+	var/icon/logo = get_logo_icon()
 	var/text = "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
