@@ -11,6 +11,7 @@
 	late_role = XENOMORPH
 	initroletype = /datum/role/alien
 
+	min_roles = 3
 	max_roles = 4
 
 	var/last_check = 0

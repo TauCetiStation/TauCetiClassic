@@ -3,8 +3,8 @@
 
 	factions_allowed = list(/datum/faction/infestation)
 
-	minimum_player_count = 20
-	minimum_players_bundles = 15
+	minimum_player_count = 25
+	minimum_players_bundles = 35
 
 /datum/game_mode/infestation/announce()
 	to_chat(world, "<b>The current game mode is - Infestation!</b>")
