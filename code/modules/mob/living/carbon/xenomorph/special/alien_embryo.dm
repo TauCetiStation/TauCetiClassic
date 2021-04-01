@@ -32,18 +32,11 @@ This is emryo growth procs
 		STOP_PROCESSING(SSobj, src)
 		remove_infected_hud()
 		affected_mob.med_hud_set_status()
+	if(baby)
+		baby.clear_alert("alien_embryo")
 	affected_mob = null
 	baby = null
 	return ..()
-
-/obj/item/clothing/mask/facehugger/proc/host_is_dead()
-	if(current_hugger)
-		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-		var/atom/movable/mob_container
-		mob_container = FH
-		mob_container.forceMove(get_turf(src))
-		FH.reset_view()
-		qdel(src)
 
 /obj/item/alien_embryo/process()
 	if(!affected_mob) // The mob we were gestating in is straight up gone, we shouldn't be here
@@ -172,7 +165,7 @@ This is emryo growth procs
 		new_xeno.key = larva_candidate
 		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 		new_xeno.update_icons()
-		new_xeno.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
+		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE) // To get the player's attention
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
 		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))
@@ -193,13 +186,13 @@ This is emryo growth procs
 
 //only aliens will see this HUD
 /obj/item/alien_embryo/proc/add_infected_hud()
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_to_hud(affected_mob)
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = "infected[stage]"
 
 /obj/item/alien_embryo/proc/remove_infected_hud()
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
-	hud.leave_hud(affected_mob)
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
+	hud.remove_hud_from(affected_mob)
 	var/image/holder = affected_mob.hud_list[ALIEN_EMBRYO_HUD]
 	holder.icon_state = null

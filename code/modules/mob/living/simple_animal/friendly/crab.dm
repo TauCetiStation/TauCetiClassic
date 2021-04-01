@@ -16,7 +16,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stomps the"
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	friendly = "pinches"
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask

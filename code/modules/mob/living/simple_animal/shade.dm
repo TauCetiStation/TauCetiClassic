@@ -22,7 +22,7 @@
 	max_co2 = 0
 	max_tox = 0
 	speed = -1
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	status_flags = 0
 	faction = "cult"
 	status_flags = CANPUSH
@@ -183,7 +183,7 @@
 	set name = "View Crew Manifest"
 	set category = "Deity"
 
-	var/dat = data_core.get_manifest()
+	var/dat = data_core.html_manifest()
 
 	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)

@@ -47,11 +47,6 @@ var/list/ventcrawl_machinery = list(
 	if(is_type_in_list(carried_item, can_enter_vent_with))
 		return TRUE//!get_inventory_slot(carried_item)
 
-/mob/living/carbon/is_allowed_vent_crawl_item(obj/item/carried_item)
-	if(carried_item in stomach_contents)
-		return TRUE
-	return ..()
-
 /mob/living/carbon/human/is_allowed_vent_crawl_item(obj/item/carried_item)
 	if(carried_item in organs)
 		return TRUE
@@ -162,6 +157,8 @@ var/list/ventcrawl_machinery = list(
 	//candrop = 0
 
 	for(var/X in totalMembers)
+		if(!X)
+			continue
 		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_image)
 			A.pipe_image = image(A, A.loc, dir = A.dir)

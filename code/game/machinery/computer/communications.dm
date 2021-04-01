@@ -505,7 +505,7 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(SSticker.mode.name == "blob" || SSticker.mode.name == "epidemic")
+		if(SSticker.mode.name == "blob")
 			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
 
@@ -524,7 +524,7 @@
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
 		return
-	if((SSticker.mode.name == "blob")||(SSticker.mode.name == "meteor"))//why??
+	if((SSticker.mode.name == "blob"))//why??
 		to_chat(user, "The console is not responding.")
 		return
 
@@ -562,3 +562,11 @@
 			status_signal.data["picture_state"] = data1
 
 	frequency.post_signal(src, status_signal)
+
+
+/obj/machinery/computer/communications/evac
+	name = "Shuttle communications console"
+	desc = "This can be used for various important functions."
+	icon_state = "erokez"
+	state_broken_preset = "erokezb"
+	state_nopower_preset = "erokez0"

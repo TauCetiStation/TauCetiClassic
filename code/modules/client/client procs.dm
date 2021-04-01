@@ -581,6 +581,10 @@ var/list/blacklisted_builds = list(
 /client/proc/is_afk(duration = config.afk_time_bracket)
 	return inactivity > duration
 
+/client/proc/inactivity2text()
+	var/seconds = inactivity / 10
+	return "[round(seconds / 60)] minute\s, [seconds % 60] second\s"
+
 // Send resources to the client.
 /client/proc/send_resources()
 	// Most assets are now handled through asset_cache.dm

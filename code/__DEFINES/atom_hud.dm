@@ -46,32 +46,31 @@
 #define HUD_LIST_LIST 1
 
 //data HUD (medhud, sechud) defines
-//Don't forget to update human/New() if you change these!
+// the numbers don't mean anything, as long as they are different
 #define DATA_HUD_SECURITY				1
 #define DATA_HUD_MEDICAL				2
-#define DATA_HUD_MEDICAL_ADV			22
-#define DATA_HUD_DIAGNOSTIC				3
-#define DATA_HUD_BROKEN					20
-#define DATA_HUD_MINER					21
-#define DATA_HUD_GOLEM					14
+#define DATA_HUD_MEDICAL_ADV			3
+#define DATA_HUD_DIAGNOSTIC				4
+#define DATA_HUD_BROKEN					5
+#define DATA_HUD_MINER					6
+#define DATA_HUD_GOLEM					7
+#define DATA_HUD_EMBRYO					8
 
 //antag HUD defines
-#define ANTAG_HUD_CULT          4
-#define ANTAG_HUD_REV           5
-#define ANTAG_HUD_OPS           6
-#define ANTAG_HUD_WIZ           7
-#define ANTAG_HUD_SHADOW        8
-#define ANTAG_HUD_TRAITOR       9
-#define ANTAG_HUD_NINJA         10
-#define ANTAG_HUD_CHANGELING    11
-#define ANTAG_HUD_ABDUCTOR      12
-#define ANTAG_HUD_GANGSTER      13
-#define ANTAG_HUD_ALIEN         15
-#define ANTAG_HUD_DEATHCOM      16
-#define ANTAG_HUD_ERT           17
-#define ANTAG_HUD_MALF          18
-#define ANTAG_HUD_ZOMB          19
-#define ANTAG_HUD_ALIEN_EMBRYO	23
+#define ANTAG_HUD_CULT          9
+#define ANTAG_HUD_REV           10
+#define ANTAG_HUD_OPS           11
+#define ANTAG_HUD_WIZ           12
+#define ANTAG_HUD_SHADOW        13
+#define ANTAG_HUD_TRAITOR       14
+#define ANTAG_HUD_NINJA         15
+#define ANTAG_HUD_CHANGELING    16
+#define ANTAG_HUD_ABDUCTOR      17
+#define ANTAG_HUD_ALIEN         18
+#define ANTAG_HUD_DEATHCOM      19
+#define ANTAG_HUD_ERT           20
+#define ANTAG_HUD_MALF          21
+#define ANTAG_HUD_ZOMB          22
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

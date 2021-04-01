@@ -114,10 +114,6 @@ SUBSYSTEM_DEF(ticker)
 					if(blackbox)
 						blackbox.save_all_data_to_sql()
 
-					var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()//why it is here?
-					if(mutiny)
-						mutiny.round_outcome()
-
 					if(dbcon.IsConnected())
 						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.mode_result)]' WHERE id = [round_id]")
 						query_round_game_mode.Execute()
@@ -271,7 +267,7 @@ SUBSYSTEM_DEF(ticker)
 		mode.post_setup()
 		for(var/mob/dead/new_player/N in new_player_list)
 			if(N.client)
-				N.new_player_panel_proc()
+				N.show_titlescreen()
 		//Cleanup some stuff
 		for(var/obj/effect/landmark/start/S in landmarks_list)
 			//Deleting Startpoints but we need the ai point to AI-ize people later

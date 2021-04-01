@@ -216,7 +216,7 @@
 				to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 				return
 
-			if((M.brainmob.mind in SSticker.mode.head_revolutionaries) || (M.brainmob.mind in SSticker.mode.A_bosses) || (M.brainmob.mind in SSticker.mode.B_bosses))
+			if((M.brainmob.mind in SSticker.mode.head_revolutionaries))
 				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [M].</span>")
 				return
 
@@ -252,9 +252,6 @@
 				cell_component.installed = 1
 
 			feedback_inc("cyborg_birth",1)
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.borgify_directive(O)
 			O.Namepick()
 
 			qdel(src)
@@ -317,14 +314,13 @@
 
 /obj/item/robot_parts/head/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/flash))
-		if(istype(user, /mob/living/silicon/robot))
-			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
-			return
-		else if(flash1 && flash2)
+		if(flash1 && flash2)
 			to_chat(user, "<span class='info'>You have already inserted the eyes!</span>")
 			return
+		if(!user.drop_item(src))
+			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
+			return
 		else
-			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='info'>You insert the flash into the eye socket!</span>")
 			if(flash1)
 				flash2 = I

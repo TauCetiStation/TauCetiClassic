@@ -133,7 +133,7 @@ Implants;
 // post_setup()
 // Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
-	var/list/exclude_autotraitor_for = list("extended", "sandbox", "meteor", "gang", "epidemic") // config_tag var
+	var/list/exclude_autotraitor_for = list("extended", "sandbox") // config_tag var
 	if(!(config_tag in exclude_autotraitor_for))
 		addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
 
@@ -261,8 +261,7 @@ Implants;
 										"Vox Raider",
 										"Raider",
 										"Abductor scientist",
-										"Abductor agent",
-										"Meme"
+										"Abductor agent"
 										)
 		var/special_role = man.mind.special_role
 		if (special_role in invisible_roles)

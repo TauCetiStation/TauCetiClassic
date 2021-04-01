@@ -20,6 +20,8 @@
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
 
+	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+
 	var/list/client_mobs_in_contents
 	var/freeze_movement = FALSE
 
@@ -170,7 +172,6 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
-
 		Moved(oldloc, 0)
 		return TRUE
 	return FALSE

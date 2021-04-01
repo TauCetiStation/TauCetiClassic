@@ -91,7 +91,7 @@
 /obj/effect/effect/bell/atom_init(mapload, obj/structure/big_bell/BB)
 	. = ..()
 	base = BB
-	AddComponent(/datum/component/bounded, BB, 0, 0)
+	AddComponent(/datum/component/bounded, BB, 0, 0, null, FALSE)
 
 /obj/effect/effect/bell/Destroy()
 	base.bell = null

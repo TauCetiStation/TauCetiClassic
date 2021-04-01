@@ -19,12 +19,6 @@
 		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
 
-/*/obj/screen/xenomorph/nightvision/Click()
-	var/mob/living/carbon/xenomorph/A = usr
-	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
-	if(T)
-		T.fire(A)*/
-
 /obj/screen/xenomorph/neurotoxin
 	name = "toggle neurotoxin"
 	icon_state = "neurotoxin0"
@@ -207,6 +201,8 @@
 	mymob.xenomorph_plasma_display.icon_state = "power_display3"
 	mymob.xenomorph_plasma_display.name = "plasma stored"
 	mymob.xenomorph_plasma_display.screen_loc = ui_alienplasmadisplay
+	var/mob/living/carbon/xenomorph/X = mymob
+	X.updatePlasmaDisplay()
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'

@@ -2,7 +2,7 @@
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "fire_extinguisher"
+	icon_state = "fire_extinguisher0"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
@@ -41,7 +41,7 @@
 		cut_overlays()
 		var/image/I = new(icon, "FE_overlay_[pick(1, 2, 3, 4)]")
 		add_overlay(I)
-	icon_state = "[initial(icon_state)][!safety]"
+	icon_state = "fire_extinguisher[!safety]"
 	reagents.add_reagent(reagent_inside, volume)
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
@@ -66,7 +66,7 @@
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attack_self(mob/user)
 	safety = !safety
-	icon_state = "[initial(icon_state)][!safety]"
+	icon_state = "fire_extinguisher[!safety]"
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini

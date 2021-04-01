@@ -1,10 +1,8 @@
-#define UPGRADE_TAIL_TIMER	100
-
 //Grab levels
-#define GRAB_UPGRADING	5
-#define GRAB_EMBRYO		6
-#define GRAB_IMPREGNATE	7
-#define GRAB_DONE		8
+#define GRAB_LEAP		1
+#define GRAB_UPGRADING	2
+#define GRAB_EMBRYO		3
+#define GRAB_IMPREGNATE	4
 
 #define BITE_COOLDOWN 20
 
@@ -36,11 +34,16 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "alien facehugger")
-		name = "alien facehugger ([rand(1, 1000)])"
+	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
 	a_intent = INTENT_GRAB
+	verbs += /mob/living/carbon/xenomorph/proc/hide
+	alien_list[ALIEN_FACEHAGGER] += src
+
+/mob/living/carbon/xenomorph/facehugger/Destroy()
+	alien_list[ALIEN_FACEHAGGER] -= src
+	return ..()
 
 /mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
 	..()
@@ -58,21 +61,6 @@
 	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
 		tally = -1
 	return (tally + move_delay_add + config.alien_delay)
-
-/mob/living/carbon/xenomorph/facehugger/verb/hide()
-	set name = "Hide"
-	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
-	set category = "Alien"
-
-	if(stat != CONSCIOUS)
-		return
-
-	if (layer != TURF_LAYER + 0.2)
-		layer = TURF_LAYER + 0.2
-		visible_message("<span class='danger'>[src] scurries to the ground!</span>", "<span class='notice'>You are now hiding.</span>")
-	else
-		layer = MOB_LAYER
-		visible_message("<span class='warning'>[src] slowly peaks up from the ground...</span>", "<span class='notice'>You have stopped hiding.</span>")
 
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
@@ -121,7 +109,6 @@
 	put_in_active_hand(G)
 
 	C.grabbed_by += G
-	SetNextMove(CLICK_CD_ACTION)
 	G.synch()
 	C.LAssailant = src
 
@@ -149,16 +136,13 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
-	else if(lying || resting)
+	else if(stat == UNCONSCIOUS || lying || resting)
 		icon_state = "facehugger_inactive"
 	else
 		icon_state = "facehugger"
 
 /mob/living/carbon/xenomorph/facehugger/update_hud()
-	//TODO
-	if (client)
-//		if(other)	client.screen |= hud_used.other		//Not used
-//		else		client.screen -= hud_used.other		//Not used
+	if(client)
 		client.screen |= contents
 
 /mob/living/carbon/xenomorph/facehugger/can_pickup(obj/O)
@@ -224,6 +208,9 @@ This is chestburster mechanic for damaging
 /obj/item/weapon/larva_bite/proc/throw_held()
 	return null
 
+/obj/item/weapon/larva_bite/attack_self(mob/user)
+	s_click()
+
 /obj/item/weapon/larva_bite/proc/synch()
 	if(affecting)
 		if(chestburster.r_hand == src)
@@ -259,7 +246,7 @@ This is chestburster mechanic for damaging
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			H.death()
 			// we're fucked. no chance to revive a person
 			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
@@ -281,7 +268,7 @@ This is chestburster mechanic for damaging
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
@@ -351,9 +338,10 @@ When we finish, facehugger's player will be transfered inside embryo.
 	name = "grab"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	var/obj/screen/fh_grab/hud = null
-	var/mob/affecting = null
-	var/mob/assailant = null
-	var/state = GRAB_PASSIVE
+	var/mob/affecting = null	//target
+	var/mob/assailant = null	//facehagger
+	var/state = GRAB_LEAP
+	var/on_cooldown = FALSE
 
 	layer = 21
 	abstract = 1
@@ -366,19 +354,19 @@ When we finish, facehugger's player will be transfered inside embryo.
 	assailant = loc
 	affecting = victim
 
-	assailant.SetNextMove(CLICK_CD_ACTION)
-
 	hud = new /obj/screen/fh_grab(src)
 	hud.icon = 'icons/mob/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src
+	start_cooldown(hud, 3, CALLBACK(src, .proc/reset_cooldown))
+	on_cooldown = TRUE
 
 	assailant.put_in_active_hand(src)
 	affecting.grabbed_by += src
-
 	synch()
 	affecting.LAssailant = assailant
+	assailant.update_hud()
 
 /obj/item/weapon/fh_grab/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -390,11 +378,16 @@ When we finish, facehugger's player will be transfered inside embryo.
 /obj/item/weapon/fh_grab/proc/throw_held()
 	return null
 
+/obj/item/weapon/fh_grab/proc/reset_cooldown()
+	on_cooldown = FALSE
+
+/obj/item/weapon/fh_grab/attack_self(mob/user)
+	s_click()
+
 /obj/item/weapon/fh_grab/proc/synch()
 	if(affecting)
 		if(assailant.r_hand == src)
 			hud.screen_loc = ui_rhand
-
 
 /obj/item/weapon/fh_grab/process()
 	if(!confirm())
@@ -404,16 +397,17 @@ When we finish, facehugger's player will be transfered inside embryo.
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
 
-	if(state <= GRAB_AGGRESSIVE)
-		if(state == GRAB_AGGRESSIVE)
-			var/h = affecting.hand
-			affecting.hand = 0
-			affecting.drop_item()
-			affecting.hand = 1
-			affecting.drop_item()
-			affecting.hand = h
+	if(state == GRAB_UPGRADING)
+		var/h = affecting.hand
+		affecting.hand = 0
+		affecting.drop_item()
+		affecting.hand = 1
+		affecting.drop_item()
+		affecting.hand = h
+		if(!on_cooldown)
+			state = GRAB_EMBRYO
 
-	if(state >= GRAB_AGGRESSIVE)
+	if(state > GRAB_EMBRYO)
 		affecting.Paralyse(MAX_IMPREGNATION_TIME / 6)
 		if(iscarbon(affecting))
 			affecting.reagents.add_reagent("dexalinp", REAGENTS_METABOLISM)
@@ -423,18 +417,16 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 	if(affecting.stat == DEAD)
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			hugger.host_is_dead()
+		if(istype(hugger, /obj/item/clothing/mask/facehugger))
+			hugger.get_off()
 		qdel(src)
 		return
-	if(state == GRAB_UPGRADING)
-		return
-	if(assailant.next_move > world.time)
+	if(on_cooldown || state == GRAB_IMPREGNATE)
 		return
 	if(assailant.lying)
 		return
 	if(istype(assailant.loc, /turf))
-		state = GRAB_PASSIVE
+		state = GRAB_LEAP
 
 	if(get_dist(assailant, affecting) > 1)
 		to_chat(assailant, "Too far.")
@@ -463,56 +455,21 @@ When we finish, facehugger's player will be transfered inside embryo.
 		qdel(src)
 		return
 
-	assailant.SetNextMove(CLICK_CD_GRAB)
-
 	switch(state)
-		if(GRAB_PASSIVE)
+		if(GRAB_LEAP)
 			var/mob/living/carbon/xenomorph/facehugger/FH = assailant
-			state = GRAB_AGGRESSIVE
-			hud.icon_state = "grab/neck"
-			hud.name = "grab around neck"
-			FH.leap_at_face(affecting)
-		if(GRAB_AGGRESSIVE)
-			assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] neck!</span>")
-			state = GRAB_NECK
-			hud.icon_state = "grab/neck+"
-			hud.name = "reinforce grab"
-		if(GRAB_NECK)
-			assailant.visible_message("<span class='danger'>[assailant] starts to tighten \his tail on [affecting]'s neck!</span>")
-			hud.icon_state = "grab/neck++"
+			start_cooldown(hud, 5, CALLBACK(src, .proc/reset_cooldown))
+			on_cooldown = TRUE
 			state = GRAB_UPGRADING
-			if(do_after(assailant, UPGRADE_TAIL_TIMER, target = affecting))
-				if(state == GRAB_EMBRYO)
-					return
-				if(!affecting)
-					qdel(src)
-					return
-				if(!assailant.canmove || assailant.lying)
-					qdel(src)
-					return
-				state = GRAB_EMBRYO
-				hud.icon_state = "grab/neck+++"
-				hud.name = "prepare to impregnate"
-				if(istype(assailant.loc, /obj/item/clothing/mask/facehugger))
-					var/obj/item/clothing/mask/facehugger/FH_mask = assailant.loc
-					FH_mask.canremove = FALSE
-				assailant.visible_message("<span class='danger'>[assailant] has tightened \his tail on [affecting]'s neck!</span>")
-				assailant.next_move = world.time + 10
-			else
-				assailant.visible_message("<span class='warning'>[assailant] was unable to tighten \his grip on [affecting]'s neck!</span>")
-				hud.icon_state = "grab/neck"
-				state = GRAB_AGGRESSIVE
-		if(GRAB_EMBRYO)
-			state = GRAB_IMPREGNATE
 			hud.icon_state = "grab/impreg"
-			hud.name = "ready to impregnate"
-			to_chat(assailant, "You are now ready to inject embryo inside your victim")
-		if(GRAB_IMPREGNATE)
-			state = GRAB_DONE
-			hud.icon_state = "grab/do_impreg"
+			hud.name = "impregnate"
+			FH.leap_at_face(affecting)
+		if(GRAB_EMBRYO)
+			assailant.visible_message("<span class='danger'>extends its proboscis deep inside [affecting]'s mouth!</span>")
+			hud.icon_state = "impreg"
 			hud.name = "impregnating"
-			assailant.visible_message("<span class='danger'>[assailant] extends its proboscis deep inside [affecting]'s mouth!</span>")
-			addtimer(CALLBACK(src, .proc/Impregnate_by_playable_fh, affecting, assailant), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+			state = GRAB_IMPREGNATE
+			addtimer(CALLBACK(src, .proc/Impregnate_by_playable_fh, affecting, assailant), MIN_IMPREGNATION_TIME)
 
 /obj/item/weapon/fh_grab/proc/Impregnate_by_playable_fh()
 	if(!affecting || !assailant)
@@ -532,8 +489,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	if(affecting.stat == DEAD)
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			hugger.host_is_dead()
+		if(istype(hugger, /obj/item/clothing/mask/facehugger))
+			hugger.get_off()
 		if(iscarbon(affecting))
 			affecting.update_inv_wear_mask(1)
 		qdel(src)
@@ -548,7 +505,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	return TRUE
 
-
 /obj/item/weapon/fh_grab/attack(mob/M, mob/user)
 	if(!affecting)
 		return
@@ -557,11 +513,9 @@ When we finish, facehugger's player will be transfered inside embryo.
 		s_click(hud)
 		return
 
-#undef UPGRADE_TAIL_TIMER
-
+#undef GRAB_LEAP
 #undef GRAB_UPGRADING
 #undef GRAB_EMBRYO
 #undef GRAB_IMPREGNATE
-#undef GRAB_DONE
 
 #undef BITE_COOLDOWN

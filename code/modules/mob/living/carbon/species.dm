@@ -165,11 +165,13 @@
 
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
-		new path(null, H)
+		var/obj/item/organ/external/O = new path(null)
+		O.insert_organ(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
-		new path(null, H)
+		var/obj/item/organ/internal/O = new path(null)
+		O.insert_organ(H)
 
 	if(flags[IS_SYNTHETIC])
 		for(var/obj/item/organ/internal/IO in H.organs)
@@ -472,10 +474,10 @@
 		IS_WHITELISTED = TRUE
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
-		,HAS_TAIL = TRUE 
+		,HAS_TAIL = TRUE
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
-		,NO_FAT = TRUE 
+		,NO_FAT = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -671,6 +673,7 @@
 	,NO_PAIN = TRUE
 	,NO_FINGERPRINT = TRUE
 	,IS_PLANT = TRUE
+	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
 	)
 
@@ -926,6 +929,7 @@
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
 	,NO_MUTATION = TRUE
 	)
 

@@ -6,10 +6,6 @@
 /datum/atom_hud/antag/hidden
 	self_visible = FALSE
 
-
-/datum/atom_hud/antag/embryo
-	hud_icons = list(ALIEN_EMBRYO_HUD)
-
 /datum/atom_hud/antag/proc/join_hud(mob/M)
 	if(!istype(M))
 		CRASH("join_hud(): [M] ([M.type]) is not a mob!")

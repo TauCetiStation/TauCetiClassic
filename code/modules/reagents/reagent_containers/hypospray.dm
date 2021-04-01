@@ -49,7 +49,7 @@
 
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
-	name = "autoinjector"
+	name = "inaprovaline autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
 	icon_state = "autoinjector"
 	item_state = "autoinjector"
@@ -60,6 +60,7 @@
 	name = "stimpack"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
+	item_state = "autoinjector_empty"
 	volume = 20
 	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
 
@@ -72,8 +73,15 @@
 	..()
 	update_icon()
 
+	if(user.hand)
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()
+
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
 	else
-		icon_state = "[initial(icon_state)]0"
+		icon_state = "autoinjector_empty"
+		item_state = "autoinjector_empty"
