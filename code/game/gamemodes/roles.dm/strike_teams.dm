@@ -1,7 +1,7 @@
 /datum/role/death_commando
-	name = RESPONDER
-	id = RESPONDER
-	special_role = RESPONDER
+	name = DEATHSQUADIE
+	id = DEATHSQUADIE
+	special_role = DEATHSQUADIE
 	disallow_job = TRUE
 
 	logo_state = "death-logo"
@@ -9,9 +9,9 @@
 	antag_hud_name = "huddeathsquad"
 
 /datum/role/emergency_responder
-	name = DEATHSQUADIE
-	id = DEATHSQUADIE
-	special_role = DEATHSQUADIE
+	name = RESPONDER
+	id = RESPONDER
+	special_role = RESPONDER
 	disallow_job = TRUE
 
 	logo_state = "ert-logo"

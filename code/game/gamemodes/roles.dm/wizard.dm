@@ -92,7 +92,7 @@
 
 /datum/role/wizard/GetScoreboard()
 	. = ..()
-	if(antag.current && antag.current.spell_list)
+	if(antag.current && antag.current.spell_list?.len)
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
@@ -106,10 +106,10 @@
 	. += "<br>"
 
 /datum/role/wizard/extraPanelButtons()
-	var/dat = ""
-	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_tp=1;'>Tp to base!</a><br>"
-	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_name=1'>Choose name</a><br>"
-	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_equip=1'>Equip</a><br>"
+	var/dat = ..()
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_tp=1;'>(Tp to base)</a>"
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_name=1'>(Choose name)</a>"
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];wiz_equip=1'>(Equip)</a>"
 	return dat
 
 /datum/role/wizard/RoleTopic(href, href_list, datum/mind/M, admin_auth)
@@ -136,7 +136,7 @@
 
 /datum/role/wizard_apprentice/GetScoreboard()
 	. = ..()
-	if(antag.current && antag.current.spell_list)
+	if(antag.current && antag.current.spell_list?.len)
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)

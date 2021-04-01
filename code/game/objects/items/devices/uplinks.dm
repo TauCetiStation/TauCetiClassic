@@ -10,7 +10,6 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/welcome = "Syndicate Uplink Console:"					// Welcoming menu message
 	var/uses = 20 						// Numbers of crystals
 	// List of items not to shove in their hands.
-	var/list/purchase_log = list()
 	var/active = 0
 	var/uplink_type = "traitor" //0 - traitor uplink, 1 - nuke
 	var/list/uplink_items = list()
@@ -89,6 +88,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				var/datum/uplink_item/I = uplink[number]
 				if(I)
 					I.buy(src, usr)
+					interact(usr)
 
 
 // HIDDEN UPLINK - Can be stored in anything but the host item has to have a trigger for it.

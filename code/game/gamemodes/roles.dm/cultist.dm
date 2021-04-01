@@ -61,9 +61,9 @@
 	C?.grant_runeword(antag.current)
 
 /datum/role/cultist/extraPanelButtons()
-	var/dat = ""
-	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];give_tome=1;'>Give Tome!</a><br>"
-	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];give_amulet=1;'>Give Amulet!</a><br>"
+	var/dat = ..()
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];give_tome=1;'>(Give Tome)</a>"
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];give_amulet=1;'>(Give Amulet)</a>"
 	return dat
 
 /datum/role/cultist/RoleTopic(href, href_list, datum/mind/M, admin_auth)

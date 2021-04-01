@@ -416,6 +416,7 @@
 				dat += "<br>"
 		else
 			dat += "<i>No orphaned roles are currently active.</i>"
+		dat += "<BR><BR><BR><a href='?src=\ref[src];check_antagonist=1'>Refresh</a>"
 
 		var/datum/browser/popup = new(usr, "roundstatus", "Round Status", 700, 700)
 		popup.set_content(dat)

@@ -23,21 +23,21 @@ var/global/list/all_objectives = list()
 /datum/objective/proc/check_completion()
 	return completed
 
-#define OBJ_SUCCES "<font color='green'>SUCCESS</font>"
-#define OBJ_HALF "<font color='yellow'>HALF</font>"
-#define OBJ_FAILURE "<font color='red'>FAILURE</font>"
-/datum/objective/proc/completion_to_string()
+/datum/objective/proc/completion_to_string(tags = TRUE)
+	var/result = "Error"
 	if(completed == OBJECTIVE_WIN)
-		return OBJ_SUCCES
+		result = "SUCCESS"
+		if(tags)
+			result = "<font color='green'>[result]</font>"
 	if(completed == OBJECTIVE_HALFWIN)
-		return OBJ_HALF
+		result = "HALF"
+		if(tags)
+			result = "<font color='yellow'>[result]</font>"
 	if(completed == OBJECTIVE_LOSS)
-		return OBJ_FAILURE
-	return "Error"
-
-#undef OBJ_SUCCES
-#undef OBJ_HALF
-#undef OBJ_FAILURE
+		result = "FAILURE"
+		if(tags)
+			result = "<font color='red'>[result]</font>"
+	return result
 
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
@@ -94,7 +94,7 @@ var/global/list/all_objectives = list()
 /datum/objective/rp_rev/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [target.assigned_role]."
+		explanation_text = "Capture, convert or exile from station [target.current.real_name], the [target.assigned_role]. Assassinate if you have no choice."
 	else
 		explanation_text = "Free Objective"
 	return target

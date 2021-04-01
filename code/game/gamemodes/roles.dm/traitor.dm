@@ -83,17 +83,6 @@
 
 	equip_traitor(antag.current)
 
-/datum/role/syndicate/traitor/GetScoreboard()
-	. = ..()
-	if(total_TC)
-		if(spent_TC)
-			. += "<br><b>TC Remaining:</b> [total_TC - spent_TC]/[total_TC]"
-			. += "<br><b>The tools used by the traitor were:</b>"
-			for(var/entry in uplink_items_bought)
-				. += "<br>[entry]"
-		else
-			. += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
-
 /datum/role/syndicate/traitor/wishgtanter
 
 /datum/role/syndicate/traitor/wishgtanter/forgeObjectives()

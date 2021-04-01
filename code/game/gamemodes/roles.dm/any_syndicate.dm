@@ -154,8 +154,19 @@
 	if(H)
 		qdel(H)
 
+/datum/role/syndicate/GetScoreboard()
+	. = ..()
+	if(total_TC)
+		if(spent_TC)
+			. += "<br><b>TC Remaining:</b> [total_TC - spent_TC]/[total_TC]"
+			. += "<br><b>The tools used by the traitor were:</b>"
+			for(var/entry in uplink_items_bought)
+				. += "<br>[entry]"
+		else
+			. += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
+
 /datum/role/syndicate/extraPanelButtons()
-	var/dat = ""
+	var/dat = ..()
 	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(antag.current)
 	if(guplink)
 		dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];telecrystalsSet=1;'>Telecrystals: [guplink.uses](Set telecrystals)</a>"

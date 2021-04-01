@@ -43,9 +43,9 @@
 	antag.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/role/syndicate/operative/extraPanelButtons()
-	var/dat = ""
-	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tp=1;'>Tp to base!</a><br>"
-	dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tellcode=1'>Tell code</a><br>"
+	var/dat = ..()
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tp=1;'>(Tp to base)</a>"
+	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tellcode=1'>(Tell code)</a>"
 	return dat
 
 /datum/role/syndicate/operative/RoleTopic(href, href_list, datum/mind/M, admin_auth)

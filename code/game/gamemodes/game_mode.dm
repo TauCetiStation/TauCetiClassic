@@ -291,7 +291,7 @@
 		completition_text += R.GetScoreboard()
 	if (!exist)
 		completition_text += "(none)"
-
+	completition_text += "<BR>"
 	count_survivors()
 
 	return completition_text

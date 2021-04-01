@@ -83,17 +83,16 @@
 		if(istype(I, /obj/item) && ishuman(user))
 			var/mob/living/carbon/human/A = user
 			A.put_in_any_hand_if_possible(I)
-			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
 			if(user.mind)
 				var/datum/role/syndicate/S = user.mind.GetRoleByType(/datum/role/syndicate/operative)
 				if(S)
-					S.faction.faction_scoreboard_data += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC<BR>"}
+					S.faction.faction_scoreboard_data += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC."}
 				else
 					S = user.mind.GetRoleByType(/datum/role/syndicate)
 					if(S)
-						S.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC<BR>"}
-				S.spent_TC += cost
-		U.interact(user)
+						S.uplink_items_bought += {"<img src="logo_[tempstate].png"> [bundlename] for [cost] TC."}
+				if(S)
+					S.spent_TC += cost
 
 		return 1
 	return 0

@@ -45,10 +45,7 @@
 	return ..()
 
 /datum/role/malfAI/extraPanelButtons()
-	. = ..()
-
-/datum/role/malfAI/extraPanelButtons()
-	var/dat = ""
+	var/dat = ..()
 	var/mob/living/silicon/ai/AI = antag.current
 	if (istype(AI) && AI.connected_robots.len)
 		var/n_e_robots = 0
@@ -56,7 +53,7 @@
 			if (R.emagged)
 				n_e_robots++
 		dat += "<br>[n_e_robots] of [AI.connected_robots.len] slaved cyborgs are emagged."
-		dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];malf_unemag_borgs=1;'>Unemag!</a><br>"
+		dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];malf_unemag_borgs=1;'>(Unemag)</a><br>"
 	return dat
 
 /datum/role/malfAI/RoleTopic(href, href_list, datum/mind/M, admin_auth)
@@ -93,11 +90,11 @@
 	logo_state = "malf-logo"
 
 /datum/role/malfbot/extraPanelButtons()
-	var/dat = ""
+	var/dat = ..()
 	var/mob/living/silicon/robot/robot = antag.current
 	if (istype(robot) && robot.emagged)
 		dat += "<br>Cyborg: Is emagged! 0th law: [robot.laws.zeroth]"
-		dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];unemag=1;'>Unemag!</a><br>"
+		dat += "<a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];unemag=1;'>(Unemag)</a><br>"
 	return dat
 
 /datum/role/malfbot/RoleTopic(href, href_list, datum/mind/M, admin_auth)

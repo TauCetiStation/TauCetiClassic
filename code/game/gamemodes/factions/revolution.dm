@@ -31,17 +31,18 @@
 	return heads
 
 /datum/faction/revolution/OnPostSetup()
+	if(SSshuttle)
+		SSshuttle.always_fake_recall = TRUE
+
+	return ..()
+
+/datum/faction/revolution/forgeObjectives()
 	var/list/heads = get_living_heads()
 
 	for(var/datum/mind/head_mind in heads)
 		var/datum/objective/rp_rev/rev_obj = AppendObjective(/datum/objective/rp_rev, TRUE)
 		rev_obj.target = head_mind
 		rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
-
-	if(SSshuttle)
-		SSshuttle.always_fake_recall = TRUE
-
-	return ..()
 
 /datum/faction/revolution/proc/check_heads_victory()
 	for(var/datum/role/syndicate/rev_leader/R in members)

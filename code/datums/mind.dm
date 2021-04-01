@@ -176,8 +176,7 @@
 	out += "<b>Memory:</b><br>"
 	out += memory
 	out += "<br><a href='?src=\ref[src];memory_edit=1'>Edit memory</a><br>"
-
-	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
+	out += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 
 	var/datum/browser/popup = new(usr, "window=edit_memory", "Memory", 700, 700)
 	popup.set_content(out)
@@ -267,25 +266,25 @@
 
 		else if(href_list["remove_from_faction"])
 			if(!R.faction)
-				to_chat(usr, "<span class='warning'>Can't leave a faction when you already don't belong to any! (This message shouldn't have to appear. Tell a coder.)</span>")
+				to_chat(usr, "<span class='warning'>Can't leave a faction when you already don't belong to any!</span>")
 			else if(R in R.faction.members)
 				R.faction.HandleRemovedRole(R)
 
 		else if(href_list["add_to_faction"])
 			if(R.faction)
-				to_chat(usr, "<span class='warning'>A role can only belong to one faction! (This message shouldn't have to appear. Tell a coder.)</span>")
-			else
-				var/list/all_factions = get_faction_list()
-				var/join_faction = input("Select new faction", "Assigned faction", null) as null|anything in all_factions
-				if(!join_faction || join_faction == "-----")
-					return
-				if(istype(all_factions[join_faction], /datum/faction))//we got an existing faction
-					var/datum/faction/joined = all_factions[join_faction]
+				to_chat(usr, "<span class='warning'>A role can only belong to one faction!</span>")
+				return
+			var/list/all_factions = get_faction_list()
+			var/join_faction = input("Select new faction", "Assigned faction", null) as null|anything in all_factions
+			if(!join_faction || join_faction == "-----")
+				return
+			if(istype(all_factions[join_faction], /datum/faction))//we got an existing faction
+				var/datum/faction/joined = all_factions[join_faction]
+				joined.HandleRecruitedRole(R)
+			else //we got an inexisting faction, gotta create it first!
+				var/datum/faction/joined = SSticker.mode.CreateFaction(all_factions[join_faction], null, 1)
+				if(joined)
 					joined.HandleRecruitedRole(R)
-				else //we got an inexisting faction, gotta create it first!
-					var/datum/faction/joined = SSticker.mode.CreateFaction(all_factions[join_faction], null, 1)
-					if(joined)
-						joined.HandleRecruitedRole(R)
 
 	else if (href_list["memory_edit"])
 		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
@@ -303,12 +302,17 @@
 			available_objectives[objective_type] = objective_type
 
 		var/new_obj = input("Select a new objective", "New Objective", null) as null|anything in available_objectives
-
-		if(new_obj == null)
+		if(!new_obj)
 			return
+
 		var/obj_type = available_objectives[new_obj]
 
-		var/datum/objective/new_objective = new obj_type(usr, obj_holder.faction)
+		var/datum/objective/new_objective
+		if(ispath(obj_type, /datum/objective/custom))
+			new_objective = new obj_type(null, usr, obj_holder.faction)
+		else
+			new_objective = new obj_type()
+
 		if (alert("Add the objective to a fraction?", "Faction" ,"Yes", "No") == "Yes")
 			var/datum/faction/fac = input("To which faction shall we give this?", "Faction-wide objective", null) as anything in SSticker.mode.factions
 			fac.handleNewObjective(new_objective)
@@ -440,6 +444,10 @@
 				for(var/obj/item/W in current)
 					current.drop_from_inventory(W)
 
+	else if (href_list["refresh"])
+		edit_memory()
+		return
+
 	edit_memory()
 
 // /datum/role and other game_mode--
@@ -449,9 +457,11 @@
 	return FALSE
 
 /datum/mind/proc/GetRoleByType(type)
-	for(var/datum/role/R in antag_roles)
+	for(var/role_id in antag_roles)
+		var/datum/role/R = antag_roles[role_id]
 		if(istype(R, type))
 			return R
+	return null
 
 /datum/mind/proc/GetFactionFromRole(role_id)
 	var/datum/role/R = GetRole(role_id)

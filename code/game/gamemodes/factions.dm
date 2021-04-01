@@ -187,17 +187,16 @@
 				score["roleswon"]++
 			else if (minor_victory)
 				score_results += "<br><font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
-				feedback_add_details("[ID]_success","MINOR_VICTORY")
+				feedback_add_details("[ID]_success","HALF")
 			else
 				score_results += "<br><span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
 				feedback_add_details("[ID]_success","FAIL")
 
 		score_results += "<br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
-			var/successful = objective.check_completion()
 			objective.extra_info()
-			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [successful ? "<font color='green'><B>Success!</B></font>" : "<span class='red'>Fail.</span>"]"
-			feedback_add_details("[ID]_objective","[objective.type]|[successful ? "SUCCESS" : "FAIL"]")
+			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
+			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			count++
 			if (count <= objective_holder.objectives.len)
 				score_results += "<br>"
@@ -254,23 +253,24 @@
 	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'>"}
 	return header
 
-/datum/faction/proc/AdminPanelEntry(datum/admins/A)
+/datum/faction/proc/AdminPanelEntry(datum/mind/M)
 	SHOULD_CALL_PARENT(TRUE)
 	var/dat = ""
 	dat += GetObjectivesMenuHeader()
-	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A><br>"
-	var/fac_objects = objective_holder.GetObjectiveString(FALSE, FALSE, A)
+	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A>"
+	var/fac_objects = objective_holder.GetObjectiveString(FALSE, FALSE, M)
 	if(fac_objects)
-		dat += "<b>Faction objectives</b><br>"
+		dat += "<br><b>Faction objectives:</b><ul>"
 		dat += fac_objects
+		dat += "</ul>"
 
-	dat += " - <b>Members</b> - "
+	dat += "[fac_objects ? "" : "<br>"] - <b>Members</b> - "
 	if(!members.len)
 		dat += "<br><i>Unpopulated</i><br>"
 	else
 		for(var/datum/role/R in members)
 			dat += "<br>"
-			dat += R.AdminPanelEntry()
+			dat += R.AdminPanelEntry(TRUE)
 	return dat
 
 /datum/faction/process()

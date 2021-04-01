@@ -41,6 +41,7 @@
 				dat += {"<BR>[O.completion_to_string()]"}
 	if(admin_edit)
 		if (owner)
+			dat += "<b> Manage role: </b> <br/>"
 			dat += "<a href='?src=\ref[M];obj_add=1;obj_holder=\ref[src]'>(add personal objective)</a> <br/>"
 		else if (faction)
 			dat += "<b> Manage faction: </b> <br/>"

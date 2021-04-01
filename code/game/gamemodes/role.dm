@@ -1,6 +1,6 @@
 /**
 * Used in Mixed Mode, also simplifies equipping antags for other gamemodes and
-* for the role panel.
+* for the TP.
 
 		###VARS###
 	===Static Vars===
@@ -197,7 +197,7 @@
 		return icon('icons/misc/logos.dmi', logo_state)
 	return icon('icons/misc/logos.dmi', "unknown-logo")
 
-/datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/admins/A)
+/datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/mind/mind)
 	var/icon/logo = get_logo_icon()
 	if(!antag || !antag.current)
 		return
@@ -205,13 +205,15 @@
 	if (M)
 		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
 	[name] <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
-	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(priv msg)</a>
-	 - <a href='?_src_=holder;traitor=\ref[M]'>(role panel)</a>"}
+	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
+	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
+	 - <a href='?src=\ref[src];jumpto=\ref[M]'><b>JMP</b></a>"}
 	else
 		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
 	[name] [antag.name]/[antag.key]<b><font color=red> - (DESTROYED)</font></b>
-	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(priv msg)</a>
-	 - <a href='?_src_=holder;traitor=\ref[M]'>(role panel)</a>"}
+	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
+	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
+	 - <a href='?src=\ref[src];jumpto=\ref[M]'><b>JMP</b></a>"}
 
 
 /datum/role/proc/Greet(greeting = GREET_DEFAULT, custom)
@@ -298,8 +300,8 @@
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
 			var/successful = objective.check_completion()
-			text += "<B>Objective #[count]</B>: [objective.explanation_text] [successful ? "<font color='green'><B>Success!</B></font>" : "<font color='red'>Fail.</font>"]"
-			feedback_add_details("[id]_objective","[objective.type]|[successful ? "SUCCESS" : "FAIL"]")
+			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
+			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			if(!successful) //If one objective fails, then you did not win.
 				win = FALSE
 			if (count < objectives.objectives.len)
@@ -329,7 +331,9 @@
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
 
 	if (objectives.objectives.len)
-		text += "<br><b>personal objectives</b><br><ul>"
+		text += "<br><b>Personal objectives:</b><ul>"
+	else
+		text += "<br>"
 	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
 	if (objectives.objectives.len)
 		text += "</ul>"
@@ -351,15 +355,15 @@
 		if (faction.objective_holder.objectives.len)
 			if (objectives.objectives.len)
 				text += "<br>"
-			text += "<b>faction objectives</b><ul>"
-			text += "<br/>"
+			text += "<b>Faction objectives:</b><ul>"
 		text += faction.objective_holder.GetObjectiveString(FALSE, admin_edit, M)
 		if (faction.objective_holder.objectives.len)
 			text += "</ul>"
-	text += "<br>"
+	text += "<HR>"
 	return text
 
 /datum/role/proc/GetScoreboard()
+	SHOULD_CALL_PARENT(TRUE)
 	return Declare()
 
 // DO NOT OVERRIDE

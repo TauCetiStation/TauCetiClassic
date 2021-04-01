@@ -6,7 +6,7 @@
 	logo_state = "rev-logo"
 
 	antag_hud_type = ANTAG_HUD_REV
-	antag_hud_name = "hudheadrevolutionary"
+	antag_hud_name = "hudrevolutionary"
 
 /datum/role/rev/CanBeAssigned(datum/mind/M)
 	if(!..())
@@ -30,7 +30,7 @@
 	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 
 	antag_hud_type = ANTAG_HUD_REV
-	antag_hud_name = "hudrevolutionary"
+	antag_hud_name = "hudheadrevolutionary"
 
 	var/rev_cooldown = 0
 

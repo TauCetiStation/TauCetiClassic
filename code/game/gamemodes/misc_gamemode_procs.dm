@@ -67,7 +67,7 @@
 	announcement_ping.play()
 
 
-// refactor to /datum/stat_collector/proc/add_survivor_stat()
+// refactor to /datum/stat_collector from vg
 // https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/datums/statistics/stat_helpers.dm
 /datum/game_mode/proc/count_survivors()
 	var/clients = 0
