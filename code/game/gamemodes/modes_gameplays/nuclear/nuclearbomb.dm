@@ -11,6 +11,7 @@ var/bomb_set
 	density = TRUE
 	can_buckle = 1
 	use_power = NO_POWER_USE
+	unacidable = TRUE	//aliens can't destroy the bomb
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0

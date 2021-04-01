@@ -127,15 +127,6 @@
 			SP.loc = BP
 			BP.embed(SP)
 
-	if(istype(P, /obj/item/projectile/neurotoxin))
-		var/obj/item/projectile/neurotoxin/B = P
-
-		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armor = getarmor_organ(BP, "bio")
-		if (armor < 100)
-			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
-			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
-
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)

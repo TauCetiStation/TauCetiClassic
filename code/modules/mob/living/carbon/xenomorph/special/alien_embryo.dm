@@ -38,15 +38,6 @@ This is emryo growth procs
 	baby = null
 	return ..()
 
-/obj/item/clothing/mask/facehugger/proc/host_is_dead()
-	if(current_hugger)
-		var/mob/living/carbon/xenomorph/facehugger/FH = current_hugger
-		var/atom/movable/mob_container
-		mob_container = FH
-		mob_container.forceMove(get_turf(src))
-		FH.reset_view()
-		qdel(src)
-
 /obj/item/alien_embryo/process()
 	if(!affected_mob) // The mob we were gestating in is straight up gone, we shouldn't be here
 		STOP_PROCESSING(SSobj, src)
@@ -176,7 +167,7 @@ This is emryo growth procs
 		if(I)
 			I.HandleRecruitedMind(new_xeno.mind)
 		new_xeno.update_icons()
-		new_xeno.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER) // To get the player's attention
+		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE) // To get the player's attention
 
 		affected_mob.visible_message("<span class='userdanger'>[new_xeno] crawls out of [affected_mob]!</span>")
 		affected_mob.add_overlay(image('icons/mob/alien.dmi', loc = affected_mob, icon_state = "bursted_stand"))

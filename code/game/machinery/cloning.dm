@@ -207,8 +207,6 @@
 	for(var/V in R.quirks)
 		new V(H)
 
-	// -- End mode specific stuff
-
 	if(!R.dna)
 		H.dna = new /datum/dna()
 		H.dna.real_name = H.real_name

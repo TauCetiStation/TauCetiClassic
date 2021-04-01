@@ -719,6 +719,8 @@
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
 		//Ninja
 		if(jobban_isbanned(M, NINJA) || isbanned_dept)
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[NINJA];jobban4=\ref[M]'>[NINJA]</a></td>"
