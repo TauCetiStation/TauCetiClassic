@@ -14,10 +14,15 @@
 	to_chat(antag.current, "<span class='notice'>The Vox are a race of cunning, sharp-eyed nomadic raiders and traders endemic to [system_name()] and much of the unexplored galaxy. You and the crew have come to the Exodus for plunder, trade or both.</span>")
 	to_chat(antag.current, "<span class='notice'>Vox are cowardly and will flee from larger groups, but corner one or find them en masse and they are vicious.</span>")
 	to_chat(antag.current, "<span class='notice'>Use :V to voxtalk, :H to talk on your encrypted channel, and don't forget to turn on your nitrogen internals!</span>")
-	to_chat(antag.current, "<span class='warning'>IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: tauceti.ru/wiki/Vox_Raider</span>")
+	if(config && config.wikiurl)
+		to_chat(antag.current, "<span class='warning'>IF YOU HAVE NOT PLAYED A VOX BEFORE, REVIEW THIS THREAD: [config.wikiurl]/Vox_Raider</span>")
 
-	var/output_text = {"<font color='red'>============Ограбление - краткий курс============</font><BR>
-	<font color='red'>[sanitize("Крайне рекомендуется ознакомиться вот с этой статьей или найти аналог - http://tauceti.ru/wiki/Vox_Raider")]</font><BR>
+	var/wikilink = ""
+
+	if(config && config.wikiurl)
+		wikilink = "<font color='red'>Крайне рекомендуется ознакомиться вот с этой статьей или найти аналог - [config.wikiurl]/Vox_Raider</font><BR>"
+
+	var/output_text = {"<font color='red'>============Ограбление - краткий курс============</font><BR>[wikilink]
 	[sanitize("- Запомните! Воксы никогда не бросают своих! Скорее пойдут на верную гибель вызволяя собрата. К примеру: начали миссию в 4-ом, значит в 4-ом и должны закончить, живыми или мертвыми (даже тела нужно забрать, если остались)!")]<BR>
 	[sanitize("- Вы - не пираты (режим). Вам не надо тащить все что не прибито к полу, старайтесь придерживаться ваших целей. Чем дольше вы задержитесь в раунде, тем выше шансы того, что кто-нибудь из вас вляпается в неприятности. Но если решите забить на цели и устроить чай, дело ваше (но только если вы решили это командой, а не кто-то один очень умный, ну и на всякий случай согласуйте \"чай\" с администрацией, в остальных случаях идите просто по заданиям).")]<BR>
 	[sanitize("- Могут ли воксы убивать? Могут. Однако они никогда не будут это делать специально и целенаправленно, выкашивая всех на своем пути. Все боевые действия должны быть сведены к минимуму, желательно не у всех на глазах и только для защиты своей команды, не больше и не меньше. Если враг перед вами не представляет никакой опасности и даже скорее хочет убежать с ваших глаз - вероятно стоит приогнорировать, однако в плен взять вам никто не запрещает, и если уж калечить, то так, чтобы это не кончилось летальным исходом. Но помните о последствиях к которым могут привести те или иные действия.")]<BR>
