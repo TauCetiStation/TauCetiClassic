@@ -7,13 +7,9 @@
 /datum/announcement/centcomm/blob/outbreak5
 	name = "Blob: Level 5 Outbreak"
 	subtitle = "Biohazard Alert"
-	message = "Confirmed outbreak of level 5 biohazard aboard Space Station 13. " + \
-			"All personnel must contain the outbreak. The station crew isolation protocols are now active."
-	sound = "outbreak5"
-/datum/announcement/centcomm/blob/outbreak5/play()
-	message = "Confirmed outbreak of level 5 biohazard aboard [station_name()]. " + \
-			"All personnel must contain the outbreak. The station crew isolation protocols are now active."
-	..()
+	message = "Господа, у вас абсолютно точно не блоб. " + \
+			"Но карантин мы всё же введём."
+	sound = "outbreak"
 
 /datum/announcement/centcomm/blob/critical
 	name = "Blob: Blob Critical Mass"
@@ -59,27 +55,28 @@
 
 /datum/announcement/centcomm/malf/first
 	name = "Malf: Announce №1"
-	message = "Caution, Space Station 13. We have detected abnormal behaviour in your network. " + \
-			"It seems someone is trying to hack your electronic systems. We will update you when we have more information."
+	message = "Внимание персоналу КСН Исход. Мы обнаружили нетипичные трассировки в вашей сети. " + \
+			"Похоже, что кто-то хочет взломать ваши системы. Мы сообщим больше как только так сразу."
 	sound = "malf1"
-/datum/announcement/centcomm/malf/first/play()
-	message = "Caution, [station_name]. We have detected abnormal behaviour in your network. " + \
-			"It seems someone is trying to hack your electronic systems. We will update you when we have more information."
-	..()
 
 /datum/announcement/centcomm/malf/second
 	name = "Malf: Announce №2"
-	message = "We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. " + \
-			"We suggest checking all network control terminals. We will keep you updated on the situation."
+	message = "Мы начали отслеживание взломщика. Похоже, что он прямо у вас на станции. " + \
+			"Поэтому, проверьте свои консоли АПЦ. А, ну и да, кстати... химик, пока ещё рано варить термит."
 	sound = "malf2"
 
 /datum/announcement/centcomm/malf/third
 	name = "Malf: Announce №3"
-	message = "This is highly abnormal and somewhat concerning. " + \
-			"The intruder is too fast, he is evading our traces. No man could be this fast..."
+	message = "Это очень странно и необычно, потому что взломщик искуссно заметает следы. " + \
+			"Ни один человек не может так быстро работать с машинами... Да и СПУ тоже..."
 	sound = "malf3"
 
 /datum/announcement/centcomm/malf/fourth
 	name = "Malf: Announce №4"
-	message = "We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>"
+	message = "Похоже, что мы обнаружили вашего взломщика, и э-э-э-это ваш-ваш-ваш на-на-на -еллект. Он пы-ы-ы-тается запустить механизм самоуничт..."
 	sound = "malf4"
+
+/datum/announcement/centcomm/malf/rickroll
+	name = "Malf: Rick Roll"
+	message = "Похоже, что мы обнаружили вашего взломщика, и э-э-э-это ваш-ваш-ваш на-на-на -еллект. Он пы-ы-ы-тается запустить механизм самоуничт...  [Rick Astley - Never Gonna Give You Up]"
+	sound = "malf4aprilfools"

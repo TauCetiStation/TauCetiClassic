@@ -36,11 +36,11 @@
 /* Alerts */
 /datum/announcement/station/nuke
 	name = "Alert: Nuke Activation"
-	message = "Detected activation of a nuclear warhead somewhere on the station. Someone trying to blow up the station!"
+	message = "Обнаружена активация ядерной боеголовки на борту станции. Кто-то пытается взорвать станцию!"
 	sound = "nuke"
 /datum/announcement/station/nuke/play(area/A)
 	if(A)
-		message = "Detected activation of a nuclear warhead in [initial(A.name)]. Someone trying to blow up the station!"
+		message = "Обнаружена активация ядерной боеголовки в [initial(A.name)]. Кто-то пытается взорвать станцию!"
 	..()
 
 /datum/announcement/station/maint_revoke
@@ -54,7 +54,7 @@
 /datum/announcement/station/gravity_on
 	name = "Secret: Gravity On"
 	subtitle = "Station Fail-Safe System"
-	message = "Gravity generators are again functioning within normal parameters. Sorry for any inconvenience."
+	message = "Генератор гравитации вновь работает в штатном режиме. Приносим свои извинения за внеплановое восхождение человека с земли на небо."
 	sound = "gravon"
 /datum/announcement/station/gravity_on/play()
 	subtitle = "[station_name()] Fail-Safe System"
@@ -63,8 +63,8 @@
 /datum/announcement/station/gravity_off
 	name = "Secret: Gravity Off"
 	subtitle = "Station Fail-Safe System"
-	message = "Feedback surge detected in mass-distributions systems. Artifical gravity has been disabled whilst the system reinitializes. " + \
-			"Further failures may result in a gravitational collapse and formation of blackholes. Have a nice day."
+	message = "Обнаружен всплеск обратной связи не очень-то массивных масс-распределителей. " + \
+			"Рукотворная гравитация отключена на время повторного осознания системой всех своих внутренних страхов и противоречий."
 	sound = "gravoff"
 /datum/announcement/station/gravity_off/play()
 	subtitle = "[station_name()] Fail-Safe System"
@@ -73,108 +73,96 @@
 /* Shuttles */
 /datum/announcement/station/shuttle/crew_called
 	name = "Shuttle: Crew Called"
-	message = "A crew transfer has been initiated. The shuttle has been called. It will arrive in a few minutes."
+	message = "Трансферный шаттл отправлен. Он прибудет в целости и сохранности. Когда-нибудь. Но мы вам этого не гарантируем."
 	sound = "crew_shut_called"
 /datum/announcement/station/shuttle/crew_called/play()
-	message = "A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes."
+	message = "Трансферный шаттл отправлен. Он прибудет в целости и сохранности. Через [shuttleminutes2text()] минут. Но мы вам этого не гарантируем."
 	..()
 
 /datum/announcement/station/shuttle/crew_recalled
 	name = "Shuttle: Crew Recalled"
-	message = "The shuttle has been recalled."
+	message = "Внимание, шаттл отозван. ШО, ОПЯТЬ?."
 	sound = "crew_shut_recalled"
 
 /datum/announcement/station/shuttle/crew_docked
 	name = "Shuttle: Crew Docked"
-	message = "The scheduled Crew Transfer Shuttle has docked with the station. It will depart in a few minutes."
+	message = "Трансферный шаттл успешно пристыковался к станции. Мы сами удивлены. Единая Тау Кита. Занимайте места согласно купленным билетам. Мы отправимся тогда, когда я этого захочу."
 	sound = "crew_shut_docked"
 /datum/announcement/station/shuttle/crew_docked/play()
-	message = "The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [shuttleminutes2text()] minutes."
+	message = "Трансферный шаттл успешно пристыковался к станции. Мы сами удивлены. Единая Тау Кита. Занимайте места согласно купленным билетам. Мы отправимся через [shuttleminutes2text()] минут."
 	..()
 
 /datum/announcement/station/shuttle/crew_left
 	name = "Shuttle: Crew Left"
-	message = "The Crew Transfer Shuttle has left the station. It will dock at Central Command in a few minutes."
+	message = "Трансферный шаттл покинул станцию. Слава NT и добро пожаловать отсюда."
 	sound = "crew_shut_left"
 /datum/announcement/station/shuttle/crew_left/play()
-	message = "The Crew Transfer Shuttle has left the station. Estimate [shuttleminutes2text()] minutes until the shuttle docks at Central Command."
+	message = "Трансферный шаттл покинул станцию. Слава NT и добро пожаловать отсюда. Прибудем через [shuttleminutes2text()] минут."
 	..()
 
 
 /datum/announcement/station/shuttle/emer_called
 	name = "Shuttle: Emergency Called"
-	message = "The emergency shuttle has been called. It will arrive as soon as possible."
+	message = "Вызван аварийный шаттл. Он прибудет в скором времени."
 	sound = "emer_shut_called"
 /datum/announcement/station/shuttle/emer_called/play()
-	message = "The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes."
+	message = "Вызван аварийный шаттл. Он прибудет через [shuttleminutes2text()] минут."
 	..()
 
 /datum/announcement/station/shuttle/emer_recalled
 	name = "Shuttle: Emergency Recalled"
-	message = "The emergency shuttle has been recalled."
+	message = "Аварийный шаттл отозван."
 	sound = "emer_shut_recalled"
 
 /datum/announcement/station/shuttle/emer_docked
 	name = "Shuttle: Emergency Docked"
-	message = "The Emergency Shuttle has docked with the station. You have a few minutes to board the Emergency Shuttle."
+	message = "Аварийный шаттл прибывает на станцию. Начата посадка на рейс Исход - Центральное Коммандование."
 	sound = "emer_shut_docked"
 /datum/announcement/station/shuttle/emer_docked/play()
-	message = "The Emergency Shuttle has docked with the station. You have [shuttleminutes2text()] minutes to board the Emergency Shuttle."
+	message = "Аварийный шаттл прибывает на станцию. Начата посадка на рейс Исход - Центральное Коммандование. Осталось [shuttleminutes2text()] минут."
 	..()
 
 /datum/announcement/station/shuttle/emer_left
 	name = "Shuttle: Emergency Left"
-	message = "The Emergency Shuttle has left the station. It will dock at Central Command in a few minutes."
+	message = "Аварийный шаттл отбывает с платформы. Следующая остановка Центральное Коммандование."
 	sound = "emer_shut_left"
 /datum/announcement/station/shuttle/emer_left/play()
-	message = "The Emergency Shuttle has left the station. Estimate [shuttleminutes2text()] minutes until the shuttle docks at Central Command."
+	message = "Аварийный шаттл отбывает с платформы. Следующая остановка Центральное Коммандование. Прибытие через [shuttleminutes2text()] минут."
 	..()
 
 /* Security codes */
 /datum/announcement/station/code/downtogreen
 	name = "Code: Down to Green"
-	subtitle = "Attention! Security level lowered to green."
-	message = "Непосредственные или явные угрозы для станции отсутствуют. " + \
-			"Служба безопасности обязана спрятать оружие, а также уважать личное право и пространство персонала, несанкционированные обыски запрещены."
+	subtitle = "Внимание! Уровень тревоги понижен до Зелёного!"
+	message = "Охрана больше не может ходить с оружием на виду. Соблюдение личных прав сведено к норме."
 	sound = "downtogreen"
 
 /datum/announcement/station/code/uptoblue
 	name = "Code: Up to Blue"
-	subtitle = "Attention! Security level elevated to blue."
-	message = "Командование получило надежную информацию о возможной враждебной активности на борту станции. " + \
-			"Служба безопасности может носить оружие на виду, однако, не следует вынимать его без необходимости. " + \
-			"Разрешается личный обыск персонала и отсеков станции без предварительных санкций."
+	subtitle = "Внимание! Уровень тревоги поднят до Синего!"
+	message = "Руководство станции получило достоверную информацию о враждебной активности на борту станции. Охранный персонал может держать оружие на виду. Разрешены случайные обыски."
 	sound = "blue"
 
 /datum/announcement/station/code/downtoblue
 	name = "Code: Down to Blue"
-	subtitle = "Attention! Security level lowered to blue."
-	message = "Непосредственная угроза станции отсутсвует. " + \
-			"Служба безопасности не имеет права вынимать оружие, однако может носить его на виду. " + \
-			"Спонтанные обыски всё еще разрешены."
+	subtitle = "Внимание! Уровень тревоги понижен до Синего!"
+	message = "Охранный персонал не может больше держать оружие наготове, но может держать его на виду. Случайные обыски разрешены."
 	sound = "downtoblue"
 
 /datum/announcement/station/code/uptored
 	name = "Code: Up to Red"
-	subtitle = "Attention! Code red!"
-	message = "Существует прямая угроза станции или возможно причинение значительного ущерба. " + \
-			"Боевое положение! Служба безопасности имеет право носить оружие на готове по собственному усмотрению. " + \
-			"Рекомендуются спонтанные обыски персонала и отсеков. Весь персонал станции обязан оставаться в своих отделах. " + \
-			"Весь персонал станции обязан повиноваться требованиям СБ и выше стоящих офицеров."
+	subtitle = "Внимание! Код Красный!"
+	message = "Присутствует прямая серьезная угроза станции. Случайные обыски разрешены и рекомендуемы."
 	sound = "red"
 
 /datum/announcement/station/code/downtored
 	name = "Code: Down to Red"
-	subtitle = "Attention! Code red!"
-	message = "Механизм самоунитожения деактивирован и над ситуацией был вернут частичный контроль. " + \
-			"Тем не менее существует прямая угроза станции. Служба безопасности имеет право носить оружие наготове по собственному усмотрению. " + \
-			"Рекомендуются спонтанные обыски персонала и отсеков."
+	subtitle = "Внимание! Код Красный!"
+	message = "Механизм самоунитожения станции был отключён, но прямая угроза станции всё ещё присутствует. Случайные обыски разрешены и рекомендуемы."
 	sound = "downtored"
 
 /datum/announcement/station/code/delta
 	name = "Code: Up to Delta"
-	subtitle = "Attention! Delta security level reached!"
-	message = "Внимание, активирован механизм самоуничтожения или ситуация вышла полностью из под контроля! " + \
-			"Все приказы глав станции должны выполняться беспрекословно, любое неповиновение карается смертью! " + \
-			"Всему персоналу перевести датчики костюмов в третий режим! Это не учебная тревога!"
+	subtitle = "Внимание! Достигнут уровень тревоги Дельта!"
+	message = "Был взведён механизм самоуничтожения станции. Весь персонал должен бесприкословно выполнять приказы глав. Любое неповиновение может караться смертью. Это не буровая установка."
 	sound = "delta"

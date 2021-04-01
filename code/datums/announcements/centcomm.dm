@@ -18,17 +18,11 @@
 /datum/announcement/centcomm/yesert
 	name = "Centcomm: ERT Approved"
 	subtitle = "Central Command"
-	message = "It would appear that an emergency response team was requested for Space Station 13. We will prepare and send one as soon as possible."
+	message = "Исход, ваш запрос одобрен. Мы соберём и отправим к вам Отряд Сме- Кхехм Кхм. Отряд Быстрого Реагирования, как только это станет возможным."
 	sound = "yesert"
-/datum/announcement/centcomm/yesert/play()
-	message = "It would appear that an emergency response team was requested for [station_name()]. We will prepare and send one as soon as possible."
-	..()
 
 /datum/announcement/centcomm/noert
 	name = "Centcomm: ERT Denied"
 	subtitle = "Central Command"
-	message = "It would appear that an emergency response team was requested for Space Station 13. Unfortunately, we were unable to send one at this time."
-	sound = "yesert"
-/datum/announcement/centcomm/noert/play()
-	message = "It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time."
-	..()
+	message = "Нет. Не будет. Никакого. ЕРТ. А теперь намотайте сопли на кулак и научитесь решать проблемы самостоятельно."
+	sound = "noert"
