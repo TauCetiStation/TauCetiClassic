@@ -230,7 +230,7 @@
 /datum/announcement/centcomm/icarus_lost
 	name = "Event: Icarus Lost"
 	subtitle = "Rogue drone alert"
-	message = "Был утерян контакт с крылом боевых не очень-то-лётников покинувших КБС Икар. Если они будут обнаружены в данном районе, то приближайтесь к ним с особой осторожностью, они немного стесняются."
+	message = "Был утерян контакт с крылом боевых не очень-то-лётников покинувших КБС Икар. Если они будут замечены в данном районе, то приближайтесь к ним с особой осторожностью, они немного стесняются."
 	sound = "icaruslost"
 /datum/announcement/centcomm/icarus_lost/play(message)
 	if(message)
