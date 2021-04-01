@@ -5,7 +5,7 @@
 	name = "Abduction"
 	factions_allowed = list(/datum/faction/abductors = 4)
 
-	minimum_player_count = 0
+	minimum_player_count = 25
 	minimum_players_bundles = 25
 
 /datum/game_mode/abduction/proc/setup_landmarks()

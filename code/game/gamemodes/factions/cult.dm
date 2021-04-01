@@ -21,7 +21,8 @@
 	late_role = CULTIST
 	initroletype = /datum/role/cultist
 
-	max_roles = 4
+	min_roles = 1
+	max_roles = 3
 
 	var/list/startwords = list("blood","join","self","hell")
 	var/list/sacrificed = list()

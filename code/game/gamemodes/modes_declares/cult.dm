@@ -3,7 +3,7 @@
 
 	factions_allowed = list(/datum/faction/cult)
 
-	minimum_player_count = 0
+	minimum_player_count = 5
 	minimum_players_bundles = 20
 
 /datum/game_mode/cult/announce()

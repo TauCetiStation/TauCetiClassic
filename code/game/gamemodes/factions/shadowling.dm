@@ -11,6 +11,7 @@
 	late_role = SHADOW_THRALL
 	roletype = /datum/role/thrall
 
+	min_roles = 2
 	max_roles = 2
 
 	var/shadowling_ascended = FALSE

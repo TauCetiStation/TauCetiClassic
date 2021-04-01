@@ -9,6 +9,9 @@
 	roletype = /datum/role/syndicate/traitor
 	initroletype = /datum/role/syndicate/traitor
 
+	min_roles = 1
+	max_roles = 4
+
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/const/traitor_scaling_coeff = 7.0 //how much does the amount of players get divided by to determine traitors
 

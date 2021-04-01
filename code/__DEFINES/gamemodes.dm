@@ -1,9 +1,3 @@
-// Dynamic Mode
-#define CURRENT_LIVING_PLAYERS	"living"
-#define CURRENT_LIVING_ANTAGS	"antags"
-#define CURRENT_DEAD_PLAYERS	"dead"
-#define CURRENT_OBSERVERS	"observers"
-
 // Faction IDs
 #define ABDUCTORS "Abductor Team"
 #define BLOODCULT "Cult Of Blood"

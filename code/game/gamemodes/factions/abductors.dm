@@ -10,6 +10,7 @@
 
 	logo_state = "abductor-logo"
 
+	min_roles = 2
 	max_roles = 2
 
 	var/team_number

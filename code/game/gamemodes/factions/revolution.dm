@@ -16,7 +16,8 @@
 	initroletype = /datum/role/syndicate/rev_leader
 	roletype = /datum/role/rev
 
-	max_roles = 3
+	min_roles = 2
+	max_roles = 2
 
 	var/checkwin_counter = 0
 	var/last_command_report = 0
