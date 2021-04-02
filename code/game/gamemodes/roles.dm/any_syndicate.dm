@@ -161,6 +161,18 @@
 	if(I?.hidden_uplink)
 		QDEL_NULL(I.hidden_uplink)
 
+/datum/role/syndicate/proc/get_nt_opposed()
+	var/list/dudes = list()
+	for(var/mob/living/carbon/human/man in human_list)
+		if(man.client)
+			if(man.client.prefs.nanotrasen_relation == "Opposed")
+				dudes += man
+			else if(man.client.prefs.nanotrasen_relation == "Skeptical" && prob(50))
+				dudes += man
+	if(dudes.len == 0)
+		return null
+	return pick(dudes)
+
 /datum/role/syndicate/GetScoreboard()
 	. = ..()
 	if(total_TC)
