@@ -184,9 +184,9 @@
 	name = "neurotoxin"
 	icon_state = "energy2"
 	damage = 5
-	stun = 10
+	paralyze = 10
 	damage_type = TOX
-	flag = "bullet"
+	flag = "bio"
 
 /obj/item/projectile/acid_special
 	name = "acid"
@@ -202,7 +202,7 @@
 /obj/item/projectile/acid_special/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_bodypart_damage(damage)//+10=30
+		S.take_bodypart_damage(damage)
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -216,7 +216,7 @@
 			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(prob(75))
+					if(prob(30))
 						C.make_old()
 						if(bp == H.head)
 							H.update_inv_head()
@@ -235,16 +235,7 @@
 			else
 				continue //Does this thing we're shooting even exist?
 
-		var/obj/item/organ/external/organ = H.get_bodypart(check_zone(def_zone))
-		var/armorblock = H.run_armor_check(organ, "bio")
-		H.apply_damage(damage, damage_type, organ, armorblock, null, src)
-		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
-		H.flash_pain()
-		to_chat(H, "<span class='warning'>You feel the acid on your skin!</span>")
-		return
-	..()
-
-/obj/item/projectile/bullet/scrap //
+/obj/item/projectile/bullet/scrap
 	icon_state = "scrap_shot"
 	damage = 35
 	stoping_power = 8

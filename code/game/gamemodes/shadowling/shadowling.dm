@@ -130,7 +130,8 @@ Made by Xhuis
 	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
 	to_chat(shadow.current, "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>")
 	to_chat(shadow.current, "<b>Any other shadowlings are you allies. You must assist them as they shall assist you.</b>")
-	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at http://tauceti.ru/wiki/Shadowling</b><br>")
+	if(config && config.wikiurl)
+		to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at [config.wikiurl]/Shadowling</b><br>")
 
 
 /datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)

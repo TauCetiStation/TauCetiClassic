@@ -1,11 +1,10 @@
-var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHHH")
-
 /obj/item/weapon/extraction_pack
 	name = "fulton recovery marker"
 	desc = "A marker that can be used to extract a target to a Aurora. Anything not bolted down can be moved. Anything living will be dropped off into a holding cell"
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	var/turf/extraction_point
+	var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHHH")
 
 /obj/item/weapon/extraction_pack/afterattack(atom/target, mob/user, proximity, params)
 	var/extract_time = 70

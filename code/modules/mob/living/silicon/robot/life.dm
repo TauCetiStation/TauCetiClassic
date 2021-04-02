@@ -226,7 +226,7 @@
 	if (src.syndicate && src.client)
 		if(src.connected_ai)
 			src.connected_ai.connected_robots -= src
-			src.connected_ai = null
+			src.set_ai_link(null)
 		if(src.mind)
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"
