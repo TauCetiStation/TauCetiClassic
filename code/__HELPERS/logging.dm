@@ -260,7 +260,7 @@
 	stats["map"] = SSmapping.config.map_name
 
 	stats["completion_html"] = SSticker.mode.completition_text
-	stats["completion_antagonists"] = antagonists_completion //todo: icon2base64 icons?
+	stats["completion_antagonists"] = antagonists_completion
 
 	stats["score"] = score
 	stats["achievements"] = achievements
