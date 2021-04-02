@@ -195,7 +195,6 @@
 
 /datum/rune/cult/capture_area/Destroy()
 	var/datum/religion/cult/R = global.cult_religion
-	R.capturing_area = FALSE
 	if(!QDELETED(statue))
 		qdel(statue)
 	return ..()
