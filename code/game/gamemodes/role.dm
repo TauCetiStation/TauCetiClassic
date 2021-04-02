@@ -247,15 +247,15 @@
 /datum/role/proc/printplayerwithicon(mob/M)
 	var/text = ""
 	if(!M)
-		var/icon/sprotch = icon('icons/effects/blood.dmi', "sprotch")
+		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 		text += "<img src='data:image/png;base64,[icon2base64(sprotch)]' style='position:relative; top:10px;'/>"
 	else
-		var/icon/flat = getFlatIcon(M, SOUTH, 0, 1)
+		var/icon/flat = getFlatIcon(M, SOUTH, exact = 1)
 		if(M.stat == DEAD)
 			if (!istype(M, /mob/living/carbon/brain))
 				flat.Turn(90)
-			var/icon/ded = icon('icons/effects/blood.dmi', "floor1-old")
-			ded.Blend(flat,ICON_OVERLAY)
+			var/icon/ded = icon('icons/effects/blood.dmi', "floor_old")
+			ded.Blend(flat, ICON_OVERLAY)
 			end_icons += ded
 		else
 			end_icons += flat

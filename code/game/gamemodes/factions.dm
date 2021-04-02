@@ -182,17 +182,17 @@
 			score_results += custom_result
 		else
 			if (IsSuccessful())
-				score_results += "<br><font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
+				score_results += "<font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
 				feedback_add_details("[ID]_success","SUCCESS")
 				score["roleswon"]++
 			else if (minor_victory)
-				score_results += "<br><font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
+				score_results += "<font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
 				feedback_add_details("[ID]_success","HALF")
 			else
-				score_results += "<br><span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
+				score_results += "<span class='red'><B>\The [capitalize(name)] has failed.</B></span>"
 				feedback_add_details("[ID]_success","FAIL")
 
-		score_results += "<br>"
+		score_results += "<br><br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			objective.extra_info()
 			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
@@ -330,18 +330,6 @@
 	objective_holder.objectives -= O
 	O.faction = null
 	qdel(O)
-
-/datum/faction/proc/Declare()
-	SHOULD_CALL_PARENT(TRUE)
-	var/dat = GetObjectivesMenuHeader()
-	dat += "<br><b>Faction objectives</b><br>"
-	dat += CheckObjectives()
-	dat += "<br><b>Faction members.</b><br"
-	var/list/score_results = GetScoreboard()
-	for(var/i in score_results)
-		dat += i
-
-	return dat
 
 /datum/faction/proc/latespawn(mob/M)
 	return

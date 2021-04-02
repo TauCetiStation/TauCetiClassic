@@ -1106,8 +1106,11 @@
 		var/dat = ""
 		for(var/mode in config.modes)
 			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
+		dat += "<HR>"
+		for(var/type in subtypesof(/datum/modesbundle))
+			var/datum/modesbundle/bound_type = type
+			var/bname = initial(bound_type.name)
+			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}
 
 		var/datum/browser/popup = new(usr, "c_mode", "What mode do you wish to play?", 400, 535)
