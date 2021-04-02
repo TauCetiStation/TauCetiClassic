@@ -2,8 +2,6 @@
 	if(achievements.len)
 		completions += "<div class='Section'>[achievement_declare_completion()]</div>"
 
-	// Score Calculation and Display
-
 	// Who is alive/dead, who escaped
 	for (var/mob/living/silicon/ai/I in ai_list)
 		if (I.stat == DEAD && is_station_level(I.z))
@@ -15,10 +13,10 @@
 			score["crew_dead"] += 1
 		if (I.job == "Clown")
 			for(var/thing in I.attack_log)
-				if(findtext(thing, "<font color='orange'>")) //</font>
+				if(findtext(thing, "<font color='orange'>"))
 					score["clownabuse"]++
 
-	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
+	var/area/escape_zone = get_area_by_type(/area/shuttle/escape/centcom)
 
 	var/cashscore = 0
 	var/dmgscore = 0
@@ -140,7 +138,6 @@
 		score["researchdone"] += research_levels
 
 	// Bonus Modifiers
-	//var/traitorwins = score["traitorswon"]
 	var/rolesuccess = score["roleswon"] * 250
 	var/deathpoints = score["crew_dead"] * 250 //done
 	var/researchpoints = score["researchdone"] * 30
@@ -201,10 +198,6 @@
 	if (score["deadaipenalty"])
 		score["crewscore"] -= 250
 	score["crewscore"] -= power
-	//if (score["crewscore"] != 0) // Dont divide by zero!
-	//	while (traitorwins > 0)
-	//		score["crewscore"] /= 2
-	//		traitorwins -= 1
 	score["crewscore"] -= messpoints
 	score["crewscore"] -= plaguepoints
 
@@ -213,9 +206,6 @@
 	to_chat(world, "<b><font size='4'>[score["crewscore"]]</font></b>")
 	for(var/mob/E in player_list)
 		if(E.client) E.scorestats(completions)
-	return
-
-
 
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
@@ -381,5 +371,3 @@
 	var/datum/browser/popup = new(src, "roundstats", "Round #[round_id] Stats", 1000, 600)
 	popup.set_content(dat)
 	popup.open()
-
-	return
