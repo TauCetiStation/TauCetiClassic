@@ -801,7 +801,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 /datum/objective/infestation/reproduct/check_completion()
 	var/datum/faction/infestation/aliens = faction
 	if(istype(aliens))
-		var/data = count_alien_percent()
+		var/data = aliens.count_alien_percent()
 		if(data[ALIEN_PERCENT] >= WIN_PERCENT)
 			return OBJECTIVE_WIN
 		return OBJECTIVE_LOSS
