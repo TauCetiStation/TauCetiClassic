@@ -222,7 +222,7 @@
 		if (GREET_CUSTOM)
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>[custom]</B>")
 		else
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetObjectivesMenuHeader()]":"."]</B>")
+			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
 
 	return TRUE
 
@@ -339,7 +339,7 @@
 		text += "</ul>"
 
 	if (faction)
-		text += "<br>[faction.GetObjectivesMenuHeader()]"
+		text += "<br>[faction.GetFactionHeader()]"
 	else
 		text += "<br><i>None Faction</i>"
 

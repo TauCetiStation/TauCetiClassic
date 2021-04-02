@@ -256,7 +256,7 @@
 		return icon('icons/misc/logos.dmi', logo_state)
 	return icon('icons/misc/logos.dmi', "unknown-logo")
 
-/datum/faction/proc/GetObjectivesMenuHeader() //Returns what will show when the factions objective completion is summarized
+/datum/faction/proc/GetFactionHeader() //Returns what will show when the factions objective completion is summarized
 	var/icon/logo = get_logo_icon()
 	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'>"}
 	return header
@@ -264,7 +264,7 @@
 /datum/faction/proc/AdminPanelEntry(datum/mind/M)
 	SHOULD_CALL_PARENT(TRUE)
 	var/dat = ""
-	dat += GetObjectivesMenuHeader()
+	dat += GetFactionHeader()
 	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A>"
 	var/fac_objects = objective_holder.GetObjectiveString(FALSE, FALSE, M)
 	if(fac_objects)

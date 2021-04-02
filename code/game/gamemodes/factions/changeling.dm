@@ -21,7 +21,7 @@
 	max_roles = 1 + round(num_players / 10)
 	return TRUE
 
-/datum/faction/changeling/GetObjectivesMenuHeader()
+/datum/faction/changeling/GetFactionHeader()
 	var/icon/logo_left = get_logo_icon("change-logoa")
 	var/icon/logo_right = get_logo_icon("change-logob")
 	var/header = {"<img src='data:image/png;base64,[icon2base64(logo_left)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo_right)]' style='position:relative; top:10px;'>"}

@@ -281,7 +281,7 @@
 	for(var/datum/faction/F in factions)
 		if (F.members.len > 0)
 			exist = TRUE
-			completition_text += F.GetObjectivesMenuHeader()
+			completition_text += F.GetFactionHeader()
 			completition_text += F.GetScoreboard()
 			completition_text += "<HR>"
 	if (orphaned_roles.len > 0)
