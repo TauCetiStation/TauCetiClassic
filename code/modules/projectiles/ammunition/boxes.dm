@@ -44,13 +44,6 @@
 	ammo_type = /obj/item/ammo_casing/c9mmr
 	max_ammo = 12
 	multiple_sprites = 2
-/*
-/obj/item/ammo_box/c10mm
-	name = "Ammunition Box (10mm)"
-	icon_state = "9mm"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	max_ammo = 30 */
 
 /obj/item/ammo_box/c45
 	name = "Ammunition Box (.45)"
