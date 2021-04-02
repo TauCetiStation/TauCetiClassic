@@ -154,6 +154,15 @@
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	return NONE
 
+/datum/component/bounded/proc/change_max_dist(dist)
+	max_dist = dist
+	if(vis_radius && ismob(parent))
+		// Del old
+		qdel(bound_to.GetComponent(/datum/component/vis_radius))
+		deltimer(hide_radius_timer)
+		// Create new
+		bound_to.AddComponent(/datum/component/vis_radius, max_dist)
+
 /datum/component/bounded/proc/try_show_radius()
 	if(!ismob(parent))
 		return

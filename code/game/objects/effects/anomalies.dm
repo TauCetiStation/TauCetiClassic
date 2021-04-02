@@ -203,6 +203,9 @@
 	var/spawns = -1
 	var/need_bound = FALSE
 
+	var/extencion_cd = 1 MINUTE
+	var/list/extencion_timers = list()
+
 	var/enabled = TRUE
 	var/coef_max_size = 0.3333 // When this coefficient decreases, the sprite size increases
 	var/old_size = 1
@@ -218,6 +221,8 @@
 
 /obj/effect/anomaly/bluespace/cult_portal/Destroy()
 	disable()
+	for(var/timer in extencion_timers)
+		deltimer(timer)
 	return ..()
 
 /obj/effect/anomaly/bluespace/cult_portal/examine(mob/user, distance)
@@ -225,6 +230,14 @@
 	if(spawns > -1) // otherwise infinite
 		if(isobserver(user) || iscultist(user))
 			to_chat(user, "Оболочек для будущих рабов осталось: [spawns]")
+
+/obj/effect/anomaly/bluespace/cult_portal/proc/extencion(datum/component/bounded/B)
+	B.change_max_dist(B.max_dist + 1)
+
+	if(ismob(B.parent))
+		var/mob/M = B.parent
+		if(M.ckey)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/enable()
 	for(var/i in 1 to 4)
@@ -324,4 +337,7 @@
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))
 	if(need_bound)
-		C.AddComponent(/datum/component/bounded, src, 0, 7)
+		var/datum/component/bounded/B = C.AddComponent(/datum/component/bounded, src, 0, 7)
+		var/mob/M = B.parent
+		if(M.ckey)
+			extencion_timers[M.ckey] = addtimer(CALLBACK(src, .proc/extencion, B), extencion_cd, TIMER_STOPPABLE)
