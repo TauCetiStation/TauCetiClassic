@@ -194,9 +194,107 @@
 /datum/faction/nuclear/GetScoreboard()
 	var/dat = ..()
 	if(faction_scoreboard_data)
-		dat += "<BR>The operatives bought:"
+		dat += "The operatives bought:"
 		for(var/entry in faction_scoreboard_data)
 			dat += "<br>[entry]"
+		dat += "<br>"
+	return dat
+
+/datum/faction/nuclear/proc/get_nukedpenalty()
+	var/nukedpenalty = 1000
+	for (var/obj/machinery/nuclearbomb/NUKE in poi_list)
+		if (NUKE.detonated == 0)
+			continue
+		var/turf/T = NUKE.loc
+		if (istype(T,/area/shuttle/syndicate) || istype(T,/area/custom/wizard_station) || istype(T,/area/station/solar))
+			nukedpenalty = 1000
+		else if (istype(T,/area/station/security/main) || istype(T,/area/station/security/brig) || istype(T,/area/station/security/armoury) || istype(T,/area/station/security/checkpoint))
+			nukedpenalty = 50000
+		else if (istype(T,/area/station/engineering))
+			nukedpenalty = 100000
+		else
+			nukedpenalty = 10000
+
+		return nukedpenalty
+	return 0
+
+/datum/faction/nuclear/build_scorestat()
+	var/foecount = 0
+	var/nukedpenalty = 1000
+	for(var/datum/role/role in members)
+		foecount++
+		if (!role.antag || !role.antag.current)
+			score["opkilled"]++
+			continue
+		var/turf/T = role.antag.current.loc
+		if (T && istype(T.loc, /area/station/security/brig))
+			score["arrested"] += 1
+		else if (role.antag.current.stat == DEAD)
+			score["opkilled"]++
+	if(foecount == score["arrested"])
+		score["allarrested"] = 1
+
+	if (score["nuked"])
+		nukedpenalty = get_nukedpenalty()
+		if(score["disc"])
+			score["crewscore"] += 500
+
+	var/killpoints = score["opkilled"] * 250
+	var/arrestpoints = score["arrested"] * 1000
+	score["crewscore"] += killpoints
+	score["crewscore"] += arrestpoints
+	if (score["nuked"])
+		score["crewscore"] -= nukedpenalty
+
+/datum/faction/nuclear/get_scorestat()
+	var/dat = ""
+
+	var/foecount = members.len
+	var/crewcount = 0
+	var/diskdat = ""
+	var/bombdat = 
+	for(var/mob/living/C in alive_mob_list)
+		if (!C.client || C.stat != DEAD)
+			continue
+		if(!ishuman(C) || !issilicon(C))
+			continue
+		crewcount++
+
+	for (var/obj/machinery/nuclearbomb/NUKE in poi_list)
+		if (NUKE.detonated == 0)
+			continue
+		bombdat = NUKE.loc
+		break
+
+	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+		if(!N)
+			continue
+		var/atom/disk_loc = N.loc
+		while(!istype(disk_loc, /turf))
+			if(istype(disk_loc, /mob))
+				var/mob/M = disk_loc
+				diskdat += "Carried by [M.real_name] "
+			if(istype(disk_loc, /obj))
+				var/obj/O = disk_loc
+				diskdat += "in \a [O.name] "
+			disk_loc = disk_loc.loc
+		diskdat += "in [disk_loc.loc]"
+		break
+
+	var/nukedpenalty = get_nukedpenalty()
+	if (!diskdat)
+		diskdat = "Uh oh. Something has fucked up! Report this."
+
+	dat += {"<B><U>NUKE STATS</U></B><BR>
+	<B>Number of Operatives:</B> [foecount]<BR>
+	<B>Number of Surviving Crew:</B> [crewcount]<BR>
+	<B>Final Location of Nuke:</B> [bombdat]<BR>
+	<B>Final Location of Disk:</B> [diskdat]<BR><BR>
+	<B>Operatives Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
+	<B>Operatives Killed:</B> [score["opkilled"]] ([score["opkilled"] * 250] Points)<BR>
+	<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
+	<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>"}
+
 	return dat
 
 #undef MAX_OPS

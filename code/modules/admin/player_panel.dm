@@ -406,7 +406,7 @@
 		if(SSticker.mode.factions.len)
 			for(var/datum/faction/F in SSticker.mode.factions)
 				dat += F.AdminPanelEntry(src)
-				dat += "<br>"
+				dat += "<hr>"
 		else
 			dat += "<i>No factions are currently active.</i>"
 		dat += "<h3>Other Roles</h3>"

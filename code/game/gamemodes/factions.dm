@@ -169,6 +169,14 @@
 /datum/faction/proc/CheckObjectives()
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
+// Numbers!!
+/datum/faction/proc/build_scorestat()
+	return
+
+// Numbers!!
+/datum/faction/proc/get_scorestat()
+	return ""
+
 /datum/faction/proc/custom_result()
 	return ""
 
@@ -217,8 +225,8 @@
 				score_results += "<br>"
 		i++
 	score_results += "</ul>"
-
 	score_results += "<br>"
+
 	return score_results
 
 /datum/faction/Topic(href, href_list)
