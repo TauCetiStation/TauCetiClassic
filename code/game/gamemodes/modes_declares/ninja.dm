@@ -1,7 +1,7 @@
 /datum/game_mode/ninja
 	name = "Ninja"
 
-	roles_allowed = list(/datum/faction/ninja)
+	factions_allowed = list(/datum/faction/ninja)
 
 	minimum_player_count = 10
 	minimum_players_bundles = 15
