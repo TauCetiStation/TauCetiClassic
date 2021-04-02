@@ -1764,6 +1764,10 @@
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
+"aeL" = (
+/obj/structure/cult/portal_to_station,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "aeT" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,18"
@@ -61973,8 +61977,8 @@ aaM
 adx
 adx
 yea
-yea
 wfy
+yea
 wfy
 yea
 adx
@@ -62230,9 +62234,9 @@ aaM
 adx
 nyj
 wfy
+yea
 wfy
-wfy
-wfy
+yea
 wfy
 nyj
 adx
@@ -62486,9 +62490,9 @@ aaM
 aaM
 adx
 bVy
-wfy
 yea
 wfy
+aeL
 wfy
 yea
 bVy
@@ -62743,8 +62747,8 @@ aaM
 aaM
 adx
 nyj
-yea
 wfy
+yea
 wfy
 yea
 wfy
@@ -63001,9 +63005,9 @@ aaM
 adx
 adx
 cgI
+yea
 wfy
-wfy
-wfy
+yea
 djY
 adx
 adx
@@ -63258,7 +63262,7 @@ aaM
 aaM
 adx
 kxC
-yea
+wfy
 wfy
 wfy
 eVX

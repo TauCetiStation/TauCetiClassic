@@ -102,10 +102,6 @@
 	name = "Телепорт в РАЙ"
 	rune_type = /datum/rune/cult/teleport/teleport_to_heaven
 
-/datum/building_agent/rune/cult/random_teleport
-	name = "Телепорт на станцию"
-	rune_type = /datum/rune/cult/teleport/random_teleport
-
 /datum/building_agent/rune/cult/capture_area
 	name = "Захват Зоны"
 	rune_type = /datum/rune/cult/capture_area

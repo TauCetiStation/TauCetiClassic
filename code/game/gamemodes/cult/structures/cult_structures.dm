@@ -195,6 +195,39 @@
 
 	return TRUE
 
+/obj/structure/cult/portal_to_station
+	name = "портал в прошлое"
+	desc = "Портал псионически транслирует тебе в разум: \"Войди. Попадёшь обратно. Случайно.\"."
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "portal"
+	light_color = "#ff69b4"
+	layer = INFRONT_MOB_LAYER
+
+	can_unwrench = FALSE
+
+/obj/structure/cult/portal_to_station/Bumped(atom/A)
+	var/turf/target = findEventArea()
+	if(ismob(A))
+		var/mob/user = A
+		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
+		new /obj/effect/temp_visual/cult/blood/out(user.loc)
+		playsound(user, 'sound/magic/Teleport_app.ogg', VOL_EFFECTS_MASTER)
+		new /obj/effect/temp_visual/cult/blood(target)
+		var/list/companions = handle_teleport_grab(target, user, FALSE)
+		LAZYINITLIST(companions)
+		user.forceMove(target)
+		user.eject_from_wall(TRUE, companions = companions)
+		for(var/mob/M in companions + user)
+			if(M.client)
+				new /obj/screen/temp/cult_teleportation(M, M)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = user
+				H.Paralyse(5)
+
+	else if(isitem(A))
+		var/obj/item/I = A
+		I.forceMove(target)
+
 // Just trash
 /obj/structure/cult/anomaly
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
