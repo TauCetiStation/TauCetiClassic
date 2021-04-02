@@ -795,6 +795,18 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
+/datum/objective/infestation/reproduct
+	explanation_text = "Улей должен жить и размножаться."
+
+/datum/objective/infestation/reproduct/check_completion()
+	var/datum/faction/infestation/aliens = faction
+	if(istype(aliens))
+		var/data = count_alien_percent()
+		if(data[ALIEN_PERCENT] >= WIN_PERCENT)
+			return OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
+
 /datum/objective/custom
 	explanation_text = "Just be yourself"
 	completed = OBJECTIVE_WIN

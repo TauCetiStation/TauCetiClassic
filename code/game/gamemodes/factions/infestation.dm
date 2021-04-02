@@ -53,6 +53,9 @@
 		QDEL_NULL(role.antag.original)
 	return ..()
 
+/datum/faction/infestation/forgeObjectives()
+	AppendObjective(/datum/objective/infestation/reproduct)
+
 /datum/faction/infestation/proc/count_hive_power(in_detail = FALSE)
 	var/count = 0
 	var/list/aliens = list(
