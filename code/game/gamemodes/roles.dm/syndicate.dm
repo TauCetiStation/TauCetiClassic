@@ -35,9 +35,6 @@
 
 	INVOKE_ASYNC(src, .proc/NukeNameAssign, antag)
 
-/datum/role/syndicate/operative/forgeObjectives()
-	AppendObjective(/datum/objective/nuclear)
-
 /datum/role/syndicate/operative/Greet(greeting, custom)
 	. = ..()
 	antag.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)

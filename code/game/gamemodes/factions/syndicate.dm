@@ -77,6 +77,9 @@
 		if(R)
 			leader = R
 
+/datum/faction/nuclear/forgeObjectives()
+	AppendObjective(/datum/objective/nuclear)
+
 /datum/faction/nuclear/OnPostSetup()
 	var/list/turf/synd_spawn = list()
 	var/turf/synd_comm_spawn
@@ -191,9 +194,9 @@
 /datum/faction/nuclear/GetScoreboard()
 	var/dat = ..()
 	if(faction_scoreboard_data)
-		dat += "<BR>The operatives bought:<BR>"
+		dat += "<BR>The operatives bought:"
 		for(var/entry in faction_scoreboard_data)
-			dat += "[entry]<BR>"
+			dat += "<br>[entry]"
 	return dat
 
 #undef MAX_OPS

@@ -149,10 +149,17 @@
 			return I.hidden_uplink
 	return null
 
+/datum/role/syndicate/proc/find_syndicate_pda(mob/living/carbon/human/human)
+	var/list/L = human.get_contents()
+	for(var/obj/item/I in L)
+		if(I.hidden_uplink)
+			return I
+	return null
+
 /datum/role/syndicate/proc/take_uplink(mob/living/carbon/human/human)
-	var/obj/item/device/uplink/hidden/H = find_syndicate_uplink(human)
-	if(H)
-		qdel(H)
+	var/obj/item/I = find_syndicate_pda(human)
+	if(I?.hidden_uplink)
+		QDEL_NULL(I.hidden_uplink)
 
 /datum/role/syndicate/GetScoreboard()
 	. = ..()
@@ -177,7 +184,7 @@
 
 /datum/role/syndicate/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	if(href_list["giveuplink"])
-		give_uplink(antag.current, 20, src)
+		give_uplink(M.current, 20)
 
 	if(href_list["telecrystalsSet"])
 		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(M.current)
