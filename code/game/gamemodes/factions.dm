@@ -320,12 +320,6 @@
 		WARNING("Trying to add an objective ([O]) to faction ([src]) when it already has it.")
 		return FALSE
 
-	var/setup = TRUE
-	if (alert("Do you want to specify a target?", "New Objective", "Yes", "No") == "No")
-		setup = O.find_target()
-	if(!setup)
-		alert("Couldn't set-up a proper target.", "New Objective")
-		return
 	AppendObjective(O)
 	return TRUE
 
