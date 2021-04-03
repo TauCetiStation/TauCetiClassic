@@ -3,8 +3,8 @@
 //The advanced pea-green monochrome lcd of tomorrow.
 
 /obj/item/device/pda
-	name = "PDA"
-	desc = "Переносной компьютер от Thinktronic Systems, LTD. Набор функций зависит от вставленного картриджа."
+	name = "КПК"
+	desc = "Портативный микрокомпьютер от Thinktronic Systems, LTD. Набор функций зависит от вставленного картриджа."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
@@ -133,7 +133,7 @@
 /obj/item/device/pda/clown
 	default_cartridge = /obj/item/weapon/cartridge/clown
 	icon_state = "pda-clown"
-	desc = "Переносной компьютер от Thinktronic Systems, LTD. Вся поверхность покрыта политетрафторэтиленом и капающем соком банана."
+	desc = "Портативный микрокомпьютер от Thinktronic Systems, LTD. Вся поверхность покрыта политетрафторэтиленом и капающем соком банана."
 	ttone = "honk"
 
 /obj/item/device/pda/clown/atom_init()
@@ -230,7 +230,7 @@
 
 /obj/item/device/pda/librarian
 	icon_state = "pda-libb"
-	desc = "Переносной компьютер от Thinktronic Systems, LTD. Это электронная книга модели WGW-11."
+	desc = "Портативный микрокомпьютер от Thinktronic Systems, LTD. Это электронная книга модели WGW-11."
 	note = "Поздравляем, Ваша станция выбрала электронную книгу модели Thinktronic 5290 WGW-11 и карманный персональный компьютер!"
 	message_silent = 1 //Quiet in the library!
 
@@ -244,7 +244,7 @@
 
 /obj/item/device/pda/clear
 	icon_state = "pda-transp"
-	desc = "Переносной компьютер от Thinktronic Systems, LTD. Это специальная модель имеет прозрачный корпус."
+	desc = "Портативный микрокомпьютер от Thinktronic Systems, LTD. Это специальная модель имеет прозрачный корпус."
 	note = "Поздравляем, Вы выбрали модель карманный персональный компьютер Thinktronic 5230 Deluxe Special Max Turbo Limited Edition!"
 
 /obj/item/device/pda/chef
@@ -293,11 +293,11 @@
 	set src in usr
 	set hidden = 1
 	if(usr.stat == DEAD)
-		to_chat(usr, "Вы мертвы и не можете читать сообщения!")
+		to_chat(usr, "Вы мертвы и не можете отправлять сообщения!")
 		return
 	var/list/plist = available_pdas()
 	if (plist)
-		var/c = input(usr, "Пожалуйста выберете КПК") as null|anything in sortList(plist)
+		var/c = input(usr, "Пожалуйста, выберите КПК") as null|anything in sortList(plist)
 		if (!c) // if the user hasn't selected a PDA file we can't send a message
 			return
 		var/selected = plist[c]
@@ -312,7 +312,7 @@
 		to_chat(usr, "Вы не можете этого сделать, потому что мертвы!")
 		return
 	toff = !toff
-	to_chat(usr, "<span class='notice'> Сервис отправления/получения сообщений КПК переключён [(toff ? "Выключено" : "Включено")]!</span>")
+	to_chat(usr, "<span class='notice'>Сервис отправления/получения сообщений КПК переключён [(toff ? "Выключено" : "Включено")]!</span>")
 
 
 /obj/item/device/pda/silicon/verb/cmd_toggle_pda_silent()
@@ -323,7 +323,7 @@
 		to_chat(usr, "Вы не можете этого сделать, потому что мертвы!")
 		return
 	message_silent = !message_silent
-	to_chat(usr, "<span class='notice'>звонок КПК переключён [(message_silent ? "Выключено" : "Включено")]!</span>")
+	to_chat(usr, "<span class='notice'>Звук КПК переключён [(message_silent ? "Выключено" : "Включено")]!</span>")
 
 
 /obj/item/device/pda/silicon/verb/cmd_show_message_log()
@@ -837,7 +837,7 @@
 
 		if("Look for")
 			ui.close()
-			to_chat(U, "[bicon(src)]<span class='notice'>Выберете получателя перевода.</span>")
+			to_chat(U, "[bicon(src)]<span class='notice'>Выберите получателя перевода.</span>")
 			pda_paymod = TRUE
 
 		if("Show Manifest")
@@ -872,13 +872,13 @@
 				to_chat(U, "[bicon(src)]<span class='warning'>Ваш аккаунт заблокирован!</span>")
 				return
 			if(funds_amount <= 0)
-				to_chat(U, "[bicon(src)]<span class='warning'>Некорректное количество!</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>Некорректная сумма!</span>")
 				return
 			if(funds_amount > owner_account.money)
 				to_chat(U, "[bicon(src)]<span class='warning'>У вас не хватает средств, чтобы сделать это!</span>")
 				return
 			if(target_account_number == owner_account.account_number)
-				to_chat(U, "[bicon(src)]<span class='warning'>Ошибка! [target_account_number] это ваш номер аккаунта, [owner].</span>")
+				to_chat(U, "[bicon(src)]<span class='warning'>Ошибка! [target_account_number] – ваш номер аккаунта, [owner].</span>")
 				return
 			if(charge_to_account(target_account_number, target_account_number, transfer_purpose, name, funds_amount))
 				charge_to_account(owner_account.account_number, target_account_number, transfer_purpose, name, -funds_amount)
@@ -956,17 +956,17 @@
 								difficulty += 3
 
 						if(prob(difficulty))
-							U.show_message("<span class='warning'>Выскакивает ошибка на вашем [src].</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *beep*</span>", SHOWMSG_AUDIO)
+							U.show_message("<span class='warning'>Выскакивает ошибка на вашем [src].</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *Бип*</span>", SHOWMSG_AUDIO)
 						else if (prob(difficulty * 7))
-							U.show_message("<span class='warning'>Питание возвращается на вашем [src]!</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *beep*</span>", SHOWMSG_AUDIO)
+							U.show_message("<span class='warning'>Питание возвращается на вашем [src]!</span>", SHOWMSG_VISUAL, "<span class='warning'>Вы слышите отрицательный *Бип*</span>", SHOWMSG_AUDIO)
 							ui.close()
 							detonate_act(src)
-							log_admin("[key_name(U)] только что хотел взорвать [P] c помощью катриджа Детаматрикс, но не получилось, и он взорвал сам себя!")
-							message_admins("[key_name_admin(U)] только что хотел взорвать [P] c помощью катриджа Детаматрикс, но не получилось. [ADMIN_JMP(U)]")
+							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")	
 						else
 							to_chat("<span class='notice'>Success!</span>")
-							log_admin("[key_name(U)] только что хотел взорвать [P] c помощью катриджа Детаматрикс и это получилось")
-							message_admins("[key_name_admin(U)] только что хотел взорвать [P] c помощью катриджа Детаматрикс и это получилось. [ADMIN_JMP(U)]")
+							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
+							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
 					else
 						to_chat(U, "Нет заряда.")
@@ -1401,7 +1401,7 @@
 					data_message += "<span class='notice'>Уровень радиации:</span> [C.radiation]"
 				else
 					data_message += "<span class='notice'>Радиации не обнаружино.</span>"
-				visible_message("<span class='warning'>[user] проанализирован, Ваш уровень радиации — [C]!</span>")
+				visible_message("<span class='warning'>[user] проанализирован, Ваш уровень радиации – [C]!</span>")
 				to_chat(user, data_message)
 
 /obj/item/device/pda/afterattack(atom/target, mob/user, proximity, params)
@@ -1414,9 +1414,9 @@
 			if(!isnull(target.reagents))
 				if(target.reagents.reagent_list.len > 0)
 					var/reagents_length = target.reagents.reagent_list.len
-					to_chat(user, "<span class='notice'>[reagents_length] химический агент [reagents_length > 1 ? "ы" : ""] найден.</span>")
+					to_chat(user, "<span class='notice'>[reagents_length] химический агент[reagents_length > 1 ? "ы" : ""] найден.</span>")
 					for (var/re in target.reagents.reagent_list)
-						to_chat(user, "<span class='notice'>&emsp; [ре]</span>")
+						to_chat(user, "<span class='notice'>&emsp; [re]</span>")
 				else
 					to_chat(user, "<span class='notice'>Активные химические агенты не обнаружены в [target].</span>")
 			else
@@ -1486,7 +1486,7 @@
 			mode = 7
 			pda_paymod = FALSE
 			ui_interact(usr)
-			to_chat(usr, "[bicon(src)]<span class='info'>Номер аккаунта цели — [target_account_number]</span>")
+			to_chat(usr, "[bicon(src)]<span class='info'>Номер аккаунта цели [target_account_number]</span>")
 			return
 		else
 			to_chat(usr, "[bicon(src)]<span class='warning'>Цель не имеет аккаунта.</span>")
@@ -1508,7 +1508,7 @@
 	if(fingerprints in owner_fingerprints)
 		return TRUE
 	else
-		var/tried_pin =  text2num(input(user, "[owner] пожалуйста введить ваш пароль от аккаунта", name) as text)
+		var/tried_pin =  text2num(input(user, "[owner] пожалуйста, введите ваш пароль от аккаунта", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
 			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
 			to_chat(user, "[bicon(src)]<span class='info'>Пароль верный.</span>")
@@ -1536,7 +1536,7 @@
 				to_chat(L, "[bicon(src)]<span class='notice'><b>[owner], [source] вернула вам стандартную зарплату.</b></span>")
 		else
 			if(amount > 0)
-				to_chat(L, "[bicon(src)]<span class='notice'>[owner],Вам перевели [amount]$ на аккаунт, источник — [source] </span>")
+				to_chat(L, "[bicon(src)]<span class='notice'>[owner],Вам перевели [amount]$ на аккаунт, источник – [source] </span>")
 			else
 				to_chat(L, "[bicon(src)]<span class='notice'>Вы успешно перевели [amount]$ на аккаунт [target].</span>")
 		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
