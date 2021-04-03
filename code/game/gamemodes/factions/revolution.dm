@@ -76,11 +76,11 @@
 				alive_heads++
 
 		if(alive_heads >= dead_heads)
-			dat += "<font color='green'>The heads of staff were overthrown! The revolutionaries win! It's a clear victory!</span>"
+			dat += "<span class='green'>The heads of staff were overthrown! The revolutionaries win! It's a clear victory!</span>"
 			feedback_add_details("[ID]_success","SUCCESS")
 			score["roleswon"]++
 		else
-			dat += "<font color='orange'>The heads of staff were overthrown, but many heads died. The revolutionaries win, but lose support.</span>"
+			dat += "<span class='orange'>The heads of staff were overthrown, but many heads died. The revolutionaries win, but lose support.</span>"
 			feedback_add_details("[ID]_success","HALF")
 
 	else
