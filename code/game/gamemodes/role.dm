@@ -97,7 +97,7 @@
 	M.antag_roles[id] = src
 	objectives.owner = M
 	if(msg_admins)
-		message_admins("[key_name(M)] is now \an [id].[M.current ? " [ADMIN_JMP(M.current)]" : ""]")
+		message_admins("[key_name(M)] is now \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
 
 	if (!OnPreSetup())
 		return FALSE

@@ -353,7 +353,8 @@
 					if(src != user && I.damtype == BRUTE && mind)
 						for(var/id in list(HEADREV, REV))
 							var/datum/role/R = mind.GetRole(id)
-							R.RemoveFromRole(mind)
+							if(R)
+								R.RemoveFromRole(mind)
 
 				if(bloody)//Apply blood
 					if(wear_mask)

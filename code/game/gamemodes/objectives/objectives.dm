@@ -31,7 +31,7 @@ var/global/list/all_objectives = list()
 	if(completed == OBJECTIVE_HALFWIN)
 		result = "HALF"
 		if(tags)
-			result = "<font color='yellow'>[result]</font>"
+			result = "<font color='orange'>[result]</font>"
 	if(completed == OBJECTIVE_LOSS)
 		result = "FAILURE"
 		if(tags)

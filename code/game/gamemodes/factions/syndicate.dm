@@ -144,50 +144,50 @@
 	var/dat = ""
 	var/crew_evacuated = (SSshuttle.location==2)
 	if      (!disk_rescued &&  SSticker.station_was_nuked &&          !syndies_didnt_escape)
-		dat += "<span style='font-color: red; font-weight: bold;'>Syndicate Major Victory!</span>"
+		dat += "<span class='red'>Syndicate Major Victory!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"
 		score["roleswon"]++
 		feedback_add_details("[ID]_success","SUCCESS")
 
 	else if (!disk_rescued &&  SSticker.station_was_nuked &&           syndies_didnt_escape)
-		dat += "<span style='font-color: red; font-weight: bold;'>Total Annihilation</span>"
+		dat += "<span class='red'>Total Annihilation</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</b> Next time, don't lose the disk!"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if (!disk_rescued && !SSticker.station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
-		dat += "<span style='font-color: red; font-weight: bold;'>Crew Minor Victory</span>"
+		dat += "<span class='red'>Crew Minor Victory</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't [station_name()].</b> Next time, don't lose the disk!"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if (!disk_rescued && !SSticker.station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
-		dat += "<span style='font-color: red; font-weight: bold;'>Gorlex Maradeurs span earned Darwin Award!</span>"
+		dat += "<span class='red'>Gorlex Maradeurs span earned Darwin Award!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives blew up something that wasn't [station_name()] and got caught in the explosion.</b> Next time, don't lose the disk!"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if ( disk_rescued                                         && is_operatives_are_dead())
-		dat += "<span style='font-color: red; font-weight: bold;'>Crew Major Victory!</span>"
+		dat += "<span class='red'>Crew Major Victory!</span>"
 		dat += "<br><b>The Research Staff has saved the disc and killed the Gorlex Maradeurs Operatives</b>"
 		feedback_add_details("[ID]_success","FAIL")
 
 	else if ( disk_rescued                                        )
-		dat += "<span style='font-color: red; font-weight: bold;'>Crew Major Victory</span>"
+		dat += "<span class='red'>Crew Major Victory</span>"
 		dat += "<br><b>The Research Staff has saved the disc and stopped the Gorlex Maradeurs Operatives!</b>"
 		feedback_add_details("[ID]_success","FAIL")
 
 	else if (!disk_rescued                                         && is_operatives_are_dead())
-		dat += "<span style='font-color: red; font-weight: bold;'>Syndicate Minor Victory!</span>"
+		dat += "<span class='red'>Syndicate Minor Victory!</span>"
 		dat += "<br><b>The Research Staff failed to secure the authentication disk but did manage to kill most of the Gorlex Maradeurs Operatives!</b>"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if (!disk_rescued                                         &&  crew_evacuated)
-		dat += "<span style='font-color: red; font-weight: bold;'>Syndicate Minor Victory!</span>"
+		dat += "<span class='red'>Syndicate Minor Victory!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</b> Next time, don't lose the disk!"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if (!disk_rescued                                         && !crew_evacuated)
-		dat += "<span style='font-color: red; font-weight: bold;'>Neutral Victory</span>"
+		dat += "<span class='red'>Neutral Victory</span>"
 		dat += "<br><b>Round was mysteriously interrupted!</b>"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	return dat
 

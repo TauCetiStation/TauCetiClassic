@@ -24,7 +24,7 @@
 	var/required_pref = ""
 
 	var/max_roles = 0
-	var/min_roles = 0
+	var/min_roles = 1
 	var/accept_latejoiners = FALSE
 
 	var/datum/role/leader
@@ -194,7 +194,7 @@
 				feedback_add_details("[ID]_success","SUCCESS")
 				score["roleswon"]++
 			else if (minor_victory)
-				score_results += "<font color='green'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
+				score_results += "<font color='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
 				feedback_add_details("[ID]_success","HALF")
 			else
 				score_results += "<span class='red'><B>\The [capitalize(name)] has failed.</B></span>"

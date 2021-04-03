@@ -26,6 +26,11 @@
 	var/list/factions = list()
 	var/list/orphaned_roles = list()
 
+// !!! DEBUG CODE !!!
+/datum/game_mode/New()
+	minimum_player_count = 0
+	minimum_players_bundles = 0
+
 /datum/game_mode/proc/announce()
 	return
 
@@ -58,8 +63,6 @@
 
 /datum/game_mode/proc/potential_runnable()
 	if(!can_start(FALSE))
-		return FALSE
-	if(!CanPopulateFaction(FALSE))
 		return FALSE
 	return TRUE
 
@@ -131,9 +134,13 @@
 		for(var/mob/M in L)
 			if(!F.can_join_faction(M))
 				can_be--
+		// !!! DEBUG CODE !!!
+		to_chat(world, "[F.type] - [can_be] - [F.min_roles]")
 		if(can_be < F.min_roles)
 			return FALSE
 		qdel(F)
+	// !!! DEBUG CODE !!!
+	to_chat(world, "ok")
 	return TRUE
 
 /datum/game_mode/proc/PopulateFactions()
@@ -153,13 +160,9 @@
 
 /*=====ROLE RELATED STUFF=====*/
 
-/datum/game_mode/proc/setup_num_of_roles()
-	return
-
 /datum/game_mode/proc/CreateRoles() //Must return TRUE in some way, else the gamemode is scrapped.
 	if(!roles_allowed.len) //No roles to handle
 		return TRUE
-	setup_num_of_roles()
 	for(var/role in roles_allowed)
 		if(isnum(roles_allowed[role]))
 			return CreateStrictNumOfRoles(role, roles_allowed[role])
@@ -226,12 +229,13 @@
 	var/list/possible_factions = list()
 	for(var/datum/faction/F in factions)
 		F.latespawn(mob)
+		if(!F.accept_latejoiners)
+			continue
 		if(F.max_roles && F.members.len >= F.max_roles)
 			continue
 		if(!F.can_join_faction(mob))
 			continue
-		if(F.accept_latejoiners)
-			possible_factions += F
+		possible_factions += F
 	if(possible_factions.len)
 		var/datum/faction/F = pick(possible_factions)
 		F.HandleRecruitedMind(mob.mind)

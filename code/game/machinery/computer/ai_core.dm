@@ -135,7 +135,8 @@
 				if(M.brainmob.mind)
 					for(var/role in list(CULTIST, REV, HEADREV))
 						var/datum/role/R = M.brainmob.mind.GetRole(role)
-						R.RemoveFromRole(M.brainmob.mind)
+						if(R)
+							R.RemoveFromRole(M.brainmob.mind)
 
 				user.drop_item()
 				M.loc = src

@@ -20,7 +20,7 @@
 	var/AI_malf_revealed = 0
 	var/intercept_hacked = FALSE
 
-/datum/faction/malf_silicons/can_setup(num_players)
+/datum/faction/malf_silicons/can_join_faction(mob/P)
 	if (!..())
 		return FALSE
 	if (config && !config.allow_ai)
@@ -28,7 +28,10 @@
 	var/datum/job/ai_job = SSjob.GetJob("AI")
 	if (!ai_job || !ai_job.map_check())
 		return FALSE
-	return TRUE
+	for (var/lvl in 1 to 3)
+		if(P.client.prefs.job_preferences[ai_job.title] == lvl && (!jobban_isbanned(P, ai_job.title)))
+			return TRUE
+	return FALSE
 
 /datum/faction/malf_silicons/OnPostSetup()
 	if(SSshuttle)
@@ -152,47 +155,47 @@
 	dat += "<h3>Malfunction mode resume:</h3>"
 
 	if(station_captured &&						SSticker.station_was_nuked)
-		dat += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
+		dat += "<span class='red'>AI Victory!</span>"
 		dat += "<br><b>Everyone was killed by the self-destruct!</b>"
 		feedback_add_details("[ID]_success","SUCCESS")
 		score["roleswon"]++
 
 	else if(station_captured && malf_dead &&	!SSticker.station_was_nuked)
-		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		dat += "<span class='red'>Neutral Victory.</span>"
 		dat += "<br><b>The AI has been killed!</b> The staff has lose control over the station."
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if(station_captured && !malf_dead &&	!SSticker.station_was_nuked)
-		dat += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
+		dat += "<span class='red'>AI Victory!</span>"
 		dat += "<br><b>The AI has chosen not to explode you all!</b>"
 		feedback_add_details("[ID]_success","SUCCESS")
 		score["roleswon"]++
 
 	else if(!station_captured && SSticker.station_was_nuked)
-		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		dat += "<span class='red'>Neutral Victory.</span>"
 		dat += "<br><b>Everyone was killed by the nuclear blast!</b>"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if(!station_captured && malf_dead &&	!SSticker.station_was_nuked)
-		dat += "<span style='color: red; font-weight: bold;'>Human Victory.</span>"
+		dat += "<span class='red'>Human Victory.</span>"
 		dat += "<br><b>The AI has been killed!</b> The staff is victorious."
 		feedback_add_details("[ID]_success","FAIL")
 
 	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && crew_evacuated)
-		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		dat += "<span class='red'>Neutral Victory.</span>"
 		dat += "<br><b>The Corporation has lose [station_name()]! All survived personnel will be fired!</b>"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	else if(!station_captured && !malf_dead &&	!SSticker.station_was_nuked && !crew_evacuated)
-		dat += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		dat += "<span class='red'>Neutral Victory.</span>"
 		dat += "<br><b>Round was mysteriously interrupted!</b>"
-		feedback_add_details("[ID]_success","MINOR_VICTORY")
+		feedback_add_details("[ID]_success","HALF")
 
 	return dat
 
 /datum/faction/malf_silicons/GetScoreboard()
-	var/dat = ""
-	dat += "<b>The malfunctioning AI were:</b>"
+	var/dat = custom_result()
+	dat += "<br><b>The malfunctioning AI were:</b>"
 
 	for(var/datum/role/malfAI/role in members)
 		var/mob/living/silicon/ai/cur_AI = role.antag.current
