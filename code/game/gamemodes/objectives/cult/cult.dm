@@ -1,9 +1,5 @@
 /datum/objective/cult
 
-/datum/objective/cult/sacrifice/New()
-	..()
-	find_target()
-
 /datum/objective/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in human_list)

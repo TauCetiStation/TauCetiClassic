@@ -14,7 +14,6 @@ var/global/list/all_objectives = list()
 	all_objectives |= src
 	if(text)
 		explanation_text = text
-	target = find_target()
 
 /datum/objective/Destroy()
 	all_objectives -= src
@@ -60,6 +59,8 @@ var/global/list/all_objectives = list()
 	return
 
 /datum/objective/proc/PostAppend()
+	SHOULD_CALL_PARENT(TRUE)
+	target = find_target()
 	return TRUE
 
 /datum/objective/proc/ShuttleDocked()
@@ -783,6 +784,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	var/invade_tiles = 0
 
 /datum/objective/blob_takeover/PostAppend()
+	..()
 	var/datum/faction/blob_conglomerate/F = faction
 	if (!istype(F))
 		return FALSE
@@ -799,6 +801,7 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	explanation_text = "Улей должен жить и размножаться. Ваша численность должна превосходить экипаж станции в X раз."
 
 /datum/objective/infestation/reproduct/PostAppend()
+	..()
 	var/datum/faction/infestation/aliens = faction
 	if(!istype(aliens))
 		return FALSE

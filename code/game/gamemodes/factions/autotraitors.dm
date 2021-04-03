@@ -2,12 +2,9 @@
 
 /datum/faction/traitor/auto
 	name = "AutoTraitors"
-	accept_latejoiners = TRUE
 	var/next_try = 0
 
 /datum/faction/traitor/auto/can_setup(num_players)
-	. = ..()
-
 	var/max_traitors = 1
 	var/traitor_prob = 0
 	max_traitors = round(num_players / 10) + 1
@@ -23,12 +20,24 @@
 	abandon_allowed = 1
 	return TRUE
 
+/datum/faction/traitor/auto/HandleRecruitedMind(datum/mind/M, override = FALSE)
+	var/datum/role/R = ..()
+	if(!R)
+		return
+
+	R.Greet(GREET_AUTOTATOR)
+	R.OnPostSetup()
+	R.forgeObjectives()
+	R.AnnounceObjectives()
+
+	return R
+
 /datum/faction/traitor/auto/proc/traitorcheckloop()
 	if(SSshuttle.departed)
 		return
 
 	if(SSshuttle.online) //shuttle in the way, but may be revoked
-		addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
+		addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
 		return
 
 	var/list/possible_autotraitor = list()
@@ -64,15 +73,13 @@
 			message_admins("Making a new Traitor.")
 			if(!possible_autotraitor.len)
 				message_admins("No potential traitors.  Cancelling new traitor.")
-				addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
+				addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
 				return
 
 			var/mob/living/newtraitor = pick(possible_autotraitor)
-			create_and_setup_role(/datum/role/syndicate/traitor, newtraitor)
+			HandleRecruitedMind(newtraitor.mind)
 
-			to_chat(newtraitor, "<span class='warning'><B>ATTENTION:</B></span> It is time to pay your debt to the Syndicate...")
-
-	addtimer(CALLBACK(src, .proc/traitorcheckloop), 15 MINUTES)
+	addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
 
 /datum/faction/traitor/auto/OnPostSetup()
 	addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)

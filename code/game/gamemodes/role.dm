@@ -333,13 +333,15 @@
 	if (objectives.objectives.len)
 		text += "<br><b>Personal objectives:</b><ul>"
 	else
-		text += "<br>No objectives available"
+		text += "<br>No objectives available<br>"
 	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
 	if (objectives.objectives.len)
 		text += "</ul>"
 
 	if (faction)
 		text += "<br>[faction.GetFactionHeader()]"
+	else
+		text += "<br><i>None Faction</i>"
 
 	if (admin_edit)
 		text += " - "
