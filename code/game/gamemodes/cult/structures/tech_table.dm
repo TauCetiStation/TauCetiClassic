@@ -57,7 +57,7 @@
 		religion = user.my_religion
 
 	if(religion.aspects.len == 0)
-		to_chat(user, "<span class='warning'>Сначало выберите аспекты.</span>")
+		to_chat(user, "<span class='warning'>Сначала выберите аспекты.</span>")
 		return
 
 	if(researching)
