@@ -297,7 +297,7 @@
 		return
 	var/list/plist = available_pdas()
 	if (plist)
-		var/c = input(usr, "Пожалуйста выберете КПК(PDA)") as null|anything in sortList(plist)
+		var/c = input(usr, "Пожалуйста выберете КПК") as null|anything in sortList(plist)
 		if (!c) // if the user hasn't selected a PDA file we can't send a message
 			return
 		var/selected = plist[c]
@@ -796,7 +796,7 @@
 						to_chat(U, "<span class='notice'>Virus sent!</span>")
 						P.honkamt = (rand(15,20))
 				else
-					to_chat(U, "КПК(PDA) не найден.")
+					to_chat(U, "КПК не найден.")
 			else
 				ui.close()
 				return 0
@@ -810,7 +810,7 @@
 						P.message_silent = 1
 						P.ttone = "silence"
 				else
-					to_chat(U, "КПК(PDA) не найден.")
+					to_chat(U, "КПК не найден.")
 			else
 				ui.close()
 				return 0
