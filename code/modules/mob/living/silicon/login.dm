@@ -3,4 +3,3 @@
 	if(mind && SSticker && SSticker.mode)
 		SSticker.mode.remove_cultist(mind)
 		SSticker.mode.remove_revolutionary(mind, TRUE)
-		SSticker.mode.remove_gangster(mind, TRUE)

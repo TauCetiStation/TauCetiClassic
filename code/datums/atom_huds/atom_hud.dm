@@ -26,7 +26,6 @@ var/global/list/huds[23]
 	huds[ANTAG_HUD_NINJA] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_CHANGELING] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ABDUCTOR] = new/datum/atom_hud/antag/hidden
-	huds[ANTAG_HUD_GANGSTER] = new/datum/atom_hud/antag/hidden //Update gamemode!
 	huds[ANTAG_HUD_ALIEN] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_DEATHCOM] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_ERT] = new/datum/atom_hud/antag

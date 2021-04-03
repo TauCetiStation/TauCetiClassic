@@ -1,3 +1,6 @@
+#define SEARCH_FOR_DISK 0
+#define SEARCH_FOR_OBJECT 1
+
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
 	icon_state = "pinoff"

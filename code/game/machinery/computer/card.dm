@@ -242,10 +242,6 @@
 					if(datum_account)
 						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
 
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.reassign_employee(modify)
-
 		if ("reg")
 			if (is_authenticated())
 				var/t2 = modify
@@ -308,10 +304,6 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.terminate_employee(modify)
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
