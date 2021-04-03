@@ -796,7 +796,14 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	return OBJECTIVE_LOSS
 
 /datum/objective/infestation/reproduct
-	explanation_text = "Улей должен жить и размножаться."
+	explanation_text = "Улей должен жить и размножаться. Ваша численность должна превосходить экипаж станции в X раз."
+
+/datum/objective/infestation/reproduct/PostAppend()
+	var/datum/faction/infestation/aliens = faction
+	if(!istype(aliens))
+		return FALSE
+	explanation_text = "Улей должен жить и размножаться. Ваша численность должна превосходить экипаж станции в [WIN_PERCENT/100] раз."
+	return TRUE
 
 /datum/objective/infestation/reproduct/check_completion()
 	var/datum/faction/infestation/aliens = faction

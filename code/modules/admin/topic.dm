@@ -1128,7 +1128,11 @@
 		var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
 		for(var/mode in config.modes)
 			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
+		dat += "<HR>"
+		for(var/type in subtypesof(/datum/modesbundle))
+			var/datum/modesbundle/bound_type = type
+			var/bname = initial(bound_type.name)
+			dat += {"<A href='?src=\ref[src];f_secret2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [secret_force_mode]"}
 
 		var/datum/browser/popup = new(usr, "f_secret")

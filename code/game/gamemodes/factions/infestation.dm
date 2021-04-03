@@ -51,6 +51,7 @@
 		var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
 		role.antag.transfer_to(L)
 		QDEL_NULL(role.antag.original)
+
 	return ..()
 
 /datum/faction/infestation/forgeObjectives()

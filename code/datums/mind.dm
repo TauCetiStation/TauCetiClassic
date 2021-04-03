@@ -112,8 +112,7 @@
 	if(antag_roles.len)
 		for(var/role in antag_roles)
 			var/datum/role/R = antag_roles[role]
-			output += R.GetMemory(src,FALSE)//preventing edits
-		output += "<hr>"
+			output += R.GetMemory(src, FALSE) //preventing edits
 
 	var/datum/browser/popup = new(recipient, "window=memory")
 	popup.set_content(output)

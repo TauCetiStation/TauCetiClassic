@@ -133,8 +133,10 @@
 	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
 
 	for(var/datum/faction/F in SSticker.mode.factions)
-		dat += F.get_scorestat()
-		dat += "<hr>"
+		var/stat = F.get_scorestat()
+		if(stat)
+			dat += stat
+			dat += "<hr>"
 
 	var/totalfunds = station_account.money
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
