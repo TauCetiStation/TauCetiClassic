@@ -2198,24 +2198,12 @@
 	},
 /area/station/security/main)
 "adG" = (
-/obj/machinery/power/apc{
-	name = "Armory APC";
-	pixel_y = -28
-	},
 /obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
-	},
-/obj/structure/closet/wardrobe/tactical,
+/obj/machinery/light/small/emergency,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -62046,17 +62034,6 @@
 	},
 /area/station/security/main)
 "ctH" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
-	},
-/obj/structure/closet/wardrobe/tactical,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -69807,14 +69784,14 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/mine_sci_shuttle)
 "erb" = (
-/obj/structure/window/reinforced,
-/obj/machinery/light/small/emergency,
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker";
-	req_access = list(3)
+/obj/machinery/power/apc{
+	name = "Armory APC";
+	pixel_y = -28
 	},
-/obj/structure/closet/wardrobe/tactical,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
