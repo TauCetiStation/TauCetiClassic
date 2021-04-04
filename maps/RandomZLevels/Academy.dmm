@@ -1473,7 +1473,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "eq" = (
-/obj/singularity/academy,
+/obj/item/toy/spinningtoy,
 /turf/space,
 /area)
 "er" = (
