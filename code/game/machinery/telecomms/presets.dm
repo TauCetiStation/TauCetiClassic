@@ -19,14 +19,14 @@
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
-	hide = 1
-	toggled = 0
+	hide = TRUE
+	toggled = FALSE
 	autolinkers = list("r_relay")
 
 /obj/machinery/telecomms/relay/preset/centcom
 	id = "Centcom Relay"
-	hide = 1
-	toggled = 1
+	hide = TRUE
+	toggled = TRUE
 	heatgen = 0
 	autolinkers = list("c_relay")
 
