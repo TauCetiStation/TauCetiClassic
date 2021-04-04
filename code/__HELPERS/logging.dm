@@ -23,7 +23,7 @@
 
 /proc/round_log(msg)
 	world.log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
-	game_log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
+	global.game_log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
 
 /proc/log_href(text, say_type)
 	if (config && config.log_hrefs)

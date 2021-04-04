@@ -55,6 +55,7 @@
 	return ..()
 
 /datum/faction/infestation/forgeObjectives()
+	. = ..()
 	AppendObjective(/datum/objective/infestation/reproduct)
 
 /datum/faction/infestation/proc/count_hive_power(in_detail = FALSE)

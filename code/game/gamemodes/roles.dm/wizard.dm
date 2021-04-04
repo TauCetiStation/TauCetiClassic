@@ -103,7 +103,6 @@
 			if(antag.current.spell_list.len > i)
 				. += ", "
 			i++
-	. += "<br>"
 
 /datum/role/wizard/extraPanelButtons()
 	var/dat = ..()
@@ -147,4 +146,3 @@
 			if(antag.current.spell_list.len > i)
 				. += ", "
 			i++
-	. += "<br>"

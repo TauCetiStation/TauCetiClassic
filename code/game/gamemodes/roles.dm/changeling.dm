@@ -35,14 +35,10 @@
 	var/mob/living/parasite/essence/controled_by
 	var/delegating = FALSE
 
-/datum/role/changeling/New()
-	. = ..()
-	if(.)
-		set_changelingID()
-
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
 	antag.current.make_changeling()
+	set_changelingID()
 
 /datum/role/changeling/proc/set_changelingID()
 	var/honorific

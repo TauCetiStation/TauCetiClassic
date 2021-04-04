@@ -625,10 +625,7 @@ var/global/list/all_objectives = list()
 
 //Vox heist objectives.
 
-/datum/objective/heist/proc/choose_target()
-	return
-
-/datum/objective/heist/kidnap/choose_target()
+/datum/objective/heist/kidnap/find_target()
 	var/list/roles = list("Roboticist" , "Medical Doctor" , "Chemist" , "Station Engineer")
 	var/list/possible_targets = list()
 	var/list/priority_targets = list()
@@ -662,7 +659,7 @@ var/global/list/all_objectives = list()
 	else
 		return FALSE
 
-/datum/objective/heist/loot/choose_target()
+/datum/objective/heist/loot/find_target()
 	var/loot = "an object"
 	switch(rand(1, 7))
 		if(1)
@@ -717,7 +714,7 @@ var/global/list/all_objectives = list()
 
 	return FALSE
 
-/datum/objective/heist/salvage/choose_target()
+/datum/objective/heist/salvage/find_target()
 	switch(rand(1, 3))
 		if(1)
 			target = "metal"
@@ -758,6 +755,7 @@ var/global/list/all_objectives = list()
 	if(total_amount >= target_amount)
 		return TRUE
 	return FALSE
+
 /datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 

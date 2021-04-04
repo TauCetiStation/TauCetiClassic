@@ -75,14 +75,13 @@
 
 	if(M && !AssignToRole(M, override))
 		Drop()
-		return FALSE
+		return
 
 	if(!plural_name)
 		plural_name="[name]s"
 
 	objectives.owner = M
 	..()
-	return TRUE
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = 0, msg_admins = TRUE)
 	if(!istype(M) && !override)
@@ -97,7 +96,7 @@
 	M.antag_roles[id] = src
 	objectives.owner = M
 	if(msg_admins)
-		message_admins("[key_name(M)] is now \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
+		message_admins("[key_name(M)] is now \an [id].")
 
 	if (!OnPreSetup())
 		return FALSE
@@ -422,12 +421,14 @@
 
 // Adds the specified antag hud to the player. Usually called in an antag datum file
 /datum/role/proc/add_antag_hud()
-	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
-	hud.join_hud(antag.current)
-	set_antag_hud(antag.current, antag_hud_name)
+	if(antag_hud_type && antag_hud_name)
+		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+		hud.join_hud(antag.current)
+		set_antag_hud(antag.current, antag_hud_name)
 
 // Removes the specified antag hud from the player. Usually called in an antag datum file
 /datum/role/proc/remove_antag_hud()
-	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
-	hud.leave_hud(antag.current)
-	set_antag_hud(antag.current, null)
+	if(antag_hud_type && antag_hud_name)
+		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+		hud.leave_hud(antag.current)
+		set_antag_hud(antag.current, null)

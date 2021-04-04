@@ -66,6 +66,8 @@
 	id = NUKE_OP_LEADER
 	special_role = NUKE_OP_LEADER
 
+	logo_state = "nuke-logo-leader"
+
 	nuclear_outfit = /datum/outfit/nuclear/leader
 
 /datum/role/syndicate/operative/leader/OnPostSetup(laterole)

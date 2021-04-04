@@ -37,6 +37,7 @@
 	return ..()
 
 /datum/faction/revolution/forgeObjectives()
+	. = ..()
 	var/list/heads = get_living_heads()
 
 	for(var/datum/mind/head_mind in heads)

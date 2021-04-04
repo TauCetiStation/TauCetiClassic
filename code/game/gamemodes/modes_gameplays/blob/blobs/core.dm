@@ -29,7 +29,7 @@ var/global/list/blob_nodes = list()
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
-		qdel(overmind)
+		QDEL_NULL(overmind)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 //	return

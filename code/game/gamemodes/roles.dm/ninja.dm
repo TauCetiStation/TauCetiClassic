@@ -78,7 +78,7 @@
 					ninja_objective.explanation_text = objective_p.explanation_text
 
 			var/datum/objective/assassinate/ninja_objective = AppendObjective(/datum/objective/assassinate)
-			ninja_objective.target = second_ninja
+			ninja_objective.target = second_ninja.antag
 			ninja_objective.explanation_text = "Assassinate [second_ninja.antag.current.real_name], the [second_ninja.antag.special_role]."
 
 	AppendObjective(/datum/objective/survive)

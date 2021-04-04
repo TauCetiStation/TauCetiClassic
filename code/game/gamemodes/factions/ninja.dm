@@ -26,9 +26,9 @@
 		if(L.name == "ninja")
 			ninjastart.Add(L)
 	for(var/datum/role/role in members)
-		var/start_point = pick(ninjastart)
+		var/obj/effect/landmark/start_point = pick(ninjastart)
 		ninjastart -= start_point
-		role.antag.current.forceMove(start_point)
+		role.antag.current.forceMove(start_point.loc)
 	return ..()
 
 /datum/faction/ninja/check_win()

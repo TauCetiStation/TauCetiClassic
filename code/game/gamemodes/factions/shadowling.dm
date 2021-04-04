@@ -17,4 +17,14 @@
 	var/shadowling_ascended = FALSE
 
 /datum/faction/shadowlings/forgeObjectives()
+	. = ..()
 	AppendObjective(/datum/objective/enthrall)
+
+/datum/faction/shadowlings/HandleRecruitedMind(datum/mind/M, override = FALSE)
+	var/datum/role/R = ..()
+	if(!R)
+		return null
+
+	R.OnPostSetup() // for huds
+
+	return R

@@ -174,7 +174,7 @@ SUBSYSTEM_DEF(ticker)
 			return 0
 
 		// hiding forced gamemode in secret
-		if(istype(master_bundle, /datum/modesbundle/all/secret) && secret_force_mode != "secret")
+		if(istype(master_bundle, /datum/modesbundle/all/secret) && secret_force_mode != "Secret")
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if(!smode.can_start())
 				var/datum/faction/type = smode.factions_allowed[1]

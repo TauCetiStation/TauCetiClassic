@@ -50,14 +50,19 @@
 
 	return players
 
+// !!! DEBUG CODE !!!
 /datum/game_mode/proc/can_start(check_ready = TRUE)
 	if(minimum_player_count == 0 && get_ready_players(check_ready))
+		to_chat(world, "if(minimum_player_count == 0 && get_ready_players(check_ready))")
 		return TRUE
 	if(get_player_count(check_ready) < minimum_player_count)
+		to_chat(world, "if(get_player_count(check_ready) < minimum_player_count)")
 		return FALSE
 	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) <= minimum_players_bundles)
+		to_chat(world, "if(config.is_bundle_by_name(master_mode) &")
 		return FALSE
 	if(!CanPopulateFaction(check_ready))
+		to_chat(world, "f(!CanPopulateFaction(check_ready))")
 		return FALSE
 	return TRUE
 
@@ -75,12 +80,12 @@
 	return
 
 /datum/game_mode/proc/Setup()
-	if(!can_start())
-		TearDown()
+	if(!can_start(TRUE))
 		return FALSE
 	SetupFactions()
 	var/FactionSuccess = CreateFactions()
 	var/RolesSuccess = CreateRoles()
+	to_chat(world, "[FactionSuccess] - [RolesSuccess]")
 	return FactionSuccess && RolesSuccess
 
 //1 = station, 2 = centcomm
@@ -143,18 +148,28 @@
 	to_chat(world, "ok")
 	return TRUE
 
+// !!! DEBUG CODE !!!
 /datum/game_mode/proc/PopulateFactions()
+	if(!factions.len)
+		message_admins("No faction was created in [type].")
+		WARNING("No faction was created in [type].")
+		return FALSE
 	var/list/available_players = get_ready_players()
 	for(var/datum/faction/F in factions)
 		for(var/mob/dead/new_player/P in available_players)
+			to_chat(world, "P - [P]")
 			if(F.max_roles && F.members.len >= F.max_roles)
+				to_chat(world, "f(F.max_roles && F.members.len >= F.max_roles)")
 				break
 			if(!F.can_join_faction(P))
+				to_chat(world, "f(!F.can_join_faction(P))ax_roles)")
 				continue
 			if(!F.HandleNewMind(P.mind))
-				stack_trace("[P.mind] failed [F] HandleNewMind!")
+				to_chat(world, "if(!F.HandleNewMind(P.mind)) - [P] - [F]")
+				stack_trace("[P] failed [F] HandleNewMind!")
 				continue
 		if(F.members.len < F.min_roles)
+			to_chat(world, "if(F.members.len < F.min_roles)oles)")
 			return FALSE
 	return TRUE
 
@@ -275,10 +290,6 @@
 
 	return TRUE
 
-// This is where the game mode is shut down and cleaned up.
-/datum/game_mode/proc/TearDown()
-	return
-
 /datum/game_mode/proc/GetScoreboard()
 	completition_text = "<h2>Factions & Roles</h2>"
 	var/exist = FALSE
@@ -293,6 +304,7 @@
 	for(var/datum/role/R in orphaned_roles)
 		exist = TRUE
 		completition_text += R.GetScoreboard()
+		completition_text += "<br>"
 	if (!exist)
 		completition_text += "(none)"
 	completition_text += "<BR>"

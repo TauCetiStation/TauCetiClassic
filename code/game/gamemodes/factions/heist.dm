@@ -21,6 +21,7 @@
 	return FALSE
 
 /datum/faction/heist/forgeObjectives()
+	. = ..()
 	var/max_objectives = pick(2,2,2,2,3,3,3,4)
 	var/list/goals = list("kidnap","loot","salvage")
 

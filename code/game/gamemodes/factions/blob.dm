@@ -17,12 +17,16 @@
 	name = BLOBCONGLOMERATE
 	ID = BLOBCONGLOMERATE
 	logo_state = "blob-logo"
+	required_pref = BLOBOVERMIND
 
 	initroletype = /datum/role/blob_overmind
 	initial_role = BLOBOVERMIND
 
 	roletype = /datum/role/blob_overmind/cerebrate
 	late_role = BLOBCEREBRATE
+
+	min_roles = 1
+	max_roles = 2
 
 	var/datum/station_state/start
 
@@ -47,9 +51,11 @@
 			ded = FALSE
 	if(ded)
 		stage(FACTION_DEFEATED)
+	return ded
 
 /datum/faction/blob_conglomerate/HandleNewMind(datum/mind/M)
-	if(..())
+	. = ..()
+	if(.)
 		OnPostSetup() //We didn't finish setting up!
 
 /datum/faction/blob_conglomerate/process()
@@ -66,9 +72,6 @@
 		stage(FACTION_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
-	CountFloors()
-	forgeObjectives()
-	AnnounceObjectives()
 	start = new()
 	start.count()
 	prelude_announcement = world.time + rand(WAIT_TIME_PHASE1,2*WAIT_TIME_PHASE1)
@@ -76,17 +79,11 @@
 	return ..()
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
-	var/floor_count = 0
-	for(var/i = 1 to ((2 * world.view + 1)*WORLD_ICON_SIZE))
-		for(var/r = 1 to ((2 * world.view + 1)*WORLD_ICON_SIZE))
-			var/turf/tile = locate(i, r, pick(SSmapping.levels_by_trait(ZTRAIT_STATION)))
-			if(tile && istype(tile, /turf/simulated/floor) && !isspace(tile.loc) && !istype(tile.loc, /area/station/bridge/nuke_storage) && !istype(tile.loc, /area/station/security/prison))
-				floor_count++
-	blobwincount = round(floor_count *  0.25) // Must take over a quarter of the station.
-	blobwincount += rand(-50,50)
-
+	blobwincount = 500 * max_roles
 
 /datum/faction/blob_conglomerate/forgeObjectives()
+	. = ..()
+	CountFloors()
 	AppendObjective(/datum/objective/blob_takeover)
 
 // -- Fluff & warnings --
@@ -137,7 +134,6 @@
 			send_intercept(FACTION_DEFEATED)
 			SSshuttle.always_fake_recall = FALSE
 			declared = FALSE
-			world << sound('sound/misc/notice1.ogg')
 			for(var/mob/living/silicon/ai/aiPlayer in player_list)
 				aiPlayer.set_zeroth_law("")
 				to_chat(aiPlayer, "Laws Updated. Lockdown has been lifted.")

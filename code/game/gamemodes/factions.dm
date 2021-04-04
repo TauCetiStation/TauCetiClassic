@@ -47,6 +47,9 @@
 	objective_holder = new
 	objective_holder.faction = src
 
+	min_roles = 1
+	max_roles = 999
+
 /datum/faction/proc/OnPostSetup()
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
@@ -69,7 +72,9 @@
 
 //For when you want your faction to have specific objectives (Vampire, suck blood. Cult, sacrifice the head of personnel's dog, etc.)
 /datum/faction/proc/forgeObjectives()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	for(var/datum/role/R in members)
+		R.forgeObjectives()
 
 /datum/faction/proc/AnnounceObjectives()
 	SHOULD_CALL_PARENT(TRUE)
@@ -91,8 +96,14 @@
 
 /datum/faction/proc/can_join_faction(mob/P)
 	if(!P.client || !P.mind)
+		to_chat(world, "if(!P.client || !P.mind)")
 		return FALSE
 	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref))
+		to_chat(world, "------[P]------")
+		to_chat(world, "P.client.prefs.be_role.Find(required_pref) - [P.client.prefs.be_role.Find(required_pref)]")
+		to_chat(world, "jobban_isbanned(P, required_pref) - [jobban_isbanned(P, required_pref)]")
+		to_chat(world, "role_available_in_minutes(P, required_pref) - [role_available_in_minutes(P, required_pref)]")
+		to_chat(world, "required_pref - [required_pref]")
 		return FALSE
 	return TRUE
 
@@ -101,6 +112,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
+			to_chat(world, "HandleNewMind - [M.name] - if(R.antag == M)")
 			return null
 	if(M.GetRole(initial_role))
 		WARNING("Mind already had a role of [initial_role]!")
@@ -109,7 +121,10 @@
 	var/datum/role/newRole = new role_type(null, src, initial_role)
 	if(!newRole.AssignToRole(M))
 		newRole.Drop()
+		to_chat(world, "HandleNewMind - [M.name] - if(!newRole.AssignToRole(M))")
 		return null
+	// !!! DEBUG CODE !!!
+	to_chat(world, "newRole - [newRole]")
 	return newRole
 
 // Basically, these are the new members of the faction during the round
@@ -220,6 +235,7 @@
 		var/results = R.GetScoreboard()
 		if(results)
 			score_results += results
+			score_results += "<br>"
 		if(R.objectives.objectives.len <= 0)
 			if (i < members.len)
 				score_results += "<br>"

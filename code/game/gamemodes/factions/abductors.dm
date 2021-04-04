@@ -29,6 +29,7 @@
 	return /datum/role/abductor/scientist
 
 /datum/faction/abductors/forgeObjectives()
+	. = ..()
 	AppendObjective(/datum/objective/experiment)
 
 /datum/faction/abductors/check_win()
@@ -51,6 +52,7 @@
 		dat += "<br><b>The abductees:</b>"
 		for(var/datum/role/abducted/A in abductees)
 			dat += A.GetScoreboard()
+			dat += "<br>"
 
 	return dat
 

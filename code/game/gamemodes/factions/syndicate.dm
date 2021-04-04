@@ -72,12 +72,14 @@
 	return FALSE
 
 /datum/faction/nuclear/HandleNewMind(datum/mind/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/datum/role/R = locate(/datum/role/syndicate/operative/leader) in members
 		if(R)
 			leader = R
 
 /datum/faction/nuclear/forgeObjectives()
+	. = ..()
 	AppendObjective(/datum/objective/nuclear)
 
 /datum/faction/nuclear/OnPostSetup()
