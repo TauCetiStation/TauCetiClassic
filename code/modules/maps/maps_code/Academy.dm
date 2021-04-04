@@ -22,20 +22,6 @@
 
 //Academy Items
 
-/obj/singularity/academy
-	dissipate = 0
-	move_self = 0
-	grav_pull = 1
-
-/obj/singularity/academy/admin_investigate_setup()
-	return
-
-/obj/singularity/academy/process()
-	eat()
-	if(prob(1))
-		mezzer()
-
-
 /obj/item/clothing/glasses/meson/truesight
 	name = "The Lens of Truesight"
 	desc = "I can see forever!"
