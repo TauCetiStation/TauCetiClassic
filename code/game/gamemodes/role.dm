@@ -335,7 +335,7 @@
 		text += "<ul>"
 		if(faction.objective_holder)
 			if(faction.objective_holder.objectives.len)
-				text += "<ul><b>Faction objectives:</b>"
+				text += "<ul><b>Faction objectives:</b><br>"
 			text += faction.objective_holder.GetObjectiveString(FALSE, admin_edit, M)
 			if(faction.objective_holder.objectives.len)
 				text += "</ul>"
@@ -346,7 +346,7 @@
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
 
 	if(objectives.objectives.len)
-		text += "<br><ul><b>Personal objectives:</b>"
+		text += "<br><ul><b>Personal objectives:</b><br>"
 	else
 		text += "<br>No objectives available<br>"
 	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
@@ -388,21 +388,24 @@
 
 /datum/role/proc/AnnounceObjectives()
 	var/text = ""
-	if (objectives.objectives.len)
-		text += "<b>[capitalize(name)] objectives:</b><ul>"
+	if(faction)
+		text += "[faction.GetFactionHeader()]<br>"
+		if(faction.objective_holder)
+			if(faction.objective_holder.objectives.len)
+				text += "<ul><b>Faction objectives:</b><br>"
+				var/obj_count = 1
+				for(var/datum/objective/O in faction.objective_holder.objectives)
+					text += "<b>Objective #[obj_count++]</b>: [O.explanation_text]<br>"
+				text += "</ul>"
+
+	if(objectives.objectives.len)
+		var/icon/logo = get_logo_icon()
+		text += "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
+		text += "<ul><b>[capitalize(name)] objectives:</b><br>"
 		var/obj_count = 1
 		for(var/datum/objective/O in objectives.objectives)
 			text += "<b>Objective #[obj_count++]</b>: [O.explanation_text]<br>"
 		text += "</ul>"
-	if (faction && faction.objective_holder)
-		if (faction.objective_holder.objectives.len)
-			if (objectives.objectives.len)
-				text += "<br>"
-			text += "<b>Faction objectives:</b><ul>"
-			var/obj_count = 1
-			for(var/datum/objective/O in faction.objective_holder.objectives)
-				text += "<b>Objective #[obj_count++]</b>: [O.explanation_text]<br>"
-			text += "</ul>"
 	to_chat(antag.current, text)
 
 // -- Custom reagent reaction for your antag - now in a (somewhat) maintable fashion

@@ -288,7 +288,7 @@
 	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A>"
 	var/fac_objects = objective_holder.GetObjectiveString(FALSE, FALSE, M)
 	if(fac_objects)
-		dat += "<br><b>Faction objectives:</b><ul>"
+		dat += "<br><ul><b>Faction objectives:</b><br>"
 		dat += fac_objects
 		dat += "</ul>"
 
