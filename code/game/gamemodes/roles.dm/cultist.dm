@@ -2,7 +2,7 @@
 	name = CULTIST
 	id = CULTIST
 
-	required_pref = CULTIST
+	required_pref = ROLE_CULTIST
 	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	restricted_species_flags = list(NO_BLOOD)
 

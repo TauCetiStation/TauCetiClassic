@@ -4,7 +4,7 @@
 /datum/role/blob_overmind
 	name = BLOBOVERMIND
 	id = BLOBOVERMIND
-	required_pref = BLOBOVERMIND
+	required_pref = ROLE_BLOB
 	logo_state = "blob-logo"
 	greets = list(GREET_DEFAULT,GREET_CUSTOM)
 

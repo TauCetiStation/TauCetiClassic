@@ -517,7 +517,7 @@
 	min_age = 1
 	max_age = 100
 
-	prohibit_roles = list(CHANGELING, WIZARD)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 /datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -710,7 +710,7 @@
 	min_age = 1
 	max_age = 1000
 
-	prohibit_roles = list(CHANGELING, CULTIST)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -842,7 +842,7 @@
 	min_age = 1
 	max_age = 125
 
-	prohibit_roles = list(CHANGELING, SHADOW, CULTIST, BLOBOVERMIND)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()

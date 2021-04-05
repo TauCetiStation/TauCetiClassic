@@ -49,7 +49,7 @@
 			playercount++
 			if(isanyantag(player))
 				traitorcount++
-			else if((player.client && (TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, TRAITOR) && !role_available_in_minutes(player, TRAITOR) && !isloyal(player))
+			else if((player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
 				if(!possible_autotraitor.len || !possible_autotraitor.Find(player))
 					possible_autotraitor += player
 

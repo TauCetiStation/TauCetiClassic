@@ -50,11 +50,11 @@ var/can_call_ert
 	/*	if(admin_emergency_team)
 			to_chat(usr, "An emergency response team has already been sent.")
 			return */
-		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, RESPONDER) || jobban_isbanned(usr, "Security Officer"))
+		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
 			to_chat(usr, "<span class='danger'>You are jobbanned from the emergency reponse team!</span>")
 			return
 
-		var/available_in_minutes = role_available_in_minutes(usr, RESPONDER)
+		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
 		if(available_in_minutes)
 			to_chat(usr, "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes (e.g.: you gain minutes while playing).</span>")
 			return

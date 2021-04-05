@@ -197,11 +197,11 @@ var/list/cult_runes = list()
 				passed = FALSE
 				to_chat(user, "<span class='cult'The mind of [M] Resists!</span>")
 				to_chat(M, "<span class='userdanger'Your Mind Resists!</span>")
-			else if(jobban_isbanned(M, CULTIST) || jobban_isbanned(M, "Syndicate"))
+			else if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate"))
 				passed = FALSE
 				to_chat(user, "<span class='cult'Your god forbade recruitment of [M]!</span>")
 
-			else if(role_available_in_minutes(M, CULTIST))
+			else if(role_available_in_minutes(M, ROLE_CULTIST))
 				passed = FALSE
 				to_chat(user, "<span class='cult'This soul is too young for your God!</span>")
 
@@ -549,7 +549,7 @@ var/list/cult_runes = list()
 			continue
 		ghost = O
 		break
-	if(!ghost || jobban_isbanned(ghost, CULTIST) || jobban_isbanned(ghost, "Syndicate") || role_available_in_minutes(ghost, CULTIST))
+	if(!ghost || jobban_isbanned(ghost, ROLE_CULTIST) || jobban_isbanned(ghost, "Syndicate") || role_available_in_minutes(ghost, ROLE_CULTIST))
 		return fizzle(user)
 	playsound(holder, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	user.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")

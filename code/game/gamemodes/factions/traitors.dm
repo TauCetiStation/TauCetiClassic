@@ -3,7 +3,7 @@
 	ID = TRAITOR
 	initial_role = TRAITOR
 	late_role = TRAITOR
-	required_pref = TRAITOR
+	required_pref = ROLE_TRAITOR
 	desc = "Operatives of the syndicate, implanted into the crew in one way or another."
 	logo_state = "synd-logo"
 	roletype = /datum/role/syndicate/traitor

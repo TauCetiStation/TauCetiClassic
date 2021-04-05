@@ -3,7 +3,7 @@
 	ID = HEIST
 	initial_role = VOXRAIDER
 	late_role = VOXRAIDER
-	required_pref = VOXRAIDER
+	required_pref = ROLE_RAIDER
 	initroletype = /datum/role/vox_raider
 	min_roles = 4
 	max_roles = 6

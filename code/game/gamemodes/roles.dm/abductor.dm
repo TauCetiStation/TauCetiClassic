@@ -1,6 +1,6 @@
 /datum/role/abductor
 	disallow_job = TRUE
-	required_pref = ABDUCTOR_AGENT
+	required_pref = ROLE_ABDUCTOR
 
 	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductor"

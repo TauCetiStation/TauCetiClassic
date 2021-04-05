@@ -1,7 +1,7 @@
 /datum/role/alien
 	name = XENOMORPH
 	id = XENOMORPH
-	required_pref = XENOMORPH
+	required_pref = ROLE_ALIEN
 	disallow_job = TRUE
 
 	logo_state = "xeno-logo"

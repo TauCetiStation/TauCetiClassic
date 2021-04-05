@@ -2,7 +2,7 @@
 	name = MALF
 	id = MALF
 
-	required_pref = MALF
+	required_pref = ROLE_MALF
 	required_jobs = list("AI")
 
 	antag_hud_type = ANTAG_HUD_MALF
@@ -79,7 +79,7 @@
 	name = MALFBOT
 	id = MALFBOT
 
-	required_pref = MALF
+	required_pref = ROLE_MALF
 	required_jobs = list("Cyborg")
 
 	antag_hud_type = ANTAG_HUD_MALF

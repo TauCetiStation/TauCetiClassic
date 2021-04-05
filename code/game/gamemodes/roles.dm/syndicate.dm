@@ -13,7 +13,7 @@
 	id = NUKE_OP
 	disallow_job = TRUE
 
-	required_pref = NUKE_OP
+	required_pref = ROLE_OPERATIVE
 
 	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "hudsyndicate"

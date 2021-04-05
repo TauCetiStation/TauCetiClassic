@@ -1,7 +1,7 @@
 /datum/role/changeling/traitor
 	name = TRAITORCHAN
 	id = TRAITORCHAN
-	required_pref = TRAITOR
+	required_pref = ROLE_TRAITOR
 
 /datum/role/changeling/traitor/OnPostSetup(laterole)
 	. = ..()

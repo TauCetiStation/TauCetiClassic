@@ -19,8 +19,8 @@
 	var/list/possible_traitors = list()
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player.client && player.mind && player.stat != DEAD && !player.mind.special_role \
-		&& (TRAITOR in player.client.prefs.be_role) && !jobban_isbanned(player, "Syndicate") \
-		&& !jobban_isbanned(player, TRAITOR) && !role_available_in_minutes(player, TRAITOR) && !isloyal(player))
+		&& (ROLE_TRAITOR in player.client.prefs.be_role) && !jobban_isbanned(player, "Syndicate") \
+		&& !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
 
 			possible_traitors += player
 			for(var/job in list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain"))

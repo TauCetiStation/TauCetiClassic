@@ -5,7 +5,7 @@
 	ID = SYNDIOPS
 	logo_state = "nuke-logo"
 
-	required_pref = NUKE_OP
+	required_pref = ROLE_OPERATIVE
 
 	initial_role = NUKE_OP
 	late_role = NUKE_OP

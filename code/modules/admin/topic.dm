@@ -656,96 +656,96 @@
 		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
 
 		//Traitor
-		if(jobban_isbanned(M, TRAITOR) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[TRAITOR];jobban4=\ref[M]'>[TRAITOR]</a></td>"
+		if(jobban_isbanned(M, ROLE_TRAITOR) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[TRAITOR];jobban4=\ref[M]'>[TRAITOR]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
 
 		//Changeling
-		if(jobban_isbanned(M, CHANGELING) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[CHANGELING];jobban4=\ref[M]'>[CHANGELING]</a></td>"
+		if(jobban_isbanned(M, ROLE_CHANGELING) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_CHANGELING];jobban4=\ref[M]'>[ROLE_CHANGELING]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[CHANGELING];jobban4=\ref[M]'>[CHANGELING]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_CHANGELING];jobban4=\ref[M]'>[ROLE_CHANGELING]</a></td>"
 
 		//Nuke Operative
-		if(jobban_isbanned(M, NUKE_OP) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[NUKE_OP];jobban4=\ref[M]'>[NUKE_OP]</a></td>"
+		if(jobban_isbanned(M, ROLE_OPERATIVE) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[NUKE_OP];jobban4=\ref[M]'>[NUKE_OP]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
 
 		//Revolutionary
-		if(jobban_isbanned(M, REV) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[REV];jobban4=\ref[M]'>[REV]</a></td>"
+		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[REV];jobban4=\ref[M]'>[REV]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 
 		//Raider (New heist)
-		if(jobban_isbanned(M, VOXRAIDER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[VOXRAIDER];jobban4=\ref[M]'>[VOXRAIDER]</a></td>"
+		if(jobban_isbanned(M, ROLE_RAIDER) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[VOXRAIDER];jobban4=\ref[M]'>[VOXRAIDER]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Cultist
-		if(jobban_isbanned(M, CULTIST) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[CULTIST];jobban4=\ref[M]'>[CULTIST]</a></td>"
+		if(jobban_isbanned(M, ROLE_CULTIST) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[CULTIST];jobban4=\ref[M]'>[CULTIST]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
 
 		//Wizard
-		if(jobban_isbanned(M, WIZARD) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[WIZARD];jobban4=\ref[M]'>[WIZARD]</a></td>"
+		if(jobban_isbanned(M, ROLE_WIZARD) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[WIZARD];jobban4=\ref[M]'>[WIZARD]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
 
 		//ERT
-		if(jobban_isbanned(M, RESPONDER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[RESPONDER];jobban4=\ref[M]'>[RESPONDER]</a></td>"
+		if(jobban_isbanned(M, ROLE_ERT) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[RESPONDER];jobban4=\ref[M]'>[RESPONDER]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
 
 		//Shadowling
-		if(jobban_isbanned(M, SHADOW) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[SHADOW];jobban4=\ref[M]'>[SHADOW]</a></td>"
+		if(jobban_isbanned(M, ROLE_SHADOWLING) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[SHADOW];jobban4=\ref[M]'>[SHADOW]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
 
 		//Abductor
-		if(jobban_isbanned(M, ABDUCTOR_AGENT) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ABDUCTOR_AGENT];jobban4=\ref[M]'>[ABDUCTOR_AGENT]</a></td>"
+		if(jobban_isbanned(M, ROLE_ABDUCTOR) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ABDUCTOR_AGENT];jobban4=\ref[M]'>[ABDUCTOR_AGENT]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Ninja
-		if(jobban_isbanned(M, NINJA) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[NINJA];jobban4=\ref[M]'>[NINJA]</a></td>"
+		if(jobban_isbanned(M, ROLE_NINJA) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_NINJA];jobban4=\ref[M]'>[ROLE_NINJA]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[NINJA];jobban4=\ref[M]'>[NINJA]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_NINJA];jobban4=\ref[M]'>[ROLE_NINJA]</a></td>"
 
 		//Blob
-		if(jobban_isbanned(M, BLOBOVERMIND) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[BLOBOVERMIND];jobban4=\ref[M]'>[BLOBOVERMIND]</a></td>"
+		if(jobban_isbanned(M, ROLE_BLOB) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[BLOBOVERMIND];jobban4=\ref[M]'>[BLOBOVERMIND]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
 
 		//Malfunctioning AI
-		if(jobban_isbanned(M, MALF) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[MALF];jobban4=\ref[M]'>[MALF]</a></td>"
+		if(jobban_isbanned(M, ROLE_MALF) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[MALF];jobban4=\ref[M]'>[MALF]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Xenomorph
-		if(jobban_isbanned(M, XENOMORPH) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[XENOMORPH];jobban4=\ref[M]'>[XENOMORPH]</a></td>"
+		if(jobban_isbanned(M, ROLE_ALIEN) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[XENOMORPH];jobban4=\ref[M]'>[XENOMORPH]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
 
 		jobs += "</tr></table>"
 

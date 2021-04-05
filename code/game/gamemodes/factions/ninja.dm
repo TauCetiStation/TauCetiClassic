@@ -9,7 +9,7 @@
 	min_roles = 2
 	max_roles = 2
 
-	required_pref = NINJA
+	required_pref = ROLE_NINJA
 
 	logo_state = "ninja-logo"
 
