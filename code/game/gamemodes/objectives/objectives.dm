@@ -27,15 +27,15 @@ var/global/list/all_objectives = list()
 	if(completed == OBJECTIVE_WIN)
 		result = "SUCCESS"
 		if(tags)
-			result = "<font color='green'>[result]</font>"
+			result = "<font color='green'><b>[result]</b></font>"
 	if(completed == OBJECTIVE_HALFWIN)
 		result = "HALF"
 		if(tags)
-			result = "<font color='orange'>[result]</font>"
+			result = "<font color='orange'><b>[result]</b></font>"
 	if(completed == OBJECTIVE_LOSS)
-		result = "FAILURE"
+		result = "FAIL"
 		if(tags)
-			result = "<font color='red'>[result]</font>"
+			result = "<font color='red'><b>[result]</b></font>"
 	return result
 
 /datum/objective/proc/find_target()
