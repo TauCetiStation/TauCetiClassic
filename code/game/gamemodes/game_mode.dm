@@ -119,7 +119,7 @@
 		factions += F
 		return F
 	else
-		warning("Faction ([F]) could not set up properly with given population.")
+		log_mode("Faction ([F]) could not set up properly with given population.")
 		qdel(F)
 		return null
 /*
@@ -152,7 +152,7 @@
 /datum/game_mode/proc/PopulateFactions()
 	if(!factions.len)
 		message_admins("No faction was created in [type].")
-		WARNING("No faction was created in [type].")
+		log_mode("No faction was created in [type].")
 		return FALSE
 	var/list/available_players = get_ready_players()
 	for(var/datum/faction/F in factions)
@@ -166,7 +166,7 @@
 				continue
 			if(!F.HandleNewMind(P.mind))
 				to_chat(world, "if(!F.HandleNewMind(P.mind)) - [P] - [F]")
-				stack_trace("[P] failed [F] HandleNewMind!")
+				log_mode("[P] failed [F] HandleNewMind!")
 				continue
 		if(F.members.len < F.min_roles)
 			to_chat(world, "if(F.members.len < F.min_roles)oles)")
@@ -187,7 +187,7 @@
 
 /datum/game_mode/proc/CreateNumOfRoles(role_type, list/candidates)
 	if(!candidates || !candidates.len)
-		WARNING("ran out of available players to fill role [role_type]!")
+		log_mode("Ran out of available players to fill role [role_type]!")
 		return
 	for(var/mob/M in candidates)
 		CreateRole(role_type, M)
@@ -197,7 +197,7 @@
 	var/list/available_players = FilterAvailablePlayers(role_type)
 	for(var/i = 0 to num)
 		if(!available_players.len)
-			WARNING("ran out of available players to fill role [role_type]!")
+			log_mode("Ran out of available players to fill role [role_type]!")
 			break
 		shuffle(available_players)
 		var/mob/dead/new_player/P = pick(available_players)
@@ -221,20 +221,20 @@
 			players_to_choose.Remove(P)
 			continue
 	if(!players_to_choose.len)
-		warning("No available players for [role_type]")
+		log_mode("No available players for [role_type]")
 	return players_to_choose
 
 /datum/game_mode/proc/CreateRole(role_type, mob/P)
 	var/datum/role/newRole = CreateBasicRole(role_type)
 
 	if(!newRole)
-		warning("Role killed itself or was otherwise missing!")
+		log_mode("Role killed itself or was otherwise missing!")
 		return FALSE
 
 	newRole.is_roundstart_role = TRUE
 
 	if(!newRole.AssignToRole(P.mind))
-		warning("Role refused mind and dropped!")
+		log_mode("Role refused mind and dropped!")
 		newRole.Drop()
 		return FALSE
 

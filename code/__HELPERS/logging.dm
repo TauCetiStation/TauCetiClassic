@@ -2,7 +2,7 @@
 // will get logs that are one big line if the system is Linux and they are using notepad.  This solves it by adding CR to every line ending
 // in the logs.  ascii character 13 = CR
 
-/var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
+/var/global/log_end = world.system_type == UNIX ? ascii2text(13) : ""
 
 //print an error message to world.log
 #define ERROR(MSG) error("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
@@ -68,6 +68,10 @@
 /proc/log_game(text)
 	if (config.log_game)
 		global.game_log << "\[[time_stamp()]]GAME: [text][log_end]"
+
+/proc/log_mode(text)
+	if (config.log_game)
+		global.game_log << "\[[time_stamp()]]MODE: [text][log_end]"
 
 /proc/log_vote(text)
 	if (config.log_vote)

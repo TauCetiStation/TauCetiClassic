@@ -115,7 +115,7 @@
 			to_chat(world, "HandleNewMind - [M.name] - if(R.antag == M)")
 			return null
 	if(M.GetRole(initial_role))
-		WARNING("Mind already had a role of [initial_role]!")
+		log_mode("Mind already had a role of [initial_role]!")
 		return null
 	var/role_type = get_initrole_type()
 	var/datum/role/newRole = new role_type(null, src, initial_role)
@@ -134,7 +134,7 @@
 		if(R.antag == M)
 			return R
 	if(M.GetRole(late_role))
-		WARNING("Mind already had a role of [late_role]!")
+		log_mode("Mind already had a role of [late_role]!")
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
 	var/datum/role/R = new role_type(null, src, late_role) // Add him to our roles
@@ -255,6 +255,7 @@
 		if(alert(usr, "Are you sure you want to destroy [capitalize(name)]?",  "Destroy Faction" , "Yes" , "No") != "Yes")
 			return
 		message_admins("[key_name(usr)] destroyed faction [capitalize(name)].")
+		log_mode("[key_name(usr)] destroyed faction [capitalize(name)].")
 		Dismantle()
 
 /datum/faction/proc/IsSuccessful()
@@ -333,7 +334,7 @@
 	ASSERT(O)
 	O.faction = src
 	if(O in objective_holder.objectives)
-		WARNING("Trying to add an objective ([O]) to faction ([src]) when it already has it.")
+		log_mode("Trying to add an objective ([O]) to faction ([src]) when it already has it.")
 		return FALSE
 
 	AppendObjective(O)
@@ -343,7 +344,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	ASSERT(O)
 	if (!(O in objective_holder.objectives))
-		WARNING("Trying to remove an objective ([O]) to faction ([src]) who never had it.")
+		log_mode("Trying to remove an objective ([O]) to faction ([src]) who never had it.")
 		return FALSE
 	objective_holder.objectives -= O
 	O.faction = null

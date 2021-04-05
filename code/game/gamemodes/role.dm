@@ -85,10 +85,10 @@
 
 /datum/role/proc/AssignToRole(datum/mind/M, override = 0, msg_admins = TRUE)
 	if(!istype(M) && !override)
-		stack_trace("M is [M.type]!")
+		log_mode("M is [M.type]!")
 		return FALSE
 	if(!CanBeAssigned(M) && !override)
-		stack_trace("[M.name] was to be assigned to [name] but failed CanBeAssigned!")
+		log_mode("[M.name] was to be assigned to [name] but failed CanBeAssigned!")
 		return FALSE
 
 	antag = M
@@ -97,6 +97,7 @@
 	objectives.owner = M
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
+		log_mode("[key_name(M)] is now \an [id].")
 
 	if (!OnPreSetup())
 		return FALSE
@@ -108,7 +109,8 @@
 	M.antag_roles.Remove(id)
 	remove_antag_hud()
 	if(msg_admins)
-		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_JMP(M.current)]" : ""]")
+		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
+		log_mode("[key_name(M)] is <span class='danger'>no longer</span> \an [id].")
 	antag = null
 
 // Destroy this role
