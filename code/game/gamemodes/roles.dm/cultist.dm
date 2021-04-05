@@ -1,7 +1,6 @@
 /datum/role/cultist
 	name = CULTIST
 	id = CULTIST
-	special_role = CULTIST
 
 	required_pref = CULTIST
 	restricted_jobs = list("Security Cadet", "Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")

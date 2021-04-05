@@ -1,7 +1,6 @@
 /datum/role/malfAI
 	name = MALF
 	id = MALF
-	special_role = MALF
 
 	required_pref = MALF
 	required_jobs = list("AI")
@@ -79,7 +78,6 @@
 /datum/role/malfbot
 	name = MALFBOT
 	id = MALFBOT
-	special_role = MALFBOT
 
 	required_pref = MALF
 	required_jobs = list("Cyborg")

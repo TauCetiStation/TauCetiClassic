@@ -1,7 +1,6 @@
 /datum/role/borer
 	name = BORER
 	id = BORER
-	special_role = BORER
 
 /datum/role/borer/Greet(greeting, custom)
 	. = ..()

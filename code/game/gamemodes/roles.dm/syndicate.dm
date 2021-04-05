@@ -11,7 +11,6 @@
 /datum/role/syndicate/operative
 	name = NUKE_OP
 	id = NUKE_OP
-	special_role = NUKE_OP
 	disallow_job = TRUE
 
 	required_pref = NUKE_OP
@@ -64,7 +63,6 @@
 /datum/role/syndicate/operative/leader
 	name = NUKE_OP_LEADER
 	id = NUKE_OP_LEADER
-	special_role = NUKE_OP_LEADER
 
 	logo_state = "nuke-logo-leader"
 

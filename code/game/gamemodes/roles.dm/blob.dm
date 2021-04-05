@@ -5,7 +5,6 @@
 	name = BLOBOVERMIND
 	id = BLOBOVERMIND
 	required_pref = BLOBOVERMIND
-	special_role = BLOBOVERMIND
 	logo_state = "blob-logo"
 	greets = list(GREET_DEFAULT,GREET_CUSTOM)
 

@@ -1,7 +1,6 @@
 /datum/role/death_commando
 	name = DEATHSQUADIE
 	id = DEATHSQUADIE
-	special_role = DEATHSQUADIE
 	disallow_job = TRUE
 
 	logo_state = "death-logo"
@@ -11,7 +10,6 @@
 /datum/role/emergency_responder
 	name = RESPONDER
 	id = RESPONDER
-	special_role = RESPONDER
 	disallow_job = TRUE
 
 	logo_state = "ert-logo"
@@ -21,7 +19,6 @@
 /datum/role/syndicate_elite_commando
 	name = SYNDIESQUADIE
 	id = SYNDIESQUADIE
-	special_role = SYNDIESQUADIE
 	disallow_job = TRUE
 
 	logo_state = "elite-logo"

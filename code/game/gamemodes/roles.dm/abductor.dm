@@ -49,7 +49,6 @@
 /datum/role/abductor/agent
 	name = "Agent"
 	id = ABDUCTOR_AGENT
-	special_role = ABDUCTOR_AGENT
 
 /datum/role/abductor/agent/Greet(greeting, custom)
 	if(!..())
@@ -85,7 +84,6 @@
 /datum/role/abductor/scientist
 	name = "Scientist"
 	id = ABDUCTOR_SCI
-	special_role = ABDUCTOR_SCI
 
 /datum/role/abductor/scientist/Greet(greeting, custom)
 	if(!..())
@@ -122,7 +120,6 @@
 /datum/role/abducted
 	name = ABDUCTED
 	id = ABDUCTED
-	special_role = ABDUCTED
 
 	logo_state = "abductor-logo"
 

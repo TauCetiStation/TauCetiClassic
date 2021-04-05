@@ -2,7 +2,6 @@
 	name = CHANGELING
 	id = CHANGELING
 	required_pref = CHANGELING
-	special_role = CHANGELING
 
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"

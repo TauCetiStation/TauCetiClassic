@@ -1,7 +1,6 @@
 /datum/role/wizard
 	name = WIZARD
 	id = WIZARD
-	special_role = WIZARD
 	disallow_job = TRUE
 
 	required_pref = WIZARD
@@ -124,7 +123,6 @@
 /datum/role/wizard_apprentice // Greets and objectives gives in code\game\gamemodes\wizard\artefact.dm
 	name = WIZ_APPRENTICE
 	id = WIZ_APPRENTICE
-	special_role = WIZ_APPRENTICE
 
 	required_pref = WIZARD
 

@@ -30,9 +30,6 @@
 	var/id
 	// Displayed name of the antag type
 	var/name
-	var/plural_name
-	// If set, sets special_role to this
-	var/special_role
 
 	// for atom_hud
 	var/antag_hud_type
@@ -77,9 +74,6 @@
 		Drop()
 		return
 
-	if(!plural_name)
-		plural_name="[name]s"
-
 	objectives.owner = M
 	..()
 
@@ -111,6 +105,7 @@
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
 		log_mode("[key_name(M)] is <span class='danger'>no longer</span> \an [id].")
 	antag = null
+	antag.special_role = initial(antag.special_role)
 
 // Destroy this role
 /datum/role/proc/Drop()
@@ -154,8 +149,8 @@
 
 // Return TRUE on success, FALSE on failure.
 /datum/role/proc/OnPreSetup()
-	if(special_role)
-		antag.special_role = special_role
+	antag.special_role = id
+
 	if(disallow_job)
 		var/datum/job/job = SSjob.GetJob(antag.assigned_role)
 		if(job)

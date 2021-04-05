@@ -1,7 +1,6 @@
 /datum/role/shadowling
 	name = SHADOW
 	id = SHADOW
-	special_role = SHADOW
 
 	required_pref = SHADOW
 	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
@@ -34,7 +33,6 @@
 /datum/role/thrall
 	name = SHADOW_THRALL
 	id = SHADOW_THRALL
-	special_role = SHADOW_THRALL
 
 	antag_hud_type = ANTAG_HUD_SHADOW
 	antag_hud_name = "hudthrall"

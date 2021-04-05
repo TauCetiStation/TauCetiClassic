@@ -2,7 +2,6 @@
 	name = NINJA
 	id = NINJA
 	required_pref = NINJA
-	special_role = NINJA
 	disallow_job = TRUE
 
 	antag_hud_type = ANTAG_HUD_NINJA

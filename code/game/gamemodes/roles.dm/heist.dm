@@ -2,7 +2,6 @@
 	name = VOXRAIDER
 	id = VOXRAIDER
 	required_pref = VOXRAIDER
-	special_role = VOXRAIDER
 	disallow_job = TRUE
 
 	logo_state = "raider-logo"
