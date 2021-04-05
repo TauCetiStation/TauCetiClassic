@@ -213,11 +213,15 @@
 	return new type_role
 
 /datum/game_mode/proc/FilterAvailablePlayers(datum/role/role_type, list/players_to_choose = get_ready_players())
+	var/pref = initial(role_type.required_pref)
+	if(!pref)
+		log_mode("[role_type] has no required_pref")
+
 	for(var/mob/dead/new_player/P in players_to_choose)
 		if(!P.client || !P.mind)
 			players_to_choose.Remove(P)
 			continue
-		if(!P.client.prefs.be_role.Find(initial(role_type.required_pref)) || jobban_isbanned(P, initial(role_type.required_pref)) || role_available_in_minutes(P, initial(role_type.required_pref)))
+		if(!P.client.prefs.be_role.Find(pref) || jobban_isbanned(P, pref) || role_available_in_minutes(P, pref) || jobban_isbanned(P, "Syndicate"))
 			players_to_choose.Remove(P)
 			continue
 	if(!players_to_choose.len)

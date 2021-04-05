@@ -98,7 +98,10 @@
 	if(!P.client || !P.mind)
 		to_chat(world, "if(!P.client || !P.mind)")
 		return FALSE
-	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref))
+	if(!required_pref)
+		log_mode("[name] - [type] has no required_pref")
+		return TRUE
+	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref) || jobban_isbanned(P, "Syndicate"))
 		to_chat(world, "------[P]------")
 		to_chat(world, "P.client.prefs.be_role.Find(required_pref) - [P.client.prefs.be_role.Find(required_pref)]")
 		to_chat(world, "jobban_isbanned(P, required_pref) - [jobban_isbanned(P, required_pref)]")
