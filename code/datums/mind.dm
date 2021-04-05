@@ -208,7 +208,6 @@
 		for(var/role in subtypesof(/datum/role))
 			var/datum/role/R = role
 			if (initial(R.id) && !(initial(R.id) in antag_roles))
-				available_roles.Add(initial(R.id))
 				available_roles[initial(R.id)] = R
 
 		if(!available_roles.len)
@@ -297,7 +296,6 @@
 		var/list/available_objectives = list()
 
 		for(var/objective_type in subtypesof(/datum/objective))
-			available_objectives.Add(objective_type)
 			available_objectives[objective_type] = objective_type
 
 		var/new_obj = input("Select a new objective", "New Objective", null) as null|anything in available_objectives
@@ -628,13 +626,11 @@
 /datum/mind/proc/get_faction_list()
 	var/list/all_factions = list()
 	for(var/datum/faction/F in SSticker.mode.factions)
-		all_factions.Add(F.name)
 		all_factions[F.name] = F
 	all_factions += "-----"
 	for(var/factiontype in subtypesof(/datum/faction))
 		var/datum/faction/F = factiontype
 		if (!(initial(F.name) in all_factions))
-			all_factions.Add(initial(F.name))
 			all_factions[initial(F.name)] = F
 	all_factions += "-----"
 	return all_factions

@@ -92,7 +92,6 @@
 		return FALSE
 
 	antag = M
-	M.antag_roles.Add(id)
 	M.antag_roles[id] = src
 	objectives.owner = M
 	if(msg_admins)
