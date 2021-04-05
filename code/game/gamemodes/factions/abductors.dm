@@ -18,11 +18,6 @@
 	var/static/team_count = 1
 	var/static/finished = FALSE
 
-/datum/faction/abductors/New()
-	..()
-	team_number = team_count++
-	name = "Mothership [pick(greek_pronunciation)]"
-
 /datum/faction/abductors/get_initrole_type()
 	if(members.len == 0)
 		return /datum/role/abductor/agent
@@ -31,6 +26,13 @@
 /datum/faction/abductors/forgeObjectives()
 	. = ..()
 	AppendObjective(/datum/objective/experiment)
+
+/datum/faction/abductors/can_setup()
+	if(!..())
+		return FALSE
+	team_number = team_count++
+	name = "Mothership [pick(greek_pronunciation)]"
+	return TRUE
 
 /datum/faction/abductors/check_win()
 	if(finished)

@@ -320,40 +320,42 @@
 	return ""
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
+	var/text = ""
+	if (faction)
+		text += "<br>[faction.GetFactionHeader()]"
+
+	if (admin_edit)
+		if (faction)
+			text += "<a href='?src=\ref[M];role_edit=\ref[src];remove_from_faction=1'>(remove from faction)</a>"
+		else
+			text += "<a href='?src=\ref[M];role_edit=\ref[src];add_to_faction=1'> - (add to faction) - </a>"
+
+	text += "<br>"
+	if(faction)
+		text += "<ul>"
+		if(faction.objective_holder)
+			if(faction.objective_holder.objectives.len)
+				text += "<ul><b>Faction objectives:</b>"
+			text += faction.objective_holder.GetObjectiveString(FALSE, admin_edit, M)
+			if(faction.objective_holder.objectives.len)
+				text += "</ul>"
+
 	var/icon/logo = get_logo_icon()
-	var/text = "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
+	text += "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
 
-	if (objectives.objectives.len)
-		text += "<br><b>Personal objectives:</b><ul>"
+	if(objectives.objectives.len)
+		text += "<br><ul><b>Personal objectives:</b>"
 	else
 		text += "<br>No objectives available<br>"
 	text += objectives.GetObjectiveString(FALSE, admin_edit, M, src)
-	if (objectives.objectives.len)
+	if(objectives.objectives.len)
 		text += "</ul>"
 
-	if (faction)
-		text += "<br>[faction.GetFactionHeader()]"
-	else
-		text += "<br><i>None Faction</i>"
+	if(faction)
+		text += "</ul>"
 
-	if (admin_edit)
-		text += " - "
-		if (faction)
-			text += "<a href='?src=\ref[M];role_edit=\ref[src];remove_from_faction=1'>(remove)</a>"
-		else
-			text += "<a href='?src=\ref[M];role_edit=\ref[src];add_to_faction=1'>(add)</a>"
-
-	text += "<br>"
-	if (faction?.objective_holder)
-		if (faction.objective_holder.objectives.len)
-			if (objectives.objectives.len)
-				text += "<br>"
-			text += "<b>Faction objectives:</b><ul>"
-		text += faction.objective_holder.GetObjectiveString(FALSE, admin_edit, M)
-		if (faction.objective_holder.objectives.len)
-			text += "</ul>"
 	text += "<HR>"
 	return text
 
