@@ -298,7 +298,7 @@ Hit Procs
 
 //xenomorphs can extinguish each other using help intent
 /mob/living/carbon/xenomorph/help_shake_act(mob/living/carbon/M)
-	if(on_fire)
+	if(on_fire && M !=  src)
 		fire_stacks -= 2
 		M.visible_message("<span class='danger'>[M] trying to extinguish [src].</span>", \
 		"<span class='rose'>You trying to extinguish [src].</span>")
