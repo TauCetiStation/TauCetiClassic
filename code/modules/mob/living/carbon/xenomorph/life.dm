@@ -189,4 +189,4 @@
 	if(istype(loc, /obj/machinery/atmospherics/pipe))
 		return FALSE
 	else
-		. = ..()
+		return ..()
