@@ -175,12 +175,11 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 
 		log_sql("ERROR: [errmsg] | [sql_query]")
 
-		if(findtext(errmsg, "Lost connection"))//something bad happened, basically "temporary" debug output before we hunt down this error
+		if(findtext(errmsg, "Lost connection"))
 			message_admins("<span style='color: red;'>[errmsg]</span>")
 			world.send2bridge(
 				type = list(BRIDGE_SERVICE),
 				attachment_title = errmsg,
-				attachment_msg = sql_query,
 				attachment_color = BRIDGE_COLOR_ADMINALERT,
 			)
 
