@@ -2,6 +2,8 @@
 	name = BORER
 	id = BORER
 
+	logo_state = "borer-logo"
+
 /datum/role/borer/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "Use your Infest power to crawl into the ear of a host and fuse with their brain.")
