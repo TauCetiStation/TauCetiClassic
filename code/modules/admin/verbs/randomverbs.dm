@@ -292,6 +292,8 @@
 		return
 
 	var/message = sanitize(input("Введите сообщение:", "Религия") as null|text)
+	if(!message)
+		return
 
 	religion.send_message_to_members(message, god_name)
 	log_admin("[key_name(usr)] said as a [god_name] to members of [religion.name] a [message].")
