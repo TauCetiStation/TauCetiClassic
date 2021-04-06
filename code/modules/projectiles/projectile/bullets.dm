@@ -98,6 +98,7 @@
 	hitscan = 1
 
 /obj/item/projectile/bullet/grenade/r4046
+	name = "rubber grenade"
 	damage = 10
 	stun = 10
 	weaken = 10
@@ -108,9 +109,6 @@
 /obj/item/projectile/bullet/grenade/r4046/atom_init()
 	. = ..()
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
-
-/obj/item/projectile/bullet/grenade/r4046/rubber
-	name = "rubber grenade"
 
 /obj/item/projectile/bullet/chem
 	damage = 5

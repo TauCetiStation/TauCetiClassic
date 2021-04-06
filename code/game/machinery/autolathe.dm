@@ -8,6 +8,8 @@
 	var/max_res_amount = 50
 
 /proc/path_to_ar(obj/path)
+	var/obj/P = path
+	var/amount = 1
 	var/datum/autolathe_recipe/recipe
 	if(ispath(path, /obj/item/stack))
 		recipe = new /datum/autolathe_recipe/stack
@@ -16,10 +18,14 @@
 		S.max_res_amount = initial(PS.max_amount)
 	else
 		recipe = new /datum/autolathe_recipe
+		if(ispath(path, /obj/item/ammo_box))
+			var/obj/item/ammo_box/ammobox = path
+			amount = initial(ammobox.max_ammo)
+			P = initial(ammobox.ammo_type)
 	recipe.name = initial(path.name)
 	recipe.result_type = path
-	recipe.metal_amount = initial(path.m_amt)
-	recipe.glass_amount = initial(path.g_amt)
+	recipe.metal_amount = initial(P.m_amt) * amount
+	recipe.glass_amount = initial(P.g_amt) * amount
 	return recipe
 
 #define R(path) path_to_ar(path)
@@ -59,9 +65,9 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/reagent_containers/glass/beaker/large),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/vial),
 	R(/obj/item/weapon/reagent_containers/syringe),
-	R(/obj/item/ammo_casing/shotgun/beanbag),
-	R(/obj/item/ammo_box/c45r),
-	R(/obj/item/ammo_box/c9mmr),
+	R(/obj/item/ammo_box/eight_shells/beanbag),
+	R(/obj/item/ammo_box/magazine/c45r),
+	R(/obj/item/ammo_box/magazine/m9mm_2/rubber),
 	R(/obj/item/device/taperecorder),
 	R(/obj/item/device/assembly/igniter),
 	R(/obj/item/device/assembly/signaler),
@@ -93,11 +99,11 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/weapon/weldingtool/largetank),
 	R(/obj/item/weapon/handcuffs),
 	R(/obj/item/ammo_box/a357),
-	R(/obj/item/ammo_box/c45),
-	R(/obj/item/ammo_box/c9mm),
-	R(/obj/item/ammo_casing/shotgun),
-	R(/obj/item/ammo_casing/shotgun/dart),
-	R(/obj/item/ammo_casing/shotgun/buckshot),
+	R(/obj/item/ammo_box/magazine/c45m),
+	R(/obj/item/ammo_box/magazine/m9mm_2),
+	R(/obj/item/ammo_box/eight_shells),
+	R(/obj/item/ammo_box/eight_shells/dart),
+	R(/obj/item/ammo_box/eight_shells/buckshot),
 	R(/obj/item/device/harmonica),
 	R(/obj/item/weapon/bell),
 )
@@ -265,16 +271,6 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if(stat)
 		return 1
 
-	if(m_amount + I.m_amt > max_m_amount)
-		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
-		return 1
-	if(g_amount + I.g_amt > max_g_amount)
-		to_chat(user, "<span class='warning'>The autolathe is full. Please remove glass from the autolathe in order to insert more.</span>")
-		return 1
-	if(I.m_amt == 0 && I.g_amt == 0)
-		to_chat(user, "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>")
-		return 1
-
 	var/amount = 1
 	var/obj/item/stack/stack
 	var/m_amt = I.m_amt
@@ -288,20 +284,43 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		if(g_amt)
 			amount = min(amount, round((max_g_amount - g_amount) / g_amt))
 			flick("autolathe_r",src)//plays glass insertion animation
-		stack.use(amount)
-	else
-		usr.remove_from_mob(I)
-		I.loc = src
+	else if(istype(I, /obj/item/ammo_box))
+		m_amt = 0
+		g_amt = 0
+		var/obj/item/ammo_box/ammobox = I
+		if(ammobox.stored_ammo.len)
+			for(var/obj/item/ammo_casing/ammo_type in ammobox.stored_ammo)
+				m_amt += ammo_type.m_amt
+				g_amt += ammo_type.g_amt
+	m_amt *= amount
+	g_amt *= amount
+
+	if((m_amount + m_amt > max_m_amount) || (g_amount + g_amt > max_g_amount))
+		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
+		return 1
+	if(m_amt == 0 && g_amt == 0)
+		to_chat(user, "<span class='warning'>This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.</span>")
+		return 1
+
+	take_item(I, amount)
 	icon_state = "autolathe"
 	busy = 1
 	use_power(max(1000, (m_amt + g_amt) * amount / 10))
-	m_amount += m_amt * amount
-	g_amount += g_amt * amount
+	m_amount += m_amt
+	g_amount += g_amt
 	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
 	if(I && I.loc == src)
 		qdel(I)
 	busy = 0
 	updateUsrDialog()
+
+/obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
+	if(istype(I, /obj/item/stack))
+		var/obj/item/stack/S = I
+		S.use(amount)
+	else
+		usr.remove_from_mob(I)
+		I.loc = src
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(!istype(usr, /mob/living/silicon/pai))
