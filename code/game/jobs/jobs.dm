@@ -133,9 +133,6 @@ var/list/nonhuman_positions = list(
 )
 
 
-/proc/guest_jobbans(job)
-	return job in command_positions
-
 /proc/get_job_datums()
 	var/list/occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
