@@ -295,17 +295,3 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
-
-//xenomorphs can extinguish each other using help intent
-/mob/living/carbon/xenomorph/help_shake_act(mob/living/carbon/M)
-	if(on_fire && M !=  src)
-		fire_stacks -= 2
-		M.visible_message("<span class='danger'>[M] trying to extinguish [src].</span>", \
-		"<span class='rose'>You trying to extinguish [src].</span>")
-		if(fire_stacks <= 0)
-			ExtinguishMob()
-			M.visible_message("<span class='danger'>[M] has successfully extinguished [src]!</span>", \
-			"<span class='notice'>You extinguish [src]!</span>")
-		playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
-	else
-		..()
