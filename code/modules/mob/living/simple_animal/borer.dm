@@ -461,4 +461,6 @@
 	mind = candidate.mob.mind
 	ckey = candidate.ckey
 
-	create_and_setup_role(/datum/role/borer, src)
+	var/datum/faction/borers/B = find_active_first_faction_by_type(/datum/faction/borers)
+	if(B)
+		add_faction_member(B, src)

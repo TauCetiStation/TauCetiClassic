@@ -2,6 +2,7 @@
 #define ABDUCTORS "Abductor Team"
 #define BLOODCULT "Cult Of Blood"
 #define BLOBCONGLOMERATE "Blob Conglomerate"
+#define BORER_HIVEMIND "Borer Hivemind"
 #define CUSTOMSQUAD "Custom Squad"
 #define DEATHSQUAD "Nanotrasen Deathsquad"
 #define EMERSQUAD "Emergency Response Team"

@@ -236,18 +236,17 @@
 
 	score_results += "<ul>"
 	score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
-	var/i = 1
+	var/have_objectives = FALSE
 	for(var/datum/role/R in members)
 		var/results = R.GetScoreboard()
 		if(results)
 			score_results += results
 			score_results += "<br>"
-		if(R.objectives.objectives.len <= 0)
-			if (i < members.len)
-				score_results += "<br>"
-		i++
+			if(R.objectives.objectives.len)
+				have_objectives = TRUE
 	score_results += "</ul>"
-	score_results += "<br>"
+	if(!have_objectives)
+		score_results += "<br>"
 
 	return score_results
 
