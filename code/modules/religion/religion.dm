@@ -409,7 +409,7 @@
 		if(needed_aspects[asp.name])
 			diff += asp.power - needed_aspects[asp.name]
 
-	divine_power = divine_power * (diff / needed_aspects.len + 1)
+	divine_power = round(divine_power * (diff / needed_aspects.len + 1), 1)
 
 	return divine_power
 
