@@ -17,8 +17,10 @@
 	var/shadowling_ascended = FALSE
 
 /datum/faction/shadowlings/forgeObjectives()
-	. = ..()
+	if(!..())
+		return FALSE
 	AppendObjective(/datum/objective/enthrall)
+	return TRUE
 
 /datum/faction/shadowlings/HandleRecruitedMind(datum/mind/M, override = FALSE)
 	var/datum/role/R = ..()

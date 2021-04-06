@@ -20,6 +20,8 @@
 			AppendObjective(/datum/objective/dehead, TRUE)
 
 /datum/role/syndicate/traitor/forgeObjectives()
+	if(!..())
+		return FALSE
 	if(istype(antag.current, /mob/living/silicon))
 		AppendObjective(/datum/objective/assassinate, TRUE)
 		AppendObjective(/datum/objective/assassinate, TRUE)
@@ -40,6 +42,7 @@
 				AppendObjective(/datum/objective/survive)
 			else
 				AppendObjective(/datum/objective/hijack)
+	return TRUE
 
 /datum/role/syndicate/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore all other laws."
@@ -86,13 +89,19 @@
 /datum/role/syndicate/traitor/wishgtanter
 
 /datum/role/syndicate/traitor/wishgtanter/forgeObjectives()
+	if(!..())
+		return FALSE
 	AppendObjective(/datum/objective/custom/wishgtanter)
 	AppendObjective(/datum/objective/escape)
+	return TRUE
 
 /datum/role/syndicate/traitor/syndbeacon
 
 /datum/role/syndicate/traitor/syndbeacon/forgeObjectives()
+	if(!..())
+		return FALSE
 	AppendObjective(/datum/objective/silence)
+	return TRUE
 
 /datum/role/syndicate/traitor/syndcall
 

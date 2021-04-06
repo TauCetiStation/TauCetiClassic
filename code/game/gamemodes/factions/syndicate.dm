@@ -79,8 +79,10 @@
 			leader = R
 
 /datum/faction/nuclear/forgeObjectives()
-	. = ..()
+	if(!..())
+		return FALSE
 	AppendObjective(/datum/objective/nuclear)
+	return TRUE
 
 /datum/faction/nuclear/OnPostSetup()
 	var/list/turf/synd_spawn = list()

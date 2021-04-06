@@ -35,10 +35,9 @@ var/list/net_announcer_secret = list()
 	var/allow_admin_spawning = 1		// allows admin item spawning
 	var/allow_admin_rev = 1				// allows admin revives
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
-//	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/traitor_scaling = 1 			//if amount of traitors scales based on amount of players
-	var/objectives_disabled = 0 			//if objectives are disabled or not
+	var/objectives_disabled = 0 		//if objectives are disabled or not
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
 	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/fps = 20
@@ -356,9 +355,6 @@ var/list/net_announcer_secret = list()
 
 				if ("allow_ai")
 					config.allow_ai = text2num(value)
-
-//				if ("authentication")
-//					config.enable_authentication = 1
 
 				if ("norespawn")
 					config.respawn = 0

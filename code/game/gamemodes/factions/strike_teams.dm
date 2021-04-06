@@ -4,9 +4,11 @@
 	logo_state = "nano-logo"
 
 /datum/faction/strike_team/forgeObjectives(mission)
-	. = ..()
+	if(!..())
+		return FALSE
 	var/datum/objective/custom/c = AppendObjective(/datum/objective/custom)
 	c.explanation_text = mission
+	return TRUE
 
 //________________________________________________
 

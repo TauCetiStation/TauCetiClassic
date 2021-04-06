@@ -24,8 +24,10 @@
 	return /datum/role/abductor/scientist
 
 /datum/faction/abductors/forgeObjectives()
-	. = ..()
+	if(!..())
+		return FALSE
 	AppendObjective(/datum/objective/experiment)
+	return TRUE
 
 /datum/faction/abductors/can_setup()
 	if(!..())

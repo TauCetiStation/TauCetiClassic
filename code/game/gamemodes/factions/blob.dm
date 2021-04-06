@@ -82,9 +82,11 @@
 	blobwincount = 500 * max_roles
 
 /datum/faction/blob_conglomerate/forgeObjectives()
-	. = ..()
+	if(!..())
+		return FALSE
 	CountFloors()
 	AppendObjective(/datum/objective/blob_takeover)
+	return TRUE
 
 // -- Fluff & warnings --
 
