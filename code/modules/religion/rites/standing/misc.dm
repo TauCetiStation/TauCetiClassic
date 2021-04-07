@@ -152,7 +152,7 @@
 							  "...They endowed Animation with human passions and feelings...",
 							  "...Animation, come from the New Kingdom, rejoice in the light!...",)
 	invoke_msg = "I appeal to you! I am calling! Wake up from sleep!"
-	favor_cost = 20
+	favor_cost = 80
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
@@ -162,13 +162,14 @@
 /datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
-	var/list/anim_items = list()
+	var/anim_items = 0
 	for(var/obj/item/O in get_turf(AOG))
-		anim_items += O
-	if(anim_items.len == 0)
+		anim_items++
+	if(!anim_items)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
 		return FALSE
-	favor_cost = round(initial(favor_cost) * religion.members * anim_items / divine_power)
+	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items / divine_power), 10)
+	religion.update_rites()
 	return TRUE
 
 /datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/AOG)
@@ -180,10 +181,17 @@
 	for(var/obj/item/O in get_turf(AOG))
 		anim_items += O
 
+	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items.len) / divine_power, 10)
+	religion.update_rites()
+
+	if(!religion.check_costs(favor_cost, piety_cost, user))
+		return FALSE
+
 	if(anim_items.len != 0)
 		for(var/obj/item/O in anim_items)
 			var/mob/living/simple_animal/hostile/mimic/copy/religion/R = new(O.loc, O)
 			religion.add_member(R, HOLY_ROLE_PRIEST)
+			R.friends = religion.members
 
 		user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE

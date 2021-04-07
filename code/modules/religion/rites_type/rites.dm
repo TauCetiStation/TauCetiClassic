@@ -82,7 +82,7 @@
 	if(SEND_SIGNAL(src, COMSIG_RITE_CAN_START, user, AOG) & COMPONENT_CHECK_FAILED)
 		return FALSE
 
-	if(!religion.check_costs(favor_cost, user = user))
+	if(!religion.check_costs(favor_cost, piety_cost, user))
 		return FALSE
 
 	if(!can_start(user, AOG))
@@ -123,7 +123,7 @@
 
 /datum/religion_rites/proc/end_wrapper(mob/living/user, obj/AOG)
 	end(user, AOG)
-	if(invoke_effect(user, AOG))
+	if(invoke_effect(user, AOG) && religion.check_costs(favor_cost, piety_cost, user))
 		religion.adjust_favor(-favor_cost)
 		religion.adjust_favor(-piety_cost)
 		religion.ritename_by_count[name]++
