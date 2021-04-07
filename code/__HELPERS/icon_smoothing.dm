@@ -57,7 +57,7 @@
 
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
-		return FALSE
+		return 0
 
 	var/adjacencies = 0
 
@@ -65,7 +65,7 @@
 	if(ismovable(A))
 		AM = A
 		if(AM.can_be_unanchored && !AM.anchored)
-			return FALSE
+			return 0
 
 	for(var/direction in global.cardinal)
 		AM = find_type_in_direction(A, direction)
