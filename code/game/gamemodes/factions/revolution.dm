@@ -9,10 +9,9 @@
 	name = "Revolutionaries"
 	ID = REVOLUTION
 	required_pref = ROLE_REV
-	initial_role = HEADREV
-	late_role = REV
 	desc = "Viva!"
 	logo_state = "rev-logo"
+
 	initroletype = /datum/role/syndicate/rev_leader
 	roletype = /datum/role/rev
 

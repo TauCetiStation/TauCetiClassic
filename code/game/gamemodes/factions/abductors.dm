@@ -6,7 +6,6 @@
 	required_pref = ROLE_ABDUCTOR
 
 	initroletype = /datum/role/abductor/agent
-	initial_role = ABDUCTOR
 
 	logo_state = "abductor-logo"
 

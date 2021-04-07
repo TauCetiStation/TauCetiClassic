@@ -4,6 +4,5 @@
 	required_pref = ROLE_GHOSTLY
 
 	roletype = /datum/role/borer
-	late_role = BORER
 
 	logo_state = "borer-logo"

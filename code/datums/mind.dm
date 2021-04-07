@@ -541,7 +541,8 @@
 			count--
 			var/mob/living/carbon/human/H = pick(candidates)
 			candidates.Remove(H)
-			if(initial(fac_type.initial_role) in H.mind.antag_roles) // Ex: a head rev being made a revolutionary.
+			var/initial_role = initial(FF.initroletype.id)
+			if(initial_role in H.mind.antag_roles) // Ex: a head rev being made a revolutionary.
 				continue
 			if(isobserver(H))
 				H = makeBody(H)

@@ -20,10 +20,7 @@
 	required_pref = BLOBOVERMIND
 
 	initroletype = /datum/role/blob_overmind
-	initial_role = BLOBOVERMIND
-
 	roletype = /datum/role/blob_overmind/cerebrate
-	late_role = BLOBCEREBRATE
 
 	min_roles = 1
 	max_roles = 2

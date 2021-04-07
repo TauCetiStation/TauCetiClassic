@@ -4,11 +4,8 @@
 	name = SYNDIOPS
 	ID = SYNDIOPS
 	logo_state = "nuke-logo"
-
 	required_pref = ROLE_OPERATIVE
 
-	initial_role = NUKE_OP
-	late_role = NUKE_OP
 	initroletype = /datum/role/syndicate/operative
 
 	min_roles = 2

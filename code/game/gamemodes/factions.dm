@@ -6,8 +6,6 @@
 	@name: String: Name of the faction
 	@ID: List(String): Identifying strings for shorthand finding this faction.
 	@desc: String: Description of the faction, their intentions, how they do things, etc. Something for lorewriters to use.
-	@initial_role: String(DEFINE): On initial setup via gamemode or faction creation, set the new minds role ID to this.
-	@late_role: String(DEFINE): On later recruitment, set the new minds role ID to this. TRAITOR for example
 	@required_pref: String(DEFINE): What preference is required to be recruited to this faction.
 	@members: List(Reference): Who is a member of this faction - ROLES, NOT MINDS
 	@max_roles: Integer: How many members this faction is limited to. Set to 0 for no limit
@@ -28,9 +26,7 @@
 	var/accept_latejoiners = FALSE
 
 	var/datum/role/leader
-	var/initial_role
 	var/datum/role/initroletype
-	var/late_role
 	var/datum/role/roletype
 
 	var/logo_state
@@ -120,11 +116,12 @@
 		if(R.antag == M)
 			to_chat(world, "HandleNewMind - [M.name] - if(R.antag == M)")
 			return null
+	var/initial_role = initial(initroletype.id)
 	if(M.GetRole(initial_role))
 		log_mode("Mind already had a role of [initial_role]!")
 		return null
 	var/role_type = get_initrole_type()
-	var/datum/role/newRole = new role_type(null, src, initial_role)
+	var/datum/role/newRole = new role_type(null, src)
 	if(!newRole.AssignToRole(M))
 		newRole.Drop()
 		to_chat(world, "HandleNewMind - [M.name] - if(!newRole.AssignToRole(M))")
@@ -139,11 +136,12 @@
 	for(var/datum/role/R in members)
 		if(R.antag == M)
 			return R
+	var/late_role = initial(roletype.id)
 	if(M.GetRole(late_role))
 		log_mode("Mind already had a role of [late_role]!")
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
-	var/datum/role/R = new role_type(null, src, late_role) // Add him to our roles
+	var/datum/role/R = new role_type(null, src) // Add him to our roles
 	if(!R.AssignToRole(M, override))
 		R.Drop()
 		return null

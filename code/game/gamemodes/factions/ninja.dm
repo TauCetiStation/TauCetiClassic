@@ -2,8 +2,6 @@
 	name = SPIDERCLAN
 	ID = SPIDERCLAN
 
-	initial_role = NINJA
-	late_role = NINJA
 	initroletype = /datum/role/ninja
 
 	min_roles = 2

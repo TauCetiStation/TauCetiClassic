@@ -2,12 +2,9 @@
 	name = WIZFEDERATION
 	ID = WIZFEDERATION
 	logo_state = "wizard-logo"
-
 	required_pref = ROLE_WIZARD
 
-	initial_role = WIZARD
 	initroletype = /datum/role/wizard
-	late_role = WIZ_APPRENTICE
 	roletype = /datum/role/wizard_apprentice
 
 	max_roles = 1

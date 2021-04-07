@@ -1,10 +1,10 @@
 /datum/faction/changeling
 	name = "Changeling Hivemind"
 	ID = HIVEMIND
-	initial_role = CHANGELING
-	late_role = CHANGELING
 	required_pref = CHANGELING
+
 	initroletype = /datum/role/changeling
+	roletype = /datum/role/changeling
 
 	min_roles = 1
 	max_roles = 4

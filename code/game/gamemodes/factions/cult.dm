@@ -14,11 +14,8 @@
 	name = BLOODCULT
 	ID = BLOODCULT
 	logo_state = "cult-logo"
-
 	required_pref = ROLE_CULTIST
 
-	initial_role = CULTIST
-	late_role = CULTIST
 	initroletype = /datum/role/cultist
 
 	min_roles = 1

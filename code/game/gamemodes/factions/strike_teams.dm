@@ -17,7 +17,6 @@
 	ID = EMERSQUAD
 	logo_state = "ert-logo"
 
-	initial_role = RESPONDER
 	initroletype = /datum/role/emergency_responder
 
 //________________________________________________
@@ -27,7 +26,6 @@
 	ID = DEATHSQUAD
 	logo_state = "death-logo"
 
-	initial_role = DEATHSQUADIE
 	initroletype = /datum/role/death_commando
 
 
@@ -38,6 +36,5 @@
 	ID = SYNDIESQUAD
 	logo_state = "elite-logo"
 
-	initial_role = SYNDIESQUADIE
 	initroletype = /datum/role/syndicate_elite_commando
 

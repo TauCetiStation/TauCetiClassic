@@ -3,12 +3,11 @@
 /datum/faction/malf_silicons
 	name = MALF
 	ID = MALF
+	logo_state = "malf-logo"
 	required_pref = ROLE_MALF
-	initial_role = MALF
-	late_role = MALFBOT
+
 	initroletype = /datum/role/malfAI //First addition should be the AI
 	roletype = /datum/role/malfbot //Then anyone else should be bots
-	logo_state = "malf-logo"
 
 	max_roles = 1
 

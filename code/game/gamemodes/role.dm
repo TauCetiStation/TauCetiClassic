@@ -58,7 +58,7 @@
 
 	var/list/greets = list(GREET_DEFAULT,GREET_CUSTOM)
 
-/datum/role/New(datum/mind/M, datum/faction/fac, new_id, override = FALSE)
+/datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	// Link faction.
 	faction = fac
@@ -67,9 +67,6 @@
 	else
 		faction.add_role(src)
 
-	if(new_id)
-		id = new_id
-
 	if(M && !AssignToRole(M, override))
 		Drop()
 		return
@@ -77,7 +74,7 @@
 	objectives.owner = M
 	..()
 
-/datum/role/proc/AssignToRole(datum/mind/M, override = 0, msg_admins = TRUE)
+/datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE)
 	if(!istype(M) && !override)
 		log_mode("M is [M.type]!")
 		return FALSE

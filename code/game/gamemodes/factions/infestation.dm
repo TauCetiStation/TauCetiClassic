@@ -4,11 +4,8 @@
 	name = XENOMORPH_HIVE
 	ID = XENOMORPH_HIVE
 	logo_state = "xeno-logo"
-
 	required_pref = ROLE_ALIEN
 
-	initial_role = XENOMORPH
-	late_role = XENOMORPH
 	initroletype = /datum/role/alien
 
 	min_roles = 3
