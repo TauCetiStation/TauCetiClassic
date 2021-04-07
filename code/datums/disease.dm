@@ -135,7 +135,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	var/check_range = airborne_range//defaults to airborne - range 2
 
 	if(how_spread != AIRBORNE && how_spread != SPECIAL)
-		check_range = TRUE // everything else, like infect-on-contact things, only infect things on top of it
+		check_range = 1 // everything else, like infect-on-contact things, only infect things on top of it
 
 	if(isturf(source.loc))
 		for(var/mob/living/carbon/M in oview(check_range, source))
