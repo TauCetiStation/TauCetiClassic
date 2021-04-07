@@ -5,4 +5,3 @@
 //Tool types defines
 
 #define TOOL_KNIFE "knife"
-
