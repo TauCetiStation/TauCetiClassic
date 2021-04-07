@@ -210,7 +210,7 @@
 						M.gib()
 						return
 
-		else
+		if(/obj/singularity/energy_ball || /obj/singularity/scrap_ball)
 			return
 	..()
 
