@@ -33,7 +33,7 @@
 	if(istype(D,/atom))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
-			sprite = TRUE
+			sprite = 1
 
 	title = "[D] (\ref[D]) = [D.type]"
 
