@@ -293,7 +293,7 @@
 // This proc converts all related objects in area_type to this reigion's liking.
 /datum/religion/proc/religify(_area_type = area_type, datum/callback/after_action, mob/user, force = FALSE)
 	var/area/area = get_area_by_type(_area_type)
-	if(!istype(area.religion, type) && !force)
+	if(area && !istype(area.religion, type) && !force)
 		if(user)
 			to_chat(user, "<span class='warning'>[area] больше не под контролем вашей религии!</span>")
 		return FALSE

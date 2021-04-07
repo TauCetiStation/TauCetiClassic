@@ -38,7 +38,7 @@
 	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/do_effect)
 	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/equipped_effect)
 	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped_effect)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/scatter_effect)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/del_effect)
 
 	var/datum/mechanic_tip/self_effect/effect_tip = new(src, effect_type)
 
@@ -61,9 +61,8 @@
 			can_spawn_effect = FALSE
 			can_spawn_effect_timer = addtimer(CALLBACK(src, .proc/ready_create_effect), recharge_time, TIMER_STOPPABLE)
 			effect = A
-			RegisterSignal(effect, list(COMSIG_PARENT_QDELETED), .proc/scatter_effect)
 			if(time_to_del)
-				QDEL_IN(effect, time_to_del)
+				addtimer(CALLBACK(src, .proc/scatter_effect), time_to_del)
 			remove_outline()
 		else
 			qdel(A)
@@ -81,14 +80,19 @@
 	if(!have_outline && can_spawn_effect)
 		create_outline()
 
+/datum/component/self_effect/proc/del_effect()
+	QDEL_NULL(effect)
+
 /datum/component/self_effect/proc/scatter_effect()
 	if(isitem(effect))
 		var/obj/item/I = effect
-		if(I && (I.slot_equipped == SLOT_L_HAND || I.slot_equipped == SLOT_R_HAND))
+		if(I)
 			var/mob/M = I.loc
 			to_chat(M, "<span class='warning'>[effect] was scattered.</span>")
 
-	QDEL_NULL(effect)
+	del_effect()
+	if(can_spawn_effect_timer)
+		deltimer(can_spawn_effect_timer)
 	can_spawn_effect_timer = addtimer(CALLBACK(src, .proc/ready_create_effect), recharge_time_after_del, TIMER_STOPPABLE)
 
 /datum/component/self_effect/proc/remove_outline()
