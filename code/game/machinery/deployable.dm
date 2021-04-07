@@ -260,6 +260,3 @@ for reference:
 	explosion(src.loc,-1,-1,0)
 	if(src)
 		qdel(src)
-
-
-
