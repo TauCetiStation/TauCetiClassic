@@ -37,7 +37,7 @@
 #define N_SOUTHEAST   (1<<6)
 #define N_SOUTHWEST   (1<<10)
 
-#define SMOOTH_FALSE      0      //not smooth
+#define SMOOTH_FALSE      FALSE    //not smooth
 #define SMOOTH_TRUE       (1<<0) //smooths with exact specified types or just itself
 #define SMOOTH_MORE       (1<<1) //smooths with all subtypes of specified types or just itself (this value can replace SMOOTH_TRUE)
 #define SMOOTH_DIAGONAL   (1<<2) //if atom should smooth diagonally, this should be present in 'smooth' var
@@ -57,7 +57,7 @@
 
 /proc/calculate_adjacencies(atom/A)
 	if(!A.loc)
-		return 0
+		return FALSE
 
 	var/adjacencies = 0
 
@@ -65,7 +65,7 @@
 	if(ismovable(A))
 		AM = A
 		if(AM.can_be_unanchored && !AM.anchored)
-			return 0
+			return FALSE
 
 	for(var/direction in global.cardinal)
 		AM = find_type_in_direction(A, direction)

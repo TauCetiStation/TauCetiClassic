@@ -14,9 +14,9 @@ var/list/paper_blacklist = list("java","onblur","onchange","onclick","ondblclick
 	"onkeypress","onkeyup","onload","onmousedown","onmousemove","onmouseout","onmouseover",	\
 	"onmouseup","onreset","onselect","onsubmit","onunload")
 
-var/gravity_is_on = 1
+var/gravity_is_on = TRUE
 var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
-var/visual_counter = 1
+var/visual_counter = TRUE
 
 //Goonstyle scoreboard
 // NOW AN ASSOCIATIVE LIST
@@ -75,13 +75,13 @@ var/global/list/antagonists_completion = list()
 
 // Icons that appear on the Round End pop-up browser
 var/global/list/end_icons = list()
-var/endgame_info_logged = 0
+var/endgame_info_logged = FALSE
 
 // Xenomorphs
 var/facehuggers_control_type = FACEHUGGERS_PLAYABLE
 
 // Unsorted stuff
-var/global_message_cooldown = 1
+var/global_message_cooldown = TRUE
 var/list/stealth_keys = list()
 var/list/ignore_vision_inside = list(
 	/obj/mecha,

@@ -247,9 +247,9 @@
 
 	var/list/pickerlist = list()
 	for(var/i in global.bitfields[bitfield])
-		var/can_edit = 1
+		var/can_edit = TRUE
 		if(!isnull(allowed_edit_list) && !(allowed_edit_list & global.bitfields[bitfield][i]))
-			can_edit = 0
+			can_edit = FALSE
 		if(current_value & global.bitfields[bitfield][i])
 			pickerlist += list(list("checked" = 1, "value" = global.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 		else
@@ -303,7 +303,7 @@
 // otherwise, just reset the client mob's machine var.
 //
 /client/verb/windowclose(atomref as text)
-	set hidden = 1						// hide this verb from the user's panel
+	set hidden = TRUE						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
 	//world << "windowclose: [atomref]"

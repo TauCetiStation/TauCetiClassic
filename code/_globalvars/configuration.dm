@@ -14,20 +14,20 @@ var/changelog_hash = ""
 
 var/list/donators = list()
 
-var/aliens_allowed = 0
-var/ooc_allowed = 1
-var/looc_allowed = 1
-var/dsay_allowed = 1
-var/dooc_allowed = 1
-var/traitor_scaling = 1
-//var/goonsay_allowed = 0
-var/dna_ident = 1
-var/abandon_allowed = 1
-var/enter_allowed = 1
-var/guests_allowed = 1
-var/shuttle_frozen = 0
-var/shuttle_left = 0
-var/tinted_weldhelh = 1
+var/aliens_allowed = FALSE
+var/ooc_allowed = TRUE
+var/looc_allowed = TRUE
+var/dsay_allowed = TRUE
+var/dooc_allowed = TRUE
+var/traitor_scaling = TRUE
+//var/goonsay_allowed = FALSE
+var/dna_ident = TRUE
+var/abandon_allowed = TRUE
+var/enter_allowed = TRUE
+var/guests_allowed = TRUE
+var/shuttle_frozen = FALSE
+var/shuttle_left = FALSE
+var/tinted_weldhelh = TRUE
 var/mouse_respawn_time = 5 //Amount of time that must pass between a player dying as a mouse and repawning as a mouse. In minutes.
 
 // Debug is used exactly once (in living.dm) but is commented out in a lot of places.  It is not set anywhere and only checked.
@@ -39,9 +39,9 @@ var/Debug2 = 1   // enables detailed job debug file in secrets
 var/MAX_EXPLOSION_RANGE = 14
 
 var/eventchance = 10 //% per 5 mins
-var/event = 0
-var/hadevent = 0
-var/blobevent = 0
+var/event = FALSE
+var/hadevent = FALSE
+var/blobevent = FALSE
 
 //Admin call for slack
 var/list/ac_nameholder = list()

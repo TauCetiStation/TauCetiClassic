@@ -1,10 +1,10 @@
 /datum/data
 	var/name = "data"
-	var/size = 1.0
+	var/size = 1
 
 /datum/data/function
 	name = "function"
-	size = 2.0
+	size = 2
 
 /datum/data/function/data_control
 	name = "data control"
@@ -14,7 +14,7 @@
 
 /datum/data/record
 	name = "record"
-	size = 5.0
+	size = 5
 	var/list/fields = list(  )
 
 /datum/data/text

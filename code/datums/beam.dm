@@ -9,10 +9,10 @@
 	var/max_distance = 0
 	var/endtime = 0
 	var/sleep_time = 3
-	var/finished = 0
+	var/finished = FALSE
 	var/target_oldloc = null
 	var/origin_oldloc = null
-	var/static_beam = 0
+	var/static_beam = FALSE
 	var/beam_type = /obj/effect/ebeam //must be subtype
 	var/layer = null
 
@@ -24,7 +24,7 @@
 	target = beam_target
 	target_oldloc = get_turf(target)
 	if(origin_oldloc == origin && target_oldloc == target)
-		static_beam = 1
+		static_beam = TRUE
 	max_distance = maxdistance
 	base_icon = new(beam_icon,beam_icon_state)
 	icon = beam_icon
@@ -49,7 +49,7 @@
 
 
 /datum/beam/proc/End()
-	finished = 1
+	finished = TRUE
 
 
 /datum/beam/proc/Reset()
@@ -123,7 +123,7 @@
 
 /obj/effect/ebeam
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	anchored = 1
+	anchored = TRUE
 	var/datum/beam/owner
 
 
