@@ -31,9 +31,9 @@
 
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
-		return TRUE
+		return 1
 
-	return FALSE //not in range and not telekinetic
+	return 0 //not in range and not telekinetic
 
 /**
  * Get a bounding box of a list of atoms.
