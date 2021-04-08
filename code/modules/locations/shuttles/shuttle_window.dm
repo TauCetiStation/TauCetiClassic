@@ -55,6 +55,12 @@
 	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
 	dir = SOUTHWEST
 
+/obj/structure/window/reinforced/shuttle/vox
+	name = "shuttle window"
+	icon = 'code/modules/locations/shuttles/vox_shuttle.dmi'
+	icon_state = "7,10"
+	dir = SOUTHWEST
+
 /obj/structure/window/reinforced/shuttle/default
 	name = "shuttle window"
 	icon = 'icons/obj/podwindows.dmi'

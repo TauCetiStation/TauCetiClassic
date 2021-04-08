@@ -46,3 +46,12 @@
 /obj/structure/object_wall/evac
 	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
 	icon_state = "9,1"
+
+/obj/structure/object_wall/vox
+	name = "skipjack wall"
+	desc = "Shuttle wall covered with graffitis."
+	icon = 'code/modules/locations/shuttles/vox_shuttle.dmi'
+	icon_state = "14,11"
+
+/obj/structure/object_wall/vox/internal
+	desc = "Internal shuttle wall. Cleaner than outside walls, but not by far."
