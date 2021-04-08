@@ -131,7 +131,7 @@
 		for(var/aspect in religion.aspects)
 			var/datum/aspect/asp = religion.aspects[aspect]
 			var/points = asp.sacrifice(I, user, src)
-			var/mult = asp.power > 1 ? round(log(asp.power, 10), 0.01) : 0
+			var/mult = asp.power > 1 ? round(log(EXP, asp.power), 0.01) : 0
 			mult += 1
 			points *= mult
 			if(points > max_points)
