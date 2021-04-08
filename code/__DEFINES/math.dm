@@ -2,7 +2,6 @@
 #define SPEED_OF_LIGHT		3e8 //not exact but hey!
 #define SPEED_OF_LIGHT_SQ	9e+16
 #define INFINITY 			1.#INF
-#define EXP 				2.71828183
 
 // Converts 255 RGB color values to float and returns that as matrix, where color applied into contrast row.
 #define RGB_CONTRAST(r, g, b) list(1,0,0, 0,1,0, 0,0,1, r/255, g/255, b/255)
