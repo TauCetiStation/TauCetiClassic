@@ -191,7 +191,7 @@
 	edge = 0
 
 /obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(istype(target, /obj/singularity)
+	if(istype(target, /obj/singularity))
 		  switch(target.type)
 			  if(/obj/singularity)
 				  var/obj/singularity/S = target
