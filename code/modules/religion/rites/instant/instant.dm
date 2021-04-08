@@ -80,14 +80,14 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob
-	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD] || H.my_religion)
+	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD])
 		to_chat(user, "<span class='warning'>Неподходящее тело.</span>")
 		return FALSE
 	if(!global.cult_religion.can_convert(H))
 		to_chat(user, "<span class='warning'>Разум тела сопротивляется.</span>")
 		return FALSE
-	if(jobban_isbanned(H, ROLE_CULTIST))
-		to_chat(user, "<span class='warning'>Ему не нужно такое тело.</span>")
+	if(jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate"))
+		to_chat(user, "<span class='warning'>Нар-Си не нужно такое тело.</span>")
 		return FALSE
 
 	return TRUE
