@@ -8,6 +8,8 @@
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
+	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTATOR, GREET_ROUNDSTART)
+
 /datum/role/syndicate/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
 		if(1 to 20)
@@ -77,7 +79,6 @@
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You have joined the ranks of the Syndicate and become a traitor to Nanotrasen!</span>")
 		else
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <span class='danger'>You are a Traitor.</span>")
-
 
 	return TRUE
 

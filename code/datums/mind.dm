@@ -236,7 +236,7 @@
 		if (newRole.greets.len)
 			if (alert("Do you want to greet them as their new role?", "Assigned role", "Yes", "No") == "Yes")
 				chosen_greeting = input("Choose a greeting", "Assigned role", null) as null|anything in newRole.greets
-				if (chosen_greeting == "custom")
+				if (chosen_greeting == GREET_CUSTOM)
 					custom_greeting = input("Choose a custom greeting", "Assigned role", "") as null|text
 
 		if(!newRole.AssignToRole(src,1))//it shouldn't fail since we're using our admin powers to force the role
