@@ -11984,19 +11984,6 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
-"aHo" = (
-/obj/effect/step_trigger/teleporter/random{
-	affect_ghosts = 1;
-	name = "escapeshuttle_leave";
-	teleport_x = 25;
-	teleport_x_offset = 245;
-	teleport_y = 25;
-	teleport_y_offset = 245;
-	teleport_z = 6;
-	teleport_z_offset = 6
-	},
-/turf/space,
-/area/shuttle/vox/transit)
 "aHp" = (
 /turf/unsimulated/floor{
 	name = "plating"
@@ -16116,15 +16103,6 @@
 	icon_state = "swall_s10"
 	},
 /area/space)
-"aWG" = (
-/obj/effect/step_trigger/thrower{
-	affect_ghosts = 1;
-	name = "thrower_throwdown";
-	stopper = 0;
-	tiles = 0
-	},
-/turf/space,
-/area/shuttle/vox/transit)
 "aWH" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
@@ -38983,15 +38961,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -39233,14 +39211,14 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 ofb
 ofb
 ofb
@@ -39248,8 +39226,8 @@ ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -39486,17 +39464,17 @@ aaM
 ahG
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 ofb
 ofb
 ofb
@@ -39506,8 +39484,8 @@ ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ahG
+ahG
 aaM
 aaM
 ahG
@@ -39743,11 +39721,10 @@ aaM
 ahG
 aaM
 aaM
-aaM
+ahG
 ofb
 ofb
 aaM
-aHo
 ofb
 ofb
 ofb
@@ -39764,7 +39741,8 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ahG
 aaM
 aaM
 ahG
@@ -39999,12 +39977,8 @@ aaM
 aaM
 ahG
 aaM
-aaM
-aaM
-ofb
-ofb
-ofb
-aHo
+ahG
+ahG
 ofb
 ofb
 ofb
@@ -40021,7 +39995,11 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ofb
+ofb
+ofb
+ahG
 aaM
 aaM
 ahG
@@ -40256,12 +40234,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
-ofb
-ofb
-ofb
-ofb
-aHo
+ahG
 ofb
 ofb
 ofb
@@ -40278,8 +40251,13 @@ ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ofb
+ofb
+ofb
+ofb
+ofb
+ahG
+ahG
 aaM
 ahG
 aaM
@@ -40513,12 +40491,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
-ofb
-ofb
-ofb
-ofb
-aHo
+ahG
 ofb
 ofb
 ofb
@@ -40536,7 +40509,12 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ofb
+ofb
+ofb
+ofb
+ahG
 aaM
 ahG
 aaM
@@ -40770,30 +40748,30 @@ aaM
 aaM
 ahG
 aaM
-aaM
 ahG
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
-aHo
 aaM
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ahG
 aaM
 ahG
 aaM
@@ -41027,7 +41005,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
+ahG
 ofb
 ofb
 ofb
@@ -41040,7 +41018,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -41049,8 +41026,9 @@ ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ofb
+ahG
+ahG
 aaM
 ahG
 aaM
@@ -41284,7 +41262,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
+ahG
 ofb
 ofb
 ofb
@@ -41297,7 +41275,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -41306,7 +41283,8 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ahG
 aaM
 aaM
 ahG
@@ -41541,7 +41519,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
+ahG
 ofb
 ofb
 ofb
@@ -41554,7 +41532,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -41563,7 +41540,8 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ahG
 aaM
 aaM
 ahG
@@ -41798,7 +41776,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
+ahG
 ofb
 ofb
 ofb
@@ -41811,7 +41789,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -41820,8 +41797,9 @@ ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ofb
+ahG
+ahG
 aaM
 ahG
 aaM
@@ -42055,8 +42033,8 @@ aaM
 aaM
 ahG
 aaM
+ahG
 aaM
-aaM
 ofb
 ofb
 ofb
@@ -42068,7 +42046,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -42078,7 +42055,8 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ahG
 aaM
 ahG
 aaM
@@ -42312,7 +42290,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
+ahG
 ofb
 ofb
 ofb
@@ -42325,7 +42303,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -42335,7 +42312,8 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ahG
 aaM
 ahG
 aaM
@@ -42569,7 +42547,7 @@ aaM
 aaM
 ahG
 aaM
-aaM
+ahG
 ofb
 ofb
 ofb
@@ -42582,7 +42560,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -42591,8 +42568,9 @@ ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ofb
+ahG
+ahG
 aaM
 ahG
 aaM
@@ -42826,9 +42804,8 @@ aaM
 aaM
 ahG
 aaM
-aaM
-oeb
-aWG
+ahG
+ahG
 ofb
 ofb
 ofb
@@ -42839,7 +42816,6 @@ ofb
 ofb
 ofb
 ofb
-aHo
 ofb
 ofb
 ofb
@@ -42848,7 +42824,9 @@ ofb
 ofb
 ofb
 ofb
-aaM
+ofb
+ofb
+ahG
 aaM
 aaM
 ahG
@@ -43084,28 +43062,28 @@ aaM
 ahG
 aaM
 aaM
-aaM
-aWG
-aWG
-oeb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
-aHo
-ofb
-ofb
-ofb
-ofb
-ofb
-ofb
+ahG
 ofb
 ofb
 aaM
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ofb
+ahG
 aaM
 aaM
 ahG
@@ -43341,19 +43319,17 @@ aaM
 ahG
 aaM
 aaM
-aaM
-aaM
-aaM
-oeb
-oeb
-oeb
-aaM
-aaM
-aaM
-aaM
-aaM
-ofb
-aHo
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 ofb
 ofb
 ofb
@@ -43361,8 +43337,10 @@ ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ofb
+ofb
+ahG
+ahG
 aaM
 aaM
 ahG
@@ -43603,22 +43581,22 @@ aaM
 aaM
 aaM
 aaM
-oeb
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aHo
+ahG
+ahG
 ofb
 ofb
 ofb
 ofb
 ofb
 ofb
-aaM
-aaM
+ofb
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -43866,15 +43844,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM

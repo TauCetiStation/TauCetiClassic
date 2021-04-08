@@ -5,6 +5,8 @@
 	var/stopper = 1 // stops throwers
 	invisibility = 101 // nope cant see this shit
 	anchored = 1
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x3"
 
 /obj/effect/step_trigger/proc/Trigger(atom/movable/A)
 	return 0
