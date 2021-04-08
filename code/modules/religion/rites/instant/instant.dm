@@ -86,7 +86,7 @@
 	if(!global.cult_religion.can_convert(H))
 		to_chat(user, "<span class='warning'>Разум тела сопротивляется.</span>")
 		return FALSE
-	if(jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate"))
+	if(jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate"))
 		to_chat(user, "<span class='warning'>Нар-Си не нужно такое тело.</span>")
 		return FALSE
 
