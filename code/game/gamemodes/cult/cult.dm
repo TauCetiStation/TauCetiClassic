@@ -36,6 +36,7 @@
 	var/list/datum/objective/objectives = list()
 
 	var/eldergod = FALSE //for the summon god objective
+	var/check_leader_time
 
 /datum/game_mode/cult/announce()
 	to_chat(world, "<B>Текущий режим игры - Культ!</B>")
@@ -254,6 +255,37 @@
 	<HR>"}
 
 	return dat
+
+#define CHECK_LEADER_CD 50
+/datum/game_mode/cult/process()
+	if(check_leader_time < world.time)
+		to_chat(world, "text")
+		check_leader_time = world.time + CHECK_LEADER_CD
+		var/leader = FALSE
+		for(var/mob/living/carbon/human/M in religion.members)
+			if(M && M.client && M.client.inactivity <= 20 MINUTES && M.mind?.holy_role == CULT_ROLE_MASTER) // 20 minutes inactivity are OK
+				leader = TRUE
+				break
+
+		if(!leader)
+			log_debug("There are zero active leaders of cult, trying to add some..")
+			var/added_lead = FALSE
+			for(var/mob/living/carbon/human/H in religion.members)
+				if(H.stat != DEAD && H.client?.inactivity <= 20 MINUTES && H.mind?.holy_role != CULT_ROLE_MASTER)
+					H.mind.holy_role = CULT_ROLE_MASTER
+					add_antag_hud(antag_hud_type, leader_hud_name, H)
+
+					to_chat(H, "<span class='warning'>Вы теперь новый лидер культа.</span>")
+					added_lead = TRUE
+					break
+
+			if(added_lead)
+				log_admin("Managed to add new leaders of cult.")
+				message_admins("Managed to add new leaders of cult.")
+			else
+				log_admin("Unable to add new leaders of cult.")
+				message_admins("Unable to add new leaders of cult.")
+				check_leader_time = world.time + 10 MINUTE
 
 /datum/game_mode/proc/auto_declare_completion_cult()
 	var/text = ""
