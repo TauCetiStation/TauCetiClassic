@@ -71242,6 +71242,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/item/weapon/storage/lockbox/anti_singulo,
 /turf/simulated/floor,
 /area/station/engineering/chiefs_office)
 "gyb" = (
