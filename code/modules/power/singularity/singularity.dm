@@ -44,6 +44,7 @@
 			break
 
 /obj/singularity/Destroy()
+	visible_message("<span class='warning'><B>[src] slows it's endless spinning down. A second passes - and reality around [src] distorts before allowing [src] to collapse into itself and disappear from existence.</B></span>")
 	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	return ..()
@@ -353,6 +354,9 @@
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
 	return
+
+/obj/singularity/proc/deduce_energy(deduce)
+	energy -= deduce
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

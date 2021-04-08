@@ -158,7 +158,6 @@
 
 /obj/singularity/narsie/large/proc/begin_the_end()
 	narsie_spawn_animation()
-	invisibility = 60
 
 	addtimer(CALLBACK(SSshuttle, /datum/controller/subsystem/shuttle.proc/incall, 0.5), 70)
 
