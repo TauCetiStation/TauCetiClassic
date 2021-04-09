@@ -7,7 +7,7 @@ var/list/req_console_information = list()
 var/list/departments_from_field = list()
 
 /obj/machinery/requests_console
-	name = "Консоль Запросов"
+	name = "Requests Console"
 	desc = "Консоль предназначенна для отправки запросов в разные отделы станции."
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
@@ -53,7 +53,7 @@ var/list/departments_from_field = list()
 	var/message = "";
 	var/to_dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
-	var/console_from_field  // "Консоль Запросов [console_from_field]" "Оповещение [console_from_field]"
+	var/console_from_field  // "Оповещение [console_from_field]"
 	var/list/departments = list() // Buffer for duplicate department filter
 	light_range = 0
 
@@ -75,7 +75,6 @@ var/list/departments_from_field = list()
 	. = ..()
 	if(!console_from_field)
 		console_from_field = department
-	name = "Консоль Запросов [console_from_field]"
 	departments_from_field[department] = console_from_field
 	requests_console_list += src
 	//req_console_departments += department

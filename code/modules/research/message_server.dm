@@ -103,7 +103,7 @@
 			var/from_desc = sender
 			if(length(from))
 				from_desc = from
-			var/content = "<A href='?src=\ref[Console];write=[url_encode(sender)]'>[from_desc]</A>:</B><BR><DIV class='Section'>[message]</DIV>[auth]"
+			var/content = "<A href='?src=\ref[Console];write=[url_encode(sender)]'><B>[from_desc]</B></A>:<BR><DIV class='Section'>[message]</DIV>[auth]"
 			switch(priority)
 				if(2)		//High priority
 					if(Console.newmessagepriority < 2)
