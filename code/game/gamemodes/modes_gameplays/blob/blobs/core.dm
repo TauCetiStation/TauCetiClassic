@@ -106,15 +106,13 @@ var/global/list/blob_nodes = list()
 					if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
 						ded = FALSE
 						break
-			if(ded)
-				conglomerate.HandleNewMind(B.mind)
-			else
-				conglomerate.HandleRecruitedMind(B.mind)
+			add_faction_member(conglomerate, B, !ded)
 
 	else //No faction? Make one and you're the overmind.
 		conglomerate = SSticker.mode.CreateFaction(/datum/faction/blob_conglomerate)
 		if(conglomerate)
-			conglomerate.HandleNewMind(B.mind)
+			add_faction_member(conglomerate, B, FALSE)
+
 	B.b_congl = conglomerate
 
 	if(icon_state == "cerebrate")

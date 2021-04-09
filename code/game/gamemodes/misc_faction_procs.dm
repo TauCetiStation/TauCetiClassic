@@ -61,6 +61,8 @@
 	return uniques
 
 /proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE)
+	ASSERT(faction)
+
 	if(recruit)
 		faction.HandleRecruitedMind(M.mind)
 	else
@@ -68,12 +70,13 @@
 
 	var/datum/role/R
 	if(recruit)
-		R = M.mind.GetRole(faction.roletype)
+		R = M.mind.GetRoleByType(faction.roletype)
 	else
-		R = M.mind.GetRole(faction.initroletype)
+		R = M.mind.GetRoleByType(faction.initroletype)
+
 	R.Greet()
-	R.forgeObjectives()
-	R.AnnounceObjectives()
+	faction.forgeObjectives()
+	faction.AnnounceObjectives()
 
 /proc/create_and_setup_role(role_type, mob/P, post_setup = TRUE)
 	var/datum/role/R = SSticker.mode.CreateRole(role_type, P)
