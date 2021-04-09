@@ -348,7 +348,7 @@
 			var/list/datum/faction/game_mode_factions = find_active_all_faction_by_type(type)
 			for(var/datum/faction/faction in game_mode_factions)
 				if(!faction.IsSuccessful())
-					return "loose"
+					return "lose"
 
 	if(roles_allowed.len)
 		for(var/type in roles_allowed)
@@ -358,6 +358,6 @@
 					game_mode_roles += R
 			for(var/datum/role/R in game_mode_roles)
 				if(!R.IsSuccessful())
-					return "loose"
+					return "lose"
 
 	return "win"
