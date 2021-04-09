@@ -1,8 +1,5 @@
 var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
-<<<<<<< HEAD
-=======
-
 /datum/ai_laws
 	var/name = "Unknown Laws"
 	var/zeroth = null
@@ -54,7 +51,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /* Initializers */
 
->>>>>>> parent of 98d63add41 (Перевод законов ИИ)
 /datum/ai_laws/asimov/New()
 	..()
 	add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
