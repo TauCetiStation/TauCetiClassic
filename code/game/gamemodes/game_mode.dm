@@ -17,7 +17,7 @@
 	var/list/roles_allowed = list()
 	var/minimum_player_count
 	var/minimum_players_bundles
-	var/probability = 1
+	var/probability = 100 // this is the weight
 
 	var/newscaster_announcements = null
 
