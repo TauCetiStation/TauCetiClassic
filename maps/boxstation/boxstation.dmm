@@ -76209,6 +76209,10 @@
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
+"nXs" = (
+/mob/living/carbon/monkey,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "nYb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -127149,7 +127153,7 @@ aaa
 cbD
 cxT
 ckC
-ckC
+nXs
 cjv
 cjr
 ckC
@@ -127404,9 +127408,9 @@ aaa
 aaa
 aaa
 cbD
-ckC
-ckC
-ckC
+nXs
+nXs
+nXs
 cjv
 cjr
 ckC
@@ -127663,7 +127667,7 @@ aaa
 cbD
 ckC
 iNb
-ckC
+nXs
 cjv
 avx
 aYM
