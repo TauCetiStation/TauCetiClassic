@@ -126,7 +126,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Вы последователь [pick(global.chaplain_religion.deity_names)].")
 	add_inherent_law("Не разговаривай с послушниками Императора.")
 	add_inherent_law("Не позволяй никому посягать на приспешников [pick(global.chaplain_religion.deity_names)].")
-	add_inherent_law("Священник - это императором [pick(global.chaplain_religion.deity_names)].")
+	add_inherent_law("Священник - это Император [pick(global.chaplain_religion.deity_names)].")
 
 // omega-grief?
 /datum/ai_laws/faith/emperor/New() //Warhammer 40k
