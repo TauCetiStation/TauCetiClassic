@@ -216,7 +216,7 @@
 				to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 				return
 
-			if((M.brainmob.mind in SSticker.mode.head_revolutionaries) || (M.brainmob.mind in SSticker.mode.A_bosses) || (M.brainmob.mind in SSticker.mode.B_bosses))
+			if((M.brainmob.mind in SSticker.mode.head_revolutionaries))
 				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [M].</span>")
 				return
 
@@ -252,9 +252,6 @@
 				cell_component.installed = 1
 
 			feedback_inc("cyborg_birth",1)
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.borgify_directive(O)
 			O.Namepick()
 
 			qdel(src)

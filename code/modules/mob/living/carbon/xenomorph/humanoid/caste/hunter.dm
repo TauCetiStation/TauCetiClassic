@@ -6,7 +6,6 @@
 	storedPlasma = 100
 	max_plasma = 150
 	icon_state = "alienh_s"	//default invisibility
-	heal_rate = 3
 
 /mob/living/carbon/xenomorph/humanoid/hunter/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -30,7 +29,6 @@
 	..()
 
 //Hunter verbs
-
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
 	if(resting)
 		lay_down()
@@ -38,17 +36,18 @@
 	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
 	if(message)
-		to_chat(src, "<span class='noticealien'>You will now [leap_on_click ? "leap at":"slash at"] enemies!</span>")
+		if(leap_on_click)
+			to_chat(src, "<span class='noticealien'>You will now leap at enemies with a middle click!</span>")
+		else
+			to_chat(src, "<span class='noticealien'>You will no longer leap at enemies with a middle click!</span>")
 	else
 		return
 
-
-/mob/living/carbon/xenomorph/humanoid/hunter/ClickOn(atom/A, params)
+/mob/living/carbon/xenomorph/humanoid/hunter/MiddleClickOn(atom/A, params)
 	if(next_move <= world.time && leap_on_click)
 		leap_at(A)
 	else
 		..()
-
 
 #define MAX_ALIEN_LEAP_DIST 7
 
@@ -90,16 +89,22 @@
 
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
-		L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
-		if(issilicon(L))
-			L.Weaken(1) //Only brief stun
+		var/shield = L.is_in_hands(/obj/item/weapon/shield/riot)
+		if(shield)
+			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
+			weakened = 2
 		else
-			L.Weaken(5)
-		sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
-		step_towards(src, L)
-		toggle_leap(FALSE)
-		pounce_cooldown = TRUE
-		VARSET_IN(src, pounce_cooldown, FALSE, pounce_cooldown_time)
+			L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
+			if(issilicon(L))
+				L.Weaken(1) //Only brief stun
+			else
+				L.Weaken(5)
+			sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
+			step_towards(src, L)
+			toggle_leap(FALSE)
+			pounce_cooldown = TRUE
+			VARSET_IN(src, pounce_cooldown, FALSE, pounce_cooldown_time)
+			playsound(src, pick(SOUNDIN_HUNTER_LEAP), VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
 		weakened = 2
@@ -115,3 +120,8 @@
 	if(leap_on_click)
 		toggle_leap()
 	..()
+
+/mob/living/carbon/xenomorph/humanoid/hunter/MobBump(mob/M)
+	. = ..()
+	if(. && leaping && isliving(M) && M.is_in_hands(/obj/item/weapon/shield/riot))
+		STOP_THROWING(src, M)

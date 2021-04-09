@@ -37,11 +37,10 @@ var/list/net_announcer_secret = list()
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 //	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
-	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
-	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
+	var/traitor_scaling = 1 			//if amount of traitors scales based on amount of players
 	var/objectives_disabled = 0 			//if objectives are disabled or not
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
-	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/fps = 20
 	var/list/resource_urls = null
 	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
@@ -51,11 +50,10 @@ var/list/net_announcer_secret = list()
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
-	var/allow_random_events = 0			// enables random events mid-round when set to 1
+	var/allow_random_events = 1			// enables random events mid-round when set to 1
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
-	var/guest_jobban = 1
 	var/usewhitelist = 0
 	var/serverwhitelist = 0
 	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
@@ -368,7 +366,7 @@ var/list/net_announcer_secret = list()
 					config.ert_admin_call_only = 1
 
 				if ("allow_ai")
-					config.allow_ai = 1
+					config.allow_ai = text2num(value)
 
 //				if ("authentication")
 //					config.enable_authentication = 1
@@ -400,9 +398,6 @@ var/list/net_announcer_secret = list()
 				if ("forumurl")
 					config.forumurl = value
 
-				if ("guest_jobban")
-					config.guest_jobban = 1
-
 				if ("guest_ban")
 					guests_allowed = 0
 
@@ -427,11 +422,8 @@ var/list/net_announcer_secret = list()
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
 
-				if ("feature_object_spell_system")
-					config.feature_object_spell_system = 1
-
 				if ("traitor_scaling")
-					config.traitor_scaling = 1
+					config.traitor_scaling = text2num(value)
 
 				if ("objectives_disabled")
 					config.objectives_disabled = 1
@@ -455,7 +447,7 @@ var/list/net_announcer_secret = list()
 						log_misc("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("allow_random_events")
-					config.allow_random_events = 1
+					config.allow_random_events = text2num(value)
 
 				if("kick_inactive")
 					config.kick_inactive = 1
@@ -812,12 +804,12 @@ var/list/net_announcer_secret = list()
 			switch(modeset)
 				if("bs12")
 					switch(M.config_tag)
-						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitorchan","traitor","blob","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 				if("tau classic")
 					switch(M.config_tag)
-						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitor","blob","extended","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 		var/mod_prob = probabilities[M.config_tag]

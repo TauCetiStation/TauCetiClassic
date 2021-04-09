@@ -2,10 +2,6 @@
 /datum/announcement/centcomm/malf
 	subtitle = "Сетевой Мониторинг"
 
-/datum/announcement/station/gang
-	subtitle = "Брандмауэр Станции"
-
-
 /* Blob */
 /datum/announcement/centcomm/blob/outbreak5
 	name = "Blob: Level 5 Outbreak"
@@ -24,35 +20,6 @@
 	name = "Blob: Blob Critical Mass"
 	subtitle = "Тревога. Биоугроза"
 	message = "Биологическая опасность достигла критической массы. Потеря станции неминуема."
-
-/* Epidemic */
-/datum/announcement/centcomm/epidemic/cruiser
-	name = "Epidemic: Cruiser"
-	subtitle = "Система Раннего Оповещения"
-	message = "Подлетающий крейсер обнаружен на встречном курсе. " + \
-			"Сканирование показывает наличие вооружения на борту и его готовность открыть огонь. " + \
-			"Время прибытия: 5 минут."
-/datum/announcement/centcomm/epidemic/cruiser/play()
-	subtitle = "Система Раннего Оповещения [station_name()]"
-	..()
-
-/* Mutiny */
-/datum/announcement/centcomm/mutiny/reveal
-	name = "Mutiny: Directive Reveal"
-	subtitle = "Черезвычайная Передача"
-	message = "Входящая черезвычайная директива: факс в кабинете капитана, КСН Исход."
-/datum/announcement/centcomm/mutiny/reveal/play()
-	message = "Входящая черезвычайная директива: факс в кабинете капитана, [station_name()]."
-	..()
-
-/datum/announcement/centcomm/mutiny/noert
-	name = "Mutiny: ERT is busy"
-	subtitle = "Черезвычайная Передача"
-	message = "Присутсвие ЭРИ в регионе требует все местные аварийные ресурсы. Сейчас отряд быстрого реагирования не может быть вызван."
-/datum/announcement/centcomm/mutiny/noert/play(reason)
-	if(reason)
-		message = "Присутсвие [reason] в регионе требует все местные аварийные ресурсы. Сейчас отряд быстрого реагирования не может быть вызван."
-	..()
 
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
@@ -117,16 +84,3 @@
 	name = "Malf: Announce №4"
 	message = "Мы отследили взломшик#, это каже@&# ва3) сист7ма ИИ, он# *#@амыает меха#7зм самоун@чт$#енiя. Оста*##ивте )то по*@!)$#&&@@  <СВЯЗЬ ПОТЕРЯНА>"
 	sound = "malf4"
-
-/* Gang */
-/datum/announcement/station/gang/breach
-	name = "Gang: Dominator Activation"
-	message = "Network breach detected somewhere on the station. Some Gang is attempting to seize control of the station!"
-/datum/announcement/station/gang/breach/play(area/A, gang)
-	if(A && gang)
-		message = "Network breach detected in [initial(A.name)]. The [gang_name(gang)] Gang is attempting to seize control of the station!"
-	..()
-
-/datum/announcement/station/gang/multiple
-	name = "Gang: Multiple Dominators"
-	message = "Multiple station takeover attempts have made simultaneously. Conflicting hostile runtimes appears to have delayed both attempts."

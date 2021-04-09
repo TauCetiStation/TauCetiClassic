@@ -248,17 +248,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
 
-/mob/dead/observer/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Station Time: [worldtime2text()]")
-		if(SSticker.mode && SSticker.mode.config_tag == "gang")
-			var/datum/game_mode/gang/mode = SSticker.mode
-			if(isnum(mode.A_timer))
-				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-			if(isnum(mode.B_timer))
-				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
-
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
@@ -555,7 +544,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "View Crew Manifest"
 	set category = "Ghost"
 
-	var/dat = data_core.get_manifest()
+	var/dat = data_core.html_manifest(OOC=1)
 
 	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)

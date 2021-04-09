@@ -410,7 +410,7 @@
 	return new_character
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = data_core.get_manifest(OOC = 1)
+	var/dat = data_core.html_manifest(OOC = 1)
 
 	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)

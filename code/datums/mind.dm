@@ -143,8 +143,7 @@
 
 	var/list/sections = list(
 		"implant",
-		"revolution",
-		"gang",
+		"rp-revolution",
 		"cult",
 		"wizard",
 		"changeling",
@@ -174,7 +173,7 @@
 		sections["implant"] = text
 		/** REVOLUTION ***/
 		text = "revolution"
-		if (SSticker.mode.config_tag=="revolution")
+		if (SSticker.mode.config_tag=="rp-revolution")
 			text += uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
@@ -205,43 +204,6 @@
 		else
 			text += "|Disabled in Prefs"
 		sections["revolution"] = text
-
-		/** GANG ***/
-		text = "gang"
-		if (SSticker.mode.config_tag=="gang")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (src in SSticker.mode.A_bosses)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A)</B> <a href='?src=\ref[src];gang=agang'>gangster</a> <b>BOSS</b>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
-			else
-				text += "."
-
-		else if (src in SSticker.mode.B_bosses)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "<a href='?src=\ref[src];gang=takeequip'>take</a>."
-			else
-				text += "."
-
-		else if (src in SSticker.mode.A_gang)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A) GANGSTER</B> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if (src in SSticker.mode.B_gang)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B) GANGSTER</B> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if(ismindshielded(current))
-			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else
-			text += "loyal|<B>NONE</B>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		sections["gang"] = text
 
 		/** CULT ***/
 		text = "cult"
@@ -460,8 +422,6 @@
 
 
 	if (((src in SSticker.mode.head_revolutionaries) || \
-		(src in SSticker.mode.A_bosses)              || \
-		(src in SSticker.mode.B_bosses)              || \
 		(src in SSticker.mode.traitors)              || \
 		(src in SSticker.mode.syndicates))           && \
 		istype(current,/mob/living/carbon/human)      )
@@ -746,8 +706,8 @@
 					// copy targets
 					var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 					if (valid_head)
-						for (var/datum/objective/mutiny/O in valid_head.objectives)
-							var/datum/objective/mutiny/rev_obj = new
+						for (var/datum/objective/rp_rev/O in valid_head.objectives)
+							var/datum/objective/rp_rev/rev_obj = new
 							rev_obj.owner = src
 							rev_obj.target = O.target
 							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
@@ -762,107 +722,6 @@
 				SSticker.mode.forge_revolutionary_objectives(src)
 				SSticker.mode.greet_revolutionary(src,0)
 				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
-
-			if("flash")
-				if (!SSticker.mode.equip_revolutionary(current))
-					to_chat(usr, "<span class='warning'>Spawning flash failed!</span>")
-
-			if("takeflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='warning'>Deleting flash failed!</span>")
-				qdel(flash)
-
-			if("repairflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='warning'>Repairing flash failed!</span>")
-				else
-					flash.broken = 0
-
-			if("reequip")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				qdel(flash)
-				take_uplink()
-				var/fail = 0
-				fail |= !SSticker.mode.equip_traitor(current, 1)
-				fail |= !SSticker.mode.equip_revolutionary(current)
-				if (fail)
-					to_chat(usr, "<span class='warning'>Reequipping revolutionary goes wrong!</span>")
-
-	else if (href_list["gang"])
-		switch(href_list["gang"])
-			if("clear")
-				SSticker.mode.remove_gangster(src,0,1)
-				remove_objectives()
-				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
-				log_admin("[key_name(usr)] has de-gang'ed [current].")
-				remove_antag_hud(ANTAG_HUD_GANGSTER, current)
-
-			if("agang")
-				if(src in SSticker.mode.A_gang)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.add_gangster(src,"A",0)
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gangster_a", current)
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A).")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A).")
-
-			if("aboss")
-				if(src in SSticker.mode.A_bosses)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.A_bosses += src
-				src.special_role = "[gang_name("A")] Gang (A) Boss"
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", current)
-				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>")
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
-				SSticker.mode.forge_gang_objectives(src)
-				SSticker.mode.greet_gang(src,0)
-
-			if("bgang")
-				if(src in SSticker.mode.B_gang)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.add_gangster(src,"B",0)
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gangster_b", current)
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B).")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B).")
-
-			if("bboss")
-				if(src in SSticker.mode.B_bosses)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.B_bosses += src
-				src.special_role = "[gang_name("B")] Gang (B) Boss"
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", current)
-				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>")
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-				SSticker.mode.forge_gang_objectives(src)
-				SSticker.mode.greet_gang(src,0)
-
-			if("equip")
-				switch(SSticker.mode.equip_gang(current))
-					if(1)
-						to_chat(usr, "<span class='warning'>Unable to equip territory spraycan!</span>")
-					if(2)
-						to_chat(usr, "<span class='warning'>Unable to equip recruitment pen and spraycan!</span>")
-					if(3)
-						to_chat(usr, "<span class='warning'>Unable to equip gangtool, pen, and spraycan!</span>")
-
-			if("takeequip")
-				var/list/L = current.get_contents()
-				for(var/obj/item/weapon/pen/gang/pen in L)
-					qdel(pen)
-				for(var/obj/item/device/gangtool/gangtool in L)
-					qdel(gangtool)
-				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
-					qdel(SC)
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
@@ -922,7 +781,7 @@
 					SSticker.mode.wizards -= src
 					special_role = null
 					remove_antag_hud(ANTAG_HUD_WIZ, current)
-					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
+					current.spellremove()
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
@@ -1092,7 +951,7 @@
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
-				current.spellremove(current)
+				current.spellremove()
 				if(src in SSticker.mode.shadows)
 					SSticker.mode.shadows -= src
 					special_role = null
@@ -1320,7 +1179,7 @@
 
 	// remove wizards spells
 	//If there are more special powers that need removal, they can be procced into here./N
-	current.spellremove(current)
+	current.spellremove()
 
 	// clear memory
 	memory = ""
@@ -1460,8 +1319,8 @@
 		// copy targets
 		var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 		if (valid_head)
-			for (var/datum/objective/mutiny/O in valid_head.objectives)
-				var/datum/objective/mutiny/rev_obj = new
+			for (var/datum/objective/rp_rev/O in valid_head.objectives)
+				var/datum/objective/rp_rev/rev_obj = new
 				rev_obj.owner = src
 				rev_obj.target = O.target
 				rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
@@ -1477,16 +1336,6 @@
 	var/obj/item/device/flash/flash = locate() in L
 	qdel(flash)
 	take_uplink()
-	var/fail = 0
-//	fail |= !SSticker.mode.equip_traitor(current, 1)
-	fail |= !SSticker.mode.equip_revolutionary(current)
-
-/datum/mind/proc/make_Gang(gang)
-	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
-	add_antag_hud(ANTAG_HUD_GANGSTER, "[(gang=="A") ? "gang_boss_a" : "gang_boss_b"]", current)
-	SSticker.mode.forge_gang_objectives(src, gang)
-	SSticker.mode.greet_gang(src)
-	SSticker.mode.equip_gang(current)
 
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
@@ -1702,10 +1551,6 @@
 	..()
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
-
-/mob/living/parasite/meme/mind_initialize() //Just in case
-	..()
-	mind.assigned_role = "meme"
 
 //BLOB
 /mob/camera/blob/mind_initialize()

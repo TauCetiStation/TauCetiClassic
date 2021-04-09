@@ -10,9 +10,9 @@
 	name = "infestation"
 	config_tag = "infestation"
 	role_type = ROLE_ALIEN
-	required_players = 20
-	required_players_bundles = 15
-	required_enemies = 2
+	required_players = 25
+	required_players_bundles = 35
+	required_enemies = 3
 	recommended_enemies = 4
 	votable = 0
 	var/last_check = 0

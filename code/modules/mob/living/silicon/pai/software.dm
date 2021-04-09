@@ -727,7 +727,7 @@
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><hr>"
 	if(data_core)
-		dat += data_core.get_manifest(0) // make it monochrome
+		dat += data_core.html_manifest(monochrome=0)
 	dat += "<br>"
 	return dat
 
