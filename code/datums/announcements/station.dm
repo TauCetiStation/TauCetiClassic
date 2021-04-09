@@ -58,7 +58,7 @@
 	message = "Генераторы гравитации снова функционируют с нормальными показателями. Приносим извинения за неудобства."
 	sound = "gravon"
 /datum/announcement/station/gravity_on/play()
-	subtitle = "Отказоустойчивая Система [station_name()]"
+	subtitle = "Отказоустойчивая Система [station_name_ru()]"
 	..()
 
 /datum/announcement/station/gravity_off
@@ -68,7 +68,7 @@
 			"Дальнейшие ошибки могут привести к гравитационному коллапсу и формированию черной дыры. Хорошего дня."
 	sound = "gravoff"
 /datum/announcement/station/gravity_off/play()
-	subtitle = "Отказоустойчивая Система [station_name()]"
+	subtitle = "Отказоустойчивая Система [station_name_ru()]"
 	..()
 
 /* Shuttles */

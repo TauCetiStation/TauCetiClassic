@@ -6,7 +6,9 @@ var/host_announcements
 var/join_test_merge = null
 var/test_merges
 var/station_name = "NSS Exodus"
+var/station_name_ru = "КСН Исход"
 var/system_name = "Tau Ceti"
+var/system_name_ru = "Tay Кита"
 var/game_version = "TauCetiStation"
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
 var/gamestory_start_year = 2213
