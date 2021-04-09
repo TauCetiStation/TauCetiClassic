@@ -74,10 +74,10 @@
 /* Shuttles */
 /datum/announcement/station/shuttle/crew_called
 	name = "Shuttle: Crew Called"
-	message = "Переход экипажа начат. Шаттл вызван. Он прибудет в течении нескольких минут."
+	message = "Смена экипажа начата. Шаттл вызван. Он прибудет в течении нескольких минут."
 	sound = "crew_shut_called"
 /datum/announcement/station/shuttle/crew_called/play()
-	message = "Переход экипажа начат. Шаттл вызван. Он прибудет через [shuttleminutes2text()]."
+	message = "Смена экипажа начата. Шаттл вызван. Он прибудет через [shuttleminutes2text()]."
 	..()
 
 /datum/announcement/station/shuttle/crew_recalled
