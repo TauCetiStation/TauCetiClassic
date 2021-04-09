@@ -50,7 +50,8 @@
 				return
 			adjustToxLoss(-500)
 			var/mob/living/carbon/xenomorph/humanoid/queen/new_xeno = new (loc)
-			mind.transfer_to(new_xeno)
+			new_xeno.key = key
+			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 			qdel(src)
 		else
 			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")
