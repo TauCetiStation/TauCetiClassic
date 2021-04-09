@@ -157,7 +157,7 @@
 		text = "Body destroyed or logged out."
 	sections["roles"] = text
 
-	text = "<font size='5'><b>Roles and Factions</b></font>"
+	text = "<font size='5'><b>Roles and Factions</b></font><BR>"
 	if(!antag_roles.len)
 		text += "<i>This mob has no roles.</i><br>"
 	else
