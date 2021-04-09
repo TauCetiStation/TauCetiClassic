@@ -69,7 +69,8 @@
 			apc.overload_lighting()
 
 		var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
-		L.key = xeno.key
+		xeno.transfer_to(L)
+		xeno.name = L.real_name
 		QDEL_NULL(xeno.original)
 		add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", L)
 		greet_xeno(xeno)

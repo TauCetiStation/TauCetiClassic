@@ -59,8 +59,8 @@
 		if(!new_xeno)
 			CRASH("new_xeno = null. Chosen caste: [alien_caste].")
 		if(mind)
-			new_xeno.key = key
-			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+			mind.transfer_to(new_xeno)
+			new_xeno.mind.name = new_xeno.real_name
 			qdel(src)
 		return
 	else
