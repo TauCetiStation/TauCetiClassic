@@ -48,6 +48,9 @@
 			ded = FALSE
 	if(ded)
 		stage(FACTION_DEFEATED)
+
+	if(config.continous_rounds)
+		return FALSE
 	return ded
 
 /datum/faction/blob_conglomerate/HandleNewMind(datum/mind/M)
