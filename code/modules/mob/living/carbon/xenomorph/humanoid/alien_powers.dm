@@ -209,11 +209,11 @@ Doesn't work on other aliens/AI.*/
 			adjustToxLoss(-50)
 			neurotoxin_next_shot = world.time  + neurotoxin_delay
 		if(ALIEN_ACID)
-			if(!powerc(100))
+			if(!powerc(75))
 				return
 			BB = new /obj/item/projectile/acid_special(usr.loc)
-			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 3)
-			adjustToxLoss(-100)
+			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 2)
+			adjustToxLoss(-75)
 
 	visible_message("<span class='danger'>[src] spits [BB.name] at [target]!</span>")
 	playsound(src, pick(SOUNDIN_XENOMORPH_SPLITACID), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
