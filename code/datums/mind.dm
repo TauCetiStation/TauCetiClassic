@@ -37,6 +37,7 @@
 
 	var/assigned_role
 	var/special_role
+
 	var/holy_role = NONE
 
 	var/protector_role = 0 //If we want force player to protect the station
@@ -79,6 +80,9 @@
 		new_character.mind.current = null
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
+
+	if(current.my_religion)
+		current.my_religion.add_member(new_character, holy_role)
 
 	var/mob/old_character = current
 	current = new_character		//link ourself to our new body
@@ -719,20 +723,38 @@
 	..()
 	mind.assigned_role = "Shade"
 
+/mob/living/simple_animal/construct/mind_initialize()
+	..()
+	if(global.cult_religion)
+		SSticker.mode.add_cultist(mind)
+
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
 	mind.special_role = "Cultist"
+	to_chat(src, "<span class='cult'>Вы играете за Artificer. Вы самый слабый по всем характеристикам вид оболочки, но вы можете строить укрепления, чинить другие оболочки (нажав на них), а так же создавать новые оболочки и камни души.</span>")
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
 	mind.special_role = "Cultist"
+	to_chat(src, "<span class='cult'>Вы играете за Wraith. Несмотря на вашу хрупкость, вы владеете самой большой подвижностью и можете проходить сквозь стены.</span>")
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
 	mind.special_role = "Cultist"
+	to_chat(src, "<span class='cult'>Вы играете за Juggernaut. Ваша подвижность очень ограничена, но вы можете выдержать большое количество повреждений. Ваша сила позволяет вам рвать на куски как врагов, так и стены.</span>")
+
+/mob/living/simple_animal/construct/behemoth/mind_initialize()
+	..()
+	mind.assigned_role = "Behemoth"
+	to_chat(src, "<span class='cult'>Вы играете за Behemoth. Вы самая сильная и живучая оболочка, но это не остановит Полкана.</span>")
+
+/mob/living/simple_animal/construct/proteon/mind_initialize()
+	..()
+	mind.assigned_role = "Proteon"
+	to_chat(src, "<span class='cult'>Вы играете за Proteon. Ваши боевые способности превосходят все оболочки, а так же вы очень быстры и ловки, но при этом вы очень хрупки, по сравнению с другими.</span>")
 
 /mob/living/simple_animal/vox/armalis/mind_initialize()
 	..()

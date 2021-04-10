@@ -207,6 +207,13 @@
 	for(var/V in R.quirks)
 		new V(H)
 
+	// -- Mode/mind specific stuff goes here
+	if(global.cult_religion)
+		if(occupant.mind in global.cult_religion.members_minds)
+			global.cult_religion.add_member(occupant, occupant.mind.holy_role)
+
+	// -- End mode specific stuff
+
 	if(!R.dna)
 		H.dna = new /datum/dna()
 		H.dna.real_name = H.real_name

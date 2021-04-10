@@ -47,7 +47,6 @@
 	use_power = NO_POWER_USE
 	req_access = list(access_engine_equip)
 	allowed_checks = ALLOWED_CHECK_NONE
-	unacidable = TRUE
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell

@@ -85,7 +85,7 @@
 	new /obj/item/weapon/storage/backpack/chaplain(src)
 	new /obj/item/weapon/game_kit/chaplain(src)
 	new /obj/item/weapon/reagent_containers/spray/thurible(src)
-	new /obj/item/clothing/glasses/sunglasses/chaplain(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/chaplain(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/fancy/candle_box(src)
 

@@ -128,19 +128,19 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam)
+/turf/simulated/wall/proc/take_damage(dam, devastated)
 	if(dam)
 		damage = max(0, damage + dam)
-		update_damage()
+		update_damage(devastated)
 	return
 
-/turf/simulated/wall/proc/update_damage()
+/turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
 	if(rotting)
 		cap = cap / 10
 
 	if(damage >= cap)
-		dismantle_wall()
+		dismantle_wall(devastated)
 	else
 		update_icon()
 
@@ -173,7 +173,7 @@
 /turf/simulated/wall/proc/break_wall()
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
-		return (new /obj/structure/cultgirder(src))
+		return (new /obj/structure/girder/cult(src))
 
 	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
@@ -277,9 +277,9 @@
 		else
 			if (prob(40) || rotting)
 				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
-				dismantle_wall(1)
+				dismantle_wall(TRUE)
 			else
-				take_damage(rand(25, 75))
+				take_damage(rand(25, 75), TRUE)
 				to_chat(M, "<span class='info'>You smash against the wall.</span>")
 
 /turf/simulated/wall/attack_hand(mob/user)

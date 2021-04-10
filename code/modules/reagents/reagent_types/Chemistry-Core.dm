@@ -97,7 +97,7 @@
 	..()
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
-	if(ishuman(M) && iscultist(M) && prob(10))
+	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
 		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
 		C.RemoveFromRole(M.mind)
 		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",

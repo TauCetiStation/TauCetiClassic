@@ -1303,14 +1303,6 @@
 			see_in_dark = 8
 			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-		if(seer)
-			var/obj/effect/rune/R = locate() in loc
-			if(R && istype(R.power, /datum/cult/seer))
-				see_invisible = SEE_INVISIBLE_CULT
-			else
-				see_invisible = SEE_INVISIBLE_LIVING
-				seer = FALSE
-
 		if(glasses)
 			var/obj/item/clothing/glasses/G = glasses
 			if(istype(G))
@@ -1325,9 +1317,6 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_MINIMUM
-
-		else if(!seer)
-			see_invisible = SEE_INVISIBLE_LIVING
 
 		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 			var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask

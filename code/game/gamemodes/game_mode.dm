@@ -318,7 +318,6 @@
 
 	return completition_text
 
-
 /datum/game_mode/process()
 	for(var/datum/faction/F in factions)
 		F.process()

@@ -86,8 +86,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
 
-	var/list/possible_bad_dudes = subtypesof(/datum/faction)
-	for(var/type in possible_bad_dudes)
+	for(var/type in subtypesof(/datum/faction))
 		var/datum/faction/F = find_active_first_faction_by_type(type)
 		if(!F)
 			continue

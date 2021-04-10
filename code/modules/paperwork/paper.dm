@@ -48,8 +48,6 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/update_icon()
-	if(icon_state == "scrap_bloodied")
-		return
 	if(info)
 		icon_state = "paper_words"
 		return

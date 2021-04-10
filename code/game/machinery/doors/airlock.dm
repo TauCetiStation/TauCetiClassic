@@ -132,7 +132,7 @@ var/list/airlock_overlays = list()
 	return FALSE
 
 /obj/machinery/door/airlock/proc/isWireCut(wireIndex)
-	return wires.is_index_cut(wireIndex)
+	return wires?.is_index_cut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()
 	return ((aiControlDisabled != 1) && !isAllPowerCut());
