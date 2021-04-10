@@ -259,7 +259,6 @@
 #define CHECK_LEADER_CD 50
 /datum/game_mode/cult/process()
 	if(check_leader_time < world.time)
-		to_chat(world, "text")
 		check_leader_time = world.time + CHECK_LEADER_CD
 		var/leader = FALSE
 		for(var/mob/living/carbon/human/M in religion.members)
