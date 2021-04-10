@@ -1964,11 +1964,11 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunslug
 	name = "Stun Slug"
-	desc = "A stunning, electrified slug for a shotgun."
+	desc = "Box of eight stunning, electrified slugs for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/ammo_casing/shotgun/stunslug
+	materials = list(MAT_METAL = 20000)
+	build_path = /obj/item/ammo_box/eight_shells/stunslug
 	category = list("Weapons")
 
 /datum/design/phoronpistol
