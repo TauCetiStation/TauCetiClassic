@@ -180,11 +180,7 @@
 	M.key = S.key
 	S.cancel_camera()
 
-	if(user.my_religion)
-		if(iscultist(user))
-			SSticker.mode.add_cultist(M.mind)
-		else
-			user.my_religion.add_member(M)
+	user.my_religion?.add_member(M)
 
 	qdel(src)
 	qdel(target)

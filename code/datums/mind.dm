@@ -725,8 +725,7 @@
 
 /mob/living/simple_animal/construct/mind_initialize()
 	..()
-	if(global.cult_religion)
-		SSticker.mode.add_cultist(mind)
+	global.cult_religion?.add_member(src)
 
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()

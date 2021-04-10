@@ -54,8 +54,7 @@
 	/*
 		Only cult
 	*/
-	// Just gamemode of cult
-	var/datum/game_mode/cult/mode
+	var/datum/faction/cult/mode
 	// Is the area captured by /datum/rune/cult/capture_area
 	var/capturing_area = FALSE
 
@@ -108,8 +107,6 @@
 
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		mode = SSticker.mode
 
 /datum/religion/cult/process()
 	adjust_favor(passive_favor_gain)
@@ -235,7 +232,25 @@
 /datum/religion/cult/add_member(mob/M, holy_role)
 	if(!..())
 		return FALSE
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", M)
+	if(!M.mind)
+		var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_CULT]
+		hud.join_hud(M)
+		set_antag_hud(M, "hudcultist")
+	else if(!M.mind.GetRole(CULTIST))
+		mode.HandleRecruitedMind(M.mind)
+		to_chat(world, "test - mode.HandleRecruitedMind(M.mind)") // !!! DEBUG CODE !!!
+	return TRUE
+
+/datum/religion/cult/remove_member(mob/M)
+	if(!..())
+		return FALSE
+	if(M.mind)
+		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+		if(C)
+			C.RemoveFromRole(M.mind)
+		to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
+		M.mind.memory = ""
+		M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
 	return TRUE
 
 /datum/religion/cult/on_exit(mob/M)

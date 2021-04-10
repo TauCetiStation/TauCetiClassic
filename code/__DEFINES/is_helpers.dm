@@ -148,7 +148,7 @@
 
 #define isshadowthrall(H) (H.mind ? H.mind.GetRole(SHADOW_THRALL) : FALSE)
 
-#define iscultist(H) (H.mind ? H.mind.GetRole(CULTIST) : FALSE)
+#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
 #define isvoxraider(H) (H.mind ? H.mind.GetRole(VOXRAIDER) : FALSE)
 

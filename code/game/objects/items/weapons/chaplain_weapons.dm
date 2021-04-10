@@ -139,7 +139,9 @@
 	if(M.stat != DEAD)
 		if(iscultist(M))
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
-			SSticker.mode.remove_cultist(M.mind)
+			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+			C.RemoveFromRole(M.mind)
+			M.Paralyse(5)
 			new /obj/effect/temp_visual/religion/pulse(M.loc)
 			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
 		else

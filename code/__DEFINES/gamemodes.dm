@@ -25,6 +25,7 @@
 #define BLOBCEREBRATE "Blob Cerebrate"
 #define CHANGELING "Changeling"
 #define CULTIST "Cultist"
+#define CULT_LEADER "Cult Leader"
 #define DEATHSQUADIE "Death Commando"
 #define HEADREV "Head Revolutionary"
 #define MALF "Malf AI"

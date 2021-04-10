@@ -106,8 +106,7 @@
 	if(!can_convert(user, AOG))
 		return FALSE
 
-	var/datum/religion/cult/cult = religion
-	cult.mode.add_cultist(AOG.buckled_mob.mind)
+	religion.add_member(AOG.buckled_mob)
 	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
 	religion.adjust_favor(300 * divine_power)
 	return TRUE
@@ -241,8 +240,7 @@
 		return FALSE
 
 	corpse_to_raise.revive()
-	var/datum/religion/cult/cult = religion
-	cult.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
+	religion.add_member(corpse_to_raise) // all checks in proc add_member, No reason to worry
 	corpse_to_raise.visible_message("<span class='[religion.style_text]'>Глаза, раньше бездыханного тела, загораются слабым красным светом.</span>", \
 		"<span class='[religion.style_text]'>Жизнь... Я снова живу...</span>", \
 		"<span class='[religion.style_text]'>Вы слышите слабый, но знакомый шепот.</span>")
@@ -317,8 +315,7 @@
 		H.underwear = 0
 		H.key = M.key
 
-		var/datum/religion/cult/C = religion
-		C.mode.add_cultist(H.mind)
+		religion.add_member(H)
 
 		to_chat(H, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
 		to_chat(H, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
