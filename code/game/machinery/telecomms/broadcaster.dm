@@ -13,8 +13,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "broadcaster"
 	desc = "A dish-shaped machine used to broadcast processed subspace signals."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 25
 	machinetype = 5
@@ -124,13 +124,13 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "comm_server"
 	desc = "A compact machine used for portable subspace telecommuniations processing."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	machinetype = 6
 	heatgen = 0
-	var/intercept = 0 // if nonzero, broadcasts all messages to syndicate channel
+	var/intercept = FALSE // if TRUE, broadcasts all messages to syndicate channel
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
 
