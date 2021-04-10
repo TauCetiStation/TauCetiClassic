@@ -256,10 +256,10 @@
 	list_reagents = list("champagne" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
-	name = "Flask of Holy Water"
-	desc = "A flask of the chaplain's holy water."
+	name = "Holy Flask"
+	desc = "A flask of the chaplain's water."
 	icon_state = "holyflask"
-	list_reagents = list("holywater" = 100)
+	list_reagents = list("water" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"

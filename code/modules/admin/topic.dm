@@ -295,6 +295,7 @@
 							timer_maint_revoke_id = 0
 						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
+		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["edit_shuttle_time"])
@@ -304,6 +305,8 @@
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
 		SSshuttle.announce_emer_called.play()
 		message_admins("<span class='notice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]</span>")
+
+		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["delay_round_end"])
@@ -317,6 +320,8 @@
 			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
+
+		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["simplemake"])

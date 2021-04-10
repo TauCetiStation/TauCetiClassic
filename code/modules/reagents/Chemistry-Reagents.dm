@@ -33,6 +33,8 @@
 	// "holy" means that this reagent will convert turfs into holy turfs,
 	var/list/needed_aspects
 
+	var/datum/religion/religion
+
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!istype(M, /mob/living))
 		return FALSE
@@ -73,6 +75,7 @@
 	return
 
 /datum/reagent/proc/reaction_turf(turf/T, volume)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
@@ -93,7 +96,7 @@
 // This doesn't even work, start EUGH
 
 // Called after add_reagents creates a new reagent.
-/datum/reagent/proc/on_new(data)
+/datum/reagent/proc/on_new()
 	handle_religions()
 	return
 
@@ -142,7 +145,7 @@
 	return TRUE
 
 /datum/reagent/proc/on_skeleton_digest(mob/living/M)
-	return TRUE
+	return FALSE
 
 /datum/reagent/proc/on_shadowling_digest(mob/living/M)
 	return TRUE
@@ -155,12 +158,12 @@
 
 // Handles holy reagents.
 /datum/reagent/proc/handle_religions()
-	if(!global.chaplain_religion)
+	if(!religion)
 		return
-	if(!global.chaplain_religion.holy_reagents[name])
+	if(!religion.holy_reagents[name])
 		return
 
-	global.chaplain_religion.on_holy_reagent_created(src)
+	religion.on_holy_reagent_created(src)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
