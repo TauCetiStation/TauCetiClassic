@@ -88,9 +88,9 @@
 /* Cult */
 /datum/announcement/station/cult/capture_area
 	name = "Anomaly: Bluespace"
-	message = "Unstable bluespace anomaly detected on long range scanners. Expected location: unknown."
+	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: неизвестно."
 	sound = "bluspaceanom"
 /datum/announcement/station/cult/capture_area/play(area/A)
 	if(A)
-		message = "Unstable bluespace anomaly detected on long range scanners. Expected location: [A.name]."
+		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: [A.name]."
 	..()
