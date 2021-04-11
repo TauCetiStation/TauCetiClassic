@@ -25,6 +25,3 @@
 //Time it takes to impregnate someone with facehugger
 #define MIN_IMPREGNATION_TIME 220
 #define MAX_IMPREGNATION_TIME 250
-
-//aliens pressure damage
-#define ALIEN_PRESSURE_DAMAGE 4
