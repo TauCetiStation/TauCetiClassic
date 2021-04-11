@@ -70,12 +70,14 @@
 		R = faction.HandleNewMind(M.mind)
 
 	R.Greet()
+	R.add_antag_hud()
 	R.forgeObjectives()
-	faction.AnnounceObjectives()
+	R.AnnounceObjectives()
 
 /proc/create_and_setup_role(role_type, mob/P, post_setup = TRUE)
 	var/datum/role/R = SSticker.mode.CreateRole(role_type, P)
 	R.Greet()
+	R.add_antag_hud()
 	R.forgeObjectives()
 	R.AnnounceObjectives()
 	if(post_setup)

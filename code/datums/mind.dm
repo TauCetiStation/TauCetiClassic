@@ -81,9 +81,6 @@
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
-	if(current.my_religion)
-		current.my_religion.add_member(new_character, holy_role)
-
 	var/mob/old_character = current
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
@@ -91,6 +88,9 @@
 	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
 	transfer_antag_huds(hud_to_transfer)
+
+	if(old_character.my_religion)
+		old_character.my_religion.add_member(current, holy_role)
 
 	for(var/role in antag_roles)
 		var/datum/role/R = antag_roles[role]
@@ -395,7 +395,8 @@
 
 	else if(href_list["role"]) //Something role specific
 		var/datum/role/R = locate(href_list["role"])
-		R.Topic(href, href_list)
+		if(R)
+			R.Topic(href, href_list)
 
 	else if (href_list["obj_announce"])
 		to_chat(src.current, "<span class='notice'>Your objectives are:</span>")
@@ -725,24 +726,25 @@
 
 /mob/living/simple_animal/construct/mind_initialize()
 	..()
-	global.cult_religion?.add_member(src)
+	if(global.cult_religion)
+		global.cult_religion.add_member(src, CULT_ROLE_HIGHPRIEST)
+	else
+		SSticker.mode.CreateFaction(/datum/faction/cult)
+		global.cult_religion.add_member(src, CULT_ROLE_HIGHPRIEST)// religion was created in faction
 
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
-	mind.special_role = "Cultist"
 	to_chat(src, "<span class='cult'>Вы играете за Artificer. Вы самый слабый по всем характеристикам вид оболочки, но вы можете строить укрепления, чинить другие оболочки (нажав на них), а так же создавать новые оболочки и камни души.</span>")
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
-	mind.special_role = "Cultist"
 	to_chat(src, "<span class='cult'>Вы играете за Wraith. Несмотря на вашу хрупкость, вы владеете самой большой подвижностью и можете проходить сквозь стены.</span>")
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
-	mind.special_role = "Cultist"
 	to_chat(src, "<span class='cult'>Вы играете за Juggernaut. Ваша подвижность очень ограничена, но вы можете выдержать большое количество повреждений. Ваша сила позволяет вам рвать на куски как врагов, так и стены.</span>")
 
 /mob/living/simple_animal/construct/behemoth/mind_initialize()
@@ -759,8 +761,3 @@
 	..()
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
-
-//BLOB
-/mob/camera/blob/mind_initialize()
-	..()
-	mind.special_role = "Blob"

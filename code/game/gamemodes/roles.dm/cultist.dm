@@ -86,7 +86,7 @@
 		if(href_list["cult_leader"])
 			var/mob/living/carbon/human/H = M.current
 			H.mind.holy_role = CULT_ROLE_MASTER
-			add_antag_hud(ANTAG_HUD_CULT, "hudheadcultist", H)
+			add_antag_hud("hudheadcultist")
 	else
 		to_chat(M.current, "Сначала добавьте культиста во фракцию культа")
 

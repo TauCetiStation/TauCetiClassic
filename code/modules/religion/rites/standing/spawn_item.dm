@@ -141,7 +141,7 @@
 	animal.ckey = M.ckey
 	animal.name = "familiar of [god_name] [num2roman(rand(1, 20))]"
 	animal.real_name = animal.name
-	religion.add_member(animal)
+	religion.add_member(animal, HOLY_ROLE_PRIEST)
 	animal.universal_understand = TRUE
 	M.cancel_camera()
 	M.reset_view()

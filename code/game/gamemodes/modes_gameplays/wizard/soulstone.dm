@@ -180,7 +180,7 @@
 	M.key = S.key
 	S.cancel_camera()
 
-	user.my_religion?.add_member(M)
+	user.my_religion?.add_member(M, CULT_ROLE_HIGHPRIEST)
 
 	qdel(src)
 	qdel(target)

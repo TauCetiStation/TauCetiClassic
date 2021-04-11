@@ -232,11 +232,7 @@
 /datum/religion/cult/add_member(mob/M, holy_role)
 	if(!..())
 		return FALSE
-	if(!M.mind)
-		var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_CULT]
-		hud.join_hud(M)
-		set_antag_hud(M, "hudcultist")
-	else if(!M.mind.GetRole(CULTIST))
+	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
 		to_chat(world, "test - mode.HandleRecruitedMind(M.mind)") // !!! DEBUG CODE !!!
 	return TRUE

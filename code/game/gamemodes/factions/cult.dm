@@ -30,10 +30,9 @@
 	return ..()
 
 /datum/faction/cult/HandleRecruitedMind(datum/mind/M, override)
-	if(!..())
-		return FALSE
-	M.current.Paralyse(5)
-	return TRUE
+	. = ..()
+	if(.)
+		M.current.Paralyse(5)
 
 /datum/faction/cult/forgeObjectives()
 	if(!..())
