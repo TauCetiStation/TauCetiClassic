@@ -157,8 +157,8 @@
 /mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
 	return FALSE
 
-/mob/living/carbon/xenomorph/facehugger/go_in_vent(vent, time = 5)
-	return ..(vent, time)
+/mob/living/carbon/xenomorph/facehugger/go_in_vent(vent, time)
+	return ..(vent, 5)
 
 /*----------------------------------------
               LARVA'S  BITE
