@@ -46,7 +46,8 @@
 
 /datum/role/cultist/OnPostSetup(laterole)
 	..()
-	equip_cultist(antag.current)
+	if(!laterole)
+		equip_cultist(antag.current)
 	var/datum/faction/cult/C = faction
 	if(istype(C))
 		C.religion.add_member(antag.current, holy_rank)

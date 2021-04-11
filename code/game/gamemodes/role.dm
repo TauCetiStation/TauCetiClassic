@@ -98,6 +98,7 @@
 	return TRUE
 
 /datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
+	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
 	remove_antag_hud()
@@ -105,18 +106,18 @@
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
 		log_mode("[key_name(M)] is <span class='danger'>no longer</span> \an [id].")
 	antag = null
-	antag.special_role = initial(antag.special_role)
 
 // Destroy this role
 /datum/role/proc/Drop()
+	if(antag)
+		RemoveFromRole(antag)
+
 	if(faction && (src in faction.members))
 		faction.remove_role(src)
 
 	if(!faction)
 		SSticker.mode.orphaned_roles.Remove(src)
 
-	if(antag)
-		RemoveFromRole(antag)
 	qdel(src)
 
 // General sanity checks before assigning antag.

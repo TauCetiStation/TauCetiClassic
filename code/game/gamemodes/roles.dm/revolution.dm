@@ -49,7 +49,8 @@
 			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
-	equip_traitor(antag.current)
+	if(!laterole)
+		equip_traitor(antag.current)
 
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"

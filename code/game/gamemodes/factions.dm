@@ -25,7 +25,6 @@
 	var/min_roles = 1
 	var/accept_latejoiners = FALSE
 
-	var/datum/role/leader
 	var/datum/role/initroletype
 	var/datum/role/roletype
 
@@ -34,6 +33,7 @@
 	var/minor_victory = FALSE
 	var/list/faction_scoreboard_data = list()
 
+	var/datum/role/leader
 	var/list/datum/role/members = list()
 	var/datum/objective_holder/objective_holder
 

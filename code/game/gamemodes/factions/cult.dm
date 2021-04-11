@@ -25,7 +25,7 @@
 	return TRUE
 
 /datum/faction/cult/get_initrole_type()
-	if(!leader)
+	if(get_active_leads() == 0)
 		return /datum/role/cultist/leader
 	return ..()
 
@@ -44,21 +44,29 @@
 		AppendObjective(pick_n_take(possibles_objectives))
 	return TRUE
 
+/datum/faction/cult/AdminPanelEntry()
+	. = ..()
+	if(global.cult_religion.captured_areas)
+		var/list/zones_name = list()
+		for(var/area/A in global.cult_religion.captured_areas)
+			zones_name += "[A.name]"
+
+		. += "<br>Подконтрольные зоны культа([zones_name.len]): [english_list(zones_name)]"
+
 #define CHECK_LEADER_CD 50
 /datum/faction/cult/process()
 	if(check_leader_time < world.time)
 		check_leader_time = world.time + CHECK_LEADER_CD
 
-		var/mob/M = leader?.antag?.current
-		if(!(M && M.client && M.client.inactivity <= 20 MINUTES && M.mind?.holy_role == CULT_ROLE_MASTER)) // 20 minutes inactivity are OK
-			leader = null
+		if(get_active_leads() == 0)
 			log_mode("There are zero active leaders of cult, trying to add some..")
 			var/added_lead = FALSE
 			for(var/mob/living/carbon/human/H in religion.members)
 				if(H.stat != DEAD && H.client?.inactivity <= 20 MINUTES && H.mind?.holy_role != CULT_ROLE_MASTER)
 					var/datum/role/R = H.mind.GetRole(CULTIST)
-					R.RemoveFromRole(H.mind)
-					HandleNewMind(H.mind)
+					R.Drop(H.mind)
+					R = HandleNewMind(H.mind)
+					R.OnPostSetup(TRUE)
 
 					to_chat(H, "<span class='warning'>Вы теперь новый лидер культа.</span>")
 					added_lead = TRUE
@@ -111,6 +119,14 @@
 	<HR>"}
 
 	return dat
+
+/datum/faction/cult/proc/get_active_leads()
+	var/active_leads = 0
+	for(var/datum/role/cultist/leader/R in members)
+		var/mob/M = R?.antag?.current
+		if(M && M.client && M.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
+			active_leads++
+	return active_leads
 
 /datum/faction/cult/proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))

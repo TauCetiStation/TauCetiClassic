@@ -63,19 +63,14 @@
 /proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE)
 	ASSERT(faction)
 
-	if(recruit)
-		faction.HandleRecruitedMind(M.mind)
-	else
-		faction.HandleNewMind(M.mind)
-
 	var/datum/role/R
 	if(recruit)
-		R = M.mind.GetRoleByType(faction.roletype)
+		R = faction.HandleRecruitedMind(M.mind)
 	else
-		R = M.mind.GetRoleByType(faction.initroletype)
+		R = faction.HandleNewMind(M.mind)
 
 	R.Greet()
-	faction.forgeObjectives()
+	R.forgeObjectives()
 	faction.AnnounceObjectives()
 
 /proc/create_and_setup_role(role_type, mob/P, post_setup = TRUE)

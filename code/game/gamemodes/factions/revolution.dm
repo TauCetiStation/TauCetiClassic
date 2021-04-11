@@ -114,9 +114,9 @@
 			for(var/mob/living/carbon/human/H in human_list)
 				if(H.stat != DEAD && H.mind && H.client?.inactivity <= 20 MINUTES && isrev(H))
 					var/datum/role/R = H.mind.GetRole(REV)
-					R.RemoveFromRole(H.mind)
-					HandleNewMind(H.mind)
-					H.verbs += /mob/living/carbon/human/proc/RevConvert
+					R.Drop(H.mind)
+					R = HandleNewMind(H.mind)
+					R.OnPostSetup(TRUE)
 					added_heads = TRUE
 					break
 

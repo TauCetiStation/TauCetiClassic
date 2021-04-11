@@ -237,20 +237,8 @@
 		hud.join_hud(M)
 		set_antag_hud(M, "hudcultist")
 	else if(!M.mind.GetRole(CULTIST))
-		mode.HandleRecruitedMind(M.mind)
+		add_faction_member(mode, M, TRUE)
 		to_chat(world, "test - mode.HandleRecruitedMind(M.mind)") // !!! DEBUG CODE !!!
-	return TRUE
-
-/datum/religion/cult/remove_member(mob/M)
-	if(!..())
-		return FALSE
-	if(M.mind)
-		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
-		if(C)
-			C.RemoveFromRole(M.mind)
-		to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
-		M.mind.memory = ""
-		M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
 	return TRUE
 
 /datum/religion/cult/on_exit(mob/M)

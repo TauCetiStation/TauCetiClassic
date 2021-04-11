@@ -139,9 +139,14 @@
 	if(M.stat != DEAD)
 		if(iscultist(M))
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
+
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
 			C.RemoveFromRole(M.mind)
 			M.Paralyse(5)
+			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
+			M.mind.memory = ""
+			M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
+
 			new /obj/effect/temp_visual/religion/pulse(M.loc)
 			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
 		else
