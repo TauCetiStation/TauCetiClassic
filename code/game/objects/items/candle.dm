@@ -173,7 +173,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 		return
 
-	if(istype(I, /obj/item/weapon/book/tome))
+	if(istype(I, /obj/item/weapon/storage/bible/tome))
 		spook()
 		light()
 		return

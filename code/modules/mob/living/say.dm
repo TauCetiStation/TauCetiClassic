@@ -96,7 +96,6 @@ var/list/department_radio_keys = list(
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
-
 	if(sanitize)
 		message = sanitize(message)
 		if(!message)

@@ -84,3 +84,13 @@
 	name = "Malf: Announce №4"
 	message = "Мы отследили взломшик#, это каже@&# ва3) сист7ма ИИ, он# *#@амыает меха#7зм самоун@чт$#енiя. Оста*##ивте )то по*@!)$#&&@@  <СВЯЗЬ ПОТЕРЯНА>"
 	sound = "malf4"
+
+/* Cult */
+/datum/announcement/station/cult/capture_area
+	name = "Anomaly: Bluespace"
+	message = "Unstable bluespace anomaly detected on long range scanners. Expected location: unknown."
+	sound = "bluspaceanom"
+/datum/announcement/station/cult/capture_area/play(area/A)
+	if(A)
+		message = "Unstable bluespace anomaly detected on long range scanners. Expected location: [A.name]."
+	..()

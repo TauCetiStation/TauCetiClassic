@@ -69,6 +69,11 @@
 		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: [A.name]."
 	..()
 
+/datum/announcement/centcomm/anomaly/massive_portals
+	name = "Anomaly: Many Bluespace Alerts"
+	message = "Внимание! Был зафиксирован кластер несанкционированных блюспейс сигнатур! Сохраните целостность объекта."
+	sound = "bluspaceanom"
+
 /datum/announcement/centcomm/anomaly/bluespace_trigger
 	name = "Anomaly: Bluespace Triggered"
 	message = "Обнаружено массивное блюспейс перемещение."

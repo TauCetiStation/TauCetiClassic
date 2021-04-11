@@ -1049,7 +1049,7 @@ var/global/BSACooldown = 0
 		if (SSticker.mode.config_tag == "rp-revolution")
 			return 2
 		return 1
-	if(M.mind in SSticker.mode.cult)
+	if(global.cult_religion?.is_member(M))
 		if (SSticker.mode.config_tag == "cult")
 			return 2
 		return 1

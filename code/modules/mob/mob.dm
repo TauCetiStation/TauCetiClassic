@@ -1,6 +1,3 @@
-/mob
-	hud_possible = list(ANTAG_HUD)
-
 /**
   * Delete a mob
   *
@@ -16,11 +13,13 @@
 	global.mob_list -= src
 	global.dead_mob_list -= src
 	global.alive_mob_list -= src
-	for (var/alert in alerts)
+	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
+	my_religion?.remove_member(src)
+
 	return ..()
 
 /mob/atom_init()
@@ -34,10 +33,8 @@
 		alive_mob_list += src
 	. = ..()
 	prepare_huds()
-	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA)
-			continue
-		AA.update_alt_appearance(src)
+	update_all_alt_apperance()
+
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -424,7 +421,7 @@
 	var/eye_name = null
 
 	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
+	eye_name = input("Please, select a mob!", ok, null, null) as null|anything in creatures
 
 	if(!eye_name)
 		return

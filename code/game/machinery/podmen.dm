@@ -117,8 +117,8 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 
 	switch(SSticker.mode.name)
 		if ("cult")
-			if (podman.mind in SSticker.mode:cult)
-				SSticker.mode:add_cultist(podman.mind)
+			if (iscultist(podman))
+				SSticker.mode.add_cultist(podman.mind)
 		// -- End mode specific stuff
 
 	to_chat(podman, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")

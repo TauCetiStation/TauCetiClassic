@@ -393,7 +393,7 @@
 	mymob.nutrition_icon = new
 	if (H.species.flags[IS_SYNTHETIC])
 		mymob.nutrition_icon.icon = 'icons/mob/screen_alert.dmi'
-	else 
+	else
 		mymob.nutrition_icon.icon = 'icons/mob/screen_gen.dmi'
 	mymob.nutrition_icon.icon_state = "starving"
 	mymob.nutrition_icon.name = "nutrition"

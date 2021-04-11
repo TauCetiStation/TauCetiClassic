@@ -74475,6 +74475,10 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
+"wov" = (
+/mob/living/carbon/monkey,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "woF" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
@@ -123939,7 +123943,7 @@ afi
 vNi
 pkz
 pkz
-pkz
+wov
 vNi
 kHU
 plf
@@ -124194,9 +124198,9 @@ nKo
 afz
 xzl
 eTL
-pkz
-pkz
-pkz
+wov
+wov
+wov
 vNi
 kHU
 plf
@@ -124453,7 +124457,7 @@ jdG
 vNi
 ujB
 pkz
-pkz
+wov
 vNi
 kHU
 plf

@@ -99,7 +99,12 @@
 
 /atom/Destroy()
 	if(alternate_appearances)
+		var/prev_key // There is a runtime when the index remains in list, but the type or other devilry disappears
 		for(var/K in alternate_appearances)
+			// ghost apperance qdeling in main apperance
+			if(K == "[prev_key]_observer")
+				continue
+			prev_key = K
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
 			AA.remove_from_hud(src)
 
@@ -109,6 +114,9 @@
 	LAZYCLEARLIST(overlays)
 
 	QDEL_NULL(light)
+
+	var/area/A = get_area(src)
+	A?.Exited(src, null)
 
 	return ..()
 
@@ -685,15 +693,6 @@
 /mob/shake_act(severity, recursive = TRUE)
 	..()
 	shake_camera(src, 0.5 SECONDS, severity)
-
-/atom/proc/set_alt_apperances_layers()
-	if(alternate_appearances)
-		for(var/key in alternate_appearances)
-			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
-			if(AA.theImage)
-				AA.theImage.layer = layer
-				AA.theImage.plane = plane
-				AA.theImage.appearance_flags = appearance_flags
 
 /atom/proc/get_name(mob/user)
 	if(alternate_appearances)
