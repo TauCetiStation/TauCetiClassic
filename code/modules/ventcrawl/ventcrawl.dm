@@ -74,6 +74,18 @@ var/list/ventcrawl_machinery = list(
 		return
 	..()
 
+/mob/living/proc/go_in_vent(vent, time = 45)
+	to_chat(src, "You begin climbing into the ventilation system...")
+	if(is_busy() || !do_after(src, time, null, vent))
+		return FALSE
+	return TRUE
+
+/mob/living/proc/go_out_vent(target, time = 20)
+	to_chat(src, "You start to climb out the ventilation system.")
+	if(is_busy() || !do_after(src, time, null, target))
+		return FALSE
+	return TRUE
+
 /mob/living/proc/handle_ventcrawl(atom/clicked_on)
 	if(!can_ventcrawl())
 		return
@@ -99,9 +111,14 @@ var/list/ventcrawl_machinery = list(
 		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
 		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
 
+			if(!can_ventcrawl())
+				return
+
+			if(!go_in_vent(vent_found))
+				return
+
 			var/datum/gas_mixture/air_contents = vent_found.AIR1
 
-			to_chat(src, "You begin climbing into the ventilation system...")
 			if(air_contents && !issilicon(src))
 
 				switch(air_contents.temperature)
@@ -123,12 +140,6 @@ var/list/ventcrawl_machinery = list(
 						to_chat(src, "<span class='warning'>You feel a strong current pushing you away from the vent.</span>")
 					if(HAZARD_HIGH_PRESSURE to INFINITY)
 						to_chat(src, "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>")
-
-			if(is_busy() || !do_after(src, 45, null, vent_found))
-				return
-
-			if(!can_ventcrawl())
-				return
 
 			visible_message("<B>[src] scrambles into the ventilation ducts!</B>", "You climb into the ventilation system.")
 
