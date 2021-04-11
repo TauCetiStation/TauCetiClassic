@@ -759,9 +759,6 @@ var/list/net_announcer_secret = list()
 			return TRUE
 	return FALSE
 
-/datum/configuration/proc/is_hidden_gamemode(datum/modesbundle/bundle)
-	return bundle.hidden
-
 /datum/configuration/proc/is_custom_modeset(datum/modesbundle/bundle)
 	return istype(bundle, /datum/modesbundle/tauclassic) || istype(bundle, /datum/modesbundle/bs12)
 

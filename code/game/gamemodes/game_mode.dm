@@ -52,6 +52,7 @@
 
 // !!! DEBUG CODE !!!
 /datum/game_mode/proc/can_start(check_ready = TRUE)
+	to_chat(world, "------- [src] - [type] -------")
 	if(minimum_player_count == 0 && get_ready_players(check_ready))
 		to_chat(world, "if(minimum_player_count == 0 && get_ready_players(check_ready))")
 		return TRUE

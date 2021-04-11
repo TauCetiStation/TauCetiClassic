@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(ticker)
 	var/const/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
 
-	var/hide_mode = 0
+	var/datum/modesbundle/bundle = null
 	var/datum/game_mode/mode = null
 
 	var/login_music			// music played in pregame lobby
@@ -158,12 +158,10 @@ SUBSYSTEM_DEF(ticker)
 	var/init_start = world.timeofday
 
 	if(config.is_bundle_by_name(master_mode))
-		var/datum/modesbundle/master_bundle = config.get_bundle_by_name(master_mode)
 		//Create and announce mode
-		if(config.is_hidden_gamemode(master_bundle))
-			hide_mode = TRUE
+		bundle = config.get_bundle_by_name(master_mode)
 
-		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(master_bundle)
+		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
@@ -174,7 +172,7 @@ SUBSYSTEM_DEF(ticker)
 			return 0
 
 		// hiding forced gamemode in secret
-		if(istype(master_bundle, /datum/modesbundle/all/secret) && secret_force_mode != "Secret")
+		if(istype(bundle, /datum/modesbundle/all/secret) && secret_force_mode != "Secret")
 			var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
 			if(!smode.can_start())
 				var/datum/faction/type = smode.factions_allowed[1]
@@ -213,7 +211,7 @@ SUBSYSTEM_DEF(ticker)
 		SSjob.ResetOccupations()
 		return 0
 
-	if(!hide_mode)
+	if(!bundle || !bundle.hidden)
 		mode.announce()
 
 	current_state = GAME_STATE_PLAYING

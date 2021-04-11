@@ -1,5 +1,5 @@
 /datum/faction/traitor
-	name = TRAITOR
+	name = "Traitors"
 	ID = TRAITOR
 	required_pref = ROLE_TRAITOR
 	desc = "Operatives of the syndicate, implanted into the crew in one way or another."
