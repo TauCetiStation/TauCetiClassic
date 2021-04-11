@@ -43,6 +43,12 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
+
+	var/datum/faction/ninja/N = find_active_first_faction_by_type(/datum/faction/ninja)
+	if(!N)
+		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	add_faction_member(N, new_ninja, FALSE)
+
 	message_admins("[new_ninja] has spawned at [new_ninja.x],[new_ninja.y],[new_ninja.z] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
 
 	if(assign_mission)
