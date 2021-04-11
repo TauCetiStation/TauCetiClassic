@@ -234,7 +234,6 @@
 		return FALSE
 	if(!M.mind?.GetRole(CULTIST))
 		add_faction_member(mode, M, TRUE)
-		to_chat(world, "test - mode.HandleRecruitedMind(M.mind)") // !!! DEBUG CODE !!!
 	return TRUE
 
 /datum/religion/cult/on_exit(mob/M)

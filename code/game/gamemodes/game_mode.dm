@@ -26,11 +26,6 @@
 	var/list/factions = list()
 	var/list/orphaned_roles = list()
 
-// !!! DEBUG CODE !!!
-/datum/game_mode/New()
-	minimum_player_count = 0
-	minimum_players_bundles = 0
-
 /datum/game_mode/proc/announce()
 	return
 
@@ -50,20 +45,14 @@
 
 	return players
 
-// !!! DEBUG CODE !!!
 /datum/game_mode/proc/can_start(check_ready = TRUE)
-	to_chat(world, "------- [src] - [type] -------")
 	if(minimum_player_count == 0 && get_ready_players(check_ready))
-		to_chat(world, "if(minimum_player_count == 0 && get_ready_players(check_ready))")
 		return TRUE
 	if(get_player_count(check_ready) < minimum_player_count)
-		to_chat(world, "if(get_player_count(check_ready) < minimum_player_count)")
 		return FALSE
 	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) <= minimum_players_bundles)
-		to_chat(world, "if(config.is_bundle_by_name(master_mode) &")
 		return FALSE
 	if(!CanPopulateFaction(check_ready))
-		to_chat(world, "f(!CanPopulateFaction(check_ready))")
 		return FALSE
 	return TRUE
 
@@ -86,7 +75,6 @@
 	SetupFactions()
 	var/FactionSuccess = CreateFactions()
 	var/RolesSuccess = CreateRoles()
-	to_chat(world, "[FactionSuccess] - [RolesSuccess]")
 	return FactionSuccess && RolesSuccess
 
 //1 = station, 2 = centcomm
@@ -140,16 +128,11 @@
 		for(var/mob/M in L)
 			if(!F.can_join_faction(M))
 				can_be--
-		// !!! DEBUG CODE !!!
-		to_chat(world, "[F.type] - [can_be] - [F.min_roles]")
 		if(can_be < F.min_roles)
 			return FALSE
 		qdel(F)
-	// !!! DEBUG CODE !!!
-	to_chat(world, "ok")
 	return TRUE
 
-// !!! DEBUG CODE !!!
 /datum/game_mode/proc/PopulateFactions()
 	if(!factions.len)
 		message_admins("No faction was created in [type].")
@@ -158,19 +141,14 @@
 	var/list/available_players = get_ready_players()
 	for(var/datum/faction/F in factions)
 		for(var/mob/dead/new_player/P in available_players)
-			to_chat(world, "P - [P]")
 			if(F.max_roles && F.members.len >= F.max_roles)
-				to_chat(world, "f(F.max_roles && F.members.len >= F.max_roles)")
 				break
 			if(!F.can_join_faction(P))
-				to_chat(world, "f(!F.can_join_faction(P))ax_roles)")
 				continue
 			if(!F.HandleNewMind(P.mind))
-				to_chat(world, "if(!F.HandleNewMind(P.mind)) - [P] - [F]")
 				log_mode("[P] failed [F] HandleNewMind!")
 				continue
 		if(F.members.len < F.min_roles)
-			to_chat(world, "if(F.members.len < F.min_roles)oles)")
 			return FALSE
 	return TRUE
 

@@ -89,11 +89,8 @@
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
 
-// !!! DEBUG CODE !!!
-	to_chat(world, "до if (!OnPreSetup())")
 	if (!OnPreSetup())
 		return FALSE
-	to_chat(world, "после if (!OnPreSetup())")
 
 	return TRUE
 

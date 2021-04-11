@@ -43,9 +43,6 @@
 	objective_holder = new
 	objective_holder.faction = src
 
-	min_roles = 1
-	max_roles = 999
-
 /datum/faction/proc/OnPostSetup()
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
@@ -95,17 +92,11 @@
 
 /datum/faction/proc/can_join_faction(mob/P)
 	if(!P.client || !P.mind)
-		to_chat(world, "if(!P.client || !P.mind)")
 		return FALSE
 	if(!required_pref)
 		log_mode("[name] - [type] has no required_pref")
 		return TRUE
 	if(!P.client.prefs.be_role.Find(required_pref) || jobban_isbanned(P, required_pref) || role_available_in_minutes(P, required_pref) || jobban_isbanned(P, "Syndicate"))
-		to_chat(world, "------[P]------")
-		to_chat(world, "P.client.prefs.be_role.Find(required_pref) - [P.client.prefs.be_role.Find(required_pref)]")
-		to_chat(world, "jobban_isbanned(P, required_pref) - [jobban_isbanned(P, required_pref)]")
-		to_chat(world, "role_available_in_minutes(P, required_pref) - [role_available_in_minutes(P, required_pref)]")
-		to_chat(world, "required_pref - [required_pref]")
 		return FALSE
 	return TRUE
 
@@ -114,7 +105,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	for(var/datum/role/R in members)
 		if(R.antag == M)
-			to_chat(world, "HandleNewMind - [M.name] - if(R.antag == M)")
 			return null
 	var/initial_role = initial(initroletype.id)
 	if(M.GetRole(initial_role))
@@ -124,10 +114,7 @@
 	var/datum/role/newRole = new role_type(null, src)
 	if(!newRole.AssignToRole(M))
 		newRole.Drop()
-		to_chat(world, "HandleNewMind - [M.name] - if(!newRole.AssignToRole(M))")
 		return null
-	// !!! DEBUG CODE !!!
-	to_chat(world, "newRole - [newRole]")
 	return newRole
 
 // Basically, these are the new members of the faction during the round
