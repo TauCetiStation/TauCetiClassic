@@ -50,7 +50,7 @@
 		return TRUE
 	if(get_player_count(check_ready) < minimum_player_count)
 		return FALSE
-	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) <= minimum_players_bundles)
+	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) < minimum_players_bundles)
 		return FALSE
 	if(!CanPopulateFaction(check_ready))
 		return FALSE

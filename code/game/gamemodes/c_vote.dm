@@ -1,7 +1,7 @@
 /datum/modesbundle
 	var/name
 	var/votable = TRUE
-	var/hidden = TRUE
+	var/hidden = TRUE // for mode annouce
 	var/list/possible_gamemodes = list()
 
 /datum/modesbundle/proc/get_gamemodes_name()
@@ -11,6 +11,9 @@
 		if(M.potential_runnable())
 			L += M.name
 		qdel(M)
+	if(!L.len) // if no mode can start, then the modes that will always start
+		var/datum/modesbundle/run_anyway/super_bundle = new
+		L = super_bundle.get_gamemodes_name()
 	return L
 
 /*
@@ -64,9 +67,13 @@
 /datum/modesbundle/all
 	name = "Random"
 	votable = FALSE
+	var/list/black_types
 
 /datum/modesbundle/all/New()
 	for(var/type in subtypesof(/datum/game_mode))
+		if(black_types)
+			if(type in black_types)
+				continue
 		var/datum/game_mode/M = type
 		if(initial(M.name))
 			possible_gamemodes += type
@@ -74,3 +81,17 @@
 /datum/modesbundle/all/secret
 	name = "Secret"
 	votable = TRUE
+	black_types = list(/datum/game_mode/extended)
+
+/datum/modesbundle/run_anyway
+	name = "Modes that will ALWAYS start"
+	votable = FALSE
+	hidden = FALSE
+	possible_gamemodes = list(/datum/game_mode/extended)
+
+/datum/modesbundle/run_anyway/get_gamemodes_name()
+	var/list/L = list()
+	for(var/type in possible_gamemodes)
+		var/datum/game_mode/M = type
+		L += initial(M.name)
+	return L
