@@ -772,9 +772,10 @@ var/list/net_announcer_secret = list()
 		if (probabilities[M.name] <= 0)
 			qdel(M)
 			continue
+		if (global.master_last_mode == M.name)
+			qdel(M)
+			continue
 		var/mod_prob = probabilities[M.name]
-		if (is_custom_modeset(bundle))
-			mod_prob = 100
 		if (M.can_start())
 			runnable_modes[M] = mod_prob
 	return runnable_modes
