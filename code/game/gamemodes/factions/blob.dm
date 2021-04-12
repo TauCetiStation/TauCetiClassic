@@ -9,10 +9,6 @@
 #define STATION_WAS_NUKED 2
 #define BLOB_IS_DED 3
 
-#define CREW_VICTORY 0
-#define AI_VICTORY 1 // Station was nuked.
-#define BLOB_VICTORY 2
-
 /datum/faction/blob_conglomerate
 	name = BLOBCONGLOMERATE
 	ID = BLOBCONGLOMERATE
@@ -46,12 +42,16 @@
 	for (var/datum/role/R in members)
 		if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
 			ded = FALSE
-	if(ded)
+
+	if(!ded)
+		if(blobwincount <= blobs.len) //Blob took over
+			return TRUE
+		else if(SSticker.station_was_nuked)
+			return TRUE
+	else
 		stage(FACTION_DEFEATED)
 
-	if(config.continous_rounds)
-		return FALSE
-	return ded
+	return FALSE
 
 /datum/faction/blob_conglomerate/HandleNewMind(datum/mind/M)
 	. = ..()
@@ -325,6 +325,3 @@ Message ends."}
 #undef STATION_TAKEOVER
 #undef STATION_WAS_NUKED
 #undef BLOB_IS_DED
-#undef CREW_VICTORY
-#undef AI_VICTORY
-#undef BLOB_VICTORY
