@@ -124,6 +124,8 @@
 /obj/item/clothing/suit/ianshirt/price = 7500
 /obj/item/clothing/suit/space/price = 24456
 /obj/item/clothing/suit/space/rig/price = 32547
+/obj/item/clothing/suit/space/sk/price = 400
+/obj/item/clothing/head/helmet/space/sk/price = 100
 /obj/item/clothing/suit/storage/labcoat/cmo/price = 5500
 /obj/item/clothing/accessory/holobadge/price = 350
 /obj/item/clothing/accessory/holster/price = 1600

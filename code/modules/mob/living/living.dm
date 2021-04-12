@@ -717,7 +717,7 @@
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if (isturf(M.loc) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir
@@ -862,7 +862,7 @@
 			if (istype(C.buckled,/obj/structure/stool/bed/nest))
 				C.buckled.user_unbuckle_mob(C)
 				return
-			if( C.handcuffed )
+			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")

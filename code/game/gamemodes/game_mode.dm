@@ -19,7 +19,6 @@
 	var/modeset = null        // if game_mode in modeset
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
-	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
 	var/mode_result = "undefined"
 	var/list/datum/mind/modePlayer = new // list of current antags.
@@ -514,6 +513,10 @@ Implants;
 
 		count++
 	return text
+
+// Should return additional statistics for the gamemode
+/datum/game_mode/proc/modestat()
+	return
 
 //Used for printing player with there icons in round ending staticstic
 /datum/game_mode/proc/printplayerwithicon(datum/mind/ply)

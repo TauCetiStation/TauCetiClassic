@@ -207,8 +207,10 @@
 	for(var/V in R.quirks)
 		new V(H)
 
-	if (H.mind in SSticker.mode.cult)
-		SSticker.mode.add_cultist(src.occupant.mind)
+	// -- Mode/mind specific stuff goes here
+	if(global.cult_religion)
+		if(occupant.mind in global.cult_religion.members_minds)
+			global.cult_religion.add_member(occupant, occupant.mind.holy_role)
 
 	// -- End mode specific stuff
 
