@@ -74,15 +74,18 @@ var/list/ventcrawl_machinery = list(
 		return
 	..()
 
-/mob/living/proc/go_in_vent(vent, time = 45)
+/mob/living/proc/go_in_vent(obj/machinery/atmospherics/vent)
 	to_chat(src, "You begin climbing into the ventilation system...")
+	var/time = 40
+	if(small)
+		time = 5
 	if(is_busy() || !do_after(src, time, null, vent))
 		return FALSE
 	return TRUE
 
-/mob/living/proc/go_out_vent(target, time = 20)
+/mob/living/proc/go_out_vent(obj/machinery/atmospherics/target)
 	to_chat(src, "You start to climb out the ventilation system.")
-	if(is_busy() || !do_after(src, time, null, target))
+	if(is_busy() || !do_after(src, 20, null, target))
 		return FALSE
 	return TRUE
 

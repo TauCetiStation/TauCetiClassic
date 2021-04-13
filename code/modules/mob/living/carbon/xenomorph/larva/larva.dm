@@ -77,6 +77,3 @@
 
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
 	return FALSE
-
-/mob/living/carbon/xenomorph/larva/go_in_vent(vent, time)
-	return ..(vent, 5)
