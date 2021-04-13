@@ -33,6 +33,12 @@
 	/datum/game_mode/traitorchan,
 	/datum/game_mode/traitor,
 	/datum/game_mode/wizard,
+	/datum/game_mode/mix/cultwiz,
+	/datum/game_mode/mix/nukeheist,
+	/datum/game_mode/mix/borerxenochang,
+	/datum/game_mode/mix/ninjatraitor,
+	/datum/game_mode/mix/ninjawiz,
+	/datum/game_mode/mix/cultrev,
 */
 
 /datum/modesbundle/extended
@@ -81,6 +87,15 @@
 /datum/modesbundle/all/secret
 	name = "Secret"
 	votable = TRUE
+
+/datum/modesbundle/all/secret/New()
+	black_types = subtypesof(/datum/game_mode/mix) + /datum/game_mode/extended
+	..()
+
+/datum/modesbundle/all/secret_plus
+	name = "Secret Plus"
+	votable = FALSE
+
 	black_types = list(/datum/game_mode/extended)
 
 /datum/modesbundle/run_anyway
