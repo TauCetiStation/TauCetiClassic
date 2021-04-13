@@ -18,7 +18,6 @@
 	min_roles = 2
 	max_roles = 2
 
-	var/checkwin_counter = 0
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
 
@@ -149,11 +148,6 @@
 	else if(last_command_report == 2 && world.time >= 60 MINUTES)
 		command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
 		last_command_report = 3
-
-	checkwin_counter++
-	if(checkwin_counter >= 5)
-		check_win()
-		checkwin_counter = 0
 
 /datum/faction/revolution/proc/command_report(message)
 	for (var/obj/machinery/computer/communications/comm in communications_list)
