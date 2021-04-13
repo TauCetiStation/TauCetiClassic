@@ -6,8 +6,8 @@
 		/datum/faction/infestation,
 	)
 
-	minimum_player_count = 1
-	minimum_players_bundles = 1
+	minimum_player_count = 60
+	minimum_players_bundles = 60
 
 /datum/game_mode/borer // del me pls
 	name = "Borer"
