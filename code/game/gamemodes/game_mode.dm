@@ -46,13 +46,17 @@
 	return players
 
 /datum/game_mode/proc/can_start(check_ready = TRUE)
-	if(minimum_player_count == 0 && get_ready_players(check_ready))
+	if(minimum_player_count == 0 && get_ready_players(check_ready)) // For debug, minimum_player_count = 0 is very bad
+		log_mode("[name] start because `minimum_player_count = 0`")
 		return TRUE
 	if(get_player_count(check_ready) < minimum_player_count)
+		log_mode("[name] not start because number of players who Ready is less than minimum number of players.")
 		return FALSE
 	if(config.is_bundle_by_name(master_mode) && get_player_count(check_ready) < minimum_players_bundles)
+		log_mode("[name] not start because number of players who Ready is less than minimum number of players in bundle.")
 		return FALSE
 	if(!CanPopulateFaction(check_ready))
+		log_mode("[name] not start because pre-filling of the faction failed.")
 		return FALSE
 	return TRUE
 
@@ -106,6 +110,7 @@
 	var/datum/faction/F = new Fac
 	if(F.can_setup(population) || override)
 		factions += F
+		log_mode("[F] was normally created.")
 		return F
 	else
 		log_mode("Faction ([F]) could not set up properly with given population.")
@@ -129,6 +134,7 @@
 			if(!F.can_join_faction(M))
 				can_be--
 		if(can_be < F.min_roles)
+			log_mode("[F] cannot be filled completely. Possible members is [can_be], minimum [F.min_roles]")
 			return FALSE
 		qdel(F)
 	return TRUE
@@ -149,6 +155,7 @@
 				log_mode("[P] failed [F] HandleNewMind!")
 				continue
 		if(F.members.len < F.min_roles)
+			log_mode("Not enought players for [F]!")
 			return FALSE
 	return TRUE
 
