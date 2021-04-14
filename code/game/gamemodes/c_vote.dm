@@ -46,30 +46,6 @@
 	hidden = FALSE
 	possible_gamemodes = list(/datum/game_mode/extended)
 
-/datum/modesbundle/tauclassic
-	name = "Tau Classic"
-	possible_gamemodes = list(
-		/datum/game_mode/abduction,
-		/datum/game_mode/changeling,
-		/datum/game_mode/cult,
-		/datum/game_mode/malfunction,
-		/datum/game_mode/nuclear,
-		/datum/game_mode/traitorchan,
-		/datum/game_mode/wizard,
-	)
-
-/datum/modesbundle/bs12
-	name = "BS12"
-	possible_gamemodes = list(
-		/datum/game_mode/abduction,
-		/datum/game_mode/changeling,
-		/datum/game_mode/cult,
-		/datum/game_mode/extended,
-		/datum/game_mode/malfunction,
-		/datum/game_mode/nuclear,
-		/datum/game_mode/wizard,
-	)
-
 /datum/modesbundle/all
 	name = "Random"
 	votable = FALSE
