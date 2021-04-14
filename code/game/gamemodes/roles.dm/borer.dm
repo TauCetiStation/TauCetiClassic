@@ -1,6 +1,7 @@
 /datum/role/borer
 	name = BORER
 	id = BORER
+	disallow_job = TRUE
 
 	logo_state = "borer-logo"
 
