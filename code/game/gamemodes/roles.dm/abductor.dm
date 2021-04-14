@@ -33,7 +33,7 @@
 	. = ..()
 	var/mob/living/carbon/human/abductor/H = antag.current
 	H.set_species(ABDUCTOR)
-	H.real_name = faction.name + " Agent"
+	H.real_name = faction.name + " " + name
 	H.mind.name = H.real_name
 	H.flavor_text = ""
 	equip_common(H)
@@ -72,15 +72,6 @@
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
 
-/datum/role/abductor/agent/OnPostSetup(laterole)
-	. = ..()
-
-	var/datum/faction/abductors/A = faction
-	var/obj/effect/landmark/L = agent_landmarks[A.team_number]
-	antag.current.forceMove(L.loc)
-
-	return TRUE
-
 /datum/role/abductor/scientist
 	name = "Scientist"
 	id = ABDUCTOR_SCI
@@ -109,14 +100,6 @@
 	beamplant.implanted(scientist)
 	beamplant.home = console.pad
 
-/datum/role/abductor/scientist/OnPostSetup(laterole)
-	. = ..()
-
-	var/datum/faction/abductors/A = faction
-	var/obj/effect/landmark/L = scientist_landmarks[A.team_number]
-	antag.current.forceMove(L.loc)
-
-	return TRUE
 /datum/role/abducted
 	name = ABDUCTED
 	id = ABDUCTED

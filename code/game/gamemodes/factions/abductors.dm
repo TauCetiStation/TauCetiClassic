@@ -22,6 +22,18 @@
 		return /datum/role/abductor/agent
 	return /datum/role/abductor/scientist
 
+/datum/faction/abductors/OnPostSetup()
+	for(var/datum/role/R in members)
+		if(istype(R, /datum/role/abductor/scientist))
+			var/obj/effect/landmark/L = scientist_landmarks[team_number]
+			R.antag.current.forceMove(L.loc)
+
+		else if(istype(R, /datum/role/abductor/agent/))
+			var/obj/effect/landmark/L = agent_landmarks[team_number]
+			R.antag.current.forceMove(L.loc)
+
+	return ..()
+
 /datum/faction/abductors/forgeObjectives()
 	if(!..())
 		return FALSE
