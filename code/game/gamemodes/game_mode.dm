@@ -43,10 +43,10 @@
 		if(P.client && (!check_ready || P.ready))
 			players.Add(P)
 
-	return players
+	return shuffle(players)
 
 /datum/game_mode/proc/can_start(check_ready = TRUE)
-	if(minimum_player_count == 0 && get_ready_players(check_ready)) // For debug, minimum_player_count = 0 is very bad
+	if(minimum_player_count == 0 && get_player_count(check_ready)) // For debug, minimum_player_count = 0 is very bad
 		log_mode("[name] start because `minimum_player_count = 0`")
 		return TRUE
 	if(get_player_count(check_ready) < minimum_player_count)
@@ -154,6 +154,7 @@
 			if(!F.HandleNewMind(P.mind))
 				log_mode("[P] failed [F] HandleNewMind!")
 				continue
+			available_players -= P // One player cannot be a borero-ninja-malf
 		if(F.members.len < F.min_roles)
 			log_mode("Not enought players for [F]!")
 			return FALSE
@@ -323,9 +324,6 @@
 
 /datum/game_mode/proc/declare_completion()
 	return GetScoreboard()
-
-/datum/game_mode/proc/mob_destroyed(mob/M)
-	return
 
 /datum/game_mode/proc/get_mode_result()
 	if(factions_allowed.len)
