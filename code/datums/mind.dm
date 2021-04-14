@@ -584,10 +584,10 @@
 			if(!newRole.AssignToRole(M))
 				newRole.Drop()
 				continue
+			newRole.Greet(GREET_LATEJOIN)
 			newRole.OnPostSetup()
 			newRole.forgeObjectives()
 			newRole.AnnounceObjectives()
-			newRole.Greet(GREET_LATEJOIN)
 			message_admins("[key_name(H)] has been made into a [newRole.name] via create antagonist verb.")
 			recruit_count++
 
