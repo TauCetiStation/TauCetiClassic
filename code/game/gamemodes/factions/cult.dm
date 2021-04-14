@@ -109,7 +109,7 @@
 /datum/faction/cult/get_scorestat()
 	var/dat = ""
 
-	dat += {"<B><U>MODE STATS</U></B><BR>
+	dat += {"<B><U>CULT STATS</U></B><BR>
 	<B>Всего членов Культа:</B> [religion.members.len]<BR>
 	<B>Захвачено зон:</B> [religion.captured_areas.len - religion.area_types.len]<BR>
 	<B>Накоплено Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>

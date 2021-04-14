@@ -512,7 +512,7 @@
 		role_name = initial(role_type.name)
 
 	var/list/mob/candidates
-	if(recruitment_source == FROM_PLAYERS)
+	if(recruitment_source == FROM_GHOSTS)
 		candidates = pollGhostCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100)
 	else
 		candidates = pollCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100, player_list)
@@ -562,6 +562,7 @@
 
 		FF.OnPostSetup()
 		FF.forgeObjectives()
+		FF.AnnounceObjectives()
 
 		return recruit_count
 
@@ -585,6 +586,7 @@
 				continue
 			newRole.OnPostSetup()
 			newRole.forgeObjectives()
+			newRole.AnnounceObjectives()
 			newRole.Greet(GREET_LATEJOIN)
 			message_admins("[key_name(H)] has been made into a [newRole.name] via create antagonist verb.")
 			recruit_count++

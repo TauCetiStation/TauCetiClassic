@@ -5,10 +5,6 @@
 
 #define PLAYER_PER_BLOB_CORE 30
 
-#define STATION_TAKEOVER 1
-#define STATION_WAS_NUKED 2
-#define BLOB_IS_DED 3
-
 /datum/faction/blob_conglomerate
 	name = BLOBCONGLOMERATE
 	ID = BLOBCONGLOMERATE
@@ -25,7 +21,6 @@
 
 	var/list/pre_escapees = list()
 	var/declared = FALSE
-	var/win = FALSE
 	var/blobwincount = 0
 	var/prelude_announcement
 	var/outbreak_announcement
@@ -193,35 +188,35 @@ Message ends."}
 			intercept.info = intercepttext
 			intercept.update_icon()
 
-
 // -- Scoreboard --
+
 /datum/faction/blob_conglomerate/GetScoreboard()
 	var/dat = ..()
-	dat += "<br/>"
-	switch (win)
-		if (STATION_TAKEOVER)
-			dat += "<b>Blob victory!</b>"
-		if (STATION_WAS_NUKED)
-			dat += "<b>Crew minor victory!</b>"
-		if (BLOB_IS_DED)
-			dat += "<b>Crew victory!</b>"
-	dat += "<br />"
-	var/datum/station_state/end = new
-	end.count()
-	dat += "<b>Total blobs: [blobs.len]</b><br/>"
-	dat += "<b>Station Integrity: [round(end.score(start)*100)]%</b><br/>"
-	dat += "<br/>"
-	dat += "<b>Quarantaine status:</b><br/>"
+
 	var/list/result = check_quarantaine()
-	dat += "Dead humans: <b>[result["numDead"]]</b><br/>"
-	dat += "Alive humans still on board: <b>[result["numAlive"]]</b><br/>"
-	dat += "Humans in space: <b>[result["numSpace"]]</b><br/>"
-	dat += "Humans off-station: <b>[result["numOffStation"]]</b><br/>"
-	dat += "Pre-escapes: <b>[pre_escapees.len]</b><br/>"
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
 		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
 	else
 		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
+
+	return dat
+
+/datum/faction/blob_conglomerate/get_scorestat()
+	var/dat = ""
+	var/datum/station_state/end = new
+	end.count()
+	var/list/result = check_quarantaine()
+	dat += {"<B><U>BLOB STATS</U></B><BR>
+	<b>Total blobs: [blobs.len]</b><br>
+	<b>Station Integrity: [round(end.score(start)*100)]%</b><br>
+	<br>
+	<b>Quarantaine status:</b><br>
+	Dead humans: <b>[result["numDead"]]</b><br>
+	Alive humans still on board: <b>[result["numAlive"]]</b><br>
+	Humans in space: <b>[result["numSpace"]]</b><br>
+	Humans off-station: <b>[result["numOffStation"]]</b><br>
+	Pre-escapes: <b>[pre_escapees.len]</b><br>
+	<HR>"}
 	return dat
 
 /datum/faction/blob_conglomerate/proc/detect_overminds()
@@ -322,6 +317,3 @@ Message ends."}
 #undef WAIT_TIME_PHASE1
 #undef WAIT_TIME_PHASE2
 #undef PLAYER_PER_BLOB_CORE
-#undef STATION_TAKEOVER
-#undef STATION_WAS_NUKED
-#undef BLOB_IS_DED

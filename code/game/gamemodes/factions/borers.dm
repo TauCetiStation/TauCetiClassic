@@ -5,6 +5,8 @@
 
 	roletype = /datum/role/borer
 
+	max_roles = 3
+
 	logo_state = "borer-logo"
 
 /datum/faction/borers/OnPostSetup()
