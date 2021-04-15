@@ -113,7 +113,7 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/emp
-	name = "ЕМП"
+	name = "ЭМИ"
 	desc = "Производит электрический импульс фотонов."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Энергетический импульс!!!"
