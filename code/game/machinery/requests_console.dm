@@ -4,7 +4,7 @@
 var/list/req_console_assistance = list()
 var/list/req_console_supplies = list()
 var/list/req_console_information = list()
-var/list/departments_from_field = list()
+var/list/departments_genitive = list()
 
 /obj/machinery/requests_console
 	name = "Requests Console"
@@ -12,7 +12,8 @@ var/list/departments_from_field = list()
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
-	var/department = "Неизвестный" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
+	var/department = "Неизвестный"  //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
+	var/department_genitive         // "Оповещение [department_genitive]"
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0
 		// 0 = none (not listed, can only repeplied to)
@@ -40,9 +41,6 @@ var/list/departments_from_field = list()
 		// 9 = authentication before sending
 		// 10 = send announcement
 	var/silent = 0 // set to 1 for it not to beep all the time
-//	var/hackState = 0
-		// 0 = not hacked
-		// 1 = hacked
 	var/announcementConsole = 0
 		// 0 = This console cannot be used to send department announcements
 		// 1 = This console can send department announcementsf
@@ -53,7 +51,6 @@ var/list/departments_from_field = list()
 	var/message = "";
 	var/to_dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
-	var/console_from_field  // "Оповещение [console_from_field]"
 	var/list/departments = list() // Buffer for duplicate department filter
 	light_range = 0
 
@@ -73,9 +70,9 @@ var/list/departments_from_field = list()
 
 /obj/machinery/requests_console/atom_init()
 	. = ..()
-	if(!console_from_field)
-		console_from_field = department
-	departments_from_field[department] = console_from_field
+	if(!department_genitive)
+		department_genitive = department
+	departments_genitive[department] = department_genitive
 	requests_console_list += src
 	//req_console_departments += department
 	switch(departmentType)
@@ -258,7 +255,7 @@ var/list/departments_from_field = list()
 		if(!announcementConsole)
 			return FALSE
 
-		announcement.play(console_from_field, message)
+		announcement.play(department_genitive, message)
 
 		announceAuth = 0
 		message = ""
@@ -269,8 +266,8 @@ var/list/departments_from_field = list()
 		var/pass = 0
 		var/list/auth_data = list()
 		var/recipient_from_field = href_list["department"]
-		if(recipient_from_field in departments_from_field)
-			recipient_from_field = departments_from_field[recipient_from_field]
+		if(recipient_from_field in departments_genitive)
+			recipient_from_field = departments_genitive[recipient_from_field]
 		if(msgVerified)
 			auth_data.Add(msgVerified)
 		if(msgStamped)
@@ -283,7 +280,7 @@ var/list/departments_from_field = list()
 			screen = 6
 			pass = 1
 			messages += "[worldtime2text()] <B>Отправлено для [recipient_from_field]:</B><BR><DIV class='Section'>[message]</DIV>[auth]"
-			MS.send_rc_message(href_list["department"], department, log_msg, msgStamped, msgVerified, priority, console_from_field)
+			MS.send_rc_message(href_list["department"], department, log_msg, msgStamped, msgVerified, priority, department_genitive)
 			break
 		if(!pass)
 			audible_message("[bicon(src)] *Консоль Запроса пикнула: 'ЗАМЕЧАНИЕ: Сервер не обнаружен!'")
