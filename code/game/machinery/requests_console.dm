@@ -454,8 +454,13 @@ var/list/departments_genitive = list()
 
 // Medbay
 
+/obj/machinery/requests_console/medbay
+	name = "Medbay Requests Console"
+	department = "Медотсек"
+	department_genitive = "Медотсека"
+
 /obj/machinery/requests_console/genetics
-	name "Genetics Requests Console"
+	name = "Genetics Requests Console"
 	department = "Генетика"
 	department_genitive = "Генетики"
 
@@ -486,6 +491,12 @@ var/list/departments_genitive = list()
 	department_genitive = "Грузового"
 	departmentType = RC_SUPPLY
 
+/obj/machinery/requests_console/bar
+	name = "Bar Requests Console"
+	department = "Бар"
+	department_genitive = "Бара"
+	departmentType = RC_SUPPLY
+
 /obj/machinery/requests_console/chapel
 	name = "Chapel Requests Console"
 	department = "Церковь"
@@ -503,10 +514,17 @@ var/list/departments_genitive = list()
 	department = "Офис Внутренних Дел"
 	department_genitive = "Офиса Внутренних Дел"
 
+/obj/machinery/requests_console/kitchen
+	name = "Kitchen Requests Console"
+	department = "Кухня"
+	department_genitive = "Кухни"
+	departmentType = RC_SUPPLY
+
 /obj/machinery/requests_console/hydroponics
 	name = "Hydroponics Requests Console"
 	department = "Гидропоника"
 	department_genitive = "Гидропоники"
+	departmentType = RC_SUPPLY
 
 /obj/machinery/requests_console/eva
 	name = "EVA Requests Console"
@@ -533,6 +551,11 @@ var/list/departments_genitive = list()
 	name = "Tech Storage Requests Console"
 	department = "Тех Склада"
 	department_genitive = "Тех Склада"
+
+/obj/machinery/requests_console/chem_storage
+	name = "Chemistry Storage RC"
+	department = "Хим Склад"
+	department_genitive = "Хим Склада"
 
 
 #undef RC_ASSIST
