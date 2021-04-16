@@ -6,14 +6,25 @@ var/list/req_console_supplies = list()
 var/list/req_console_information = list()
 var/list/departments_genitive = list()
 
+#define RC_ASSIST 1
+#define RC_SUPPLY 2
+#define RC_INFO 3
+#define RC_ASSIST_SUPPLY 4
+#define RC_ASSIST_INFO 5
+#define RC_SUPPLY_INFO 6
+#define RC_ASSIST_SUPPLY_INFO 7
+
 /obj/machinery/requests_console
 	name = "Requests Console"
 	desc = "Консоль предназначенна для отправки запросов в разные отделы станции."
 	anchored = 1
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
-	var/department = "Неизвестный"  //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
-	var/department_genitive         // "Оповещение [department_genitive]"
+	var/department = "Неизвестный"
+	// The list of all departments on the station (Determined from this variable on each unit)
+	// Set this to the same thing if you want several consoles in one department
+	var/department_genitive = "Неизвестного"
+	// "Оповещение от [department_genitive]"
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0
 		// 0 = none (not listed, can only repeplied to)
@@ -40,12 +51,12 @@ var/list/departments_genitive = list()
 		// 8 = view messages
 		// 9 = authentication before sending
 		// 10 = send announcement
-	var/silent = 0 // set to 1 for it not to beep all the time
-	var/announcementConsole = 0
-		// 0 = This console cannot be used to send department announcements
-		// 1 = This console can send department announcementsf
-	var/open = 0 // 1 if open
-	var/announceAuth = 0 //Will be set to 1 when you authenticate yourself for announcements
+	var/silent = FALSE // set to TRUE for it not to beep all the time
+	var/announcementConsole = FALSE
+		// FALSE = This console cannot be used to send department announcements
+		// TRUE = This console can send department announcements
+	var/open = FALSE // TRUE if open
+	var/announceAuth = FALSE //Will be set to TRUE when you authenticate yourself for announcements
 	var/msgVerified = "" //Will contain the name of the person who varified it
 	var/msgStamped = "" //If a message is stamped, this will contain the stamp name
 	var/message = "";
@@ -76,22 +87,22 @@ var/list/departments_genitive = list()
 	requests_console_list += src
 	//req_console_departments += department
 	switch(departmentType)
-		if(1)
+		if(RC_ASSIST)
 			req_console_assistance += department
-		if(2)
+		if(RC_SUPPLY)
 			req_console_supplies += department
-		if(3)
+		if(RC_INFO)
 			req_console_information += department
-		if(4)
+		if(RC_ASSIST_SUPPLY)
 			req_console_assistance += department
 			req_console_supplies += department
-		if(5)
+		if(RC_ASSIST_INFO)
 			req_console_assistance += department
 			req_console_information += department
-		if(6)
+		if(RC_SUPPLY_INFO)
 			req_console_supplies += department
 			req_console_information += department
-		if(7)
+		if(RC_ASSIST_SUPPLY_INFO)
 			req_console_assistance += department
 			req_console_supplies += department
 			req_console_information += department
@@ -99,22 +110,22 @@ var/list/departments_genitive = list()
 /obj/machinery/requests_console/Destroy()
 	requests_console_list -= src
 	switch(departmentType)
-		if(1)
+		if(RC_ASSIST)
 			req_console_assistance -= department
-		if(2)
+		if(RC_SUPPLY)
 			req_console_supplies -= department
-		if(3)
+		if(RC_INFO)
 			req_console_information -= department
-		if(4)
+		if(RC_ASSIST_SUPPLY)
 			req_console_assistance -= department
 			req_console_supplies -= department
-		if(5)
+		if(RC_ASSIST_INFO)
 			req_console_assistance -= department
 			req_console_information -= department
-		if(6)
+		if(RC_SUPPLY_INFO)
 			req_console_supplies -= department
 			req_console_information -= department
-		if(7)
+		if(RC_ASSIST_SUPPLY_INFO)
 			req_console_assistance -= department
 			req_console_supplies -= department
 			req_console_information -= department
@@ -189,7 +200,7 @@ var/list/departments_genitive = list()
 
 			else	//main menu
 				screen = 0
-				announceAuth = 0
+				announceAuth = FALSE
 				if (newmessagepriority == 1)
 					dat += text("<FONT COLOR='RED'>Есть новые сообщения</FONT><BR>")
 				if (newmessagepriority == 2)
@@ -248,7 +259,7 @@ var/list/departments_genitive = list()
 					priority = -1
 		else
 			message = ""
-			announceAuth = 0
+			announceAuth = FALSE
 			screen = 0
 
 	if(href_list["sendAnnouncement"])
@@ -257,7 +268,7 @@ var/list/departments_genitive = list()
 
 		announcement.play(department_genitive, message)
 
-		announceAuth = 0
+		announceAuth = FALSE
 		message = ""
 		screen = 0
 
@@ -322,9 +333,9 @@ var/list/departments_genitive = list()
 	switch( href_list["setSilent"] )
 		if(null)	//skip
 		if("1")
-			silent = 1
+			silent = TRUE
 		else
-			silent = 0
+			silent = FALSE
 
 	updateUsrDialog()
 
@@ -337,9 +348,9 @@ var/list/departments_genitive = list()
 		if(screen == 10)
 			var/obj/item/weapon/card/id/ID = O
 			if (access_RC_announce in ID.GetAccess())
-				announceAuth = 1
+				announceAuth = TRUE
 			else
-				announceAuth = 0
+				announceAuth = FALSE
 				to_chat(user, "<span class='warning'>Вы не авторизованы для отправки оповещений на станцию.</span>")
 			updateUsrDialog()
 	if (istype(O, /obj/item/weapon/stamp))
@@ -348,3 +359,186 @@ var/list/departments_genitive = list()
 			msgStamped = text("<font color='blue'><b>[T.name]</b></font>")
 			updateUsrDialog()
 	return
+
+
+// Heads
+
+/obj/machinery/requests_console/captain
+	name = "Captain Requests Console"
+	department = "Кабинет Капитана"
+	department_genitive = "Кабинета Капитана"
+	departmentType = RC_ASSIST_INFO
+	announcementConsole = TRUE
+
+/obj/machinery/requests_console/hop
+	name = "Head of Personnel RC"
+	department = "Кабинет ГП"
+	department_genitive = "Кабинета ГП"
+	departmentType = RC_ASSIST_INFO
+	announcementConsole = TRUE
+
+/obj/machinery/requests_console/hos
+	name = "Head of Security RC"
+	department =  "Кабинет ГСБ"
+	department_genitive = "Кабинета ГСБ"
+	departmentType = RC_ASSIST_INFO
+	announcementConsole = TRUE
+
+/obj/machinery/requests_console/rd
+	name = "Research Director RC"
+	department = "Кабинет Научрука"
+	department_genitive = "Кабинета Научрука"
+	departmentType = RC_ASSIST_INFO
+	announcementConsole = TRUE
+
+/obj/machinery/requests_console/cmo
+	name = "Chief Medical Officer RC"
+	department = "Кабинет Главврача"
+	department_genitive = "Кабинета Главврача"
+	departmentType = RC_ASSIST_INFO
+	announcementConsole = TRUE
+
+/obj/machinery/requests_console/ce
+	name = "Chief Engineer RC"
+	department = "Кабинет ГИ"
+	department_genitive = "Кабинета ГИ"
+	departmentType = RC_INFO
+	announcementConsole = TRUE
+
+/obj/machinery/requests_console/bridge
+	name = "Bridge Requests Console"
+	department = "Мостик"
+	department_genitive = "Мостика"
+	departmentType = RC_ASSIST_INFO
+	announcementConsole = TRUE
+
+// Security
+
+/obj/machinery/requests_console/security
+	name = "Security Requests Console"
+	department = "Служба Безопасности"
+	department_genitive = "Службы Безопасности"
+	departmentType = RC_ASSIST_INFO
+
+
+/obj/machinery/requests_console/detective
+	name = "Detective Requests Console"
+	department = "Кабинет Детектива"
+	department_genitive = "Кабинета Детектива"
+	departmentType = RC_ASSIST_INFO
+
+/obj/machinery/requests_console/forensic
+	name = "Forensic Requests Console"
+	department = "Криминалист"
+	department_genitive = "Криминалиста"
+	departmentType = RC_ASSIST_INFO
+
+// Science
+
+/obj/machinery/requests_console/ai
+	name = "AI Requests Console"
+	department = "ИИ"
+	departmentType = RC_ASSIST_INFO
+
+/obj/machinery/requests_console/science
+	name = "Science Requests Console"
+	department = "Научный"
+	department_genitive = "Научного"
+	departmentType = RC_SUPPLY
+
+/obj/machinery/requests_console/robotics
+	name = "Robotics Requests Console"
+	department = "Робототехника"
+	department_genitive = "Робототехники"
+	departmentType = RC_SUPPLY
+
+// Medbay
+
+/obj/machinery/requests_console/genetics
+	name "Genetics Requests Console"
+	department = "Генетика"
+	department_genitive = "Генетики"
+
+/obj/machinery/requests_console/virology
+	name = "Virology Requests Console"
+	department = "Вирусология"
+	department_genitive = "Вирусологии"
+
+// Enginiring
+
+/obj/machinery/requests_console/atmos
+	name = "Atmos Requests Console"
+	department = "Атмосферный"
+	department_genitive = "Атмосферного"
+	departmentType = RC_ASSIST_SUPPLY
+
+/obj/machinery/requests_console/engineering
+	name = "Engineering Requests Console"
+	department = "Инженерный"
+	department_genitive = "Инженерного"
+	departmentType = RC_ASSIST_SUPPLY
+
+// Civil
+
+/obj/machinery/requests_console/cargo_bay
+	name = "Cargo Bay Requests Console"
+	department =  "Грузовой"
+	department_genitive = "Грузового"
+	departmentType = RC_SUPPLY
+
+/obj/machinery/requests_console/chapel
+	name = "Chapel Requests Console"
+	department = "Церковь"
+	department_genitive = "Церкви"
+	departmentType = RC_SUPPLY
+
+/obj/machinery/requests_console/janitorial
+	name = "Janitorial Requests Console"
+	department = "Кабинет Уборщика"
+	department_genitive = "Кабинета Уборщика"
+	departmentType = RC_ASSIST
+
+/obj/machinery/requests_console/internal_affairs
+	name = "Internal Affairs RC"
+	department = "Офис Внутренних Дел"
+	department_genitive = "Офиса Внутренних Дел"
+
+/obj/machinery/requests_console/hydroponics
+	name = "Hydroponics Requests Console"
+	department = "Гидропоника"
+	department_genitive = "Гидропоники"
+
+/obj/machinery/requests_console/eva
+	name = "EVA Requests Console"
+	department = "ВКД"
+
+/obj/machinery/requests_console/crew_quarters
+	name = "Crew Quarters Requests Console"
+	department = "Каюты Экипажа"
+	department_genitive = "Кают Экипажа"
+
+/obj/machinery/requests_console/private_office
+	name = "Private Office Requests Console"
+	department = "Частный Офис"
+	department_genitive = "Частного Офиса"
+
+// Storage
+
+/obj/machinery/requests_console/tool_storage
+	name = "Tool Storage Requests Console"
+	department = "Склад Инструментов"
+	department_genitive = "Склада Инструментов"
+
+/obj/machinery/requests_console/tech_storage
+	name = "Tech Storage Requests Console"
+	department = "Тех Склада"
+	department_genitive = "Тех Склада"
+
+
+#undef RC_ASSIST
+#undef RC_SUPPLY
+#undef RC_INFO
+#undef RC_ASSIST_SUPPLY
+#undef RC_ASSIST_INFO
+#undef RC_SUPPLY_INFO
+#undef RC_ASSIST_SUPPLY_INFO
