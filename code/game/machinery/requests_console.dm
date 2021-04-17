@@ -505,8 +505,8 @@ var/list/departments_genitive = list()
 
 /obj/machinery/requests_console/janitorial
 	name = "Janitorial Requests Console"
-	department = "Коморка Уборщика"
-	department_genitive = "Коморки Уборщика"
+	department = "Подсобка Уборщика"
+	department_genitive = "Подсобки Уборщика"
 	departmentType = RC_ASSIST
 
 /obj/machinery/requests_console/internal_affairs
