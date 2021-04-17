@@ -112,7 +112,7 @@
 					if(!Console.silent)
 						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 						Console.audible_message("[bicon(Console)] **Консоль Запроса пикнула: 'ПРИОРИТЕТНОЕ сообщение от [from_desc]'")
-					Console.messages += "[worldtime2text()] <B><FONT color='red'>Приоритетное сообщение из </FONT></B>[content]"
+					Console.messages += "[worldtime2text()] <B><FONT color='red'>Приоритетное сообщение от </FONT></B>[content]"
 				else		// Normal priority
 					if(Console.newmessagepriority < 1)
 						Console.newmessagepriority = 1
@@ -120,7 +120,7 @@
 					if(!Console.silent)
 						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 						Console.audible_message("[bicon(Console)] **Консоль Запроса пикнула: 'Сообщение от [from_desc]'")
-					Console.messages += "[worldtime2text()] <B>Получено из </B>[content]"
+					Console.messages += "[worldtime2text()] <B>Получено от </B>[content]"
 			Console.set_light(2)
 
 /obj/machinery/message_server/attack_hand(user)

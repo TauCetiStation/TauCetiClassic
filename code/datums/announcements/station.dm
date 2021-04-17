@@ -22,12 +22,12 @@
 /datum/announcement/station/command/department/play(department, message)
 	// TODO translate department name
 	if(department && message)
-		title = "Оповещение из [department]"
+		title = "Оповещение от [department]"
 	..(message)
 
 /datum/announcement/station/command/ai
 	name = "Heads: AI"
-	title = "Оповещение ИИ"
+	title = "Оповещение от ИИ"
 	sound = "aiannounce"
 /datum/announcement/station/command/ai/play(mob/user, message)
 	if(user && message)

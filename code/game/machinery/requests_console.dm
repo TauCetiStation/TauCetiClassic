@@ -23,7 +23,7 @@ var/list/departments_genitive = list()
 	var/department = "Неизвестный"
 	// The list of all departments on the station (Determined from this variable on each unit)
 	// Set this to the same thing if you want several consoles in one department
-	var/department_genitive = "Неизвестного"
+	var/department_genitive
 	// "Оповещение от [department_genitive]"
 	var/list/messages = list() //List of all messages
 	var/departmentType = 0
@@ -423,14 +423,14 @@ var/list/departments_genitive = list()
 
 /obj/machinery/requests_console/detective
 	name = "Detective Requests Console"
-	department = "Кабинет Детектива"
-	department_genitive = "Кабинета Детектива"
+	department = "Офис Детектива"
+	department_genitive = "Офиса Детектива"
 	departmentType = RC_ASSIST_INFO
 
 /obj/machinery/requests_console/forensic
 	name = "Forensic Requests Console"
-	department = "Криминалист"
-	department_genitive = "Криминалиста"
+	department = "Офис Криминалиста"
+	department_genitive = "Офиса Криминалиста"
 	departmentType = RC_ASSIST_INFO
 
 // Science
@@ -505,8 +505,8 @@ var/list/departments_genitive = list()
 
 /obj/machinery/requests_console/janitorial
 	name = "Janitorial Requests Console"
-	department = "Кабинет Уборщика"
-	department_genitive = "Кабинета Уборщика"
+	department = "Коморка Уборщика"
+	department_genitive = "Коморки Уборщика"
 	departmentType = RC_ASSIST
 
 /obj/machinery/requests_console/internal_affairs
