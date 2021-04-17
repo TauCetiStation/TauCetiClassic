@@ -107,7 +107,7 @@
 	message = "Эвакуационный Шаттл был вызван. Он прибудет как можно скорее."
 	sound = "emer_shut_called"
 /datum/announcement/station/shuttle/emer_called/play()
-	message = "Эвакуационный Шаттл был вызван. Он прибудет через [shuttleminutes2text()]"
+	message = "Эвакуационный Шаттл был вызван. Он прибудет через [shuttleminutes2text()]."
 	..()
 
 /datum/announcement/station/shuttle/emer_recalled
