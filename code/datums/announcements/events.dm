@@ -51,7 +51,7 @@
 /datum/announcement/centcomm/fungi
 	name = "Event: Fungi"
 	subtitle = "Тревога. Биоугроза"
-	message = "Вредный грибок обнаружен на станции. Структура станции заражена."
+	message = "Вредный грибок обнаружен на станции. Структура станции может быть заражена."
 	sound = "fungi"
 
 /datum/announcement/centcomm/wormholes

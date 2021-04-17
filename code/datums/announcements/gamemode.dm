@@ -25,7 +25,7 @@
 /datum/announcement/centcomm/nuclear/war
 	name = "Nuclear: Declaration of War"
 	subtitle = "Объявление Войны"
-	message = "Синдикат объявил, что намерен полностью уничтожить станцию с помощю ядерного устройства и весь экипаж, что будет пытаться их остановить."
+	message = "Синдикат объявил о намерении полностью уничтожить станцию с помощю ядерного устройства и весь экипаж, что будет пытаться их остановить."
 /datum/announcement/centcomm/nuclear/war/play(message)
 	if(message)
 		src.message = message
