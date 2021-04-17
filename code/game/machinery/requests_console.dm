@@ -386,8 +386,8 @@ var/list/departments_genitive = list()
 
 /obj/machinery/requests_console/rd
 	name = "Research Director RC"
-	department = "Кабинет Научрука"
-	department_genitive = "Кабинета Научрука"
+	department = "Кабинет ДИР"
+	department_genitive = "Кабинета ДИР"
 	departmentType = RC_ASSIST_INFO
 	announcementConsole = TRUE
 
@@ -400,8 +400,8 @@ var/list/departments_genitive = list()
 
 /obj/machinery/requests_console/ce
 	name = "Chief Engineer RC"
-	department = "Кабинет ГИ"
-	department_genitive = "Кабинета ГИ"
+	department = "Кабинет СИ"
+	department_genitive = "Кабинета СИ"
 	departmentType = RC_INFO
 	announcementConsole = TRUE
 
@@ -487,8 +487,8 @@ var/list/departments_genitive = list()
 
 /obj/machinery/requests_console/cargo_bay
 	name = "Cargo Bay Requests Console"
-	department =  "Грузовой"
-	department_genitive = "Грузового"
+	department =  "Отдел Поставок"
+	department_genitive = "Отдела Поставок"
 	departmentType = RC_SUPPLY
 
 /obj/machinery/requests_console/bar
