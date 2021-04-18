@@ -1,8 +1,8 @@
 // Possibles title screens
-var/global/list/lobby_screens = list('icons/lobby/nss_exodus_system.gif', 'icons/lobby/standart.gif')
+var/global/list/lobby_screens = list('icons/lobby/utopia_lobby.jpeg')
 var/global/list/new_year_screens = list('icons/lobby/nss_exodus_system.gif', 'icons/lobby/newyear.gif')
 
-var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
+var/global/current_lobby_screen = 'icons/lobby/utopia_lobby.jpeg'
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"

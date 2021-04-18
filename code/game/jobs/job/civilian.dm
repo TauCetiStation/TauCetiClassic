@@ -10,7 +10,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
-	salary = 160
+	salary = 100
 	minimal_player_ingame_minutes = 960
 	outfit = /datum/outfit/job/qm
 	/*
@@ -34,8 +34,8 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
-	salary = 50
-	minimal_player_ingame_minutes = 120
+	salary = 20
+	minimal_player_ingame_minutes = 60
 	outfit = /datum/outfit/job/cargo_tech
 
 
@@ -50,8 +50,8 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
-	salary = 80
-	minimal_player_ingame_minutes = 480
+	salary = 50
+	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/mining
 
 
@@ -66,8 +66,8 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
-	salary = 60
-	minimal_player_ingame_minutes = 480
+	salary = 30
+	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/recycler
 	/*
 		HEY YOU!
@@ -92,7 +92,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
 	salary = 40
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 180
 	outfit = /datum/outfit/job/bartender
 	/*
 		HEY YOU!
@@ -117,7 +117,7 @@
 	access = list(access_kitchen)
 	salary = 40
 	alt_titles = list("Cook")
-	minimal_player_ingame_minutes = 60
+	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/chef
 	/*
 		HEY YOU!
@@ -140,9 +140,9 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
-	salary = 60
+	salary = 10
 	alt_titles = list("Hydroponicist")
-	minimal_player_ingame_minutes = 10
+	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/hydro
 
 
@@ -157,7 +157,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby)
-	salary = 50
+	salary = 10
 	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/janitor
 
@@ -174,7 +174,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
-	salary = 40
+	salary = 20
 	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
 	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/barber
@@ -191,9 +191,9 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
-	salary = 40
+	salary = 30
 	alt_titles = list("Journalist")
-	minimal_player_ingame_minutes = 30
+	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/librarian
 
 /datum/job/media
@@ -207,8 +207,8 @@
 	selection_color = "#008080"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
-	salary = 40
-	minimal_player_ingame_minutes = 30
+	salary = 20
+	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/media
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
@@ -223,8 +223,8 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engineering_lobby)
-	salary = 200
-	minimal_player_ingame_minutes = 1560
+	salary = 70
+	minimal_player_ingame_minutes = 1440
 	outfit = /datum/outfit/job/lawyer
 	/*
 		HEY YOU!
@@ -247,8 +247,8 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
-	salary = 20
-	minimal_player_ingame_minutes = 120
+	salary = 10
+	minimal_player_ingame_minutes = 30
 	outfit = /datum/outfit/job/clown
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -266,7 +266,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre)
-	salary = 20
+	salary = 10
 	outfit = /datum/outfit/job/mime
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
