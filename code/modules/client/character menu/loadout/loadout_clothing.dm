@@ -211,17 +211,18 @@
 	gear_tweaks += new/datum/gear_tweak/path(shirt)
 
 /datum/gear/under/secovercoat
-display_name = "security overcoat"
-path = /obj/item/clothing/suit/armor/vest/leather
-slot = SLOT_WEAR_SUIT
-sort_category = "Suits and Overwear"
-cost = 2
+	display_name = "security overcoat"
+	path = /obj/item/clothing/suit/armor/vest/leather
+	slot = SLOT_WEAR_SUIT
+	sort_category = "Suits and Overwear"
+	cost = 2
+	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security")
 
 /datum/gear/under/overcoat
-display_name = "leather overcoat"
-path = /obj/item/clothing/suit/jacket/leather/overcoat
-slot = SLOT_WEAR_SUIT
-sort_category = "Suits and Overwear"
-cost = 2
-allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security")
+	display_name = "leather overcoat"
+	path = /obj/item/clothing/suit/jacket/leather/overcoat
+	slot = SLOT_WEAR_SUIT
+	sort_category = "Suits and Overwear"
+	cost = 1
+
 
