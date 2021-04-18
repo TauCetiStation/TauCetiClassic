@@ -98,8 +98,10 @@
 
 	if(iscultist(user))
 		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
-		user.adjustBruteLoss(10)
-		user.Paralyse(20)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.adjustBruteLoss(10)
+			H.Paralyse(20)
 		return
 
 	// Captured area is too strong
