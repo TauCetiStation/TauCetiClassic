@@ -15,6 +15,7 @@
 #define SPIDERCLAN "Spider Clan"
 #define WIZFEDERATION "Wizard Federation"
 #define XENOMORPH_HIVE "Alien Hivemind"
+#define ZOMBIES "Zobmies"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"

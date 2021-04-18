@@ -175,3 +175,5 @@
 #define isninja(H) (H.mind ? H.mind.GetRole(NINJA) : FALSE)
 
 #define isERT(H) (H.mind ? H.mind.GetRole(RESPONDER) : FALSE)
+
+#define isrolezombie(H) (H.mind ? H.mind.GetRole(ZOMBIE) : FALSE)

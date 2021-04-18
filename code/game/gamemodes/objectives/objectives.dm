@@ -234,6 +234,20 @@ var/global/list/all_objectives = list()
 					return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 
+/datum/objective/turn_into_zombie
+	explanation_text = "Превратите всех людей на станции в зомби."
+
+/datum/objective/turn_into_zombie/check_completion()
+	if(!faction)
+		return OBJECTIVE_LOSS
+	if(!faction.members.len)
+		return OBJECTIVE_LOSS
+	for(var/mob/living/carbon/human/H in human_list)
+		if(!H || !H.mind || !is_station_level(H.z))
+			continue
+		if(!H.mind.GetRoleByType(faction.initroletype) || !H.mind.GetRoleByType(faction.roletype))
+			return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
 
 /datum/objective/block
 	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
