@@ -92,7 +92,7 @@ var/list/net_announcer_secret = list()
 	var/siteurl
 	var/wikiurl
 	var/forumurl
-	var/media_base_url = "http://example.org"
+	var/media_base_url = "https://discord.gg/zdaXjN4GCN"
 	var/server_rules_url
 	var/discord_invite_url
 	var/customitems_info_url

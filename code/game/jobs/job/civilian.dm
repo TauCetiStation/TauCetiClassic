@@ -35,7 +35,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	salary = 50
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/cargo_tech
 
 
@@ -117,7 +117,7 @@
 	access = list(access_kitchen)
 	salary = 40
 	alt_titles = list("Cook")
-	minimal_player_ingame_minutes = 240
+	minimal_player_ingame_minutes = 60
 	outfit = /datum/outfit/job/chef
 	/*
 		HEY YOU!
@@ -142,7 +142,7 @@
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	salary = 60
 	alt_titles = list("Hydroponicist")
-	minimal_player_ingame_minutes = 120
+	minimal_player_ingame_minutes = 10
 	outfit = /datum/outfit/job/hydro
 
 
@@ -158,7 +158,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels, access_sec_doors, access_research, access_mailsorting, access_medical, access_engineering_lobby)
 	salary = 50
-	minimal_player_ingame_minutes = 120
+	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/janitor
 
 
@@ -176,7 +176,7 @@
 	access = list(access_barber)
 	salary = 40
 	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
-	minimal_player_ingame_minutes = 120
+	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/barber
 
 
@@ -193,9 +193,23 @@
 	access = list(access_library)
 	salary = 40
 	alt_titles = list("Journalist")
-	minimal_player_ingame_minutes = 120
+	minimal_player_ingame_minutes = 30
 	outfit = /datum/outfit/job/librarian
 
+/datum/job/media
+	title = "Media Worker"
+	flag = MEDIA
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of personnel"
+	selection_color = "#008080"
+	idtype = /obj/item/weapon/card/id/civ
+	access = list(access_library)
+	salary = 40
+	minimal_player_ingame_minutes = 30
+	outfit = /datum/outfit/job/media
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
 /datum/job/lawyer

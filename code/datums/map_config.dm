@@ -6,11 +6,11 @@
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 
 	// Config actually from the JSON - should default to Box
-	var/map_name = "Box Station"
+	var/map_name = "Utopia Station"
 	var/map_path = "boxstation"
 	var/map_file = "boxstation.dmm"
-	var/station_name = "NSS Exodus"
-	var/system_name = "Tau Ceti"
+	var/station_name = "NSS Utopia"
+	var/system_name = "Nebula"
 	var/station_image = "exodus"
 
 	// Config from maps.txt

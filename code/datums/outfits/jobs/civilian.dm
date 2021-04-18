@@ -73,6 +73,17 @@
 	l_hand = /obj/item/weapon/barcodescanner
 	r_pocket = /obj/item/device/pda/librarian
 
+//MEDIA WORKER OUTFIT
+/datum/outfit/job/media
+	name = OUTFIT_JOB_NAME("Media")
+
+	uniform = /obj/item/clothing/under/suit_jacket/red
+	shoes = /obj/item/clothing/shoes/black
+
+	belt = /obj/item/weapon/storage/bag/bookbag
+	l_hand = /obj/item/weapon/barcodescanner
+	r_pocket = /obj/item/device/pda/librarian
+
 // LAWYER OUTFIT
 /datum/outfit/job/lawyer
 	name = OUTFIT_JOB_NAME("Internal Affairs Agent")
