@@ -5,7 +5,7 @@ var/join_motd = null
 var/host_announcements
 var/join_test_merge = null
 var/test_merges
-var/station_name = "NSS Utopia | Project Utopia | Hardcore RP |"
+var/station_name = "NSS Utopia"
 var/system_name = "Tau Ceti"
 var/game_version = "Project Utopia"
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
