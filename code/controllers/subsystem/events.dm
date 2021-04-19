@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = SS_INIT_EVENTS
 	// Report events at the end of the rouund
-	var/report_at_round_end = 0
+	var/report_at_round_end = 1
 
     // Event vars
 	var/datum/event_container/selected_event_container = null
