@@ -38,7 +38,7 @@
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-	salary = 250
+	salary = 150
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
 	access = list(

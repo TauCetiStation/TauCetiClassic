@@ -15,7 +15,7 @@
 		access_heads, access_construction, access_sec_doors, access_minisat,
 		access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_engineering_lobby
 	)
-	salary = 250
+	salary = 70
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/chief_engineer
@@ -42,7 +42,7 @@
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	outfit = /datum/outfit/job/engineer
-	salary = 160
+	salary = 50
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
 
@@ -58,7 +58,7 @@
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
 	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks, access_engineering_lobby)
-	salary = 160
+	salary = 50
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
 	outfit = /datum/outfit/job/atmos
@@ -75,7 +75,7 @@
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
 	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
-	salary = 50
+	salary = 10
 	outfit = /datum/outfit/job/technical_assistant
 
 

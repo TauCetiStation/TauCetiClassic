@@ -161,25 +161,6 @@
 	minimal_player_ingame_minutes = 0
 	outfit = /datum/outfit/job/janitor
 
-
-//More or less assistants
-/datum/job/barber
-	title = "Barber"
-	flag = BARBER
-	department_flag = CIVILIAN
-	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
-	supervisors = "the head of personnel"
-	selection_color = "#bbe291"
-	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_barber)
-	salary = 20
-	alt_titles = list("Stylist" = /datum/outfit/job/stylist)
-	minimal_player_ingame_minutes = 0
-	outfit = /datum/outfit/job/barber
-
-
 /datum/job/librarian
 	title = "Librarian"
 	flag = LIBRARIAN

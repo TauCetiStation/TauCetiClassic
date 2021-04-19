@@ -15,7 +15,7 @@
 		access_research, access_robotics, access_xenobiology, access_ai_upload,
 		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels
 	)
-	salary = 250
+	salary = 80
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/rd
@@ -41,7 +41,7 @@
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Phoron Researcher")
-	salary = 180
+	salary = 30
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/scientist
 
@@ -57,7 +57,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenoarch)
-	salary = 190
+	salary = 45
 	minimal_player_ingame_minutes = 1400
 	outfit = /datum/outfit/job/xenoarchaeologist
 	/*
@@ -81,7 +81,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenobiology)
-	salary = 190
+	salary = 25
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/xenobiologist
 
@@ -97,7 +97,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
-	salary = 180
+	salary = 30
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/roboticist
@@ -114,6 +114,6 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research)
-	salary = 50
+	salary = 40
 	outfit = /datum/outfit/job/research_assistant
 

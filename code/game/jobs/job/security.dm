@@ -15,7 +15,7 @@
 		access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
 	)
-	salary = 250
+	salary = 110
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 	outfit = /datum/outfit/job/hos
@@ -40,7 +40,7 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_maint_tunnels)
-	salary = 190
+	salary = 55
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 	outfit = /datum/outfit/job/warden
@@ -65,7 +65,7 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels)
-	salary = 180
+	salary = 45
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/detective
@@ -80,7 +80,7 @@
 
 
 /datum/job/officer
-	title = "Security Officer"
+	title = "Utopian peacemaker"
 	flag = OFFICER
 	department_flag = ENGSEC
 	faction = "Station"
@@ -90,7 +90,7 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_maint_tunnels)
-	salary = 130
+	salary = 30
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/officer
@@ -115,7 +115,7 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels)
-	salary = 150
+	salary = 30
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 	outfit = /datum/outfit/job/forensic
@@ -130,7 +130,7 @@
 
 
 /datum/job/cadet
-	title = "Security Cadet"
+	title = "Peacemaker cadet"
 	flag = CADET
 	department_flag = ENGSEC
 	faction = "Station"
@@ -140,7 +140,7 @@
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_maint_tunnels)
-	salary = 50
+	salary = 10
 	minimal_player_age = 2
 	minimal_player_ingame_minutes = 520
 	outfit = /datum/outfit/job/cadet

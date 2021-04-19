@@ -50,8 +50,7 @@ var/const/CLOWN				=(1<<11)
 var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
 var/const/RECYCLER			=(1<<14)
-var/const/BARBER			=(1<<15)
-var/const/MEDIA				=(1<<16)
+var/const/MEDIA				=(1<<15)
 
 var/list/assistant_occupations = list(
 )
@@ -100,7 +99,6 @@ var/list/science_positions = list(
 //BS12 EDIT
 var/list/civilian_positions = list(
 	"Head of Personnel",
-	"Barber",
 	"Bartender",
 	"Botanist",
 	"Chef",
@@ -115,16 +113,15 @@ var/list/civilian_positions = list(
 	"Test Subject",
 	"Clown",
 	"Mime",
-	"Media Worker"
 )
 
 var/list/security_positions = list(
 	"Head of Security",
 	"Warden",
 	"Detective",
-	"Security Officer",
+	"Utopian pPeacemaker",
 	"Forensic Technician",
-	"Security Cadet"
+	"Peacemaker Cadet"
 )
 
 
