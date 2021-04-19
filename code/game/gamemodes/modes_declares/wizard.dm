@@ -1,6 +1,6 @@
 /datum/game_mode/wizard
 	name = "Wizard"
-
+	config_name = "wizard"
 	factions_allowed = list(/datum/faction/wizards)
 
 	minimum_player_count = 2

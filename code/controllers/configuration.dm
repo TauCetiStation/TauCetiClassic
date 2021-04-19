@@ -45,7 +45,7 @@ var/list/net_announcer_secret = list()
 	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
 	var/antag_hud_restricted = 0                    // Ghosts that turn on Antagovision cannot rejoin the round.
 	var/list/mode_names = list()
-	var/list/modes = list()				// allowed modes
+	var/list/config_name_by_real = list()
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
 	var/allow_random_events = 1			// enables random events mid-round when set to 1
@@ -206,11 +206,11 @@ var/list/net_announcer_secret = list()
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = type
-		if(initial(M.name) && !(initial(M.name) in modes))
+		if(initial(M.name) && !(initial(M.name) in mode_names))
 			log_misc("Adding game mode [initial(M.name)] to configuration.")
-			modes += initial(M.name)
-			mode_names[initial(M.name)] = initial(M.name)
-			probabilities[initial(M.name)] = initial(M.probability)
+			mode_names += initial(M.name)
+			config_name_by_real[initial(M.config_name)] = initial(M.name)
+			probabilities[initial(M.config_name)] = initial(M.probability)
 
 /datum/configuration/proc/load(filename, type = "config") //the type can also be game_options, in which case it uses a different switch. not making it separate to not copypaste code - Urist
 	var/list/Lines = file2list(filename)
@@ -421,7 +421,7 @@ var/list/net_announcer_secret = list()
 					if (prob_pos)
 						prob_name = lowertext(copytext(value, 1, prob_pos))
 						prob_value = copytext(value, prob_pos + 1)
-						if (prob_name in config.modes)
+						if (prob_name in config.config_name_by_real)
 							config.probabilities[prob_name] = text2num(prob_value)
 						else
 							log_misc("Unknown game mode probability configuration definition: [prob_name].")
@@ -763,7 +763,7 @@ var/list/net_announcer_secret = list()
 	var/list/datum/game_mode/runnable_modes = list()
 	for (var/type in bundle.possible_gamemodes)
 		var/datum/game_mode/M = new type()
-		if (!name || !(M.name in modes))
+		if (!name || !(M.config_name in config_name_by_real))
 			qdel(M)
 			continue
 		if (probabilities[M.name] <= 0)

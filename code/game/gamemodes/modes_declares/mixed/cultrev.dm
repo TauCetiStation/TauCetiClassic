@@ -1,5 +1,6 @@
 /datum/game_mode/mix/cultrev
-	name = "Revolution Of Nar-Sie"
+	name = "Revolution Of Nar-sie"
+	config_name = "revocult"
 	factions_allowed = list(
 		/datum/faction/cult,
 		/datum/faction/revolution,

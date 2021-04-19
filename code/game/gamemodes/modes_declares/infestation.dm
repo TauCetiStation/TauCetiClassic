@@ -1,5 +1,6 @@
 /datum/game_mode/infestation
 	name = "Infestation"
+	config_name = "infestation"
 
 	factions_allowed = list(/datum/faction/infestation)
 

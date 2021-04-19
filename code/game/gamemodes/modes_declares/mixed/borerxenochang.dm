@@ -1,5 +1,6 @@
 /datum/game_mode/mix/borerxenochang
 	name = "Real Infestation"
+	config_name = "real_infestation"
 	factions_allowed = list(
 		/datum/faction/borers,
 		/datum/faction/changeling,

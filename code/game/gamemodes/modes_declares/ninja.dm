@@ -1,5 +1,6 @@
 /datum/game_mode/ninja
 	name = "Ninja"
+	config_name = "ninja"
 
 	factions_allowed = list(/datum/faction/ninja)
 

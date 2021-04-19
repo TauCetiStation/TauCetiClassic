@@ -1,5 +1,6 @@
 /datum/game_mode/traitor
 	name = "Traitor"
+	config_name = "traitor"
 	factions_allowed = list(/datum/faction/traitor)
 
 	minimum_player_count = 1

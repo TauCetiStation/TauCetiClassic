@@ -13,6 +13,7 @@
 
 /datum/game_mode
 	var/name
+	var/config_name // use only for config, without SSticker.mode.config_name == "malf", please
 	var/list/factions_allowed = list()
 	var/list/roles_allowed = list()
 	var/minimum_player_count
