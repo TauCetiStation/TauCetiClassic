@@ -9,7 +9,7 @@
 	var/map_name = "Utopia Station"
 	var/map_path = "boxstation"
 	var/map_file = "boxstation.dmm"
-	var/station_name = "NSS Utopia"
+	var/station_name = "NSS Utopia | Hard RP | Project Utopia"
 	var/system_name = "Nebula"
 	var/station_image = "exodus"
 
