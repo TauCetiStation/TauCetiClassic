@@ -108,13 +108,12 @@
 	..()
 
 /obj/item/device/mmi/posibrain/attack_ghost(mob/dead/observer/O)
-	if(brainmob && !brainmob.key && searching == 0)
-		//Start the process of searching for a new user.
-		to_chat(O, "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>")
-		icon_state = "posibrain-searching"
-		searching = TRUE
-		request_player()
-		addtimer(CALLBACK(src, .proc/reset_search), 300)
+	if(!ping_cd)
+		ping_cd = 1
+		spawn(50)
+			ping_cd = 0
+		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 10, FALSE)
 
 /obj/item/device/mmi/posibrain/atom_init()
 
