@@ -137,7 +137,7 @@ var/list/net_announcer_secret = list()
 	// No custom time
 	var/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
-									EVENT_LEVEL_MAJOR = list("lower" = 80 MINUTES, "upper" = 100 MINUTES))
+									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
 	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
