@@ -177,3 +177,5 @@
 #define isERT(H) (H.mind ? H.mind.GetRole(RESPONDER) : FALSE)
 
 #define isrolezombie(H) (H.mind ? H.mind.GetRole(ZOMBIE) : FALSE)
+
+#define isalien(H) (H.mind ? H.mind.GetRole(XENOMORPH) : FALSE)

@@ -306,9 +306,6 @@
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
 			qdel(current_hugger)
-			var/datum/faction/infestation/I = find_active_first_faction_by_type(/datum/faction/infestation)
-			if(I)
-				I.HandleRecruitedMind(new_xeno.mind)
 		target.unEquip(src)
 		target.status_flags |= XENO_HOST
 		target.med_hud_set_status()

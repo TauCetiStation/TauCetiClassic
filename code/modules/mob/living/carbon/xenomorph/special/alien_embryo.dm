@@ -163,9 +163,6 @@ This is emryo growth procs
 			H.rupture_lung()
 		var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(get_turf(affected_mob))
 		new_xeno.key = larva_candidate
-		var/datum/faction/infestation/I = find_active_first_faction_by_type(/datum/faction/infestation)
-		if(I)
-			I.HandleRecruitedMind(new_xeno.mind)
 		new_xeno.update_icons()
 		playsound(new_xeno, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE) // To get the player's attention
 

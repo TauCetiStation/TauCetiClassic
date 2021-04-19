@@ -430,9 +430,6 @@
 		if(GROWN)
 			var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(src))
 			FH.key = user.key
-			var/datum/faction/infestation/I = find_active_first_faction_by_type(/datum/faction/infestation)
-			if(I)
-				I.HandleRecruitedMind(FH.mind)
 			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)

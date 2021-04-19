@@ -38,7 +38,7 @@
 			break
 		callshuttle++
 
-	if(istype(SSticker.mode, /datum/game_mode/rp_revolution) || istype(SSticker.mode, /datum/game_mode/malfunction) || sent_strike_team)
+	if(find_active_first_faction_by_type(/datum/faction/revolution) || find_active_first_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
 		callshuttle = 0
 
 	if(callshuttle == 3) //if all three conditions are met

@@ -49,7 +49,7 @@ robot_fabricator
 	available_modules = subtypesof(/datum/AI_Module/large)
 	available_modules += subtypesof(/datum/AI_Module/small)
 
-/datum/AI_Module/module_picker/proc/use(mob/user)
+/datum/AI_Module/module_picker/proc/use(mob/living/silicon/ai/user)
 	var/dat
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];clear=1'>Clear</A>"
@@ -60,10 +60,9 @@ robot_fabricator
 		dat += "<HR>"
 		dat += "<B>Install Module:</B><BR>"
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
-		var/is_malf = istype(SSticker.mode, /datum/game_mode/malfunction)
 		for(var/module in available_modules)
 			var/datum/AI_Module/module_type = module
-			if(initial(module_type.only_for_malf_gamemode) && !is_malf)
+			if(initial(module_type.only_for_malf_gamemode) && !ismalf(user))
 				continue
 			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> ([initial(module_type.price)])<BR>"
 		dat += "<HR>"

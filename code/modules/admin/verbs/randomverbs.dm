@@ -327,9 +327,6 @@
 		else			return 0
 
 	new_xeno.ckey = ckey
-	var/datum/faction/infestation/I = find_active_first_faction_by_type(/datum/faction/infestation)
-	if(I)
-		I.HandleRecruitedMind(new_xeno.mind)
 	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>")
 	return 1
 

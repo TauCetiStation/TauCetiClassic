@@ -466,10 +466,6 @@
 		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
-	if(istype(SSticker.mode, /datum/game_mode/blob))
-		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
-		return
-
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
@@ -505,10 +501,6 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(istype(SSticker.mode, /datum/game_mode/blob))
-			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
-			return
-
 	SSshuttle.shuttlealert(1)
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
@@ -523,9 +515,6 @@
 		return
 	if(SSshuttle.timeleft() < 300)
 		to_chat(user, "Shuttle is close and it's too late for cancellation.")
-		return
-	if(istype(SSticker.mode, /datum/game_mode/blob))//why??
-		to_chat(user, "The console is not responding.")
 		return
 
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm

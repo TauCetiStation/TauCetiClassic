@@ -649,6 +649,7 @@
 
 //Initialisation procs
 /mob/proc/mind_initialize()
+	SHOULD_CALL_PARENT(TRUE)
 	if(mind)
 		mind.key = key
 	else
@@ -676,6 +677,14 @@
 /mob/living/carbon/xenomorph/mind_initialize()
 	..()
 	mind.assigned_role = "Alien"
+
+	if(!isalien(src))
+		var/datum/faction/infestation/I = find_active_first_faction_by_type(/datum/faction/infestation)
+		if(!I)
+			I = SSticker.mode.CreateFaction(/datum/faction/infestation)
+			I.forgeObjectives()
+		add_faction_member(I, src, TRUE)
+
 	//XENO HUMANOID
 /mob/living/carbon/xenomorph/humanoid/queen/mind_initialize()
 	..()

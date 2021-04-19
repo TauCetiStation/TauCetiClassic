@@ -262,10 +262,6 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(istype(SSticker.mode, /datum/game_mode/blob))
-			alert("You can't call the shuttle during blob!")
-			return
-
 		switch(href_list["call_shuttle"])
 			if("1")
 				if ((!( SSticker ) || SSshuttle.location))

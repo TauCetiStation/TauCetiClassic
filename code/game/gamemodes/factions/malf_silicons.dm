@@ -99,8 +99,8 @@
 	if (is_malf_ai_dead())
 		if(config.continous_rounds)
 			if(SSshuttle)
-				SSshuttle.always_fake_recall = 0
-			malf_mode_declared = 0
+				SSshuttle.always_fake_recall = FALSE
+			malf_mode_declared = FALSE
 		else
 			return TRUE
 	return FALSE
