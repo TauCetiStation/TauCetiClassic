@@ -1768,6 +1768,48 @@
 /obj/structure/cult/portal_to_station,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
+"aeM" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/wiz,
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"aeN" = (
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"aeO" = (
+/obj/structure/stool/bed/chair/wood/wings{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"aeP" = (
+/obj/structure/stool/bed/chair/wood/wings{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "aeT" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,18"
@@ -15730,9 +15772,6 @@
 /area/custom/wizard_station)
 "baz" = (
 /obj/structure/table/woodentable,
-/obj/effect/landmark{
-	name = "Teleport-Scroll"
-	},
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "carpetside"
@@ -15905,10 +15944,11 @@
 	},
 /area/custom/wizard_station)
 "baU" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "engine"
 	},
 /area/custom/wizard_station)
 "baV" = (
@@ -29598,7 +29638,7 @@ bav
 bav
 bbo
 bbo
-bbo
+aeP
 bbo
 bav
 aaY
@@ -30367,7 +30407,7 @@ bav
 bav
 bav
 bav
-bbr
+aeO
 bbr
 bbr
 bbr
@@ -31648,7 +31688,7 @@ bar
 baB
 baJ
 baR
-baU
+aeM
 baT
 bbh
 bar
@@ -32416,11 +32456,11 @@ aaM
 aaM
 aaM
 bas
-baD
+baU
 baD
 bar
 baW
-baT
+aeN
 bbj
 bar
 bby

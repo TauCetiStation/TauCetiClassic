@@ -7,7 +7,7 @@
 	initroletype = /datum/role/wizard
 	roletype = /datum/role/wizard_apprentice
 
-	max_roles = 1
+	max_roles = 2
 
 /datum/faction/wizards/can_setup(num_players)
 	return (..() && wizardstart.len != 0)
