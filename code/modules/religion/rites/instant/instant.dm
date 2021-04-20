@@ -295,7 +295,7 @@
 
 /datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
 	..()
-	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 15 SECONDS)
+	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 15 SECONDS)
 	if(!candidates.len)
 		to_chat(user, "<span class='warning'>Ниодна душа не захотела вселяться в гомункула.</span>")
 		return FALSE
