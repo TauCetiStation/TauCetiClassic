@@ -245,7 +245,7 @@
 		possible_factions += F
 	if(possible_factions.len)
 		var/datum/faction/F = pick(possible_factions)
-		F.HandleRecruitedMind(mob.mind)
+		add_faction_member(F, mob, TRUE)
 
 /datum/game_mode/proc/PostSetup()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)

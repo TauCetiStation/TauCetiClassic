@@ -223,7 +223,7 @@
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
 		target.setOxyLoss(0) //In case the shadowling was choking them out
-		faction.HandleRecruitedMind(target.mind)
+		add_faction_member(faction, target)
 
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
@@ -590,7 +590,7 @@
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
 		var/datum/faction/shadowlings/faction = find_active_first_faction_by_type(/datum/faction/shadowlings)
-		faction.HandleRecruitedMind(target.mind)
+		add_faction_member(faction, target, TRUE)
 
 
 /obj/effect/proc_holder/spell/targeted/shadowling_phase_shift

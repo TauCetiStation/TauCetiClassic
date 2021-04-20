@@ -152,7 +152,7 @@
 		wizard_name = wizard.name
 	var/datum/role/wizard/wiz_role = wizard.GetRole(WIZARD)
 	var/datum/faction/wizards/federation = wiz_role.GetFaction()
-	federation.HandleRecruitedMind(M.mind)
+	add_faction_member(federation, M, TRUE)
 	if(istraitor(M))
 		to_chat(M, "<span class='notice'>You succeed in getting those precious powers from that fool. Now it's time to show [master] what you are realy after.</span>")
 	else

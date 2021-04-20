@@ -90,7 +90,7 @@
 		var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 		if(choice == "Yes!")
 			var/datum/faction/revolution/rev = lead.GetFaction()
-			rev.HandleRecruitedMind(M.mind)
+			add_faction_member(rev, M, TRUE)
 			to_chat(M, "<span class='notice'>You join the revolution!</span>")
 			to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 		else if(choice == "No!")

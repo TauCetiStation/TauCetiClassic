@@ -77,7 +77,7 @@
 				return
 
 			var/mob/living/newtraitor = pick(possible_autotraitor)
-			HandleRecruitedMind(newtraitor.mind)
+			add_faction_member(src, newtraitor, TRUE)
 
 	addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
 
