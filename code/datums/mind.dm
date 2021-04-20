@@ -258,7 +258,7 @@
 
 		newRole.OnPostSetup()
 		if ((chosen_greeting && chosen_greeting != "custom") || (chosen_greeting == "custom" && custom_greeting))
-			newRole.Greet(chosen_greeting,custom_greeting)
+			newRole.Greet(chosen_greeting, custom_greeting)
 
 	else if(href_list["role_edit"])
 		var/datum/role/R = locate(href_list["role_edit"])

@@ -1,4 +1,3 @@
-
 /datum/faction/abductors
 	name = ABDUCTORS
 	ID = ABDUCTORS

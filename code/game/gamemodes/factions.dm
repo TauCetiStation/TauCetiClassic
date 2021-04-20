@@ -268,6 +268,10 @@
 	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'>"}
 	return header
 
+
+/datum/faction/proc/extraPanelButtons(datum/mind/M)
+	return ""
+
 /datum/faction/proc/AdminPanelEntry(datum/mind/M)
 	SHOULD_CALL_PARENT(TRUE)
 	var/dat = ""

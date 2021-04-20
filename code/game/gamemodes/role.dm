@@ -216,7 +216,8 @@
 	var/icon/logo = get_logo_icon()
 	switch(greeting)
 		if (GREET_CUSTOM)
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>[custom]</B>")
+			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
+			to_chat(antag.current, "[custom]")
 		else
 			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
 
@@ -317,7 +318,7 @@
 
 	return text
 
-/datum/role/proc/extraPanelButtons()
+/datum/role/proc/extraPanelButtons(datum/mind/M)
 	return ""
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
@@ -327,7 +328,7 @@
 
 	if (admin_edit)
 		if (faction)
-			text += "<a href='?src=\ref[M];role_edit=\ref[src];remove_from_faction=1'>(remove from faction)</a>"
+			text += "<a href='?src=\ref[M];role_edit=\ref[src];remove_from_faction=1'>(remove from faction)</a>[faction.extraPanelButtons(M)]"
 		else
 			text += "<a href='?src=\ref[M];role_edit=\ref[src];add_to_faction=1'> - (add to faction) - </a>"
 
@@ -344,7 +345,7 @@
 	var/icon/logo = get_logo_icon()
 	text += "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
 	if (admin_edit)
-		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons()]"
+		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons(M)]"
 
 	if(objectives.objectives.len)
 		text += "<br><ul><b>Personal objectives:</b><br>"

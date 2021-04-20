@@ -423,36 +423,3 @@
 		popup.open()
 	else
 		alert("The game hasn't started yet!")
-
-/proc/check_role_table(name, list/members, admins, show_objectives = TRUE)
-	var/txt = "<br><table cellspacing=5><tr><td><b>[name]</b></td><td></td></tr>"
-	for(var/datum/mind/M in members)
-		txt += check_role_table_row(M.current, admins, show_objectives)
-	txt += "</table>"
-	return txt
-
-/proc/check_role_table_row(mob/M, admins=src, show_objectives)
-	if (!istype(M))
-		return "<tr><td><i>Not found!</i></td></tr>"
-
-	var/txt = {"
-		<tr>
-			<td>
-				<a href='?src=\ref[admins];adminplayeropts=\ref[M]'>[M.real_name]</a>
-				[M.client ? "" : " <i>(logged out)</i>"]
-				[M.is_dead() ? " <b><span class='red'>(DEAD)</span></b>" : ""]
-			</td>
-			<td>
-				<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>
-			</td>
-	"}
-
-	if (show_objectives)
-		txt += {"
-			<td>
-				<a href='?src=\ref[admins];traitor=\ref[M]'>Show Objective</a>
-			</td>
-		"}
-
-	txt += "</tr>"
-	return txt
