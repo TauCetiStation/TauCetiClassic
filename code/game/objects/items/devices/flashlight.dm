@@ -215,10 +215,7 @@
 		item_state = "[initial(item_state)]-burned"
 		if(ismob(loc))
 			var/mob/U = loc
-			if(U.hand)
-				U.update_inv_l_hand()
-			else
-				U.update_inv_r_hand()
+			U.update_inv_item(src)
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
@@ -239,10 +236,7 @@
 		src.force = on_damage
 		src.damtype = "fire"
 		item_state = icon_state
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
+		user.update_inv_item(src)
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/slime
