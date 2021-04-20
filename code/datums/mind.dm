@@ -735,14 +735,6 @@
 	..()
 	mind.assigned_role = "Shade"
 
-/mob/living/simple_animal/construct/mind_initialize()
-	..()
-	if(global.cult_religion)
-		global.cult_religion.add_member(src, CULT_ROLE_HIGHPRIEST)
-	else
-		SSticker.mode.CreateFaction(/datum/faction/cult)
-		global.cult_religion.add_member(src, CULT_ROLE_HIGHPRIEST)// religion was created in faction
-
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
