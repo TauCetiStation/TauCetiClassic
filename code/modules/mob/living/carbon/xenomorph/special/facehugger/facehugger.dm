@@ -229,11 +229,19 @@
 
 /obj/item/clothing/mask/facehugger/proc/mouth_is_protected(obj/item/clothing/I)
 	if(istype(I, /obj/item/clothing/head))
-		if(I.flags & HEADCOVERSMOUTH)
+		if((I.flags & HEADCOVERSMOUTH) || (I.flags_inv & HIDEMASK))
 			return TRUE
 	if(istype(I, /obj/item/clothing/mask))
 		if(I.flags & MASKCOVERSMOUTH)
 			return TRUE
+	return FALSE
+
+/obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
+	var/obj/item/clothing/head/helmet/space/rig/R = I
+	if(istype(R) && !R.canremove)	//if the helmet is attached to the rig, facehugger will not be able to remove it
+		R.canremove = TRUE
+	if(C.unEquip(I))
+		return TRUE
 	return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/carbon/C)
@@ -246,7 +254,7 @@
 	var/target_mask = C.wear_mask
 	var/fail_rip_off = FALSE
 	if(target_head && mouth_is_protected(target_head))
-		if(prob(50) && C.unEquip(target_head))
+		if(prob(50) && unequip_head(target_head, C))
 			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] rips off your [target_head]!</span>")
 		else
 			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_head]!</span>")

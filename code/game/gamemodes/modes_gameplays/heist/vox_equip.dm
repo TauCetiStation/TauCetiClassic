@@ -1,8 +1,7 @@
 /mob/living/carbon/human/proc/equip_vox_raider()
 	var/static/vox_tick = 1
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate
-	R.set_frequency(SYND_FREQ) // Same frequency as the syndicate team in Nuke mode.
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/heist
 	equip_to_slot_or_del(R, SLOT_L_EAR)
 
 	equip_to_slot_or_del(new /obj/item/clothing/under/vox/vox_robes, SLOT_W_UNIFORM)

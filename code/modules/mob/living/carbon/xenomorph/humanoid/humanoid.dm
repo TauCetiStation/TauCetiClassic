@@ -48,6 +48,3 @@
 	. = ..()
 	if(.)
 		update_icons()
-
-/mob/living/carbon/xenomorph/humanoid/set_pressure_damage()
-	return heal_rate	//adult aliens won't take damage from pressure if stay on weeds

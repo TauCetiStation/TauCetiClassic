@@ -27,9 +27,12 @@
 /obj/machinery/atmospherics/proc/ventcrawl_to(mob/living/user, obj/machinery/atmospherics/target_move, direction)
 	if(target_move)
 		if(is_type_in_list(target_move, ventcrawl_machinery) && target_move.can_crawl_through())
+			to_chat(user, "You start to climb out the ventilation system.")
+			if(user.is_busy() || !do_after(user, 20, null, target_move))
+				return
 			user.remove_ventcrawl()
 			user.forceMove(target_move.loc) //handles entering and so on
-			user.visible_message("You hear something squeezing through the ducts.", "You climb out the ventilation system.")
+			user.visible_message("You hear something squeezing through the ducts.", "You climbed out the ventilation system.")
 		else if(target_move.can_crawl_through())
 			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
 			if(pipenetdiff.len)
@@ -42,9 +45,12 @@
 				playsound(src, 'sound/machines/ventcrawl.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	else
 		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && src.can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+			to_chat(user, "You start to climb out the ventilation system.")
+			if(user.is_busy() || !do_after(user, 20, null, loc))
+				return
 			user.remove_ventcrawl()
 			user.forceMove(src.loc)
-			user.visible_message("You hear something squeezing through the pipes.", "You climb out the ventilation system.")
+			user.visible_message("You hear something squeezing through the pipes.", "You climbed out the ventilation system.")
 	user.canmove = FALSE
 	spawn(1)
 		user.canmove = TRUE

@@ -16,6 +16,12 @@
 	origin_tech = "syndicate=3"
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
+/obj/item/device/encryptionkey/heist
+	icon_state = "cypherkey"
+	channels = list("Heist" = 1)
+	origin_tech = "syndicate=3"
+	syndie = 1//Signifies that it de-crypts Syndicate transmissions
+
 /obj/item/device/encryptionkey/binary
 	icon_state = "cypherkey"
 	translate_binary = 1
