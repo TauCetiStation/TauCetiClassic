@@ -211,8 +211,14 @@
 		update_brightness(null)
 
 	if(!fuel)
-		icon_state = "[initial(icon_state)]-empty"
-		item_state = icon_state
+		icon_state = "[initial(icon_state)]-burned"
+		item_state = "[initial(item_state)]-burned"
+		if(ismob(loc))
+			var/mob/U = loc
+			if(U.hand)
+				U.update_inv_l_hand()
+			else
+				U.update_inv_r_hand()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
