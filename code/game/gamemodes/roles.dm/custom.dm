@@ -10,7 +10,7 @@
 	dat += "<center><B>Settings of Role</B></center><HR><BR>"
 	dat += "<B><A href='?src=\ref[src];set_custom_name=1;custom_mind=\ref[M]'>Название</A>:</B> [name]<BR>"
 	dat += "<B><A href='?src=\ref[src];set_custom_logo=1;custom_mind=\ref[M]'>Логотип</A>:</B> [logo_state]<BR>"
-	dat += "<B><A href='?src=\ref[src];open_custom_logos=1;custom_mind=\ref[M]'>[spoiler_open ? "Закрыть" : "Открыть"] возможные логотипы</A>:</B><HR>"
+	dat += "<B><A href='?src=\ref[src];open_custom_logos=1;custom_mind=\ref[M]'>[spoiler_open ? "Закрыть" : "Открыть"] доступные логотипы</A>:</B><HR>"
 	if(spoiler_open)
 		for(var/name in icon_states('icons/misc/logos.dmi'))
 			if(!name)
