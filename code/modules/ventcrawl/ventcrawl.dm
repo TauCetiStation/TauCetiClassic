@@ -69,6 +69,9 @@ var/list/ventcrawl_machinery = list(
 	return TRUE
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
+	if(!istype(L))
+		return
+
 	if(!L.can_ventcrawl())
 		return
 
