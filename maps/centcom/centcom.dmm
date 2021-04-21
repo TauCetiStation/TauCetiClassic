@@ -1795,8 +1795,10 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "aeP" = (
-/obj/machinery/door/airlock/hatch,
-/turf/simulated/shuttle/floor/vox,
+/obj/structure/rack,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
 /area/shuttle/vox/arkship)
 "aeQ" = (
 /obj/structure/object_wall/vox/internal{
@@ -2210,10 +2212,12 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "afP" = (
-/obj/structure/window/reinforced/shuttle/vox{
-	icon_state = "7,12"
+/obj/machinery/light{
+	dir = 8
 	},
-/turf/simulated/shuttle/floor/vox,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
 /area/shuttle/vox/arkship)
 "afQ" = (
 /obj/structure/sign/mark{
@@ -2225,10 +2229,18 @@
 	},
 /area/centcom/evac)
 "afR" = (
-/obj/machinery/light/small{
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 8
+	},
+/obj/effect/landmark{
+	name = "voxstart"
+	},
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor/vox,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
 /area/shuttle/vox/arkship)
 "afS" = (
 /obj/structure/object_wall/vox/internal{
@@ -2397,8 +2409,8 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "agh" = (
-/obj/machinery/light/spot{
-	dir = 8
+/obj/machinery/door/airlock/hatch{
+	req_access = list(150)
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -2413,9 +2425,7 @@
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
 "agk" = (
-/obj/machinery/light/spot{
-	dir = 4
-	},
+/obj/machinery/bodyscanner,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "agl" = (
@@ -2919,8 +2929,12 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
 "ahE" = (
-/obj/structure/window/reinforced/shuttle/vox,
-/turf/simulated/shuttle/floor/vox,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
 /area/shuttle/vox/arkship)
 "ahF" = (
 /turf/simulated/mineral,
@@ -3407,8 +3421,8 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "aiL" = (
-/obj/structure/window/reinforced/shuttle/vox{
-	icon_state = "24"
+/obj/machinery/body_scanconsole{
+	known_implants = list(/obj/item/weapon/implant/cortical)
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -5266,11 +5280,8 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "amY" = (
-/obj/structure/object_wall/vox{
-	icon_state = "17,6";
-	opacity = 0
-	},
-/turf/space,
+/obj/machinery/optable,
+/turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "amZ" = (
 /obj/machinery/computer/intruder_station,
@@ -5634,11 +5645,10 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "anO" = (
-/obj/structure/object_wall/vox{
-	icon_state = "17,5";
-	opacity = 0
+/obj/machinery/light{
+	dir = 1
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "anP" = (
 /turf/space,
@@ -5724,16 +5734,19 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "anY" = (
-/obj/machinery/light/spot,
+/obj/structure/window/reinforced/shuttle/vox{
+	icon_state = "7,12"
+	},
 /turf/simulated/shuttle/floor/vox{
-	icon_state = "floorplace"
+	icon_state = "floorplating"
 	},
 /area/shuttle/vox/arkship)
 "anZ" = (
-/obj/structure/object_wall/vox/internal{
-	icon_state = "5,4"
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aoa" = (
 /obj/structure/object_wall/vox/internal{
@@ -5752,7 +5765,9 @@
 /turf/space,
 /area/space)
 "aoc" = (
-/obj/machinery/light/spot,
+/obj/machinery/sleeper/upgraded{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aod" = (
@@ -5763,11 +5778,12 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "aoe" = (
-/obj/structure/object_wall/vox{
-	icon_state = "17,4";
-	opacity = 0
+/obj/effect/landmark{
+	name = "voxstart"
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
 /area/shuttle/vox/arkship)
 "aof" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -6038,11 +6054,10 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "aoN" = (
-/obj/structure/object_wall/vox{
-	icon_state = "17,3";
-	opacity = 0
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/space,
+/turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aoO" = (
 /turf/space,
@@ -6252,13 +6267,10 @@
 	},
 /area/velocity)
 "apj" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door_control{
-	id = "voxshuttle"
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access = list(150)
 	},
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorplace"
-	},
+/turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "apk" = (
 /obj/structure/object_wall/vox{
@@ -6648,9 +6660,7 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "aqe" = (
-/obj/machinery/door/poddoor/cargo{
-	id = "voxshuttle"
-	},
+/obj/machinery/chem_dispenser,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aqf" = (
@@ -7304,6 +7314,16 @@
 	oxygen = 0
 	},
 /area/space)
+"arB" = (
+/obj/structure/table/glass,
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/vox/arkship)
+"arC" = (
+/obj/structure/window/reinforced/shuttle/vox,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/shuttle/vox/arkship)
 "arD" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
@@ -7327,6 +7347,30 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
+"arG" = (
+/obj/machinery/chem_master,
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/vox/arkship)
+"arH" = (
+/obj/structure/window/reinforced/shuttle/vox{
+	icon_state = "24"
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/shuttle/vox/arkship)
+"arI" = (
+/obj/structure/closet/crate/secure/miningsec{
+	req_access = list(150)
+	},
+/obj/machinery/light/small{
+	brightness_color = "#ff0000";
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/shuttle/vox/arkship)
 "arJ" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,1"
@@ -7338,6 +7382,14 @@
 	},
 /turf/space,
 /area/shuttle/supply/velocity)
+"arL" = (
+/obj/structure/closet/crate/secure/miningsec{
+	req_access = list(150)
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/shuttle/vox/arkship)
 "arM" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "0,2"
@@ -7375,6 +7427,15 @@
 	icon_state = "4,5"
 	},
 /area/shuttle/supply/velocity)
+"arQ" = (
+/obj/machinery/light/small{
+	brightness_color = "#ff0000";
+	dir = 1
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/shuttle/vox/arkship)
 "arR" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/red,
@@ -7401,6 +7462,14 @@
 	icon_state = "wood"
 	},
 /area/velocity)
+"arT" = (
+/obj/structure/object_wall/vox{
+	density = 0;
+	icon_state = "17,6";
+	opacity = 0
+	},
+/turf/space,
+/area/shuttle/vox/arkship)
 "arU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -7410,6 +7479,34 @@
 	icon_state = "wood"
 	},
 /area/velocity)
+"arV" = (
+/obj/structure/object_wall/vox{
+	density = 0;
+	icon_state = "17,5";
+	opacity = 0
+	},
+/turf/space,
+/area/shuttle/vox/arkship)
+"arW" = (
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/shuttle/vox/arkship)
+"arX" = (
+/obj/structure/object_wall/vox/internal{
+	icon_state = "5,4"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/space,
+/area/shuttle/vox/arkship)
 "arY" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "1,2"
@@ -7447,6 +7544,17 @@
 	icon_state = "wood"
 	},
 /area/velocity)
+"asd" = (
+/obj/machinery/disposal/deliveryChute{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/shuttle/vox/arkship)
 "ase" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
@@ -7475,6 +7583,23 @@
 	name = "plating"
 	},
 /area/velocity)
+"asf" = (
+/obj/structure/object_wall/vox{
+	density = 0;
+	icon_state = "17,4";
+	opacity = 0
+	},
+/turf/space,
+/area/shuttle/vox/arkship)
+"asg" = (
+/obj/machinery/light/spot{
+	dir = 4
+	},
+/obj/structure/rack,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
+	},
+/area/shuttle/vox/arkship)
 "ash" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,2"
@@ -7503,6 +7628,26 @@
 	icon_state = "plasma5"
 	},
 /area/custom/alien)
+"asm" = (
+/obj/structure/object_wall/vox{
+	density = 0;
+	icon_state = "17,3";
+	opacity = 0
+	},
+/turf/space,
+/area/shuttle/vox/arkship)
+"asn" = (
+/obj/structure/object_wall/vox{
+	icon_state = "7,1"
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/vox/arkship)
+"aso" = (
+/obj/structure/object_wall/vox{
+	icon_state = "10,1"
+	},
+/turf/space,
+/area/shuttle/vox/arkship)
 "asp" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -16860,16 +17005,19 @@
 /turf/space,
 /area/shuttle/vox/arkship)
 "aZo" = (
-/obj/machinery/light/spot{
-	dir = 8
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
+	},
+/obj/effect/landmark{
+	name = "voxstart"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
 /area/shuttle/vox/arkship)
 "aZq" = (
-/obj/machinery/light/spot{
-	dir = 4
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
@@ -79511,7 +79659,7 @@ ajB
 amL
 aYs
 aYs
-aYi
+aeP
 aom
 ape
 apI
@@ -79765,10 +79913,10 @@ agg
 ahq
 aiG
 ajC
-aYi
+arI
+aZQ
 aYs
-aYs
-anY
+aeP
 aon
 apf
 apJ
@@ -80016,16 +80164,16 @@ aYn
 aZc
 aoT
 aeL
-aYs
-aYs
-agh
-aYs
-aYs
+agk
+anZ
+aoc
+aqe
+arG
 ajD
-aYi
+arL
 aYs
 aYs
-aYi
+arW
 aop
 apg
 apK
@@ -80273,16 +80421,16 @@ aZR
 aZn
 aoX
 aeM
-aYs
+aiL
 aZr
-aZr
+aoe
 aZr
 aYs
 ajE
 afS
 agi
 any
-anZ
+arX
 aoq
 aph
 aqc
@@ -80526,22 +80674,22 @@ aaM
 aXX
 aXi
 aYg
-aYi
-aZo
+aeP
+afP
 aYi
 aeN
+amY
 aYs
 aYs
-aYs
-aYs
-aYs
+arB
+arB
 ajF
 aYi
 aYs
 anz
+asd
 aYi
-aZo
-apj
+aYi
 aqd
 ara
 aaM
@@ -80783,15 +80931,15 @@ aWL
 aXZ
 aXl
 aYf
-aZQ
-aZQ
-aZQ
+aYs
+aYs
+aYs
 aeO
 afo
-afP
-aeP
-ahE
-aiL
+anY
+agh
+arC
+arH
 ajL
 aYi
 amW
@@ -80799,7 +80947,7 @@ anA
 aZr
 aYs
 aZr
-aqe
+asn
 aaM
 aaM
 aaM
@@ -81039,24 +81187,24 @@ aaM
 aWO
 aXY
 aXn
-aYi
+aZo
 aYs
 aZr
 bag
-aeP
+agh
 afq
 aYs
 aZr
 aYs
 aYs
-aeP
+agh
 aZr
 bag
-aeP
+agh
 afq
 aor
 bag
-aqe
+agh
 aaM
 aaM
 aaM
@@ -81296,24 +81444,24 @@ aaM
 aWQ
 aYA
 aXm
-aYi
+aZq
 aYs
 aZr
 bag
-aeP
+agh
 afq
-afR
+aoN
 aZr
 aYs
 aYs
-aeP
+agh
 aZr
 bag
-aeP
+agh
 afq
 aos
 bag
-aqe
+agh
 aaM
 aaM
 aaM
@@ -81554,15 +81702,15 @@ aWS
 aXb
 aYP
 aYh
-aZQ
-aZQ
-aZQ
+aYs
+aYs
+aYs
 aeQ
 afr
 afS
-agi
-ahE
-aiL
+apj
+arC
+arH
 ajP
 aYi
 amW
@@ -81570,7 +81718,7 @@ anB
 aZr
 aYs
 aZr
-aqe
+aso
 aaM
 aaM
 aaM
@@ -81812,8 +81960,8 @@ aYC
 aYT
 aYk
 aYi
-aZq
-aYi
+afR
+ahE
 aeR
 aYi
 aYi
@@ -81824,9 +81972,9 @@ ajQ
 aYi
 aYs
 anJ
-aYi
-aZq
-aYi
+aeP
+asg
+aeP
 aqh
 arf
 aaM
@@ -82072,9 +82220,9 @@ aZT
 anC
 bai
 aeS
-aYs
+anO
 aZr
-aZr
+aoe
 aZr
 aYs
 ajR
@@ -82331,7 +82479,7 @@ ban
 aeY
 aYi
 aYi
-agk
+aYs
 aYi
 aYi
 ajS
@@ -82592,10 +82740,10 @@ agn
 ahL
 aiQ
 akA
-aYi
+arQ
+aZQ
 aYs
 aYs
-aoc
 aoH
 apt
 aqz
@@ -83364,10 +83512,10 @@ aaM
 aiX
 akP
 amQ
-amY
-anO
-aoe
-aoN
+arT
+arV
+asf
+asm
 aaM
 aaM
 aaM
