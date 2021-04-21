@@ -37,6 +37,7 @@
 
 	var/assigned_role
 	var/special_role
+
 	var/holy_role = NONE
 
 	var/protector_role = 0 //If we want force player to protect the station
@@ -85,6 +86,9 @@
 		new_character.mind.current = null
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
+
+	if(current.my_religion)
+		current.my_religion.add_member(new_character, holy_role)
 
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
@@ -210,11 +214,13 @@
 		if (SSticker.mode.config_tag=="cult")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
+		if(!global.cult_religion)
+			text += "<br>Create a cult religion <a href='?src=\ref[src];cult=religion'>create</a>"
+		else if(istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
-		else if (src in SSticker.mode.cult)
+		else if(global.cult_religion.is_member(current))
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
+			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=heaven'>teleport to heaven</a>|<a href='?src=\ref[src];cult=cheating_cult'>cheating religion</a>|<a href='?src=\ref[src];cult=make_leader'>make leader</a>."
 /*
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
@@ -644,8 +650,7 @@
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
-			if(src in SSticker.mode.cult)
-				SSticker.mode.cult -= src
+			if(global.cult_religion.remove_member(current))
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				special_role = null
 				var/datum/game_mode/cult/cult = SSticker.mode
@@ -725,9 +730,10 @@
 
 	else if (href_list["cult"])
 		switch(href_list["cult"])
+			if("religion")
+				create_religion(/datum/religion/cult)
 			if("clear")
-				if(src in SSticker.mode.cult)
-					SSticker.mode.cult -= src
+				if(global.cult_religion.remove_member(current))
 					special_role = null
 					var/datum/game_mode/cult/cult = SSticker.mode
 					if (istype(cult))
@@ -738,10 +744,8 @@
 					remove_antag_hud(ANTAG_HUD_CULT, current)
 					log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
-				if(!(src in SSticker.mode.cult))
-					SSticker.mode.cult += src
+				if(global.cult_religion.add_member(current, HOLY_ROLE_HIGHPRIEST))
 					special_role = "Cultist"
-					add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 					to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -753,24 +757,25 @@
 			if("tome")
 				var/mob/living/carbon/human/H = current
 				if (istype(H))
-					var/obj/item/weapon/book/tome/T = new(H)
+					if(global.cult_religion)
+						global.cult_religion.give_tome(H)
+			if("heaven")
+				var/area/A = locate(global.cult_religion.area_type)
+				var/turf/T = get_turf(pick(A.contents))
+				current.forceMove(T)
+			if("cheating_cult")
+				global.cult_religion.favor = 100000
+				global.cult_religion.piety = 100000
+				// All aspects
+				var/list/L = subtypesof(/datum/aspect)
+				for(var/type in L)
+					L[type] = 1
+				global.cult_religion.add_aspects(L)
+			if("make_leader")
+				var/mob/living/carbon/human/H = current
+				H.mind.holy_role = CULT_ROLE_MASTER
+				add_antag_hud(ANTAG_HUD_CULT, "hudheadcultist", current)
 
-					var/list/slots = list (
-						"backpack" = SLOT_IN_BACKPACK,
-						"left pocket" = SLOT_L_STORE,
-						"right pocket" = SLOT_R_STORE,
-						"left hand" = SLOT_L_HAND,
-						"right hand" = SLOT_R_HAND,
-					)
-					var/where = H.equip_in_one_of_slots(T, slots)
-					if (!where)
-						to_chat(usr, "<span class='warning'>Spawning tome failed!</span>")
-					else
-						to_chat(H, "A tome, a message from your new master, appears in your [where].")
-
-			if("amulet")
-				if (!SSticker.mode.equip_cultist(current))
-					to_chat(usr, "<span class='warning'>Spawning amulet failed!</span>")
 
 	else if (href_list["wizard"])
 
@@ -781,7 +786,7 @@
 					SSticker.mode.wizards -= src
 					special_role = null
 					remove_antag_hud(ANTAG_HUD_WIZ, current)
-					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
+					current.spellremove()
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
@@ -951,7 +956,7 @@
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
-				current.spellremove(current)
+				current.spellremove()
 				if(src in SSticker.mode.shadows)
 					SSticker.mode.shadows -= src
 					special_role = null
@@ -1179,7 +1184,7 @@
 
 	// remove wizards spells
 	//If there are more special powers that need removal, they can be procced into here./N
-	current.spellremove(current)
+	current.spellremove()
 
 	// clear memory
 	memory = ""
@@ -1280,8 +1285,8 @@
 
 
 /datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.cult += src
+	if(global.cult_religion.add_member(current, HOLY_ROLE_HIGHPRIEST))
+		special_role = "Cultist"
 		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
@@ -1297,7 +1302,9 @@
 
 	var/mob/living/carbon/human/H = current
 	if (istype(H))
-		var/obj/item/weapon/book/tome/T = new(H)
+		var/obj/item/weapon/storage/bible/tome/T = new(H)
+		if(global.cult_religion)
+			T.religion = global.cult_religion
 
 		var/list/slots = list (
 			"backpack" = SLOT_IN_BACKPACK,
@@ -1529,23 +1536,35 @@
 	..()
 	mind.assigned_role = "Shade"
 
+/mob/living/simple_animal/construct/mind_initialize()
+	..()
+	if(global.cult_religion)
+		SSticker.mode.add_cultist(mind)
+
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
-	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Artificer. Вы самый слабый по всем характеристикам вид оболочки, но вы можете строить укрепления, чинить другие оболочки (нажав на них), а так же создавать новые оболочки и камни души.</span>")
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
-	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Wraith. Несмотря на вашу хрупкость, вы владеете самой большой подвижностью и можете проходить сквозь стены.</span>")
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
-	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Juggernaut. Ваша подвижность очень ограничена, но вы можете выдержать большое количество повреждений. Ваша сила позволяет вам рвать на куски как врагов, так и стены.</span>")
+
+/mob/living/simple_animal/construct/behemoth/mind_initialize()
+	..()
+	mind.assigned_role = "Behemoth"
+	to_chat(src, "<span class='cult'>Вы играете за Behemoth. Вы самая сильная и живучая оболочка, но это не остановит Полкана.</span>")
+
+/mob/living/simple_animal/construct/proteon/mind_initialize()
+	..()
+	mind.assigned_role = "Proteon"
+	to_chat(src, "<span class='cult'>Вы играете за Proteon. Ваши боевые способности превосходят все оболочки, а так же вы очень быстры и ловки, но при этом вы очень хрупки, по сравнению с другими.</span>")
 
 /mob/living/simple_animal/vox/armalis/mind_initialize()
 	..()

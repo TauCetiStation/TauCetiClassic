@@ -693,6 +693,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "head"
 	artery_name = "cartoid artery"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "head_m"
+
 	temp_coeff = 1.05
 
 	body_part = HEAD
@@ -866,6 +869,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_arm"
+
 	artery_name = "basilic vein"
 
 	temp_coeff = 1.0
@@ -891,6 +898,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right arm"
 	artery_name = "basilic vein"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_arm"
+
 	temp_coeff = 1.0
 
 	body_part = ARM_RIGHT
@@ -913,6 +923,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left leg"
 	artery_name = "femoral artery"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_leg"
+
 	temp_coeff = 0.75
 
 	body_part = LEG_LEFT
@@ -929,6 +942,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_leg"
 
 	temp_coeff = 0.75
 

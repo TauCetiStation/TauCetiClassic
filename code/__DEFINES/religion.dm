@@ -15,9 +15,13 @@
 		"Atheism", \
 	)
 
-//Holy role
+//Holy role of chaplain
 #define HOLY_ROLE_PRIEST 1 //default priestly role
 #define HOLY_ROLE_HIGHPRIEST 2 //the one who designates the religion
+
+//Holy role of cultists
+#define CULT_ROLE_HIGHPRIEST 2 //the one who designates the religion
+#define CULT_ROLE_MASTER 3 //the one who designates the cult
 
 //Apect defines
 //Other informations about aspect in aspect.dm

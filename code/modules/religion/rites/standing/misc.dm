@@ -2,9 +2,9 @@
  * Food summoning
  * Grants a lot of food while you AFK near the altar. Even more food if you finish the ritual.
  */
-/datum/religion_rites/food
-	name = "Create food"
-	desc = "Create more and more food!"
+/datum/religion_rites/standing/food
+	name = "Создание Еды"
+	desc = "Нужно больше и больше еды!"
 	ritual_length = (2.1 MINUTES)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
@@ -38,34 +38,33 @@
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
-/datum/religion_rites/food/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/food/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
-	for(var/mob/living/carbon/human/M in viewers(AOG.loc))
+	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
 		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0)
 			M.flash_eyes()
 
-	spawn_food(AOG.loc, 4 + rand(2, 5))
+	spawn_food(get_turf(AOG), 4 + rand(2, 5) * divine_power)
 
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/food/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG)
-	..()
+/datum/religion_rites/standing/food/rite_step(mob/living/user, obj/AOG)
 	if(prob(50))
-		spawn_food(AOG.loc, 1)
+		spawn_food(get_turf(AOG), 1)
 
 /*
  * Prayer
  * Increases favour while you AFK near altar, heals everybody around if invoked succesfully.
  */
-/datum/religion_rites/pray
-	name = "Prayer to god"
-	desc = "Pray for a while in exchange for favor."
+/datum/religion_rites/standing/pray
+	name = "Молитва"
+	desc = "За добрые слова вы получаете немного favor'а."
 	ritual_length = (4 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
@@ -85,12 +84,12 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/pray/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/pray/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	var/heal_num = -15
+	var/heal_num = -15 * divine_power
 	for(var/mob/living/L in range(2, src))
 		L.apply_damages(heal_num, heal_num, heal_num, heal_num, heal_num, heal_num)
 
@@ -99,18 +98,18 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/pray/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
+/datum/religion_rites/standing/pray/rite_step(mob/living/user, obj/AOG, stage)
 	..()
-	global.chaplain_religion.adjust_favor(15 + adding_favor)
+	religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
 
 /*
  * Honk
  * The ritual creates a honk that everyone hears.
  */
-/datum/religion_rites/honk
-	name = "Clown shriek"
-	desc = "Spread honks throughout the station."
+/datum/religion_rites/standing/honk
+	name = "Клоунский Крик"
+	desc = "Разносит хонк по всей станции."
 	ritual_length = (1.9 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you...",
@@ -125,7 +124,7 @@
 		ASPECT_WACKY = 1,
 	)
 
-/datum/religion_rites/honk/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/honk/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -136,8 +135,7 @@
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/honk/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	..()
+/datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/AOG, stage)
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 
@@ -145,42 +143,55 @@
  * Revitalizing items.
  * It makes a thing move and say something. You can't pick up a thing until you kill a item-mob.
  */
-/datum/religion_rites/animation
-	name = "Animation"
-	desc = "Revives a things on the altar."
+/datum/religion_rites/standing/animation
+	name = "Анимация"
+	desc = "Возраждает вещи на алтаре."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
 							  "...given from the light given by the wisdom of the gods returned...",
 							  "...They endowed Animation with human passions and feelings...",
 							  "...Animation, come from the New Kingdom, rejoice in the light!...",)
 	invoke_msg = "I appeal to you! I am calling! Wake up from sleep!"
-	favor_cost = 200
+	favor_cost = 80
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
 		ASPECT_WEAPON = 1,
 	)
 
-/datum/religion_rites/animation/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	..()
-	var/obj/item/anim_item = locate() in AOG.loc
-	if(!anim_item)
+/datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
+	var/anim_items = 0
+	for(var/obj/item/O in get_turf(AOG))
+		anim_items++
+	if(!anim_items)
 		to_chat(user, "<span class='warning'>Put any the item on the altar!</span>")
 		return FALSE
+	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items / divine_power), 10)
+	religion.update_rites()
 	return TRUE
 
-/datum/religion_rites/animation/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	var/list/anim_items = list()
-	for(var/obj/item/O in AOG.loc)
+	for(var/obj/item/O in get_turf(AOG))
 		anim_items += O
 
-	if(anim_items && anim_items.len != 0)
+	favor_cost = round((initial(favor_cost) * religion.members.len * anim_items.len) / divine_power, 10)
+	religion.update_rites()
+
+	if(!religion.check_costs(favor_cost, piety_cost, user))
+		return FALSE
+
+	if(anim_items.len != 0)
 		for(var/obj/item/O in anim_items)
-			new /mob/living/simple_animal/hostile/mimic/copy/religion(O.loc, O)
+			var/mob/living/simple_animal/hostile/mimic/copy/religion/R = new(O.loc, O)
+			religion.add_member(R, HOLY_ROLE_PRIEST)
+			R.friends = religion.members
 
 		user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
@@ -189,9 +200,9 @@
  * Spook
  * This ritual spooks players: Light lamps pop out, and people start to shake
  */
-/datum/religion_rites/spook
-	name = "Spook"
-	desc = "Distributes a jerky sound."
+/datum/religion_rites/standing/spook
+	name = "Испуг"
+	desc = "Издаёт из алтаря страшный крик."
 	ritual_length = (20 SECONDS)
 	ritual_invocations = list("I call the souls of people here, I send your soul to the otherworldly thief, in a black mirror...",
 							  "...Let Evil take you and lock you up...",
@@ -207,10 +218,10 @@
 		ASPECT_OBSCURE = 1,
 	)
 
-/datum/religion_rites/spook/proc/remove_spook_effect(mob/living/carbon/M)
+/datum/religion_rites/standing/spook/proc/remove_spook_effect(mob/living/carbon/M)
 	M.remove_alt_appearance("spookyscary")
 
-/datum/religion_rites/spook/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/spook/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -218,10 +229,10 @@
 	playsound(AOG, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/mob/living/carbon/M in hearers(4, get_turf(AOG)))
-		if(M.mind.holy_role)
+		if(M?.mind?.holy_role)
 			M.make_jittery(50)
 		else
-			M.confused += 10
+			M.confused += 10 * divine_power
 			M.make_jittery(50)
 			if(prob(50))
 				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
@@ -229,7 +240,7 @@
 		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
 		I.override = TRUE
 		M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS)
+		addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS * divine_power)
 
 	var/list/targets = list()
 	for(var/turf/T in range(4))
@@ -242,9 +253,9 @@
  * Illuminate
  * The ritual turns on the flash in range, create overlay of "spirit" and the person begins to glow
  */
-/datum/religion_rites/illuminate
-	name = "Illuminate"
-	desc = "Create wisp of light and turns on the light."
+/datum/religion_rites/standing/illuminate
+	name = "Озарение"
+	desc = "Создаёт пучок света над вами."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
@@ -262,7 +273,7 @@
 		ASPECT_LIGHT = 1,
 	)
 
-/datum/religion_rites/illuminate/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/illuminate/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -301,9 +312,9 @@
  * Revive
  * Revive animal
  */
-/datum/religion_rites/revive_animal
-	name = "Revive"
-	desc = "The animal revives from the better world."
+/datum/religion_rites/standing/revive_animal
+	name = "Возрождение Животного"
+	desc = "Возвращает душу животного из лучшего мира."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I will say, whisper, quietly say such words...",
 							  "...May every disease leave you...",
@@ -320,8 +331,9 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/revive_animal/required_checks(mob/living/user, obj/structure/altar_of_gods/AOG)
-	..()
+/datum/religion_rites/standing/revive_animal/can_start(mob/living/user, obj/AOG)
+	if(!..())
+		return FALSE
 	if(!AOG)
 		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
 		return FALSE
@@ -345,7 +357,7 @@
 
 	return TRUE
 
-/datum/religion_rites/revive_animal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/revive_animal/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -354,7 +366,7 @@
 	if(!istype(animal))
 		to_chat(user, "<span class='warning'>Only a animal can go through the ritual.</span>")
 		return FALSE
-
+	animal.maxHealth *= divine_power
 	animal.rejuvenate()
 
 	return TRUE

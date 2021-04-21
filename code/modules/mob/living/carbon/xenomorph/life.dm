@@ -183,3 +183,10 @@
 	adjustFireLoss(12)
 	return
 //END FIRE CODE
+
+//Xenomorphs will not be blind in ventilation
+/mob/living/carbon/xenomorph/is_vision_obstructed()
+	if(istype(loc, /obj/machinery/atmospherics/pipe))
+		return FALSE
+	else
+		return ..()

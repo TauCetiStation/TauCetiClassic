@@ -33,10 +33,14 @@
 
 	var/datum/tip_handler
 	var/list/datum/mechanic_tip/tips
+	// Allows you to show a hint only to certain people
+	var/datum/callback/can_show
 
-/datum/component/mechanic_desc/Initialize(list/datum/mechanic_tip/tips_to_add)
+/datum/component/mechanic_desc/Initialize(list/datum/mechanic_tip/tips_to_add, datum/callback/_can_show)
 	if(!istype(parent, /atom))
 		return COMPONENT_INCOMPATIBLE
+
+	can_show = _can_show
 
 	for(var/datum/mechanic_tip/tip in tips_to_add)
 		add_tip(tip)
@@ -69,6 +73,9 @@
 		remove_tip(tip_name)
 
 /datum/component/mechanic_desc/proc/show_tips(datum/source, mob/user)
+	if(!can_show?.Invoke(source, user))
+		return
+
 	for(var/tip_name in tips)
 		var/datum/mechanic_tip/tip = tips[tip_name]
 		to_chat(user, tip.get_tip(user, source))
