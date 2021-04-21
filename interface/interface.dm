@@ -102,8 +102,8 @@ Admin:
 	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
 	var/servername = config.server_name
 	var/url_params = "[issue_template]"
-	if(round_id || config.server_name)
-		url_params += "Issue reported from [round_id ? " Round ID: [round_id][servername ? " ([servername])" : ""]" : servername]\n"
+	if(global.round_id || config.server_name)
+		url_params += "Issue reported from [global.round_id ? " Round ID: [global.round_id][servername ? " ([servername])" : ""]" : servername]\n"
 	url_params += "Testmerges: ```[test_merges ? test_merges : "No test merges"]```\n"
 	url_params += "Reporting client version: [byond_version].[byond_build]\n"
 	DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(url_params)]"))
