@@ -18,8 +18,8 @@
 	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	transform = turn(transform,rand(0,360))
 	update_icon()
 
