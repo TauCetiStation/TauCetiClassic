@@ -32,8 +32,8 @@
 		return FALSE
 	var/datum/role/second_ninja = get_other_ninja()
 	if(!antag.protector_role && !second_ninja)
-		var/objective_list = list(1,2,3,4)
-		for(var/i = rand(2,4), i > 0, i--)
+		var/objective_list = list(1,2,3)
+		for(var/i = rand(2,3), i > 0, i--)
 			switch(pick(objective_list))
 				if(1)
 					AppendObjective(/datum/objective/assassinate)
@@ -41,8 +41,6 @@
 				if(2)
 					AppendObjective(/datum/objective/steal)
 				if(3)
-					AppendObjective(/datum/objective/download)
-				if(4)
 					AppendObjective(/datum/objective/harm)
 	else
 		if(!second_ninja.antag.protector_role)
@@ -62,11 +60,6 @@
 
 					ninja_objective.target = objective_p.target
 					ninja_objective.steal_target = objective_p.target
-					ninja_objective.explanation_text = objective_p.explanation_text
-
-				if(istype(objective_p, /datum/objective/download))
-					var/datum/objective/download/ninja_objective = AppendObjective(/datum/objective/download)
-					ninja_objective.target_amount = objective_p.target_amount
 					ninja_objective.explanation_text = objective_p.explanation_text
 
 				if(istype(objective_p, /datum/objective/harm))
