@@ -213,9 +213,7 @@
 	if(!fuel)
 		icon_state = "[initial(icon_state)]-burned"
 		item_state = "[initial(item_state)]-burned"
-		if(ismob(loc))
-			var/mob/U = loc
-			U.update_inv_item(src)
+		update_inv_mob()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
