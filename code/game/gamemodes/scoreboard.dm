@@ -1,4 +1,4 @@
-/datum/controller/subsystem/ticker/proc/scoreboard(completions)
+/datum/controller/subsystem/ticker/proc/scoreboard(completions, mob/one_mob)
 	if(achievements.len)
 		completions += "<div class='Section'>[achievement_declare_completion()]</div>"
 
@@ -124,9 +124,12 @@
 	// Show the score - might add "ranks" later
 	to_chat(world, "<b>The crew's final score is:</b>")
 	to_chat(world, "<b><font size='4'>[score["crewscore"]]</font></b>")
-	for(var/mob/E in player_list)
-		if(E.client)
-			E.scorestats(completions)
+	if(one_mob)
+		one_mob.scorestats(completions)
+	else
+		for(var/mob/E in player_list)
+			if(E.client)
+				E.scorestats(completions)
 
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
