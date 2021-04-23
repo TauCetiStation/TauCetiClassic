@@ -16,7 +16,7 @@
 
 /datum/role/wizard/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
-	M.spellremove()
+	M.current.ClearSpells()
 
 /datum/role/wizard/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	var/wizard_name_first = pick(wizard_first)
