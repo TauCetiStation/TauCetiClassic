@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(stickyban)
 	// Delete bans that no longer exist in the database
 	// and add new bans to the database
 	// Config => DB && remove expired DB stickyban from Config
-	if (global.dbcon.Connect() || length(dbcache))
+	if (establish_db_connection() || length(dbcache))
 		if (length(global.stickyban_admin_exemptions))
 			restore_stickybans()
 		// Checking new bans from Config

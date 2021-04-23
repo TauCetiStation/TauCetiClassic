@@ -13,8 +13,6 @@
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_player WHERE ckey = '[key]'")
 	if(!query.Execute())
-		var/err = query.ErrorMsg()
-		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
 		return 0
 
 	if(query.RowCount())
@@ -43,9 +41,7 @@
 
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (ckey, firstseen) VALUES ('[ckey], Now()')")
 	if(!query_insert.Execute())
-		var/err = query_insert.ErrorMsg()
-		log_game("SQL ERROR, WHITELIST. Error : \[[err]\]\n")
-		return
+		return 0
 
 	message_admins("[key_name_admin(src)] add [ckey] to server whitelist")
 	log_admin("[key_name(src)] add [ckey] to server whitelist")
