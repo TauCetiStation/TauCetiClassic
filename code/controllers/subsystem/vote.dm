@@ -8,13 +8,10 @@ SUBSYSTEM_DEF(vote)
 	var/datum/poll/active_vote = null
 	var/vote_start_time = 0
 
-	var/list/test = list()
-
 /datum/controller/subsystem/vote/PreInit()
 	for(var/T in subtypesof(/datum/poll))
 		var/datum/poll/P = new T
 		votes[T] = P
-		test += P
 
 /datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(active_vote)
