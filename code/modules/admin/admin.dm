@@ -331,7 +331,6 @@ var/global/BSACooldown = 0
 		"DATE_FORMAT(unbanned_datetime, '[timestamp_format]')",
 		"DATEDIFF(unbanned_datetime, '[days_ago_start_date]')",
 		"unbanned_ckey",
-		"rounds",
 		"round_id"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[ckey(player_ckey)]') ORDER BY id LIMIT 100")
@@ -356,8 +355,7 @@ var/global/BSACooldown = 0
 		var/unbanned_timestamp = query.item[11]
 		var/unbanned_days_ago = text2num(query.item[12])
 		var/unbanned_a_ckey = query.item[13]
-		var/rounds_ban_counter = text2num(query.item[14])  // legacy field, but it can be in DB now
-		var/rid = text2num(query.item[15])
+		var/rid = text2num(query.item[14])
 
 		if(rid)
 			notes_record.round_id = rid
@@ -373,8 +371,6 @@ var/global/BSACooldown = 0
 		// Ban Record creating
 		if(length(a_ckey))
 			notes_record.author = a_ckey
-		if(rounds_ban_counter)
-			duration += " and [rounds_ban_counter] rounds"
 		var/description = "([ip_cid.Join(", ")]): [reason]"
 		switch(bantype)
 			if (BANTYPE_JOB_PERMA_STR)

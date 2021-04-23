@@ -650,8 +650,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Status"))
-		if(round_id)
-			stat(null, "Round ID: #[round_id]")
+		if(global.round_id)
+			stat(null, "Round ID: #[global.round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
 			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")

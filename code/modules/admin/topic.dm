@@ -151,7 +151,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
+		DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid )
 
 	else if(href_list["editrights"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2140,7 +2140,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT content FROM erro_library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2166,7 +2166,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title FROM erro_library WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2176,7 +2176,7 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = '[bookid]'")
+		query = dbcon.NewQuery("UPDATE erro_library SET deletereason = NULL WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2196,7 +2196,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title FROM erro_library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2207,7 +2207,7 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[bookid]'")
+		query = dbcon.NewQuery("DELETE FROM erro_library WHERE id='[bookid]'")
 		if(!query.Execute())
 			return
 

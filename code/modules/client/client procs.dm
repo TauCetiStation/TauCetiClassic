@@ -392,7 +392,7 @@ var/list/blacklisted_builds = list(
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sanitize_sql(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
 
@@ -408,7 +408,7 @@ var/list/blacklisted_builds = list(
 		sql_player_ingame_age = text2num(query.item[3])
 		break
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[sanitize_sql(address)]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
@@ -419,7 +419,7 @@ var/list/blacklisted_builds = list(
 		related_accounts_ip += "[query_ip.item[1]]"
 		break
 
-	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
+	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[sanitize_sql(computer_id)]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
@@ -462,7 +462,7 @@ var/list/blacklisted_builds = list(
 	player_ingame_age = sql_player_ingame_age
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
+	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
 
@@ -527,7 +527,7 @@ var/list/blacklisted_builds = list(
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
 	else
-		var/sql_ckey = sanitize_sql(ckey)
+		var/sql_ckey = ckey(ckey)
 		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
 		query_cidcheck.Execute()
 
@@ -566,7 +566,7 @@ var/list/blacklisted_builds = list(
 	if(player_ingame_age <= 0)
 		return
 
-	var/sql_ckey = sanitize_sql(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as unsigned integer) < [player_ingame_age]")
 	query_update.Execute()
 
