@@ -85,10 +85,10 @@
 /obj/machinery/atmospherics/components/binary/valve/can_crawl_through()
 	return open
 
-/obj/machinery/atmospherics/proc/can_enter_to()
-	return TRUE
+/obj/machinery/atmospherics/proc/suitable_for_ventcrawl()
+	return FALSE
 
-/obj/machinery/atmospherics/pipe/can_enter_to()
+/obj/machinery/atmospherics/pipe/suitable_for_ventcrawl()
 	var/connections = 0	//count the number of pipes connected
 	for(var/node in nodes)
 		if(!node)
@@ -98,7 +98,7 @@
 		return	FALSE//This means that there are no free holes and we cannot get into the pipe.
 	return TRUE
 
-/obj/machinery/atmospherics/components/can_enter_to()
+/obj/machinery/atmospherics/components/suitable_for_ventcrawl()
 	return can_crawl_through()
 
 /obj/machinery/atmospherics/proc/findConnecting(direction)

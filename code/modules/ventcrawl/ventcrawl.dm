@@ -75,20 +75,15 @@ var/list/ventcrawl_machinery = list(
 	if(!L.can_ventcrawl())
 		return
 
-	if(is_type_in_list(src, ventcrawl_machinery) || istype(src, /obj/machinery/atmospherics/pipe))
-		if(!L.Adjacent(src))
-			to_chat(L, "You must be standing on or beside an air vent to enter it.")
-			return
-
-		if(!can_enter_to())
-			to_chat(L, "You can't enter to [src].")
-			return
-
-		var/datum/pipeline/vent_found_parent = returnPipenet()
-		L.handle_ventcrawl(src, vent_found_parent)
+	if(!suitable_for_ventcrawl())
+		to_chat(L, "You can't enter to [src].")
 		return
 
-	..()
+	if(!L.Adjacent(src))
+		to_chat(L, "You must be standing on or beside an air vent to enter it.")
+		return
+
+	L.handle_ventcrawl(src, returnPipenet())
 
 /mob/living/proc/handle_ventcrawl(obj/machinery/atmospherics/vent_found, datum/pipeline/vent_found_parent)
 	if(is_busy())
