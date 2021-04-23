@@ -410,6 +410,9 @@ var/list/net_announcer_secret = list()
 				if ("traitor_scaling")
 					config.traitor_scaling = text2num(value)
 
+				if ("objectives_disabled")
+					config.objectives_disabled = 1
+
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist = 1
 
