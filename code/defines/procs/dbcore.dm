@@ -29,22 +29,17 @@
 #define BLOB		14
 // TODO: Investigate more recent type additions and see if I can handle them. - Nadrew
 
-
-// Deprecated! See global.dm for new configuration vars
-/*
-var/DB_SERVER = "" // This is the location of your MySQL server (localhost is USUALLY fine)
-var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is the default)
-*/
-
 /DBConnection
 	var/_db_con // This variable contains a reference to the actual database connection.
 	var/dbi // This variable is a string containing the DBI MySQL requires.
 	var/user // This variable contains the username data.
 	var/password // This variable contains the password data.
 	var/default_cursor // This contains the default database cursor data.
-		//
+
 	var/server = ""
 	var/port = 3306
+
+	var/list/table_exists = list() // cache for proc/TableExists
 
 /DBConnection/New(dbi_handler, username, password_handler, cursor_handler)
 	src.dbi = dbi_handler
@@ -147,6 +142,27 @@ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is 
 		sqlrowlist += "([row.Join(",\n	")])"
 	sqlrowlist = "	[sqlrowlist.Join(",\n	")]" // list -> text
 	return NewQuery("INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n[sqlrowlist]\n[duplicate_key]")
+
+// we need this for sandbox server, where only part of the tables is available
+/DBConnection/proc/TableExists(table_name)
+	if(!IsConnected())
+		return 0
+
+	table_name = sanitize_sql(table_name)
+
+	if(table_exists["table_name"] == 1)
+		return 1
+
+	var/DBQuery/check_table = NewQuery("SHOW TABLES LIKE '[table_name]'")
+	check_table.Execute()
+
+	if(check_table.RowCount())
+		table_exists[table_name] = 1
+		return 1
+	else
+		table_exists[table_name] = 0
+		log_sql("ERROR: table '[table_name]' does not exist in the database!")
+		return 0
 
 /DBQuery/New(sql_query, DBConnection/connection_handler, cursor_handler)
 	if(sql_query)

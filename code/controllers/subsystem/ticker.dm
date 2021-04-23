@@ -115,12 +115,12 @@ SUBSYSTEM_DEF(ticker)
 						blackbox.save_all_data_to_sql()
 
 					if(dbcon.IsConnected())
-						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.mode_result)]' WHERE id = [round_id]")
+						var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET end_datetime = Now(), game_mode_result = '[sanitize_sql(mode.mode_result)]' WHERE id = [global.round_id]")
 						query_round_game_mode.Execute()
 
 					world.send2bridge(
 						type = list(BRIDGE_ROUNDSTAT),
-						attachment_title = "Round #[round_id] is over",
+						attachment_title = "Round #[global.round_id] is over",
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
@@ -231,7 +231,7 @@ SUBSYSTEM_DEF(ticker)
 	round_start_realtime = world.realtime
 
 	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), map_name = '[sanitize_sql(SSmapping.config.map_name)]' WHERE id = [round_id]")
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), map_name = '[sanitize_sql(SSmapping.config.map_name)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
 
 	setup_economy()
@@ -250,7 +250,7 @@ SUBSYSTEM_DEF(ticker)
 	world.send2bridge(
 		type = list(BRIDGE_ROUNDSTAT),
 		attachment_title = "Round is started, gamemode - **[master_mode]**",
-		attachment_msg = "Round #[round_id]; Join now: <[BYOND_JOIN_LINK]>",
+		attachment_msg = "Round #[global.round_id]; Join now: <[BYOND_JOIN_LINK]>",
 		attachment_color = BRIDGE_COLOR_ANNOUNCE,
 	)
 
