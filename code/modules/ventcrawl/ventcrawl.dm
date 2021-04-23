@@ -75,43 +75,29 @@ var/list/ventcrawl_machinery = list(
 	if(!L.can_ventcrawl())
 		return
 
-	if(!L.Adjacent(src))
-		to_chat(L, "You must be standing on or beside an air vent to enter it.")
-		return
-
-	if(is_type_in_list(src, ventcrawl_machinery))
-		var/obj/machinery/atmospherics/components/unary/vent_found = src
-		if(!vent_found.can_crawl_through())
-			to_chat(L, "You can't crawl through [src].")
+	if(is_type_in_list(src, ventcrawl_machinery) || istype(src, /obj/machinery/atmospherics/pipe))
+		if(!L.Adjacent(src))
+			to_chat(L, "You must be standing on or beside an air vent to enter it.")
 			return
-		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
-		if(!vent_found_parent && !(vent_found_parent.members.len || vent_found_parent.other_atmosmch))
-			to_chat(L, "This vent is not connected to anything.")
-			return
-		L.handle_ventcrawl(src, vent_found_parent)
-		return
 
-	else if(istype(src, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/vent_found = src
-		var/connections = 0	//count the number of pipes connected
-		for(var/node in vent_found.nodes)
-			if(!node)
-				continue
-			connections++
-		if(connections == vent_found.device_type)
-			return	//This means that there are no free holes and we cannot get into the pipe.
-		var/datum/pipeline/vent_found_parent = vent_found.parent
+		if(!can_enter_to())
+			to_chat(L, "You can't enter to [src].")
+			return
+
+		var/datum/pipeline/vent_found_parent = returnPipenet()
 		L.handle_ventcrawl(src, vent_found_parent)
 		return
 
 	..()
 
 /mob/living/proc/handle_ventcrawl(obj/machinery/atmospherics/vent_found, datum/pipeline/vent_found_parent)
+	if(is_busy())
+		return
 	to_chat(src, "You begin climbing into the ventilation system...")
 	var/time = 40
 	if(small)
 		time = 5
-	if(is_busy() || !do_after(src, time, null, vent_found))
+	if(!do_after(src, time, null, vent_found))
 		return
 
 	if(!can_ventcrawl())
