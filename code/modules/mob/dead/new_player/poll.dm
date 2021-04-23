@@ -1,3 +1,5 @@
+// not used atm
+// should be rewritten 
 
 /mob/dead/new_player/proc/handle_privacy_poll()
 	establish_db_connection()
@@ -5,7 +7,7 @@
 		return
 	var/voted = 0
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[ckey(src.ckey)]'")
 	query.Execute()
 	while(query.NextRow())
 		voted = 1
@@ -89,6 +91,9 @@
 	establish_db_connection()
 	if(dbcon.IsConnected())
 
+		if(!isnum(pollid))
+			return
+
 		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM erro_poll_question WHERE id = [pollid]")
 		select_query.Execute()
 
@@ -114,7 +119,11 @@
 		switch(polltype)
 			//Polls that have enumerated options
 			if("OPTION")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+
+				if(!isnum(pollid))
+					return
+
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 				voted_query.Execute()
 
 				var/voted = 0
@@ -169,7 +178,10 @@
 
 			//Polls with a text input
 			if("TEXT")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT replytext FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+				if(!isnum(pollid))
+					return
+
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT replytext FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 				voted_query.Execute()
 
 				var/voted = 0
@@ -213,7 +225,10 @@
 
 			//Polls with a text input
 			if("NUMVAL")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM erro_poll_option o, erro_poll_vote v WHERE o.pollid = [pollid] AND v.ckey = '[usr.ckey]' AND o.id = v.optionid")
+				if(!isnum(pollid))
+					return
+
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM erro_poll_option o, erro_poll_vote v WHERE o.pollid = [pollid] AND v.ckey = '[ckey(usr.ckey)]' AND o.id = v.optionid")
 				voted_query.Execute()
 
 				var/output = "<div align='center'><B>Player poll</B>"
@@ -286,7 +301,9 @@
 
 
 			if("MULTICHOICE")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+				if(!isnum(pollid))
+					return
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 				voted_query.Execute()
 
 				var/list/votedfor = list()
@@ -394,7 +411,7 @@
 
 		var/alreadyvoted = 0
 
-		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 		voted_query.Execute()
 
 		while(voted_query.NextRow())
@@ -415,7 +432,7 @@
 			adminrank = usr.client.holder.rank
 
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]')")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank) VALUES (null, Now(), [pollid], [optionid], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', '[sanitize_sql(adminrank)]')")
 		insert_query.Execute()
 
 		to_chat(usr, "<span class='notice'>Vote successful.</span>")
@@ -448,7 +465,7 @@
 
 		var/alreadyvoted = 0
 
-		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 		voted_query.Execute()
 
 		while(voted_query.NextRow())
@@ -473,7 +490,7 @@
 			to_chat(usr, "The text you entered was blank, contained illegal characters or was too long. Please correct the text and submit again.")
 			return
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_textreply (id ,datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (null, Now(), [pollid], '[usr.ckey]', '[usr.client.address]', '[replytext]', '[adminrank]')")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_textreply (id ,datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (null, Now(), [pollid], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', '[sanitize_sql(replytext)]', '[sanitize_sql(adminrank)]')")
 		insert_query.Execute()
 
 		to_chat(usr, "<span class='notice'>Feedback logging successful.</span>")
@@ -519,7 +536,7 @@
 
 		var/alreadyvoted = 0
 
-		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE optionid = [optionid] AND ckey = '[usr.ckey]'")
+		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE optionid = [optionid] AND ckey = '[ckey(usr.ckey)]'")
 		voted_query.Execute()
 
 		while(voted_query.NextRow())
@@ -535,7 +552,7 @@
 			adminrank = usr.client.holder.rank
 
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', '[sanitize_sql(adminrank)]', [(isnull(rating)) ? "null" : sanitize_sql(rating)])")
 		insert_query.Execute()
 
 		to_chat(usr, "<span class='notice'>Vote successful.</span>")
