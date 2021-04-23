@@ -1168,7 +1168,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!ckey)
 		return
 
-	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[GUARD_CHECK_AGE]' WHERE ckey = '[sanitize_sql(ckey)]' AND cast(ingameage as unsigned integer) < [GUARD_CHECK_AGE]")
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[GUARD_CHECK_AGE]' WHERE ckey = '[ckey]' AND cast(ingameage as unsigned integer) < [GUARD_CHECK_AGE]")
 	query_update.Execute()
 
 	to_chat(src, "Guard pass granted (probably)")
