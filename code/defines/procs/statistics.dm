@@ -30,7 +30,6 @@
 	var/sqlbrain = text2num(H.brainloss)
 	var/sqloxy = text2num(H.getOxyLoss())
 
-	
 	if(establish_db_connection("erro_death"))
 		var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_death (name, byondkey, job, special, pod, tod, laname, lakey, gender, bruteloss, fireloss, brainloss, oxyloss, coord) VALUES ('[sqlname]', '[sqlkey]', '[sqljob]', '[sqlspecial]', '[sqlpod]', '[sqltime]', '[laname]', '[lakey]', '[sqlgender]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], '[sqlcoord]')")
 		query.Execute()
