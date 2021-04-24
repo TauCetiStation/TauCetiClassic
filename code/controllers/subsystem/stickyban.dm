@@ -289,12 +289,12 @@ SUBSYSTEM_DEF(stickyban)
 	// Drop stickyban record from all
 	if (ckey)
 		if (establish_db_connection())
-			var/sanitized_ckey = sanitize_sql(ckey)
+			var/sanitized_ckey = ckey(ckey)
 			if (length(sanitized_ckey))
 				var/list/sql_q = list(
 					"DELETE FROM [STICKYBAN_TABLENAME] WHERE ckey = '[sanitized_ckey]'",
-					"DELETE FROM [STICKYBAN_CKEY_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]",
-					"DELETE FROM [STICKYBAN_CID_MATCHED_TABLENAME] stickyban = '[sanitized_ckey]'",
+					"DELETE FROM [STICKYBAN_CKEY_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'",
+					"DELETE FROM [STICKYBAN_CID_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'",
 					"DELETE FROM [STICKYBAN_IP_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'"
 				)
 				for (var/Q in sql_q)

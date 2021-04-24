@@ -60,7 +60,7 @@
 			if(!dbcon.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else
-				var/SQLquery = "SELECT author, title, category, id FROM library WHERE "
+				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE "
 				if(category == "Any")
 					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' LIMIT [page], [LIBRETURNLIMIT]"
 				else
