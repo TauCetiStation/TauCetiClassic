@@ -526,7 +526,7 @@
 	H.take_overall_damage(10, 20)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	H.AddComponent(/datum/component/forcefield, "power aura", 50 * divine_power, 1 MINUTE, 40 SECONDS, R, FALSE, TRUE)
+	H.AddComponent(/datum/component/forcefield, "power aura", 30 * divine_power, 1 MINUTE, 2.5 MINUTE, R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE
