@@ -87,7 +87,7 @@
 			return
 		admin_datums -= adm_ckey
 		D.disassociate()
-		db_admin_rank_modification(adm_ckey, "Removed")
+		db_admin_rank_modification(adm_ckey, ADMIN_RANK_REMOVED)
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 
@@ -302,6 +302,10 @@ var elements = document.getElementsByName('rights');
 		return
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
+	if(new_rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX, ADMIN_RANK_REMOVED))
+		to_chat(usr, "<span class='alert'>You can not edit special admin rank [new_rank]!</span>")
+		return
+
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT id FROM erro_admin WHERE ckey = '[adm_ckey]'")
 	select_query.Execute()
 	var/new_admin = 1
@@ -322,3 +326,42 @@ var elements = document.getElementsByName('rights');
 			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Edited the rank of [adm_ckey] to [sanitize_sql(new_rank)]');")
 			log_query.Execute()
 			to_chat(usr, "<span class='notice'>Admin rank changed.</span>")
+
+/client/proc/add_round_admin()
+	set category = "Admin"
+	set name = "Round Admin"
+	set desc = "Add or remove temporary admin"
+
+	if(!check_rights(R_PERMISSIONS))
+		return
+
+	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND] rank for the duration of the round.") as null|anything in clients
+
+	if(!target)
+		return
+
+	if(!target.holder)
+		var/confirm = alert("You want to grant permissions for [target.ckey], are you sure?", "Confirmation", "Yes", "No")
+		if (confirm != "Yes")
+			return
+
+		new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN), target.ckey)
+		target.holder = admin_datums[target.ckey]
+		target.holder.associate(target)
+
+		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
+		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
+
+	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND)
+		var/confirm = alert("You want to remove [ADMIN_RANK_ROUND] permissions from [target.ckey], are you sure?", "Confirmation", "Yes", "No")
+		if (confirm != "Yes")
+			return
+
+		var/datum/admins/D = target.holder
+		admin_datums -= target.ckey
+		D.disassociate()
+
+		message_admins("[key_name_admin(usr)] removed [ADMIN_RANK_ROUND] [key_name_admin(target)] from the admins list")
+		log_admin("[key_name(usr)] removed [ADMIN_RANK_ROUND] [key_name(target)] from the admins list")
+	else
+		to_chat(usr, "<span class='alert'>Wrong client!</span>")
