@@ -404,8 +404,7 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	var/sql_ckey = ckey(src.ckey)
@@ -572,8 +571,7 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	if(!isnum(player_ingame_age))

@@ -52,7 +52,7 @@
 
 	// Database ban system
 	else
-		if(!establish_db_connection())
+		if(!establish_db_connection("erro_ban"))
 			error("Ban database connection failure. Key [ckey] not checked")
 			log_misc("Ban database connection failure. Key [ckey] not checked")
 			return

@@ -224,7 +224,7 @@ var/global/BSACooldown = 0
 	if(!key || !config.sql_enabled)
 		return
 
-	if(!establish_db_connection())
+	if(!establish_db_connection("erro_messages", "erro_ban"))
 		usr.show_message("Notes [key] from DB don't available.")
 		return
 

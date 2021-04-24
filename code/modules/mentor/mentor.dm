@@ -4,7 +4,11 @@
 /world/proc/load_mentors()
 	mentor_ckeys.Cut()
 	mentors.Cut()
-	if(config.admin_legacy_system)
+
+	if(!establish_db_connection("erro_mentor"))
+		error("Failed to connect to database in load_mentors(). Reverting to legacy system.")
+		log_misc("Failed to connect to database in load_mentors(). Reverting to legacy system.")
+
 		var/text = file2text("config/mentors.txt")
 		if (!text)
 			error("Failed to load config/mentors.txt")
@@ -20,13 +24,6 @@
 				if(directory[ckey])
 					mentors += directory[ckey]
 	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			error("Failed to connect to database in load_mentors(). Reverting to legacy system.")
-			log_misc("Failed to connect to database in load_mentors(). Reverting to legacy system.")
-			config.admin_legacy_system = 1
-			load_mentors()
-			return
 		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM erro_mentor")
 		query.Execute()
 		while(query.NextRow())

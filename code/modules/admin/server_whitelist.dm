@@ -2,7 +2,7 @@
 
 //return 1, if player in server db, or 0
 /proc/check_if_a_new_player(key)
-	if(!establish_db_connection())
+	if(!establish_db_connection("erro_player"))
 		world.log << "Ban database connection failure. Key [key] not checked"
 		log_debug("Ban database connection failure. Key [key] not checked")
 		return 1
@@ -28,8 +28,7 @@
 	if(!config.serverwhitelist)
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		to_chat(usr, "<span class='warning'>Failed to establish database connection</span>")
 		return
 
