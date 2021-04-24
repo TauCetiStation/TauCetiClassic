@@ -344,7 +344,9 @@ var/list/blacklisted_builds = list(
 
 /client/proc/handle_autokick_reasons()
 	if(config.client_limit_panic_bunker_count != null)
-		if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
+		if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list) && \
+			!((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap))
+
 			if (config.client_limit_panic_bunker_link)
 				to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
 				SEND_LINK(src, config.client_limit_panic_bunker_link)
