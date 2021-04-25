@@ -464,7 +464,7 @@ var/failed_db_connections = 0
 
 //This proc ensures that the connection to the database (global variable dbcon) is established
 //optionally you can pass table names as args to check that they exist
-/proc/establish_db_connection()
+/proc/establish_db_connection(...)
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
