@@ -5,10 +5,16 @@
 	mentor_ckeys.Cut()
 	mentors.Cut()
 
-	if(!establish_db_connection("erro_mentor"))
+	var/legacy_system = FALSE
+
+	if(config.admin_legacy_system)
+		legacy_system = TRUE
+	else if(!establish_db_connection("erro_mentor"))
+		legacy_system = TRUE
 		error("Failed to connect to database in load_mentors(). Reverting to legacy system.")
 		log_misc("Failed to connect to database in load_mentors(). Reverting to legacy system.")
 
+	if(legacy_system)
 		var/text = file2text("config/mentors.txt")
 		if (!text)
 			error("Failed to load config/mentors.txt")
