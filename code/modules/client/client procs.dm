@@ -362,11 +362,11 @@ var/list/blacklisted_builds = list(
 
 			if(blocked_by_bunker)
 				if (config.client_limit_panic_bunker_link)
-					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].\nOr subscribe to patreon to ignore server limits: https://www.patreon.com/join/tauceti.</span>")
 					SEND_LINK(src, config.client_limit_panic_bunker_link)
 					log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
 				else
-					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.\nOr subscribe to patreon to ignore server limits: https://www.patreon.com/join/tauceti</span>")
 					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 					QDEL_IN(src, 2 SECONDS)
 				return
