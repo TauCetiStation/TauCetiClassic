@@ -19,7 +19,6 @@
 	var/modeset = null        // if game_mode in modeset
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
-	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
 	var/mode_result = "undefined"
 	var/list/datum/mind/modePlayer = new // list of current antags.
@@ -143,14 +142,14 @@ Implants;
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)
 		feedback_set_details("game_mode","[SSticker.mode]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 	spawn(rand(waittime_l, waittime_h))
 		send_intercept()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 
 	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [round_id]")
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
 	return 1
 
@@ -514,6 +513,10 @@ Implants;
 
 		count++
 	return text
+
+// Should return additional statistics for the gamemode
+/datum/game_mode/proc/modestat()
+	return
 
 //Used for printing player with there icons in round ending staticstic
 /datum/game_mode/proc/printplayerwithicon(datum/mind/ply)

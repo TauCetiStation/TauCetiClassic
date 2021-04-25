@@ -428,7 +428,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	switch (cause)
 		if("death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
+			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) || istype(t, /area/custom/cult))
 				//give the syndies a bit of stealth
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else

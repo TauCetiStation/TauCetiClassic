@@ -22,8 +22,8 @@
 	world.log << "## INFO: [msg][log_end]"
 
 /proc/round_log(msg)
-	world.log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
-	game_log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
+	world.log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
+	game_log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
 
 /proc/log_href(text, say_type)
 	if (config && config.log_hrefs)
@@ -249,7 +249,7 @@
 /proc/drop_round_stats()
 	var/list/stats = list()
 
-	stats["round_id"] = round_id
+	stats["round_id"] = global.round_id
 	stats["start_time"] = time2text(round_start_realtime, "hh:mm:ss")
 	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
 	stats["duration"] = roundduration2text()

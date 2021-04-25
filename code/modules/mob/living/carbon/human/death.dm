@@ -39,7 +39,6 @@
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
-	dog_owner = null
 
 	med_hud_set_health()
 	med_hud_set_status()

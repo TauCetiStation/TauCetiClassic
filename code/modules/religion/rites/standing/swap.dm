@@ -1,13 +1,13 @@
-/datum/religion_rites/swap
+/datum/religion_rites/standing/swap
 	// item = item for which we are changing
 	var/list/swap_list
 
-/datum/religion_rites/swap/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/standing/swap/invoke_effect(mob/living/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	for(var/obj/O in range(1, AOG.loc))
+	for(var/obj/O in range(1, get_turf(AOG)))
 		if(swap_list[O.type])
 			var/swapping = swap_list[O.type]
 			new swapping(O.loc)
@@ -16,9 +16,8 @@
 			qdel(O)
 	return TRUE
 
-/datum/religion_rites/swap/on_invocation(mob/living/user, obj/structure/altar_of_gods/AOG, stage)
-	..()
-	for(var/obj/O in range(1, AOG.loc))
+/datum/religion_rites/standing/swap/rite_step(mob/living/user, obj/AOG, stage)
+	for(var/obj/O in range(1, get_turf(AOG)))
 		if(!swap_list[O.type])
 			continue
 		if(prob(20))
@@ -29,9 +28,9 @@
  * Devaluation
  * In the radius from the altar, changes the denomination of banknotes one higher
  */
-/datum/religion_rites/swap/devaluation
-	name = "Devaluation"
-	desc = "Changes the denomination of banknotes one higher."
+/datum/religion_rites/standing/swap/devaluation
+	name = "Девальвация"
+	desc = "Меняет номинал банкнот на один выше."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("Lord, hope and support...",
 							  "...Thy Everlasting Throne, your backwater...",
@@ -53,16 +52,16 @@
 		ASPECT_GREED = 1,
 	)
 
-/datum/religion_rites/swap/devaluation/New()
+/datum/religion_rites/standing/swap/devaluation/New()
 	swap_list = cash_increase_list
 
 /*
  * Upgrade
  * In the radius from the altar, changes stock_parts withs rating to stock_parts with rating + 1
  */
-/datum/religion_rites/swap/upgrade
-	name = "Upgrade"
-	desc = "Upgrade scientific things."
+/datum/religion_rites/standing/swap/upgrade
+	name = "Улучшение"
+	desc = "Улучшает научные штуки."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("The moon was born...",
 							  "...the force was born...",
@@ -76,5 +75,5 @@
 		ASPECT_SCIENCE = 1,
 	)
 
-/datum/religion_rites/swap/upgrade/New()
+/datum/religion_rites/standing/swap/upgrade/New()
 	swap_list = stock_parts_increase_list

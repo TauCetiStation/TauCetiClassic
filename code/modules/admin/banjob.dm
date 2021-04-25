@@ -4,9 +4,8 @@
 		return FALSE
 
 	if(!M.client) //no cache. fallback to a DBQuery
-		var/DBQuery/query = dbcon.NewQuery("SELECT reason FROM erro_ban WHERE ckey = '[sanitize_sql(M.ckey)]' AND job = '[sanitize_sql(rank)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT reason FROM erro_ban WHERE ckey = '[ckey(M.ckey)]' AND job = '[sanitize_sql(rank)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query.Execute())
-			log_game("SQL ERROR obtaining jobbans. Error : \[[query.ErrorMsg()]\]\n")
 			return
 		if(query.NextRow())
 			var/reason = query.item[1]
@@ -26,9 +25,8 @@
 /proc/jobban_buildcache(client/C)
 	if(C && istype(C))
 		C.jobbancache = list()
-		var/DBQuery/query = dbcon.NewQuery("SELECT job, bantime, bantype, reason, duration, expiration_time, a_ckey, round_id FROM erro_ban WHERE ckey = '[sanitize_sql(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT job, bantime, bantype, reason, duration, expiration_time, a_ckey, round_id FROM erro_ban WHERE ckey = '[ckey(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query.Execute())
-			log_game("SQL ERROR obtaining jobbans. Error : \[[query.ErrorMsg()]\]\n")
 			return
 		while(query.NextRow())
 			C.jobbancache[query.item[1]] = list(

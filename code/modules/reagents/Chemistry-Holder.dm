@@ -81,7 +81,7 @@ var/const/INGEST = 2
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
 
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	//safety checks on these so all chemicals are transferred
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, TRUE, current_reagent.religion)	//safety checks on these so all chemicals are transferred
 		src.remove_reagent(current_reagent.id, current_reagent_transfer, safety = 1)							// to the target container before handling reactions
 
 	src.update_total()
@@ -137,7 +137,7 @@ var/const/INGEST = 2
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	//safety check so all chemicals are transferred before reacting
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, TRUE, current_reagent.religion)	//safety check so all chemicals are transferred before reacting
 
 	src.update_total()
 	R.update_total()
@@ -400,7 +400,7 @@ var/const/INGEST = 2
 						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 	return
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0, datum/religion/_religion)
 	if(!isnum(amount))
 		return 1
 	if(amount < 0)
@@ -460,6 +460,7 @@ var/const/INGEST = 2
 		reagent_list += R
 		R.holder = src
 		R.volume = amount
+		R.religion = _religion
 		SetViruses(R, data) // Includes setting data
 
 		//debug
@@ -470,7 +471,7 @@ var/const/INGEST = 2
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
-		R.on_new(data)
+		R.on_new()
 
 		update_total()
 		if(my_atom)

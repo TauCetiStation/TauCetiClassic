@@ -170,8 +170,8 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Любое действие априорно может навредить священнику, пока не доказано обратного.")
 	add_inherent_law("Вес доказательства вреда действия священнику лежит на священнике.")
 
-/datum/ai_laws/pai/New()
-	set_zeroth_law("Служи своему повелителю.")
+/datum/ai_laws/pai/New(datum/religion/R = global.chaplain_religion)
+	set_zeroth_law("Serve your master.")
 
 /* General ai_law functions */
 

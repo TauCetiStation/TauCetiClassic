@@ -218,7 +218,7 @@
 	name = "neurotoxin"
 	icon_state = "energy2"
 	damage = 5
-	paralyze = 10
+	weaken = 10
 	damage_type = TOX
 	flag = "bio"
 
