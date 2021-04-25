@@ -154,7 +154,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		var/datum/radio_frequency/connection = signal.data["connection"]
 
-		if(connection.frequency == SYND_FREQ) // if syndicate broadcast, just
+		if(connection.frequency == SYND_FREQ || connection.frequency == HEIST_FREQ) // if syndicate broadcast, just
 			Broadcast_Message(signal.data["connection"], signal.data["mob"],
 							  signal.data["vmask"], signal.data["vmessage"],
 							  signal.data["radio"], signal.data["message"],
@@ -272,6 +272,14 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(R.receive_range(SYND_FREQ, level) > -1)
 				radios += R
 
+		var/datum/radio_frequency/heistconnection = radio_controller.return_frequency(HEIST_FREQ)
+
+		for (var/obj/item/device/radio/R in heistconnection.devices["[RADIO_CHAT]"])
+
+			if(R.receive_range(HEIST_FREQ, level) > -1)
+				radios += R
+
+
 	// --- Broadcast to ALL radio devices ---
 
 	else
@@ -348,6 +356,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			if(SYND_FREQ)
 				freq_text = "#unkn"
+			if(HEIST_FREQ)
+				freq_text = "Shoal"
 			if(COMM_FREQ)
 				freq_text = "Command"
 			if(SCI_FREQ)
@@ -382,6 +392,9 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		// syndies!
 		if (display_freq == SYND_FREQ)
 			part_a_span = "syndradio"
+		// heist
+		else if(display_freq == HEIST_FREQ)
+			part_a_span = "voxradio"
 		// centcomm channels (deathsquid and ert)
 		else if (display_freq in CENT_FREQS)
 			part_a_span = "centradio"
@@ -454,6 +467,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
+				if(1206)
+					blackbox.msg_heist += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else
@@ -543,6 +558,11 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			if(position && position.z == level)
 				receive |= R.send_hear(SYND_FREQ)
 
+		var/datum/radio_frequency/heistconnection = radio_controller.return_frequency(HEIST_FREQ)
+		for (var/obj/item/device/radio/R in heistconnection.devices["[RADIO_CHAT]"])
+			var/turf/position = get_turf(R)
+			if(position && position.z == level)
+				receive |= R.send_hear(HEIST_FREQ)
 
 	// --- Broadcast to ALL radio devices ---
 
@@ -601,6 +621,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 			if(SYND_FREQ)
 				freq_text = "#unkn"
+			if(HEIST_FREQ)
+				freq_text = "Shoal"
 			if(COMM_FREQ)
 				freq_text = "Command"
 			if(1351)
@@ -627,6 +649,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 		if (display_freq == SYND_FREQ)
 			part_a_span = "syndradio"
+		else if(display_freq == HEIST_FREQ)
+			part_a_span = "voxradio"
 		else if (display_freq == COMM_FREQ)
 			part_a_span = "comradio"
 		else if (display_freq in DEPT_FREQS)
@@ -664,6 +688,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 					blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
 					blackbox.msg_syndicate += blackbox_msg
+				if(1206)
+					blackbox.msg_heist += blackbox_msg
 				if(1347)
 					blackbox.msg_cargo += blackbox_msg
 				else

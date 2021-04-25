@@ -70,6 +70,7 @@ var/list/net_announcer_secret = list()
 	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
+	var/client_limit_panic_bunker_mentor_pass_cap = 3
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 9  //...so long as this many cultists are active.
@@ -636,6 +637,9 @@ var/list/net_announcer_secret = list()
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
+				
+				if("client_limit_panic_bunker_mentor_pass_cap")
+					config.client_limit_panic_bunker_mentor_pass_cap = text2num(value)
 
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value
@@ -747,12 +751,6 @@ var/list/net_announcer_secret = list()
 				sqllogin = value
 			if ("password")
 				sqlpass = value
-			if ("feedback_database")
-				sqlfdbkdb = value
-			if ("feedback_login")
-				sqlfdbklogin = value
-			if ("feedback_password")
-				sqlfdbkpass = value
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
 

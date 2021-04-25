@@ -53,19 +53,22 @@
 			<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>
 			<A href='?src=\ref[src];search=1'>Start Search</A><BR>"}
 		if(1)
-			establish_old_db_connection()
-			if(!dbcon_old.IsConnected())
+			if(!isnum(page))
+				return
+
+			establish_db_connection()
+			if(!dbcon.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else
-				var/SQLquery = "SELECT author, title, category, id FROM library WHERE "
+				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE "
 				if(category == "Any")
-					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' LIMIT [page], [LIBRETURNLIMIT]"
+					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' LIMIT [page], [LIBRETURNLIMIT]"
 				else
-					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]' LIMIT [page], [LIBRETURNLIMIT]"
+					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' AND category='[sanitize_sql(category)]' LIMIT [page], [LIBRETURNLIMIT]"
 				dat += {"<table>
 				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"}
 
-				var/DBQuery/query = dbcon_old.NewQuery(SQLquery)
+				var/DBQuery/query = dbcon.NewQuery(SQLquery)
 				query.Execute()
 
 				while(query.NextRow())
@@ -222,12 +225,15 @@
 			<A href='?src=\ref[src];checkout=1'>Commit Entry</A><BR>
 			<A href='?src=\ref[src];switchscreen=0'>Main Menu</A><BR>"}
 		if(4)
+			if(!isnum(page))
+				return
+
 			dat += "<h3>External Archive</h3>"
-			establish_old_db_connection()
-			if(!dbcon_old.IsConnected())
+			establish_db_connection()
+			if(!dbcon.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category, deletereason FROM library LIMIT [page], [LIBRETURNLIMIT]")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category, deletereason FROM erro_library LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
 				var/first_id = null
@@ -373,8 +379,8 @@
 					if(scanner.cache.unique)
 						alert("This book has been rejected from the database. Aborting!")
 					else
-						establish_old_db_connection()
-						if(!dbcon_old.IsConnected())
+						establish_db_connection()
+						if(!dbcon.IsConnected())
 							alert("Connection to Archive has been severed. Aborting.")
 						else
 							/*
@@ -387,27 +393,27 @@
 							var/sqlauthor = sanitize_sql(scanner.cache.author)
 							var/sqlcontent = sanitize_sql(scanner.cache.dat)
 							var/sqlcategory = sanitize_sql(upload_category)
-							var/sqlckey = sanitize_sql(usr.ckey)
-							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]')")
+							var/sqlckey = ckey(usr.ckey)
+							var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]')")
 							if(!query.Execute())
-								to_chat(usr, query.ErrorMsg())
+								to_chat(usr, "SQL ERROR")
 							else
 								log_game("[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 								alert("Upload Complete.")
 
 	if(href_list["targetid"])
-		var/sqlid = sanitize_sql(href_list["targetid"])
+		var/sqlid = text2num(href_list["targetid"])
 		if(!sqlid)
 			return
 
-		establish_old_db_connection()
-		if(!dbcon_old.IsConnected())
+		establish_db_connection()
+		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 		if(next_print > world.time)
 			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
 			next_print = world.time + 6 SECONDS
-			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[sqlid]'")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id='[sqlid]'")
 			query.Execute()
 
 			while(query.NextRow())
@@ -424,16 +430,16 @@
 				break
 
 	if(href_list["deleteid"])
-		var/sqlid = sanitize_sql(href_list["deleteid"])
+		var/sqlid = text2num(href_list["deleteid"])
 		if(!sqlid)
 			return
 
-		establish_old_db_connection()
-		if(!dbcon_old.IsConnected())
+		establish_db_connection()
+		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title, deletereason FROM library WHERE id='[sqlid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title, deletereason FROM erro_library WHERE id='[sqlid]'")
 		if(!query.Execute())
 			return
 
@@ -452,7 +458,7 @@
 		if(!reason)
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = '[reason]' WHERE id = '[sqlid]'")
+		query = dbcon.NewQuery("UPDATE erro_library SET deletereason = '[reason]' WHERE id = '[sqlid]'")
 		query.Execute()
 
 		message_admins("[usr.name]/[usr.ckey] requested removal of [title] from the library database")
