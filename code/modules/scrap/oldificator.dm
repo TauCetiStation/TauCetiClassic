@@ -1,8 +1,9 @@
-/obj/proc/make_old()
+/obj/proc/make_old(change_looks = TRUE)
 	color = pick("#996633", "#663300", "#666666")
 	light_color = color
-	name = pick("old ", "expired ", "dirty ") + initial(name)
-	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
+	if(change_looks)
+		name = pick("old ", "expired ", "dirty ") + initial(name)
+		desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
 	reliability = rand(100)

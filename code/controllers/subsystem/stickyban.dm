@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(stickyban)
 	// Delete bans that no longer exist in the database
 	// and add new bans to the database
 	// Config => DB && remove expired DB stickyban from Config
-	if (global.dbcon.Connect() || length(dbcache))
+	if (establish_db_connection() || length(dbcache))
 		if (length(global.stickyban_admin_exemptions))
 			restore_stickybans()
 		// Checking new bans from Config
@@ -289,12 +289,12 @@ SUBSYSTEM_DEF(stickyban)
 	// Drop stickyban record from all
 	if (ckey)
 		if (establish_db_connection())
-			var/sanitized_ckey = sanitize_sql(ckey)
+			var/sanitized_ckey = ckey(ckey)
 			if (length(sanitized_ckey))
 				var/list/sql_q = list(
 					"DELETE FROM [STICKYBAN_TABLENAME] WHERE ckey = '[sanitized_ckey]'",
-					"DELETE FROM [STICKYBAN_CKEY_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]",
-					"DELETE FROM [STICKYBAN_CID_MATCHED_TABLENAME] stickyban = '[sanitized_ckey]'",
+					"DELETE FROM [STICKYBAN_CKEY_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'",
+					"DELETE FROM [STICKYBAN_CID_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'",
 					"DELETE FROM [STICKYBAN_IP_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'"
 				)
 				for (var/Q in sql_q)

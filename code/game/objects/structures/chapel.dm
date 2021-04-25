@@ -94,8 +94,8 @@
 	AddComponent(/datum/component/bounded, BB, 0, 0, null, FALSE)
 
 /obj/effect/effect/bell/Destroy()
-	base.bell = null
-	QDEL_NULL(base)
+	if(!QDELING(base))
+		QDEL_NULL(base)
 	return ..()
 
 /obj/effect/effect/bell/proc/can_use(mob/user)
@@ -283,7 +283,8 @@
 	bell = new(loc, src)
 
 /obj/structure/big_bell/Destroy()
-	QDEL_NULL(bell)
+	if(!QDELING(bell))
+		QDEL_NULL(bell)
 	return ..()
 
 /obj/structure/big_bell/attackby(obj/item/I, mob/user)

@@ -185,7 +185,7 @@ var/global/list/image/splatter_cache=list()
 	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "gibbl5"
+	icon_state = "gibbearcore"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	var/fleshcolor = "#ffffff"
 
@@ -203,19 +203,24 @@ var/global/list/image/splatter_cache=list()
 	add_overlay(giblets)
 
 /obj/effect/decal/cleanable/blood/gibs/up
+	icon_state = "gibup1" // for mapeditor
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
 
 /obj/effect/decal/cleanable/blood/gibs/down
+	icon_state = "gibdown1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
 
 /obj/effect/decal/cleanable/blood/gibs/body
+	icon_state = "gibhead"
 	random_icon_states = list("gibhead", "gibtorso")
 
 /obj/effect/decal/cleanable/blood/gibs/limb
+	icon_state = "gibleg"
 	random_icon_states = list("gibleg", "gibarm")
 
 /obj/effect/decal/cleanable/blood/gibs/core
-	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+	icon_state = "gibmid1"
+	random_icon_states = list("gibmid1", "gibmid2", "gibmid3", "gibbearcore")
 
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)

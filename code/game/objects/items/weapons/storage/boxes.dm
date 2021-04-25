@@ -173,7 +173,7 @@
 /obj/item/weapon/storage/box/r4046/rubber/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/r4046/rubber(src)
+		new /obj/item/ammo_casing/r4046(src)
 
 //Teargas 40x46mm
 /obj/item/weapon/storage/box/r4046/teargas

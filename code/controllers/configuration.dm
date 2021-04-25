@@ -37,14 +37,11 @@ var/list/net_announcer_secret = list()
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 //	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
-	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
-	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
+	var/traitor_scaling = 1 			//if amount of traitors scales based on amount of players
 	var/objectives_disabled = 0 			//if objectives are disabled or not
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
-	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
-	var/allow_Metadata = 1				// Metadata is supported.
+	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/fps = 20
-	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
 	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
 	var/antag_hud_restricted = 0                    // Ghosts that turn on Antagovision cannot rejoin the round.
@@ -53,11 +50,10 @@ var/list/net_announcer_secret = list()
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
-	var/allow_random_events = 0			// enables random events mid-round when set to 1
+	var/allow_random_events = 1			// enables random events mid-round when set to 1
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
-	var/guest_jobban = 1
 	var/usewhitelist = 0
 	var/serverwhitelist = 0
 	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
@@ -74,9 +70,10 @@ var/list/net_announcer_secret = list()
 	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
+	var/client_limit_panic_bunker_mentor_pass_cap = 3
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
-	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
+	var/cult_ghostwriter_req_cultists = 9  //...so long as this many cultists are active.
 
 	var/max_maint_drones = 5				//This many drones can spawn,
 	var/allow_drone_spawn = 1				//assuming the admin allow them to.
@@ -89,12 +86,11 @@ var/list/net_announcer_secret = list()
 
 	var/usealienwhitelist = 0
 	var/use_alien_job_restriction = 0
-	var/limitalienplayers = 0
-	var/alien_to_human_ratio = 0.5
 	var/list/whitelisted_species_by_time = list()
 
 	var/server
 	var/banappeals
+	var/siteurl
 	var/wikiurl
 	var/forumurl
 	var/media_base_url = "http://example.org"
@@ -107,14 +103,6 @@ var/list/net_announcer_secret = list()
 	var/changelog_hash_link = ""
 
 	var/repository_link = ""
-
-	//Alert level description
-	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
-	var/alert_desc_blue_upto = "The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted."
-	var/alert_desc_blue_downto = "The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed."
-	var/alert_desc_red_upto = "There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised."
-	var/alert_desc_red_downto = "The self-destruct mechanism has been deactivated, there is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
-	var/alert_desc_delta = "The station's self-destruct mechanism has been engaged. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
 	var/forbid_singulo_possession = 0
 
@@ -167,8 +155,8 @@ var/list/net_announcer_secret = list()
 
 	var/add_player_age_value = 4320 //default minuts added with admin "Increase player age" button. 4320 minutes = 72 hours = 3 days
 
-	var/byond_version_min = 0
-	var/byond_version_recommend = 0
+	var/byond_version_min = RECOMMENDED_VERSION
+	var/byond_version_recommend = RECOMMENDED_VERSION
 
 	var/simultaneous_pm_warning_timeout = 100
 
@@ -182,7 +170,6 @@ var/list/net_announcer_secret = list()
 	var/use_overmap = 0
 
 	var/chat_bridge = 0
-	var/antigrief_alarm_level = 1
 	var/check_randomizer = 0
 
 	var/guard_email = null
@@ -380,7 +367,7 @@ var/list/net_announcer_secret = list()
 					config.ert_admin_call_only = 1
 
 				if ("allow_ai")
-					config.allow_ai = 1
+					config.allow_ai = text2num(value)
 
 //				if ("authentication")
 //					config.enable_authentication = 1
@@ -406,11 +393,11 @@ var/list/net_announcer_secret = list()
 				if ("wikiurl")
 					config.wikiurl = value
 
+				if ("siteurl")
+					config.siteurl = value
+
 				if ("forumurl")
 					config.forumurl = value
-
-				if ("guest_jobban")
-					config.guest_jobban = 1
 
 				if ("guest_ban")
 					guests_allowed = 0
@@ -436,14 +423,8 @@ var/list/net_announcer_secret = list()
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
 
-				if ("feature_object_spell_system")
-					config.feature_object_spell_system = 1
-
-				if ("allow_metadata")
-					config.allow_Metadata = 1
-
 				if ("traitor_scaling")
-					config.traitor_scaling = 1
+					config.traitor_scaling = text2num(value)
 
 				if ("objectives_disabled")
 					config.objectives_disabled = 1
@@ -467,7 +448,7 @@ var/list/net_announcer_secret = list()
 						log_misc("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("allow_random_events")
-					config.allow_random_events = 1
+					config.allow_random_events = text2num(value)
 
 				if("kick_inactive")
 					config.kick_inactive = 1
@@ -477,24 +458,6 @@ var/list/net_announcer_secret = list()
 
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
-
-				if("alert_red_upto")
-					config.alert_desc_red_upto = value
-
-				if("alert_red_downto")
-					config.alert_desc_red_downto = value
-
-				if("alert_blue_downto")
-					config.alert_desc_blue_downto = value
-
-				if("alert_blue_upto")
-					config.alert_desc_blue_upto = value
-
-				if("alert_green")
-					config.alert_desc_green = value
-
-				if("alert_delta")
-					config.alert_desc_delta = value
 
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
@@ -514,9 +477,6 @@ var/list/net_announcer_secret = list()
 					config.antag_hud_allowed = 1
 				if("antag_hud_restricted")
 					config.antag_hud_restricted = 1
-
-				if("socket_talk")
-					socket_talk = text2num(value)
 
 				if("humans_need_surnames")
 					humans_need_surnames = 1
@@ -544,10 +504,6 @@ var/list/net_announcer_secret = list()
 							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
 					else
 						log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
-
-				if("alien_player_ratio")
-					limitalienplayers = 1
-					alien_to_human_ratio = text2num(value)
 
 				if("assistant_maint")
 					config.assistant_maint = 1
@@ -628,9 +584,6 @@ var/list/net_announcer_secret = list()
 				if("chat_bridge")
 					config.chat_bridge = value
 
-				if("antigrief_alarm_level")
-					config.antigrief_alarm_level = value
-
 				if("check_randomizer")
 					config.check_randomizer = value
 
@@ -684,6 +637,9 @@ var/list/net_announcer_secret = list()
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
+				
+				if("client_limit_panic_bunker_mentor_pass_cap")
+					config.client_limit_panic_bunker_mentor_pass_cap = text2num(value)
 
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value
@@ -795,12 +751,6 @@ var/list/net_announcer_secret = list()
 				sqllogin = value
 			if ("password")
 				sqlpass = value
-			if ("feedback_database")
-				sqlfdbkdb = value
-			if ("feedback_login")
-				sqlfdbklogin = value
-			if ("feedback_password")
-				sqlfdbkpass = value
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
 
@@ -852,12 +802,12 @@ var/list/net_announcer_secret = list()
 			switch(modeset)
 				if("bs12")
 					switch(M.config_tag)
-						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitorchan","traitor","blob","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 				if("tau classic")
 					switch(M.config_tag)
-						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitor","blob","extended","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 		var/mod_prob = probabilities[M.config_tag]

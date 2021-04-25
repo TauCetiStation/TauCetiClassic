@@ -75,11 +75,6 @@
 				log_admin("[key_name(usr)] has spawned vox raiders.")
 				if(!src.makeVoxRaiders())
 					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
-			if("12")
-				message_admins("[key_name(usr)] started a gang war.")
-				log_admin("[key_name(usr)] started a gang war.")
-				if(!src.makeGangsters())
-					to_chat(usr, "<span class='danger'>Unfortunatly there were not enough candidates available.</span>")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"] || href_list["dbsearchbantype"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -156,7 +151,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
+		DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid )
 
 	else if(href_list["editrights"])
 		if(!check_rights(R_PERMISSIONS))
@@ -300,6 +295,7 @@
 							timer_maint_revoke_id = 0
 						timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
+		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["edit_shuttle_time"])
@@ -309,6 +305,8 @@
 		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]")
 		SSshuttle.announce_emer_called.play()
 		message_admins("<span class='notice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [SSshuttle.timeleft()]</span>")
+
+		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["delay_round_end"])
@@ -322,6 +320,8 @@
 			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
+
+		check_antagonists()
 		href_list["secretsadmin"] = "check_antagonist"
 
 	else if(href_list["simplemake"])
@@ -363,29 +363,6 @@
 			if("constructbuilder")	M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
 			if("constructwraith")	M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
 			if("shade")				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
-			if("meme")
-				var/mob/living/parasite/meme/newmeme = new
-				M.mind.transfer_to(newmeme)
-				newmeme.clearHUD()
-
-				var/found = 0
-				for(var/mob/living/carbon/human/H in human_list) if(H.client && !H.parasites.len)
-					found = 1
-					newmeme.enter_host(H)
-
-					message_admins("[H] has become [newmeme.key]'s host")
-
-					break
-
-				// if there was no host, abort
-				if(!found)
-					newmeme.mind.transfer_to(M)
-					message_admins("Failed to find host for meme [M.key]. Aborting.")
-
-				SSticker.mode.memes += newmeme
-
-				if(delmob)
-					qdel(M)
 
 
 	/////////////////////////////////////new ban stuff
@@ -727,20 +704,6 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
 
-		//Meme
-		if(jobban_isbanned(M, ROLE_MEME) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_MEME];jobban4=\ref[M]'>[ROLE_MEME]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MEME];jobban4=\ref[M]'>[ROLE_MEME]</a></td>"
-
-		//Mutineer
-		if(jobban_isbanned(M, ROLE_MUTINEER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_MUTINEER];jobban4=\ref[M]'>[ROLE_MUTINEER]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MUTINEER];jobban4=\ref[M]'>[ROLE_MUTINEER]</a></td>"
-
-		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
-
 		//Shadowling
 		if(jobban_isbanned(M, ROLE_SHADOWLING) || isbanned_dept)
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
@@ -752,6 +715,8 @@
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Ninja
 		if(jobban_isbanned(M, ROLE_NINJA) || isbanned_dept)
@@ -2169,7 +2134,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT content FROM erro_library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2195,7 +2160,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title FROM erro_library WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2205,7 +2170,7 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = '[bookid]'")
+		query = dbcon.NewQuery("UPDATE erro_library SET deletereason = NULL WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2225,7 +2190,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title FROM erro_library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2236,7 +2201,7 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[bookid]'")
+		query = dbcon.NewQuery("DELETE FROM erro_library WHERE id='[bookid]'")
 		if(!query.Execute())
 			return
 

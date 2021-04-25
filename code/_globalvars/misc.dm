@@ -40,6 +40,7 @@ var/list/score=list(
 	"opkilled"       = 0, // used during nuke mode, how many operatives died?
 	"disc"           = 0, // is the disc safe and secure?
 	"nuked"          = 0, // was the station blown into little bits?
+	"destranomaly"   = 0, // anomaly of cult
 
 	//crew
 	"crew_escaped"   = 0,      // how many people got out alive?
@@ -98,6 +99,9 @@ var/list/ignore_vision_inside = list(
 
 // Is initiated in setup_religions(). Used to save all info about chaplain's religion.
 var/global/datum/religion/chaplain/chaplain_religion
+// Cultists religion. You/I can change it?
+var/global/datum/religion/cult/cult_religion
+var/global/list/datum/religion/all_religions = list()
 
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.

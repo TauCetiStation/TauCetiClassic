@@ -253,100 +253,9 @@
 /mob/proc/scorestats(completions)//omg why we count this for every player
 	var/dat = completions
 	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
-	if (SSticker.mode.name == "nuclear emergency")
-		var/foecount = 0
-		var/crewcount = 0
-		var/diskdat = ""
-		var/bombdat = null
-		var/datum/game_mode/nuclear/GM = SSticker.mode
-		for(var/datum/mind/M in GM.syndicates)
-			foecount++
-		for(var/mob/living/C in alive_mob_list)
-			if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai))
-				continue
-			if (!C.client)
-				continue
-			crewcount++
+	// additional statistics for the gamemode
+	dat += SSticker.mode.modestat()
 
-		for(var/obj/item/weapon/disk/nuclear/N in poi_list)
-			if(!N)
-				continue
-			var/atom/disk_loc = N.loc
-			while(!istype(disk_loc, /turf))
-				if(istype(disk_loc, /mob))
-					var/mob/M = disk_loc
-					diskdat += "Carried by [M.real_name] "
-				if(istype(disk_loc, /obj))
-					var/obj/O = disk_loc
-					diskdat += "in \a [O.name] "
-				disk_loc = disk_loc.loc
-			diskdat += "in [disk_loc.loc]"
-			break // Should only need one go-round, probably
-		var/nukedpenalty = 0
-		for(var/obj/machinery/nuclearbomb/NUKE in poi_list)
-			//if (NUKE.r_code == "Nope") continue
-			if (NUKE.detonated == 0)
-				continue
-			var/turf/T = NUKE.loc
-			bombdat = T.loc
-			if (istype(T,/area/shuttle/syndicate) || istype(T,/area/custom/wizard_station) || istype(T,/area/station/solar))
-				nukedpenalty = 1000
-			else if (istype(T,/area/station/security/main) || istype(T,/area/station/security/brig) || istype(T,/area/station/security/armoury) || istype(T,/area/station/security/checkpoint))
-				nukedpenalty = 50000
-			else if (istype(T,/area/station/engineering))
-				nukedpenalty = 100000
-			else
-				nukedpenalty = 10000
-			break
-		if (!diskdat)
-			diskdat = "Uh oh. Something has fucked up! Report this."
-		dat += {"<B><U>MODE STATS</U></B><BR>
-		<B>Number of Operatives:</B> [foecount]<BR>
-		<B>Number of Surviving Crew:</B> [crewcount]<BR>
-		<B>Final Location of Nuke:</B> [bombdat]<BR>
-		<B>Final Location of Disk:</B> [diskdat]<BR><BR>
-		<B>Operatives Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
-		<B>Operatives Killed:</B> [score["opkilled"]] ([score["opkilled"] * 250] Points)<BR>
-		<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
-		<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
-		<HR>"}
-//		<B>Nuclear Disk Secure:</B> [score["disc"] ? "Yes" : "No"] ([score["disc"] * 500] Points)<BR>
-	if (SSticker.mode.name == "rp-revolution")
-		var/foecount = 0
-		var/comcount = 0
-		var/revcount = 0
-		var/loycount = 0
-		var/datum/game_mode/rp_revolution/GM = SSticker.mode
-		for(var/datum/mind/M in GM.head_revolutionaries)
-			if (M.current && M.current.stat != DEAD) foecount++
-		for(var/datum/mind/M in GM.revolutionaries)
-			if (M.current && M.current.stat != DEAD) revcount++
-		for(var/mob/living/carbon/human/player in human_list)
-			if(player.mind)
-				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
-					if (player.stat != DEAD)
-						comcount++
-				else
-					if(player.mind in GM.revolutionaries)
-						continue
-					loycount++
-		for(var/mob/living/silicon/X in silicon_list)
-			if(X.stat == DEAD)
-				continue
-			loycount++
-		var/revpenalty = 10000
-		dat += {"<B><U>MODE STATS</U></B><BR>
-		<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>
-		<B>Number of Surviving Command Staff:</B> [comcount]<BR>
-		<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
-		<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
-		<B>Revolution Heads Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
-		<B>Revolution Heads Slain:</B> [score["opkilled"]] ([score["opkilled"] * 500] Points)<BR>
-		<B>Command Staff Slain:</B> [score["deadcommand"]] (-[score["deadcommand"] * 500] Points)<BR>
-		<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
-		<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
-		<HR>"}
 	var/totalfunds = station_account.money
 	dat += {"<B><U>GENERAL STATS</U></B><BR>
 	<U>THE GOOD:</U><BR>
@@ -412,7 +321,7 @@
 		endgame_info_logged = 1
 		log_game(dat)
 
-	var/datum/browser/popup = new(src, "roundstats", "Round #[round_id] Stats", 1000, 600)
+	var/datum/browser/popup = new(src, "roundstats", "Round #[global.round_id] Stats", 1000, 600)
 	popup.set_content(dat)
 	popup.open()
 

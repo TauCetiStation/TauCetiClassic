@@ -17,7 +17,8 @@
 					continue
 				var/ckey = copytext(line, 1)
 				mentor_ckeys += ckey
-				mentors += directory[ckey]
+				if(directory[ckey])
+					mentors += directory[ckey]
 	else
 		establish_db_connection()
 		if(!dbcon.IsConnected())
@@ -31,7 +32,8 @@
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			mentor_ckeys += ckey
-			mentors += directory[ckey]
+			if(directory[ckey])
+				mentors += directory[ckey]
 
 /proc/message_mentors(msg, observer_only = 0)
 	msg = "<span class=\"admin\"><span class=\"prefix\">MENTOR LOG:</span> <span class=\"message\">[msg]</span></span>"

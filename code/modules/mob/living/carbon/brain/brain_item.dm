@@ -32,10 +32,6 @@
 		H.mind.transfer_to(brainmob)
 
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.debrain_directive(src)
-
 /obj/item/brain/examine(mob/user) // -- TLE
 	..()
 	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.

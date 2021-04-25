@@ -718,7 +718,7 @@
 		paperaffected.clearpaper()
 		to_chat(usr, "The solution dissolves the ink on the paper.")
 	if(istype(O,/obj/item/weapon/book))
-		if(istype(O,/obj/item/weapon/book/tome))
+		if(istype(O,/obj/item/weapon/storage/bible/tome))
 			to_chat(usr, "The solution does nothing. Whatever this is, it isn't normal ink.")
 			return
 		if(volume >= 5)
