@@ -14,6 +14,12 @@ var/base_commit_sha = 0
 	timezoneOffset = text2num(time2text(0, "hh")) HOURS
 
 	load_configuration()
+
+	if(!setup_database_connection())
+		log_sql("Your server failed to establish a connection with the SQL database.")
+	else
+		log_sql("SQL database connection established.")
+
 	load_regisration_panic_bunker()
 	load_stealth_keys()
 	load_mode()
@@ -49,11 +55,6 @@ var/base_commit_sha = 0
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
 	ahelp_tickets = new
-
-	if(!setup_database_connection())
-		log_sql("Your server failed to establish a connection with the SQL database.")
-	else
-		log_sql("SQL database connection established.")
 
 	SetRoundID()
 	base_commit_sha = GetGitMasterCommit(1)
