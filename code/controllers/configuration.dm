@@ -70,6 +70,7 @@ var/list/net_announcer_secret = list()
 	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
+	var/client_limit_panic_bunker_mentor_pass_cap = 3
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
 	var/cult_ghostwriter_req_cultists = 9  //...so long as this many cultists are active.
@@ -137,7 +138,7 @@ var/list/net_announcer_secret = list()
 	// No custom time
 	var/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
-									EVENT_LEVEL_MAJOR = list("lower" = 80 MINUTES, "upper" = 100 MINUTES))
+									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
 	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
@@ -636,6 +637,9 @@ var/list/net_announcer_secret = list()
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
+				
+				if("client_limit_panic_bunker_mentor_pass_cap")
+					config.client_limit_panic_bunker_mentor_pass_cap = text2num(value)
 
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value

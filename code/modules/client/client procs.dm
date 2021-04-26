@@ -344,16 +344,32 @@ var/list/blacklisted_builds = list(
 
 /client/proc/handle_autokick_reasons()
 	if(config.client_limit_panic_bunker_count != null)
-		if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
-			if (config.client_limit_panic_bunker_link)
-				to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
-				SEND_LINK(src, config.client_limit_panic_bunker_link)
-				log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
-			else
-				to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
-				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-				QDEL_IN(src, 2 SECONDS)
-			return
+
+		if(clients.len > config.client_limit_panic_bunker_count)
+			var/blocked_by_bunker = TRUE
+
+			if(ckey in admin_datums) // admins immune to bunker
+				blocked_by_bunker = FALSE
+
+			if(supporter) // and patrons
+				blocked_by_bunker = FALSE
+
+			if(ckey in joined_player_list) // player already joined the game and just reconnects, so we pass him
+				blocked_by_bunker = FALSE
+
+			if((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap) // mentors immune too, but only before own cap 
+				blocked_by_bunker = FALSE
+
+			if(blocked_by_bunker)
+				if (config.client_limit_panic_bunker_link)
+					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+					SEND_LINK(src, config.client_limit_panic_bunker_link)
+					log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
+				else
+					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+					QDEL_IN(src, 2 SECONDS)
+				return
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
