@@ -220,9 +220,13 @@ var/list/blacklisted_builds = list(
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 
-	if(config.sandbox && !holder)
-		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
-		holder = admin_datums[ckey]
+	if(config.sandbox)
+		var/sandbox_permissions = (R_HOST & ~(R_PERMISSIONS | R_DEBUG | R_BAN | R_LOG))
+		if(!holder)
+			new /datum/admins("Sandbox Admin", sandbox_permissions, ckey)
+			holder = admin_datums[ckey]
+		else
+			holder.rights = (holder.rights | sandbox_permissions)
 
 	if(holder)
 		holder.owner = src
