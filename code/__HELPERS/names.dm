@@ -229,10 +229,18 @@ var/global/regex/code_response_highlight_rule
 	return
 
 /proc/highlight_traitor_codewords(message, datum/mind/traitor_mind)
-	if(!traitor_mind || !traitor_mind.syndicate_awareness)
+	if(!traitor_mind)
 		return message
 
-	switch(traitor_mind.syndicate_awareness)
+	var/datum/role/syndicate/S = traitor_mind.GetRoleByType(/datum/role/syndicate)
+	if(!S)
+		return message
+
+	var/awareness = S.syndicate_awareness
+	if(!awareness)
+		return message
+
+	switch(awareness)
 		if(SYNDICATE_AWARE)
 			message = highlight_codewords(message, global.code_phrase_highlight_rule) // Same can be done with code_response or any other list of words, using regex created by generate_code_regex(). You can also add the name of CSS class as argument to change highlight style.
 			message = highlight_codewords(message, global.code_response_highlight_rule, "deptradio")

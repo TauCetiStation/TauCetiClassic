@@ -3,6 +3,7 @@
 	var/total_TC = 0
 	var/spent_TC = 0
 	var/uplink_uses = 20
+	var/syndicate_awareness = SYNDICATE_UNAWARE
 
 /datum/role/syndicate/proc/give_uplink(mob/living/carbon/human/traitor_mob, crystals)
 	// find a radio! toolbox(es), backpack, belt, headset
@@ -81,7 +82,7 @@
 		var/code_phrase = "<b>Code Phrase</b>: [codewords2string(global.syndicate_code_phrase)]"
 		to_chat(traitor_mob, code_phrase)
 		traitor_mob.mind.store_memory(code_phrase)
-		traitor_mob.mind.syndicate_awareness = SYNDICATE_PHRASES
+		syndicate_awareness = SYNDICATE_PHRASES
 
 		code_words += 1
 
@@ -90,7 +91,7 @@
 		var/code_response = "<b>Code Response</b>: [codewords2string(global.syndicate_code_response)]"
 		to_chat(traitor_mob, code_response)
 		traitor_mob.mind.store_memory(code_response)
-		traitor_mob.mind.syndicate_awareness = SYNDICATE_RESPONSE
+		syndicate_awareness = SYNDICATE_RESPONSE
 
 		code_words += 1
 
@@ -100,7 +101,7 @@
 		if(1) // half
 			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 		if(2)
-			traitor_mob.mind.syndicate_awareness = SYNDICATE_AWARE
+			syndicate_awareness = SYNDICATE_AWARE
 			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 
 /datum/role/syndicate/proc/give_intel(mob/living/traitor_mob)
