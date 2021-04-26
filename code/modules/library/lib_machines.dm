@@ -56,8 +56,7 @@
 			if(!isnum(page))
 				return
 
-			establish_db_connection()
-			if(!dbcon.IsConnected())
+			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else
 				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE "
@@ -229,8 +228,8 @@
 				return
 
 			dat += "<h3>External Archive</h3>"
-			establish_db_connection()
-			if(!dbcon.IsConnected())
+
+			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
 				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category, deletereason FROM erro_library LIMIT [page], [LIBRETURNLIMIT]")
@@ -379,8 +378,7 @@
 					if(scanner.cache.unique)
 						alert("This book has been rejected from the database. Aborting!")
 					else
-						establish_db_connection()
-						if(!dbcon.IsConnected())
+						if(!establish_db_connection("erro_library"))
 							alert("Connection to Archive has been severed. Aborting.")
 						else
 							/*
@@ -406,8 +404,7 @@
 		if(!sqlid)
 			return
 
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!establish_db_connection("erro_library"))
 			alert("Connection to Archive has been severed. Aborting.")
 		if(next_print > world.time)
 			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
@@ -434,8 +431,7 @@
 		if(!sqlid)
 			return
 
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!establish_db_connection("erro_library"))
 			alert("Connection to Archive has been severed. Aborting.")
 			return
 
