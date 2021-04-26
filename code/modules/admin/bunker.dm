@@ -67,17 +67,17 @@
 	if(!establish_db_connection("erro_player"))
 		world.log << "Ban database connection failure. Key [key] not checked"
 		log_debug("Ban database connection failure. Key [key] not checked")
-		return FALSE
+		return TRUE
 
 	key = ckey(key)
 
 	if(!key)
-		return FALSE
+		return TRUE
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT ingameage FROM erro_player WHERE ckey = '[key]'")
 
 	if(!query.Execute()) // can't check player because some problems
-		return FALSE
+		return TRUE
 
 	if(!query.RowCount()) // no record in db, new player
 		return TRUE
