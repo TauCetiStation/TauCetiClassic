@@ -225,7 +225,7 @@ var/global/BSACooldown = 0
 		return
 
 	if(!establish_db_connection("erro_messages", "erro_ban"))
-		usr.show_message("Notes [key] from DB don't available.")
+		to_chat(usr, "Notes [key] from DB don't available.")
 		return
 
 	//Display player age and player warn bans

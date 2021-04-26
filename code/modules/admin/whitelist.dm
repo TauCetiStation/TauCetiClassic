@@ -237,15 +237,15 @@
 		to_chat(usr, "<span class='warning'>[role] for [target_ckey] does not exist in whitelist.</span>")
 		return
 
-	if(!establish_db_connection("whitelist"))
+	if(!establish_db_connection("erro_whitelist"))
 		to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
 		return
 
 	var/sql_update
 	if(ban_edit)
-		sql_update = "UPDATE `whitelist` SET ban = '[sanitize_sql(ban)]', reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
+		sql_update = "UPDATE `erro_whitelist` SET ban = '[sanitize_sql(ban)]', reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
 	else
-		sql_update = "UPDATE `whitelist` SET reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
+		sql_update = "UPDATE `erro_whitelist` SET reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
 	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
 	if(!query_update.Execute())
 		message_admins("SQL ERROR")
@@ -277,7 +277,7 @@
 
 	role_whitelist = list()
 
-	if(!establish_db_connection("whitelist"))
+	if(!establish_db_connection("erro_whitelist"))
 		world.log << "SQL ERROR (L): whitelist: connection failed to SQL database."
 		return
 
