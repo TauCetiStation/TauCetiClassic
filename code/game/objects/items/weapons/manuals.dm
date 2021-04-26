@@ -207,7 +207,7 @@
 //Law and Order
 
 /obj/item/weapon/book/manual/wiki/possible_threats
-	name = "Памятка о возможных угрозах"
+	name = "Possible Threats"
 	desc = "A Nanotrasen warning about possible threats"
 	icon_state = "bookThreats"
 	item_state = "book9"
