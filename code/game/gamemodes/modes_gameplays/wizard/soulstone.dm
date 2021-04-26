@@ -180,9 +180,13 @@
 	M.key = S.key
 	S.cancel_camera()
 
-	if(iswizard(user))
-		add_faction_member(user.mind.GetFactionFromRole(WIZARD), M, TRUE)
-	else if(user.my_religion)
+	if(isanyantag(user))
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			if(R.faction)
+				add_faction_member(R.faction, M, TRUE)
+
+	if(user.my_religion) // for cult and chaplain religion
 		user.my_religion.add_member(M, CULT_ROLE_HIGHPRIEST)
 
 	qdel(src)
