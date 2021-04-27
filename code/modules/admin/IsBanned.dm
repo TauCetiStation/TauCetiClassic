@@ -17,11 +17,9 @@
 	var/ckey = ckey(key)
 	var/client/C = global.directory[ckey]
 
-	/* Uncomment this for skip connected clients checks. Broke stckybans sometimes
 	// Don't recheck connected clients.
 	if (!real_bans_only && istype(C) && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
 		return
-	*/
 
 	// Whitelist
 	if(!real_bans_only && config.bunker_ban_mode && is_blocked_by_regisration_panic_bunker_ban_mode(key))
