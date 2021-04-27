@@ -628,7 +628,7 @@ var/list/net_announcer_secret = list()
 					config.registration_panic_bunker_age = value
 
 				if("allowed_by_bunker_player_age")
-					config.allowed_by_bunker_player_age = 	text2num(value)
+					config.allowed_by_bunker_player_age = text2num(value)
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
