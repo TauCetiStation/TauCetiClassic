@@ -150,8 +150,8 @@
 
 	table_name = sanitize_sql(table_name)
 
-	if(table_exists["table_name"] == 1)
-		return 1
+	if(table_name in table_exists)
+		return table_exists[table_name]
 
 	var/DBQuery/check_table = NewQuery("SHOW TABLES LIKE '[table_name]'")
 	check_table.Execute()

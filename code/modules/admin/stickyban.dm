@@ -179,7 +179,7 @@
 /datum/admins/proc/stickyban_timeout(ckey)
 	if (!ckey)
 		return
-	if (!establish_db_connection())
+	if (!establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 		return
 	if (alert("Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure","Yes","No") == "No")
@@ -195,7 +195,7 @@
 /datum/admins/proc/stickyban_untimeout(ckey)
 	if (!ckey)
 		return
-	if (!establish_db_connection())
+	if (!establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 		return
 	if (alert("Are you sure you want to lift the timeout on [ckey]'s stickyban?","Are you sure","Yes","No") == "No")
@@ -228,8 +228,8 @@
 		return
 	var/src_href = "_src_=holder"
 	var/disable_link = "<a href='?[src_href];stickyban=revert&ckey=[ckey]'>Revert</a>"
-	establish_db_connection()
-	if(dbcon && dbcon.IsConnected())
+	
+	if(establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		disable_link = "<a href='?[src_href];stickyban=[(ban[BANKEY_TIMEOUT] ? "untimeout" : "timeout")]&ckey=[ckey]'>[ban[BANKEY_TIMEOUT] ? "Untimeout" : "Timeout"]</a>"
 	var/remove_link = "<a href='?[src_href];stickyban=remove&ckey=[ckey]'>-</a>"
 	var/edit_link = "<b><a href='?[src_href];stickyban=edit&ckey=[ckey]'>Edit</a></b>"

@@ -440,6 +440,12 @@
 		to_chat(src, "They are no longer in range!")
 		return
 
+// Borers will not be blind in ventilation
+/mob/living/simple_animal/borer/is_vision_obstructed()
+	if(istype(loc, /obj/machinery/atmospherics/pipe))
+		return FALSE
+	return ..()
+
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/verb/hide()
 	set name = "Hide"

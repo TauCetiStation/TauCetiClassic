@@ -14,7 +14,7 @@ var/changelog_hash = ""
 
 var/list/donators = list()
 
-var/aliens_allowed = 0
+var/aliens_allowed = 1
 var/ooc_allowed = 1
 var/looc_allowed = 1
 var/dsay_allowed = 1

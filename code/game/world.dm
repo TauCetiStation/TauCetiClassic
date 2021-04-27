@@ -14,6 +14,12 @@ var/base_commit_sha = 0
 	timezoneOffset = text2num(time2text(0, "hh")) HOURS
 
 	load_configuration()
+
+	if(!setup_database_connection())
+		log_sql("Your server failed to establish a connection with the SQL database.")
+	else
+		log_sql("SQL database connection established.")
+
 	load_regisration_panic_bunker()
 	load_stealth_keys()
 	load_mode()
@@ -49,11 +55,6 @@ var/base_commit_sha = 0
 	data_core = new /obj/effect/datacore()
 	paiController = new /datum/paiController()
 	ahelp_tickets = new
-
-	if(!setup_database_connection())
-		log_sql("Your server failed to establish a connection with the SQL database.")
-	else
-		log_sql("SQL database connection established.")
 
 	SetRoundID()
 	base_commit_sha = GetGitMasterCommit(1)
@@ -177,7 +178,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/proc/PreShutdown(end_state)
 
-	if(dbcon.IsConnected())
+	if(establish_db_connection("erro_round"))
 		end_state = end_state ? end_state : "undefined"
 		var/DBQuery/query_round_shutdown = dbcon.NewQuery("UPDATE erro_round SET shutdown_datetime = Now(), end_state = '[sanitize_sql(end_state)]' WHERE id = [global.round_id]")
 		query_round_shutdown.Execute()
@@ -425,7 +426,7 @@ var/shutdown_processed = FALSE
 		src.status = s
 
 /proc/SetRoundID()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_round"))
 		return
 	var/DBQuery/query_round_initialize = dbcon.NewQuery("INSERT INTO erro_round (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[sanitize_sql(world.internet_address)]')), '[sanitize_sql(world.port)]')")
 	if(query_round_initialize.Execute())
@@ -443,7 +444,6 @@ var/failed_db_connections = 0
 
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
-
 	if(!dbcon)
 		dbcon = new()
 
@@ -464,14 +464,21 @@ var/failed_db_connections = 0
 	return .
 
 //This proc ensures that the connection to the database (global variable dbcon) is established
-/proc/establish_db_connection()
+//optionally you can pass table names as args to check that they exist
+/proc/establish_db_connection(...)
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
 	if(!dbcon || !dbcon.IsConnected())
-		return setup_database_connection()
-	else
-		return 1
+		if(!setup_database_connection())
+			return 0
+
+	if(length(args))
+		for(var/tablename in args)
+			if(!dbcon.TableExists(tablename))
+				return 0
+
+	return 1
 
 #undef FAILED_DB_CONNECTION_CUTOFF
 

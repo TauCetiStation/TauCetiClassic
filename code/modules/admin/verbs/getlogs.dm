@@ -85,7 +85,7 @@
 
 /client/proc/browseserverlogs_id(subpath = "")
 
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_round"))
 		to_chat(usr, "<span class='alert'>Database connection required</span>")
 		return
 

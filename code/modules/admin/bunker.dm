@@ -35,3 +35,57 @@
 		attachment_msg = "**[key_name(src)]** [msg]",
 		attachment_color = BRIDGE_COLOR_ADMINALERT,
 	)
+
+/client/proc/is_blocked_by_regisration_panic_bunker()
+	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
+
+	var/list/byond_date = get_byond_registration()
+
+	if (!length(byond_date))
+		return
+
+	bunker_date_regex.Find(config.registration_panic_bunker_age)
+
+	var/user_year = byond_date[1]
+	var/user_month = byond_date[2]
+	var/user_day = byond_date[3]
+
+	var/bunker_year = text2num(bunker_date_regex.group[1])
+	var/bunker_month = text2num(bunker_date_regex.group[2])
+	var/bunker_day = text2num(bunker_date_regex.group[3])
+
+	var/is_invalid_year = user_year > bunker_year
+	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
+	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
+
+	var/is_invalid_date = is_invalid_year || is_invalid_month || is_invalid_day
+	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
+
+	return is_invalid_date && is_invalid_ingame_age
+
+/proc/is_blocked_by_regisration_panic_bunker_ban_mode(key)
+	if(!establish_db_connection("erro_player"))
+		world.log << "Ban database connection failure. Key [key] not checked"
+		log_debug("Ban database connection failure. Key [key] not checked")
+		return TRUE
+
+	key = ckey(key)
+
+	if(!key)
+		return TRUE
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT ingameage FROM erro_player WHERE ckey = '[key]'")
+
+	if(!query.Execute()) // can't check player because some problems
+		return TRUE
+
+	if(!query.RowCount()) // no record in db, new player
+		return TRUE
+
+	if(query.NextRow())
+		var/sql_player_ingame_age = text2num(query.item[1])
+
+		if(sql_player_ingame_age < config.allowed_by_bunker_player_age) // player in db but doesn't have minutes to pass bunker
+			return TRUE
+
+	return FALSE

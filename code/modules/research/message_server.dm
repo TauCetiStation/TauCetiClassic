@@ -300,8 +300,9 @@ var/obj/machinery/blackbox_recorder/blackbox
 	if(!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
-	establish_db_connection()
-	if(!dbcon.IsConnected()) return
+
+	if(!establish_db_connection("erro_feedback"))
+		return
 
 	for(var/datum/feedback_variable/FV in feedback)
 		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [global.round_id], \"[sanitize_sql(FV.get_variable())]\", [sanitize_sql(FV.get_value())], \"[sanitize_sql(FV.get_details())]\")"

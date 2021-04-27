@@ -3,8 +3,7 @@
 	set name = "Library: Remove by id"
 	if(!check_rights(R_DEBUG))	return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "BD POTRACHENO")
 		return
 
@@ -37,8 +36,7 @@
 	set name = "Library: Read by id"
 	if(!check_rights(R_DEBUG))	return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "BD POTRACHENO")
 		return
 
@@ -67,8 +65,7 @@
 	set category = "Admin"
 	set name = "Library: Recycle bin"
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "Database is not connected.")
 		return
 

@@ -148,7 +148,7 @@ Implants;
 	start_state = new /datum/station_state()
 	start_state.count(1)
 
-	if(dbcon.IsConnected())
+	if(establish_db_connection("erro_round"))
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
 	return 1
