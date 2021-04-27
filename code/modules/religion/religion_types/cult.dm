@@ -47,11 +47,6 @@
 	symbol_icon_state = null
 
 	/*
-		Tech
-	*/
-	var/blade_with_shield = FALSE
-
-	/*
 		Only cult
 	*/
 	// Just gamemode of cult

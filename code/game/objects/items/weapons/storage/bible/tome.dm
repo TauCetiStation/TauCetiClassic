@@ -246,7 +246,7 @@
 
 /obj/item/weapon/storage/bible/tome/proc/can_build_here(mob/user, datum/rune/rune)
 	var/area/area = get_area(user)
-	if(!religion.can_build_everywhere && !istype(religion, area.religion?.type))
+	if(!religion.get_tech(RTECH_BUILD_EVERYWHERE) && !istype(religion, area.religion?.type))
 		to_chat(user, "<span class='warning'>Вы можете строить только внутри зоны, подконтрольной вашей религией.</span>")
 		return FALSE
 	return TRUE
