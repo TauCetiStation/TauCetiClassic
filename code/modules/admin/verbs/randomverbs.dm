@@ -1117,7 +1117,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_VAREDIT))
 		return
 
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	var/ckey = ckey(input("Enter player ckey") as null|text)

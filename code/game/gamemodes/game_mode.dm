@@ -259,7 +259,7 @@
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)
 		feedback_set_details("game_mode","[SSticker.mode]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 
 	start_state = new /datum/station_state()
 	start_state.count(1)
@@ -276,7 +276,7 @@
 		R.AnnounceObjectives()
 		R.OnPostSetup()
 
-	if(dbcon.IsConnected())
+	if(establish_db_connection("erro_round"))
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
 

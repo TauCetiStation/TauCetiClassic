@@ -273,7 +273,7 @@
 
 /datum/guard/proc/process_autoban()
 
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_ban"))
 		message_admins("GUARD: autoban for [holder.ckey] not processed due to database connection problem.")
 		return
 
