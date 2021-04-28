@@ -220,9 +220,13 @@ var/list/blacklisted_builds = list(
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 
-	if(config.sandbox && !holder)
-		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
-		holder = admin_datums[ckey]
+	if(config.sandbox)
+		var/sandbox_permissions = (R_HOST & ~(R_PERMISSIONS | R_DEBUG | R_BAN | R_LOG))
+		if(!holder)
+			new /datum/admins("Sandbox Admin", sandbox_permissions, ckey)
+			holder = admin_datums[ckey]
+		else
+			holder.rights = (holder.rights | sandbox_permissions)
 
 	if(holder)
 		holder.owner = src
@@ -404,8 +408,7 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	var/sql_ckey = ckey(src.ckey)
@@ -468,7 +471,7 @@ var/list/blacklisted_builds = list(
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
-	else if(!config.serverwhitelist)
+	else if(!config.bunker_ban_mode)
 		//New player!! Need to insert all the stuff
 		guard.first_entry = TRUE
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
@@ -478,9 +481,10 @@ var/list/blacklisted_builds = list(
 	player_ingame_age = sql_player_ingame_age
 
 	//Logging player access
-	var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+	if(establish_db_connection("erro_connection_log"))
+		var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
+		var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+		query_accesslog.Execute()
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
@@ -572,8 +576,7 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	if(!isnum(player_ingame_age))
@@ -652,33 +655,6 @@ var/list/blacklisted_builds = list(
 		screen -= S
 		qdel(S)
 	char_render_holders = null
-
-/client/proc/is_blocked_by_regisration_panic_bunker()
-	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
-
-	var/list/byond_date = get_byond_registration()
-
-	if (!length(byond_date))
-		return
-
-	bunker_date_regex.Find(config.registration_panic_bunker_age)
-
-	var/user_year = byond_date[1]
-	var/user_month = byond_date[2]
-	var/user_day = byond_date[3]
-
-	var/bunker_year = text2num(bunker_date_regex.group[1])
-	var/bunker_month = text2num(bunker_date_regex.group[2])
-	var/bunker_day = text2num(bunker_date_regex.group[3])
-
-	var/is_invalid_year = user_year > bunker_year
-	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
-	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
-
-	var/is_invalid_date = is_invalid_year || is_invalid_month || is_invalid_day
-	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
-
-	return is_invalid_date && is_invalid_ingame_age
 
 /client/proc/get_byond_registration()
 	if(byond_registration)
