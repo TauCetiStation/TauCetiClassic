@@ -27,7 +27,7 @@
 	var/selection_color = "#ffffff"
 
 	//the type of the ID the player will have
-	var/idtype = /obj/item/weapon/card/id
+	var/idtype = /obj/item/weapon/card/id/civ
 
 	//List of alternate titles, if any. outfits as assoc values.
 	var/list/alt_titles
