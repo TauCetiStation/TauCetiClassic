@@ -70,7 +70,7 @@
 	anchored = TRUE
 	canSmoothWith = list(/obj/structure/alien/resin)
 	smooth = SMOOTH_TRUE
-	health = 250
+	health = 300
 	var/resintype = null
 
 /obj/structure/alien/resin/wall

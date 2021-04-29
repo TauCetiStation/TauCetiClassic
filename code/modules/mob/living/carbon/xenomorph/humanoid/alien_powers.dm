@@ -273,7 +273,7 @@ Doesn't work on other aliens/AI.*/
 				new /obj/structure/stool/bed/nest(loc)
 
 /mob/living/carbon/xenomorph/humanoid/proc/air_plant()
-	set name = "Plant Air Generator (250)"
+	set name = "Plant Air Generator (200)"
 	set desc = "Plants some alien weeds."
 	set category = "Alien"
 
@@ -285,8 +285,8 @@ Doesn't work on other aliens/AI.*/
 		to_chat (src, "<span class='warning'>You can only build on weeds.</span>")
 		return
 
-	if(powerc(250, 1))
-		adjustToxLoss(-250)
+	if(powerc(200, 1))
+		adjustToxLoss(-200)
 		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'><B>[src]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 		new /obj/structure/alien/air_plant(loc)
