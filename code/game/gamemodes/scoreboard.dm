@@ -321,7 +321,7 @@
 		endgame_info_logged = 1
 		log_game(dat)
 
-	var/datum/browser/popup = new(src, "roundstats", "Round #[round_id] Stats", 1000, 600)
+	var/datum/browser/popup = new(src, "roundstats", "Round #[global.round_id] Stats", 1000, 600)
 	popup.set_content(dat)
 	popup.open()
 
