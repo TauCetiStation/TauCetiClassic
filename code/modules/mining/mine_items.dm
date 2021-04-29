@@ -633,7 +633,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(!used)
 		var/turf/T = get_turf(src)
 		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
-			to_chat(user, "<span class='warning'>You must use shelter at asteroid or in space! Grab this shit and shut up!</span>")
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"You must use shelter at asteroid or in space! Grab this shit and shut up!\"</span>")
 			used = TRUE
 			new /obj/item/clothing/mask/breath(T)
 			new /obj/item/weapon/tank/air(T)
@@ -642,7 +642,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			new /obj/item/clothing/head/helmet/space/cheap(T)
 			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 		else
-			src.loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
+			visible_message("<span class='warning'>\The [src] begins to shake.</span>")
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"Stand back!\"</span>")
 			used = TRUE
 			sleep(50)
 
@@ -654,7 +655,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 				if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
 					var/width = template.width
 					var/height = template.height
-					to_chat(user, "<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
+					audible_message("<span class='game say'><span class='name'>[src]</span> says, \"There is no room to deply! A cleared space of [width]x[height] size is required!\"</span>")
 
 			if(status != SHELTER_DEPLOY_ALLOWED)
 				used = FALSE
