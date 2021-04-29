@@ -319,7 +319,7 @@
 
 		audible_message("<span class='notice'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>")
 
-		if(istype(target, /turf/simulated/wall)) // I hate turf code.
+		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
 		else if(istype(target, /turf/simulated/floor))
