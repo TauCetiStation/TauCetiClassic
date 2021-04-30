@@ -17,6 +17,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/swap/rite_step(mob/living/user, obj/AOG, stage)
+	..()
 	for(var/obj/O in range(1, get_turf(AOG)))
 		if(!swap_list[O.type])
 			continue
