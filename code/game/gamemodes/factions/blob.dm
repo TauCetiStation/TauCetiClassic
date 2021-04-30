@@ -90,7 +90,7 @@
 	. += "<br/>Station takeover: [blobs.len]/[blobwincount]."
 
 /datum/faction/blob_conglomerate/stage(new_stage)
-	switch(new_stage	)
+	switch(new_stage)
 		if(FACTION_DORMANT)
 			if (!declared)
 				declared = TRUE
