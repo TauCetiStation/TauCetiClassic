@@ -24,6 +24,8 @@
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
 	else
 		playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+
+	user.SetNextMove(CLICK_CD_MELEE)
 	health -= W.force
 	healthcheck()
 
