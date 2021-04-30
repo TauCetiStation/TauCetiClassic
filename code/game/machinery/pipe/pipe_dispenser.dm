@@ -173,6 +173,7 @@ Nah
 		<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
 		<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
 		<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+		<A href='?src=\ref[src];dmake=8'>Sorting Junction</A><BR>
 		<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
 		<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
 		<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
@@ -219,6 +220,8 @@ Nah
 				if(7)
 					C.ptype = 8
 					C.density = 1
+				if(8)
+					C.ptype = 9
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1
