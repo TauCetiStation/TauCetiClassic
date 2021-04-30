@@ -327,6 +327,7 @@
 							  "...God helps, and in my words the work is strengthened...",)
 	invoke_msg = "...Let it be so!"
 	favor_cost = 150
+	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,

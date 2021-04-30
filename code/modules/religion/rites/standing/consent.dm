@@ -1,6 +1,7 @@
 // This class is used for rites that require conesnt of a mob buckled to altar.
 /datum/religion_rites/standing/consent
 	var/consent_msg = ""
+	can_talismaned = FALSE
 
 /datum/religion_rites/standing/consent/New()
 	AddComponent(/datum/component/rite/consent, consent_msg)

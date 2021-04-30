@@ -7,6 +7,7 @@
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Для моих богов!!"
 	favor_cost = 50
+	can_talismaned = FALSE
 
 /datum/religion_rites/instant/cult/sacrifice/can_start(mob/living/user, obj/AOG)
 	if(!..())
@@ -73,6 +74,7 @@
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Служи ему!!!"
 	favor_cost = 100
+	can_talismaned = FALSE
 
 /datum/religion_rites/instant/cult/convert/proc/can_convert(mob/living/user, obj/AOG)
 	if(!ishuman(AOG.buckled_mob))
@@ -193,6 +195,7 @@
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Восстань из мертвых!!!"
 	favor_cost = 300
+	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_OBSCURE = 2,
@@ -492,6 +495,7 @@
 	ritual_length = (15 SECONDS)
 	invoke_msg = "Защитись же!!"
 	favor_cost = 300
+	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_CHAOS = 2,
