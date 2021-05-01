@@ -231,7 +231,8 @@
 
 	can_hold = list(
 		/obj/item/weapon/melee,
-		/obj/item/weapon/crowbar
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/reagent_containers/food/snacks/candy/yumbaton
 		)
 
 	sliding_behavior = TRUE

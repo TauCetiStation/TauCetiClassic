@@ -247,7 +247,15 @@
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
 
-			if(lying)
+			if(on_fire && M != src)
+				fire_stacks--
+				M.visible_message("<span class='danger'>[M] trying to extinguish [src].</span>", \
+								"<span class='rose'>You trying to extinguish [src].</span>")
+				if(fire_stacks <= 0)
+					ExtinguishMob()
+					M.visible_message("<span class='danger'>[M] has successfully extinguished [src]!</span>", \
+									"<span class='notice'>You extinguish [src]!</span>")
+			else if(lying)
 				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
 					if(!IsSleeping())

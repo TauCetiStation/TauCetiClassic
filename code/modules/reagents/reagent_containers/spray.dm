@@ -462,6 +462,14 @@
 	. = ..()
 	reagents.add_reagent("plantbgone", 100)
 
+// Lube Spray
+/obj/item/weapon/reagent_containers/spray/lube
+	volume = 150
+
+/obj/item/weapon/reagent_containers/spray/lube/atom_init()
+	. = ..()
+	reagents.add_reagent("lube", 150)
+
 //Water Gun
 /obj/item/weapon/reagent_containers/spray/watergun
 	name = "hyper soaker"

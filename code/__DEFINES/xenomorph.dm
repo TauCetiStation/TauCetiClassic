@@ -2,7 +2,7 @@
 #define TOTAL_HUMAN			1
 #define TOTAL_ALIEN			2
 #define ALIEN_PERCENT		3
-#define WIN_PERCENT			150
+#define WIN_PERCENT			190
 
 //alien list
 #define ALIEN_QUEEN			"Королева"

@@ -37,6 +37,7 @@
 
 	var/assigned_role
 	var/special_role
+
 	var/holy_role = NONE
 
 	var/protector_role = 0 //If we want force player to protect the station
@@ -85,6 +86,9 @@
 		new_character.mind.current = null
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
+
+	if(current.my_religion)
+		current.my_religion.add_member(new_character, holy_role)
 
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
@@ -143,8 +147,7 @@
 
 	var/list/sections = list(
 		"implant",
-		"revolution",
-		"gang",
+		"rp-revolution",
 		"cult",
 		"wizard",
 		"changeling",
@@ -174,7 +177,7 @@
 		sections["implant"] = text
 		/** REVOLUTION ***/
 		text = "revolution"
-		if (SSticker.mode.config_tag=="revolution")
+		if (SSticker.mode.config_tag=="rp-revolution")
 			text += uppertext(text)
 		text = "<i><b>[text]</b></i>: "
 		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
@@ -206,53 +209,18 @@
 			text += "|Disabled in Prefs"
 		sections["revolution"] = text
 
-		/** GANG ***/
-		text = "gang"
-		if (SSticker.mode.config_tag=="gang")
-			text = uppertext(text)
-		text = "<i><b>[text]</b></i>: "
-		if (src in SSticker.mode.A_bosses)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A)</B> <a href='?src=\ref[src];gang=agang'>gangster</a> <b>BOSS</b>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "|<a href='?src=\ref[src];gang=takeequip'>take</a>."
-			else
-				text += "."
-
-		else if (src in SSticker.mode.B_bosses)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B)</B> <a href='?src=\ref[src];gang=bgang'>gangster</a> <b>BOSS</b>"
-			text += "<br>Equipment: <a href='?src=\ref[src];gang=equip'>give</a>"
-
-			var/list/L = current.get_contents()
-			var/obj/item/device/gangtool/gangtool = locate() in L
-			if (gangtool)
-				text += "<a href='?src=\ref[src];gang=takeequip'>take</a>."
-			else
-				text += "."
-
-		else if (src in SSticker.mode.A_gang)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A) GANGSTER</B> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if (src in SSticker.mode.B_gang)
-			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B) GANGSTER</B> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if(ismindshielded(current))
-			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else
-			text += "loyal|<B>NONE</B>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		sections["gang"] = text
-
 		/** CULT ***/
 		text = "cult"
 		if (SSticker.mode.config_tag=="cult")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
+		if(!global.cult_religion)
+			text += "<br>Create a cult religion <a href='?src=\ref[src];cult=religion'>create</a>"
+		else if(istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
-		else if (src in SSticker.mode.cult)
+		else if(global.cult_religion.is_member(current))
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
+			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=heaven'>teleport to heaven</a>|<a href='?src=\ref[src];cult=cheating_cult'>cheating religion</a>|<a href='?src=\ref[src];cult=make_leader'>make leader</a>."
 /*
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
@@ -460,8 +428,6 @@
 
 
 	if (((src in SSticker.mode.head_revolutionaries) || \
-		(src in SSticker.mode.A_bosses)              || \
-		(src in SSticker.mode.B_bosses)              || \
 		(src in SSticker.mode.traitors)              || \
 		(src in SSticker.mode.syndicates))           && \
 		istype(current,/mob/living/carbon/human)      )
@@ -684,8 +650,7 @@
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the loyalty implant remove \
 				 all thoughts about being a revolutionary.  Get back to work!</B></Font></span>")
-			if(src in SSticker.mode.cult)
-				SSticker.mode.cult -= src
+			if(global.cult_religion.remove_member(current))
 				remove_antag_hud(ANTAG_HUD_REV, current)
 				special_role = null
 				var/datum/game_mode/cult/cult = SSticker.mode
@@ -746,8 +711,8 @@
 					// copy targets
 					var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 					if (valid_head)
-						for (var/datum/objective/mutiny/O in valid_head.objectives)
-							var/datum/objective/mutiny/rev_obj = new
+						for (var/datum/objective/rp_rev/O in valid_head.objectives)
+							var/datum/objective/rp_rev/rev_obj = new
 							rev_obj.owner = src
 							rev_obj.target = O.target
 							rev_obj.explanation_text = "Assassinate [O.target.name], the [O.target.assigned_role]."
@@ -763,112 +728,12 @@
 				SSticker.mode.greet_revolutionary(src,0)
 				to_chat(usr, "<span class='notice'>The objectives for revolution have been generated and shown to [key]</span>")
 
-			if("flash")
-				if (!SSticker.mode.equip_revolutionary(current))
-					to_chat(usr, "<span class='warning'>Spawning flash failed!</span>")
-
-			if("takeflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='warning'>Deleting flash failed!</span>")
-				qdel(flash)
-
-			if("repairflash")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				if (!flash)
-					to_chat(usr, "<span class='warning'>Repairing flash failed!</span>")
-				else
-					flash.broken = 0
-
-			if("reequip")
-				var/list/L = current.get_contents()
-				var/obj/item/device/flash/flash = locate() in L
-				qdel(flash)
-				take_uplink()
-				var/fail = 0
-				fail |= !SSticker.mode.equip_traitor(current, 1)
-				fail |= !SSticker.mode.equip_revolutionary(current)
-				if (fail)
-					to_chat(usr, "<span class='warning'>Reequipping revolutionary goes wrong!</span>")
-
-	else if (href_list["gang"])
-		switch(href_list["gang"])
-			if("clear")
-				SSticker.mode.remove_gangster(src,0,1)
-				remove_objectives()
-				message_admins("[key_name_admin(usr)] has de-gang'ed [current].")
-				log_admin("[key_name(usr)] has de-gang'ed [current].")
-				remove_antag_hud(ANTAG_HUD_GANGSTER, current)
-
-			if("agang")
-				if(src in SSticker.mode.A_gang)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.add_gangster(src,"A",0)
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gangster_a", current)
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A).")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A).")
-
-			if("aboss")
-				if(src in SSticker.mode.A_bosses)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.A_bosses += src
-				src.special_role = "[gang_name("A")] Gang (A) Boss"
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_a", current)
-				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("A")] Gang Boss!</B></FONT>")
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("A")] Gang (A) leadership.")
-				SSticker.mode.forge_gang_objectives(src)
-				SSticker.mode.greet_gang(src,0)
-
-			if("bgang")
-				if(src in SSticker.mode.B_gang)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.add_gangster(src,"B",0)
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gangster_b", current)
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B).")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B).")
-
-			if("bboss")
-				if(src in SSticker.mode.B_bosses)
-					return
-				SSticker.mode.remove_gangster(src, 0, 2)
-				SSticker.mode.B_bosses += src
-				src.special_role = "[gang_name("B")] Gang (B) Boss"
-				add_antag_hud(ANTAG_HUD_GANGSTER, "gang_boss_b", current)
-				to_chat(current, "<FONT size=3 color=red><B>You are a [gang_name("B")] Gang Boss!</B></FONT>")
-				message_admins("[key_name_admin(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-				log_admin("[key_name(usr)] has added [current] to the [gang_name("B")] Gang (B) leadership.")
-				SSticker.mode.forge_gang_objectives(src)
-				SSticker.mode.greet_gang(src,0)
-
-			if("equip")
-				switch(SSticker.mode.equip_gang(current))
-					if(1)
-						to_chat(usr, "<span class='warning'>Unable to equip territory spraycan!</span>")
-					if(2)
-						to_chat(usr, "<span class='warning'>Unable to equip recruitment pen and spraycan!</span>")
-					if(3)
-						to_chat(usr, "<span class='warning'>Unable to equip gangtool, pen, and spraycan!</span>")
-
-			if("takeequip")
-				var/list/L = current.get_contents()
-				for(var/obj/item/weapon/pen/gang/pen in L)
-					qdel(pen)
-				for(var/obj/item/device/gangtool/gangtool in L)
-					qdel(gangtool)
-				for(var/obj/item/toy/crayon/spraycan/gang/SC in L)
-					qdel(SC)
-
 	else if (href_list["cult"])
 		switch(href_list["cult"])
+			if("religion")
+				create_religion(/datum/religion/cult)
 			if("clear")
-				if(src in SSticker.mode.cult)
-					SSticker.mode.cult -= src
+				if(global.cult_religion.remove_member(current))
 					special_role = null
 					var/datum/game_mode/cult/cult = SSticker.mode
 					if (istype(cult))
@@ -879,10 +744,8 @@
 					remove_antag_hud(ANTAG_HUD_CULT, current)
 					log_admin("[key_name(usr)] has de-cult'ed [current].")
 			if("cultist")
-				if(!(src in SSticker.mode.cult))
-					SSticker.mode.cult += src
+				if(global.cult_religion.add_member(current, HOLY_ROLE_HIGHPRIEST))
 					special_role = "Cultist"
-					add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 					to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 					to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
@@ -894,24 +757,25 @@
 			if("tome")
 				var/mob/living/carbon/human/H = current
 				if (istype(H))
-					var/obj/item/weapon/book/tome/T = new(H)
+					if(global.cult_religion)
+						global.cult_religion.give_tome(H)
+			if("heaven")
+				var/area/A = locate(global.cult_religion.area_type)
+				var/turf/T = get_turf(pick(A.contents))
+				current.forceMove(T)
+			if("cheating_cult")
+				global.cult_religion.favor = 100000
+				global.cult_religion.piety = 100000
+				// All aspects
+				var/list/L = subtypesof(/datum/aspect)
+				for(var/type in L)
+					L[type] = 1
+				global.cult_religion.add_aspects(L)
+			if("make_leader")
+				var/mob/living/carbon/human/H = current
+				H.mind.holy_role = CULT_ROLE_MASTER
+				add_antag_hud(ANTAG_HUD_CULT, "hudheadcultist", current)
 
-					var/list/slots = list (
-						"backpack" = SLOT_IN_BACKPACK,
-						"left pocket" = SLOT_L_STORE,
-						"right pocket" = SLOT_R_STORE,
-						"left hand" = SLOT_L_HAND,
-						"right hand" = SLOT_R_HAND,
-					)
-					var/where = H.equip_in_one_of_slots(T, slots)
-					if (!where)
-						to_chat(usr, "<span class='warning'>Spawning tome failed!</span>")
-					else
-						to_chat(H, "A tome, a message from your new master, appears in your [where].")
-
-			if("amulet")
-				if (!SSticker.mode.equip_cultist(current))
-					to_chat(usr, "<span class='warning'>Spawning amulet failed!</span>")
 
 	else if (href_list["wizard"])
 
@@ -922,7 +786,7 @@
 					SSticker.mode.wizards -= src
 					special_role = null
 					remove_antag_hud(ANTAG_HUD_WIZ, current)
-					current.spellremove(current, config.feature_object_spell_system? "object":"verb")
+					current.spellremove()
 					to_chat(current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a wizard!</B></FONT></span>")
 					log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
@@ -1092,7 +956,7 @@
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
-				current.spellremove(current)
+				current.spellremove()
 				if(src in SSticker.mode.shadows)
 					SSticker.mode.shadows -= src
 					special_role = null
@@ -1320,7 +1184,7 @@
 
 	// remove wizards spells
 	//If there are more special powers that need removal, they can be procced into here./N
-	current.spellremove(current)
+	current.spellremove()
 
 	// clear memory
 	memory = ""
@@ -1421,8 +1285,8 @@
 
 
 /datum/mind/proc/make_Cultist()
-	if(!(src in SSticker.mode.cult))
-		SSticker.mode.cult += src
+	if(global.cult_religion.add_member(current, HOLY_ROLE_HIGHPRIEST))
+		special_role = "Cultist"
 		add_antag_hud(ANTAG_HUD_CULT, "hudcultist", current)
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
@@ -1438,7 +1302,9 @@
 
 	var/mob/living/carbon/human/H = current
 	if (istype(H))
-		var/obj/item/weapon/book/tome/T = new(H)
+		var/obj/item/weapon/storage/bible/tome/T = new(H)
+		if(global.cult_religion)
+			T.religion = global.cult_religion
 
 		var/list/slots = list (
 			"backpack" = SLOT_IN_BACKPACK,
@@ -1460,8 +1326,8 @@
 		// copy targets
 		var/datum/mind/valid_head = locate() in SSticker.mode.head_revolutionaries
 		if (valid_head)
-			for (var/datum/objective/mutiny/O in valid_head.objectives)
-				var/datum/objective/mutiny/rev_obj = new
+			for (var/datum/objective/rp_rev/O in valid_head.objectives)
+				var/datum/objective/rp_rev/rev_obj = new
 				rev_obj.owner = src
 				rev_obj.target = O.target
 				rev_obj.explanation_text = "Assassinate [O.target.current.real_name], the [O.target.assigned_role]."
@@ -1477,16 +1343,6 @@
 	var/obj/item/device/flash/flash = locate() in L
 	qdel(flash)
 	take_uplink()
-	var/fail = 0
-//	fail |= !SSticker.mode.equip_traitor(current, 1)
-	fail |= !SSticker.mode.equip_revolutionary(current)
-
-/datum/mind/proc/make_Gang(gang)
-	special_role = "[(gang=="A") ? "[gang_name("A")] Gang (A)" : "[gang_name("B")] Gang (B)"] Boss"
-	add_antag_hud(ANTAG_HUD_GANGSTER, "[(gang=="A") ? "gang_boss_a" : "gang_boss_b"]", current)
-	SSticker.mode.forge_gang_objectives(src, gang)
-	SSticker.mode.greet_gang(src)
-	SSticker.mode.equip_gang(current)
 
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
@@ -1680,32 +1536,40 @@
 	..()
 	mind.assigned_role = "Shade"
 
+/mob/living/simple_animal/construct/mind_initialize()
+	..()
+	if(global.cult_religion)
+		SSticker.mode.add_cultist(mind)
+
 /mob/living/simple_animal/construct/builder/mind_initialize()
 	..()
 	mind.assigned_role = "Artificer"
-	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Artificer. Вы самый слабый по всем характеристикам вид оболочки, но вы можете строить укрепления, чинить другие оболочки (нажав на них), а так же создавать новые оболочки и камни души.</span>")
 
 /mob/living/simple_animal/construct/wraith/mind_initialize()
 	..()
 	mind.assigned_role = "Wraith"
-	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Wraith. Несмотря на вашу хрупкость, вы владеете самой большой подвижностью и можете проходить сквозь стены.</span>")
 
 /mob/living/simple_animal/construct/armoured/mind_initialize()
 	..()
 	mind.assigned_role = "Juggernaut"
-	mind.special_role = "Cultist"
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", src)
+	to_chat(src, "<span class='cult'>Вы играете за Juggernaut. Ваша подвижность очень ограничена, но вы можете выдержать большое количество повреждений. Ваша сила позволяет вам рвать на куски как врагов, так и стены.</span>")
+
+/mob/living/simple_animal/construct/behemoth/mind_initialize()
+	..()
+	mind.assigned_role = "Behemoth"
+	to_chat(src, "<span class='cult'>Вы играете за Behemoth. Вы самая сильная и живучая оболочка, но это не остановит Полкана.</span>")
+
+/mob/living/simple_animal/construct/proteon/mind_initialize()
+	..()
+	mind.assigned_role = "Proteon"
+	to_chat(src, "<span class='cult'>Вы играете за Proteon. Ваши боевые способности превосходят все оболочки, а так же вы очень быстры и ловки, но при этом вы очень хрупки, по сравнению с другими.</span>")
 
 /mob/living/simple_animal/vox/armalis/mind_initialize()
 	..()
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
-
-/mob/living/parasite/meme/mind_initialize() //Just in case
-	..()
-	mind.assigned_role = "meme"
 
 //BLOB
 /mob/camera/blob/mind_initialize()

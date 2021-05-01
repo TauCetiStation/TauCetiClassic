@@ -112,6 +112,11 @@
 	if(istype(user, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/H = user
 		H.attack_hulk(src)
+		return
+
+	..()
+	if(density)
+		open()
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)

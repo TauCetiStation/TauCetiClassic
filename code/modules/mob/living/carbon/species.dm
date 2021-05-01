@@ -219,8 +219,12 @@
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
-/datum/species/proc/on_loose(mob/living/carbon/human/H)
+	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
+
+/datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	H.remove_moveset_source(MOVESET_SPECIES)
+
+	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -474,10 +478,10 @@
 		IS_WHITELISTED = TRUE
 		,NO_SCAN = TRUE
 		,FACEHUGGABLE = TRUE
-		,HAS_TAIL = TRUE 
+		,HAS_TAIL = TRUE
 		,SPRITE_SHEET_RESTRICTION = TRUE
 		,HAS_HAIR_COLOR = TRUE
-		,NO_FAT = TRUE 
+		,NO_FAT = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -673,6 +677,7 @@
 	,NO_PAIN = TRUE
 	,NO_FINGERPRINT = TRUE
 	,IS_PLANT = TRUE
+	,NO_VOMIT = TRUE
 	,RAD_ABSORB = TRUE
 	)
 
@@ -928,6 +933,7 @@
 	,NO_EMBED = TRUE
 	,NO_MINORCUTS = TRUE
 	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
 	,NO_MUTATION = TRUE
 	)
 
@@ -951,6 +957,8 @@
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
+
+	H.status_flags &= ~(CANSTUN | CANPARALYSE)
 
 	return ..()
 

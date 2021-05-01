@@ -85,18 +85,13 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/list/antagonist_list = list()//The main bad guys. Evil minds that plot destruction.
 	var/list/protagonist_list = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
-	//We want the ninja to appear only in certain modes.
-	//	var/acceptable_modes_list[] = list("traitor","revolution","cult","wizard","changeling","traitorchan","nuclear","malfunction","monkey")  // Commented out for both testing and ninjas
-	//	if(!(current_mode.config_tag in acceptable_modes_list))
-	//		return
-
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
 
 	var/list/possible_bad_dudes = list(
 		current_mode.traitors,current_mode.head_revolutionaries,
 		current_mode.head_revolutionaries,
-		current_mode.cult,current_mode.wizards,
+		global.cult_religion.members,current_mode.wizards,
 		current_mode.changelings,current_mode.syndicates
 		)
 	for(var/list in possible_bad_dudes)//For every possible antagonist type.
