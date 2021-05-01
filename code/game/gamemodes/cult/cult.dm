@@ -201,7 +201,7 @@
 	if(check_cult_victory())
 		mode_result = "win - cult win"
 		feedback_set_details("round_end_result", mode_result)
-		completion_text += "<span class='color: red; font-weight: bold;'>Культ <span style='color: green'>выйграл</span>! Рабы преуспели в служении своим темным хозяевам!</span><br>"
+		completion_text += "<span class='color: red; font-weight: bold;'>Культ <span style='color: green'>выиграл</span>! Рабы преуспели в служении своим темным хозяевам!</span><br>"
 		score["roleswon"]++
 	else
 		mode_result = "loss - staff can stop cult"
