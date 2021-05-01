@@ -72,7 +72,7 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini
 	name = "fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
-	icon_state = "miniFE"
+	icon_state = "miniFE0"
 	item_state = "miniFE"
 	hitsound = null // It is much lighter, after all.
 	throwforce = 2
@@ -93,7 +93,7 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher/golden
 	name = "golden fire extinguisher"
 	desc = "A rare golden extinguisher filled to the top with the finest champagne. Weighs a ton."
-	icon_state = "goldenFE"
+	icon_state = "goldenFE0"
 	item_state = "goldenFE"
 	throwforce = 22
 	force = 22
