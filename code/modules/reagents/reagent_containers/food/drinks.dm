@@ -177,7 +177,7 @@
 
 		usr.visible_message("<span class='notice'>[usr] gulped down the whole [src]!</span>", "<span class='notice'>You gulped down the whole [src]!</span>")
 		reagents.trans_to_ingest(usr, reagents.total_volume)
-		playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(5, 25))
+		playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(15, 55))
 
 		to_chat(world, "TOTAL VOLUME AFTER: [reagents.total_volume]")
 
