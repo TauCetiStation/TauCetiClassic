@@ -480,10 +480,8 @@ var/global/list/wedge_icon_cache = list()
 	if(!global.wedge_icon_cache[cache_string])
 		var/icon/I = getFlatIcon(wedged_item, SOUTH)
 
-		// #define COOL_LOOKING_SHIFT_USING_CROWBAR_RIGHT 14, #define COOL_LOOKING_SHIFT_USING_CROWBAR_DOWN 6 - throw a rock at me if this looks less magic.
 		I.Shift(SOUTH, 15) // These numbers I got by sticking the crowbar in and looking what will look good.
 		I.Shift(WEST, 4)
-		//I.Turn(0)
 
 		global.wedge_icon_cache[cache_string] = I
 		underlays += I
