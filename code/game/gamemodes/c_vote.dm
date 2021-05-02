@@ -32,7 +32,7 @@
 	/datum/game_mode/traitorchan,
 	/datum/game_mode/traitor,
 	/datum/game_mode/wizard,
-	/---------------MIXS----------------\
+	/---------------MIXS----------------\,
 	/datum/game_mode/mix/changabduct,
 	/datum/game_mode/mix/borerxenochang,
 	/datum/game_mode/mix/cultrev,
