@@ -15,6 +15,8 @@
 
 var/list/airlock_overlays = list()
 
+var/global/list/wedge_icon_cache
+
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
@@ -66,6 +68,8 @@ var/list/airlock_overlays = list()
 	var/door_deni_sound         = 'sound/machines/airlock/access_denied.ogg'
 	var/door_bolt_up_sound      = 'sound/machines/airlock/bolts_up_1.ogg'
 	var/door_bolt_down_sound    = 'sound/machines/airlock/bolts_down_1.ogg'
+
+	var/obj/item/wedged_item
 
 /obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
@@ -1108,6 +1112,51 @@ var/list/airlock_overlays = list()
 	open()
 	bolt()
 	return
+
+/obj/machinery/door/airlock/proc/force_wedge_item(obj/item/I)
+	I.forceMove(src)
+	wedged_item = I
+	update_icon()
+	verbs -= /obj/machinery/door/airlock/proc/try_wedge_item
+	verbs += /obj/machinery/door/airlock/proc/take_out_wedged_item
+
+/obj/machinery/door/airlock/proc/try_wedge_item(mob/living/user)
+	set name = "Wedge item"
+	set category = "Object"
+	set src in view(1)
+
+	if(!user)
+		user = usr
+
+	var/obj/item/I = user.get_active_hand()
+	if(istype(I) && I.w_class >= ITEM_SIZE_NORMAL)
+		if(!density)
+			user.drop_item()
+			force_wedge_item(I)
+			to_chat(user, "<span class='notice'>You wedge [I] into [src].</span>")
+		else
+			to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is open.</span>")
+
+/obj/machinery/door/airlock/proc/take_out_wedged_item(mob/living/user)
+	set name = "Remove Blockage"
+	set category = "Object"
+	set src in view(1)
+
+	if(!user)
+		user = usr
+
+	if(wedged_item)
+		// If some stats are added should check for agility/strength.
+		if(user && !wedged_item.use_tool(user, src, 5, quality=QUALITY_PRYING))
+			return
+		wedged_item.forceMove(loc)
+		if(user)
+			user.put_in_hands(wedged_item)
+			to_chat(user, "<span class='notice>You took [wedged_item] out of [src].</span>")
+		wedged_item = null
+		verbs -= /obj/machinery/door/airlock/proc/take_out_wedged_item
+		verbs += /obj/machinery/door/airlock/proc/try_wedge_item
+		update_icon()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
 	var/obj/item/weapon/airlock_painter/W
