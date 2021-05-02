@@ -7,12 +7,14 @@
 
 	if(!canopened)
 		flags &= ~OPENCONTAINER
+		verbs -= /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)
 	if (!canopened)
 		playsound(src, pick(SOUNDIN_CAN_OPEN), VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the drink with an audible pop!</span>")
 		flags |= OPENCONTAINER
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 		canopened = 1
 	else
 		return
@@ -113,13 +115,7 @@
 
 	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
-
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
-
-		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
+		reagents.standard_splash(target, user=user)
 	return
 
 

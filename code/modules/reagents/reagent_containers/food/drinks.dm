@@ -11,6 +11,11 @@
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
 
+/obj/item/weapon/reagent_containers/food/drinks/atom_init()
+	. = ..()
+	if(is_open_container())
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
+
 /obj/item/weapon/reagent_containers/food/drinks/on_reagent_change()
 	if (gulp_size < 5)
 		gulp_size = 5
@@ -64,7 +69,6 @@
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		update_icon()
 		return 1
-
 
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -120,12 +124,8 @@
 	else if((user.a_intent == INTENT_HARM) && reagents.total_volume && istype(target, /turf/simulated))
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
-		reagents.reaction(target, TOUCH)
-		reagents.clear_reagents()
+		reagents.standard_splash(target, user=user)
 
-		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[key_name(usr)] splashed [reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
 	update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
@@ -145,6 +145,44 @@
 			to_chat(user, "<span class='notice'>\The [src] is almost full!</span>")
 		else
 			to_chat(user, "<span class='notice'>\The [src] is full!</span>")
+
+/obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole()
+	set category = "Object"
+	set name = "Gulp Down"
+	set src in view(1)
+
+	if(is_open_container())
+		to_chat(world, "TOTAL VOLUME: [reagents.total_volume]")
+		usr.visible_message("<span class='notice'>[usr] prepares to gulp down [src].</span>", "<span class='notice'>You prepare to gulp down [src].</span>")
+
+		if(!CanEat(usr, usr, src, eatverb="gulp"))
+			return
+
+		if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
+			if(!Adjacent(usr))
+				return
+			usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
+			reagents.standard_splash(loc, user=usr)
+			return
+
+		if(!Adjacent(usr))
+			return
+
+		if(!CanEat(usr, usr, src, eatverb="gulp"))
+			return
+
+		if(taste && isliving(usr))
+			var/mob/living/L = usr
+			L.taste_reagents(reagents)
+
+		usr.visible_message("<span class='notice'>[usr] gulped down the whole [src]!</span>", "<span class='notice'>You gulped down the whole [src]!</span>")
+		reagents.trans_to_ingest(usr, reagents.total_volume)
+		playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(5, 25))
+
+		to_chat(world, "TOTAL VOLUME AFTER: [reagents.total_volume]")
+
+	else
+		to_chat(usr, "<span class='notice'>You need to open [src]!</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
@@ -249,6 +287,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
 	if (!is_open_container())
 		flags |= OPENCONTAINER
+		flags += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the [src].</span>")
 		update_icon()
