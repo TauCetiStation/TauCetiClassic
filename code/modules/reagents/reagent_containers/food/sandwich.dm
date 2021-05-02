@@ -48,14 +48,10 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/proc/add_ingredient()
-	if(contents.len == MAX_SANDWICH_LIMIT)
-		name = "finished sandwich"
-		desc = "The best thing since sliced bread. This work is done. Complete. Nothing left to do with it."
-
 	if(contents.len > 5)
 		name = ""
 		if(contents.len > 100)
-			name += "very"
+			name += "very "
 
 		name += "[pick(list("absurd", "colossal", "enormous", "ridiculous"))] sandwich"
 
@@ -79,6 +75,10 @@
 				name += ", [O.name]"
 
 	w_class = clamp(contents.len, ITEM_SIZE_SMALL, ITEM_SIZE_GARGANTUAN)
+
+	if(contents.len == MAX_SANDWICH_LIMIT)
+		name = "finished sandwich"
+		desc = "The best thing since sliced bread. This work is done. Complete. Nothing left to do with it."
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/proc/add_filling_overlay(obj/item/weapon/reagent_containers/food/snacks/filling)
 	if(contents.len > MAX_RENDERED_SANDWICH_LIMIT)
@@ -109,13 +109,15 @@
 	if(contents.len == 0)
 		return
 
-	if(contents.len == MAX_SANDWICH_LIMIT)
-		user.emote("gasp")
-	else
+	if(contents.len != MAX_SANDWICH_LIMIT)
 		to_chat(user, "It's like... About [contents.len] layers high!")
 
 	var/obj/item/O = pick(contents)
 	to_chat(user, "<span class='notice'>You think you can see [O.name] in there.</span>")
+
+	if(contents.len == MAX_SANDWICH_LIMIT)
+		user.visible_message("<span class='notice'>Completely stricken by awe... [user] starts to lose their breath!</span>", "<span class='notice'>IT IS COMPLETE, you think, as you gasp for air.</span>")
+		user.emote("gasp")
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "eat"))
