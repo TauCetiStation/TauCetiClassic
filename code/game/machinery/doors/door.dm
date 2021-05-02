@@ -267,9 +267,7 @@
 /obj/machinery/door/proc/close(forced = FALSE)
 	if(density)
 		return TRUE
-	to_chat(world, "WE'RE TYING TO CLOSE")
 	if(close_checks(forced))
-		to_chat(world, "WE'RE CLOSING FOR SOME REASON")
 		set_operating(TRUE)
 		do_close()
 		set_operating(FALSE)

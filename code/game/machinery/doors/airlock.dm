@@ -80,7 +80,7 @@ var/global/list/wedge_icon_cache = list()
 	if(dir)
 		src.set_dir(dir)
 
-	verbs += /obj/machinery/door/airlock/proc/try_wedge_item
+	verbs += /obj/machinery/door/airlock/proc/try_wedge_item_verb
 
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
@@ -1196,17 +1196,24 @@ var/global/list/wedge_icon_cache = list()
 	I.forceMove(src)
 	wedged_item = I
 	update_icon()
-	verbs -= /obj/machinery/door/airlock/proc/try_wedge_item
-	verbs += /obj/machinery/door/airlock/proc/take_out_wedged_item
+	verbs -= /obj/machinery/door/airlock/proc/try_wedge_item_verb
+	verbs += /obj/machinery/door/airlock/proc/take_out_wedged_item_verb
 
-/obj/machinery/door/airlock/proc/try_wedge_item(mob/living/user)
+/obj/machinery/door/airlock/proc/try_wedge_item_verb()
 	set name = "Wedge item"
 	set category = "Object"
 	set src in view(1)
 
-	if(!user)
-		user = usr
+	if(usr.incapacitated())
+		return
+	if(!usr.Adjacent(src))
+		return
+	if(!usr.IsAdvancedToolUser())
+		return
 
+	try_wedge_item(usr)
+
+/obj/machinery/door/airlock/proc/try_wedge_item(mob/living/user)
 	var/obj/item/I = user.get_active_hand()
 	if(istype(I) && I.w_class >= ITEM_SIZE_NORMAL)
 		if(!density)
@@ -1214,16 +1221,23 @@ var/global/list/wedge_icon_cache = list()
 			force_wedge_item(I)
 			to_chat(user, "<span class='notice'>You wedge [I] into [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is open.</span>")
+			to_chat(user, "<span class='notice'>[I] can't be wedged into [src], while [src] is closed.</span>")
 
-/obj/machinery/door/airlock/proc/take_out_wedged_item(mob/living/user)
+/obj/machinery/door/airlock/proc/take_out_wedged_item_verb()
 	set name = "Remove Blockage"
 	set category = "Object"
 	set src in view(1)
 
-	if(!user)
-		user = usr
+	if(usr.incapacitated())
+		return
+	if(!usr.Adjacent(src))
+		return
+	if(!usr.IsAdvancedToolUser())
+		return
 
+	take_out_wedged_item(usr)
+
+/obj/machinery/door/airlock/proc/take_out_wedged_item(mob/living/user)
 	if(wedged_item)
 		// If some stats are added should check for agility/strength.
 		if(user && !wedged_item.use_tool(src, user, 5, quality=QUALITY_PRYING))
@@ -1233,8 +1247,8 @@ var/global/list/wedge_icon_cache = list()
 			user.put_in_hands(wedged_item)
 			to_chat(user, "<span class='notice>You took [wedged_item] out of [src].</span>")
 		wedged_item = null
-		verbs -= /obj/machinery/door/airlock/proc/take_out_wedged_item
-		verbs += /obj/machinery/door/airlock/proc/try_wedge_item
+		verbs -= /obj/machinery/door/airlock/proc/take_out_wedged_item_verb
+		verbs += /obj/machinery/door/airlock/proc/try_wedge_item_verb
 		update_icon()
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
