@@ -102,9 +102,9 @@
 				else
 					if(S.get_amount() < 2)
 						return ..()
-					to_chat(user, "<span class='notice'>Вы начинаете добавлять металл.</span>")
+					to_chat(user, "<span class='notice'>Вы начинаете добавлять материал.</span>")
 					if(S.use_tool(src, user, 40, amount = 2, volume = 100))
-						to_chat(user, "<span class='notice'>Вы добавили металл!</span>")
+						to_chat(user, "<span class='notice'>Вы добавили материал!</span>")
 						var/turf/Tsrc = get_turf(src)
 						Tsrc.ChangeTurf(/turf/simulated/wall)
 						for(var/turf/simulated/wall/X in Tsrc.loc)
