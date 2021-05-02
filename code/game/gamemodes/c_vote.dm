@@ -26,20 +26,33 @@
 	/datum/game_mode/heist,
 	/datum/game_mode/infestation,
 	/datum/game_mode/malfunction,
-	/datum/game_mode/ninja,
 	/datum/game_mode/nuclear,
 	/datum/game_mode/rp_revolution,
 	/datum/game_mode/shadowling,
 	/datum/game_mode/traitorchan,
 	/datum/game_mode/traitor,
 	/datum/game_mode/wizard,
+	/---------------MIXS----------------\
+	/datum/game_mode/mix/changabduct,
+	/datum/game_mode/mix/borerxenochang,
+	/datum/game_mode/mix/cultrev,
 	/datum/game_mode/mix/cultwiz,
 	/datum/game_mode/mix/nukeheist,
-	/datum/game_mode/mix/borerxenochang,
-	/datum/game_mode/mix/ninjatraitor,
-	/datum/game_mode/mix/ninjawiz,
-	/datum/game_mode/mix/cultrev,
+	/datum/game_mode/mix/wizabduct,
+	/datum/game_mode/mix/wiztraitor,
 */
+
+/datum/modesbundle/teambased
+	name = "Team Based"
+	possible_gamemodes = list(
+		/datum/game_mode/abduction,
+		/datum/game_mode/blob,
+		/datum/game_mode/cult,
+		/datum/game_mode/infestation,
+		/datum/game_mode/nuclear,
+		/datum/game_mode/rp_revolution,
+		/datum/game_mode/shadowling,
+	)
 
 /datum/modesbundle/extended
 	name = "Extended"
