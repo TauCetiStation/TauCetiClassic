@@ -203,7 +203,7 @@
 
 	assailant.SetNextMove(CLICK_CD_MELEE)
 	if(G.state >= GRAB_AGGRESSIVE)
-		INVOKE_ASYNC(victim, /atom/movable.proc/simple_move_animation, A.loc)
+		INVOKE_ASYNC(victim, /atom/movable.proc/do_simple_move_animation, A.loc)
 		victim.forceMove(A.loc)
 		victim.Weaken(5)
 

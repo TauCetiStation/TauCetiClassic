@@ -118,7 +118,7 @@
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
 			if(G.use_tool(src, usr, 20))
-				INVOKE_ASYNC(GM, /atom/movable.proc/simple_move_animation, src)
+				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src)
 				GM.forceMove(src)
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
@@ -181,7 +181,7 @@
 	else
 		return
 
-	INVOKE_ASYNC(target, /atom/movable.proc/simple_move_animation, src)
+	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
 	target.forceMove(src)
 	target.instant_vision_update(1,src)
 
@@ -223,7 +223,7 @@
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
 		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		INVOKE_ASYNC(target, /atom/movable.proc/simple_move_animation, src)
+		INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
 		target.forceMove(src)
 
 		user.visible_message(msg, self_message = self_msg)
