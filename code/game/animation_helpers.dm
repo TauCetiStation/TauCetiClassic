@@ -7,7 +7,7 @@
 /atom/proc/after_shake_animation(intensity, time, intensity_dropoff)
 	return
 
-/atom/proc/shake_animation(intensity, time, intensity_dropoff = 0.9)
+/atom/proc/shake_animation(intensity, time, intensity_dropoff = 0.9, move_mult = 1.0, angle_mult = 0.5)
 	if(invisibility > 0)
 		return
 	if(shaking_anim)
@@ -37,10 +37,10 @@
 
 	var/stop_shaking = world.time + time
 	while(stop_shaking > world.time)
-		var/shiftx = rand(-intensity, intensity)
-		var/shifty = rand(-intensity, intensity)
+		var/shiftx = rand(-intensity, intensity) * move_mult
+		var/shifty = rand(-intensity, intensity) * move_mult
 
-		var/angle = rand(-intensity * 0.5, intensity * 0.5)
+		var/angle = rand(-intensity, intensity) * angle_mult
 		var/matrix/M = matrix(prev_transform)
 		M.Turn(angle)
 

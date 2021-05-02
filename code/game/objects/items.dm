@@ -774,7 +774,7 @@
 	delay *= toolspeed
 
 	if(!isnull(quality))
-		if(!qualities[quality])
+		if(!qualities || !qualities[quality])
 			return
 		delay *= 1 / qualities[quality]
 
@@ -1063,3 +1063,13 @@ var/global/list/items_blood_overlay_by_type = list()
 /obj/item/proc/remove_outline()
 	usr.client.images -= usr.client.outlined_item[src]
 	usr.client.outlined_item -= src
+
+/obj/item/airlock_crush_act()
+	if(!qualities || !qualities[QUALITY_PRYING])
+		return
+
+	var/chance = w_class / (qualities[QUALITY_PRYING] * (m_amt + 1))
+
+	if(prob(chance * 100))
+		qdel(src)
+		//ex_act(rand(1, 3))

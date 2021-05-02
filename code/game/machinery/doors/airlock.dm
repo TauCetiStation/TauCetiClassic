@@ -15,7 +15,7 @@
 
 var/list/airlock_overlays = list()
 
-var/global/list/wedge_icon_cache
+var/global/list/wedge_icon_cache = list()
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -80,6 +80,8 @@ var/global/list/wedge_icon_cache
 	if(dir)
 		src.set_dir(dir)
 
+	verbs += /obj/machinery/door/airlock/proc/try_wedge_item
+
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -97,6 +99,7 @@ var/global/list/wedge_icon_cache
 	closeOther = null
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)
+	QDEL_NULL(wedged_item)
 	return ..()
 
 /obj/machinery/door/airlock/process()
@@ -249,6 +252,13 @@ var/global/list/wedge_icon_cache
 		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
 			icon_state = "nonexistenticonstate"
 	set_airlock_overlays(state)
+
+	if(underlays.len)
+		underlays.Cut()
+
+	if(wedged_item)
+		generate_wedge_overlay()
+
 	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
@@ -445,6 +455,37 @@ var/global/list/wedge_icon_cache
 
 //aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 11 lift access override
 //aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door, 11 lift access override
+
+/obj/machinery/door/airlock/AltClick(mob/user)
+	if(!user.incapacitated() && Adjacent(user) && user.IsAdvancedToolUser())
+		try_wedge_item(user)
+
+/obj/machinery/door/airlock/MouseDrop(obj/over_object)
+	if(usr.IsAdvancedToolUser() && usr == over_object && !usr.incapacitated() && Adjacent(usr))
+		take_out_wedged_item(usr)
+		return
+	return ..()
+
+/obj/machinery/door/airlock/examine(mob/user)
+	. = ..()
+	if(wedged_item)
+		to_chat(user, "You can see \icon[wedged_item] [wedged_item] wedged into it.")
+
+/obj/machinery/door/airlock/proc/generate_wedge_overlay()
+	var/cache_string = "[wedged_item.icon]||[wedged_item.icon_state]||[wedged_item.overlays.len]||[wedged_item.underlays.len]"
+
+	if(!global.wedge_icon_cache[cache_string])
+		var/icon/I = getFlatIcon(wedged_item, SOUTH)
+
+		// #define COOL_LOOKING_SHIFT_USING_CROWBAR_RIGHT 14, #define COOL_LOOKING_SHIFT_USING_CROWBAR_DOWN 6 - throw a rock at me if this looks less magic.
+		I.Shift(SOUTH, 15) // These numbers I got by sticking the crowbar in and looking what will look good.
+		I.Shift(WEST, 4)
+		//I.Turn(0)
+
+		global.wedge_icon_cache[cache_string] = I
+		underlays += I
+	else
+		underlays += global.wedge_icon_cache[cache_string]
 
 /obj/machinery/door/airlock/proc/show_unified_command_interface(mob/user)
 	user.set_machine(src)
@@ -698,6 +739,10 @@ var/global/list/wedge_icon_cache
 	if(wires.interact(user))
 		return
 	else
+		if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
+			take_out_wedged_item(user)
+			return
+
 		if(HULK in user.mutations)
 			hulk_break_reaction(user)
 			return
@@ -1045,6 +1090,18 @@ var/global/list/wedge_icon_cache
 
 /obj/machinery/door/airlock/close_checks()
 	if(..() && !welded && !locked)
+		if(wedged_item)
+			// we can't have nice things because somebody really wanted to do some bullshit
+			// where instead of flicking() an opening/closing animation we instead set icon_state
+			// to a non-looping animation which ends on a open/closed sprite, which of course
+			// when you in any way update the icon_state/invisibility for the airlock
+			// causes the animation to play again, which shake_animation used
+			// so we can't both have this thingy and the nice animation and I don't have the strength
+			// to replace this with flick-s() ~Luduk
+			//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
+			wedged_item.airlock_crush_act(DOOR_CRUSH_DAMAGE)
+			return FALSE
+
 		if(safe)
 			for(var/turf/T in locs)
 				if(locate(/mob/living) in T)
@@ -1055,6 +1112,28 @@ var/global/list/wedge_icon_cache
 					return FALSE
 		return TRUE
 	return FALSE
+
+/obj/machinery/door/airlock/close()
+	if(safe && !wedged_item)
+		for(var/turf/turf in locs)
+			for(var/atom/movable/AM in turf)
+				if(istype(AM, /obj/item))
+					var/obj/item/I = AM
+					if(I.qualities && I.qualities[QUALITY_PRYING] && I.w_class >= ITEM_SIZE_NORMAL)
+						operating = TRUE
+						density = TRUE
+						do_animate("closing")
+						sleep(7)
+						force_wedge_item(AM)
+						playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
+						//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
+						sleep(7)
+						playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
+						density = FALSE
+						do_animate("opening")
+						operating = FALSE
+						return
+	. = ..()
 
 /obj/machinery/door/airlock/normal_open_checks()
 	if(hasPower() && !isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
@@ -1147,7 +1226,7 @@ var/global/list/wedge_icon_cache
 
 	if(wedged_item)
 		// If some stats are added should check for agility/strength.
-		if(user && !wedged_item.use_tool(user, src, 5, quality=QUALITY_PRYING))
+		if(user && !wedged_item.use_tool(src, user, 5, quality=QUALITY_PRYING))
 			return
 		wedged_item.forceMove(loc)
 		if(user)

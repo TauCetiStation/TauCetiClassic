@@ -545,7 +545,7 @@
 	force = 5.0
 	throwforce = 7.0
 	item_state = "crowbar"
-	w_class = ITEM_SIZE_SMALL
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 50
 	origin_tech = "engineering=1"
 	hitsound = list('sound/items/tools/crowbar-hit.ogg')
