@@ -206,6 +206,15 @@
 
 //Law and Order
 
+/obj/item/weapon/book/manual/wiki/possible_threats
+	name = "Possible Threats"
+	desc = "A Nanotrasen warning about possible threats"
+	icon_state = "bookThreats"
+	item_state = "book9"
+	author = "NanoTrasen"
+	title = "Возможные угрозы"
+	wiki_page = "Возможные_угрозы"
+
 /obj/item/weapon/book/manual/wiki/security_space_law
 	name = "Space Law"
 	desc = "A set of NanoTrasen guidelines for keeping law and order on their space stations."
@@ -312,6 +321,14 @@
 	author = "Tau Ceti Classic"
 	title = "Rules"
 	wiki_page = "Rules"
+
+/obj/item/weapon/book/manual/wiki/cult
+	name = "Ordhu'rug'ar"
+	icon_state = "book"
+	item_state = "book2"
+	author = "Bok'irg"
+	title = "Магия культа"
+	wiki_page = "Cult_Magic"
 
 //Old manuals that we should keep for a while
 

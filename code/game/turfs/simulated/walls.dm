@@ -128,19 +128,19 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam)
+/turf/simulated/wall/proc/take_damage(dam, devastated)
 	if(dam)
 		damage = max(0, damage + dam)
-		update_damage()
+		update_damage(devastated)
 	return
 
-/turf/simulated/wall/proc/update_damage()
+/turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
 	if(rotting)
 		cap = cap / 10
 
 	if(damage >= cap)
-		dismantle_wall()
+		dismantle_wall(devastated)
 	else
 		update_icon()
 
@@ -173,7 +173,7 @@
 /turf/simulated/wall/proc/break_wall()
 	if(istype(src, /turf/simulated/wall/cult))
 		new /obj/effect/decal/cleanable/blood(src)
-		return (new /obj/structure/cultgirder(src))
+		return (new /obj/structure/girder/cult(src))
 
 	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
@@ -276,11 +276,19 @@
 				to_chat(M, "<span class='info'>Стена слишком прочная, чтобы вы могли ее уничтожить.</span>")
 		else
 			if (prob(40) || rotting)
+<<<<<<< HEAD
 				to_chat(M, text("<span class='notice'>Вы пробиваете стену насквозь.</span>"))
 				dismantle_wall(1)
 			else
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
+=======
+				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
+				dismantle_wall(TRUE)
+			else
+				take_damage(rand(25, 75), TRUE)
+				to_chat(M, "<span class='info'>You smash against the wall.</span>")
+>>>>>>> 281a6e5f0725c431042d35202fbb9c7041b2b4b2
 
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

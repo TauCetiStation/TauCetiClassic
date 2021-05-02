@@ -66,6 +66,22 @@
 	name = "Tophat"
 	icon_state = "tophat-room"
 
+/area/custom/cult
+	name = "Cult Heaven"
+	icon_state = "cult-heaven"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	is_force_ambience = TRUE
+	looped_ambience = 'sound/ambience/ambiruin7_looped.ogg'
+	ambience = list(
+		'sound/ambience/ambiruin1.ogg',
+		'sound/ambience/ambiruin2.ogg',
+		'sound/ambience/ambiruin3.ogg',
+		'sound/ambience/ambiruin4.ogg',
+		'sound/ambience/ambiruin5.ogg',
+		'sound/ambience/ambiruin6.ogg',
+	)
+
 /area/custom/ninjaspawn
 	name = "Space Dojo"
 	icon_state = "red"

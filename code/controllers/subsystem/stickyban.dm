@@ -1,8 +1,3 @@
-#define STICKYBAN_TABLENAME "erro_stickyban"
-#define STICKYBAN_CKEY_MATCHED_TABLENAME "erro_stickyban_matched_ckey"
-#define STICKYBAN_CID_MATCHED_TABLENAME "erro_stickyban_matched_cid"
-#define STICKYBAN_IP_MATCHED_TABLENAME "erro_stickyban_matched_ip"
-
 SUBSYSTEM_DEF(stickyban)
 	name = "PRISM"
 
@@ -35,7 +30,7 @@ SUBSYSTEM_DEF(stickyban)
 	// Delete bans that no longer exist in the database
 	// and add new bans to the database
 	// Config => DB && remove expired DB stickyban from Config
-	if (global.dbcon.Connect() || length(dbcache))
+	if (establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME) || length(dbcache))
 		if (length(global.stickyban_admin_exemptions))
 			restore_stickybans()
 		// Checking new bans from Config
@@ -76,7 +71,7 @@ SUBSYSTEM_DEF(stickyban)
 
 /datum/controller/subsystem/stickyban/proc/get_cached_sticky_banned_ckeys()
 	// Return list of stickybaned ckeys form DBcache or null. Update dbcache on timer
-	if (establish_db_connection() || length(dbcache))
+	if (establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME) || length(dbcache))
 		populate_expired_dbcache()
 		// Is dbcache initilized?
 		if (dbcache_expire)
@@ -85,7 +80,7 @@ SUBSYSTEM_DEF(stickyban)
 /datum/controller/subsystem/stickyban/proc/get_dbcached_stickyban(ckey)
 	// Return stickyban, if have it in DB or DBcache. Update dbcache on timer
 	var/list/stickyban_record = list()
-	if ((establish_db_connection()) || length(dbcache))
+	if ((establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME)) || length(dbcache))
 		populate_expired_dbcache()
 		// Is dbcache initilized?
 		if (dbcache_expire)
@@ -112,7 +107,7 @@ SUBSYSTEM_DEF(stickyban)
 	// Load DBcache from DB
 
 	var/list/new_dbcache = list() //so if we runtime or the db connection dies we don't kill the existing cache
-	if (!establish_db_connection())
+	if (!establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		return
 
 	var/DBQuery/query_stickybans = dbcon.NewQuery("SELECT ckey, reason, banning_admin, datetime FROM [STICKYBAN_TABLENAME] ORDER BY ckey")
@@ -220,7 +215,7 @@ SUBSYSTEM_DEF(stickyban)
 	if (!ban[BANKEY_MSG])
 		ban[BANKEY_MSG] = "Evasion"
 
-	if (!establish_db_connection())
+	if (!establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		return
 	var/DBQuery/query_create_stickyban = dbcon.NewQuery({"INSERT IGNORE INTO [STICKYBAN_TABLENAME]
 		(ckey, reason, banning_admin)
@@ -268,17 +263,17 @@ SUBSYSTEM_DEF(stickyban)
 			sqlips[++sqlips.len] = sqlip
 
 	// Execute prepared mass insert
-	if (length(sqlckeys) && establish_db_connection())
+	if (length(sqlckeys) && establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		var/DBQuery/matched_ckey_query = dbcon.NewMassInsertQuery(STICKYBAN_CKEY_MATCHED_TABLENAME, sqlckeys, FALSE, TRUE)
 		if (matched_ckey_query)
 			matched_ckey_query.Execute()
 
-	if (length(sqlcids) && establish_db_connection())
+	if (length(sqlcids) && establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		var/DBQuery/matched_cid_query = dbcon.NewMassInsertQuery(STICKYBAN_CID_MATCHED_TABLENAME, sqlcids, FALSE, TRUE)
 		if (matched_cid_query)
 			matched_cid_query.Execute()
 
-	if (length(sqlips) && establish_db_connection())
+	if (length(sqlips) && establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		var/DBQuery/matched_ip_query = dbcon.NewMassInsertQuery(STICKYBAN_IP_MATCHED_TABLENAME, sqlips, FALSE, TRUE)
 		if (matched_ip_query)
 			matched_ip_query.Execute()
@@ -288,13 +283,13 @@ SUBSYSTEM_DEF(stickyban)
 /datum/controller/subsystem/stickyban/proc/remove(ckey)
 	// Drop stickyban record from all
 	if (ckey)
-		if (establish_db_connection())
-			var/sanitized_ckey = sanitize_sql(ckey)
+		if (establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
+			var/sanitized_ckey = ckey(ckey)
 			if (length(sanitized_ckey))
 				var/list/sql_q = list(
 					"DELETE FROM [STICKYBAN_TABLENAME] WHERE ckey = '[sanitized_ckey]'",
-					"DELETE FROM [STICKYBAN_CKEY_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]",
-					"DELETE FROM [STICKYBAN_CID_MATCHED_TABLENAME] stickyban = '[sanitized_ckey]'",
+					"DELETE FROM [STICKYBAN_CKEY_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'",
+					"DELETE FROM [STICKYBAN_CID_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'",
 					"DELETE FROM [STICKYBAN_IP_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]'"
 				)
 				for (var/Q in sql_q)
@@ -316,7 +311,7 @@ SUBSYSTEM_DEF(stickyban)
 			cache[ckey] = ban
 			var/sanitized_ckey = sanitize_sql(ckey)
 			var/sanitized_alt_ckey = sanitize_sql(altckey)
-			if (length(sanitized_ckey) && length(sanitized_alt_ckey) && establish_db_connection())
+			if (length(sanitized_ckey) && length(sanitized_alt_ckey) && establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 				var/DBQuery/query = dbcon.NewQuery("DELETE FROM [STICKYBAN_CKEY_MATCHED_TABLENAME] WHERE stickyban = '[sanitized_ckey]' AND matched_ckey = '[sanitized_alt_ckey]'")
 				if (query)
 					query.Execute()
@@ -330,7 +325,7 @@ SUBSYSTEM_DEF(stickyban)
 		if (length(ban))
 			ban[BANKEY_MSG] = "[reason]"
 			var/santinized_ckey = sanitize_sql(ckey)
-			if (santinized_ckey && establish_db_connection())
+			if (santinized_ckey && establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 				var/DBQuery/query_update = dbcon.NewQuery("UPDATE [STICKYBAN_TABLENAME] SET reason = '[sanitize_sql(reason)]' WHERE ckey = '[santinized_ckey]'")
 				if (query_update)
 					query_update.Execute()
@@ -352,7 +347,7 @@ SUBSYSTEM_DEF(stickyban)
 			world.SetConfig("ban", ckey, list2stickyban(ban))
 			cache[ckey] = ban
 			// Update DB if can
-			if (establish_db_connection())
+			if (establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 				var/sanitized_ckey = sanitize_sql(ckey)
 				var/sanitized_alt_ckey = sanitize_sql(altckey)
 				if (sanitized_ckey && sanitized_alt_ckey)
@@ -375,7 +370,7 @@ SUBSYSTEM_DEF(stickyban)
 			world.SetConfig("ban", ckey, list2stickyban(ban))
 			cache[ckey] = ban
 			// Update DB if can
-			if (establish_db_connection())
+			if (establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 				var/sanitized_ckey = sanitize_sql(ckey)
 				var/sanitized_alt_ckey = sanitize_sql(altckey)
 				if (sanitized_ckey && sanitized_alt_ckey)
@@ -424,7 +419,7 @@ SUBSYSTEM_DEF(stickyban)
 	// Updates matches tables
 	// If matched address, ckey or cid found, update last_matched column in DB
 
-	if(establish_db_connection())
+	if(establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		var/list/ckey_match_row = list(
 			"stickyban" = "'[sanitize_sql(ckey)]'",
 			"matched_ckey" = "'[sanitize_sql(matched_ckey)]'")
@@ -532,8 +527,3 @@ SUBSYSTEM_DEF(stickyban)
 	buffer -= BANKEY_ADMIN_MATCHES_THIS_ROUND
 	buffer -= BANKEY_PENDING_MATCHES
 	return list2params(buffer)
-
-#undef STICKYBAN_TABLENAME
-#undef STICKYBAN_CKEY_MATCHED_TABLENAME
-#undef STICKYBAN_CID_MATCHED_TABLENAME
-#undef STICKYBAN_IP_MATCHED_TABLENAME

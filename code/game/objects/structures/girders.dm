@@ -12,7 +12,8 @@
 		/obj/structure/falsewall,
 		/obj/structure/falsewall/reinforced,
 		/obj/structure/girder,
-		/obj/structure/girder/reinforced
+		/obj/structure/girder/reinforced,
+		/obj/structure/girder/cult,
 	)
 	smooth = SMOOTH_TRUE
 
@@ -210,7 +211,7 @@
 			 "<span class='warning'>Вы крушите каркас.</span>", \
 			 "Вы слышите скрежет металла.")
 		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		health -= attacker.melee_damage
+		health -= attacker.melee_damage * 10
 		if(health <= 0)
 			new /obj/item/stack/sheet/metal(get_turf(src))
 			qdel(src)
@@ -228,12 +229,13 @@
 	state = 2
 	health = 500
 
-/obj/structure/cultgirder
-	icon= 'icons/obj/cult.dmi'
-	icon_state= "cultgirder"
+/obj/structure/girder/cult
+	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
+	icon_state= "box"
 	anchored = 1
 	density = 1
 	layer = 2.9
+<<<<<<< HEAD
 	var/health = 250
 	smooth = SMOOTH_FALSE
 
@@ -271,21 +273,11 @@
 		qdel(src)
 
 	return
+=======
+	health = 250
+	smooth = SMOOTH_TRUE
+>>>>>>> 281a6e5f0725c431042d35202fbb9c7041b2b4b2
 
-/obj/structure/cultgirder/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(30))
-				new /obj/effect/decal/remains/human(loc)
-				qdel(src)
-			return
-		if(3.0)
-			if (prob(5))
-				new /obj/effect/decal/remains/human(loc)
-				qdel(src)
-			return
-		else
-	return
+/obj/structure/girder/cult/Destroy()
+	new /obj/effect/decal/remains/human(get_turf(src))
+	return ..()

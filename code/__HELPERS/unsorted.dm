@@ -319,35 +319,36 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0, skip_mindless=0)
+/proc/getpois(with_mobs = TRUE, skip_mindless = FALSE, mobs_only = FALSE)
 	var/list/mobs = sortmobs() - global.dummy_mob_list
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()
 
-	for(var/mob/M in mobs)
-		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera))
+	if(with_mobs)
+		for(var/mob/M in mobs)
+			if(skip_mindless && (!M.mind && !M.ckey))
+				if(!isbot(M) && !istype(M, /mob/camera))
+					continue
+			if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 				continue
-		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
-			continue
-		if(usr == M)	//skip yourself
-			continue
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (M.stat == DEAD)
-			if(istype(M, /mob/dead/observer))
-				name += " \[ghost\]"
+			if(usr == M)	//skip yourself
+				continue
+			var/name = M.name
+			if (name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
 			else
-				name += " \[dead\]"
-		pois[name] = M
+				names.Add(name)
+				namecounts[name] = 1
+			if (M.real_name && M.real_name != M.name)
+				name += " \[[M.real_name]\]"
+			if (M.stat == DEAD)
+				if(istype(M, /mob/dead/observer))
+					name += " \[ghost\]"
+				else
+					name += " \[dead\]"
+			pois[name] = M
 
 	if(!mobs_only)
 		for(var/atom/A in poi_list)
