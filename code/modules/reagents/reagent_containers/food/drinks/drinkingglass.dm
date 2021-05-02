@@ -526,24 +526,12 @@
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/target, mob/user, def_zone)
-	gulp_size = volume
-
 	if(user.a_intent == INTENT_HARM)
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			to_chat(user, "<span class='warning'>You splash your drink in the [target] face!</span>")
 			reagents.standard_splash(target, user=user)
 			user.visible_message("<span class='warning'>[target] has been splashed with [src] in the face by [user]!</span>")
 			return
-
-	else
-		if(user.a_intent == INTENT_HELP)
-			gulp_size = volume * 0.1
-			return ..()
-
-	if(reagents.total_volume)
-		if(!CanEat(user, target, src, "drink"))
-			return
-		return ..()
 
 	return ..()
 

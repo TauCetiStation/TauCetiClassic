@@ -87,13 +87,11 @@
 	show_filler_on_icon(3, 24, 0)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
-
-	if(!target)
-		return
-
 	if(user.a_intent != INTENT_HARM || !is_glass)
 		return ..()
 
+	if(!target)
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 

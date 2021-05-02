@@ -7,7 +7,7 @@
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
 	flags = OPENCONTAINER
-	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
+	var/gulp_size = 5
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
 
@@ -26,19 +26,23 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
-	var/datum/reagents/R = reagents
-	var/fillevel = gulp_size
-
 	if (!src.is_open_container())
 		return 0
 
-	if(!R.total_volume || !R)
+	if(reagents.total_volume <= 0)
 		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		return 0
 
-	if(!CanEat(user, M, src, "drink")) return
+	if(!CanEat(user, M, src, "drink"))
+		return
+
+	var/fillevel = gulp_size
 
 	if(M == user)
+		if(user.a_intent != INTENT_HELP && user.a_intent != INTENT_HARM)
+			gulp_whole()
+			return
+
 		if(isliving(M))
 			var/mob/living/L = M
 			if(taste)
@@ -52,7 +56,8 @@
 		return 1
 	else
 		user.visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
-		if(!do_mob(user, M)) return
+		if(!do_mob(user, M))
+			return
 		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
 
 		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
@@ -63,8 +68,8 @@
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
-			var/refill = R.get_master_reagent_id()
-			addtimer(CALLBACK(R, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
+			var/refill = reagents.get_master_reagent_id()
+			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, fillevel), 600)
 
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		update_icon()
@@ -152,7 +157,6 @@
 	set src in view(1)
 
 	if(is_open_container())
-		to_chat(world, "TOTAL VOLUME: [reagents.total_volume]")
 		usr.visible_message("<span class='notice'>[usr] prepares to gulp down [src].</span>", "<span class='notice'>You prepare to gulp down [src].</span>")
 
 		if(!CanEat(usr, usr, src, eatverb="gulp"))
@@ -178,8 +182,6 @@
 		usr.visible_message("<span class='notice'>[usr] gulped down the whole [src]!</span>", "<span class='notice'>You gulped down the whole [src]!</span>")
 		reagents.trans_to_ingest(usr, reagents.total_volume)
 		playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(15, 55))
-
-		to_chat(world, "TOTAL VOLUME AFTER: [reagents.total_volume]")
 
 	else
 		to_chat(usr, "<span class='notice'>You need to open [src]!</span>")
