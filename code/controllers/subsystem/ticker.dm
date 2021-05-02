@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(ticker)
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
 	var/obj/screen/cinematic = null
+	var/datum/station_state/start_state = null
 
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax

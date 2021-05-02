@@ -249,20 +249,14 @@
 
 /datum/game_mode/proc/PostSetup()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
-
 	addtimer(CALLBACK(src, .proc/send_intercept), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
 	var/list/exclude_autotraitor_for = list(/datum/game_mode/extended)
 	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 
-	feedback_set_details("round_start","[time2text(world.realtime)]")
-	if(SSticker && SSticker.mode)
-		feedback_set_details("game_mode","[SSticker.mode]")
-	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
-
-	start_state = new /datum/station_state()
-	start_state.count(1)
+	SSticker.start_state = new /datum/station_state()
+	SSticker.start_state.count(TRUE)
 
 	for(var/datum/faction/F in factions)
 		for(var/datum/role/R in F.members)
@@ -279,6 +273,10 @@
 	if(establish_db_connection("erro_round"))
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
+
+	feedback_set_details("round_start","[time2text(world.realtime)]")
+	feedback_set_details("game_mode","[SSticker.mode]")
+	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 
 	return TRUE
 
