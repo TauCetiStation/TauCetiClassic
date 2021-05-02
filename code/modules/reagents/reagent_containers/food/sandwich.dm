@@ -138,6 +138,33 @@
 			L.adjustBruteLoss(5) //TODO: Target head if human.
 	..()
 
+/obj/item/weapon/reagent_containers/food/snacks/csandwich/proc/complete()
+	set waitfor = 0
+
+	var/list/pos_filler = subtypesof(/obj/item/weapon/reagent_containers/food/snacks) - typesof(/obj/item/weapon/reagent_containers/food/snacks/breadslice)
+	var/list/pos_slices = typesof(/obj/item/weapon/reagent_containers/food/snacks/breadslice)
+
+	while(contents.len < MAX_SANDWICH_LIMIT)
+		sleep(0)
+
+		for(var/i in 1 to SANDWICH_GROWTH_BY_SLICE - 1)
+			if(contents.len >= MAX_SANDWICH_LIMIT)
+				break
+
+			var/fill_type = pick(pos_filler)
+			var/obj/item/weapon/reagent_containers/food/snacks/S = new fill_type(src)
+			add_ingredient()
+			add_filling_overlay(S)
+
+		if(contents.len >= MAX_SANDWICH_LIMIT)
+			break
+
+		var/slice_type = pick(pos_slices)
+		var/obj/item/weapon/reagent_containers/food/snacks/breadslice/B = new slice_type(src)
+		sandwich_limit = min(sandwich_limit + SANDWICH_GROWTH_BY_SLICE, MAX_SANDWICH_LIMIT)
+		add_ingredient()
+		add_filling_overlay(B)
+
 #undef MIN_SANDWICH_LIMIT
 #undef SANDWICH_GROWTH_BY_SLICE
 #undef MAX_SANDWICH_LIMIT
