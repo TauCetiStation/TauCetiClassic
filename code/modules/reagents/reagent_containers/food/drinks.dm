@@ -167,9 +167,6 @@
 				usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
 			reagents.standard_splash(loc, user=usr)
 			return
-			usr.visible_message("<span class='warning'>[usr] splashed the [src] all over themselves!</span>", "<span class='warning'>You splashed the [src] all over yourself!</span>")
-			reagents.standard_splash(usr, user=usr)
-			return
 
 		if(!Adjacent(usr))
 			usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
