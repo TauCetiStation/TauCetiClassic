@@ -69,7 +69,7 @@
 	var/list/sprite_sheets_obj = null
 
     /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/tools = list()
+	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -762,7 +762,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -772,6 +772,11 @@
 		return
 
 	delay *= toolspeed
+
+	if(!isnull(quality))
+		if(!qualities[quality])
+			return
+		delay *= 1 / qualities[quality]
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)

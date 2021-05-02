@@ -552,6 +552,10 @@
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	usesound = 'sound/items/Crowbar.ogg'
 
+	qualities = list(
+		QUALITY_PRYING = 1
+	)
+
 /obj/item/weapon/crowbar/red
 	icon_state = "red_crowbar"
 	item_state = "crowbar_red"
