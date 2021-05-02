@@ -458,7 +458,10 @@ var/global/list/wedge_icon_cache = list()
 
 /obj/machinery/door/airlock/AltClick(mob/user)
 	if(!user.incapacitated() && Adjacent(user) && user.IsAdvancedToolUser())
-		try_wedge_item(user)
+		if(!wedged_item)
+			try_wedge_item(user)
+		else
+			take_out_wedged_item(user)
 
 /obj/machinery/door/airlock/MouseDrop(obj/over_object)
 	if(usr.IsAdvancedToolUser() && usr == over_object && !usr.incapacitated() && Adjacent(usr))
