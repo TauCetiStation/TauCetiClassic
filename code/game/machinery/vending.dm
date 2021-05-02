@@ -180,8 +180,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		coin = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
@@ -234,8 +233,7 @@
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
 	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 

@@ -43,8 +43,7 @@
 				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
-				user.drop_item()
-				P.loc = src
+				user.drop_from_inventory(P, src)
 			if(isscrewdriver(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
@@ -136,8 +135,7 @@
 					SSticker.mode.remove_cultist(M.brainmob.mind, 1)
 					SSticker.mode.remove_revolutionary(M.brainmob.mind, 1)
 
-				user.drop_item()
-				M.loc = src
+				user.drop_from_inventory(M, src)
 				brain = M
 				to_chat(usr, "Added [M].")
 				icon_state = "3b"

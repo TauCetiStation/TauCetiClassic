@@ -87,8 +87,7 @@
 /obj/machinery/computer/guestpass/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/card/id))
 		if(!giver)
-			user.drop_item()
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			giver = O
 			updateUsrDialog()
 		if(ishuman(usr))
@@ -174,8 +173,7 @@
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
-						usr.drop_item()
-						I.loc = src
+						usr.drop_from_inventory(I, src)
 						giver = I
 					if(ishuman(usr))
 						var/mob/living/carbon/human/H = usr

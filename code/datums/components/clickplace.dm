@@ -76,12 +76,10 @@
 		return COMPONENT_NO_AFTERATTACK
 	if(!can_place(source, I, user))
 		return NONE
-	if(!user.drop_from_inventory(I))
+	var/atom/A = parent
+	if(!user.drop_from_inventory(I, A.loc))
 		return FALSE
 
-	var/atom/A = parent
-
-	I.forceMove(A.loc)
 	var/list/click_params = params2list(params)
 	//Center the icon where the user clicked.
 	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
@@ -205,6 +203,7 @@
 
 	assailant.SetNextMove(CLICK_CD_MELEE)
 	if(G.state >= GRAB_AGGRESSIVE)
+		INVOKE_ASYNC(victim, /atom/movable.proc/simple_move_animation, A.loc)
 		victim.forceMove(A.loc)
 		victim.Weaken(5)
 

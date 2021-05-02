@@ -318,14 +318,20 @@ var/list/slot_equipment_priority = list(
 	O.plane = initial(O.plane)
 	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
+
 	if(istype(O, /obj/item))
+		if(!target)
+			target = loc
+
 		var/obj/item/I = O
-		if(target)
-			I.forceMove(target)
-		else
-			I.forceMove(loc)
+
+		if(I.loc != target)
+			INVOKE_ASYNC(I, /atom/movable.proc/do_putdown_animation, target, src)
+
+		I.forceMove(target)
 		I.dropped(src)
 		I.slot_equipped = initial(I.slot_equipped)
+
 	return 1
 
 /mob/proc/get_hand_slots()

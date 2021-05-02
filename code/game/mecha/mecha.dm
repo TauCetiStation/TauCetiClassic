@@ -734,8 +734,7 @@
 		if(state==4)
 			if(!src.cell)
 				to_chat(user, "You install the powercell")
-				user.drop_item()
-				W.forceMove(src)
+				user.drop_from_inventory(W, src)
 				src.cell = W
 				src.log_message("Powercell installed")
 			else

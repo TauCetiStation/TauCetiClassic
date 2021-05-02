@@ -366,9 +366,11 @@
 	remove_outline()
 	src.pickup(user)
 	add_fingerprint(user)
-	user.put_in_active_hand(src)
-	return
 
+	var/atom/old_loc = loc
+
+	if(user.put_in_active_hand(src) && old_loc && (user != old_loc) && (user != old_loc.loc))
+		INVOKE_ASYNC(src, /atom/movable.proc/do_pickup_animation, user, old_loc)
 
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
