@@ -1245,7 +1245,7 @@ var/global/list/wedge_icon_cache = list()
 		wedged_item.forceMove(loc)
 		if(user)
 			user.put_in_hands(wedged_item)
-			to_chat(user, "<span class='notice>You took [wedged_item] out of [src].</span>")
+			to_chat(user, "<span class='notice'>You took [wedged_item] out of [src].</span>")
 		wedged_item = null
 		verbs -= /obj/machinery/door/airlock/proc/take_out_wedged_item_verb
 		verbs += /obj/machinery/door/airlock/proc/try_wedge_item_verb
