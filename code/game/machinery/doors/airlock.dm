@@ -665,6 +665,7 @@ var/global/list/wedge_icon_cache = list()
 		H.attack_hulk(src)
 
 /obj/machinery/door/airlock/proc/door_rupture(mob/user)
+	take_out_wedged_item()
 	var/obj/structure/door_assembly/da = new assembly_type(loc)
 	da.anchored = 0
 	var/target = da.loc
@@ -1009,6 +1010,7 @@ var/global/list/wedge_icon_cache = list()
 			if(C.use_tool(src, user, 40, volume = 100))
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
+				take_out_wedged_item()
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
 				da.anchored = 1
 				if(mineral)
@@ -1117,23 +1119,25 @@ var/global/list/wedge_icon_cache = list()
 /obj/machinery/door/airlock/close()
 	if(safe && !wedged_item)
 		for(var/turf/turf in locs)
-			for(var/atom/movable/AM in turf)
-				if(istype(AM, /obj/item))
-					var/obj/item/I = AM
-					if(I.qualities && I.qualities[QUALITY_PRYING] && I.w_class >= ITEM_SIZE_NORMAL)
-						operating = TRUE
-						density = TRUE
-						do_animate("closing")
-						sleep(7)
-						force_wedge_item(AM)
-						playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
-						//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
-						sleep(7)
-						playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
-						density = FALSE
-						do_animate("opening")
-						operating = FALSE
+			for(var/obj/item/I in turf)
+				if(I.qualities && I.qualities[QUALITY_PRYING] && I.w_class >= ITEM_SIZE_NORMAL)
+					operating = TRUE
+					density = TRUE
+					do_animate("closing")
+					sleep(7)
+					if(QDELETED(src) || QDELETED(I))
 						return
+					force_wedge_item(I)
+					playsound(src, 'sound/machines/airlock/creaking.ogg', VOL_EFFECTS_MASTER, rand(40, 70), TRUE)
+					//shake_animation(12, 7, move_mult = 0.4, angle_mult = 1.0)
+					sleep(7)
+					if(QDELETED(src))
+						return
+					playsound(src, door_deni_sound, VOL_EFFECTS_MASTER, 50, FALSE, 3)
+					density = FALSE
+					do_animate("opening")
+					operating = FALSE
+					return
 	. = ..()
 
 /obj/machinery/door/airlock/normal_open_checks()
