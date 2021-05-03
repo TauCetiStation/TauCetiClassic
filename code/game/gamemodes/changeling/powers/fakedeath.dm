@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/fakedeath
-	name = "Regenerative Stasis"
-	desc = "We fall into a stasis, allowing us to regenerate."
-	helptext = "Can be used before or after death. Duration varies greatly."
+	name = "Регенеративный Сон"
+	desc = "Мы впадаем в сон, залечивающий любые раны."
+	helptext = "Можем использовать до и после смерти. Длина сна различается."
 	chemical_cost = 20
 	genomecost = 0
 	req_dna = 1

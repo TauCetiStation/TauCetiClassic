@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/absorbDNA
-	name = "Absorb DNA"
-	desc = "Absorb the DNA of our victim."
+	name = "Поглощение ДНК"
+	desc = "Поглощает ДНК нашей жертвы."
 	chemical_cost = 0
 	genomecost = 0
 	req_human = 1

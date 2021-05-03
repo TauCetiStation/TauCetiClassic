@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/epinephrine
-	name = "Epinephrine Overdose"
-	desc = "We evolve additional sacs of adrenaline throughout our body."
-	helptext = "Removes all stuns instantly and adds a short-term reduction in further stuns. Can be used while unconscious. Continued use poisons the body."
+	name = "Адреналиновая Передозировка"
+	desc = "Мы отращиваем железы, вырабатывающие адреналин."
+	helptext = "Мнгновенно впрыскивает накопленный адреналин, позволяя нам сбросить кратковременное оглушение. Частое использование будет отравлять организм."
 	chemical_cost = 30
 	genomecost = 3
 	req_human = 1

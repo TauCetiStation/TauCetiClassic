@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/weapon/hammer
-	name = "Organic Hammer"
-	desc = "We reform one of our arms into hammer."
-	helptext = "Can break walls, airlocks, windows and humans, requires a lot of chemical for each use. Cannot be used while in lesser form."
+	name = "Биомолот"
+	desc = "Мы превращаем нашу руку в смертоносный молот."
+	helptext = "Разбивает стены, окна, шлюзы, людей. Нельзя применять в форме обезьяны."
 	chemical_cost = 20
 	genomecost = 5
 	genetic_damage = 12

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/fleshmend
-	name = "Fleshmend"
-	desc = "Our flesh rapidly regenerates, healing our wounds."
-	helptext = "Heals a moderate amount of damage over a short period of time. Can be used while unconscious."
+	name = "Заживление Плоти"
+	desc = "Наша плоть быстро восстанавливается, залечивая раны."
+	helptext = "Позволяет нам быстро вылечить некритические раны. Можно использовать в бессознательном состоянии."
 	chemical_cost = 25
 	genomecost = 4
 	req_stat = UNCONSCIOUS

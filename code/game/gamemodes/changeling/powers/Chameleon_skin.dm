@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/chameleon_skin
-	name = "Chameleon Skin"
-	desc = "Our skin pigmentation rapidly changes to suit our current environment."
-	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
+	name = "Кожная Маскировка"
+	desc = "Расцветка кожи быстро адаптируется под окружающую среду."
+	helptext = "Позволяет получить полную невидимость стоя неподвижно. Может включаться и выключаться."
 	genomecost = 2
 	chemical_cost = 0
 	req_human = 1

@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/digitalcamo
-	name = "Digital Camouflage"
-	desc = "By evolving the ability to distort our form and proprotions, we defeat common altgorithms used to detect lifeforms on cameras."
-	helptext = "We cannot be tracked by camera while using this skill. However, humans looking at us will find us... uncanny. We must constantly expend chemicals to maintain our form like this."
+	name = "Цифровая Невидимость"
+	desc = "Развивая способность искажать нашу форму и размер, мы побеждаем обычные алгоритмы ИИ, используемые для обнаружения форм жизни на камерах."
+	helptext = "При использовании этого навыка нас нельзя отследить камерой. Однако люди, смотрящие на нас, будут видеть нечто... неестественное. Мы должны постоянно расходовать химикаты, чтобы поддерживать такую форму."
 	genomecost = 1
 
 //Prevents AIs tracking you but makes you easily detectable to the human-eye.

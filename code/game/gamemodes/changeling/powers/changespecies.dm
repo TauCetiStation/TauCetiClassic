@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/change_species
-	name = "Change Species"
-	desc = "We take on the apperance of a species that we have absorbed."
+	name = "Смена Расы"
+	desc = "Дает возможность сменить расу, представителей которой мы уже поглощали."
 	chemical_cost = 5
 	genomecost = 0
 	req_dna = 1
