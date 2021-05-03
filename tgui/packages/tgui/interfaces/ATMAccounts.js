@@ -91,7 +91,7 @@ export const ATMAccountsContent = (props, context) => {
               <Button
                 content="New Account"
                 selected={route.key === 'new-account'}
-                onClick={() => act('setPage', { page: 'create-account' })}
+                onClick={() => act('setPage', { page: 'new-account' })}
               />
               <Button
                 content="Print"
@@ -115,8 +115,8 @@ export const ATMHome = (props, context) => {
       <Table>
         <Table.Row header>
           <Table.Cell>ID</Table.Cell>
-          <Table.Cell>Name</Table.Cell>
-          <Table.Cell>Status</Table.Cell>
+          <Table.Cell textAlign="center">Name</Table.Cell>
+          <Table.Cell textAlign="center">Status</Table.Cell>
         </Table.Row>
         {accounts.map((account, i) => (
           <Table.Row key={i}>

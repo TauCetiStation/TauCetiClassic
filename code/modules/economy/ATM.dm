@@ -225,11 +225,12 @@ log transactions
 			return TRUE
 		if("changepage")
 			var/page = params["page"]
-			if(page == "sec") view_screen = SECURITY_PAGE
-			else if(page == "transact") view_screen = TRANSACTION_PAGE
-			else if(page == "transfer") view_screen = TRANSFER_PAGE
-			else if(page == "withdrawal") view_screen = WITHDRAWAL_PAGE
-			else view_screen = INDEX_PAGE
+			view_screen = page
+			// if(page == "sec") view_screen = SECURITY_PAGE
+			// else if(page == "transact") view_screen = TRANSACTION_PAGE
+			// else if(page == "transfer") view_screen = TRANSFER_PAGE
+			// else if(page == "withdrawal") view_screen = WITHDRAWAL_PAGE
+			// else view_screen = INDEX_PAGE
 			return TRUE
 		if("setSecLvl")
 			if(authenticated_account && authenticated_account.security_level != params["lvl"]) 
@@ -458,3 +459,10 @@ log transactions
 	else
 		money_stock -= sum
 		spawn_money(sum, src.loc)
+
+#undef INDEX_PAGE
+#undef PROFILE_PAGE
+#undef SECURITY_PAGE
+#undef TRANSFER_PAGE
+#undef TRANSACTION_PAGE
+#undef WITHDRAWAL_PAGE

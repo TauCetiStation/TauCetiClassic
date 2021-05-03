@@ -79,7 +79,7 @@
 	switch(action)
 		if("setPage")
 			var/page = params["page"]
-			if(page == "create-account")
+			if(page == "new-account")
 				viewPage = NEW_ACCOUNT_PAGE
 			else if(page == "home")
 				detailed_account_view = null

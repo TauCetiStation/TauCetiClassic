@@ -840,15 +840,15 @@
 	switch(action)
 		if("cover")
 			coverlocked = !coverlocked
-			. = TRUE
+			return TRUE
 		if("toggle_nightshift")
 			toggle_nightshift_lights()
-			. = TRUE
+			return TRUE
 		if("change_nightshift")
 			var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
 			if(new_preset && lighting_presets[new_preset])
 				set_nightshift_preset(new_preset)
-			. = TRUE
+			return TRUE
 		if("breaker")
 			operating = !operating
 			if(malfai)
@@ -856,15 +856,15 @@
 					if(is_station_level(z))
 						var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 						operating ? gm_malf.apcs++ : gm_malf.apcs--
-
-			src.update()
+			update()
 			update_icon()
-			. = TRUE
+			return TRUE
 		if("charge")
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = 0
 				update_icon()
+			return TRUE
 		if("channel")
 			if(params["eqp"])
 				equipment = setsubsystem(text2num(params["eqp"]))
@@ -878,7 +878,7 @@
 				environ = setsubsystem(text2num(params["env"]))
 				update_icon()
 				update()
-			. = TRUE
+			return TRUE
 		if("overload")
 			if( (issilicon(usr) && !src.aidisabled) || isobserver(usr) )
 				src.overload_lighting()
@@ -886,11 +886,13 @@
 			failure_timer = 0
 			update_icon()
 			update()
-		if("close")
-			to_chat(usr, "CLOSE ACTION!")
+			return TRUE
+		// if("close")
+			// to_chat(usr, "CLOSE ACTION!")
 		if("hack")
 			malfhack()
-			. = TRUE
+			return TRUE
+	return TRUE
 
 /obj/machinery/power/apc/proc/malfhack()
 	var/mob/living/silicon/ai/malfai = usr
