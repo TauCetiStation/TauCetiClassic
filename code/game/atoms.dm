@@ -713,8 +713,13 @@
 	for(var/key in alternate_appearances)
 		var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
 
-		var/image/I = image(icon, icon_state)
-		I.appearance = src
+		var/image/I
+		if(AA.alternate_obj)
+			I = image(AA.alternate_obj.icon, AA.alternate_obj.icon_state)
+			I.appearance = AA.alternate_obj
+		else
+			I = image(AA.theImage.icon, AA.theImage.icon_state)
+			I.appearance = AA.theImage
 
 		var/list/img_viewers = list()
 		for(var/v in viewers)
@@ -723,7 +728,7 @@
 
 		imgs[I] = img_viewers
 
-		if(AA.alternate_obj)
+		if(AA.theImage.override)
 			for(var/v in img_viewers)
 				viewers -= v
 
