@@ -242,6 +242,11 @@ var/list/slot_equipment_priority = list(
 		remove_from_mob(W, target)
 		if(!(W && W.loc))
 			return 1 // self destroying objects (tk, grabs)
+
+		// storages operate on two levels. slap me if otherwise ~Luduk
+		if(target != src && target.loc != src && target.loc.loc != src)
+			INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src)
+
 		update_icons()
 		return 1
 	return 0
@@ -326,9 +331,8 @@ var/list/slot_equipment_priority = list(
 		var/obj/item/I = O
 
 		if(I.loc != target)
-			INVOKE_ASYNC(I, /atom/movable.proc/do_putdown_animation, target, src)
+			I.forceMove(target)
 
-		I.forceMove(target)
 		I.dropped(src)
 		I.slot_equipped = initial(I.slot_equipped)
 

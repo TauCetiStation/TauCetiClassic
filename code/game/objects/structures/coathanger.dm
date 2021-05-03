@@ -32,8 +32,7 @@
 	if (can_hang && !coat && !istype(W, /obj/item/clothing/head/det_hat))
 		user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
 		coat = W
-		user.drop_item(src)
-		coat.loc = src
+		user.drop_from_inventory(coat, src)
 		update_icon()
 	else
 		if (can_hang && !hat && istype(W, /obj/item/clothing/head/det_hat))

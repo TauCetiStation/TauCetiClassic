@@ -318,10 +318,6 @@
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
-	if(istype(src.loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = src.loc
-		S.remove_from_storage(src)
-
 	src.throwing = 0
 	if(src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
@@ -362,6 +358,10 @@
 
 	if(!user.can_pickup(src))
 		return
+
+	if(istype(src.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = src.loc
+		S.remove_from_storage(src, user)
 
 	remove_outline()
 	src.pickup(user)

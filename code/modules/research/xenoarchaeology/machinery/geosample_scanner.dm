@@ -89,8 +89,7 @@
 				to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
 				update_coolant()
 				return
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		scanned_item = I
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()

@@ -64,8 +64,7 @@
 			if(FA.wielded)
 				to_chat(user, "<span class='warning'>Unwield the axe first.</span>")
 				return
-			user.drop_item()
-			O.forceMove(src)
+			user.drop_from_inventory(O, src)
 			fireaxe = O
 			to_chat(user, "<span class='notice'>You place the fire axe back in the [src.name].</span>")
 			update_icon()

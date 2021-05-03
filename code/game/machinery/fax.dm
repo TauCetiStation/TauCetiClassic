@@ -170,7 +170,7 @@ var/list/alldepartments = list("Central Command")
 
 		var/obj/item/weapon/card/id/idcard = O
 		if(!scan)
-			usr.drop_item()
+			usr.drop_from_inventory(idcard, src)
 			idcard.loc = src
 			scan = idcard
 			if(ishuman(usr))

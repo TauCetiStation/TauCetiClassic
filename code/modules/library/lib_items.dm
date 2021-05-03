@@ -28,8 +28,7 @@
 
 /obj/structure/bookcase/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))

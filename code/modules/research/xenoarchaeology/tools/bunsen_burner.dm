@@ -16,9 +16,8 @@
 		if(held_container)
 			to_chat(user, "<span class='warning'>You must remove the [held_container] first.</span>")
 		else
-			user.drop_item(src)
+			user.drop_from_inventory(W, src)
 			held_container = W
-			held_container.loc = src
 			to_chat(user, "<span class='notice'>You put \the [held_container] onto \the [src].</span>")
 			var/image/I = image("icon" = W, "layer" = FLOAT_LAYER, "pixel_y" = 13 * PIXEL_MULTIPLIER)
 			var/image/I2 = image("icon" = src.icon, icon_state ="bunsen_prong", "layer" = FLOAT_LAYER)
