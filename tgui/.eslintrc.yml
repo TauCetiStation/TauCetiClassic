@@ -16,10 +16,8 @@ settings:
   react:
     version: '16.10'
 rules:
-
   ## Possible Errors
   ## ----------------------------------------
-
   ## Enforce “for” loop update clause moving the counter in the right
   ## direction.
   # for-direction: error
@@ -114,7 +112,7 @@ rules:
   ## Require return statements to either always or never specify values
   # consistent-return: error
   ## Enforce consistent brace style for all control statements
-  curly: [error, all]
+  curly: [warn, multi-line]
   ## Require default cases in switch statements
   # default-case: error
   ## Enforce default parameters to be last
@@ -279,7 +277,8 @@ rules:
   no-shadow-restricted-names: error
   ## Disallow the use of undeclared variables unless mentioned
   ## in /*global*/ comments
-  no-undef: error
+  ## NOTE: Pointless when TypeScript can check for this
+  # no-undef: error
   ## Disallow initializing variables to undefined
   no-undef-init: error
   ## Disallow the use of undefined as an identifier
@@ -307,13 +306,16 @@ rules:
   ## Enforce or disallow capitalization of the first letter of a comment
   # capitalized-comments: error
   ## Require or disallow trailing commas
-  comma-dangle: [error, {
-    arrays: always-multiline,
-    objects: always-multiline,
-    imports: always-multiline,
-    exports: always-multiline,
-    functions: only-multiline, ## Optional on functions
-  }]
+  comma-dangle: [
+      error,
+      {
+        arrays: always-multiline,
+        objects: always-multiline,
+        imports: always-multiline,
+        exports: always-multiline,
+        functions: only-multiline, ## Optional on functions
+      },
+    ]
   ## Enforce consistent spacing before and after commas
   comma-spacing: [error, { before: false, after: true }]
   ## Enforce consistent comma style
@@ -368,13 +370,17 @@ rules:
   ## Enforce a maximum depth that blocks can be nested
   # max-depth: error
   ## Enforce a maximum line length
-  max-len: [error, {
-    code: 80,
-    ## Ignore imports
-    ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
-    ignoreUrls: true,
-    ignoreRegExpLiterals: true,
-  }]
+  max-len: [
+      error,
+      {
+        code: 80,
+        ## Ignore imports
+        ignorePattern: '^(import\s.+\sfrom\s|.*require\()',
+        ignoreUrls: true,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+      },
+    ]
   ## Enforce a maximum number of lines per file
   # max-lines: error
   ## Enforce a maximum number of line of code in a function
@@ -454,7 +460,7 @@ rules:
   ## Require or disallow assignment operator shorthand where possible
   # operator-assignment: error
   ## Enforce consistent linebreak style for operators
-  operator-linebreak: [error, before]
+  #operator-linebreak: [error, before]
   ## Require or disallow padding within blocks
   # padded-blocks: error
   ## Require or disallow padding lines between statements
@@ -479,11 +485,8 @@ rules:
   ## Enforce consistent spacing before blocks
   space-before-blocks: [error, always]
   ## Enforce consistent spacing before function definition opening parenthesis
-  space-before-function-paren: [error, {
-    anonymous: always,
-    named: never,
-    asyncArrow: always,
-  }]
+  space-before-function-paren:
+    [error, { anonymous: always, named: never, asyncArrow: always }]
   ## Enforce consistent spacing inside parentheses
   space-in-parens: [error, never]
   ## Require spacing around infix operators
@@ -506,7 +509,7 @@ rules:
   ## Require braces around arrow function bodies
   # arrow-body-style: error
   ## Require parentheses around arrow function arguments
-  arrow-parens: [error, as-needed]
+  # arrow-parens: [error, as-needed]
   ## Enforce consistent spacing before and after the arrow in arrow functions
   arrow-spacing: [error, { before: true, after: true }]
   ## Require super() calls in constructors
@@ -582,7 +585,7 @@ rules:
   ## Rule enforces consistent usage of destructuring assignment in component
   # react/destructuring-assignment: [error, always, { ignoreClassFields: true }]
   ## Prevent missing displayName in a React component definition
-  react/display-name: error
+  # react/display-name: error
   ## Forbid certain props on Components
   # react/forbid-component-props: error
   ## Forbid certain props on DOM Nodes
@@ -683,19 +686,19 @@ rules:
   ## expressions.
   # react/jsx-child-element-spacing: error
   ## Validate closing bracket location in JSX (fixable)
-  react/jsx-closing-bracket-location: [error, {
-    ## NOTE: Not really sure about enforcing this one
-    selfClosing: false,
-    nonEmpty: after-props,
-  }]
+  # react/jsx-closing-bracket-location: [error, {
+  #   ## NOTE: Not really sure about enforcing this one
+  #   selfClosing: false,
+  #   nonEmpty: after-props,
+  # }]
   ## Validate closing tag location in JSX (fixable)
   react/jsx-closing-tag-location: error
   ## Enforce or disallow newlines inside of curly braces in JSX attributes and
   ## expressions (fixable)
-  react/jsx-curly-newline: error
+  #react/jsx-curly-newline: warn
   ## Enforce or disallow spaces inside of curly braces in JSX attributes and
   ## expressions (fixable)
-  react/jsx-curly-spacing: error
+  #react/jsx-curly-spacing: error
   ## Enforce or disallow spaces around equal signs in JSX attributes (fixable)
   react/jsx-equals-spacing: error
   ## Restrict file extensions that may contain JSX
@@ -705,9 +708,7 @@ rules:
   ## Enforce event handler naming conventions in JSX
   react/jsx-handler-names: error
   ## Validate JSX indentation (fixable)
-  react/jsx-indent: [error, 2, {
-    checkAttributes: true,
-  }]
+  #react/jsx-indent: [error, 2, { checkAttributes: true }]
   ## Validate props indentation in JSX (fixable)
   react/jsx-indent-props: [error, 2]
   ## Validate JSX has key prop when in array or iterator

@@ -307,6 +307,7 @@
 #include "code\datums\outfits\jobs\medical.dm"
 #include "code\datums\outfits\jobs\science.dm"
 #include "code\datums\outfits\jobs\security.dm"
+#include "code\datums\statistics\json_helpers.dm"
 #include "code\datums\spells\area_teleport.dm"
 #include "code\datums\spells\barnyardcurse.dm"
 #include "code\datums\spells\charge.dm"

@@ -11,7 +11,12 @@ import { backendSuspendStart, useBackend } from '../backend';
 import { Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { toggleKitchenSink, useDebug } from '../debug';
-import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
+import {
+  dragStartHandler,
+  recallWindowGeometry,
+  resizeStartHandler,
+  setWindowKey,
+} from '../drag';
 import { createLogger } from '../logging';
 import { useDispatch } from '../store';
 import { Layout, refocusLayout } from './Layout';
@@ -40,16 +45,8 @@ export class Window extends Component {
   }
 
   render() {
-    const {
-      resizable,
-      theme,
-      title,
-      children,
-    } = this.props;
-    const {
-      config,
-      suspended,
-    } = useBackend(this.context);
+    const { resizable, theme, title, children } = this.props;
+    const { config, suspended, act } = useBackend(this.context);
     const { debugLayout } = useDebug(this.context);
     const dispatch = useDispatch(this.context);
     const fancy = config.window?.fancy;
@@ -58,9 +55,7 @@ export class Window extends Component {
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE;
     return (
-      <Layout
-        className="Window"
-        theme={theme}>
+      <Layout className="Window" theme={theme}>
         <TitleBar
           className="Window__titleBar"
           title={!suspended && (title || decodeHtmlEntities(config.title))}
@@ -68,27 +63,30 @@ export class Window extends Component {
           fancy={fancy}
           onDragStart={dragStartHandler}
           onClose={() => {
+            act('$onClose');
             logger.log('pressed close');
             dispatch(backendSuspendStart());
-          }} />
+          }}
+        />
         <div
-          className={classes([
-            'Window__rest',
-            debugLayout && 'debug-layout',
-          ])}>
+          className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
           {!suspended && children}
-          {showDimmer && (
-            <div className="Window__dimmer" />
-          )}
+          {showDimmer && <div className="Window__dimmer" />}
         </div>
         {fancy && resizable && (
           <Fragment>
-            <div className="Window__resizeHandle__e"
-              onMousedown={resizeStartHandler(1, 0)} />
-            <div className="Window__resizeHandle__s"
-              onMousedown={resizeStartHandler(0, 1)} />
-            <div className="Window__resizeHandle__se"
-              onMousedown={resizeStartHandler(1, 1)} />
+            <div
+              className="Window__resizeHandle__e"
+              onMousedown={resizeStartHandler(1, 0)}
+            />
+            <div
+              className="Window__resizeHandle__s"
+              onMousedown={resizeStartHandler(0, 1)}
+            />
+            <div
+              className="Window__resizeHandle__se"
+              onMousedown={resizeStartHandler(1, 1)}
+            />
           </Fragment>
         )}
       </Layout>
@@ -96,26 +94,16 @@ export class Window extends Component {
   }
 }
 
-const WindowContent = props => {
-  const {
-    className,
-    fitted,
-    children,
-    ...rest
-  } = props;
+const WindowContent = (props) => {
+  const { className, fitted, children, ...rest } = props;
   // A bit lazy to actually write styles for it,
   // so we simply include a Box with margins.
   return (
     <Layout.Content
-      className={classes([
-        'Window__content',
-        className,
-      ])}
+      className={classes(['Window__content', className])}
       {...rest}>
-      {fitted && children || (
-        <div className="Window__contentPadding">
-          {children}
-        </div>
+      {(fitted && children) || (
+        <div className="Window__contentPadding">{children}</div>
       )}
     </Layout.Content>
   );
@@ -123,7 +111,7 @@ const WindowContent = props => {
 
 Window.Content = WindowContent;
 
-const statusToColor = status => {
+const statusToColor = (status) => {
   switch (status) {
     case UI_INTERACTIVE:
       return 'good';
@@ -136,34 +124,25 @@ const statusToColor = status => {
 };
 
 const TitleBar = (props, context) => {
-  const {
-    className,
-    title,
-    status,
-    fancy,
-    onDragStart,
-    onClose,
-  } = props;
+  const { className, title, status, fancy, onDragStart, onClose } = props;
   const dispatch = useDispatch(context);
   return (
-    <div
-      className={classes([
-        'TitleBar',
-        className,
-      ])}>
+    <div className={classes(['TitleBar', className])}>
       <Icon
         className="TitleBar__statusIcon"
         color={statusToColor(status)}
-        name="eye" />
+        name="eye"
+      />
       <div className="TitleBar__title">
-        {typeof title === 'string'
-          && title === title.toLowerCase()
-          && toTitleCase(title)
-          || title}
+        {(typeof title === 'string' &&
+          title === title.toLowerCase() &&
+          toTitleCase(title)) ||
+          title}
       </div>
       <div
         className="TitleBar__dragZone"
-        onMousedown={e => fancy && onDragStart(e)} />
+        onMousedown={(e) => fancy && onDragStart(e)}
+      />
       {process.env.NODE_ENV !== 'production' && (
         <div
           className="TitleBar__devBuildIndicator"
