@@ -195,7 +195,7 @@
 	for(var/i in imgs)
 		INVOKE_ASYNC(src, .proc/pickup_animation, i, imgs[i], target, old_loc)
 
-/atom/movable/proc/putdown_animation(image/I, list/viewers, atom/target, mob/user)
+/atom/movable/proc/putdown_animation(image/I, list/viewers, atom/target, mob/user, additional_pixel_x = 0, additional_pixel_y = 0)
 	if (QDELETED(src))
 		return
 	if (QDELETED(target))
@@ -224,15 +224,12 @@
 
 	flick_overlay(I, new_viewers, 4)
 
-	var/to_x = (target.x - old_turf.x) * 32 + pixel_x
-	var/to_y = (target.y - old_turf.y) * 32 + pixel_y
-
-	pixel_x = 0
-	pixel_y = 0
+	var/to_x = (target.x - old_turf.x) * 32 + pixel_x + additional_pixel_x
+	var/to_y = (target.y - old_turf.y) * 32 + pixel_y + additional_pixel_y
 
 	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, transform = matrix(), easing = CUBIC_EASING)
 
-/atom/movable/proc/do_putdown_animation(atom/target, mob/user)
+/atom/movable/proc/do_putdown_animation(atom/target, mob/user, additional_pixel_x = 0, additional_pixel_y = 0)
 	if (QDELETED(src))
 		return
 	if (QDELETED(target))
@@ -248,14 +245,14 @@
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
-		INVOKE_ASYNC(src, .proc/putdown_animation, i, imgs[i], target, user)
+		INVOKE_ASYNC(src, .proc/putdown_animation, i, imgs[i], target, user, additional_pixel_x, additional_pixel_y)
 
 	sleep(3)
 	if (QDELETED(src))
 		return
 	invisibility = old_invisibility
-	pixel_x = old_x
-	pixel_y = old_y
+	pixel_x = old_x + additional_pixel_x
+	pixel_y = old_y + additional_pixel_y
 
 /atom/movable/proc/simple_move_animation(image/I, list/viewers, atom/target)
 	if (QDELETED(src))

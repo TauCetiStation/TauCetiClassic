@@ -76,17 +76,18 @@
 		return COMPONENT_NO_AFTERATTACK
 	if(!can_place(source, I, user))
 		return NONE
-	var/atom/A = parent
-	if(!user.drop_from_inventory(I, A.loc))
-		return FALSE
 
 	var/list/click_params = params2list(params)
 	//Center the icon where the user clicked.
 	if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
 		return
-	//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-	I.pixel_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
-	I.pixel_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+
+	var/p_x = clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+	var/p_y = clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+
+	var/atom/A = parent
+	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x - I.pixel_x, additional_pixel_y=p_y - I.pixel_y))
+		return FALSE
 
 	if(on_place)
 		on_place.Invoke(A, I, user)
