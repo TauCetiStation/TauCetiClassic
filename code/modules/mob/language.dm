@@ -215,6 +215,7 @@
 /datum/language/pseudo
 	name = null
 	flags = RESTRICTED | PSEUDOLANG
+
 /datum/language/pseudo/proc/pseudo_say(text, mob/user)
 	return
 
