@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/panacea
-	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, genetic disabilities, and removing toxins and radiation."
-	helptext = "Can be used while unconscious."
+	name = "Анатомическая Панацея"
+	desc = "При помощи данной способности мы вылечиваем себя от различных заболеваний, генетических мутаций, также из организма выводятся токсины и радиация."
+	helptext = "Можно использовать в безсознательном состоянии."
 	chemical_cost = 25
 	genomecost = 1
 	req_stat = UNCONSCIOUS

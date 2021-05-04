@@ -94,9 +94,9 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/weapon/arm_blade
-	name = "Arm Blade"
-	desc = "We reform one of our arms into a deadly blade."
-	helptext = "Cannot be used while in lesser form."
+	name = "Рука-Лезвие"
+	desc = "Мы превращаем одну из рук в смертоносный клинок."
+	helptext = "Нельзя использовать в форме обезьяны."
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 10
@@ -160,9 +160,9 @@
 			A.open(1)
 
 /obj/effect/proc_holder/changeling/weapon/shield
-	name = "Organic Shield"
-	desc = "We reform one of our arms into hard shield."
-	helptext = "Organic tissue cannot resist damage forever, the shield will break after it is hit too much. The more genomes we absorb, the stronger it is.. Cannot be used while in lesser form."
+	name = "Био-Щит"
+	desc = "Мы превращаем одну из наших рук в прочный щит."
+	helptext = "Органическая ткань не может противостоять повреждениям вечно, щит сломается после слишком сильного удара. Чем больше геномов мы поглотили, тем он сильнее. Нельзя использовать в форме обезьяны."
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 12
@@ -207,9 +207,9 @@
 		return block_chance
 
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
-	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure."
-	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Retreating the suit damages our genomes. Cannot be used in lesser form."
+	name = "Космический Био-костюм"
+	desc = "Мы выращиваем на теле органический костюм, чтобы защитить себя от воздействия космоса."
+	helptext = "Мы должны постоянно ремонтировать нашу форму, чтобы она оставалась герметичной, сокращая производство химикатов, пока мы защищены. Сброс костюма повреждает наши геномы. Не может использоваться в форме обезьяны."
 	chemical_cost = 20
 	genomecost = 2
 	genetic_damage = 8
@@ -259,9 +259,9 @@
 	siemens_coefficient = 2 // fleeesh!
 
 /obj/effect/proc_holder/changeling/suit/armor
-	name = "Chitinous Armor"
-	desc = "We turn our skin into tough chitin to protect us from damage."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Retreating the armor damages our genomes. Cannot be used in lesser form."
+	name = "Хитиновая Броня"
+	desc = "Мы превращаем нашу кожу в прочный хитин, чтобы защититься от повреждений."
+	helptext = "Уход за броней требует небольшого расхода химикатов. Броня устойчива против физических повреждений, но не защищает от лазеров. Сброс брони повреждает наши геномы. Не может использоваться в форме обезьяны."
 	chemical_cost = 25
 	genomecost = 2
 	genetic_damage = 10

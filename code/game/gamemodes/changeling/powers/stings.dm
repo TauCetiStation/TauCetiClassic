@@ -96,9 +96,9 @@
 			return 0
 
 /obj/effect/proc_holder/changeling/sting/cryo
-	name = "Cryogenic Sting"
-	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
-	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
+	name = "Криогенное Жало"
+	desc = "Мы молча жалим человека коктейлем из химикатов, замораживающих его тело."
+	helptext = "Не предупреждает жертву, хотя они=а, скорее всего, поймет, когда внезапно замерзнет."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
 	genomecost = 1
@@ -113,9 +113,9 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/LSD
-	name = "Hallucination Sting"
-	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung.  The effect occurs after 30 to 60 seconds."
+	name = "Галициногенное Жало"
+	desc = "Вызывает апокалипсис в голове цели."
+	helptext = "Мы жалим цель мощными галлюциногенными химикатами. Цель не замечает укуса. Эффект наступает через 30-60 секунд."
 	sting_icon = "sting_lsd"
 	chemical_cost = 15
 	genomecost = 2
@@ -130,9 +130,9 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation
-	name = "Transformation Sting"
-	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "Does not provide a warning to others. The victim will transform much like a changeling would."
+	name = "Жало Трансформации"
+	desc = "Мы молча жалим человека, вводя ретровирус, заставляющий жертву трансформироваться."
+	helptext = "Не предупреждает существ вокруг. Жертва трансформируется так же, как генокрад."
 	sting_icon = "sting_transform"
 	chemical_cost = 40
 	genomecost = 3
@@ -175,9 +175,9 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
-	name = "Extract DNA Sting"
-	desc = "We stealthily sting a target and extract their DNA."
-	helptext = "Will give you the DNA of your target, allowing you to transform into them."
+	name = "Жало Кражи ДНК"
+	desc = "Мы незаметно жалим цель, извлекая ее ДНК."
+	helptext = "Дает вам ДНК цели, что позволит вам превратиться в нее."
 	sting_icon = "sting_extract"
 	chemical_cost = 25
 	genomecost = 1
@@ -207,9 +207,9 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/silence
-	name = "Silence Sting"
-	desc = "We silently sting a human, completely deafening and silencing them for a short time."
-	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
+	name = "Жало Безмолвья"
+	desc = "Мы молча жалим человека, полностью оглушая его и заставляя замолчать на короткое время."
+	helptext = "Жертва не узнает о том, что ее ужалили, пока не попытается заговорить."
 	sting_icon = "sting_mute"
 	chemical_cost = 20
 	genomecost = 2
@@ -225,10 +225,10 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/blind
-	name = "Blind Sting"
-	helptext = "Temporarily blinds the target."
+	name = "Жало Слепоты"
+	helptext = "Временно слепит жертву."
 
-	desc = "This sting completely blinds a target for a short time. The target does not notice they have been stung."
+	desc = "Этот укус полностью ослепляет цель на короткое время. Цель не замечает, что ее ужалили."
 	sting_icon = "sting_blind"
 	chemical_cost = 25
 	genomecost = 2
@@ -245,8 +245,8 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/unfat
-	name = "Fat Sting"
-	desc = "We silently sting a human, forcing them to rapidly metabolize their fat."
+	name = "Жировое Жало"
+	desc = "Мы тихо жалим человека, заставляя его моментально набрать вес."
 	helptext = ""
 	sting_icon = "sting_fat"
 	chemical_cost = 5

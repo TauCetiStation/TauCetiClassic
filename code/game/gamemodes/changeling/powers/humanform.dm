@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/humanform
-	name = "Human form"
-	desc = "We change into a human."
+	name = "Человеческая форма"
+	desc = "Возвращает нас обратно в человеческий облик."
 	chemical_cost = 5
 	genetic_damage = 20
 //	req_dna = 1

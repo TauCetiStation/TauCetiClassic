@@ -2,8 +2,8 @@
 var/list/datum/dna/hivemind_bank = list()
 
 /obj/effect/proc_holder/changeling/hivemind_upload
-	name = "Hive Channel"
-	desc = "Allows us to channel DNA in the airwaves to allow other changelings to absorb it."
+	name = "Эфирный Канал"
+	desc = "Позволяет нам направить ДНК в эфир, чтобы позволить другим генокрадам поглотить его.."
 	chemical_cost = 10
 	genomecost = 0
 
@@ -32,8 +32,8 @@ var/list/datum/dna/hivemind_bank = list()
 	return 1
 
 /obj/effect/proc_holder/changeling/hivemind_download
-	name = "Hive Absorb"
-	desc = "Allows us to absorb DNA that has been channeled to the airwaves. Does not count towards absorb objectives."
+	name = "Эфирное Поглощение"
+	desc = "Позволяет нам поглощать ДНК, переданное в эфир. Это не пойдет в зачет задания на поглощение ДНК."
 	chemical_cost = 20
 	genomecost = 0
 /*

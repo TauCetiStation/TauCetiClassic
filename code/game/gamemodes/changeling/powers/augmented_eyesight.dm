@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/augmented_eyesight
 	name = "Дополнительные Фоторецепторы"
 	desc = "Создаёт в наших глазах тепловые рецепторы и значительно увеличивает чувствительность к свету."
-	helptext = "Даёт нам ночное и термальное видение. Может включаться и выключаться."
+	helptext = "Даёт вам ночное и термальное видение. Может включаться и выключаться."
 	chemical_cost = 0
 	genomecost = 3
 	var/active = 0 //Whether or not vision is enhanced

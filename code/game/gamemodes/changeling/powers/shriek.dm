@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/resonant_shriek
-	name = "Resonant Shriek"
-	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
-	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
+	name = "Резонансный Крик"
+	desc = "Наши легкие и голосовые связки сужаются, позволяя нам на короткое время издать шум, который оглушает и сбивает с толку всех вокруг."
+	helptext = "Издает высокочастотный крик, который сбивает с толку и оглушает людей, разбивает лампочки и перегружает датчики киборгов."
 	chemical_cost = 25
 	genomecost = 3
 	req_human = 1
