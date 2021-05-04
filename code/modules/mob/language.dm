@@ -256,7 +256,7 @@
 	if(H.wear_mask)
 		skipface |= H.wear_mask.flags_inv & HIDEFACE
 
-	if(!BP.disfigured || skipface) // we still text even tho the screen may be broken or hidden
+	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
 		H.custom_emote(SHOWMSG_VISUAL, "отображает на своём экране, \"<span class=\"emojify\">[text]</span>\"")
 
 /datum/language/xenomorph
