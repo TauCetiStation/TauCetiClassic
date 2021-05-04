@@ -147,6 +147,25 @@ log transactions
 		return
 	add_fingerprint(usr)
 	switch(action)
+		if("logout")
+			authenticated_account = null
+			view_screen = INDEX_PAGE
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+			return TRUE
+		if("changepage")
+			var/page = params["page"]
+			view_screen = page
+			return TRUE
+		if("setSecLvl")
+			if(authenticated_account && authenticated_account.security_level != params["lvl"]) 
+				authenticated_account.security_level = params["lvl"]
+			return TRUE
+		if("toMenu")
+			if(authenticated_account)
+				view_screen = PROFILE_PAGE
+			else 
+				view_screen = INDEX_PAGE
+			return TRUE
 		if("insert_card")
 			if(!held_card)
 				//this might happen if the user had the browser window open when somebody emagged it
@@ -218,62 +237,6 @@ log transactions
 
 				previous_account_number = tried_account_num
 				return TRUE
-		if("logout")
-			authenticated_account = null
-			view_screen = INDEX_PAGE
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-			return TRUE
-		if("changepage")
-			var/page = params["page"]
-			view_screen = page
-			return TRUE
-		if("setSecLvl")
-			if(authenticated_account && authenticated_account.security_level != params["lvl"]) 
-				authenticated_account.security_level = params["lvl"]
-			return TRUE
-		if("toMenu")
-			if(authenticated_account) view_screen = PROFILE_PAGE
-			else view_screen = INDEX_PAGE
-			return TRUE
-		if ("print_transaction")
-			if(authenticated_account)
-				var/obj/item/weapon/paper/R = new(src.loc)
-				R.name = "Transaction logs: [authenticated_account.owner_name]"
-				R.info = "<b>Transaction logs</b><br>"
-				R.info += "<i>Account holder:</i> [authenticated_account.owner_name]<br>"
-				R.info += "<i>Account number:</i> [authenticated_account.account_number]<br>"
-				R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
-				R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
-				R.info += "<table border=1 style='width:100%'>"
-				R.info += "<tr>"
-				R.info += "<td><b>Date</b></td>"
-				R.info += "<td><b>Time</b></td>"
-				R.info += "<td><b>Target</b></td>"
-				R.info += "<td><b>Purpose</b></td>"
-				R.info += "<td><b>Value</b></td>"
-				R.info += "<td><b>Source terminal ID</b></td>"
-				R.info += "</tr>"
-				for(var/datum/transaction/T in authenticated_account.transaction_log)
-					R.info += "<tr>"
-					R.info += "<td>[T.date]</td>"
-					R.info += "<td>[T.time]</td>"
-					R.info += "<td>[T.target_name]</td>"
-					R.info += "<td>[T.purpose]</td>"
-					R.info += "<td>$[T.amount]</td>"
-					R.info += "<td>[T.source_terminal]</td>"
-					R.info += "</tr>"
-				R.info += "</table>"
-				R.update_icon()
-
-				//stamp the paper
-				var/obj/item/weapon/stamp/centcomm/S = new
-				S.stamp_paper(R, "Automatic Teller Machine")
-
-			if(prob(50))
-				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
-			else
-				playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
-			return TRUE
 		if("transferTo")
 			if(authenticated_account)
 				var/transfer_amount = text2num(params["funds_amount"])
@@ -349,6 +312,44 @@ log transactions
 			else
 				playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
+		if ("print_transaction")
+			if(authenticated_account)
+				var/obj/item/weapon/paper/R = new(src.loc)
+				R.name = "Transaction logs: [authenticated_account.owner_name]"
+				R.info = "<b>Transaction logs</b><br>"
+				R.info += "<i>Account holder:</i> [authenticated_account.owner_name]<br>"
+				R.info += "<i>Account number:</i> [authenticated_account.account_number]<br>"
+				R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
+				R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
+				R.info += "<table border=1 style='width:100%'>"
+				R.info += "<tr>"
+				R.info += "<td><b>Date</b></td>"
+				R.info += "<td><b>Time</b></td>"
+				R.info += "<td><b>Target</b></td>"
+				R.info += "<td><b>Purpose</b></td>"
+				R.info += "<td><b>Value</b></td>"
+				R.info += "<td><b>Source terminal ID</b></td>"
+				R.info += "</tr>"
+				for(var/datum/transaction/T in authenticated_account.transaction_log)
+					R.info += "<tr>"
+					R.info += "<td>[T.date]</td>"
+					R.info += "<td>[T.time]</td>"
+					R.info += "<td>[T.target_name]</td>"
+					R.info += "<td>[T.purpose]</td>"
+					R.info += "<td>$[T.amount]</td>"
+					R.info += "<td>[T.source_terminal]</td>"
+					R.info += "</tr>"
+				R.info += "</table>"
+				R.update_icon()
+
+				//stamp the paper
+				var/obj/item/weapon/stamp/centcomm/S = new
+				S.stamp_paper(R, "Automatic Teller Machine")
+				if(prob(50))
+					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
+				else
+					playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
+				return TRUE
 	return TRUE
 
 /obj/machinery/atm/tgui_interact(mob/user, datum/tgui/ui)
