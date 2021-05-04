@@ -52,13 +52,19 @@
 	var/datum/language/speaking = parse_language(message)
 	var/has_lang_prefix = !!speaking
 	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages["Universal Sign Language"]
-		if(can_speak(USL))
-			speaking = USL
+		var/list/datum/language/mute_fallback = list(
+			all_languages["Display Text"],
+			all_languages["Universal Sign Language"],
+		)
+
+		for(var/datum/language/L in mute_fallback)
+			if(can_speak(L))
+				speaking = L
+				break
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
-		if (!(speaking && (speaking.flags & SIGNLANG)))
+		if (!(speaking && (speaking.flags & (SIGNLANG | PSEUDOLANG))))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
 

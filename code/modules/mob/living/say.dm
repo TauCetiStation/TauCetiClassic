@@ -117,6 +117,12 @@ var/list/department_radio_keys = list(
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
 			return 1
 
+		if (speaking.flags & PSEUDOLANG)
+			var/datum/language/pseudo/P = speaking
+			if(istype(P))
+				P.pseudo_say(message, src)
+			return 1
+
 	//speaking into radios
 	if(used_radios.len)
 		italics = 1
