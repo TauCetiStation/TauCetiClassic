@@ -24,6 +24,10 @@
 			S = new/mob/living/carbon/slime/red(T)
 		else
 			S = new/mob/living/carbon/slime/orange(T)
-		S.rabid = 1
+		S.rabid = TRUE
+		S.name = "pyroclastic [S.name]"
+
+		for(var/mob/dead/observer/O in observer_list)
+			S.try_request_n_transfer(O, "A new Pyroclastic Slime was born. Do you want to be him?", ROLE_GHOSTLY)
 
 		qdel(newAnomaly)

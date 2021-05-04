@@ -268,6 +268,14 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
+/mob/living/carbon/slime/transfer_personality(client/candidate)
+	if(!candidate)
+		return
+
+	ckey = candidate.ckey
+
+	to_chat(src, "Вы - [name].")
+	to_chat(src, "Ваша цель - размножение.")
 
 /mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(Victim)

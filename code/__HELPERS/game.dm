@@ -647,7 +647,7 @@
 	if(key || mind || stat != CONSCIOUS)
 		return
 
-	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
+	if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 		return
 
 	if(isobserver(M))
@@ -675,10 +675,11 @@
 		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes", "Not This Round")
 	else
 		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes")
+
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")
-		M.client.prefs.ignore_question += IGNORE_BORER
+		M.client.prefs.ignore_question += Ignore_Role
 		return
 
 	if(key || mind || stat != CONSCIOUS)
