@@ -7772,6 +7772,7 @@
 /obj/structure/object_wall/velocity{
 	dir = 8;
 	icon_state = "vel_w04";
+	layer = 3.2;
 	name = "shuttle window";
 	opacity = 0
 	},
@@ -7873,6 +7874,7 @@
 /obj/structure/object_wall/velocity{
 	dir = 8;
 	icon_state = "vel_w02";
+	layer = 3.2;
 	name = "shuttle window";
 	opacity = 0
 	},
@@ -7925,6 +7927,7 @@
 /obj/structure/object_wall/velocity{
 	dir = 8;
 	icon_state = "vel_w05";
+	layer = 3.2;
 	name = "shuttle window";
 	opacity = 0
 	},
