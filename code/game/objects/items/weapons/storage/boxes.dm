@@ -700,7 +700,7 @@
 /obj/item/weapon/storage/box/mines/explosive
 	name = "box of HE mines"
 
-obj/item/weapon/storage/box/mines/explosive/atom_init()
+/obj/item/weapon/storage/box/mines/explosive/atom_init()
 	. = ..()
 	for(var/i in 1 to 4)
 		new /obj/item/mine(src)
@@ -709,7 +709,7 @@ obj/item/weapon/storage/box/mines/explosive/atom_init()
 /obj/item/weapon/storage/box/mines/stun
 	name = "box of stun mines"
 
-obj/item/weapon/storage/box/mines/stun/atom_init()
+/obj/item/weapon/storage/box/mines/stun/atom_init()
 	. = ..()
 	for(var/i in 1 to 4)
 		new /obj/item/mine/stun(src)
