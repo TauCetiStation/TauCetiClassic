@@ -1,6 +1,6 @@
 /obj/item/mine
 	name = "mine"
-	desc = "A friendly-looking pancake with a happy light on the top. Absolute opposite of libertarian - this mine BEGS to be stepped on."
+	desc = "A friendly-looking pancake with a happy light on top. Absolute opposite of libertarian - this mine BEGS to be stepped on."
 	icon = 'icons/obj/mines.dmi'
 	icon_state = "mine"
 	layer = 3
@@ -46,6 +46,10 @@
 			trigger_act(M)
 		else
 			return
+
+/obj/item/mine/bullet_act(obj/item/projectile/Proj)
+	trigger_act(Proj)
+	return
 
 /obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 1, 1, 3, 3)
@@ -101,12 +105,23 @@
 
 /obj/item/mine/incendiary
 	name = "incendiary mine"
-	desc = "This thing definetly violates Space Geneva Convention."
+	desc = "This thing definitely violates Space Geneva Convention."
 	icon_state = "incendiarymine"
 
 /obj/item/mine/incendiary/trigger_act(obj)
+	explosion(loc, 0.5, 1, 1)
 	if(isliving(obj))
 		var/mob/living/M = obj
 		M.adjust_fire_stacks(10)
 		M.IgniteMob()
 		qdel(src)
+
+/obj/item/mine/emp
+	name = "ion mine"
+	desc = "When you hate your roomba really, really much."
+	icon_state = "empmine"
+
+/obj/item/mine/emp/trigger_act(obj)
+	empulse(src, 2, 3)
+	qdel(src)
+	return

@@ -32,6 +32,7 @@
 	new /obj/item/device/remote_device/captain(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
+	new /obj/item/weapon/storage/box/mines/stun(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 	new /obj/item/clothing/head/santa(src)
