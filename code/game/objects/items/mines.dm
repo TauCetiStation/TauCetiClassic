@@ -50,7 +50,6 @@
 
 /obj/item/mine/bullet_act(obj/item/projectile/Proj)
 	trigger_act(Proj)
-	return
 
 /obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 1, 1, 3, 3)
