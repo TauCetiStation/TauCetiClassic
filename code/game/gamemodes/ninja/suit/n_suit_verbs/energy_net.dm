@@ -1,4 +1,4 @@
-/** 
+/**
   * SPACE NINJA NET
   *  It will teleport people to a holding facility after 30 seconds. (Check the process() proc to change where teleport goes)
   *  It is possible to destroy the net by the occupant or someone else.
@@ -11,7 +11,7 @@
 
 	density = 1//Can't pass through.
 	opacity = 0//Can see through.
-	mouse_opacity = 1//So you can hit it with stuff.
+	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
 
 	var/health = 100//How much health it has.
@@ -36,7 +36,7 @@
 		qdel(src)
 	return
 
-/obj/effect/energy_net/process(var/mob/living/carbon/M as mob)
+/obj/effect/energy_net/process(mob/living/carbon/M)
 	var/check = 60//30 seconds before teleportation. Could be extended I guess. - Extended to one minute
 	//var/mob_name = affecting.name//Since they will report as null if terminated before teleport.
 	//The person can still try and attack the net when inside.

@@ -32,9 +32,6 @@
 	//to find it.
 	src.blinded = null
 
-	// Basically just deletes any screen objects :<
-	regular_hud_updates()
-
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
 		handle_environment(environment)
@@ -737,7 +734,7 @@
 					phrases += "[M]... feed me..."
 			say (pick(phrases))
 
-/mob/living/carbon/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
+/mob/living/carbon/slime/proc/will_hunt(hunger = -1) // Check for being stopped from feeding and chasing
 	//if (docile)	return 0
 	if (hunger == 2 || rabid || attacked) return 1
 	if (Leader) return 0

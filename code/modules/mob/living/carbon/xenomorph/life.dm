@@ -13,9 +13,6 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		//stuff in the stomach
-		handle_stomach()
-
 		update_icons()
 
 	//Apparently, the person who wrote this code designed it so that
@@ -37,61 +34,6 @@
 	if(client)
 		handle_regular_hud_updates()
 
-/mob/living/carbon/xenomorph/proc/adjust_body_temperature(current, loc_temp, boost)
-	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
-	if(!on_fire)
-		if(difference > 50)
-			increments = difference/5
-		else
-			increments = difference/10
-		var/change = increments*boost	// Get the amount to change by (x per increment)
-		var/temp_change
-		if(current < loc_temp)
-			temperature = min(loc_temp, temperature+change)
-		else if(current > loc_temp)
-			temperature = max(loc_temp, temperature-change)
-		temp_change = (temperature - current)
-		return temp_change
-
-/*
-/mob/living/carbon/xenomorph/proc/get_thermal_protection()
-	var/thermal_protection = 1.0
-	//Handle normal clothing
-	if(head && (head.body_parts_covered & HEAD))
-		thermal_protection += 0.5
-	if(wear_suit && (wear_suit.body_parts_covered & UPPER_TORSO))
-		thermal_protection += 0.5
-	if(wear_suit && (wear_suit.body_parts_covered & LEGS))
-		thermal_protection += 0.2
-	if(wear_suit && (wear_suit.body_parts_covered & ARMS))
-		thermal_protection += 0.2
-	if(wear_suit && (wear_suit.body_parts_covered & HANDS))
-		thermal_protection += 0.2
-	if(wear_suit && (wear_suit.flags & SUITSPACE))
-		thermal_protection += 3
-	if(COLD_RESISTANCE in mutations)
-		thermal_protection += 5
-
-	return thermal_protection
-
-/mob/living/carbon/xenomorph/proc/add_fire_protection(temp)
-	var/fire_prot = 0
-	if(head)
-		if(head.protective_temperature > temp)
-			fire_prot += (head.protective_temperature/10)
-	if(wear_mask)
-		if(wear_mask.protective_temperature > temp)
-			fire_prot += (wear_mask.protective_temperature/10)
-	if(wear_suit)
-		if(wear_suit.protective_temperature > temp)
-			fire_prot += (wear_suit.protective_temperature/10)
-
-
-	return fire_prot
-*/
-
 /mob/living/carbon/xenomorph/proc/handle_regular_status_updates()
 	updatehealth()
 
@@ -100,14 +42,14 @@
 		silent = 0
 	else				//ALIVE. LIGHTS ARE ON
 		if(isxenoadult(src))
-			if(health < config.health_threshold_dead || !has_brain())
+			if(health < config.health_threshold_dead)
 				death()
 				blinded = 1
 				stat = DEAD
 				silent = 0
 				return 1
 		else if(isfacehugger(src) || isxenolarva(src))
-			if(health < 0 || !has_brain())
+			if(health < 0)
 				death()
 				blinded = 1
 				stat = DEAD
@@ -212,30 +154,38 @@
 	..()
 
 /mob/living/carbon/xenomorph/proc/handle_hud_icons_health()
-	return
-
-/mob/living/carbon/xenomorph/proc/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
-				stomach_contents.Remove(M)
-				continue
-			if(istype(M, /mob/living/carbon) && stat != DEAD)
-				if(M.stat == DEAD)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmobs.times_fired%3==1)
-					if(!(status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
-
+	if(!healths)
+		return
+	if(stat != DEAD)
+		var/resulthealth = (health / maxHealth) * 100
+		switch(resulthealth)
+			if(90 to 100)
+				healths.icon_state = "health0"
+			if(72 to 90)
+				healths.icon_state = "health1"
+			if(54 to 72)
+				healths.icon_state = "health2"
+			if(36 to 54)
+				healths.icon_state = "health3"
+			if(18 to 36)
+				healths.icon_state = "health4"
+			if(0 to 18)
+				healths.icon_state = "health5"
+			else
+				healths.icon_state = "health6"
+	else
+		healths.icon_state = "health7"
 
 ///FIRE CODE
 /mob/living/carbon/xenomorph/handle_fire()
 	if(..())
 		return
-	adjustFireLoss(6)
+	adjustFireLoss(12)
 	return
 //END FIRE CODE
+
+//Xenomorphs will not be blind in ventilation
+/mob/living/carbon/xenomorph/is_vision_obstructed()
+	if(istype(loc, /obj/machinery/atmospherics/pipe))
+		return FALSE
+	return ..()

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 //  Beacon randomly spawns in space
 //	When a non-traitor (no special role in /mind) uses it, he is given the choice to become a traitor
 //	If he accepts there is a random chance he will be accepted, rejected, or rejected and killed
@@ -73,6 +71,7 @@
 			SSticker.mode.equip_traitor(N)
 			SSticker.mode.traitors += N.mind
 			N.mind.special_role = "traitor"
+			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", N)
 			var/objective = "Free Objective"
 			switch(rand(1,100))
 				if(1 to 50)

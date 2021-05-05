@@ -351,11 +351,11 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.dir = NORTH
-		else		usr.dir = SOUTH
+		if(dy > 0)	usr.set_dir(NORTH)
+		else		usr.set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.dir = EAST
-		else		usr.dir = WEST
+		if(dx > 0)	usr.set_dir(EAST)
+		else		usr.set_dir(WEST)
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
@@ -371,14 +371,14 @@
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			set_dir(NORTH)
 		else
-			dir = SOUTH
+			set_dir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			set_dir(EAST)
 		else
-			dir = WEST
+			set_dir(WEST)
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
@@ -396,7 +396,7 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
 /obj/screen/click_catcher/atom_init()

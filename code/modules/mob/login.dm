@@ -56,7 +56,15 @@
 	blocker.alpha = 255
 	blocker.layer = ABOVE_HUD_LAYER
 	blocker.plane = ABOVE_HUD_PLANE
-	blocker.mouse_opacity = 0
+	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	// atom_huds
+	reload_huds()
+
+	//Reload alternate appearances
+	update_all_alt_apperance()
+
+	add_click_catcher()
 
 	client.screen += blocker
 

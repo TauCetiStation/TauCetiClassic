@@ -75,6 +75,7 @@ SUBSYSTEM_DEF(job)
 		if(!latejoin)
 			position_limit = job.spawn_positions
 		Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+		player.mind.assigned_job = job
 		player.mind.assigned_role = rank
 		player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 		unassigned -= player
@@ -153,6 +154,7 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in player_list)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
+			player.mind.assigned_job = null
 			player.mind.special_role = null
 	SetupOccupations()
 	unassigned = list()
@@ -358,6 +360,7 @@ SUBSYSTEM_DEF(job)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
 			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
+			player.client << output(player.ready, "lobbybrowser:imgsrc")
 			unassigned -= player
 			SSticker.mode.antag_candidates -= player.mind
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
@@ -454,7 +457,7 @@ SUBSYSTEM_DEF(job)
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
 			H.buckled.loc = H.loc
-			H.buckled.dir = H.dir
+			H.buckled.set_dir(H.dir)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
@@ -543,9 +546,6 @@ SUBSYSTEM_DEF(job)
 
 //		H.update_icons()
 
-	H.hud_updateflag |= (1 << ID_HUD)
-	H.hud_updateflag |= (1 << IMPLOYAL_HUD)
-	H.hud_updateflag |= (1 << SPECIALROLE_HUD)
 	return 1
 
 /datum/controller/subsystem/job/proc/spawnId(mob/living/carbon/human/H, rank, title)

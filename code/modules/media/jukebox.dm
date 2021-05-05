@@ -22,7 +22,7 @@
 
 	var/emagged = 0
 
-/datum/song_info/New(var/list/json)
+/datum/song_info/New(list/json)
 	title  = json["title"]
 	artist = json["artist"]
 	album  = json["album"]
@@ -143,7 +143,6 @@ var/global/loopModeNames=list(
 
 	var/datum/browser/popup = new (user,"jukebox",name,420,700)
 	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 

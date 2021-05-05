@@ -17,6 +17,7 @@
 
 /datum/bodypart_controller/Destroy()
 	BP = null
+	return ..()
 
 /datum/bodypart_controller/proc/is_damageable(additional_damage = 0)
 	//Continued damage to vital organs can kill you
@@ -55,12 +56,9 @@
 		cur_damage += BP.burn_dam
 
 	if(BP.bodypart_organs.len && (cur_damage + damage_amt >= BP.max_damage || (((sharp && damage_amt >= 5) || damage_amt >= 10) && prob(5))))
-		// Damage an internal organ
+	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
 		IO.take_damage(damage_amt / 2)
-		brute /= 2
-		if(laser)
-			burn /= 2
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
@@ -100,7 +98,7 @@
 	// If there are still hurties to dispense
 	var/spillover = cur_damage + damage_amt + BP.burn_dam + burn - BP.max_damage // excess damage goes off into shock_stage, this var also can prevent dismemberment, if result is negative.
 
-	if(spillover > 0)
+	if(spillover > 0 && !BP.species.flags[IS_SYNTHETIC])
 		BP.owner.shock_stage += spillover * ORGAN_DAMAGE_SPILLOVER_MULTIPLIER
 
 	// sync the organ's damage with its wounds
@@ -246,6 +244,7 @@ This function completely restores a damaged organ to perfect condition.
 			BP.implants -= implanted_object
 
 	BP.owner.updatehealth()
+	BP.owner.sec_hud_set_implants()
 
 /datum/bodypart_controller/proc/createwound(type = CUT, damage)
 	if(damage == 0)

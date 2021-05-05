@@ -238,7 +238,7 @@
 	},
 /area/station/civilian/holodeck/source_courtroom)
 "D" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-10"
 	},
 /obj/structure/window/reinforced/holowindow{

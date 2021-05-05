@@ -13,15 +13,23 @@
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/ore))
 		user.drop_from_inventory(W, src)
-		stored_ore[W.name]++
 	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
-			stored_ore[O.name]++
 		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
 	return
+
+/obj/structure/ore_box/Entered(atom/movable/ORE)
+	if(istype(ORE, /obj/item/weapon/ore))
+		stored_ore[ORE.name]++
+
+/obj/structure/ore_box/Exited(atom/movable/ORE)
+	if(istype(ORE, /obj/item/weapon/ore))
+		stored_ore[ORE.name]--
+	if(!contents.len)
+		stored_ore = list()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	var/dat = ""
@@ -64,9 +72,7 @@
 	src.add_fingerprint(usr)
 	if(href_list["removeall"])
 		for (var/obj/item/weapon/ore/O in contents)
-			contents -= O
-			O.loc = src.loc
-		stored_ore = list()
+			O.Move(src.loc)
 		to_chat(usr, "<span class='notice'>You empty the box</span>")
 	src.updateUsrDialog()
 	return
@@ -80,7 +86,7 @@
 		to_chat(usr, "<span class='warning'>You are physically incapable of emptying the ore box.</span>")
 		return
 
-	if( usr.incapacitated() )
+	if(usr.incapacitated())
 		return
 
 	if(!Adjacent(usr)) //You can only empty the box if you can physically reach it
@@ -94,8 +100,8 @@
 		return
 
 	for (var/obj/item/weapon/ore/O in contents)
-		contents -= O
-		O.loc = src.loc
+		O.Move(src.loc)
+
 	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
 	return

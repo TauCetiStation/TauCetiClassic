@@ -22,19 +22,25 @@
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
 // /datum/religion_rites signals
-/// from base of religion_rites/on_chosen(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/on_chosen(): (/mob, /obj)
 #define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
-/// from base of religion_rites/required_checks(): (/mob, /obj/structure/altar_of_gods)
-#define COMSIG_RITE_REQUIRED_CHECK "rite_required_checks"
-/// from base of religion_rites/before_perform_rite(): (/mob, /obj/structure/altar_of_gods)
-#define COMSIG_RITE_BEFORE_PERFORM "rite_before_perform"
-/// from base of religion_rites/invoke_effect(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/can_start_wrapper(): (/mob, /obj)
+#define COMSIG_RITE_CAN_START "rite_can_start"
+/// from base of religion_rites/start(): (/mob, /obj)
+#define COMSIG_RITE_STARTED "rite_is_started"
+/// from base of religion_rites/rite_step_wrapper(): (/mob, /obj)
+#define COMSIG_RITE_IN_STEP "rite_in_step"
+/// from base of religion_rites/step_end(): (/mob, /obj)
+#define COMSIG_RITE_STEP_ENDED "rite_step_ended"
+/// from base of religion_rites/invoke_effect(): (/mob, /obj)
 #define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
-/// from base of religion_rites/on_invocation(): (/mob, /obj/structure/altar_of_gods, stage)
-#define COMSIG_RITE_ON_INVOCATION "rite_on_invocation"
-/// from base of religion_rites: (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/can_step(): (/mob, /obj)
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
+
+// /datum/religion signals
+/// from base of religion/add_membern(): (/mob, holy_role)
+#define COMSIG_REL_ADD_MEMBER "rite_on_chosen"
 
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)
@@ -44,6 +50,13 @@
 /// from base of reagent/reaction_turf(): (turf/T, volume)
 #define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"
 
+// /datum/species signals
+
+///from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
+#define COMSIG_SPECIES_GAIN "species_gain"
+///from datum/species/on_species_loss(): (datum/species/lost_species)
+#define COMSIG_SPECIES_LOSS "species_loss"
+
 // /client signals
 /// from base of client/Move(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_MOVE "client_move"
@@ -51,10 +64,18 @@
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
 
+// /area signals
+///from base of area/Entered(): (atom/movable/M)
+#define COMSIG_AREA_ENTERED "area_entered"
+///from base of area/Exited(): (atom/movable/M)
+#define COMSIG_AREA_EXITED "area_exited"
+
 // /atom signals
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
+/// from base of mob/living/carbon/human/electrocute_act(): (shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+#define COMSIG_ATOM_ELECTROCUTE_ACT "atom_electrocute_act"
 /// from base of atom/Entered(): (atom/movable/entering, /atom)
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/newLoc)
@@ -87,6 +108,9 @@
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
 
+/// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
+#define COMSIG_ATOM_CHANGE_DIR "change_dir"
+
 // /atom/movable signals
 /// from base of atom/movable/Move(): (/atom/newLoc)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
@@ -109,6 +133,16 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
+///from base of area/Entered(): (/area)
+#define COMSIG_ENTER_AREA "enter_area"
+///from base of area/Exited(): (/area)
+#define COMSIG_EXIT_AREA "exit_area"
+
+// /obj
+/// from base of datum/religion_rites/reset_rite_wrapper(): ()
+#define COMSIG_OBJ_RESET_RITE "obj_reset_rite"
+/// from base of datum/religion_rites/start(): ()
+#define COMSIG_OBJ_START_RITE "obj_start_rite"
 
 // /obj/item signals
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
@@ -117,6 +151,10 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/equipped(): (/mob/equipper, slot)
+#define COMSIG_ITEM_EQUIPPED "item_equip"
+///from base of obj/item/dropped(): (mob/user)
+#define COMSIG_ITEM_DROPPED "item_drop"
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
 /// from base of mob/CtrlClickOn(): (atom/target, mob/user)
@@ -131,6 +169,18 @@
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
+
+// hand_like /obj/item signals
+/// check if item is hand_like: ()
+#define COMSIG_HAND_IS "hand_is"
+/// from mob/living/silicon/robot/ClickOn(): (atom/T, mob/user, params)
+#define COMSIG_HAND_ATTACK "hand_attack"
+/// from mob/living/silicon/robot/drop_item(): (atom/T, mob/user)
+#define COMSIG_HAND_DROP_ITEM "hand_drop_item"
+/// from mob/living/silicon/robot/put_in_active_hand(): (obj/item/I, mob/user)
+#define COMSIG_HAND_PUT_IN "hand_put_in"
+/// from mob/living/silicon/robot/get_active_hand(): (mob/user)
+#define COMSIG_HAND_GET_ITEM "hand_get_item"
 
 // mob signals
 /// from  base of mob/ClickOn(): (atom/target, params)
@@ -172,6 +222,10 @@
 /// from mob/living/check_shields(): (atom/attacker, damage, attack_text, hit_dir)
 #define COMSIG_LIVING_CHECK_SHIELDS "check_shields"
 	#define COMPONENT_ATTACK_SHIELDED 1
+// from mob/living/learn_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_LEARN_COMBO "learn_combo"
+// from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
+#define COMSIG_LIVING_FORGET_COMBO "forget_combo"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
@@ -195,3 +249,8 @@
 
 /// from base of /datum/mob_modifier/revert. Called to notify other modifiers that they should re-apply: (datum/component/mob_modifier/reverting)
 #define COMSIG_MOB_MOD_UPDATE "mob_mod_update"
+
+/// send this signal to add /datum/component/vis_radius to a list of mobs or one mob: (mob/mob_or_mobs)
+#define COMSIG_SHOW_RADIUS "show_radius"
+/// send this signal to remove /datum/component/vis_radius to a mobs: ()
+#define COMSIG_HIDE_RADIUS "hide_radius"

@@ -1,7 +1,13 @@
 	////////////
 	//SECURITY//
 	////////////
-#define TOPIC_SPAM_DELAY	2		//2 ticks is about 2/10ths of a second; it was 4 ticks, but that caused too many clicks to be lost due to lag
+#define LIMITER_SIZE	5
+#define CURRENT_SECOND	1
+#define SECOND_COUNT	2
+#define CURRENT_MINUTE	3
+#define MINUTE_COUNT	4
+#define ADMINSWARNED_AT	5
+
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
 
 var/list/blacklisted_builds = list(
@@ -32,31 +38,70 @@ var/list/blacklisted_builds = list(
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
 
+	// asset_cache
+	var/asset_cache_job
+	if(href_list["asset_cache_confirm_arrival"])
+		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
+		if(!asset_cache_job)
+			return
+
 	if(href_list["_src_"] == "chat")
 		return chatOutput.Topic(href, href_list)
 
 	//Reduces spamming of links by dropping calls that happen during the delay period
-	if(next_allowed_topic_time > world.time)
-		return
-	next_allowed_topic_time = world.time + TOPIC_SPAM_DELAY
+	if (!holder && config.minutetopiclimit)
+		var/minute = round(world.time, 600)
+		if (!topiclimiter)
+			topiclimiter = new(LIMITER_SIZE)
+		if (minute != topiclimiter[CURRENT_MINUTE])
+			topiclimiter[CURRENT_MINUTE] = minute
+			topiclimiter[MINUTE_COUNT] = 0
+		topiclimiter[MINUTE_COUNT] += 1
+		if (topiclimiter[MINUTE_COUNT] > config.minutetopiclimit)
+			var/msg = "Your previous action was ignored because you've done too many in a minute."
+			if (minute != topiclimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
+				topiclimiter[ADMINSWARNED_AT] = minute
+				msg += " Administrators have been informed."
+				log_game("[key_name(src)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [config.minutetopiclimit] topic calls in a given game minute.")
+			to_chat(src, "<span class='danger'>[msg]</span>")
+			return
+
+	if (!holder && config.secondtopiclimit)
+		var/second = round(world.time, 10)
+		if (!topiclimiter)
+			topiclimiter = new(LIMITER_SIZE)
+		if (second != topiclimiter[CURRENT_SECOND])
+			topiclimiter[CURRENT_SECOND] = second
+			topiclimiter[SECOND_COUNT] = 0
+		topiclimiter[SECOND_COUNT] += 1
+		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
+			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second.</span>")
+			return
 
 	//search the href for script injection
 	if( findtext(href,"<script",1,0) )
 		world.log << "Attempted use of scripts within a topic call, by [src]"
 		message_admins("Attempted use of scripts within a topic call, by [src]")
-		//del(usr)
-		return
-
-	if(href_list["asset_cache_confirm_arrival"])
-		//to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
-		var/job = text2num(href_list["asset_cache_confirm_arrival"])
-		completed_asset_jobs += job
 		return
 
 	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
 		var/file = href_list["file"]
 		var/message = href_list["message"]
 		js_error_manager.log_error(file, message, src)
+		return
+
+	//byond bug ID:2256651
+	if(asset_cache_job && (asset_cache_job in completed_asset_jobs))
+		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
+		src << browse("...", "window=asset_cache_browser")
+		return
+	if(href_list["asset_cache_preload_data"])
+		asset_cache_preload_data(href_list["asset_cache_preload_data"])
+		return
+
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
 		return
 
 	//Admin PM
@@ -99,6 +144,13 @@ var/list/blacklisted_builds = list(
 			src << link(href_list["link"])
 
 	..()	//redirect to hsrc.Topic()
+
+#undef ADMINSWARNED_AT
+#undef MINUTE_COUNT
+#undef CURRENT_MINUTE
+#undef SECOND_COUNT
+#undef CURRENT_SECOND
+#undef LIMITER_SIZE
 
 /client/Destroy()
 	..() // Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
@@ -168,9 +220,13 @@ var/list/blacklisted_builds = list(
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 
-	if(config.sandbox && !holder)
-		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
-		holder = admin_datums[ckey]
+	if(config.sandbox)
+		var/sandbox_permissions = (R_HOST & ~(R_PERMISSIONS | R_DEBUG | R_BAN | R_LOG))
+		if(!holder)
+			new /datum/admins("Sandbox Admin", sandbox_permissions, ckey)
+			holder = admin_datums[ckey]
+		else
+			holder.rights = (holder.rights | sandbox_permissions)
 
 	if(holder)
 		holder.owner = src
@@ -210,6 +266,8 @@ var/list/blacklisted_builds = list(
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
+	connection_time = world.time
+
 	update_supporter_status()
 
 	if(custom_event_msg && custom_event_msg != "")
@@ -225,6 +283,11 @@ var/list/blacklisted_builds = list(
 	if(holder)
 		add_admin_verbs()
 		admin_memo_show()
+		if(holder.rights & R_PERMISSIONS)
+			var/list/fluff_list = custom_item_premoderation_list()
+			var/fluff_count = fluff_list.len
+			if(fluff_count)
+				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [russian_plural(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
@@ -285,16 +348,32 @@ var/list/blacklisted_builds = list(
 
 /client/proc/handle_autokick_reasons()
 	if(config.client_limit_panic_bunker_count != null)
-		if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
-			if (config.client_limit_panic_bunker_link)
-				to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
-				SEND_LINK(src, config.client_limit_panic_bunker_link)
-				log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
-			else
-				to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
-				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-				QDEL_IN(src, 2 SECONDS)
-			return
+
+		if(clients.len > config.client_limit_panic_bunker_count)
+			var/blocked_by_bunker = TRUE
+
+			if(ckey in admin_datums) // admins immune to bunker
+				blocked_by_bunker = FALSE
+
+			if(supporter) // and patrons
+				blocked_by_bunker = FALSE
+
+			if(ckey in joined_player_list) // player already joined the game and just reconnects, so we pass him
+				blocked_by_bunker = FALSE
+
+			if((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap) // mentors immune too, but only before own cap 
+				blocked_by_bunker = FALSE
+
+			if(blocked_by_bunker)
+				if (config.client_limit_panic_bunker_link)
+					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+					SEND_LINK(src, config.client_limit_panic_bunker_link)
+					log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
+				else
+					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+					QDEL_IN(src, 2 SECONDS)
+				return
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
@@ -329,17 +408,16 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
-	var/sql_ckey = sanitize_sql(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
-	
+
 	if(!query.Execute()) // for some reason IsConnected() sometimes ignores disconnections
 		return           // dbcore revision needed
-	
+
 	var/sql_id = 0
 	var/sql_player_age = 0	// New players won't have an entry so knowing we have a connection we set this to zero to be updated if their is a record.
 	var/sql_player_ingame_age = 0
@@ -349,7 +427,7 @@ var/list/blacklisted_builds = list(
 		sql_player_ingame_age = text2num(query.item[3])
 		break
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[sanitize_sql(address)]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
@@ -360,7 +438,7 @@ var/list/blacklisted_builds = list(
 		related_accounts_ip += "[query_ip.item[1]]"
 		break
 
-	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
+	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[sanitize_sql(computer_id)]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
@@ -393,7 +471,7 @@ var/list/blacklisted_builds = list(
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
-	else if(!config.serverwhitelist)
+	else if(!config.bunker_ban_mode)
 		//New player!! Need to insert all the stuff
 		guard.first_entry = TRUE
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
@@ -403,9 +481,10 @@ var/list/blacklisted_builds = list(
 	player_ingame_age = sql_player_ingame_age
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+	if(establish_db_connection("erro_connection_log"))
+		var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
+		var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+		query_accesslog.Execute()
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
@@ -428,7 +507,7 @@ var/list/blacklisted_builds = list(
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			del(src)
+			qdel(src)
 			return TRUE
 
 		if (oldcid != computer_id) //IT CHANGED!!!
@@ -451,7 +530,7 @@ var/list/blacklisted_builds = list(
 
 			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
 
-			del(src)
+			qdel(src)
 			return TRUE
 		else
 			if (cidcheck_failedckeys[ckey])
@@ -468,7 +547,7 @@ var/list/blacklisted_builds = list(
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
 	else
-		var/sql_ckey = sanitize_sql(ckey)
+		var/sql_ckey = ckey(ckey)
 		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
 		query_cidcheck.Execute()
 
@@ -481,7 +560,7 @@ var/list/blacklisted_builds = list(
 			tokens[ckey] = cid_check_reconnect()
 
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
-			del(src)
+			qdel(src)
 			return TRUE
 
 /client/proc/cid_check_reconnect()
@@ -497,8 +576,7 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	if(!isnum(player_ingame_age))
@@ -507,11 +585,10 @@ var/list/blacklisted_builds = list(
 	if(player_ingame_age <= 0)
 		return
 
-	var/sql_ckey = sanitize_sql(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as unsigned integer) < [player_ingame_age]")
 	query_update.Execute()
 
-#undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
 
 /client/Click(atom/object, atom/location, control, params)
@@ -523,6 +600,10 @@ var/list/blacklisted_builds = list(
 /client/proc/is_afk(duration = config.afk_time_bracket)
 	return inactivity > duration
 
+/client/proc/inactivity2text()
+	var/seconds = inactivity / 10
+	return "[round(seconds / 60)] minute\s, [seconds % 60] second\s"
+
 // Send resources to the client.
 /client/proc/send_resources()
 	// Most assets are now handled through asset_cache.dm
@@ -532,8 +613,12 @@ var/list/blacklisted_builds = list(
 	)
 
 	spawn (10) //removing this spawn causes all clients to not get verbs.
+
+		//load info on what assets the client has
+		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
+
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSassets.cache, register_asset = FALSE)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/getFilesSlow, src, SSassets.preload, FALSE), 5 SECONDS)
 
 /client/proc/generate_clickcatcher()
 	if(!void)
@@ -542,12 +627,13 @@ var/list/blacklisted_builds = list(
 
 //This may help with UI's that were stuck and don't want to open anymore.
 /client/verb/close_nanouis()
-	set name = "Fix NanoUI (Close All)"
+	set name = "Fix UI (Close All)"
 	set category = "OOC"
-	set desc = "Closes all opened NanoUI."
+	set desc = "Closes all opened NanoUI/TGUI."
 
-	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.</span>")
 	nanomanager.close_user_uis(usr)
+	SStgui.force_close_all_windows(usr)
+	to_chat(src, "<span class='notice'>You forcibly close any opened TGUI/NanoUI interfaces.</span>")
 
 /client/proc/show_character_previews(mutable_appearance/MA)
 	var/pos = 0
@@ -559,7 +645,7 @@ var/list/blacklisted_builds = list(
 			LAZYSET(char_render_holders, "[D]", O)
 			screen |= O
 		O.appearance = MA
-		O.dir = D
+		O.set_dir(D)
 		O.underlays += image('icons/turf/floors.dmi', "floor")
 		O.screen_loc = "character_preview_map:0,[pos]"
 
@@ -569,33 +655,6 @@ var/list/blacklisted_builds = list(
 		screen -= S
 		qdel(S)
 	char_render_holders = null
-
-/client/proc/is_blocked_by_regisration_panic_bunker()
-	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
-
-	var/list/byond_date = get_byond_registration()
-
-	if (!length(byond_date))
-		return
-
-	bunker_date_regex.Find(config.registration_panic_bunker_age)
-
-	var/user_year = byond_date[1]
-	var/user_month = byond_date[2]
-	var/user_day = byond_date[3]
-
-	var/bunker_year = text2num(bunker_date_regex.group[1])
-	var/bunker_month = text2num(bunker_date_regex.group[2])
-	var/bunker_day = text2num(bunker_date_regex.group[3])
-
-	var/is_invalid_year = user_year > bunker_year
-	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
-	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
-
-	var/is_invalid_date = is_invalid_year || is_invalid_month || is_invalid_day
-	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
-
-	return is_invalid_date && is_invalid_ingame_age
 
 /client/proc/get_byond_registration()
 	if(byond_registration)

@@ -450,7 +450,6 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
-	item_color="white"
 	species_restricted = list("exclude" , UNATHI)
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
@@ -459,7 +458,6 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "walter_brooks_1"
 	item_state = "bluegloves"
-	item_color="blue"
 
 /obj/item/clothing/gloves/fluff/chal_appara_1 //furlucis: Chal Appara
 	name = "Left Black Glove"
@@ -510,6 +508,8 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "taryn_kifer_1"
 	body_parts_covered = 0
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/head/fluff
 	body_parts_covered = 0

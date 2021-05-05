@@ -11,6 +11,7 @@ var/bomb_set
 	density = TRUE
 	can_buckle = 1
 	use_power = NO_POWER_USE
+	unacidable = TRUE	//aliens can't destroy the bomb
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
@@ -29,6 +30,8 @@ var/bomb_set
 	var/lastentered = ""
 	var/spray_icon_state
 	var/nuketype = ""
+
+	var/datum/announcement/station/nuke/announce_nuke = new
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
@@ -214,7 +217,7 @@ var/bomb_set
 		if (yes_code)
 			message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-	
+
 	var/datum/browser/popup = new(user, "window=nuclearbomb", src.name, 300, 400)
 	popup.set_content(dat)
 	popup.open()
@@ -299,7 +302,7 @@ var/bomb_set
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
 						var/area/nuclearbombloc = get_area(loc)
-						captain_announce("Detected activation of a nuclear warhead in [initial(nuclearbombloc.name)]. Someone trying to blow up the station!", sound = "nuke")
+						announce_nuke.play(nuclearbombloc)
 						set_security_level("delta")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else

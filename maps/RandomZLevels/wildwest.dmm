@@ -48,7 +48,7 @@
 	},
 /area/awaymission/wildwest/vault)
 "al" = (
-/obj/effect/gateway,
+/obj/structure/cult/anomaly/timewhole,
 /turf/simulated/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "am" = (
@@ -1267,7 +1267,7 @@
 /area/awaymission/wildwest/mines)
 "ea" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly,
 /turf/simulated/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eb" = (

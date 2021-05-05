@@ -7,9 +7,11 @@
 	config_tag = "wizard"
 	role_type = ROLE_WIZARD
 	required_players = 2
-	required_players_secret = 10
+	required_players_bundles = 10
 	required_enemies = 1
 	recommended_enemies = 1
+	antag_hud_type = ANTAG_HUD_WIZ
+	antag_hud_name = "hudwizard"
 
 	votable = 0
 
@@ -35,7 +37,7 @@
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	return TRUE
-	
+
 
 /datum/game_mode/wizard/pre_setup()
 	for(var/datum/mind/wizard in wizards)
@@ -53,7 +55,6 @@
 		greet_wizard(wizard)
 
 	return ..()
-
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	if (config.objectives_disabled)
@@ -129,6 +130,7 @@
 
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
+	add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", wizard.current)
 	if (you_are)
 		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
 	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
@@ -279,14 +281,14 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "wizard", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 
 //OTHER PROCS
 
 //To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(mob/M)
+/mob/proc/spellremove()
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
 		qdel(spell_to_remove)
 	spell_list.Cut()

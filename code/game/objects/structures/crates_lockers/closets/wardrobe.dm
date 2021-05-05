@@ -31,7 +31,7 @@
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/santa(src)
-		new /obj/item/clothing/suit/wintercoat/security(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	#endif
 
@@ -62,7 +62,7 @@
 		new /obj/item/clothing/shoes/black(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat(src)
+		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -85,7 +85,7 @@
 	new /obj/item/weapon/storage/backpack/chaplain(src)
 	new /obj/item/weapon/game_kit/chaplain(src)
 	new /obj/item/weapon/reagent_containers/spray/thurible(src)
-	new /obj/item/clothing/glasses/sunglasses/chaplain(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/chaplain(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/fancy/candle_box(src)
 
@@ -157,7 +157,7 @@
 		new /obj/item/clothing/head/beret/eng(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	#endif
 
@@ -182,7 +182,7 @@
 		new /obj/item/clothing/head/beret/eng(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/suit/wintercoat/engineering(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	#endif
 
@@ -246,7 +246,7 @@
 		new /obj/item/clothing/gloves/black(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -284,7 +284,7 @@
 		new /obj/item/clothing/suit/storage/labcoat/genetics(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -307,7 +307,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/medical(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -319,6 +319,10 @@
 	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/medic_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/head/soft/paramed(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/head/beret/paramed(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/under/rank/medical(src)
 	for (var/i in 1 to 2)
@@ -333,10 +337,10 @@
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/surgical(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/medical(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/suit/storage/labcoat/winterlabcoat(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	#endif
 
 
@@ -354,7 +358,7 @@
 		new /obj/item/clothing/head/soft/grey(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/wintercoat(src)
+		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 		new /obj/item/clothing/head/santa(src)
 	#endif
@@ -400,7 +404,7 @@
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat(src)
+	new /obj/item/clothing/suit/hooded/wintercoat(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -416,11 +420,9 @@
 	new /obj/item/weapon/storage/backpack/dufflebag/marinad(src)
 	new /obj/item/clothing/gloves/security/marinad(src)
 	new /obj/item/clothing/head/helmet/tactical/marinad(src)
-	new /obj/item/clothing/suit/storage/flak/marinad(src)
+	new /obj/item/clothing/suit/marinad(src)
 	new /obj/item/clothing/under/tactical/marinad(src)
-	new /obj/item/clothing/mask/balaclava(src)
-	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
 	new /obj/item/weapon/storage/belt/security/tactical(src)
 	new /obj/item/weapon/kitchenknife/combat(src)
 	new /obj/item/clothing/shoes/boots/work(src)
-

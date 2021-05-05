@@ -169,9 +169,9 @@
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
-			t += " <small><A href='byond://?src=\ref[src];edit=1;code=[key]'>(edit)</A>"
-			t += " <A href='byond://?src=\ref[src];delete=1;code=[key]'>(delete)</A></small><BR>"
-		t += "<small><A href='byond://?src=\ref[src];add=1;'>(add new)</A></small><BR>"
+			t += " <small><A href='byond://?src=\ref[src];edit=1;code=[key]'>edit</A>"
+			t += " <A href='byond://?src=\ref[src];delete=1;code=[key]'>delete</A></small><BR>"
+		t += "<small><A href='byond://?src=\ref[src];add=1;'>add new</A></small><BR>"
 		t+= "<UL></TT>"
 
 	var/datum/browser/popup = new(user, "window=navbeacon", src.name)

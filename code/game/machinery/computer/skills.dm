@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 #define SKILLS_MODE_MAIN_SCREEN 1
 #define SKILLS_MODE_MAINTENACE_SCREEN 2
 #define SKILLS_MODE_EDIT_SCREEN 3
@@ -12,7 +11,7 @@
 	state_nopower_preset = "laptop0"
 	light_color = "#00b000"
 	req_one_access = list(access_heads)
-	circuit = "/obj/item/weapon/circuitboard/skills"
+	circuit = /obj/item/weapon/circuitboard/skills
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/obj/item/weapon/card/id/scan = null  //current id card inside machine
@@ -73,7 +72,7 @@
 							</tr>"}
 						dat += "</table><hr width='75%' />"
 					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Log Out'>{Log Out}</A>",src)
+					dat += text("<A href='?src=\ref[];choice=Log Out'>Log Out</A>",src)
 				if(SKILLS_MODE_MAINTENACE_SCREEN)
 					dat += {"<b>Records Maintenance</b>
 					<hr><br>
@@ -142,13 +141,12 @@
 						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index</A>", src)
 				else
 		else
-			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
+			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
 
 	var/datum/browser/popup = new(user, "secure_rec", "Employment Records", 600, 400)
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-	onclose(user, "secure_rec")
 
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
@@ -195,6 +193,9 @@ What a mess.*/
 					usr.drop_item()
 					I.loc = src
 					scan = I
+					if(ishuman(usr))
+						var/mob/living/carbon/human/H = usr
+						H.sec_hud_set_ID()
 
 		if("Log Out")
 			authenticated = null

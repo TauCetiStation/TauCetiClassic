@@ -23,7 +23,7 @@
 			"Z"
 			)
 
-/dmm_suite/save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num)
+/dmm_suite/save_map(turf/t1 as turf, turf/t2 as turf, map_name as text, flags as num)
 	//Check for illegal characters in file name... in a cheap way.
 	if(!((ckeyEx(map_name)==map_name) && ckeyEx(map_name))){
 		CRASH("Invalid text supplied to proc save_map, invalid characters or empty string.")
@@ -40,7 +40,7 @@
 	saved_map << file_text
 	return saved_map
 
-/dmm_suite/write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num)
+/dmm_suite/write_map(turf/t1 as turf, turf/t2 as turf, flags as num)
 	//Check for valid turfs.
 	if(!isturf(t1) || !isturf(t2)){
 		CRASH("Invalid arguments supplied to proc write_map, arguments were not turfs.")
@@ -73,31 +73,31 @@
 		dmm_text += {""[keys[key_pos]]" = ([templates[key_pos]])\n"}
 		}
 	var/z_level = 0
-	for(var/z_pos=1;TRUE;z_pos=findtext(template_buffer,".",z_pos)+1){
-		if(z_pos>=length(template_buffer)){break}
+	var/z_pos = 1
+	while(z_pos < length(template_buffer))
 		if(z_level){dmm_text+={"\n"}}
 		dmm_text += {"\n(1,1,[++z_level]) = {"\n"}
 		var/z_block = copytext(template_buffer,z_pos,findtext(template_buffer,".",z_pos))
-		for(var/y_pos=1;TRUE;y_pos=findtext(z_block,";",y_pos)+1){
-			if(y_pos>=length(z_block)){break}
+		var/y_pos = 1
+		while(y_pos < length(z_block))
 			var/y_block = copytext(z_block,y_pos,findtext(z_block,";",y_pos))
-			for(var/x_pos=1;TRUE;x_pos=findtext(y_block,",",x_pos)+1){
-				if(x_pos>=length(y_block)){break}
+			var/x_pos = 1
+			while(x_pos < length(y_block))
 				var/x_block = copytext(y_block,x_pos,findtext(y_block,",",x_pos))
 				var/key_number = text2num(x_block)
 				var/temp_key = keys[key_number]
 				dmm_text += temp_key
 				sleep(-1)
-				}
+				x_pos = findtext(y_block, ",", x_pos) + 1
 			dmm_text += {"\n"}
 			sleep(-1)
-			}
+			y_pos = findtext(z_block, ";", y_pos) + 1
 		dmm_text += {"\"}"}
 		sleep(-1)
-		}
+		z_pos = findtext(template_buffer, ".", z_pos) + 1
 	return dmm_text
 
-/dmm_suite/proc/make_template(var/turf/model as turf, var/flags as num)
+/dmm_suite/proc/make_template(turf/model as turf, flags as num)
 	var/template = ""
 	var/obj_template = ""
 	var/mob_template = ""
@@ -130,7 +130,7 @@
 	template = "[obj_template][mob_template][turf_template][area_template]"
 	return template
 
-/dmm_suite/proc/check_attributes(var/atom/A)
+/dmm_suite/proc/check_attributes(atom/A)
 	var/attributes_text = {"{"}
 	for(var/V in A.vars){
 		sleep(-1)
@@ -160,7 +160,7 @@
 	attributes_text += {"}"}
 	return attributes_text
 
-/dmm_suite/proc/get_model_key(var/which as num, var/key_length as num)
+/dmm_suite/proc/get_model_key(which as num, key_length as num)
 	var/key = ""
 	var/working_digit = which-1
 	for(var/digit_pos=key_length;digit_pos>=1;digit_pos--){

@@ -61,46 +61,72 @@
 	QDEL_NULL(storage_ui)
 	return ..()
 
-/obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
-		var/mob/M = usr
+/obj/item/weapon/storage/MouseDrop(obj/over_object, src_location, turf/over_location)
+	if(src != over_object)
+		remove_outline()
+	if(!(ishuman(usr) || ismonkey(usr) || isIAN(usr))) //so monkeys can take off their backpacks -- Urist
+		return
+	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return
 
-		if(!over_object)
+	var/mob/M = usr
+	if(isturf(over_location) && over_object != M)
+		if(M.incapacitated())
 			return
-
-		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
 			return
-
-		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			src.open(usr)
+		if(!isturf(M.loc))
 			return
-
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-
-		//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
-		//there's got to be a better way of doing this.
-		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		if(istype(src, /obj/item/weapon/storage/lockbox))
+			var/obj/item/weapon/storage/lockbox/L = src
+			if(L.locked)
+				return
+		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
 			return
+		if(M.a_intent == INTENT_HELP)
+			var/dir_target = get_dir(M.loc, over_location)
+			M.SetNextMove(CLICK_CD_MELEE)
+			for(var/obj/item/I in contents)
+				if(M.is_busy())
+					return
+				if(!Adjacent(M) || !over_location.Adjacent(src) || !over_location.Adjacent(M))
+					return
+				if(!do_after(M, 2, target = M))
+					return
+				remove_from_storage(I, M.loc)
+				I.add_fingerprint(M)
+				step(I, dir_target)
+			add_fingerprint(M)
+		return
 
-		if (!usr.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-				if("mouth")
-					if(!M.unEquip(src))
-						return
-					M.put_in_active_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
+	if(!over_object)
+		return
+	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
+		src.open(usr)
+		return
+	if (!( istype(over_object, /obj/screen) ))
+		return ..()
 
+	//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
+	//there's got to be a better way of doing this.
+	if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		return
+
+	if (!usr.incapacitated())
+		switch(over_object.name)
+			if("r_hand")
+				if(!M.unEquip(src))
+					return
+				M.put_in_r_hand(src)
+			if("l_hand")
+				if(!M.unEquip(src))
+					return
+				M.put_in_l_hand(src)
+			if("mouth")
+				if(!M.unEquip(src))
+					return
+				M.put_in_active_hand(src)
+		src.add_fingerprint(usr)
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -282,9 +308,9 @@
 		else
 			W.layer = initial(W.layer)
 			W.plane = initial(W.plane)
-		W.loc = new_location
+		W.Move(new_location)
 	else
-		W.loc = get_turf(src)
+		W.Move(get_turf(src))
 
 	if(usr && !NoUpdate)
 		update_ui_after_item_removal()
@@ -312,20 +338,6 @@
 	if(istype(I, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = I
-		if(T.calc_carry() > 0)
-			if(prob(85))
-				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
-				return FALSE
-			else
-				I.forceMove(user.loc)
-				if(user.client && user.s_active != src)
-					user.client.screen -= I
-				I.dropped(user)
-				to_chat(user, "<span class='warning'>God damnit!</span>")
-			return
-
 	if(istype(I, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
@@ -334,6 +346,7 @@
 	return TRUE
 
 /obj/item/weapon/storage/dropped(mob/user)
+	..()
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
@@ -349,7 +362,7 @@
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
 	return attack_hand(user)                  // to unequip - there is drag n drop available for this task - same as humans do.
 
-/obj/item/weapon/storage/proc/gather_all(var/turf/T, var/mob/user)
+/obj/item/weapon/storage/proc/gather_all(turf/T, mob/user)
 	var/success = 0
 	var/failure = 0
 

@@ -31,7 +31,6 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
-		hud_updateflag |= 1 << IMPLOYAL_HUD
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items()
@@ -109,6 +108,7 @@
 			IMP.loc = O
 			IMP.imp_in = O
 			IMP.implanted = TRUE
+		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -166,7 +166,6 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
-		hud_updateflag |= 1 << IMPLOYAL_HUD
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in get_equipped_items())
@@ -225,6 +224,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -249,6 +249,7 @@
 			if(BP)
 				IMP.part = BP
 				BP.implants += IMP
+		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -355,7 +356,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -368,7 +369,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link)
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link, R)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -399,10 +400,6 @@
 			O.mmi = new /obj/item/device/mmi(O)
 
 		if(O.mmi) O.mmi.transfer_identity(src) //Does not transfer key/client.
-
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.borgify_directive(O)
 
 	O.Namepick()
 
@@ -435,6 +432,7 @@
 
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
+	new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	spawn(0)//To prevent the proc from returning null.

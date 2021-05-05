@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/machinery/implantchair
 	name = "loyalty implanter"
 	desc = "Used to implant occupants with loyalty implants."
@@ -44,8 +42,6 @@
 	var/datum/browser/popup = new(user, "implant")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "implant")
 
 
 /obj/machinery/implantchair/Topic(href, href_list)

@@ -23,7 +23,7 @@
 		keyslot1 = new ks1type(src)
 	if(ks2type)
 		keyslot2 = new ks2type(src)
-	recalculateChannels()
+	INVOKE_ASYNC(src, .proc/recalculateChannels)
 
 /obj/item/device/radio/headset/Destroy()
 	qdel(keyslot1)
@@ -49,6 +49,15 @@
 /obj/item/device/radio/headset/syndicate/atom_init()
 	. = ..()
 	set_frequency(SYND_FREQ)
+
+/obj/item/device/radio/headset/heist
+	syndie = TRUE
+	ks1type = /obj/item/device/encryptionkey/heist
+	grid = TRUE
+
+/obj/item/device/radio/headset/heist/atom_init()
+	. = ..()
+	set_frequency(HEIST_FREQ)
 
 /obj/item/device/radio/headset/ninja
 	grid = TRUE

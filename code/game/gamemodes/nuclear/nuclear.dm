@@ -8,9 +8,11 @@
 	config_tag = "nuclear"
 	role_type = ROLE_OPERATIVE
 	required_players = 15
-	required_players_secret = 25
+	required_players_bundles = 25
 	required_enemies = 2
 	recommended_enemies = 6
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "hudsyndicate"
 
 	votable = 0
 
@@ -73,47 +75,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/update_all_synd_icons()
-	spawn(0)
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							qdel(I)
-
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
-/datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
-	spawn(0)
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				var/I = image('icons/mob/mob.dmi', loc = synd_mind.current, icon_state = "synd")
-				synd_mind.current.client.images += I
-
-/datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
-	spawn(0)
-		for(var/datum/mind/synd in syndicates)
-			if(synd.current)
-				if(synd.current.client)
-					for(var/image/I in synd.current.client.images)
-						if(I.icon_state == "synd" && I.loc == synd_mind.current)
-							qdel(I)
-
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				for(var/image/I in synd_mind.current.client.images)
-					if(I.icon_state == "synd")
-						qdel(I)
-
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/nuclear/post_setup()
 
@@ -172,9 +133,6 @@
 			forge_syndicate_objectives(synd_mind)
 
 		spawnpos++
-		update_synd_icons_added(synd_mind)
-
-	update_all_synd_icons()
 
 	if(uplinklocker)
 		var/obj/structure/closet/C = new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
@@ -188,7 +146,6 @@
 		the_bomb.r_code = nuke_code
 
 	return ..()
-
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	if (nuke_code)
@@ -220,6 +177,7 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1, boss=0)
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", syndicate.current)
 	if (you_are)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>")
 	if(boss)
@@ -237,8 +195,8 @@
 
 /datum/game_mode/proc/remove_nuclear(mob/M)
 	syndicates -= M
-	update_synd_icons_removed(src)
 	M.mind.special_role = null
+	remove_antag_hud(ANTAG_HUD_OPS, M)
 	M.mind.remove_objectives()
 	M.mind.current.faction = "neutral"
 
@@ -346,6 +304,65 @@
 	..()
 	return 1
 
+/datum/game_mode/nuclear/modestat()
+	var/dat = ""
+	var/foecount = 0
+	var/crewcount = 0
+	var/diskdat = ""
+	var/bombdat = null
+	var/datum/game_mode/nuclear/GM = SSticker.mode
+	for(var/datum/mind/M in GM.syndicates)
+		foecount++
+	for(var/mob/living/C in alive_mob_list)
+		if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai))
+			continue
+		if (!C.client)
+			continue
+		crewcount++
+
+	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+		if(!N)
+			continue
+		var/atom/disk_loc = N.loc
+		while(!istype(disk_loc, /turf))
+			if(istype(disk_loc, /mob))
+				var/mob/M = disk_loc
+				diskdat += "Carried by [M.real_name] "
+			if(istype(disk_loc, /obj))
+				var/obj/O = disk_loc
+				diskdat += "in \a [O.name] "
+			disk_loc = disk_loc.loc
+		diskdat += "in [disk_loc.loc]"
+		break // Should only need one go-round, probably
+	var/nukedpenalty = 0
+	for(var/obj/machinery/nuclearbomb/NUKE in poi_list)
+		//if (NUKE.r_code == "Nope") continue
+		if (NUKE.detonated == 0)
+			continue
+		var/turf/T = NUKE.loc
+		bombdat = T.loc
+		if (istype(T,/area/shuttle/syndicate) || istype(T,/area/custom/wizard_station) || istype(T,/area/station/solar))
+			nukedpenalty = 1000
+		else if (istype(T,/area/station/security/main) || istype(T,/area/station/security/brig) || istype(T,/area/station/security/armoury) || istype(T,/area/station/security/checkpoint))
+			nukedpenalty = 50000
+		else if (istype(T,/area/station/engineering))
+			nukedpenalty = 100000
+		else
+			nukedpenalty = 10000
+		break
+	if (!diskdat)
+		diskdat = "Uh oh. Something has fucked up! Report this."
+	dat += {"<B><U>MODE STATS</U></B><BR>
+	<B>Number of Operatives:</B> [foecount]<BR>
+	<B>Number of Surviving Crew:</B> [crewcount]<BR>
+	<B>Final Location of Nuke:</B> [bombdat]<BR>
+	<B>Final Location of Disk:</B> [diskdat]<BR><BR>
+	<B>Operatives Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
+	<B>Operatives Killed:</B> [score["opkilled"]] ([score["opkilled"] * 250] Points)<BR>
+	<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
+	<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
+	<HR>"}
+	return dat
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	var/text = ""
@@ -365,7 +382,7 @@
 
 	if(text)
 		antagonists_completion += list(list("mode" = "nuclear", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text
 

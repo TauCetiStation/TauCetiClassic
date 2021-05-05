@@ -306,11 +306,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
 
-	if(istype(wear_suit, /obj/item/clothing/suit/wintercoat))
-		var/obj/item/clothing/suit/wintercoat/W = wear_suit
-		if(W.hooded) // used for coat hood due to hair layer viewed over the suit
-			overlays_standing[HAIR_LAYER]   = null
-
 	apply_overlay(HAIR_LAYER)
 
 
@@ -497,11 +492,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		overlays_standing[ID_LAYER]	= image("icon"='icons/mob/mob.dmi', "icon_state"="id", "layer"=-ID_LAYER)
 
-	hud_updateflag |= 1 << ID_HUD
-	hud_updateflag |= 1 << WANTED_HUD
-
 	apply_overlay(ID_LAYER)
-
 
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
@@ -668,12 +659,6 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_from_inventory(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
-
-		if(istype(wear_suit,/obj/item/clothing/suit/wintercoat))
-			var/obj/item/clothing/suit/wintercoat/W = wear_suit
-			if(W.hooded) //used for coat hood due to hair layer viewed over the suit
-				overlays_standing[HAIR_LAYER] = null
-				overlays_standing[HEAD_LAYER] = null
 		update_inv_shoes()
 
 	update_inv_w_uniform()
@@ -796,12 +781,13 @@ Please contact me on #coderbus IRC. ~Carn x
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 
-			if(BP.status & ORGAN_DEAD)
-				tail_s.color = NECROSIS_COLOR_MOD
-			else if(HULK in mutations)
-				tail_s.color = HULK_SKIN_COLOR
-			else
-				tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
+			if(species.flags[HAS_SKIN_COLOR])
+				if(BP.status & ORGAN_DEAD)
+					tail_s.color = NECROSIS_COLOR_MOD
+				else if(HULK in mutations)
+					tail_s.color = HULK_SKIN_COLOR
+				else
+					tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
 
 			overlays_standing[TAIL_LAYER] = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 

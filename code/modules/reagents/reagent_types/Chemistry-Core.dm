@@ -97,10 +97,8 @@
 	..()
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
-	if(ishuman(M) && iscultist(M) && prob(10))
+	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
 		SSticker.mode.remove_cultist(M.mind)
-		M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
-				          "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
 
 /datum/reagent/water/holywater/reaction_obj(obj/O, volume)
 	src = null
@@ -326,7 +324,7 @@
 	taste_message = "like a pencil or something"
 	custom_metabolism = 0.01
 
-/datum/reagent/carbon/reaction_turf(var/turf/T, var/volume)
+/datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
 	if(!istype(T, /turf/space))
 		var/obj/effect/decal/cleanable/dirt/dirtoverlay = locate(/obj/effect/decal/cleanable/dirt, T)

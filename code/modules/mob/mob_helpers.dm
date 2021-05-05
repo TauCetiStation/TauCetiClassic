@@ -48,9 +48,8 @@
 	return
 
 /proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-
 	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield)
+		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield || istype(L, /obj/item/weapon/implant/mindshield/loyalty))
 			continue
 		if(L.implanted)
 			return TRUE
@@ -301,7 +300,7 @@
 
 	return html_encode(new_text)
 
-/proc/zombie_talk(var/message)
+/proc/zombie_talk(message)
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
@@ -340,7 +339,7 @@
 	return 0
 
 
-/mob/proc/abiotic(var/full_body = 0)
+/mob/proc/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
 		return 1
 
@@ -393,9 +392,13 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
+	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]
+	var/list/sec_hud_users = hud.hudusers
 	broadcast_hud_message(message, broadcast_source, sec_hud_users)
 
 /proc/broadcast_medical_hud_message(message, broadcast_source)
+	var/datum/atom_hud/hud = huds[DATA_HUD_MEDICAL]
+	var/list/med_hud_users = hud.hudusers
 	broadcast_hud_message(message, broadcast_source, med_hud_users)
 
 /proc/broadcast_hud_message(message, broadcast_source, list/targets)
@@ -434,7 +437,7 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 	if(id && istype(id, /obj/item/weapon/card/id/syndicate))
 		threatcount -= 2
 	// A proper CentCom id is hard currency.
-	else if(id && is_type_in_list(id, list(/obj/item/weapon/card/id/centcom, /obj/item/weapon/card/id/ert)))
+	else if(id && istype(id, /obj/item/weapon/card/id/centcom))
 		return SAFE_PERP
 
 	if(check_access && !access_obj.allowed(src))

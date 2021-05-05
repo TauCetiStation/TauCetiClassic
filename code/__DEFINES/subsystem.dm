@@ -46,8 +46,9 @@
 #define SS_PRIORITY_CHAT         400
 #define SS_PRIORITY_TICKER       200
 #define SS_PRIORITY_NANOUI       110
+#define SS_PRIORITY_TGUI         110
 #define SS_PRIORITY_MOBS         100
-#define SS_PRIORITY_PARALAX       65
+#define SS_PRIORITY_PARALLAX      65
 #define SS_PRIORITY_DEFAULT       50
 #define SS_PRIORITY_OBJECTS       40
 #define SS_PRIORITY_QUIRKS        40
@@ -71,12 +72,13 @@
 #define SS_WAIT_TIMER         1
 #define SS_WAIT_ICON_SMOOTH   1
 #define SS_WAIT_LIGHTING      2
-#define SS_WAIT_PARALAX       2
+#define SS_WAIT_PARALLAX      2
 #define SS_WAIT_ORBIT         2
 #define SS_WAIT_FASTPROCESS   2
 #define SS_WAIT_FLUIDS        3
 #define SS_WAIT_GARBAGE       5
 #define SS_WAIT_SPACEDRIFT    5
+#define SS_WAIT_TGUI          9
 #define SS_WAIT_NANOUI       10
 #define SS_WAIT_SHUTTLES     10
 #define SS_WAIT_VOTE         10

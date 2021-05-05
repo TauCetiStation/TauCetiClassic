@@ -11,6 +11,8 @@
 		..()
 
 /obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
 		src.forceMove(target)
@@ -138,7 +140,7 @@
 			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
 			if(istype(I, /obj/item/organ/external/head))
 				I.pixel_y -= 10 // Head always has 10 pixels shift
-				I.dir = 2 // Rotate head face to us
+				I.set_dir(2) // Rotate head face to us
 				I.transform = turn(null, null)	//Turn it to initial angle
 
 /obj/item/device/flashlight/lamp/fir/special/attack_hand(mob/user)

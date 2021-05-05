@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/weapon/implantpad
 	name = "implantpad"
 	desc = "Used to modify implants."
@@ -66,8 +64,6 @@
 	var/datum/browser/popup = new(user, "implantpad", "Implant Mini-Computer")
 	popup.set_content(dat)
 	popup.open()
-
-	onclose(user, "implantpad")
 	return
 
 

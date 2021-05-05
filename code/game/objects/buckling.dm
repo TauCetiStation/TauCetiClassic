@@ -18,7 +18,7 @@
 	if(Adjacent(user) && user_unbuckle_mob(user))
 		return
 	return ..()
-	
+
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	if(can_buckle && istype(M) && !buckled_mob && istype(user))

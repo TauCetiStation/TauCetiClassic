@@ -188,7 +188,7 @@
 	if(slot == SLOT_WEAR_SUIT)
 		wearer = user
 		START_PROCESSING(SSobj, src)
-		wearer.playsound_local(null, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER, null, FALSE)
+		wearer.playsound_local(null, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		to_chat(wearer, "<span class='notice'>The medical system is ready for use. Make sure your helmet supports this system.</span>")
 
 /obj/item/clothing/suit/space/vox/medic/dropped(mob/user)
@@ -277,9 +277,9 @@
 			return
 		if(wearer)
 			wearer.alpha = 4
-			wearer.mouse_opacity = 0
+			wearer.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			if(current_charge <= (power_decrease * 15)) // there are 30 seconds to full discharge
-				wearer.playsound_local(null, 'sound/rig/loudbeep.wav', VOL_EFFECTS_MASTER, null, FALSE)
+				wearer.playsound_local(null, 'sound/rig/loudbeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 				to_chat(wearer, "<span class='danger'>Critically low charge:</span> <span class='electronicblue'>\[ [current_charge] \]</span>")
 	else
 		var/power_increase = 20 // 30 seconds to full charge
@@ -312,7 +312,7 @@
 		on = FALSE
 		slowdown = 0.5
 		wearer.alpha = 255
-		wearer.mouse_opacity = 1
+		wearer.mouse_opacity = MOUSE_OPACITY_ICON
 	else if(!deactive)
 		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
 			to_chat(wearer, "<span class='warning'>The cloaking system cannot function without a helmet.</span>")
@@ -333,7 +333,7 @@
 			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
 			slowdown = 2
 			wearer.alpha = 4
-			wearer.mouse_opacity = 0
+			wearer.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/vox/stealth/proc/is_damaged(low_damage_check = FALSE)
@@ -366,7 +366,7 @@
 			current_charge -= charge_decrease
 			if(wearer)
 				to_chat(wearer, "<span class='warning'>Attention. The cloaking system is overloaded. Redistributed [charge_decrease] conventional units of energy.</span>")
-				wearer.playsound_local(null, 'sound/rig/beep.wav', VOL_EFFECTS_MASTER, null, FALSE)
+				wearer.playsound_local(null, 'sound/rig/beep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			return
 		overload()
 

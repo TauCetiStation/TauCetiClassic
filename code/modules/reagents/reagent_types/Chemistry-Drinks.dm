@@ -712,13 +712,13 @@
 	..()
 	return !flags[IS_ORGANIC]
 
-/datum/reagent/consumable/ethanol/reaction_obj(var/obj/O, var/volume)
+/datum/reagent/consumable/ethanol/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()
 		to_chat(usr, "The solution dissolves the ink on the paper.")
 	if(istype(O,/obj/item/weapon/book))
-		if(istype(O,/obj/item/weapon/book/tome))
+		if(istype(O,/obj/item/weapon/storage/bible/tome))
 			to_chat(usr, "The solution does nothing. Whatever this is, it isn't normal ink.")
 			return
 		if(volume >= 5)
@@ -1337,7 +1337,7 @@
 /datum/reagent/consumable/ethanol/singulo
 	name = "Singulo"
 	id = "singulo"
-	description = "A blue-space beverage!"
+	description = "A bluespace beverage!"
 	color = "#2e6671" // rgb: 46, 102, 113
 	boozepwr = 5
 	dizzy_adj = 15

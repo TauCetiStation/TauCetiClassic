@@ -96,7 +96,7 @@
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
-					playsound(src, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER)
+					playsound(M, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER)
 					flick(G.hud.icon_state, G.hud)
 					user.SetNextMove(CLICK_CD_ACTION)
 					user.visible_message("<span class='danger'>[user] slit [M]'s throat open with \the [name]!</span>")
@@ -106,13 +106,13 @@
 	if (istype(M,/mob/living/carbon/brain))
 		messagesource = M:container
 	if (length(hitsound))
-		playsound(src, pick(hitsound), VOL_EFFECTS_MASTER)
+		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
 	user.do_attack_animation(M)
 
-	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE))
+	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE) && user.a_intent != INTENT_HARM)
 		user.visible_message("<span class='danger'>[user] tries to put [name] on the [M]'s head!</span>")
 		if(user.is_busy(src) || !do_after(user, 0.8 SECONDS, target = M))
 			return
@@ -122,8 +122,9 @@
 		M.log_combat(user, "slammed with [name] on the head (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(BRUTE)])")
 		var/list/data = user.get_unarmed_attack()
 		// if item has no force just assume attacker smashed his fist (no scratches or any modifiers) against victim's head.
-		M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
-		playsound(src, data["sound"], VOL_EFFECTS_MASTER)
+		if(user.a_intent in list(INTENT_PUSH, INTENT_GRAB))
+			M.apply_damage(force + data["damage"], BRUTE, BP_HEAD)
+			playsound(M, data["sound"], VOL_EFFECTS_MASTER)
 		return TRUE
 
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
@@ -210,10 +211,24 @@
 		if(!(user in viewers(M, null)))
 			showname = "."
 
+		var/list/alt_alpperances_vieawers
+		if(alternate_appearances)
+			for(var/key in alternate_appearances)
+				var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[key]
+				if(!AA.alternate_obj || !istype(AA.alternate_obj, /obj))
+					continue
+				var/obj/alternate_obj = AA.alternate_obj
+				alt_alpperances_vieawers = list()
+				for(var/mob/alt_viewer in viewers(M))
+					if(!alt_viewer.client || !(alt_viewer in AA.hudusers))
+						continue
+					alt_alpperances_vieawers += alt_viewer
+					alt_viewer.show_message("<span class='warning'><B>[M] has been attacked with [alternate_obj.name][showname] </B></span>", SHOWMSG_VISUAL)
+
 		if(attack_verb.len)
-			messagesource.visible_message("<span class='warning'><B>[M] has been [pick(attack_verb)] with [src][showname] </B></span>")
+			messagesource.visible_message("<span class='warning'><B>[M] has been [pick(attack_verb)] with [src][showname] </B></span>", ignored_mobs = alt_alpperances_vieawers)
 		else
-			messagesource.visible_message("<span class='warning'><B>[M] has been attacked with [src][showname] </B></span>")
+			messagesource.visible_message("<span class='warning'><B>[M] has been attacked with [src][showname] </B></span>", ignored_mobs = alt_alpperances_vieawers)
 
 		if(!showname && user)
 			if(user.client)

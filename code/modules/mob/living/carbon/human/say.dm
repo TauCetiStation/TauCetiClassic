@@ -237,7 +237,7 @@
 			return 1
 		if(isgod(other))
 			var/mob/living/simple_animal/shade/god/G = other
-			if(l_hand == G.container || r_hand == G.container)
+			if(G.my_religion.is_member(src))
 				return TRUE
 
 	//This is already covered by mob/say_understands()
@@ -311,10 +311,9 @@
 		if((message_mode != "changeling") && prob(40))
 			if(prob(80))
 				message = pick("A-HA-HA-HA!", "U-HU-HU-HU!", "I'm a GN-NOME!", "I'm a GnOme!", "Don't GnoMe me!", "I'm gnot a gnoblin!", "You've been GNOMED!")
-			else if(config.rus_language)
-				message =  "[message]... Но я ГНОМ!"
 			else
-				message =  "[message]... But i'm A GNOME!"
+				message =  "[message]... Но я ГНОМ!"
+
 			verb = pick("yells like an idiot", "says rather loudly")
 			speech_sound = 'sound/magic/GNOMED.ogg'
 

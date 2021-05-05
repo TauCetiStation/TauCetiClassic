@@ -17,7 +17,7 @@ var/global/list/frozen_items = list()
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cellconsole"
-	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
+	circuit = /obj/item/weapon/circuitboard/cryopodcontrol
 	var/mode = null
 
 /obj/machinery/computer/cryopod/ui_interact(mob/user)
@@ -26,12 +26,14 @@ var/global/list/frozen_items = list()
 
 	var/dat
 
-	dat += "<hr/><br/><b>Cryogenic Oversight Control</b><br/>"
-	dat += "<i>Welcome, [user.real_name].</i><br/><br/><hr/>"
-	dat += "<a href='?src=\ref[src];log=1'>View storage log</a>.<br>"
-	dat += "<a href='?src=\ref[src];item=1'>Recover object</a>.<br>"
-	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
-	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a>.<br/><hr/>"
+	dat += "<div class='Section__title'>Cryogenic Oversight Control</div>"
+	dat += "<div class='Section'>"
+	dat += "<i>Welcome, [user.real_name].</i><br/><br/>"
+	dat += "<a href='?src=\ref[src];log=1'>View storage log</a><br>"
+	dat += "<a href='?src=\ref[src];item=1'>Recover object</a><br>"
+	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a><br>"
+	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a><br/>"
+	dat += "</div>"
 
 	var/datum/browser/popup = new(user, "window=cryopod_console", src.name)
 	popup.set_content(dat)
@@ -180,7 +182,7 @@ var/global/list/frozen_items = list()
 
 			//Update any existing objectives involving this mob.
 			for(var/datum/objective/O in all_objectives)
-				if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind) //We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
+				if(istype(O,/datum/objective/rp_rev) && O.target == occupant.mind) //We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
 					qdel(O) //TODO: Update rev objectives on login by head (may happen already?) ~ Z
 				else if(O.target && istype(O.target, /datum/mind))
 					if(O.target == occupant.mind)

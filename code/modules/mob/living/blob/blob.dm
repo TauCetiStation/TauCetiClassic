@@ -18,7 +18,7 @@
 	. = ..()
 
 
-/mob/living/blob/say(var/message)
+/mob/living/blob/say(message)
 	return//No talking for you
 
 

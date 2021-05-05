@@ -141,11 +141,13 @@ var/can_call_ert
 
 	// there's only a certain chance a team will be sent
 	if(!prob(send_team_chance))
-		command_alert("It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time.", "Central Command", "noert")
+		var/datum/announcement/centcomm/noert/announcement = new
+		announcement.play()
 		can_call_ert = 0 // Only one call per round, ladies.
 		return
 
-	command_alert("It would appear that an emergency response team was requested for [station_name()]. We will prepare and send one as soon as possible.", "Central Command", "yesert")
+	var/datum/announcement/centcomm/yesert/announcement = new
+	announcement.play()
 	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1
 
@@ -231,6 +233,7 @@ var/can_call_ert
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
+	M.mind.add_antag_hud(ANTAG_HUD_ERT, "hudoperative", M)
 	if(!(M.mind in SSticker.minds))
 		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = spawn_location
@@ -249,7 +252,7 @@ var/can_call_ert
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
 
 	if(leader_selected)
-		var/obj/item/weapon/card/id/ert/W = new(src)
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
 		W.rank = "Emergency Response Team Leader"
 		W.registered_name = real_name
@@ -257,15 +260,11 @@ var/can_call_ert
 		W.icon_state = "ert-leader"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	else
-		var/obj/item/weapon/card/id/ert/W = new(src)
-		W.assignment = "Emergency Response Team"
-		W.rank = "Emergency Response Team"
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
-		W.icon_state = "ert"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
-	START_PROCESSING(SSobj, L)
 	return 1

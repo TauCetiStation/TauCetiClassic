@@ -50,7 +50,7 @@
 #define INTERACTION_ANYBOT_TOGGLE_ACTIVE				2
 
 #define INTERACTION_SECBOT_ID_CHECKER					3
-#define INTERACTION_SECBOT_CHEKING_RECORDS				4
+#define INTERACTION_SECBOT_CHECKING_RECORDS				4
 
 #define INTERACTION_FARMBOT_PLANTS_WATERING				3
 #define INTERACTION_FARMBOT_TOGGLE_REFILLGING			4
@@ -128,7 +128,7 @@
 
 
 	// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
-	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+	dat = {"<!DOCTYPE html>
 			<html>
 			<head>
 				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
@@ -335,10 +335,24 @@
 						src.securityActive2 = M
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				secHUD = !secHUD
+				if(secHUD)
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
+					sec.add_hud_to(src)
+				else
+					var/datum/atom_hud/sec = global.huds[DATA_HUD_SECURITY]
+					sec.remove_hud_from(src)
+
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				medHUD = !medHUD
+				if(medHUD)
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+					med.add_hud_to(src)
+				else
+					var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+					med.remove_hud_from(src)
+
 		if("translator")
 			if(href_list["toggle"])
 				src.translator_toggle()
@@ -525,9 +539,9 @@
 			if(istype(hackobj, /obj/machinery/bot/secbot))
 				var/obj/machinery/bot/secbot/Bot = hackobj
 				switch(interaction_type)
-					if(INTERACTION_SECBOT_ID_CHECKER) //Toggle ID cheker
+					if(INTERACTION_SECBOT_ID_CHECKER) //Toggle ID checker
 						Bot.idcheck = !Bot.idcheck
-					if(INTERACTION_SECBOT_CHEKING_RECORDS) //Toggle Checking records
+					if(INTERACTION_SECBOT_CHECKING_RECORDS) //Toggle Checking records
 						Bot.check_records = !Bot.check_records
 			if(istype(hackobj, /obj/machinery/bot/farmbot))
 				var/obj/machinery/bot/farmbot/Bot = hackobj
@@ -650,7 +664,7 @@
 			"}
 	return dat
 
-/mob/living/silicon/pai/proc/CheckDNA(var/mob/M, var/mob/living/silicon/pai/P)
+/mob/living/silicon/pai/proc/CheckDNA(mob/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
 		P.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>", blind_message = "<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
@@ -713,7 +727,7 @@
 	var/dat = ""
 	dat += "<h2>Crew Manifest</h2><hr>"
 	if(data_core)
-		dat += data_core.get_manifest(0) // make it monochrome
+		dat += data_core.html_manifest(monochrome=0)
 	dat += "<br>"
 	return dat
 
@@ -948,7 +962,7 @@
 					dat += "Security Bot.<br>"
 					var/obj/machinery/bot/secbot/Temp = hackobj
 					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_ID_CHECKER];sub=0'>Toggle ID Checker</a> (Currently [Temp.idcheck ? "Active" : "Disabled"]) <br>"
-					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_CHEKING_RECORDS];sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
+					dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_SECBOT_CHECKING_RECORDS];sub=0'>Toggle Records Checker</a> (Currently [Temp.check_records ? "Active" : "Disabled"]) <br>"
 				if(istype(hackobj, /obj/machinery/bot/farmbot))
 					botchecked = 1
 					dat += "Farm Bot.<br>"
@@ -1109,7 +1123,7 @@
 #undef INTERACTION_ANYBOT_TOGGLE_ACTIVE
 
 #undef INTERACTION_SECBOT_ID_CHECKER
-#undef INTERACTION_SECBOT_CHEKING_RECORDS
+#undef INTERACTION_SECBOT_CHECKING_RECORDS
 
 #undef INTERACTION_FARMBOT_PLANTS_WATERING
 #undef INTERACTION_FARMBOT_TOGGLE_REFILLGING

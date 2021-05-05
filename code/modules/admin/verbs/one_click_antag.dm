@@ -119,7 +119,7 @@
 
 /datum/admins/proc/makeRevs()
 
-	var/datum/game_mode/revolution/temp = new
+	var/datum/game_mode/rp_revolution/temp = new
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
 
@@ -207,8 +207,6 @@
 			H = pick(candidates)
 			H.mind.make_Cultist()
 			candidates.Remove(H)
-			temp.grant_runeword(H)
-
 		return 1
 
 	return 0
@@ -283,21 +281,6 @@
 				qdel(A)
 				continue
 
-		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							qdel(I)
-
-		for(var/datum/mind/synd_mind in SSticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in SSticker.mode.syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
 		for (var/obj/machinery/nuclearbomb/bomb in poi_list)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
@@ -370,36 +353,6 @@
 
 	return 1
 
-
-/datum/admins/proc/makeGangsters()
-
-	var/datum/game_mode/gang/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_REV in applicant.client.prefs.be_role)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_REV))
-							if(!(applicant.job in temp.restricted_jobs))
-								candidates += applicant
-
-	if(candidates.len >= 2)
-		H = pick(candidates)
-		H.mind.make_Gang("A")
-		candidates.Remove(H)
-		H = pick(candidates)
-		H.mind.make_Gang("B")
-		return 1
-
-	return 0
-
-
 /datum/admins/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
@@ -443,6 +396,7 @@
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
 	SSticker.mode.traitors += new_syndicate_commando.mind
@@ -547,6 +501,7 @@
 	I.imp_in = new_vox
 	I.implanted = 1
 	BP.implants += I
+	new_vox.sec_hud_set_implants()
 	I.part = BP
 
 	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist ) ) )

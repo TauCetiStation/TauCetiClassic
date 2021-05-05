@@ -125,7 +125,7 @@
 								</tr>
 								{{for data.protolathe_data.materials}}
 								<tr>
-									<td><span class="average">{{:value.name}}</span></td><td>{{:value.ammount}}</td>
+									<td><span class="average">{{:value.name}}</span></td><td>{{:value.amount}}</td>
 									<td>
 									{{if value.can_eject_one}}
 										{{:helper.link("Eject", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 1})}}
@@ -171,7 +171,7 @@
 								
 								{{for data.imprinter_data.materials}}
 								<tr>
-									<td><span class="average">{{:value.name}}</span></td><td>{{:value.ammount}}</td>
+									<td><span class="average">{{:value.name}}</span></td><td>{{:value.amount}}</td>
 									<td>
 									{{if value.can_eject_one}}
 										{{:helper.link("Eject", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 1})}}
@@ -266,7 +266,7 @@
 							</tr>
 							{{for data.protolathe_data.materials}}
 							<tr>
-								<td><span class="average">{{:value.name}}</span></td><td>{{:value.ammount}}</td>
+								<td><span class="average">{{:value.name}}</span></td><td>{{:value.amount}}</td>
 								<td>
 								{{if value.can_eject_one}}
 									{{:helper.link("Eject", '', {'lathe_ejectsheet' : value.id, 'lathe_ejectsheet_amt' : 1})}}
@@ -310,7 +310,7 @@
 							
 							{{for data.imprinter_data.materials}}
 							<tr>
-								<td><span class="average">{{:value.name}}</span></td><td>{{:value.ammount}}</td>
+								<td><span class="average">{{:value.name}}</span></td><td>{{:value.amount}}</td>
 								<td>
 								{{if value.can_eject_one}}
 									{{:helper.link("Eject", '', {'imprinter_ejectsheet' : value.id, 'imprinter_ejectsheet_amt' : 1})}}

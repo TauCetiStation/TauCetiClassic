@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
@@ -28,7 +26,7 @@
 
 
 /obj/effect/accelerated_particle/atom_init(mapload, dir = 2)
-	src.dir = dir
+	src.set_dir(dir)
 	if(movement_range > 20)
 		movement_range = 20
 	INVOKE_ASYNC(src, .proc/move, 1)

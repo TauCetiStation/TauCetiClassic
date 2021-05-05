@@ -39,7 +39,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if(L.name == "carpspawn")
 				ninjastart.Add(L)
-	
+
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
@@ -85,18 +85,13 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/list/antagonist_list = list()//The main bad guys. Evil minds that plot destruction.
 	var/list/protagonist_list = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
-	//We want the ninja to appear only in certain modes.
-	//	var/acceptable_modes_list[] = list("traitor","revolution","cult","wizard","changeling","traitorchan","nuclear","malfunction","monkey")  // Commented out for both testing and ninjas
-	//	if(!(current_mode.config_tag in acceptable_modes_list))
-	//		return
-
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
 
 	var/list/possible_bad_dudes = list(
 		current_mode.traitors,current_mode.head_revolutionaries,
 		current_mode.head_revolutionaries,
-		current_mode.cult,current_mode.wizards,
+		global.cult_religion.members,current_mode.wizards,
 		current_mode.changelings,current_mode.syndicates
 		)
 	for(var/list in possible_bad_dudes)//For every possible antagonist type.
@@ -159,7 +154,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		for(var/enemies_list in SYNDICATE_ENEMIES_LIST to NANOTRASEN_ENEMIES_LIST)//Two lists.
 			if(enemies_list == NANOTRASEN_ENEMIES_LIST) //Which list are we looking at?
 				current_minds = antagonist_list
-			else 
+			else
 				current_minds = protagonist_list
 			for(var/t = 3, (current_minds.len && t > 0), t--)//While the list is not empty and targets remain. Also, 3 targets is good.
 				current_mind = pick(current_minds)//Pick a random person.

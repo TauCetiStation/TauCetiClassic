@@ -2,36 +2,39 @@
   * Delete a mob
   *
   * Removes mob from the following global lists
-  * * GLOB.mob_list
-  * * GLOB.dead_mob_list
-  * * GLOB.alive_mob_list
+  * * global.mob_list
+  * * global.dead_mob_list
+  * * global.alive_mob_list
   * Clears alerts for this mob
   *
   * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
 	global.dead_mob_list -= src
 	global.alive_mob_list -= src
-	for (var/alert in alerts)
+	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
 	qdel(hud_used)
 	ghostize(bancheck = TRUE)
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	my_religion?.remove_member(src)
+
+	return ..()
 
 /mob/atom_init()
 	spawn()
-		if(client) animate(client, color = null, time = 0)
+		if(client)
+			animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
 	else
 		alive_mob_list += src
 	. = ..()
+	prepare_huds()
+	update_all_alt_apperance()
+
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -350,9 +353,6 @@
 	if(stat != DEAD || !SSticker)
 		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
-	if(SSticker && istype(SSticker.mode, /datum/game_mode/meteor))
-		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
-		return
 	else
 		var/deathtime = world.time - src.timeofdeath
 		if(istype(src,/mob/dead/observer))
@@ -421,7 +421,7 @@
 	var/eye_name = null
 
 	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
+	eye_name = input("Please, select a mob!", ok, null, null) as null|anything in creatures
 
 	if(!eye_name)
 		return
@@ -440,7 +440,7 @@
 	set category = "OOC"
 	reset_view(null)
 	unset_machine()
-	if(istype(src, /mob/living))
+	if(isliving(src))
 		var/mob/living/M = src
 		if(M.cameraFollow)
 			M.cameraFollow = null
@@ -459,11 +459,6 @@
 	return
 
 /mob/Topic(href, href_list)
-	if(href_list["mach_close"])
-		var/t1 = text("window=[href_list["mach_close"]]")
-		unset_machine()
-		src << browse(null, t1)
-
 	if (href_list["refresh"])
 		if(machine && in_range(src, usr))
 			show_inv(machine)
@@ -655,8 +650,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Status"))
-		if(round_id)
-			stat(null, "Round ID: #[round_id]")
+		if(global.round_id)
+			stat(null, "Round ID: #[global.round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
 			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
@@ -791,9 +786,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
-	dir = ndir
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
-		buckled.dir = ndir
+		buckled.set_dir(ndir)
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
 	return 1
@@ -1004,6 +999,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					BP = limb
 
 		BP.implants -= selection
+		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
@@ -1026,13 +1022,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 			anchored = 0
 	return 1
 
-/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+///Get the ghost of this mob (from the mind)
+/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
-		for(var/mob/dead/observer/G in observer_list)
-			if(G.mind == mind)
-				if(G.can_reenter_corpse || even_if_they_cant_reenter)
-					return G
-				break
+		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
@@ -1153,3 +1146,47 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Return null if mob of this type can not scramble messages.
 /mob/proc/get_scrambled_message(message, datum/language/speaking = null)
 	return speaking ? speaking.scramble(message) : stars(message)
+
+/**
+  * Prepare the huds for this atom
+  *
+  * Goes through hud_possible list and adds the images to the hud_list variable (if not already
+  * cached)
+  */
+/atom/proc/prepare_huds()
+	if(hud_list || !hud_possible)
+		return
+
+	hud_list = list()
+	for(var/hud in hud_possible)
+		var/hint = hud_possible[hud]
+		switch(hint)
+			if(HUD_LIST_LIST)
+				hud_list[hud] = list()
+			else
+				var/image/I = image('icons/mob/hud.dmi', src, "")
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				hud_list[hud] = I
+
+///Spin this mob around it's central axis
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	if((spintime < 1) || (speed < 1) || !spintime|| !speed)
+		return
+
+	flags |= IS_SPINNING
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		set_dir(D)
+		spintime -= speed
+	flags &= ~IS_SPINNING

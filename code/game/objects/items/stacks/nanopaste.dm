@@ -26,7 +26,7 @@
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
-		if(BP && (BP.is_robotic()))
+		if(BP && BP.is_robotic())
 			if(BP.get_damage())
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
@@ -36,5 +36,15 @@
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
 				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
 				return TRUE
+			else if(can_operate(H))
+				for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+					if(IO.is_bruised())
+						..()
+						return TRUE
+					else
+						return FALSE
+			else
+				to_chat(user, "<span class='notice'>Noting to fix!</span>")
+				return FALSE
 
 	return ..()

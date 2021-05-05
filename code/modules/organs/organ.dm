@@ -23,17 +23,14 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
-/obj/item/organ/atom_init(mapload, mob/living/carbon/human/H)
-	if(istype(H))
-		insert_organ(H)
-
-	return ..()
-
-/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
-	STOP_PROCESSING(SSobj, src)
-
+/obj/item/organ/proc/set_owner(mob/living/carbon/human/H)
 	loc = null
 	owner = H
+
+/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
+	set_owner(H)
+
+	STOP_PROCESSING(SSobj, src)
 
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]

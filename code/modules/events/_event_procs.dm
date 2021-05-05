@@ -1,4 +1,4 @@
-/client/proc/forceEvent(var/type in SSevents.allEvents)
+/client/proc/forceEvent(type in SSevents.allEvents)
 	set name = "Trigger Event (Debug Only)"
 	set category = "Debug"
 
@@ -46,7 +46,7 @@
 
 			if(R.module && (R.modtype == "Security"))
 				active_with_role["Security"]++
-			
+
 			if(R.module && (R.modtype == "Janitor"))
 				active_with_role["Janitor"]++
 

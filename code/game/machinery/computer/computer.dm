@@ -76,13 +76,6 @@
 		set_broken()
 	..()
 
-
-/obj/machinery/computer/blob_act()
-	if (prob(75))
-		for(var/x in verbs)
-			verbs -= x
-		set_broken()
-
 /obj/machinery/computer/update_icon()
 	..()
 	icon_state = initial(icon_state)
@@ -132,7 +125,7 @@
 			transfer_fingerprints_to(A)
 			A.circuit = circuit
 			A.anchored = 1
-			A.dir = dir
+			A.set_dir(dir)
 			circuit = null
 			for (var/obj/C in src)
 				C.loc = src.loc
@@ -162,7 +155,7 @@
 
 		if(I.use_tool(src, user, 20, volume = 50) && src && I)
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
-			dir = text2dir(dir_choise)
+			set_dir(text2dir(dir_choise))
 
 /obj/machinery/computer/verb/rotate()
 	set category = "Object"
@@ -197,7 +190,7 @@
 
 	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
 		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>","<span class='notice'>You turn \the [src] [dir_choise].</span>")
-		dir = text2dir(dir_choise)
+		set_dir(text2dir(dir_choise))
 
 /obj/machinery/computer/attack_hand(user)
 	if(ishuman(user))
@@ -232,18 +225,8 @@
 	if(istype(user, /mob/living/carbon/xenomorph/humanoid/queen))
 		attack_hand(user)
 		return
-	if(circuit)
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(prob(80))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with \his claws.</span>",
-			"<span class='danger'>You smash the [src.name] with your claws.</span>",
-			"<span class='danger'>You hear a smashing sound.</span>")
-			set_broken()
-			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with \his claws.</span>",
-	"<span class='danger'>You smash against the [src.name] with your claws.</span>",
-	"<span class='danger'>You hear a clicking sound.</span>")
+	else
+		to_chat(user, "You don't want to break these thing")
 
 /obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hulk))

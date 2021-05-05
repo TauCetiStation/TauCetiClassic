@@ -1,5 +1,6 @@
 // How many structures will be spawned
-#define SPACE_STRUCTURES_AMMOUNT 7
+#define SPACE_STRUCTURES_AMOUNT 7
+#define MAX_MINING_SECRET_ROOM 5
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
@@ -11,7 +12,6 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
-	var/const/max_secret_rooms = 3
 	var/list/spawned_structures = list()
 	var/list/reserved_space = list()
 
@@ -48,8 +48,8 @@ SUBSYSTEM_DEF(mapping)
 	..()
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
-	for(var/i in 1 to max_secret_rooms)
-		make_mining_asteroid_secret()
+	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
+		make_mining_asteroid_secret(3)
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(mapping)
 		possible += structure_id
 
 	var/list/picked_structures = list()
-	while(possible.len && picked_structures.len < SPACE_STRUCTURES_AMMOUNT)
+	while(possible.len && picked_structures.len < SPACE_STRUCTURES_AMOUNT)
 		var/structure_id = pick(possible)
 		possible -= structure_id
 		picked_structures += structure_id
@@ -144,8 +144,6 @@ SUBSYSTEM_DEF(mapping)
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
 
-#undef SPACE_STRUCTURES_AMMOUNT
-
 #define INIT_ANNOUNCE(X) info(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
 	. = list()
@@ -206,7 +204,7 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
 	station_loaded = TRUE
-
+	change_lobbyscreen()
 	while (space_levels_so_far < config.space_ruin_levels)
 		++space_levels_so_far
 		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
@@ -248,7 +246,7 @@ SUBSYSTEM_DEF(mapping)
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
 
-/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
+/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = load_map_config(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
@@ -256,3 +254,6 @@ SUBSYSTEM_DEF(mapping)
 
 	next_map_config = VM
 	return TRUE
+
+#undef SPACE_STRUCTURES_AMOUNT
+#undef MAX_MINING_SECRET_ROOM

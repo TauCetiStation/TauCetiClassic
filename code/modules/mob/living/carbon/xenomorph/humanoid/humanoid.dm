@@ -8,12 +8,9 @@
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null
 	var/caste = ""
-	//var/perception = 0 //0 - standart mode, 1 - SEE_TURF mode
-	var/praetorians = 2
-	//update_icon = 1
 	var/alt_icon = 'icons/mob/xenoleap.dmi' //used to switch between the two alien icon files.
 	var/leap_on_click = 0
-
+	heal_rate = 3
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 15 SECONDS
 
@@ -42,7 +39,10 @@
 	return (move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
-	return ..() && istype(O, /obj/item/clothing/mask/facehugger)
+	if(..() && istype(O, /obj/item/clothing/mask/facehugger))
+		return TRUE
+	else
+		return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/set_m_intent(intent)
 	. = ..()

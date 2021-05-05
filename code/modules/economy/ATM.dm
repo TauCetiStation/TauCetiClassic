@@ -233,7 +233,7 @@ log transactions
 /obj/machinery/atm/is_operational_topic()
 	return TRUE
 
-/obj/machinery/atm/Topic(var/href, var/href_list)
+/obj/machinery/atm/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -422,6 +422,9 @@ log transactions
 							usr.drop_item()
 							I.loc = src
 							held_card = I
+							if(ishuman(usr))
+								var/mob/living/carbon/human/H = usr
+								H.sec_hud_set_ID()
 				else
 					release_held_id(usr)
 			if("logout")
