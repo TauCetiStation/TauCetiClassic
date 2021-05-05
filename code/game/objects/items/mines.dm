@@ -4,7 +4,6 @@
 	icon = 'icons/obj/mines.dmi'
 	icon_state = "mine"
 	layer = 3
-	var/triggered = FALSE
 
 /obj/item/mine/attack_self(mob/living/user)
 	if(locate(/obj/item/mine) in get_turf(src))
@@ -34,20 +33,19 @@
 		alpha = 255
 
 /obj/item/mine/Crossed(atom/movable/AM)
-	Bumped(AM)
+	try_trigger(AM)
 
-/obj/item/mine/Bumped(mob/M)
-	if(triggered)
-		return
-
-	if(istype(M, /mob/living/carbon) || istype(M, /mob/living/silicon))
-		if(anchored)
-			M.visible_message("<span class='danger'>[M] steps on [src]!</span>")
-			triggered = TRUE
-			trigger_act(M)
+/obj/item/mine/Bumped(atom/movable/AM)
+	try_trigger(AM)
 
 /obj/item/mine/bullet_act(obj/item/projectile/Proj)
-	trigger_act(Proj)
+	try_trigger(Proj)
+
+/obj/item/mine/proc/try_trigger(atom/movable/AM)
+	if(istype(AM, /mob/living/carbon) || istype(AM, /mob/living/silicon))
+		if(anchored)
+			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
+			trigger_act(AM)
 
 /obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 1, 1, 3, 3)
@@ -60,15 +58,11 @@
 		return
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
+	if(I.use_tool(src, user, 40, volume = 50))
+		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
-	if(!do_after(user, 40, target = src))
-		user.visible_message("<span class='warning'>[user] stops disarming [src].</span>", "<span class='warning'>You stop disarming [src].</span>")
-		return
-
-	user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
-
-	anchored = FALSE
-	update_icon()
+		anchored = FALSE
+		update_icon()
 
 /obj/item/mine/stun
 	name = "stun mine"
@@ -82,24 +76,25 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
-	spawn(0)
-		qdel(src)
 
 /obj/item/mine/shock
 	name = "shock mine"
 	desc = "A security issued less-than-lethal mine, this one will shock and stun anyone unfortunate to step on it."
 	icon_state = "shockmine"
+	var/stepped_by = BP_R_LEG
+
+/obj/item/mine/shock/atom_init()
+	. = ..()
+	stepped_by = pick(BP_R_LEG, BP_L_LEG)
 
 /obj/item/mine/shock/trigger_act(obj)
 	if(isliving(obj))
 		var/mob/living/M = obj
-		M.electrocute_act(30, src) // electrocute act does a message.
-		M.Weaken(5)
+		M.electrocute_act(30, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
-	spawn(0)
-		qdel(src)
+	qdel(src)
 
 /obj/item/mine/incendiary
 	name = "incendiary mine"
