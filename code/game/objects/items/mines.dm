@@ -37,7 +37,8 @@
 	Bumped(AM)
 
 /obj/item/mine/Bumped(mob/M)
-	if(triggered) return
+	if(triggered)
+		return
 
 	if(istype(M, /mob/living/carbon) || istype(M, /mob/living/silicon))
 		if(anchored)
