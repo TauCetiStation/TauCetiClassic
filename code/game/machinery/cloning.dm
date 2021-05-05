@@ -208,12 +208,9 @@
 		new V(H)
 
 	// -- Mode/mind specific stuff goes here
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.update_icon(H)
-
-	if (H.mind in SSticker.mode.cult)
-		SSticker.mode.add_cultist(src.occupant.mind)
+	if(global.cult_religion)
+		if(occupant.mind in global.cult_religion.members_minds)
+			global.cult_religion.add_member(occupant, occupant.mind.holy_role)
 
 	// -- End mode specific stuff
 

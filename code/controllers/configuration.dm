@@ -37,11 +37,10 @@ var/list/net_announcer_secret = list()
 	var/vote_period = 600				// length of voting period (deciseconds, default 1 minute)
 //	var/enable_authentication = 0		// goon authentication
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
-	var/feature_object_spell_system = 0 //spawns a spellbook which gives object-type spells instead of verb-type spells for the wizard
-	var/traitor_scaling = 0 			//if amount of traitors scales based on amount of players
+	var/traitor_scaling = 1 			//if amount of traitors scales based on amount of players
 	var/objectives_disabled = 0 			//if objectives are disabled or not
 	var/protect_roles_from_antagonist = 0// If security and such can be traitor/cult/other
-	var/continous_rounds = 1			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
+	var/continous_rounds = 0			// Gamemodes which end instantly will instead keep on going until the round ends by escape shuttle or nuke.
 	var/fps = 20
 	var/list/resource_urls = null
 	var/antag_hud_allowed = 0			// Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
@@ -51,14 +50,11 @@ var/list/net_announcer_secret = list()
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
 	var/humans_need_surnames = 0
-	var/allow_random_events = 0			// enables random events mid-round when set to 1
+	var/allow_random_events = 1			// enables random events mid-round when set to 1
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 1
-	var/guest_jobban = 1
 	var/usewhitelist = 0
-	var/serverwhitelist = 0
-	var/serverwhitelist_message = "Sorry, you can't play on this server, because we use a whitelist.<br/>Please, visit another our server."
 	var/mods_are_mentors = 0
 	var/kick_inactive = 0				//force disconnect for inactive players
 	var/afk_time_bracket = 6000 // 10 minutes
@@ -72,9 +68,13 @@ var/list/net_announcer_secret = list()
 	var/allowed_by_bunker_player_age = 60
 	var/client_limit_panic_bunker_count = null
 	var/client_limit_panic_bunker_link = null
+	var/client_limit_panic_bunker_mentor_pass_cap = 3
+
+	var/bunker_ban_mode = 0
+	var/bunker_ban_mode_message = "Sorry, you can't play on this server, we do not accept new players."
 
 	var/cult_ghostwriter = 1               //Allows ghosts to write in blood in cult rounds...
-	var/cult_ghostwriter_req_cultists = 10 //...so long as this many cultists are active.
+	var/cult_ghostwriter_req_cultists = 9  //...so long as this many cultists are active.
 
 	var/max_maint_drones = 5				//This many drones can spawn,
 	var/allow_drone_spawn = 1				//assuming the admin allow them to.
@@ -139,7 +139,7 @@ var/list/net_announcer_secret = list()
 	// No custom time
 	var/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
-									EVENT_LEVEL_MAJOR = list("lower" = 80 MINUTES, "upper" = 100 MINUTES))
+									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
 	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
@@ -368,7 +368,7 @@ var/list/net_announcer_secret = list()
 					config.ert_admin_call_only = 1
 
 				if ("allow_ai")
-					config.allow_ai = 1
+					config.allow_ai = text2num(value)
 
 //				if ("authentication")
 //					config.enable_authentication = 1
@@ -400,17 +400,11 @@ var/list/net_announcer_secret = list()
 				if ("forumurl")
 					config.forumurl = value
 
-				if ("guest_jobban")
-					config.guest_jobban = 1
-
 				if ("guest_ban")
 					guests_allowed = 0
 
 				if ("usewhitelist")
 					config.usewhitelist = 1
-
-				if ("serverwhitelist")
-					config.serverwhitelist = 1
 
 				if("media_base_url")
 					media_base_url = value
@@ -424,14 +418,8 @@ var/list/net_announcer_secret = list()
 				if ("customitems_info_url")
 					customitems_info_url = value
 
-				if("serverwhitelist_message")
-					config.serverwhitelist_message = value
-
-				if ("feature_object_spell_system")
-					config.feature_object_spell_system = 1
-
 				if ("traitor_scaling")
-					config.traitor_scaling = 1
+					config.traitor_scaling = text2num(value)
 
 				if ("objectives_disabled")
 					config.objectives_disabled = 1
@@ -455,7 +443,7 @@ var/list/net_announcer_secret = list()
 						log_misc("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("allow_random_events")
-					config.allow_random_events = 1
+					config.allow_random_events = text2num(value)
 
 				if("kick_inactive")
 					config.kick_inactive = 1
@@ -640,13 +628,22 @@ var/list/net_announcer_secret = list()
 					config.registration_panic_bunker_age = value
 
 				if("allowed_by_bunker_player_age")
-					config.allowed_by_bunker_player_age = value
+					config.allowed_by_bunker_player_age = text2num(value)
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
+				
+				if("client_limit_panic_bunker_mentor_pass_cap")
+					config.client_limit_panic_bunker_mentor_pass_cap = text2num(value)
 
 				if("client_limit_panic_bunker_link")
 					config.client_limit_panic_bunker_link = value
+
+				if ("bunker_ban_mode")
+					config.bunker_ban_mode = 1
+
+				if("bunker_ban_mode_message")
+					config.bunker_ban_mode_message = value
 
 				if("summon_testmap")
 					config.load_testmap = TRUE
@@ -755,12 +752,6 @@ var/list/net_announcer_secret = list()
 				sqllogin = value
 			if ("password")
 				sqlpass = value
-			if ("feedback_database")
-				sqlfdbkdb = value
-			if ("feedback_login")
-				sqlfdbklogin = value
-			if ("feedback_password")
-				sqlfdbkpass = value
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
 
@@ -812,12 +803,12 @@ var/list/net_announcer_secret = list()
 			switch(modeset)
 				if("bs12")
 					switch(M.config_tag)
-						if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitorchan","traitor","blob","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 				if("tau classic")
 					switch(M.config_tag)
-						if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+						if("traitor","blob","extended","heist","infestation","ninja","rp-revolution","shadowling")
 							qdel(M)
 							continue
 		var/mod_prob = probabilities[M.config_tag]

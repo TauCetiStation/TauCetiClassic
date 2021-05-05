@@ -40,12 +40,18 @@
 
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	handle_vision()
 	update_action_buttons()
 
-	return 1
+	if(pullin)
+		if(pulling)
+			pullin.icon_state = "pull1"
+		else
+			pullin.icon_state = "pull0"
+
+	return TRUE
 
 /mob/living/proc/is_vision_obstructed()
 	if(istype(loc, /obj/item/weapon/holder))
@@ -92,7 +98,7 @@
 			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
-			if(!client.adminobs)
+			if(!client.adminobs && !force_remote_viewing)
 				reset_view(null)
 
 /mob/living/proc/update_sight()

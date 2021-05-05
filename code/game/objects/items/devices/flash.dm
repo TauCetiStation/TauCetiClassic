@@ -76,24 +76,6 @@
 		if(safety <= 0)
 			M.confused = max(rand(6, 10), M.confused)
 			M.flash_eyes()
-
-			if(ishuman(M) && ishuman(user) && M.stat!=DEAD)
-
-				if(user.mind && (user.mind in SSticker.mode.head_revolutionaries) && SSticker.mode.name == "revolution")
-					if(M.client)
-						if(M.stat == CONSCIOUS)
-							M.mind_initialize()		//give them a mind datum if they don't have one.
-							var/resisted
-							if(!ismindshielded(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_REV))
-								if(user.mind in SSticker.mode.head_revolutionaries)
-									M.mind.has_been_rev = 1
-									if(!SSticker.mode.add_revolutionary(M.mind))
-										resisted = 1
-							else
-								resisted = 1
-
-							if(resisted)
-								to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
 		else
 			flashfail = 1
 

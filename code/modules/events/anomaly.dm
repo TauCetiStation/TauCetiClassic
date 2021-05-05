@@ -34,7 +34,7 @@
 		qdel(newAnomaly)
 
 
-/datum/event/anomaly/proc/findEventArea()
+/proc/findEventArea()
 	var/static/list/allowed_areas
 	if(!allowed_areas)
 		//Places that shouldn't explode

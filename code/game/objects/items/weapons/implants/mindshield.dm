@@ -18,19 +18,14 @@
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
-	if(H.mind && (H.mind in (SSticker.mode.head_revolutionaries | SSticker.mode.A_bosses | SSticker.mode.B_bosses)) || is_shadow_or_thrall(H)|| H.mind.special_role == "Wizard")
+	if(H.mind && (H.mind in (SSticker.mode.head_revolutionaries)) || is_shadow_or_thrall(H)|| H.mind.special_role == "Wizard")
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 
 	if(H.mind && (H.mind in SSticker.mode.revolutionaries))
 		SSticker.mode.remove_revolutionary(H.mind)
 
-	if(H.mind && (H.mind in (SSticker.mode.A_gang | SSticker.mode.B_gang)))
-		SSticker.mode.remove_gangster(H.mind, exclude_bosses=1)
-		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='userdanger'>You feel a surge of loyalty towards Nanotrasen.</span>")
-		return FALSE
-
-	if(H.mind && (H.mind in SSticker.mode.cult))
+	if(H.mind && iscultist(H))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 	else

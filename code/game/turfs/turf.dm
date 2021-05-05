@@ -126,19 +126,21 @@
 /turf/proc/is_mob_placeable(mob/M)
 	if(density)
 		return FALSE
+	var/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
+								  /obj/structure/table, /obj/structure/grille,
+								  /obj/structure/cult, /obj/structure/mineral_door)
 	for(var/atom/movable/on_turf in contents)
 		if(on_turf == M)
 			continue
 		if(istype(on_turf, /mob) && !on_turf.anchored)
 			continue
 		if(on_turf.density)
-			if(istype(on_turf, /obj/structure/window))
-				continue
-			if(istype(on_turf, /obj/machinery/door))
-				continue
-			if(istype(on_turf, /obj/structure/table))
-				continue
-			if(istype(on_turf, /obj/structure/grille))
+			var/allow = FALSE
+			for(var/type in allowed_types)
+				if(istype(on_turf, type))
+					allow = TRUE
+					break
+			if(allow)
 				continue
 			return FALSE
 	return TRUE
