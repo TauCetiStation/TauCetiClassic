@@ -83,5 +83,5 @@
 		icon_state = "[initial(icon_state)]"
 		item_state = "[initial(item_state)]"
 	else
-		icon_state = "autoinjector_empty"
-		item_state = "autoinjector_empty"
+		icon_state = "[initial(icon_state)]_empty"
+		item_state = "[initial(item_state)]_empty"
