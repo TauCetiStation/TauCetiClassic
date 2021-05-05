@@ -408,7 +408,7 @@
 	icon = 'icons/turf/catwalks.dmi'
 	icon_state = "catwalk0"
 	name = "catwalk"
-	desc = "Кошки очень не любят такие покрытия."
+	desc = "Рабочий помост с сомнительным функционалом."
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
