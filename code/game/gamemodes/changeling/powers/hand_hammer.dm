@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/changeling/weapon/hammer
-	name = "Биомолот"
+	name = "Био-Молот"
 	desc = "Мы превращаем нашу руку в смертоносный молот."
 	helptext = "Разбивает стены, окна, шлюзы, людей. Нельзя применять в форме обезьяны."
 	chemical_cost = 20
