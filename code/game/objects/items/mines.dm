@@ -45,8 +45,6 @@
 			M.visible_message("<span class='danger'>[M] steps on [src]!</span>")
 			triggered = TRUE
 			trigger_act(M)
-		else
-			return
 
 /obj/item/mine/bullet_act(obj/item/projectile/Proj)
 	trigger_act(Proj)
