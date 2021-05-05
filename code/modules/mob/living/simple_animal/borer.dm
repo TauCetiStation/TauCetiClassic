@@ -195,8 +195,7 @@
 		to_chat(src, "You cannot use that ability again so soon.")
 		return
 
-	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
-
+	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") as null|anything in choices
 	if(!M || !src)
 		return
 
