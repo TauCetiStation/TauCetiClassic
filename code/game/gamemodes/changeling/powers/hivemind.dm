@@ -3,7 +3,7 @@ var/list/datum/dna/hivemind_bank = list()
 
 /obj/effect/proc_holder/changeling/hivemind_upload
 	name = "Эфирный Канал"
-	desc = "Позволяет нам направить ДНК в эфир, чтобы позволить другим генокрадам поглотить его.."
+	desc = "Позволяет нам направить ДНК в эфир, чтобы позволить другим генокрадам поглотить его."
 	chemical_cost = 10
 	genomecost = 0
 
