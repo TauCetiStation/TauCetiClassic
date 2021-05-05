@@ -45,7 +45,7 @@
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
+		track = FOLLOW_LINK(src, speaker)
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
@@ -65,6 +65,8 @@
 					pronoun = "it"
 			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear [pronoun].")
 	else
+		if(isliving(src))
+			message = highlight_traitor_codewords(message, src.mind)
 		if(language)
 			to_chat(src, "[track] <span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>")
 		else
@@ -94,6 +96,8 @@
 	if(!say_understands(speaker,language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
+			if(!S.speak.len)
+				return
 			message = pick(S.speak)
 		else if(isIAN(speaker))
 			var/mob/living/carbon/ian/IAN = speaker
@@ -178,8 +182,17 @@
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> [speaker_name]"
 
+		var/track_button
+		var/turf/T = get_turf(speaker)
+		if(T)
+			track_button = FOLLOW_OR_TURF_LINK(src, speaker, T)
+		else
+			track_button = FOLLOW_LINK(src, speaker)
+		track = "[track_button] [speaker_name]"
+
+	if(isliving(src))
+		message = highlight_traitor_codewords(message, src.mind)
 	var/formatted
 	if(language)
 		formatted = language.format_message_radio(message, verb)
@@ -222,10 +235,10 @@
 		var/list/messages = splittext(message, " ")
 		var/R = rand(1, messages.len)
 		var/heardword = messages[R]
-		if(copytext(heardword,1, 1) in punctuation)
+		if(heardword[1] in punctuation)
 			heardword = copytext(heardword,2)
 		if(copytext(heardword,-1) in punctuation)
-			heardword = copytext(heardword,1,lentext(heardword))
+			heardword = copytext(heardword,1,-1)
 		heard = "<span class = 'game_say'>...You hear something about...[heardword]</span>"
 
 	else

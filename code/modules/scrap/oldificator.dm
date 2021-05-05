@@ -1,8 +1,9 @@
-/obj/proc/make_old()
+/obj/proc/make_old(change_looks = TRUE)
 	color = pick("#996633", "#663300", "#666666")
 	light_color = color
-	name = pick("old ", "expired ", "dirty ") + initial(name)
-	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
+	if(change_looks)
+		name = pick("old ", "expired ", "dirty ") + initial(name)
+		desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
 	reliability = rand(100)
@@ -51,7 +52,7 @@
 	..()
 
 /obj/item/ammo_box/make_old()
-	var/del_count = rand(0,contents.len)
+	var/del_count = rand(0,stored_ammo.len)
 	for(var/i = 1 to del_count)
 		var/removed_item = pick(stored_ammo)
 		stored_ammo -= removed_item
@@ -153,7 +154,7 @@
 
 /obj/item/weapon/aiModule/broken/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	IonStorm(0)
+	target.overload_ai_system()
 	explosion(sender.loc, 1, 1, 1, 3)
 	sender.drop_from_inventory(src)
 	qdel(src)
@@ -168,15 +169,8 @@
 	..()
 
 /obj/item/clothing/glasses/hud/make_old()
-	if(prob(75) && !istype(src, /obj/item/clothing/glasses/hud/broken))
-		var/obj/item/clothing/glasses/hud/broken/brokenhud= new /obj/item/clothing/glasses/hud/broken
-		brokenhud.name = src.name
-		brokenhud.desc = src.desc
-		brokenhud.icon = src.icon
-		brokenhud.icon_state = src.icon_state
-		brokenhud.item_state = src.item_state
-		brokenhud.make_old()
-		qdel(src)
+	if(prob(75))
+		broke_hud()
 	..()
 
 /obj/item/clothing/glasses/make_old()
@@ -236,10 +230,9 @@
 	if(prob(50))
 		content_mob = /mob/living/simple_animal/hostile/giant_spider
 
-/obj/item/clothing/glasses/sunglasses/sechud/make_old()
+/obj/item/clothing/glasses/sunglasses/hud/sechud/make_old()
 	..()
-	if(hud && prob(75))
-		hud = new /obj/item/clothing/glasses/hud/broken
+	broke_hud()
 
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8

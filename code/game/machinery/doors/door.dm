@@ -8,6 +8,7 @@
 	density = 1
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"
@@ -39,12 +40,19 @@
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
 
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
+
 	update_nearby_tiles(need_rebuild=1)
 
 
 /obj/machinery/door/Destroy()
 	density = 0
 	update_nearby_tiles()
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_from_hud(src)
 	return ..()
 
 //process()
@@ -100,10 +108,6 @@
 	if(!density)
 		return
 	try_open(user)
-
-/obj/machinery/door/meteorhit(obj/M)
-	src.open()
-	return
 
 /obj/machinery/door/proc/try_open(mob/user, obj/item/tool = null)
 	if(operating)
@@ -195,8 +199,10 @@
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
+			diag_hud_set_electrified()
 			spawn(300)
 				secondsElectrified = 0
+				diag_hud_set_electrified()
 	..()
 
 
@@ -285,14 +291,14 @@
  */
 
 /obj/machinery/door/proc/open_checks(forced)
-	if(!operating && ticker)
+	if(!operating && SSticker)
 		if(!forced)
 			return normal_open_checks()
 		return TRUE
 	return FALSE
 
 /obj/machinery/door/proc/close_checks(forced)
-	if(!operating && ticker)
+	if(!operating && SSticker)
 		if(!forced)
 			return normal_close_checks()
 		return TRUE

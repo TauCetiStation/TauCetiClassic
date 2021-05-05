@@ -24,7 +24,7 @@
 	var/can_make_a_sound = !(muted || muzzled || silent)
 
 	if(findtext(act, "s", -1) && !findtext(act, "_", -2)) // Removes ending s's unless they are prefixed with a '_'
-		act = copytext(act, 1, length(act))
+		act = copytext(act, 1, -1)
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
@@ -111,6 +111,33 @@
 				conditions_for_emote = (!species.flags[NO_BREATHE])
 				sound_priority = SOUND_PRIORITY_MEDIUM
 				emote_sound = pick((gender == FEMALE) ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
+
+		if("beep")
+			message_type = SHOWMSG_AUDIO
+			conditions_for_emote = (species.flags[IS_SYNTHETIC])
+			message = "beeps."
+			muzzled_message = "beeps."
+			miming_message = "beeps."
+			if(species.flags[IS_SYNTHETIC])
+				playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+		if("ping")
+			message_type = SHOWMSG_AUDIO
+			conditions_for_emote = (species.flags[IS_SYNTHETIC])
+			message = "pings."
+			muzzled_message = "pings."
+			miming_message = "pings."
+			if(species.flags[IS_SYNTHETIC])
+				playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+		if("buzz")
+			message_type = SHOWMSG_AUDIO
+			conditions_for_emote = (species.flags[IS_SYNTHETIC])
+			message = "buzzes."
+			muzzled_message = "buzzes."
+			miming_message = "buzzes."
+			if(species.flags[IS_SYNTHETIC])
+				playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 // ========== AUDIBLE ==========
 
@@ -384,10 +411,10 @@
 			continue // skip leavers
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
-				to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+				to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(!auto)
-					to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]")
+					to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]")
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)

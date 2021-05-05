@@ -31,7 +31,6 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
-		hud_updateflag |= 1 << IMPLOYAL_HUD
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items()
@@ -109,6 +108,7 @@
 			IMP.loc = O
 			IMP.imp_in = O
 			IMP.implanted = TRUE
+		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -166,7 +166,6 @@
 			if(IMP.part)
 				IMP.part.implants -= src
 				IMP.part = null
-		hud_updateflag |= 1 << IMPLOYAL_HUD
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in get_equipped_items())
@@ -207,7 +206,7 @@
 	else
 		O.dna = dna.Clone(transfer_SE = FALSE)
 
-	if(ismonkey(src) && cmptext(initial(name), copytext(O.dna.real_name, 1, length(initial(name)) + 1))) // simple "monkey" name check is not enough with species.
+	if(ismonkey(src) && cmptext(initial(name), copytext(O.dna.real_name, 1, length_char(initial(name)) + 1))) // simple "monkey" name check is not enough with species.
 		O.real_name = random_unique_name(O.gender)
 		O.dna.generate_unique_enzymes(O)
 	else
@@ -225,6 +224,7 @@
 		viruses = list()
 		for(var/datum/disease/D in O.viruses)
 			D.affected_mob = O
+		O.med_hud_set_status()
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -249,6 +249,7 @@
 			if(BP)
 				IMP.part = BP
 				BP.implants += IMP
+		O.sec_hud_set_implants()
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
@@ -305,16 +306,8 @@
 /mob/proc/AIize(move=1)
 	if(client)
 		playsound_stop(CHANNEL_MUSIC) // stop the jams for AIs
-	var/mob/living/silicon/ai/O = new (loc, base_law_type,,1)//No MMI but safety is in effect.
-	O.invisibility = 0
-	O.aiRestorePowerRoutine = 0
 
-	if(mind)
-		mind.transfer_to(O)
-		O.mind.original = O
-	else
-		O.key = key
-
+	var/newloc = loc
 	if(move)
 		var/obj/loc_landmark
 		for(var/obj/effect/landmark/start/sloc in landmarks_list)
@@ -330,23 +323,29 @@
 						continue
 					loc_landmark = tripai
 		if (!loc_landmark)
-			to_chat(O, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
+			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
 			for(var/obj/effect/landmark/start/sloc in landmarks_list)
 				if (sloc.name == "AI")
 					loc_landmark = sloc
 
-		O.loc = loc_landmark.loc
-		for (var/obj/item/device/radio/intercom/comm in O.loc)
+		newloc = loc_landmark.loc
+
+	var/mob/living/silicon/ai/O = new (newloc, base_law_type,,1)//No MMI but safety is in effect.
+
+	if(move)
+		for(var/obj/item/device/radio/intercom/comm in O.loc)
 			comm.ai += O
 
-	to_chat(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	to_chat(O, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
-	to_chat(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	to_chat(O, "To use something, simply click on it.")
-	to_chat(O, "Use say \":b to speak to your cyborgs through binary.")
-	if (!(ticker && ticker.mode && (O.mind in ticker.mode.malf_ai)))
-		O.show_laws()
-		to_chat(O, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+	O.invisibility = 0
+	O.aiRestorePowerRoutine = 0
+
+	if(mind)
+		mind.transfer_to(O)
+		O.mind.original = O
+	else
+		O.key = key
+
+	O.announce_role()
 
 	O.add_ai_verbs()
 	O.job = "AI"
@@ -357,7 +356,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -370,7 +369,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link)
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link, R)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -401,10 +400,6 @@
 			O.mmi = new /obj/item/device/mmi(O)
 
 		if(O.mmi) O.mmi.transfer_identity(src) //Does not transfer key/client.
-
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.borgify_directive(O)
 
 	O.Namepick()
 
@@ -437,6 +432,7 @@
 
 	new_xeno.a_intent = INTENT_HARM
 	new_xeno.key = key
+	new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
 
 	to_chat(new_xeno, "<B>You are now an alien.</B>")
 	spawn(0)//To prevent the proc from returning null.

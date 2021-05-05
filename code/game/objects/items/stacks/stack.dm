@@ -48,9 +48,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1 / 3)))
-		w_class = CLAMP(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 2, ITEM_SIZE_TINY, full_w_class)
 	else if (amount <= (max_amount * (2 / 3)))
-		w_class = CLAMP(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
+		w_class = clamp(full_w_class - 1, ITEM_SIZE_TINY, full_w_class)
 	else
 		w_class = full_w_class
 
@@ -84,7 +84,7 @@
 	if (recipes_sublist && recipe_list[recipes_sublist] && istype(recipe_list[recipes_sublist], /datum/stack_recipe_list))
 		var/datum/stack_recipe_list/srl = recipe_list[recipes_sublist]
 		recipe_list = srl.recipes
-	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.amount)
+	var/t1 = "<TT>Amount Left: [src.amount]<br>"
 	for(var/i=1;i<=recipe_list.len,i++)
 		var/E = recipe_list[i]
 		if (isnull(E))
@@ -133,9 +133,11 @@
 				if (!(max_multiplier in multipliers))
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
-	t1 += "</TT></body></HTML>"
-	user << browse(entity_ja(t1), "window=stack")
-	onclose(user, "stack")
+	t1 += "</TT>"
+
+	var/datum/browser/popup = new(user, "stack", "Constructions from [src]")
+	popup.set_content(t1)
+	popup.open()
 	return
 
 /obj/item/stack/Topic(href, href_list)
@@ -176,7 +178,7 @@
 		if(!src.use(R.req_amount*multiplier))
 			return
 		var/atom/O = new R.result_type( usr.loc )
-		O.dir = usr.dir
+		O.set_dir(usr.dir)
 		if (R.max_res_amount>1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier

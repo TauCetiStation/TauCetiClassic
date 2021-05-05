@@ -10,8 +10,7 @@
 
 /datum/admins/proc/one_click_antag()
 
-	var/dat = {"<B>One-click Antagonist</B><br>
-		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
+	var/dat = {"<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=2'>Make Changlings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
@@ -26,12 +25,12 @@
 	Nuke team is getting a null mob returned from makebody() (runtime error: null.mind. Line 272)
 
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=8'>Make Space Ninja (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=9'>Make Aliens (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
 */
-	usr << browse(entity_ja(dat), "window=oneclickantag;size=400x400")
+	var/datum/browser/popup = new(usr, "oneclickantag", "One-click Antagonist", 400, 400)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 
@@ -120,7 +119,7 @@
 
 /datum/admins/proc/makeRevs()
 
-	var/datum/game_mode/revolution/temp = new
+	var/datum/game_mode/rp_revolution/temp = new
 	if(config.protect_roles_from_antagonist)
 		temp.restricted_jobs += temp.protected_jobs
 
@@ -208,8 +207,6 @@
 			H = pick(candidates)
 			H.mind.make_Cultist()
 			candidates.Remove(H)
-			temp.grant_runeword(H)
-
 		return 1
 
 	return 0
@@ -284,36 +281,9 @@
 				qdel(A)
 				continue
 
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							qdel(I)
-
-		for(var/datum/mind/synd_mind in ticker.mode.syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in ticker.mode.syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
 		for (var/obj/machinery/nuclearbomb/bomb in poi_list)
 			bomb.r_code = nuke_code						// All the nukes are set to this code.
 
-	return 1
-
-
-
-
-
-/datum/admins/proc/makeAliens()
-	alien_infestation(3)
-	return 1
-
-/datum/admins/proc/makeSpaceNinja()
-	space_ninja_arrival()
 	return 1
 
 /datum/admins/proc/makeDeathsquad()
@@ -383,36 +353,6 @@
 
 	return 1
 
-
-/datum/admins/proc/makeGangsters()
-
-	var/datum/game_mode/gang/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_REV in applicant.client.prefs.be_role)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate") && !role_available_in_minutes(applicant, ROLE_REV))
-							if(!(applicant.job in temp.restricted_jobs))
-								candidates += applicant
-
-	if(candidates.len >= 2)
-		H = pick(candidates)
-		H.mind.make_Gang("A")
-		candidates.Remove(H)
-		H = pick(candidates)
-		H.mind.make_Gang("B")
-		return 1
-
-	return 0
-
-
 /datum/admins/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)	return
 
@@ -456,9 +396,10 @@
 	new_syndicate_commando.mind_initialize()
 	new_syndicate_commando.mind.assigned_role = "MODE"
 	new_syndicate_commando.mind.special_role = "Syndicate Commando"
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
 
 	//Adds them to current traitor list. Which is really the extra antagonist list.
-	ticker.mode.traitors += new_syndicate_commando.mind
+	SSticker.mode.traitors += new_syndicate_commando.mind
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 
 	return new_syndicate_commando
@@ -560,14 +501,15 @@
 	I.imp_in = new_vox
 	I.implanted = 1
 	BP.implants += I
+	new_vox.sec_hud_set_implants()
 	I.part = BP
 
-	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
-		var/datum/game_mode/heist/M = ticker.mode
+	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist ) ) )
+		var/datum/game_mode/heist/M = SSticker.mode
 		M.cortical_stacks[new_vox.mind] = I
 		M.raiders[new_vox.mind] = I
 
-	ticker.mode.traitors += new_vox.mind
+	SSticker.mode.traitors += new_vox.mind
 	new_vox.equip_vox_raider()
 
 	return new_vox
@@ -594,11 +536,11 @@
 			candidates.Remove(G)
 
 	if(candidates.len >= 2)
-		var/number =  ticker.mode.abductor_teams + 1
+		var/number =  SSticker.mode.abductor_teams + 1
 
 		var/datum/game_mode/abduction/temp
-		if(ticker.mode.config_tag == "abduction")
-			temp = ticker.mode
+		if(SSticker.mode.config_tag == "abduction")
+			temp = SSticker.mode
 		else
 			temp = new
 
@@ -622,11 +564,11 @@
 		temp.abductors = list(agent_mind,scientist_mind)
 		temp.make_abductor_team(number)
 		temp.post_setup_team(number)
-		ticker.mode.abductors += temp.abductors
-		ticker.mode.abductor_teams++
+		SSticker.mode.abductors += temp.abductors
+		SSticker.mode.abductor_teams++
 
-		if(ticker.mode.config_tag != "abduction")
-			ticker.mode.abductors |= temp.abductors
+		if(SSticker.mode.config_tag != "abduction")
+			SSticker.mode.abductors |= temp.abductors
 
 		return 1
 	else

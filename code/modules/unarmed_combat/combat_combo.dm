@@ -9,13 +9,15 @@ var/global/list/combat_combos_by_name = list()
 	var/name = "Combat_Combo" // These are used as combo_elements...
 	var/desc = "A move that does combo cool stuff."
 
+	// Is generated in gen_description.
+	var/full_desc
+
 	// Combo points required for this combo.
 	var/fullness_lose_on_execute = 50
 	// Combo elements required for this combo.
 	var/list/combo_elements = list()
 
-	// These should be deprecated in favour of a /datum/combo_moveset later. ~Luduk
-	var/list/allowed_to_mob_types = list(/mob/living)
+	// These should be deprecated in favour of anything that is not an element in list check. ~Luduk
 	var/list/allowed_on_mob_types = list(/mob/living)
 
 	// A special icon state for combo element on the interface after this combo was finished.
@@ -60,6 +62,66 @@ var/global/list/combat_combos_by_name = list()
 	// Should admins be PM-ed about this combo?
 	var/needs_logging = TRUE
 
+/datum/combat_combo/New()
+	gen_description()
+
+/datum/combat_combo/proc/gen_description()
+	full_desc += "<b>Name:</b> <i>[name]</i><br>"
+	full_desc += "<b>Desc:</b> [desc]<br>"
+	full_desc += "<b>Combopoints cost:</b> [fullness_lose_on_execute]%<br>"
+
+	var/tz_txt = ""
+	var/first = TRUE
+	for(var/tz in allowed_target_zones)
+		switch(tz)
+			if(BP_HEAD)
+				tz = "head"
+			if(BP_CHEST)
+				tz = "chest"
+			if(BP_GROIN)
+				tz = "groin"
+			if(BP_L_ARM)
+				tz = "left arm"
+			if(BP_R_ARM)
+				tz = "right arm"
+			if(BP_L_LEG)
+				tz = "left leg"
+			if(BP_R_LEG)
+				tz = "right leg"
+			if(O_EYES)
+				tz = "eyes"
+			if(O_MOUTH)
+				tz = "mouth"
+		if(first)
+			tz_txt += capitalize(tz)
+			first = FALSE
+		else
+			tz_txt += ", " + tz
+
+	full_desc += "<b>Allowed target zones:</b> [tz_txt]<br>"
+
+	var/combo_txt = ""
+	for(var/c_el in combo_elements)
+		switch(c_el)
+			if(INTENT_PUSH)
+				c_el = "<font color='dodgerblue'>[capitalize(c_el)]</font>"
+			if(INTENT_GRAB)
+				c_el = "<font color='yellow'>[capitalize(c_el)]</font>"
+			if(INTENT_HARM)
+				c_el = "<font color='red'>[capitalize(c_el)]</font>"
+			else
+				c_el = "<font color='grey'>[c_el]</font>"
+		combo_txt += c_el + " "
+
+	full_desc += "<b>Combo required:</b> [combo_txt]<br>"
+	var/notes = ""
+	notes += ignore_size ? "<font color='dodgerblue'><i>* Ignores opponent's size.</i></font><br>" : ""
+	notes += scale_damage_coeff != 0.0 || scale_effect_coeff != 0.0 ? "<font color='red'><i>* Modified by your attack's base damage.</i></font><br>" : ""
+	notes += scale_size_exponent != 0.0 ? "<font color='red'><i>* Damage is amplified by difference in size.</i></font><br>" : ""
+	notes += armor_pierce ? "<font color='red'><i>* Ignores armor.</i></font><br>" : ""
+	if(notes)
+		full_desc += "<br>" + notes
+
 /datum/combat_combo/proc/get_hash()
 	. = list()
 	for(var/TZ in allowed_target_zones)
@@ -97,6 +159,10 @@ var/global/list/combat_combos_by_name = list()
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while [CS.victim] is performing something.</span>")
 		return FALSE
+	if(!CS.victim.loc.CanPass(CS.attacker, get_step(CS.attacker, get_dir(CS.attacker, CS.victim))))
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>You can't get to [CS.victim].</span>")
+		return FALSE
 	if(!ignore_size && CS.victim.is_bigger_than(CS.attacker))
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b> on them.</span>")
@@ -106,10 +172,6 @@ var/global/list/combat_combos_by_name = list()
 			to_chat(CS.attacker, "<span class='notice'>You don't have enough combopoints for <b>[name]</b>.</span>")
 		return FALSE
 
-	if(!is_type_in_list(CS.attacker, allowed_to_mob_types))
-		if(show_warning)
-			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b>.</span>")
-		return FALSE
 	if(!is_type_in_list(CS.victim, allowed_on_mob_types))
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>You can't perform <b>[name]</b> on [CS.victim].</span>")
@@ -152,16 +214,25 @@ var/global/list/combat_combos_by_name = list()
 
 	return TRUE
 
-// This proc scales damage/stun based on size/damage/whatever relevant to this combo.
-// base_dam - base damage to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
+// This proc scales a given value with coeff for given situation.
+// base_dam - base damage to scale. scale_coeff - multiplier to attack_obj["damage"].
+// min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
 // Returns TRUE if damage was dealt.
-/datum/combat_combo/proc/apply_damage(base_dam, mob/living/victim, mob/living/attacker, zone = null, min_value = -1)
-	var/val = base_dam
+/datum/combat_combo/proc/scale_value(base_value, scale_coeff, mob/living/victim, mob/living/attacker, list/attack_obj = null)
+	var/val = base_value
 	if(scale_size_exponent != 0.0)
 		val *= get_size_ratio(attacker, victim) ** scale_size_exponent
 
-	var/list/attack_obj = attacker.get_unarmed_attack()
-	val += attack_obj["damage"] * scale_damage_coeff
+	if(!attack_obj)
+		attack_obj = attacker.get_unarmed_attack()
+	val += attack_obj["damage"] * scale_coeff
+	return val
+
+// This proc scales damage/stun based on size/damage/whatever relevant to this combo.
+// base_dam - base damage to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
+// Returns TRUE if damage was dealt.
+/datum/combat_combo/proc/apply_damage(base_dam, mob/living/victim, mob/living/attacker, zone = null, list/attack_obj = null, min_value = -1)
+	var/val = scale_value(base_dam, scale_damage_coeff, victim, attacker, attack_obj)
 
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
@@ -175,35 +246,47 @@ var/global/list/combat_combos_by_name = list()
 		)
 	return FALSE
 
-// effect - effect to apply, duration - base duration to scale. min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
-// Returns TRUE if effect was applied.
-/datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, min_value = -1)
-	var/val = duration
-	if(scale_size_exponent != 0.0)
-		val *= get_size_ratio(attacker, victim) ** scale_size_exponent
+/**
+	This proc handles effect scaling based on all the combo factors specified in class.
 
-	var/list/attack_obj = attacker.get_unarmed_attack()
-	val += attack_obj["damage"] * scale_effect_coeff
+	* effect - effect to apply
+	* duration - base duration to scale
+	* zone - zone where a hit should occur
+	* attack_obk - all the stats of an attack that provoked the combo
+	* min_value - how much damage should there be for it to be applied in the first place(if set to -1, ignores this arg)
+
+	* Returns TRUE if effect was applied succesfully.
+**/
+/datum/combat_combo/proc/apply_effect(duration, effect, mob/living/victim, mob/living/attacker, zone = null, list/attack_obj = null, min_value = -1)
+	var/val = scale_value(duration, scale_effect_coeff, victim, attacker, attack_obj)
 
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : attacker.get_targetzone(), "melee")
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
 		return victim.apply_effect(duration, effect, blocked = armor_check)
 	return FALSE
 
 /datum/combat_combo/proc/do_combo(mob/living/victim, mob/living/attacker, delay)
 	var/endtime = world.time + delay
+
 	while(world.time < endtime)
 		stoplag()
 		if(QDELETED(victim))
 			return FALSE
 		if(QDELETED(attacker))
 			return FALSE
+
 		if(victim.notransform || attacker.notransform)
 			return FALSE
 		if(!attacker.combo_animation)
 			return FALSE
+
+		// Since victim or attacker can suddenly get into something, we need to check both ways
+		// (since Adjacent does turf-level checks, and isturf(loc) checks only on side of the one issuing the proc)
+		if(!attacker.Adjacent(victim) || !victim.Adjacent(attacker))
+			return FALSE
+
 		if(additional_checks(victim, attacker))
 			return FALSE
 	return TRUE
@@ -237,8 +320,6 @@ var/global/list/combat_combos_by_name = list()
 
 	attacker.combo_animation = TRUE
 
-// Please remember, that the default animation of attack takes 3 ticks. So put at least sleep(3) here
-// before anything.
 /datum/combat_combo/proc/animate_combo(mob/living/victim, mob/living/attacker)
 	return
 
@@ -275,3 +356,33 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/execute(mob/living/victim, mob/living/attacker)
 	return
+
+/// A lot of combos currently have such mechanic, so it's somewhat reasonable to abstract it here.
+/datum/combat_combo/proc/prepare_grab(mob/living/victim, mob/living/attacker, state)
+	var/obj/item/weapon/grab/victim_G
+
+	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+		if(G.affecting == victim)
+			if(G.state != state)
+				G.set_state(state)
+			victim_G = G
+			break
+
+	if(!victim_G)
+		victim_G = attacker.Grab(victim, state)
+
+	if(!istype(victim_G))
+		return
+
+	// To prevent bugs with multiple grabs, some of which are of different state.
+	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+		if(G == victim_G)
+			continue
+		attacker.drop_from_inventory(G)
+
+	return victim_G
+
+/// For combos that prepare grabs, at the end of the combo - destory them.
+/datum/combat_combo/proc/destroy_grabs(mob/living/victim, mob/living/attacker)
+	for(var/obj/item/weapon/grab/G in attacker.GetGrabs())
+		attacker.drop_from_inventory(G)

@@ -162,24 +162,24 @@
 /obj/item/weapon/storage/box/r4046
 	name = "box of 40x46mm rubber grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
-	icon_state = "4046_box"
+	icon_state = "4046_box(r)"
 
 //Rubber 40x46mm
 /obj/item/weapon/storage/box/r4046/rubber
 	name = "box of 40x46mm rubber grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
-	icon_state = "4046_box"
+	icon_state = "4046_box(r)"
 
 /obj/item/weapon/storage/box/r4046/rubber/atom_init()
 	. = ..()
 	for(var/i in 1 to 7)
-		new /obj/item/ammo_casing/r4046/rubber(src)
+		new /obj/item/ammo_casing/r4046(src)
 
 //Teargas 40x46mm
 /obj/item/weapon/storage/box/r4046/teargas
 	name = "box of 40x46mm teargas grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
-	icon_state = "4046_box"
+	icon_state = "4046_box(gas)"
 
 /obj/item/weapon/storage/box/r4046/teargas/atom_init()
 	. = ..()
@@ -190,7 +190,7 @@
 /obj/item/weapon/storage/box/r4046/EMP
 	name = "box of 40x46mm EMP grenades (WARNING)"
 	desc = "<span class='bold'>WARNING: These devices are extremely dangerous and can cause injury.</span>"
-	icon_state = "4046_box"
+	icon_state = "4046_box(emp)"
 
 /obj/item/weapon/storage/box/r4046/EMP/atom_init()
 	. = ..()

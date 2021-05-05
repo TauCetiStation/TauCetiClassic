@@ -23,13 +23,14 @@
 	var/background_icon_state = "bg_default"
 	var/mob/living/owner
 
-/datum/action/New(var/Target)
+/datum/action/New(Target)
 	target = Target
 
 /datum/action/Destroy()
 	if(owner)
 		Remove(owner)
 	target = null
+	QDEL_NULL(button)
 	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
@@ -46,7 +47,6 @@
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		del(button)
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null
@@ -118,6 +118,10 @@
 /obj/screen/movable/action_button
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
+
+/obj/screen/movable/action_button/Destroy()
+	owner = null
+	return ..()
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)

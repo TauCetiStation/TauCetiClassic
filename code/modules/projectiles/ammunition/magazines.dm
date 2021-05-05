@@ -87,6 +87,14 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
+	name = "bazooka internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/caseless/rocket/anti_singulo
+	caliber = "rocket_as"
+	max_ammo = 1
+	multiload = 0
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev45
 	name = "Colt revolver cylinder"
 	desc = "Oh god, this shouldn't be here."
@@ -142,7 +150,7 @@
 	name = "magazine (9mm rubber)"
 	icon_state = "9mmr_mag"
 	ammo_type = /obj/item/ammo_casing/c9mmr
-	caliber = "9mmr"
+	caliber = "9mm"
 
 /obj/item/ammo_box/magazine/m9mm_2/update_icon()
 	..()
@@ -248,7 +256,7 @@
 	name = "magazine (.45 rubber)"
 	icon_state = "45r"
 	ammo_type = /obj/item/ammo_casing/c45r
-	caliber = ".45r"
+	caliber = ".45"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/c45r/update_icon()
@@ -319,7 +327,7 @@
 /obj/item/ammo_box/magazine/chameleon
 	name = "magazine (.45)"
 	icon_state = "45"
-	ammo_type = "/obj/item/ammo_casing/chameleon"
+	ammo_type = /obj/item/ammo_casing/chameleon
 	max_ammo = 7
 	multiple_sprites = 1
 

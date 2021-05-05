@@ -25,12 +25,7 @@
 
 #define PERCENT(val) (round((val)*100, 0.1))
 
-#if DM_VERSION < 513
-#define CLAMP(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
-#else
-#define CLAMP(CLVALUE,CLMIN,CLMAX) clamp(CLVALUE, CLMIN, CLMAX)
-#endif
-#define CLAMP01(x) (CLAMP(x, 0, 1))
+#define CLAMP01(x) (clamp(x, 0, 1))
 
 #define SIGN(x) (x < 0 ? -1 : 1)
 
@@ -41,15 +36,8 @@
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
 
-// Tangent
-#if DM_VERSION < 513
-#define TAN(x) (sin(x) / cos(x))
-#else
-#define TAN(x) tan(x)
-#endif
-
 // Cotangent
-#define COT(x) (1 / TAN(x))
+#define COT(x) (1 / tan(x))
 
 // Secant
 #define SEC(x) (1 / cos(x))
@@ -192,8 +180,8 @@ var/normal_next
 	while(pixel_y < -16)
 		pixel_y += 32
 		new_y--
-	new_x = CLAMP(new_x, 0, world.maxx)
-	new_y = CLAMP(new_y, 0, world.maxy)
+	new_x = clamp(new_x, 0, world.maxx)
+	new_y = clamp(new_y, 0, world.maxy)
 	return locate(new_x, new_y, starting.z)
 
 // Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles
@@ -218,10 +206,10 @@ var/normal_next
 
 #define EXP_DISTRIBUTION(desired_mean) ( -(1/(1/desired_mean)) * log(rand(1, 1000) * 0.001) )
 
-#define LORENTZ_DISTRIBUTION(x, s) ( s*TAN(TO_DEGREES(PI*(rand()-0.5))) + x )
+#define LORENTZ_DISTRIBUTION(x, s) ( s*tan(TO_DEGREES(PI*(rand()-0.5))) + x )
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 
 // Linear conversion from range of [minx, maxx] to [miny, maxy] regarding the value x. Clamps excesses.
-#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) CLAMP(((x - minx) * (maxy - miny) / (maxx - minx)) + miny, miny, maxy)
+#define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) clamp(((x - minx) * (maxy - miny) / (maxx - minx)) + miny, miny, maxy)

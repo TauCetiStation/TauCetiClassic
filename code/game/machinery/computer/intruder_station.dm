@@ -38,15 +38,14 @@
 	for(var/datum/intruder_tools/T in tools)
 		dat += "[T.name] ([T.cost]):"
 		var/buyable = (stored_uplink && stored_uplink.hidden_uplink && available_telecrystalls >= T.cost)
-		dat += "<a href ='?src=\ref[src];buy=\ref[T]'>[buyable ? "Buy"  : "<font color='grey'>Buy</font>"]</a> | "
+		dat += "<a [!buyable ? "class='disabled'" : null] href ='?src=\ref[src];buy=\ref[T]'>Buy</a> | "
 		dat += "<a href ='?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
 		if(show_tool_desc == T)
 			dat += "[T.desc]<BR>"
 		dat += "<BR>"
 
-	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500)
+	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/intruder_station/Topic(href, href_list)
@@ -177,3 +176,10 @@
 	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
 	item = /obj/item/weapon/storage/box/syndie_kit/armor
 	cost = 4
+
+/datum/intruder_tools/hazmat
+	name = "Experimental Chemical Warfare Kit"
+	desc = "Experimental kit consisting of menacing hazmat space suit designed to strike terror into Nanotrasen employees and chemical tank filled with deadly mix of poisons, drugs and combustible fuel. The tank comes with a handy meister attached. Additional chemicals can be bought via uplink to refill the tank."
+	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	cost = 20
+	delete_dat_after_buying = TRUE

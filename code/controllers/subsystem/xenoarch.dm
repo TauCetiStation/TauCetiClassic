@@ -1,6 +1,4 @@
-var/datum/subsystem/xenoarch/SSxenoarch
-
-/datum/subsystem/xenoarch
+SUBSYSTEM_DEF(xenoarch)
 	name = "Xenoarch"
 
 	init_order = SS_INIT_XENOARCH
@@ -49,11 +47,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 		/obj/item/seeds/blackberry
 	)
 
-
-/datum/subsystem/xenoarch/New()
-	NEW_SS_GLOBAL(SSxenoarch)
-
-/datum/subsystem/xenoarch/Initialize(timeofday)
+/datum/controller/subsystem/xenoarch/Initialize(timeofday)
 	// Local lists for sonic speed.
 	var/list/turfs_to_process        = list()
 	var/list/artifact_spawning_turfs = list()
@@ -93,6 +87,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 		if(isnull(archeo_turf.finds))
 			archeo_turf.finds = list()
+
 			if(prob(50))
 				archeo_turf.finds += new /datum/find(digsite, rand(5,95))
 				digsite_spawning_turfs += archeo_turf
@@ -110,6 +105,11 @@ var/datum/subsystem/xenoarch/SSxenoarch
 				archeo_turf.archaeo_overlay = "overlay_archaeo[rand(1,3)]"
 				archeo_turf.add_overlay(archeo_turf.archaeo_overlay)
 
+			archeo_turf.prepare_huds()
+			var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
+			mine.add_to_hud(archeo_turf)
+			archeo_turf.set_mine_hud()
+
 		// Have a chance for an artifact to spawn here, but not in animal or plant digsites
 		if(isnull(archeo_turf.artifact_find) && digsite != 1 && digsite != 2)
 			artifact_spawning_turfs += archeo_turf
@@ -121,6 +121,11 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 	for(var/turf/simulated/mineral/artifact_turf in artifact_spawning_turfs)
 		artifact_turf.artifact_find = new
+
+		artifact_turf.prepare_huds()
+		var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
+		mine.add_to_hud(artifact_turf)
+		artifact_turf.set_mine_hud()
 
 	// Ref digsites and artifacts list to subsystem to be able to view it.
 	turfs_with_artifacts = artifact_spawning_turfs
@@ -156,5 +161,5 @@ var/datum/subsystem/xenoarch/SSxenoarch
 
 	..()
 
-/datum/subsystem/xenoarch/Recover()
+/datum/controller/subsystem/xenoarch/Recover()
 	flags |= SS_NO_INIT

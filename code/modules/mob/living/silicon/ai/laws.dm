@@ -23,6 +23,7 @@
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
 	src.laws_sanity_check()
 	src.laws.set_zeroth_law(law, law_borg)
+	add_antag_hud(ANTAG_HUD_MALF, "hudmalai", src)
 
 /mob/living/silicon/ai/proc/add_inherent_law(law)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
@@ -162,4 +163,6 @@
 	list += {"<br><A href='byond://?src=\ref[src];lawr=1'>Channel: [src.lawchannel]</A><br>"}
 	list += {"<A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
-	usr << browse(entity_ja(list), "window=laws")
+	var/datum/browser/popup = new(usr, "window=laws", "[name] Laws")
+	popup.set_content(list)
+	popup.open()

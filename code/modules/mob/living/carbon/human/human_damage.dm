@@ -14,6 +14,8 @@
 		total_burn += BP.burn_dam
 
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	med_hud_set_health()
+	med_hud_set_status()
 
 	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
@@ -177,7 +179,8 @@
 			if (BP.status & ORGAN_MUTATED)
 				BP.unmutate()
 				to_chat(src, "<span class = 'notice'>Your [BP.name] is shaped normally again.</span>")
-	hud_updateflag |= 1 << HEALTH_HUD
+	med_hud_set_health()
+
 
 // =============================================
 
@@ -225,8 +228,8 @@
 	if(!parts.len)
 		return
 	var/obj/item/organ/external/BP = pick(parts)
-	if(BP.heal_damage(brute, burn))
-		hud_updateflag |= 1 << HEALTH_HUD
+	BP.heal_damage(brute, burn)
+
 	updatehealth()
 
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
@@ -241,10 +244,18 @@
 	var/damage_flags = (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
 
 	if(BP.take_damage(brute, burn, damage_flags))
-		hud_updateflag |= 1 << HEALTH_HUD
+
 		updatehealth()
 		speech_problem_flag = 1
 
+// Damage certain bodyparts
+/mob/living/carbon/human/proc/take_certain_bodypart_damage(list/parts_name, brute, burn, sharp = 0, edge = 0)
+	for(var/name in parts_name)
+		var/obj/item/organ/external/BP = get_bodypart(name)
+		var/damage_flags = (sharp ? DAM_SHARP : FALSE) | (edge ? DAM_EDGE : FALSE)
+
+		if(BP.take_damage(brute, burn, damage_flags))
+			updatehealth()
 
 //Heal MANY external bodyparts, in random order
 /mob/living/carbon/human/heal_overall_damage(brute, burn)
@@ -258,7 +269,7 @@
 		burn -= (burn_was - BP.burn_dam)
 		parts -= BP
 	updatehealth()
-	hud_updateflag |= 1 << HEALTH_HUD
+
 	speech_problem_flag = 1
 
 
@@ -286,7 +297,7 @@
 		parts -= BP
 
 	updatehealth()
-	hud_updateflag |= 1 << HEALTH_HUD
+
 
 
 ////////////////////////////////////////////
@@ -309,13 +320,14 @@ This function restores all bodyparts.
 	for(var/BP_ZONE in species.has_bodypart)
 		if(!bodyparts_by_name[BP_ZONE])
 			var/path = species.has_bodypart[BP_ZONE]
-			new path(null, src)
+			var/obj/item/organ/external/E = new path(null)
+			E.insert_organ(src)
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
 	if(istype(BP, /obj/item/organ/external))
 		if(BP.heal_damage(brute, burn))
-			hud_updateflag |= 1 << HEALTH_HUD
+			med_hud_set_health()
 	else
 		return 0
 
@@ -365,6 +377,6 @@ This function restores all bodyparts.
 
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
-	hud_updateflag |= 1 << HEALTH_HUD
+
 
 	return created_wound

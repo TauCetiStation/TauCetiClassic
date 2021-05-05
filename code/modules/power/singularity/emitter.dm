@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/machinery/power/emitter
 	name = "Emitter"
 	desc = "It is a heavy duty industrial laser."
@@ -61,7 +59,7 @@
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/power/emitter/Destroy()
@@ -124,9 +122,6 @@
 			set_power_use(IDLE_POWER_USE)	*/
 	return 1
 
-/obj/machinery/containment_field/meteorhit()
-	return 0
-
 /obj/machinery/power/emitter/process()
 	if(stat & (BROKEN))
 		return
@@ -162,7 +157,7 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, src)
 			s.start()
-		A.dir = src.dir
+		A.set_dir(src.dir)
 		A.starting = get_turf(src)
 		switch(dir)
 			if(NORTH)

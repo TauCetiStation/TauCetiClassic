@@ -103,8 +103,6 @@
 	popup.set_content(dat)
 	popup.open()
 
-	onclose(user, "autorepair")
-
 
 /obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
 	if(istype(W, /obj/item/stack/tile/plasteel))
@@ -179,9 +177,7 @@
 
 	var/area/t_area = get_area(t)
 
-	if(t_area && (t_area.name == "Space" || findtext(t_area.name, "huttle")))
-		return FALSE
-	else
+	if(istype(t_area, /area/station/))
 		return TRUE
 
 /obj/machinery/bot/floorbot/proc/is_broken(turf/simulated/floor/t)

@@ -92,7 +92,7 @@
 	return TRUE
 
 /obj/machinery/suspension_gen/ui_interact(mob/user)
-	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
+	var/dat = ""
 	if(cell)
 		var/colour = "red"
 		if(cell.charge / cell.maxcharge > 0.66)
@@ -104,7 +104,7 @@
 		dat += "<b>Energy cell</b>: None<br>"
 		dat += "<hr>"
 	if(locked && !isobserver(user))
-		dat += "<i>Swipe your ID card to begin.</i>"
+		dat += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
 		dat += "Suspension field generator is: [suspension_field ? "<font color=green>Enable</font>" : "<font color=red>Disable</font>" ] <br><b><A href='?src=\ref[src];toggle_field=1'>[suspension_field ? "\[Disable field\]" : "\[Enable field\]"]</a></b><br>"
 		dat += "<b>Select field mode</b><br>"
@@ -121,9 +121,11 @@
 		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
-	dat += "<A href='?src=\ref[src];close=1'> Close console </A><BR>"
-	user << browse(entity_ja(dat), "window=suspension;size=500x400")
-	onclose(user, "suspension")
+
+	var/datum/browser/popup = new(user, "suspension", "Multi-phase mobile suspension field generator MK II \"Steadfast\"", 500, 400)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/suspension_gen/process()
 	//set background = 1
@@ -165,11 +167,6 @@
 	return TRUE
 
 /obj/machinery/suspension_gen/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=suspension")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -299,6 +296,8 @@
 	set name = "Rotate suspension gen (counter-clockwise)"
 	set category = "Object"
 
+	if(usr.incapacitated())
+		return
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else
@@ -309,6 +308,8 @@
 	set name = "Rotate suspension gen (clockwise)"
 	set category = "Object"
 
+	if(usr.incapacitated())
+		return
 	if(anchored)
 		to_chat(usr, "<span class='warning'>You cannot rotate [src], it has been firmly fixed to the floor.</span>")
 	else

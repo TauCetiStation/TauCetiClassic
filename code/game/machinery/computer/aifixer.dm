@@ -25,7 +25,7 @@
 	return
 
 /obj/machinery/computer/aifixer/ui_interact(mob/user)
-	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
+	var/dat = ""
 
 	if (src.occupier)
 		var/laws
@@ -57,10 +57,10 @@
 			dat += {"<br><br><A href='byond://?src=\ref[src];fix=1'>Begin Reconstruction</A>"}
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
-	dat += {" <A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/aifixer/process()
 	if(..())

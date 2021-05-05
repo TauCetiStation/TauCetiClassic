@@ -4,6 +4,7 @@
 
 /mob/living/carbon/Destroy()
 	carbon_list -= src
+	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/Life()
@@ -48,30 +49,9 @@
 			return
 		var/tile = get_turf(get_step(essence.phantom, direction))
 		if(get_dist(tile, essence.host) < 8)
-			essence.phantom.dir = direction
+			essence.phantom.set_dir(direction)
 			essence.phantom.loc = tile
 		return
-	if(user in src.stomach_contents)
-		if(prob(40))
-			audible_message("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>", hearing_distance = 4)
-			var/obj/item/I = user.get_active_hand()
-			if(I && I.force)
-				var/d = rand(round(I.force / 4), I.force)
-				if(istype(src, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
-					BP.take_damage(d, 0)
-					H.updatehealth()
-				else
-					src.take_bodypart_damage(d)
-				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>")
-				playsound(user, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-
-				if(prob(src.getBruteLoss() - 50))
-					for(var/atom/movable/A in stomach_contents)
-						A.loc = loc
-						stomach_contents.Remove(A)
-					src.gib()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/attacker)
 	if(istype(attacker, /mob/living/simple_animal/headcrab))
@@ -82,8 +62,6 @@
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
-		if(M in src.stomach_contents)
-			src.stomach_contents.Remove(M)
 		M.loc = src.loc
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
@@ -269,7 +247,15 @@
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
 
-			if(lying)
+			if(on_fire && M != src)
+				fire_stacks--
+				M.visible_message("<span class='danger'>[M] trying to extinguish [src].</span>", \
+								"<span class='rose'>You trying to extinguish [src].</span>")
+				if(fire_stacks <= 0)
+					ExtinguishMob()
+					M.visible_message("<span class='danger'>[M] has successfully extinguished [src]!</span>", \
+									"<span class='notice'>You extinguish [src]!</span>")
+			else if(lying)
 				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
 					if(!IsSleeping())
@@ -494,7 +480,7 @@
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
-	var/list/dat = list()
+	var/dat
 
 	dat += "<table>"
 	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
@@ -513,12 +499,10 @@
 	if(legcuffed)
 		dat += "<tr><td><B>Legcuffed:</B></td><td><A href='?src=\ref[src];item=[SLOT_LEGCUFFED]'>Remove</A></td></tr>"
 
-	dat += {"</table>
-	<A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
+	dat += "</table>"
 
 	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
-	popup.set_content(dat.Join())
+	popup.set_content(dat)
 	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
@@ -556,7 +540,7 @@
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
 
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
 
@@ -582,7 +566,7 @@
 
 //Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Torment host"
 	set desc = "Punish your host with agony."
 
@@ -605,7 +589,7 @@
 	return 0
 
 /mob/living/carbon/proc/spawn_larvae()
-	set category = "Alien"
+	set category = "Borer"
 	set name = "Reproduce"
 	set desc = "Spawn several young."
 
@@ -617,9 +601,10 @@
 	if(B.chemicals >= 100)
 		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
 		B.chemicals -= 100
+		B.has_reproduced = 1
 
 		vomit()
-		new /mob/living/simple_animal/borer(get_turf(src))
+		new/mob/living/simple_animal/borer(get_turf(src), TRUE)
 	else
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
@@ -858,7 +843,7 @@
 							internalsound = 'sound/misc/riginternalon.ogg'
 					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
 
-					if(ITEM.air_contents && LAZYLEN(ITEM.air_contents.gas))
+					if(ITEM.air_contents && length(ITEM.air_contents.gas))
 						gas_log_string = " (gases:"
 						for(var/G in ITEM.air_contents.gas)
 							gas_log_string += " - [G]=[ITEM.air_contents.gas[G]]"
@@ -905,6 +890,7 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	med_hud_set_status()
 
 /mob/living/carbon/get_unarmed_attack()
 	var/retDam = 2

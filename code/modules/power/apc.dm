@@ -47,7 +47,6 @@
 	use_power = NO_POWER_USE
 	req_access = list(access_engine_equip)
 	allowed_checks = ALLOWED_CHECK_NONE
-	unacidable = TRUE
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -110,9 +109,9 @@
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if(building)
-		dir = ndir
+		set_dir(ndir)
 	tdir = dir		// to fix Vars bug
-	dir = SOUTH
+	set_dir(SOUTH)
 
 	pixel_x = (tdir & 3) ? 0 : (tdir == 4 ? 27 : -27)
 	pixel_y = (tdir & 3) ? (tdir == 1 ? 27 : -27) : 0
@@ -131,9 +130,9 @@
 /obj/machinery/power/apc/Destroy()
 	apc_list -= src
 	if(malfai && operating)
-		if(ticker.mode.config_tag == "malfunction")
+		if(SSticker.mode.config_tag == "malfunction")
 			if(is_station_level(z))
-				var/datum/game_mode/malfunction/gm_malf = ticker.mode
+				var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 				gm_malf.apcs--
 	area.apc = null
 	area.power_light = 0
@@ -157,7 +156,7 @@
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
+	terminal.set_dir(tdir)
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
@@ -398,7 +397,7 @@
 						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
 						"You broke the charred power control board and remove the remains.",
 						"You hear a crack!")
-					//ticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
+					//SSticker.mode:apcs-- //XSI said no and I agreed. -rastaf0
 				else
 					user.visible_message(\
 						"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
@@ -707,7 +706,7 @@
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
-	if(ticker && ticker.mode && (malf.mind in ticker.mode.malf_ai) && istype(malf))
+	if(SSticker && SSticker.mode && (malf.mind in SSticker.mode.malf_ai) && istype(malf))
 		if(src.malfai == (malf.parent || malf))
 			if(src.occupier == malf)
 				return 3 // 3 = User is shunted in this APC
@@ -777,7 +776,7 @@
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 485 : 460)
+		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 505 : 460)
 		// when the ui is first opened this is the data it will use
 		ui.set_initial_data(data)
 		// open the new ui window
@@ -859,9 +858,9 @@
 	else if(href_list["breaker"])
 		operating = !operating
 		if(malfai)
-			if(ticker.mode.config_tag == "malfunction")
+			if(SSticker.mode.config_tag == "malfunction")
 				if(is_station_level(z))
-					var/datum/game_mode/malfunction/gm_malf = ticker.mode
+					var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 					operating ? gm_malf.apcs++ : gm_malf.apcs--
 
 		src.update()
@@ -917,9 +916,9 @@
 				if(!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
-					if(ticker.mode.config_tag == "malfunction")
+					if(SSticker.mode.config_tag == "malfunction")
 						if(is_station_level(z))
-							var/datum/game_mode/malfunction/gm_malf = ticker.mode
+							var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 							gm_malf.apcs++
 					if(malfai.parent)
 						src.malfai = malfai.parent
@@ -1203,12 +1202,6 @@
 	return val
 
 // damage and destruction acts
-
-/obj/machinery/power/apc/meteorhit(obj/O)
-
-	set_broken()
-	return
-
 /obj/machinery/power/apc/emp_act(severity)
 	flick("apc-spark", src)
 	if(cell)
@@ -1255,9 +1248,9 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		if(ticker.mode.config_tag == "malfunction")
+		if(SSticker.mode.config_tag == "malfunction")
 			if(is_station_level(z))
-				var/datum/game_mode/malfunction/gm_malf = ticker.mode
+				var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 				gm_malf.apcs--
 	stat |= BROKEN
 	operating = 0

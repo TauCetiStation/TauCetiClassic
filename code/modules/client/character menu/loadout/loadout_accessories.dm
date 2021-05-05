@@ -35,7 +35,7 @@
 	path = /obj/item/clothing/head/headscarf
 
 /datum/gear/accessory/haircomb
-	display_name = "Purple comb"
+	display_name = "Black comb"
 	path = /obj/item/weapon/haircomb
 
 /datum/gear/accessory/lipstick
@@ -97,6 +97,11 @@
 	display_name = "Gold Collar"
 	path = /obj/item/clothing/mask/tie/collar2
 
-/datum/gear/accessory/holy
-	display_name = "Holy Cross"
-	path = /obj/item/clothing/accessory/holy
+/datum/gear/accessory/metal_cross
+	display_name = "Metal cross"
+	path = /obj/item/clothing/accessory/metal_cross
+
+/datum/gear/accessory/bronze_cross
+	display_name = "Bronze cross"
+	path = /obj/item/clothing/accessory/bronze_cross
+	cost = 2

@@ -460,6 +460,11 @@
 					if(isnull(var_new))
 						return
 					O.set_light(l_color = var_new)
+				if("ckey")
+					var/var_new = ckey(input("Enter new text:", "Text", O.vars[variable]) as null|text)
+					if(isnull(var_new))
+						return
+					O.vars[variable] = var_new
 				else
 					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable]) as null|text)
 					if(isnull(var_new))

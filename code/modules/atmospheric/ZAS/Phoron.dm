@@ -86,7 +86,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		contaminate()
 
 	//Anything else requires them to not be dead.
-	if(stat >= 2)
+	if(stat >= 2 || species.flags[IS_SYNTHETIC])
 		return
 
 	//Burn skin if exposed.

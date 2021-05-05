@@ -99,21 +99,18 @@
 			qdel(src)
 			return
 		if(2.0)
-			shatter(0)
+			take_damage(rand(30, 50))
 			return
 		if(3.0)
-			if(prob(50))
-				shatter(0)
-				return
+			take_damage(rand(5, 15))
+			return
 
+/obj/structure/window/airlock_crush_act()
+	take_damage(DOOR_CRUSH_DAMAGE * 2)
+	..()
 
 /obj/structure/window/blob_act()
-	shatter()
-
-
-/obj/structure/window/meteorhit()
-	shatter()
-
+	take_damage(rand(30, 50))
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -289,7 +286,7 @@
 			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
 
-	else
+	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force, W.damtype)
 			if(health <= 7)
@@ -299,7 +296,7 @@
 				step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		..()
+		return ..()
 
 /obj/structure/window/proc/fastened_change()
 	return
@@ -336,7 +333,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 90)
+	set_dir(turn(dir, 90))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -356,7 +353,7 @@
 		return 0
 
 	update_nearby_tiles(need_rebuild=1) //Compel updates before
-	dir = turn(dir, 270)
+	set_dir(turn(dir, 270))
 //	updateSilicate()
 	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
@@ -403,7 +400,7 @@
 /obj/structure/window/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
-	dir = ini_dir
+	set_dir(ini_dir)
 	update_nearby_tiles(need_rebuild=1)
 
 //checks if this window is full-tile one
@@ -582,4 +579,4 @@
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
 		return TRUE
-	. = ..()
+	return ..()

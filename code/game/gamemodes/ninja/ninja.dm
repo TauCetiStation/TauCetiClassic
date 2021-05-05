@@ -6,9 +6,11 @@
 	role_type = ROLE_NINJA
 	restricted_jobs = list("Cyborg", "AI")
 	required_players = 10 //Can be adjusted later, should suffice for now.
-	required_players_secret = 15
+	required_players_bundles = 15
 	required_enemies = 2
 	recommended_enemies = 2
+	antag_hud_type = ANTAG_HUD_NINJA
+	antag_hud_name = "hudninja"
 
 	votable = 0
 
@@ -21,7 +23,7 @@
 	if (!..())
 		return FALSE
 	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "carpspawn")
+		if(L.name == "ninja")
 			return TRUE
 	return FALSE
 
@@ -47,7 +49,7 @@
 /datum/game_mode/ninja/pre_setup()
 	//Until such a time as people want to place ninja spawn points, carpspawn will do fine.
 	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "carpspawn")
+		if(L.name == "ninja")
 			ninjastart.Add(L)
 	for(var/datum/mind/ninja in ninjas)
 		ninja.current << browse(null, "window=playersetup")
@@ -68,6 +70,7 @@
 		var/mob/living/carbon/human/N = ninja.current
 		N.internal = N.s_store
 		N.internals.icon_state = "internal1"
+		add_antag_hud(antag_hud_type, antag_hud_name, N)
 		if(N.wear_suit && istype(N.wear_suit,/obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/S = N.wear_suit
 			S:randomize_param()
@@ -241,11 +244,11 @@
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] has failed!</span>"
+					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
 
 	if(text)
 		antagonists_completion += list(list("mode" = "ninja", "html" = text))
-		text = "<div class='block'>[text]</div>"
+		text = "<div class='Section'>[text]</div>"
 
 	return text

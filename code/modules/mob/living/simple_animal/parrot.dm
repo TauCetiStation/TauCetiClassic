@@ -47,7 +47,7 @@
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
 	response_harm   = "swats the"
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	universal_speak = 1
 
 	has_head = TRUE
@@ -123,14 +123,15 @@
 	user.set_machine(src)
 	if(user.incapacitated()) return
 
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
+	var/dat = ""
 	if(ears)
 		dat +=	"<br><b>Headset:</b> [ears] (<a href='?src=\ref[src];remove_inv=ears'>Remove</a>)"
 	else
 		dat +=	"<br><b>Headset:</b> <a href='?src=\ref[src];add_inv=ears'>Nothing</a>"
 
-	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
-	onclose(user, "mob[real_name]")
+	var/datum/browser/popup = new(user, "mob[real_name]", "Inventory of [name]", 325, 500)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
@@ -155,8 +156,8 @@
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
-							if(copytext(possible_phrase,1,3) in department_radio_keys)
-								possible_phrase = copytext(possible_phrase,3,length(possible_phrase))
+							if(copytext(possible_phrase,1,2 + length(possible_phrase[2])) in department_radio_keys)
+								possible_phrase = copytext(possible_phrase, 2 + length(possible_phrase[2]),-1)
 					else
 						to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from].</span>")
 						return
@@ -327,8 +328,8 @@
 						if(prob(50))
 							useradio = 1
 
-						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+						if(copytext(possible_phrase,1, 2 + length(possible_phrase[2])) in department_radio_keys)
+							possible_phrase = "[useradio?pick(available_channels):""] [copytext(possible_phrase,2 + length(possible_phrase[2]))]" //crop out the channel prefix
 						else
 							possible_phrase = "[useradio?pick(available_channels):""] [possible_phrase]"
 
@@ -336,8 +337,8 @@
 
 				else //If we have no headset or channels to use, dont try to use any!
 					for(var/possible_phrase in speak)
-						if(copytext(possible_phrase,1,3) in department_radio_keys)
-							possible_phrase = "[copytext(possible_phrase,3,length(possible_phrase)+1)]" //crop out the channel prefix
+						if(copytext(possible_phrase,1, 2 + length(possible_phrase[2])) in department_radio_keys)
+							possible_phrase = "[copytext(possible_phrase,2 + length(possible_phrase[2]))]" //crop out the channel prefix
 						newspeak.Add(possible_phrase)
 				speak = newspeak
 
@@ -709,7 +710,7 @@
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived
@@ -767,9 +768,9 @@
 	memory_saved = 1 //At this point nothing is saved
 	. = ..()
 
-/mob/living/simple_animal/parrot/say(var/message)
+/mob/living/simple_animal/parrot/say(message)
 
-	if(stat)
+	if(stat || !message)
 		return
 
 	var/verb = "says"
@@ -778,16 +779,16 @@
 
 
 	var/message_mode=""
-	if(copytext(message,1,2) == ";")
+	if(message[1] == ";")
 		message_mode = "headset"
 		message = copytext(message,2)
 
 	if(length(message) >= 2)
-		var/channel_prefix = copytext(message, 1 ,3)
+		var/channel_prefix = copytext(message, 1 ,2 + length(message[2]))
 		message_mode = department_radio_keys[channel_prefix]
 
-	if(copytext(message,1,2) == ":")
-		var/positioncut = 3
+	if(message[1] == ":")
+		var/positioncut = 2 + length(message[2])
 		message = trim(copytext(message,positioncut))
 
 	message = capitalize(trim_left(message))
@@ -809,7 +810,7 @@
 
 
 /mob/living/simple_animal/parrot/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
-	if(speaker != src)
+	if(speaker != src && length(available_channels) > 0)
 		parrot_hear("[pick(available_channels)] [message]")
 	..()
 

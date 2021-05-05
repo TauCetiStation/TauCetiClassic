@@ -4,6 +4,7 @@ var/host = null
 var/join_motd = null
 var/host_announcements
 var/join_test_merge = null
+var/test_merges
 var/station_name = "NSS Exodus"
 var/system_name = "Tau Ceti"
 var/game_version = "TauCetiStation"
@@ -13,7 +14,7 @@ var/changelog_hash = ""
 
 var/list/donators = list()
 
-var/aliens_allowed = 0
+var/aliens_allowed = 1
 var/ooc_allowed = 1
 var/looc_allowed = 1
 var/dsay_allowed = 1

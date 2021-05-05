@@ -21,10 +21,12 @@
 			return FALSE
 	var/A = null
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) in teleportlocs
+		A = input("Area to teleport to", "Teleport", A) as null|anything  in teleportlocs
 	else
 		A = pick(teleportlocs)
 
+	if(!A)
+		return FALSE
 	var/area/thearea = teleportlocs[A]
 	usr.say("SCYAR NILA [thearea.name]")
 	if(do_after(usr, 50, target = usr))
@@ -53,12 +55,16 @@
 		target.forceMove(T)
 		handle_teleport_grab(T, target)
 
-/obj/proc/handle_teleport_grab(atom/T, mob/living/U)
+/obj/proc/handle_teleport_grab(atom/T, mob/living/U, victim_spread = TRUE)
 	var/atom/teleport_place
 	if(isturf(T))
-		teleport_place = locate(T.x + rand(-1,1), T.y + rand(-1,1), T.z)
+		if(victim_spread)
+			teleport_place = locate(T.x + rand(-1,1), T.y + rand(-1,1), T.z)
+		else
+			teleport_place = T
 	else
-		teleport_place = T
+		teleport_place = get_turf(T)
+
 	var/list/returned = list()
 	for(var/obj/item/weapon/grab/G in U.GetGrabs())
 		returned += G.affecting

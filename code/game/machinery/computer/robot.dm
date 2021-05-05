@@ -1,6 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/computer/robotics
 	name = "Robotics Control"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
@@ -73,31 +70,28 @@
 					dat += " Independent from AI |"
 				if (istype(user, /mob/living/silicon))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
-						dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
-				dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
+						dat += "<A class='violet' href='?src=\ref[src];magbot=\ref[R]'><i>Hack</i></A> "
+				dat += "<A class='green' href='?src=\ref[src];stopbot=\ref[R]'><i>[R.canmove ? "Lockdown" : "Release"]</i></A> "
+				dat += "<A class='red' href='?src=\ref[src];killbot=\ref[R]'><i>Destroy</i></A>"
 				dat += "<BR>"
-			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
+			dat += "<A href='?src=\ref[src];screen=0'>Main Menu</A><BR>"
 		if(screen == 2)
 			if(!src.status)
 				dat += {"<BR><B>Emergency Robot Self-Destruct</B><HR>\nStatus: Off<BR>
 				\n<BR>
-				\nCountdown: [src.timeleft]/60 <A href='?src=\ref[src];reset=1'>\[Reset\]</A><BR>
+				\nCountdown: [src.timeleft]/60 <A href='?src=\ref[src];reset=1'>Reset</A><BR>
 				\n<BR>
-				\n<A href='?src=\ref[src];eject=1'>Start Sequence</A><BR>
-				\n<BR>
-				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+				\n<A href='?src=\ref[src];eject=1'>Start Sequence</A><BR>"}
 			else
 				dat = {"<B>Emergency Robot Self-Destruct</B><HR>\nStatus: Activated<BR>
 				\n<BR>
 				\nCountdown: [src.timeleft]/60 \[Reset\]<BR>
-				\n<BR>\n<A href='?src=\ref[src];stop=1'>Stop Sequence</A><BR>
-				\n<BR>
-				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
-			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
+				\n<BR>\n<A href='?src=\ref[src];stop=1'>Stop Sequence</A><BR>"}
+			dat += "<A href='?src=\ref[src];screen=0'>Main Menu</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", null, 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	. = ..()
@@ -106,7 +100,7 @@
 
 	if (href_list["eject"])
 		src.temp = {"Destroy Robots?<BR>
-		<BR><B><A href='?src=\ref[src];eject2=1'>\[Swipe ID to initiate destruction sequence\]</A></B><BR>
+		<BR><B><A href='?src=\ref[src];eject2=1'>Swipe ID to initiate destruction sequence</A></B><BR>
 		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
 	else if (href_list["eject2"])

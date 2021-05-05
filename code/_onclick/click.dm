@@ -20,6 +20,12 @@
 /mob/proc/SetNextMove(num)
 	next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
 
+// Delays the mob's next click/action either by num deciseconds, or maximum that was already there.
+/mob/proc/AdjustNextMove(num)
+	var/new_next_move = world.time + ((num + next_move_adjust) * next_move_modifier)
+	if(new_next_move > next_move)
+		next_move = new_next_move
+
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -289,7 +295,7 @@
 	/*
 	Handling combat activation after **item swipes** and changeling stings.
 	*/
-	if(istype(user) && in_range(src, user) && user.try_combo(src))
+	if(istype(user) && user.Adjacent(src) && user.try_combo(src))
 		return FALSE
 	return ..()
 
@@ -345,11 +351,11 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.dir = NORTH
-		else		usr.dir = SOUTH
+		if(dy > 0)	usr.set_dir(NORTH)
+		else		usr.set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.dir = EAST
-		else		usr.dir = WEST
+		if(dx > 0)	usr.set_dir(EAST)
+		else		usr.set_dir(WEST)
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
@@ -365,14 +371,14 @@
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			set_dir(NORTH)
 		else
-			dir = SOUTH
+			set_dir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			set_dir(EAST)
 		else
-			dir = WEST
+			set_dir(WEST)
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
@@ -390,7 +396,7 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
-	mouse_opacity = 2
+	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	screen_loc = "CENTER"
 
 /obj/screen/click_catcher/atom_init()

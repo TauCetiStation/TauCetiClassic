@@ -1,6 +1,3 @@
-#define LOG_CLEANING(text) \
-  replace_characters(text, list(JA_ENTITY=JA_PLACEHOLDER, JA_ENTITY_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
-
 //Investigate logging defines
 //todo: not all curently used, copypaste from /tg/
 #define INVESTIGATE_ATMOS           "atmos"

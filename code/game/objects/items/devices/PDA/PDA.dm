@@ -334,14 +334,17 @@
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
-	var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>"
+	var/HTML = ""
 	for(var/index in tnote)
 		if(index["sent"])
 			HTML += addtext("<i><b>&rarr; To <a href='byond://?src=\ref[src];choice=Message;target=",index["src"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
 		else
 			HTML += addtext("<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=",index["target"],"'>", index["owner"],"</a>:</b></i><br>", index["message"], "<br>")
-	HTML +="</body></html>"
-	usr << browse(entity_ja(HTML), "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
+
+	var/datum/browser/popup = new(usr, "log", "AI PDA Message Log", 400, 444)
+	popup.set_window_options("border=1;can_minimize=0")
+	popup.set_content(HTML)
+	popup.open()
 
 
 /obj/item/device/pda/silicon/can_use()
@@ -397,6 +400,7 @@
 	return id
 
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
+	. = ..()
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && can_use())
 		return attack_self(M)
@@ -532,7 +536,7 @@
 				data["convo_job"] = sanitize(c["job"])
 				break
 	if(mode==41)
-		data_core.get_manifest_json()
+		data_core.load_manifest()
 
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
@@ -732,7 +736,7 @@
 		if ("Edit")
 			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
 			if (in_range(src, U) && loc == U && mode == 1)
-				note = html_decode(n)
+				note = n
 				notehtml = note
 				note = replacetext(note, "\n", "<br>")
 			else
@@ -845,7 +849,25 @@
 			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
 		if("purpose")
 			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+
 		if("make_transfer")
+		//============check telecoms and message server=================
+			var/obj/machinery/message_server/useMS = FALSE
+			var/useTC = FALSE
+			if(message_servers)
+				for(var/obj/machinery/message_server/MS in message_servers)
+					if(MS.active)
+						useMS = TRUE
+						break
+
+			var/datum/signal/signal = src.telecomms_process()
+
+			if(signal && signal.data["done"])
+				useTC = TRUE
+			if(!useMS || !useTC)
+				to_chat(U, "[bicon(src)]<span class='warning'>Communication Error</span>")
+				return
+		//==============================================================
 			if(owner_account.suspended)
 				to_chat(U, "[bicon(src)]<span class='warning'>Your account is suspended!</span>")
 				return
@@ -1156,12 +1178,13 @@
 
 		if (!P.message_silent)
 			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-			audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
+			P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 
 		//Search for holder of the PDA.
 		var/mob/living/L = null
 		if(P.loc && isliving(P.loc))
 			L = P.loc
+			t = highlight_traitor_codewords(t, L.mind)
 		//Maybe they are a pAI!
 		else
 			L = get(P, /mob/living/silicon)
@@ -1211,6 +1234,11 @@
 			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -1292,6 +1320,10 @@
 				id_check(user, 2)
 				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.
+				if(ishuman(loc))
+					var/mob/living/carbon/human/human_wearer = loc
+					if(human_wearer.wear_id == src)
+						human_wearer.sec_hud_set_ID()
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(I, /obj/item/device/paicard) && !src.pai)
@@ -1478,7 +1510,7 @@
 	else
 		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
-			owner_fingerprints += fingerprints	//add new owner’s fingerprints to the list
+			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else

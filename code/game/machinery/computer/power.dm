@@ -44,10 +44,9 @@
 			return
 
 
-	var/t = "<TT><B>Power Monitoring</B><HR>"
+	var/t = "<TT>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
 		t += "<span class='warning'>No connection</span>"
@@ -77,16 +76,12 @@
 
 		t += "</FONT></PRE></TT>"
 
-	user << browse(entity_ja(t), "window=powcomp;size=450x900")
-	onclose(user, "powcomp")
+	var/datum/browser/popup = new(user, "powcomp", "Power Monitoring", 450, 900)
+	popup.set_content(t)
+	popup.open()
 
 
 /obj/machinery/computer/monitor/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=powcomp")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

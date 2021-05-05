@@ -62,7 +62,7 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	set name = "Become space bum"
 	set category = "Ghost"
 	var/mob/dead/observer/M = usr
-	if(ticker.current_state < GAME_STATE_PLAYING)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
 		to_chat(src, "<span class='warning'> The game hasn't started yet!</span>")
 		return
 	if(!SSjunkyard.junkyard_initialised)

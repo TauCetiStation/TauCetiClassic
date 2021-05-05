@@ -69,7 +69,7 @@
 				desc = "Vitamins! Yay!"
 			if("tomatojuice")
 				icon_state = "glass_red"
-				name = "Glass of Tomato juf"
+				name = "Glass of Tomato juice"
 				desc = "Are you sure this is tomato juice?"
 			if("blood")
 				icon_state = "glass_red"
@@ -306,7 +306,7 @@
 			if("singulo")
 				icon_state = "singulo"
 				name = "Singulo"
-				desc = "A blue-space beverage."
+				desc = "A bluespace beverage."
 			if("alliescocktail")
 				icon_state = "alliescocktail"
 				name = "Allies cocktail"
@@ -557,15 +557,10 @@
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda/atom_init()
-	. = ..()
-	reagents.add_reagent("sodawater", volume)
-	on_reagent_change()
+	list_reagents = list("sodawater" = 25)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
+	list_reagents = list("cola" = 25)
 
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola/atom_init()
-	. = ..()
-	reagents.add_reagent("cola", volume)
-	on_reagent_change()
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood
+	list_reagents = list("blood" = 25)

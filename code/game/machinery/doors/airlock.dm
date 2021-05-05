@@ -20,13 +20,12 @@ var/list/airlock_overlays = list()
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
 	explosion_resistance = 15
-
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
 	var/spawnPowerRestoreRunning = 0
-	var/welded = null
+	var/welded = FALSE
 	var/locked = 0
 	var/lights = 1 // bolt lights show by default
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
@@ -75,7 +74,8 @@ var/list/airlock_overlays = list()
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
-		src.dir = dir
+		src.set_dir(dir)
+
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -91,12 +91,15 @@ var/list/airlock_overlays = list()
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
 	closeOther = null
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_from_hud(src)
 	return ..()
 
 /obj/machinery/door/airlock/process()
 	if(secondsElectrified > 0)
 		secondsElectrified--
 	else
+		diag_hud_set_electrified()
 		return PROCESS_KILL
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
@@ -129,7 +132,7 @@ var/list/airlock_overlays = list()
 	return FALSE
 
 /obj/machinery/door/airlock/proc/isWireCut(wireIndex)
-	return wires.is_index_cut(wireIndex)
+	return wires?.is_index_cut(wireIndex)
 
 /obj/machinery/door/airlock/proc/canAIControl()
 	return ((aiControlDisabled != 1) && !isAllPowerCut());
@@ -441,24 +444,24 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/show_unified_command_interface(mob/user)
 	user.set_machine(src)
-	var/t1 = text("<B>Airlock Control</B><br>\n")
+	var/t1 = ""
 	if(secondsMainPowerLost > 0)
 		if(!isWireCut(AIRLOCK_WIRE_MAIN_POWER1) && !isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
-			t1 += text("Main power is offline for [] seconds.<br>\n", secondsMainPowerLost)
+			t1 += text("Main power is <span class='bad'>offline</span> for [] seconds.<br>\n", secondsMainPowerLost)
 		else
-			t1 += text("Main power is offline indefinitely.<br>\n")
+			t1 += text("Main power is <span class='bad'>offline</span> indefinitely.<br>\n")
 	else
-		t1 += text("Main power is online.")
+		t1 += text("Main power is <span class='green'>online</span>.<br>")
 
 	if(secondsBackupPowerLost > 0)
 		if(!isWireCut(AIRLOCK_WIRE_BACKUP_POWER1) && !isWireCut(AIRLOCK_WIRE_BACKUP_POWER2))
-			t1 += text("Backup power is offline for [] seconds.<br>\n", secondsBackupPowerLost)
+			t1 += text("Backup power is <span class='bad'>offline</span> for [] seconds.<br>\n", secondsBackupPowerLost)
 		else
-			t1 += text("Backup power is offline indefinitely.<br>\n")
+			t1 += text("Backup power is <span class='bad'>offline</span> indefinitely.<br>\n")
 	else if(secondsMainPowerLost > 0)
-		t1 += text("Backup power is online.")
+		t1 += text("Backup power is <span class='green'>online</span>.<br>")
 	else
-		t1 += text("Backup power is offline, but will turn on if main power fails.")
+		t1 += text("Backup power is <span class='bad'>offline</span>, but will turn on if main power fails.")
 	t1 += "<br>\n"
 
 	if(isWireCut(AIRLOCK_WIRE_IDSCAN))
@@ -508,21 +511,21 @@ var/list/airlock_overlays = list()
 	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		t1 += text("Electrification wire is cut.<br>\n")
 	if(secondsElectrified == -1)
-		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src)
+		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", src)
 	else if(secondsElectrified>0)
-		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", secondsElectrified, src)
+		t1 += text("Door is electrified temporarily ([]s). <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", secondsElectrified, src)
 	else
-		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
+		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify temporarily (30s)</a> <A href='?src=\ref[];aiEnable=6'>Electrify indefinitely</a><br>\n", src, src)
 
 	if(isWireCut(AIRLOCK_WIRE_SAFETY))
-		t1 += text("Door force sensors not responding.</a><br>\n")
+		t1 += text("Door force sensors not responding</a><br>\n")
 	else if(safe)
 		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
 	else
 		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
 
 	if(isWireCut(AIRLOCK_WIRE_SPEED))
-		t1 += text("Door timing circuitry not responding.</a><br>\n")
+		t1 += text("Door timing circuitry not responding</a><br>\n")
 	else if(normalspeed)
 		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'> Override?</a><br>\n",src)
 	else
@@ -536,9 +539,9 @@ var/list/airlock_overlays = list()
 		else
 			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
 
-	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-	user << browse(entity_ja(t1), "window=airlock")
-	onclose(user, "airlock")
+	var/datum/browser/popup = new(user, "airlock", "Airlock Control")
+	popup.set_content(t1)
+	popup.open()
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
@@ -697,12 +700,7 @@ var/list/airlock_overlays = list()
 		..()
 
 
-/obj/machinery/door/airlock/Topic(href, href_list, var/no_window = 0)
-	if(href_list["close"])
-		usr << browse(null, "window=airlock")
-		usr.unset_machine(src)
-		return FALSE
-
+/obj/machinery/door/airlock/Topic(href, href_list, no_window = 0)
 	. = ..(href, href_list)
 	if(!.)
 		return
@@ -753,6 +751,7 @@ var/list/airlock_overlays = list()
 						secondsElectrified = 0
 					else if(secondsElectrified > 0)
 						secondsElectrified = 0
+					diag_hud_set_electrified()
 
 				if(7)
 					// Close door
@@ -835,7 +834,8 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = 30
-						START_PROCESSING(SSmachine, src)
+						diag_hud_set_electrified()
+						START_PROCESSING(SSmachines, src)
 
 				if(6)
 					// Electrify door indefinitely
@@ -849,6 +849,7 @@ var/list/airlock_overlays = list()
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>"
 						secondsElectrified = -1
+						diag_hud_set_electrified()
 
 				if(7)
 					// Open door
@@ -920,13 +921,19 @@ var/list/airlock_overlays = list()
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
 
-	if(iswelder(C) && !(operating > 0) && density)
+	if(iswelder(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
-		if(W.use(0,user))
-			welded = !welded
-			update_icon()
-			return
+		if(W.use(0, user))
+			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
+			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
+			if(W.use_tool(src, user, 30, volume = 100))
+				welded = !welded
+				update_icon()
+				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
+				                     "<span class='notice'>You [welded ? "weld" : "remove welding from"] [src]'s shutters with [W].</span>")
+				return
 		else
+			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 	else if(isscrewdriver(C))
 		p_open = !p_open
@@ -959,7 +966,7 @@ var/list/airlock_overlays = list()
 				if(glass && da.can_insert_glass)
 					da.set_glass(TRUE)
 				da.state = ASSEMBLY_WIRED
-				da.dir = dir
+				da.set_dir(dir)
 				da.created_name = name
 				da.update_state()
 
@@ -1039,6 +1046,9 @@ var/list/airlock_overlays = list()
 				if(locate(/mob/living) in T)
 					autoclose()
 					return FALSE
+				if(locate(/obj/mecha) in T)
+					autoclose()
+					return FALSE
 		return TRUE
 	return FALSE
 
@@ -1079,29 +1089,8 @@ var/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/do_afterclose()
-	for(var/turf/T in locs)
-		for(var/mob/living/M in T)
-			if(isrobot(M))
-				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE * 0.5)
-			else
-				M.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-				M.SetStunned(5)
-				M.SetWeakened(5)
-
-			var/turf/mob_turf = get_turf(M)
-			for(var/dir in cardinal)
-				var/turf/new_turf = get_step(mob_turf, dir)
-				if(M.Move(new_turf))
-					break
-
-			M.visible_message("<span class='red'>[M] was crushed by the [src] door.</span>",
-			                  "<span class='danger'>[src] door crushed you.</span>")
-
-		for(var/obj/structure/window/W in T)
-			W.ex_act(2)
-
-		for(var/obj/effect/fluid/F in T)
-			qdel(F)
+	for(var/atom/A in orange(0, src))
+		A.airlock_crush_act()
 	..()
 
 /obj/machinery/door/airlock/proc/autoclose()
@@ -1201,9 +1190,6 @@ var/list/airlock_overlays = list()
 			if(prob(10))
 				to_chat(user,"<span=userdanger>You accidentally drop your wrench in the flame</span>")
 				qdel(O)
-	else
-		return
-
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()

@@ -599,7 +599,7 @@
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
-/proc/filter_list(var/list/L, var/type)
+/proc/filter_list(list/L, type)
 	. = list()
 	for(var/entry in L)
 		if(istype(entry, type))
@@ -715,6 +715,15 @@
 					L[T] = TRUE
 		return L
 
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
+
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -760,13 +769,35 @@
 
 	return TRUE
 
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
+
+/proc/is_associative_list(list/L)
+	var/index = 0
+	for(var/key in L)
+		index++
+
+		var/value = null
+		// if key not num we can check L[key] without fear of "out of bound"
+		// else compare to index to prevent runtime error in e.g. list(5, 1)
+		// L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
+		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+			value = L[key]
+
+		if(!isnull(value))
+			return TRUE
+
+	return FALSE
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
-#define LAZYLEN(L) length(L)
+//#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )

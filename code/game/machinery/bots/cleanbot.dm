@@ -99,8 +99,9 @@
 			text("<A href='?src=\ref[src];operation=screw'>[screwloose ? "Yes" : "No"]</A>"),
 			text("<A href='?src=\ref[src];operation=oddbutton'>[oddbutton ? "Yes" : "No"]</A>"))
 
-	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autocleaner")
-	onclose(user, "autocleaner")
+	var/datum/browser/popup = new(user, "window=autocleaner", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
 	. = ..()

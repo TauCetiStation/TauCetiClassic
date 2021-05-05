@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
@@ -45,13 +43,13 @@
 						<BR><A href='?src=\ref[src];screen=6'>Medbot Tracking</A>
 						<BR>
 						<BR><A href='?src=\ref[src];screen=3'>Record Maintenance</A>
-						<BR><A href='?src=\ref[src];logout=1'>{Log Out}</A><BR>
+						<BR><A href='?src=\ref[src];logout=1'>Log Out</A><BR>
 						"}
 				if(2.0)
 					dat += "<B>Record List</B>:<HR>"
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general))
-							dat += text("<A href='?src=\ref[];d_rec=\ref[]'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
+							dat += text("<A href='?src=\ref[];d_rec=\ref[]'>[]: []</A><BR>", src, R, R.fields["id"], R.fields["name"])
 							//Foreach goto(132)
 					dat += text("<HR><A href='?src=\ref[];screen=1'>Back</A>", src)
 				if(3.0)
@@ -123,9 +121,11 @@
 
 				else
 		else
-			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", entity_ja(dat)), "window=med_rec")
-	onclose(user, "med_rec")
+			dat += text("<A href='?src=\ref[];login=1'>Log In</A>", src)
+
+	var/datum/browser/popup = new(user, "med_rec", "Medical Records")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
 	. = ..()
@@ -162,7 +162,9 @@
 				usr.drop_item()
 				I.loc = src
 				src.scan = I
-
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					H.sec_hud_set_ID()
 	else if (href_list["logout"])
 		src.authenticated = null
 		src.screen = null
@@ -454,7 +456,7 @@
 				return
 			src.active1 = null
 			src.active2 = null
-			t1 = lowertext_(t1)
+			t1 = lowertext(t1)
 			for(var/datum/data/record/R in data_core.medical)
 				if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["id"]) || t1 == lowertext(R.fields["b_dna"])))
 					src.active2 = R

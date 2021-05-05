@@ -223,7 +223,7 @@
 		user << browse(null, "window=turbine")
 		return
 
-	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
+	var/t = "<TT><PRE>"
 
 	t += "Generated power : [round(lastgen)] W<BR><BR>"
 
@@ -231,18 +231,16 @@
 
 	t += "Starter: [ compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]"
 
-	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
+	t += "</PRE><HR>"
 
 	t += "</TT>"
-	user << browse(entity_ja(t), "window=turbine")
-	onclose(user, "turbine")
+
+	var/datum/browser/popup = new(user, "turbine", "Gas Turbine Generator")
+	popup.set_content(t)
+	popup.open()
+
 
 /obj/machinery/power/turbine/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=turbine")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -276,15 +274,13 @@
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user)
 	var/dat
 	if(compressor && compressor.turbine)
-		dat += {"<BR><B>Gas turbine remote control system</B><HR>
-		\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
+		dat += {"\nTurbine status: [ src.compressor.starter ? "<A href='?src=\ref[src];str=1'>Off</A> <B>On</B>" : "<B>Off</B> <A href='?src=\ref[src];str=1'>On</A>"]
 		\n<BR>
 		\nTurbine speed: [src.compressor.rpm]rpm<BR>
 		\nPower currently being generated: [src.compressor.turbine.lastgen]W<BR>
 		\nInternal gas temperature: [src.compressor.gas_contained.temperature]K<BR>
 		\nVent doors: [ src.door_status ? "<A href='?src=\ref[src];doors=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];doors=1'>Open</A>"]
 		\n</PRE><HR><A href='?src=\ref[src];view=1'>View</A>
-		\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 		\n<BR>
 		\n"}
 	else
@@ -292,9 +288,9 @@
 		if(!compressor)
 			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
-
+	var/datum/browser/popup = new(user, "computer", "Gas turbine remote control system", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/turbine_computer/Topic(href, href_list)
@@ -316,10 +312,6 @@
 				spawn( 0 )
 					D.close()
 					door_status = 0
-	else if( href_list["close"] )
-		usr << browse(null, "window=computer")
-		usr.machine = null
-		return FALSE
 	else if(href_list["search"])
 		search_turbine()
 

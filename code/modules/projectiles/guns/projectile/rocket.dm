@@ -21,6 +21,28 @@
 	wielded = 1
 	update_icon()
 
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/MouseDrop(obj/over_object)
+	. = ..()
+	if (ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		if (loc != usr)
+			return
+		if (!over_object)
+			return
+
+		if (!usr.incapacitated())
+			switch(over_object.name)
+				if("r_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_r_hand(src)
+				if("l_hand")
+					if(!M.unEquip(src))
+						return
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
+
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/mob_can_equip(M, slot)
 	//Cannot equip wielded items.
 	if(wielded)
@@ -33,6 +55,7 @@
 	return ..(1, 1)
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/dropped(mob/user)
+	..()
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/revolver/rocketlauncher/O = user.get_inactive_hand()
@@ -88,6 +111,14 @@
 		return
 	else
 		..()
-		if(chambered)
-			qdel(chambered)
-			chambered = null
+		magazine.get_round(FALSE)
+
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
+	name = "XASL Mk.2 singularity buster"
+	desc = "Experimental Anti-Singularity Launcher. In case of extreme emergency you should point it at super-massive blackhole expanding towards you."
+	icon_state = "anti-singulo"
+	item_state = "anti-singulo"
+	slot_flags = SLOT_FLAGS_BACK
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
+	fire_sound = 'sound/weapons/guns/gunpulse_emitter2.ogg'
+	origin_tech = "combat=3;bluespace=6"

@@ -112,6 +112,11 @@
 	if(istype(user, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/H = user
 		H.attack_hulk(src)
+		return
+
+	..()
+	if(density)
+		open()
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -258,7 +263,7 @@
 /obj/machinery/door/firedoor/do_close()
 	..()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
-	START_PROCESSING(SSmachine, src)
+	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_open()

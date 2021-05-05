@@ -23,7 +23,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	if(!(usr.client.holder.rights & R_DEBUG))
 		return
 	if(!class)
-		if(istype(target, /datum/subsystem))
+		if(istype(target, /datum/controller/subsystem))
 			class = "subsystem"
 		else if(istype(target, /datum/controller))
 			class = "controller"

@@ -40,7 +40,7 @@
 	if(istype(target, /obj/effect/proc_holder/spell))
 		return
 
-	if(istype(target, /obj/structure/reagent_dispensers) && get_dist(src,target) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
+	if(istype(target, /obj/structure/reagent_dispensers) && proximity) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		var/obj/structure/reagent_dispensers/RD = target
 		if(!is_open_container())
 			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
@@ -145,10 +145,7 @@
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(turf/start, turf/target)
 	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
-	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-	D.create_reagents(amount_per_transfer_from_this)
-	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
-	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount_per_transfer_from_this, 1/spray_size, name_from_reagents = FALSE)
 
 	if(!chempuff_dense)
 		D.pass_flags |= PASSBLOB | PASSMOB | PASSCRAWL
@@ -201,7 +198,7 @@
 	desc = "Changes hair colour! Don't forget to read the label!"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "hairspraywhite"
-	item_state = "hairspray"
+	item_state = "hairspraywhite"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,5,10)
 	spray_size = 1
@@ -219,12 +216,17 @@
 
 	var/colour_spray = input(usr, "Choose desired label colour") as null|anything in list("white", "red", "green", "blue", "black", "brown", "blond")
 	if(colour_spray)
-		name = "[colour_spray] [initial(name)]"
-		icon_state = "[initial(icon_state)][colour_spray]"
+		name = "[colour_spray] hair color spray"
+		icon_state = "hairspray[colour_spray]"
+		item_state = "hairspray[colour_spray]"
 	else
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
 	update_icon()
+	if(usr.hand)
+		usr.update_inv_l_hand()
+	else
+		usr.update_inv_r_hand()
 
 //thurible
 /obj/item/weapon/reagent_containers/spray/thurible
@@ -459,6 +461,14 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/atom_init()
 	. = ..()
 	reagents.add_reagent("plantbgone", 100)
+
+// Lube Spray
+/obj/item/weapon/reagent_containers/spray/lube
+	volume = 150
+
+/obj/item/weapon/reagent_containers/spray/lube/atom_init()
+	. = ..()
+	reagents.add_reagent("lube", 150)
 
 //Water Gun
 /obj/item/weapon/reagent_containers/spray/watergun

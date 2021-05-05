@@ -17,9 +17,9 @@
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	universal_speak = 0	// No, just no.
-	var/stop_automated_movement = 0 // Use this to temporarely stop random movement or to if you write special movement code for animals.
-	var/wander = 1 // Does the mob wander around when idle?
-	var/stop_automated_movement_when_pulled = 1 // When set to 1 this stops the animal from moving when someone is pulling it.
+	var/stop_automated_movement = FALSE // Use this to temporarely stop random movement or to if you write special movement code for animals.
+	var/wander = TRUE // Does the mob wander around when idle?
+	var/stop_automated_movement_when_pulled = TRUE // When set to 1 this stops the animal from moving when someone is pulling it.
 
 	// Interaction
 	var/response_help   = "tries to help"
@@ -63,26 +63,43 @@
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
+	// See atom_init below.
+	moveset_type = null
+
 /mob/living/simple_animal/atom_init()
+	if(!moveset_type)
+		if(animalistic)
+			moveset_type = /datum/combat_moveset/animal
+		else if(has_head && has_arm && has_leg)
+			moveset_type = /datum/combat_moveset/human
+		else
+			moveset_type = /datum/combat_moveset/living
+
 	. = ..()
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
+
+/mob/living/simple_animal/Login()
+	..()
+	blinded = FALSE
+	stat = CONSCIOUS
+	update_canmove()
 
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
 
 /mob/living/simple_animal/helpReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='notice'>[attacker] [response_help] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
 /mob/living/simple_animal/disarmReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='warning'>[attacker] [response_disarm] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
 /mob/living/simple_animal/hurtReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='warning'>[attacker] [response_harm] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
@@ -103,6 +120,8 @@
 				"miss_sound" = retMissSound)
 
 /mob/living/simple_animal/updatehealth()
+	med_hud_set_health()
+	med_hud_set_status()
 	return
 
 /mob/living/simple_animal/Life()
@@ -110,12 +129,6 @@
 
 	// Health
 	if(stat == DEAD)
-		if(health > 0)
-			icon_state = icon_living
-			dead_mob_list -= src
-			alive_mob_list += src
-			stat = CONSCIOUS
-			density = 1
 		return 0
 
 	else if(health < 1)
@@ -125,7 +138,7 @@
 	health = min(health, maxHealth)
 
 	if(client)
-		handle_vision()
+		handle_regular_hud_updates()
 
 	if(stunned)
 		AdjustStunned(-1)
@@ -232,6 +245,11 @@
 	..()
 	icon_state = icon_living
 
+/mob/living/simple_animal/revive()
+	..()
+	density = initial(density)
+	mouse_opacity = initial(mouse_opacity)
+
 /mob/living/simple_animal/gib()
 	if(icon_gib)
 		flick(icon_gib, src)
@@ -271,34 +289,33 @@
 	stat = DEAD
 	health = 0
 	density = 0
+	med_hud_set_health()
+	med_hud_set_status()
 	return ..()
 
 /mob/living/simple_animal/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
-	switch (severity)
-		if (1.0)
-			adjustBruteLoss(500)
+	switch(severity)
+		if(1)
 			gib()
-			return
 
-		if (2.0)
+		if(2)
 			adjustBruteLoss(60)
 
-
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
 	damage *= perc_block
 
-	health = CLAMP(health - damage, 0, maxHealth)
+	health = clamp(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
 		death()
 
 /mob/living/simple_animal/adjustFireLoss(damage)
-	health = CLAMP(health - damage, 0, maxHealth)
+	health = clamp(health - damage, 0, maxHealth)
 	if(health < 1 && stat != DEAD)
 		death()
 
@@ -306,16 +323,16 @@
 	if (isliving(target_mob))
 		var/mob/living/L = target_mob
 		if(!L.stat && L.health >= 0)
-			return (0)
-	if (istype(target_mob,/obj/mecha))
+			return FALSE
+	if (istype(target_mob, /obj/mecha))
 		var/obj/mecha/M = target_mob
-		if (M.occupant)
-			return (0)
-	if (istype(target_mob,/obj/machinery/bot))
+		if(M.occupant)
+			return FALSE
+	if (istype(target_mob, /obj/machinery/bot))
 		var/obj/machinery/bot/B = target_mob
 		if(B.health > 0)
-			return (0)
-	return (1)
+			return FALSE
+	return TRUE
 
 // Call when target overlay should be added/removed
 /mob/living/simple_animal/update_targeted()
@@ -350,21 +367,24 @@
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
 
-/mob/living/simple_animal/say(var/message)
+/mob/living/simple_animal/say(message)
 	if(stat)
 		return
 
 	message = sanitize(message)
 
-	if(copytext(message,1,2) == "*")
+	if(!message)
+		return
+
+	if(message[1] == "*")
 		return emote(copytext(message,2))
 
 	var/verb = "says"
-	var/ending = copytext(message, length(message))
+	var/ending = copytext(message, -1)
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.get_spoken_verb(ending)
-		message = copytext(message,2 + length(speaking.key))
+		message = copytext(message, 2 + length_char(speaking.key))
 	else
 		verb = pick(speak_emote)
 
@@ -383,6 +403,7 @@
 	if(IsSleeping())
 		stat = UNCONSCIOUS
 		blinded = TRUE
+	med_hud_set_status()
 
 /mob/living/simple_animal/get_scrambled_message(message, datum/language/speaking = null)
 	if(!speak.len)

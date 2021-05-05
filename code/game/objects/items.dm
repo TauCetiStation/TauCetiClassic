@@ -73,11 +73,12 @@
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
-	// Determines whether any religious activity has been carried out on the item.
-	var/blessed = FALSE
+	// Determines whether additional damage is given to this weapon
+	var/blessed = 0
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -91,7 +92,7 @@
 /obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
 	var/message = ""
 	if(!output_to_chat)
-		message += "<HTML><head><title>[M.name]'s scan results</title></head><BODY>"
+		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
@@ -102,7 +103,7 @@
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return ""
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
@@ -201,12 +202,13 @@
 			else
 				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
 		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-		switch(Heart.heart_status)
-			if(HEART_FAILURE)
-				message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
-			if(HEART_FIBR)
-				message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
-		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
+		if(Heart)
+			switch(Heart.heart_status)
+				if(HEART_FAILURE)
+					message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
+				if(HEART_FIBR)
+					message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
+			message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
 	if(!output_to_chat)
 		message += "</BODY></HTML>"
@@ -359,9 +361,9 @@
 		return
 
 	if(!user.can_pickup(src))
-		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
+	remove_outline()
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -372,11 +374,10 @@
 	if (!user || anchored)
 		return
 
-	if (istype(src.loc, /obj/item/weapon/storage))
-		for(var/mob/M in range(1, src.loc))
-			if (M.s_active == src.loc)
-				if (M.client)
-					M.client.screen -= src
+	if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src)
+
 	src.throwing = 0
 	if (src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
@@ -397,6 +398,7 @@
 		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
+	remove_outline()
 	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
@@ -440,8 +442,11 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	if(DROPDEL & flags)
 		qdel(src)
+	set_alt_apperances_layers()
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -465,7 +470,9 @@
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
@@ -475,7 +482,6 @@
 		return FALSE
 	if(QDELETED(M))
 		return FALSE
-
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
@@ -1002,3 +1008,53 @@ var/global/list/items_blood_overlay_by_type = list()
 
 /obj/item/proc/play_unique_footstep_sound() // TODO: port https://github.com/tgstation/tgstation/blob/master/code/datums/components/squeak.dm
 	return
+
+/obj/item/proc/set_alt_apperances_layers()
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+			AA.theImage.layer = layer
+			AA.theImage.plane = plane
+			AA.theImage.appearance_flags = appearance_flags
+
+/obj/item/MouseEntered()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	apply_outline()
+
+/obj/item/MouseExited()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	remove_outline()
+
+/obj/item/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	if(src != over)
+		remove_outline()
+
+
+/client/var/list/image/outlined_item = list()
+/obj/item/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/obj/item/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src

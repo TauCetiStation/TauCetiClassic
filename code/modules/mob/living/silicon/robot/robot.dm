@@ -7,12 +7,14 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+
+	typing_indicator_type = "robot"
 
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
 	var/crisis //Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
 
@@ -29,7 +31,7 @@
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
-	var/module_active = null
+	var/obj/item/module_active = null
 	var/module_state_1 = null
 	var/module_state_2 = null
 	var/module_state_3 = null
@@ -52,7 +54,6 @@
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
 	//var/list/laws = list()
-	var/viewalerts = 0
 	var/modtype = "Default"
 	var/lower_mod = 0
 	var/jetpack = 0
@@ -73,7 +74,10 @@
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE)
+	// Radial menu for choose module
+	var/static/list/choose_module
+
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -88,7 +92,7 @@
 	updatename(name_prefix)
 	updateicon()
 
-	init(laws_type, ai_link)
+	init(laws_type, ai_link, R)
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -117,20 +121,18 @@
 		cell_component.wrapped = cell
 		cell_component.installed = 1
 
-	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
-	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	diag_hud_set_borgcell()
 
-/mob/living/silicon/robot/proc/init(laws_type, ai_link)
+/mob/living/silicon/robot/proc/set_ai_link(link)
+	if (connected_ai != link)
+		connected_ai = link
+		update_manifest()
+
+/mob/living/silicon/robot/proc/init(laws_type, ai_link, datum/religion/R)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	laws = new laws_type()
+	laws = new laws_type(R)
 	if(ai_link)
-		connected_ai = select_active_ai_with_fewest_borgs()
+		set_ai_link(select_active_ai_with_fewest_borgs())
 		if(connected_ai)
 			connected_ai.connected_robots += src
 			lawsync()
@@ -160,14 +162,33 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
+
+	if(!choose_module)
+		var/list/modules = list(
+				"Standard" = "robot_old",
+				"Engineering" = "Engineering",
+				"Surgeon" = "medicalrobot",
+				"Crisis" = "Medbot",
+				"Miner" = "Miner_old",
+				"Janitor" = "JanBot2",
+				"Service" = "Service",
+				"Security" = "secborg",
+				"Science" = "toxbot",
+				)
+
+		choose_module = list()
+		for(var/mod in modules)
+			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
+
 	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
-		to_chat(src, "<span class='warning'>Crisis mode active. Combat module available.</span>")
-		modules+="Combat"
-	modtype = input("Please, select a module!", "Robot", null, null) in modules
+		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
+		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
+
+	modtype = show_radial_menu(usr, usr, choose_module, radius = 50, tooltips = TRUE)
+	if(!modtype)
+		return
 
 	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
-
 	if(module)
 		return
 
@@ -201,6 +222,7 @@
 			module_sprites["Toxin"] = "toxbot"
 			module_sprites["Xenobio"] = "xenobot"
 			module_sprites["Acheron"] = "mechoid-Science"
+			give_hud(DATA_HUD_MINER)
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
@@ -213,6 +235,7 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			give_hud(DATA_HUD_MINER)
 
 		if("Crisis")
 			module = new /obj/item/weapon/robot_module/crisis(src)
@@ -241,6 +264,8 @@
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			module.channels = list("Security" = 1)
+			if(camera && ("Robots" in camera.network))
+				camera.add_network("Security")
 			module_sprites["Basic"] = "secborg"
 			module_sprites["Red Knight"] = "Security"
 			module_sprites["Black Knight"] = "securityrobot"
@@ -254,7 +279,7 @@
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			module.channels = list("Engineering" = 1)
 			if(camera && ("Robots" in camera.network))
-				camera.add_network("Engineering")
+				camera.add_network("Engineering Robots")
 			module_sprites["Basic"] = "Engineering"
 			module_sprites["Antique"] = "engineerrobot"
 			module_sprites["Custom"] = "custom_astra_t3"
@@ -279,13 +304,6 @@
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
 
-	//languages
-	module.add_languages(src)
-
-	//Custom_sprite check and entry
-	if (custom_sprite == 1)
-		module_sprites["Custom"] = "[src.ckey]-[modtype]"
-
 	hands.icon_state = lowertext(modtype)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
@@ -293,7 +311,18 @@
 	if(modtype == "Crisis" || modtype == "Surgeon" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
-	choose_icon(6,module_sprites)
+	// Radial menu for choose icon_state
+	var/choose_icon = list()
+
+	for(var/name in module_sprites)
+		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
+
+	// Default skin of module
+	icon_state = module_sprites[pick(module_sprites)]
+	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
+	if(new_icon_state)
+		icon_state = module_sprites[new_icon_state]
+
 	radio.config(module.channels)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
@@ -323,29 +352,11 @@
 
 	// if we've changed our name, we also need to update the display name for our PDA
 	setup_PDA()
+	update_manifest()
 
 	//We also need to update name of internal camera.
 	if (camera)
 		camera.c_tag = changed_name
-
-	if(!custom_sprite) //Check for custom sprite
-		var/file = file2text("config/custom_sprites.txt")
-		var/lines = splittext(file, "\n")
-
-		for(var/line in lines)
-		// split & clean up
-			var/list/Entry = splittext(line, "-")
-			for(var/i = 1 to Entry.len)
-				Entry[i] = trim(Entry[i])
-
-			if(Entry.len < 2)
-				continue;
-
-			if(Entry[1] == src.ckey && Entry[2] == src.real_name) //They're in the list? Custom sprite time, var and icon change required
-				custom_sprite = 1
-				icon = 'icons/mob/custom-synthetic.dmi'
-				if(icon_state == "robot")
-					icon_state = "[src.ckey]-Standard"
 
 /mob/living/silicon/robot/proc/Namepick()
 	set waitfor = FALSE
@@ -360,25 +371,24 @@
 		updateicon()
 
 /mob/living/silicon/robot/show_alerts()
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
 		dat += text("<B>[cat]</B><BR>\n")
 		var/list/alarmlist = alarms[cat]
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
-				dat += "<NOBR>"
 				dat += text("-- [area_name]")
 				if (alarm.sources.len > 1)
 					dat += text("- [alarm.sources.len] sources")
-				dat += "</NOBR><BR>\n"
+				dat += "<BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
 
-	viewalerts = 1
-	src << browse(entity_ja(dat), "window=robotalerts&can_close=0")
+	var/datum/browser/popup = new(src, "window=robotalerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
@@ -388,12 +398,14 @@
 	if (!cell_use_power(CO.active_usage))
 		to_chat(src, "<span class='userdanger'>Low Power.</span>")
 
-	var/dat = "<HEAD><TITLE>[src.name] Self-Diagnosis Report</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	for (var/V in components)
 		var/datum/robot_component/C = components[V]
 		dat += "<b>[C.name]</b><br><table><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.idle_usage || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
 
-	src << browse(entity_ja(dat), "window=robotdiagnosis")
+	var/datum/browser/popup = new(src, "robotdiagnosis", "Self-Diagnosis Report")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/proc/toggle_lights()
 	if (stat == DEAD)
@@ -438,15 +450,15 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(ticker && ticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = ticker.mode
+	if(SSticker && SSticker.mode && SSticker.mode.name == "AI malfunction")
+		var/datum/game_mode/malfunction/malf = SSticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if(connected_ai)
 				if(connected_ai.mind == malfai)
 					if(malf.apcs >= 3)
 						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-			else if(ticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+			else if(SSticker.mode:malf_mode_declared)
+				stat(null, "Time left: [max(SSticker.mode:AI_win_timeleft/(SSticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -464,14 +476,17 @@
 		if(module)
 			var/obj/item/weapon/tank/jetpack/current_jetpack = locate(/obj/item/weapon/tank/jetpack) in module.modules
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
-				stat("Internal Atmosphere Info", current_jetpack.name)
-				stat("Tank Pressure", current_jetpack.air_contents.return_pressure())
+				stat("Internal Atmosphere Info: [current_jetpack.name]")
+				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
 /mob/living/silicon/robot/restrained()
 	return 0
 
+/mob/living/silicon/robot/airlock_crush_act()
+	..()
+	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
 	if(!blinded)
@@ -494,17 +509,6 @@
 
 	updatehealth()
 
-
-/mob/living/silicon/robot/meteorhit(obj/O)
-	visible_message("<span class='warning'>[src] has been hit by [O]</span>")
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
-
-
 /mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
@@ -525,7 +529,7 @@
 
 	if (!has_alarm)
 		queueAlarm(text("--- [class] alarm in [A.name] has been cleared."), class, 0)
-//		if (viewalerts) robot_alerts()
+
 	return has_alarm
 
 
@@ -662,6 +666,7 @@
 			//This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
 			C.brute_damage = 0
 			C.electronics_damage = 0
+			diag_hud_set_borgcell()
 
 	else if (iswirecutter(W) || ismultitool(W))
 		if (!wires.interact(user))
@@ -746,7 +751,7 @@
 				throw_alert("hacked", /obj/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
-				connected_ai = null
+				set_ai_link(null)
 				to_chat(user, "You emag [src]'s interface.")
 				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
@@ -758,14 +763,14 @@
 				set_zeroth_law("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
 				to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
 				sleep(20)
-				playsound_local(src, 'sound/rig/shortbeep.wav', VOL_EFFECTS_MASTER)
+				playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
 				sleep(6)
 				to_chat(src, "<span class='warning'>SynBorg v1.7.1 loaded.</span>")
 				sleep(13)
 				to_chat(src, "<span class='warning'>LAW SYNCHRONISATION ERROR</span>")
 				sleep(9)
-				playsound_local(src, 'sound/rig/longbeep.wav', VOL_EFFECTS_MASTER)
+				playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
 				to_chat(src, "<span class='warning'>Would you like to send a report to NanoTraSoft? Y/N</span>")
 				sleep(16)
 				to_chat(src, "<span class='warning'>> N</span>")
@@ -799,6 +804,7 @@
 			cell_component.wrapped = null
 			cell_component.installed = 0
 			updateicon()
+			diag_hud_set_borgcell()
 		else if(cell_component.installed == -1)
 			cell_component.installed = 0
 			var/obj/item/broken_device = cell_component.wrapped
@@ -847,30 +853,14 @@
 
 	update_fire()
 
-	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
-		if(wiresexposed)
-			add_overlay("[src.ckey]-openpanel +w")
-		else if(cell)
-			add_overlay("[src.ckey]-openpanel +c")
-		else
-			add_overlay("[src.ckey]-openpanel -c")
-
-	if(opened && icon_state == "custom_astra_t3")
-		if(wiresexposed)
-			add_overlay("ov-[icon_state] +w")
-		else if(cell)
-			add_overlay("ov-[icon_state] +c")
-		else
-			add_overlay("ov-[icon_state] -c")
-
-	else if (opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
+	if(opened && (icon_state == "mechoid-Standard" || icon_state == "mechoid-Service" || icon_state == "mechoid-Science" || icon_state == "mechoid-Miner" || icon_state == "mechoid-Medical" || icon_state == "mechoid-Engineering" || icon_state == "mechoid-Security" || icon_state == "mechoid-Janitor"  || icon_state == "mechoid-Combat" ) )
 		if(wiresexposed)
 			add_overlay("mechoid-open+w")
 		else if(cell)
 			add_overlay("mechoid-open+c")
 		else
 			add_overlay("mechoid-open-c")
-	else if (opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
+	else if(opened && (icon_state == "drone-standard" || icon_state == "drone-service" || icon_state == "droid-miner" || icon_state == "drone-medical" || icon_state == "drone-engineer" || icon_state == "drone-sec") )
 		if(wiresexposed)
 			add_overlay("drone-openpanel +w")
 		else if(cell)
@@ -915,7 +905,7 @@
 	if(!module)
 		pick_module()
 		return
-	var/dat = "<HEAD><TITLE>Modules</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
@@ -938,14 +928,10 @@
 			dat += text("[module.emag]: <B>Activated</B><BR>")
 		else
 			dat += text("[module.emag]: <A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A><BR>")
-/*
-		if(activated(obj))
-			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
-		else
-			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
-*/
-	src << browse(entity_ja(dat), "window=robotmod")
 
+	var/datum/browser/popup = new(src, "robotmod", "Modules")
+	popup.set_content(dat)
+	popup.open()
 
 /mob/living/silicon/robot/Topic(href, href_list)
 	..()
@@ -1086,7 +1072,7 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if (src.connected_ai)
-		src.connected_ai = null
+		src.set_ai_link(null)
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
@@ -1095,6 +1081,7 @@
 	if(src.camera)
 		src.camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
+	update_manifest()
 
 
 /mob/living/silicon/robot/proc/ResetSecurityCodes()
@@ -1122,41 +1109,6 @@
 	set category = "IC"
 
 	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text)
-
-/mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
-
-	if(triesleft<1 || !module_sprites.len)
-		return
-	else
-		triesleft--
-
-	var/icontype
-
-	if (custom_sprite == 1)
-		icontype = "Custom"
-		triesleft = 0
-	else
-		icontype = input("Select an icon! [triesleft ? "You have [triesleft] more chances." : "This is your last try."]", "Robot", null, null) in module_sprites
-
-	if(icontype)
-		icon_state = module_sprites[icontype]
-	else
-		to_chat(src, "Something is badly wrong with the sprite selection. Harass a coder.")
-		icon_state = module_sprites[1]
-		return
-
-	cut_overlay("eyes")
-	updateicon()
-
-	if (triesleft >= 1)
-		var/choice = input("Look at your icon - is this what you want?") in list("Yes","No")
-		if(choice=="No")
-			choose_icon(triesleft, module_sprites)
-		else
-			triesleft = 0
-			return
-	else
-		to_chat(src, "Your icon has been set. You now require a module reset to change it.")
 
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.

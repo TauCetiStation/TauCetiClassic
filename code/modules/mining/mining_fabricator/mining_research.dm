@@ -51,7 +51,7 @@
 	construction_time = 400
 	category = list("Spacesuit")
 
-datum/design/space_suit_helmet_science
+/datum/design/space_suit_helmet_science
 	name = "Science space suit helmet"
 	id = "space_suit_helmet_science"
 	build_type = MINEFAB
@@ -70,7 +70,7 @@ datum/design/space_suit_helmet_science
 	construction_time = 400
 	category = list("Spacesuit")
 
-datum/design/space_suit_helmet_recycler
+/datum/design/space_suit_helmet_recycler
 	name = "Recycler space suit helmet"
 	id = "space_suit_helmet_recycler"
 	build_type = MINEFAB

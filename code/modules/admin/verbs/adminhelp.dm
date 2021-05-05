@@ -63,7 +63,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list("<html><head><title>[title]</title></head>")
+	var/list/dat = list("<title>[title]</title>")
 	dat += "<A href='?_src_=holder;ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
@@ -130,7 +130,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help
 	var/id
 	var/name
-	var/stat_name // name that is displayed in stat panel (because of byond until 513 unicode).
 	var/state = AHELP_ACTIVE
 
 	var/opened_at // ticks
@@ -153,8 +152,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 //msg is the title of the ticket: usually the ahelp text
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
-	//clean the input msg
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -164,7 +161,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	opened_at_server = world.timeofday
 
 	name = msg
-	stat_name = sanitize_stat(msg)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -190,7 +186,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		var/admin_number_present = send2bridge_adminless_only("**Ticket #[id]** created by **[key_name(initiator)]**", name, type = list(BRIDGE_ADMINALERT), mention = BRIDGE_MENTION_HERE)
 
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-		
+
 		world.send2bridge(
 			type = list(BRIDGE_ADMINLOG),
 			attachment_title = "**Ticket #[id]** created by **[key_name(initiator)]**",
@@ -264,7 +260,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
-		X.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+		X.mob.playsound_local(null, X.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 		window_flash(X)
 		to_chat(X, admin_msg)
 
@@ -339,7 +335,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	state = AHELP_RESOLVED
 	global.ahelp_tickets.ListInsert(src)
 
-	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/giveadminhelpverb, initiator_ckey), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
 	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
@@ -359,7 +355,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		return
 
 	if(initiator)
-		initiator.giveadminhelpverb()
+		giveadminhelpverb(initiator.ckey)
 
 		initiator.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
@@ -403,7 +399,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
+	var/list/dat = list("<title>Ticket #[id]</title>")
 	var/ref_src = "\ref[src]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "
@@ -435,19 +431,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	popup.set_content(dat.Join())
 	popup.open()
 
-//takes msg which was sanitized with sanitize() proc, returns correct text for stat display.
-/datum/admin_help/proc/sanitize_stat(msg)
-	msg = replacetext(msg, JA_PLACEHOLDER, JA_CHARACTER)
-	var/string = ""
-	for (var/i in 1 to length(msg))
-		string += "&#[text2ascii(copytext(msg,i,i+1))];"
-	return string
-
 /datum/admin_help/proc/Retitle()
 	var/new_title = sanitize(input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null)
 	if(new_title)
 		name = new_title
-		stat_name = sanitize_stat(new_title)
 		//not saying the original name cause it could be a long ass message
 		var/msg = "Ticket [TicketHref("#[id]")] titled [name] by [key_name_admin(usr)]"
 		message_admins(msg)
@@ -486,7 +473,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	. = ..()
 
 /obj/effect/statclick/ahelp/update()
-	return ..(ahelp_datum.stat_name)
+	return ..(ahelp_datum.name)
 
 /obj/effect/statclick/ahelp/Click()
 	ahelp_datum.TicketPanel()
@@ -507,7 +494,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	else
 		return FALSE
 
-/client/proc/giveadminhelpverb()
+/proc/giveadminhelpverb(ckey)
 	ahelp_tickets.ckey_cooldown_holder[ckey] = 0
 
 /client/verb/adminhelp()

@@ -144,7 +144,7 @@ Class Procs:
 	if (speed_process)
 		START_PROCESSING(SSfastprocess, src)
 	else
-		START_PROCESSING(SSmachine, src)
+		START_PROCESSING(SSmachines, src)
 
 	power_change()
 	update_power_use()
@@ -159,7 +159,7 @@ Class Procs:
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
 	else
-		STOP_PROCESSING(SSmachine, src)
+		STOP_PROCESSING(SSmachines, src)
 
 	dropContents()
 	return ..()
@@ -188,7 +188,7 @@ Class Procs:
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1
-		pulse2.dir = pick(cardinal)
+		pulse2.set_dir(pick(cardinal))
 
 		QDEL_IN(pulse2, 10)
 	..()
@@ -385,6 +385,9 @@ Class Procs:
 	interact(user)
 	return 0
 
+/obj/machinery/tgui_close(mob/user)
+	user.unset_machine(src)
+
 /obj/machinery/CheckParts(list/parts_list)
 	..()
 	RefreshParts()
@@ -436,7 +439,7 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		dir = turn(dir,-90)
+		set_dir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
 	return 0

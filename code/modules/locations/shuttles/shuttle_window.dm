@@ -33,7 +33,7 @@
 					take_damage(12)
 					visible_message("<span class='warning'><big><b>[user] crushes [M] against \the [src]!</b></big></span>")
 			return
-	else
+	else if(user.a_intent == INTENT_HARM)
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
 			if(health <= 7)
@@ -42,12 +42,18 @@
 				step(src, get_dir(user, src))
 		else
 			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		..()
+		return ..()
 
 /obj/structure/window/reinforced/shuttle/mining
+	name = "shuttle window"
 	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'
 	dir = SOUTHWEST
 	icon_state = "1"
+
+/obj/structure/window/reinforced/shuttle/evac
+	name = "shuttle window"
+	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	dir = SOUTHWEST
 
 /obj/structure/window/reinforced/shuttle/default
 	name = "shuttle window"

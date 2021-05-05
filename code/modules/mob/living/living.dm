@@ -7,12 +7,20 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
+	for(var/datum/atom_hud/data/hud in global.huds)
+		hud.add_to_hud(src)
+
+	if(moveset_type)
+		add_moveset(new moveset_type(), MOVESET_TYPE)
 
 /mob/living/Destroy()
+	allowed_combos = null
+	known_combos = null
+	movesets_by_source = null
 	QDEL_LIST(combos_performed)
 	QDEL_LIST(combos_saved)
 
-	if(LAZYLEN(status_effects))
+	if(length(status_effects))
 		for(var/s in status_effects)
 			var/datum/status_effect/S = s
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
@@ -20,17 +28,27 @@
 			else
 				S.be_replaced()
 
+	remove_from_all_data_huds()
+
 	living_list -= src
 	return ..()
 
 /mob/living/proc/OpenCraftingMenu()
 	return
 
+/mob/living/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/proc/prepare_data_huds()
+	med_hud_set_health()
+	med_hud_set_status()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
 		return
-	if(!ismovableatom(A) || is_blocked_turf(A))
+	if(!ismovable(A) || is_blocked_turf(A))
 		if(confused && stat == CONSCIOUS && m_intent == "run")
 			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
@@ -103,7 +121,7 @@
 
 			now_pushing = 0
 			return 1
-			
+
 	//Fat
 	if(HAS_TRAIT(M, TRAIT_FAT))
 		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
@@ -194,10 +212,9 @@
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
-		src.adjustOxyLoss(src.health + 200)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+		adjustOxyLoss(health - config.health_threshold_dead)
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
-
+		death()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -205,6 +222,8 @@
 		stat = CONSCIOUS
 	else
 		health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss() - halloss
+		med_hud_set_health()
+		med_hud_set_status()
 
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
@@ -270,7 +289,7 @@
 /mob/living/proc/adjustBruteLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	bruteloss = CLAMP(bruteloss + amount, 0, maxHealth * 2)
+	bruteloss = clamp(bruteloss + amount, 0, maxHealth * 2)
 
 // ========== OXY ==========
 /mob/living/proc/getOxyLoss()
@@ -279,12 +298,12 @@
 /mob/living/proc/adjustOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = CLAMP(oxyloss + amount, 0, maxHealth * 2)
+	oxyloss = clamp(oxyloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setOxyLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	oxyloss = CLAMP(amount, 0, maxHealth * 2)
+	oxyloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== TOX ==========
 /mob/living/proc/getToxLoss()
@@ -293,12 +312,12 @@
 /mob/living/proc/adjustToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = CLAMP(toxloss + amount, 0, maxHealth * 2)
+	toxloss = clamp(toxloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setToxLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	toxloss = CLAMP(amount, 0, maxHealth * 2)
+	toxloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== FIRE ==========
 /mob/living/proc/getFireLoss()
@@ -307,7 +326,7 @@
 /mob/living/proc/adjustFireLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	fireloss = CLAMP(fireloss + amount, 0, maxHealth * 2)
+	fireloss = clamp(fireloss + amount, 0, maxHealth * 2)
 
 // ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
@@ -316,12 +335,12 @@
 /mob/living/proc/adjustCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = CLAMP(cloneloss + amount, 0, maxHealth * 2)
+	cloneloss = clamp(cloneloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setCloneLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	cloneloss = CLAMP(amount, 0, maxHealth * 2)
+	cloneloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
@@ -330,12 +349,12 @@
 /mob/living/proc/adjustBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = CLAMP(brainloss + amount, 0, maxHealth * 2)
+	brainloss = clamp(brainloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setBrainLoss(amount)
 	if(status_flags & GODMODE)
 		return
-	brainloss = CLAMP(amount, 0, maxHealth * 2)
+	brainloss = clamp(amount, 0, maxHealth * 2)
 
 // ========== PAIN ==========
 /mob/living/proc/getHalLoss()
@@ -346,14 +365,14 @@
 		return
 	if(amount > 0)
 		add_combo_value_all(amount)
-	halloss = CLAMP(halloss + amount, 0, maxHealth * 2)
+	halloss = clamp(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
 	if(status_flags & GODMODE)
 		return
 	if(amount - halloss > 0)
 		add_combo_value_all(amount - halloss)
-	halloss = CLAMP(amount, 0, maxHealth * 2)
+	halloss = clamp(amount, 0, maxHealth * 2)
 
 // ============================================================
 
@@ -380,6 +399,18 @@
 	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
+
+/mob/living/airlock_crush_act()
+	var/turf/mob_turf = get_turf(src)
+	for(var/dir in cardinal)
+		var/turf/new_turf = get_step(mob_turf, dir)
+		if(Move(new_turf))
+			break
+	AdjustStunned(5)
+	AdjustWeakened(5)
+	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
+	visible_message("<span class='red'>[src] was crushed by the door.</span>",
+					"<span class='danger'>The door crushed you.</span>")
 
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
@@ -457,7 +488,7 @@
 		if (C.legcuffed && !initial(C.legcuffed))
 			C.drop_from_inventory(C.legcuffed)
 		C.legcuffed = initial(C.legcuffed)
-	update_health_hud()
+	med_hud_set_health()
 
 /mob/living/proc/rejuvenate()
 	SEND_SIGNAL(src, COMSIG_LIVING_REJUVENATE)
@@ -483,6 +514,7 @@
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
+	suiciding = FALSE
 
 	if(pinned.len)
 		for(var/obj/O in pinned)
@@ -506,7 +538,7 @@
 			H.restore_blood()
 			H.full_prosthetic = null
 			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-			Heart.heart_normalize()
+			Heart?.heart_normalize()
 
 	restore_all_bodyparts()
 	cure_all_viruses()
@@ -529,8 +561,11 @@
 	// make the icons look correct
 	if(HUSK in mutations)
 		mutations.Remove(HUSK)
+
 	regenerate_icons()
-	update_health_hud()
+
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -544,11 +579,6 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
-
-/mob/living/proc/update_health_hud()
-	hud_updateflag |= 1 << HEALTH_HUD
-	hud_updateflag |= 1 << STATUS_HUD
-
 /mob/living/proc/UpdateDamageIcon()
 	return
 
@@ -584,13 +614,10 @@
 	set category = "OOC"
 	set src in view()
 
-	if(config.allow_Metadata)
-		if(client)
-			to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
-		else
-			to_chat(usr, "[src] does not have any stored infomation!")
+	if(client)
+		to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 	else
-		to_chat(usr, "OOC Metadata is not supported by this server!")
+		to_chat(usr, "[src] does not have any stored infomation!")
 
 	return
 
@@ -690,7 +717,7 @@
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if (isturf(M.loc) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir
@@ -835,7 +862,7 @@
 			if (istype(C.buckled,/obj/structure/stool/bed/nest))
 				C.buckled.user_unbuckle_mob(C)
 				return
-			if( C.handcuffed )
+			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
@@ -984,11 +1011,9 @@
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
-		spawn(0)
-			sleep(25)
-			if(src)
-				clear_fullscreen("flash", 25)
-		return 1
+		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		return TRUE
+	return FALSE
 
 /mob/living/proc/has_brain()
 	return TRUE
@@ -1041,37 +1066,56 @@
 	var/final_pixel_y = default_pixel_y
 	..(A, final_pixel_y)
 
+	var/list/viewing = list()
+	for(var/mob/M in viewers(A))
+		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
+			viewing |= M.client
+
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
 	if(hand)
 		if(l_hand)
+			if(l_hand.alternate_appearances)
+				viewing = alternate_attack_animation(l_hand, A, viewing)
 			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
 	else
 		if(r_hand)
+			if(r_hand.alternate_appearances)
+				viewing = alternate_attack_animation(r_hand, A, viewing)
 			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		var/list/viewing = list()
-		for(var/mob/M in viewers(A))
-			if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
-				viewing |= M.client
+
 		flick_overlay(I,viewing,5)
 		I.pixel_z = 16 //lift it up...
 		animate(I, pixel_z = 0, alpha = 125, time = 3) //smash it down into them!
 
-/mob/living/Stat()
-	..()
-	if(statpanel("Status"))
-		if(ticker.mode && ticker.mode.config_tag == "gang")
-			var/datum/game_mode/gang/mode = ticker.mode
-			if(isnum(mode.A_timer))
-				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-			if(isnum(mode.B_timer))
-				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+// returns a new list of viewers without viewers with alternate_appearance
+/mob/living/proc/alternate_attack_animation(obj/item/item, atom/target, list/viewing)
+	if(item.alternate_appearances)
+		var/image/I
+		for(var/key in item.alternate_appearances)
+			var/list/alt_viewing = list()
+			var/datum/atom_hud/alternate_appearance/basic/AA = item.alternate_appearances[key]
+			for(var/client/C in viewing)
+				if(!(C.mob in AA.hudusers))
+					continue
+				alt_viewing += C
+				viewing -= C
+
+			I = image(AA.theImage.icon, target, AA.theImage.icon_state, target.layer+1)
+			I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+			flick_overlay(I, alt_viewing, 5)
+			I.pixel_z = 16
+			animate(I, pixel_z = 0, alpha = 125, time = 3)
+	return viewing
 
 /mob/living/update_gravity(has_gravity)
-	if(!ticker)
+	if(!SSticker)
 		return
 	float(!has_gravity)
 
@@ -1115,11 +1159,12 @@
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
 		return
-	if(butcher_results.len)
+	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
 				new path(src.loc)
-			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+			butcher_results.Remove(path)
 		visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 

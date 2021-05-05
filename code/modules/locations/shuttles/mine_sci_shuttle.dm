@@ -26,17 +26,19 @@ var/global/area/asteroid/mine_sci_curr_location = null
 			shuttle_location = "Mining Station"
 		else if(istype(autopilot.mine_sci_curr_location, SCI_DOCK))
 			shuttle_location = "Research Outpost"
-		dat = {"Location: [shuttle_location]<br>
-		Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
-		<a href='?src=\ref[src];mine=1'>Mining Station</a> |
-		<a href='?src=\ref[src];station=1'>[station_name()]</a> |
-		<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>
-		<a href='?src=\ref[user];mach_close=flightcomputer'>Close</a>"}
+		dat += "<ul><li>Location: [shuttle_location]</li>"
+		dat += {"<li>Ready to move[max(autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((autopilot.lastMove + MINE_SCI_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]</li>"}
+		dat += "</ul>"
+		dat += "<a href='?src=\ref[src];mine=1'>Mining Station</a> |"
+		dat += "<a href='?src=\ref[src];station=1'>[station_name()]</a> |"
+		dat += "<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>"
 	else
 		dat = "Cannot find shuttle"
 
-	user << browse(entity_ja(dat), "window=flightcomputer;size=575x450")
-	onclose(user, "flightcomputer")
+	var/datum/browser/popup = new(user, "flightcomputer", "[src.name]", 365, 200)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/computer/mine_sci_shuttle/Topic(href, href_list)
 	. = ..()
@@ -82,7 +84,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 	if(istype(get_turf(src),M_S_SHUTTLE_FLOOR) &&\
 		   is_type_in_list(my_area,list(STATION_DOCK, MINE_DOCK, SCI_DOCK))) //if we build console not in shuttle area
 		autopilot = src
-		dir = WEST
+		set_dir(WEST)
 		if(!mine_sci_curr_location)
 			mine_sci_curr_location = my_area
 
@@ -112,7 +114,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		var/area/transit_location = locate(/area/shuttle/mining/transit)
 
 		if(istype(mine_sci_curr_location, STATION_DOCK))
-			SSshuttle.undock_act(/area/station/hallway/secondary/entry, "stat_dock")
+			SSshuttle.undock_act(/area/station/hallway/secondary/mine_sci_shuttle, "stat_dock")
 			SSshuttle.undock_act(mine_sci_curr_location)
 		else if(istype(mine_sci_curr_location, MINE_DOCK))
 			SSshuttle.undock_act(/area/asteroid/mine/production, "mine_dock")
@@ -155,7 +157,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 		SSshuttle.shake_mobs_in_area(destination, EAST)
 
 		if(istype(destination, STATION_DOCK))
-			SSshuttle.dock_act(/area/station/hallway/secondary/entry, "stat_dock")
+			SSshuttle.dock_act(/area/station/hallway/secondary/mine_sci_shuttle, "stat_dock")
 			SSshuttle.dock_act(destination)
 		else if(istype(destination, MINE_DOCK))
 			SSshuttle.dock_act(/area/asteroid/mine/production, "mine_dock")

@@ -8,7 +8,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 /obj/effect/effect
 	name = "effect"
 	icon = 'icons/effects/effects.dmi'
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	unacidable = 1//So effect are not targeted by alien acid.
 	pass_flags = PASSTABLE | PASSGRILLE
 
@@ -17,7 +17,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
 	var/life = 15.0
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/Destroy()
 	if(reagents)
@@ -400,7 +400,7 @@ steam.start() -- spawns the effect
 		if(T != src.oldposition)
 			if(!has_gravity(T))
 				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
-				I.dir = src.holder.dir
+				I.set_dir(src.holder.dir)
 				flick("ion_fade", I)
 				I.icon_state = "blank"
 				QDEL_IN(I, 20)
@@ -440,7 +440,7 @@ steam.start() -- spawns the effect
 				var/obj/effect/effect/steam/I = new /obj/effect/effect/steam(src.oldposition)
 				src.number++
 				src.oldposition = get_turf(holder)
-				I.dir = src.holder.dir
+				I.set_dir(src.holder.dir)
 				spawn(10)
 					qdel(I)
 					src.number--
@@ -471,7 +471,7 @@ steam.start() -- spawns the effect
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	var/expand = 1
 	animate_movement = 0
@@ -660,8 +660,7 @@ steam.start() -- spawns the effect
 
 
 /obj/structure/foamedmetal/attackby(obj/item/I, mob/user)
-
-	if (istype(I, /obj/item/weapon/grab))
+	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		G.affecting.forceMove(loc)
 		for(var/mob/O in viewers(src))

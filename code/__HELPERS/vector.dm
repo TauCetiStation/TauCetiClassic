@@ -97,7 +97,7 @@ return_location()
 		offset_y = sign(dy)
 	else
 		offset_x = sign(dx)
-		offset_y = TAN(angle)
+		offset_y = tan(angle)
 		if(dx < 0)
 			offset_y = -offset_y
 

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Computer"
 	desc = "This controls the density of the particles."
@@ -70,11 +68,6 @@
 	return
 
 /obj/machinery/particle_accelerator/control_box/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null, "window=pacontrol")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -139,7 +132,7 @@
 
 /obj/machinery/particle_accelerator/control_box/proc/part_scan()
 	for(var/obj/structure/particle_accelerator/fuel_chamber/F in orange(1,src))
-		src.dir = F.dir
+		src.set_dir(F.dir)
 	connected_parts = list()
 	var/tally = 0
 	var/ldir = turn(dir,-90)
@@ -209,9 +202,7 @@
 		user << browse(null, "window=pacontrol")
 		return
 
-	var/dat = ""
-	dat += "Particle Accelerator Control Panel<BR>"
-	dat += "<A href='?src=\ref[src];close=1'>Close</A><BR><BR>"
+	var/dat
 	dat += "Status:<BR>"
 	if(!assembled)
 		dat += "Unable to detect all parts!<BR>"
@@ -227,5 +218,6 @@
 		dat += "Particle Strength: [src.strength] "
 		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-	user << browse(entity_ja(dat), "window=pacontrol;size=420x500")
-	onclose(user, "pacontrol")
+	var/datum/browser/popup = new(user, "pacontrol", "Particle Accelerator Control Panel", 420,500)
+	popup.set_content(dat)
+	popup.open()

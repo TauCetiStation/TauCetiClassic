@@ -138,7 +138,7 @@ log transactions
 		return
 
 	//js replicated from obj/machinery/computer/card
-	var/dat = "<h1>NanoTrasen Automatic Teller Machine</h1>"
+	var/dat = ""
 	dat += "For all your monetary needs!<br>"
 	dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br/>"
 
@@ -226,12 +226,14 @@ log transactions
 			dat += "<input type='submit' value='Submit'><br>"
 			dat += "</form>"
 
-	user << browse(entity_ja(dat),"window=atm;size=550x650")
+	var/datum/browser/popup = new(user, "atm", "NanoTrasen Automatic Teller Machine", 550, 650)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/atm/is_operational_topic()
 	return TRUE
 
-/obj/machinery/atm/Topic(var/href, var/href_list)
+/obj/machinery/atm/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -420,6 +422,9 @@ log transactions
 							usr.drop_item()
 							I.loc = src
 							held_card = I
+							if(ishuman(usr))
+								var/mob/living/carbon/human/H = usr
+								H.sec_hud_set_ID()
 				else
 					release_held_id(usr)
 			if("logout")

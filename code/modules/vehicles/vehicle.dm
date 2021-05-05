@@ -83,7 +83,7 @@
 	else if(iswelder(W))
 		var/obj/item/weapon/weldingtool/T = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(T.welding)
+		if(T.isOn())
 			if(health < maxhealth)
 				if(open)
 					health = min(maxhealth, health + 20)
@@ -109,10 +109,6 @@
 	health -= Proj.damage
 	..()
 	healthcheck()
-
-/obj/vehicle/meteorhit()
-	explode()
-	return
 
 /obj/vehicle/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff

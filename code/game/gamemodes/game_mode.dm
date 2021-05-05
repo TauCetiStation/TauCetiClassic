@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /*
  * GAMEMODES (by Rastaf0)
  *
@@ -21,7 +19,6 @@
 	var/modeset = null        // if game_mode in modeset
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
-	var/nar_sie_has_risen = 0 //check, if there is already one god in the world who was summoned (only for tomes)
 	var/completion_text = ""
 	var/mode_result = "undefined"
 	var/list/datum/mind/modePlayer = new // list of current antags.
@@ -32,8 +29,8 @@
 	// TO-DO: use traits? ~Luduk
 	var/list/restricted_species_flags = list()
 
-	var/required_players = 0
-	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
+	var/required_players = 0 // Minimum number of players, if game mode is forced
+	var/required_players_bundles = 0 //Minimum number of players for that game mode to be chose in Secret|BS12|TauClassic
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -45,6 +42,10 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 	var/check_ready = TRUE
+
+	var/antag_hud_type
+	var/antag_hud_name
+
 	var/uplink_welcome = "Syndicate Uplink Console:"
 	var/uplink_uses = 20
 	var/uplink_items = {"Highly Visible and Dangerous Weapons;
@@ -102,7 +103,7 @@ Implants;
 	if (playerC == 0 && required_players == 0)
 		return TRUE
 	// check for minimal player on server
-	if((modeset && modeset == "secret" && playerC < required_players_secret) || playerC < required_players)
+	if((modeset && modeset == ("secret" || "tau classic" || "bs12") && playerC < required_players_bundles) || playerC < required_players)
 		return FALSE
 	// get list of all antags possiable
 	antag_candidates = get_players_for_role(role_type)
@@ -131,7 +132,7 @@ Implants;
 // post_setup()
 // Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
-	var/list/exclude_autotraitor_for = list("extended", "sandbox", "meteor", "gang", "epidemic") // config_tag var
+	var/list/exclude_autotraitor_for = list("extended", "sandbox") // config_tag var
 	if(!(config_tag in exclude_autotraitor_for))
 		addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
 
@@ -139,18 +140,17 @@ Implants;
 		display_roundstart_logout_report()
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
-	if(ticker && ticker.mode)
-		feedback_set_details("game_mode","[ticker.mode]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	if(SSticker && SSticker.mode)
+		feedback_set_details("game_mode","[SSticker.mode]")
+	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 	spawn(rand(waittime_l, waittime_h))
 		send_intercept()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 
-	if(dbcon.IsConnected())
-		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(ticker.mode)]' WHERE id = [round_id]")
+	if(establish_db_connection("erro_round"))
+		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET game_mode = '[sanitize_sql(SSticker.mode)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
-
 	return 1
 
 
@@ -260,8 +260,7 @@ Implants;
 										"Vox Raider",
 										"Raider",
 										"Abductor scientist",
-										"Abductor agent",
-										"Meme"
+										"Abductor agent"
 										)
 		var/special_role = man.mind.special_role
 		if (special_role in invisible_roles)
@@ -313,7 +312,7 @@ Implants;
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 
-	station_announce(sound = "commandreport")
+	announcement_ping.play()
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	if(security_level < SEC_LEVEL_BLUE)
@@ -515,6 +514,10 @@ Implants;
 		count++
 	return text
 
+// Should return additional statistics for the gamemode
+/datum/game_mode/proc/modestat()
+	return
+
 //Used for printing player with there icons in round ending staticstic
 /datum/game_mode/proc/printplayerwithicon(datum/mind/ply)
 	var/text = ""
@@ -549,3 +552,15 @@ Implants;
 	var/text = ""
 	text += {"<img src="logo_[tempstate].png"> <b>The [antagname] were:</b> <img src="logo_[tempstate].png">"}
 	return text
+
+// Adds the specified antag hud to the player. Usually called in an antag datum file
+/datum/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+	hud.join_hud(mob_override)
+	set_antag_hud(mob_override, antag_hud_name)
+
+// Removes the specified antag hud from the player. Usually called in an antag datum file
+/datum/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
+	var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
+	hud.leave_hud(mob_override)
+	set_antag_hud(mob_override, null)

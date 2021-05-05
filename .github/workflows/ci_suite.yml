@@ -1,0 +1,91 @@
+name: CI Suite
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+env:
+  BYOND_MAJOR: 513
+  BYOND_MINOR: 1533
+  SPACEMAN_DMM_VERSION: suite-1.6
+jobs:
+  DreamChecker:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/spaceman_dmm/$SPACEMAN_DMM_VERSION
+          key: ${{ runner.os }}-spacemandmm-${{ env.SPACEMAN_DMM_VERSION }}
+      - name: Install Dreamchecker
+        run:  bash scripts/install-spaceman-dmm.sh dreamchecker
+      - name: Run Dreamchecker
+        run: ~/dreamchecker
+  Code:
+    name: Code and Map Linting
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Code and Map Linting
+        env:
+          TEST: LINTING
+          NODE_VERSION: 12
+        run: |
+          chmod +x test/run-test.sh
+          bash test/run-test.sh
+          bash scripts/build_tgui.sh
+  unit_tests:
+    name: Unit Tests
+    runs-on: ubuntu-16.04
+    strategy:
+      matrix:
+        include:
+          - map_meta: boxstation
+            map_name: Box Station
+          - map_meta: gamma
+            map_name: Gamma Station
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: Unit Tests
+        env:
+          TEST: UNIT
+          MAP_META: ${{ matrix.map_meta }}
+          MAP_NAME: ${{ matrix.map_name }}
+        run: |
+          bash scripts/install-byond.sh
+          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          chmod +x -R scripts/
+          chmod +x test/run-test.sh
+          bash test/run-test.sh
+  compile_everything:
+    name: Compile Everything
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
+          key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+      - name: "Compile Everything"
+        env:
+          TEST: COMPILE
+        run: |
+          bash scripts/install-byond.sh
+          source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          chmod +x -R scripts/
+          chmod +x test/run-test.sh
+          bash test/run-test.sh

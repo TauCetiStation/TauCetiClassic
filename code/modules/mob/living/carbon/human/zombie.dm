@@ -44,7 +44,7 @@
 		if(O.can_buckle && O.buckled_mob)
 			O.user_unbuckle_mob(user)
 
-/obj/item/weapon/melee/zombie_hand/proc/opendoor(mob/user, var/obj/machinery/door/A)
+/obj/item/weapon/melee/zombie_hand/proc/opendoor(mob/user, obj/machinery/door/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -59,7 +59,7 @@
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
 				A.open(1)
 
-/obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, var/obj/machinery/door/airlock/A)
+/obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, obj/machinery/door/airlock/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -84,7 +84,7 @@
 			else
 				return
 
-/obj/item/weapon/melee/zombie_hand/proc/breakfiredoor(mob/user, var/obj/machinery/door/firedoor/A)
+/obj/item/weapon/melee/zombie_hand/proc/breakfiredoor(mob/user, obj/machinery/door/firedoor/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -124,6 +124,15 @@
 		return
 	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
+	var/obj/item/organ/internal/eyes = H.bodyparts_by_name[O_EYES]
+	var/obj/item/organ/internal/brain = H.bodyparts_by_name[O_BRAIN]
+	if(eyes)
+		eyes.damage = 0
+	if(brain)
+		brain.damage = 0
+	H.setBrainLoss(0)
+	H.eye_blurry = 0
+	H.eye_blind = 0
 
 	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		H.drop_l_hand()
@@ -172,13 +181,6 @@
 	H.nutrition = 400
 	H.SetSleeping(0)
 	H.radiation = 0
-
-	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-	if(istype(IO))
-		IO.damage = 0
-		H.eye_blurry = 0
-		H.eye_blind = 0
-
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
 	H.restore_blood()
 
@@ -191,7 +193,7 @@
 	H.stat = CONSCIOUS
 	H.update_canmove()
 	H.regenerate_icons()
-	H.update_health_hud()
+	H.med_hud_set_health()
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
@@ -248,28 +250,6 @@
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
 
-/proc/zombie_talk(var/message)
-	var/list/message_list = splittext(message, " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
-
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len)
-		message_list.Insert(insertpos, "[pick("ÃŒ«√»", "ÃÓÁ„Ë", "ÃÓÓÁ„ËËË", "ÃŒŒŒ«√»»»»", "¡ŒÀ‹ÕŒ", "¡ŒÀ‹", "œŒÃŒ√»", "–¿¿¿¿", "¿¿¿¿", "¿––’", "Œ“ –Œ…“≈", "Œ“ –Œ…")]...")
-
-	for(var/i = 1, i <= message_list.len, i++)
-		if(prob(50) && !(copytext(message_list[i], length(message_list[i]) - 2) == "..."))
-			message_list[i] = message_list[i] + "..."
-
-		if(prob(60))
-			message_list[i] = stutter(message_list[i])
-
-		message_list[i] = stars(message_list[i], 80)
-
-		if(prob(60))
-			message_list[i] = slur(message_list[i])
-
-	return jointext(message_list, " ")
-
 /mob/living/carbon/human/proc/zombie_movement_delay()
 	if(!has_gravity(src))
 		return -1
@@ -316,28 +296,14 @@ var/list/zombie_list = list()
 /proc/add_zombie(mob/living/carbon/human/H)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
-	update_all_zombie_icons()
+	H.mind.add_antag_hud(ANTAG_HUD_ZOMB, "hudzombie", H)
 
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
 	H.RemoveSpell(spell)
 	qdel(spell)
 	zombie_list -= H
-	update_all_zombie_icons()
-
-/proc/update_all_zombie_icons()
-	spawn(0)
-		for(var/mob/living/carbon/human/H in zombie_list)
-			if(H.client)
-				for(var/image/I in H.client.images)
-					if(I.icon_state == "zombie_hud")
-						qdel(I)
-
-		for(var/mob/living/carbon/human/H in zombie_list)
-			if(H.client)
-				for(var/mob/living/carbon/human/Z in zombie_list)
-					var/I = image('icons/mob/human_races/r_zombie.dmi', loc = Z, icon_state = "zombie_hud")
-					H.client.images += I
+	H.mind.remove_antag_hud(ANTAG_HUD_ZOMB, H)
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"

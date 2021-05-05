@@ -4,7 +4,6 @@
 	icon_state = "prox"
 	m_amt = 800
 	g_amt = 200
-	w_amt = 50
 	origin_tech = "magnets=1"
 
 	wires = WIRE_PULSE
@@ -79,6 +78,7 @@
 	return
 
 /obj/item/device/assembly/prox_sensor/dropped()
+	..()
 	spawn(0)
 		sense()
 		return
@@ -116,13 +116,14 @@
 		return 0
 	var/second = time % 60
 	var/minute = (time - second) / 60
-	var/dat = text("<TT><B>Proximity Sensor</B>\n[] []:[]\n<A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT>", (timing ? text("<A href='?src=\ref[];time=0'>Arming</A>", src) : text("<A href='?src=\ref[];time=1'>Not Arming</A>", src)), minute, second, src, src, src, src)
+	var/dat = text("<TT>\n[] []:[]\n<A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT>", (timing ? text("<A href='?src=\ref[];time=0'>Arming</A>", src) : text("<A href='?src=\ref[];time=1'>Not Arming</A>", src)), minute, second, src, src, src, src)
 	dat += text("<BR>Range: <A href='?src=\ref[];range=-1'>-</A> [] <A href='?src=\ref[];range=1'>+</A>", src, range, src)
 	dat += "<BR><A href='?src=\ref[src];scanning=1'>[scanning?"Armed":"Unarmed"]</A> (Movement sensor active when armed!)"
 	dat += "<BR><BR><A href='?src=\ref[src];refresh=1'>Refresh</A>"
-	dat += "<BR><BR><A href='?src=\ref[src];close=1'>Close</A>"
-	user << browse(entity_ja(dat), "window=prox")
-	onclose(user, "prox")
+
+	var/datum/browser/popup = new(user, "prox", "Proximity Sensor")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/item/device/assembly/prox_sensor/Topic(href, href_list)
@@ -168,10 +169,6 @@
 		var/r = text2num(href_list["range"])
 		range += r
 		range = min(max(range, 1), 5)
-
-	if(href_list["close"])
-		usr << browse(null, "window=prox")
-		return
 
 	if(usr)
 		attack_self(usr)

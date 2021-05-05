@@ -11,7 +11,7 @@
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/atom_init()
-	dir = pick(1,2,3,4)
+	set_dir(pick(1,2,3,4))
 	. = ..()
 	update_nearby_tiles(need_rebuild = 1)
 
@@ -46,18 +46,6 @@
 	spawn(20) if(src) opacity = 0
 
 	..()
-
-/obj/machinery/shield/meteorhit()
-	src.health -= max_health*0.75 //3/4 health as damage
-
-	if(src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissipates!</span>")
-		qdel(src)
-		return
-
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-	return
 
 /obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
@@ -183,13 +171,6 @@
 	if(health <= 0)
 		qdel(src)
 	update_icon()
-	return
-
-/obj/machinery/shieldgen/meteorhit(obj/O)
-	src.health -= max_health*0.25 //A quarter of the machine's health
-	if (prob(5))
-		src.malfunction = 1
-	src.checkhp()
 	return
 
 /obj/machinery/shieldgen/ex_act(severity)
@@ -462,7 +443,7 @@
 		T2 = T
 		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall/(src, G) //(ref to this gen, ref to connected gen)
 		CF.loc = T
-		CF.dir = field_dir
+		CF.set_dir(field_dir)
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)

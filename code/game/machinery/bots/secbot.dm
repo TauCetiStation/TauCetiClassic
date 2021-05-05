@@ -19,7 +19,6 @@
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/frustration = 0
-	var/lasercolor = "" //Used by ED209
 //	var/emagged = 0 //Emagged Secbots view everyone as a criminal
 	var/idcheck = 0 //If false, all station IDs are authorized for weapons.
 	var/check_records = 1 //Does it check security records?
@@ -73,6 +72,7 @@
 	if(radio_controller)
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
+
 	update_icon()
 
 /obj/machinery/bot/secbot/turn_on()
@@ -116,8 +116,9 @@
 			"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	user << browse("<HEAD><TITLE>Securitron v1.3 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autosec")
-	onclose(user, "autosec")
+	var/datum/browser/popup = new(user, "window=autosec", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/secbot/Topic(href, href_list)
 	. = ..()
@@ -216,7 +217,7 @@
 				if(Adjacent(target) && istype(target.loc, /turf))
 					if(iscarbon(target))
 						playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
-						icon_state = "[lasercolor][icon_state_arrest]"
+						icon_state = "[icon_state_arrest]"
 						addtimer(CALLBACK(src, .proc/update_icon), 2)
 						var/mob/living/carbon/M = target
 						do_attack_animation(M)
@@ -238,7 +239,7 @@
 							next_harm_time = world.time + 15
 							playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
-							icon_state = "[lasercolor][icon_state_arrest]"
+							icon_state = "[icon_state_arrest]"
 							addtimer(CALLBACK(src, .proc/update_icon), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)

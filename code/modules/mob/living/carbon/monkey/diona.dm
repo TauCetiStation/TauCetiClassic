@@ -311,7 +311,7 @@
 			return 1
 	return ..()
 
-/mob/living/carbon/monkey/diona/say(var/message)
+/mob/living/carbon/monkey/diona/say(message)
 	var/verb = "says"
 	var/message_range = world.view
 
@@ -320,7 +320,7 @@
 			to_chat(src, "<span class='warning'>You cannot speak in IC (Muted).</span>")
 			return
 
-	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = copytext_char(trim(message), 1, MAX_MESSAGE_LEN)
 
 	if(stat == DEAD)
 		return say_dead(message)
@@ -328,7 +328,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		message = trim(copytext_char(message,2+length_char(speaking.key)))
 
 	if(!message || stat)
 		return

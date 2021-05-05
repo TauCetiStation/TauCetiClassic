@@ -30,7 +30,9 @@
 		/obj/item/stack/cable_coil,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
-		/obj/item/taperoll/engineering)
+		/obj/item/taperoll/engineering,
+		/obj/item/weapon/gun/energy/pyrometer,
+		/obj/item/device/science_tool)
 
 
 /obj/item/weapon/storage/belt/utility/full/atom_init()
@@ -128,6 +130,7 @@
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
+	force = 5
 	storage_slots = 7
 	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
@@ -138,9 +141,8 @@
 		/obj/item/device/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_box/magazine,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/lighter,
 		/obj/item/weapon/storage/fancy/cigarettes,
@@ -181,6 +183,7 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
+	force = 5
 	storage_slots = 1
 	can_hold = list(
 		/obj/item/clothing/mask/luchador
@@ -200,9 +203,8 @@
 		/obj/item/device/flash,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_box/magazine,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
-		/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
 		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/gun/energy/taser/stunrevolver,
 		/obj/item/weapon/lighter,
@@ -221,4 +223,5 @@
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "militarybelt"
+	force = 10
 	can_hold = list()

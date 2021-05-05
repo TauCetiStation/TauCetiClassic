@@ -1,3 +1,4 @@
+// shouldn't these be deprecated? ~Luduk
 /mob/living/simple_animal/slime
 	name = "pet slime"
 	desc = "A lovable, domesticated slime."
@@ -15,7 +16,10 @@
 	var/colour = "grey"
 	ventcrawler = 2
 
+	typing_indicator_type = "slime"
+
 	has_head = TRUE
+	moveset_type = /datum/combat_moveset/slime
 
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
@@ -32,7 +36,10 @@
 	emote_see = list("jiggles", "bounces in place")
 	var/colour = "grey"
 
+	typing_indicator_type = "slime"
+
 	has_head = TRUE
+	moveset_type = /datum/combat_moveset/slime
 
 /mob/living/simple_animal/adultslime/atom_init()
 	. = ..()
@@ -51,4 +58,6 @@
 	S2.icon_living = "[src.colour] baby slime"
 	S2.icon_dead = "[src.colour] baby slime dead"
 	S2.colour = "[src.colour]"
+	med_hud_set_health()
+	med_hud_set_status()
 	qdel(src)

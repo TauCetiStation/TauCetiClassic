@@ -85,8 +85,9 @@
 
 
 /obj/machinery/computer/general_air_control/ui_interact(mob/user)
-	user << browse(entity_ja(return_text()),"window=computer")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "window=computer", src.name)
+	popup.set_content(return_text())
+	popup.open()
 
 /obj/machinery/computer/general_air_control/process()
 	..()

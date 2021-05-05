@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 var/global/list/all_objectives = list()
 
 /datum/objective
@@ -10,7 +9,7 @@ var/global/list/all_objectives = list()
 
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor") // They can't be targets of any objective.
 
-/datum/objective/New(var/text)
+/datum/objective/New(text)
 	all_objectives |= src
 	if(text)
 		explanation_text = text
@@ -24,7 +23,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in SSticker.minds)
 		if(possible_target.assigned_role in protected_jobs)
 			continue
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
@@ -34,7 +33,7 @@ var/global/list/all_objectives = list()
 
 
 /datum/objective/proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in SSticker.minds)
 		if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
 			target = possible_target
 			break
@@ -67,37 +66,7 @@ var/global/list/all_objectives = list()
 	return OBJECTIVE_WIN
 
 
-
-
-/datum/objective/mutiny/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-
-/datum/objective/mutiny/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/mutiny/check_completion()
-	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
-			return OBJECTIVE_WIN
-		var/turf/T = get_turf(target.current)
-		if(T && !is_station_level(T.z))			//If they leave the station they count as dead for this
-			return OBJECTIVE_HALFWIN
-		return OBJECTIVE_LOSS
-	return OBJECTIVE_WIN
-
-
-/datum/objective/mutiny/rp/find_target()
+/datum/objective/rp_rev/find_target()
 	..()
 	if(target && target.current)
 		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [target.assigned_role]."
@@ -106,7 +75,7 @@ var/global/list/all_objectives = list()
 	return target
 
 
-/datum/objective/mutiny/rp/find_target_by_role(role, role_type=0)
+/datum/objective/rp_rev/find_target_by_role(role, role_type=0)
 	..(role, role_type)
 	if(target && target.current)
 		explanation_text = "Capture, convert or exile from station [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]. Assassinate if you have no choice."
@@ -115,7 +84,7 @@ var/global/list/all_objectives = list()
 	return target
 
 	// less violent rev objectives
-/datum/objective/mutiny/rp/check_completion()
+/datum/objective/rp_rev/check_completion()
 	if(target && target.current)
 		if(target.current.stat == DEAD)
 			return OBJECTIVE_HALFWIN
@@ -124,105 +93,12 @@ var/global/list/all_objectives = list()
 		if(target.current:handcuffed || !ishuman(target.current))
 			return OBJECTIVE_WIN
 
-		// Check if they're converted
-		if(istype(ticker.mode, /datum/game_mode/revolution))
-			if(target in ticker.mode:revolutionaries)
-				return OBJECTIVE_WIN
-
 		var/turf/T = get_turf(target.current)
 		if(T && !is_station_level(T.z))
 			return OBJECTIVE_WIN
 
 		return OBJECTIVE_LOSS
 
-	return OBJECTIVE_WIN
-
-/datum/objective/anti_revolution/execute/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [target.assigned_role] has extracted confidential information above their clearance. Execute \him[target.current]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-
-/datum/objective/anti_revolution/execute/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] has extracted confidential information above their clearance. Execute \him[target.current]."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/execute/check_completion()
-	if(target && target.current)
-		if(target.current.stat == DEAD || !ishuman(target.current))
-			return OBJECTIVE_WIN
-		return OBJECTIVE_LOSS
-	return OBJECTIVE_WIN
-
-/datum/objective/anti_revolution/brig
-	var/already_completed = 0
-
-/datum/objective/anti_revolution/brig/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "Brig [target.current.real_name], the [target.assigned_role] for 20 minutes to set an example."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-
-/datum/objective/anti_revolution/brig/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "Brig [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] for 20 minutes to set an example."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/brig/check_completion()
-	if(already_completed)
-		return OBJECTIVE_WIN
-
-	if(target && target.current)
-		if(target.current.stat == DEAD)
-			return OBJECTIVE_LOSS
-		if(target.is_brigged(10 * 60 * 10))
-			already_completed = 1
-			return OBJECTIVE_WIN
-		return OBJECTIVE_LOSS
-	return OBJECTIVE_LOSS
-
-/datum/objective/anti_revolution/demote/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [target.assigned_role]  has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/demote/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "[target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] has been classified as harmful to NanoTrasen's goals. Demote \him[target.current] to assistant."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/anti_revolution/demote/check_completion()
-	if(target && target.current && istype(target,/mob/living/carbon/human))
-		var/obj/item/weapon/card/id/I = target.current:wear_id
-		if(istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/P = I
-			I = P.id
-
-		if(!istype(I)) return OBJECTIVE_WIN
-
-		if(I.assignment == "Test Subject")
-			return OBJECTIVE_WIN
-		else
-			return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
 
 /datum/objective/debrain/find_target()//I want braaaainssss
@@ -423,41 +299,6 @@ var/global/list/all_objectives = list()
 	if(issilicon(owner.current) && owner.current != owner.original)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
-
-// Similar to the anti-rev objective, but for traitors
-/datum/objective/brig
-	var/already_completed = 0
-
-/datum/objective/brig/find_target()
-	..()
-	if(target && target.current)
-		explanation_text = "Have [target.current.real_name], the [target.assigned_role] brigged for 10 minutes."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-
-/datum/objective/brig/find_target_by_role(role, role_type=0)
-	..(role, role_type)
-	if(target && target.current)
-		explanation_text = "Have [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role] brigged for 10 minutes."
-	else
-		explanation_text = "Free Objective"
-	return target
-
-/datum/objective/brig/check_completion()
-	if(already_completed)
-		return OBJECTIVE_WIN
-
-	if(target && target.current)
-		if(target.current.stat == DEAD)
-			return OBJECTIVE_LOSS
-		// Make the actual required time a bit shorter than the official time
-		if(target.is_brigged(10 * 60 * 5))
-			already_completed = 1
-			return OBJECTIVE_WIN
-		return OBJECTIVE_LOSS
-	return OBJECTIVE_LOSS
 
 // Harm a crew member, making an example of them
 /datum/objective/harm
@@ -702,15 +543,15 @@ var/global/list/all_objectives = list()
 
 /datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
-	if (ticker)
+	if (SSticker)
 		var/n_p = 1 //autowin
-		if (ticker.current_state == GAME_STATE_SETTING_UP)
+		if (SSticker.current_state == GAME_STATE_SETTING_UP)
 			for(var/mob/dead/new_player/P in new_player_list)
 				if(P.client && P.ready && P.mind!=owner)
 					n_p ++
-		else if (ticker.current_state == GAME_STATE_PLAYING)
+		else if (SSticker.current_state == GAME_STATE_PLAYING)
 			for(var/mob/living/carbon/human/P in human_list)
-				if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
+				if(P.client && !(P.mind in SSticker.mode.changelings) && P.mind!=owner)
 					n_p ++
 		target_amount = min(target_amount, n_p)
 
@@ -723,66 +564,25 @@ var/global/list/all_objectives = list()
 	else
 		return OBJECTIVE_LOSS
 
+//Borer objective(s).
+/datum/objective/borer_survive
+	explanation_text = "Survive in a host until the end of the round."
 
-
-/* Isn't suited for global objectives
-//---------CULTIST----------
-/datum/objective/eldergod
-	explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
-
-/datum/objective/eldergod/check_completion()
-	if(eldergod) //global var, defined in rune4.dm
-		return OBJECTIVE_WIN
+/datum/objective/borer_survive/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.stat < DEAD && B.host && B.host.stat < DEAD)
+			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
-/datum/objective/survivecult
-	var/num_cult
-	explanation_text = "Our knowledge must live on. Make sure at least 5 acolytes escape on the shuttle to spread their work on an another station."
+/datum/objective/borer_reproduce
+	explanation_text = "Reproduce at least once."
 
-/datum/objective/survivecult/check_completion()
-	if(SSshuttle.location<2)
-		return OBJECTIVE_LOSS
-	var/cultists_escaped = 0
-	var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
-	for(var/turf/T in	get_area_turfs(C.type))
-		for(var/mob/living/carbon/H in T)
-			if(iscultist(H))
-				cultists_escaped++
-	if(cultists_escaped>=5)
-		return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
-/datum/objective/sacrifice/proc/find_target() //stolen from traitor target objective
- //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
-	var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
-	if(possible_targets.len > 0)
-		sacrifice_target = pick(possible_targets)
-	if(sacrifice_target && sacrifice_target.current)
-		explanation_text = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
-	else
-		explanation_text = "Free Objective"
-	return sacrifice_target
-
-/datum/objective/sacrifice/check_completion() //again, calling on a global list defined in rune15.dm
-	if(sacrifice_target.current in sacrificed)
-		return OBJECTIVE_WIN
-	else
-		return OBJECTIVE_LOSS
-//-------ENDOF CULTIST------
-*/
-
-//Meme objectives
-/datum/objective/meme_attune/proc/gen_amount_goal(lowbound = 4, highbound = 6)
-	target_amount = rand (lowbound,highbound)
-	explanation_text = "Attune [target_amount] humanoid brains."
-	return target_amount
-
-/datum/objective/meme_attune/check_completion()
-	if(owner?.current)
-		if (istype(owner.current, /mob/living/parasite/meme))
-			var/mob/living/parasite/meme/M = owner.current
-			if (M.indoctrinated.len >= target_amount)
-				return OBJECTIVE_WIN
+/datum/objective/borer_reproduce/check_completion()
+	if(owner && owner.current)
+		var/mob/living/simple_animal/borer/B = owner.current
+		if(istype(B) && B.has_reproduced)
+			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
 //Vox heist objectives.
@@ -795,7 +595,7 @@ var/global/list/all_objectives = list()
 	var/list/possible_targets = list()
 	var/list/priority_targets = list()
 
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in SSticker.minds)
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && (possible_target.assigned_role != "MODE"))
 
 			possible_targets += possible_target
@@ -819,8 +619,6 @@ var/global/list/all_objectives = list()
 	if(target && target.current)
 		if (target.current.stat == DEAD)
 			return FALSE // They're dead. Fail.
-		//if (!target.current.restrained())
-		//	return OBJECTIVE_LOSS // They're loose. Close but no cigar.
 		if(get_area(target) == locate(/area/shuttle/vox/arkship))
 			return TRUE
 	else
@@ -863,7 +661,7 @@ var/global/list/all_objectives = list()
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/O in locate(/area/shuttle/vox/arkship))
+	for(var/obj/O in get_area_by_type(/area/shuttle/vox/arkship))
 		if(istype(O,target)) total_amount++
 		for(var/obj/I in O.contents)
 			if(istype(I, target))
@@ -871,7 +669,7 @@ var/global/list/all_objectives = list()
 		if(total_amount >= target_amount)
 			return TRUE
 
-	var/datum/game_mode/heist/H = ticker.mode
+	var/datum/game_mode/heist/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
 			for(var/obj/O in raider.current.get_contents())
@@ -899,7 +697,7 @@ var/global/list/all_objectives = list()
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/item/O in locate(/area/shuttle/vox/arkship))
+	for(var/obj/item/O in get_area_by_type(/area/shuttle/vox/arkship))
 
 		var/obj/item/stack/sheet/S
 		if(istype(O, /obj/item/stack/sheet))
@@ -912,7 +710,7 @@ var/global/list/all_objectives = list()
 					S = I
 					total_amount += S.get_amount()
 
-	var/datum/game_mode/heist/H = ticker.mode
+	var/datum/game_mode/heist/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
 			for(var/obj/item/O in raider.current.get_contents())
@@ -924,48 +722,11 @@ var/global/list/all_objectives = list()
 	if(total_amount >= target_amount)
 		return TRUE
 	return FALSE
-/*
-var/heist_rob_total = 0
-/proc/heist_recursive_price_check(atom/movable/AM,loop=0)
-	loop++
-	if(loop > 15) return
-	heist_rob_total += AM.get_price()
-	if(AM.contents && AM.contents.len)
-		for(var/atom/movable/I in AM.contents)
-			heist_rob_total += I.get_price()
-			if(I.contents && I.contents.len)
-				heist_recursive_price_check(I,loop)
-/proc/heist_recursive_price_reset(atom/movable/AM,loop=0)
-	loop++
-	if(loop > 15) return
-	AM.price = 0
-	if(AM.contents && AM.contents.len)
-		for(var/atom/movable/I in AM.contents)
-			I.price = 0
-			if(I.contents && I.contents.len)
-				heist_recursive_price_reset(I,loop)
-/proc/heist_get_shuttle_price()
-	heist_rob_total = 0
-	var/area/A = get_area(locate(/obj/effect/landmark/heist/aurora))
-	if(A)
-		for(var/atom/movable/AM in A)
-			heist_recursive_price_check(AM)
-/datum/objective/heist/robbery/choose_target()
-	target = "valuables"
-	target_amount = 1000000
-	explanation_text = "Ransack the station for any valuables."
-/datum/objective/heist/robbery/check_completion()
-	heist_rob_total = 0
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/arkship))
-		heist_recursive_price_check(AM)
-	if(heist_rob_total >= target_amount) return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS*/
-
 /datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 
 /datum/objective/heist/inviolate_crew/check_completion()
-	var/datum/game_mode/heist/H = ticker.mode
+	var/datum/game_mode/heist/H = SSticker.mode
 	if(H.is_raider_crew_safe())
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
@@ -981,3 +742,80 @@ var/global/vox_kills = 0 //Used to check the Inviolate.
 	if(vox_kills > MAX_VOX_KILLS)
 		return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
+
+/datum/objective/blob_takeover
+	explanation_text = "Reach critical mass!"
+
+/datum/objective/blob_takeover/check_completion()
+	if(blobs.len >= blobwincount)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult
+	// Many vars in mode
+	var/datum/game_mode/cult/cur_mode
+
+/datum/objective/cult/New(text, datum/game_mode/cult/mode)
+	cur_mode = mode
+	..()
+
+/datum/objective/cult/sacrifice/New()
+	..()
+	find_target()
+
+/datum/objective/cult/sacrifice/find_target()
+	cur_mode.find_sacrifice_target()
+	if(cur_mode.sacrifice_target)
+		explanation_text = "Принесите в жертву [cur_mode.sacrifice_target.name], [cur_mode.sacrifice_target.assigned_role]."
+	else
+		explanation_text = "Свободная задача."
+
+/datum/objective/cult/sacrifice/check_completion()
+	if(cur_mode.sacrifice_target in cur_mode.sacrificed)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/recruit
+	var/acolytes_needed
+
+/datum/objective/cult/recruit/New()
+	acolytes_needed = max(4, round(player_list.len * 0.1))
+	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [russian_plural(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы продолжить исследования на других станциях."
+	..()
+
+/datum/objective/cult/recruit/find_target()
+	return
+
+/datum/objective/cult/recruit/check_completion()
+	if(cur_mode.get_cultists_out() >= acolytes_needed)
+		return OBJECTIVE_WIN
+
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/summon_narsie
+	explanation_text = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции."
+
+/datum/objective/cult/summon_narsie/find_target()
+	return
+
+/datum/objective/cult/summon_narsie/check_completion()
+	if(cur_mode.eldergod)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/capture_areas
+	var/need_capture = 4 // areas
+	explanation_text = "Захватите не менее 4 отсеков станции с помощью руны захвата зон."
+
+/datum/objective/cult/capture_areas/New()
+	need_capture = max(4, round(player_list.len * 0.1) + 1)
+	explanation_text = "Захватите не менее [need_capture] отсеков станции с помощью руны захвата зон."
+	..()
+
+/datum/objective/cult/capture_areas/find_target()
+	return
+
+/datum/objective/cult/capture_areas/check_completion()
+	if(cur_mode.religion.captured_areas.len - cur_mode.religion.area_types.len >= need_capture)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

@@ -6,7 +6,7 @@ RSF
 /obj/item/weapon/rsf
 	name = "Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
@@ -73,7 +73,7 @@ RSF
 			new /obj/item/weapon/spacecash/c10( target.loc )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high amount, like 500 units a kick, till then, enjoy dosh!
 			else
 				matter--
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
@@ -87,7 +87,7 @@ RSF
 			new /obj/item/weapon/spacecash/c10( target )
 			if (isrobot(user))
 				var/mob/living/silicon/robot/engy = user
-				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high ammount, like 500 units a kick, till then, enjoy dosh!
+				engy.cell.charge -= 200 //once money becomes useful, I guess changing this to a high amount, like 500 units a kick, till then, enjoy dosh!
 			else
 				matter--
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")

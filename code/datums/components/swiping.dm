@@ -208,6 +208,12 @@
 	SEND_SIGNAL(parent, COMSIG_TIPS_REMOVE, list(SWIPING_TIP))
 	return ..()
 
+// Whether any of the actions at all can be performed.
+/datum/component/swiping/proc/availability_check(obj/item/I)
+	// Future proofing for cases of telekinetic swiping.
+	// If item's not held by anyone, and is not on turf - you can't sweep, spin, push, and/or pull.
+	return (ismob(I.loc) && isturf(I.loc.loc)) || isturf(I.loc)
+
 /datum/component/swiping/proc/get_sweep_objects(turf/start, obj/item/I, mob/user, list/directions, sweep_delay)
 	if(on_get_sweep_objects)
 		return on_get_sweep_objects.Invoke(start, I, user, directions, sweep_delay)
@@ -283,6 +289,9 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	if(can_push_call)
 		if(!can_push_call.Invoke(target, user))
 			return NONE
@@ -305,6 +314,7 @@
 
 	sweep_push(target, T, user)
 
+	user.face_atom(T)
 	user.do_attack_animation(T)
 
 	if(istype(get_turf(W), /turf/simulated) && istype(user.buckled, /obj/structure/stool/bed/chair) && !user.buckled.anchored && user.buckled != target)
@@ -374,6 +384,9 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	if(can_pull_call)
 		if(!can_pull_call.Invoke(target, user))
 			return NONE
@@ -396,6 +409,7 @@
 
 	sweep_pull(target, T, user)
 
+	user.face_atom(T)
 	user.do_attack_animation(T)
 
 	if(WS.Adjacent(target))
@@ -434,10 +448,11 @@
 
 // A proc called each new tile we're swiping across, before all the possible checks.
 /datum/component/swiping/proc/sweep_move(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, mob/user)
+	user.face_atom(current_turf)
+
 	if(on_sweep_move)
 		on_sweep_move.Invoke(current_turf, sweep_image, user)
 		return
-	user.face_atom(current_turf)
 
 // A proc that checks whether the sweep will hit target.
 /datum/component/swiping/proc/can_sweep_hit(atom/target, mob/user)
@@ -526,7 +541,8 @@
 			return SWEEP_INTERUPT
 
 		sweep_to_check(current_turf, next_turf, sweep_image, A, user)
-		user.SetNextMove(sweep_image.sweep_delay + 1)
+		// Just in case of some delaying/async bull.
+		user.AdjustNextMove(sweep_image.sweep_delay + 1)
 
 	if(sweep_image.next_dir == sweep_image.dirs_to_move.len)
 		return SWEEP_END
@@ -548,6 +564,8 @@
 		for(var/obj/effect/effect/weapon_sweep/sweep_image in sweep_objects)
 			var/dir_ = sweep_image.dirs_to_move[sweep_image.next_dir]
 			var/turf/current_turf = get_step(W, dir_)
+
+			user.SetNextMove(sweep_image.sweep_delay * directions.len + 1)
 
 			INVOKE_ASYNC(src, .proc/move_sweep_image, current_turf, sweep_image)
 
@@ -602,6 +620,9 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	if(can_sweep_call)
 		if(!can_sweep_call.Invoke(target, user))
 			return NONE
@@ -620,6 +641,9 @@
 */
 // A spin proc, a glorified 2x speed sweep.
 /datum/component/swiping/proc/sweep_spin(datum/source, mob/user)
+	if(!availability_check(source))
+		return NONE
+
 	if(can_spin_call)
 		if(!can_spin_call.Invoke(user))
 			return NONE
@@ -643,6 +667,9 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	if(sweep_spin(source, user) != NONE)
 		return COMSIG_ITEM_CANCEL_CLICKWITH
 	return NONE
@@ -656,10 +683,13 @@
 	if(user.next_move > world.time || user.incapacitated())
 		return NONE
 
+	if(!availability_check(source))
+		return NONE
+
 	var/turf/over_turf = get_turf(over)
 	var/turf/dropping_turf = get_turf(dropping)
 
-	if(get_dir(user, over_turf) == reverse_direction(get_dir(user, dropping_turf)))
+	if(get_dir(user, over_turf) == turn(get_dir(user, dropping_turf), 180))
 		if(can_spin && sweep_spin(parent, user) != NONE)
 			return COMPONENT_NO_MOUSEDROP
 

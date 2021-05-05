@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 // Mulebot - carries crates around for Quartermaster
 // Navigates via floor navbeacons
 // Remote Controlled from QM's PDA
@@ -227,8 +225,9 @@
 		else
 			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[entity_ja(dat)]", "window=mulebot;size=350x500")
-	onclose(user, "mulebot")
+	var/datum/browser/popup = new(user, "window=mulebot", src.name, 350, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)
 	. = ..()
@@ -523,14 +522,14 @@
 						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
-							B.dir = newdir
+							B.set_dir(newdir)
 						else
 							newdir = newdir | dir
 							if(newdir == 3)
 								newdir = 1
 							else if(newdir == 12)
 								newdir = 4
-							B.dir = newdir
+							B.set_dir(newdir)
 						bloodiness--
 
 					var/moved = step_towards(src, next)	// attempt to move

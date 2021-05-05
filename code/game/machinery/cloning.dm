@@ -102,15 +102,23 @@
 	var/mob/selected = null
 	for(var/mob/M in player_list)
 		//Dead people only thanks!
-		if ((M.stat != DEAD) || (!M.client))
+		if((M.stat != DEAD) || (!M.client))
 			continue
 		//They need a brain!
-		if (istype(M, /mob/living/carbon/human) && !M:has_brain())
-			continue
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.has_brain())
+				continue
+		//They must return in the body
+		else if(isobserver(M))
+			var/mob/dead/observer/O = M
+			if(!O.can_reenter_corpse)
+				continue
 
-		if (M.ckey == find_key)
+		if(M.ckey == find_key)
 			selected = M
 			break
+
 	return selected
 
 //Disk stuff.
@@ -157,43 +165,35 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(datum/dna2/record/R)
 	if(panel_open)
-		return 0
+		return FALSE
 	if(mess || attempting)
-		return 0
+		return FALSE
 	var/datum/mind/clonemind = locate(R.mind)
-	if(!istype(clonemind,/datum/mind))	//not a mind
-		return 0
-	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
-		return 0
-	if(clonemind.active)	//somebody is using that mind
-		if( ckey(clonemind.key)!=R.ckey )
-			return 0
-	else
-		for(var/mob/dead/observer/G in player_list)
-			if(G.ckey == R.ckey)
-				if(G.can_reenter_corpse)
-					break
-				else
-					return 0
+	if(!istype(clonemind, /datum/mind)) //not a mind
+		return FALSE
+	if(clonemind.current && clonemind.current.stat != DEAD) //mind is associated with a non-dead body
+		return FALSE
+	if(clonemind.active) //somebody is using that mind
+		if(ckey(clonemind.key) != R.ckey )
+			return FALSE
 
+	src.attempting = TRUE //One at a time!!
+	src.locked = TRUE
 
-	src.attempting = 1 //One at a time!!
-	src.locked = 1
-
-	src.eject_wait = 1
+	src.eject_wait = TRUE
 	spawn(30)
-		src.eject_wait = 0
+		src.eject_wait = FALSE
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
 	occupant = H
 
-	if(!R.dna.real_name)	//to prevent null names
+	if(!R.dna.real_name) //to prevent null names
 		R.dna.real_name = "clone ([rand(0,999)])"
 	H.real_name = R.dna.real_name
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE) //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
@@ -208,19 +208,9 @@
 		new V(H)
 
 	// -- Mode/mind specific stuff goes here
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.update_icon(H)
-
-	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
-		ticker.mode.update_all_rev_icons() //So the icon actually appears
-	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gang) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gang))
-		ticker.mode.update_all_gang_icons()
-	if(H.mind in ticker.mode.syndicates)
-		ticker.mode.update_all_synd_icons()
-	if (H.mind in ticker.mode.cult)
-		ticker.mode.add_cultist(src.occupant.mind)
-		ticker.mode.update_all_cult_icons() //So the icon actually appears
+	if(global.cult_religion)
+		if(occupant.mind in global.cult_religion.members_minds)
+			global.cult_religion.add_member(occupant, occupant.mind.holy_role)
 
 	// -- End mode specific stuff
 
@@ -228,7 +218,7 @@
 		H.dna = new /datum/dna()
 		H.dna.real_name = H.real_name
 	else
-		H.dna=R.dna
+		H.dna = R.dna
 	H.UpdateAppearance()
 	//if(efficiency > 2)
 	//	for(var/A in bad_se_blocks)
@@ -246,9 +236,9 @@
 
 	for(var/datum/language/L in R.languages)
 		H.add_language(L.name)
-	H.suiciding = 0
-	src.attempting = 0
-	return 1
+	H.suiciding = FALSE
+	src.attempting = FALSE
+	return TRUE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()

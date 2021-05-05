@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/machinery/containment_field
 	name = "Containment Field"
 	desc = "An energy field."
@@ -37,9 +35,6 @@
 	return 0
 
 /obj/machinery/containment_field/ex_act(severity)
-	return 0
-
-/obj/machinery/containment_field/meteorhit()
 	return 0
 
 /obj/machinery/containment_field/HasProximity(atom/movable/AM)

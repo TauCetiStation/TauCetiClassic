@@ -70,10 +70,6 @@
 		produce_heat(heat_gen)
 		delay = initial(delay)
 
-/obj/machinery/r_n_d/server/meteorhit(obj/O)
-	griefProtection()
-	..()
-
 
 /obj/machinery/r_n_d/server/emp_act(severity)
 	griefProtection()
@@ -226,8 +222,9 @@
 
 	else if(href_list["reset_techology"])
 		var/choice = alert("Techology Deletion", "Are you sure you want to delete this techology? Data lost cannot be recovered.", "Continue", "Cancel")
-		if(choice == "Continue")
-			temp_server.files.forget_techology( temp_server.files.researched_tech[href_list["reset_design"]] )
+		var/techology = temp_server.files.researched_tech[href_list["reset_techology"]]
+		if(choice == "Continue" && techology)
+			temp_server.files.forget_techology(techology)
 
 	updateUsrDialog()
 
@@ -237,14 +234,16 @@
 	switch(screen)
 		if(0) //Main Menu
 			dat += "Connected Servers:<BR><BR>"
-
 			for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
-				dat += "[S.name] || "
-				dat += "<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> | "
-				dat += "<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"
-				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
+				dat += "<table><tr>"
+				dat += "<td>[S.name]</td>"
+				dat += "<td><A href='?src=\ref[src];access=[S.server_id]'>Access Rights</A></td>"
+				dat += "<td><A href='?src=\ref[src];data=[S.server_id]'>Data Management</A></td>"
+				if(badmin)
+					dat += "<td><A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A></td>"
+				dat += "</tr></table>"
 				dat += "<BR>"
 
 		if(1) //Access rights menu
@@ -254,17 +253,17 @@
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
 				if(C.id in temp_server.id_with_upload)
-					dat += " (Remove)</A><BR>"
+					dat += "Remove</A><BR>"
 				else
-					dat += " (Add)</A><BR>"
+					dat += "Add</A><BR>"
 			dat += "Consoles with Download Access<BR>"
 			for(var/obj/machinery/computer/rdconsole/C in consoles)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];download_toggle=[C.id]'>[console_turf.loc]"
 				if(C.id in temp_server.id_with_download)
-					dat += " (Remove)</A><BR>"
+					dat += "Remove</A><BR>"
 				else
-					dat += " (Add)</A><BR>"
+					dat += "Add</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(2) //Data Management menu
@@ -287,8 +286,11 @@
 			for(var/obj/machinery/r_n_d/server/S in servers)
 				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
-	user << browse("<TITLE>R&D Server Control</TITLE><HR>[entity_ja(dat)]", "window=server_control;size=575x400")
-	onclose(user, "server_control")
+
+	var/datum/browser/popup = new(user, "server_control", "R&D Server Control", 575, 400)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	..()

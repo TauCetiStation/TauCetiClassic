@@ -14,34 +14,6 @@
 //Checks if all high bits in req_mask are set in bitfield
 #define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
 
-//Inverts the colour of an HTML string
-/proc/invertHTML(HTMLstring)
-
-	if (!( istext(HTMLstring) ))
-		CRASH("Given non-text argument!")
-	else
-		if (length(HTMLstring) != 7)
-			CRASH("Given non-HTML argument!")
-	var/textr = copytext(HTMLstring, 2, 4)
-	var/textg = copytext(HTMLstring, 4, 6)
-	var/textb = copytext(HTMLstring, 6, 8)
-	var/r = hex2num(textr)
-	var/g = hex2num(textg)
-	var/b = hex2num(textb)
-	textr = num2hex(255 - r)
-	textg = num2hex(255 - g)
-	textb = num2hex(255 - b)
-	if (length(textr) < 2)
-		textr = text("0[]", textr)
-	if (length(textg) < 2)
-		textr = text("0[]", textg)
-	if (length(textb) < 2)
-		textr = text("0[]", textb)
-	return text("#[][][]", textr, textg, textb)
-
-//Returns the middle-most value
-/proc/dd_range(low, high, num)
-	return max(low,min(high,num))
 
 //Returns whether or not A is the middle most value
 /proc/InRange(A, lower, upper)
@@ -193,16 +165,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Returns whether or not a player is a guest using their ckey as an input
 /proc/IsGuestKey(key)
-	if (findtext(key, "Guest-", 1, 7) != 1) //was findtextEx
-		return 0
-
-	var/i, ch, len = length(key)
-
-	for (i = 7, i <= len, ++i)
-		ch = text2ascii(key, i)
-		if (ch < 48 || ch > 57)
-			return 0
-	return 1
+	return findtext(key, "Guest-", 1, 7) == 1
 
 //Ensure the frequency is within bounds of what it should be sending/recieving at
 /proc/sanitize_frequency(f)
@@ -356,35 +319,36 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0, skip_mindless=0)
-	var/list/mobs = sortmobs()
+/proc/getpois(with_mobs = TRUE, skip_mindless = FALSE, mobs_only = FALSE)
+	var/list/mobs = sortmobs() - global.dummy_mob_list
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()
 
-	for(var/mob/M in mobs)
-		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera))
+	if(with_mobs)
+		for(var/mob/M in mobs)
+			if(skip_mindless && (!M.mind && !M.ckey))
+				if(!isbot(M) && !istype(M, /mob/camera))
+					continue
+			if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 				continue
-		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
-			continue
-		if(usr == M)	//skip yourself
-			continue
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (M.stat == DEAD)
-			if(istype(M, /mob/dead/observer))
-				name += " \[ghost\]"
+			if(usr == M)	//skip yourself
+				continue
+			var/name = M.name
+			if (name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
 			else
-				name += " \[dead\]"
-		pois[name] = M
+				names.Add(name)
+				namecounts[name] = 1
+			if (M.real_name && M.real_name != M.name)
+				name += " \[[M.real_name]\]"
+			if (M.stat == DEAD)
+				if(istype(M, /mob/dead/observer))
+					name += " \[ghost\]"
+				else
+					name += " \[dead\]"
+			pois[name] = M
 
 	if(!mobs_only)
 		for(var/atom/A in poi_list)
@@ -574,12 +538,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/between(low, middle, high)
 	return max(min(middle, high), low)
 
-#if DM_VERSION < 513
-/proc/arctan(x)
-	var/y=arcsin(x/sqrt(1+x*x))
-	return y
-#endif
-
 //returns random gauss number
 /proc/GaussRand(sigma)
   var/x,y,rsq
@@ -599,7 +557,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.set_dir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -701,17 +659,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype)
-	if(!areatype) return null
-	if(istext(areatype)) areatype = text2path(areatype)
-	if(isarea(areatype))
+/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0)
+	if(istext(areatype))
+		areatype = text2path(areatype)
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
 
-	var/list/turfs = new/list()
-	for(var/area/N in all_areas)
-		if(istype(N, areatype))
-			for(var/turf/T in N) turfs += T
+	var/list/turfs = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/V in global.all_areas)
+			var/area/A = V
+			if(!cache[A.type])
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
+	else
+		for(var/V in global.all_areas)
+			var/area/A = V
+			if(A.type != areatype)
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -792,7 +766,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 					var/turf/X = T.MoveTurf(B)
 
-					X.dir = old_dir1
+					X.set_dir(old_dir1)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
@@ -945,7 +919,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							continue moving
 
 					var/turf/X = new T.type(B)
-					X.dir = old_dir1
+					X.set_dir(old_dir1)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
@@ -1196,25 +1170,6 @@ var/global/list/common_tools = list(
 		return TRUE
 	return FALSE
 
-/proc/reverse_direction(dir)
-	switch(dir)
-		if(NORTH)
-			return SOUTH
-		if(NORTHEAST)
-			return SOUTHWEST
-		if(EAST)
-			return WEST
-		if(SOUTHEAST)
-			return NORTHWEST
-		if(SOUTH)
-			return NORTH
-		if(SOUTHWEST)
-			return NORTHEAST
-		if(WEST)
-			return EAST
-		if(NORTHWEST)
-			return SOUTHEAST
-
 /*
 Checks if that loc and dir has a item on the wall
 */
@@ -1264,8 +1219,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = CLAMP(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = CLAMP(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	tX = clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
+	tY = clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -1277,8 +1232,8 @@ var/list/WALLITEMS = typecacheof(list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = CLAMP(origin.x + 7 - tX, 1, world.maxx)
-	tY = CLAMP(origin.y + 7 - tY, 1, world.maxy)
+	tX = clamp(origin.x + 7 - tX, 1, world.maxx)
+	tY = clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/iscatwalk(atom/A)
@@ -1530,17 +1485,23 @@ var/list/WALLITEMS = typecacheof(list(
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta - 1, 1)), 1)
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
-/proc/stoplag()
+//returns the number of ticks slept
+/proc/stoplag(initial_delay)
+	if (!Master) // || !(Master.current_runlevel & RUNLEVELS_DEFAULT) ,but we don't have these variables
+		sleep(world.tick_lag)
+		return 1
+	if (!initial_delay)
+		initial_delay = world.tick_lag
 	. = 0
-	var/i = 1
+	var/i = DS2TICKS(initial_delay)
 	do
-		. += round(i * DELTA_CALC)
+		. += CEILING(i * DELTA_CALC, 1)
 		sleep(i*world.tick_lag * DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
 
 #undef DELTA_CALC
 
@@ -1562,3 +1523,39 @@ var/list/WALLITEMS = typecacheof(list(
 		return -1
 	else
 		return 0
+
+/atom/proc/contains(atom/location)
+	if(!location)
+		return 0
+	if(location == src)
+		return 1
+
+	return contains(location.loc)
+
+//Inverts the colour of an HTML string
+/proc/invertHTMLcolor(HTMLstring)
+	if(!istext(HTMLstring))
+		CRASH("Given non-text argument!")
+	else if(length(HTMLstring) != 7)
+		CRASH("Given non-HTML argument!")
+	else if(length_char(HTMLstring) != 7)
+		CRASH("Given non-hex symbols in argument!")
+	var/textr = copytext(HTMLstring, 2, 4)
+	var/textg = copytext(HTMLstring, 4, 6)
+	var/textb = copytext(HTMLstring, 6, 8)
+	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
+
+/proc/change_lobbyscreen(new_screen)
+	if(new_screen)
+		global.current_lobby_screen = new_screen
+	else
+		var/newyear
+		#ifdef NEWYEARCONTENT
+		global.current_lobby_screen = pick(global.new_year_screens)
+		newyear = TRUE
+		#endif
+		if(!newyear)
+			global.current_lobby_screen = pick(global.lobby_screens)
+
+	for(var/mob/dead/new_player/N in new_player_list)
+		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)

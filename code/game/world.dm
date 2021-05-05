@@ -1,7 +1,6 @@
 var/round_id = 0
 var/base_commit_sha = 0
 
-#define RECOMMENDED_VERSION 512
 /world/New()
 #ifdef DEBUG
 	enable_debugger()
@@ -12,7 +11,15 @@ var/base_commit_sha = 0
 
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
+	timezoneOffset = text2num(time2text(0, "hh")) HOURS
+
 	load_configuration()
+
+	if(!setup_database_connection())
+		log_sql("Your server failed to establish a connection with the SQL database.")
+	else
+		log_sql("SQL database connection established.")
+
 	load_regisration_panic_bunker()
 	load_stealth_keys()
 	load_mode()
@@ -49,22 +56,12 @@ var/base_commit_sha = 0
 	paiController = new /datum/paiController()
 	ahelp_tickets = new
 
-	spawn(10)
-		Master.Setup()
-
-	if(!setup_old_database_connection())
-		log_sql("Your server failed to establish a connection with the SQL database.")
-	else
-		log_sql("SQL database connection established.")
-
-	if(!setup_database_connection())
-		log_sql("Your server failed to establish a connection with the feedback database.")
-	else
-		log_sql("Feedback database connection established.")
-
 	SetRoundID()
 	base_commit_sha = GetGitMasterCommit(1)
 	SetupLogs() // depends on round id
+
+	spawn(10)
+		Master.Initialize()
 
 	Get_Holiday()
 
@@ -83,9 +80,9 @@ var/base_commit_sha = 0
 #undef RECOMMENDED_VERSION
 
 /world/proc/SetupLogs()
-	var/log_suffix = round_id ? round_id : replacetext(time_stamp(), ":", ".")
+	var/log_suffix = global.round_id ? global.round_id : replacetext(time_stamp(), ":", ".")
 	var/log_date = time2text(world.realtime, "YYYY/MM/DD")
-	
+
 	global.log_directory = "data/logs/[log_date]/round-[log_suffix]"
 	global.log_investigate_directory = "[log_directory]/investigate"
 	global.log_debug_directory = "[log_directory]/debug"
@@ -94,6 +91,8 @@ var/base_commit_sha = 0
 	global.game_log = file("[log_directory]/game.log")
 	global.hrefs_log = file("[log_directory]/href.log")
 	global.access_log = file("[log_directory]/access.log")
+	global.asset_log = file("[log_debug_directory]/asset.log")
+	global.tgui_log = file("[log_debug_directory]/tgui.log")
 
 	global.initialization_log = file("[log_debug_directory]/initialization.log")
 	global.runtime_log = file("[log_debug_directory]/runtime.log")
@@ -143,16 +142,15 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["mode"] = custom_event_msg ? "event" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
 		s["enter"] = enter_allowed
-		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
-		s["gamestate"] = ticker.current_state
+		s["gamestate"] = SSticker.current_state
 		s["roundduration"] = roundduration2text()
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
-		s["round_id"] = round_id
+		s["round_id"] = global.round_id
 		s["revision"] = base_commit_sha
 		var/n = 0
 		var/admins = 0
@@ -169,7 +167,7 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["admins"] = admins
 
 		return list2params(s)
-	
+
 	else if (length(T) && istext(T))
 		var/list/packet_data = params2list(T)
 		if (packet_data && packet_data["announce"] == "")
@@ -180,15 +178,12 @@ var/world_topic_spam_protect_time = world.timeofday
 
 /world/proc/PreShutdown(end_state)
 
-	if(dbcon.IsConnected())
+	if(establish_db_connection("erro_round"))
 		end_state = end_state ? end_state : "undefined"
-		var/DBQuery/query_round_shutdown = dbcon.NewQuery("UPDATE erro_round SET shutdown_datetime = Now(), end_state = '[sanitize_sql(end_state)]' WHERE id = [round_id]")
+		var/DBQuery/query_round_shutdown = dbcon.NewQuery("UPDATE erro_round SET shutdown_datetime = Now(), end_state = '[sanitize_sql(end_state)]' WHERE id = [global.round_id]")
 		query_round_shutdown.Execute()
 
 		dbcon.Disconnect()
-
-	if(dbcon_old.IsConnected())
-		dbcon_old.Disconnect()
 
 	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
 
@@ -305,7 +300,7 @@ var/shutdown_processed = FALSE
 				host_announcements += "<hr>"
 
 			host_announcements += trim(file2text("data/announcements/[file]"))
-		
+
 		host_announcements = "<h2>Important Admin Announcements:</h2><br>[host_announcements]"
 
 /world/proc/load_test_merge()
@@ -313,6 +308,7 @@ var/shutdown_processed = FALSE
 		join_test_merge = "<strong>Test merged PRs:</strong> "
 		var/list/prs = splittext(trim(file2text("test_merge.txt")), " ")
 		for(var/pr in prs)
+			test_merges += "#[pr] "
 			join_test_merge += "<a href='[config.repository_link]/pull/[pr]'>#[pr]</a> "
 
 /world/proc/load_regisration_panic_bunker()
@@ -338,7 +334,7 @@ var/shutdown_processed = FALSE
 		for(var/line in L)
 			if(!length(line))
 				continue
-			if(copytext(line,1,2) == "#")
+			if(line[1] == "#")
 				continue
 			donators.Add(ckey(line))
 
@@ -349,7 +345,7 @@ var/shutdown_processed = FALSE
 			warning("Failed to load taucetistation.org patreon list")
 			message_admins("Failed to load taucetistation.org patreon list, please inform responsible persons")
 		else
-			var/list/l = json2list(w)
+			var/list/l = json_decode(w)
 			for(var/i in l)
 				if(l[i]["reward_price"] == "5.00")
 					donators.Add(ckey(l[i]["name"]))
@@ -379,16 +375,17 @@ var/shutdown_processed = FALSE
 		s += "<b>[config.server_name]</b> &#8212; "
 
 	s += "<b>[station_name()]</b>";
-	s += " ("
-	s += "<a href=\"http://tauceti.ru\">" //Change this to wherever you want the hub to link to.
-//	s += "[game_version]"
-	s += "site"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
-	s += "</a>"
-	s += ")"
+
+	if (config && config.siteurl)
+		s += " ("
+		s += "<a href=\"[config.siteurl]\">" //Change this to wherever you want the hub to link to.
+		s += "site"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+		s += "</a>"
+		s += ")"
 
 	var/list/features = list()
 
-	if(ticker)
+	if(SSticker)
 		if(master_mode)
 			features += master_mode
 	else
@@ -398,9 +395,6 @@ var/shutdown_processed = FALSE
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"
-
-	if (config && config.allow_vote_mode)
-		features += "vote"
 
 	if (config && config.allow_ai)
 		features += "AI allowed"
@@ -432,32 +426,30 @@ var/shutdown_processed = FALSE
 		src.status = s
 
 /proc/SetRoundID()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_round"))
 		return
-	var/DBQuery/query_round_initialize = dbcon.NewQuery("INSERT INTO erro_round (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-	query_round_initialize.Execute()
-	var/DBQuery/query_round_last_id = dbcon.NewQuery("SELECT LAST_INSERT_ID()")
-	query_round_last_id.Execute()
-	if(query_round_last_id.NextRow())
-		round_id = query_round_last_id.item[1]
-		log_game("New round: #[round_id]\n-------------------------")
-		world.log << "New round: #[round_id]\n-------------------------"
+	var/DBQuery/query_round_initialize = dbcon.NewQuery("INSERT INTO erro_round (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[sanitize_sql(world.internet_address)]')), '[sanitize_sql(world.port)]')")
+	if(query_round_initialize.Execute())
+		var/DBQuery/query_round_last_id = dbcon.NewQuery("SELECT LAST_INSERT_ID()")
+		query_round_last_id.Execute()
+		if(query_round_last_id.NextRow())
+			global.round_id = text2num(query_round_last_id.item[1])
+			log_game("New round: #[global.round_id]\n-------------------------")
+			world.log << "New round: #[global.round_id]\n-------------------------"
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
-var/failed_old_db_connections = 0
 
 /proc/setup_database_connection()
 
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
-
 	if(!dbcon)
 		dbcon = new()
 
-	var/user = sqlfdbklogin
-	var/pass = sqlfdbkpass
-	var/db = sqlfdbkdb
+	var/user = sqllogin
+	var/pass = sqlpass
+	var/db = sqldb
 	var/address = sqladdress
 	var/port = sqlport
 
@@ -471,50 +463,22 @@ var/failed_old_db_connections = 0
 
 	return .
 
-//This proc ensures that the connection to the feedback database (global variable dbcon) is established
-/proc/establish_db_connection()
+//This proc ensures that the connection to the database (global variable dbcon) is established
+//optionally you can pass table names as args to check that they exist
+/proc/establish_db_connection(...)
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
 	if(!dbcon || !dbcon.IsConnected())
-		return setup_database_connection()
-	else
-		return 1
+		if(!setup_database_connection())
+			return 0
 
-//These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
-/proc/setup_old_database_connection()
+	if(length(args))
+		for(var/tablename in args)
+			if(!dbcon.TableExists(tablename))
+				return 0
 
-	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
-		return 0
-
-	if(!dbcon_old)
-		dbcon_old = new()
-
-	var/user = sqllogin
-	var/pass = sqlpass
-	var/db = sqldb
-	var/address = sqladdress
-	var/port = sqlport
-
-	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
-	. = dbcon_old.IsConnected()
-	if ( . )
-		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
-	else
-		failed_old_db_connections++		//If it failed, increase the failed connections counter.
-		world.log << dbcon.ErrorMsg()
-
-	return .
-
-//This proc ensures that the connection to the feedback database (global variable dbcon) is established
-/proc/establish_old_db_connection()
-	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
-		return 0
-
-	if(!dbcon_old || !dbcon_old.IsConnected())
-		return setup_old_database_connection()
-	else
-		return 1
+	return 1
 
 #undef FAILED_DB_CONNECTION_CUTOFF
 

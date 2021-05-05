@@ -1,3 +1,6 @@
+////////////////
+//  NULLRODS  //
+////////////////
 /obj/item/weapon/nullrod
 	name = "null rod"
 	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of paranormal phenomenae."
@@ -11,11 +14,20 @@
 	light_color = "#4c4cff"
 	light_power = 3
 	w_class = ITEM_SIZE_SMALL
+
+	// Deconvering mobs
+	var/deconverting = FALSE
+
+	// Glowing
 	var/last_process = 0
-	var/datum/cult/reveal/power
 	var/static/list/scum
 
+	// Change type of nullrod
 	var/tried_replacing = FALSE
+
+	// Deconverting turfs
+	var/deconvert_turf_cd = 5 SECONDS
+	var/next_turf_deconvert = 0
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='userdanger'>[user] is impaling himself with the [name]! It looks like \he's trying to commit suicide.</span>")
@@ -25,7 +37,6 @@
 	. = ..()
 	if(!scum)
 		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
-	power = new(src)
 
 /obj/item/weapon/nullrod/attack_self(mob/living/user)
 	if(user.mind && user.mind.holy_role && !tried_replacing)
@@ -59,7 +70,6 @@
 
 /obj/item/weapon/nullrod/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(power)
 	return ..()
 
 /obj/item/weapon/nullrod/dropped(mob/user)
@@ -77,32 +87,62 @@
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
-/obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "<span class='danger'> You don't have the dexterity to do this!</span>")
+/obj/item/weapon/nullrod/proc/convert_effect(turf/T, turf_type)
+	new /obj/effect/temp_visual/religion/pulse(T)
+	sleep(8)
+	T.ChangeTurf(turf_type)
+
+/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity || !user.my_religion || !global.cult_religion || !isturf(target) || next_turf_deconvert > world.time)
 		return
 
-	M.log_combat(user, "deconvered (attempt) via [name]")
+	// Captured area is too strong
+	var/area/A = get_area(target)
+	if(A.religion && istype(A.religion, global.cult_religion.type))
+		to_chat(user, "<span class='danger'>Вам не хватает силы для этого!</span>")
+		return
 
-	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
+	// If it's not a cult type, then don't do it.
+	var/turf/T = target
+	if(T.type in global.cult_religion.wall_types)
+		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/wall)
+	else if(T.type in global.cult_religion.floor_types)
+		INVOKE_ASYNC(src, .proc/convert_effect, T, /turf/simulated/floor)
+
+	next_turf_deconvert = world.time + deconvert_turf_cd
+
+/obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
+	if((CLUMSY in user.mutations) && prob(50))
+		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
 		user.adjustBruteLoss(10)
 		user.Paralyse(20)
 		return
 
-	if (M.stat != DEAD)
-		if((M.mind in ticker.mode.cult) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST && prob(33))
-			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the cult's influence!</span>")
-			to_chat(user, "<span class='danger'>You wave [src] over [M]'s head and see their eyes become clear, their mind returning to normal.</span>")
-			ticker.mode.remove_cultist(M.mind)
-		else
-			to_chat(user, "<span class='danger'>The rod appears to do nothing.</span>")
-		M.visible_message("<span class='danger'>[user] waves [src] over [M.name]'s head</span>")
+	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST || deconverting)
+		return
 
-/obj/item/weapon/nullrod/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	if (proximity_flag && istype(target, /turf/simulated/floor) && user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		to_chat(user, "<span class='notice'>You hit the floor with the [src].</span>")
-		power.action(user, 1)
+	user.visible_message("<span class='danger'>[user] заряжает [src] и целится в [M].</span>")
+
+	deconverting = TRUE
+	if(!do_after(user, 50, target = M))
+		deconverting = FALSE
+		return
+	deconverting = FALSE
+
+	M.log_combat(user, "deconvered (attempt) via [name]")
+
+	if(M.stat != DEAD)
+		if(iscultist(M))
+			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
+			SSticker.mode.remove_cultist(M.mind)
+			new /obj/effect/temp_visual/religion/pulse(M.loc)
+			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
+		else
+			to_chat(user, "<span class='danger'>Жезл наказывает вас за ложное использование.</span>")
+			new /obj/effect/temp_visual/religion/pulse(user.loc)
+			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
+			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
+			M.confused += 10
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
@@ -129,28 +169,26 @@
 	god_lore = global.chaplain_religion.lore
 
 /obj/item/weapon/nullrod/staff/Destroy()
-	// Damn... He's free now.
-	if(brainmob)
-		brainmob.invisibility = 0
-		qdel(brainmob.GetComponent(/datum/component/bounded))
-		brainmob.container = null
-		brainmob = null
-
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
 		var/mob/M = loc
 		hide_god(M)
 
 	QDEL_NULL(god_image)
 
+	if(brainmob)
+		brainmob.container = null
+		brainmob.gib()
+		brainmob = null
+
 	return ..()
 
 /obj/item/weapon/nullrod/staff/proc/show_god(mob/M)
-	if(M.client && god_image)
-		M.client.images += god_image
+	if(god_image)
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person, "god_staff", god_image, M)
 
 /obj/item/weapon/nullrod/staff/proc/hide_god(mob/M)
-	if(M.client && god_image)
-		M.client.images -= god_image
+	if(god_image)
+		brainmob.remove_alt_appearance("god_staff")
 
 /obj/item/weapon/nullrod/staff/equipped(mob/user, slot)
 	..()
@@ -170,11 +208,12 @@
 			var/obj/item/device/soulstone/S = I
 			if(S.imprinted == "empty")
 				S.imprinted = brainmob.name
-				S.transfer_soul("SHADE", brainmob, user)
+				S.transfer_soul(SOULSTONE_SHADE, brainmob, user)
 
 		else if(istype(I, /obj/item/weapon/storage/bible)) //force kick god from staff
 			if(brainmob)
 				next_apply[brainmob.ckey] = world.time + 10 MINUTES
+				brainmob.ghostize(FALSE)
 				qdel(brainmob)
 				searching = FALSE
 				icon_state = "talking_staff"
@@ -185,7 +224,7 @@
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
 	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
-		if(global.chaplain_religion.aspects.len == 0)
+		if(user.my_religion.aspects.len == 0)
 			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return
 		if(!brainmob && !searching)
@@ -195,38 +234,23 @@
 			light_power = 5
 			searching = TRUE
 			request_player(user)
-			addtimer(CALLBACK(src, .proc/reset_search), 600)
+			addtimer(CALLBACK(src, .proc/reset_search), 200)
 
 /obj/item/weapon/nullrod/staff/proc/request_player(mob/living/user)
-	for(var/mob/dead/observer/O in player_list)
-		if(O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
+	var/list/candidates = pollGhostCandidates("Do you want to serve [user.my_religion.name] in divine staff?", ROLE_GHOSTLY, IGNORE_TSTAFF, 100, TRUE)
+	for(var/mob/M in candidates) // No random
+		if(next_apply[M.client.ckey] > world.time)
+			to_chat(M, "You were forcibly kicked from staff, left [round((next_apply[M.client.ckey] - world.time) / 600)] minutes")
 			continue
-		if(jobban_isbanned(O, ROLE_GHOSTLY) && role_available_in_minutes(O, ROLE_GHOSTLY))
-			continue
-		if(O.client)
-			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find(IGNORE_TSTAFF) && (ROLE_GHOSTLY in C.prefs.be_role))
-				INVOKE_ASYNC(src, .proc/question, C, user)
-
-/obj/item/weapon/nullrod/staff/proc/question(client/C, mob/living/user)
-	if(!C)
-		return
-	var/response = alert(C, "Someone is requesting a your soul in divine staff?", "Staff request", "No", "Yeeesss", "Never for this round")
-	if(!C || (brainmob && brainmob.ckey) || !searching)
-		return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-	if(response == "Yeeesss")
-		if(next_apply[C.ckey] > world.time)
-			to_chat(C.mob, "You were forcibly kicked from staff, left [round((next_apply[C.ckey] - world.time) / 600)] minutes")
-			return
-		transfer_personality(C.mob, user)
-	else if (response == "Never for this round")
-		C.prefs.ignore_question += IGNORE_TSTAFF
+		transfer_personality(M, user)
+		break
 
 /obj/item/weapon/nullrod/staff/proc/transfer_personality(mob/candidate, mob/living/summoner)
 	searching = FALSE
 
 	if(brainmob)
 		to_chat(brainmob, "<span class='userdanger'>You are no longer our god!</span>")
+		brainmob.ghostize(FALSE)
 		qdel(brainmob) //create new god, otherwise the old mob could not be woken up
 
 	QDEL_NULL(god_image)
@@ -237,30 +261,22 @@
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
 
-	brainmob.invisibility = INVISIBILITY_OBSERVER
-	brainmob.see_invisible = SEE_INVISIBLE_OBSERVER
-
-	brainmob.mind = candidate.mind
 	brainmob.ckey = candidate.ckey
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
-	brainmob.real_name = name
 	brainmob.mind.assigned_role = "Chaplain`s staff"
 	if(god_lore != "")
 		brainmob.mind.memory = "<B>YOUR LORE</B><BR>"
 		brainmob.mind.memory += god_lore
-	brainmob.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
-	for(var/aspect in global.chaplain_religion.aspects)
-		var/datum/aspect/asp = global.chaplain_religion.aspects[aspect]
+	for(var/aspect in summoner.my_religion.aspects)
+		var/datum/aspect/asp = summoner.my_religion.aspects[aspect]
 		if(asp.god_desc)
-			brainmob.mind.memory += "<BR><BR><B>Aspect [aspect]</B><BR>[asp.god_desc]"
+			brainmob.mind.memory += "<BR><BR><B>Aspect [aspect]</B>:<BR>[asp.god_desc]"
 
 	candidate.cancel_camera()
 	candidate.reset_view()
 
-	brainmob.universal_speak = FALSE
-
-	global.chaplain_religion.add_deity(brainmob)
+	summoner.my_religion.add_deity(brainmob)
 
 	for(var/datum/language/L in summoner.languages)
 		brainmob.add_language(L.name)
@@ -268,6 +284,8 @@
 	name = "staff of the [god_name]"
 	if(god_name == "Aghanim") //sprite is very similar
 		name = "Aghanim's Scepter"
+
+	brainmob.real_name = name
 
 	desc = "Stone sometimes glow. Pray for mercy on [god_name]."
 	to_chat(brainmob, "<b>You are an avatar of god, brought into existence on [station_name()].</b>")
@@ -281,10 +299,7 @@
 
 	icon_state = "talking_staffsoul"
 
-	var/image/I = image(brainmob.icon, brainmob.icon_state)
-	I.loc = brainmob
-	I.appearance = brainmob
-	god_image = I
+	god_image = image(brainmob.icon, brainmob, brainmob.icon_state)
 
 	brainmob.container = src
 	brainmob.AddComponent(/datum/component/bounded, src, 0, 3)
@@ -301,6 +316,7 @@
 	icon_state = "talking_staff"
 	visible_message("<span class='notice'>The stone of \the [src] stopped glowing, why didn't you please the god?</span>")
 	if(brainmob)
+		brainmob.ghostize(FALSE)
 		qdel(brainmob)
 
 /obj/item/weapon/nullrod/staff/examine(mob/user)
@@ -358,17 +374,21 @@
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
 
 /obj/item/weapon/nullrod/forcefield_staff/equipped(mob/living/user, slot)
+	..()
 	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND || slot == SLOT_BACK)
 		activate(user)
 	else if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
 		deactivate(user)
 
 /obj/item/weapon/nullrod/forcefield_staff/dropped(mob/living/user)
+	..()
 	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND || slot_equipped == SLOT_BACK)
 		deactivate(user)
 
 
-
+///////////////
+// EQUIPMENT //
+///////////////
 /obj/item/weapon/shield/riot/roman/religion
 	name = "sacred shield"
 	desc = "Go-... Whatever deity you worship protects you!"
@@ -379,7 +399,6 @@
 
 /obj/item/weapon/shield/riot/roman/religion/atom_init()
 	. = ..()
-
 	filters += filter(type = "outline", size = 1, color = "#fffb0064")
 	animate(filters[filters.len], color = "#fffb0000", time = 1 MINUTE)
 
@@ -391,14 +410,7 @@
 	force = 10
 	throwforce = 5
 
-	var/can_spawn_shield = TRUE
-	var/obj/item/weapon/shield/riot/roman/religion/shield
-
-	var/holy_outline
-	var/have_outline = FALSE
-	var/can_spawn_shield_timer
 	var/image/down_overlay
-
 	/// Force for holy wielders.
 	var/holy_force = 10
 	/// Force for non-holy wielders.
@@ -411,62 +423,26 @@
 	add_overlay(down_overlay)
 	addtimer(CALLBACK(src, .proc/revert_effect), 5 SECONDS)
 
-	holy_outline = filter(type = "outline", size = 1, color = "#fffb0064")
+	var/shield_type = /obj/item/weapon/shield/riot/roman/religion
+	AddComponent(/datum/component/self_effect, shield_type, "#fffb0064", CALLBACK(src, .proc/only_holy), 3 MINUTE, 30 SECONDS, 1 MINUTE)
 
-/obj/item/weapon/claymore/religion/Destroy()
-	if(can_spawn_shield_timer)
-		deltimer(can_spawn_shield_timer)
-	return ..()
+/obj/item/weapon/claymore/religion/proc/only_holy(datum/source, mob/M)
+	if(M?.mind?.holy_role)
+		return TRUE
+	return FALSE
 
 /obj/item/weapon/claymore/religion/dropped()
-	QDEL_NULL(shield)
-	remove_holy_outline()
-	force = def_force
+	..()
+	force = def_force + blessed
 
 /obj/item/weapon/claymore/religion/equipped(mob/user, slot)
-	if(user.mind.holy_role)
-		force = holy_force
-		if(!have_outline && can_spawn_shield)
-			create_holy_outline()
+	..()
+	if(user.mind?.holy_role)
+		force = holy_force + blessed
 	else
-		force = def_force
-
-/obj/item/weapon/claymore/religion/proc/remove_holy_outline()
-	have_outline = FALSE
-	filters -= holy_outline
-
-/obj/item/weapon/claymore/religion/proc/create_holy_outline()
-	have_outline = TRUE
-	filters += holy_outline
+		force = def_force + blessed
 
 /obj/item/weapon/claymore/religion/proc/revert_effect()
 	if(down_overlay)
 		cut_overlays(down_overlay)
 		qdel(down_overlay)
-
-/obj/item/weapon/claymore/religion/proc/ready_shield()
-	can_spawn_shield = TRUE
-	if(!have_outline && (slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND))
-		create_holy_outline()
-
-/obj/item/weapon/claymore/religion/proc/scatter_shield()
-	if(slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND)
-		var/mob/M = loc
-		to_chat(M, "<span class='warning'>[shield] was scattered.</span>")
-
-	shield = null
-	can_spawn_shield_timer = addtimer(CALLBACK(src, .proc/ready_shield), 30 SECONDS)
-
-/obj/item/weapon/claymore/religion/attack_self(mob/living/carbon/human/H)
-	if(!H.mind.holy_role || !can_spawn_shield)
-		return
-
-	var/obj/item/weapon/shield/riot/roman/religion/R = new (H)
-	if(H.put_in_inactive_hand(R))
-		can_spawn_shield = FALSE
-		can_spawn_shield_timer = addtimer(CALLBACK(src, .proc/ready_shield, H), 3 MINUTES)
-		shield = R
-		RegisterSignal(R, list(COMSIG_PARENT_QDELETED), .proc/scatter_shield)
-		remove_holy_outline()
-	else
-		qdel(R)

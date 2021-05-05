@@ -53,8 +53,9 @@
 			<A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
 			"}
 
-	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=robot_fabricator")
-	onclose(user, "robot_fabricator")
+	var/datum/browser/popup = new(user, "window=robot_fabricator", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/robotic_fabricator/Topic(href, href_list)
 	. = ..()
@@ -65,55 +66,54 @@
 		if (!src.operating)
 			var/part_type = text2num(href_list["make"])
 
-			var/build_type = ""
+			var/build_type = null
 			var/build_time = 200
 			var/build_cost = 25000
 
 			switch (part_type)
 				if (1)
-					build_type = "/obj/item/robot_parts/l_arm"
+					build_type = /obj/item/robot_parts/l_arm
 					build_time = 200
 					build_cost = 25000
 
 				if (2)
-					build_type = "/obj/item/robot_parts/r_arm"
+					build_type = /obj/item/robot_parts/r_arm
 					build_time = 200
 					build_cost = 25000
 
 				if (3)
-					build_type = "/obj/item/robot_parts/l_leg"
+					build_type = /obj/item/robot_parts/l_leg
 					build_time = 200
 					build_cost = 25000
 
 				if (4)
-					build_type = "/obj/item/robot_parts/r_leg"
+					build_type = /obj/item/robot_parts/r_leg
 					build_time = 200
 					build_cost = 25000
 
 				if (5)
-					build_type = "/obj/item/robot_parts/chest"
+					build_type = /obj/item/robot_parts/chest
 					build_time = 350
 					build_cost = 50000
 
 				if (6)
-					build_type = "/obj/item/robot_parts/head"
+					build_type = /obj/item/robot_parts/head
 					build_time = 350
 					build_cost = 50000
 
 				if (7)
-					build_type = "/obj/item/robot_parts/robot_suit"
+					build_type = /obj/item/robot_parts/robot_suit
 					build_time = 600
 					build_cost = 75000
 
-			var/building = text2path(build_type)
-			if (!isnull(building))
+			if (!isnull(build_type))
 				if (src.metal_amount >= build_cost)
 					src.operating = 1
 					set_power_use(ACTIVE_POWER_USE)
 
 					src.metal_amount = max(0, src.metal_amount - build_cost)
 
-					src.being_built = new building(src)
+					src.being_built = new build_type(src)
 
 					src.add_overlay("fab-active")
 

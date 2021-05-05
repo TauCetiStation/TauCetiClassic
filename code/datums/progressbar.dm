@@ -63,7 +63,7 @@
 		if (user.client)
 			user.client.images += bar
 
-	progress = CLAMP(progress, 0, goal)
+	progress = clamp(progress, 0, goal)
 	bar.icon_state = "[bar_icon_state]_[round(((progress / goal) * 100), 5)]"
 	if (!shown)
 		user.client.images += bar

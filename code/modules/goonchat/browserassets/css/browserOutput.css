@@ -313,15 +313,17 @@ em						{font-style: normal;	font-weight: bold;}
 /* Miscellaneous */
 .say					{}
 .alert					{color: #ff0000;}
-h1.alert, h2.alert	{color: #000000;}
+h1.alert, h2.alert		{color: #000000;}
 .emote					{font-style: italic;}
-.selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
+.selecteddna			{color: #FFFFFF; background-color: #001B1B}
 .artefact				{color: #ffa500;}
-.electronicblue		{color: #00BFFF; background-color: #414141}
+.electronicblue			{color: #00BFFF; background-color: #414141}
+.piety					{color: #ceca0e; text-shadow: 3px 3px 6px rgba(0,0,0,0.2);}
 
 /* Radio Channels */
 .comradio				{color: #193A7A;}
 .syndradio				{color: #6D3F40;}
+.voxradio				{color: #88900e;}
 .centradio				{color: #5C5C8A;}
 .airadio				{color: #FF00FF;}
 .secradio				{color: #A30000;}
@@ -334,6 +336,7 @@ h1.alert, h2.alert	{color: #000000;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
 .deadsay				{color: #5c00e6;}
+.ghostalert				{color: #6600ff; font-style: italic; font-weight: bold;}
 .newscaster				{color: #800000;}
 
 .binarysay    			{color: #20c20e; background-color: #414141; display: block;}
@@ -367,7 +370,9 @@ h1.alert, h2.alert	{color: #000000;}
 .abductor_team3			{color: #6E4040;	font-style: italic;}
 .abductor_team4			{color: #800080;	font-style: italic;}
 .cult					{color: #800080;	font-weight: bold; font-style: italic;}
-.alien					{color: #543354;}
+.alien					{color: #6b286b;	font-style: italic;}
+.hive,	.hive_queen		{color: #420a81;	font-weight: bold;}
+.hive_queen				{font-size: medium;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 
@@ -415,3 +420,27 @@ h1.alert, h2.alert	{color: #000000;}
 }
 .embedded_tip:hover .embedded_tip-text{display: block;}
 .embedded_tip-mark{font-style: italic;}
+
+table.staffwho {
+	border-spacing: 0;
+	border-collapse:collapse;
+	color: #333;
+	line-height: 1;
+}
+table.staffwho td, table.staffwho th {
+	margin:0;
+	padding: 2px 4px;
+	font-size: 13px;
+}
+
+table.staffwho th {
+	text-transform: uppercase;
+	text-align: left;
+	color: #807473;
+	font-size: 12px;
+	font-weight: bold;
+}
+table.staffwho .Admins    {color:#E67E22;}
+table.staffwho .Mentors   {color:#E91E63;}
+table.staffwho .Developers{color:#5E5ED1;}
+table.staffwho .Xenovisors{color:#2ECC71;}

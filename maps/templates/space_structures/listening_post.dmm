@@ -290,7 +290,7 @@
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aM" = (
-/obj/structure/flora/plant/random,
+/obj/item/weapon/twohanded/flora/random,
 /turf/simulated/floor,
 /area/space_structures/listening_post)
 "aN" = (
@@ -399,7 +399,6 @@
 /area/space_structures/listening_post)
 "bc" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/clothing/head/welding/fluff/yuki_matsuda_1,
 /obj/item/weapon/weldingtool/largetank,
 /obj/structure/cable{
 	d1 = 1;

@@ -148,6 +148,7 @@
 			drop_from_inventory(belt)
 		w_uniform = null
 		update_inv_w_uniform()
+		update_suit_sensors()
 	else if (W == gloves)
 		gloves = null
 		update_inv_gloves()
@@ -191,8 +192,11 @@
 				internals.icon_state = "internal0"
 			internal = null
 		update_inv_wear_mask()
+		sec_hud_set_security_status()
 	else if (W == wear_id)
 		wear_id = null
+		sec_hud_set_ID()
+		sec_hud_set_security_status()
 		update_inv_wear_id()
 	else if (W == r_store)
 		r_store = null
@@ -265,6 +269,7 @@
 				update_hair()
 			W.equipped(src, slot)
 			update_inv_wear_mask()
+			sec_hud_set_security_status()
 		if(SLOT_HANDCUFFED)
 			src.handcuffed = W
 			update_inv_handcuffed()
@@ -281,12 +286,15 @@
 			W.equipped(src, slot)
 			update_inv_r_hand()
 		if(SLOT_BELT)
+			playsound(src, 'sound/effects/equip_belt.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.belt = W
 			W.equipped(src, slot)
 			update_inv_belt()
 		if(SLOT_WEAR_ID)
 			src.wear_id = W
 			W.equipped(src, slot)
+			sec_hud_set_ID()
+			sec_hud_set_security_status()
 			update_inv_wear_id()
 		if(SLOT_L_EAR)
 			src.l_ear = W
@@ -327,6 +335,7 @@
 			W.equipped(src, slot)
 			update_inv_head()
 		if(SLOT_SHOES)
+			playsound(src, 'sound/effects/equip_shoes.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.shoes = W
 			W.equipped(src, slot)
 			update_inv_shoes()
@@ -337,8 +346,10 @@
 			W.equipped(src, slot)
 			update_inv_wear_suit()
 		if(SLOT_W_UNIFORM)
+			playsound(src, 'sound/effects/equip_uniform.ogg', VOL_EFFECTS_MASTER, 50, FALSE, -5)
 			src.w_uniform = W
 			W.equipped(src, slot)
+			update_suit_sensors()
 			update_inv_w_uniform()
 		if(SLOT_L_STORE)
 			src.l_store = W
@@ -384,3 +395,39 @@
 	if(!has_bodypart(BP_R_ARM))
 		return FALSE
 	return ..()
+
+//delete all equipment without dropping anything
+/mob/living/carbon/human/proc/delete_equipment()
+	for(var/slot in get_all_slots())//order matters, dependant slots go first
+		qdel(slot)
+
+/mob/living/carbon/human/proc/get_all_slots()
+	. = get_head_slots() | get_body_slots()
+
+/mob/living/carbon/human/proc/get_body_slots()
+	return list(
+		back,
+		s_store,
+		handcuffed,
+		legcuffed,
+		wear_suit,
+		gloves,
+		shoes,
+		belt,
+		wear_id,
+		l_store,
+		r_store,
+		w_uniform,
+		l_hand,
+		r_hand
+		)
+
+/mob/living/carbon/human/proc/get_head_slots()
+	return list(
+		head,
+		wear_mask,
+		neck,
+		glasses,
+		l_ear,
+		r_ear
+		)

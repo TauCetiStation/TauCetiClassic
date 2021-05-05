@@ -20,6 +20,9 @@
 	implant_list -= src
 	if(part)
 		part.implants.Remove(src)
+		if(isliving(imp_in))
+			var/mob/living/L = imp_in
+			L.sec_hud_set_implants()
 		part = null
 	imp_in = null
 	return ..()
@@ -48,8 +51,8 @@
 		if(!BP)
 			return
 		BP.implants += src
+		C.sec_hud_set_implants()
 		part = BP
-		H.hud_updateflag |= 1 << IMPLOYAL_HUD
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -67,6 +70,7 @@
 	else
 		var/mob/living/M = imp_in
 		M.apply_damage(15,BURN)
+		M.sec_hud_set_implants()
 	name = "melted implant"
 	desc = "Charred circuit in melted plastic case. Wonder what that used to be..."
 	icon_state = "implant_melted"
@@ -169,7 +173,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/hear(msg)
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
-	msg = sanitize(msg, replacechars)
+	msg = replace_characters(msg, replacechars)
 	if(findtext(msg,phrase))
 		activate()
 		qdel(src)
@@ -424,7 +428,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	switch (cause)
 		if("death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
+			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) || istype(t, /area/custom/cult))
 				//give the syndies a bit of stealth
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else

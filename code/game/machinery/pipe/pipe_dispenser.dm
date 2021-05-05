@@ -67,8 +67,9 @@
 		"}
 //What number the make points to is in the define # at the top of construction.dm in same folder
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
-	onclose(user, "pipedispenser")
+	var/datum/browser/popup = new(user, "pipedispenser", src.name)
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 /obj/machinery/pipedispenser/is_operational_topic()
 	return TRUE
@@ -143,7 +144,7 @@
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
-/obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
+/obj/machinery/pipedispenser/disposal/Crossed(obj/structure/disposalconstruct/pipe as obj)
 	if(istype(pipe) && !pipe.anchored)
 		qdel(pipe)
 
@@ -172,6 +173,7 @@ Nah
 		<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
 		<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
 		<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+		<A href='?src=\ref[src];dmake=8'>Sorting Junction</A><BR>
 		<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
 		<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
 		<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
@@ -179,7 +181,9 @@ Nah
 		<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
 		"}
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
+	var/datum/browser/popup = new(user, "pipedispenser", src.name)
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 // 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 
@@ -216,6 +220,8 @@ Nah
 				if(7)
 					C.ptype = 8
 					C.density = 1
+				if(8)
+					C.ptype = 9
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1

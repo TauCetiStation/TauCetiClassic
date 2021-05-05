@@ -63,17 +63,6 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
-/obj/item/organ/external/atom_init(mapload, mob/living/carbon/human/H)
-	. = ..()
-	recolor()
-	controller = new controller_type(src)
-	if(H)
-		species = owner.species
-		b_type = owner.dna.b_type
-	else // Bodypart was spawned outside of the body so we need to update its sprite
-		species = all_species[HUMAN]
-		update_sprite()
-
 /obj/item/organ/external/Destroy()
 	if(parent)
 		parent.children -= src
@@ -103,6 +92,19 @@
 		harvest(I, user)
 	else
 		return ..()
+
+/obj/item/organ/external/set_owner(mob/living/carbon/human/H)
+	..()
+
+	recolor()
+	controller = new controller_type(src)
+
+	if(H)
+		species = owner.species
+		b_type = owner.dna.b_type
+	else // Bodypart was spawned outside of the body so we need to update its sprite
+		species = all_species[HUMAN]
+		update_sprite()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
@@ -349,7 +351,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					// Throw limb around.
 					if(isturf(bodypart.loc))
 						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
-					dir = 2
+					set_dir(2)
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
@@ -419,7 +421,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
-		new /obj/item/organ/external/stump(null, owner, src)
+		var/obj/item/organ/external/stump/S = new(null)
+		S.insert_organ(owner, null, src)
 	owner.updatehealth()
 
 	if(!should_delete)
@@ -491,7 +494,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		W.germ_level = 0
 	return rval
 
-/obj/item/organ/external/proc/clamp()
+/obj/item/organ/external/proc/strap()
 	var/rval = 0
 	src.status &= ~ORGAN_BLEEDING
 	for(var/datum/wound/W in wounds)
@@ -634,6 +637,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	supplied_wound.embedded_objects += W
 	implants += W
+	owner.sec_hud_set_implants()
 	owner.embedded_flag = 1
 	owner.verbs += /mob/proc/yank_out_object
 	W.add_blood(owner)
@@ -689,6 +693,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "head"
 	artery_name = "cartoid artery"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "head_m"
+
 	temp_coeff = 1.05
 
 	body_part = HEAD
@@ -707,21 +714,33 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/brain_op_stage = 0
 	var/f_style // So we can put his haircut back when we attach the head
 	var/h_style
+	var/grad_style
 	var/r_facial
 	var/g_facial
 	var/b_facial
+	var/dyed_r_facial
+	var/dyed_g_facial
+	var/dyed_b_facial
+	var/facial_painted
 	var/r_hair
 	var/g_hair
 	var/b_hair
-
-/obj/item/organ/external/head/atom_init()
-	. = ..()
-	organ_head_list += src
+	var/dyed_r_hair
+	var/dyed_g_hair
+	var/dyed_b_hair
+	var/r_grad
+	var/g_grad
+	var/b_grad
+	var/hair_painted
 
 /obj/item/organ/external/head/Destroy()
 	organ_head_list -= src
 	QDEL_NULL(brainmob)
 	return ..()
+
+/obj/item/organ/external/head/set_owner()
+	..()
+	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
 	if(H.species.name == IPC || H.species.name == DIONA)
@@ -743,9 +762,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 			r_facial = owner.r_facial
 			g_facial = owner.g_facial
 			b_facial = owner.b_facial
+			dyed_r_facial = owner.dyed_r_facial
+			dyed_g_facial = owner.dyed_g_facial
+			dyed_b_facial = owner.dyed_b_facial
+			facial_painted = owner.facial_painted
 			var/mutable_appearance/facial = mutable_appearance(facial_hair_style.icon, "[facial_hair_style.icon_state]_s")
 			if(facial_hair_style.do_colouration)
-				facial.color = RGB_CONTRAST(owner.r_facial, owner.g_facial, owner.b_facial)
+				if(!facial_painted)
+					facial.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+				else
+					facial.color = RGB_CONTRAST(dyed_r_facial, dyed_g_facial, dyed_b_facial)
 
 			add_overlay(facial)
 
@@ -753,14 +779,30 @@ Note that amputating the affected organ does in fact remove the infection from t
 		var/datum/sprite_accessory/hair_style = hair_styles_list[owner.h_style]
 		if(hair_style)
 			h_style = owner.h_style
+			grad_style = owner.grad_style
 			r_hair = owner.r_hair
 			g_hair = owner.g_hair
 			b_hair = owner.b_hair
-			var/mutable_appearance/hair = mutable_appearance(hair_style.icon, "[hair_style.icon_state]_s")
+			dyed_r_hair = owner.dyed_r_hair
+			dyed_g_hair = owner.dyed_g_hair
+			dyed_b_hair = owner.dyed_b_hair
+			r_grad = owner.r_grad
+			g_grad = owner.g_grad
+			b_grad = owner.b_grad
+			hair_painted = owner.hair_painted
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
 			if(hair_style.do_colouration)
-				hair.color = RGB_CONTRAST(owner.r_hair, owner.g_hair, owner.b_hair)
+				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[grad_style])
+				grad_s.Blend(hair_s, ICON_AND)
+				if(!hair_painted)
+					hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_AND)
+					grad_s.Blend(rgb(r_grad, g_grad, b_grad), ICON_AND)
+				else
+					hair_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
+					grad_s.Blend(rgb(dyed_r_hair, dyed_g_hair, dyed_b_hair), ICON_AND)
+				hair_s.Blend(grad_s, ICON_OVERLAY)
 
-			add_overlay(hair)
+			add_overlay(mutable_appearance(hair_s, "[hair_style.icon_state]_s"))
 
 /obj/item/organ/external/head/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/scalpel) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/shard))
@@ -827,6 +869,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_arm"
+
 	artery_name = "basilic vein"
 
 	temp_coeff = 1.0
@@ -852,6 +898,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right arm"
 	artery_name = "basilic vein"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_arm"
+
 	temp_coeff = 1.0
 
 	body_part = ARM_RIGHT
@@ -874,6 +923,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left leg"
 	artery_name = "femoral artery"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_leg"
+
 	temp_coeff = 0.75
 
 	body_part = LEG_LEFT
@@ -890,6 +942,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_leg"
 
 	temp_coeff = 0.75
 

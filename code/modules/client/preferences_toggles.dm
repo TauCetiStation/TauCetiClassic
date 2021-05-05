@@ -92,6 +92,18 @@
 	to_chat(src, "You will [(role_type in prefs.be_role) ? "now" : "no longer"] be considered for [role] events (where possible).")
 	feedback_add_details("admin_verb","TBeSpecial") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_ignored_role()
+	set name = "Toggle Ignore Roles"
+	set category = "Preferences"
+	set desc = "Toggles ignore questions"
+
+	var/role = input(usr, "Ignored Qustions for Roles in current Round:") as null|anything in prefs.ignore_question
+	if(!role)
+		return
+	prefs.ignore_question -= role
+	to_chat(src, "You will receive requests for \"[role]\" again")
+	feedback_add_details("admin_verb","TBeSpecialIgnore") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/change_ui()
 	set name = "Change UI"
 	set category = "Preferences"
@@ -257,3 +269,82 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","CGSO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_fancy_tgui()
+	set name = "Toggle Fancy TGUI"
+	set category = "Preferences"
+	set desc = "Toggle Fancy TGUI"
+
+	prefs.tgui_fancy = !prefs.tgui_fancy
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TFTGUI")
+
+/client/verb/toggle_tooltip()
+	set name = "Tooltip: Show/Hide"
+	set category = "Preferences"
+	set desc = "Toggle Name of Items"
+
+	prefs.tooltip = !prefs.tooltip
+
+	if(prefs.tooltip)
+		tooltip.set_state(TRUE)
+	else
+		tooltip.set_state(FALSE)
+
+	prefs.save_preferences()
+	to_chat(src, "Name of items [prefs.tooltip ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TTIP")
+
+/client/verb/change_font_tooltip()
+	set name = "Tooltip: Change Font"
+	set category = "Preferences"
+	set desc = "Toggle Font of Names of Items"
+
+	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Serif", "Verdana", "Custom Font")
+
+	var/font = input(usr, "Font of Names of Items:", "Font", prefs.tooltip_font) as null|anything in fonts | prefs.tooltip_font
+
+	if(font == "Custom Font")
+		font = sanitize(input("Enter the font that you have on your computer:", "Font") as null|text)
+
+	if(!font)
+		return
+
+	prefs.tooltip_font = font
+
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "FTIP")
+
+/client/verb/change_size_tooltip()
+	set name = "Tooltip: Change Size"
+	set category = "Preferences"
+	set desc = "Change Size of Names of Items"
+
+	prefs.tooltip_size = input(usr, "Введите размер Названий Предметов") as num
+
+	tooltip.font_size = prefs.tooltip_size
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "LTIP")
+
+/client/verb/toggle_outline()
+	set name = "Toggle Outline"
+	set category = "Preferences"
+	set desc = "Toggle Outline"
+
+	prefs.outline_enabled = !prefs.outline_enabled
+	prefs.save_preferences()
+	to_chat(src, "Outline is [prefs.outline_enabled ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TO")
+
+/client/verb/change_outline_color()
+	set name = "Change Outline Color"
+	set category = "Preferences"
+	set desc = "Change Outline Color"
+
+	var/pickedOutlineColor = input(usr, "Choose your outline color.", "General Preference", prefs.outline_color) as color|null
+	if(!pickedOutlineColor)
+		return
+	prefs.outline_color = pickedOutlineColor
+	prefs.save_preferences()
+	to_chat(src, "Outline color changed.")
+	feedback_add_details("admin_verb", "COC")

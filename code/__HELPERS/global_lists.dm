@@ -7,11 +7,42 @@
 	for(var/path in subtypesof(/datum/sprite_accessory/hair))
 		var/datum/sprite_accessory/hair/H = new path()
 		hair_styles_list[H.name] = H
+		for(var/S in H.species_allowed)
+			hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			if(H.gender == NEUTER)
+				hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+				hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			hairs_cache["[S][PLURAL][H.ipc_head_compatible]"] += list(H.name = list(null, null)) // contents all hairs for species
+
+	// Circular double list initialization
+	for(var/hash in hairs_cache)
+		var/hairs_cache_len = length(hairs_cache[hash])
+		hairs_cache[hash][hairs_cache[hash][1]][LEFT] = hairs_cache[hash][hairs_cache_len]
+		hairs_cache[hash][hairs_cache[hash][hairs_cache_len]][RIGHT] = hairs_cache[hash][1]
+		for(var/i in 1 to hairs_cache_len)
+			hairs_cache[hash][hairs_cache[hash][i]][LEFT] = hairs_cache[hash][hairs_cache[hash][i]][LEFT] || hairs_cache[hash][i - 1]
+			hairs_cache[hash][hairs_cache[hash][i]][RIGHT] = hairs_cache[hash][hairs_cache[hash][i]][RIGHT] || hairs_cache[hash][i + 1]
 
 	//Facial Hair - Initialise all /datum/sprite_accessory/facial_hair into an list indexed by facialhair-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/facial_hair))
 		var/datum/sprite_accessory/facial_hair/H = new path()
 		facial_hair_styles_list[H.name] = H
+		for(var/S in H.species_allowed)
+			facial_hairs_cache["[S][H.gender][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			if(H.gender == NEUTER)
+				facial_hairs_cache["[S][MALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+				facial_hairs_cache["[S][FEMALE][H.ipc_head_compatible]"] += list(H.name = list(null, null))
+			facial_hairs_cache["[S][PLURAL][H.ipc_head_compatible]"] += list(H.name = list(null, null)) // contents all hairs for species
+
+	// Circular double list initialization
+	for(var/hash in facial_hairs_cache)
+		var/hairs_cache_len = length(facial_hairs_cache[hash])
+		facial_hairs_cache[hash][facial_hairs_cache[hash][1]][LEFT] = facial_hairs_cache[hash][hairs_cache_len]
+		facial_hairs_cache[hash][facial_hairs_cache[hash][hairs_cache_len]][RIGHT] = facial_hairs_cache[hash][1]
+		for(var/i in 1 to hairs_cache_len)
+			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][LEFT] || facial_hairs_cache[hash][i - 1]
+			facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] = facial_hairs_cache[hash][facial_hairs_cache[hash][i]][RIGHT] || facial_hairs_cache[hash][i + 1]
+
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	for(var/T in subtypesof(/datum/surgery_step))
@@ -35,7 +66,7 @@
 	for(var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
 		for(var/key in L.key)
-			language_keys[":[lowertext_(key)]"] = L
+			language_keys[":[lowertext(key)]"] = L
 
 	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))
@@ -113,11 +144,11 @@
 	global.spells_by_aspects = list()
 	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
 		var/obj/effect/proc_holder/spell/S = new path()
-		if(!S.needed_aspect)
+		if(!S.needed_aspects)
 			continue
 
 		// Don't bother adding ourselves to other aspects, it is redundant.
-		var/aspect_type = S.needed_aspect[1]
+		var/aspect_type = S.needed_aspects[1]
 
 		if(!global.spells_by_aspects[aspect_type])
 			global.spells_by_aspects[aspect_type] = list()
@@ -172,6 +203,8 @@
 
 	populate_gear_list()
 
+	init_hud_list()
+
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!
 	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
@@ -209,3 +242,10 @@
 				continue
 			L+= path
 		return L
+
+/proc/gen_hex_by_color()
+	if(!hex_by_color)
+		hex_by_color = list()
+
+	for(var/color in color_by_hex)
+		hex_by_color[color_by_hex[color]] = color
