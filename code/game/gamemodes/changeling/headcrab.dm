@@ -1,9 +1,9 @@
 #define EGG_INCUBATION_TIME 1200
 
 /obj/effect/proc_holder/changeling/headcrab
-	name = "Last Resort"
-	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
-	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
+	name = "Последний Шанс"
+	desc = "Мы жертвуем нашим телом, проявляя наш истинный облик."
+	helptext = "Вы получите контроль над маленьким хрупким существом. Вы сможете отложить свои яйца в труп, чтобы вырастить в нем свою новую форму."
 	chemical_cost = 20
 	genomecost = 1
 	req_human = 1
