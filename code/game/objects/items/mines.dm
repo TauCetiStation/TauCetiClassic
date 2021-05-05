@@ -122,4 +122,3 @@
 /obj/item/mine/emp/trigger_act(obj)
 	empulse(src, 2, 3)
 	qdel(src)
-	return
