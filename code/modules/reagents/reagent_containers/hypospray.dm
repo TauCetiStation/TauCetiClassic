@@ -21,6 +21,14 @@
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return src.attack_hand(user)
 
+/obj/item/weapon/reagent_containers/hypospray/update_icon()
+	if(reagents.total_volume > 0)
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+	else
+		icon_state = "[initial(icon_state)]_empty"
+		item_state = "[initial(item_state)]_empty"
+
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty.</span>")
@@ -42,15 +50,8 @@
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in [src].</span>")
 
+		update_icon()
 	return
-
-/obj/item/weapon/reagent_containers/hypospray/update_icon()
-	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
-	else
-		icon_state = "[initial(icon_state)]_empty"
-		item_state = "[initial(item_state)]_empty"
 
 /obj/item/weapon/reagent_containers/hypospray/cmo
 	list_reagents = list("tricordrazine" = 30)
@@ -76,13 +77,3 @@
 	flags &= ~OPENCONTAINER
 	amount_per_transfer_from_this = volume
 	. = ..()
-
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M, mob/user)
-	..()
-	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
-
