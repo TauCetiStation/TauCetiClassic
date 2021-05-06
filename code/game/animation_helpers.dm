@@ -190,6 +190,8 @@
 		return
 	if (QDELETED(old_loc))
 		return
+	if (!Adjacent(target))
+		return
 
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
@@ -235,6 +237,8 @@
 	if (QDELETED(target))
 		return
 	if (QDELETED(user))
+		return
+	if (!Adjacent(user))
 		return
 
 	var/old_invisibility = invisibility // I don't know, it may be used.
