@@ -331,10 +331,17 @@
 	result_amount = 2
 
 /datum/chemical_reaction/imidazoline
-	name = "imidazoline"
+	name = "Imidazoline"
 	id = "imidazoline"
 	result = "imidazoline"
 	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/aurisine
+	name = "Aurisine"
+	id = "aurisine"
+	result = "aurisine"
+	required_reagents = list("sulfur" = 1, "oxygen" = 1, "anti_toxin" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/dextromethorphan
