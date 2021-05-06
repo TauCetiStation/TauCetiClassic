@@ -44,6 +44,14 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/hypospray/update_icon()
+	if(reagents.total_volume > 0)
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+	else
+		icon_state = "[initial(icon_state)]_empty"
+		item_state = "[initial(item_state)]_empty"
+
 /obj/item/weapon/reagent_containers/hypospray/cmo
 	list_reagents = list("tricordrazine" = 30)
 
@@ -60,7 +68,7 @@
 	name = "stimpack"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
-	item_state = "autoinjector_empty"
+	item_state = "stimpen"
 	volume = 20
 	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
 
@@ -78,10 +86,3 @@
 	else
 		user.update_inv_r_hand()
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
-	if(reagents.total_volume > 0)
-		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
-	else
-		icon_state = "[initial(icon_state)]_empty"
-		item_state = "[initial(item_state)]_empty"

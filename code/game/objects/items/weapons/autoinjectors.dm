@@ -3,7 +3,7 @@
 	name = "combat autoinjector"
 	desc = "Younger brother of combat autoinjector."
 	icon_state = "stimpen"
-	item_state = "autoinjector_empty"
+	item_state = "stimpen"
 	volume = 10
 	list_reagents = list("synaptizine" = 1, "hyperzine" = 2.5, "oxycodone" = 2.5, "anti_toxin" = 5)
 
@@ -43,7 +43,7 @@
 	name = "improved stimpack"
 	desc = "It does not contain caffeine"
 	icon_state = "auto_minig_t2"
-	item_state = "autoburn"
+	item_state = "auto_minig_t2"
 	volume = 20
 	list_reagents = list("hyperzine" = 3, "paracetamol" = 10, "tricordrazine" = 7)
 
@@ -59,7 +59,7 @@
 	name = "advanced stimpack"
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
-	item_state = "autobrut"
+	item_state = "auto_minig_t3"
 	volume = 25
 	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10)
 

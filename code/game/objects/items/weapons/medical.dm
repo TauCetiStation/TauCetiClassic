@@ -2,7 +2,7 @@
 	name = "combat stimulant injector"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field."
 	amount_per_transfer_from_this = 10
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/syringe.dmi'
 	icon_state = "combat_hypo"
 	volume = 60
 	list_reagents = list("synaptizine" = 5, "hyperzine" = 15, "oxycodone" = 15, "anti_toxin" = 25)
