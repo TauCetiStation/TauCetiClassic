@@ -569,6 +569,8 @@
 	verbs -= /mob/living/carbon/proc/punish_host
 	verbs -= /mob/living/carbon/proc/spawn_larvae
 
+	med_hud_set_status()
+
 //Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
 	set category = "Borer"

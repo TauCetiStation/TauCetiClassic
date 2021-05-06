@@ -58,11 +58,13 @@
 		"Septenary", "Octonary", "Novenary", "Decenary", "Undenary", "Duodenary",
 		)
 
+	var/static/list/banned_species = list(IPC, GOLEM, SLIME, DIONA)
+
 	var/dominate_cd = 0                        // Calldown for dominate victim
 	var/assuming = FALSE
 	var/chemicals = 10                         // Chemicals used for reproduction and spitting neurotoxin.
 	var/const/max_chemicals = 250              // Maximum chemicals
-	var/mob/living/carbon/human/host           // Human host for the brain worm.
+	var/mob/living/carbon/host                 // Carbon host for the brain worm.
 	var/mob/living/captive_brain/host_brain    // Used for swapping control of the body back and forth.
 	var/controlling = FALSE                    // Used in human death check.
 	var/docile = FALSE                         // Sugar can stop borers from acting.
@@ -188,7 +190,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(3,src))
-		if(C.stat != DEAD)
+		if(C.stat != DEAD && !(C.get_species() in banned_species))
 			choices += C
 
 	if(world.time - dominate_cd < 300)
@@ -215,6 +217,7 @@
 	set desc = "Fully connect to the brain of your host."
 
 	if(assuming)
+		to_chat(src, "You are already assuming a host body!")
 		return
 
 	if(!host)
@@ -225,9 +228,11 @@
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	if(!host.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
-		to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
-		return
+	if(ishuman(host))
+		var/mob/living/carbon/human/H = host
+		if(!H.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
+			to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
+			return
 
 	if(docile)
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
@@ -253,6 +258,8 @@
 	host.verbs += /mob/living/carbon/proc/release_control
 	host.verbs += /mob/living/carbon/proc/punish_host
 	host.verbs += /mob/living/carbon/proc/spawn_larvae
+
+	host.med_hud_set_status()
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
 	set category = "Borer"
@@ -303,9 +310,6 @@
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
-	if(!host || !src)
-		return
-
 	if(leaving)
 		leaving = FALSE
 		to_chat(src, "<span class='userdanger'>You decide against leaving your host.</span>")
@@ -315,11 +319,12 @@
 
 	leaving = TRUE
 
+	if(host.stat == CONSCIOUS)
+		to_chat(host, "An odd, uncomfortable pressure begins to build inside your skull, behind your ear...")
+
 	addtimer(CALLBACK(src, .proc/let_go), 200)
 
 /mob/living/simple_animal/borer/proc/let_go()
-	if(host.stat == CONSCIOUS)
-		to_chat(host, "An odd, uncomfortable pressure begins to build inside your skull, behind your ear...")
 	if(!host || !src || QDELETED(host) || QDELETED(src))
 		return
 	if(!leaving)
@@ -342,26 +347,21 @@
 	if(!host)
 		return
 
-	var/obj/item/organ/external/BP = host.bodyparts_by_name[BP_HEAD]
-	BP.implants -= src
+	if(ishuman(host))
+		var/mob/living/carbon/human/H = host
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 
-	if(host.glasses.hud_list)
-		for(var/hud in host.glasses.hud_list)
-			var/datum/atom_hud/H = global.huds[hud]
-			H.remove_hud_from(src)
+		BP.implants -= src
+		if(H.glasses?.hud_list)
+			for(var/hud in H.glasses.hud_list)
+				var/datum/atom_hud/AH = global.huds[hud]
+				AH.remove_hud_from(src)
 
-	loc = get_turf(host)
+	forceMove(get_turf(host))
 	controlling = FALSE
 
 	reset_view(null)
 	machine = null
-
-	host.reset_view(null)
-	host.machine = null
-
-	host.verbs -= /mob/living/carbon/proc/release_control
-	host.verbs -= /mob/living/carbon/proc/punish_host
-	host.verbs -= /mob/living/carbon/proc/spawn_larvae
 
 	if(host_brain.ckey)
 		ckey = host.ckey
@@ -386,63 +386,67 @@
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/human/H in view(1,src))
-		if(H.stat != DEAD && Adjacent(H))
-			choices += H
+	for(var/mob/living/carbon/C in view(1,src))
+		if(C.stat != DEAD && Adjacent(C) && !(C.get_species() in banned_species))
+			choices += C
 
-	var/mob/living/carbon/human/H = input(src, "Who do you wish to infest?") in null|choices
-	if(!H || !src)
+	var/mob/living/carbon/C = input(src, "Who do you wish to infest?") as null|anything in choices
+	if(!C || !src)
 		return
 
-	if(!Adjacent(H))
+	if(!Adjacent(C))
 		return
 
-	if(H.has_brain_worms())
+	if(C.has_brain_worms())
 		to_chat(src, "You cannot infest someone who is already infested!")
 		return
 
-	if(H.check_head_coverage())
-		to_chat(src, "You cannot get through that host's protective gear.")
-		return
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(H.check_head_coverage())
+			to_chat(src, "You cannot get through that host's protective gear.")
+			return
 
 	if(is_busy())
 		return
 
-	to_chat(H, "Something slimy begins probing at the opening of your ear canal...")
-	to_chat(src, "You slither up [H] and begin probing at their ear canal...")
+	to_chat(C, "Something slimy begins probing at the opening of your ear canal...")
+	to_chat(src, "You slither up [C] and begin probing at their ear canal...")
 
-	if(!do_after(src, 50, target = H))
-		to_chat(src, "As [H] moves away, you are dislodged and fall to the ground.")
+	if(!do_after(src, 50, target = C))
+		to_chat(src, "As [C] moves away, you are dislodged and fall to the ground.")
 		return
 
-	if(!H || !src)
+	if(!C || !src)
 		return
 
 	if(incapacitated())
 		to_chat(src, "You cannot infest a target in your current state.")
 		return
 
-	if(H.stat == DEAD)
+	if(C.stat == DEAD)
 		to_chat(src, "That is not an appropriate target.")
 		return
 
-	if(!(H in view(1, src)))
+	if(!(C in view(1, src)))
 		to_chat(src, "They are no longer in range!")
 		return
 
-	to_chat(src, "You wiggle into [H]'s ear.")
-	if(!H.stat == CONSCIOUS)
-		to_chat(H, "Something disgusting and slimy wiggles into your ear!")
+	to_chat(src, "You wiggle into [C]'s ear.")
+	if(!C.stat == CONSCIOUS)
+		to_chat(C, "Something disgusting and slimy wiggles into your ear!")
 
-	host = H
-	loc = H
+	host = C
+	forceMove(C)
 
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	BP.implants += src
-	H.sec_hud_set_implants()
+	if(ishuman(host))
+		var/mob/living/carbon/human/H = host
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.implants += src
+		H.sec_hud_set_implants()
 
-	host_brain.name = H.name
-	host_brain.real_name = H.real_name
+	host_brain.name = C.name
+	host_brain.real_name = C.real_name
 	host.parasites |= src
 
 // Borers will not be blind in ventilation
