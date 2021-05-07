@@ -221,7 +221,7 @@
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
 	overdose = 10
-	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	custom_metabolism = REAGENTS_METABOLISM * 0.25
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
 
@@ -240,15 +240,15 @@
 		var/obj/item/organ/internal/lungs/IO = H.organs_by_name[O_LUNGS]
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
-				IO.damage = max(IO.damage - 0.7, 0)
+				IO.damage -= min(3 * custom_metabolism, IO.damage)
 		switch(data["ticks"])
-			if(50 to 100)
+			if(100 to 200)
 				H.disabilities &= ~COUGHING
-			if(100 to INFINITY)
+			if(200 to INFINITY)
 				H.hallucination = max(H.hallucination, 7)
 	data["ticks"]++
 
-/datum/reagent/dexalinp/on_vox_digest(mob/living/M)
+/datum/reagent/dextromethorphan/on_vox_digest(mob/living/M)
 	..()
 	M.adjustToxLoss(7 * REM)
 	return FALSE
