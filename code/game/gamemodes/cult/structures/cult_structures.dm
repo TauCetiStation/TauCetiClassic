@@ -18,6 +18,10 @@
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return
+
+	if(user.a_intent != INTENT_HARM)
+		return
+
 	..()
 
 	if(length(W.hitsound))
@@ -25,7 +29,6 @@
 	else
 		playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 
-	user.SetNextMove(CLICK_CD_MELEE)
 	health -= W.force
 	healthcheck()
 
@@ -233,6 +236,22 @@
 // Just trash
 /obj/structure/cult/anomaly
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
+/obj/structure/cult/anomaly/attackby(obj/item/weapon/W, mob/user)
+	return
+
+/obj/structure/cult/anomaly/attack_animal(mob/living/simple_animal/user)
+	if(iscultist(user))
+		destroying(user.my_religion)
+
+/obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
+	animate(src, 1 SECONDS, alpha = 0)
+	sleep(1 SECONDS)
+	qdel(src)
+
+	C.adjust_favor(rand(1, 5))
+	// statistics!
+	score["destranomaly"]++
 
 /obj/structure/cult/anomaly/spacewhole
 	name = "abyss in space"

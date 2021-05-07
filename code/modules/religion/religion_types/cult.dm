@@ -61,7 +61,7 @@
 	// Created anomalies at the beginning and the number of possible anomalies after
 	var/max_spawned_anomalies = 12
 	// Types
-	var/list/strange_anomalies = list(/obj/structure/cult/anomaly/spacewhole, /obj/structure/cult/anomaly/timewhole, /obj/structure/cult/anomaly/orb, /obj/structure/cult/anomaly/shell)
+	var/list/strange_anomalies
 	// Instead of storing links to turfs
 	var/list/coord_started_anomalies = list()
 
@@ -84,6 +84,7 @@
 /datum/religion/cult/New()
 	..()
 	// Init anomalys
+	strange_anomalies = subtypesof(/obj/structure/cult/anomaly)
 	var/area/area = get_area_by_type(/area/custom/cult)
 	for(var/i in 1 to max_spawned_anomalies)
 		var/turf/T = get_turf(pick(area.contents))
