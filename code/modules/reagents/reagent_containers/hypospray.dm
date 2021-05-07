@@ -51,6 +51,11 @@
 			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in [src].</span>")
 
 		update_icon()
+
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/cmo
@@ -69,7 +74,7 @@
 	name = "stimpack"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
-	item_state = "stimpen"
+	item_state = "autoinjector"
 	volume = 20
 	list_reagents = list("inaprovaline" = 5, "coffee" = 13, "hyperzine" = 2)
 

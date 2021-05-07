@@ -3,7 +3,7 @@
 	name = "combat autoinjector"
 	desc = "Younger brother of combat autoinjector."
 	icon_state = "stimpen"
-	item_state = "stimpen"
+	item_state = "autoinjector"
 	volume = 10
 	list_reagents = list("synaptizine" = 1, "hyperzine" = 2.5, "oxycodone" = 2.5, "anti_toxin" = 5)
 
@@ -11,7 +11,7 @@
 	name = "bicaridine autoinjector"
 	desc = "For physical injuries."
 	icon_state = "autobrut"
-	item_state = "autobrut"
+	item_state = "autoinjector"
 	volume = 20
 	list_reagents = list("bicaridine" = 20)
 
@@ -19,7 +19,7 @@
 	name = "dermaline autoinjector"
 	desc = "For burns."
 	icon_state = "autoburn"
-	item_state = "autoburn"
+	item_state = "autoinjector"
 	volume = 15
 	list_reagents = list("dermaline" = 15)
 
@@ -27,7 +27,7 @@
 	name = "tramadol autoinjector"
 	desc = "Painkiller."
 	icon_state = "autopainkiller"
-	item_state = "autopainkiller"
+	item_state = "autoinjector"
 	volume = 15
 	list_reagents = list("tramadol" = 15)
 
@@ -35,7 +35,7 @@
 	name = "anti-toxin autoinjector"
 	desc = "Neutralizes many common toxins."
 	icon_state = "autoantitox"
-	item_state = "autoantitox"
+	item_state = "autoinjector"
 	volume = 20
 	list_reagents = list("anti_toxin" = 20)
 
@@ -43,7 +43,7 @@
 	name = "improved stimpack"
 	desc = "It does not contain caffeine"
 	icon_state = "auto_minig_t2"
-	item_state = "auto_minig_t2"
+	item_state = "autoinjector"
 	volume = 20
 	list_reagents = list("hyperzine" = 3, "paracetamol" = 10, "tricordrazine" = 7)
 
@@ -59,7 +59,7 @@
 	name = "advanced stimpack"
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
-	item_state = "auto_minig_t3"
+	item_state = "autoinjector"
 	volume = 25
 	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10)
 
@@ -74,7 +74,7 @@
 	name = "nutriment autoinjector"
 	desc = "To satisfy hunger."
 	icon_state = "autonutriment"
-	item_state = "autonutriment"
+	item_state = "autoinjector"
 	volume = 10
 	list_reagents = list("nutriment" = 10)
 
@@ -82,6 +82,6 @@
 	name = "Bone-R"
 	desc = "Getting your bones repaired. Use carefully."
 	icon_state = "bonepen"
-	item_state = "bonepen"
+	item_state = "autoinjector"
 	volume = 30
 	list_reagents = list("nanocalcium" = 30)
