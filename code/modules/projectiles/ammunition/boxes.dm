@@ -7,6 +7,11 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
+/obj/item/ammo_box/a357/buckshot
+	name = "speedloader (.357 buckshot)"
+	icon_state = "buck357"
+	ammo_type = /obj/item/ammo_casing/a357/buckshot
+
 /obj/item/ammo_box/c38
 	name = "speedloader (.38 rubber)"
 	desc = "A .38 speedloader."

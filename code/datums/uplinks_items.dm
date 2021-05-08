@@ -288,6 +288,12 @@
 	item = /obj/item/ammo_box/a357
 	cost = 3
 
+/datum/uplink_item/ammo/revolver_buckshot
+	name = "Speedloader-.357 Buckshot"
+	desc = "A speedloader that contains seven buckshot shells of 357 caliber. Has less pellets than actual shotgun shell, but still does tons of damage."
+	item = /obj/item/ammo_box/a357/buckshot
+	cost = 3
+
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."

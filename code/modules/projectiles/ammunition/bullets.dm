@@ -4,6 +4,13 @@
 	projectile_type = /obj/item/projectile/bullet/revbullet
 	m_amt = 1000
 
+/obj/item/ammo_casing/a357/buckshot
+	desc = "A .357 buckshot casing."
+	icon_state = "357_buckshot"
+	caliber = "357"
+	projectile_type = /obj/item/projectile/bullet/buckpellet
+	pellets = 4
+
 /obj/item/ammo_casing/a50
 	desc = "A .50AE bullet casing."
 	caliber = ".50"
