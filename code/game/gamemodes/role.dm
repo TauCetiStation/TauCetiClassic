@@ -1,35 +1,8 @@
-/**
-* Used in Mixed Mode, also simplifies equipping antags for other gamemodes and
-* for the TP.
-
-		###VARS###
-	===Static Vars===
-	@id: String: The unique ID of the role
-	@name: String: The name of the role (Traitor, Changeling)
-	@plural_name: String: The name of a multitude of this role (Traitors, Changelings)
-	@disallow_job: Boolean: If this role is recruited to at roundstart, the person recruited is not assigned a position on station (Wizard, Nuke Op, Vox Raider)
-	@faction: Faction: What faction this role is associated with.
-	@antag: mind: The actual antag mind.
-	@objectives: Objective Holder: Where the objectives associated with the role will go.
-
-		###PROCS###
-	@New(mind/M = null, role/parent=null,faction/F=null):
-		initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
-	@Drop():
-		Drops the antag mind from the parent role, informs the gamemode the mind now doesn't have a role, and deletes the role datum.
-	@CanBeAssigned(Mind)
-		General sanity checks before assigning the person to the role, such as checking if they're part of the protected jobs or antags.
-	@PreMindTransfer(Old_character, Mob/Living)
-		Things to do to the *old* body prior to the mind transfer.
-	@PostMindTransfer(New_character, Mob/Living, Old_character, Mob/Living)
-		Things to do to the *new* body after the mind transfer is completed.
-*/
-
 /datum/role
-	// Unique ID of the definition.
-	var/id
-	// Displayed name of the antag type
+	// The name of the role (Traitor, Changeling)
 	var/name
+	// The unique ID of the role
+	var/id
 
 	// for atom_hud
 	var/antag_hud_type
@@ -43,21 +16,25 @@
 	var/list/restricted_species_flags = list()
 	// The required preference for this role
 	var/required_pref = ""
-	// If set, assigned role is set to MODE to prevent job assignment.
+	// If this role is recruited to at roundstart, the person recruited is not assigned a position on station (Wizard, Nuke Op, Vox Raider)
 	var/disallow_job = FALSE
 
+	// Changes at start of round
 	var/is_roundstart_role = FALSE
+	// Logo of role
 	var/logo_state
 
-	// Assigned faction.
+	// What faction this role is associated with.
 	var/datum/faction/faction
-	// Actual antag
+	// The actual antag mind.
 	var/datum/mind/antag
-	// Objectives
+	// Where the objectives associated with the role will go.
 	var/datum/objective_holder/objectives = new
 
-	var/list/greets = list(GREET_DEFAULT,GREET_CUSTOM)
+	// Allows you to change the number of greeting messages for a role
+	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
+// Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	// Link faction.
@@ -104,7 +81,7 @@
 		log_mode("[key_name(M)] is <span class='danger'>no longer</span> \an [id].")
 	antag = null
 
-// Destroy this role
+// Drops the antag mind from the parent role, informs the gamemode the mind now doesn't have a role, and deletes the role datum.
 /datum/role/proc/Drop()
 	if(antag)
 		RemoveFromRole(antag)
@@ -117,8 +94,7 @@
 
 	qdel(src)
 
-// General sanity checks before assigning antag.
-// Return TRUE on success, FALSE on failure.
+// General sanity checks before assigning the person to the role, such as checking if they're part of the protected jobs or antags.
 /datum/role/proc/CanBeAssigned(datum/mind/M)
 	if(M.assigned_role in list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))
 		return FALSE
@@ -223,10 +199,11 @@
 
 	return TRUE
 
-
+// Things to do to the *old* body prior to the mind transfer.
 /datum/role/proc/PreMindTransfer(mob/living/old_character)
 	return
 
+// Things to do to the *new* body after the mind transfer is completed.
 /datum/role/proc/PostMindTransfer(mob/living/new_character, mob/living/old_character)
 	return
 

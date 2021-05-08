@@ -1,3 +1,5 @@
+////////////////////// ID /////////////////////////
+
 // Faction IDs
 #define ABDUCTORS "Abductor Team"
 #define BLOODCULT "Cult Of Blood"
@@ -46,13 +48,11 @@
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
 
+////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"
 #define GREET_ROUNDSTART	"roundstart"
 #define GREET_LATEJOIN		"latejoin"
-#define GREET_ADMINTOGGLE	"admintoggle"
 #define GREET_CUSTOM		"custom"
-#define GREET_MIDROUND		"midround"
-#define GREET_MASTER		"master"
 
 #define GREET_AUTOTATOR		"autotator"
 #define GREET_SYNDBEACON	"syndbeacon"
@@ -64,7 +64,7 @@
 #define FACTION_ENDGAME		3
 #define FACTION_VICTORY		5
 
-////////////////////////////////////////////////////////////////////////////////
+/////////////////////// OTHERS ////////////////////////
 
 // -- Objectives flags
 

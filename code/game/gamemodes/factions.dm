@@ -1,40 +1,37 @@
-/*
-	Faction Datums
-		Used for keeping a collection of people (In this case ROLES) under one banner, making for easier
-		objective syncing, communication, etc.
-
-	@name: String: Name of the faction
-	@ID: List(String): Identifying strings for shorthand finding this faction.
-	@desc: String: Description of the faction, their intentions, how they do things, etc. Something for lorewriters to use.
-	@required_pref: String(DEFINE): What preference is required to be recruited to this faction.
-	@members: List(Reference): Who is a member of this faction - ROLES, NOT MINDS
-	@max_roles: Integer: How many members this faction is limited to. Set to 0 for no limit
-	@min_roles: Integer: how many members this faction should be in it at the time of creating the game_mode
-	@accept_latejoiners: Boolean: Whether or not this faction accepts newspawn latejoiners
-	@objective_holder: objectives datum: What are the goals of this faction?
-	@faction_scoreboard_data: This is intended to be used on GetScoreboard() to list things like nuclear ops purchases.
-*/
-
 /datum/faction
+	// Name of the faction
 	var/name = "unknown faction"
+	// Identifying strings for shorthand finding this faction.
 	var/ID = null
-	var/desc = "This faction is bound to do something nefarious"
+	// What preference is required to be recruited to this faction.
 	var/required_pref = ""
 
+	// How many members this faction is limited to. Set to 0 for no limit
 	var/max_roles = 0
+	// How many members this faction should be in it at the time of creating the game_mode
 	var/min_roles = 1
+	// Whether or not this faction accepts newspawn latejoiners
 	var/accept_latejoiners = FALSE
 
+	// Type of roles that should be in faction initially
 	var/datum/role/initroletype
+	// Type of roles that are recruited to faction during the round
 	var/datum/role/roletype
 
+	// Logo of faction
 	var/logo_state
+	// Global faction status indicator
 	var/stage = FACTION_DORMANT //role_datums_defines.dm
+	// You need to set it manually for the correct GetScoreboard()
 	var/minor_victory = FALSE
+	// This is intended to be used on GetScoreboard() to list things like nuclear ops purchases.
 	var/list/faction_scoreboard_data = list()
 
+	// Ref to leader
 	var/datum/role/leader
+	// Who is a member of this faction - ROLES, NOT MINDS
 	var/list/datum/role/members = list()
+	// What are the goals of this faction?
 	var/datum/objective_holder/objective_holder
 
 /datum/faction/New()
