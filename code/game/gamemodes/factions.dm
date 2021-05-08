@@ -1,10 +1,10 @@
 /datum/faction
 	// Name of the faction
-	var/name = "unknown faction"
+	var/name
 	// Identifying strings for shorthand finding this faction.
-	var/ID = null
+	var/ID
 	// What preference is required to be recruited to this faction.
-	var/required_pref = ""
+	var/required_pref
 
 	// How many members this faction is limited to. Set to 0 for no limit
 	var/max_roles = 0

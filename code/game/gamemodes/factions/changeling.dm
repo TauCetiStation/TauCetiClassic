@@ -9,9 +9,6 @@
 	min_roles = 1
 	max_roles = 4
 
-	desc = "An almost parasitic, shapeshifting entity that assumes the identity of its victims. Commonly used as smart bioweapons by the syndicate,\
-	or simply wandering malignant vagrants happening upon a meal of identity that can carry them to further feeding grounds."
-
 	logo_state = "change-logoa"
 
 	//Hivemind Bank, contains a list of DNA that changelings can share and use.

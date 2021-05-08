@@ -9,14 +9,14 @@
 	name = "Revolutionaries"
 	ID = REVOLUTION
 	required_pref = ROLE_REV
-	desc = "Viva!"
-	logo_state = "rev-logo"
 
 	initroletype = /datum/role/syndicate/rev_leader
 	roletype = /datum/role/rev
 
 	min_roles = 2
 	max_roles = 2
+
+	logo_state = "rev-logo"
 
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
