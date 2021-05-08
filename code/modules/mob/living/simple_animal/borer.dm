@@ -113,7 +113,7 @@
 			return
 		if(prob(5))
 			host.adjustBrainLoss(rand(1,2))
-		if(prob(host.brainloss/20))
+		if(prob(host.getBrainLoss() * 0.05))
 			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
@@ -198,7 +198,7 @@
 		return
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") as null|anything in choices
-	if(!M || !src)
+	if(!M || incapacitated() || host)
 		return
 
 	if(M.has_brain_worms())
@@ -286,7 +286,7 @@
 		to_chat(src, "You don't have enough chemicals!")
 		return
 
-	if(!host || controlling || !src || stat != CONSCIOUS) //Sanity check.
+	if(!host || controlling || docile || incapacitated()) //Sanity check.
 		return
 
 	to_chat(src, "<span class='warning'><B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B></span>")
@@ -398,7 +398,7 @@
 			choices += C
 
 	var/mob/living/carbon/C = input(src, "Who do you wish to infest?") as null|anything in choices
-	if(!C || !src)
+	if(!C || incapacitated() || host)
 		return
 
 	if(!Adjacent(C))
@@ -440,7 +440,7 @@
 		return
 
 	to_chat(src, "You wiggle into [C]'s ear.")
-	if(!C.stat == CONSCIOUS)
+	if(C.stat == CONSCIOUS)
 		to_chat(C, "Something disgusting and slimy wiggles into your ear!")
 
 	host = C
@@ -454,7 +454,7 @@
 
 	host_brain.name = C.name
 	host_brain.real_name = C.real_name
-	host.parasites |= src
+	host.parasites += src
 
 // Borers will not be blind in ventilation
 /mob/living/simple_animal/borer/is_vision_obstructed()
