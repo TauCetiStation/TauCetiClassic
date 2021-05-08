@@ -1,5 +1,5 @@
 /datum/faction/changeling
-	name = "Changeling Hivemind"
+	name = HIVEMIND
 	ID = HIVEMIND
 	required_pref = CHANGELING
 

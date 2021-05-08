@@ -1,6 +1,6 @@
 /datum/faction/zombie // for events
-	name = ZOMBIES
-	ID = ZOMBIES
+	name = FACTION_ZOMBIES
+	ID = FACTION_ZOMBIES
 
 	initroletype = /datum/role/zombie
 

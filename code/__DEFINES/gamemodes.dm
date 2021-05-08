@@ -1,7 +1,7 @@
 ////////////////////// ID /////////////////////////
 
 // Faction IDs
-#define ABDUCTORS "Abductor Team"
+#define FACTION_ABDUCTORS "Abductor Team"
 #define BLOODCULT "Cult Of Blood"
 #define BLOBCONGLOMERATE "Blob Conglomerate"
 #define BORER_HIVEMIND "Borer Hivemind"
@@ -13,11 +13,11 @@
 #define REVOLUTION "Revolution"
 #define SYNDIOPS "Syndicate Operatives"
 #define SYNDIESQUAD "Syndicate Elite Strike Team"
-#define SHADOWLINGS "Shadowlings"
+#define FACTION_SHADOWLINGS "Shadowlings"
 #define SPIDERCLAN "Spider Clan"
 #define WIZFEDERATION "Wizard Federation"
 #define XENOMORPH_HIVE "Alien Hivemind"
-#define ZOMBIES "Zobmies"
+#define FACTION_ZOMBIES "Zobmies"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
