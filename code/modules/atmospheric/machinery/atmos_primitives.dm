@@ -335,13 +335,12 @@
 	var/total_input_moles = 0		//for flow rate calculation
 	var/list/source_specific_power = list()
 	for (var/datum/gas_mixture/source in mix_sources)
-		if (source.total_moles < MINIMUM_MOLES_TO_FILTER)
-			return -1	//either mix at the set ratios or mix no gas at all
-
 		var/mix_ratio = mix_sources[source]
 		if (!mix_ratio)
 			continue	//this gas is not being mixed in
 
+		if (source.total_moles < MINIMUM_MOLES_TO_FILTER)
+			return -1
 		//mixing rate is limited by the source with the least amount of available gas
 		var/this_mixing_moles = source.total_moles/mix_ratio
 		if (isnull(total_mixing_moles) || total_mixing_moles > this_mixing_moles)

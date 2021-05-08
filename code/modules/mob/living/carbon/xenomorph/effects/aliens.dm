@@ -301,10 +301,10 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/alien/acid/atom_init_late()
-	if(isturf(target)) // Turf take twice as long to take down.
+	if(istype(target, /turf/simulated/wall))
 		target_strength = 8
-	else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
-		target_strength = 2 //Its just welded, what??
+	else if(is_type_in_list(target, ventcrawl_machinery))
+		target_strength = 2
 	else
 		target_strength = 4
 	tick()
@@ -319,13 +319,19 @@
 
 		audible_message("<span class='notice'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>")
 
-		if(istype(target, /turf/simulated/wall)) // I hate turf code.
+		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
-		else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
-			var/obj/machinery/atmospherics/components/unary/vent_pump/VP = target
-			VP.welded = 0
-			VP.update_icon()
+		else if(istype(target, /turf/simulated/floor))
+			var/turf/simulated/floor/F = target
+			F.make_plating()
+		else if(is_type_in_list(target, ventcrawl_machinery))
+			var/obj/machinery/atmospherics/components/unary/U = target
+			if(U.welded)
+				U.welded = FALSE
+				U.update_icon()
+			else
+				qdel(target)
 		else
 			qdel(target)
 		qdel(src)
@@ -431,7 +437,7 @@
 			var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(src))
 			FH.key = user.key
 			FH.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", FH)
-			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
+			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces!</span>")
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING

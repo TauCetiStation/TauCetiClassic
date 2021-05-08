@@ -522,8 +522,33 @@
 		if(SSticker.mode.ninjas.len)
 			dat += check_role_table("Ninjas", SSticker.mode.ninjas, src)
 
-		if(SSticker.mode.cult.len)
-			dat += check_role_table("Cultists", SSticker.mode.cult, src, FALSE)
+		if(global.cult_religion)
+			var/datum/game_mode/cult/C = global.cult_religion.mode
+			if(C?.objectives?.len)
+				dat += "<br><center><h3>Задачи Культа</h3></center>"
+				var/obj_count = 1
+				for(var/datum/objective/O in C.objectives)
+					dat += "<br><B>Задача #[obj_count]</B>: [O.explanation_text]"
+					obj_count++
+
+			var/zones_len = global.cult_religion.captured_areas.len
+			var/zones = "Нету"
+			if(global.cult_religion.captured_areas)
+				zones = ""
+				var/i = 1
+				for(var/area/A in global.cult_religion.captured_areas)
+					zones += "[A.name]"
+					if(zones_len != i)
+						zones += ", "
+					i++
+
+			dat += "<br>Подконтрольные зоны культа([zones_len]): [zones]"
+			var/list/minds = list()
+			for(var/mob/M in global.cult_religion.members)
+				if(!ishuman(M) && !M.client)
+					continue
+				minds += M.mind
+			dat += check_role_table("Cultists", minds, src, FALSE)
 
 		if(SSticker.mode.traitors.len)
 			dat += check_role_table("Traitors", SSticker.mode.traitors, src)

@@ -97,9 +97,9 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user)
 	if (C == user)
-		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
+		user.visible_message("<span class='rose'>[user] climbs on [src].</span>","<span class='notice'>You climb on [src].</span>")
 	else
-		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>")
+		visible_message("<span class='notice'>[C] has been laid on [src] by [user].</span>")
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
