@@ -238,7 +238,7 @@
 		return
 	if (QDELETED(user))
 		return
-	if (!Adjacent(user))
+	if (!target.Adjacent(user))
 		return
 
 	var/old_invisibility = invisibility // I don't know, it may be used.

@@ -135,6 +135,8 @@
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
 	user.drop_from_inventory(I, src)
+	//INVOKE_ASYNC(I, /atom/movable.proc/do_simple_move_animation, src)
+	//user.remove_from_mob(I, src)
 
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
