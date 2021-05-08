@@ -39,10 +39,10 @@
 	try_trigger(AM)
 
 /obj/item/mine/bullet_act(obj/item/projectile/Proj)
-	try_trigger(Proj)
+	trigger_act(Proj)
 
 /obj/item/mine/proc/try_trigger(atom/movable/AM)
-	if(istype(AM, /mob/living/carbon) || istype(AM, /mob/living/silicon))
+	if(istype(AM, /mob/living/carbon) || istype(AM, /mob/living/silicon) || istype(AM, /obj/mecha))
 		if(anchored)
 			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
 			trigger_act(AM)
@@ -73,9 +73,11 @@
 	if(isliving(obj))
 		var/mob/living/M = obj
 		M.apply_effect(150,AGONY,0)
+
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
+	qdel(src)
 
 /obj/item/mine/shock
 	name = "shock mine"
