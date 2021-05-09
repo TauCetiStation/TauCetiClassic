@@ -5,6 +5,11 @@
 	icon_state = "mine"
 	layer = 3
 
+/obj/item/mine/atom_init()
+	. = ..()
+	if(anchored)
+		update_icon()
+
 /obj/item/mine/attack_self(mob/living/user)
 	if(locate(/obj/item/mine) in get_turf(src))
 		to_chat(user, "<span class='warning'>There already is a mine at this position!</span>")
@@ -64,20 +69,8 @@
 		anchored = FALSE
 		update_icon()
 
-/obj/item/mine/stun
-	name = "stun mine"
-	desc = "A security-issued non-lethal mine for area-denial, this mine will stun and weaken anyone unfortunate to step on it."
-	icon_state = "stunmine"
-
-/obj/item/mine/stun/trigger_act(obj)
-	if(isliving(obj))
-		var/mob/living/M = obj
-		M.apply_effect(150,AGONY,0)
-
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-	s.set_up(3, 1, src)
-	s.start()
-	qdel(src)
+/obj/item/mine/anchored
+	anchored = TRUE
 
 /obj/item/mine/shock
 	name = "shock mine"
@@ -98,6 +91,9 @@
 	s.start()
 	qdel(src)
 
+/obj/item/mine/shock/anchored
+	anchored = TRUE
+
 /obj/item/mine/incendiary
 	name = "incendiary mine"
 	desc = "This thing definitely violates Space Geneva Convention."
@@ -111,6 +107,9 @@
 		M.IgniteMob()
 		qdel(src)
 
+/obj/item/mine/incendiary/anchored
+	anchored = TRUE
+
 /obj/item/mine/emp
 	name = "ion mine"
 	desc = "When you hate your roomba really, really much."
@@ -119,3 +118,6 @@
 /obj/item/mine/emp/trigger_act(obj)
 	empulse(src, 2, 3)
 	qdel(src)
+
+/obj/item/mine/emp/anchored
+	anchored = TRUE

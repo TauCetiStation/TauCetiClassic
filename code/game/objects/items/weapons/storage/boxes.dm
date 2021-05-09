@@ -706,15 +706,6 @@
 		new /obj/item/mine(src)
 	make_exact_fit()
 
-/obj/item/weapon/storage/box/mines/stun
-	name = "box of stun mines"
-
-/obj/item/weapon/storage/box/mines/stun/atom_init()
-	. = ..()
-	for(var/i in 1 to 4)
-		new /obj/item/mine/stun(src)
-	make_exact_fit()
-
 /obj/item/weapon/storage/box/mines/shock
 	name = "box of shock mines"
 
