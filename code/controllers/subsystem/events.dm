@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(events)
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
 
-/datum/controller/subsystem/events/proc/try_start_roundstart_event()
+/datum/controller/subsystem/events/proc/start_roundstart_event()
 	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
 	EC.start_event()
 
