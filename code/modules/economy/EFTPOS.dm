@@ -56,24 +56,7 @@
 	//the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
 	linked_account = station_account
 
-/obj/item/device/eftpos/proc/print_reference()
-	var/obj/item/weapon/paper/R = new(src.loc)
-	R.name = "Reference: [eftpos_name]"
-	R.info = "<b>[eftpos_name] reference</b><br><br>"
-	R.info += "Access code: [access_code]<br><br>"
-	R.info += "<b>Do not lose or misplace this code.</b><br>"
-
-	R.update_icon()
-
-	//stamp the paper
-	var/obj/item/weapon/stamp/centcomm/S = new
-	S.stamp_paper(R, "EFTPOS")
-
-	var/obj/item/smallDelivery/D = new(R.loc)
-	R.loc = D
-	D.name = "small parcel - 'EFTPOS access code'"
-
-/obj/item/device/eftpos/attack_self(mob/user)
+/obj/item/device/eftpos/proc/show_info(mob/user)
 	if(get_dist(src,user) <= 1)
 		var/dat = ""
 		dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br>"
@@ -102,6 +85,26 @@
 		popup.open()
 	else
 		user << browse(null,"window=eftpos")
+
+/obj/item/device/eftpos/proc/print_reference()
+	var/obj/item/weapon/paper/R = new(src.loc)
+	R.name = "Reference: [eftpos_name]"
+	R.info = "<b>[eftpos_name] reference</b><br><br>"
+	R.info += "Access code: [access_code]<br><br>"
+	R.info += "<b>Do not lose or misplace this code.</b><br>"
+
+	R.update_icon()
+
+	//stamp the paper
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(R, "EFTPOS")
+
+	var/obj/item/smallDelivery/D = new(R.loc)
+	R.loc = D
+	D.name = "small parcel - 'EFTPOS access code'"
+
+/obj/item/device/eftpos/attack_self(mob/user)
+	show_info(user)
 
 /obj/item/device/eftpos/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card))
@@ -278,3 +281,20 @@
 				transaction_paid = 1
 
 	//emag?
+
+/obj/item/device/eftpos/stationary
+	name = "stationary EFTPOS"
+	anchored = TRUE
+	w_class = ITEM_SIZE_LARGE
+
+/obj/item/device/eftpos/stationary/attack_hand(mob/user)
+	if(!anchored)
+		to_chat(user, "<span_class ='warning'>[src] is not anchored.</span>")
+	else
+		show_info(user)
+
+/obj/item/device/eftpos/stationary/attackby(obj/item/weapon/G, mob/user)
+	if(iswrench(G))
+		anchored = !anchored
+		to_chat(user, "You [anchored ? "attached" : "detached"] the [src].")
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)

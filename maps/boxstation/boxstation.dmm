@@ -29400,6 +29400,10 @@
 	pixel_x = -32;
 	supply_display = 1
 	},
+/obj/item/device/eftpos/stationary{
+	pixel_x = -10;
+	pixel_y = 5
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "baC" = (
@@ -36856,7 +36860,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/clothing/head/cakehat,
+/obj/item/device/eftpos/stationary,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -71224,6 +71228,7 @@
 /area/station/maintenance/medbay)
 "iJB" = (
 /obj/structure/table/reinforced,
+/obj/item/clothing/head/cakehat,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
