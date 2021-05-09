@@ -460,6 +460,8 @@
 	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
 		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
 
+	if((!skipface || !skipjumpsuit || !skipgloves) && (GOLDEN in mutations))
+		msg += "<span class='warning' style='color: gold'><b>[t_His] skin is looking metallic!</b></span>\n"
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"
 		var/criminal = "None"

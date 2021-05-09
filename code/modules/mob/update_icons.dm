@@ -4,7 +4,19 @@
 /mob/proc/regenerate_icons()		//TODO: phase this out completely if possible
 	return
 
+// TODO: make gold filter
+
+/mob/var/golden_filter = filter(type="color", color=list(
+	1, 0, 0, 0,
+	0, 1, 0, 0,
+	-0.25, 0, 1, 0,
+	0, 0, 0, 1,
+))
+
 /mob/proc/update_icons()
+	filters -= golden_filter
+	if(GOLDEN in mutations)
+		filters += golden_filter
 	return
 
 /mob/proc/update_hud()

@@ -562,6 +562,9 @@
 	if(HUSK in mutations)
 		mutations.Remove(HUSK)
 
+	if(GOLDEN in mutations)
+		mutations.Remove(GOLDEN)
+
 	regenerate_icons()
 
 	med_hud_set_health()

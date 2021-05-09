@@ -103,3 +103,7 @@
 	random_overlay = FALSE
 	reagent_inside = "champagne"
 	FE_type = "golden"
+
+/obj/item/weapon/reagent_containers/spray/extinguisher/golden/attack(mob/living/M, mob/living/user, def_zone)
+	M.apply_status_effect(STATUS_EFFECT_MIDAS_TOUCH)
+	return ..()

@@ -19,7 +19,7 @@
 // DEBUFFS //
 /////////////
 
-#define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
+#define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping // the affected is asleep
 
 #define STATUS_EFFECT_STASIS_BAG /datum/status_effect/incapacitating/stasis_bag // Halts biological functions like bleeding, chemical processing, blood regeneration, etc
 
@@ -27,7 +27,7 @@
 // NEUTRAL //
 /////////////
 
-// line added for consistency, remove this line with first effect.
+#define STATUS_EFFECT_MIDAS_TOUCH /datum/status_effect/midas // humans that died under this status effect will turn into golden statues
 
 // Stasis helpers
 

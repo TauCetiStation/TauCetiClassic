@@ -502,7 +502,7 @@
 					to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
 				return
 
-		if(!M.unacidable)
+		if(!M.unacidable && !(GOLDEN in M.mutations))
 			if(ishuman(M) && volume >= 10)
 				var/mob/living/carbon/human/H = M
 				var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
@@ -514,7 +514,7 @@
 			else
 				M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 	else
-		if(!M.unacidable)
+		if(!M.unacidable && !(GOLDEN in M.mutations))
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
