@@ -10,9 +10,10 @@ SUBSYSTEM_DEF(events)
 	var/list/finished_events = list()
 	var/list/allEvents = list()
 	var/list/event_containers = list(
-			EVENT_LEVEL_MUNDANE  = new/datum/event_container/mundane,
-			EVENT_LEVEL_MODERATE = new/datum/event_container/moderate,
-			EVENT_LEVEL_MAJOR    = new/datum/event_container/major
+			EVENT_LEVEL_ROUNDSTART = new/datum/event_container/roundstart,
+			EVENT_LEVEL_MUNDANE    = new/datum/event_container/mundane,
+			EVENT_LEVEL_MODERATE   = new/datum/event_container/moderate,
+			EVENT_LEVEL_MAJOR      = new/datum/event_container/major,
 		)
 
 	var/datum/event_meta/new_event = new
@@ -28,6 +29,10 @@ SUBSYSTEM_DEF(events)
 	for(var/i in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
+
+/datum/controller/subsystem/events/proc/try_start_roundstart_event()
+	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
+	EC.start_event()
 
 /datum/controller/subsystem/events/proc/event_complete(datum/event/E)
 	if(!E.event_meta)	// datum/event is used here and there for random reasons, maintaining "backwards compatibility"

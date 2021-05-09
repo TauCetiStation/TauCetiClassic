@@ -264,6 +264,8 @@ SUBSYSTEM_DEF(ticker)
 	Holiday_Game_Start()
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
+		SSevents.try_start_roundstart_event()
+
 		mode.post_setup()
 		for(var/mob/dead/new_player/N in new_player_list)
 			if(N.client)

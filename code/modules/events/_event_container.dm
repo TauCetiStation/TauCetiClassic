@@ -11,7 +11,7 @@
 #define ONESHOT  1
 #define DISABLED 0
 
-var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
+var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_MODERATE = "Moderate", EVENT_LEVEL_MAJOR = "Major")
 
 /datum/event_container
 	var/severity = -1
@@ -60,7 +60,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 /datum/event_container/proc/acquire_event()
 	if(available_events.len == 0)
 		return
-	var/active_with_role = number_active_with_role()
+	var/list/active_with_role = number_active_with_role()
 
 	var/list/possible_events = list()
 	for(var/datum/event_meta/EM in available_events)
@@ -131,10 +131,16 @@ var/list/severity_to_string = list(EVENT_LEVEL_MUNDANE = "Mundane", EVENT_LEVEL_
 	next_event = EM
 	return EM
 
+/datum/event_container/roundstart
+	severity = EVENT_LEVEL_ROUNDSTART
+	available_events = list(
+		// /datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, event_enabled = 1, min_event_players = 0, min_event_weight = 0, max_event_weight = 0)
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Roundstart Nothing", /datum/event/nothing, 5000),
+	)
+
 /datum/event_container/mundane
 	severity = EVENT_LEVEL_MUNDANE
 	available_events = list(
-		// /datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, event_enabled = 1, min_event_players = 0, min_event_weight = 0, max_event_weight = 0)
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",           /datum/event/nothing,           1100),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",          /datum/event/pda_spam,          0,    list(ASSIGNMENT_ANY = 4),       0, 1, 0, 25, 50),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",       /datum/event/money_lotto,       0,    list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
