@@ -243,7 +243,7 @@ var/list/slot_equipment_priority = list(
 		if(!(W && W.loc))
 			return 1 // self destroying objects (tk, grabs)
 
-		if(target != src && target.loc != src)
+		if(target && target != src && target.loc != src)
 			INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
 
 		update_icons()
