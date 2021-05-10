@@ -47,14 +47,14 @@
 	trigger_act(Proj)
 
 /obj/item/mine/proc/try_trigger(atom/movable/AM)
-	if(istype(AM, /mob/living/carbon) || istype(AM, /mob/living/silicon) || istype(AM, /obj/mecha))
+	if(iscarbon(AM) || issilicon(AM) || istype(AM, /obj/mecha))
 		if(anchored)
 			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
 			trigger_act(AM)
+			qdel(AM)
 
 /obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 1, 1, 3, 3)
-	qdel(src)
 
 /obj/item/mine/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -89,7 +89,6 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
-	qdel(src)
 
 /obj/item/mine/shock/anchored
 	anchored = TRUE
@@ -105,7 +104,6 @@
 		var/mob/living/M = obj
 		M.adjust_fire_stacks(10)
 		M.IgniteMob()
-		qdel(src)
 
 /obj/item/mine/incendiary/anchored
 	anchored = TRUE
@@ -117,7 +115,6 @@
 
 /obj/item/mine/emp/trigger_act(obj)
 	empulse(src, 2, 3)
-	qdel(src)
 
 /obj/item/mine/emp/anchored
 	anchored = TRUE
