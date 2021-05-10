@@ -30,7 +30,7 @@
 			var/mob/living/carbon/C = attacker
 			var/obj/item/to_give = attacker.get_active_hand() || attacker.get_inactive_hand()
 			if(to_give)
-				if(to_give.flags & (ABSTRACT | DROPDEL))
+				if(to_give.flags & (ABSTRACT|DROPDEL))
 					to_give = null
 				else if(to_give.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
 					to_give = null
@@ -41,6 +41,8 @@
 
 				if(I.flags & (ABSTRACT | DROPDEL))
 					return
+				if(!I.canremove)
+					return
 				if(I.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
 					return
 
@@ -49,20 +51,24 @@
 				attacker.put_in_hands(I)
 				to_give = I
 
-			if(to_give)
-				attacker.drop_from_inventory(to_give)
-				if(victim.put_in_hands(to_give))
-					victim.visible_message("<span class='notice'>[attacker] handed \the [to_give] to [victim]!</span>")
-					to_give.add_fingerprint(victim)
-					// Extra ! ! ! F U N ! ! !
-					if(attacker.a_intent != INTENT_HARM)
-						event_log(victim, attacker, "Forced in-hand use of [to_give]")
-						to_give.attack_self(victim)
-					else
-						event_log(victim, attacker, "Forced self-attack by [to_give]")
-						var/resolved = victim.attackby(to_give, victim)
-						if(!resolved && victim && to_give)
-							to_give.afterattack(victim, victim, TRUE)
+			if(!to_give)
+				return
+
+			if(!victim.can_accept_gives(attacker, show_warnings=FALSE) || !attacker.can_give(victim, show_warnings=FALSE) || victim.client == null)
+				return
+
+			if(attacker.drop_from_inventory(to_give, victim) && victim.put_in_hands(to_give))
+				victim.visible_message("<span class='notice'>[attacker] handed \the [to_give] to [victim]!</span>")
+				to_give.add_fingerprint(victim)
+				// Extra ! ! ! F U N ! ! !
+				if(attacker.a_intent != INTENT_HARM)
+					event_log(victim, attacker, "Forced in-hand use of [to_give]")
+					to_give.attack_self(victim)
+				else
+					event_log(victim, attacker, "Forced self-attack by [to_give]")
+					var/resolved = victim.attackby(to_give, victim)
+					if(!resolved && victim && to_give)
+						to_give.afterattack(victim, victim, TRUE)
 
 /datum/combat_combo/push
 	name = COMBO_PUSH
@@ -155,7 +161,7 @@
 									continue pants_takeoff_loop
 								if(I.loc != L) // Perhaps they fell off during this or something.
 									continue pants_takeoff_loop
-								if(I.flags & (ABSTRACT|NODROP) && I.canremove)
+								if((I.flags & (ABSTRACT|NODROP)) || !I.canremove)
 									continue pants_takeoff_loop
 								if(first)
 									end_string = ", taking off their [I]"
