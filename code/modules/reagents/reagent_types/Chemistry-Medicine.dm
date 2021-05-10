@@ -439,7 +439,7 @@
 /datum/reagent/imidazoline
 	name = "Imidazoline"
 	id = "imidazoline"
-	description = "Heals eye damage"
+	description = "Heals eye damage."
 	reagent_state = LIQUID
 	color = "#a0dbff" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
@@ -456,6 +456,20 @@
 		if(istype(IO))
 			if(IO.damage > 0 && IO.robotic < 2)
 				IO.damage = max(IO.damage - 1, 0)
+
+/datum/reagent/aurisine
+	name = "Aurisine"
+	id = "aurisine"
+	description = "Aurisine is a chemical compound used to heal ear damage."
+	reagent_state = LIQUID
+	color = "#87cefa" // rgb: 135, 206, 250
+	overdose = REAGENTS_OVERDOSE
+	taste_message = "earwax"
+
+/datum/reagent/aurisine/on_general_digest(mob/living/M)
+	..()
+	M.ear_damage = max(M.ear_damage - 1, 0)
+	M.ear_deaf = max(M.ear_deaf - 3, 0)
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
