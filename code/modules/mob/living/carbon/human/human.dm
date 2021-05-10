@@ -1831,6 +1831,24 @@
 			h_style = "IPC off screen"
 		update_hair()
 
+/mob/living/carbon/human/proc/IPC_display_text()
+	set category = "IPC"
+	set name = "Display Text On Screen"
+	set desc = "Display text on your monitor"
+
+	if(stat)
+		return
+
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || BP.is_stump)
+		return
+
+	if(BP.ipc_head != "Default")
+		to_chat(usr, "<span class='warning'>Your head has no screen!</span>")
+
+	var/S = input("Write something to display on your screen (emoticons supported):", "Display Text") as text|null
+	if(S)
+		say(":[all_languages["Display Text"].key[1]][S]")
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
