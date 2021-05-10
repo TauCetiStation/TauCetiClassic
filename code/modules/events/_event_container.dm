@@ -135,7 +135,19 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 	severity = EVENT_LEVEL_ROUNDSTART
 	available_events = list(
 		// /datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, event_enabled = 1, min_event_players = 0, min_event_weight = 0, max_event_weight = 0)
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Roundstart Nothing", /datum/event/nothing, 5000),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Roundstart Nothing",      /datum/event/nothing, 1000),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Break Light",             /datum/event/roundstart/area/break_light,          50, list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 40)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stealed Weapon",          /datum/event/roundstart/area/replace/sec_weapons,  20, list(ASSIGNMENT_SECURITY = 1)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stealed First AID",       /datum/event/roundstart/area/replace/med_storage,  10, list(ASSIGNMENT_MEDICAL = 1)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Old Morgue",              /datum/event/roundstart/area/replace/med_morgue,   10, list(ASSIGNMENT_MEDICAL = 5)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Die Monkey",              /datum/event/roundstart/area/replace/dead_monkeys, 10, list(ASSIGNMENT_SCIENTIST = 5)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stealed Airlock",         /datum/event/roundstart/area/replace/airlock,      10, list(ASSIGNMENT_ENGINEER = 10)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Dirt Bay",                /datum/event/roundstart/area/dirt,                 10, list(ASSIGNMENT_JANITOR = 100)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Headset",       /datum/event/roundstart/forgotten_headset,         10, list(ASSIGNMENT_ANY = 5)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Survival Box",  /datum/event/roundstart/forgotten_survbox,         10, list(ASSIGNMENT_ANY = 5)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Fueltanks",     /datum/event/roundstart/forgotten_fueltank,        10, list(ASSIGNMENT_ENGINEER = 20)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Watertanks",    /datum/event/roundstart/forgotten_watertank,       10, list(ASSIGNMENT_BOTANIST = 10)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Cleaners",      /datum/event/roundstart/forgotten_cleaner,         10, list(ASSIGNMENT_JANITOR = 100)),
 	)
 
 /datum/event_container/mundane

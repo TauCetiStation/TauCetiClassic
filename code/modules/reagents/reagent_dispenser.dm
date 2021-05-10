@@ -204,6 +204,8 @@
 	. = ..()
 	reagents.add_reagent("water", 1000)
 
+	watertank_list += src
+
 /obj/structure/reagent_dispensers/aqueous_foam_tank
 	name = "AFFF tank"
 	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
@@ -223,6 +225,8 @@
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
 	reagents.add_reagent("fuel",300)
+
+	fueltank_list += src
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
