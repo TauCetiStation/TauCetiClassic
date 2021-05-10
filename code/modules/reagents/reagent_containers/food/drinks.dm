@@ -156,36 +156,36 @@
 	set name = "Gulp Down"
 	set src in view(1)
 
-	if(is_open_container())
-		usr.visible_message("<span class='notice'>[usr] prepares to gulp down [src].</span>", "<span class='notice'>You prepare to gulp down [src].</span>")
+	if(!is_open_container())
+		to_chat(usr, "<span class='notice'>You need to open [src]!</span>")
+		return
 
-		if(!CanEat(usr, usr, src, eatverb="gulp"))
-			return
+	usr.visible_message("<span class='notice'>[usr] prepares to gulp down [src].</span>", "<span class='notice'>You prepare to gulp down [src].</span>")
 
-		if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
-			if(!Adjacent(usr))
-				usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
-			reagents.standard_splash(loc, user=usr)
-			return
+	if(!CanEat(usr, usr, src, eatverb="gulp"))
+		return
 
+	if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
 		if(!Adjacent(usr))
 			usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
-			reagents.standard_splash(loc, user=usr)
-			return
+		reagents.standard_splash(loc, user=usr)
+		return
 
-		if(!CanEat(usr, usr, src, eatverb="gulp"))
-			return
+	if(!Adjacent(usr))
+		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
+		reagents.standard_splash(loc, user=usr)
+		return
 
-		if(taste && isliving(usr))
-			var/mob/living/L = usr
-			L.taste_reagents(reagents)
+	if(!CanEat(usr, usr, src, eatverb="gulp"))
+		return
 
-		usr.visible_message("<span class='notice'>[usr] gulped down the whole [src]!</span>", "<span class='notice'>You gulped down the whole [src]!</span>")
-		reagents.trans_to_ingest(usr, reagents.total_volume)
-		playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(15, 55))
+	if(taste && isliving(usr))
+		var/mob/living/L = usr
+		L.taste_reagents(reagents)
 
-	else
-		to_chat(usr, "<span class='notice'>You need to open [src]!</span>")
+	usr.visible_message("<span class='notice'>[usr] gulped down the whole [src]!</span>", "<span class='notice'>You gulped down the whole [src]!</span>")
+	reagents.trans_to_ingest(usr, reagents.total_volume)
+	playsound(usr, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(15, 55))
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Drinks. END
