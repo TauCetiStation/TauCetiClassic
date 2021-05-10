@@ -728,7 +728,7 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
-	switch(data)
+	switch(data["ticks"])
 		if(1 to 10)
 			M.make_dizzy(1)
 			if(prob(10))
@@ -744,5 +744,6 @@
 					if(prob(50))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
 						E.brute_dam = 0
-						E.status &= ~BROKEN
+						E.status &= ~ORGAN_BROKEN
+						E.perma_injury = 0
 						holder.remove_reagent("nanocalcium", 10)
