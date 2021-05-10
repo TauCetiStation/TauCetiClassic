@@ -1848,7 +1848,8 @@
 
 	var/S = input("Write something to display on your screen (emoticons supported):", "Display Text") as text|null
 	if(S)
-		say(":[all_languages["Display Text"].key[1]][S]")
+		var/datum/language/DT = all_languages["Display Text"]
+		say(":[DT.key[1]][S]")
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
