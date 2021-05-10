@@ -14,6 +14,10 @@
 		return
 
 	var/mob/living/carbon/C = attacker
+
+	if(!victim.can_accept_gives(attacker, show_warnings=FALSE) || !C.can_give(victim, show_warnings=FALSE) || victim.client == null)
+		return
+
 	var/obj/item/to_give = attacker.get_active_hand() || attacker.get_inactive_hand()
 	if(to_give)
 		if(to_give.flags & (ABSTRACT|DROPDEL))
@@ -42,9 +46,6 @@
 		to_give = I
 
 	if(!to_give)
-		return
-
-	if(!victim.can_accept_gives(attacker, show_warnings=FALSE) || !C.can_give(victim, show_warnings=FALSE) || victim.client == null)
 		return
 
 	if(!attacker.drop_from_inventory(to_give, victim))
