@@ -23,7 +23,6 @@ var/visual_counter = 1
 // NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
 var/list/score=list(
 	"crewscore"      = 0, // this is the overall var/score for the whole round
-	"stuffshipped"   = 0, // how many useful items have cargo shipped out?
 	"stuffharvested" = 0, // how many harvests have hydroponics done?
 	"oremined"       = 0, // obvious
 	"researchdone"   = 0,

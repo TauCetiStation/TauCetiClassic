@@ -206,20 +206,6 @@
 	name = "Circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=2;powerstorage=3"
-/obj/item/weapon/circuitboard/computer/cargo/request
-	name = "Circuit board (Supply ordering console)"
-	build_path = /obj/machinery/computer/cargo/request
-	origin_tech = "programming=2"
-/obj/item/weapon/circuitboard/computer/cargo
-	name = "Circuit board (Supply shuttle console)"
-	build_path = /obj/machinery/computer/cargo
-	origin_tech = "programming=3"
-	var/contraband_enabled = FALSE
-	var/hacked = FALSE
-/obj/item/weapon/circuitboard/computer/stockexchange
-	name = "Circuit board (Stock exchange computer)"
-	build_path = /obj/machinery/computer/stockexchange
-	origin_tech = "programming=3"
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle

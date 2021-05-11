@@ -2,7 +2,6 @@
 //todo: not all curently used, copypaste from /tg/
 #define INVESTIGATE_ATMOS           "atmos"
 #define INVESTIGATE_BOTANY          "botany"
-#define INVESTIGATE_CARGO           "cargo"
 #define INVESTIGATE_RECORDS         "records"
 #define INVESTIGATE_SINGULO         "singulo"
 #define INVESTIGATE_SUPERMATTER     "supermatter"
