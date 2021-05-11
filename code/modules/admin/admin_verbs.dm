@@ -190,7 +190,6 @@ var/list/admin_verbs_possess = list(
 	)
 var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
-	/client/proc/gsw_add,
 	/client/proc/library_debug_remove,
 	/client/proc/library_debug_read,
 	/client/proc/regisration_panic_bunker,
@@ -251,7 +250,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
-	/client/proc/gsw_add,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,

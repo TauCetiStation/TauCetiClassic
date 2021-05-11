@@ -84,7 +84,7 @@
 	if(!environment)
 		return
 
-	if(istype(loc, /obj/machinery/atmospherics/pipe))
+	if(istype(loc, /obj/machinery/atmospherics/pipe) || istype(loc, /obj/item/alien_embryo))
 		return
 
 	var/loc_temp = get_temperature(environment)
@@ -119,7 +119,7 @@
 		clear_alert("alien_fire")
 
 //xenomorphs will take damage from high and low pressure
-	var/pressure_damage = set_pressure_damage()
+	var/pressure_damage = heal_rate		//aliens won't take damage from pressure if stay on weeds
 	if(pressure >= WARNING_HIGH_PRESSURE)
 		apply_damage(pressure_damage, BRUTE)
 		throw_alert("pressure", /obj/screen/alert/highpressure, 2)
@@ -128,9 +128,6 @@
 	else
 		throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 		apply_damage(pressure_damage, BRUTE)
-
-/mob/living/carbon/xenomorph/proc/set_pressure_damage()
-	return ALIEN_PRESSURE_DAMAGE	//Damage for larva and facehugger
 
 /mob/living/carbon/xenomorph/proc/handle_mutations_and_radiation()
 
