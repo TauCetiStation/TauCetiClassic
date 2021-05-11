@@ -1,8 +1,8 @@
 #define MAX_OPS 6
 #define MIN_OPS 2
 /datum/faction/nuclear
-	name = SYNDIOPS
-	ID = SYNDIOPS
+	name = F_SYNDIOPS
+	ID = F_SYNDIOPS
 	logo_state = "nuke-logo"
 	required_pref = ROLE_OPERATIVE
 

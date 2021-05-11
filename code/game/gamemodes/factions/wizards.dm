@@ -1,6 +1,6 @@
 /datum/faction/wizards
-	name = WIZFEDERATION
-	ID = WIZFEDERATION
+	name = F_WIZFEDERATION
+	ID = F_WIZFEDERATION
 	logo_state = "wizard-logo"
 	required_pref = ROLE_WIZARD
 
@@ -31,5 +31,5 @@
 	if (wizards_alive)
 		return FALSE
 	else
-		stage = FACTION_DEFEATED
+		stage = FS_DEFEATED
 		return TRUE

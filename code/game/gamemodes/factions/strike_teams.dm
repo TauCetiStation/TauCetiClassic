@@ -1,6 +1,6 @@
 /datum/faction/strike_team
 	name = "Custom Strike Team"
-	ID = CUSTOMSQUAD
+	ID = F_CUSTOMSQUAD
 	logo_state = "nano-logo"
 
 /datum/faction/strike_team/forgeObjectives(mission)
@@ -14,7 +14,7 @@
 
 /datum/faction/strike_team/ert
 	name = "Emergency Response Team"
-	ID = EMERSQUAD
+	ID = F_EMERSQUAD
 	logo_state = "ert-logo"
 
 	initroletype = /datum/role/emergency_responder
@@ -23,7 +23,7 @@
 
 /datum/faction/strike_team/deathsquad
 	name = "Nanotrasen Deathsquad"
-	ID = DEATHSQUAD
+	ID = F_DEATHSQUAD
 	logo_state = "death-logo"
 
 	initroletype = /datum/role/death_commando
@@ -33,7 +33,7 @@
 
 /datum/faction/strike_team/syndiesquad
 	name = "Syndicate Deep-Strike squad"
-	ID = SYNDIESQUAD
+	ID = F_SYNDIESQUAD
 	logo_state = "elite-logo"
 
 	initroletype = /datum/role/syndicate_elite_commando

@@ -1,6 +1,6 @@
 /datum/faction/heist
-	name = HEIST
-	ID = HEIST
+	name = F_HEIST
+	ID = F_HEIST
 	required_pref = ROLE_RAIDER
 
 	initroletype = /datum/role/vox_raider

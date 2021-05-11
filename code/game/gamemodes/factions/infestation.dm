@@ -1,8 +1,8 @@
 #define CHECK_PERIOD 	200
 
 /datum/faction/infestation
-	name = XENOMORPH_HIVE
-	ID = XENOMORPH_HIVE
+	name = F_XENOMORPH_HIVE
+	ID = F_XENOMORPH_HIVE
 	logo_state = "xeno-logo"
 	required_pref = ROLE_ALIEN
 

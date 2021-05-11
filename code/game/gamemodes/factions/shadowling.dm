@@ -1,6 +1,6 @@
 /datum/faction/shadowlings
-	name = FACTION_SHADOWLINGS
-	ID = FACTION_SHADOWLINGS
+	name = F_SHADOWLINGS
+	ID = F_SHADOWLINGS
 	logo_state = "shadowling-logo"
 	required_pref = ROLE_SHADOWLING
 

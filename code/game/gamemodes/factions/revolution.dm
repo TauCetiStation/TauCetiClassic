@@ -7,7 +7,7 @@
 
 /datum/faction/revolution
 	name = "Revolutionaries"
-	ID = REVOLUTION
+	ID = F_REVOLUTION
 	required_pref = ROLE_REV
 
 	initroletype = /datum/role/syndicate/rev_leader

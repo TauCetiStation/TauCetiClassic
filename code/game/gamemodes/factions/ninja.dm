@@ -1,6 +1,6 @@
 /datum/faction/ninja
-	name = SPIDERCLAN
-	ID = SPIDERCLAN
+	name = F_SPIDERCLAN
+	ID = F_SPIDERCLAN
 
 	initroletype = /datum/role/ninja
 
@@ -43,5 +43,5 @@
 	if(ninjas_alive)
 		return FALSE
 	else
-		stage = FACTION_ENDGAME
+		stage = FS_ENDGAME
 		return TRUE

@@ -1,6 +1,6 @@
 /datum/faction/cult
-	name = BLOODCULT
-	ID = BLOODCULT
+	name = F_BLOODCULT
+	ID = F_BLOODCULT
 	logo_state = "cult-logo"
 	required_pref = ROLE_CULTIST
 

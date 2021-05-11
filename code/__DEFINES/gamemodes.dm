@@ -1,23 +1,23 @@
 ////////////////////// ID /////////////////////////
 
 // Faction IDs
-#define FACTION_ABDUCTORS "Abductor Team"
-#define BLOODCULT "Cult Of Blood"
-#define BLOBCONGLOMERATE "Blob Conglomerate"
-#define BORER_HIVEMIND "Borer Hivemind"
-#define CUSTOMSQUAD "Custom Squad"
-#define DEATHSQUAD "Nanotrasen Deathsquad"
-#define EMERSQUAD "Emergency Response Team"
-#define HEIST "Vox Shoal"
-#define HIVEMIND "Changeling Hivemind"
-#define REVOLUTION "Revolution"
-#define SYNDIOPS "Syndicate Operatives"
-#define SYNDIESQUAD "Syndicate Elite Strike Team"
-#define FACTION_SHADOWLINGS "Shadowlings"
-#define SPIDERCLAN "Spider Clan"
-#define WIZFEDERATION "Wizard Federation"
-#define XENOMORPH_HIVE "Alien Hivemind"
-#define FACTION_ZOMBIES "Zobmies"
+#define F_ABDUCTORS          "Abductor Team"
+#define F_BLOODCULT          "Cult Of Blood"
+#define F_BLOBCONGLOMERATE   "Blob Conglomerate"
+#define F_BORER_HIVEMIND     "Borer Hivemind"
+#define F_CUSTOMSQUAD        "Custom Squad"
+#define F_DEATHSQUAD         "Nanotrasen Deathsquad"
+#define F_EMERSQUAD          "Emergency Response Team"
+#define F_HEIST              "Vox Shoal"
+#define F_HIVEMIND           "Changeling Hivemind"
+#define F_REVOLUTION         "Revolution"
+#define F_SYNDIOPS           "Syndicate Operatives"
+#define F_SYNDIESQUAD        "Syndicate Elite Strike Team"
+#define F_SHADOWLINGS        "Shadowlings"
+#define F_SPIDERCLAN         "Spider Clan"
+#define F_WIZFEDERATION      "Wizard Federation"
+#define F_XENOMORPH_HIVE     "Alien Hivemind"
+#define F_ZOMBIES            "Zobmies"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -58,11 +58,11 @@
 #define GREET_SYNDBEACON	"syndbeacon"
 
 ///////////////// FACTION STAGES //////////////////////
-#define FACTION_DEFEATED	-1
-#define FACTION_DORMANT		0
-#define FACTION_ACTIVE		1
-#define FACTION_ENDGAME		3
-#define FACTION_VICTORY		5
+#define FS_DEFEATED    -1
+#define FS_DORMANT      0
+#define FS_ACTIVE       1
+#define FS_ENDGAME      2
+#define FS_VICTORY      3
 
 /////////////////////// OTHERS ////////////////////////
 

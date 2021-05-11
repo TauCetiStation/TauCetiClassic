@@ -1,6 +1,6 @@
 /datum/faction/borers
-	name = BORER_HIVEMIND
-	ID = BORER_HIVEMIND
+	name = F_BORER_HIVEMIND
+	ID = F_BORER_HIVEMIND
 	required_pref = ROLE_ALIEN // in code\modules\events\borers.dm too
 
 	roletype = /datum/role/borer

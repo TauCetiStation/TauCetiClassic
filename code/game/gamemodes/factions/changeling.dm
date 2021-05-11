@@ -1,6 +1,6 @@
 /datum/faction/changeling
-	name = HIVEMIND
-	ID = HIVEMIND
+	name = F_HIVEMIND
+	ID = F_HIVEMIND
 	required_pref = CHANGELING
 
 	initroletype = /datum/role/changeling

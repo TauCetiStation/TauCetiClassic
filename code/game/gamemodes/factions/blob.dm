@@ -6,8 +6,8 @@
 #define PLAYER_PER_BLOB_CORE 30
 
 /datum/faction/blob_conglomerate
-	name = BLOBCONGLOMERATE
-	ID = BLOBCONGLOMERATE
+	name = F_BLOBCONGLOMERATE
+	ID = F_BLOBCONGLOMERATE
 	logo_state = "blob-logo"
 	required_pref = BLOBOVERMIND
 
@@ -44,7 +44,7 @@
 		else if(SSticker.station_was_nuked)
 			return TRUE
 	else
-		stage(FACTION_DEFEATED)
+		stage(FS_DEFEATED)
 
 	return FALSE
 
@@ -59,12 +59,12 @@
 		return .
 	if(prelude_announcement && world.time >= prelude_announcement && detect_overminds())
 		prelude_announcement = 0
-		stage(FACTION_DORMANT)
+		stage(FS_DORMANT)
 	if(outbreak_announcement && world.time >= outbreak_announcement && detect_overminds()) //Must be alive to advance.
 		outbreak_announcement = 0
-		stage(FACTION_ACTIVE)
-	if(declared && 0.66*blobwincount <= blobs.len && stage<FACTION_ENDGAME) // Blob almost won !
-		stage(FACTION_ENDGAME)
+		stage(FS_ACTIVE)
+	if(declared && 0.66*blobwincount <= blobs.len && stage<FS_ENDGAME) // Blob almost won !
+		stage(FS_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
@@ -91,29 +91,29 @@
 
 /datum/faction/blob_conglomerate/stage(new_stage)
 	switch(new_stage)
-		if(FACTION_DORMANT)
+		if(FS_DORMANT)
 			if (!declared)
 				declared = TRUE
 				var/datum/announcement/centcomm/blob/outbreak5/announcement = new
 				announcement.play()
 				return
-		if(FACTION_ACTIVE)
+		if(FS_ACTIVE)
 			for(var/mob/M in player_list)
 				var/T = M.loc
 				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
 					pre_escapees += M.real_name
-			send_intercept(FACTION_ACTIVE)
+			send_intercept(FS_ACTIVE)
 			for (var/mob/living/silicon/ai/aiPlayer in player_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
 				to_chat(aiPlayer, "Laws Updated: [law]")
 			SSshuttle.always_fake_recall = TRUE //Quarantine
-		if(FACTION_ENDGAME)
+		if(FS_ENDGAME)
 			var/datum/announcement/centcomm/blob/critical/announcement = new
 			announcement.play()
 			for(var/mob/camera/blob/B in player_list)
 				to_chat(B, "<span class='blob'>The beings intend to eliminate you with a final suicidal attack, you must stop them quickly or consume the station before this occurs!</span>")
-			send_intercept(FACTION_ENDGAME)
+			send_intercept(FS_ENDGAME)
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
@@ -124,22 +124,22 @@
 				aiPlayer.set_zeroth_law(law)
 				to_chat(aiPlayer, "Laws Updated: [law]")
 			..() //Set thematic, set alert
-		if (FACTION_DEFEATED) //Cleanup time
+		if (FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
 			announcement.play()
 
-			send_intercept(FACTION_DEFEATED)
+			send_intercept(FS_DEFEATED)
 			SSshuttle.always_fake_recall = FALSE
 			declared = FALSE
 			for(var/mob/living/silicon/ai/aiPlayer in player_list)
 				aiPlayer.set_zeroth_law("")
 				to_chat(aiPlayer, "Laws Updated. Lockdown has been lifted.")
 
-/datum/faction/blob_conglomerate/proc/send_intercept(report = FACTION_ACTIVE)
+/datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""
 	var/interceptname = "Error"
 	switch(report)
-		if(FACTION_ACTIVE)
+		if(FS_ACTIVE)
 			interceptname = "Biohazard Alert"
 			intercepttext = {"<FONT size = 3><B>Nanotrasen Update</B>: Biohazard Alert.</FONT><HR>
 Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.
@@ -155,7 +155,7 @@ Orders for all [station_name()] personnel follows:
 Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.
 Message ends."}
 
-		if(FACTION_ENDGAME)
+		if(FS_ENDGAME)
 			var/nukecode = "ERROR"
 			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
@@ -173,7 +173,7 @@ Your orders are as follows:
 <b>Nuclear Authentication Code:</b> [nukecode]
 Message ends."}
 
-		if(FACTION_DEFEATED)
+		if(FS_DEFEATED)
 			interceptname = "Directive 7-12 lifted"
 			intercepttext = {"<Font size = 3><B>Nanotrasen Update</B>: Biohazard contained.</FONT><HR>
 Directive 7-12 has been lifted for [station_name()].

@@ -21,7 +21,7 @@
 	// Logo of faction
 	var/logo_state
 	// Global faction status indicator
-	var/stage = FACTION_DORMANT //role_datums_defines.dm
+	var/stage = FS_DORMANT //role_datums_defines.dm
 	// You need to set it manually for the correct GetScoreboard()
 	var/minor_victory = FALSE
 	// This is intended to be used on GetScoreboard() to list things like nuclear ops purchases.
@@ -296,13 +296,13 @@
 /datum/faction/proc/stage(value)
 	stage = value
 	switch(value)
-		if(FACTION_DEFEATED) //Faction was close to victory, but then lost. Send shuttle and end theme.
+		if(FS_DEFEATED) //Faction was close to victory, but then lost. Send shuttle and end theme.
 			sleep(5 SECONDS)
 			SSshuttle.always_fake_recall = FALSE
 			SSshuttle.online = TRUE
 			OnPostDefeat()
 			set_security_level("blue")
-		if(FACTION_ENDGAME) //Faction is nearing victory. Set red alert and play endgame music.
+		if(FS_ENDGAME) //Faction is nearing victory. Set red alert and play endgame music.
 			sleep(2 SECONDS)
 			set_security_level("red")
 

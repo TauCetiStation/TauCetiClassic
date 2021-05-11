@@ -1,6 +1,6 @@
 /datum/faction/abductors
-	name = FACTION_ABDUCTORS
-	ID = FACTION_ABDUCTORS
+	name = F_ABDUCTORS
+	ID = F_ABDUCTORS
 	logo_state = "abductor-logo"
 	required_pref = ROLE_ABDUCTOR
 
