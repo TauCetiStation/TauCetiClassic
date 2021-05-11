@@ -1,6 +1,6 @@
 /datum/event/roundstart/area
 	// number of random areas if no special_area_types
-	var/num_rand_areas
+	var/num_rand_areas = 1
 	// if not specified, then random
 	var/list/special_area_types
 	// allows you pick a one random area from special_area_types
@@ -25,7 +25,8 @@
 		for(var/area_type in area_types)
 			targeted_areas += get_area_by_type(area_type)
 	else
-		targeted_areas += findEventArea()
+		for(var/i in 1 to num_rand_areas)
+			targeted_areas += findEventArea()
 
 	if(!targeted_areas.len)
 		CRASH("No valid areas for roundstart event found.")

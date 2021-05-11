@@ -1,10 +1,12 @@
+#define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+
 /proc/word_to_uristrune_bit(word)
 	var/static/list/word_to_uristrune_table
 	if(!word_to_uristrune_table)
 		word_to_uristrune_table = list()
 
 		var/bit = 1
-		var/list/words = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+		var/list/words = RUNE_WORDS
 
 		while(length(words))
 			var/w = pick(words)

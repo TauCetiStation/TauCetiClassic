@@ -1,1 +1,1 @@
-/datum/event/roundstart/setup()
+/datum/event/roundstart

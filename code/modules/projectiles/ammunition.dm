@@ -100,6 +100,10 @@
 			return 1
 	return 0
 
+/obj/item/ammo_box/proc/make_empty()
+	stored_ammo = list()
+	update_icon()
+
 /obj/item/ammo_box/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = 0
 	if(istype(I, /obj/item/ammo_box))

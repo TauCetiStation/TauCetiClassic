@@ -686,7 +686,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0)
+/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0, list/black_list)
 	if(istext(areatype))
 		areatype = text2path(areatype)
 	else if(isarea(areatype))
@@ -704,7 +704,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				continue
 			for(var/turf/T in A)
 				if(target_z == 0 || target_z == T.z)
-					turfs += T
+					if(black_list && !(T.type in black_list))
+						turfs += T
 	else
 		for(var/V in global.all_areas)
 			var/area/A = V
@@ -712,7 +713,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				continue
 			for(var/turf/T in A)
 				if(target_z == 0 || target_z == T.z)
-					turfs += T
+					if(black_list && !(T.type in black_list))
+						turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.

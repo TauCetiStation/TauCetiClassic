@@ -1,6 +1,8 @@
 /datum/event/roundstart/area/replace
 	// replace: left_type on right_type (a = b)
 	var/list/replace_types = list()
+	// called before deleting replaceable item
+	var/datum/callback/replace_callback
 	// number of items to replace, -1 for infinity
 	var/num_replaceable = -1
 	// finds a random item that exists in the area by these types
@@ -32,8 +34,10 @@
 		return FALSE
 
 	var/B_type = replace_types[replace_type]
-	message_admins("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "NULL"] in ([A.x] [A.y] [A.z]) - [ADMIN_JMP(A.loc)]")
-	log_game("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "NULL"] in ([A.x] [A.y] [A.z])")
+	message_admins("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in ([A.x] [A.y] [A.z]) - [ADMIN_JMP(A.loc)]")
+	log_game("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in ([A.x] [A.y] [A.z])")
+	if(replace_callback)
+		replace_callback.Invoke(A)
 	if(!B_type)
 		qdel(A)
 	else
