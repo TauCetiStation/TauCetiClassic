@@ -196,7 +196,7 @@
 
 /obj/structure/closet/secure_closet/security/atom_init(mapload)
 	. = ..()
-	sec_closets += src
+	sec_closets_list += src
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))

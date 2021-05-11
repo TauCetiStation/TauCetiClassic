@@ -4,14 +4,14 @@
 	var/nums = 3
 
 /datum/event/roundstart/area/maintenance_spawn/proc/spawn_atom(type, turf/T)
-	message_admins("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in ([A.x] [A.y] [A.z]) - [ADMIN_JMP(A.loc)]")
-	log_game("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in ([A.x] [A.y] [A.z])")
+	message_admins("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)] - [ADMIN_JMP(T)]")
+	log_game("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)]")
 	new type(T)
 
 /datum/event/roundstart/area/maintenance_spawn/start()
 	for(var/i in 1 to nums)
 		var/area/area = get_area_by_type(pick(targeted_areas))
-		var/turf/T = pick(get_area_turfs(area, FALSE, black_list=list(/turf/simulated/wall)))
+		var/turf/T = pick(get_area_turfs(area, FALSE, black_list=list(/turf/simulated/wall, /turf/simulated/wall/r_wall)))
 		var/type = pick(possible_types)
 		spawn_atom(type, T)
 
@@ -27,8 +27,8 @@
 	)
 
 /datum/event/roundstart/area/maintenance_spawn/invasion/setup()
-	. = ..()
 	nums = rand(1, 3)
+	. = ..()
 
 /datum/event/roundstart/area/maintenance_spawn/antag_meta
 	possible_types = list(
@@ -41,12 +41,15 @@
 	)
 
 /datum/event/roundstart/area/maintenance_spawn/antag_meta/setup()
-	. = ..()
 	nums = rand(1, 3)
+	. = ..()
 
 /datum/event/roundstart/area/maintenance_spawn/antag_meta/spawn_atom(type, turf/T)
 	switch(type)
 		if(/obj/effect/rune)
-			var/obj/effect/rune/R = new(T, rand_icon = TRUE)
+			new /obj/effect/rune(T, null, null, TRUE)
 		else
 			new type(T)
+
+	message_admins("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in ([T.x] [T.y] [T.z]) - [ADMIN_JMP(T)]")
+	log_game("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in ([T.x] [T.y] [T.z])")

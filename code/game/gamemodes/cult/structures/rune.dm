@@ -30,7 +30,7 @@
 		var/list/words = list()
 		for(var/i in 1 to 3)
 			words += pick_n_take(all_words)
-		icon = get_uristrune_cult(TRUE, list(words))
+		icon = get_uristrune_cult(TRUE, words)
 
 	var/image/I = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	I.override = TRUE

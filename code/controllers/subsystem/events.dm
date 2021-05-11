@@ -19,7 +19,14 @@ SUBSYSTEM_DEF(events)
 	var/datum/event_meta/new_event = new
 
 /datum/controller/subsystem/events/Initialize()
-	allEvents = subtypesof(/datum/event) - /datum/event/anomaly
+	var/list/black_types = list(
+			/datum/event/anomaly,
+			/datum/event/roundstart
+			/datum/event/roundstart/area,
+			/datum/event/roundstart/area/replace,
+			/datum/event/roundstart/area/maintenance_spawn,
+	)
+	allEvents = subtypesof(/datum/event) - black_types
 	return ..()
 
 /datum/controller/subsystem/events/fire()

@@ -184,6 +184,8 @@
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 
+#define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
 

@@ -16,7 +16,7 @@
 		for(var/area/A in targeted_areas)
 			all_atoms |= A.get_all_contents_type(objects_type)
 		if(!all_atoms.len)
-			return null
+			continue
 		shuffle(all_atoms)
 		var/atom/A = pick(all_atoms)
 		return A.type
@@ -34,14 +34,14 @@
 		return FALSE
 
 	var/B_type = replace_types[replace_type]
-	message_admins("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in ([A.x] [A.y] [A.z]) - [ADMIN_JMP(A.loc)]")
-	log_game("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in ([A.x] [A.y] [A.z])")
+	message_admins("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in [COORD(A)] - [ADMIN_JMP(A.loc)]")
+	log_game("RoundStart Event: \"[event_meta.name]\" replace [A] on [B_type ? "[B_type]" : "OTHER"] in [COORD(A)]")
 	if(replace_callback)
 		replace_callback.Invoke(A)
-	if(!B_type)
-		qdel(A)
-	else
+	if(B_type)
 		new B_type(A.loc)
+
+	if(!QDELETED(A))
 		qdel(A)
 	return TRUE
 

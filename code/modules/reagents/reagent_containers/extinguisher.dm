@@ -44,6 +44,8 @@
 	icon_state = "fire_extinguisher[!safety]"
 	reagents.add_reagent(reagent_inside, volume)
 
+	extinguisher_list += src
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()

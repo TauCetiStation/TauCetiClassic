@@ -703,18 +703,20 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(!cache[A.type])
 				continue
 			for(var/turf/T in A)
+				if(black_list && (T.type in black_list))
+					continue
 				if(target_z == 0 || target_z == T.z)
-					if(black_list && !(T.type in black_list))
-						turfs += T
+					turfs += T
 	else
 		for(var/V in global.all_areas)
 			var/area/A = V
 			if(A.type != areatype)
 				continue
 			for(var/turf/T in A)
+				if(black_list && (T.type in black_list))
+					continue
 				if(target_z == 0 || target_z == T.z)
-					if(black_list && !(T.type in black_list))
-						turfs += T
+					turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.

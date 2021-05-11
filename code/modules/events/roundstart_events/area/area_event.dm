@@ -31,5 +31,8 @@
 	if(!targeted_areas.len)
 		CRASH("No valid areas for roundstart event found.")
 
+	var/list/names = list()
 	for(var/area/A in targeted_areas)
-		log_game("RoundStart Event: Selected area is [A.name]")
+		names += A.name
+
+	log_game("RoundStart Event: Selected areas is [english_list(names)]")
