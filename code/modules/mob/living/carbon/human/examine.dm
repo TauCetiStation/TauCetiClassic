@@ -467,7 +467,7 @@
 	if(!skipface)
 		var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 		if(istype(BP) && !BP.disfigured && BP.ipc_head == "Default" && length(BP.display_text) && h_style == "IPC text screen")
-			msg += "Отображает на экране текст: \"<span class=\"emojify\">[BP.display_text]</span>\"\n"
+			msg += "Отображает на экране: \"<span class=\"emojify\">[BP.display_text]</span>\"\n"
 
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"
