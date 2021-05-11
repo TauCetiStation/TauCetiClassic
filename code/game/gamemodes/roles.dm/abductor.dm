@@ -64,7 +64,7 @@
 
 	var/obj/machinery/abductor/console/console = A.get_team_console()
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
-	if(console!=null)
+	if(console)
 		console.vest = V
 	agent.equip_to_slot_or_del(V, SLOT_WEAR_SUIT)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), SLOT_IN_BACKPACK)
@@ -90,15 +90,15 @@
 
 	var/obj/machinery/abductor/console/console = A.get_team_console()
 	var/obj/item/device/abductor/gizmo/G = new /obj/item/device/abductor/gizmo(scientist)
-	if(console != null)
-		console.gizmo = G
-		G.console = console
 	scientist.equip_to_slot_or_del(G, SLOT_IN_BACKPACK)
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	beamplant.imp_in = scientist
 	beamplant.implanted = 1
 	beamplant.implanted(scientist)
-	beamplant.home = console.pad
+	if(console)
+		console.gizmo = G
+		G.console = console
+		beamplant.home = console.pad
 
 /datum/role/abducted
 	name = ABDUCTED

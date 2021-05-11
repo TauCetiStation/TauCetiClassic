@@ -71,9 +71,6 @@
 	return dat
 
 /datum/faction/abductors/proc/get_team_console(team)
-	var/obj/machinery/abductor/console/console
 	for(var/obj/machinery/abductor/console/c in abductor_machinery_list)
 		if(c.team == team_number)
-			console = c
-			break
-	return console
+			return c

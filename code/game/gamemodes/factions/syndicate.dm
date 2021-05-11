@@ -128,22 +128,21 @@
 
 /datum/faction/nuclear/proc/is_operatives_are_dead()
 	for(var/datum/role/role in members)
-		if (!istype(role.antag.current,/mob/living/carbon/human))
-			if(role.antag.current)
-				if(role.antag.current.stat != DEAD)
-					return FALSE
+		if (!ishuman(role.antag.current))
+			if(role.antag.current?.stat != DEAD)
+				return FALSE
 	return TRUE
 
 /datum/faction/nuclear/custom_result()
-	var/disk_rescued = 1
+	var/disk_rescued = TRUE
 	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		var/disk_area = get_area(D)
 		if(!is_type_in_typecache(disk_area, centcom_areas_typecache))
-			disk_rescued = 0
+			disk_rescued = FALSE
 			break
 
 	var/dat = ""
-	var/crew_evacuated = (SSshuttle.location==2)
+	var/crew_evacuated = (SSshuttle.location == SHUTTLE_AT_CENTCOM)
 	if      (!disk_rescued &&  SSticker.station_was_nuked &&          !syndies_didnt_escape)
 		dat += "<span class='red'>Syndicate Major Victory!</span>"
 		dat += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"

@@ -778,10 +778,10 @@ var/list/net_announcer_secret = list()
 		if (M.can_start())
 			runnable_modes[M] = mod_prob
 	if(!runnable_modes.len) // if no mode can start, then the modes that will always start
-		return get_exactly_runnable_modes()
+		return get_always_runnable_modes()
 	return runnable_modes
 
-/datum/configuration/proc/get_exactly_runnable_modes()
+/datum/configuration/proc/get_always_runnable_modes()
 	var/list/exactly_runnable_modes = list()
 	var/datum/modesbundle/run_anyway/bundle = new
 	for(var/type in bundle.possible_gamemodes)

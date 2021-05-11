@@ -149,7 +149,7 @@
 
 /datum/faction/malf_silicons/custom_result()
 	var/malf_dead = is_malf_ai_dead()
-	var/crew_evacuated = (SSshuttle.location==2)
+	var/crew_evacuated = (SSshuttle.location == SHUTTLE_AT_CENTCOM)
 	var/dat = ""
 	dat += "<h3>Malfunction mode resume:</h3>"
 

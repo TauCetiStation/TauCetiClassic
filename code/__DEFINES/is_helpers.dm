@@ -126,10 +126,6 @@
 
 #define isitem(A) (istype(A, /obj/item))
 
-// AREAS
-
-#define isspace(A) (A.type == /area)
-
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))

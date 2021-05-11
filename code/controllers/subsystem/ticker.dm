@@ -193,8 +193,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if (!mode.can_start())
 		to_chat(world, "<B>Unable to start [mode.name].</B> Not enough players, [mode.minimum_player_count] players needed. Reverting to pre-game lobby.")
-		qdel(mode)
-		mode = null
+		QDEL_NULL(mode)
 		current_state = GAME_STATE_PREGAME
 		SSjob.ResetOccupations()
 		return 0
@@ -207,8 +206,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		log_admin("The gamemode setup for [mode.name] errored out.")
 		world.log << "The gamemode setup for [mode.name] errored out."
-		qdel(mode)
-		mode = null
+		QDEL_NULL(mode)
 		SSjob.ResetOccupations()
 		return 0
 
