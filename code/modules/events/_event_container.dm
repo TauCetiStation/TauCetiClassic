@@ -143,7 +143,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stealed First AID",       /datum/event/roundstart/area/replace/med_storage,                10, list(ASSIGNMENT_MEDICAL = 1)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Old Morgue",              /datum/event/roundstart/area/replace/med_morgue,                 10, list(ASSIGNMENT_MEDICAL = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Die Monkey",              /datum/event/roundstart/area/replace/dead_monkeys,               10, list(ASSIGNMENT_SCIENTIST = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stealed Airlock",         /datum/event/roundstart/area/replace/airlock,                    10, list(ASSIGNMENT_ENGINEER = 10)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Broken Airlocks",         /datum/event/roundstart/area/replace/airlock,                    10, list(ASSIGNMENT_ENGINEER = 10)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Invasion In Mainteance",  /datum/event/roundstart/area/maintenance_spawn/invasion,         10, list(ASSIGNMENT_SECURITY = 20)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Sign of Antagonists",     /datum/event/roundstart/area/maintenance_spawn/antag_meta,       10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Headset",       /datum/event/roundstart/headset,                                 10, list(ASSIGNMENT_ANY = 5)),
@@ -155,7 +155,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Engine Mess",             /datum/event/roundstart/PA,                                      10, list(ASSIGNMENT_ENGINEER = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgottens Tanks",        /datum/event/roundstart/tank_dispenser,                          10, list(ASSIGNMENT_ENGINEER = 5, ASSIGNMENT_SCIENTIST = 10)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Sec. Equimp.",  /datum/event/roundstart/sec_equipment,                           10, list(ASSIGNMENT_SECURITY = 10)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Products",      /datum/event/roundstart/vending_products,                        10),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Products Inflation",      /datum/event/roundstart/vending_products,                        10),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
 	)
 
