@@ -45,3 +45,10 @@
 
 // Items below this gain are considered "pity" by the deity.
 #define MIN_FAVOUR_GAIN 20
+
+// Religion Techs
+#define RTECH_MEMORIZE_RUNE         "Memorize Rune"
+#define RTECH_REUSABLE_RUNE         "Reusable Rune"
+#define RTECH_BUILD_EVERYWHERE      "Build Everywhere"
+#define RTECH_MORE_RUNES            "More Runes"
+#define RTECH_MIRROR_SHIELD         "Mirror Shield"
