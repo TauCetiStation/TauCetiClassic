@@ -22,6 +22,8 @@
 
 	var/sandwich_limit = SANDWICH_GROWTH_BY_SLICE
 
+	var/gasp_cd = 0
+
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/attackby(obj/item/I, mob/user, params)
 	if(contents.len > sandwich_limit)
 		to_chat(user, "<span class='red'>If you put anything else on \the [src] it's going to collapse.</span>")
@@ -116,8 +118,11 @@
 	to_chat(user, "<span class='notice'>You think you can see [O.name] in there.</span>")
 
 	if(contents.len >= MAX_SANDWICH_LIMIT)
-		user.visible_message("<span class='notice'>Completely stricken by awe... [user] starts to lose their breath!</span>", "<span class='notice'>IT IS COMPLETE, you think, as you gasp for air.</span>")
-		user.emote("gasp")
+		to_chat(user, "<span class='notice'>IT IS COMPLETE, you think to yourself, as you gaze upon [src].</span>")
+		if(gasp_cd < world.time && prob(50))
+			gasp_cd = world.time + 0.5 SECONDS
+			user.emote("gasp")
+			user.visible_message("<span class='notice'>Completely stricken by awe... [user] starts to lose their breath!</span>", "<span class='notice'>IT IS COMPLETE, you think, as you gasp for air.</span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/attack(mob/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "eat"))
