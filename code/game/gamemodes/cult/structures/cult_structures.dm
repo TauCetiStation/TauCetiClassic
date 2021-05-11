@@ -244,7 +244,7 @@
 	if(iscultist(user))
 		destroying(user.my_religion)
 
-/obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
+/obj/structure/cult/anomaly/proc/async_destroying(datum/religion/cult/C)
 	animate(src, 1 SECONDS, alpha = 0)
 	sleep(1 SECONDS)
 	qdel(src)
@@ -252,6 +252,9 @@
 	C.adjust_favor(rand(1, 5))
 	// statistics!
 	score["destranomaly"]++
+
+/obj/structure/cult/anomaly/proc/destroying(datum/religion/cult/C)
+	INVOKE_ASYNC(src, .proc/async_destroying, C)
 
 /obj/structure/cult/anomaly/spacewhole
 	name = "abyss in space"
