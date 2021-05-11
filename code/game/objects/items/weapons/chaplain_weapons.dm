@@ -64,7 +64,7 @@
 	return ..()
 
 /obj/item/weapon/nullrod/equipped(mob/user, slot)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
 		START_PROCESSING(SSobj, src)
 	..()
 
@@ -101,6 +101,14 @@
 	if(!proximity || !user.my_religion || !global.cult_religion || !isturf(target) || next_turf_deconvert > world.time)
 		return
 
+	if(iscultist(user))
+		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.adjustBruteLoss(10)
+			H.Paralyse(20)
+		return
+
 	// Captured area is too strong
 	var/area/A = get_area(target)
 	if(A.religion && istype(A.religion, global.cult_religion.type))
@@ -123,7 +131,7 @@
 		user.Paralyse(20)
 		return
 
-	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST || deconverting)
+	if(user.mind?.holy_role < HOLY_ROLE_HIGHPRIEST || deconverting)
 		return
 
 	user.visible_message("<span class='danger'>[user] заряжает [src] и целится в [M].</span>")
@@ -138,6 +146,11 @@
 
 	if(M.stat != DEAD)
 		if(iscultist(M))
+			if(iscultist(user))
+				to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
+				user.adjustBruteLoss(10)
+				user.Paralyse(20)
+				return
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
 
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
@@ -165,8 +178,6 @@
 	w_class = ITEM_SIZE_NORMAL
 	req_access = list(access_chapel_office)
 
-	var/god_name = "Space-Jesus"
-	var/god_lore = ""
 	var/mob/living/simple_animal/shade/god/brainmob = null
 	var/searching = FALSE
 	var/next_ping = 0
@@ -174,11 +185,6 @@
 	var/image/god_image
 
 	var/list/next_apply = list()
-
-/obj/item/weapon/nullrod/staff/atom_init()
-	. = ..()
-	god_name = pick(global.chaplain_religion.deity_names)
-	god_lore = global.chaplain_religion.lore
 
 /obj/item/weapon/nullrod/staff/Destroy()
 	if((slot_equipped == SLOT_L_HAND || slot_equipped == SLOT_R_HAND) && ismob(loc))
@@ -215,7 +221,7 @@
 		hide_god(user)
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/I, mob/user, params)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
 		if(istype(I, /obj/item/device/soulstone)) //mb, the only way to pull out god
 			var/obj/item/device/soulstone/S = I
 			if(S.imprinted == "empty")
@@ -235,7 +241,7 @@
 		return ..()
 
 /obj/item/weapon/nullrod/staff/attack_self(mob/living/carbon/human/user)
-	if(user.mind && user.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
 		if(user.my_religion.aspects.len == 0)
 			to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
 			return
@@ -272,6 +278,9 @@
 	brainmob.mutations.Add(XRAY) //its the god
 	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 	brainmob.status_flags |= GODMODE
+
+	var/god_name = pick(summoner.my_religion.deity_names)
+	var/god_lore = summoner.my_religion.lore
 
 	brainmob.ckey = candidate.ckey
 	brainmob.name = "[god_name] [pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")]"
