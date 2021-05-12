@@ -39,7 +39,8 @@ SUBSYSTEM_DEF(events)
 
 /datum/controller/subsystem/events/proc/start_roundstart_event()
 	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
-	EC.start_event()
+	for(var/i in 1 to rand(1, 3))
+		EC.start_event()
 
 /datum/controller/subsystem/events/proc/event_complete(datum/event/E)
 	if(!E.event_meta)	// datum/event is used here and there for random reasons, maintaining "backwards compatibility"

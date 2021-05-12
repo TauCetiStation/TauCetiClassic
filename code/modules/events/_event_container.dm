@@ -135,7 +135,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 	severity = EVENT_LEVEL_ROUNDSTART
 	available_events = list(
 		// /datum/event_meta/New(event_severity, event_name, datum/event/type, event_weight, list/job_weights, is_one_shot = 0, event_enabled = 1, min_event_players = 0, min_event_weight = 0, max_event_weight = 0)
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Roundstart Nothing",      /datum/event/nothing, 1000),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Roundstart Nothing",      /datum/event/nothing, 1500),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Break Light",             /datum/event/roundstart/area/break_light,                        50, list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 40)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Dirt Bay",                /datum/event/roundstart/area/dirt,                               10, list(ASSIGNMENT_JANITOR = 100)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Randomize Cargo Storage", /datum/event/roundstart/area/cargo_storage,                      10),
