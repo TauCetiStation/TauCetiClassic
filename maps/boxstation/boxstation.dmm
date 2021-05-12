@@ -3601,26 +3601,6 @@
 	icon_state = "redfull"
 	},
 /area/station/security/checkpoint)
-"afX" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Secure Gate";
-	name = "Security Blast Door";
-	opacity = 0
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	dir = 1;
-	freq = 1400;
-	location = "Security"
-	},
-/obj/structure{
-	opacity = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "afY" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/plating,
@@ -8135,19 +8115,7 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "and" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	freq = 1400;
-	location = "Research Division"
-	},
-/obj/structure{
-	opacity = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
+/turf/simulated/wall,
 /area/station/rnd/hallway)
 "ane" = (
 /obj/machinery/space_heater,
@@ -12970,9 +12938,8 @@
 	},
 /area/station/rnd/xenobiology)
 "awg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -14290,9 +14257,6 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -26699,21 +26663,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
-"aVN" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	freq = 1400;
-	location = "Janitor"
-	},
-/obj/structure{
-	opacity = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
-/area/station/civilian/janitor)
 "aVO" = (
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
@@ -27839,6 +27788,12 @@
 	req_access = list(48)
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/cargo/miningoffice)
 "aXK" = (
@@ -32157,6 +32112,9 @@
 "bfH" = (
 /obj/machinery/camera{
 	c_tag = "Mining office"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -41610,21 +41568,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
-"byR" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	freq = 1400;
-	location = "Bar"
-	},
-/obj/machinery/door/firedoor,
-/obj/structure{
-	opacity = 1
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
-/area/station/civilian/bar)
 "byU" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -44213,21 +44156,6 @@
 	icon_state = "warning"
 	},
 /area/station/rnd/lab)
-"bEI" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=1";
-	freq = 1400;
-	location = "Hydroponics"
-	},
-/obj/structure{
-	opacity = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
-/area/station/civilian/hydroponics)
 "bEJ" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -49721,7 +49649,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bRC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -50503,21 +50431,6 @@
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
-	},
-/area/station/medical/storage)
-"bTt" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	freq = 1400;
-	location = "Medbay"
-	},
-/obj/structure{
-	opacity = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
 	},
 /area/station/medical/storage)
 "bTu" = (
@@ -69539,6 +69452,12 @@
 	},
 /area/station/engineering/chiefs_office)
 "gvg" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -70179,6 +70098,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -72332,15 +72252,15 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
 	},
 /area/station/cargo/miningoffice)
 "kFb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -72930,14 +72850,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"lDy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/closet/secure_closet/miner,
-/turf/simulated/floor{
-	icon_state = "brown"
-	},
-/area/station/cargo/miningoffice)
 "lEb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
@@ -95793,7 +95705,7 @@ brd
 bfH
 bRC
 awg
-lDy
+khG
 brd
 bGc
 bGc
@@ -99642,7 +99554,7 @@ aAB
 aNv
 qex
 aMQ
-bEI
+aNi
 bEW
 aSM
 aSM
@@ -101697,7 +101609,7 @@ aFO
 aTp
 bwJ
 owK
-byR
+aGn
 bEW
 bEW
 tEw
@@ -112768,7 +112680,7 @@ bek
 aKz
 cxQ
 aMR
-aVN
+bJe
 bJe
 bJe
 bJe
@@ -114749,7 +114661,7 @@ aaV
 aaV
 aeo
 aaV
-afX
+aaV
 agg
 agg
 agg
@@ -115083,7 +114995,7 @@ bPi
 bQd
 bSh
 bXv
-bTt
+bIS
 cce
 aJP
 cce
