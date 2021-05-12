@@ -33,14 +33,31 @@
 	back_style = BACKPACK_STYLE_MEDICAL
 
 
-// SURGEON OUTFIT
-/datum/outfit/job/surgeon
-	name = OUTFIT_JOB_NAME("Surgeon")
+// SURGEON_BLUE OUTFIT
+/datum/outfit/job/surgeon_blue
+	name = OUTFIT_JOB_NAME("Surgeon blue")
 
 	uniform = /obj/item/clothing/under/rank/medical/blue
 	shoes = /obj/item/clothing/shoes/white
 	suit = /obj/item/clothing/suit/storage/labcoat
 	head = /obj/item/clothing/head/surgery/blue
+
+	belt = /obj/item/device/pda/medical
+	l_ear = /obj/item/device/radio/headset/headset_med
+
+	l_hand = /obj/item/weapon/storage/firstaid/adv
+	suit_store = /obj/item/device/flashlight/pen
+
+	back_style = BACKPACK_STYLE_MEDICAL
+
+// SURGEON_GREEN OUTFIT
+/datum/outfit/job/surgeon_green
+	name = OUTFIT_JOB_NAME("Surgeon green")
+
+	uniform = /obj/item/clothing/under/rank/medical/green
+	shoes = /obj/item/clothing/shoes/white
+	suit = /obj/item/clothing/suit/storage/labcoat
+	head = /obj/item/clothing/head/surgery/green
 
 	belt = /obj/item/device/pda/medical
 	l_ear = /obj/item/device/radio/headset/headset_med

@@ -42,7 +42,8 @@
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_medbay_storage)
 	salary = 160
 	alt_titles = list(
-		"Surgeon" = /datum/outfit/job/surgeon,
+		"Surgeon blue" = /datum/outfit/job/surgeon_blue,
+		"Surgeon green" = /datum/outfit/job/surgeon_green,
 		"Nurse" = /datum/outfit/job/nurse
 		)
 	minimal_player_ingame_minutes = 960
