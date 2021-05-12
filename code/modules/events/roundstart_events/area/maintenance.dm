@@ -38,18 +38,22 @@
 		/obj/structure/alien/resin/wall/shadowling,
 		/obj/structure/alien/resin/wall,
 		/obj/structure/alien/weeds/node,
+		/obj/item/weapon/card/emag_broken,
 	)
 
 /datum/event/roundstart/area/maintenance_spawn/antag_meta/setup()
 	nums = rand(1, 3)
+	possible_types += subtypesof(/obj/item/weapon/storage/box/syndie_kit)
 	. = ..()
 
 /datum/event/roundstart/area/maintenance_spawn/antag_meta/spawn_atom(type, turf/T)
-	switch(type)
-		if(/obj/effect/rune)
-			new /obj/effect/rune(T, null, null, TRUE)
-		else
-			new type(T)
+	if(ispath(type, /obj/effect/rune))
+		new /obj/effect/rune(T, null, null, TRUE)
+	else if(ispath(type, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = new(T)
+		S.make_empty()
+	else
+		new type(T)
 
 	message_admins("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in ([T.x] [T.y] [T.z]) - [ADMIN_JMP(T)]")
 	log_game("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in ([T.x] [T.y] [T.z])")

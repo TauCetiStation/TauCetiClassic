@@ -622,8 +622,9 @@ var/list/airlock_overlays = list()
 	var/obj/structure/door_assembly/da = new assembly_type(loc)
 	da.anchored = 0
 	var/target = da.loc
-	for(var/i in 1 to 4)
-		target = get_turf(get_step(target,user.dir))
+	if(user)
+		for(var/i in 1 to 4)
+			target = get_turf(get_step(target,user.dir))
 	da.throw_at(target, 200, 100, spin = FALSE)
 	if(mineral)
 		da.change_mineral_airlock_type(mineral)

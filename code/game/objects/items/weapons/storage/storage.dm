@@ -517,3 +517,7 @@
 	for(var/obj/O in contents)
 		remove_from_storage(O, T)
 		INVOKE_ASYNC(O, /obj.proc/tumble_async, 2)
+
+/obj/item/weapon/storage/proc/make_empty()
+	for(var/A in contents)
+		qdel(A)

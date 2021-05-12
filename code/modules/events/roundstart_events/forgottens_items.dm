@@ -50,13 +50,13 @@ var/global/list/extinguisher_list = list()
 			continue
 		if(prob(60))
 			E.reagents.remove_reagent(E.reagent_inside, rand(200, 600), TRUE)
-			message_admins("RoundStart Event: [E] has changed amount of reagents in [COORD(E)]")
-			log_game("RoundStart Event: [E] has changed amount of reagents in [COORD(E)]")
+			message_admins("RoundStart Event: [E] has changed amount of reagents in [COORD(E.loc)]")
+			log_game("RoundStart Event: [E] has changed amount of reagents in [COORD(E.loc)]")
 		else if(prob(30))
 			if(istype(E.loc, /obj/structure/extinguisher_cabinet))
 				var/obj/structure/extinguisher_cabinet/EC = E.loc
-				message_admins("RoundStart Event: [E] was removed from [COORD(E)]")
-				log_game("RoundStart Event: [E] was removed from [COORD(E)]")
+				message_admins("RoundStart Event: [E] was removed from [COORD(EC)]")
+				log_game("RoundStart Event: [E] was removed from [COORD(EC)]")
 				qdel(E)
 				EC.update_icon()
 
