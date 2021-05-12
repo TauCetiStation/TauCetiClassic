@@ -3357,12 +3357,6 @@
 	},
 /turf/space,
 /area/space)
-"akF" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "0,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "akG" = (
 /obj/structure/object_wall/erokez{
 	icon_state = "2,3"
@@ -4950,46 +4944,6 @@
 	icon_state = "sandwater"
 	},
 /area/velocity)
-"apG" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "0,2"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"apL" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "0,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"apM" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "0,4"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"apN" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "0,3"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"apO" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "0,6"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"apP" = (
-/obj/structure/object_wall/cargo,
-/turf/space,
-/area/shuttle/supply/velocity)
-"apQ" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "0,7"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "apR" = (
 /obj/item/weapon/paper{
 	info = "Some stuff is missing...";
@@ -5123,18 +5077,6 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
-"aqf" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "1,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aqg" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/cargo,
-/area/shuttle/supply/velocity)
 "aqi" = (
 /obj/structure/closet/acloset,
 /turf/unsimulated/floor{
@@ -5146,16 +5088,6 @@
 	icon_state = "plasma2"
 	},
 /area/custom/alien)
-"aqk" = (
-/obj/structure/closet/crate/seized_inventory,
-/obj/item/toy/cards,
-/obj/item/toy/cards,
-/obj/item/weapon/storage/pill_bottle/dice,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "brown"
-	},
-/area/velocity)
 "aql" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/light{
@@ -5256,35 +5188,6 @@
 	icon_state = "engine"
 	},
 /area/velocity)
-"aqC" = (
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"aqD" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"aqE" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "1,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aqF" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3,0"
-	},
-/area/shuttle/supply/velocity)
-"aqG" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "2"
-	},
-/area/shuttle/supply/velocity)
 "aqH" = (
 /turf/space,
 /area/shuttle/alien/base)
@@ -5350,14 +5253,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"aqT" = (
-/obj/structure/closet/crate/seized_inventory,
-/obj/item/weapon/game_kit/random,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "brown"
-	},
-/area/velocity)
 "aqW" = (
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = 3;
@@ -5371,32 +5266,6 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor/engine,
-/area/velocity)
-"arb" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,0"
-	},
-/area/shuttle/supply/velocity)
-"arc" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "1,7"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"ard" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "2,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"are" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "CKLoad"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
 /area/velocity)
 "arj" = (
 /obj/structure/grille,
@@ -5475,47 +5344,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
-	},
-/area/velocity)
-"aro" = (
-/obj/machinery/door/poddoor/shutters{
-	dir = 4;
-	id = "ck_warehouse";
-	name = "Warehouse Shutters"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/velocity)
-"arp" = (
-/obj/machinery/door/poddoor/shutters{
-	dir = 8;
-	id = "ck_warehouse";
-	name = "Warehouse Shutters"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/velocity)
-"arr" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "CKLoad"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"ars" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "CKLoad";
-	pixel_y = 7
-	},
-/turf/unsimulated/floor{
-	name = "plating"
 	},
 /area/velocity)
 "aru" = (
@@ -5607,54 +5435,6 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
-"arJ" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "1,1"
-	},
-/area/shuttle/supply/velocity)
-"arK" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "2,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"arM" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "0,2"
-	},
-/area/shuttle/supply/velocity)
-"arN" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3,1"
-	},
-/area/shuttle/supply/velocity)
-"arO" = (
-/obj/structure/table/reinforced,
-/obj/machinery/status_display{
-	pixel_x = 32;
-	supply_display = 1
-	},
-/obj/machinery/door_control{
-	id = "QMLoaddoor";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_y = -8
-	},
-/obj/machinery/door_control{
-	id = "QMLoaddoor2";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_y = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"arP" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,5"
-	},
-/area/shuttle/supply/velocity)
 "arR" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/folder/red,
@@ -5690,31 +5470,11 @@
 	icon_state = "wood"
 	},
 /area/velocity)
-"arY" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "1,2"
-	},
-/area/shuttle/supply/velocity)
 "arZ" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/velocity)
-"asa" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Supply Shuttle";
-	req_access = list(101)
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"asb" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "3,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "asc" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
@@ -5753,29 +5513,6 @@
 	},
 /turf/unsimulated/floor{
 	name = "plating"
-	},
-/area/velocity)
-"ash" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "2,2"
-	},
-/area/shuttle/supply/velocity)
-"asi" = (
-/obj/machinery/computer/cargo,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"asj" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "3,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"ask" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "warnplate"
 	},
 /area/velocity)
 "asl" = (
@@ -5833,18 +5570,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"asw" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"asx" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "0,3"
-	},
-/area/shuttle/supply/velocity)
 "asy" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -5923,21 +5648,6 @@
 	icon_state = "white"
 	},
 /area/centcom)
-"asJ" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3,2"
-	},
-/area/shuttle/supply/velocity)
-"asK" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,2"
-	},
-/area/shuttle/supply/velocity)
-"asL" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "1,3"
-	},
-/area/shuttle/supply/velocity)
 "asN" = (
 /obj/random/vending/cola,
 /turf/unsimulated/floor{
@@ -6012,12 +5722,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/wall,
 /area/velocity)
-"atd" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,3"
-	},
-/area/shuttle/supply/velocity)
 "ate" = (
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
@@ -6093,23 +5797,6 @@
 	name = "plating"
 	},
 /area/velocity)
-"atn" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "4,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"ato" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "2,3"
-	},
-/area/shuttle/supply/velocity)
-"atp" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "4,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "atq" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -7063,29 +6750,6 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
-"awY" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "brown"
-	},
-/area/velocity)
-"awZ" = (
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "brown"
-	},
-/area/velocity)
-"axa" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Cargo";
-	req_access = list(101)
-	},
-/obj/structure/disposalpipe/segment,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/velocity)
 "axb" = (
 /obj/machinery/vending/cola{
 	name = "hacked Robust Softdrinks";
@@ -7095,16 +6759,6 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
-"axc" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,3"
-	},
-/area/shuttle/supply/velocity)
-"axd" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3,3"
-	},
-/area/shuttle/supply/velocity)
 "axf" = (
 /obj/structure/disposalpipe/segment,
 /obj/random/vending/cola,
@@ -7142,39 +6796,6 @@
 	icon_state = "floor"
 	},
 /area/velocity)
-"axp" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "1,4"
-	},
-/area/shuttle/supply/velocity)
-"axq" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "0,4"
-	},
-/area/shuttle/supply/velocity)
-"axr" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "4,7"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"axs" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "5,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"axt" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "2,4"
-	},
-/area/shuttle/supply/velocity)
-"axu" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "5,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "axv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/vending/coffee,
@@ -7202,16 +6823,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/prison)
-"axC" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "0,5"
-	},
-/area/shuttle/supply/velocity)
-"axG" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3,4"
-	},
-/area/shuttle/supply/velocity)
 "axK" = (
 /obj/structure/sign/velocity_overlay/reklama{
 	desc = "<5555> Best in space. Since 2322.";
@@ -7241,11 +6852,6 @@
 	icon_state = "floor2"
 	},
 /area/velocity)
-"axO" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,4"
-	},
-/area/shuttle/supply/velocity)
 "axS" = (
 /turf/unsimulated/floor{
 	icon_state = "red"
@@ -7881,11 +7487,6 @@
 /obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/shuttle/officer/velocity)
-"azM" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "1,5"
-	},
-/area/shuttle/supply/velocity)
 "azP" = (
 /obj/machinery/door/poddoor{
 	id = "velocity_main";
@@ -8059,12 +7660,6 @@
 	icon_state = "floor4"
 	},
 /area/velocity)
-"aAk" = (
-/obj/machinery/door/unpowered/shuttle/wagon,
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "1,6"
-	},
-/area/shuttle/supply/velocity)
 "aAl" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -8158,15 +7753,6 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
-	},
-/area/velocity)
-"aAH" = (
-/obj/machinery/deployable/barrier{
-	req_access = list(101)
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "brown"
 	},
 /area/velocity)
 "aAJ" = (
@@ -8576,7 +8162,7 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun,
 /obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
 	dir = 1;
@@ -10262,12 +9848,6 @@
 	},
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
-"aHk" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "6,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aHl" = (
 /obj/machinery/cryopod/right{
 	storage = 0
@@ -10410,11 +9990,6 @@
 	name = "plating"
 	},
 /area/shuttle/administration/centcom)
-"aHC" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "2,5"
-	},
-/area/shuttle/supply/velocity)
 "aHD" = (
 /obj/structure/window/reinforced{
 	dir = 5;
@@ -11098,12 +10673,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
-"aKi" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "6,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aKj" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_s10"
@@ -11488,7 +11057,7 @@
 	},
 /area/centcom/control)
 "aLs" = (
-/obj/machinery/computer/cargo/request{
+/obj/machinery/computer{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -11594,7 +11163,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /turf/unsimulated/floor,
@@ -11938,7 +11507,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /turf/unsimulated/floor,
@@ -12769,11 +12338,6 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
-"aQX" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "2,1"
-	},
-/area/shuttle/supply/velocity)
 "aRb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor{
@@ -13204,11 +12768,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"aSB" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3,5"
-	},
-/area/shuttle/supply/velocity)
 "aSC" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -13426,16 +12985,6 @@
 	icon_state = "circuit"
 	},
 /area/space)
-"aTj" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,1"
-	},
-/area/shuttle/supply/velocity)
-"aTk" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "0,6"
-	},
-/area/shuttle/supply/velocity)
 "aTn" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -13613,12 +13162,6 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
-"aTG" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "7,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aTJ" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -13783,12 +13326,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/living)
-"aUk" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "7,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aUn" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -13855,11 +13392,6 @@
 	icon_state = "floor5"
 	},
 /area/centcom/living)
-"aUx" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3"
-	},
-/area/shuttle/supply/velocity)
 "aUz" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -13947,54 +13479,12 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
-"aUP" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "2,6"
-	},
-/area/shuttle/supply/velocity)
-"aUQ" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "4,6"
-	},
-/area/shuttle/supply/velocity)
-"aUS" = (
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "3,6"
-	},
-/area/shuttle/supply/velocity)
 "aUT" = (
 /obj/structure/object_wall/evac{
 	icon_state = "5,19"
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
-"aUV" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "7,7"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aUW" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aUY" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,2"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aVa" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aVb" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -14174,22 +13664,10 @@
 	icon_state = "warndark"
 	},
 /area/centcom/control)
-"aVx" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,4"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aVy" = (
 /obj/structure/closet/medical_wall/erokez,
 /turf/space,
 /area/shuttle/transport1/centcom)
-"aVz" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,3"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aVC" = (
 /obj/structure/closet/secure_closet/bar,
 /turf/unsimulated/floor{
@@ -14240,18 +13718,6 @@
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
-"aVO" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,6"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aVP" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,5"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aVQ" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -14299,42 +13765,6 @@
 	icon_state = "dark"
 	},
 /area/centcom/evac)
-"aWe" = (
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"aWf" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "8,7"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aWg" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,0"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aWh" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,2"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aWi" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,1"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aWj" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,4"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aWk" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/unsimulated/floor{
@@ -14356,24 +13786,6 @@
 /obj/structure/table,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
-"aWt" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,3"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aWu" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,6"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
-"aWv" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,5"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aWw" = (
 /obj/structure/table{
 	dir = 9;
@@ -14408,12 +13820,6 @@
 	icon_state = "white"
 	},
 /area/centcom/tdome)
-"aWD" = (
-/obj/structure/object_wall/cargo{
-	icon_state = "9,7"
-	},
-/turf/space,
-/area/shuttle/supply/velocity)
 "aWE" = (
 /obj/effect/overlay/palmtree_r,
 /turf/unsimulated/beach/sand,
@@ -17404,13 +16810,6 @@
 	},
 /turf/space,
 /area/shuttle/syndicate/start)
-"bSb" = (
-/obj/structure/largecrate,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "brown"
-	},
-/area/velocity)
 "bSj" = (
 /obj/structure/table/woodentable,
 /obj/item/clothing/suit/chef/classic{
@@ -17421,68 +16820,9 @@
 	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"bTb" = (
-/obj/structure/largecrate,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/velocity)
-"bUb" = (
-/obj/structure/closet,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/velocity)
-"bVb" = (
-/obj/structure/closet,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "brown"
-	},
-/area/velocity)
 "bVy" = (
 /turf/simulated/wall/cult,
 /area/custom/cult)
-"bWb" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "CKLoad"
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "brown"
-	},
-/area/velocity)
-"bXb" = (
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "brown"
-	},
-/area/velocity)
-"bYb" = (
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "brown"
-	},
-/area/velocity)
-"bZb" = (
-/obj/machinery/status_display{
-	pixel_x = 32;
-	supply_display = 1
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/deployable/barrier{
-	req_access = list(101)
-	},
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "brown"
-	},
-/area/velocity)
 "bZH" = (
 /obj/structure/pedestal/cult,
 /turf/unsimulated/floor/cult,
@@ -17495,60 +16835,12 @@
 	icon_state = "white"
 	},
 /area/velocity)
-"cbb" = (
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "brown"
-	},
-/area/velocity)
-"ccb" = (
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "brown"
-	},
-/area/velocity)
-"cdb" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "brown"
-	},
-/area/velocity)
 "cdy" = (
 /obj/item/weapon/reagent_containers/food/snacks/meat/human{
 	name = "Edvard Right Leg Meat"
 	},
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"ceb" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"cfb" = (
-/obj/machinery/door_control{
-	id = "ck_warehouse";
-	name = "Warehouse Door Control";
-	pixel_x = -1;
-	pixel_y = -24;
-	req_access = list(101)
-	},
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "brown"
-	},
-/area/velocity)
-"cgb" = (
-/turf/unsimulated/floor{
-	icon_state = "brown"
-	},
-/area/velocity)
 "cgI" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
@@ -17574,34 +16866,6 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
-"chb" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "brown"
-	},
-/area/velocity)
-"cib" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/velocity)
-"cjb" = (
-/obj/machinery/door_control{
-	id = "ck_warehouse";
-	name = "Warehouse Door Control";
-	pixel_x = -1;
-	pixel_y = 24;
-	req_access = list(101)
-	},
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "brown"
-	},
-/area/velocity)
 "ckb" = (
 /obj/item/weapon/twohanded/flora/random,
 /obj/structure/centcom_barrier,
@@ -17647,20 +16911,6 @@
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
-	},
-/area/velocity)
-"cpb" = (
-/obj/structure/closet/crate,
-/turf/unsimulated/floor{
-	dir = 10;
-	icon_state = "brown"
-	},
-/area/velocity)
-"cqb" = (
-/obj/structure/closet/crate,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "brown"
 	},
 /area/velocity)
 "cqi" = (
@@ -23488,7 +22738,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
-/obj/structure/plasticflaps/explosion_proof,
+/obj/structure,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "oab" = (
@@ -23516,7 +22766,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
-/obj/structure/plasticflaps/explosion_proof,
+/obj/structure,
 /turf/unsimulated/floor,
 /area/centcom/control)
 "obR" = (
@@ -24209,52 +23459,6 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
-"qeb" = (
-/obj/machinery/conveyor{
-	dir = 5;
-	id = "CKLoad"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/velocity)
-"qfb" = (
-/obj/machinery/door/poddoor/cargo{
-	id = "QMLoaddoor2";
-	name = "Supply Shuttle Loading Door"
-	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "QMLoad2"
-	},
-/turf/simulated/shuttle/floor/wagon,
-/area/shuttle/supply/velocity)
-"qgb" = (
-/obj/machinery/door/poddoor/cargo{
-	id = "QMLoaddoor1";
-	name = "Supply Shuttle Loading Door"
-	},
-/obj/machinery/conveyor{
-	id = "QMLoad"
-	},
-/turf/simulated/shuttle/floor/wagon,
-/area/shuttle/supply/velocity)
-"qhb" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "0,1"
-	},
-/area/shuttle/supply/velocity)
-"qib" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor/cargo{
-	icon_state = "1,6"
-	},
-/area/shuttle/supply/velocity)
 "qnM" = (
 /obj/effect/step_trigger/thrower{
 	direction = 4;
@@ -68601,18 +67805,18 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
-aoo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -68858,18 +68062,18 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-aqC
-apQ
-apO
-apP
-apM
-apN
-apG
-apL
-akF
-aoo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -69115,18 +68319,18 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-aqC
-arc
-qhb
-arb
-aqF
-aqG
-aqg
-aqE
-aqf
-aoo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -69372,18 +68576,18 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-aqC
-qfb
-arP
-arY
-arM
-arN
-arJ
-arK
-ard
-aoo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -69629,18 +68833,18 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-aqC
-atd
-asK
-asL
-asx
-asJ
-ash
-asj
-asb
-aoo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -69886,17 +69090,17 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-aqC
-axr
-axp
-axq
-axc
-axd
-ato
-atp
-atn
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 aoo
 aoo
@@ -70143,17 +69347,17 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-aqC
-aAk
-axO
-azM
-axC
-axG
-axt
-axu
-axs
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 aoo
 aqL
@@ -70400,17 +69604,17 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-qeb
-qgb
-aTj
-aTk
-aQX
-aSB
-aHC
-aKi
-aHk
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 att
 aqM
@@ -70657,17 +69861,17 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-are
-aUV
-aUQ
-aUS
-aUx
-aUP
-qib
-aUk
-aTG
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 aql
 aqM
@@ -70914,17 +70118,17 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-are
-aWf
-aVO
-aVP
-aVx
-aVz
-aUY
-aVa
-aUW
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 aqm
 aqM
@@ -71171,17 +70375,17 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-are
-aWD
-aWu
-aWv
-aWj
-aWt
-aWh
-aWi
-aWg
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 aoo
 aqN
@@ -71428,16 +70632,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqD
-are
-aqC
-aqC
-aqC
-aqC
-aqC
-aqC
-aWe
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 aoo
 aoo
@@ -71685,16 +70889,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-are
-ars
-aqC
-aqC
-aqC
-aqC
-aqC
-aqC
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 apT
 aqn
@@ -71942,16 +71146,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-are
-aqC
-aqC
-aqC
-aqC
-aqC
-aqC
-aqC
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 apU
 aqo
@@ -72199,16 +71403,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aqC
-are
-arO
-ceb
-aqC
-ask
-ask
-asi
-asw
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 apV
 aqo
@@ -72456,16 +71660,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-aoo
-arr
-aoo
-aoo
-aoo
-aoo
-asa
-aoo
-aoo
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 apW
 aqp
@@ -72713,16 +71917,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-bSb
-bWb
-awY
-awY
-cfb
-aoo
-chb
-awY
-cpb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 aoo
 aoo
@@ -72970,16 +72174,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-bTb
-arZ
-bXb
-cbb
-cgb
-aro
-cib
-arZ
-cgb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 apX
 aqq
@@ -73227,16 +72431,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-bUb
-arZ
-bYb
-ccb
-cgb
-arp
-cib
-arZ
-cgb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 apY
 cub
@@ -73484,16 +72688,16 @@ aaM
 aaM
 aaM
 aaM
-aoo
-bVb
-aAH
-bZb
-aqT
-aqk
-aoo
-cjb
-cdb
-cqb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aoo
 apZ
 cvb
@@ -73749,7 +72953,7 @@ aoz
 aoz
 aoz
 atc
-axa
+aoz
 aoz
 aoz
 aqa
@@ -74006,7 +73210,7 @@ anp
 anu
 aoo
 ckb
-awZ
+clb
 cnb
 csb
 cnb

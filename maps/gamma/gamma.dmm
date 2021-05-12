@@ -5054,7 +5054,7 @@
 	freq = 1400;
 	location = "Bridge"
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
@@ -9902,7 +9902,7 @@
 	freq = 1400;
 	location = "Hydroponics"
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
@@ -12827,7 +12827,7 @@
 /area/station/civilian/chapel/altar)
 "cWN" = (
 /obj/machinery/door/firedoor,
-/obj/structure/plasticflaps/mining,
+/obj/structure,
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "cargostorage"
@@ -18715,7 +18715,7 @@
 	freq = 1400;
 	location = "Security"
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
@@ -19277,7 +19277,7 @@
 	},
 /area/station/engineering/chiefs_office)
 "eZN" = (
-/obj/structure/closet/secure_closet/cargotech,
+/obj/structure/closet,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -23278,7 +23278,7 @@
 	location = "Engineering"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/door/poddoor{
@@ -27542,7 +27542,7 @@
 	},
 /area/station/medical/reception)
 "hEd" = (
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/navbeacon{
@@ -27948,7 +27948,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "hLO" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -29053,7 +29053,7 @@
 	id = "QMLoaddoor1";
 	name = "Supply Dock Loading Door"
 	},
-/obj/structure/plasticflaps/mining,
+/obj/structure,
 /obj/machinery/conveyor{
 	id = "QMLoad"
 	},
@@ -34353,7 +34353,7 @@
 	},
 /area/station/cargo/recycleroffice)
 "jOr" = (
-/obj/structure/closet/secure_closet/quartermaster,
+/obj/structure/closet/secure_closet,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkyellow"
@@ -35121,7 +35121,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "kbi" = (
-/obj/structure/closet/secure_closet/recycler,
+/obj/structure/closet/secure_closet,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -36298,7 +36298,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "kvS" = (
-/obj/structure/closet/secure_closet/recycler,
+/obj/structure/closet/secure_closet,
 /obj/machinery/power/apc{
 	cell_type = 2500;
 	dir = 8;
@@ -38251,7 +38251,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/execution)
 "kZu" = (
-/obj/structure/plasticflaps/mining,
+/obj/structure,
 /obj/machinery/conveyor{
 	dir = 4;
 	id = "toxlab1"
@@ -42492,7 +42492,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/plasticflaps/mining,
+/obj/structure,
 /obj/machinery/conveyor{
 	id = "packageSort1"
 	},
@@ -42517,7 +42517,7 @@
 /obj/item/device/eftpos{
 	eftpos_name = "Cargo Bay EFTPOS scanner"
 	},
-/obj/item/device/export_scanner,
+/obj/item/device,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -54439,7 +54439,7 @@
 	dir = 1;
 	id = "packageSort1"
 	},
-/obj/structure/plasticflaps/mining,
+/obj/structure,
 /turf/simulated/floor/plating{
 	dir = 8;
 	icon_state = "warnplate"
@@ -54546,7 +54546,7 @@
 	dir = 4;
 	id = "Minedoc2"
 	},
-/obj/structure/plasticflaps/mining,
+/obj/structure,
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
 "qgk" = (
@@ -58268,7 +58268,7 @@
 	id = "QMLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
-/obj/structure/plasticflaps/mining,
+/obj/structure,
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "QMLoad2"
@@ -65646,7 +65646,7 @@
 	freq = 1400;
 	location = "Janitor"
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
@@ -69386,9 +69386,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/eva)
-"uPt" = (
-/turf/space,
-/area/shuttle/supply/station)
 "uQg" = (
 /obj/structure/object_wall/mining{
 	icon_state = "1-8"
@@ -73225,7 +73222,7 @@
 	location = "Bar"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /turf/simulated/floor{
@@ -73506,7 +73503,7 @@
 	},
 /area/station/cargo/office)
 "vYY" = (
-/obj/machinery/computer/cargo{
+/obj/machinery/computer{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -74881,7 +74878,7 @@
 	freq = 1400;
 	location = "Research Division"
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
@@ -75261,7 +75258,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "wHq" = (
-/obj/machinery/computer/cargo{
+/obj/machinery/computer{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -75753,7 +75750,7 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
 "wPq" = (
-/obj/structure/plasticflaps,
+/obj/structure,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -79429,7 +79426,7 @@
 	freq = 1400;
 	location = "Medbay"
 	},
-/obj/structure/plasticflaps{
+/obj/structure{
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
@@ -79867,7 +79864,7 @@
 	},
 /area/station/security/armoury)
 "yil" = (
-/obj/machinery/computer/cargo/request,
+/obj/machinery/computer,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -93064,14 +93061,14 @@ foG
 ohJ
 plf
 plf
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 kHU
@@ -93321,14 +93318,14 @@ snX
 ohJ
 ohJ
 lxc
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 kHU
@@ -93578,14 +93575,14 @@ hgW
 rrJ
 hgW
 rrJ
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 kHU
@@ -93835,14 +93832,14 @@ tGl
 kka
 edr
 fwT
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 kHU
@@ -94092,14 +94089,14 @@ fDS
 ohJ
 ohJ
 ohJ
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 kHU
@@ -94349,14 +94346,14 @@ tDo
 kka
 kCg
 fwT
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 kHU
@@ -94606,14 +94603,14 @@ lRb
 igD
 lRb
 igD
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 kHU
@@ -94863,14 +94860,14 @@ scu
 ohJ
 ohJ
 lxc
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 pGE
@@ -95120,14 +95117,14 @@ xxJ
 rRX
 plf
 kHU
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 pEu
 uks
@@ -95377,14 +95374,14 @@ xxJ
 rRX
 plf
 kHU
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
-uPt
+plf
+plf
+plf
+plf
+plf
+plf
+plf
+plf
 kHU
 uDA
 uks
