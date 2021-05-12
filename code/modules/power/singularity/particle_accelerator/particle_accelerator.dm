@@ -71,7 +71,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/atom_init()
 	. = ..()
-	PA_list += src
+	particle_accelerator_list += src
 
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = 0

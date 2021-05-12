@@ -1336,7 +1336,6 @@
 #include "code\modules\events\roundstart_events\area\cargo_storage.dm"
 #include "code\modules\events\roundstart_events\area\dirt.dm"
 #include "code\modules\events\roundstart_events\area\maintenance.dm"
-#include "code\modules\events\roundstart_events\area\replace\dead_monkeys.dm"
 #include "code\modules\events\roundstart_events\area\replace\med_morgue.dm"
 #include "code\modules\events\roundstart_events\area\replace\med_storage.dm"
 #include "code\modules\events\roundstart_events\area\replace\random_airlock.dm"
