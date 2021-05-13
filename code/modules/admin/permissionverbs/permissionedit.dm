@@ -204,8 +204,7 @@ var elements = document.getElementsByName('rights');
 		message_admins("[key_name_admin(usr)] removed[removed_rights] permissions of [adm_ckey]")
 		log_admin("[key_name(usr)] removed[removed_rights] permission of [adm_ckey]")
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_admin", "erro_admin_log"))
 		to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 		return
 	adm_ckey = ckey(adm_ckey)
@@ -249,8 +248,7 @@ var elements = document.getElementsByName('rights');
 	message_admins("[key_name_admin(usr)] added [ment_ckey] to the mentors list")
 	log_admin("[key_name(usr)] added [ment_ckey] to the mentors list")
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_mentor", "erro_admin_log"))
 		to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 		return
 	ment_ckey = ckey(ment_ckey)
@@ -275,8 +273,7 @@ var elements = document.getElementsByName('rights');
 		message_admins("[key_name_admin(usr)] removed [ment_ckey] from the mentors list")
 		log_admin("[key_name(usr)] removed [ment_ckey] from the mentors list")
 
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!establish_db_connection("erro_mentor", "erro_admin_log"))
 			to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 			return
 		ment_ckey = ckey(ment_ckey)
@@ -295,8 +292,7 @@ var elements = document.getElementsByName('rights');
 	if(!usr.client.holder || !(usr.client.holder.rights & R_PERMISSIONS))
 		to_chat(usr, "<span class='alert'>You do not have permission to do this!</span>")
 		return
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_admin", "erro_admin_log"))
 		to_chat(usr, "<span class='alert'>Failed to establish database connection</span>")
 		return
 	if(!adm_ckey || !new_rank)

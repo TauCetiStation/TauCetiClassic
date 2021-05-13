@@ -164,7 +164,8 @@
 
 	can_hold = list(
 		/obj/item/ammo_box,
-		/obj/item/ammo_casing
+		/obj/item/ammo_casing,
+		/obj/item/toy/ammo/gun
 		)
 
 /obj/item/weapon/storage/pouch/flare

@@ -55,6 +55,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/food/rite_step(mob/living/user, obj/AOG)
+	..()
 	if(prob(50))
 		spawn_food(get_turf(AOG), 1)
 
@@ -136,6 +137,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/AOG, stage)
+	..()
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
 
@@ -325,6 +327,7 @@
 							  "...God helps, and in my words the work is strengthened...",)
 	invoke_msg = "...Let it be so!"
 	favor_cost = 150
+	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_SPAWN = 1,
