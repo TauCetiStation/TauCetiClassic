@@ -712,7 +712,7 @@
 	check_spirit()
 
 /obj/effect/golemrune/attack_hand(mob/living/carbon/human/H)
-	if(H.my_golem || !H.get_species() == GOLEM)
+	if(H.my_golem || H.get_species() == GOLEM)
 		return
 	if(!check_spirit())
 		to_chat(H, "The rune fizzles uselessly. There is no spirit nearby.")

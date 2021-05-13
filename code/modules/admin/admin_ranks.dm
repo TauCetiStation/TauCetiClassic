@@ -102,8 +102,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 	else
 		//The current admin system uses SQL
 
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!establish_db_connection("erro_admin"))
 			error("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			log_misc("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			config.admin_legacy_system = 1
