@@ -844,6 +844,9 @@
 	if(!can_use(usr, 1))
 		return
 
+	if(locked)
+		return
+
 	else if(href_list["lock"])
 		coverlocked = !coverlocked
 
