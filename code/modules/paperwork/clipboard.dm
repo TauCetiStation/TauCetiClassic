@@ -116,7 +116,7 @@
 
 		if(href_list["remove"])
 			var/obj/item/P = locate(href_list["remove"])
-			if(P)
+			if(P && (P in src))
 				P.loc = usr.loc
 				usr.put_in_hands(P)
 				if(P == toppaper)
