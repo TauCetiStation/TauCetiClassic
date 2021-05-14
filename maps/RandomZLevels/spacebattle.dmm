@@ -1734,7 +1734,7 @@
 /area/awaymission/spacebattle/cruiser)
 "fj" = (
 /obj/structure/closet/crate,
-/obj/item/clothing/gloves/blue,
+/obj/item/clothing/gloves/color/blue,
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "fk" = (
