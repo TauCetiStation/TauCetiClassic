@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(events)
 	if(!E.severity)
 		theseverity = EVENT_LEVEL_MODERATE
 
-	if(!E.severity == EVENT_LEVEL_MUNDANE && !E.severity == EVENT_LEVEL_MODERATE && !E.severity == EVENT_LEVEL_MAJOR)
+	if(E.severity != EVENT_LEVEL_ROUNDSTART && E.severity != EVENT_LEVEL_MUNDANE && E.severity != EVENT_LEVEL_MODERATE && E.severity != EVENT_LEVEL_MAJOR)
 		theseverity = EVENT_LEVEL_MODERATE //just to be careful
 
 	if(E.severity)
