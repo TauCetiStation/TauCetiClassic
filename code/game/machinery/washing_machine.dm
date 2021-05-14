@@ -103,7 +103,7 @@
 	/*if(isscrewdriver(W))
 		panel = !panel
 		to_chat(user, "<span class='notice'>you [panel ? </span>"open" : "close"] the [src]'s maintenance panel")*/
-	if (istype (W, /obj/item/toy/crayon))
+	if(istype(W, /obj/item/toy/crayon))
 		if( state in list(	1, 3, 6 ))
 			if(!crayon)
 				user.drop_item()
