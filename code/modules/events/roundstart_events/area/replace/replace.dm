@@ -9,7 +9,6 @@
 	var/list/random_replaceable_types = list()
 
 /datum/event/roundstart/area/replace/proc/find_replaceable_type()
-	shuffle(random_replaceable_types)
 	for(var/objects_type in random_replaceable_types)
 		// Collect all atoms so that later can choose a completely random type for a future replacement
 		var/list/all_atoms = list()
@@ -48,7 +47,7 @@
 /datum/event/roundstart/area/replace/start()
 	var/count = 0
 	for(var/area/target_area in targeted_areas)
-		var/list/area_atoms = target_area.GetAreaAllContents()
+		var/list/area_atoms = shuffle(target_area.GetAreaAllContents())
 		for(var/atom/A in area_atoms)
 			if(replace(A))
 				count++
