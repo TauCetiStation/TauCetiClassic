@@ -110,7 +110,7 @@
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
-			if(P)
+			if(P && (P in src))
 				if(usr.get_active_hand())
 					P.attackby(usr.get_active_hand(), usr)
 
@@ -129,17 +129,17 @@
 
 		if(href_list["read"])
 			var/obj/item/weapon/paper/P = locate(href_list["read"])
-			if(P)
+			if(P && (P in src))
 				P.show_content(usr)
 
 		if(href_list["look"])
 			var/obj/item/weapon/photo/P = locate(href_list["look"])
-			if(P)
+			if(P && (P in src))
 				P.show(usr)
 
 		if(href_list["top"])
 			var/obj/item/P = locate(href_list["top"])
-			if(P)
+			if(P && (P in src))
 				toppaper = P
 				to_chat(usr, "<span class='notice'>You move [P.name] to the top.</span>")
 
