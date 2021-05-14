@@ -10096,7 +10096,7 @@
 "aqz" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/sandal,
-/obj/item/clothing/head/soft/orange,
+/obj/item/clothing/head/soft/color/orange,
 /obj/item/clothing/under/color/orange,
 /obj/machinery/light/small{
 	dir = 1
@@ -10472,7 +10472,7 @@
 "arj" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet,
-/obj/item/clothing/gloves/orange,
+/obj/item/clothing/gloves/color/orange,
 /obj/item/clothing/head/justice/yellow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
@@ -11574,7 +11574,7 @@
 /area/station/civilian/cold_room)
 "atl" = (
 /obj/structure/closet,
-/obj/item/clothing/head/soft/blue,
+/obj/item/clothing/head/soft/color/blue,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -21740,7 +21740,7 @@
 /area/station/rnd/mixing)
 "aMo" = (
 /obj/structure/table/glass,
-/obj/item/clothing/head/soft/grey,
+/obj/item/clothing/head/soft/color/grey,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -31217,7 +31217,7 @@
 /obj/structure/closet,
 /obj/item/clothing/shoes/boxing/gray,
 /obj/effect/decal/cleanable/cobweb2,
-/obj/item/clothing/head/soft/grey{
+/obj/item/clothing/head/soft/color/grey{
 	pixel_x = -2;
 	pixel_y = 3
 	},

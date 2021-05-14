@@ -13640,7 +13640,7 @@
 "dlY" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet,
-/obj/item/clothing/gloves/orange,
+/obj/item/clothing/gloves/color/orange,
 /obj/item/clothing/head/justice/yellow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
@@ -18056,7 +18056,7 @@
 "eHC" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/sandal,
-/obj/item/clothing/head/soft/orange,
+/obj/item/clothing/head/soft/color/orange,
 /obj/item/clothing/under/color/orange,
 /obj/machinery/light/small{
 	dir = 1
@@ -18876,7 +18876,7 @@
 /area/station/bridge)
 "eUn" = (
 /obj/structure/closet,
-/obj/item/clothing/head/soft/blue,
+/obj/item/clothing/head/soft/color/blue,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/station/security/prison)
