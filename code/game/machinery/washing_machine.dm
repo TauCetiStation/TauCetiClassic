@@ -54,32 +54,32 @@
 	if(istype(crayon,/obj/item/toy/crayon))
 		var/obj/item/toy/crayon/CR = crayon
 		wash_color = CR.colour
-	for (var/obj/item/clothing/C in contents)
+	for(var/obj/item/clothing/C in contents)
 		if(C.can_be_colored)
 			C.icon_state = "white"
 			C.item_color ="white"
 			C.color = wash_color
 			C.desc = "The colors are a bit dogdy"
-		if (istype (C, /obj/item/clothing/under))
+		if(istype(C, /obj/item/clothing/under))
 			C.item_state = "w_suit"
 			C.name = C.colored_name
-		if (istype (C, /obj/item/clothing/shoes))
+		if(istype(C, /obj/item/clothing/shoes))
 			C.item_state = "w_shoes"
 			C.name = C.colored_name
-		if (istype (C, /obj/item/clothing/gloves))
-			if (istype (C, /obj/item/clothing/gloves/fingerless))
+		if(istype(C, /obj/item/clothing/gloves))
+			if (istype(C, /obj/item/clothing/gloves/fingerless))
 				C.item_state = "fingerless_white"
 				C.icon_state = "fingerless_white"
 				C.item_color = "fingerless_white"
 			else
 				C.item_state = "white"
 				C.name = C.colored_name
-		if (istype (C, /obj/item/clothing/head/soft))
+		if (istype(C, /obj/item/clothing/head/soft))
 			C.name = C.colored_name
 		qdel(crayon)
 		crayon = null
 
-	if( locate(/mob,contents) )
+	if(locate(/mob,contents))
 		state = 7
 		gibs_ready = 1
 	else
