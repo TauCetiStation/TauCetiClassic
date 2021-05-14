@@ -9,6 +9,10 @@ var/global/list/radial_menus = list()
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
 
+/obj/screen/radial/Destroy()
+	parent = null
+	return ..()
+
 /obj/screen/radial/slice
 	icon_state = "radial_slice"
 	var/choice
@@ -89,10 +93,11 @@ var/global/list/radial_menus = list()
 	Reset()
 	hide()
 	QDEL_NULL(custom_check_callback)
-	elements = null
+	QDEL_LIST(elements)
 	current_user = null
 	close_button = null
 	anchor = null
+	QDEL_NULL(menu_holder)
 	return ..()
 
 //If we swap to vis_contens inventory these will need a redo
