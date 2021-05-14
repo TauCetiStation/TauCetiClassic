@@ -18,7 +18,7 @@
 	if(I.anchored)
 		return ..()
 
-	if(I.flags & (ABSTRACT|DROPDEL) || !I.canremove)
+	if((I.flags & (ABSTRACT|DROPDEL)) || !I.canremove)
 		return
 
 	if(istype(I, /obj/item/weapon/evidencebag))
