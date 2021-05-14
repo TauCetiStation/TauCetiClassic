@@ -3,7 +3,6 @@
 //*****************
 
 /obj/item/clothing/under/chameleon
-//starts off as black
 	name = "white jumpsuit"
 	icon_state = "white"
 	item_state = "w_suit"
