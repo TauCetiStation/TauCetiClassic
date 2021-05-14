@@ -33,7 +33,6 @@
 #define STICKYBAN_CID_MATCHED_TABLENAME "erro_stickyban_matched_cid"
 #define STICKYBAN_IP_MATCHED_TABLENAME "erro_stickyban_matched_ip"
 
-
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
 #define R_BUILDMODE		1
