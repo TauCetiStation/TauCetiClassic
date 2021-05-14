@@ -61,7 +61,7 @@
 			C.color = wash_color
 			C.desc = "The colors are a bit dogdy"
 		if (istype (C, /obj/item/clothing/under))
-			C.item_state ="w_suit"
+			C.item_state = "w_suit"
 			C.name = C.colored_name
 		if (istype (C, /obj/item/clothing/shoes))
 			C.item_state = "w_shoes"
