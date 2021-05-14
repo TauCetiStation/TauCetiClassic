@@ -11,13 +11,13 @@
 /datum/gear/head/cap/New()
 	..()
 	var/colors = list()
-	colors["red"] = /obj/item/clothing/head/soft/red
-	colors["blue"] = /obj/item/clothing/head/soft/blue
-	colors["green"] = /obj/item/clothing/head/soft/green
-	colors["yellow"] = /obj/item/clothing/head/soft/yellow
-	colors["grey"] = /obj/item/clothing/head/soft/grey
-	colors["orange"] = /obj/item/clothing/head/soft/orange
-	colors["purple"] = /obj/item/clothing/head/soft/purple
+	colors["red"] = /obj/item/clothing/head/soft/color/red
+	colors["blue"] = /obj/item/clothing/head/soft/color/blue
+	colors["green"] = /obj/item/clothing/head/soft/color/green
+	colors["yellow"] = /obj/item/clothing/head/soft/color/yellow
+	colors["grey"] = /obj/item/clothing/head/soft/color/grey
+	colors["orange"] = /obj/item/clothing/head/soft/color/orange
+	colors["purple"] = /obj/item/clothing/head/soft/color/purple
 	colors["rainbow"] = /obj/item/clothing/head/soft/rainbow
 	gear_tweaks += new/datum/gear_tweak/path(colors)
 

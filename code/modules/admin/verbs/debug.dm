@@ -1043,7 +1043,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 		if("blue wizard")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(M), SLOT_WEAR_SUIT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), SLOT_L_EAR)
@@ -1055,7 +1055,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), SLOT_IN_BACKPACK)
 
 		if("red wizard")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/red(M), SLOT_WEAR_SUIT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), SLOT_L_EAR)
@@ -1067,7 +1067,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), SLOT_IN_BACKPACK)
 
 		if("marisa wizard")
-			M.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(M), SLOT_W_UNIFORM)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/marisa(M), SLOT_WEAR_SUIT)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/marisa(M), SLOT_SHOES)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), SLOT_L_EAR)

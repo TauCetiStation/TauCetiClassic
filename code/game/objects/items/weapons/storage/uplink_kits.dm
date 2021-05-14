@@ -283,7 +283,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/merch/atom_init()
 	. = ..()
-	new /obj/item/clothing/head/soft/red(src)
+	new /obj/item/clothing/head/soft/color/red(src)
 	new /obj/item/clothing/suit/syndieshirt(src)
 	new /obj/item/toy/syndicateballoon(src)
 	make_exact_fit()

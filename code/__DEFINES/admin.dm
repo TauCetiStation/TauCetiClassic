@@ -28,11 +28,6 @@
 #define BANTYPE_ANY_FULLBAN_STR	"ANY"
 #define BANTYPE_ANY_JOB_STR		"ANYJOB"
 
-#define STICKYBAN_TABLENAME "erro_stickyban"
-#define STICKYBAN_CKEY_MATCHED_TABLENAME "erro_stickyban_matched_ckey"
-#define STICKYBAN_CID_MATCHED_TABLENAME "erro_stickyban_matched_cid"
-#define STICKYBAN_IP_MATCHED_TABLENAME "erro_stickyban_matched_ip"
-
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
 #define R_BUILDMODE		1

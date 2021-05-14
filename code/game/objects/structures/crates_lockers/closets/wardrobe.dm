@@ -194,7 +194,7 @@
 
 /obj/structure/closet/wardrobe/white/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/under/color/white(src)
+		new /obj/item/clothing/under/color(src)
 		new /obj/item/clothing/shoes/white(src)
 
 
@@ -355,7 +355,7 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/shoes/black(src)
 	for (var/i in 1 to 3)
-		new /obj/item/clothing/head/soft/grey(src)
+		new /obj/item/clothing/head/soft/color/grey(src)
 	#ifdef NEWYEARCONTENT
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
