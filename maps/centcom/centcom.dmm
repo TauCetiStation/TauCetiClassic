@@ -1178,7 +1178,7 @@
 	pixel_x = -9;
 	pixel_y = 8
 	},
-/obj/item/clothing/head/soft/grey{
+/obj/item/clothing/head/soft/color/grey{
 	pixel_x = -1;
 	pixel_y = 6
 	},
@@ -10030,7 +10030,7 @@
 "aGr" = (
 /obj/structure/rack,
 /obj/item/clothing/under/syndicate/combat,
-/obj/item/clothing/gloves/purple,
+/obj/item/clothing/gloves/color/purple,
 /obj/item/clothing/suit/bio_suit/new_hazmat/janitor,
 /obj/item/clothing/head/bio_hood/new_hazmat/janitor,
 /obj/item/device/radio/headset/ert,

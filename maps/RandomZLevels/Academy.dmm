@@ -2561,14 +2561,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
-"gZ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/academy/academyaft)
 "ha" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2579,16 +2571,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/turf/simulated/floor{
-	icon_state = "hydrofloor"
-	},
-/area/awaymission/academy/academyaft)
-"hb" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "hydrofloor"
@@ -2675,14 +2657,6 @@
 /turf/simulated/floor{
 	icon_state = "hydrofloor"
 	},
-/area/awaymission/academy/academyaft)
-"hn" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
 /area/awaymission/academy/academyaft)
 "ho" = (
 /obj/structure/cable{
@@ -2937,7 +2911,7 @@
 /area/awaymission/academy/academyaft)
 "hN" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/clothing/shoes/sandal,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -2952,7 +2926,7 @@
 /area/awaymission/academy/academyaft)
 "hQ" = (
 /obj/structure/closet,
-/obj/item/clothing/under/lightpurple,
+/obj/item/clothing/under/color/lightpurple,
 /obj/item/weapon/staff,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
@@ -2970,7 +2944,7 @@
 /area/awaymission/academy/academyaft)
 "hT" = (
 /obj/structure/closet,
-/obj/item/clothing/under/purple,
+/obj/item/clothing/under/color/purple,
 /obj/item/weapon/poster/contraband,
 /turf/simulated/floor,
 /area/awaymission/academy/academyaft)
