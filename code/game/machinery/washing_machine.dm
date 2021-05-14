@@ -133,7 +133,7 @@
 
 		var/obj/item/clothing/C = W
 		if(!C.can_be_washed)
-			to_chat(user, "<span class='notice'>\ You cant put [W] in the washing machine!</span>")
+			to_chat(user, "<span class='notice'>You cant put [W] in the washing machine!</span>")
 			return
 		if(!C.canremove)
 			to_chat(user, "<span class='notice'>\The [C] is stuck to your hand, you cannot put it in the washing machine!</span>")
