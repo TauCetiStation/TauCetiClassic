@@ -77,6 +77,9 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
+	if(modifiers["shift"] && modifiers["middle"])
+		MiddleShiftClickOn(A)
+		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -211,6 +214,23 @@
 	return
 
 /*
+	Middle Shift click
+	For point to
+*/
+/mob/proc/MiddleShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLESHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
+	A.MiddleShiftClick(src)
+	return
+
+/atom/proc/MiddleShiftClick(mob/user)
+	if(user.client && user.client.eye == user)
+		user.pointed(src)
+	return
+
+/*
 	Middle click
 	Only used for swapping hands
 */
@@ -246,6 +266,7 @@
 	if(user.client && user.client.eye == user)
 		user.examinate(src)
 	return
+
 
 /*
 	Ctrl click

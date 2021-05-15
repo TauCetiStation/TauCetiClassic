@@ -9,6 +9,10 @@
   *
   * Parent call
   */
+
+/mob
+	var/spamcheck
+
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
 	global.dead_mob_list -= src
@@ -313,7 +317,8 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-
+	if(spamcheck > world.time)
+		return
 	if(!usr || !isturf(usr.loc))
 		return
 	if(usr.incapacitated())
@@ -342,6 +347,8 @@
 		for(var/mob/living/carbon/slime/S in oview())
 			if(usr in S.Friends)
 				S.last_pointed = A
+
+	spamcheck = world.time + 15
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
