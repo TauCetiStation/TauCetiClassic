@@ -46,6 +46,7 @@
 	return TRUE
 
 /datum/religion_rites/standing/legacy/rite_step(mob/living/user, obj/AOG, current_stage)
+	..()
 	if(on_invocation_spell && prob(invocation_prob))
 		cast_spell(user, AOG, on_invocation_spell)
 
