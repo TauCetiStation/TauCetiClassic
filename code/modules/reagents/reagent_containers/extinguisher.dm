@@ -44,7 +44,7 @@
 	if(!safety)
 		icon_state = "[initial(icon_state)]"
 	else
-		icob_state = "[initial(icon_state)]_open"
+		icon_state = "[initial(icon_state)]_open"
 	reagents.add_reagent(reagent_inside, volume)
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
@@ -72,7 +72,7 @@
 	if(!safety)
 		icon_state = "[initial(icon_state)]"
 	else
-		icob_state = "[initial(icon_state)]_open"
+		icon_state = "[initial(icon_state)]_open"
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini
