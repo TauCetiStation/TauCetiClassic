@@ -42,9 +42,9 @@
 		var/image/I = new(icon, "FE_overlay_[pick(1, 2, 3, 4)]")
 		add_overlay(I)
 	if(!safety)
-		icon_state = "[initial(icon_state)]"
-	else
 		icon_state = "[initial(icon_state)]_open"
+	else
+		icon_state = "[initial(icon_state)]"
 	reagents.add_reagent(reagent_inside, volume)
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
@@ -70,9 +70,9 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher/attack_self(mob/user)
 	safety = !safety
 	if(!safety)
-		icon_state = "[initial(icon_state)]"
-	else
 		icon_state = "[initial(icon_state)]_open"
+	else
+		icon_state = "[initial(icon_state)]"
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini
