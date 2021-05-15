@@ -844,7 +844,7 @@
 	if(!can_use(usr, 1))
 		return
 
-	if(locked)
+	if((locked && !issilicon(usr)) || (issilicon(usr) && aidisabled))
 		return
 
 	else if(href_list["lock"])
