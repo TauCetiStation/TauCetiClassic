@@ -1,4 +1,4 @@
-/datum/game_mode/rp_revolution
+/datum/game_mode/revolution
 	name = "Revolution"
 	config_name = "revolution"
 
@@ -9,6 +9,6 @@
 
 	newscaster_announcements = /datum/news_announcement/revolution_inciting_event
 
-/datum/game_mode/rp_revolution/announce()
+/datum/game_mode/revolution/announce()
 	to_chat(world, "<B>The current game mode is - Revolution!</B>")
 	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!</B>")

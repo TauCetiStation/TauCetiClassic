@@ -27,7 +27,7 @@
 	/datum/game_mode/infestation,
 	/datum/game_mode/malfunction,
 	/datum/game_mode/nuclear,
-	/datum/game_mode/rp_revolution,
+	/datum/game_mode/revolution,
 	/datum/game_mode/shadowling,
 	/datum/game_mode/traitorchan,
 	/datum/game_mode/traitor,
@@ -50,7 +50,7 @@
 		/datum/game_mode/cult,
 		/datum/game_mode/infestation,
 		/datum/game_mode/nuclear,
-		/datum/game_mode/rp_revolution,
+		/datum/game_mode/revolution,
 		/datum/game_mode/shadowling,
 	)
 
