@@ -82,19 +82,18 @@
 	var/id = 1.0
 
 /obj/item/weapon/implant/tracking/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-<b>Name:</b> Tracking Beacon<BR>
-<b>Life:</b> 10 minutes after death of host<BR>
-<b>Important Notes:</b> None<BR>
+	var/dat = {"<b>Характеристики Импланта:</b><BR>
+<b>Название:</b> Отслеживающий Маячок<BR>
+<b>Время жизни:</b> 10 минут после смерти носителя<BR>
+<b>Важные примечания:</b> Отсутствуют<BR>
 <HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Continuously transmits low power signal. Useful for tracking.<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-a malfunction occurs thereby securing safety of subject. The implant will melt and
-disintegrate into bio-safe elements.<BR>
-<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-circuitry. As a result neurotoxins can cause massive damage.<HR>
+<b>Компоненты Импланта:</b> <BR>
+<b>Функции:</b> Непрерывно передает сигнал малой мощности. Полезно для отслеживания.<BR>
+<b>Особые возможности:</b><BR>
+<i>Нейро-Защита</i> - Специальная оболочка поглощает избыточное напряжение, самоуничтожая чип, если
+возникает неисправность, что обеспечивает безопасность объекта. Имплант расплавится и
+распадется на биобезопасные элементы.<BR>
+<b>Надежность:</b> ЭМИ импульсы создают небольшой риск перегрузки микросхемы, что может ее расплавить. В результате это может нанести весомый урон носителю.<HR>
 Implant Specifics:<BR>"}
 	return dat
 
@@ -121,15 +120,15 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/dexplosive/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Employee Management Implant<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Explodes<BR>
+<b>Характеристики Импланта:</b><BR>
+<b>Название:</b> Имплант Класса Устрашения Robust Corp RX-78<BR>
+<b>Время жизни:</b> Активация кодовой фразой.<BR>
+<b>Важные примечания:</b> Взрывется<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Компоненты Импланта:</b><BR>
+<b>Функции:</b> Содержит компактное электрически взрывчатое вещество, детонирующее при получении специально закодированного сигнала или после смерти носителя.<BR>
+<b>Особые возможности:</b> Взрывается<BR>
+<b>Надежность:</b> Имплант иногда разрушается имунной системой носителя, вследствие чего может работать со сбоями."}
 	return dat
 
 /obj/item/weapon/implant/dexplosive/trigger(emote, source)
@@ -156,15 +155,15 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
-<b>Life:</b> Activates upon codephrase.<BR>
-<b>Important Notes:</b> Explodes<BR>
+<b>Характеристики Импланта:</b><BR>
+<b>Название:</b> Имплант Класса Устрашения Robust Corp RX-78<BR>
+<b>Время жизни:</b> Активация кодовой фразой.<BR>
+<b>Важные примечания:</b> Взрывется<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Компоненты Импланта:</b><BR>
+<b>Функции:</b> Содержит компактное электрически взрывчатое вещество, детонирующее при получении специально закодированного сигнала или после смерти носителя.<BR>
+<b>Особые возможности:</b> Взрывается<BR>
+<b>Надежность:</b> Имплант иногда разрушается имунной системой носителя, вследствие чего может работать со сбоями."}
 	return dat
 
 /obj/item/weapon/implant/explosive/hear_talk(mob/M, msg)
@@ -282,15 +281,15 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/adrenaline/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Cybersun Industries Adrenalin Implant<BR>
-<b>Life:</b> Five days.<BR>
-<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+<b>Характеристики Импланта:</b><BR>
+<b>Название:</b>  Имплант Адреналина Cybersun Industries.<BR>
+<b>Время жизни:</b> Пять дней.<BR>
+<b>Важные примечания:</b> <font color='red'>Контрабанда.</font><BR>
 <HR>
-<b>Implant Details:</b> Subjects injected with implant can activate a massive injection of adrenalin.<BR>
-<b>Function:</b> Contains nanobots to stimulate body to mass-produce Adrenalin.<BR>
-<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant can only be used three times before the nanobots are depleted."}
+<b>Компоненты Импланта:</b> Носители импланта могут запустить инъекцию большого количества Адреналина.<BR>
+<b>Функции:</b> Содержит наноботов, заставляющих тело массово синтезировать Адреналин.<BR>
+<b>Особые возможности:</b> Откат и защита от большинства видов промывки мозгов и пропаганды.<BR>
+<b>Надежность:</b> Имплант может быть использован только три раза, прежде чем запас наноботов будет исчерпан."}
 	return dat
 
 /obj/item/weapon/implant/adrenaline/ui_action_click()
@@ -334,20 +333,16 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/chem/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp MJ-420 Prisoner Management Implant<BR>
-<b>Life:</b> Deactivates upon death but remains within the body.<BR>
-<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
-will suffer from an increased appetite.</B><BR>
+<b>Характеристики Импланта:</b><BR>
+<b>Название:</b> Имплант Контроля Заключенных Robust Corp MJ-420.<BR>
+<b>Время жизни:</b> Отключается после смерти, но остается в теле.<BR>
+<b>Важные примечания: При работе системы носитель будет ощущать повышенный аппетит.</B><BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
-the implant releases the chemicals directly into the blood stream.<BR>
-<b>Special Features:</b>
-<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
-Can only be loaded while still in its original case.<BR>
-<b>Integrity:</b> Implant will last so long as the subject is alive. However, if the subject suffers from malnutrition,<BR>
-the implant may become unstable and either pre-maturely inject the subject or simply break."}
+<b>Компоненты Импланта:</b><BR>
+<b>Функции:</b> Содержит небольшую капсулу, способную содержать различные химические вещества. Получив специально закодированный сигнал, имплант выпустит содержимое в кровь носителя.<BR>
+<b>Особые возможности:</b>
+<i>Микро-Капсула</i> - Содержит до 50 единиц. Может быть наполнен обычным шприцом до внедрения носителю.<BR>
+<b>Надежность:</b> Имплант будет функционировать пока субъект жив. Однако, если субъект страдает от голода, имплант может стать нестабильным и преждевременно ввести химикат субъекту или выйти из строя."}
 	return dat
 
 
@@ -402,15 +397,15 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/death_alarm/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+<b>Характеристики Импланта:</b><BR>
+<b>Название:</b> Сенсор Контроля Жизненных Признаков Персонала Нанотрайзен класса \"Profit Margin\".<BR>
+<b>Время жизни:</b> Активируется после смерти.<BR>
+<b>Важные примечания:</b> Предупреждает станцию о смерти члена экипажа.<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
-<b>Special Features:</b> Alerts crew to crewmember death.<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Компоненты Импланта:</b><BR>
+<b>Функции:</b> Содержит небольшой радиоприемник, срабатывающий после остановки сердца носителя.<BR>
+<b>Особые возможности:</b> Предупреждает станцию о смерти члена экипажа..<BR>
+<b>Надежность:</b> Имплант иногда разрушается иммунной системой организма и, таким образом, иногда выходит из строя."}
 	return dat
 
 /obj/item/weapon/implant/death_alarm/process()
@@ -476,15 +471,15 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/compressed/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Lifesign Sensor<BR>
-<b>Life:</b> Activates upon death.<BR>
-<b>Important Notes:</b> Alerts crew to crewmember death.<BR>
+<b>Характеристики Импланта:</b><BR>
+<b>Название:</b> Сенсор Контроля Жизненных Признаков Персонала Нанотрайзен класса \"Profit Margin\".<BR>
+<b>Время жизни:</b> Активируется после смерти.<BR>
+<b>Важные примечания:</b> Предупреждает станцию о смерти члена экипажа.<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact radio signaler that triggers when the host's lifesigns cease.<BR>
-<b>Special Features:</b> Alerts crew to crewmember death.<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Компоненты Импланта:</b><BR>
+<b>Функции:</b> Содержит небольшой радиоприемник, срабатывающий после остановки сердца носителя.<BR>
+<b>Особые возможности:</b> Предупреждает станцию о смерти члена экипажа..<BR>
+<b>Надежность:</b> Имплант иногда разрушается иммунной системой организма и, таким образом, иногда выходит из строя."}
 	return dat
 
 /obj/item/weapon/implant/compressed/trigger(emote, mob/source)
