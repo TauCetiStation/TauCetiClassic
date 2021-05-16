@@ -125,7 +125,7 @@
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		moved = 0
 		return 1
 	if(usr.next_move >= world.time) // Is this needed ?
