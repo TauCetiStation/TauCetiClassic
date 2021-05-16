@@ -211,12 +211,11 @@
 	return faction
 
 /datum/role/proc/IsSuccessful()
-	var/win = TRUE
 	if(objectives.objectives.len > 0)
 		for (var/datum/objective/objective in objectives.GetObjectives())
 			if(!objective.check_completion())
-				win = FALSE
-	return win
+				return FALSE
+	return TRUE
 
 /datum/role/proc/printplayerwithicon(mob/M)
 	var/text = ""

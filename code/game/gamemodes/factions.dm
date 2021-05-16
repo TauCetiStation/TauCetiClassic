@@ -246,12 +246,14 @@
 		Dismantle()
 
 /datum/faction/proc/IsSuccessful()
-	var/win = TRUE
 	if(objective_holder.objectives.len > 0)
-		for (var/datum/objective/objective in objective_holder.GetObjectives())
+		for(var/datum/objective/objective in objective_holder.GetObjectives())
 			if(!objective.check_completion())
-				win = FALSE
-	return win
+				return FALSE
+	for(var/datum/role/R in members)
+		if(!R.IsSuccessful)
+			return FALSE
+	return TRUE
 
 /datum/faction/proc/get_logo_icon(custom)
 	if(custom)
