@@ -29,19 +29,20 @@
 
 /obj/item/weapon/implant/freedom/get_data()
 	var/dat = {"
-		<b>Implant Specifications:</b><BR>
-		<b>Name:</b> Freedom Beacon<BR>
-		<b>Life:</b> optimum 5 uses<BR>
-		<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
+		<b>Характеристики Импланта:</b><BR>
+		<b>Название:</b> Маячек Свободы.<BR>
+		<b>Время жизни:</b> До пяти использований.<BR>
+		<b>Важные примечания:</b> <font color='red'>Контрабанда.</font><BR>
 		<HR>
-		<b>Implant Details:</b> <BR>
-		<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-		mechanisms<BR>
-		<b>Special Features:</b><BR>
-		<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
-		<b>Integrity:</b> The battery is extremely weak and commonly after injection its
-		life can drive down to only 1 use.<HR>
-		No Implant Specifics"}
+		<b>Компоненты Импланта:</b> <BR>
+		<b>Название:</b> Маяк Свободы.<BR>
+		<b>Время жизни:</b> До пяти использований.<BR>
+		<b>Важные примечания:</b> <font color='red'>Нелегально.</font><BR>
+		<HR>
+		<b>Детали импланта:</b> <BR>
+		<b>Функции:</b> Передача специализированного набора сигналов для обхода механизмов блокировки наручников.<BR>
+		<b>Особые возможности:</b><BR>
+		<i>Нейро-Скан</i> - Анализ определенных скрытых сигналов нервной системы.<BR>
+		<b>Надежность:</b> Батарея чрезвычайно слаба, и иногда после инъекции ее срок службы может сократиться до 1 использования.<HR>
+		Без Дополнительных Настроек."}
 	return dat
-
-

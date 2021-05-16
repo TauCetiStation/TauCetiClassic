@@ -3,15 +3,16 @@
 	desc = "Protects against brainwashing."
 
 /obj/item/weapon/implant/mindshield/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-				<b>Life:</b> Ten years.<BR>
-				<b>Important Notes:</b> Personnel injected with this device are much more resistant to brainwashing and propaganda.<BR>
+	var/dat = {"<b>Характеристики импланта:</b><BR>
+				<b>Название:</b> Имплант Контроля Сотрудников Нанотрайзен.<BR>
+				<b>Время жизни:</b> Десять лет.<BR>
+				<b>Важные примечания:</b> Повышает устойчивость носителя к промывке мозгов и пропаганде.<BR>
 				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small pod of nanobots that protects the host's mental functions from manipulation.<BR>
-				<b>Special Features:</b> Will prevent and cure most forms of brainwashing and propaganda.<BR>
-				<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+				<b>Компоненты Импланта:</b><BR>
+				<b>Детали Импланта:</b><BR>
+				<b>Функции:</b> Содержит капсулу наноботов, защищающих психическое состояние носителя от манипуляций.<BR>
+				<b>Особые возможности:</b> Откат и защита от большинства видов промывки мозгов и пропаганды.<BR>
+				<b>Надежность:</b> Имплант прослужит до тех пор, пока нанороботы находятся в кровеносной системе носителя."}
 	return dat
 
 /obj/item/weapon/implant/mindshield/implanted(mob/M)
@@ -50,16 +51,17 @@
 
 /obj/item/weapon/implant/mindshield/loyalty/get_data()
 	var/dat = {"
-	<b>Implant Specifications:</b><BR>
-	<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-	<b>Life:</b> Ten years.<BR>
-	<b>Important Notes:</b> Personnel injected with this device tend to be much more loyal to the company.<BR>
-	<b>Warning:</b> Usage without special equipment may cause heavy injuries and severe brain damage.<BR>
+	<b>Характеристики Импланта:</b><BR>
+	<b>Название:</b> Имплант Контроля Сотрудников Нанотрайзен.<BR>
+	<b>Время жизни:</b> Десять лет.<BR>
+	<b>Важные примечания:</b> Повышает лояльность носителя к компании.<BR>
+	<b>Внимание:</b> Использование без специального оборудования может привести к травмам и серьезным поврежденям головного мозга.<BR>
 	<HR>
-	<b>Implant Details:</b><BR>
-	<b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
-	<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-	<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+	<b>Компоненты Импланта:</b><BR>
+	<b>Детали Импланта:</b><BR>
+	<b>Функции:</b> Содержит капсулу наноботов, манипулирующих психическим состоянием носителя.<BR>
+	<b>Особые возможности:</b> Откат и защита от большинства видов промывки мозгов и пропаганды.<BR>
+	<b>Надежность:</b> Имплант прослужит до тех пор, пока нанороботы находятся в кровеносной системе носителя."}
 	return dat
 
 /obj/item/weapon/implant/mindshield/loyalty/implanted(mob/M)
@@ -82,7 +84,7 @@
 				SSticker.reconverted_antags[M.key] = M.mind
 
 		START_PROCESSING(SSobj, src)
-		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
+		to_chat(M, "НаноТрайзен - лучшая корпорация во всей Вселенной!")
 
 /obj/item/weapon/implant/mindshield/loyalty/process()
 	if (!implanted || !imp_in)
@@ -94,10 +96,10 @@
 	if(prob(1) && prob(25))//1/400
 		switch(rand(1, 4))
 			if(1)
-				to_chat(imp_in, "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!")
+				to_chat(imp_in, "\italic Вы [pick("уверены", "думаете")] что НаноТрайзен - лучшая корпорация во всей Вселенной!")
 			if(2)
-				to_chat(imp_in, "\italic You [pick("are sure", "think")] that Captain is the greatest man who ever lived!")
+				to_chat(imp_in, "\italic Вы [pick("уверены", "демаете")] что Капитан величайший человек из когда либо живших!")
 			if(3)
-				to_chat(imp_in, "\italic You want to give your life away in the name of NanoTrasen!")
+				to_chat(imp_in, "\italic Вы желаете отдать свою жизнь во имя НаноТрайзен!")
 			if(4)
-				to_chat(imp_in, "\italic You are confident that all what Heads of station do - is for a greater good!")
+				to_chat(imp_in, "\italic Вы уверены, что все действия Глав станции осуществяются ими для всеобщего блага!")

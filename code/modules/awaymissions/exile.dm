@@ -16,13 +16,14 @@
 
 /obj/item/weapon/implant/exile/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Nanotrasen Employee Exile Implant<BR>
-<b>Implant Details:</b> The onboard gateway system has been modified to reject entry by individuals containing this implant<BR>"}
+<b>Характеристики импланта:</b><BR>
+<b>Название:</b> Имплант Изгнания Сотрудников Нанотрайзен.<BR>
+<b>Компоненты Импланта:</b> Бортовой гейтвей был настроен на предотвращение входа лиц с этим имплантом.<BR>
+<b>Детали импланта:</b> Бортовой гейтвей был настроен на предотвращение входа лиц с этим имплантом.<BR>"}
 	return dat
 
 /obj/item/weapon/implantcase/exile
-	name = "Glass Case- 'Exile'"
+	name = "Glass Case 'Exile'"
 	desc = "A case containing an exile implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
