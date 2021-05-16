@@ -156,15 +156,15 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Robust Corp RX-78 Intimidation Class Implant<BR>
-<b>Life:</b> Activates upon codephrase.<BR>
-<b>Important Notes:</b> Explodes<BR>
+<b>Характеристики Импланта:</b><BR>
+<b>Название:</b> Имплант Класса Устрашения Robust Corp RX-78<BR>
+<b>Время жизни:</b> Активация кодовой фразой.<BR>
+<b>Важные примечания:</b> Взрывется<BR>
 <HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a compact, electrically detonated explosive that detonates upon receiving a specially encoded signal or upon host death.<BR>
-<b>Special Features:</b> Explodes<BR>
-<b>Integrity:</b> Implant will occasionally be degraded by the body's immune system and thus will occasionally malfunction."}
+<b>Детали Импланта:</b><BR>
+<b>Функции:</b> Содержит компактное электрически взрывчатое вещество, детонирующее при получении специально закодированного сигнала или после смерти носителя.<BR>
+<b>Особые возможности:</b> Взрывается<BR>
+<b>Надежность:</b> Имплант иногда разрушается имунной системой носителя, вследствие чего может работать со сбоями."}
 	return dat
 
 /obj/item/weapon/implant/explosive/hear_talk(mob/M, msg)
