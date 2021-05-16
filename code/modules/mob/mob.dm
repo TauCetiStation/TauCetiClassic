@@ -314,7 +314,7 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-	if(point_to_spamcheck > world.time)
+	if(next_point_to > world.time)
 		return
 	if(!usr || !isturf(usr.loc))
 		return
@@ -345,7 +345,7 @@
 			if(usr in S.Friends)
 				S.last_pointed = A
 
-	point_to_spamcheck = world.time + 15
+	next_point_to = world.time + 15
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"

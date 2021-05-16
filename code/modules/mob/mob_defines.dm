@@ -142,7 +142,7 @@
 
 	var/coughedtime = null
 
-	var/point_to_spamcheck
+	var/next_point_to
 
 	var/music_lastplayed = "null"
 
