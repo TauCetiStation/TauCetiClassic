@@ -223,12 +223,10 @@
 		return
 
 	A.MiddleShiftClick(src)
-	return
 
 /atom/proc/MiddleShiftClick(mob/user)
 	if(user.client && user.client.eye == user)
 		user.pointed(src)
-	return
 
 /*
 	Middle click

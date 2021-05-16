@@ -142,6 +142,8 @@
 
 	var/coughedtime = null
 
+	var/point_to_spamcheck
+
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
