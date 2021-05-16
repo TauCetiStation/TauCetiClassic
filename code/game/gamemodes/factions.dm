@@ -251,7 +251,7 @@
 			if(!objective.check_completion())
 				return FALSE
 	for(var/datum/role/R in members)
-		if(!R.IsSuccessful)
+		if(!R.IsSuccessful())
 			return FALSE
 	return TRUE
 
