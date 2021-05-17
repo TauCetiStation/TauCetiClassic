@@ -127,4 +127,17 @@ var/global/list/sec_closets_list = list()
 			log_game("RoundStart Event: [M] was killed in [COORD(M)]")
 			M.death()
 
+/datum/event/roundstart/salary/start()
+	for(var/i in 1 to all_money_accounts.len)
+		if(!prob(20))
+			continue
 
+		var/datum/money_account/account1 = pick(all_money_accounts)
+		var/datum/money_account/account2 = pick(all_money_accounts)
+		if(account1.owner_salary && account2.owner_salary)
+			var/temp = account1.owner_salary
+			account1.owner_salary = account2.owner_salary
+			account2.owner_salary = temp
+
+		message_admins("RoundStart Event: [account1.owner_salary] and [account2.owner_salary] salaries has been changed.")
+		log_game("RoundStart Event: [account1.owner_salary] and [account2.owner_salary] salaries has been changed.")
