@@ -104,11 +104,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	return
 
 /obj/structure/cable/proc/remove_cable(turf/T, mob/user)
-	var/atom/newcable
-	if(d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-		newcable = new /obj/item/stack/cable_coil(T, 2, color)
-	else
-		newcable = new /obj/item/stack/cable_coil(T, 1, color)
+	// 0-X cables are 1 unit, X-X cables are 2 units long
+	var/atom/newcable = new /obj/item/stack/cable_coil(T, (d1 ? 2 : 1), color)
 
 	if(user)
 		newcable.fingerprintslast = user.key
