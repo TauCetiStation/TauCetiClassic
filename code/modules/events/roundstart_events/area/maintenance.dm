@@ -4,9 +4,10 @@
 	var/nums = 3
 
 /datum/event/roundstart/area/maintenance_spawn/proc/spawn_atom(type, turf/T)
-	message_admins("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)] - [ADMIN_JMP(T)]")
-	log_game("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)]")
-	new type(T)
+	if(T)
+		message_admins("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)] - [ADMIN_JMP(T)]")
+		log_game("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)]")
+		new type(T)
 
 /datum/event/roundstart/area/maintenance_spawn/start()
 	for(var/i in 1 to nums)
@@ -56,7 +57,7 @@
 		new /obj/effect/rune(T, null, null, TRUE)
 	else if(ispath(type, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = new type(T)
-		S.make_empty()
+		S.make_empty(TRUE)
 	else
 		new type(T)
 

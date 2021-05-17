@@ -140,14 +140,16 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Break Light",             /datum/event/roundstart/area/break_light,                        50, list(ASSIGNMENT_ENGINEER = 10, ASSIGNMENT_JANITOR = 40)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Dirt Bay",                /datum/event/roundstart/area/dirt,                               10, list(ASSIGNMENT_JANITOR = 100)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Randomize Cargo Storage", /datum/event/roundstart/area/cargo_storage,                      10),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Armory Mess",             /datum/event/roundstart/area/armory_mess,                        10),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stolen Weapon",           /datum/event/roundstart/area/replace/sec_weapons,                20, list(ASSIGNMENT_SECURITY = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Stolen First AID",        /datum/event/roundstart/area/replace/med_storage,                10, list(ASSIGNMENT_MEDICAL = 1)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Old Morgue",              /datum/event/roundstart/area/replace/med_morgue,                 10),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Broken Airlocks",         /datum/event/roundstart/area/replace/airlock,                    10, list(ASSIGNMENT_ENGINEER = 20)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chewed Cables",           /datum/event/roundstart/area/replace/del_cable,                  10, list(ASSIGNMENT_ENGINEER = 20)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Clondike",                /datum/event/roundstart/area/replace/vault_gold,                 10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Deathly Sec.",            /datum/event/roundstart/area/replace/deathly_sec,                5,   list(ASSIGNMENT_CLOWN = 50)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Surgeon Tools", /datum/event/roundstart/area/replace/del_surgeon_tools,          10), list(ASSIGNMENT_MEDICAL = 2),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Deathly Sec.",            /datum/event/roundstart/area/replace/deathly_sec,                5,  list(ASSIGNMENT_CLOWN = 50)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Surgeon Tools", /datum/event/roundstart/area/replace/del_surgeon_tools,          10, list(ASSIGNMENT_MEDICAL = 2)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Anti meat",               /datum/event/roundstart/area/replace/mince_back,                 10),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Invasion In Mainteance",  /datum/event/roundstart/area/maintenance_spawn/invasion,         10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Sign of Antagonists",     /datum/event/roundstart/area/maintenance_spawn/antag_meta,       10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Headset",       /datum/event/roundstart/headset,                                 10, list(ASSIGNMENT_ANY = 5)),
@@ -167,7 +169,7 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Accounting Got It Wrong", /datum/event/roundstart/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Last Clown Jokes",        /datum/event/roundstart/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chiefs Animals",          /datum/event/roundstart/head_animals,                            10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Clumsy Access",           /datum/event/roundstart/clumsy_access,                           10,  list(ASSIGNMENT_CLOWN = 10)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Clumsy Access",           /datum/event/roundstart/clumsy_access,                           10, list(ASSIGNMENT_CLOWN = 10)),
 	)
 
 /datum/event_container/mundane
