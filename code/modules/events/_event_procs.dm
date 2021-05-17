@@ -29,6 +29,7 @@
 	active_with_role["AI"] = 0
 	active_with_role["Cyborg"] = 0
 	active_with_role["Janitor"] = 0
+	active_with_role["Clown"] = 0
 	active_with_role["Botanist"] = 0
 	active_with_role["Any"] = player_list.len
 
@@ -67,6 +68,9 @@
 
 		if(M.mind.assigned_role == "Cyborg")
 			active_with_role["Cyborg"]++
+
+		if(M.mind.assigned_role == "Clown")
+			active_with_role["Clown"]++
 
 		if(M.mind.assigned_role == "Janitor")
 			active_with_role["Janitor"]++

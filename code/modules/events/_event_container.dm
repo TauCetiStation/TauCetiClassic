@@ -4,6 +4,7 @@
 #define ASSIGNMENT_ENGINEER  "Engineer"
 #define ASSIGNMENT_BOTANIST  "Botanist"
 #define ASSIGNMENT_JANITOR   "Janitor"
+#define ASSIGNMENT_CLOWN     "Clown"
 #define ASSIGNMENT_MEDICAL   "Medical"
 #define ASSIGNMENT_SCIENTIST "Scientist"
 #define ASSIGNMENT_SECURITY  "Security"
@@ -158,8 +159,8 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Sec. Equimp.",  /datum/event/roundstart/sec_equipment,                           10, list(ASSIGNMENT_SECURITY = 10)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Products Inflation",      /datum/event/roundstart/vending_products,                        10),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Accounting got it wrong", /datum/event/roundstart/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Accounting Got It Wrong", /datum/event/roundstart/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Last Clown Jokes",        /datum/event/roundstart/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),

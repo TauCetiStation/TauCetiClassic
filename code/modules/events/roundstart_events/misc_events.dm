@@ -141,3 +141,15 @@ var/global/list/sec_closets_list = list()
 
 		message_admins("RoundStart Event: [account1.owner_salary] and [account2.owner_salary] salaries has been changed.")
 		log_game("RoundStart Event: [account1.owner_salary] and [account2.owner_salary] salaries has been changed.")
+
+/datum/event/roundstart/airlock_joke/start()
+	var/list/possible_types = list(/obj/item/weapon/bananapeel, /obj/item/device/assembly/mousetrap, /obj/item/weapon/legcuffs/beartrap, /obj/effect/decal/cleanable/blood/oil)
+	for(var/obj/machinery/door/airlock/A in airlock_list)
+		if(!is_station_level(A.z))
+			continue
+		if(prob(5))
+			var/type = pick(possible_types)
+			var/atom/A = new type(get_turf(A))
+
+			message_admins("RoundStart Event: Spawned '[A]' in [COORD(A)] - [ADMIN_JMP(A.loc)].")
+			log_game("RoundStart Event: Spawned '[A]' in [COORD(A)].")
