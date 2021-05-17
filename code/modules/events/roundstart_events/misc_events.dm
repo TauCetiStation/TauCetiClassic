@@ -134,13 +134,11 @@ var/global/list/sec_closets_list = list()
 
 		var/datum/money_account/account1 = pick(all_money_accounts)
 		var/datum/money_account/account2 = pick(all_money_accounts)
-		if(account1.owner_salary && account2.owner_salary)
-			var/temp = account1.owner_salary
-			account1.owner_salary = account2.owner_salary
-			account2.owner_salary = temp
+		if(account1 != account2)
+			VAR_SWAP(account1.owner_salary, account2.owner_salary)
 
-		message_admins("RoundStart Event: [account1.owner_salary] and [account2.owner_salary] salaries has been changed.")
-		log_game("RoundStart Event: [account1.owner_salary] and [account2.owner_salary] salaries has been changed.")
+			message_admins("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
+			log_game("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
 
 /datum/event/roundstart/airlock_joke/start()
 	var/list/possible_types = list(/obj/item/weapon/bananapeel, /obj/item/device/assembly/mousetrap, /obj/item/weapon/legcuffs/beartrap, /obj/effect/decal/cleanable/blood/oil)
@@ -149,7 +147,49 @@ var/global/list/sec_closets_list = list()
 			continue
 		if(prob(5))
 			var/type = pick(possible_types)
-			var/atom/A = new type(get_turf(A))
+			var/atom/atom = new type(get_turf(A))
 
-			message_admins("RoundStart Event: Spawned '[A]' in [COORD(A)] - [ADMIN_JMP(A.loc)].")
-			log_game("RoundStart Event: Spawned '[A]' in [COORD(A)].")
+			message_admins("RoundStart Event: Spawned '[atom]' in [COORD(atom)] - [ADMIN_JMP(atom.loc)].")
+			log_game("RoundStart Event: Spawned '[atom]' in [COORD(atom)].")
+
+var/global/list/chief_animal_list = list()
+/datum/event/roundstart/head_animals/start()
+	for(var/i in 1 to chief_animal_list.len)
+		if(!prob(40))
+			continue
+		var/mob/M1 = pick(chief_animal_list)
+		var/mob/M2 = pick(chief_animal_list)
+		if(M1 != M2)
+			VAR_SWAP(M1.loc, M2.loc)
+
+		message_admins("RoundStart Event: [M1] and [M2] has been swapped.")
+		log_game("RoundStart Event: [M1] and [M2] has been swapped.")
+
+var/global/list/scrap_list = list()
+/datum/event/roundstart/del_scrap/start()
+	for(var/A in scrap_list)
+		qdel(A)
+
+	message_admins("RoundStart Event: All scraps was deleted.")
+	log_game("RoundStart Event: All scraps was deleted.")
+
+/datum/event/roundstart/clumsy_access/start()
+	var/datum/job/captain/J = SSjob.GetJob("Captain")
+	var/list/all_access = J.get_access()
+	for(var/mob/living/carbon/human/H in human_list)
+		if(CLUMSY in H.mutations)
+			var/obj/item/weapon/card/id/I = locate() in H
+			if(!I)
+				continue
+			I.access = all_access
+
+			message_admins("RoundStart Event: [H] got full access [COORD(H)] - [ADMIN_JMP(H.loc)].")
+			log_game("RoundStart Event: [H] got full access [COORD(H)].")
+
+var/global/list/toilet_list = list()
+/datum/event/roundstart/del_toilet/start()
+	for(var/A in toilet_list)
+		qdel(A)
+
+	message_admins("RoundStart Event: All toilets was deleted.")
+	log_game("RoundStart Event: All toilets was deleted.")

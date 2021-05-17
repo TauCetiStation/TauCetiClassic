@@ -145,6 +145,9 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Old Morgue",              /datum/event/roundstart/area/replace/med_morgue,                 10),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Broken Airlocks",         /datum/event/roundstart/area/replace/airlock,                    10, list(ASSIGNMENT_ENGINEER = 20)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chewed Cables",           /datum/event/roundstart/area/replace/del_cable,                  10, list(ASSIGNMENT_ENGINEER = 20)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Clondike",                /datum/event/roundstart/area/replace/vault_gold,                 10),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Deathly Sec.",            /datum/event/roundstart/area/replace/deathly_sec,                5,   list(ASSIGNMENT_CLOWN = 50)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Surgeon Tools", /datum/event/roundstart/area/replace/del_surgeon_tools,          10), list(ASSIGNMENT_MEDICAL = 2),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Invasion In Mainteance",  /datum/event/roundstart/area/maintenance_spawn/invasion,         10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Sign of Antagonists",     /datum/event/roundstart/area/maintenance_spawn/antag_meta,       10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Headset",       /datum/event/roundstart/headset,                                 10, list(ASSIGNMENT_ANY = 5)),
@@ -153,6 +156,8 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Watertanks",    /datum/event/roundstart/watertank,                               10, list(ASSIGNMENT_BOTANIST = 10)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Cleaners",      /datum/event/roundstart/cleaner,                                 10, list(ASSIGNMENT_JANITOR = 100)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Extinguishers", /datum/event/roundstart/extinguisher,                            10),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Scraps",        /datum/event/roundstart/del_scrap,                               10),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgotten Toilets",       /datum/event/roundstart/del_toilet,                              10),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Die Monkey",              /datum/event/roundstart/dead_monkeys,                            10, list(ASSIGNMENT_SCIENTIST = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Engine Mess",             /datum/event/roundstart/PA,                                      10, list(ASSIGNMENT_ENGINEER = 10)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Forgottens Tanks",        /datum/event/roundstart/tank_dispenser,                          10, list(ASSIGNMENT_ENGINEER = 5, ASSIGNMENT_SCIENTIST = 10)),
@@ -161,9 +166,8 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Accounting Got It Wrong", /datum/event/roundstart/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Last Clown Jokes",        /datum/event/roundstart/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "BlueScreen APC",          /datum/event/roundstart/apc,                                     10, list(ASSIGNMENT_ENGINEER = 5)),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chiefs Animals",          /datum/event/roundstart/head_animals,                            10),
+		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Clumsy Access",           /datum/event/roundstart/clumsy_access,                           10,  list(ASSIGNMENT_CLOWN = 10)),
 	)
 
 /datum/event_container/mundane

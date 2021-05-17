@@ -219,6 +219,11 @@
 
 #define PLASMAGUN_OVERCHARGE 30100
 
+#define VAR_SWAP(A, B)\
+	var/temp = A;\
+	A = B;\
+	B = temp;\
+
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists

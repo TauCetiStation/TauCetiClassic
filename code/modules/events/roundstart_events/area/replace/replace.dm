@@ -3,6 +3,8 @@
 	var/list/replace_types = list()
 	// called before deleting replaceable item
 	var/datum/callback/replace_callback
+	// called after deleting replaced item for new item
+	var/datum/callback/new_atom_callback
 	// number of items to replace, -1 for infinity
 	var/num_replaceable = -1
 	// finds a random item that exists in the area by these types
@@ -38,7 +40,9 @@
 	if(replace_callback)
 		replace_callback.Invoke(A)
 	if(B_type)
-		new B_type(A.loc)
+		var/B = new B_type(A.loc)
+		if(new_atom_callback)
+			new_atom_callback.Invoke(B)
 
 	if(!QDELETED(A))
 		qdel(A)
