@@ -1329,7 +1329,7 @@
 #include "code\modules\events\holidays\Holidays.dm"
 #include "code\modules\events\holidays\Other.dm"
 #include "code\modules\events\holidays\valentines\heart_box.dm"
-#include "code\modules\events\roundstart_events\forgottens_items.dm"
+#include "code\modules\events\roundstart_events\global_lists.dm"
 #include "code\modules\events\roundstart_events\roundstart.dm"
 #include "code\modules\events\roundstart_events\area\area_event.dm"
 #include "code\modules\events\roundstart_events\area\break_light.dm"

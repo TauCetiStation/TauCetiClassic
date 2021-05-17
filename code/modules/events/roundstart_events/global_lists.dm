@@ -126,3 +126,5 @@ var/global/list/sec_closets_list = list()
 			message_admins("RoundStart Event: [M] was killed in [COORD(M)]")
 			log_game("RoundStart Event: [M] was killed in [COORD(M)]")
 			M.death()
+
+
