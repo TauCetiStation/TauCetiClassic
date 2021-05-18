@@ -81,7 +81,7 @@ var/list/GPS_list = list()
 	if(!tracking)
 		return data
 	var/turf/T = get_turf(src)
-	data["area"] = get_area_name(src, TRUE)
+	data["area"] = get_area(src)
 	data["position"] = POS_VECTOR(T)
 
 	// Saved location
@@ -102,7 +102,7 @@ var/list/GPS_list = list()
 
 		var/list/signal = list("tag" = G.gpstag, "area" = null, "position" = null)
 		if(!G.emped)
-			signal["area"] = get_area_name(G, TRUE)
+			signal["area"] = get_area(src)
 			signal["position"] = POS_VECTOR(GT)
 		signals += list(signal)
 	data["signals"] = signals
