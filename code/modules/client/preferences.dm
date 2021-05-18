@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 var/list/preferences_datums = list()
 
 var/const/MAX_SAVE_SLOTS = 10
@@ -37,6 +35,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+
+	var/tooltip = TRUE
+	var/tooltip_font = "Small Fonts"
+	var/tooltip_size = 8
+
+	var/outline_enabled = TRUE
+	var/outline_color = COLOR_BLUE_LIGHT
 
 	//TGUI
 	var/tgui_fancy = TRUE
@@ -258,6 +263,11 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
+
+		if("open_jobban_info") //for the 'occupation' and 'roles' panels
+			open_jobban_info(user, href_list["position"])
+			return
+
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)
@@ -284,7 +294,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -301,6 +311,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(character.dna)
 		character.dna.real_name = character.real_name
 
+	character.set_species(species)
+
 	character.flavor_text = flavor_text
 	character.metadata = metadata
 	character.med_record = med_record
@@ -315,15 +327,20 @@ var/const/MAX_SAVE_SLOTS = 10
 		qdel(character.bodyparts_by_name[BP_HEAD])
 		switch(ipc_head)
 			if("Default")
-				new /obj/item/organ/external/head/robot/ipc(null, character)
+				var/obj/item/organ/external/head/robot/ipc/H = new(null)
+				H.insert_organ(character)
 			if("Alien")
-				new /obj/item/organ/external/head/robot/ipc/alien(null, character)
+				var/obj/item/organ/external/head/robot/ipc/alien/H = new(null)
+				H.insert_organ(character)
 			if("Double")
-				new /obj/item/organ/external/head/robot/ipc/double(null, character)
+				var/obj/item/organ/external/head/robot/ipc/double/H = new(null)
+				H.insert_organ(character)
 			if("Pillar")
-				new /obj/item/organ/external/head/robot/ipc/pillar(null, character)
+				var/obj/item/organ/external/head/robot/ipc/pillar/H = new(null)
+				H.insert_organ(character)
 			if("Human")
-				new /obj/item/organ/external/head/robot/ipc/human(null, character)
+				var/obj/item/organ/external/head/robot/ipc/human/H = new(null)
+				H.insert_organ(character)
 
 	character.r_eyes = r_eyes
 	character.g_eyes = g_eyes
@@ -364,25 +381,37 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/status = organ_data[name]
 
 		if(status == "amputated" && BP)
-			qdel(BP) // Destroy will handle everything
-		if(status == "cyborg" && BP)
-			var/zone = BP.body_zone
 			qdel(BP)
-			switch(zone)
+		else if(status == "cyborg")
+			if(BP)
+				qdel(BP)
+			switch(name)
 				if(BP_L_ARM)
-					new /obj/item/organ/external/l_arm/robot(null, character)
+					var/obj/item/organ/external/l_arm/robot/R = new(null)
+					R.insert_organ(character)
 				if(BP_R_ARM)
-					new /obj/item/organ/external/r_arm/robot(null, character)
+					var/obj/item/organ/external/r_arm/robot/R = new(null)
+					R.insert_organ(character)
 				if(BP_L_LEG)
-					new /obj/item/organ/external/l_leg/robot(null, character)
+					var/obj/item/organ/external/l_leg/robot/R = new(null)
+					R.insert_organ(character)
 				if(BP_R_LEG)
-					new /obj/item/organ/external/r_leg/robot(null, character)
-		if(status == "assisted" && IO)
+					var/obj/item/organ/external/r_leg/robot/R = new(null)
+					R.insert_organ(character)
+
+		// create normal bodypart
+		else if(status == null && character.species.has_bodypart[name] && (!BP || BP.controller_type == /datum/bodypart_controller/robot))
+			var/type = character.species.has_bodypart[name]
+			var/obj/item/organ/external/new_BP = new type(null)
+			new_BP.insert_organ(character)
+
+		else if(status == "assisted" && IO)
 			IO.mechassist()
 		else if(status == "mechanical" && IO)
 			IO.mechanize()
 
-		else continue
+		else
+			continue
 
 	// Apply skin color
 	character.apply_recolor()
@@ -394,7 +423,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()
-		W.dir = character.dir
+		W.set_dir(character.dir)
 		W.buckled_mob = character
 		W.add_fingerprint(character)
 
@@ -426,3 +455,29 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.update_body()
 		character.update_hair()
 
+//for the 'occupation' and 'roles' panels
+/datum/preferences/proc/open_jobban_info(mob/user, rank)
+	if(rank && (rank in user.client.jobbancache)) //this double-checking after the call of jobban_isbanned() can be not needed in the most cases, but we cannot trust the preceding href
+		var/dat
+
+		dat += "<b>Причина, указанная администратором:</b><br>\"[user.client.jobbancache[rank]["reason"]]\""
+		dat += "<hr>"
+		dat += "Выдан администратором [user.client.jobbancache[rank]["ackey"]] [user.client.jobbancache[rank]["bantime"]] "
+
+		if(user.client.jobbancache[rank]["rid"])
+			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
+
+		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
+			dat += "<hr>"
+			dat += "<br>"
+			dat += "Дополнительную информацию можно получить у администратора, выдашего джоббан. Апелляции и жалобы принимаются на форуме."
+		else
+			dat += "как бессрочный."
+			dat += "<hr>"
+			dat += "<br>"
+			dat += "Дополнительную информацию можно получить у администратора, выдашего бессрочный джоббан. С ним же стоит согласовывать снятие этого джоббана, если вы согласны с его выдачей. Если у вас есть не разрешаемые в личной беседе с администратором претензии или же администратор, с джоббаном от которого вы согласны, покинул состав, обратитесь на форум."
+
+		var/datum/browser/popup = new(user, "jobban_info", "Информация о джоббане", ntheme = CSS_THEME_LIGHT)
+		popup.set_content(dat)
+		popup.open()

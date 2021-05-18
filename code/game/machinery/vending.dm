@@ -392,7 +392,7 @@
 	var/dat
 	for (var/datum/data/vending_product/R in record)
 		dat += "<tr>"
-		dat += "<td class='collapsing'><span class='vending32x32 [replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-")]'></span></td>"
+		dat += "<td class='collapsing'><span class='vending32x32 [replacetext(replacetext("[R.product_path]", "[/obj/item]/", ""), "/", "-")]'></span></td>"
 		dat += "<td><B>[R.product_name]</B></td>"
 		dat += "<td class='collapsing' align='center'><span class='[1 < R.amount ? "good" : R.amount == 1 ? "average" : "bad"]'>[R.amount] in stock</span></td>"
 		if (R.amount > 0)
@@ -643,16 +643,6 @@
 
 */
 
-/*
-/obj/machinery/vending/atmospherics //Commenting this out until someone ponies up some actual working, broken, and unpowered sprites - Quarxink
-	name = "Tank Vendor"
-	desc = "A vendor with a wide variety of masks and gas tanks."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "dispenser"
-	product_paths = "/obj/item/weapon/tank/oxygen;/obj/item/weapon/tank/phoron;/obj/item/weapon/tank/emergency_oxygen;/obj/item/weapon/tank/emergency_oxygen/engi;/obj/item/clothing/mask/breath"
-	product_amounts = "10;10;10;5;25"
-	vend_delay = 0
-*/
 
 /obj/machinery/vending/boozeomat
 	name = "Booze-O-Mat"
@@ -903,7 +893,7 @@
 	icon_deny = "sec-deny"
 	req_access = list(1)
 	products = list(/obj/item/weapon/handcuffs = 8,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6, /obj/item/ammo_box/c9mmr = 10)
+					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2,/obj/item/device/flashlight/seclite = 4)
 
 /obj/machinery/vending/hydronutrients

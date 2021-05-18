@@ -92,7 +92,7 @@
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 	var/mouse_pointer
 
-	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -125,6 +125,10 @@
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
 		step_rand(M)
+	QDEL_NULL(pr_int_temp_processor)
+	QDEL_NULL(pr_give_air)
+	QDEL_NULL(pr_internal_damage)
+	QDEL_NULL(pr_mecha_light)
 	mechas_list -= src //global mech list
 	return ..()
 
@@ -322,7 +326,7 @@
 	return 0
 
 /obj/mecha/proc/mechturn(direction)
-	dir = direction
+	set_dir(direction)
 	use_power(step_energy_drain)
 	playsound(src, 'sound/mecha/Mech_Rotation.ogg', VOL_EFFECTS_MASTER, 40)
 	return 1
@@ -364,7 +368,8 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
+	if(!islist(possible_int_damage) || isemptylist(possible_int_damage))
+		return
 	if(prob(20))
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			for(var/T in possible_int_damage)
@@ -565,7 +570,6 @@
 	if(prob(60))
 		explosion(T, 0, 0, 1, 3)
 	qdel(src)
-
 
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
@@ -1029,7 +1033,7 @@
 		src.log_append_to_last("[H] moved in as pilot.")
 		log_admin("[key_name(H)] has moved in [src.type] with name [src.name]")
 		src.icon_state = src.reset_icon()
-		dir = dir_in
+		set_dir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', VOL_EFFECTS_MASTER)
 		GrantActions(H, human_occupant = 1)
 		if(!hasInternalDamage())
@@ -1088,7 +1092,7 @@
 		src.Entered(mmi_as_oc)
 		src.Move(src.loc)
 		src.icon_state = src.reset_icon()
-		dir = dir_in
+		set_dir(dir_in)
 		src.log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
@@ -1179,7 +1183,7 @@
 			src.occupant.canmove = 0
 		src.occupant = null
 		src.icon_state = src.reset_icon()+"-open"
-		src.dir = dir_in
+		src.set_dir(dir_in)
 	return
 
 /////////////////////////

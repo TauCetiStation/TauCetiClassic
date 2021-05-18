@@ -202,14 +202,7 @@
 
 	body += "</tr></td></table>"
 
-	var/formatted_type = text("[D.type]")
-	if(length(formatted_type) > 25)
-		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
-		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
+	var/formatted_type = replacetext("[D.type]", "/", "<wbr>/")
 
 	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
 
@@ -253,6 +246,7 @@
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
 		body += "<option value='?_src_=vars;give_disease2=\ref[D]'>Give Disease</option>"
+		body += "<option value='?_src_=vars;give_religion=\ref[D]'>Give Religion</option>"
 		if(isliving(D))
 			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
@@ -515,6 +509,18 @@ body
 		src.give_disease(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
+	else if(href_list["give_religion"])
+		if(!check_rights(R_ADMIN|R_FUN))
+			return
+
+		var/mob/M = locate(href_list["give_religion"])
+		if(!istype(M))
+			to_chat(usr, "This can only be used on instances of type /mob")
+			return
+
+		global.chaplain_religion.add_member(M, HOLY_ROLE_HIGHPRIEST)
+		href_list["datumrefresh"] = href_list["give_religion"]
+
 	else if(href_list["give_disease2"])
 		if(!check_rights(R_ADMIN|R_FUN))
 			return
@@ -721,8 +727,8 @@ body
 			return
 
 		switch(href_list["rotatedir"])
-			if("right")	A.dir = turn(A.dir, -45)
-			if("left")	A.dir = turn(A.dir, 45)
+			if("right")	A.set_dir(turn(A.dir, -45))
+			if("left")	A.set_dir(turn(A.dir, 45))
 		href_list["datumrefresh"] = href_list["rotatedatum"]
 
 	else if(href_list["makemonkey"])

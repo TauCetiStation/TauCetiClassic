@@ -1,3 +1,6 @@
+#define SEARCH_FOR_DISK 0
+#define SEARCH_FOR_OBJECT 1
+
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
 	icon_state = "pinoff"
@@ -21,8 +24,6 @@
 		to_chat(user, "<span class='notice'>You deactivate the pinpointer</span>")
 	active = !active
 
-
-
 /obj/item/weapon/pinpointer/process()
 	if(!active)
 		return
@@ -32,7 +33,7 @@
 			icon_state = "pinonnull"
 			return
 	if(target)
-		dir = get_dir(src, target)
+		set_dir(get_dir(src, target))
 		var/turf/self_turf = get_turf(src)
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.z != self_turf.z)
@@ -96,7 +97,7 @@
 
 		if("Other Signature")
 			mode = SEARCH_FOR_OBJECT
-			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "" , "Item" , "DNA"))
+			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "Item" , "DNA", "AI System"))
 				if("Item")
 					var/datum/objective/steal/itemlist
 					itemlist = itemlist // To supress a 'variable defined but not used' error.
@@ -118,6 +119,15 @@
 						if(M.dna.unique_enzymes == DNAstring)
 							target = M
 							break
+				if("AI System")
+					if(!global.ai_list.len)
+						to_chat(usr, "Failed to locate active AI system!")
+						return
+					var/target_ai = input("Select AI to search for", "AI Select") as null|anything in global.ai_list
+					if(!target_ai)
+						return
+					target = target_ai
+					to_chat(usr, "You set the pinpointer to locate [target]")
 
 	return attack_self(usr)
 

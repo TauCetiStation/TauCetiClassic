@@ -14,7 +14,8 @@
 	density = 0
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
-	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_BATT_HUD)
+	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD)
+	typing_indicator_type = "machine"
 
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
@@ -36,7 +37,7 @@
 	drone_list += src
 
 	if(camera && ("Robots" in camera.network))
-		camera.add_network("Engineering")
+		camera.add_network("Engineering Robots")
 
 	//They are unable to be upgraded, so let's give them a bit of a better battery.
 	cell.maxcharge = 10000
@@ -74,7 +75,7 @@
 
 /mob/living/silicon/robot/drone/init()
 	laws = new /datum/ai_laws/drone()
-	connected_ai = null
+	set_ai_link(null)
 
 	aiCamera = new/obj/item/device/camera/siliconcam/drone_camera(src)
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -232,7 +233,7 @@
 
 	emagged = 1
 	lawupdate = 0
-	connected_ai = null
+	set_ai_link(null)
 	clear_supplied_laws()
 	clear_inherent_laws()
 	laws = new /datum/ai_laws/syndicate_override

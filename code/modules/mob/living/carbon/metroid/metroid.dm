@@ -712,7 +712,7 @@
 	check_spirit()
 
 /obj/effect/golemrune/attack_hand(mob/living/carbon/human/H)
-	if(H.my_golem || !H.get_species() == GOLEM)
+	if(H.my_golem || H.get_species() == GOLEM)
 		return
 	if(!check_spirit())
 		to_chat(H, "The rune fizzles uselessly. There is no spirit nearby.")
@@ -724,12 +724,10 @@
 	G.key = spirit.key
 	G.my_master = H
 	H.my_golem = G
-	// Master get hud
-	H.add_antag_hud(ANTAG_HUD_GOLEM, "agolem_master", H)
-	// Golom get hud
+	// Golem get hud
 	H.set_golem_hud()
-	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_GOLEM]
-	A.add_to_single_hud(G, H)
+	var/datum/atom_hud/golem/golem_hud = global.huds[DATA_HUD_GOLEM]
+	golem_hud.add_to_single_hud(G, H)
 
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [H], and assist them in completing their goals at any cost.")
 	G.mind.memory += "<B>[H]</B> - your master."

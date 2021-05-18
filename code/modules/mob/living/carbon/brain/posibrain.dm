@@ -7,7 +7,7 @@
 	origin_tech = "engineering=4;materials=4;bluespace=2;programming=4"
 
 	var/searching = 0
-	mob/living/carbon/brain/brainmob = null
+	brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
@@ -56,9 +56,7 @@
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 
 	src.searching = FALSE
-	src.brainmob.mind = candidate.mind
-	//src.brainmob.key = candidate.key
-	src.brainmob.ckey = candidate.ckey
+	src.brainmob.key = candidate.key
 	src.name = "positronic brain ([src.brainmob.name])"
 
 	to_chat(src.brainmob, "<b>You are a positronic brain, brought into existence on [station_name()].</b>")

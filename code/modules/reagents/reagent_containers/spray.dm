@@ -198,7 +198,7 @@
 	desc = "Changes hair colour! Don't forget to read the label!"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "hairspraywhite"
-	item_state = "hairspray"
+	item_state = "hairspraywhite"
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,5,10)
 	spray_size = 1
@@ -216,12 +216,17 @@
 
 	var/colour_spray = input(usr, "Choose desired label colour") as null|anything in list("white", "red", "green", "blue", "black", "brown", "blond")
 	if(colour_spray)
-		name = "[colour_spray] [initial(name)]"
-		icon_state = "[initial(icon_state)][colour_spray]"
+		name = "[colour_spray] hair color spray"
+		icon_state = "hairspray[colour_spray]"
+		item_state = "hairspray[colour_spray]"
 	else
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
 	update_icon()
+	if(usr.hand)
+		usr.update_inv_l_hand()
+	else
+		usr.update_inv_r_hand()
 
 //thurible
 /obj/item/weapon/reagent_containers/spray/thurible
@@ -456,6 +461,14 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone/atom_init()
 	. = ..()
 	reagents.add_reagent("plantbgone", 100)
+
+// Lube Spray
+/obj/item/weapon/reagent_containers/spray/lube
+	volume = 150
+
+/obj/item/weapon/reagent_containers/spray/lube/atom_init()
+	. = ..()
+	reagents.add_reagent("lube", 150)
 
 //Water Gun
 /obj/item/weapon/reagent_containers/spray/watergun

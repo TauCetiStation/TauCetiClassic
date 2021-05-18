@@ -11,6 +11,7 @@
 	var/isSwitchingStates = FALSE
 	var/sheetAmount = 7
 	var/health = 100
+	var/can_unwrench = TRUE
 
 	var/sheetType
 
@@ -25,12 +26,12 @@
 /obj/structure/mineral_door/Bumped(atom/M)
 	if(close_state)
 		if(ismob(M))
-			var/mob/user = M
-			if(DoorChecks() && MobChecks(user))
-				add_fingerprint(user)
+			if(DoorChecks() && MobChecks(M))
+				add_fingerprint(M)
 				Open()
-		else if(istype(M, /obj/mecha) && DoorChecks())
-			Open()
+		else if(istype(M, /obj/mecha))
+			if(DoorChecks() && MechChecks(M))
+				Open()
 
 /obj/structure/mineral_door/attack_ai(mob/user)
 	if(isrobot(user) && get_dist(user, src) <= 1)
@@ -64,6 +65,9 @@
 			return TRUE
 	return FALSE
 
+/obj/structure/mineral_door/proc/MechChecks(obj/mecha/user)
+	return TRUE
+
 /obj/structure/mineral_door/proc/SwitchState()
 	if(close_state)
 		Open()
@@ -74,6 +78,7 @@
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_opening", src)
+	change_alt_apperance("_opening")
 	sleep(10)
 	density = FALSE
 	set_opacity(FALSE)
@@ -86,6 +91,7 @@
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, VOL_EFFECTS_MASTER)
 	flick("[initial(icon_state)]_closing", src)
+	change_alt_apperance("_closing")
 	sleep(10)
 	density = TRUE
 	set_opacity(TRUE)
@@ -97,8 +103,18 @@
 /obj/structure/mineral_door/update_icon()
 	if(close_state)
 		icon_state = initial(icon_state)
+		change_alt_apperance("")
 	else
 		icon_state = "[initial(icon_state)]_open"
+		change_alt_apperance("_open")
+
+/obj/structure/mineral_door/proc/change_alt_apperance(icon_state_postfix)
+	if(alternate_appearances)
+		for(var/name in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[name]
+			if(!AA.alternate_obj || !istype(AA.alternate_obj, /obj/structure/mineral_door))
+				continue
+			AA.theImage.icon_state = "[initial(AA.alternate_obj.icon_state)][icon_state_postfix]"
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe) && !(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal)))
@@ -109,7 +125,7 @@
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			Dismantle()
 
-	else if(iswrench(W) && !istype(src, /obj/structure/mineral_door/resin))
+	else if(iswrench(W) && can_unwrench)
 		if(user.is_busy(src))
 			return
 		if(anchored)
@@ -273,7 +289,8 @@
 	icon = 'icons/mob/alien.dmi'
 	operating_sound = 'sound/effects/attackblob.ogg'
 	icon_state = "resin"
-	health = 150
+	health = 250
+	can_unwrench = FALSE
 	var/close_delay = 100
 
 /obj/structure/mineral_door/resin/atom_init()

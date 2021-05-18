@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
@@ -71,7 +69,7 @@
 	if(opened || istype(W, /obj/item/weapon/grab))
 		return ..()
 
-	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
+	else if(istype(W, /obj/item/weapon/packageWrap))	//OOP? Doesn't heard.
 		return
 	else if(iscoil(W))
 		if(rigged)

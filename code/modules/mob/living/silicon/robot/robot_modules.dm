@@ -11,6 +11,13 @@
 	var/obj/item/borg/upgrade/jetpack = null
 	var/list/stacktypes
 
+/obj/item/weapon/robot_module/atom_init()
+	. = ..()
+
+	var/mob/living/silicon/robot/R = loc
+
+	add_languages(R)
+
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
 		for(var/obj/O in modules)
@@ -86,18 +93,19 @@
 	if(B.charges < 10)
 		B.charges += 1
 
-/obj/item/weapon/robot_module/surgeon
-	name = "surgeon robot module"
+/obj/item/weapon/robot_module/medical
+	name = "medical robot module"
 	stacktypes = list(
 		/obj/item/stack/medical/advanced/bruise_pack = 5,
-		/obj/item/stack/nanopaste = 5
+		/obj/item/stack/medical/advanced/ointment = 5,
+		/obj/item/stack/nanopaste = 5,
+		/obj/item/stack/medical/splint = 10
 		)
 
-/obj/item/weapon/robot_module/surgeon/atom_init()
+/obj/item/weapon/robot_module/medical/atom_init()
 	. = ..()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
-	modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/medical(src)
 	modules += new /obj/item/weapon/scalpel/manager(src)
 	modules += new /obj/item/weapon/FixOVein(src)
 	modules += new /obj/item/weapon/hemostat(src)
@@ -110,43 +118,16 @@
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
 	modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
+	modules += new /obj/item/stack/medical/advanced/ointment(src)
 	modules += new /obj/item/stack/nanopaste(src)
-
-	emag = new /obj/item/weapon/reagent_containers/spray(src)
-
-	emag.reagents.add_reagent("pacid", 250)
-	emag.name = "Polyacid spray"
-
-/obj/item/weapon/robot_module/surgeon/respawn_consumable(mob/living/silicon/robot/R)
-	if(src.emag)
-		var/obj/item/weapon/reagent_containers/spray/PS = src.emag
-		PS.reagents.add_reagent("pacid", 2)
-	..()
-
-/obj/item/weapon/robot_module/crisis
-	name = "crisis robot module"
-	stacktypes = list(
-		/obj/item/stack/medical/ointment = 25,
-		/obj/item/stack/medical/bruise_pack = 25,
-		/obj/item/stack/medical/splint = 10
-		)
-
-/obj/item/weapon/robot_module/crisis/atom_init()
-	. = ..()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/gripper/chemistry(src)
-	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
-	modules += new /obj/item/stack/medical/ointment(src, 25)
-	modules += new /obj/item/stack/medical/bruise_pack(src, 25)
 	modules += new /obj/item/stack/medical/splint(src, 10)
-	modules += new /obj/item/weapon/reagent_containers/borghypo/crisis(src)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
@@ -154,7 +135,13 @@
 	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "Polyacid spray"
 
-/obj/item/weapon/robot_module/crisis/respawn_consumable(mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R)
+	if(src.emag)
+		var/obj/item/weapon/reagent_containers/spray/PS = src.emag
+		PS.reagents.add_reagent("pacid", 2)
+	..()
+
+/obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R)
 
 	var/obj/item/weapon/reagent_containers/syringe/S = locate() in src.modules
 	if(S.mode == 2)
@@ -340,6 +327,12 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+
+/obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
+	//basic set+Sy-Code
+	. = ..()
+
+	R.add_language("Sy-Code", TRUE)
 
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"

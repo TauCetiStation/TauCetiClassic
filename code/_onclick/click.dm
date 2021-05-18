@@ -77,19 +77,19 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
-	if(modifiers["shift"] && modifiers["ctrl"])
+	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
+	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers[ALT_CLICK]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
 	if(HardsuitClickOn(A))
@@ -351,11 +351,11 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.dir = NORTH
-		else		usr.dir = SOUTH
+		if(dy > 0)	usr.set_dir(NORTH)
+		else		usr.set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.dir = EAST
-		else		usr.dir = WEST
+		if(dx > 0)	usr.set_dir(EAST)
+		else		usr.set_dir(WEST)
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
@@ -371,25 +371,25 @@
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			set_dir(NORTH)
 		else
-			dir = SOUTH
+			set_dir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			set_dir(EAST)
 		else
-			dir = WEST
+			set_dir(WEST)
 
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
 		//do nothing
-	else if(modifiers["left"])
-		if(modifiers["alt"])
+	else if(modifiers[LEFT_CLICK])
+		if(modifiers[ALT_CLICK])
 			C.cob.rotate_object()
 		else
 			C.cob.try_to_build(src)
-	else if(modifiers["right"])
+	else if(modifiers[RIGHT_CLICK])
 		C.cob.remove_build_overlay(C)
 
 /obj/screen/click_catcher
@@ -405,11 +405,11 @@
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers[MIDDLE_CLICK] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = params2turf(modifiers[SCREEN_LOC], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
 	. = 1

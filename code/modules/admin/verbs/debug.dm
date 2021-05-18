@@ -318,46 +318,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	//		M.make_abomination()
 
 */
-/*
-/client/proc/make_cultist(mob/M in world) // -- TLE, modified by Urist
-	set category = "Fun"
-	set name = "Make Cultist"
-	set desc = "Makes target a cultist"
-	if(!cultwords["travel"])
-		runerandom()
-	if(M)
-		if(M.mind in SSticker.mode.cult)
-			return
-		else
-			if(alert("Spawn that person a tome?",,"Yes","No")=="Yes")
-				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie. A tome, a message from your new master, appears on the ground.</span>")
-				new /obj/item/weapon/book/tome(M.loc)
-			else
-				to_chat(M, "<span class='warning'>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</span>")
-			var/glimpse=pick("1","2","3","4","5","6","7","8")
-			switch(glimpse)
-				if("1")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["travel"]] is travel...</span>")
-				if("2")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["blood"]] is blood...</span>")
-				if("3")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["join"]] is join...</span>")
-				if("4")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["hell"]] is Hell...</span>")
-				if("5")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["destroy"]] is destroy...</span>")
-				if("6")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["technology"]] is technology...</span>")
-				if("7")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["self"]] is self...</span>")
-				if("8")
-					to_chat(M, "<span class='warning'>You remembered one thing from the glimpse... [cultwords["see"]] is see...</span>")
-
-			if(M.mind)
-				M.mind.special_role = "Cultist"
-				SSticker.mode.cult += M.mind
-			to_chat(src, "Made [M] a cultist.")
-*/
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all()
@@ -582,6 +542,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
 
+//todo: this proc should use /datum/outfit/
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
@@ -2018,51 +1979,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			to_chat(usr, jointext(clients,","))
 		if("Joined Clients")
 			to_chat(usr, jointext(joined_player_list,","))
-
-/client/proc/cmd_display_del_log()
-	set category = "Debug"
-	set name = "Display del() Log"
-	set desc = "Display del's log of everything that's passed through it."
-
-	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
-	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
-	for(var/path in SSgarbage.items)
-		var/datum/qdel_item/I = SSgarbage.items[path]
-		dellog += "<li><u>[path]</u><ul>"
-		if (I.failures)
-			dellog += "<li>Failures: [I.failures]</li>"
-		dellog += "<li>qdel() Count: [I.qdels]</li>"
-		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
-		if (I.hard_deletes)
-			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
-			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
-		if (I.slept_destroy)
-			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
-		if (I.no_respect_force)
-			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
-		if (I.no_hint)
-			dellog += "<li>No hint: [I.no_hint]</li>"
-		dellog += "</ul></li>"
-
-	dellog += "</ol>"
-
-	var/datum/browser/popup = new(usr, "dellog")
-	popup.set_content(dellog.Join())
-	popup.open()
-
-/client/proc/cmd_display_init_log()
-	set category = "Debug"
-	set name = "Display Initialize() Log"
-	set desc = "Displays a list of things that didn't handle Initialize() properly"
-
-	if(!length(SSatoms.BadInitializeCalls))
-		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
-	else
-		var/dat = replacetext(SSatoms.InitLog(), "\n", "<br>")
-
-		var/datum/browser/popup = new(usr, "initlog")
-		popup.set_content(dat)
-		popup.open()
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)

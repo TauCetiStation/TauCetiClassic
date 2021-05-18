@@ -17,9 +17,9 @@
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	universal_speak = 0	// No, just no.
-	var/stop_automated_movement = 0 // Use this to temporarely stop random movement or to if you write special movement code for animals.
-	var/wander = 1 // Does the mob wander around when idle?
-	var/stop_automated_movement_when_pulled = 1 // When set to 1 this stops the animal from moving when someone is pulling it.
+	var/stop_automated_movement = FALSE // Use this to temporarely stop random movement or to if you write special movement code for animals.
+	var/wander = TRUE // Does the mob wander around when idle?
+	var/stop_automated_movement_when_pulled = TRUE // When set to 1 this stops the animal from moving when someone is pulling it.
 
 	// Interaction
 	var/response_help   = "tries to help"
@@ -79,21 +79,27 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
+/mob/living/simple_animal/Login()
+	..()
+	blinded = FALSE
+	stat = CONSCIOUS
+	update_canmove()
+
 /mob/living/simple_animal/Grab(atom/movable/target, force_state, show_warnings = TRUE)
 	return
 
 /mob/living/simple_animal/helpReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='notice'>[attacker] [response_help] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
 /mob/living/simple_animal/disarmReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='warning'>[attacker] [response_disarm] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
 /mob/living/simple_animal/hurtReaction(mob/living/attacker, show_message = TRUE)
-	if(health > 0)
+	if(stat != DEAD)
 		visible_message("<span class='warning'>[attacker] [response_harm] [src]</span>")
 	return ..(attacker, show_message = FALSE)
 
@@ -132,7 +138,7 @@
 	health = min(health, maxHealth)
 
 	if(client)
-		handle_vision()
+		handle_regular_hud_updates()
 
 	if(stunned)
 		AdjustStunned(-1)
@@ -290,17 +296,14 @@
 /mob/living/simple_animal/ex_act(severity)
 	if(!blinded)
 		flash_eyes()
-	switch (severity)
-		if (1.0)
-			adjustBruteLoss(500)
+	switch(severity)
+		if(1)
 			gib()
-			return
 
-		if (2.0)
+		if(2)
 			adjustBruteLoss(60)
 
-
-		if(3.0)
+		if(3)
 			adjustBruteLoss(30)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
@@ -320,16 +323,16 @@
 	if (isliving(target_mob))
 		var/mob/living/L = target_mob
 		if(!L.stat && L.health >= 0)
-			return (0)
-	if (istype(target_mob,/obj/mecha))
+			return FALSE
+	if (istype(target_mob, /obj/mecha))
 		var/obj/mecha/M = target_mob
-		if (M.occupant)
-			return (0)
-	if (istype(target_mob,/obj/machinery/bot))
+		if(M.occupant)
+			return FALSE
+	if (istype(target_mob, /obj/machinery/bot))
 		var/obj/machinery/bot/B = target_mob
 		if(B.health > 0)
-			return (0)
-	return (1)
+			return FALSE
+	return TRUE
 
 // Call when target overlay should be added/removed
 /mob/living/simple_animal/update_targeted()

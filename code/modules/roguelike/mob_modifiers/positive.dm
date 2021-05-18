@@ -152,10 +152,12 @@
 	H.color = saved_color
 
 	if(!update && rejuve_timer)
-		SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
 		deltimer(rejuve_timer)
 		rejuve_timer = null
-		H.forceMove(get_turf(possessed))
+
+		if(possessed)
+			SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
+			H.forceMove(get_turf(possessed))
 
 	return ..()
 
@@ -212,11 +214,6 @@
 
 	// var/slimy_color_filter
 	var/slimy_outline_filter
-
-/datum/component/mob_modifier/slimy/Destroy()
-	// QDEL_NULL(slimy_color_filter)
-	QDEL_NULL(slimy_outline_filter)
-	return ..()
 
 /datum/component/mob_modifier/slimy/apply(update = FALSE)
 	. = ..()

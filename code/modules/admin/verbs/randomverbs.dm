@@ -274,6 +274,30 @@
 		target.overload_ai_system()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/send_gods_message()
+	set category = "Fun"
+	set name = "God's message"
+	if(!holder)
+		to_chat(src, "Only administrators may use this command.")
+		return
+
+	var/datum/religion/religion = input(usr, "Выберите религию", "Религия") as null|anything in all_religions
+	if(!religion)
+		return
+	var/god_name = input(usr, "Выберите имя бога", "Религия") as null|anything in (religion.deity_names + "Custom")
+	if(god_name == "Custom")
+		god_name = sanitize(input("Введите своё имя бога:", "Религия") as null|text)
+
+	if(!god_name)
+		return
+
+	var/message = sanitize(input("Введите сообщение:", "Религия") as null|text)
+	if(!message)
+		return
+
+	religion.send_message_to_members(message, god_name)
+	log_admin("[key_name(usr)] said as a [god_name] to members of [religion.name] a [message].")
+	message_admins("<span class='notice'>[key_name_admin(usr)] said as a [god_name] to members of [religion.name] ([message]).</span>")
 
 //I use this proc for respawn character too. /N
 /proc/create_xeno(ckey)
@@ -674,7 +698,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	
+
 	if(!(SSticker && SSticker.mode))
 		to_chat(usr, "Please wait until the game starts!")
 		return
@@ -684,7 +708,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	holder.secrets_menu["custom_announce"].interact()
 
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	
+
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in view())
 	set category = "Admin"
@@ -823,62 +847,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	M.dust()
 	feedback_add_details("admin_verb","DUST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/*
-/client/proc/cmd_manual_ban()
-	set name = "Manual Ban"
-	set category = "Special Verbs"
-	if(!authenticated || !holder)
-		to_chat(src, "Only administrators may use this command.")
-		return
-	var/mob/M = null
-	switch(alert("How would you like to ban someone today?", "Manual Ban", "Key List", "Enter Manually", "Cancel"))
-		if("Key List")
-			var/list/keys = list()
-			for(var/mob/M in world)
-				keys += M.client
-			var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in keys
-			if(!selection)
-				return
-			M = selection:mob
-			if ((M.client && M.client.holder && (M.client.holder.level >= holder.level)))
-				alert("You cannot perform this action. You must be of a higher administrative rank!")
-				return
 
-	switch(alert("Temporary Ban?",,"Yes","No"))
-	if("Yes")
-		var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num
-		if(!mins)
-			return
-		if(mins >= 525600) mins = 525599
-		var/reason = input(usr,"Reason?","reason","Griefer") as text
-		if(!reason)
-			return
-		if(M)
-			AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-			to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
-			to_chat(M, "<span class='warning'>This is a temporary ban, it will be removed in [mins] minutes.</span>")
-			to_chat(M, "<span class='warning'>To try to resolve this matter head to http://ss13.donglabs.com/forum/</span>")
-			log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-			message_admins("<span class='notice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>")
-			world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=[mins]&server=[replacetext(config.server_name, "#", "")]")
-			del(M.client)
-			qdel(M)
-		else
-
-	if("No")
-		var/reason = input(usr,"Reason?","reason","Griefer") as text
-		if(!reason)
-			return
-		AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-		to_chat(M, "<span class='warning'><BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG></span>")
-		to_chat(M, "<span class='warning'>This is a permanent ban.</span>")
-		to_chat(M, "<span class='warning'>To try to resolve this matter head to http://ss13.donglabs.com/forum/</span>")
-		log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
-		message_admins("<span class='notice'>[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.</span>")
-		world.Export("http://216.38.134.132/adminlog.php?type=ban&key=[usr.client.key]&key2=[M.key]&msg=[html_decode(reason)]&time=perma&server=[replacetext(config.server_name, "#", "")]")
-		del(M.client)
-		qdel(M)
-*/
 
 /client/proc/update_world()
 	// If I see anyone granting powers to specific keys like the code that was here,
@@ -1191,7 +1160,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!check_rights(R_VAREDIT))
 		return
 
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	var/ckey = ckey(input("Enter player ckey") as null|text)
@@ -1199,7 +1168,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!ckey)
 		return
 
-	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[GUARD_CHECK_AGE]' WHERE ckey = '[sanitize_sql(ckey)]' AND cast(ingameage as unsigned integer) < [GUARD_CHECK_AGE]")
+	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[GUARD_CHECK_AGE]' WHERE ckey = '[ckey]' AND cast(ingameage as unsigned integer) < [GUARD_CHECK_AGE]")
 	query_update.Execute()
 
 	to_chat(src, "Guard pass granted (probably)")

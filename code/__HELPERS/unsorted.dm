@@ -319,35 +319,36 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	return .
 
 //Returns a list of all items of interest with their name
-/proc/getpois(mobs_only=0, skip_mindless=0)
-	var/list/mobs = sortmobs()
+/proc/getpois(with_mobs = TRUE, skip_mindless = FALSE, mobs_only = FALSE)
+	var/list/mobs = sortmobs() - global.dummy_mob_list
 	var/list/names = list()
 	var/list/pois = list()
 	var/list/namecounts = list()
 
-	for(var/mob/M in mobs)
-		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera))
+	if(with_mobs)
+		for(var/mob/M in mobs)
+			if(skip_mindless && (!M.mind && !M.ckey))
+				if(!isbot(M) && !istype(M, /mob/camera))
+					continue
+			if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 				continue
-		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
-			continue
-		if(usr == M)	//skip yourself
-			continue
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (M.stat == DEAD)
-			if(istype(M, /mob/dead/observer))
-				name += " \[ghost\]"
+			if(usr == M)	//skip yourself
+				continue
+			var/name = M.name
+			if (name in names)
+				namecounts[name]++
+				name = "[name] ([namecounts[name]])"
 			else
-				name += " \[dead\]"
-		pois[name] = M
+				names.Add(name)
+				namecounts[name] = 1
+			if (M.real_name && M.real_name != M.name)
+				name += " \[[M.real_name]\]"
+			if (M.stat == DEAD)
+				if(istype(M, /mob/dead/observer))
+					name += " \[ghost\]"
+				else
+					name += " \[dead\]"
+			pois[name] = M
 
 	if(!mobs_only)
 		for(var/atom/A in poi_list)
@@ -556,7 +557,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.set_dir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -658,17 +659,33 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype)
-	if(!areatype) return null
-	if(istext(areatype)) areatype = text2path(areatype)
-	if(isarea(areatype))
+/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0)
+	if(istext(areatype))
+		areatype = text2path(areatype)
+	else if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
+	else if(!ispath(areatype))
+		return null
 
-	var/list/turfs = new/list()
-	for(var/area/N in all_areas)
-		if(istype(N, areatype))
-			for(var/turf/T in N) turfs += T
+	var/list/turfs = list()
+	if(subtypes)
+		var/list/cache = typecacheof(areatype)
+		for(var/V in global.all_areas)
+			var/area/A = V
+			if(!cache[A.type])
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
+	else
+		for(var/V in global.all_areas)
+			var/area/A = V
+			if(A.type != areatype)
+				continue
+			for(var/turf/T in A)
+				if(target_z == 0 || target_z == T.z)
+					turfs += T
 	return turfs
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
@@ -749,7 +766,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 					var/turf/X = T.MoveTurf(B)
 
-					X.dir = old_dir1
+					X.set_dir(old_dir1)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
@@ -902,7 +919,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							continue moving
 
 					var/turf/X = new T.type(B)
-					X.dir = old_dir1
+					X.set_dir(old_dir1)
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
@@ -1514,3 +1531,31 @@ var/list/WALLITEMS = typecacheof(list(
 		return 1
 
 	return contains(location.loc)
+
+//Inverts the colour of an HTML string
+/proc/invertHTMLcolor(HTMLstring)
+	if(!istext(HTMLstring))
+		CRASH("Given non-text argument!")
+	else if(length(HTMLstring) != 7)
+		CRASH("Given non-HTML argument!")
+	else if(length_char(HTMLstring) != 7)
+		CRASH("Given non-hex symbols in argument!")
+	var/textr = copytext(HTMLstring, 2, 4)
+	var/textg = copytext(HTMLstring, 4, 6)
+	var/textb = copytext(HTMLstring, 6, 8)
+	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
+
+/proc/change_lobbyscreen(new_screen)
+	if(new_screen)
+		global.current_lobby_screen = new_screen
+	else
+		var/newyear
+		#ifdef NEWYEARCONTENT
+		global.current_lobby_screen = pick(global.new_year_screens)
+		newyear = TRUE
+		#endif
+		if(!newyear)
+			global.current_lobby_screen = pick(global.lobby_screens)
+
+	for(var/mob/dead/new_player/N in new_player_list)
+		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)

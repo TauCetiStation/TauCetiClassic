@@ -114,7 +114,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "shuttle"
 	req_access = list(access_mining)
-	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
+	circuit = /obj/item/weapon/circuitboard/mining_shuttle
 	var/location = 0 //0 = station, 1 = mining base
 
 /obj/machinery/computer/mining_shuttle/ui_interact(user)
@@ -266,7 +266,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/twohanded/sledgehammer/proc/spin(mob/living/user)
 	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
-		user.dir = i
+		user.set_dir(i)
 		sleep(1)
 
 /obj/item/weapon/twohanded/sledgehammer/dropped(mob/living/carbon/user)
@@ -501,7 +501,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	cell_type = /obj/item/weapon/stock_parts/cell/crap
 	var/recharge_time = 20
 	var/already_improved = FALSE
 
@@ -627,13 +627,13 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "This capsule has the [template.name] stored.")
 	to_chat(user, template.description)
 
-/obj/item/weapon/survivalcapsule/attack_self()
+/obj/item/weapon/survivalcapsule/attack_self(mob/living/user)
 	// Can't grab when capsule is New() because templates aren't loaded then
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
 		if(!is_mining_level(T.z) && !is_junkyard_level(T.z) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
-			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit and shut up!</span>")
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"You must use shelter at asteroid or in space! Grab this shit and shut up!\"</span>")
 			used = TRUE
 			new /obj/item/clothing/mask/breath(T)
 			new /obj/item/weapon/tank/air(T)
@@ -642,7 +642,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			new /obj/item/clothing/head/helmet/space/cheap(T)
 			playsound(T, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
 		else
-			src.loc.visible_message("<span class='warning'>\The [src] begins to shake. Stand back!</span>")
+			visible_message("<span class='warning'>\The [src] begins to shake.</span>")
+			audible_message("<span class='game say'><span class='name'>[src]</span> says, \"Stand back!\"</span>")
 			used = TRUE
 			sleep(50)
 
@@ -650,11 +651,11 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			var/status = template.check_deploy(T)
 			switch(status)
 				if(SHELTER_DEPLOY_BAD_AREA)
-					src.loc.visible_message("<span class='warning'>\The [src] will not function in this area.</span>")
+					to_chat(user, "<span class='warning'>\The [src] will not function in this area.</span>")
 				if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
 					var/width = template.width
 					var/height = template.height
-					src.loc.visible_message("<span class='warning'>\The [src] doesn't have room to deploy! You need to clear a [width]x[height] area!</span>")
+					audible_message("<span class='game say'><span class='name'>[src]</span> says, \"There is no room to deply! A cleared space of [width]x[height] size is required!\"</span>")
 
 			if(status != SHELTER_DEPLOY_ALLOWED)
 				used = FALSE
@@ -832,6 +833,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
+		if(O.flags & NODROP || !O.canremove)
+			return 0
 		return 1
 	return 0
 

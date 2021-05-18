@@ -39,30 +39,20 @@
 	stat = DEAD
 	dizziness = 0
 	jitteriness = 0
-	dog_owner = null
 
 	med_hud_set_health()
 	med_hud_set_status()
 
 	//Handle species-specific deaths.
-	if(species) species.handle_death(src)
-
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.infected_killed(src)
-		mode.body_count.Add(mind)
+	if(species)
+		species.handle_death(src)
 
 	//Check for heist mode kill count.
 	if(SSticker.mode && ( istype( SSticker.mode,/datum/game_mode/heist) ) )
-		//Check for last assailant's mutantrace.
-		/*if( LAssailant && ( istype( LAssailant,/mob/living/carbon/human ) ) )
-			var/mob/living/carbon/human/V = LAssailant
-			if (V.dna && (V.dna.mutantrace == "vox"))*/ //Not currently feasible due to terrible LAssailant tracking.
-		//world << "Vox kills: [vox_kills]"
 		vox_kills++ //Bad vox. Shouldn't be killing humans.
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD
+		INVOKE_ASYNC(src, .proc/emote, "deathgasp") //let the world KNOW WE ARE DEAD
 
 		update_canmove()
 

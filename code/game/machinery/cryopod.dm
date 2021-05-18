@@ -17,7 +17,7 @@ var/global/list/frozen_items = list()
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cellconsole"
-	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
+	circuit = /obj/item/weapon/circuitboard/cryopodcontrol
 	var/mode = null
 
 /obj/machinery/computer/cryopod/ui_interact(mob/user)
@@ -182,7 +182,7 @@ var/global/list/frozen_items = list()
 
 			//Update any existing objectives involving this mob.
 			for(var/datum/objective/O in all_objectives)
-				if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind) //We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
+				if(istype(O,/datum/objective/rp_rev) && O.target == occupant.mind) //We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
 					qdel(O) //TODO: Update rev objectives on login by head (may happen already?) ~ Z
 				else if(O.target && istype(O.target, /datum/mind))
 					if(O.target == occupant.mind)

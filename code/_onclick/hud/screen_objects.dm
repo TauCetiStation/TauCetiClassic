@@ -16,6 +16,8 @@
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching
 	appearance_flags = APPEARANCE_UI
+	var/assigned_map
+	var/del_on_map_removal = TRUE
 
 /obj/screen/Destroy()
 	master = null
@@ -63,6 +65,11 @@
 
 /obj/screen/storage
 	name = "storage"
+	var/obj/item/last_outlined // for removing outline from item
+
+/obj/screen/storage/Destroy()
+	last_outlined = null
+	return ..()
 
 /obj/screen/storage/Click(location, control, params)
 	if(world.time <= usr.next_move)
@@ -83,7 +90,7 @@
 			return 1
 		// Taking something out of the storage screen (including clicking on item border overlay)
 		var/list/PM = params2list(params)
-		var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+		var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
 		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
 
@@ -94,6 +101,41 @@
 					I.Click(location, control, params)
 					return 1
 	return 1
+
+/obj/screen/storage/MouseEntered(location, control, params)
+	. = ..()
+	if(!master)
+		return
+	var/obj/item/weapon/storage/S = master
+	if(!S || !S.storage_ui)
+		return
+	// Taking something out of the storage screen (including clicking on item border overlay)
+	var/list/PM = params2list(params)
+	var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
+	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+	var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
+
+	var/obj/item/I
+	for(var/i in 1 to S.storage_ui.click_border_start.len)
+		if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
+			I = S.contents[i]
+			if (I)
+				last_outlined = I
+				if(usr.incapacitated() || istype(usr.loc, /obj/mecha))
+					I.apply_outline(COLOR_RED_LIGHT)
+				else
+					I.apply_outline()
+				return
+
+/obj/screen/storage/MouseExited()
+	. = ..()
+	last_outlined?.remove_outline()
+	last_outlined = null
+
+/obj/screen/storage/MouseDrop()
+	. = ..()
+	last_outlined?.remove_outline()
+	last_outlined = null
 
 /obj/screen/gun
 	name = "gun"
@@ -131,8 +173,8 @@
 
 /obj/screen/zone_sel/Click(location, control,params)
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 	if(!choice)
 		return 1
@@ -144,8 +186,8 @@
 
 /obj/screen/zone_sel/MouseMove(location, control, params)
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 
 	if(hovering == choice)
@@ -685,6 +727,35 @@
 				usr.next_move = world.time+6
 	return 1
 
+/obj/screen/inventory/MouseEntered()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	add_stored_outline()
+
+/obj/screen/inventory/MouseExited()
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
+	remove_stored_outline()
+
+/obj/screen/inventory/proc/add_stored_outline()
+	if(!slot_id || !usr.client.prefs.outline_enabled)
+		return
+	var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
+	if(!inv_item)
+		return
+	if(usr.incapacitated())
+		inv_item.apply_outline(COLOR_RED_LIGHT)
+	else
+		inv_item.apply_outline()
+
+/obj/screen/inventory/proc/remove_stored_outline()
+	if(!slot_id)
+		return
+	var/obj/item/inv_item = usr.get_item_by_slot(slot_id)
+	if(!inv_item)
+		return
+	inv_item.remove_outline()
+
 /obj/screen/inventory/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen1_Midnight.dmi'
@@ -694,3 +765,84 @@
 /obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
+
+/obj/screen/temp
+	var/mob/user
+	var/delay = 0
+
+/obj/screen/temp/atom_init(mapload, mob/M)
+	. = ..()
+	user = M
+	if(user.client)
+		user.client.screen += src
+	QDEL_IN(src, delay)
+
+/obj/screen/temp/Destroy()
+	if(user.client)
+		user.client.screen -= src
+	user = null
+	return ..()
+
+/obj/screen/temp/cult_teleportation
+	name = "crafting menu"
+	icon = 'icons/effects/bloodTP.dmi'
+	icon_state = "cult_tp"
+	screen_loc = "1,1"
+	layer = ABOVE_HUD_LAYER + 1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	delay = 8.5
+
+/obj/screen/cooldown_overlay
+	name = ""
+	icon_state = "cooldown"
+	pixel_y = 4
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = RESET_COLOR | PIXEL_SCALE | RESET_TRANSFORM | KEEP_TOGETHER | RESET_ALPHA
+	vis_flags = VIS_INHERIT_ID
+	var/cooldown_time = 0
+	var/obj/screen/parent_button
+	var/datum/callback/callback
+	var/timer
+
+/obj/screen/cooldown_overlay/atom_init(mapload, button)
+	. = ..()
+	parent_button = button
+
+/obj/screen/cooldown_overlay/Destroy()
+	stop_cooldown()
+	deltimer(timer)
+	return ..()
+
+/obj/screen/cooldown_overlay/proc/start_cooldown(delay)
+	parent_button.color = "#8000007c"
+	parent_button.vis_contents += src
+	if(delay)
+		cooldown_time = delay
+	set_maptext(cooldown_time)
+	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+
+/obj/screen/cooldown_overlay/proc/tick()
+	if(cooldown_time == 0)
+		stop_cooldown()
+		return
+	cooldown_time--
+	set_maptext(cooldown_time)
+	timer = addtimer(CALLBACK(src, .proc/tick), 1 SECOND, TIMER_STOPPABLE)
+
+/obj/screen/cooldown_overlay/proc/stop_cooldown()
+	cooldown_time = 0
+	parent_button.color = "#ffffffff"
+	parent_button.vis_contents -= src
+	if(callback)
+		callback.Invoke()
+
+/obj/screen/cooldown_overlay/proc/set_maptext(time)
+	maptext = "<div style=\"font-size:6pt;font:'Arial Black';text-align:center;\">[time]</div>"
+
+/proc/start_cooldown(obj/screen/button, time, datum/callback/callback)
+	var/obj/screen/cooldown_overlay/cooldown = new(button, button)
+	if(callback)
+		cooldown.callback = callback
+	cooldown.start_cooldown(time)
+	return cooldown

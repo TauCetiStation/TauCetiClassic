@@ -30,6 +30,7 @@
 	if(owner)
 		Remove(owner)
 	target = null
+	QDEL_NULL(button)
 	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
@@ -46,7 +47,6 @@
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		del(button)
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null
@@ -119,9 +119,13 @@
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
 
+/obj/screen/movable/action_button/Destroy()
+	owner = null
+	return ..()
+
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		moved = 0
 		return 1
 	if(usr.next_move >= world.time) // Is this needed ?

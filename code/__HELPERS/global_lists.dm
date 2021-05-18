@@ -144,11 +144,11 @@
 	global.spells_by_aspects = list()
 	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
 		var/obj/effect/proc_holder/spell/S = new path()
-		if(!S.needed_aspect)
+		if(!S.needed_aspects)
 			continue
 
 		// Don't bother adding ourselves to other aspects, it is redundant.
-		var/aspect_type = S.needed_aspect[1]
+		var/aspect_type = S.needed_aspects[1]
 
 		if(!global.spells_by_aspects[aspect_type])
 			global.spells_by_aspects[aspect_type] = list()

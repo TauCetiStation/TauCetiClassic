@@ -63,17 +63,6 @@
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
-/obj/item/organ/external/atom_init(mapload, mob/living/carbon/human/H)
-	. = ..()
-	recolor()
-	controller = new controller_type(src)
-	if(H)
-		species = owner.species
-		b_type = owner.dna.b_type
-	else // Bodypart was spawned outside of the body so we need to update its sprite
-		species = all_species[HUMAN]
-		update_sprite()
-
 /obj/item/organ/external/Destroy()
 	if(parent)
 		parent.children -= src
@@ -103,6 +92,19 @@
 		harvest(I, user)
 	else
 		return ..()
+
+/obj/item/organ/external/set_owner(mob/living/carbon/human/H)
+	..()
+
+	recolor()
+	controller = new controller_type(src)
+
+	if(H)
+		species = owner.species
+		b_type = owner.dna.b_type
+	else // Bodypart was spawned outside of the body so we need to update its sprite
+		species = all_species[HUMAN]
+		update_sprite()
 
 /obj/item/organ/external/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
 	..()
@@ -349,7 +351,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 					// Throw limb around.
 					if(isturf(bodypart.loc))
 						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
-					dir = 2
+					set_dir(2)
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
 			for(var/obj/item/I in src)
@@ -419,7 +421,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	owner.UpdateDamageIcon(src)
 	if(!clean && leaves_stump)
-		new /obj/item/organ/external/stump(null, owner, src)
+		var/obj/item/organ/external/stump/S = new(null)
+		S.insert_organ(owner, null, src)
 	owner.updatehealth()
 
 	if(!should_delete)
@@ -690,6 +693,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "head"
 	artery_name = "cartoid artery"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "head_m"
+
 	temp_coeff = 1.05
 
 	body_part = HEAD
@@ -727,14 +733,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/b_grad
 	var/hair_painted
 
-/obj/item/organ/external/head/atom_init()
-	. = ..()
-	organ_head_list += src
-
 /obj/item/organ/external/head/Destroy()
 	organ_head_list -= src
 	QDEL_NULL(brainmob)
 	return ..()
+
+/obj/item/organ/external/head/set_owner()
+	..()
+	organ_head_list += src
 
 /obj/item/organ/external/head/is_compatible(mob/living/carbon/human/H)
 	if(H.species.name == IPC || H.species.name == DIONA)
@@ -863,6 +869,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_arm"
+
 	artery_name = "basilic vein"
 
 	temp_coeff = 1.0
@@ -888,6 +898,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right arm"
 	artery_name = "basilic vein"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_arm"
+
 	temp_coeff = 1.0
 
 	body_part = ARM_RIGHT
@@ -910,6 +923,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left leg"
 	artery_name = "femoral artery"
 
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "l_leg"
+
 	temp_coeff = 0.75
 
 	body_part = LEG_LEFT
@@ -926,6 +942,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/r_leg
 	name = "right leg"
 	artery_name = "femoral artery"
+
+	icon = 'icons/mob/human_races/r_human.dmi'
+	icon_state = "r_leg"
 
 	temp_coeff = 0.75
 

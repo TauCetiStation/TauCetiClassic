@@ -360,6 +360,7 @@ SUBSYSTEM_DEF(job)
 		if(player.client.prefs.alternate_option == RETURN_TO_LOBBY)
 			Debug("Alternate return to lobby, Player: [player]")
 			player.ready = 0
+			player.client << output(player.ready, "lobbybrowser:imgsrc")
 			unassigned -= player
 			SSticker.mode.antag_candidates -= player.mind
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
@@ -456,7 +457,7 @@ SUBSYSTEM_DEF(job)
 		// Moving wheelchair if they have one
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
 			H.buckled.loc = H.loc
-			H.buckled.dir = H.dir
+			H.buckled.set_dir(H.dir)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary

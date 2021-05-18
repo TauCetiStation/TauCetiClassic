@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /***************************************************************
 **						Design Datums						  **
 **	All the data for building stuff.                          **
@@ -1700,21 +1698,31 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespacebeaker
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
+	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete."
 	id = "bluespacebeaker"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_PHORON = 3000, MAT_DIAMOND = 500)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	category = list("Misc")
 
+/datum/design/bluespacebeaker/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
+	desc += "Can hold up to [initial(B.volume)] units."
+
 /datum/design/noreactbeaker
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	desc = "A cryostasis beaker that allows for chemical storage without reactions."
 	id = "splitbeaker"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
+
+/datum/design/noreactbeaker/New()
+	..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
+	desc += "Can hold up to [initial(B.volume)] units."
 
 /datum/design/defibrillators_back
 	name = "Defibrillators"
@@ -1882,6 +1890,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/temperature
 	category = list("Weapons")
 
+/datum/design/emp_mine
+	name = "EMP Mine"
+	desc = "A mine which will generate ion impulse upon activation."
+	id = "emp_mine"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 100, MAT_URANIUM = 150)
+	build_path = /obj/item/mine/emp
+	category = list("Weapons")
+
 /datum/design/tesla_gun
 	name = "Tesla Cannon"
 	desc = "A gun which uses electrical discharges to hit multiple targets"
@@ -1956,11 +1973,11 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunslug
 	name = "Stun Slug"
-	desc = "A stunning, electrified slug for a shotgun."
+	desc = "Box of eight stunning, electrified slugs for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000)
-	build_path = /obj/item/ammo_casing/shotgun/stunslug
+	materials = list(MAT_METAL = 20000)
+	build_path = /obj/item/ammo_box/eight_shells/stunslug
 	category = list("Weapons")
 
 /datum/design/phoronpistol

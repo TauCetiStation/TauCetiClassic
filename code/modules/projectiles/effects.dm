@@ -139,6 +139,21 @@
 	return
 
 //----------------------------
+// Cult beam
+//----------------------------
+/obj/effect/projectile/emitter/tracer/cult
+	color = "#ff0000"
+	light_range = 1.5
+	light_power = 2
+	light_color = "#ff0000"
+
+/obj/effect/projectile/emitter/muzzle/cult
+	color = "#ff0000"
+
+/obj/effect/projectile/emitter/impact/cult
+	color = "#ff0000"
+
+//----------------------------
 // Stun beam
 //----------------------------
 /obj/effect/projectile/stun/tracer

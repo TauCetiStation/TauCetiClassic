@@ -331,10 +331,17 @@
 	result_amount = 2
 
 /datum/chemical_reaction/imidazoline
-	name = "imidazoline"
+	name = "Imidazoline"
 	id = "imidazoline"
 	result = "imidazoline"
 	required_reagents = list("carbon" = 1, "hydrogen" = 1, "anti_toxin" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/aurisine
+	name = "Aurisine"
+	id = "aurisine"
+	result = "aurisine"
+	required_reagents = list("sulfur" = 1, "oxygen" = 1, "anti_toxin" = 1)
 	result_amount = 2
 
 /datum/chemical_reaction/dextromethorphan
@@ -1185,7 +1192,9 @@
 
 /datum/chemical_reaction/slimefreeze/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	sleep(50)
+	addtimer(CALLBACK(src, .proc/do_freeze, holder), 50)
+
+/datum/chemical_reaction/slimefreeze/proc/do_freeze(datum/reagents/holder)
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/M in range(get_turf_loc(holder.my_atom), 7))
 		M.bodytemperature -= 140
@@ -1212,7 +1221,9 @@
 
 /datum/chemical_reaction/slimefire/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	sleep(50)
+	addtimer(CALLBACK(src, .proc/do_fire, holder), 50)
+
+/datum/chemical_reaction/slimefire/proc/do_fire(datum/reagents/holder)
 	if(!(holder.my_atom && holder.my_atom.loc))
 		return
 
@@ -1369,7 +1380,9 @@
 
 /datum/chemical_reaction/slimeexplosion/on_reaction(datum/reagents/holder)
 	holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-	sleep(50)
+	addtimer(CALLBACK(src, .proc/do_explosion, holder), 50)
+
+/datum/chemical_reaction/slimeexplosion/proc/do_explosion(datum/reagents/holder)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
 	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Oil slime extract activated by [key_name(usr)]")

@@ -15,9 +15,13 @@
 		"Atheism", \
 	)
 
-//Holy role
+//Holy role of chaplain
 #define HOLY_ROLE_PRIEST 1 //default priestly role
 #define HOLY_ROLE_HIGHPRIEST 2 //the one who designates the religion
+
+//Holy role of cultists
+#define CULT_ROLE_HIGHPRIEST 2 //the one who designates the religion
+#define CULT_ROLE_MASTER 3 //the one who designates the cult
 
 //Apect defines
 //Other informations about aspect in aspect.dm
@@ -41,3 +45,10 @@
 
 // Items below this gain are considered "pity" by the deity.
 #define MIN_FAVOUR_GAIN 20
+
+// Religion Techs
+#define RTECH_MEMORIZE_RUNE         "Memorize Rune"
+#define RTECH_REUSABLE_RUNE         "Reusable Rune"
+#define RTECH_BUILD_EVERYWHERE      "Build Everywhere"
+#define RTECH_MORE_RUNES            "More Runes"
+#define RTECH_MIRROR_SHIELD         "Mirror Shield"

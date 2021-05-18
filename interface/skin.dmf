@@ -486,6 +486,7 @@ window "mainwindow"
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Space Station 13"
+		statusbar = false
 		is-maximized = true
 		icon = 'icons\\ss13_64.png'
 		macro = "macro"
@@ -587,6 +588,30 @@ window "mapwindow"
 		saved-params = "icon-size;zoom-mode"
 		on-show = ".winset\"mainwindow.mainvsplit.left=mapwindow\""
 		on-hide = ".winset\"mainwindow.mainvsplit.left=\""
+	elem "lobbybrowser"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		is-visible = false
+		is-disabled = true
+		saved-params = ""
+		auto-format = false
+
+window "popupwindow"
+	elem "popupwindow"
+		type = MAIN
+		pos = 281,0
+		size = 120x120
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		statusbar = false
+		can-resize = false
 
 window "outputwindow"
 	elem "outputwindow"

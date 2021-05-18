@@ -4,6 +4,7 @@
 	var/turf/basetype = /turf/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
+	var/can_deconstruct = FALSE
 
 	//Properties for open tiles (/floor)
 	var/oxygen = 0
@@ -27,7 +28,13 @@
 	var/list/resources
 	var/slowdown = 0
 
+/**
+  * Turf Initialize
+  *
+  * Doesn't call parent, see [/atom/proc/atom_init]
+  */
 /turf/atom_init()
+	SHOULD_CALL_PARENT(FALSE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -119,19 +126,21 @@
 /turf/proc/is_mob_placeable(mob/M)
 	if(density)
 		return FALSE
+	var/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
+								  /obj/structure/table, /obj/structure/grille,
+								  /obj/structure/cult, /obj/structure/mineral_door)
 	for(var/atom/movable/on_turf in contents)
 		if(on_turf == M)
 			continue
 		if(istype(on_turf, /mob) && !on_turf.anchored)
 			continue
 		if(on_turf.density)
-			if(istype(on_turf, /obj/structure/window))
-				continue
-			if(istype(on_turf, /obj/machinery/door))
-				continue
-			if(istype(on_turf, /obj/structure/table))
-				continue
-			if(istype(on_turf, /obj/structure/grille))
+			var/allow = FALSE
+			for(var/type in allowed_types)
+				if(istype(on_turf, type))
+					allow = TRUE
+					break
+			if(allow)
 				continue
 			return FALSE
 	return TRUE

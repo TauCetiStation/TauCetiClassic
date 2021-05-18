@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
@@ -105,7 +103,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(SSticker.mode.name == "revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(SSticker.mode.name == "rp-revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)
@@ -364,17 +362,17 @@
 		if(check_access(I))
 			user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
 			switch(src.build_path)
-	
+
 				if(/obj/machinery/computer/rdconsole/core)
 					src.name = "Circuit Board (RD Console - Robotics)"
 					src.build_path = /obj/machinery/computer/rdconsole/robotics
 					to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
-	
+
 				if(/obj/machinery/computer/rdconsole/robotics)
 					src.name = "Circuit Board (RD Console - Mining)"
 					src.build_path = /obj/machinery/computer/rdconsole/mining
 					to_chat(user, "<span class='notice'>Access protocols set to mining.</span>")
-	
+
 				if(/obj/machinery/computer/rdconsole/mining)
 					src.name = "Circuit Board (RD Console)"
 					src.build_path = /obj/machinery/computer/rdconsole/core
@@ -404,7 +402,7 @@
 
 		if(P.use_tool(src, user, 20, volume = 50) && src && P)
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
-			dir = text2dir(dir_choise)
+			set_dir(text2dir(dir_choise))
 
 		return
 
@@ -500,7 +498,7 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
-				new_computer.dir = dir
+				new_computer.set_dir(dir)
 				transfer_fingerprints_to(new_computer)
 				qdel(src)
 
@@ -537,4 +535,4 @@
 
 	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
 		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
-		dir = text2dir(dir_choise)
+		set_dir(text2dir(dir_choise))

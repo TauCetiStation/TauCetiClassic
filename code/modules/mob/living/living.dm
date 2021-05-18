@@ -7,12 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/medical/medhud in global.huds)
-		medhud.add_to_hud(src)
-	var/datum/atom_hud/data/diagnostic/diaghud = global.huds[DATA_HUD_DIAGNOSTIC]
-	diaghud.add_to_hud(src)
-	var/datum/atom_hud/data/security/sechud = global.huds[DATA_HUD_SECURITY]
-	sechud.add_to_hud(src)
+	for(var/datum/atom_hud/data/hud in global.huds)
+		hud.add_to_hud(src)
 
 	if(moveset_type)
 		add_moveset(new moveset_type(), MOVESET_TYPE)
@@ -216,10 +212,9 @@
 /mob/living/verb/succumb()
 	set hidden = 1
 	if ((src.health < 0 && src.health > -95.0))
-		src.adjustOxyLoss(src.health + 200)
-		src.health = 100 - src.getOxyLoss() - src.getToxLoss() - src.getFireLoss() - src.getBruteLoss()
+		adjustOxyLoss(health - config.health_threshold_dead)
 		to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
-
+		death()
 
 /mob/living/proc/updatehealth()
 	if(status_flags & GODMODE)
@@ -404,6 +399,18 @@
 	log_investigate(" has consumed [key_name(src)].",INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
+
+/mob/living/airlock_crush_act()
+	var/turf/mob_turf = get_turf(src)
+	for(var/dir in cardinal)
+		var/turf/new_turf = get_step(mob_turf, dir)
+		if(Move(new_turf))
+			break
+	AdjustStunned(5)
+	AdjustWeakened(5)
+	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
+	visible_message("<span class='red'>[src] was crushed by the door.</span>",
+					"<span class='danger'>The door crushed you.</span>")
 
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
@@ -607,13 +614,10 @@
 	set category = "OOC"
 	set src in view()
 
-	if(config.allow_Metadata)
-		if(client)
-			to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
-		else
-			to_chat(usr, "[src] does not have any stored infomation!")
+	if(client)
+		to_chat(usr, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 	else
-		to_chat(usr, "OOC Metadata is not supported by this server!")
+		to_chat(usr, "[src] does not have any stored infomation!")
 
 	return
 
@@ -713,7 +717,7 @@
 	var/trail_type = M.getTrail()
 	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (istype(M.loc, /turf/simulated) && trail_type != null)
+	if (isturf(M.loc) && trail_type != null)
 		var/newdir = get_dir(T, M.loc)
 		if(newdir != M.dir)
 			newdir = newdir | M.dir
@@ -858,7 +862,7 @@
 			if (istype(C.buckled,/obj/structure/stool/bed/nest))
 				C.buckled.user_unbuckle_mob(C)
 				return
-			if( C.handcuffed )
+			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
@@ -1109,16 +1113,6 @@
 			I.pixel_z = 16
 			animate(I, pixel_z = 0, alpha = 125, time = 3)
 	return viewing
-
-/mob/living/Stat()
-	..()
-	if(statpanel("Status"))
-		if(SSticker.mode && SSticker.mode.config_tag == "gang")
-			var/datum/game_mode/gang/mode = SSticker.mode
-			if(isnum(mode.A_timer))
-				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-			if(isnum(mode.B_timer))
-				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 
 /mob/living/update_gravity(has_gravity)
 	if(!SSticker)

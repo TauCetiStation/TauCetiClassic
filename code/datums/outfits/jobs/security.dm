@@ -33,7 +33,7 @@
 	l_pocket = /obj/item/device/flash
 	l_hand_back = /obj/item/weapon/handcuffs
 
-	list/backpack_contents = null
+	backpack_contents = null
 	implants = list(/obj/item/weapon/implant/mindshield)
 
 	back_style = BACKPACK_STYLE_SECURITY

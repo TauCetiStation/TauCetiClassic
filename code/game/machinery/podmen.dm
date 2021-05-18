@@ -6,10 +6,9 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	name = "pack of dionaea-replicant seeds"
 	desc = "These seeds grow into 'replica pods' or 'dionaea', a form of strange sapient plantlife."
 	icon_state = "seed-replicapod"
-	mypath = "/obj/item/seeds/replicapod"
 	species = "replicapod"
 	plantname = "Dionaea"
-	productname = "/mob/living/carbon/human" //verrry special -- Urist
+	product_type = /mob/living/carbon/human //verrry special -- Urist
 	lifespan = 50 //no idea what those do
 	endurance = 8
 	maturation = 5
@@ -107,28 +106,11 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	found_player = TRUE
 
 	var/mob/living/carbon/monkey/diona/podman = new(parent.loc)
-	podman.ckey = candidate.ckey
-
-	if(candidate.mob && candidate.mob.mind)
-		candidate.mob.mind.transfer_to(podman)
+	podman.key = candidate.key
 
 	if(realName)
 		podman.real_name = realName
 	podman.dna.real_name = podman.real_name
-
-	// Update mode specific HUD icons.
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.update_icon(podman.mind)
-
-	switch(SSticker.mode.name)
-		if ("revolution")
-			if (podman.mind in SSticker.mode:revolutionaries)
-				SSticker.mode:add_revolutionary(podman.mind)
-		if ("cult")
-			if (podman.mind in SSticker.mode:cult)
-				SSticker.mode:add_cultist(podman.mind)
-		// -- End mode specific stuff
 
 	to_chat(podman, "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span>")
 	if(source && ckey && podman.ckey == ckey)

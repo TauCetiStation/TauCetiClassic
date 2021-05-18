@@ -11,7 +11,7 @@
 
 /*
 
-IMPORTANT NOTE: Please delete the diseases by using cure() proc or del() instruction.
+IMPORTANT NOTE: Please delete the diseases by using cure() proc or qdel() instruction.
 Diseases are referenced in a global list, so simply setting mob or obj vars
 to null does not delete the object itself. Thank you.
 

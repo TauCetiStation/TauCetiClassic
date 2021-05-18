@@ -400,6 +400,7 @@
 	return id
 
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
+	. = ..()
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && can_use())
 		return attack_self(M)
@@ -535,7 +536,7 @@
 				data["convo_job"] = sanitize(c["job"])
 				break
 	if(mode==41)
-		data_core.get_manifest_json()
+		data_core.load_manifest()
 
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
@@ -1177,7 +1178,7 @@
 
 		if (!P.message_silent)
 			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-			audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
+			P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 
 		//Search for holder of the PDA.
 		var/mob/living/L = null

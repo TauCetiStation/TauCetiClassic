@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
@@ -92,7 +90,7 @@
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
-	data["manifest"] = data_core ? data_core.get_manifest(0) : null
+	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
 	data["target_name"] = modify ? modify.name : "-----"
 	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
 	data["target_rank"] = get_target_rank()
@@ -244,10 +242,6 @@
 					if(datum_account)
 						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
 
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.reassign_employee(modify)
-
 		if ("reg")
 			if (is_authenticated())
 				var/t2 = modify
@@ -285,7 +279,7 @@
 						P.name = text("crew manifest ([])", worldtime2text())
 						P.info = {"<h4>Crew Manifest</h4>
 							<br>
-							[data_core ? data_core.get_manifest(0) : ""]
+							[data_core ? data_core.html_manifest(monochrome=0) : ""]
 						"}
 						P.update_icon()
 					else if (modify)
@@ -310,10 +304,6 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.terminate_employee(modify)
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

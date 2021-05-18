@@ -314,7 +314,7 @@
 			apply_prefix = 0
 			var/list/possible_spawns = list(/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/magus,
-			/obj/item/clothing/head/culthood/alt,
+			/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/helmet/space/cult)
 
 			var/new_type = pick(possible_spawns)
@@ -423,8 +423,8 @@
 			//new_item = new /obj/item/weapon/fossil/base(src.loc)
 
 			//the replacement item propogation isn't working, and it's messy code anyway so just do it here
-			var/list/candidates = list("/obj/item/weapon/fossil/bone"=9,"/obj/item/weapon/fossil/skull"=3,
-			"/obj/item/weapon/fossil/skull/horned"=2)
+			var/list/candidates = list(/obj/item/weapon/fossil/bone=9,/obj/item/weapon/fossil/skull=3,
+			/obj/item/weapon/fossil/skull/horned=2)
 			var/spawn_type = pickweight(candidates)
 			new_item = new spawn_type(src.loc)
 

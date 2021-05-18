@@ -61,46 +61,72 @@
 	QDEL_NULL(storage_ui)
 	return ..()
 
-/obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
-		var/mob/M = usr
+/obj/item/weapon/storage/MouseDrop(obj/over_object, src_location, turf/over_location)
+	if(src != over_object)
+		remove_outline()
+	if(!(ishuman(usr) || ismonkey(usr) || isIAN(usr))) //so monkeys can take off their backpacks -- Urist
+		return
+	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return
 
-		if(!over_object)
+	var/mob/M = usr
+	if(isturf(over_location) && over_object != M)
+		if(M.incapacitated())
 			return
-
-		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
 			return
-
-		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			src.open(usr)
+		if(!isturf(M.loc))
 			return
-
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-
-		//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
-		//there's got to be a better way of doing this.
-		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		if(istype(src, /obj/item/weapon/storage/lockbox))
+			var/obj/item/weapon/storage/lockbox/L = src
+			if(L.locked)
+				return
+		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
 			return
+		if(M.a_intent == INTENT_HELP)
+			var/dir_target = get_dir(M.loc, over_location)
+			M.SetNextMove(CLICK_CD_MELEE)
+			for(var/obj/item/I in contents)
+				if(M.is_busy())
+					return
+				if(!Adjacent(M) || !over_location.Adjacent(src) || !over_location.Adjacent(M))
+					return
+				if(!do_after(M, 2, target = M))
+					return
+				remove_from_storage(I, M.loc)
+				I.add_fingerprint(M)
+				step(I, dir_target)
+			add_fingerprint(M)
+		return
 
-		if (!usr.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-				if("mouth")
-					if(!M.unEquip(src))
-						return
-					M.put_in_active_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
+	if(!over_object)
+		return
+	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
+		src.open(usr)
+		return
+	if (!( istype(over_object, /obj/screen) ))
+		return ..()
 
+	//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
+	//there's got to be a better way of doing this.
+	if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		return
+
+	if (!usr.incapacitated())
+		switch(over_object.name)
+			if("r_hand")
+				if(!M.unEquip(src))
+					return
+				M.put_in_r_hand(src)
+			if("l_hand")
+				if(!M.unEquip(src))
+					return
+				M.put_in_l_hand(src)
+			if("mouth")
+				if(!M.unEquip(src))
+					return
+				M.put_in_active_hand(src)
+		src.add_fingerprint(usr)
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -282,7 +308,6 @@
 		else
 			W.layer = initial(W.layer)
 			W.plane = initial(W.plane)
-		W.set_alt_apperances_layers()
 		W.Move(new_location)
 	else
 		W.Move(get_turf(src))

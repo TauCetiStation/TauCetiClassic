@@ -37,7 +37,6 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
-	unacidable = TRUE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	//var/skipprocess = 0 //Experimenting
@@ -96,7 +95,7 @@
 			src.loc = loc
 
 		if(dir)
-			src.dir = dir
+			src.set_dir(dir)
 
 		buildstage = 0
 		wiresexposed = 1
@@ -1184,7 +1183,7 @@ FIRE ALARM
 		src.loc = loc
 
 	if(dir)
-		src.dir = dir
+		src.set_dir(dir)
 
 	if(building)
 		buildstage = 0

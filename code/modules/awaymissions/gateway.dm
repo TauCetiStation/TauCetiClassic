@@ -177,7 +177,7 @@
 				to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
 				return
 
-	M.dir = SOUTH
+	M.set_dir(SOUTH)
 	enter_to_transit(M, get_step(destination.loc, SOUTH))
 	use_power(1000)
 

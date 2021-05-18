@@ -85,9 +85,6 @@
 
 			handle_virus_updates()
 
-			//stuff in the stomach
-			handle_stomach()
-
 			handle_shock()
 
 			handle_pain()
@@ -1305,14 +1302,6 @@
 			see_in_dark = 8
 			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-		if(seer)
-			var/obj/effect/rune/R = locate() in loc
-			if(R && istype(R.power, /datum/cult/seer))
-				see_invisible = SEE_INVISIBLE_CULT
-			else
-				see_invisible = SEE_INVISIBLE_LIVING
-				seer = FALSE
-
 		if(glasses)
 			var/obj/item/clothing/glasses/G = glasses
 			if(istype(G))
@@ -1327,9 +1316,6 @@
 					see_invisible = SEE_INVISIBLE_LIVING
 				else
 					see_invisible = SEE_INVISIBLE_MINIMUM
-
-		else if(!seer)
-			see_invisible = SEE_INVISIBLE_LIVING
 
 		if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
 			var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
@@ -1590,23 +1576,6 @@
 				V.dead = 1
 
 	return
-
-/mob/living/carbon/human/proc/handle_stomach()
-	spawn(0)
-		for(var/mob/living/M in stomach_contents)
-			if(M.loc != src)
-				stomach_contents.Remove(M)
-				continue
-			if(istype(M, /mob/living/carbon) && stat != DEAD)
-				if(M.stat == DEAD)
-					M.death(1)
-					stomach_contents.Remove(M)
-					qdel(M)
-					continue
-				if(SSmobs.times_fired%3==1)
-					if(!(M.status_flags & GODMODE))
-						M.adjustBruteLoss(5)
-					nutrition += 10
 
 /mob/living/carbon/human/proc/handle_changeling()
 	if(mind && mind.changeling)

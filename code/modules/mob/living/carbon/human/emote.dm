@@ -411,10 +411,10 @@
 			continue // skip leavers
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
-				to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
+				to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]") // ghosts don't need to be checked for deafness, type of message, etc. So to_chat() is better here
 			if(CHAT_GHOSTSIGHT_ALLMANUAL)
 				if(!auto)
-					to_chat(M, "<a href='byond://?src=\ref[M];track=\ref[src]'>(F)</a> <B>[src]</B> [message]")
+					to_chat(M, "[FOLLOW_LINK(M, src)] <B>[src]</B> [message]")
 
 	if(cloud_emote)
 		var/image/emote_bubble = image('icons/mob/emote.dmi', src, cloud_emote, EMOTE_LAYER)

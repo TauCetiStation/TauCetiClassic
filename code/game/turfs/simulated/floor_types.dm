@@ -72,10 +72,6 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
-/turf/simulated/floor/engine/cult
-	name = "engraved floor"
-	icon_state = "cult"
-
 /turf/simulated/floor/engine/airmix
 	oxygen = MOLES_O2ATMOS
 	nitrogen = MOLES_N2ATMOS
@@ -377,6 +373,7 @@
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/ironsand/ex_act()
 	return 0
@@ -396,6 +393,7 @@
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/snow/ex_act(severity)
 	return

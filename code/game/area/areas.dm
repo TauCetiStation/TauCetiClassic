@@ -22,7 +22,7 @@
 	var/poweralm = 1
 	var/party = null
 	var/lightswitch = 1
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim or religion capture
 
 	var/eject = null
 
@@ -40,6 +40,8 @@
 	var/static_equip
 	var/static_light = 0
 	var/static_environ
+
+	var/datum/religion/religion
 
 	var/has_gravity = 1
 	var/obj/machinery/power/apc/apc = null
@@ -90,7 +92,7 @@ var/list/ghostteleportlocs = list()
 	for(var/area/AR in all_areas)
 		if(ghostteleportlocs.Find(AR.name))
 			continue
-		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome))
+		if(istype(AR, /area/station/aisat/antechamber) || istype(AR, /area/space_structures/derelict) || istype(AR, /area/centcom/tdome) || istype(AR, /area/custom/cult))
 			ghostteleportlocs += AR.name
 			ghostteleportlocs[AR.name] = AR
 		var/turf/picked = pick(get_area_turfs(AR.type))
@@ -142,9 +144,9 @@ var/list/ghostteleportlocs = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
 				if(state == 1)
-					C.network.Remove("Power Alarms")
+					C.remove_network("Power Alarms")
 				else
-					C.network.Add("Power Alarms")
+					C.add_network("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -174,7 +176,7 @@ var/list/ghostteleportlocs = list()
 
 		if (danger_level < 2 && atmosalm >= 2)
 			for(var/obj/machinery/camera/C in src)
-				C.network.Remove("Atmosphere Alarms")
+				C.remove_network("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -186,7 +188,7 @@ var/list/ghostteleportlocs = list()
 			var/list/cameras = list()
 			for(var/obj/machinery/camera/C in src)
 				cameras += C
-				C.network.Add("Atmosphere Alarms")
+				C.add_network("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
@@ -238,7 +240,7 @@ var/list/ghostteleportlocs = list()
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in src)
 			cameras.Add(C)
-			C.network.Add("Fire Alarms")
+			C.add_network("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer.client)
 				continue
@@ -257,7 +259,7 @@ var/list/ghostteleportlocs = list()
 				else if(D.density)
 					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 		for (var/obj/machinery/camera/C in src)
-			C.network.Remove("Fire Alarms")
+			C.remove_network("Fire Alarms")
 		for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 			if(!aiPlayer.client)
 				continue
@@ -356,7 +358,9 @@ var/list/ghostteleportlocs = list()
 			used_environ += amount
 
 
-/area/Entered(A)
+/area/Entered(atom/movable/A)
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A)
+	SEND_SIGNAL(A, COMSIG_ENTER_AREA, src) //The atom that enters the area
 	if (!isliving(A))
 		return
 
@@ -398,6 +402,14 @@ var/list/ghostteleportlocs = list()
 		L.client.sound_next_ambience_play = world.time + rand(3, 6) MINUTES
 		L.playsound_music(pick(ambience), VOL_AMBIENT, null, null, CHANNEL_AMBIENT)
 
+/**
+  * Called when an atom exits an area
+  *
+  * Sends signals COMSIG_EXIT_AREA (to the atom)
+  */
+/area/Exited(atom/movable/A)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A)
+	SEND_SIGNAL(A, COMSIG_EXIT_AREA, src) //The atom that exits the area
 
 /area/proc/gravitychange(gravitystate = FALSE)
 	has_gravity = gravitystate

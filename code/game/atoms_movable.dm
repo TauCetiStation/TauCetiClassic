@@ -20,6 +20,8 @@
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
 
+	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+
 	var/list/client_mobs_in_contents
 	var/freeze_movement = FALSE
 
@@ -61,6 +63,7 @@
 		return
 
 	var/atom/oldloc = loc
+	var/old_dir = dir
 
 	if(loc != NewLoc)
 		if (!(Dir & (Dir - 1))) //Cardinal move
@@ -100,6 +103,9 @@
 
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc,Dir)) //movement failed due to buckled mob
 		. = 0
+
+	if(dir != old_dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 	if(.)
 		Moved(oldloc, Dir)
@@ -166,7 +172,6 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
-
 		Moved(oldloc, 0)
 		return TRUE
 	return FALSE

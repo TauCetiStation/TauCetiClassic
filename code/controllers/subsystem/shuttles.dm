@@ -129,7 +129,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
+					shake_mobs_in_area(end_location, SOUTH)
 
 					dock_act(end_location, "shuttle_escape")
 					dock_act(/area/centcom/evac, "shuttle_escape")
@@ -298,14 +298,14 @@ SUBSYSTEM_DEF(shuttle)
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-				end_location.parallax_movedir = WEST
+				end_location.parallax_movedir = NORTH
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				shake_mobs_in_area(end_location, EAST)
+				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
@@ -595,10 +595,6 @@ SUBSYSTEM_DEF(shuttle)
 
 
 /datum/controller/subsystem/shuttle/proc/get_shuttle_arrive_time()
-	// During mutiny rounds, the shuttle takes twice as long.
-	if(SSticker && istype(SSticker.mode,/datum/game_mode/mutiny))
-		return SHUTTLEARRIVETIME * 2
-
 	return SHUTTLEARRIVETIME
 
 /datum/controller/subsystem/shuttle/proc/shuttlealert(X)

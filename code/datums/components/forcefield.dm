@@ -37,12 +37,7 @@
 /obj/effect/effect/forcefield/rune
 	name = "blood aura"
 
-	icon = 'icons/obj/rune.dmi'
-	icon_state = "1"
-
-/obj/effect/effect/forcefield/rune/atom_init()
-	. = ..()
-	icon_state = "[rand(1, 6)]"
+	icon_state = "shield-cult"
 
 /obj/effect/effect/forcefield/eva
 	name = "AT field"
