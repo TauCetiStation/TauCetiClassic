@@ -52,7 +52,7 @@
 		if(anchored)
 			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
 			trigger_act(AM)
-			qdel(AM)
+			qdel(src)
 
 /obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 1, 1, 3, 3)
