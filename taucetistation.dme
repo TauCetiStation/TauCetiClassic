@@ -1339,6 +1339,7 @@
 #include "code\modules\events\roundstart_events\area\dirt.dm"
 #include "code\modules\events\roundstart_events\area\lasertag_ed.dm"
 #include "code\modules\events\roundstart_events\area\maintenance.dm"
+#include "code\modules\events\roundstart_events\area\minefield.dm"
 #include "code\modules\events\roundstart_events\area\replace\deathly_sec.dm"
 #include "code\modules\events\roundstart_events\area\replace\del_cable.dm"
 #include "code\modules\events\roundstart_events\area\replace\del_surgeon_tools.dm"
