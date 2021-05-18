@@ -205,7 +205,7 @@ var/global/list/toilet_list = list()
 			var/obj/effect/fluid/F = locate() in thing
 			if(!F)
 				F = new(thing)
-			F.set_depth(FLUID_MAX_DEPTH)
+			F.set_depth(4000)
 
 		message_admins("RoundStart Event: Water was spawned in [COORD(T)] - [ADMIN_JMP(T)].")
 		log_game("RoundStart Event: Water was spawned in [COORD(T)].")
