@@ -30,7 +30,7 @@
 /obj/item/weapon/implant/freedom/get_data()
 	var/dat = {"
 		<b>Характеристики Импланта:</b><BR>
-		<b>Название:</b> Freedom Beacon.<BR>
+		<b>Название:</b> Имплант Освобождения Robust Corp класса "Freedom Beacon".<BR>
 		<b>Время жизни:</b> До пяти использований.<BR>
 		<b>Важные примечания:</b> <font color='red'>Контрабанда.</font><BR>
 		<HR>
