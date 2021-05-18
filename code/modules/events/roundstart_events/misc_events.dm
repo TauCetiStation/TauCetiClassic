@@ -188,8 +188,25 @@ var/global/list/scrap_list = list()
 
 var/global/list/toilet_list = list()
 /datum/event/roundstart/del_toilet/start()
-	for(var/A in toilet_list)
-		qdel(A)
+	for(var/atom/A in toilet_list)
+		if(is_station_level(A.z))
+			qdel(A)
 
 	message_admins("RoundStart Event: All toilets was deleted.")
 	log_game("RoundStart Event: All toilets was deleted.")
+
+/datum/event/roundstart/leaked_pipe/start()
+	for(var/atom/A in toilet_list)
+		if(is_station_level(A.z) && !prob(50))
+			continue
+
+		var/turf/T = get_turf(A)
+		for(var/thing in RANGE_TURFS(1, T))
+			var/obj/effect/fluid/F = locate() in thing
+			if(!F)
+				F = new(thing)
+			F.set_depth(FLUID_MAX_DEPTH)
+
+		message_admins("RoundStart Event: Water was spawned in [COORD(T)] - [ADMIN_JMP(T)].")
+		log_game("RoundStart Event: Water was spawned in [COORD(T)].")
+
