@@ -136,8 +136,8 @@
 			decals += I
 			var/list/click_params = params2list(params)
 			// Center the icon where the user clicked.
-			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
-			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+			I.pixel_x = (text2num(click_params[ICON_X]) - 16)
+			I.pixel_y = (text2num(click_params[ICON_Y]) - 16)
 			if(istype(I, /obj/item/organ/external/head))
 				I.pixel_y -= 10 // Head always has 10 pixels shift
 				I.set_dir(2) // Rotate head face to us
