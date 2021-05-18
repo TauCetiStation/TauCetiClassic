@@ -142,7 +142,7 @@
 
 	var/coughedtime = null
 
-	var/next_point_to
+	var/next_point_to = 0
 
 	var/music_lastplayed = "null"
 

@@ -15,6 +15,7 @@
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\priority_queue.dm"
 #include "code\__DATASTRUCTURES\stacks.dm"
+#include "code\__DEFINES\_click.dm"
 #include "code\__DEFINES\_logging.dm"
 #include "code\__DEFINES\_planes+layers.dm"
 #include "code\__DEFINES\_readme.dm"

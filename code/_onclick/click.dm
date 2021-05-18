@@ -77,22 +77,22 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
-	if(modifiers["shift"] && modifiers["middle"])
+	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
 		MiddleShiftClickOn(A)
 		return
-	if(modifiers["shift"] && modifiers["ctrl"])
+	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
+	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers[ALT_CLICK]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
 	if(HardsuitClickOn(A))
@@ -403,12 +403,12 @@
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
 		//do nothing
-	else if(modifiers["left"])
-		if(modifiers["alt"])
+	else if(modifiers[LEFT_CLICK])
+		if(modifiers[ALT_CLICK])
 			C.cob.rotate_object()
 		else
 			C.cob.try_to_build(src)
-	else if(modifiers["right"])
+	else if(modifiers[RIGHT_CLICK])
 		C.cob.remove_build_overlay(C)
 
 /obj/screen/click_catcher
@@ -424,11 +424,11 @@
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers[MIDDLE_CLICK] && istype(usr, /mob/living/carbon))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = params2turf(modifiers[SCREEN_LOC], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
 	. = 1

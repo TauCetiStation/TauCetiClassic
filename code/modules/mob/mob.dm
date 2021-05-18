@@ -345,7 +345,7 @@
 			if(usr in S.Friends)
 				S.last_pointed = A
 
-	next_point_to = world.time + 15
+	next_point_to = world.time + 1.5 SECONDS
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
