@@ -412,7 +412,7 @@
 		if(user.my_religion.is_member(M))
 			to_chat(M, text)
 
-	playsound(user, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER)
+	playsound(user, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER, extrarange = -6) // radius 3
 
 /obj/effect/proc_holder/spell/targeted/communicate/fastener
 	charge_max = 100
