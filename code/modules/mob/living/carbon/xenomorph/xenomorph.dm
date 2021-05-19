@@ -29,11 +29,12 @@
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")
-	var/datum/atom_hud/antag/hud = global.huds[ANTAG_HUD_ALIEN_EMBRYO]
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
 	hud.add_hud_to(src)	//add xenomorph to the hudusers list to see who is infected
 
 /mob/living/carbon/xenomorph/Destroy()
-	remove_antag_hud(ANTAG_HUD_ALIEN_EMBRYO, src)
+	var/datum/atom_hud/hud = global.huds[DATA_HUD_EMBRYO]
+	hud.remove_hud_from(src)
 	return ..()
 
 /mob/living/carbon/xenomorph/adjustToxLoss(amount)
@@ -67,23 +68,27 @@
 	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
+		else if(resting)
+			adjustBruteLoss(-heal_rate*2)
+			adjustFireLoss(-heal_rate*2)
+			adjustOxyLoss(-heal_rate*2)
+			adjustCloneLoss(-heal_rate*2)
+			adjustToxLoss(plasma_rate)
 		else
-			if(storedPlasma >= max_plasma)
-				adjustBruteLoss(-heal_rate*2)
-				adjustFireLoss(-heal_rate*2)
-				adjustOxyLoss(-heal_rate*2)
-				adjustCloneLoss(-heal_rate*2)
-			else
-				adjustBruteLoss(-heal_rate)
-				adjustFireLoss(-heal_rate)
-				adjustOxyLoss(-heal_rate)
-				adjustCloneLoss(-heal_rate)
-				adjustToxLoss(plasma_rate/2)
+			adjustBruteLoss(-heal_rate)
+			adjustFireLoss(-heal_rate)
+			adjustOxyLoss(-heal_rate)
+			adjustCloneLoss(-heal_rate)
+			adjustToxLoss(plasma_rate/2)
 
 	if(!environment)
 		return
 
+	if(istype(loc, /obj/machinery/atmospherics/pipe) || istype(loc, /obj/item/alien_embryo))
+		return
+
 	var/loc_temp = get_temperature(environment)
+	var/pressure = environment.return_pressure()
 
 	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
 
@@ -112,6 +117,17 @@
 				apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
 	else
 		clear_alert("alien_fire")
+
+//xenomorphs will take damage from high and low pressure
+	var/pressure_damage = heal_rate		//aliens won't take damage from pressure if stay on weeds
+	if(pressure >= WARNING_HIGH_PRESSURE)
+		apply_damage(pressure_damage, BRUTE)
+		throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+	else if(pressure >= WARNING_LOW_PRESSURE)
+		clear_alert("pressure")
+	else
+		throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+		apply_damage(pressure_damage, BRUTE)
 
 /mob/living/carbon/xenomorph/proc/handle_mutations_and_radiation()
 

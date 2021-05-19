@@ -7,7 +7,7 @@
 	icon_state = "robot"
 	maxHealth = 200
 	health = 200
-	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, HEALTH_HUD, STATUS_HUD, ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPMINDS_HUD, WANTED_HUD)
 
 	typing_indicator_type = "robot"
 
@@ -77,7 +77,7 @@
 	// Radial menu for choose module
 	var/static/list/choose_module
 
-/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE)
+/mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -92,7 +92,7 @@
 	updatename(name_prefix)
 	updateicon()
 
-	init(laws_type, ai_link)
+	init(laws_type, ai_link, R)
 
 	radio = new /obj/item/device/radio/borg(src)
 	if(!scrambledcodes && !camera)
@@ -123,11 +123,16 @@
 
 	diag_hud_set_borgcell()
 
-/mob/living/silicon/robot/proc/init(laws_type, ai_link)
+/mob/living/silicon/robot/proc/set_ai_link(link)
+	if (connected_ai != link)
+		connected_ai = link
+		update_manifest()
+
+/mob/living/silicon/robot/proc/init(laws_type, ai_link, datum/religion/R)
 	aiCamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
-	laws = new laws_type()
+	laws = new laws_type(R)
 	if(ai_link)
-		connected_ai = select_active_ai_with_fewest_borgs()
+		set_ai_link(select_active_ai_with_fewest_borgs())
 		if(connected_ai)
 			connected_ai.connected_robots += src
 			lawsync()
@@ -347,6 +352,7 @@
 
 	// if we've changed our name, we also need to update the display name for our PDA
 	setup_PDA()
+	update_manifest()
 
 	//We also need to update name of internal camera.
 	if (camera)
@@ -745,7 +751,7 @@
 				throw_alert("hacked", /obj/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
-				connected_ai = null
+				set_ai_link(null)
 				to_chat(user, "You emag [src]'s interface.")
 				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
@@ -1066,7 +1072,7 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if (src.connected_ai)
-		src.connected_ai = null
+		src.set_ai_link(null)
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
@@ -1075,6 +1081,7 @@
 	if(src.camera)
 		src.camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
+	update_manifest()
 
 
 /mob/living/silicon/robot/proc/ResetSecurityCodes()

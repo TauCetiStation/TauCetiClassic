@@ -60,6 +60,12 @@
 /datum/atom_hud/golem
 	hud_icons = list(GOLEM_MASTER_HUD)
 
+/datum/atom_hud/holy
+	hud_icons = list(HOLY_HUD)
+
+/datum/atom_hud/embryo
+	hud_icons = list(ALIEN_EMBRYO_HUD)
+
 /* MED/SEC/DIAG HUD HOOKS */
 
 /*
@@ -359,3 +365,10 @@
 /mob/living/proc/set_golem_hud()
 	var/image/holder = hud_list[GOLEM_MASTER_HUD]
 	holder.icon_state = "agolem_master"
+
+/*~~~~~~~~~~~~
+    ✟HOLY✟
+~~~~~~~~~~~~~*/
+/mob/proc/set_holy_hud()
+	var/image/holder = hud_list[HOLY_HUD]
+	holder.icon_state = my_religion?.symbol_icon_state

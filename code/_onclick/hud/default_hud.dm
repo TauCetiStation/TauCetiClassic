@@ -90,8 +90,15 @@
 	mymob.zone_sel.overlays.Cut()
 	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
 
+	mymob.pullin = new /obj/screen/pull()
+	mymob.pullin.icon = ui_style
+	mymob.pullin.update_icon(mymob)
+	mymob.pullin.screen_loc = ui_pull_resist
+	src.hotkeybuttons += mymob.pullin
+
+
 	mymob.client.screen = list()
 
 	mymob.client.screen += list(mymob.zone_sel)
-	mymob.client.screen += src.adding
+	mymob.client.screen += src.adding + src.hotkeybuttons
 	inventory_shown = 0

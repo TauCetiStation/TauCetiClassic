@@ -365,11 +365,12 @@
 	},
 /area/velocity)
 "aaF" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/custom/syndicate_mothership)
 "aaG" = (
 /obj/machinery/door/airlock/medical/glass,
@@ -610,10 +611,7 @@
 /mob/living/simple_animal/hostile/creature{
 	name = "Experiment 35b"
 	},
-/turf/unsimulated/floor{
-	icon_state = "lava";
-	name = "plating"
-	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "abu" = (
 /obj/effect/landmark/blockway,
@@ -701,7 +699,6 @@
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /obj/machinery/vending/wallmed1{
-	layer = 3.1;
 	pixel_y = -32
 	},
 /turf/simulated/shuttle/floor/evac,
@@ -1302,8 +1299,8 @@
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adx" = (
-/turf/unsimulated/wall,
-/area/custom/ninjaspawn)
+/turf/unsimulated/wall/cult/runed/anim,
+/area/space)
 "ady" = (
 /obj/structure/stool/bed/chair/schair/wagon{
 	dir = 1
@@ -1311,11 +1308,11 @@
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adz" = (
-/obj/machinery/computer/teleporter,
-/turf/unsimulated/floor{
-	icon_state = "gcircuit"
-	},
-/area/custom/ninjaspawn)
+/obj/structure/curtain/black,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/cult,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "adA" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -1456,14 +1453,12 @@
 /area/centcom/holding)
 "adT" = (
 /obj/structure/closet/emergency_wall{
-	layer = 3.1;
 	pixel_x = -32
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adU" = (
 /obj/structure/closet/emergency_wall{
-	layer = 3.1;
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -1558,7 +1553,6 @@
 "aeg" = (
 /obj/structure/closet/toolcloset,
 /obj/structure/extinguisher_cabinet{
-	layer = 3.1;
 	pixel_y = 32
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
@@ -1638,19 +1632,28 @@
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "aer" = (
+/turf/unsimulated/wall,
+/area/custom/ninjaspawn)
+"aes" = (
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "gcircuit"
+	},
+/area/custom/ninjaspawn)
+"aet" = (
 /obj/machinery/teleport/station,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aes" = (
+"aeu" = (
 /obj/machinery/teleport/hub,
 /turf/unsimulated/floor{
 	icon_state = "gcircuit"
 	},
 /area/custom/ninjaspawn)
-"aet" = (
+"aev" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/backpack/satchel/norm,
 /turf/unsimulated/floor{
@@ -1658,18 +1661,18 @@
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aeu" = (
+"aew" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aev" = (
+"aex" = (
 /turf/unsimulated/floor{
 	icon_state = "gcircuit"
 	},
 /area/custom/ninjaspawn)
-"aew" = (
+"aey" = (
 /obj/structure/table/reinforced,
 /obj/item/device/paicard,
 /turf/unsimulated/floor{
@@ -1677,7 +1680,7 @@
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aex" = (
+"aez" = (
 /obj/effect/landmark{
 	name = "ninja"
 	},
@@ -1686,21 +1689,13 @@
 	icon_state = "vault"
 	},
 /area/custom/ninjaspawn)
-"aey" = (
+"aeA" = (
 /obj/machinery/light/small{
 	brightness_color = "#008000"
 	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
-	},
-/area/custom/ninjaspawn)
-"aez" = (
-/turf/unsimulated/wall/fakeglass,
-/area/custom/ninjaspawn)
-"aeA" = (
-/turf/unsimulated/floor{
-	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeB" = (
@@ -1722,13 +1717,7 @@
 /turf/unsimulated/wall,
 /area/space)
 "aeE" = (
-/obj/machinery/light/small{
-	brightness_color = "#ff0000";
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "rcircuit"
-	},
+/turf/unsimulated/wall/fakeglass,
 /area/custom/ninjaspawn)
 "aeF" = (
 /obj/machinery/door/unpowered/shuttle/pod{
@@ -1745,31 +1734,37 @@
 	},
 /area/velocity)
 "aeH" = (
-/obj/structure/table/reinforced,
-/obj/item/device/paicard,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeI" = (
-/obj/machinery/computer/teleporter,
+/obj/machinery/light/small{
+	brightness_color = "#ff0000";
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeJ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/backpack/satchel/norm,
+/obj/item/device/paicard,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
 "aeK" = (
-/obj/machinery/teleport/hub,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/backpack/satchel/norm,
 /turf/unsimulated/floor{
 	icon_state = "rcircuit"
 	},
 /area/custom/ninjaspawn)
+"aeL" = (
+/obj/structure/cult/portal_to_station,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "aeT" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,18"
@@ -1805,7 +1800,6 @@
 	icon_state = "9,6"
 	},
 /obj/machinery/status_display{
-	layer = 4;
 	pixel_x = 4;
 	pixel_y = -1
 	},
@@ -1847,7 +1841,6 @@
 "aff" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/structure/closet/emergency_wall{
-	layer = 3.1;
 	pixel_y = 32
 	},
 /turf/simulated/shuttle/floor/evac/place,
@@ -1964,7 +1957,6 @@
 	icon_state = "7,6"
 	},
 /obj/machinery/status_display{
-	layer = 4;
 	pixel_x = -4;
 	pixel_y = -1
 	},
@@ -2432,11 +2424,12 @@
 /turf/space,
 /area/space)
 "ahK" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/custom/syndicate_mothership)
 "ahM" = (
 /obj/machinery/light,
@@ -2449,11 +2442,12 @@
 	},
 /area/custom/wizard_station)
 "ahN" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate_elite/mothership)
 "ahO" = (
 /obj/structure/window/reinforced,
@@ -2480,11 +2474,12 @@
 /turf/unsimulated/floor,
 /area/shuttle/specops/centcom)
 "ahR" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate_elite/mothership)
 "ahS" = (
 /obj/structure/table,
@@ -2494,16 +2489,16 @@
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/clothing/head/welding,
 /obj/machinery/recharger/wallcharger{
-	layer = 3.1;
 	pixel_x = 4;
 	pixel_y = 26
 	},
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
 "ahU" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/shuttle/syndicate_elite/mothership)
 "ahV" = (
 /obj/structure/window/reinforced,
@@ -2742,9 +2737,10 @@
 /turf/space,
 /area/custom/syndicate_mothership/elite_squad)
 "aiI" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/custom/syndicate_mothership/elite_squad)
 "aiJ" = (
 /obj/machinery/computer/pod{
@@ -2968,10 +2964,11 @@
 	},
 /area/custom/syndicate_mothership)
 "aju" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate_elite/mothership)
 "ajv" = (
 /obj/machinery/door/airlock/external{
@@ -2985,11 +2982,12 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/syndicate_elite/mothership)
 "ajw" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate_elite/mothership)
 "ajy" = (
 /obj/machinery/gateway{
@@ -3128,11 +3126,12 @@
 	},
 /area/shuttle/syndicate/start)
 "aka" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate/start)
 "akb" = (
 /obj/structure/grille,
@@ -3186,11 +3185,12 @@
 /turf/simulated/shuttle/plating,
 /area/shuttle/syndicate/start)
 "ake" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate/start)
 "akf" = (
 /obj/structure/object_wall/evac{
@@ -3303,9 +3303,10 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "aku" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/shuttle/syndicate/start)
 "akv" = (
 /turf/unsimulated/floor{
@@ -3613,17 +3614,19 @@
 	},
 /area/custom/syndicate_mothership)
 "alp" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate/start)
 "alr" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/syndicate/start)
 "als" = (
 /obj/machinery/computer/telecrystals/uplinker,
@@ -3973,7 +3976,6 @@
 "amk" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1331;
-	icon_state = "door_closed";
 	id_tag = "synd_inner";
 	name = "Ship External Access"
 	},
@@ -4172,7 +4174,6 @@
 	},
 /obj/machinery/door/airlock/external{
 	frequency = 1331;
-	icon_state = "door_closed";
 	id_tag = "synd_outer";
 	name = "Ship External Access"
 	},
@@ -4261,7 +4262,6 @@
 	icon_state = "12,13"
 	},
 /obj/machinery/status_display{
-	layer = 4;
 	pixel_x = -4;
 	pixel_y = -1
 	},
@@ -5135,9 +5135,6 @@
 	},
 /turf/simulated/shuttle/floor/cargo,
 /area/shuttle/supply/velocity)
-"aqh" = (
-/turf/unsimulated/wall/splashscreen,
-/area/start)
 "aqi" = (
 /obj/structure/closet/acloset,
 /turf/unsimulated/floor{
@@ -6520,9 +6517,14 @@
 	},
 /area/velocity)
 "auI" = (
-/turf/simulated/shuttle/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_f10"
+	},
+/turf/unsimulated/floor{
+	icon_state = "circuit"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
 	},
 /area/velocity)
 "auJ" = (
@@ -6739,10 +6741,12 @@
 /turf/space,
 /area/shuttle/transport1/centcom)
 "avv" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall12"
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
 	},
-/area/space)
+/turf/space,
+/turf/space,
+/area/shuttle/vox/arkship)
 "avw" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -6949,10 +6953,11 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
 "awC" = (
-/turf/simulated/shuttle/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_f10"
 	},
+/turf/simulated/shuttle/plating,
+/turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "awD" = (
 /obj/item/weapon/scalpel/alien,
@@ -7572,22 +7577,25 @@
 	},
 /area/velocity)
 "ayK" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
 /area/shuttle/specops/centcom)
 "ayL" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/shuttle/specops/centcom)
 "ayM" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/specops/centcom)
 "ayO" = (
 /obj/machinery/door/poddoor,
@@ -7764,6 +7772,7 @@
 /obj/structure/object_wall/velocity{
 	dir = 8;
 	icon_state = "vel_w04";
+	layer = 3.2;
 	name = "shuttle window";
 	opacity = 0
 	},
@@ -7800,6 +7809,10 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/officer/velocity)
+"azx" = (
+/obj/effect/decal/cleanable/blood/gibs/robot/down,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "azB" = (
 /obj/effect/landmark/trololo,
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -7850,16 +7863,18 @@
 	},
 /area/shuttle/specops/centcom)
 "azH" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/specops/centcom)
 "azI" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
 	icon_state = "vel_w02";
+	layer = 3.2;
 	name = "shuttle window";
 	opacity = 0
 	},
@@ -7881,9 +7896,10 @@
 	},
 /area/velocity)
 "azQ" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "diagonalWall3"
 	},
+/turf/space,
 /area/shuttle/specops/centcom)
 "azR" = (
 /obj/machinery/door/airlock/external,
@@ -7911,6 +7927,7 @@
 /obj/structure/object_wall/velocity{
 	dir = 8;
 	icon_state = "vel_w05";
+	layer = 3.2;
 	name = "shuttle window";
 	opacity = 0
 	},
@@ -9646,14 +9663,16 @@
 	},
 /area/centcom/creed)
 "aFi" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall_f9"
+	},
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/turf/unsimulated/floor{
+	icon_state = "circuit"
 	},
-/area/shuttle/administration/centcom)
+/area/velocity)
 "aFj" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -9664,12 +9683,15 @@
 /turf/unsimulated/floor,
 /area/shuttle/administration/centcom)
 "aFl" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "diagonalWall3"
+/turf/unsimulated/floor{
+	name = "plating"
 	},
 /area/shuttle/administration/centcom)
 "aFm" = (
@@ -10281,14 +10303,11 @@
 	},
 /area/shuttle/vox/arkship)
 "aHp" = (
-/turf/unsimulated/floor{
-	name = "plating"
+/obj/structure/object_wall/standart{
+	icon_state = "swall_s6"
 	},
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/administration/centcom)
+/turf/space,
+/area/centcom/evac)
 "aHr" = (
 /obj/machinery/vending/wallmed1{
 	name = "Emergency NanoMed";
@@ -10380,11 +10399,15 @@
 	},
 /area/centcom/specops)
 "aHB" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
 /turf/unsimulated/floor{
 	name = "plating"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+/turf/unsimulated/floor{
+	name = "plating"
 	},
 /area/shuttle/administration/centcom)
 "aHC" = (
@@ -11082,10 +11105,11 @@
 /turf/space,
 /area/shuttle/supply/velocity)
 "aKj" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s6"
+/obj/structure/object_wall/standart{
+	icon_state = "swall_s10"
 	},
-/area/space)
+/turf/space,
+/area/centcom/evac)
 "aKl" = (
 /turf/space,
 /area/shuttle/escape_pod4/centcom)
@@ -14395,39 +14419,53 @@
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
 "aWF" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s10"
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
-/area/space)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/shuttle/administration/centcom)
 "aWG" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
+/obj/structure/object_wall/standart{
+	icon_state = "swall_f5"
 	},
-/area/shuttle/vox/arkship)
+/turf/simulated/shuttle/floor,
+/turf/space,
+/area/centcom/evac)
 "aWH" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall3"
-	},
-/area/space)
-"aWI" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 1;
+/obj/structure/object_wall/standart{
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/vox/arkship)
-"aWJ" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall14"
+/turf/unsimulated/floor{
+	name = "plating"
 	},
-/area/space)
-"aWK" = (
-/turf/simulated/shuttle/wall{
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/shuttle/administration/centcom)
+"aWI" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall1"
+	},
+/turf/space,
+/area/centcom/evac)
+"aWJ" = (
+/obj/structure/object_wall/standart{
 	icon_state = "swall_s9"
 	},
-/area/space)
+/turf/space,
+/area/centcom/evac)
+"aWK" = (
+/obj/structure/object_wall/standart{
+	icon_state = "swall_f5"
+	},
+/turf/space,
+/area/centcom/evac)
 "aWL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -14495,10 +14533,11 @@
 	},
 /area/shuttle/vox/arkship)
 "aWP" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_s5"
 	},
-/area/space)
+/turf/space,
+/area/centcom/evac)
 "aWQ" = (
 /obj/machinery/computer/vox_station,
 /turf/simulated/shuttle/floor4{
@@ -14561,9 +14600,10 @@
 	master_tag = "vox_west_control";
 	req_one_access = list(150)
 	},
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/shuttle/vox/arkship)
 "aXc" = (
 /obj/machinery/door/airlock/hatch{
@@ -14624,9 +14664,10 @@
 	master_tag = "vox_east_control";
 	req_access = list(150)
 	},
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/shuttle/vox/arkship)
 "aXi" = (
 /obj/machinery/door/airlock/hatch{
@@ -14796,15 +14837,12 @@
 	},
 /area/shuttle/vox/arkship)
 "aXI" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "vox_west_control";
-	req_one_access = list(150)
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/space,
+/turf/space,
 /area/shuttle/vox/arkship)
 "aXK" = (
 /obj/machinery/door/airlock/hatch{
@@ -14932,15 +14970,12 @@
 	},
 /area/shuttle/vox/arkship)
 "aXY" = (
-/obj/machinery/access_button{
-	command = "cycle_interior";
-	frequency = 1331;
-	master_tag = "vox_east_control";
-	req_one_access = list(150)
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/space,
+/turf/space,
 /area/shuttle/vox/arkship)
 "aXZ" = (
 /turf/simulated/shuttle/plating{
@@ -15329,10 +15364,16 @@
 	},
 /area/custom/beach)
 "aZa" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3"
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1331;
+	master_tag = "vox_west_control";
+	req_one_access = list(150)
 	},
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/space,
 /area/shuttle/vox/arkship)
 "aZb" = (
 /obj/structure/object_wall/evac{
@@ -15430,11 +15471,16 @@
 	},
 /area/shuttle/vox/arkship)
 "aZo" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "diagonalWall3"
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1331;
+	master_tag = "vox_east_control";
+	req_one_access = list(150)
 	},
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/space,
 /area/shuttle/vox/arkship)
 "aZq" = (
 /obj/structure/rack,
@@ -15511,6 +15557,10 @@
 	oxygen = 0
 	},
 /area/shuttle/vox/arkship)
+"aZI" = (
+/obj/effect/decal/cleanable/blood/gibs/robot/limb,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aZL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -16169,11 +16219,13 @@
 	},
 /area/custom/wizard_station)
 "bbD" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "pwall"
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
-/area/space)
+/turf/space,
+/turf/space,
+/area/shuttle/vox/arkship)
 "bbG" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/dice,
@@ -16219,9 +16271,10 @@
 	},
 /area/custom/abductor_ship)
 "bbS" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/shuttle/vox/arkship)
 "bbX" = (
 /obj/structure/table/woodentable,
@@ -17019,12 +17072,21 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"bqK" = (
+/obj/effect/decal/cleanable/blood/gibs/robot/up,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "brb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"bry" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/kitchenknife/ritual,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bsb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
@@ -17033,6 +17095,10 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
+"bsi" = (
+/obj/structure/cult/pylon,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "btb" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 4
@@ -17052,6 +17118,14 @@
 	icon_state = "floor"
 	},
 /area/centcom/living)
+"buc" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/shoes/boots/cult{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bvb" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Mecha"
@@ -17153,6 +17227,13 @@
 	icon_state = "vault"
 	},
 /area/centcom/specops)
+"bFc" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Edvard Right Leg Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bGb" = (
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
 /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill,
@@ -17177,6 +17258,10 @@
 	icon_state = "floor"
 	},
 /area/custom/syndicate_mothership)
+"bHV" = (
+/obj/structure/cult/statue/camera/jew,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bIb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -17227,7 +17312,6 @@
 "bJl" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/structure/extinguisher_cabinet{
-	layer = 3.1;
 	pixel_x = -31;
 	pixel_y = 4
 	},
@@ -17242,6 +17326,10 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"bKC" = (
+/obj/structure/cult/forge,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bLb" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -17254,6 +17342,11 @@
 	icon_state = "grimy"
 	},
 /area/centcom/creed)
+"bLC" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/book/manual/wiki/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bMb" = (
 /obj/structure/mirror/magic{
 	pixel_w = 30
@@ -17289,6 +17382,10 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
+"bOm" = (
+/obj/structure/table/woodentable,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bPb" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_l"
@@ -17314,6 +17411,16 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"bSj" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/suit/chef/classic{
+	name = "blacksmith apron"
+	},
+/obj/item/clothing/gloves/black{
+	name = "cult gloves"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "bTb" = (
 /obj/structure/largecrate,
 /turf/unsimulated/floor{
@@ -17335,6 +17442,9 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"bVy" = (
+/turf/simulated/wall/cult,
+/area/custom/cult)
 "bWb" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -17373,6 +17483,10 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"bZH" = (
+/obj/structure/pedestal/cult,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "cab" = (
 /obj/effect/landmark/start{
 	name = "Fallback-Start"
@@ -17399,6 +17513,12 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"cdy" = (
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Edvard Right Leg Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "ceb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -17429,6 +17549,31 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"cgI" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/soup/bloodsoup{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Kelly Right Arm Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Josh Body Meat"
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "chb" = (
 /obj/machinery/light{
 	dir = 1
@@ -17568,6 +17713,10 @@
 	icon_state = "vault"
 	},
 /area/velocity)
+"cua" = (
+/obj/effect/decal/cleanable/blood,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "cub" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -17581,6 +17730,13 @@
 	icon_state = "carpet8-0"
 	},
 /area/velocity)
+"cvG" = (
+/obj/item/weapon/wirecutters,
+/obj/item/weapon/kitchen/utensil/fork,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "cwb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet1-0"
@@ -17659,6 +17815,12 @@
 	icon_state = "carpet3-0"
 	},
 /area/velocity)
+"cEu" = (
+/obj/item/weapon/razor,
+/obj/item/weapon/reagent_containers/syringe,
+/obj/structure/table/woodentable/fancy/black,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "cFb" = (
 /turf/unsimulated/floor{
 	icon_state = "carpet3-0"
@@ -17685,6 +17847,12 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cIK" = (
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Billi Left Arm Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "cJb" = (
 /obj/item/weapon/twohanded/flora/random,
 /turf/unsimulated/floor{
@@ -17721,6 +17889,10 @@
 	name = "plating"
 	},
 /area/velocity)
+"cKX" = (
+/obj/structure/cult/statue/camera,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "cLb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -17749,6 +17921,14 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cNo" = (
+/obj/structure/altar_of_gods/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
+"cNr" = (
+/obj/structure/mineral_door/cult,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "cOb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -17830,6 +18010,17 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cTm" = (
+/obj/machinery/optable/torture_table,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
+"cTM" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/weapon/handcuffs/cable/orange,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "cUb" = (
 /obj/machinery/door_control{
 	id = "velocity_hall";
@@ -17898,6 +18089,15 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"cZu" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/scissors,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "cZN" = (
 /obj/structure/closet/wardrobe/white,
 /turf/unsimulated/floor{
@@ -17928,6 +18128,10 @@
 	icon_state = "bcircuitoff"
 	},
 /area/velocity)
+"dcv" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "ddb" = (
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -17996,6 +18200,34 @@
 	icon_state = "floorgrime"
 	},
 /area/velocity)
+"djY" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Jimmy-Jim Left Leg Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Scotty Left Arm Meat"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Victor Body Meat"
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "dkb" = (
 /obj/item/weapon/twohanded/flora/random,
 /obj/machinery/light{
@@ -18014,6 +18246,10 @@
 	icon_state = "bcircuitoff"
 	},
 /area/velocity)
+"dlr" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "dmb" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
@@ -18022,6 +18258,13 @@
 	icon_state = "floorgrime"
 	},
 /area/velocity)
+"dmc" = (
+/obj/machinery/optable/torture_table,
+/obj/item/weapon/reagent_containers/food/snacks/meat/human{
+	name = "Christopher Body Meat"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "dnb" = (
 /obj/structure/sink{
 	dir = 8;
@@ -18153,6 +18396,13 @@
 	icon_state = "hydrofloor"
 	},
 /area/velocity)
+"dAj" = (
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/obj/item/weapon/book/manual/wiki/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "dBb" = (
 /obj/structure/sign/directions/velocity{
 	icon_state = "tablo02"
@@ -18211,10 +18461,21 @@
 	icon_state = "rampbottom"
 	},
 /area/velocity)
+"dHm" = (
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
 "dIb" = (
-/turf/simulated/shuttle/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_f6"
+	},
+/turf/unsimulated/floor{
+	icon_state = "circuit"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
 	},
 /area/velocity)
 "dJb" = (
@@ -18227,9 +18488,10 @@
 	},
 /area/velocity)
 "dKb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall12"
 	},
+/turf/space,
 /area/velocity)
 "dLb" = (
 /obj/structure/disposalpipe/segment{
@@ -18271,9 +18533,10 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "dNb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
+/turf/space,
 /area/velocity)
 "dOb" = (
 /obj/structure/sign/warning/nosmoking{
@@ -18349,6 +18612,10 @@
 	icon_state = "delivery"
 	},
 /area/velocity)
+"dSA" = (
+/obj/structure/cult/tech_table,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "dTb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -18444,9 +18711,10 @@
 /area/velocity)
 "ebb" = (
 /obj/structure/sign/monorail_map,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
+/turf/space,
 /area/velocity)
 "ecb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
@@ -18512,7 +18780,6 @@
 "ehN" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/structure/extinguisher_cabinet{
-	layer = 3.1;
 	pixel_x = 31;
 	pixel_y = 4
 	},
@@ -18562,9 +18829,14 @@
 	},
 /area/velocity)
 "enb" = (
-/turf/simulated/shuttle/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_f5"
+	},
+/turf/unsimulated/floor{
+	icon_state = "circuit"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
 	},
 /area/velocity)
 "eob" = (
@@ -18579,14 +18851,20 @@
 	icon_state = "OneCompany";
 	name = "\improper billboard"
 	},
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall12"
 	},
+/turf/space,
 /area/velocity)
 "eqb" = (
-/turf/simulated/shuttle/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
+	},
+/turf/unsimulated/floor{
+	icon_state = "circuit"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
 	},
 /area/velocity)
 "erb" = (
@@ -18617,9 +18895,10 @@
 	icon_state = "Lunar";
 	name = "\improper billboard"
 	},
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall12"
 	},
+/turf/space,
 /area/velocity)
 "ewb" = (
 /obj/structure/sign/mark{
@@ -18853,6 +19132,12 @@
 	},
 /turf/space,
 /area/shuttle/officer/velocity)
+"eVX" = (
+/obj/structure/dresser{
+	pixel_x = -1
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "eWb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -19345,6 +19630,10 @@
 	icon_state = "warning"
 	},
 /area/velocity)
+"fXQ" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "fYb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -20221,10 +20510,16 @@
 	},
 /area/velocity)
 "hrb" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s6"
+/obj/structure/object_wall/standart{
+	icon_state = "swall_f5"
 	},
-/area/centcom/evac)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/turf/unsimulated/floor{
+	icon_state = "circuit"
+	},
+/area/velocity)
 "hsb" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 1;
@@ -20232,6 +20527,12 @@
 	},
 /turf/space,
 /area/centcom/evac)
+"hsL" = (
+/obj/structure/bookcase{
+	name = "Forbidden Knowledge"
+	},
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "hsR" = (
 /obj/structure/rack,
 /obj/item/ammo_box/a357,
@@ -20277,10 +20578,11 @@
 /turf/space,
 /area/centcom/evac)
 "hvb" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s10"
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
 	},
-/area/centcom/evac)
+/turf/space,
+/area/shuttle/administration/centcom)
 "hwb" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light{
@@ -20329,24 +20631,34 @@
 	},
 /area/centcom/specops)
 "hCb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall3"
 	},
+/turf/space,
 /area/centcom/evac)
+"hCi" = (
+/obj/item/weapon/shard,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/hatchet,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "hDb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall7"
 	},
+/turf/space,
 /area/centcom/evac)
 "hEb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall12"
 	},
+/turf/space,
 /area/centcom/evac)
 "hFb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall11"
 	},
+/turf/space,
 /area/centcom/evac)
 "hGb" = (
 /turf/unsimulated/floor{
@@ -20370,16 +20682,18 @@
 	},
 /area/centcom/evac)
 "hJb" = (
-/turf/simulated/shuttle/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_f6"
 	},
+/turf/simulated/shuttle/plating,
+/turf/simulated/shuttle/plating,
 /area/centcom/evac)
 "hKb" = (
-/turf/simulated/shuttle/floor,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
 	},
+/turf/simulated/shuttle/floor,
+/turf/space,
 /area/centcom/evac)
 "hLb" = (
 /turf/simulated/shuttle/floor{
@@ -20387,11 +20701,14 @@
 	},
 /area/centcom/evac)
 "hMb" = (
-/turf/simulated/shuttle/floor,
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_f5"
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
 	},
-/area/centcom/evac)
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/velocity)
 "hNb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -20411,10 +20728,15 @@
 	},
 /area/centcom/evac)
 "hQb" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall1"
+/obj/structure/sign/monorail_map,
+/obj/structure/object_wall/standart{
+	icon_state = "swall3"
 	},
-/area/centcom/evac)
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/velocity)
 "hRb" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
@@ -20435,15 +20757,27 @@
 	},
 /area/centcom)
 "hUb" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s5"
+/obj/structure/object_wall/standart{
+	icon_state = "swall_f6"
 	},
-/area/centcom/evac)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/turf/unsimulated/floor{
+	icon_state = "circuit"
+	},
+/area/velocity)
 "hVb" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall_s9"
+/obj/structure/object_wall/standart{
+	icon_state = "swall_f10"
 	},
-/area/centcom/evac)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/turf/unsimulated/floor{
+	icon_state = "circuit"
+	},
+/area/velocity)
 "hWb" = (
 /turf/unsimulated/floor{
 	icon_state = "grass2"
@@ -20541,6 +20875,10 @@
 	icon_state = "blue"
 	},
 /area/centcom/specops)
+"idX" = (
+/obj/machinery/optable/torture_table,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "ieb" = (
 /turf/unsimulated/floor{
 	dir = 6;
@@ -20681,9 +21019,10 @@
 	},
 /area/centcom/control)
 "izb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "swall14"
 	},
+/turf/space,
 /area/centcom/evac)
 "iAb" = (
 /obj/machinery/door/airlock/hatch{
@@ -21364,6 +21703,12 @@
 	icon_state = "brown"
 	},
 /area/centcom/holding)
+"jZp" = (
+/obj/machinery/teleport/hub,
+/turf/unsimulated/floor{
+	icon_state = "rcircuit"
+	},
+/area/custom/ninjaspawn)
 "kab" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -21577,6 +21922,17 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/holding)
+"kxC" = (
+/obj/structure/closet{
+	icon_closed = "cabinet_closed";
+	icon_opened = "cabinet_open";
+	icon_state = "cabinet_closed";
+	name = "Clothing Storage"
+	},
+/obj/item/clothing/suit/necromancer_hoodie,
+/obj/item/weapon/storage/backpack/cultpack,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "kyb" = (
 /turf/unsimulated/floor{
 	icon_state = "neutral"
@@ -22517,10 +22873,15 @@
 	icon_state = "redbluefull"
 	},
 /area/centcom/tdome/tdomeobserve)
+"mzq" = (
+/obj/effect/decal/cleanable/blood,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "mAb" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/custom/syndicate_mothership)
 "mDb" = (
 /obj/machinery/vending/coffee,
@@ -22612,6 +22973,10 @@
 /obj/machinery/computer/shuttle,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
+"mQF" = (
+/obj/structure/mineral_door/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "mRb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "10,22";
@@ -22901,6 +23266,12 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nyj" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/cult,
+/obj/structure/curtain/black,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "nzb" = (
 /obj/machinery/computer/pod{
 	id = "thunderdome";
@@ -23081,16 +23452,10 @@
 /area/custom/wizard_station)
 "nUb" = (
 /obj/effect/decal/remains/human,
-/turf/unsimulated/floor{
-	icon_state = "lava";
-	name = "plating"
-	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "nVb" = (
-/turf/unsimulated/floor{
-	icon_state = "lava";
-	name = "plating"
-	},
+/turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "nWb" = (
 /turf/unsimulated/floor{
@@ -23327,7 +23692,6 @@
 	dir = 4
 	},
 /obj/structure/closet/hydrant{
-	layer = 3.1;
 	pixel_x = 32
 	},
 /turf/simulated/shuttle/floor/evac,
@@ -23448,7 +23812,6 @@
 	},
 /obj/structure/table,
 /obj/machinery/recharger/wallcharger{
-	layer = 3.1;
 	pixel_x = 34
 	},
 /obj/item/weapon/storage/firstaid/adv,
@@ -23719,7 +24082,6 @@
 	},
 /obj/structure/table,
 /obj/machinery/vending/wallmed1{
-	layer = 3.1;
 	pixel_x = 32;
 	pixel_y = 2
 	},
@@ -23745,6 +24107,10 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom)
+"pJt" = (
+/obj/structure/pedestal/cult,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "pLb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "15,9"
@@ -23911,10 +24277,19 @@
 	icon_state = "floor"
 	},
 /area/velocity)
+"qDT" = (
+/obj/structure/cult/pylon,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
+"qOG" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "qTT" = (
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/space,
 /area/custom/syndicate_mothership/armory)
 "rkK" = (
 /obj/item/weapon/twohanded/flora/pottedplant/tropicalfern{
@@ -23933,6 +24308,12 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
+"scL" = (
+/obj/item/weapon/storage/box/monkeycubes,
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/weapon/kitchenknife/ritual,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "skC" = (
 /obj/item/weapon/reagent_containers/blood/AMinus{
 	pixel_x = -7;
@@ -23973,7 +24354,6 @@
 /obj/item/weapon/reagent_containers/syringe/inaprovaline,
 /obj/structure/table,
 /obj/structure/closet/medical_wall{
-	layer = 3.1;
 	pixel_x = 2;
 	pixel_y = -30
 	},
@@ -23999,6 +24379,10 @@
 	icon_state = "podhatch"
 	},
 /area/custom/syndicate_mothership/armory)
+"tqh" = (
+/obj/structure/cult/statue/camera/gargoyle,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "tWq" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -24059,6 +24443,10 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"vaz" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "vaT" = (
 /obj/structure/closet/wardrobe/black,
 /turf/unsimulated/floor{
@@ -24083,12 +24471,26 @@
 	icon_state = "neutral"
 	},
 /area/velocity)
+"vDJ" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
+"vLb" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "vSL" = (
 /obj/mecha/combat/marauder/mauler,
 /turf/unsimulated/floor{
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership)
+"wfy" = (
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
+"wtx" = (
+/turf/simulated/wall/cult/runed/anim,
+/area/custom/cult)
 "wRz" = (
 /obj/structure/table/glass{
 	pixel_y = 2
@@ -24149,6 +24551,10 @@
 	icon_state = "purplechecker"
 	},
 /area/velocity)
+"xYF" = (
+/obj/structure/cult/statue/camera,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "ycG" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 4
@@ -24157,6 +24563,9 @@
 	icon_state = "floor4"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"yea" = (
+/turf/unsimulated/floor/cult,
+/area/custom/cult)
 "ygn" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/twohanded/flora,
@@ -24257,7 +24666,7 @@ anM
 anM
 anM
 anM
-aqh
+anM
 aaM
 aaM
 aaM
@@ -37163,11 +37572,11 @@ aaM
 aaM
 aaM
 aaM
-hrb
+aHp
 hCb
 hCb
 hCb
-hUb
+aWK
 aaM
 aaM
 aaM
@@ -37425,7 +37834,7 @@ ahV
 aHb
 aHb
 awC
-hUb
+aWK
 aaM
 aaM
 aaM
@@ -37937,7 +38346,7 @@ aaM
 hub
 ahV
 hJb
-hQb
+aWI
 aHG
 hFb
 hCb
@@ -37949,7 +38358,7 @@ hCb
 hCb
 hCb
 hCb
-hUb
+aWK
 aaM
 aaM
 aaM
@@ -38191,7 +38600,7 @@ aaM
 aaM
 aaM
 aaM
-hvb
+aKj
 hDb
 hKb
 aHr
@@ -38207,7 +38616,7 @@ aGz
 aKt
 aGz
 izb
-hUb
+aWK
 aaM
 aaM
 aaM
@@ -38467,7 +38876,7 @@ izb
 hFb
 hCb
 hCb
-hUb
+aWP
 aaM
 aaM
 aaM
@@ -40009,7 +40418,7 @@ izb
 hDb
 hCb
 hCb
-hVb
+aWJ
 aaM
 aaM
 aaM
@@ -40247,9 +40656,9 @@ aaM
 aaM
 aaM
 aaM
-hrb
+aHp
 hFb
-hMb
+aWG
 aHu
 aHs
 aHY
@@ -40263,7 +40672,7 @@ aHY
 hLb
 aHe
 izb
-hVb
+aWJ
 aaM
 aaM
 aaM
@@ -40507,7 +40916,7 @@ aaM
 hsb
 ahV
 awC
-hQb
+aWI
 aHG
 hDb
 hCb
@@ -40519,7 +40928,7 @@ hCb
 hCb
 aGN
 hCb
-hVb
+aWJ
 aaM
 aaM
 aaM
@@ -41023,7 +41432,7 @@ ahV
 aHb
 aHb
 hJb
-hVb
+aWJ
 abn
 aII
 abn
@@ -41275,11 +41684,11 @@ aaM
 aaM
 aaM
 aaM
-hvb
+aKj
 hCb
 hCb
 hCb
-hVb
+aWJ
 aaM
 abn
 aII
@@ -56534,11 +56943,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aer
+aer
+aer
 aaM
 aaM
 aaM
@@ -56790,13 +57199,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aex
+aeE
+aeH
+aer
+aer
 aaM
 aaM
 aaM
@@ -57046,15 +57455,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aev
+aew
+aeE
+aew
+aeJ
+aer
+aer
 aaM
 aaM
 aaM
@@ -57303,15 +57712,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aes
+aew
+aex
+aeE
+aeI
+aeH
+dHm
+aer
 aaM
 aaM
 aaM
@@ -57560,15 +57969,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aet
+aex
+aez
+aeE
+aez
+aew
+aet
+aer
 aaM
 aaM
 aaM
@@ -57817,15 +58226,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aeu
+aex
+aeA
+aeE
+aew
+aeH
+jZp
+aer
 aaM
 aaM
 aaM
@@ -58074,15 +58483,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aey
+aex
+aeE
+aew
+aeK
+aer
+aer
 aaM
 aaM
 aaM
@@ -58332,13 +58741,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aex
+aeE
+aeH
+aer
+aer
 aaM
 aaM
 aaM
@@ -58590,11 +58999,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+aer
+aer
+aer
+aer
+aer
 aaM
 aaM
 aaM
@@ -59616,11 +60025,11 @@ aaM
 aaM
 aaM
 aaM
-adx
-adx
-adx
-adx
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -59872,13 +60281,13 @@ aaM
 aaM
 aaM
 aaM
-adx
-adx
-aev
-aez
-aeA
-adx
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60128,15 +60537,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-adx
-aet
-aeu
-aez
-aeu
-aeH
-adx
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60293,15 +60702,15 @@ aEW
 aEW
 aEW
 aEW
-aFi
+aFl
 aGR
 aGR
-aHB
+aWH
 aEW
-aFi
+aFl
 aGR
 aGR
-aHB
+aWH
 aEW
 aEW
 aEW
@@ -60385,15 +60794,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-adz
-aeu
-aev
-aez
-aeE
-aeA
-aeI
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60549,17 +60958,17 @@ aBp
 aEW
 aEW
 aEW
-aFi
-aFj
+aFl
+hvb
 ayS
 ayS
-aFj
-aFj
-aFj
+hvb
+hvb
+hvb
 ayS
 ayS
-aFj
-aHB
+hvb
+aWH
 aEW
 aEW
 aEW
@@ -60642,15 +61051,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-aer
-aev
-aex
-aez
-aex
-aeu
-aer
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -60805,19 +61214,19 @@ aCV
 aBp
 aEW
 aEW
-aFi
-aFj
-aFj
+aFl
+hvb
+hvb
 aGT
 aFX
 aGy
-aFj
+hvb
 aIm
 aIG
 aIV
-aFj
-aFj
-aHB
+hvb
+hvb
+aWH
 aEW
 aEW
 aJu
@@ -60899,15 +61308,15 @@ aaM
 aaM
 aaM
 aaM
-adx
-aes
-aev
-aey
-aez
-aeu
-aeA
-aeK
-adx
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61061,21 +61470,21 @@ aCV
 aCV
 aBp
 aEW
-aFi
+aFl
 aFD
 aFX
 aGA
 aFX
 aFX
 aFX
-aFj
+hvb
 aIn
 aIG
 aIG
 aJh
 aIG
 aFj
-aHB
+aWH
 aEW
 aJu
 aKY
@@ -61153,18 +61562,18 @@ aaM
 aaM
 aaM
 aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
-adx
-adx
-aew
-aev
-aez
-aeu
-aeJ
-adx
-adx
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61318,21 +61727,21 @@ aCV
 aCV
 aBp
 aEW
-aFj
+hvb
 aFE
 aFX
 aGB
 aGU
 aFX
 aGy
-aFj
+hvb
 aIo
 aIG
 aIG
 aJi
 aIG
 aJU
-aFj
+hvb
 aEW
 aJu
 aJP
@@ -61409,18 +61818,18 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 adx
 adx
-aev
-aez
-aeA
+adz
+bVy
+adz
 adx
 adx
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61575,21 +61984,21 @@ aCV
 aCV
 aBp
 aEW
-aFj
+hvb
 aFF
 aFX
 aGC
 aGU
 aFX
 aFX
-aFj
+hvb
 aIm
 aIG
 aIG
 aJi
 aIG
 aJV
-aFj
+hvb
 aEW
 aJu
 aJP
@@ -61665,18 +62074,18 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 adx
 adx
+yea
+wfy
+yea
+wfy
+yea
 adx
 adx
-adx
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61832,21 +62241,21 @@ aCV
 aCV
 aBp
 aEW
-aFj
+hvb
 aFG
 aFX
 aGD
 aGU
 aFX
 aGy
-aFj
+hvb
 aIp
 aIG
 aIG
 aJj
 aIG
 aJW
-aFj
+hvb
 aEW
 aJu
 aJP
@@ -61922,15 +62331,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+nyj
+wfy
+yea
+wfy
+yea
+wfy
+nyj
+adx
 aaM
 aaM
 aaM
@@ -62089,21 +62498,21 @@ aDQ
 aCV
 gub
 aEX
-aFj
-aFj
-aFj
-aFj
-aFj
+hvb
+hvb
+hvb
+hvb
+hvb
 aGE
-aFj
-aFj
-aFj
+hvb
+hvb
+hvb
 aGE
-aFj
-aFj
-aFj
-aFj
-aFj
+hvb
+hvb
+hvb
+hvb
+hvb
 aEW
 aJu
 aKY
@@ -62179,15 +62588,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+bVy
+yea
+wfy
+aeL
+wfy
+yea
+bVy
+adx
 aaM
 aaM
 aaM
@@ -62360,7 +62769,7 @@ aFX
 aFZ
 aFX
 aFX
-aFj
+hvb
 aEW
 aJu
 aJP
@@ -62436,15 +62845,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+nyj
+wfy
+yea
+wfy
+yea
+wfy
+nyj
+adx
 aaM
 aaM
 aaM
@@ -62617,7 +63026,7 @@ aFX
 aGa
 aGa
 aFX
-aFj
+hvb
 aEW
 aJu
 aJP
@@ -62693,15 +63102,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+cgI
+yea
+wfy
+yea
+djY
+adx
+adx
 aaM
 aaM
 aaM
@@ -62860,21 +63269,21 @@ aCV
 aCV
 gub
 aEZ
-aFj
-aFj
-aFj
+hvb
+hvb
+hvb
 aGE
-aFj
-aFj
+hvb
+hvb
 aFX
 aFX
 aFX
-aFj
+hvb
 aFX
 aGa
 aGa
 aFX
-aFj
+hvb
 aEW
 aJu
 aJP
@@ -62951,13 +63360,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+kxC
+wfy
+wfy
+wfy
+eVX
+adx
 aaM
 aaM
 aaM
@@ -63117,21 +63526,21 @@ aBp
 aBp
 aBp
 aEW
-aFj
+hvb
 aFJ
 aFZ
 aFX
 aGV
-aFj
+hvb
 aFX
 aHS
 aFX
-aFj
+hvb
 aFX
 aGa
 aGa
 aFX
-aFj
+hvb
 aEW
 aJu
 aJP
@@ -63208,13 +63617,13 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+wtx
+mQF
+wtx
+adx
+adx
 aaM
 aaM
 aaM
@@ -63374,21 +63783,21 @@ aaM
 aaM
 aEz
 aEW
-aFj
+hvb
 aFK
 aFX
 aFX
 aGW
-aFj
+hvb
 aHD
 aHD
 aHD
-aFj
+hvb
 aFX
 aFX
 aHS
 aFX
-aFj
+hvb
 aEW
 aJu
 aKY
@@ -63466,11 +63875,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wfy
+wfy
+wfy
+adx
 aaM
 aaM
 aaM
@@ -63631,21 +64040,21 @@ aaM
 aaM
 aEz
 aEW
-aFj
-aFj
+hvb
+hvb
 aGa
 aFX
 aGX
-aFj
+hvb
 aEW
 aEW
 aEW
-aFj
-aFj
+hvb
+hvb
 aGE
-aFj
-aFj
-aFj
+hvb
+hvb
+hvb
 aEW
 aJu
 ixb
@@ -63720,17 +64129,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+yea
+wfy
+yea
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -63888,21 +64297,21 @@ aaM
 aaM
 aEz
 aEW
-aFl
-aFj
+aHB
+hvb
 aGb
 aFX
 aGY
-aFj
+hvb
 aEW
 aEW
 aEW
-aFj
+hvb
 aFX
 aFX
 aGy
-aFj
-aHp
+hvb
+aWF
 aEW
 aJu
 aJu
@@ -63976,19 +64385,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+wfy
+tqh
+wtx
+yea
+wfy
+yea
+wtx
+xYF
+wfy
+adx
+adx
 aaM
 aaM
 aaM
@@ -64146,19 +64555,19 @@ aaM
 aEz
 aEW
 aEW
-aFj
-aFj
+hvb
+hvb
 aGF
 aGZ
-aFj
+hvb
 aEW
 aEW
 aEW
-aFj
+hvb
 aIW
 aJk
-aFj
-aFj
+hvb
+hvb
 aEW
 aEW
 aJu
@@ -64232,21 +64641,21 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+wfy
+wfy
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+wfy
+wfy
+adx
+adx
 aaM
 aaM
 aaM
@@ -64403,19 +64812,19 @@ aaM
 aEz
 aEW
 aEW
-aFl
-aFj
+aHB
+hvb
 aGG
 aHa
-aFj
+hvb
 aEW
 aEW
 aEW
-aFj
+hvb
 aIX
 aJl
-aFj
-aHp
+hvb
+aWF
 aEW
 aEW
 aJu
@@ -64489,28 +64898,28 @@ aaM
 aaM
 aaM
 aaM
+adx
+wfy
+wfy
+yea
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+yea
+wfy
+wfy
+adx
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -64661,17 +65070,17 @@ aEz
 aEW
 aEW
 aEW
-aFl
-aFj
-aFj
-aHp
+aHB
+hvb
+hvb
+aWF
 aEW
 aEW
 aEW
-aFl
-aFj
-aFj
-aHp
+aHB
+hvb
+hvb
+aWF
 aEW
 aEW
 aEW
@@ -64738,37 +65147,37 @@ aaM
 aaM
 aaM
 aaM
+adx
+adx
+adx
+adx
+adx
+adx
+adx
 aaM
+adx
+wfy
+yea
+yea
+yea
+qDT
+bZH
+wfy
+bZH
+qDT
+yea
+yea
+yea
+wfy
+adx
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+dAj
+wfy
+hsL
+adx
+adx
 aaM
 aaM
 aaM
@@ -64924,7 +65333,7 @@ aEW
 aEW
 hTb
 hTb
-aEW
+hTb
 aEW
 aEW
 aEW
@@ -64994,39 +65403,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+azx
+bry
+bFc
+bOm
+azx
+adx
+adx
+adx
+wtx
+yea
+yea
+qDT
+bZH
+wfy
+wfy
+wfy
+bZH
+qDT
+yea
+yea
+wtx
+adx
+adx
+adx
+bsi
+yea
+wfy
+yea
+bsi
+adx
+adx
 aaM
 aaM
 aaM
@@ -65251,39 +65660,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+bsi
+aZI
+aZI
+wfy
+bqK
+aZI
+wtx
+wfy
+yea
+yea
+yea
+yea
+bZH
+wfy
+wfy
+wfy
+wfy
+wfy
+bZH
+yea
+yea
+yea
+yea
+wfy
+wtx
+yea
+wfy
+yea
+wfy
+yea
+wfy
+adx
 aaM
 aaM
 aaM
@@ -65508,39 +65917,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+tqh
+wfy
+aZI
+bKC
+azx
+wfy
+mQF
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+cNo
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+wfy
+mQF
+wfy
+yea
+dSA
+yea
+wfy
+tqh
+adx
 aaM
 aaM
 aaM
@@ -65765,39 +66174,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+bsi
+bqK
+wfy
+azx
+bqK
+wfy
+wtx
+wfy
+yea
+yea
+yea
+yea
+bZH
+wfy
+wfy
+wfy
+wfy
+wfy
+bZH
+yea
+yea
+yea
+yea
+wfy
+wtx
+yea
+wfy
+yea
+wfy
+yea
+wfy
+adx
 aaM
 aaM
 aaM
@@ -66022,39 +66431,39 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+wfy
+buc
+bLC
+bSj
+aZI
+adx
+adx
+adx
+wtx
+yea
+yea
+qDT
+bZH
+wfy
+wfy
+wfy
+bZH
+qDT
+yea
+yea
+wtx
+adx
+adx
+adx
+bsi
+yea
+wfy
+yea
+bsi
+adx
+adx
 aaM
 aaM
 aaM
@@ -66280,37 +66689,37 @@ aaM
 aaM
 aaM
 aaM
+adx
+adx
+adx
+adx
+adx
+adx
+adx
 aaM
+adx
+wfy
+yea
+yea
+yea
+qDT
+bZH
+wfy
+bZH
+qDT
+yea
+yea
+yea
+wfy
+adx
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+dAj
+wfy
+hsL
+adx
+adx
 aaM
 aaM
 aaM
@@ -66545,28 +66954,28 @@ aaM
 aaM
 aaM
 aaM
+adx
+wfy
+wfy
+yea
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+yea
+wfy
+wfy
+adx
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -66802,21 +67211,21 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+wfy
+wfy
+yea
+yea
+yea
+wfy
+yea
+yea
+yea
+wfy
+wfy
+adx
+adx
 aaM
 aaM
 aaM
@@ -67060,19 +67469,19 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+wfy
+xYF
+wtx
+yea
+wfy
+yea
+wtx
+tqh
+wfy
+adx
+adx
 aaM
 aaM
 aaM
@@ -67318,17 +67727,17 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+adx
+yea
+wfy
+yea
+adx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -67578,11 +67987,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wfy
+wfy
+wfy
+adx
 aaM
 aaM
 aaM
@@ -67835,11 +68244,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wtx
+mQF
+wtx
+adx
 aaM
 aaM
 aaM
@@ -68092,11 +68501,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+hCi
+wfy
+cTM
+adx
 aaM
 aaM
 aaM
@@ -68349,11 +68758,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+scL
+vaz
+cZu
+adx
 aaM
 aaM
 aaM
@@ -68606,11 +69015,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+cvG
+yea
+bsi
+adx
 aaM
 aaM
 aaM
@@ -68863,11 +69272,11 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+cEu
+vaz
+pJt
+adx
 aaM
 aaM
 aaM
@@ -69118,15 +69527,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
+wtx
+cNr
+wtx
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -69375,15 +69784,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wfy
+wfy
+yea
+vaz
+wfy
+vaz
+yea
+adx
 aaM
 aaM
 aaM
@@ -69632,15 +70041,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+vaz
+cua
+vaz
+qOG
+wfy
+vDJ
+vaz
+adx
 aaM
 aaM
 aaM
@@ -69889,15 +70298,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wfy
+idX
+vDJ
+cTm
+vaz
+idX
+cua
+adx
 aaM
 aaM
 aaM
@@ -70146,15 +70555,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+cdy
+wfy
+wfy
+wfy
+fXQ
+yea
+wfy
+adx
 aaM
 aaM
 aaM
@@ -70403,15 +70812,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wfy
+wfy
+bsi
+cKX
+bsi
+wfy
+wfy
+adx
 aaM
 aaM
 aaM
@@ -70660,15 +71069,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wtx
+mQF
+wtx
+wtx
+wtx
+mQF
+wtx
+adx
 aaM
 aaM
 aaM
@@ -70917,15 +71326,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+vLb
+vaz
+wfy
+wtx
+wfy
+dlr
+vaz
+adx
 aaM
 aaM
 aaM
@@ -71174,15 +71583,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+wfy
+idX
+mzq
+wtx
+wfy
+dmc
+vLb
+adx
 aaM
 aaM
 aaM
@@ -71431,15 +71840,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+vDJ
+wfy
+cIK
+wtx
+dcv
+mzq
+wfy
+adx
 aaM
 aaM
 aaM
@@ -71688,15 +72097,15 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+bHV
+adx
+adx
+adx
+bHV
+adx
+adx
 aaM
 aaM
 aaM
@@ -71946,13 +72355,13 @@ aaM
 aaM
 aaM
 aaM
+adx
+adx
+adx
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+adx
+adx
+adx
 aaM
 aaM
 aaM
@@ -74668,11 +75077,11 @@ ayO
 azi
 azi
 azi
-dIb
+hUb
 aAA
 aAA
 aAA
-enb
+hrb
 azi
 azi
 azi
@@ -75424,11 +75833,11 @@ dXb
 dNb
 eqb
 auI
-dNb
+hMb
 dXb
-ebb
+hQb
 dXb
-dNb
+hMb
 eqb
 atP
 atP
@@ -75439,11 +75848,11 @@ ayO
 azi
 azi
 azi
-auI
+hVb
 dNb
 dNb
 dNb
-eqb
+aFi
 azi
 azi
 azi
@@ -80437,11 +80846,11 @@ aaM
 aaM
 aaM
 aaM
-bbD
-bbD
-bbD
-aWG
-aZa
+abu
+abu
+abu
+aXI
+avv
 aaM
 aaM
 aaM
@@ -80689,7 +81098,7 @@ aaM
 aaM
 aaM
 aaM
-aWG
+aXI
 bbS
 bbS
 bbS
@@ -80699,7 +81108,7 @@ ban
 aYd
 bbS
 bbS
-aZa
+avv
 aaM
 aaM
 aaM
@@ -80946,7 +81355,7 @@ aaM
 aaM
 aaM
 aaM
-bbD
+abu
 aXb
 anC
 aoO
@@ -81202,12 +81611,12 @@ aaM
 aaM
 aaM
 aaM
-aKj
-bbD
+aaM
+abu
 aXc
 anF
 aoP
-aXI
+aZa
 aXZ
 aYf
 aXg
@@ -81459,8 +81868,8 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWI
+aaM
+aXY
 bbS
 bbS
 bbS
@@ -81470,7 +81879,7 @@ aYe
 aXg
 aYs
 bbS
-aZo
+bbD
 aaM
 aaM
 aaM
@@ -81716,11 +82125,11 @@ aaM
 aaM
 aaM
 aaM
-aWJ
-aWH
-aWH
-bbD
-bbD
+aaM
+aaM
+aaM
+abu
+abu
 bbS
 aXZ
 aYh
@@ -81973,9 +82382,9 @@ aaM
 aaM
 aaM
 aaM
-avv
 aaM
-aWG
+aaM
+aXI
 aXD
 aYd
 bbS
@@ -82228,10 +82637,10 @@ aaM
 aaM
 aaM
 aaM
-aKj
-aWH
-aWK
-aWG
+aaM
+aaM
+aaM
+aXI
 bbS
 aXm
 aXm
@@ -82246,7 +82655,7 @@ bbS
 bbS
 bbS
 bbS
-aZa
+avv
 aaM
 aaM
 "}
@@ -82485,8 +82894,8 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWG
+aaM
+aXI
 bbS
 bbS
 aXd
@@ -82504,7 +82913,7 @@ aZE
 aZN
 bbl
 bbS
-aZa
+avv
 aaM
 "}
 (228,1,1) = {"
@@ -82742,8 +83151,8 @@ aaM
 aaM
 aaM
 aaM
-aWF
-bbD
+aaM
+abu
 aWM
 aWS
 aXf
@@ -83000,7 +83409,7 @@ aaM
 aaM
 aaM
 aaM
-bbD
+abu
 aWL
 aWQ
 aXe
@@ -83256,8 +83665,8 @@ aaM
 aaM
 aaM
 aaM
-aKj
-bbD
+aaM
+abu
 aWO
 aXa
 aXf
@@ -83513,8 +83922,8 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWI
+aaM
+aXY
 bbS
 bbS
 aXl
@@ -83532,7 +83941,7 @@ aZL
 aZP
 aZS
 bbS
-aZo
+bbD
 aaM
 "}
 (232,1,1) = {"
@@ -83770,10 +84179,10 @@ aaM
 aaM
 aaM
 aaM
-aWF
-aWH
-aWP
-aWI
+aaM
+aaM
+aaM
+aXY
 bbS
 aXm
 aXm
@@ -83788,7 +84197,7 @@ bbS
 bbS
 bbS
 bbS
-aZo
+bbD
 aaM
 aaM
 "}
@@ -84029,9 +84438,9 @@ aaM
 aaM
 aaM
 aaM
-avv
 aaM
-aWI
+aaM
+aXY
 aXD
 aYd
 bbS
@@ -84286,11 +84695,11 @@ aaM
 aaM
 aaM
 aaM
-aWJ
-aWH
-aWH
-bbD
-bbD
+aaM
+aaM
+aaM
+abu
+abu
 bbS
 aXZ
 aYl
@@ -84543,8 +84952,8 @@ aaM
 aaM
 aaM
 aaM
-avv
-aWG
+aaM
+aXI
 bbS
 bbS
 bbS
@@ -84554,7 +84963,7 @@ aYk
 aYn
 aYP
 bbS
-aZa
+avv
 aaM
 aaM
 aaM
@@ -84800,12 +85209,12 @@ aaM
 aaM
 aaM
 aaM
-aWF
-bbD
+aaM
+abu
 aXi
 anI
 aoS
-aXY
+aZo
 aXZ
 aYm
 aXg
@@ -85058,7 +85467,7 @@ aaM
 aaM
 aaM
 aaM
-bbD
+abu
 aXh
 anH
 aoQ
@@ -85315,7 +85724,7 @@ aaM
 aaM
 aaM
 aaM
-aWI
+aXY
 bbS
 bbS
 bbS
@@ -85325,7 +85734,7 @@ ban
 aYd
 bbS
 bbS
-aZo
+bbD
 aaM
 aaM
 aaM
@@ -85577,11 +85986,11 @@ aaM
 aaM
 aaM
 aaM
+abu
+abu
+abu
+aXY
 bbD
-bbD
-bbD
-aWI
-aZo
 aaM
 aaM
 aaM

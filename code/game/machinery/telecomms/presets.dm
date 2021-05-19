@@ -7,7 +7,6 @@
 
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
-	listening_level = 1
 	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/telecomms
@@ -20,17 +19,14 @@
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
-	hide = 1
-	toggled = 0
+	hide = TRUE
+	toggled = FALSE
 	autolinkers = list("r_relay")
 
 /obj/machinery/telecomms/relay/preset/centcom
 	id = "Centcom Relay"
-	hide = 1
-	toggled = 1
-	//anchored = 1
-	//use_power = NO_POWER_USE
-	//idle_power_usage = 0
+	hide = TRUE
+	toggled = TRUE
 	heatgen = 0
 	autolinkers = list("c_relay")
 

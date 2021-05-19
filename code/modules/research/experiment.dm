@@ -206,6 +206,8 @@
 
 	channels = list("Science" = 1)
 
+	var/message_scientists = TRUE
+
 	// This thing should be really hard to destroy by any means.
 	// Some destruction methods(Lord Singuloo) are expected, and not considered anomalous.
 	var/anomalous_destruction = TRUE
@@ -223,6 +225,15 @@
 /obj/item/device/radio/beacon/interaction_watcher/atom_init()
 	. = ..()
 	global.interaction_watcher_list += src
+
+/obj/item/device/radio/beacon/interaction_watcher/attack_self(mob/living/carbon/human/user)
+	message_scientists = !message_scientists
+	to_chat(user, "<span class='notice'>You toggle [src]'s messaging module [message_scientists ? "on" : "off"]</span>")
+
+/obj/item/device/radio/beacon/interaction_watcher/autosay(message, from, channel, freq = 1459)
+	if(!message_scientists)
+		return
+	return ..()
 
 /obj/item/device/radio/beacon/interaction_watcher/Destroy()
 	global.interaction_watcher_list -= src

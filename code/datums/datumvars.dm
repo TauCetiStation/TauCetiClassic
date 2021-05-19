@@ -246,6 +246,7 @@
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
 		body += "<option value='?_src_=vars;give_disease2=\ref[D]'>Give Disease</option>"
+		body += "<option value='?_src_=vars;give_religion=\ref[D]'>Give Religion</option>"
 		if(isliving(D))
 			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
@@ -507,6 +508,18 @@ body
 
 		src.give_disease(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
+
+	else if(href_list["give_religion"])
+		if(!check_rights(R_ADMIN|R_FUN))
+			return
+
+		var/mob/M = locate(href_list["give_religion"])
+		if(!istype(M))
+			to_chat(usr, "This can only be used on instances of type /mob")
+			return
+
+		global.chaplain_religion.add_member(M, HOLY_ROLE_HIGHPRIEST)
+		href_list["datumrefresh"] = href_list["give_religion"]
 
 	else if(href_list["give_disease2"])
 		if(!check_rights(R_ADMIN|R_FUN))

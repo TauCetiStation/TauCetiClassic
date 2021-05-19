@@ -69,7 +69,7 @@
 				desc = "Vitamins! Yay!"
 			if("tomatojuice")
 				icon_state = "glass_red"
-				name = "Glass of Tomato juf"
+				name = "Glass of Tomato juice"
 				desc = "Are you sure this is tomato juice?"
 			if("blood")
 				icon_state = "glass_red"
@@ -561,3 +561,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
 	list_reagents = list("cola" = 25)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood
+	list_reagents = list("blood" = 25)

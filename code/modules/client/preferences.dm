@@ -35,6 +35,11 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+
+	var/tooltip = TRUE
+	var/tooltip_font = "Small Fonts"
+	var/tooltip_size = 8
+
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_BLUE_LIGHT
 
@@ -258,6 +263,11 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
+
+		if("open_jobban_info") //for the 'occupation' and 'roles' panels
+			open_jobban_info(user, href_list["position"])
+			return
+
 	switch(menu_type)
 		if("general")
 			process_link_general(user, href_list)
@@ -445,3 +455,29 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.update_body()
 		character.update_hair()
 
+//for the 'occupation' and 'roles' panels
+/datum/preferences/proc/open_jobban_info(mob/user, rank)
+	if(rank && (rank in user.client.jobbancache)) //this double-checking after the call of jobban_isbanned() can be not needed in the most cases, but we cannot trust the preceding href
+		var/dat
+
+		dat += "<b>Причина, указанная администратором:</b><br>\"[user.client.jobbancache[rank]["reason"]]\""
+		dat += "<hr>"
+		dat += "Выдан администратором [user.client.jobbancache[rank]["ackey"]] [user.client.jobbancache[rank]["bantime"]] "
+
+		if(user.client.jobbancache[rank]["rid"])
+			dat += "в раунде #[user.client.jobbancache[rank]["rid"]] "
+
+		if(user.client.jobbancache[rank]["bantype"] == "JOB_TEMPBAN")
+			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
+			dat += "<hr>"
+			dat += "<br>"
+			dat += "Дополнительную информацию можно получить у администратора, выдашего джоббан. Апелляции и жалобы принимаются на форуме."
+		else
+			dat += "как бессрочный."
+			dat += "<hr>"
+			dat += "<br>"
+			dat += "Дополнительную информацию можно получить у администратора, выдашего бессрочный джоббан. С ним же стоит согласовывать снятие этого джоббана, если вы согласны с его выдачей. Если у вас есть не разрешаемые в личной беседе с администратором претензии или же администратор, с джоббаном от которого вы согласны, покинул состав, обратитесь на форум."
+
+		var/datum/browser/popup = new(user, "jobban_info", "Информация о джоббане", ntheme = CSS_THEME_LIGHT)
+		popup.set_content(dat)
+		popup.open()

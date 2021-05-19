@@ -4,7 +4,7 @@ var/global/list/all_huds = list()
 
 //global HUD LIST
 //if you add new defines, then change number of assoc list
-var/global/list/huds[23]
+var/global/list/huds[24]
 
 /proc/init_hud_list() // proc used in global_list.dm
 	// Crooked port from TG, but he needed
@@ -13,9 +13,11 @@ var/global/list/huds[23]
 	huds[DATA_HUD_MEDICAL] = new/datum/atom_hud/data/medical
 	huds[DATA_HUD_MEDICAL_ADV] = new/datum/atom_hud/data/medical/adv
 	huds[DATA_HUD_DIAGNOSTIC] = new/datum/atom_hud/data/diagnostic
+	huds[DATA_HUD_HOLY] = new/datum/atom_hud/holy
 	huds[DATA_HUD_BROKEN] = new/datum/atom_hud/data/broken
 	huds[DATA_HUD_MINER] = new/datum/atom_hud/mine
 	huds[DATA_HUD_GOLEM] = new/datum/atom_hud/golem
+	huds[DATA_HUD_EMBRYO] = new/datum/atom_hud/embryo
 	huds[ANTAG_HUD_CULT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_REV] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_OPS] = new/datum/atom_hud/antag
@@ -25,13 +27,11 @@ var/global/list/huds[23]
 	huds[ANTAG_HUD_NINJA] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_CHANGELING] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ABDUCTOR] = new/datum/atom_hud/antag/hidden
-	huds[ANTAG_HUD_GANGSTER] = new/datum/atom_hud/antag/hidden //Update gamemode!
 	huds[ANTAG_HUD_ALIEN] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_DEATHCOM] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_ERT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_MALF] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ZOMB] = new/datum/atom_hud/antag
-	huds[ANTAG_HUD_ALIEN_EMBRYO] = new/datum/atom_hud/antag/embryo
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud
@@ -53,11 +53,14 @@ var/global/list/huds[23]
 	global.all_huds -= src
 	return ..()
 
-/datum/atom_hud/proc/remove_hud_from(mob/M)
+/datum/atom_hud/proc/remove_hud_from(mob/M, absolute = FALSE)
 	if(!M || !hudusers[M])
 		return
-	if (!--hudusers[M])
+	if (absolute || !--hudusers[M])
+		UnregisterSignal(M, COMSIG_PARENT_QDELETED)
 		hudusers -= M
+		if(next_time_allowed[M])
+			next_time_allowed -= M
 		if(queued_to_see[M])
 			queued_to_see -= M
 		else
@@ -83,6 +86,7 @@ var/global/list/huds[23]
 		return
 	if(!hudusers[M])
 		hudusers[M] = 1
+		RegisterSignal(M, COMSIG_PARENT_QDELETED, .proc/unregister_mob)
 		if(next_time_allowed[M] > world.time)
 			if(!queued_to_see[M])
 				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, M), next_time_allowed[M] - world.time)
@@ -93,6 +97,10 @@ var/global/list/huds[23]
 				add_to_single_hud(M, A)
 	else
 		hudusers[M]++
+
+/datum/atom_hud/proc/unregister_mob(datum/source, force)
+	SIGNAL_HANDLER
+	remove_hud_from(source, TRUE)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(hud_user, hidden_atom)
 	if(hudusers[hud_user])

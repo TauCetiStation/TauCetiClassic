@@ -356,7 +356,7 @@
 	return O
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE)
+/mob/living/carbon/human/proc/Robotize(name = "Default", laws = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -369,7 +369,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link)
+	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(loc, name, laws, ai_link, R)
 
 	// cyborgs produced by Robotize get an automatic power cell
 	O.cell = new(O)
@@ -400,10 +400,6 @@
 			O.mmi = new /obj/item/device/mmi(O)
 
 		if(O.mmi) O.mmi.transfer_identity(src) //Does not transfer key/client.
-
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.borgify_directive(O)
 
 	O.Namepick()
 
