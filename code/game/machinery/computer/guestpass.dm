@@ -162,7 +162,6 @@
 			for(var/entry in internal_log)
 				dat += "[entry]<br><hr>"
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
-			playsound(loc, 'sound/machines/fax_centcomm.ogg', 50, TRUE)
 			P.name = "activity log"
 			P.info = dat
 		if("issue")
