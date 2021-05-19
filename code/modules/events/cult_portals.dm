@@ -8,7 +8,7 @@
 	startWhen = rand(50, 150)
 	announceWhen = startWhen + 5
 	endWhen = startWhen + 300
-	max_constructs = rand(4, 7)
+	max_constructs = rand(2, 3)
 
 /datum/event/anomaly/cult_portal/start()
 	var/list/turfs = get_area_turfs(impact_area)
