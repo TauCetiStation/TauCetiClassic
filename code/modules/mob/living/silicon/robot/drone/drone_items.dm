@@ -194,6 +194,21 @@
 		/obj/item/device/flash
 		)
 
+/obj/item/weapon/gripper/limbs
+	name = "limbs gripper"
+	desc = "A limb holder for surgery."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/organ/internal/brain,
+		/obj/item/organ/external/head,
+		/obj/item/organ/external/l_leg,
+		/obj/item/organ/external/r_leg,
+		/obj/item/organ/external/l_arm,
+		/obj/item/organ/external/r_arm
+		)
+
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
 	if(wrapped)
