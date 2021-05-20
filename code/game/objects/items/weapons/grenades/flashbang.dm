@@ -59,7 +59,18 @@
 
 //Now applying sound
 	var/distance = get_dist(M, T)
-	if((distance <= 2 || loc == M.loc || loc == M))
+
+	if(!distance || loc == M.loc || loc == M)
+		M.Stun(10)
+		M.Weaken(5)
+		to_chat(M, "<span class='userdanger'>The close blast from \the [src] severly disorients you!</span>")
+		if((prob(14) || (M == loc && prob(70))))
+			M.ear_damage += rand(1, 10)
+		else
+			M.ear_damage += rand(0, 5)
+			M.ear_deaf = max(M.ear_deaf, 15)
+
+	else if(distance <= 2)
 		if(ear_safety > 1)
 			M.Stun(1.5)
 		else if(ear_safety > 0)
@@ -79,6 +90,7 @@
 			M.Stun(8)
 			M.ear_damage += rand(0, 3)
 			M.ear_deaf = max(M.ear_deaf, 10)
+
 
 	else if(!ear_safety)
 		M.Stun(4)
