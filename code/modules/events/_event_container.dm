@@ -172,7 +172,6 @@ var/list/severity_to_string = list(EVENT_LEVEL_ROUNDSTART = "RoundStart", EVENT_
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Accounting Got It Wrong", /datum/event/roundstart/salary,                                  10, list(ASSIGNMENT_ANY = 2)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Last Clown Jokes",        /datum/event/roundstart/airlock_joke,                            10, list(ASSIGNMENT_CLOWN = 50)),
 		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Chiefs Animals",          /datum/event/roundstart/head_animals,                            10),
-		new /datum/event_meta(EVENT_LEVEL_ROUNDSTART, "Clumsy Access",           /datum/event/roundstart/clumsy_access,                           10, list(ASSIGNMENT_CLOWN = 10)),
 	)
 
 /datum/event_container/mundane

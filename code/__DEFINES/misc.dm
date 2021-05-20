@@ -224,6 +224,11 @@
 	A = B;\
 	B = temp;\
 
+#define LOC_SWAP(A, B)\
+	var/atom/temp = A.loc;\
+	A.forceMove(B.loc);\
+	B.forceMove(temp);\
+
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists

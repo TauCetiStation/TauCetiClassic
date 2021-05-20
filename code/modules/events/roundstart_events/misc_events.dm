@@ -160,7 +160,7 @@ var/global/list/chief_animal_list = list()
 		var/mob/M1 = pick(chief_animal_list)
 		var/mob/M2 = pick(chief_animal_list)
 		if(M1 != M2)
-			VAR_SWAP(M1.loc, M2.loc)
+			LOC_SWAP(M1, M2)
 
 		message_admins("RoundStart Event: [M1] and [M2] has been swapped.")
 		log_game("RoundStart Event: [M1] and [M2] has been swapped.")
@@ -172,19 +172,6 @@ var/global/list/scrap_list = list()
 
 	message_admins("RoundStart Event: All scraps was deleted.")
 	log_game("RoundStart Event: All scraps was deleted.")
-
-/datum/event/roundstart/clumsy_access/start()
-	var/datum/job/captain/J = SSjob.GetJob("Captain")
-	var/list/all_access = J.get_access()
-	for(var/mob/living/carbon/human/H in human_list)
-		if(CLUMSY in H.mutations)
-			var/obj/item/weapon/card/id/I = locate() in H
-			if(!I)
-				continue
-			I.access = all_access
-
-			message_admins("RoundStart Event: [H] got full access [COORD(H)] - [ADMIN_JMP(H.loc)].")
-			log_game("RoundStart Event: [H] got full access [COORD(H)].")
 
 var/global/list/toilet_list = list()
 /datum/event/roundstart/del_toilet/start()
