@@ -11,8 +11,8 @@
 
 /datum/event/roundstart/area/maintenance_spawn/start()
 	for(var/i in 1 to nums)
-		var/area/area = get_area_by_type(pick(targeted_areas))
-		var/list/all_turfs = list(get_area_turfs(area, FALSE, black_list=list(/turf/simulated/wall, /turf/simulated/wall/r_wall)))
+		var/area/area = get_area_by_type(pick_n_take(targeted_areas))
+		var/list/all_turfs = get_area_turfs(area, FALSE, black_list=list(/turf/simulated/wall, /turf/simulated/wall/r_wall)))
 		// to prevent spawn in glass or grinds
 		for(var/turf/T in all_turfs)
 			if(T.contents.len == 1) // any turfs has a single instance of lighting_object, for at some optimization, i need to skip such turfs
@@ -61,5 +61,5 @@
 	else
 		new type(T)
 
-	message_admins("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in ([T.x] [T.y] [T.z]) - [ADMIN_JMP(T)]")
-	log_game("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in ([T.x] [T.y] [T.z])")
+	message_admins("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)] - [ADMIN_JMP(T)]")
+	log_game("RoundStart Event: \"[event_meta.name]\" spawn '[type]' in [COORD(T)]")
