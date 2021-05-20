@@ -170,7 +170,7 @@ var/global/list/scrap_list = list()
 	for(var/A in scrap_list)
 		qdel(A)
 
-	message_admins("RoundStart Event: All scraps was deleted.")
+	message_admins("RoundStart Event: All scrap was deleted.")
 	log_game("RoundStart Event: All scrap was deleted.")
 
 /datum/event/roundstart/clumsy_access/start()
