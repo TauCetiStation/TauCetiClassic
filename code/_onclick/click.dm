@@ -265,7 +265,6 @@
 		user.examinate(src)
 	return
 
-
 /*
 	Ctrl click
 	For most objects, pull

@@ -9,7 +9,6 @@
   *
   * Parent call
   */
-
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
 	global.dead_mob_list -= src
