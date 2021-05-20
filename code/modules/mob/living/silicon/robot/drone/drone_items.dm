@@ -146,17 +146,6 @@
 		/obj/item/weapon/newspaper
 		)
 
-/obj/item/weapon/gripper/chemistry
-	name = "chemistry gripper"
-	desc = "A simple grasping tool for chemical work."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "gripper"
-
-	can_hold = list(
-		/obj/item/weapon/reagent_containers/glass,
-		/obj/item/weapon/storage/pill_bottle
-		)
-
 /obj/item/weapon/gripper/service
 	name = "service gripper"
 	desc = "A simple grasping tool for service work."
@@ -194,13 +183,16 @@
 		/obj/item/device/flash
 		)
 
-/obj/item/weapon/gripper/limbs
-	name = "limbs gripper"
-	desc = "A limb holder for surgery."
+/obj/item/weapon/gripper/medical
+	name = "medical gripper"
+	desc = "A holder for limbs and chemical containers."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gripper"
 
 	can_hold = list(
+		/obj/item/weapon/reagent_containers/blood,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/organ/internal/brain,
 		/obj/item/organ/external/head,
 		/obj/item/organ/external/l_leg,
