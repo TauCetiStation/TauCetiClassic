@@ -202,7 +202,7 @@ var/list/GPS_list = list()
 		clear()
 	tagged = null
 	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
+	return ..()
 
 #undef EMP_DISABLE_TIME
 #undef POS_VECTOR
