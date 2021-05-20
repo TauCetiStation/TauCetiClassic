@@ -136,8 +136,8 @@
 	emag.name = "Polyacid spray"
 
 /obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R)
-	if(src.emag)
-		var/obj/item/weapon/reagent_containers/spray/PS = src.emag
+	if(emag)
+		var/obj/item/weapon/reagent_containers/spray/PS = emag
 		PS.reagents.add_reagent("pacid", 2)
 	..()
 
