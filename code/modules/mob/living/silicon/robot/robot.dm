@@ -245,7 +245,8 @@
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-surgery"
+			module_sprites["Drone Red"] = "drone-surgery"
+			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
