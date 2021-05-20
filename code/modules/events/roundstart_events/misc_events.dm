@@ -171,7 +171,7 @@ var/global/list/scrap_list = list()
 		qdel(A)
 
 	message_admins("RoundStart Event: All scraps was deleted.")
-	log_game("RoundStart Event: All scraps was deleted.")
+	log_game("RoundStart Event: All scrap was deleted.")
 
 /datum/event/roundstart/clumsy_access/start()
 	var/datum/job/captain/J = SSjob.GetJob("Captain")
@@ -209,4 +209,3 @@ var/global/list/toilet_list = list()
 
 		message_admins("RoundStart Event: Water was spawned in [COORD(T)] - [ADMIN_JMP(T)].")
 		log_game("RoundStart Event: Water was spawned in [COORD(T)].")
-
