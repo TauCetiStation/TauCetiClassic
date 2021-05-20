@@ -313,7 +313,8 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-
+	if(next_point_to > world.time)
+		return
 	if(!usr || !isturf(usr.loc))
 		return
 	if(usr.incapacitated())
@@ -342,6 +343,8 @@
 		for(var/mob/living/carbon/slime/S in oview())
 			if(usr in S.Friends)
 				S.last_pointed = A
+
+	next_point_to = world.time + 1.5 SECONDS
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
