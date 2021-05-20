@@ -170,8 +170,8 @@ var/global/list/scrap_list = list()
 	for(var/A in scrap_list)
 		qdel(A)
 
-	message_admins("RoundStart Event: All scraps was deleted.")
-	log_game("RoundStart Event: All scraps was deleted.")
+	message_admins("RoundStart Event: All scrap was deleted.")
+	log_game("RoundStart Event: All scrap was deleted.")
 
 var/global/list/toilet_list = list()
 /datum/event/roundstart/del_toilet/start()
@@ -196,4 +196,3 @@ var/global/list/toilet_list = list()
 
 		message_admins("RoundStart Event: Water was spawned in [COORD(T)] - [ADMIN_JMP(T)].")
 		log_game("RoundStart Event: Water was spawned in [COORD(T)].")
-
