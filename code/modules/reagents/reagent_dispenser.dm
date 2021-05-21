@@ -138,8 +138,8 @@
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged [src] at [COORD(c)] for explosion. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] rigged [src] at [COORD(c)] for explosion.")
+				message_admins("[key_name_admin(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
+				log_game("[key_name(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion.")
 
 			rig = W
 			user.drop_item()

@@ -479,7 +479,7 @@ var/bomb_set
 		var/turf/diskturf = get_turf(src)
 		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
 		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - [ADMIN_JMP(diskturf)]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - [ADMIN_JMP(targetturf)]).")
-		log_game("[src] has been destroyed in [COORD(f)]. Moving it to [COORD(f)].")
+		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark")
 	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success

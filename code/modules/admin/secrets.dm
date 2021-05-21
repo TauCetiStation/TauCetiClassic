@@ -520,7 +520,7 @@
 				to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
 				return
 			var/turf/T = get_turf(usr)
-			message_admins("[key_name_admin(usr)] has created a complete sandwich at location [COORD(T)] [ADMIN_JMP(usr)]")
+			message_admins("[key_name_admin(usr)] has created a complete sandwich at location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
 			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))

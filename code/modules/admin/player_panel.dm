@@ -420,7 +420,7 @@
 						var/obj/O = disk_loc
 						dat += "in \a [O.name] "
 					disk_loc = disk_loc.loc
-				dat += "in [disk_loc.loc] at [COORD(c)]</td></tr>"
+				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
 			dat += "</table>"
 
 		if(SSticker.mode.head_revolutionaries.len || SSticker.mode.revolutionaries.len)
