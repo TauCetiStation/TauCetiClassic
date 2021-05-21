@@ -189,7 +189,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 		var/turf/T = get_turf(A)
 		var/area/T_area = get_area(T)
 		//message_admins("<span class='warning'>[src] hit [A] in [T_area] [ADMIN_JMP(T)].</span>")
-		log_game("[src] hit [A] ([T.x], [T.y], [T.z]) in [T_area].")
+		log_game("[src] hit [A] [COORD(T)] in [T_area].")
 		if(ismob(A))
 			visible_message("<span class='red'>[A] has been hit by [src].</span>")
 		ram_turf(get_turf(A))
