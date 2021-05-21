@@ -63,7 +63,7 @@
 	return 1
 
 /obj/machinery/power/emitter/Destroy()
-	message_admins("Emitter deleted at ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
+	message_admins("Emitter deleted at ([COORD(src)] - [ADMIN_JMP(src)]",0,1)
 	log_game("Emitter deleted at [COORD(src)]")
 	log_investigate("<font color='red'>deleted</font> at [COORD(src)]",INVESTIGATE_SINGULO)
 	return ..()
@@ -92,7 +92,7 @@
 			if(active)
 				active = 0
 				to_chat(user, "You turn off the [src].")
-				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - src)]",0,1)
+				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - src)]",0,1)
 				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
 				log_investigate("turned <font color='red'>off</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			else
@@ -103,7 +103,7 @@
 				to_chat(user, "You turn on the [src].")
 				shot_number = 0
 				fire_delay = maximum_fire_delay
-				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - [ADMIN_JMP(src)]",0,1)
+				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([COORD(src)] - [ADMIN_JMP(src)]",0,1)
 				log_game("Emitter turned on by [key_name(user)] in [COORD(src)]")
 				log_investigate("turned <font color='green'>on</font> by [key_name(user)]",INVESTIGATE_SINGULO)
 			update_icon()

@@ -154,7 +154,7 @@
 	return "[src] ([type]) (\ref[src])"
 
 /area/get_log_info_line()
-	return "[..()] ([isnum(z) ? "[x],[y],[z]" : "0,0,0"])"
+	return "[..()] ([isnum(z) ? "[COORD(src)]" : "0,0,0"])"
 
 /turf/get_log_info_line()
 	return "[..()] [COORD(src)] ([loc ? loc.type : "NULL"])"
