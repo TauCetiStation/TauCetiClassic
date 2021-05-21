@@ -289,7 +289,7 @@
 	icon = 'icons/mob/alien.dmi'
 	operating_sound = 'sound/effects/attackblob.ogg'
 	icon_state = "resin"
-	health = 150
+	health = 250
 	can_unwrench = FALSE
 	var/close_delay = 100
 

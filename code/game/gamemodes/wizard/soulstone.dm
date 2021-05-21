@@ -184,7 +184,7 @@
 		if(iscultist(user))
 			SSticker.mode.add_cultist(M.mind)
 		else
-			user.my_religion.add_member(M)
+			user.my_religion.add_member(M, HOLY_ROLE_PRIEST)
 
 	qdel(src)
 	qdel(target)
