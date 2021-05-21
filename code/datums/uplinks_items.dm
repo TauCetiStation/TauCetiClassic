@@ -264,6 +264,18 @@
 	cost = 6
 	uplink_types = list("traitor")
 
+/datum/uplink_item/dangerous/mine
+	name = "High Explosive Mine"
+	desc = "A mine that explodes upon pressure. Use multitool to disarm it."
+	item = /obj/item/mine
+	cost = 3
+
+/datum/uplink_item/dangerous/incendiary_mine
+	name = "Incendiary Mine"
+	desc = "A variation of many different mines, this one will set on fire anyone unfortunate to step on it."
+	item = /obj/item/mine/incendiary
+	cost = 3
+
 // AMMUNITION
 
 /datum/uplink_item/ammo
