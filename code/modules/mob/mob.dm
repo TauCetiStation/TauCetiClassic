@@ -679,7 +679,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")
 				if(client.holder.rights & R_DEBUG)
-					stat("Location:", "([x], [y], [z])")
+					stat("Location:", "[COORD(src)]")
 					stat("Instances:", "[world.contents.len]")
 					config.stat_entry()
 					stat(null)

@@ -77,7 +77,7 @@
 		log_investigate("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [key_name(usr)]",INVESTIGATE_SINGULO)
 		if (active)
 			message_admins("PA Control Computer turned ON by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - [ADMIN_JMP(src)])",0,1)
-			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in ([x],[y],[z])")
+			log_game("PA Control Computer turned ON by [usr.ckey]([usr]) in [COORD(src)]")
 	else if(href_list["scan"])
 		src.part_scan()
 	else if(href_list["strengthup"])
@@ -86,7 +86,7 @@
 			strength = 2
 		else
 			message_admins("PA Control Computer increased to [strength] by [key_name(usr, usr.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) in ([x],[y],[z] - [ADMIN_JMP(src)])",0,1)
-			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in ([x],[y],[z])")
+			log_game("PA Control Computer increased to [strength] by [usr.ckey]([usr]) in [COORD(src)]")
 			log_investigate("increased to <font color='red'>[strength]</font> by [key_name(usr)]",INVESTIGATE_SINGULO)
 		for(var/obj/structure/particle_accelerator/part in connected_parts)
 			part.strength = strength
