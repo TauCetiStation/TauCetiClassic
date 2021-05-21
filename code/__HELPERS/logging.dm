@@ -161,7 +161,7 @@
 
 /atom/movable/get_log_info_line()
 	var/turf/t = get_turf(src)
-	return "[..()] ([t ? t : "NULL"]) ([t ? "[t.x],[t.y],[t.z]" : "0,0,0"]) ([t ? t.type : "NULL"])"
+	return "[..()] ([t ? t : "NULL"]) ([t ? "[COORD(t)]" : "0,0,0"]) ([t ? t.type : "NULL"])"
 
 /mob/get_log_info_line()
 	return ckey ? "[..()] ([ckey])" : ..()
