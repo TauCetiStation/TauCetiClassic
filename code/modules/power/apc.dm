@@ -826,6 +826,8 @@
 
 			return 0
 	else
+		if(locked)
+			return FALSE
 		if((!in_range(src, user) || !istype(src.loc, /turf)))
 			nanomanager.close_user_uis(user, src)
 
@@ -842,9 +844,6 @@
 		return
 
 	if(!can_use(usr, 1))
-		return
-
-	if((locked && !issilicon(usr)) || (issilicon(usr) && aidisabled))
 		return
 
 	else if(href_list["lock"])
