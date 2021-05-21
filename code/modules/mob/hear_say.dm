@@ -90,7 +90,7 @@
 	if(language)
 		if(language.flags & NONVERBAL && (!speaker || (sdisabilities & BLIND || blinded) || !(speaker in view(src))))
 			message = stars(message)
-		else if(language.flags & SIGNLANG)
+		else if(language.flags & (SIGNLANG | PSEUDOLANG))
 			return
 
 	if(!say_understands(speaker,language))
