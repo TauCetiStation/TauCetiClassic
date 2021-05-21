@@ -6,7 +6,7 @@
 	item_state = "hypo"
 	icon_state = "borghypo"
 	amount_per_transfer_from_this = 5
-	volume = 50
+	volume = 30
 	possible_transfer_amounts = null
 	var/mode = 1
 	var/charge_cost = 50
@@ -57,12 +57,12 @@
 // Use this to add more chemicals for the borghypo to produce.
 /obj/item/weapon/reagent_containers/borghypo/proc/add_reagent(reagent)
 	reagent_ids |= reagent
-	var/datum/reagents/RG = new(50)
+	var/datum/reagents/RG = new(30)
 	RG.my_atom = src
 	reagent_list += RG
 
 	var/datum/reagents/R = reagent_list[reagent_list.len]
-	R.add_reagent(reagent, 50)
+	R.add_reagent(reagent, 30)
 
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/living/M, mob/user)
 	var/datum/reagents/R = reagent_list[mode]
