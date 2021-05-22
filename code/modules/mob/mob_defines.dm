@@ -142,6 +142,8 @@
 
 	var/coughedtime = null
 
+	var/next_point_to = 0
+
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
