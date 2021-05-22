@@ -198,7 +198,11 @@
 		/obj/item/organ/external/l_leg,
 		/obj/item/organ/external/r_leg,
 		/obj/item/organ/external/l_arm,
-		/obj/item/organ/external/r_arm
+		/obj/item/organ/external/r_arm,
+		/obj/item/robot_parts/l_arm,
+		/obj/item/robot_parts/r_arm,
+		/obj/item/robot_parts/l_leg,
+		/obj/item/robot_parts/r_leg
 		)
 
 /obj/item/weapon/gripper/examine(mob/user)
