@@ -390,7 +390,7 @@
 		IO.heart_stop()
 		return
 
-	if(IO.heart_status == HEART_FIBR)
+	if(IO.heart_status == HEART_FIBR || isrobot(user))
 		if(H.stat == DEAD)
 			IO.heart_normalize()
 			H.reanimate_body(H)
