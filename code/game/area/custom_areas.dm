@@ -87,3 +87,9 @@
 	icon_state = "red"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/custom/arena
+	name = "Deathmatch Arena"
+	icon_state = "red"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
