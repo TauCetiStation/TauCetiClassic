@@ -376,7 +376,7 @@
 	if(!IO)
 		return
 
-	if(H.stat == DEAD && IO.heart_status == HEART_FAILURE && !(isrobot(user)))
+	if(H.stat == DEAD && IO.heart_status == HEART_FAILURE)
 		make_announcement("buzzes, \"Defibrillation failed - patient's heart is not beating.\"")
 		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return
