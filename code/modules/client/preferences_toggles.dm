@@ -350,7 +350,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	feedback_add_details("admin_verb", "COC")
 
 /client/verb/toggle_eorg()
-	set name = "Toggle End of Round Deathmatch Candidacy"
+	set name = "Toggle End of Round Deathmatch"
 	set category = "Preferences"
 	set desc = "At the end of the round you will be teleported to thunderdome to freely bash your fellow colleagues."
 

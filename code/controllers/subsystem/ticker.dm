@@ -518,20 +518,22 @@ SUBSYSTEM_DEF(ticker)
 
 	scoreboard(ai_completions)
 
-	for(var/i in global.player_list)
-		var/mob/living/M = i
-		if(isnewplayer(M))
-			return
-		if(!(M.client.prefs.eorg_enabled))
-			return
-		M.loc = pick(eorgwarp)
-		to_chat(M, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
+	teleport_players_to_eorg_area()
 
 	//Ask the event manager to print round end information
 	SSevents.RoundEnd()
 
 	return 1
+
+/datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
+	for(var/mob/living/M in global.player_list)
+		if(isnewplayer(M))
+			continue
+		if(!(M.client.prefs.eorg_enabled))
+			continue
+		M.forceMove(pick(eorgwarp))
+		to_chat(M, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
 	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
