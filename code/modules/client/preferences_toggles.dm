@@ -348,3 +348,13 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "Outline color changed.")
 	feedback_add_details("admin_verb", "COC")
+
+/client/verb/toggle_eorg()
+	set name = "Toggle End of Round Deathmatch Candidacy"
+	set category = "Preferences"
+	set desc = "At the end of the round you will be teleported to thunderdome to freely bash your fellow colleagues."
+
+	prefs.eorg_enabled = !prefs.eorg_enabled
+	prefs.save_preferences()
+	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
+	feedback_add_details("admin_verb", "ED")

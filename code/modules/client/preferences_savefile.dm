@@ -270,7 +270,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tooltip_font"]		>> tooltip_font
 	S["outline_enabled"]	>> outline_enabled
 	S["outline_color"]		>> outline_color
-
+	S["eorg_enabled"]		>> eorg_enabled
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
 	S["tgui_lock"]		>> tgui_lock
@@ -313,6 +313,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tooltip_size = sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
 	outline_color = normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
+	eorg_enabled = sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
