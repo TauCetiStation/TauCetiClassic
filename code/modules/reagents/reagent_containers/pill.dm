@@ -24,7 +24,7 @@
 	var/volume_half = reagents.total_volume / 2
 	for(var/part in list("top", "bottom"))
 		var/obj/item/weapon/reagent_containers/pill/P = new(user.loc)
-		P.name = "Half of [name]"
+		P.name = "half of [name]"
 		P.icon_state = icon_state
 		P.filters += filter(type = "alpha", icon = icon(icon, "pill_half_[part]"))
 		P.add_overlay(icon(icon, "pill_half_border_[part]"))
