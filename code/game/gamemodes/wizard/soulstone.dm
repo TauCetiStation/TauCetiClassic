@@ -95,6 +95,7 @@
 /obj/item/device/soulstone/proc/capture_victim(target, mob/user)
 	var/mob/living/carbon/human/H = target
 	var/obj/item/device/soulstone/C = src
+/*
 	if(target != user)
 		if(C.imprinted != "empty")
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [C.imprinted]!")
@@ -111,18 +112,14 @@
 		if(H.species.flags[IS_SYNTHETIC])
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Неподходящая цель.")
 			return
-
+*/
 	for(var/obj/item/W in H)
 		H.drop_from_inventory(W)
 
 	new /obj/effect/decal/remains/human(H.loc) //Spawns a skeleton
-	H.invisibility = 101
-	var/atom/movable/overlay/animation = new /atom/movable/overlay( H.loc )
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = H
-	flick("dust-h", animation)
-	qdel(animation)
+	H.invisibility = INVISIBILITY_ABSTRACT
+	new /obj/effect/temp_visual/dust_animation(H.loc, "dust-h")
+
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( H.loc )
 	S.my_religion = H.my_religion
 	S.forceMove(C)
@@ -171,10 +168,10 @@
 	var/construct_class = show_radial_menu(user, target, class_images, require_near = TRUE, tooltips = TRUE)
 
 	var/type = classes[construct_class]
-	var/mob/M = new type(get_turf(target.loc))
+	var/mob/living/simple_animal/construct/M = new type(get_turf(target))
 
-	flick("make_[M.icon_state]", M)
-	sleep(9)
+	var/image/I = image(M.icon, M, "make_[M.icon_state]")
+	flick_overlay_view(I, M, 10) // in fact, animation last 9.75
 	playsound(M, 'sound/effects/constructform.ogg', VOL_EFFECTS_MASTER)
 
 	M.key = S.key
