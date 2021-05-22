@@ -532,8 +532,7 @@ SUBSYSTEM_DEF(ticker)
 			continue
 		if(!(M.client.prefs.eorg_enabled))
 			continue
-		var/mob/living/carbon/human/L
-		L = new /mob/living/carbon/human(pick(eorgwarp))
+		var/mob/living/carbon/human/L = new(pick(eorgwarp))
 		M.mind.transfer_to(L)
 		L.equipOutfit(/datum/outfit/arena)
 		L.name = "Gladiator ([rand(1, 1000)])"
