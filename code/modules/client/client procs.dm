@@ -593,7 +593,7 @@ var/list/blacklisted_builds = list(
 
 /client/Click(atom/object, atom/location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["drag"])
+	if(modifiers[DRAG])
 		return
 	..()
 
