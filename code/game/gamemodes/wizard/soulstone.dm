@@ -95,7 +95,6 @@
 /obj/item/device/soulstone/proc/capture_victim(target, mob/user)
 	var/mob/living/carbon/human/H = target
 	var/obj/item/device/soulstone/C = src
-/*
 	if(target != user)
 		if(C.imprinted != "empty")
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [C.imprinted]!")
@@ -112,7 +111,7 @@
 		if(H.species.flags[IS_SYNTHETIC])
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Неподходящая цель.")
 			return
-*/
+
 	for(var/obj/item/W in H)
 		H.drop_from_inventory(W)
 
