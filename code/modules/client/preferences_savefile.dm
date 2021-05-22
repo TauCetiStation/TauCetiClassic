@@ -381,6 +381,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["outline_enabled"]	<< outline_enabled
 	S["outline_color"]		<< outline_color
+	S["eorg_enabled"]		<< eorg_enabled
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
