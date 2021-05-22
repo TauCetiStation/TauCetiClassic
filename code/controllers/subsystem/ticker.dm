@@ -533,12 +533,11 @@ SUBSYSTEM_DEF(ticker)
 		if(!(M.client.prefs.eorg_enabled))
 			continue
 		var/mob/living/carbon/human/L
-		if(isliving(M) || isAI(M))
-			L = new /mob/living/carbon/human(pick(eorgwarp))
-			M.mind.transfer_to(L)
-			L.equipOutfit(/datum/outfit/arena)
-			L.name = "Gladiator ([rand(1, 1000)])"
-			L.real_name = L.name
+		L = new /mob/living/carbon/human(pick(eorgwarp))
+		M.mind.transfer_to(L)
+		L.equipOutfit(/datum/outfit/arena)
+		L.name = "Gladiator ([rand(1, 1000)])"
+		L.real_name = L.name
 		to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
