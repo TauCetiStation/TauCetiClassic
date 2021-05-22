@@ -96,7 +96,7 @@
 		usr << browse(null, "window=filingcabinet") // Close the menu
 
 		//var/retrieveindex = text2num(href_list["retrieve"])
-		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
+		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
 		if(P && in_range(src, usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
