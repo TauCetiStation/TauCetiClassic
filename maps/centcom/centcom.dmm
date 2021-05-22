@@ -1777,12 +1777,12 @@
 	},
 /area/centcom/tdome)
 "aeO" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
 /obj/machinery/light{
 	invisibility = 101;
 	name = "invisible light fixture"
+	},
+/obj/effect/landmark{
+	name = "eorgwarp"
 	},
 /turf/unsimulated/floor{
 	icon_state = "engine"
@@ -1950,18 +1950,6 @@
 /mob/living/simple_animal/hostile/carp/dog/polkan,
 /turf/unsimulated/floor,
 /area/centcom/control)
-"afm" = (
-/obj/machinery/light{
-	invisibility = 101;
-	name = "invisible light fixture"
-	},
-/obj/effect/landmark{
-	name = "tdome2"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/centcom/tdome)
 "afn" = (
 /obj/item/weapon/twohanded/dualsaber,
 /turf/unsimulated/floor{
@@ -9860,14 +9848,6 @@
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor,
 /area/shuttle/administration/centcom)
-"aFl" = (
-/obj/effect/landmark{
-	name = "tdome2"
-	},
-/turf/unsimulated/floor{
-	icon_state = "engine"
-	},
-/area/centcom/tdome)
 "aFm" = (
 /obj/machinery/vending/engineering,
 /turf/unsimulated/floor{
@@ -80346,12 +80326,12 @@ aaM
 aaM
 aaM
 aSj
-aFl
+aeS
 aXI
 aHB
 aSj
 aHB
-aFl
+aeS
 aSj
 aeN
 aWH
@@ -80359,7 +80339,7 @@ aeR
 aSj
 aHB
 avv
-aFl
+aeS
 aHB
 aXI
 aWH
@@ -80867,7 +80847,7 @@ avv
 aWH
 aWF
 aSj
-aFl
+aeS
 avv
 aHB
 aSj
@@ -80875,7 +80855,7 @@ afd
 aSj
 aSj
 aSj
-aFl
+aeS
 aSj
 aSj
 aaM
@@ -81120,7 +81100,7 @@ aSj
 aHB
 aHB
 aHB
-aFl
+aeS
 aHB
 aHB
 aHB
@@ -81638,11 +81618,11 @@ aHB
 avv
 aHB
 aSj
-aFl
+aeS
 aHB
 aHB
 aHB
-aFl
+aeS
 aSj
 aSj
 aHB
@@ -81888,11 +81868,11 @@ aaM
 aaM
 aaM
 aSj
-aFl
+aeS
 aWH
 aWF
 aXI
-aFl
+aeS
 aHB
 aSj
 aHB
@@ -81901,7 +81881,7 @@ aSj
 aHB
 aHB
 aWH
-aFl
+aeS
 aHB
 aHB
 aHB
@@ -82662,7 +82642,7 @@ aSj
 aHB
 avv
 aHB
-aFl
+aeS
 aHB
 aHB
 aHB
@@ -82675,7 +82655,7 @@ aHB
 aSj
 aHB
 afq
-aFl
+aeS
 aSj
 aaM
 aaM
@@ -83187,7 +83167,7 @@ afc
 aSj
 aWH
 aHB
-aFl
+aeS
 aHB
 aWH
 aSj
@@ -83432,7 +83412,7 @@ aaM
 aSj
 aHB
 aHB
-aFl
+aeS
 aHB
 aXI
 aHB
@@ -83441,7 +83421,7 @@ aHB
 aSj
 aHB
 aHB
-aFl
+aeS
 aHB
 aHB
 aSj
@@ -83693,7 +83673,7 @@ aSj
 aHB
 aHB
 aSj
-aFl
+aeS
 aHB
 aHB
 aHB
@@ -83945,7 +83925,7 @@ aaM
 aaM
 aSj
 aHB
-aFl
+aeS
 aHB
 aHB
 azH
@@ -83953,7 +83933,7 @@ aSj
 aHB
 aHB
 aWF
-aFl
+aeS
 aHB
 aSj
 aHB
@@ -84213,10 +84193,10 @@ aXI
 aHB
 aHB
 aSj
-afm
+aeO
 aHB
 aXI
-aFl
+aeS
 aHB
 aSj
 aaM
@@ -84719,7 +84699,7 @@ aXI
 aHB
 aHB
 aHB
-aFl
+aeS
 aHB
 aHB
 avv
@@ -84973,7 +84953,7 @@ aaM
 aaM
 aSj
 aHB
-aFl
+aeS
 aHB
 aHB
 aSj
@@ -84981,7 +84961,7 @@ aSj
 aHB
 aHB
 aeQ
-aFl
+aeS
 aHB
 aSj
 awC
@@ -85235,13 +85215,13 @@ aSj
 aHB
 aSj
 aSj
-aFl
+aeS
 aHB
 aXI
 aHB
 aHB
 aHB
-aFl
+aeS
 aHB
 aHB
 aSj
@@ -85502,7 +85482,7 @@ aWH
 aHB
 aSj
 aHB
-afm
+aeO
 aSj
 aaM
 aaM
@@ -85753,7 +85733,7 @@ aeM
 aHB
 aHB
 aSj
-aFl
+aeS
 aHB
 aHB
 aWF
