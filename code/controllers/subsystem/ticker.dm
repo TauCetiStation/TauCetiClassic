@@ -525,7 +525,7 @@ SUBSYSTEM_DEF(ticker)
 		if(!(M.client.prefs.eorg_enabled))
 			return
 		M.loc = pick(eorgwarp)
-		to_chat(M, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>"
+		to_chat(M, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 
 	//Ask the event manager to print round end information
