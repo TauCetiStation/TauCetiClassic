@@ -105,7 +105,7 @@
 		S.remove_from_storage(I, target)
 	else if(ismob(I.loc))
 		var/mob/M = I.loc
-		M.drop_from_inventory(I, target)
+		M.remove_from_mob(I, target)
 	else
 		I.forceMove(target)
 
@@ -151,6 +151,8 @@
 	if(spare_slots <= 0)
 		return
 
+	var/atom/old_loc = I.loc
+
 	jump_out(I, user.loc)
 
 	// Bounding component took over or something.
@@ -163,7 +165,10 @@
 	if(I.loc != A.loc)
 		step_towards(I, A)
 
-		if(I.loc == A.loc && on_place)
+	if(I.loc == A.loc)
+		if(!isturf(old_loc))
+			INVOKE_ASYNC(I, /atom/movable.proc/do_putdown_animation, A.loc, user)
+		if(on_place)
 			on_place.Invoke(A, I, user)
 
 // Return TRUE to prevent default qdel logic.
