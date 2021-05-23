@@ -10,7 +10,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	var/list/ion = list()
 
 /datum/ai_laws/asimov
-	name = "Три закона робототехники"
+	name = "Три Закона Робототехники"
 
 /datum/ai_laws/nanotrasen
 	name = "Основные директивы"
@@ -30,19 +30,19 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	name = "Десять заповедей"
 
 /datum/ai_laws/faith/chaos
-	name = "Хаосные постулаты"
+	name = "Постулаты хаоса"
 
 /datum/ai_laws/faith/emperor
 	name = "Имперская правда"
 
 /datum/ai_laws/faith/satanism
-	name = "Проклятые законы"
+	name = "Нечестивые законы"
 
 /datum/ai_laws/faith/scientology
 	name = "Законы Хаббарда"
 
 /datum/ai_laws/faith/honk
-	name = "Хонк ради хонка"
+	name = "Хонк за хонк"
 
 /datum/ai_laws/faith/science
 	name = "Принципы Декарта"
