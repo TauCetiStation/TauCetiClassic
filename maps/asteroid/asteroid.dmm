@@ -1360,24 +1360,26 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "de" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 9;
 	icon_state = "pwall"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/alien/mine)
 "df" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
+/obj/structure/object_wall/standart{
 	icon_state = "pwall"
 	},
+/turf/space,
 /area/shuttle/alien/mine)
 "dg" = (
-/turf/simulated/floor/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 10;
 	icon_state = "pwall"
 	},
+/turf/simulated/floor/plating,
+/turf/simulated/floor/plating,
 /area/shuttle/alien/mine)
 "dh" = (
 /obj/item/stack/rods,
@@ -1641,11 +1643,12 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "dE" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
 /obj/structure/window/reinforced/tinted{
 	dir = 4
+	},
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
 	},
 /turf/simulated/floor/plating/airless,
 /area/shuttle/alien/mine)
@@ -1912,18 +1915,20 @@
 /turf/simulated/mineral,
 /area/asteroid/research_outpost/atmos)
 "ef" = (
-/turf/space,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 5;
 	icon_state = "pwall"
 	},
+/turf/space,
+/turf/space,
 /area/shuttle/alien/mine)
 "eg" = (
-/turf/simulated/floor/plating,
-/turf/simulated/shuttle/wall{
+/obj/structure/object_wall/standart{
 	dir = 6;
 	icon_state = "pwall"
 	},
+/turf/simulated/floor/plating,
+/turf/simulated/floor/plating,
 /area/shuttle/alien/mine)
 "eh" = (
 /obj/item/weapon/shard,
@@ -7257,7 +7262,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "pc" = (
 /obj/machinery/floodlight,
 /turf/simulated/floor{
@@ -7572,7 +7577,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/asteroid/mine/unexplored)
+/area/asteroid/mine/explored)
 "pL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -45798,7 +45803,7 @@ ad
 ad
 ac
 ac
-rE
+oE
 pK
 ac
 ac
@@ -46057,7 +46062,7 @@ ac
 ac
 um
 un
-rE
+oE
 pb
 uB
 Hc
@@ -46315,7 +46320,7 @@ ac
 un
 ur
 jS
-kO
+ac
 ac
 uo
 va
@@ -46569,9 +46574,9 @@ ad
 ac
 ac
 ac
-kO
-kO
-kO
+ac
+ac
+ac
 ac
 ac
 uo

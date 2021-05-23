@@ -107,16 +107,18 @@ var/list/radiochannels = list(
 	"Velocity" = 1245,
 	"Deathsquad" = 1341,
 	"Syndicate" = 1213,
+	"Heist" = 1206,
 	"Supply" = 1347,
 )
 //depenging helpers
-var/list/DEPT_FREQS = list(1351, 1355, 1357, 1359, 1213, 1345, 1341, 1347)
+var/list/DEPT_FREQS = list(1351, 1355, 1357, 1359, 1213, 1206, 1345, 1341, 1347)
 
 // central command channels, i.e deathsquid & response teams & Velocity.
 var/list/CENT_FREQS = list(1345, 1341, 1245)
 
 var/const/COMM_FREQ = 1353 //command, colored gold in chat window
 var/const/SYND_FREQ = 1213
+var/const/HEIST_FREQ = 1206
 var/const/VELOCITY_FREQ = 1245
 
 // department channels

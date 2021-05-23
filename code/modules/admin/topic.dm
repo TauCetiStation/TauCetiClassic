@@ -151,7 +151,7 @@
 		else
 			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
-		DB_ban_record(bantype, playermob, banduration, banreason, banjob, null, banckey, banip, bancid )
+		DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid )
 
 	else if(href_list["editrights"])
 		if(!check_rights(R_PERMISSIONS))
@@ -337,9 +337,6 @@
 			if("Cancel")	return
 			if("Yes")		delmob = 1
 
-		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
-		message_admins("[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
-
 		switch(href_list["simplemake"])
 			if("observer")			M.change_mob_type( /mob/dead/observer , null, null, delmob )
 			if("drone")				M.change_mob_type( /mob/living/carbon/xenomorph/humanoid/drone , null, null, delmob )
@@ -363,6 +360,10 @@
 			if("constructbuilder")	M.change_mob_type( /mob/living/simple_animal/construct/builder , null, null, delmob )
 			if("constructwraith")	M.change_mob_type( /mob/living/simple_animal/construct/wraith , null, null, delmob )
 			if("shade")				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+			else                    return
+
+		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
+		message_admins("[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]]; deletemob=[delmob]")
 
 
 	/////////////////////////////////////new ban stuff
@@ -434,7 +435,7 @@
 	/////////////////////////////////////new ban stuff
 
 	else if(href_list["jobban2"])
-//		if(!check_rights(R_BAN))	return
+		if(!check_rights(R_BAN))	return
 
 		var/mob/M = locate(href_list["jobban2"])
 		if(!ismob(M))
@@ -2134,7 +2135,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT content FROM erro_library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2160,7 +2161,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title FROM erro_library WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2170,7 +2171,7 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = '[bookid]'")
+		query = dbcon.NewQuery("UPDATE erro_library SET deletereason = NULL WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2190,7 +2191,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title FROM erro_library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2201,7 +2202,7 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[bookid]'")
+		query = dbcon.NewQuery("DELETE FROM erro_library WHERE id='[bookid]'")
 		if(!query.Execute())
 			return
 
