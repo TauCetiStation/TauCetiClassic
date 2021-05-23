@@ -256,6 +256,18 @@ macro "hotkeymode"
 	elem "HKMODE-CTRL+H"
 		name = "CTRL+H"
 		command = "holster"
+	elem "HKMODE-L"
+		name = "L"
+		command = "looc"
+	elem "HKMODE-M"
+		name = "M"
+		command = ".me"
+	elem "HKMODE-O"
+		name = "O"
+		command = "ooc"
+	elem "HKMODE-P"
+		name = "P"
+		command = "remove_pen"
 	elem "HKMODE-Q"
 		name = "Q"
 		command = ".northwest"
@@ -291,10 +303,10 @@ macro "hotkeymode"
 		command = ".northeast"
 	elem "HKMODE-Y"
 		name = "Y"
-		command = "Click-On-Held-Object"
+		command = "resist"
 	elem "HKMODE-CTRL+Y"
 		name = "CTRL+Y"
-		command = "Click-On-Held-Object"
+		command = "resist"
 	elem "HKMODE-Z"
 		name = "Z"
 		command = "Click-On-Held-Object"
@@ -498,7 +510,6 @@ window "mainwindow"
 		anchor1 = none
 		anchor2 = none
 		is-visible = false
-		auto-format = false
 		saved-params = ""
 	elem "hotkey_toggle"
 		type = BUTTON
@@ -559,7 +570,6 @@ window "mainwindow"
 		background-color = #000000
 		is-visible = false
 		saved-params = ""
-		auto-format = false
 
 window "mapwindow"
 	elem "mapwindow"
@@ -594,11 +604,9 @@ window "mapwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
-		auto-format = false
 
 window "popupwindow"
 	elem "popupwindow"
@@ -607,7 +615,6 @@ window "popupwindow"
 		size = 120x120
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
@@ -637,7 +644,6 @@ window "outputwindow"
 		is-visible = false
 		is-disabled = true
 		saved-params = ""
-		auto-format = false
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
