@@ -24,7 +24,7 @@
 	               /obj/item/weapon/melee/energy/sword,
 	               /obj/item/weapon/handcuffs,
 	               /obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1
+	slowdown = 0.3
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	species_restricted = list("exclude" , DIONA , VOX)
 

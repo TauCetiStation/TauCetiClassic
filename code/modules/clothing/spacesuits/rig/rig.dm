@@ -58,8 +58,8 @@
 	desc = "A special space suit for environments that might pose hazards beyond just the vacuum of space. Provides more protection than a standard space suit."
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
-	slowdown = 1
-	var/offline_slowdown = 5
+	slowdown = 0.5
+	var/offline_slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -575,7 +575,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding. Heavy insulation layer adds additional weight"
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
-	slowdown = 3
+	slowdown = 0.6
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 80)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	siemens_coefficient = 0
@@ -597,7 +597,7 @@
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
-	slowdown = 1
+	slowdown = 0.3
 	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
@@ -753,7 +753,7 @@
 	icon_state = "rig-syndie-space"
 	item_state = "syndie_hardsuit"
 	item_color = "rig-syndie"
-	slowdown = 1.4
+	slowdown = 0.3
 	armor = list(melee = 60, bullet = 55, laser = 45, energy = 30, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,
 	               /obj/item/weapon/tank,
@@ -833,12 +833,12 @@
 	icon_state = "rig-heavy-space"
 	item_state = "syndie_hardsuit"
 	item_color = "rig-heavy"
-	slowdown = 1.4
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 55, bomb = 50, bio = 100, rad = 60)
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
-	combat_slowdown = 0.5
+	combat_slowdown = 0.2
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	name = "Syndicate elite hybrid helmet"
@@ -865,11 +865,11 @@
 	icon_state = "rig-syndie_elit-space"
 	item_state = "syndicate-elite"
 	item_color = "rig-syndie_elit"
-	slowdown = 1.5
+	slowdown = 0.7
 	armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_armor = list(melee = 80, bullet = 75, laser = 65, energy = 65, bomb = 70, bio = 70, rad = 70)
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
-	combat_slowdown = 0.5
+	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
@@ -897,7 +897,7 @@
 	icon_state = "rig-hazmat-space"
 	item_state = "syndie_hazmat"
 	item_color = "rig-hazmat"
-	slowdown = 1.4
+	slowdown = 0.5
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	unacidable = TRUE
@@ -928,7 +928,7 @@
 	name = "gem-encrusted hardsuit"
 	desc = "A bizarre gem-encrusted suit that radiates magical energies."
 	item_state = "wiz_hardsuit"
-	slowdown = 1
+	slowdown = 0.3
 	unacidable = 1
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
@@ -966,7 +966,7 @@
 	name = "advanced medical hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has minor radiation shielding."
 	item_state = "cmo_hardsuit"
-	slowdown = 0.5
+	slowdown = 0.3
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/medical, /obj/item/rig_module/device/healthscanner)
 
@@ -987,7 +987,7 @@
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/melee/baton)
 	breach_threshold = 20
-	slowdown = 1.4
+	slowdown = 0.5
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
@@ -1025,7 +1025,7 @@
 	name = "advanced security hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "hos_hardsuit"
-	slowdown = 0.7
+	slowdown = 0.3
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
 

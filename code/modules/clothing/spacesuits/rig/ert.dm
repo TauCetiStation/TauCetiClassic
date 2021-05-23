@@ -31,7 +31,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
 	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
 	/obj/item/weapon/tank,/obj/item/weapon/rcd)
-	slowdown = 1
+	slowdown = 0.2
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
@@ -71,7 +71,7 @@
 	item_state = "ert_security"
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 30, bomb = 65, bio = 100, rad = 10)
 	breach_threshold = 25
-	slowdown = 1.4
+	slowdown = 0.3
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/mounted/taser)
 
 //Engineer
@@ -106,7 +106,7 @@
 	desc = "A suit worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights. Armoured and space ready."
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
-	slowdown = 0.8
+	slowdown = 0.3
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/device/healthscanner, /obj/item/rig_module/chem_dispenser/medical/ert)
 
 /obj/item/clothing/head/helmet/space/rig/ert/stealth
@@ -125,5 +125,5 @@
 	icon_state = "ert_stealth"
 	item_state = "ert_stealth"
 	armor = list(melee = 40, bullet = 20, laser = 30,energy = 10, bomb = 30, bio = 100, rad = 100)
-	slowdown = 0.6
+	slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash, /obj/item/rig_module/stealth, /obj/item/rig_module/nuclear_generator,/obj/item/rig_module/chem_dispenser/combat)

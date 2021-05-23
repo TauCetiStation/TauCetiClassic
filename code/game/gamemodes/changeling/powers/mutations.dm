@@ -282,7 +282,7 @@
 	canremove = 0
 	flags = THICKMATERIAL | DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	slowdown = 1
+	slowdown = 0.3
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0

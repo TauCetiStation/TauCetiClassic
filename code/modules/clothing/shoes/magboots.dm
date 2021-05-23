@@ -6,7 +6,7 @@
 	species_restricted = null
 	var/magpulse = 0
 	var/magboot_state = "magboots"
-	var/slowdown_off = 2
+	var/slowdown_off = 0.7
 	action_button_name = "Toggle Magboots"
 	origin_tech = "materials=3;magnets=4;engineering=4"
 //	flags = NOSLIP //disabled by default
