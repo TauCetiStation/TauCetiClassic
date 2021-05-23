@@ -101,8 +101,8 @@ SUBSYSTEM_DEF(mapping)
 
 			structure.load(T, centered = TRUE, initBounds = FALSE)
 #ifdef SPACE_STRUCTURES_DEBUG
-			info("[structure_id] was created in [T.x],[T.y],[T.z]")
-			message_admins("[structure_id] was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
+			info("[structure_id] was created in [COORD(T)]")
+			message_admins("[structure_id] was created in [COORD(T)] [ADMIN_JMP(T)]")
 #endif
 
 /datum/controller/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
