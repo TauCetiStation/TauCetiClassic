@@ -61,7 +61,7 @@
 	var/distance = get_dist(M, T)
 
 
-	if(!distance || loc == M.loc || loc == M)
+	if(distance == 0 || loc == M.loc || loc == M)
 		to_chat(M, "<span class='userdanger'>The close blast from \the [src] severly disorients you!</span>")
 		if(ear_safety > 1)
 			M.Stun(10)
