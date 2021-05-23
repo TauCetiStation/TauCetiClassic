@@ -62,8 +62,8 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(T)
-		log_admin("Badmin [src] spawned on [T.x]:[T.y]:[T.z]")
-		message_admins("<span class='notice'>Badmin [src] spawned on [T.x]:[T.y]:[T.z] [ADMIN_JMP(T)]</span>")
+		log_admin("Badmin [src] spawned on [COORD(T)]")
+		message_admins("<span class='notice'>Badmin [src] spawned on [COORD(T)] [ADMIN_JMP(T)]</span>")
 	else
 		log_admin("Badmin [src] spawned somewhere")
 		message_admins("<span class='notice'>Badmin [src] spawned somewhere</span>")
