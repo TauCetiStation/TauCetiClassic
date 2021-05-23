@@ -1765,7 +1765,7 @@
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
 "aeM" = (
-/obj/item/weapon/twohanded/fireaxe,
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -1777,7 +1777,7 @@
 	},
 /area/custom/arena)
 "aeO" = (
-/obj/item/weapon/melee/baton,
+/obj/random/melee,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -1803,7 +1803,7 @@
 	},
 /area/custom/arena)
 "aeR" = (
-/obj/random/guns/set_9mm,
+/obj/effect/decal/cleanable/blood/gibs/limb,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -1895,7 +1895,7 @@
 	},
 /area/custom/arena)
 "afd" = (
-/obj/item/weapon/melee/energy/sword/traitor,
+/obj/effect/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -1957,13 +1957,13 @@
 	},
 /area/custom/arena)
 "afn" = (
-/obj/item/weapon/melee/arm_blade,
+/obj/effect/decal/cleanable/blood/gibs/up,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
 /area/custom/arena)
 "afo" = (
-/obj/item/weapon/twohanded/dualsaber,
+/obj/effect/decal/cleanable/blood/gibs/body,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -1976,7 +1976,7 @@
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "afq" = (
-/obj/random/guns/set_357,
+/obj/random/guns/projectile_handgun,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -2165,6 +2165,16 @@
 	},
 /turf/space,
 /area/shuttle/vox/arkship)
+"afO" = (
+/obj/machinery/light{
+	invisibility = 101;
+	name = "invisible light fixture"
+	},
+/obj/random/melee,
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/custom/arena)
 "afQ" = (
 /obj/structure/sign/mark{
 	icon_state = "yrt"
@@ -7130,7 +7140,7 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
 "awC" = (
-/obj/item/weapon/twohanded/spear,
+/obj/effect/decal/cleanable/blood/gibs/down,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -7766,7 +7776,7 @@
 /turf/space,
 /area/shuttle/specops/centcom)
 "ayM" = (
-/obj/item/weapon/melee/classic_baton,
+/obj/effect/decal/cleanable/blood/gibs/core,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -8037,7 +8047,11 @@
 	},
 /area/shuttle/specops/centcom)
 "azH" = (
-/obj/item/weapon/melee/cattleprod,
+/obj/machinery/light{
+	invisibility = 101;
+	name = "invisible light fixture"
+	},
+/obj/effect/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -16357,7 +16371,7 @@
 	},
 /area/custom/wizard_station)
 "bbD" = (
-/obj/item/weapon/twohanded/sledgehammer,
+/obj/random/guns/handgun_security,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -80331,7 +80345,7 @@ aaM
 aHB
 aeS
 aXY
-aWF
+aeO
 aHB
 aWF
 aeS
@@ -80340,7 +80354,7 @@ aeN
 aXI
 aeY
 aHB
-aWF
+aeO
 avv
 aeS
 aWF
@@ -80586,7 +80600,7 @@ aaM
 aaM
 aaM
 aHB
-aWF
+aeM
 aWF
 aHB
 aHB
@@ -80598,7 +80612,7 @@ aeP
 aHB
 aHB
 aWF
-aXI
+azH
 aWF
 aWF
 aWF
@@ -81101,14 +81115,14 @@ aaM
 aaM
 aHB
 aWF
-aWF
+aeR
 aWF
 aeS
 aWF
+aeM
 aWF
 aWF
-aWF
-aWF
+aeO
 aeS
 aWF
 aWF
@@ -81361,15 +81375,15 @@ aHB
 aHB
 aHB
 aWF
-ayM
+aeO
 aHB
 aHB
 aHB
 aXI
-aWF
+awC
 aXY
 aWF
-aeR
+bbD
 aHB
 aXI
 aXY
@@ -81615,14 +81629,14 @@ aaM
 aaM
 aHB
 aWF
-awC
+aeO
 aWF
 aWF
 avv
 aWF
 aHB
 aeS
-aWF
+afo
 aWF
 aWF
 aeS
@@ -82131,18 +82145,18 @@ aHB
 aWF
 aWF
 aHB
+afd
 aWF
 aWF
-aWF
-aWF
+aeO
 aXY
 aHB
 aHB
 aHB
-afn
-awC
-afo
-afq
+aeO
+afd
+aeO
+afm
 aWF
 avv
 aHB
@@ -82387,7 +82401,7 @@ aaM
 aHB
 aHB
 aWF
-aWF
+aeM
 aWF
 aHB
 aHB
@@ -82899,12 +82913,12 @@ aaM
 aaM
 aaM
 aHB
-aWF
+aeO
 aWF
 aXY
 aWF
 avv
-bbD
+aeO
 aHB
 aWF
 aHB
@@ -83161,18 +83175,18 @@ aHB
 aXI
 aWF
 aWF
-aWF
+afn
 aWF
 aXI
 aWF
-afd
+aeO
 afc
 aHB
 aXI
 aWF
 aeS
 aWF
-aXI
+afO
 aHB
 aaM
 aaM
@@ -83413,7 +83427,7 @@ aaM
 aaM
 aaM
 aHB
-aWF
+aeM
 aWF
 aeS
 aWF
@@ -83422,8 +83436,8 @@ aWF
 hJb
 aWF
 aHB
-aWF
-aWF
+ayM
+aeO
 aeS
 aWF
 aWF
@@ -83929,9 +83943,9 @@ aaM
 aHB
 aWF
 aeS
+aeO
 aWF
-aWF
-azH
+aeO
 aHB
 aWF
 aWF
@@ -83939,8 +83953,8 @@ aWH
 aeS
 aWF
 aHB
-aWF
-aWF
+aeO
+aeM
 aWF
 aWF
 hJb
@@ -84188,7 +84202,7 @@ aXI
 aHB
 aXI
 aWF
-aWF
+aeM
 aHB
 aHB
 aWF
@@ -84450,12 +84464,12 @@ aWF
 aHB
 aXI
 aWF
-aWF
+aeO
 aWF
 aHB
 aWF
 aWF
-aWF
+aeR
 aWF
 aXI
 aHB
@@ -84706,7 +84720,7 @@ aeS
 aWF
 aWF
 avv
-aWF
+afd
 aWF
 aHB
 aHB
@@ -84958,20 +84972,20 @@ aHB
 aWF
 aeS
 aWF
-aWF
+aeO
 aHB
 aHB
 aWF
 aWF
-aeR
+afq
 aeS
 aWF
 aHB
-awC
+aeO
 afg
 aWF
 aWF
-aWF
+aeM
 aHB
 aaM
 aaM
@@ -85219,7 +85233,7 @@ aWF
 aHB
 aHB
 aeS
-aWF
+aeM
 aXY
 aWF
 aWF
@@ -85726,11 +85740,11 @@ aaM
 aaM
 aaM
 aHB
-aeM
+aeO
 aWF
 aHB
 aWF
-aWF
+aeR
 aWF
 aeO
 aWF

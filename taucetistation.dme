@@ -904,6 +904,7 @@
 #include "code\game\objects\random\random_materials.dm"
 #include "code\game\objects\random\random_mecha.dm"
 #include "code\game\objects\random\random_meds.dm"
+#include "code\game\objects\random\random_melee.dm"
 #include "code\game\objects\random\random_misc.dm"
 #include "code\game\objects\random\random_mob.dm"
 #include "code\game\objects\random\random_science.dm"
