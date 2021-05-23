@@ -110,7 +110,7 @@
 	user.drop_item(cuffs)
 	cuffs.loc = src
 	chained = cuffs
-	slowdown = 3
+	slowdown = 7
 	name = "shackles"
 	icon_state = "orange1"
 	item_state = "o_shoes1"
