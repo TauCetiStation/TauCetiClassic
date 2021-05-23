@@ -191,7 +191,7 @@
 	//crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
-		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in ([T.x],[T.y],[T.z]) - [ADMIN_JMP(T)]")
+		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in [COORD(T)] - [ADMIN_JMP(T)]")
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		log_investigate("SMES deconstructed by [key_name(user)]",INVESTIGATE_SINGULO)
 

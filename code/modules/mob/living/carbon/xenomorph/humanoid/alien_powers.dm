@@ -65,11 +65,11 @@ Doesn't work on other aliens/AI.*/
 					to_chat(src, "<span class='warning'>You need to be closer.</span>")
 
 /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
-	set name = "Corrossive Acid (200)"
+	set name = "Corrossive Acid (100)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
-	if(powerc(200))
+	if(powerc(100))
 		if(O in oview(1))
 			// OBJ CHECK
 			if(isobj(O))
@@ -91,7 +91,7 @@ Doesn't work on other aliens/AI.*/
 			else// Not a type we can acid.
 				return
 
-			adjustToxLoss(-200)
+			adjustToxLoss(-100)
 			new /obj/effect/alien/acid(get_turf(O), O)
 			visible_message("<span class='danger'>[src] vomits globs of vile stuff all over [O]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 		else
@@ -273,7 +273,7 @@ Doesn't work on other aliens/AI.*/
 				new /obj/structure/stool/bed/nest(loc)
 
 /mob/living/carbon/xenomorph/humanoid/proc/air_plant()
-	set name = "Plant Air Generator (250)"
+	set name = "Plant Air Generator (200)"
 	set desc = "Plants some alien weeds."
 	set category = "Alien"
 
@@ -285,8 +285,8 @@ Doesn't work on other aliens/AI.*/
 		to_chat (src, "<span class='warning'>You can only build on weeds.</span>")
 		return
 
-	if(powerc(250, 1))
-		adjustToxLoss(-250)
+	if(powerc(200, 1))
+		adjustToxLoss(-200)
 		playsound(src, 'sound/effects/resin_build.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'><B>[src]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 		new /obj/structure/alien/air_plant(loc)

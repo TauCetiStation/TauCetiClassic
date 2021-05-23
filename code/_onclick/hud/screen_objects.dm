@@ -90,7 +90,7 @@
 			return 1
 		// Taking something out of the storage screen (including clicking on item border overlay)
 		var/list/PM = params2list(params)
-		var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+		var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
 		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
 
@@ -111,7 +111,7 @@
 		return
 	// Taking something out of the storage screen (including clicking on item border overlay)
 	var/list/PM = params2list(params)
-	var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+	var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
 	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 	var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
 
@@ -173,8 +173,8 @@
 
 /obj/screen/zone_sel/Click(location, control,params)
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 	if(!choice)
 		return 1
@@ -186,8 +186,8 @@
 
 /obj/screen/zone_sel/MouseMove(location, control, params)
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 
 	if(hovering == choice)

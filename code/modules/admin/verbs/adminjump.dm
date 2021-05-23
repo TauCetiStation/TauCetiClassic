@@ -26,8 +26,8 @@
 		if(src.mob)
 			var/mob/A = src.mob
 			A.forceMove(T)
-			log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-			message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
+			log_admin("[key_name(usr)] jumped to [COORD(T)] in [T.loc]")
+			message_admins("[key_name_admin(usr)] jumped to [COORD(T)] in [T.loc]")
 			feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")

@@ -49,10 +49,10 @@
 
 	if(params)
 		var/list/mouse_control = params2list(params)
-		if(mouse_control["icon-x"])
-			BB.p_x = text2num(mouse_control["icon-x"])
-		if(mouse_control["icon-y"])
-			BB.p_y = text2num(mouse_control["icon-y"])
+		if(mouse_control[ICON_X])
+			BB.p_x = text2num(mouse_control[ICON_X])
+		if(mouse_control[ICON_Y])
+			BB.p_y = text2num(mouse_control[ICON_Y])
 
 	//randomize clickpoint a bit based on dispersion
 	if(BB.dispersion)

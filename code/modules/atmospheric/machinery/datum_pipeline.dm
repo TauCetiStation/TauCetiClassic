@@ -73,7 +73,7 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: [COORD(item)]")
 									pipenetwarnings -= 1
 									if(pipenetwarnings == 0)
 										warning("build_pipeline(): further messages about pipenets will be supressed")
@@ -100,7 +100,7 @@
 	other_atmosmch |= C
 	var/datum/gas_mixture/G = C.returnPipenetAir(src)
 	if(!G)
-		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
+		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: [COORD(C)]")
 	other_airs |= G
 
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)

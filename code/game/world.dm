@@ -240,6 +240,10 @@ var/shutdown_processed = FALSE
 	..()
 
 /world/Del()
+#ifdef DEBUG
+	disable_debugger()
+#endif
+
 	if(!shutdown_processed) //if SIGTERM signal, not restart/reboot
 		PreShutdown("Graceful shutdown")
 		round_log("Graceful shutdown")

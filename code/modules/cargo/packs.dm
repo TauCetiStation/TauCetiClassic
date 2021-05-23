@@ -372,6 +372,14 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	crate_name = "Investigation Crate"
 	group = "Security"
 
+/datum/supply_pack/shockmines
+	name = "Shock Mines"
+	cost = 3000
+	contains = list(/obj/item/weapon/storage/box/mines/shock)
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Shock Mines Crate"
+	group = "Security"
+
 //----------------------------------------------
 //-----------------HOSPITALITY------------------
 //----------------------------------------------

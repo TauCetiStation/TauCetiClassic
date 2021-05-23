@@ -148,7 +148,7 @@
 	icon_state = "4"
 	building_type = /datum/religion_tech/cult/memorizing_rune
 	favor_cost = 300
-	piety_cost = 150
+	piety_cost = 250
 
 /datum/building_agent/tech/cult/reusable_runes
 	name = "Многоразовые Руны"

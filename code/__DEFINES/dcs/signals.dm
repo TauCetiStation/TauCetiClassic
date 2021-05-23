@@ -157,6 +157,8 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
+/// from base of mob/MiddleShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_MIDDLESHIFTCLICKWITH "item_middleshiftclickwith"
 /// from base of mob/CtrlClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_CTRLCLICKWITH "item_ctrlclickwith"
 /// from base of mob/AltClickOn(): (atom/target, mob/user)

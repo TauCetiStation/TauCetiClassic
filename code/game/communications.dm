@@ -239,7 +239,7 @@ var/global/datum/controller/radio/radio_controller
 				device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
 //						N_nf++
 
-//	log_admin("DEBUG: post_signal(source=[source] ([source.x], [source.y], [source.z]),filter=[filter]) frequency=[frequency], N_f=[N_f], N_nf=[N_nf]")
+//	log_admin("DEBUG: post_signal(source=[source] [COORD(source)],filter=[filter]) frequency=[frequency], N_f=[N_f], N_nf=[N_nf]")
 
 
 //	qdel(signal)

@@ -99,9 +99,7 @@
 	start_activity(CALLBACK(src, .proc/research_tech, choosed_tech))
 
 /obj/structure/cult/tech_table/proc/research_tech(datum/building_agent/tech/choosed_tech)
-	var/datum/religion_tech/T = new choosed_tech.building_type
-	T.apply_effect(religion)
-	qdel(T)
+	religion.add_tech(choosed_tech.building_type)
 
 	uniq_images -= choosed_tech
 	religion.available_techs -= choosed_tech

@@ -41,8 +41,8 @@
 		return
 
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 
 	switch(icon_x)
 		if(4 to 29)

@@ -264,7 +264,7 @@
 		return
 
 	var/datum/religion_rites/R = religion.rites_by_name[choosed_rite]
-	if(istype(R, /datum/religion_rites/pedestals))
+	if(!R.can_talismaned)
 		to_chat(user, "<span class='warning'>Неподходящий ритуал.</span>")
 		return
 	if(!religion.check_costs(R.favor_cost*2, R.piety_cost*2, user))

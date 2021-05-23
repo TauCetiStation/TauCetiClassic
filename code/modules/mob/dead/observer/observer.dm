@@ -34,6 +34,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/datum/orbit_menu/orbit_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -103,6 +104,9 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	if(orbit_menu)
+		SStgui.close_uis(orbit_menu)
+		QDEL_NULL(orbit_menu)
 	if(mind && mind.current && isliving(mind.current))
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
@@ -340,12 +344,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(TRUE, TRUE)
-	var/input = input("Please, select a object!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
-	if(!target)
-		return
-	ManualFollow(target)
+	if(!orbit_menu)
+		orbit_menu = new(src)
+
+	orbit_menu.tgui_interact(src)
+
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -409,24 +412,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.update_parallax_contents()
 			else
 				to_chat(A, "This mob is not located in the game world.")
-
-/mob/dead/observer/verb/jumptoobj()
-	set name = "Points of interest"
-	set desc = "Teleport to a obj."
-	set category = "Ghost"
-
-	if(!istype(usr, /mob/dead/observer))
-		return
-
-	var/list/pois = getpois(FALSE, TRUE)
-	var/input = input("Please, select a object!", "Teleport", null, null) as null|anything in pois
-	var/atom/target = pois[input]
-	if(!target)
-		return
-	var/turf/T = get_turf(target)
-	if(T)
-		forceMove(T)
-		update_parallax_contents()
 
 /*
 /mob/dead/observer/verb/boo()

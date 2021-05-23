@@ -5,6 +5,7 @@
 	var/datum/religion/religion
 
 	var/disposable = FALSE
+	var/text_befor_riteinfo
 
 /obj/item/weapon/paper/talisman/atom_init(mapload, datum/religion/_religion, datum/religion_rites/_rite)
 	. = ..()
@@ -25,6 +26,12 @@
 /obj/item/weapon/paper/talisman/proc/reset_rite()
 	busy = FALSE
 
+/obj/item/weapon/paper/talisman/examine(mob/user)
+	..()
+	if(religion?.is_member(user) && rite)
+		var/rite_info = religion.rites_info[rite.name] ? religion.rites_info[rite.name] : religion.get_rite_info(rite)
+		to_chat(user, "<span class='[religion.style_text]'>[text_befor_riteinfo]: [rite_info]</span>.")
+
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
 	if(!religion?.is_member(user))
 		user.examinate(src)
@@ -39,17 +46,9 @@
 		if(disposable)
 			qdel(src)
 
-/obj/item/weapon/paper/talisman/chaplain/examine(mob/user)
-	..()
-	if(religion?.is_member(user) && rite)
-		var/rite_info = religion.rites_info[rite.name] ? religion.rites_info[rite.name] : religion.get_rite_info(rite)
-		to_chat(user, "<span class='[religion.style_text]'>Божественным почерком написано: [rite_info]</span>.")
+/obj/item/weapon/paper/talisman/chaplain
+	text_befor_riteinfo = "Божественным почерком написано"
 
 /obj/item/weapon/paper/talisman/cult
 	icon_state = "scrap_bloodied"
-
-/obj/item/weapon/paper/talisman/cult/examine(mob/user)
-	..()
-	if(religion?.is_member(user) && rite)
-		var/rite_info = religion.rites_info[rite.name] ? religion.rites_info[rite.name] : religion.get_rite_info(rite)
-		to_chat(user, "<span class='[religion.style_text]'>Кровью наскрябано: [rite_info]</span>.")
+	text_befor_riteinfo = "Кровью наскрябано"

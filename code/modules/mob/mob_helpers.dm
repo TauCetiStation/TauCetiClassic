@@ -346,7 +346,7 @@
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
 		return 1
 
-	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
+	if(l_hand && !(l_hand.flags & ABSTRACT) || r_hand && !(r_hand.flags & ABSTRACT))
 		return 1
 
 	return 0

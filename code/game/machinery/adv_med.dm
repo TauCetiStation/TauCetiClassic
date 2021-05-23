@@ -277,7 +277,7 @@
 
 					if(unknown_body || BP.hidden)
 						imp += "Unknown body present:"
-					if(!AN && !open && !infected & !imp)
+					if(!AN && !open && !infected && !imp)
 						AN = "None:"
 					if(!(BP.is_stump))
 						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"

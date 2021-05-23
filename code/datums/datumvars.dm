@@ -518,7 +518,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		global.chaplain_religion.add_member(M)
+		global.chaplain_religion.add_member(M, HOLY_ROLE_HIGHPRIEST)
 		href_list["datumrefresh"] = href_list["give_religion"]
 
 	else if(href_list["give_disease2"])

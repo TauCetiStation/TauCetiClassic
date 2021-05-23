@@ -1890,6 +1890,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/energy/temperature
 	category = list("Weapons")
 
+/datum/design/emp_mine
+	name = "EMP Mine"
+	desc = "A mine which will generate ion impulse upon activation."
+	id = "emp_mine"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1500, MAT_GLASS = 100, MAT_URANIUM = 150)
+	build_path = /obj/item/mine/emp
+	category = list("Weapons")
+
 /datum/design/tesla_gun
 	name = "Tesla Cannon"
 	desc = "A gun which uses electrical discharges to hit multiple targets"

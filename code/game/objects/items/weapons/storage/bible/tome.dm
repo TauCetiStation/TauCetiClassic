@@ -81,15 +81,9 @@
 	if(!istype(religion, /datum/religion/cult))
 		return
 
-	var/datum/religion/cult/C = religion
-	if(target.type in C.strange_anomalies)
-		animate(target, 1 SECONDS, alpha = 0)
-		sleep(1 SECONDS)
-		religion.adjust_favor(rand(1, 5))
-		qdel(target)
-		destr_next[user.ckey] = world.time + destr_cd
-		// statistics!
-		score["destranomaly"]++
+	if(istype(target, /obj/structure/cult/anomaly))
+		var/obj/structure/cult/anomaly/A = target
+		A.destroying(religion)
 		return
 
 	if(!toggle_deconstruct || !proximity)
@@ -246,7 +240,7 @@
 
 /obj/item/weapon/storage/bible/tome/proc/can_build_here(mob/user, datum/rune/rune)
 	var/area/area = get_area(user)
-	if(!religion.can_build_everywhere && !istype(religion, area.religion?.type))
+	if(!religion.get_tech(RTECH_BUILD_EVERYWHERE) && !istype(religion, area.religion?.type))
 		to_chat(user, "<span class='warning'>Вы можете строить только внутри зоны, подконтрольной вашей религией.</span>")
 		return FALSE
 	return TRUE

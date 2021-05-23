@@ -178,6 +178,7 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
+	new /obj/item/weapon/storage/box/mines/shock(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)

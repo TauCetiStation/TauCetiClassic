@@ -255,10 +255,10 @@
 
 /obj/machinery/computer/security/attack_hand(mob/user)
 	if (!network)
-		world.log << "A computer lacks a network at [x],[y],[z]."
+		world.log << "A computer lacks a network at [COORD(src)]."
 		return
 	if (!istype(network, /list))
-		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+		world.log << "The computer at [COORD(src)] has a network that is not a list!"
 		return
 
 	..()

@@ -30,7 +30,7 @@
 	fizzle(user)
 	action(user)
 	holder_reaction(user)
-	if(!religion.reusable_rune)
+	if(!religion.get_tech(RTECH_REUSABLE_RUNE))
 		qdel(holder)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
@@ -325,7 +325,7 @@
 	return ..()
 
 /datum/rune/cult/wall/can_action(mob/living/carbon/user)
-	if(!religion.reusable_rune) // The first click puts up a wall. The second click removes the wall and rune.
+	if(!religion.get_tech(RTECH_REUSABLE_RUNE)) // The first click puts up a wall. The second click removes the wall and rune.
 		if(!wall)
 			action(user)
 			return FALSE

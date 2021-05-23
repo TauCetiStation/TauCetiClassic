@@ -164,6 +164,6 @@ var/global/Holiday = null
 				if(S.z != ZLEVEL_STATION)	continue
 				containers += S
 
-			message_admins("<span class='notice'>DEBUG: Event: Egg spawned at [Egg.loc] ([Egg.x],[Egg.y],[Egg.z])</span>")*/
+			message_admins("<span class='notice'>DEBUG: Event: Egg spawned at [Egg.loc] [COORD(Egg)]</span>")*/
 		if("End of the World")
 			if(prob(eventchance))	GameOver()

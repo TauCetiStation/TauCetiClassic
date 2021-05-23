@@ -34,7 +34,7 @@
 
 		var/mob/living/carbon/xenomorph/facehugger/new_xeno = new(vent.loc)
 		new_xeno.key = candidate.key
-		message_admins("[new_xeno] has spawned at [new_xeno.x],[new_xeno.y],[new_xeno.z] [ADMIN_JMP(new_xeno)] [ADMIN_FLW(new_xeno)].")
+		message_admins("[new_xeno] has spawned at [COORD(new_xeno)] [ADMIN_JMP(new_xeno)] [ADMIN_FLW(new_xeno)].")
 
 		candidates -= candidate
 		vents -= vent

@@ -24,7 +24,7 @@
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	if(iscultist(user))
 		var/datum/religion/cult/C = user.my_religion
-		if(!GetComponent(/datum/component/self_effect) && C.blade_with_shield)
+		if(!GetComponent(/datum/component/self_effect) && C.get_tech(RTECH_MIRROR_SHIELD))
 			var/shield_type = /obj/item/weapon/shield/riot/mirror
 			AddComponent(/datum/component/self_effect, shield_type, "#51106bff", CALLBACK(src, .proc/only_cultists), 5 MINUTE, 30 SECONDS, 2 MINUTE)
 	else

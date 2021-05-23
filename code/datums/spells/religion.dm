@@ -420,12 +420,21 @@
 	action_icon_state = "rune"
 	action_background_icon_state = "bg_cult"
 
+	var/choosing = FALSE
+
 /obj/effect/proc_holder/spell/dumbfire/memorize_rune/cast()
 	if(!usr.my_religion)
 		usr.RemoveSpell(src)
 		return
+	if(choosing)
+		return
 
-	var/datum/building_agent/rune/B = input("Выберите руну", name, "") as anything in usr.my_religion.available_runes
+	choosing = TRUE
+	var/datum/building_agent/rune/B = input("Выберите руну", name, "") as null|anything in usr.my_religion.available_runes
+	if(!B)
+		choosing = FALSE
+		revert_cast()
+		return
 
 	var/obj/effect/proc_holder/spell/dumbfire/scribe_rune/S = new
 	S.agent = B

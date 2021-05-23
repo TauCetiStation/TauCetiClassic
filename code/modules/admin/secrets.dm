@@ -73,6 +73,8 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel1'>Security Level - Blue</A><BR>
 					<A href='?src=\ref[src];secretsfun=securitylevel2'>Security Level - Red</A><br>
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
+					<h4>Do something stupid</h4>
+					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
 					"}
 
 		if(2) // OOC Events
@@ -513,6 +515,16 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ASTEROID")
 			usr.client.drop_asteroid()
+		if("spawncompletesandwich")
+			if(!check_rights(R_EVENT|R_FUN))
+				to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
+				return
+			var/turf/T = get_turf(usr)
+			message_admins("[key_name_admin(usr)] has created a complete sandwich at location [COORD(T)] [ADMIN_JMP(usr)]")
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
+			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
+			CS.complete()
 		else
 			to_chat(world, "oof, this is ["secretsfun"] not worked")
 	if(usr)
@@ -566,7 +578,7 @@
 				GM.temperature = 293
 				GM.update_values()
 
-				message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
+				message_admins("[key_name_admin(usr)] has restored air in [COORD(T)] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 			else
 				to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 		// Bombing List

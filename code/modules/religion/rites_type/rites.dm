@@ -29,6 +29,8 @@
 	/// The more, the stronger the ritual, formula of increase
 	/// power = power * (summ of aspect diferences / amount of spell aspects + 1)
 	var/divine_power = 1
+	// Ability to place the ritual in talisman
+	var/can_talismaned = TRUE
 
 /datum/religion_rites/proc/update_tip()
 	if(religion)

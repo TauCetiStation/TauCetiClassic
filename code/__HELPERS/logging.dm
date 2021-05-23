@@ -147,21 +147,21 @@
 	if(!message || !subject)
 		return
 	var/F = file("[global.log_investigate_directory]/[subject].html")
-	F << "[time_stamp()] \ref[src] ([x],[y],[z]) || [src] [strip_html_properly(message)]<br>[log_end]"
+	F << "[time_stamp()] \ref[src] [COORD(src)] || [src] [strip_html_properly(message)]<br>[log_end]"
 
 // Helper procs for building detailed log lines
 /datum/proc/get_log_info_line()
 	return "[src] ([type]) (\ref[src])"
 
 /area/get_log_info_line()
-	return "[..()] ([isnum(z) ? "[x],[y],[z]" : "0,0,0"])"
+	return "[..()] ([isnum(z) ? "[COORD(src)]" : "0,0,0"])"
 
 /turf/get_log_info_line()
-	return "[..()] ([x],[y],[z]) ([loc ? loc.type : "NULL"])"
+	return "[..()] [COORD(src)] ([loc ? loc.type : "NULL"])"
 
 /atom/movable/get_log_info_line()
 	var/turf/t = get_turf(src)
-	return "[..()] ([t ? t : "NULL"]) ([t ? "[t.x],[t.y],[t.z]" : "0,0,0"]) ([t ? t.type : "NULL"])"
+	return "[..()] ([t ? t : "NULL"]) ([t ? "[COORD(t)]" : "0,0,0"]) ([t ? t.type : "NULL"])"
 
 /mob/get_log_info_line()
 	return ckey ? "[..()] ([ckey])" : ..()

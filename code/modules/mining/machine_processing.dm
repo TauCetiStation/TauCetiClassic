@@ -104,7 +104,7 @@
 	if(!.)
 		return
 
-	if(href_list["toggle_smelting"])
+	if(href_list["toggle_smelting"] && (href_list["toggle_smelting"] in machine.ores_processing))
 		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting","Compressing","Alloying","Drop","Nothing")
 		if(!choice)
 			return FALSE

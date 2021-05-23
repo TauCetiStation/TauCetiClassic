@@ -108,8 +108,6 @@
 	var/list/runes_by_mob = list()
 	// Max runes on mob
 	var/max_runes_on_mob
-	// Is the rune removed after use
-	var/reusable_rune = FALSE
 
 	/*
 		Others
@@ -118,6 +116,8 @@
 	var/list/obj/structure/altar_of_gods/altars = list()
 	// The whole composition of beings in religion. Contains any mobs, even dead and without mind.
 	var/list/mob/members = list()
+	// Tech_id by ref
+	var/list/all_techs = list()
 	// Used for cloning and round result
 	var/list/datum/mind/members_minds = list()
 	// Easy access
@@ -142,8 +142,6 @@
 	var/list/datum/building_agent/available_techs = list()
 	// Type of initial tech agent for which available_runes will be generated
 	var/tech_agent_type
-	// Is it possible to build not only within the religious area
-	var/can_build_everywhere = FALSE
 
 	/*
 		Holy reagents
@@ -673,3 +671,11 @@
 	for(var/mob/M in global.mob_list)
 		if(is_member(M) || isobserver(M))
 			to_chat(M, "<span class='[style_text]'><font size='6'>[name]: [message]</font></span>")
+
+/datum/religion/proc/add_tech(tech_type)
+	var/datum/religion_tech/T = new tech_type
+	T.on_add(src)
+	all_techs[T.id] = T
+
+/datum/religion/proc/get_tech(tech_id)
+	return all_techs[tech_id]

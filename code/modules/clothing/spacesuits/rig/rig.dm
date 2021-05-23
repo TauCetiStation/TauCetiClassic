@@ -388,7 +388,9 @@
 		if(istype(H))
 			if(helmet && H.head == helmet)
 				helmet.canremove = 1
+				var/dropped_helmet = helmet
 				H.drop_from_inventory(helmet)
+				helmet = dropped_helmet		//attach the helmet back to the suit
 				helmet.loc = src
 
 	if(boots)
@@ -427,7 +429,9 @@
 
 	if(H.head == helmet)
 		helmet.canremove = 1
+		var/dropped_helmet = helmet
 		H.drop_from_inventory(helmet)
+		helmet = dropped_helmet		//attach the helmet back to the suit
 		helmet.loc = src
 		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
 

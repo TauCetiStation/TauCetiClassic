@@ -80,7 +80,7 @@
 	if(initBounds)
 		initTemplateBounds(bounds)
 
-	log_game("[name] loaded at [T.x],[T.y],[T.z]")
+	log_game("[name] loaded at [COORD(T)]")
 	loaded_stuff.Cut()
 
 /datum/map_template/proc/loadMap(z)
