@@ -527,9 +527,9 @@ SUBSYSTEM_DEF(ticker)
 	return 1
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
+	if(!config.deathmatch_arena)
+		return
 	for(var/mob/living/M in global.player_list)
-		if(isnewplayer(M))
-			continue
 		if(!(M.client.prefs.eorg_enabled))
 			continue
 		var/mob/living/carbon/human/L = new(pick(eorgwarp))
