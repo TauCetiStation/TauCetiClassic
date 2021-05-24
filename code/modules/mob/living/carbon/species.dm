@@ -848,8 +848,6 @@
 
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
-	additional_languages = list("Display Text")
-
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
