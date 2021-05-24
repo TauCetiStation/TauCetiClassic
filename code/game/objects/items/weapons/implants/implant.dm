@@ -306,7 +306,7 @@ Implant Specifics:<BR>"}
 	imp_in.SetWeakened(0)
 	imp_in.lying = 0
 	imp_in.update_canmove()
-	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("adrenaline", 1)
 	imp_in.reagents.add_reagent("stimulants", 4)
 	if (!uses)
 		qdel(src)

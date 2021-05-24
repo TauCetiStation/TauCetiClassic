@@ -749,3 +749,19 @@
 						E.status &= ~ORGAN_BROKEN
 						E.perma_injury = 0
 						holder.remove_reagent("nanocalcium", 10)
+
+/datum/reagent/adrenaline
+	name = "Adrenaline"
+	id = "adrenaline"
+	description = "Adrenaline is a natural hormone which plays important role in fight-or-flight response by increasing blood flow to musckles and output of heart."
+	reagent_state = LIQUID
+	color = "#a59b28" // rgb: 165, 155, 40
+	custom_metabolism = 0.03
+	overdose = REAGENTS_OVERDOSE * 0.5
+	taste_message = "panic"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/adrenaline/on_general_digest(mob/living/M)
+	..()
+	if(prob(5))
+		M.emote(pick("twitch","blink","shiver"))

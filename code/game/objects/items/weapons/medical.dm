@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "combat_hypo"
 	volume = 60
-	list_reagents = list("synaptizine" = 5, "hyperzine" = 15, "oxycodone" = 15, "anti_toxin" = 25)
+	list_reagents = list("synaptizine" = 5, "adrenaline" = 15, "oxycodone" = 15, "anti_toxin" = 25)
 /obj/item/weapon/reagent_containers/hypospray/combat/atom_init()
 	. = ..()
 	if (!possible_transfer_amounts)

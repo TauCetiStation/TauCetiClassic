@@ -59,7 +59,7 @@
 
 	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
 	var/chem_nullify_debuff = FALSE
-	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
+	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") || reagents.has_reagent("adrenaline")))
 		chem_nullify_debuff = TRUE
 
 	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
