@@ -38,7 +38,23 @@ var/global/list/all_objectives = list()
 			target = possible_target
 			break
 
+/datum/objective/syndisupport
+	explanation_text = "Provide other Syndicate agents any equipment and support they need to succeed their mission."
 
+/datum/objective/syndisupport/check_completion()
+	if(SSticker.mode.traitorswon > max((SSticker.mode.traitors.len-1)/2,1))
+		return OBJECTIVE_WIN
+	else
+		return OBJECTIVE_LOSS
+
+/datum/objective/doubleagent
+	explanation_text = "Make sure other Syndicate agents not succeed their mission."
+
+/datum/objective/doubleagent/check_completion()
+	if(SSticker.mode.traitorswon < max((SSticker.mode.traitors.len-1)/4,1))
+		return OBJECTIVE_WIN
+	else
+		return OBJECTIVE_LOSS
 
 /datum/objective/assassinate/find_target()
 	..()
