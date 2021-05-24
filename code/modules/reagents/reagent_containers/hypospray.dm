@@ -62,7 +62,7 @@
 	icon_state = "stimpen"
 	item_state = "autoinjector_empty"
 	volume = 20
-	list_reagents = list("inaprovaline" = 5, "anti_toxin" = 13, "hyperzine" = 2)
+	list_reagents = list("paracetamol" = 5, "anti_toxin" = 13, "hyperzine" = 2)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
 	flags &= ~OPENCONTAINER

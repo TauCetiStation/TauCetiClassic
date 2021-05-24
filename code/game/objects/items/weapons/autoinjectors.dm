@@ -52,8 +52,8 @@
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
 	item_state = "autobrut"
-	volume = 35
-	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10, "anti_toxin" = 10)
+	volume = 45
+	list_reagents = list("hyperzine" = 5, "tramadol" = 9, "dexalinp" = 1, "tricordrazine" = 10, "anti_toxin" = 20)
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
 	name = "leporazine autoinjector"
