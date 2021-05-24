@@ -154,6 +154,7 @@
 	I.plane = plane
 	I.layer = MOB_LAYER + 1
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	if (ismob(target))
 		I.dir = target.dir
@@ -212,6 +213,7 @@
 	I.layer = MOB_LAYER + 1
 	I.transform = matrix() * 0
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	I.pixel_x = 0
 	I.pixel_y = 0
 
@@ -268,6 +270,7 @@
 	I.plane = GAME_PLANE
 	I.layer = MOB_LAYER + 1
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/list/new_viewers = list()
 	for(var/v in viewers)
