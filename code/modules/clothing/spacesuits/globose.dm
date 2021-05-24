@@ -46,7 +46,6 @@
 /obj/item/clothing/suit/space/globose/black/pirate
 	name = "pirate space suit"
 	breach_threshold = 25
-	slowdown = 0.5
 	armor = list(melee = 60, bullet = 35, laser = 60,energy = 60, bomb = 30, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/globose/black
@@ -70,7 +69,7 @@
 	desc = "Mining space suit that protects against low pressure environments. Has reinforced plating."
 	icon_state = "glob_mining"
 	breach_threshold = 18
-	slowdown = 0.5
+	slowdown = 1
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore)
 

@@ -15,7 +15,7 @@
 	desc = "Emergency Rescue VOid Suit"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
-	slowdown = 0.7
+	slowdown = 2
 	siemens_coefficient = 0.65
 
 /obj/item/clothing/suit/space/sk/atom_init()

@@ -105,7 +105,7 @@
 	desc = "A cheap NT knock-off of a Unathi battle-rig. Looks like a fish, moves like a fish, steers like a cow."
 	icon_state = "rig-unathi-cheap"
 	item_state = "rig-unathi-cheap"
-	slowdown = 1
+	slowdown = 1.1
 
 /obj/item/clothing/head/helmet/space/unathi/breacher
 	name = "breacher helm"
@@ -127,7 +127,7 @@
 /obj/item/clothing/suit/space/vox
 	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
-	slowdown = 0.5
+	slowdown = 0.7
 	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -150,7 +150,7 @@
 	icon_state = "vox-pressure"
 	item_state = "vox-pressure"
 	desc = "A huge, armoured, pressurized suit, designed for distinctly nonhuman proportions."
-	slowdown = 0.5
+	slowdown = 1
 	armor = list(melee = 80, bullet = 75, laser = 50, energy = 10, bomb = 35, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/vox/carapace
@@ -179,7 +179,7 @@
 	icon_state = "vox-medic"
 	item_state = "vox-medic"
 	desc = "An almost organic looking nonhuman pressure suit."
-	slowdown = 0.3
+	slowdown = 0.5
 	var/mob/living/carbon/human/wearer
 	armor = list(melee = 50, bullet = 40, laser = 45, energy = 15, bomb = 25, bio = 30, rad = 30)
 
@@ -236,7 +236,7 @@
 
 	armor = list(melee = 45, bullet = 20, laser = 25, energy = 5, bomb = 15, bio = 30, rad = 30)
 
-	slowdown = 0.3
+	slowdown = 0.2
 	action_button_name = "Toggle Stealth Technology"
 	var/on = FALSE
 	var/mob/living/carbon/human/wearer
@@ -310,7 +310,7 @@
 	if(on)
 		playsound(src, 'sound/rig/stealthrig_turn_off.ogg', VOL_EFFECTS_MASTER, null, null, -4)
 		on = FALSE
-		slowdown = 0.3
+		slowdown = 0.2
 		wearer.alpha = 255
 		wearer.mouse_opacity = MOUSE_OPACITY_ICON
 	else if(!deactive)
