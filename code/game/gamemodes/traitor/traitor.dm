@@ -227,12 +227,12 @@
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
 	var/text = ""
+	var/list/datum/mind/subtraitors = list()
 	if(traitors.len)
 		text += printlogo("synd", "traitors")
 		for(var/datum/mind/traitor in traitors)
 			if(traitor.sub_role)
 				subtraitors += traitor
-				to_chat(world, "<B>subtraitors++</B>")
 				continue
 			text += printplayerwithicon(traitor)
 
