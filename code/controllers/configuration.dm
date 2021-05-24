@@ -713,7 +713,7 @@ var/list/net_announcer_secret = list()
 				if("nightshift")
 					config.nightshift = TRUE
 				if("deathmatch_arena")
-					config.deathmatch_arena = TRUE
+					config.deathmatch_arena = text2num(value)
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
