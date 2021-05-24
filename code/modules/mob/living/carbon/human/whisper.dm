@@ -50,7 +50,7 @@
 // Returns FALSE if speaking was not succesful.
 /mob/living/carbon/human/proc/whisper_say(message, datum/language/speaking = null, alt_name="", verb="whispers")
 	// Whispering with gestures? You mad bro?
-	if(speaking && (speaking.flags & (SIGNLANG | PSEUDOLANG)))
+	if(speaking && (speaking.flags & SIGNLANG))
 		return FALSE
 
 	var/message_range = 1

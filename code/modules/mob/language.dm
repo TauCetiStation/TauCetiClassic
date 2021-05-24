@@ -212,54 +212,6 @@
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
 
-/datum/language/pseudo
-	name = null
-	flags = RESTRICTED | PSEUDOLANG
-
-/datum/language/pseudo/proc/pseudo_say(text, mob/user)
-	return
-
-/datum/language/pseudo/displaytext
-	name = "Display Text"
-	desc = "Display text on your monitor."
-	key = list(":")
-	flags = RESTRICTED | PSEUDOLANG
-
-/datum/language/pseudo/displaytext/pseudo_say(text, mob/user)
-	if(!length(text))
-		return
-
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		return
-
-	if(H.get_species() != IPC)
-		return
-
-	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
-	if(!BP || BP.is_stump)
-		return
-
-	if(BP.ipc_head != "Default")
-		return
-
-	if(!BP.screen_toggle)
-		H.set_light(BP.screen_brightness)
-		BP.screen_toggle = TRUE
-
-	BP.display_text = text
-	H.h_style = "IPC text screen"
-	H.update_hair()
-
-	var/skipface = FALSE
-	if(H.head)
-		skipface = H.head.flags_inv & HIDEFACE
-	if(H.wear_mask)
-		skipface |= H.wear_mask.flags_inv & HIDEFACE
-
-	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
-		H.custom_emote(SHOWMSG_VISUAL, "отображает на экране, \"<span class=\"emojify\">[text]</span>\"")
-
 /datum/language/xenomorph
 	name = "Xenomorph language"
 	desc = "Xenomorph language."

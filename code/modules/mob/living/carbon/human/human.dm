@@ -1847,9 +1847,32 @@
 		to_chat(usr, "<span class='warning'>Your head has no screen!</span>")
 
 	var/S = input("Write something to display on your screen (emoticons supported):", "Display Text") as text|null
-	if(S)
-		var/datum/language/DT = all_languages["Display Text"]
-		say(":[DT.key[1]][S]")
+	if(!S)
+		return
+	if(!length(S))
+		return
+
+	if(get_species() != IPC)
+		return
+
+	if(!BP.screen_toggle)
+		set_light(BP.screen_brightness)
+		BP.screen_toggle = TRUE
+
+	BP.display_text = S
+	h_style = "IPC text screen"
+	update_hair()
+
+	var/skipface = FALSE
+	if(head)
+		skipface = head.flags_inv & HIDEFACE
+	if(wear_mask)
+		skipface |= wear_mask.flags_inv & HIDEFACE
+
+	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
+		custom_emote(SHOWMSG_VISUAL, "отображает на экране, \"<span class=\"emojify\">[S]</span>\"")
+
+
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])
