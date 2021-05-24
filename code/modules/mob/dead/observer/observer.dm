@@ -24,6 +24,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
 	var/has_enabled_antagHUD = 0
+	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY) // Data huds allowed all ghost
 	var/data_hud = FALSE
 	var/antagHUD = FALSE
 	universal_speak = 1
@@ -33,6 +34,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/datum/orbit_menu/orbit_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -87,22 +89,24 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	dead_mob_list += src
 
-	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA)
-			continue
-		AA.update_alt_appearance(src)
+	update_all_alt_apperance()
 
 	. = ..()
 
 	observer_list += src
 
 /mob/dead/observer/Destroy()
+	if(data_hud)
+		remove_data_huds()
 	observer_list -= src
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	if(orbit_menu)
+		SStgui.close_uis(orbit_menu)
+		QDEL_NULL(orbit_menu)
 	if(mind && mind.current && isliving(mind.current))
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
@@ -144,23 +148,6 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 		var/turf/T = get_turf(target)
 		forceMove(T)
-
-/mob/dead/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/book/tome))
-		user.SetNextMove(CLICK_CD_MELEE)
-		var/mob/dead/M = src
-		if(src.invisibility != 0)
-			M.invisibility = 0
-			user.visible_message( \
-				"<span class='red'>[user] drags ghost, [M], to our plan of reality!</span>", \
-				"<span class='red'>You drag [M] to our plan of reality!</span>" \
-			)
-		else
-			user.visible_message ( \
-				"<span class='red'>[user] just tried to smash his book into that ghost!  It's not very effective.</span>", \
-				"<span class='red'>You get the feeling that the ghost can't become any more visible.</span>" \
-			)
-
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 1
@@ -248,17 +235,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/can_use_hands()	return 0
 /mob/dead/observer/is_active()		return 0
 
-/mob/dead/observer/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Station Time: [worldtime2text()]")
-		if(SSticker.mode && SSticker.mode.config_tag == "gang")
-			var/datum/game_mode/gang/mode = SSticker.mode
-			if(isnum(mode.A_timer))
-				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-			if(isnum(mode.B_timer))
-				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
-
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
@@ -273,6 +249,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
+/mob/dead/observer/proc/show_data_huds()
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = global.huds[hudtype]
+		H.add_hud_to(src)
+
+/mob/dead/observer/proc/remove_data_huds()
+	for(var/hudtype in datahuds)
+		var/datum/atom_hud/H = global.huds[hudtype]
+		H.remove_hud_from(src)
+
 /mob/dead/observer/verb/toggle_allHUD()
 	set category = "Ghost"
 	set name = "Toggle HUDs"
@@ -284,18 +270,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "Please disable antag-HUD or combo-HUDs in the admin tab.")
 		return
 
-	var/list/datahuds = list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC) // Data huds allowed all ghost
 	if(data_hud)
 		data_hud = !data_hud
-		for(var/hudtype in datahuds)
-			var/datum/atom_hud/H = global.huds[hudtype]
-			H.remove_hud_from(src)
+		remove_data_huds()
 		to_chat(src, "<span class='info'><B>HUDs Disabled</B></span>")
 	else
 		data_hud = !data_hud
-		for(var/hudtype in datahuds)
-			var/datum/atom_hud/H = global.huds[hudtype]
-			H.add_hud_to(src)
+		show_data_huds()
 		to_chat(src, "<span class='info'><B>HUDs Enabled</B></span>")
 
 /mob/dead/observer/verb/toggle_antagHUD()
@@ -359,16 +340,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_parallax_contents()
 
 /mob/dead/observer/verb/follow()
-	set category = "Ghost"
 	set name = "Orbit" // "Haunt"
+	set category = "Ghost"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(skip_mindless=1)
-	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
-	if(!target)
-		return
-	ManualFollow(target)
+	if(!orbit_menu)
+		orbit_menu = new(src)
+
+	orbit_menu.tgui_interact(src)
+
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -417,7 +397,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/list/dest = list() //List of possible destinations (mobs)
 		var/target = null	   //Chosen target.
 
-		dest += getpois(mobs_only=1) //Fill list, prompt user with list
+		dest += getpois(mobs_only = TRUE) //Fill list, prompt user with list
 		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
 
 		if (!target)//Make sure we actually have a target
@@ -555,7 +535,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "View Crew Manifest"
 	set category = "Ghost"
 
-	var/dat = data_core.get_manifest()
+	var/dat = data_core.html_manifest(OOC=1)
 
 	var/datum/browser/popup = new(src, "manifest", "Crew Manifest", 370, 420, ntheme = CSS_THEME_LIGHT)
 	popup.set_content(dat)
@@ -563,7 +543,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
 /mob/dead/observer/verb/bloody_doodle()
-
 	set category = "Ghost"
 	set name = "Write in blood"
 	set desc = "If the round is sufficiently spooky, write a short message in blood on the floor or a wall. Remember, no IC in OOC or OOC in IC."
@@ -576,66 +555,52 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if (usr != src)
-		return 0 //something is terribly wrong
+		return //something is terribly wrong
 
-	var/ghosts_can_write
-	if(SSticker.mode && SSticker.mode.name == "cult")
-		var/datum/game_mode/cult/C = SSticker.mode
-		if(C.cult.len > config.cult_ghostwriter_req_cultists)
-			ghosts_can_write = 1
+	var/ghosts_can_write = FALSE
+	if(global.cult_religion)
+		var/count = 0
+		for(var/mob/M in global.cult_religion.members)
+			if(M && M.mind && M.ckey && M.stat != DEAD)
+				count++
+
+		if(count > config.cult_ghostwriter_req_cultists)
+			ghosts_can_write = TRUE
 
 	if(!ghosts_can_write)
-		to_chat(src, "<span class='red'>The veil is not thin enough for you to do that.</span>")
+		to_chat(src, "<span class='red'>Вуаль еще не ослабла.</span>")
 		return
 
-	var/list/choices = list()
-	for(var/obj/effect/decal/cleanable/blood/B in view(1,src))
-		if(B.amount > 0)
-			choices += B
-
-	if(!choices.len)
-		to_chat(src, "<span class = 'warning'>There is no blood to use nearby.</span>")
-		return
-
-	var/obj/effect/decal/cleanable/blood/choice = input(src,"What blood would you like to use?") in null|choices
-
-	var/direction = input(src,"Which way?","Tile selection") as anything in list("Here","North","South","East","West")
-	var/turf/simulated/T = src.loc
-	if (direction != "Here")
-		T = get_step(T,text2dir(direction))
-
-	if (!istype(T))
-		to_chat(src, "<span class='warning'>You cannot doodle there.</span>")
-		return
-
-	if(!choice || choice.amount == 0 || !(src.Adjacent(choice)))
-		return
-
-	var/datum/dirt_cover/doodle_color = new/datum/dirt_cover(choice.basedatum)
-
-	var/num_doodles = 0
-	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
-		num_doodles++
-	if (num_doodles > 4)
-		to_chat(src, "<span class='warning'>There is no space to write on!</span>")
-		return
+	var/type = pick(subtypesof(/datum/dirt_cover))
+	var/datum/dirt_cover/color = new type()
+	var/datum/dirt_cover/doodle_color = new /datum/dirt_cover(color)
+	qdel(color)
 
 	var/max_length = 50
+	var/message = sanitize(input(src, "Напишите сообщение. Оно не должно быть более 50 символов.", "Писание кровью", ""))
 
-	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
+	if(message)
+		var/turf/simulated/T = get_turf(src)
+		if(!istype(T))
+			to_chat(src, "<span class='warning'>Вы не можете здесь рисовать.</span>")
+			return
+		var/num_doodles = 0
+		for(var/obj/effect/decal/cleanable/blood/writing/W in T)
+			num_doodles++
+		if(num_doodles > 4)
+			to_chat(src, "<span class='warning'>Не хватает места для еще одной надписи.</span>")
+			return
 
-	if (message)
-
-		if (length_char(message) > max_length)
+		if(length_char(message) > max_length)
 			message = "[copytext_char(message, 1, max_length+1)]~"
-			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
+			to_chat(src, "<span class='warning'>Вам не хватило крови дописать.</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
 		W.basedatum = new/datum/dirt_cover(doodle_color)
 		W.update_icon()
 		W.message = message
 		W.add_hiddenprint(src)
-		W.visible_message("<span class='red'>Invisible fingers crudely paint something in blood on [T]...</span>")
+		W.visible_message("<span class='red'>Невидимые пальцы что-то рисуют кровью на [T]...</span>")
 
 /mob/dead/observer/verb/toggle_ghostsee()
 	set name = "Toggle Ghost Vision"
@@ -657,7 +622,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		see_invisible = SEE_INVISIBLE_OBSERVER
 		if (!ghostvision)
-			see_invisible = SEE_INVISIBLE_LIVING;
+			see_invisible = SEE_INVISIBLE_LIVING
 	updateghostimages()
 
 /proc/updateallghostimages()

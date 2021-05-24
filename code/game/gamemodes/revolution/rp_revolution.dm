@@ -1,5 +1,9 @@
 // BS12's less violent revolution mode
 
+/datum/game_mode
+	var/list/datum/mind/head_revolutionaries = list()
+	var/list/datum/mind/revolutionaries = list()
+
 /datum/game_mode/rp_revolution
 	name = "rp-revolution"
 	config_tag = "rp-revolution"
@@ -74,7 +78,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		if(!config.objectives_disabled)
 			for(var/datum/mind/head_mind in heads)
-				var/datum/objective/mutiny/rp/rev_obj = new
+				var/datum/objective/rp_rev/rev_obj = new
 				rev_obj.owner = rev_mind
 				rev_obj.target = head_mind
 				rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
@@ -165,7 +169,7 @@
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
-/datum/game_mode/rp_revolution/add_revolutionary(datum/mind/rev_mind)
+/datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	// overwrite this func to make it so even heads can be converted
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
 	if(ismindshielded(H))
@@ -179,6 +183,53 @@
 	if(config.objectives_disabled)
 		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return 1
+
+//////////////////////////////////////////////////////////////////////////////
+//Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
+//////////////////////////////////////////////////////////////////////////////
+/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
+	if(rev_mind in revolutionaries)
+		revolutionaries -= rev_mind
+		rev_mind.special_role = null
+		remove_antag_hud(ANTAG_HUD_REV, rev_mind.current)
+
+
+		if(beingborged)
+			to_chat(rev_mind.current, "<span class='warning'><FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing from the moment you were flashed until now.</B></FONT></span>")
+
+		else
+			to_chat(rev_mind.current, "<span class='warning'><FONT size = 3><B>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</B></FONT></span>")
+
+		for(var/mob/living/M in view(rev_mind.current))
+			if(beingborged)
+				to_chat(rev_mind.current, "<span class='warning'><FONT size = 3><B>The frame's firmware detects and deletes your neural reprogramming!  You remember nothing but the name of the one who flashed you.</B></FONT></span>")
+				message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> has been borged while being a member of the revolution.")
+
+			else
+				to_chat(M, "[rev_mind.current] looks like they just remembered their real allegiance!")
+
+/datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
+	add_antag_hud(ANTAG_HUD_REV, "hudheadrevolutionary", rev_mind.current)
+	var/obj_count = 1
+	if (you_are)
+		to_chat(rev_mind.current, "<span class='notice'>You are a member of the revolutionaries' leadership!</span>")
+	if(!config.objectives_disabled)
+		for(var/datum/objective/objective in rev_mind.objectives)
+			to_chat(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+			rev_mind.special_role = "Head Revolutionary"
+			obj_count++
+	else
+		to_chat(rev_mind.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+
+/datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
+	if(!config.objectives_disabled)
+		var/list/heads = get_living_heads()
+		for(var/datum/mind/head_mind in heads)
+			var/datum/objective/rp_rev/rev_obj = new
+			rev_obj.owner = rev_mind
+			rev_obj.target = head_mind
+			rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
+			rev_mind.objectives += rev_obj
 
 //////////////////////////////////////////////////////////////////////
 //Announces the end of the game with all relavent information stated//
@@ -215,6 +266,45 @@
 	..()
 	return 1
 
+/datum/game_mode/rp_revolution/modestat()
+	var/dat = ""
+	var/foecount = 0
+	var/comcount = 0
+	var/revcount = 0
+	var/loycount = 0
+	var/datum/game_mode/rp_revolution/GM = SSticker.mode
+	for(var/datum/mind/M in GM.head_revolutionaries)
+		if (M.current && M.current.stat != DEAD) foecount++
+	for(var/datum/mind/M in GM.revolutionaries)
+		if (M.current && M.current.stat != DEAD) revcount++
+	for(var/mob/living/carbon/human/player in human_list)
+		if(player.mind)
+			var/role = player.mind.assigned_role
+			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director"))
+				if (player.stat != DEAD)
+					comcount++
+			else
+				if(player.mind in GM.revolutionaries)
+					continue
+				loycount++
+	for(var/mob/living/silicon/X in silicon_list)
+		if(X.stat == DEAD)
+			continue
+		loycount++
+	var/revpenalty = 10000
+	dat += {"<B><U>MODE STATS</U></B><BR>
+	<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>
+	<B>Number of Surviving Command Staff:</B> [comcount]<BR>
+	<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
+	<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
+	<B>Revolution Heads Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
+	<B>Revolution Heads Slain:</B> [score["opkilled"]] ([score["opkilled"] * 500] Points)<BR>
+	<B>Command Staff Slain:</B> [score["deadcommand"]] (-[score["deadcommand"] * 500] Points)<BR>
+	<B>Revolution Successful:</B> [score["traitorswon"] ? "Yes" : "No"] (-[score["traitorswon"] * revpenalty] Points)<BR>
+	<B>All Revolution Heads Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
+	<HR>"}
+	return dat
+
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
 	set category = "IC"
@@ -242,7 +332,7 @@
 			message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 			var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
 			if(choice == "Yes!")
-				SSticker.mode:add_revolutionary(M.mind)
+				SSticker.mode.add_revolutionary(M.mind)
 				to_chat(M, "<span class='notice'>You join the revolution!</span>")
 				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
 			else if(choice == "No!")
@@ -267,7 +357,7 @@
 					head_revolutionaries += H.mind
 					revolutionaries -= H.mind
 					for(var/datum/mind/head_mind in heads)
-						var/datum/objective/mutiny/rp/rev_obj = new
+						var/datum/objective/rp_rev/rev_obj = new
 						rev_obj.owner = H.mind
 						rev_obj.target = head_mind
 						rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
@@ -336,7 +426,7 @@
 		heads += M
 
 		for(var/datum/mind/rev_mind in head_revolutionaries)
-			var/datum/objective/mutiny/rp/rev_obj = new
+			var/datum/objective/rp_rev/rev_obj = new
 			rev_obj.owner = rev_mind
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Capture, convert or exile from station [M.name], the [M.mind.assigned_role]. Assassinate if you have no choice."

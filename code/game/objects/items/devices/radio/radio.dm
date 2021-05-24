@@ -484,6 +484,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			switch(display_freq)
 				if(SYND_FREQ)
 					freq_text = "#unkn"
+				if(HEIST_FREQ)
+					freq_text = "Shoal"
 				if(COMM_FREQ)
 					freq_text = "Command"
 				if(1351)
@@ -505,6 +507,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 			if (display_freq==SYND_FREQ)
 				part_a_span = "syndradio"
+			else if(display_freq == HEIST_FREQ)
+				part_a_span = "voxradio"
 			else if (display_freq==COMM_FREQ)
 				part_a_span = "comradio"
 			else if (display_freq in DEPT_FREQS)
@@ -540,6 +544,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 						blackbox.msg_deathsquad += blackbox_msg
 					if(1213)
 						blackbox.msg_syndicate += blackbox_msg
+					if(1206)
+						blackbox.msg_heist += blackbox_msg
 					if(1349)
 						blackbox.msg_mining += blackbox_msg
 					if(1347)
@@ -623,7 +629,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
 			return -1
-	if(freq == SYND_FREQ)
+	if(freq == SYND_FREQ || freq == HEIST_FREQ)
 		if(!(src.syndie))//Checks to see if it's allowed on that frequency, based on the encryption keys
 			return -1
 	if (!on)

@@ -50,6 +50,8 @@
 
 #define BLOCKUNIFORM           (1<<16)  // CLothing. Hide uniform overlay.
 
+#define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
+
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay

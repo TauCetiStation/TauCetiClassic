@@ -131,9 +131,6 @@
 			if("toggle_suspension")
 				if(detailed_account_view)
 					detailed_account_view.suspended = !detailed_account_view.suspended
-					var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-					if(mode)
-						mode.suspension_directive(detailed_account_view)
 
 			if("finalise_create_account")
 				var/account_name = href_list["holder_name"]
@@ -186,10 +183,6 @@
 
 				detailed_account_view.transaction_log.Add(account_trx)
 				station_account.transaction_log.Add(station_trx)
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.payroll_directive(detailed_account_view)
 
 			if("print")
 				var/text

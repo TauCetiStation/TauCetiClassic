@@ -120,7 +120,7 @@
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [COORD(src)] [ADMIN_JMP(src)]")
 		modded = !modded
 		if (modded)
 			START_PROCESSING(SSobj, src)
@@ -138,8 +138,8 @@
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion.")
+				message_admins("[key_name_admin(user)] rigged [src] at [COORD(loc)] for explosion. [ADMIN_JMP(user)]")
+				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
 			rig = W
 			user.drop_item()
@@ -312,3 +312,21 @@
 /obj/structure/reagent_dispensers/cleaner/atom_init()
 	. = ..()
 	reagents.add_reagent("cleaner", 1000)
+
+/obj/structure/reagent_dispensers/hazard
+	name = "inconspicuous tank"
+	desc = "An unmarked tank, holding many mysteries."
+	icon_state = "unmarkedtank"
+
+/obj/structure/reagent_dispensers/hazard/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("lexorin", 200)
+	reagents.add_reagent("mindbreaker", 200)
+	reagents.add_reagent("alphaamanitin", 200)
+	reagents.add_reagent("space_drugs", 200)
+	reagents.add_reagent("pacid", 200)
+	reagents.add_reagent("fuel", 200)
+	reagents.add_reagent("condensedcapsaicin", 200)
+	reagents.add_reagent("stoxin", 200)
+

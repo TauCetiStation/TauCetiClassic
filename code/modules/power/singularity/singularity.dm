@@ -44,6 +44,7 @@
 			break
 
 /obj/singularity/Destroy()
+	visible_message("<span class='warning'><B>[src] slows it's endless spinning down. A second passes - and reality around [src] distorts before allowing [src] to collapse into itself and disappear from existence.</B></span>")
 	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	return ..()
@@ -106,7 +107,7 @@
 	last_warning = world.time
 	var/count = locate(/obj/machinery/containment_field) in orange(30, src)
 	if(!count)
-		message_admins("A singulo has been created without containment fields active ([x],[y],[z]) [ADMIN_JMP(src)]")
+		message_admins("A singulo has been created without containment fields active [COORD(src)] [ADMIN_JMP(src)]")
 	log_investigate("was created. [count?"":"<font color='red'>No containment fields were active</font>"]",INVESTIGATE_SINGULO)
 
 /obj/singularity/proc/dissipate()
@@ -353,6 +354,9 @@
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(energy)
 	return
+
+/obj/singularity/proc/deduce_energy(deduce)
+	energy -= deduce
 
 /obj/singularity/singularity_act()
 	var/gain = (energy/2)

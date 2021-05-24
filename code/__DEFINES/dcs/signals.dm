@@ -22,19 +22,25 @@
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"
 
 // /datum/religion_rites signals
-/// from base of religion_rites/on_chosen(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/on_chosen(): (/mob, /obj)
 #define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
-/// from base of religion_rites/required_checks(): (/mob, /obj/structure/altar_of_gods)
-#define COMSIG_RITE_REQUIRED_CHECK "rite_required_checks"
-/// from base of religion_rites/before_perform_rite(): (/mob, /obj/structure/altar_of_gods)
-#define COMSIG_RITE_BEFORE_PERFORM "rite_before_perform"
-/// from base of religion_rites/invoke_effect(): (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/can_start_wrapper(): (/mob, /obj)
+#define COMSIG_RITE_CAN_START "rite_can_start"
+/// from base of religion_rites/start(): (/mob, /obj)
+#define COMSIG_RITE_STARTED "rite_is_started"
+/// from base of religion_rites/rite_step_wrapper(): (/mob, /obj)
+#define COMSIG_RITE_IN_STEP "rite_in_step"
+/// from base of religion_rites/step_end(): (/mob, /obj)
+#define COMSIG_RITE_STEP_ENDED "rite_step_ended"
+/// from base of religion_rites/invoke_effect(): (/mob, /obj)
 #define COMSIG_RITE_INVOKE_EFFECT "rite_invoke_effect"
-/// from base of religion_rites/on_invocation(): (/mob, /obj/structure/altar_of_gods, stage)
-#define COMSIG_RITE_ON_INVOCATION "rite_on_invocation"
-/// from base of religion_rites: (/mob, /obj/structure/altar_of_gods)
+/// from base of religion_rites/can_step(): (/mob, /obj)
 #define COMSIG_RITE_FAILED_CHECK "rite_failed_check"
 	#define COMPONENT_CHECK_FAILED 1
+
+// /datum/religion signals
+/// from base of religion/add_membern(): (/mob, holy_role)
+#define COMSIG_REL_ADD_MEMBER "rite_on_chosen"
 
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)
@@ -44,12 +50,25 @@
 /// from base of reagent/reaction_turf(): (turf/T, volume)
 #define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"
 
+// /datum/species signals
+
+///from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
+#define COMSIG_SPECIES_GAIN "species_gain"
+///from datum/species/on_species_loss(): (datum/species/lost_species)
+#define COMSIG_SPECIES_LOSS "species_loss"
+
 // /client signals
 /// from base of client/Move(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_MOVE "client_move"
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
+
+// /area signals
+///from base of area/Entered(): (atom/movable/M)
+#define COMSIG_AREA_ENTERED "area_entered"
+///from base of area/Exited(): (atom/movable/M)
+#define COMSIG_AREA_EXITED "area_exited"
 
 // /atom signals
 /// emp_act() : severity
@@ -114,6 +133,16 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
+///from base of area/Entered(): (/area)
+#define COMSIG_ENTER_AREA "enter_area"
+///from base of area/Exited(): (/area)
+#define COMSIG_EXIT_AREA "exit_area"
+
+// /obj
+/// from base of datum/religion_rites/reset_rite_wrapper(): ()
+#define COMSIG_OBJ_RESET_RITE "obj_reset_rite"
+/// from base of datum/religion_rites/start(): ()
+#define COMSIG_OBJ_START_RITE "obj_start_rite"
 
 // /obj/item signals
 /// from base of obj/item/attack(): (/mob/living/target, /mob/living/user, def_zone)
@@ -128,6 +157,8 @@
 #define COMSIG_ITEM_DROPPED "item_drop"
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
+/// from base of mob/MiddleShiftClickOn(): (atom/target, mob/user)
+#define COMSIG_ITEM_MIDDLESHIFTCLICKWITH "item_middleshiftclickwith"
 /// from base of mob/CtrlClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_CTRLCLICKWITH "item_ctrlclickwith"
 /// from base of mob/AltClickOn(): (atom/target, mob/user)

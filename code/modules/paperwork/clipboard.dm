@@ -109,13 +109,13 @@
 					to_chat(usr, "<span class='notice'>You slot the pen into \the [src].</span>")
 
 		if(href_list["write"])
-			var/obj/item/P = locate(href_list["write"])
+			var/obj/item/P = locate(href_list["write"]) in src
 			if(P)
 				if(usr.get_active_hand())
 					P.attackby(usr.get_active_hand(), usr)
 
 		if(href_list["remove"])
-			var/obj/item/P = locate(href_list["remove"])
+			var/obj/item/P = locate(href_list["remove"]) in src
 			if(P)
 				P.loc = usr.loc
 				usr.put_in_hands(P)
@@ -128,17 +128,17 @@
 						toppaper = null
 
 		if(href_list["read"])
-			var/obj/item/weapon/paper/P = locate(href_list["read"])
+			var/obj/item/weapon/paper/P = locate(href_list["read"]) in src
 			if(P)
 				P.show_content(usr)
 
 		if(href_list["look"])
-			var/obj/item/weapon/photo/P = locate(href_list["look"])
+			var/obj/item/weapon/photo/P = locate(href_list["look"]) in src
 			if(P)
 				P.show(usr)
 
 		if(href_list["top"])
-			var/obj/item/P = locate(href_list["top"])
+			var/obj/item/P = locate(href_list["top"]) in src
 			if(P)
 				toppaper = P
 				to_chat(usr, "<span class='notice'>You move [P.name] to the top.</span>")

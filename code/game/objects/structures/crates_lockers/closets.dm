@@ -192,7 +192,7 @@
 	else if(opened || istype(W, /obj/item/weapon/grab))
 		return ..()
 
-	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
+	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 
 	else

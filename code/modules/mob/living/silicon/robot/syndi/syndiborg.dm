@@ -15,7 +15,7 @@
 /mob/living/silicon/robot/syndicate/atom_init()
 	. = ..()
 	updatename("Syndicate")
-	connected_ai = null
+	set_ai_link(null)
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)

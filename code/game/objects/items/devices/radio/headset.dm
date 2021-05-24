@@ -50,6 +50,15 @@
 	. = ..()
 	set_frequency(SYND_FREQ)
 
+/obj/item/device/radio/headset/heist
+	syndie = TRUE
+	ks1type = /obj/item/device/encryptionkey/heist
+	grid = TRUE
+
+/obj/item/device/radio/headset/heist/atom_init()
+	. = ..()
+	set_frequency(HEIST_FREQ)
+
 /obj/item/device/radio/headset/ninja
 	grid = TRUE
 

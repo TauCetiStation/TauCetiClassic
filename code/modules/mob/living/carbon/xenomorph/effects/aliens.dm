@@ -41,6 +41,20 @@
 		playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
+/obj/structure/alien/attack_alien(mob/user, damage)
+	if(user.a_intent != INTENT_HARM)
+		return FALSE
+	if (isxenolarva(usr) || isfacehugger(usr))	//Safety check for larva.
+		return FALSE
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	user.visible_message("<span class='warning'>[usr] claws at the [name]!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
+	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+	apply_damage(damage)
+	if(health <= 0)
+		user.visible_message("<span class='warning'>[usr] slices the [name] apart!</span>", self_message = "<span class='notice'>You slice the [name] to pieces.</span>")
+	return TRUE
+
 /obj/structure/alien/proc/apply_damage(value)
 	health = max(0, health - round(value))
 	healthcheck()
@@ -56,7 +70,7 @@
 	anchored = TRUE
 	canSmoothWith = list(/obj/structure/alien/resin)
 	smooth = SMOOTH_TRUE
-	health = 250
+	health = 300
 	var/resintype = null
 
 /obj/structure/alien/resin/wall
@@ -85,10 +99,12 @@
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
+	update_nearby_tiles(need_rebuild = TRUE)
 
 /obj/structure/alien/resin/Destroy()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = initial(T.thermal_conductivity)
+	update_nearby_tiles()
 	return ..()
 
 /obj/structure/alien/resin/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
@@ -122,17 +138,8 @@
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/alien/resin/attack_alien(mob/user)
-	user.do_attack_animation(src)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if (isxenolarva(usr) || isfacehugger(usr))//Safety check for larva. /N
-		return
-	user.visible_message("<span class='warning'>[usr] claws at the resin!</span>", self_message = "<span class='notice'>You claw at the [name].</span>")
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	apply_damage(rand(40, 60))
-	if(health <= 0)
-		user.visible_message("<span class='warning'>[usr] slices the [name] apart!</span>", self_message = "<span class='notice'>You slice the [name] to pieces.</span>")
-	return
+/obj/structure/alien/resin/attack_alien(mob/user, damage)
+	..(user, rand(40, 60))
 
 /obj/structure/alien/resin/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
@@ -233,15 +240,18 @@
 	. = ..()
 	if(!.)
 		return
-	var/damage = W.force / 4.0
+	var/damage = W.force
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			damage = 15
 	apply_damage(damage)
 
+/obj/structure/alien/weeds/attack_alien(mob/user, damage)
+	return
+
 /obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
+	if(exposed_temperature > 290)
 		apply_damage(15)
 
 /obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
@@ -291,10 +301,10 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/alien/acid/atom_init_late()
-	if(isturf(target)) // Turf take twice as long to take down.
+	if(istype(target, /turf/simulated/wall))
 		target_strength = 8
-	else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
-		target_strength = 2 //Its just welded, what??
+	else if(is_type_in_list(target, ventcrawl_machinery))
+		target_strength = 2
 	else
 		target_strength = 4
 	tick()
@@ -309,13 +319,19 @@
 
 		audible_message("<span class='notice'><B>[src.target] collapses under its own weight into a puddle of goop and undigested debris!</B></span>")
 
-		if(istype(target, /turf/simulated/wall)) // I hate turf code.
+		if(istype(target, /turf/simulated/wall))
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
-		else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
-			var/obj/machinery/atmospherics/components/unary/vent_pump/VP = target
-			VP.welded = 0
-			VP.update_icon()
+		else if(istype(target, /turf/simulated/floor))
+			var/turf/simulated/floor/F = target
+			F.make_plating()
+		else if(is_type_in_list(target, ventcrawl_machinery))
+			var/obj/machinery/atmospherics/components/unary/U = target
+			if(U.welded)
+				U.welded = FALSE
+				U.update_icon()
+			else
+				qdel(target)
 		else
 			qdel(target)
 		qdel(src)
@@ -350,14 +366,14 @@
 	icon_state = "egg_growing"
 	density = FALSE
 	anchored = TRUE
-
 	health = 100
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
+	var/timer
 
 /obj/structure/alien/egg/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
+	timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
 
 /obj/structure/alien/egg/attack_paw(mob/user)
 	if(isxeno(user))
@@ -382,6 +398,9 @@
 	to_chat(user, "It feels slimy.")
 	user.SetNextMove(CLICK_CD_MELEE)
 
+/obj/structure/alien/egg/attack_alien(mob/user, damage)
+	attack_paw(user)
+
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"
 	status = GROWN
@@ -389,6 +408,7 @@
 
 /obj/structure/alien/egg/proc/Burst(kill_fh = TRUE)
 	STOP_PROCESSING(SSobj, src)
+	deltimer(timer)
 	if(status == GROWN || status == GROWING)
 		icon_state = "egg_hatched"
 		flick("egg_opening", src)
@@ -398,7 +418,6 @@
 			var/obj/item/clothing/mask/facehugger/FH = new /obj/item/clothing/mask/facehugger(get_turf(src))
 			if(kill_fh)
 				FH.Die()
-
 
 /obj/structure/alien/egg/attack_ghost(mob/living/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)
@@ -418,7 +437,7 @@
 			var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(src))
 			FH.key = user.key
 			FH.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", FH)
-			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
+			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces!</span>")
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING
@@ -426,20 +445,19 @@
 				status = BURST
 
 /obj/structure/alien/egg/process()
-	if(prob(10))
+	if(prob(20))
 		var/turf/T = get_turf(src);
 		var/datum/gas_mixture/environment = T.return_air()
 		var/pressure = environment.return_pressure()
 		if(pressure < WARNING_LOW_PRESSURE)
-			if(prob(25))
-				audible_message("<span class='warning'>\The [src] is cracking!</span>")
-			apply_damage(5)
+			audible_message("<span class='warning'>\The [src] is cracking!</span>")
+			apply_damage(rand(10, 30))
 
 /obj/structure/alien/egg/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
 	if(!.)
 		return
-	var/damage = W.force / 4.0
+	var/damage = W.force
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
@@ -452,7 +470,7 @@
 		Burst()
 
 /obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
+	if(exposed_temperature > 290)
 		apply_damage(25)
 
 #undef BURST
@@ -460,9 +478,10 @@
 #undef GROWING
 #undef GROWN
 
-/*
- * Air generator
- */
+//Air generator
+
+ #define AIR_PLANT_PRESSURE	ONE_ATMOSPHERE * 0.90	// ~ 90 kPa
+
 /obj/structure/alien/air_plant
 	name = "strange plant"
 	desc = "Air restoring plant. Progressive aliens technologies..."
@@ -470,7 +489,9 @@
 	density = FALSE
 	anchored = TRUE
 	health = 15
-	var/restoring_moles = MOLES_CELLSTANDARD/4
+	var/restoring_moles = MOLES_CELLSTANDARD / 2
+	var/animating = FALSE
+	var/pressure = 0
 
 /obj/structure/alien/air_plant/atom_init()
 	. = ..()
@@ -485,17 +506,21 @@
 			qdel(src)
 
 		var/datum/gas_mixture/environment = T.return_air()
-		var/pressure = environment.return_pressure()
+		pressure = round(environment.return_pressure())
 
 		//So aliens can detect dangerous pressure level for eggs
-		if(pressure < WARNING_LOW_PRESSURE)
-			if(light_color != "#ff6224")
-				set_light(2, 1, "#ff6224")
-		else if(light_color != "#24c1ff")
+		if(pressure < AIR_PLANT_PRESSURE)
+			if(!animating)
+				animating = TRUE
+				set_light(2, 1, "#da3a3a")
+				animate(src, color = "#da3a3a", time = 5, loop = -1, LINEAR_EASING)
+		else if(animating)
+			animating = FALSE
 			set_light(2, 1, "#24c1ff")
+			color = initial(color)
 
 		//actually restoring air
-		if(pressure < (ONE_ATMOSPHERE*0.90))//it's pretty sloppy, but never mind
+		if(pressure < AIR_PLANT_PRESSURE)
 			environment.adjust_multi_temp("oxygen", restoring_moles*O2STANDARD, T20C, "nitrogen", restoring_moles*N2STANDARD, T20C)
 
 /obj/structure/alien/air_plant/attackby(obj/item/weapon/W, mob/user)
@@ -504,11 +529,19 @@
 		return
 	apply_damage(W.force)
 
+/obj/structure/alien/air_plant/attack_alien(mob/user, damage)
+	..(user, 5)
+
+/obj/structure/alien/air_plant/examine(mob/user)
+	..()
+	if(isxeno(user))
+		to_chat(user, "Сurrent ambient pressure: [pressure] kPa.")
 
 /obj/structure/alien/air_plant/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
+	if(exposed_temperature > 290)
 		apply_damage(15)
 
+#undef AIR_PLANT_PRESSURE
 #undef WEED_SOUTH_EDGING
 #undef WEED_NORTH_EDGING
 #undef WEED_WEST_EDGING

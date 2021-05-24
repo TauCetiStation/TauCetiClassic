@@ -142,8 +142,8 @@
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		var/turf/T = get_turf(src)
-		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(usr)]")
-		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
+		message_admins("[key_name_admin(usr)] splashed [src.reagents.get_reagents()] on [target], location [COORD(T)] [ADMIN_JMP(usr)]")
+		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location [COORD(T)]")
 		return
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
@@ -178,12 +178,18 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker
 	name = "beaker"
-	desc = "A beaker. Can hold up to 50 units."
+	desc = "A beaker."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker"
 	item_state = "beaker"
 	m_amt = 0
 	g_amt = 500
+	volume = 60
+	possible_transfer_amounts = list(5,10,15,25,30,60)
+
+/obj/item/weapon/reagent_containers/glass/beaker/atom_init()
+	. = ..()
+	desc += " Can hold up to [volume] units."
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
@@ -217,7 +223,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
-	desc = "A large beaker. Can hold up to 150 units."
+	desc = "A large beaker."
 	icon_state = "beakerlarge"
 	g_amt = 5000
 	volume = 150
@@ -227,16 +233,15 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	desc = "A cryostasis beaker that allows for chemical storage without reactions."
 	icon_state = "beakernoreact"
 	g_amt = 500
-	volume = 50
 	amount_per_transfer_from_this = 10
 	flags = OPENCONTAINER | NOREACT
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology. Can hold up to 300 units."
+	desc = "A bluespace beaker, powered by experimental bluespace technology."
 	icon_state = "beakerbluespace"
 	g_amt = 5000
 	volume = 300
@@ -247,7 +252,7 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/vial
 	name = "vial"
-	desc = "A small glass vial. Can hold up to 25 units."
+	desc = "A small glass vial."
 	icon_state = "vial"
 	g_amt = 250
 	volume = 25

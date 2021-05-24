@@ -351,8 +351,6 @@
 			dat += "<td>Monkey</td>"
 		else if(isxeno(M))
 			dat += "<td>Alien</td>"
-		else if(istype(M, /mob/living/parasite/meme))
-			dat += "<td>Meme</td>"
 		else if(istype(M, /mob/living/parasite/essence))
 			dat += "<td>Changelling Essence</td>"
 		else
@@ -422,7 +420,7 @@
 						var/obj/O = disk_loc
 						dat += "in \a [O.name] "
 					disk_loc = disk_loc.loc
-				dat += "in [disk_loc.loc] at ([disk_loc.x], [disk_loc.y], [disk_loc.z])</td></tr>"
+				dat += "in [disk_loc.loc] at [COORD(disk_loc)]</td></tr>"
 			dat += "</table>"
 
 		if(SSticker.mode.head_revolutionaries.len || SSticker.mode.revolutionaries.len)
@@ -449,58 +447,6 @@
 					dat += "<td>[mob_loc.loc]</td></tr>"
 				else
 					dat += "<tr><td><i>Head not found!</i></td></tr>"
-			dat += "</table>"
-
-		if(SSticker.mode.A_bosses.len || SSticker.mode.A_gang.len)
-			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("A")] Gang: [(SSticker.mode.gang_points ? "[SSticker.mode.gang_points.A] Influence, " : "")][round((SSticker.mode.A_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.A_bosses)
-				var/mob/M = N.current
-				if(!M)
-					dat += "<tr><td><i>Gang Boss not found!</i></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><span class='red'>(DEAD)</span></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.A_gang)
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><span class='red'>(DEAD)</span></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(SSticker.mode.B_bosses.len || SSticker.mode.B_gang.len)
-			dat += "<br><table cellspacing=5><tr><td><B>[gang_name("B")] Gang: [(SSticker.mode.gang_points ? "[SSticker.mode.gang_points.B] Influence, " : "")][round((SSticker.mode.B_territory.len/start_state.num_territories)*100, 1)]% Control</B></td><td></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.B_bosses)
-				var/mob/M = N.current
-				if(!M)
-					dat += "<tr><td><i>Gang Boss not found!</i></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a> <b>(Boss)</b>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><span class='red'>(DEAD)</span></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			for(var/datum/mind/N in SSticker.mode.B_gang)
-				var/mob/M = N.current
-				if(M)
-					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><span class='red'>(DEAD)</span></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td></tr>"
-			dat += "</table>"
-
-		if(SSticker.mode.memes.len) //Меме
-			dat += "<br><table cellspacing=5><tr><td><B>Memes</B></td><td></td><td></td></tr>"
-			for(var/datum/mind/meme in SSticker.mode.memes)
-				var/mob/living/parasite/meme/M = meme.current
-				if(M)
-					dat += "<tr><td><a href='?src=\ref[src];adminplayeropts=\ref[M]'>[M.key]</a>[M.client ? "" : " <i>(logged out)</i>"][M.stat == DEAD ? " <b><span class='red'>(DEAD)</span></b>" : ""]</td>"
-					dat += "<td><A href='?src=\ref[usr];priv_msg=\ref[M]'>PM</A></td>"
-					dat += "<td><A HREF='?src=\ref[src];traitor=\ref[M]'>Show Objective</A></td></tr>"
-					// need this check because the meme may be possessing someone right now
-					if(istype(M))
-						dat += "\t<td>Attuned: "
-						for(var/mob/attuned in M.indoctrinated)
-							if(attuned.key)
-								dat += "[attuned.real_name]([attuned.key]) "
-							else
-								dat += "[attuned.real_name] "
-					else
-						dat += "<tr><td><i>Meme not found!</i></td></tr>"
 			dat += "</table>"
 
 		if(SSticker.mode.shadows.len)
@@ -576,15 +522,36 @@
 		if(SSticker.mode.ninjas.len)
 			dat += check_role_table("Ninjas", SSticker.mode.ninjas, src)
 
-		if(SSticker.mode.cult.len)
-			dat += check_role_table("Cultists", SSticker.mode.cult, src, FALSE)
+		if(global.cult_religion)
+			var/datum/game_mode/cult/C = global.cult_religion.mode
+			if(C?.objectives?.len)
+				dat += "<br><center><h3>Задачи Культа</h3></center>"
+				var/obj_count = 1
+				for(var/datum/objective/O in C.objectives)
+					dat += "<br><B>Задача #[obj_count]</B>: [O.explanation_text]"
+					obj_count++
+
+			var/zones_len = global.cult_religion.captured_areas.len
+			var/zones = "Нету"
+			if(global.cult_religion.captured_areas)
+				zones = ""
+				var/i = 1
+				for(var/area/A in global.cult_religion.captured_areas)
+					zones += "[A.name]"
+					if(zones_len != i)
+						zones += ", "
+					i++
+
+			dat += "<br>Подконтрольные зоны культа([zones_len]): [zones]"
+			var/list/minds = list()
+			for(var/mob/M in global.cult_religion.members)
+				if(!ishuman(M) && !M.client)
+					continue
+				minds += M.mind
+			dat += check_role_table("Cultists", minds, src, FALSE)
 
 		if(SSticker.mode.traitors.len)
 			dat += check_role_table("Traitors", SSticker.mode.traitors, src)
-
-		var/datum/game_mode/mutiny/mutiny = get_mutiny_mode()
-		if(mutiny)
-			dat += mutiny.check_antagonists_ui(src)
 
 		if(istype(SSticker.mode, /datum/game_mode/infestation))
 			var/datum/game_mode/infestation/inf = SSticker.mode

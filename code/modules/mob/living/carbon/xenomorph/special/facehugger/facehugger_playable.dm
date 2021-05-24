@@ -246,7 +246,7 @@ This is chestburster mechanic for damaging
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			affecting.visible_message("<span class='userdanger'>[chestburster] crawls out of [affecting]!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			H.death()
 			// we're fucked. no chance to revive a person
 			H.apply_damage(rand(150, 250), BRUTE, BP_CHEST)
@@ -268,7 +268,7 @@ This is chestburster mechanic for damaging
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
 			affecting.add_overlay(image('icons/mob/alien.dmi', loc = affecting, icon_state = "bursted_stand"))
-			chestburster.playsound_local(null, 'sound/voice/xenomorph/small_roar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
+			playsound(chestburster, pick(SOUNDIN_XENOMORPH_CHESTBURST), VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 			qdel(src)
 		else
 			last_bite = world.time
@@ -417,8 +417,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 		return
 	if(affecting.stat == DEAD)
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			hugger.host_is_dead()
+		if(istype(hugger, /obj/item/clothing/mask/facehugger))
+			hugger.get_off()
 		qdel(src)
 		return
 	if(on_cooldown || state == GRAB_IMPREGNATE)
@@ -489,8 +489,8 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 	if(affecting.stat == DEAD)
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			hugger.host_is_dead()
+		if(istype(hugger, /obj/item/clothing/mask/facehugger))
+			hugger.get_off()
 		if(iscarbon(affecting))
 			affecting.update_inv_wear_mask(1)
 		qdel(src)
