@@ -1020,7 +1020,6 @@ var/global/BSACooldown = 0
 	message_admins("[key_name(usr)] toggled Job restrictions for xenos.")
 	feedback_add_details("admin_verb","TJR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
 /datum/admins/proc/toggle_deathmatch_arena()
 	set category = "Server"
 	set desc="Toggle arena on the round end."
