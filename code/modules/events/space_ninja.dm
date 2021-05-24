@@ -49,7 +49,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
 
-	message_admins("[new_ninja] has spawned at [new_ninja.x],[new_ninja.y],[new_ninja.z] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
+	message_admins("[new_ninja] has spawned at [COORD(new_ninja)] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
 
 	if(assign_mission)
 		new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
