@@ -1,6 +1,7 @@
 /datum/game_mode
 	// this includes admin-appointed traitors and multitraitors. Easy!
 	var/list/datum/mind/traitors = list()
+	var/traitorswon = 0 //so that seen from objectives
 
 /datum/game_mode/traitor
 	name = "traitor"
@@ -61,7 +62,16 @@
 
 
 /datum/game_mode/traitor/post_setup()
+	var/supplier = 0 //check if spawned that already
+	var/double = 0 //check if spawned that already
 	for(var/datum/mind/traitor in traitors)
+		if(prob(10) && !supplier && traitors.len > 3)
+			traitor.sub_role = "Syndi supplier"
+			supplier = 1
+		else
+			if(prob(10) && !double && traitors.len > 3)
+				traitor.sub_role = "Double agent"
+				double = 1
 		if (!config.objectives_disabled)
 			forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
@@ -95,6 +105,24 @@
 			traitor.objectives += block_objective
 
 	else
+		if(traitor.sub_role == "Syndi supplier")
+			var/datum/objective/syndisupport/syndisupport_objective = new
+			syndisupport_objective.owner = traitor
+			traitor.objectives += syndisupport_objective
+			var/datum/objective/survive/survive_objective = new
+			survive_objective.owner = traitor
+			traitor.objectives += survive_objective
+			return
+		else
+			if(traitor.sub_role == "Double agent")
+				var/datum/objective/doubleagent/doubleagent_objective = new
+				doubleagent_objective.owner = traitor
+				traitor.objectives += doubleagent_objective
+				var/datum/objective/survive/survive_objective = new
+				survive_objective.owner = traitor
+				traitor.objectives += survive_objective
+				return
+				
 		var/objectives_count = pick(1,2,2,3)
 
 		while(objectives_count > 0)
@@ -146,7 +174,13 @@
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
 	add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor.current)
-	to_chat(traitor.current, "<B><font size=3 color=red>You are the traitor.</font></B>")
+	if(traitor.sub_role == "Syndi supplier")
+		to_chat(traitor, "<B><font size=3 color=red>You are the Syndicate coordinator. Contact with agents on station and suppot them.</font></B>")
+	else
+		if(traitor.sub_role == "Double agent")
+			to_chat(traitor, "<B><font size=3 color=red>You are the double agent. Use stuff Syndicate provided you to screw its agents on station or just locate and eliminate them. But formally you still work for Syndicate so dont expect NT Security be polite with you. You're on your own.</font></B>")
+		else
+			to_chat(traitor, "<B><font size=3 color=red>You are the traitor.</font></B>")
 	if (!config.objectives_disabled)
 		var/obj_count = 1
 		for(var/datum/objective/objective in traitor.objectives)
@@ -196,7 +230,10 @@
 	if(traitors.len)
 		text += printlogo("synd", "traitors")
 		for(var/datum/mind/traitor in traitors)
-
+			if(traitor.sub_role)
+				subtraitors += traitor
+				to_chat(world, "<B>subtraitors++</B>")
+				continue
 			text += printplayerwithicon(traitor)
 
 			var/traitorwin = 1
@@ -234,7 +271,47 @@
 						text += "<br>[entry]"
 				else
 					text += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
+	if(subtraitors.len) //now count roles depend on others success
+		for(var/datum/mind/traitor in subtraitors)
+			text += printplayerwithicon(traitor)
+			var/traitorwin = 1
+			if(traitor.objectives && traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+				var/count = 1
+				for(var/datum/objective/objective in traitor.objectives)
+					if(objective.check_completion())
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
+						feedback_add_details("traitor_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
+						feedback_add_details("traitor_objective","[objective.type]|FAIL")
+						traitorwin = 0
+					count++
 
+			var/special_role_text
+			if(traitor.sub_role)
+				special_role_text = lowertext(traitor.sub_role)
+			else
+				special_role_text = "antagonist"
+			if(!config.objectives_disabled)
+				if(traitorwin)
+					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] was successful!</span>"
+					feedback_add_details("traitor_success","SUCCESS")
+					score["roleswon"]++
+					if(!traitor.sub_role)
+						traitorswon++
+				else
+					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
+					feedback_add_details("traitor_success","FAIL")
+
+			if(traitor.total_TC)
+				if(traitor.spent_TC)
+					text += "<br><b>TC Remaining:</b> [traitor.total_TC - traitor.spent_TC]/[traitor.total_TC]"
+					text += "<br><b>The tools used by the [special_role_text] were:</b>"
+					for(var/entry in traitor.uplink_items_bought)
+						text += "<br>[entry]"
+				else
+					text += "<br>The [special_role_text] was a smooth operator this round (did not purchase any uplink items)."
+	
 	if(SSticker.reconverted_antags.len)
 		text += "<br><hr>"
 		for(var/reconverted in SSticker.reconverted_antags)
@@ -320,7 +397,8 @@
 			R.hidden_uplink = T
 			var/obj/item/device/pda/P = R
 			P.lock_code = pda_pass
-
+			if(traitor_mob.mind.sub_role == "Syndi supplier")
+				R.hidden_uplink.uses = 50
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += R.hidden_uplink.uses
