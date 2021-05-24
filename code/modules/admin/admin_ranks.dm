@@ -7,7 +7,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 	var/previous_rights = 0
 
 	//load text from file
-	var/list/Lines = file2list("config/admin_ranks.txt")
+	var/list/Lines = file2list("config/admin_ranks.txt") 
 
 	//process each line seperately
 	for(var/line in Lines)
