@@ -68,7 +68,7 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN + 0.2
+	slowdown = SHOES_SLOWDOWN + 0.5
 	item_color = "clown"
 	species_restricted = null
 
