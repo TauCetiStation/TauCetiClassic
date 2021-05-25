@@ -17,9 +17,9 @@
 	return TRUE
 
 /datum/keybinding/mob/cycle_intent_right
-	hotkey_keys = list("Insert", "G")
+	hotkey_keys = list("G", "Insert")
 	name = "cycle_intent_right"
-	full_name = "cycle intent right"
+	full_name = "Сycle intent right"
 	description = ""
 
 /datum/keybinding/mob/cycle_intent_right/down(client/user)
@@ -30,7 +30,7 @@
 /datum/keybinding/mob/cycle_intent_left
 	hotkey_keys = list("F")
 	name = "cycle_intent_left"
-	full_name = "cycle intent left"
+	full_name = "Сycle intent left"
 	description = ""
 
 /datum/keybinding/mob/cycle_intent_left/down(client/user)
