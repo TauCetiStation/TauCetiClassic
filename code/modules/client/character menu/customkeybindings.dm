@@ -20,7 +20,13 @@
 			if(!length(user_binds[kb.name]) || user_binds[kb.name][1] == "None")
 				. += "<tr><td width='40%'>[kb.full_name]</td><td width='15%'><a class='white fluid' href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["None"]'>None</a></td>"
 				var/list/default_keys = kb.hotkey_keys
-				. += {"<td width='15%'></td><td width='15%'></td><td width='15%'><a [compare_list(user_binds[kb.name], default_keys) ? "class='disabled fluid'" : "class='white fluid' href ='?_src_=prefs;preference=keybinding_reset;keybinding=[kb.name];old_keys=[jointext(user_binds[kb.name], ",")]"]'>Reset</a></td>"}
+				var/class
+				if(compare_list(user_binds[kb.name], default_keys))
+					class = "class='disabled fluid'"
+				else
+					class = "class='white fluid' href ='?_src_=prefs;preference=keybinding_reset;keybinding=[kb.name];old_keys=[jointext(user_binds[kb.name], ",")]"
+
+				. += {"<td width='15%'></td><td width='15%'></td><td width='15%'><a [class]'>Reset</a></td>"}
 				. += "</tr>"
 			else
 				var/bound_key = user_binds[kb.name][1]
