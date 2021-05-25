@@ -151,6 +151,8 @@
 
 	if(length(message) >= 2)
 		var/channel_prefix = copytext(message, 1, 2 + length(message[2]))
+		if(channel_prefix == IPC_DISPLAY_TEXT_PREFIX)
+			return "ipc_display_text"
 		return department_radio_keys[channel_prefix]
 
 	return null

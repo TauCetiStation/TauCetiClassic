@@ -40,7 +40,6 @@
 
 	if(!ignore_appearance && name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
-
 	//parse the radio code and consume it
 	if (message_mode)
 		if (message_mode == "headset")
