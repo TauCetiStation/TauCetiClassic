@@ -16,7 +16,7 @@
 	return TRUE
 
 /datum/keybinding/admin/admin_ghost
-	hotkey_keys = list("F3")
+	hotkey_keys = list("None")
 	name = "admin_ghost"
 	full_name = "Aghost"
 	description = "Go ghost"
@@ -46,7 +46,7 @@
 	return TRUE
 
 /datum/keybinding/admin/stealthmode
-	hotkey_keys = list("Ctrl-F8")
+	hotkey_keys = list("CtrlF8")
 	name = "stealth_mode"
 	full_name = "Stealth mode"
 	description = "Enters stealth mode"
@@ -82,7 +82,7 @@
 	description = "Shed your admin powers"
 
 /datum/keybinding/admin/deadmin/down(client/user)
-	user.deadmin()
+	user.deadmin_self()
 	return TRUE
 
 /datum/keybinding/admin/readmin

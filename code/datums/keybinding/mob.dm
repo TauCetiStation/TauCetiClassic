@@ -17,7 +17,7 @@
 	return TRUE
 
 /datum/keybinding/mob/cycle_intent_right
-	hotkey_keys = list("Northwest") // HOME
+	hotkey_keys = list("Insert", "G")
 	name = "cycle_intent_right"
 	full_name = "cycle intent right"
 	description = ""
@@ -28,7 +28,7 @@
 	return TRUE
 
 /datum/keybinding/mob/cycle_intent_left
-	hotkey_keys = list("Insert")
+	hotkey_keys = list("F")
 	name = "cycle_intent_left"
 	full_name = "cycle intent left"
 	description = ""
@@ -39,7 +39,7 @@
 	return TRUE
 
 /datum/keybinding/mob/activate_inhand
-	hotkey_keys = list("Z", "Southeast") // Southeast = PAGEDOWN
+	hotkey_keys = list("Z", "Y","Southeast") // Southeast = PAGEDOWN
 	name = "activate_inhand"
 	full_name = "Activate in-hand"
 	description = "Uses whatever item you have inhand"
@@ -132,7 +132,7 @@
 	user.movement_locked = FALSE
 
 /datum/keybinding/mob/click_on_self
-	hotkey_keys = list("N")
+	hotkey_keys = list("B")
 	name = "click_on_self"
 	full_name = "Click On Self"
 	description = ""

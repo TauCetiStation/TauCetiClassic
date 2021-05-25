@@ -13,9 +13,18 @@
 	user.adminhelp()
 	return TRUE
 
+/datum/keybinding/client/mentor_help
+	hotkey_keys = list("F9")
+	name = "mentor_help"
+	full_name = "Mentor Help"
+	description = "Ask an mentors for help."
+
+/datum/keybinding/client/mentor_help/down(client/user)
+	user.get_mentorhelp()
+	return TRUE
 
 /datum/keybinding/client/screenshot
-	hotkey_keys = list("F2")
+	hotkey_keys = list("None")
 	name = "screenshot"
 	full_name = "Screenshot"
 	description = "Take a screenshot."

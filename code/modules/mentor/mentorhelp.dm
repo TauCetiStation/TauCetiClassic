@@ -66,3 +66,7 @@
 
 	feedback_add_details("admin_verb", "MH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[prefix]: [key_name(src)]: [msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins.")
+
+/client/proc/get_mentorhelp()
+	var/msg = input(src, null, "mentorhelp \"text\"") as text|null
+	mentorhelp(msg)

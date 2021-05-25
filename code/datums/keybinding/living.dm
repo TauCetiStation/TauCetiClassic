@@ -7,7 +7,7 @@
 	return isliving(user.mob)
 
 /datum/keybinding/living/resist
-	hotkey_keys = list("B")
+	hotkey_keys = list("N")
 	name = "resist"
 	full_name = "Resist"
 	description = "Break free of your current state. Handcuffed? on fire? Resist!"
@@ -34,7 +34,7 @@
 	return TRUE
 
 /datum/keybinding/living/drop_item
-	hotkey_keys = list("Q")
+	hotkey_keys = list("Q", "Northwest") // HOME
 	name = "drop_item"
 	full_name = "Drop Item"
 	description = ""
@@ -49,12 +49,11 @@
 		L.drop_item()
 	return TRUE
 
-
 /datum/keybinding/living/rest
 	hotkey_keys = list("None")
 	name = "rest"
 	full_name = "Rest"
-	description = ""
+	description = "You lay down/get up"
 
 /datum/keybinding/living/rest/down(client/user)
 	var/mob/living/L = user.mob
