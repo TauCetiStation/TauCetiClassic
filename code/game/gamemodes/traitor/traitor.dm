@@ -69,17 +69,18 @@
 				spawnertypes = 1
 			if(41 to 80)
 				spawnertypes = 2
+		var/list/datum/mind/localtraitors = traitors.Copy()
 		if(spawnertypes > 1)
-			var/datum/mind/double = pick(traitors)
-			traitors -= double
+			var/datum/mind/double = pick(localtraitors)
+			localtraitors -= double
 			double.sub_role = TRAITOR_DOUBLE_AGENT
 		if(spawnertypes == 1 || spawnertypes == 3)
-			var/datum/mind/supplier = pick(traitors)
-			traitors -= supplier
+			var/datum/mind/supplier = pick(localtraitors)
+			localtraitors -= supplier
 			supplier.sub_role = TRAITOR_SUPPLIER
 			
 	for(var/datum/mind/traitor in traitors)
-		if (!config.objectives_disabled)
+		if (!config.objectives_disabled && !traitor.sub_role)
 			forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
 			finalize_traitor(traitor)
