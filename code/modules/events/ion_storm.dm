@@ -40,7 +40,7 @@
 			continue
 		players += H.real_name
 
-	var/random_player = "Капитан"
+	var/random_player = "The Captain"
 	if(players.len)
 		random_player = pick(players)		//Random player's name, to be used in laws.
 
