@@ -62,16 +62,23 @@
 
 
 /datum/game_mode/traitor/post_setup()
-	var/supplier = 0 //check if spawned that already
-	var/double = 0 //check if spawned that already
+	if(prob((traitors.len/2.0-1)*15)) //no sub-traitors if 2 or less traitors
+		var/spawnertypes = 3	//yep magic number, it best what can be here
+		switch(rand(1,80+(traitors.len/3.0-1)*50)) //can spawn both only if 4 or more traitors
+			if(1 to 40)
+				spawnertypes = 1
+			if(41 to 80)
+				spawnertypes = 2
+		if(spawnertypes > 1)
+			var/datum/mind/double = pick(traitors)
+			traitors -= double
+			double.sub_role = TRAITOR_DOUBLE_AGENT
+		if(spawnertypes == 1 || spawnertypes == 3)
+			var/datum/mind/supplier = pick(traitors)
+			traitors -= supplier
+			supplier.sub_role = TRAITOR_SUPPLIER
+			
 	for(var/datum/mind/traitor in traitors)
-		if(prob(10) && !supplier && traitors.len > 3)
-			traitor.sub_role = "Syndi supplier"
-			supplier = 1
-		else
-			if(prob(10) && !double && traitors.len > 3)
-				traitor.sub_role = "Double agent"
-				double = 1
 		if (!config.objectives_disabled)
 			forge_traitor_objectives(traitor)
 		spawn(rand(10,100))
@@ -105,7 +112,7 @@
 			traitor.objectives += block_objective
 
 	else
-		if(traitor.sub_role == "Syndi supplier")
+		if(traitor.sub_role == TRAITOR_SUPPLIER)
 			var/datum/objective/syndisupport/syndisupport_objective = new
 			syndisupport_objective.owner = traitor
 			traitor.objectives += syndisupport_objective
@@ -113,15 +120,14 @@
 			survive_objective.owner = traitor
 			traitor.objectives += survive_objective
 			return
-		else
-			if(traitor.sub_role == "Double agent")
-				var/datum/objective/doubleagent/doubleagent_objective = new
-				doubleagent_objective.owner = traitor
-				traitor.objectives += doubleagent_objective
-				var/datum/objective/survive/survive_objective = new
-				survive_objective.owner = traitor
-				traitor.objectives += survive_objective
-				return
+		else if(traitor.sub_role == TRAITOR_DOUBLE_AGENT)
+			var/datum/objective/doubleagent/doubleagent_objective = new
+			doubleagent_objective.owner = traitor
+			traitor.objectives += doubleagent_objective
+			var/datum/objective/survive/survive_objective = new
+			survive_objective.owner = traitor
+			traitor.objectives += survive_objective
+			return
 				
 		var/objectives_count = pick(1,2,2,3)
 
@@ -174,11 +180,11 @@
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
 	add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", traitor.current)
-	if(traitor.sub_role == "Syndi supplier")
-		to_chat(traitor, "<B><font size=3 color=red>You are the Syndicate coordinator. Contact with agents on station and suppot them.</font></B>")
-	else
-		if(traitor.sub_role == "Double agent")
-			to_chat(traitor, "<B><font size=3 color=red>You are the double agent. Use stuff Syndicate provided you to screw its agents on station or just locate and eliminate them. But formally you still work for Syndicate so dont expect NT Security be polite with you. You're on your own.</font></B>")
+	switch(traitor.sub_role)
+		if(TRAITOR_SUPPLIER)
+			to_chat(traitor, "<B><font size=3 color=red>You are a Syndicate coordinator. Contact with agents on station and suppot them. However they got their pay and you dont have to do their job for them.</font></B>")
+		if(TRAITOR_DOUBLE_AGENT)
+			to_chat(traitor, "<B><font size=3 color=red>You are a double agent. Use stuff Syndicate provided you to screw its agents on station or just locate and eliminate them. But formally you still work for Syndicate so dont expect NT Security be polite with you. You on your own.</font></B>")
 		else
 			to_chat(traitor, "<B><font size=3 color=red>You are the traitor.</font></B>")
 	if (!config.objectives_disabled)
@@ -259,6 +265,7 @@
 					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] was successful!</span>"
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
+					traitorswon++
 				else
 					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
@@ -287,18 +294,12 @@
 						traitorwin = 0
 					count++
 
-			var/special_role_text
-			if(traitor.sub_role)
-				special_role_text = lowertext(traitor.sub_role)
-			else
-				special_role_text = "antagonist"
+			var/special_role_text = traitor.sub_role
 			if(!config.objectives_disabled)
 				if(traitorwin)
 					text += "<br><span style='color: green; font-weight: bold;'>The [special_role_text] was successful!</span>"
 					feedback_add_details("traitor_success","SUCCESS")
 					score["roleswon"]++
-					if(!traitor.sub_role)
-						traitorswon++
 				else
 					text += "<br><span style='color: red; font-weight: bold;'>The [special_role_text] has failed!</span>"
 					feedback_add_details("traitor_success","FAIL")
@@ -397,7 +398,7 @@
 			R.hidden_uplink = T
 			var/obj/item/device/pda/P = R
 			P.lock_code = pda_pass
-			if(traitor_mob.mind.sub_role == "Syndi supplier")
+			if(traitor_mob.mind.sub_role == TRAITOR_SUPPLIER)
 				R.hidden_uplink.uses = 50
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
