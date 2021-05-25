@@ -29,8 +29,6 @@ You can also tell which keys are being held down now. Each client a list of keys
 `keys_held`. Each entry is a key as a text string associated with the world.time when it was
 pressed.
 
-No client-set keybindings at this time, but it shouldn't be too hard if someone wants.
-
 Notes about certain keys:
 
 * `Tab` has client-sided behavior but acts normally
