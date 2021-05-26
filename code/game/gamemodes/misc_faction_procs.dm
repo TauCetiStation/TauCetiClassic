@@ -24,7 +24,6 @@
 	if(R.GetFaction())
 		return R.GetFaction()
 	if(SSticker?.mode?.factions?.len)
-		var/success = FALSE
 		for(var/datum/faction/F in SSticker.mode.factions)
 			for(var/datum/role/RR in F.members)
 				if(RR == R || RR.antag == M)
