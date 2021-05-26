@@ -33,6 +33,7 @@
 /datum/faction/blob_conglomerate/check_win()
 	if(!declared) //No blobs have been spawned yet
 		return FALSE
+	. = FALSE
 	var/ded = TRUE
 	for (var/datum/role/R in members)
 		if (R.antag && R.antag.current && !(R.antag.current.is_dead()))
@@ -40,13 +41,21 @@
 
 	if(!ded)
 		if(blobwincount <= blobs.len) //Blob took over
-			return TRUE
+			for(var/datum/role/blob_overmind/R in members)
+				var/mob/camera/blob/B = R.antag.current
+				if(istype(B))
+					max_blob_points = INFINITY
+					blob_points = INFINITY
+			. = TRUE
 		else if(SSticker.station_was_nuked)
-			return TRUE
+			. = TRUE
 	else
 		stage(FS_DEFEATED)
 
-	return FALSE
+	if(config.continous_rounds)
+		return FALSE
+
+	return .
 
 /datum/faction/blob_conglomerate/HandleNewMind(datum/mind/M)
 	. = ..()
@@ -63,7 +72,7 @@
 	if(outbreak_announcement && world.time >= outbreak_announcement && detect_overminds()) //Must be alive to advance.
 		outbreak_announcement = 0
 		stage(FS_ACTIVE)
-	if(declared && 0.66*blobwincount <= blobs.len && stage<FS_ENDGAME) // Blob almost won !
+	if(declared && 0.7*blobwincount <= blobs.len && stage<FS_ENDGAME) // Blob almost won !
 		stage(FS_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
@@ -103,7 +112,7 @@
 				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
-			for (var/mob/living/silicon/ai/aiPlayer in player_list)
+			for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
 				to_chat(aiPlayer, "Laws Updated: [law]")
@@ -115,11 +124,11 @@
 				to_chat(B, "<span class='blob'>The beings intend to eliminate you with a final suicidal attack, you must stop them quickly or consume the station before this occurs!</span>")
 			send_intercept(FS_ENDGAME)
 			var/nukecode = "ERROR"
-			for(var/obj/machinery/nuclearbomb/bomb in machines)
+			for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 				if(bomb && bomb.r_code)
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
-			for(var/mob/living/silicon/ai/aiPlayer in player_list)
+			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
 				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 				to_chat(aiPlayer, "Laws Updated: [law]")
