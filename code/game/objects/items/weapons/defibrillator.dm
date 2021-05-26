@@ -257,19 +257,8 @@
 	if(!check_charge(charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
-	if(!wielded)
+	if(!wielded && !isrobot(user))
 		to_chat(user, "<span class='warning'>You need to wield the paddles with both hands before you can use them on someone!</span>")
-		return FALSE
-	if(cooldown)
-		to_chat(user, "<span class='warning'>\The [src] are re-energizing!</span>")
-		return FALSE
-	return TRUE
-
-/obj/item/weapon/twohanded/shockpaddles/robot/proc/robot_can_use(mob/user, mob/M)
-	if(busy)
-		return FALSE
-	if(!check_charge(charge_cost))
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
 	if(cooldown)
 		to_chat(user, "<span class='warning'>\The [src] are re-energizing!</span>")
@@ -322,7 +311,7 @@
 /obj/item/weapon/twohanded/shockpaddles/proc/checked_use(charge_amt)
 	return TRUE
 
-/obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/living/carbon/user, def_zone)
+/obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/living/user, def_zone)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, M))
 		return
@@ -338,21 +327,6 @@
 	busy = FALSE
 	update_icon()
 
-/obj/item/weapon/twohanded/shockpaddles/robot/attack(mob/M, mob/living/silicon/user, def_zone)
-	var/mob/living/carbon/human/H = M
-	if(!istype(H) || !robot_can_use(user, M))
-		return
-
-	busy = TRUE
-	update_icon()
-
-	if(user.a_intent == INTENT_HARM)
-		do_electrocute(M, user, def_zone)
-	else
-		robot_try_revive(M, user)
-
-	busy = FALSE
-	update_icon()
 
 // This proc is used so that we can return out of the revive process while ensuring that busy and update_icon() are handled
 /obj/item/weapon/twohanded/shockpaddles/proc/try_revive(mob/living/carbon/human/H, mob/user)
@@ -449,85 +423,12 @@
 	make_announcement("pings, \"Defibrillation successful.\"")
 	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-/obj/item/weapon/twohanded/shockpaddles/robot/proc/robot_try_revive(mob/living/carbon/human/H, mob/user)
-	//beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
-	user.visible_message("<span class='warning'>\The [user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
-	if(!do_after(user, 30, target = H))
-		return
-	user.visible_message("<span class='notice'>\The [user] places [src] on [H]'s chest.</span>", "<span class='warning'>You place [src] on [H]'s chest.</span>")
-	playsound(src, 'sound/items/surgery/defib_charge.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-	var/error = can_defib(H)
-	if(error)
-		make_announcement(error)
-		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return
-
-	//placed on chest and short delay to shock for dramatic effect, revive time is ~5sec total
-	if(!do_after(user, charge_time, target = H))
-		return
-
-	//deduct charge here, in case the base unit was EMPed or something during the delay time
-	if(!checked_use(charge_cost))
-		make_announcement("buzzes, \"Insufficient charge.\"")
-		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return
-
-	H.log_combat(user, "shocked with [name]")
-	user.visible_message("<span class='warning'>[user] shocks [H] with [src].</span>", "<span class='warning'>You shock [H] with [src].</span>", "<span class='warning'>You hear electricity zaps flesh.</span>")
-
-	H.apply_effect(4, STUN, 0)
-	H.apply_effect(4, WEAKEN, 0)
-	H.apply_effect(4, STUTTER, 0)
-
-	if(H.jitteriness <= 100)
-		H.make_jittery(150)
-	else
-		H.make_jittery(50)
-
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, H)
-	s.start()
-	playsound(src, pick(SOUNDIN_BODYFALL), VOL_EFFECTS_MASTER)
-	playsound(src, 'sound/items/surgery/defib_zap.ogg', VOL_EFFECTS_MASTER)
-	set_cooldown(cooldown_time)
-
+/obj/item/weapon/twohanded/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
-	if(!IO)
-		return
-
-	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
-		make_announcement("buzzes, \"Defibrillation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
-		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return
-
-	if(IO.heart_status == HEART_NORMAL && prob(20))
-		IO.heart_stop()
-		return
-
-	if(H.stat == DEAD)
-		IO.heart_normalize()
-		H.reanimate_body(H)
-		H.stat = UNCONSCIOUS
-		H.return_to_body_dialog(src)
-
-	if(IO.heart_status == HEART_FIBR)
-		IO.heart_normalize()
-
-	if(H.health <= config.health_threshold_crit || prob(10))
-		var/suff = min(H.getOxyLoss(), 20)
-		H.adjustOxyLoss(-suff)
-	else
-		H.adjustFireLoss(burn_damage_amt)
-	H.updatehealth()
-
-	if(H.health < config.health_threshold_dead)
-		make_announcement("buzzes, \"Defibrillation failed - Patinent's body is too wounded to sustain heart beating.\"")
-		playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		return
-
-	make_announcement("pings, \"Defibrillation successful.\"")
-	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if (IO.heart_status == HEART_FAILURE)
+		IO.heart_fibrillate()
+	..()
+	return
 
 /obj/item/weapon/twohanded/shockpaddles/proc/do_electrocute(mob/living/carbon/human/H, mob/user, target_zone)
 	var/obj/item/organ/external/affecting = H.get_bodypart(target_zone)
