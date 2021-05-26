@@ -150,7 +150,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-	var/datum/faction/strike_team/syndiesquad/S = find_active_first_faction_by_type(/datum/faction/strike_team/syndiesquad)
+	var/datum/faction/strike_team/syndiesquad/S = find_faction_by_type(/datum/faction/strike_team/syndiesquad)
 	if(S)
 		add_faction_member(S, new_syndicate_commando, FALSE)
 

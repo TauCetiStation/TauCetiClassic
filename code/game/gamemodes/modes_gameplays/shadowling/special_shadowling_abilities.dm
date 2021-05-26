@@ -98,7 +98,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				to_chat(usr, "<span class='warning'>You can't evolve here.</span>")
 				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
 				return
-			var/datum/faction/shadowlings/faction = find_active_first_faction_by_type(/datum/faction/shadowlings)
+			var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 			usr.notransform = TRUE
 			usr.Stun(34)
 			usr.visible_message("<span class='warning'>[usr] rapidly bends and contorts, their eyes flaring a deep crimson!</span>", \

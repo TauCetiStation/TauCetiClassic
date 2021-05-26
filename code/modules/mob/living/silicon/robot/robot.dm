@@ -455,7 +455,7 @@
 		if(malf.apcs >= 3)
 			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
 	else
-		var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(malf?.malf_mode_declared)
 			stat(null, "Time left: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0

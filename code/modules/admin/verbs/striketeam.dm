@@ -120,7 +120,7 @@ var/global/sent_strike_team = FALSE
 	// Creates mind stuff
 	new_commando.mind_initialize()
 	new_commando.equip_death_commando(is_leader)
-	var/datum/faction/strike_team/deathsquad/D = find_active_first_faction_by_type(/datum/faction/strike_team/deathsquad)
+	var/datum/faction/strike_team/deathsquad/D = find_faction_by_type(/datum/faction/strike_team/deathsquad)
 	if(D)
 		add_faction_member(D, new_commando, FALSE)
 	return new_commando

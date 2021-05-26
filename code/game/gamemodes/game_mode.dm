@@ -327,7 +327,7 @@
 /datum/game_mode/proc/get_mode_result()
 	if(factions_allowed.len)
 		for(var/type in factions_allowed)
-			var/list/datum/faction/game_mode_factions = find_active_all_faction_by_type(type)
+			var/list/datum/faction/game_mode_factions = find_factions_by_type(type)
 			for(var/datum/faction/faction in game_mode_factions)
 				if(!faction.IsSuccessful())
 					return "lose"

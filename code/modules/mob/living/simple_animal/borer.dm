@@ -483,6 +483,6 @@
 	mind = candidate.mob.mind
 	ckey = candidate.ckey
 
-	var/datum/faction/borers/B = find_active_first_faction_by_type(/datum/faction/borers)
+	var/datum/faction/borers/B = find_faction_by_type(/datum/faction/borers)
 	if(B)
 		add_faction_member(B, src)

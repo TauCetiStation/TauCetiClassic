@@ -143,7 +143,7 @@
 /obj/effect/proc_holder/spell/targeted/enthrall/cast(list/targets)
 	var/thrallsPresent = 0
 	var/mob/living/carbon/human/user = usr
-	var/datum/faction/shadowlings/faction = find_active_first_faction_by_type(/datum/faction/shadowlings)
+	var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 	for(var/datum/role/thrall/mindToCount in faction.members)
 		thrallsPresent++
 	if(thrallsPresent >= 5 && (user.dna.species != SHADOWLING))
@@ -589,7 +589,7 @@
 		to_chat(target, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
 		to_chat(target, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
 		to_chat(target, "<span class='shadowling'>You can communicate with the other enlightened ones by using the Hivemind Commune ability.</span>")
-		var/datum/faction/shadowlings/faction = find_active_first_faction_by_type(/datum/faction/shadowlings)
+		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		add_faction_member(faction, target, TRUE)
 
 

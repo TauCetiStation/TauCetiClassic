@@ -377,7 +377,7 @@ var/bomb_set
 		off_station = 2
 
 	if(SSticker)
-		var/datum/faction/nuclear/N = find_active_first_faction_by_type(/datum/faction/nuclear)
+		var/datum/faction/nuclear/N = find_faction_by_type(/datum/faction/nuclear)
 		if(N)
 			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
 			if(syndie_location)

@@ -219,7 +219,7 @@ That prevents a few funky behaviors.
 						if(C.contents.len)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+							var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 							if(malf)
 								for (var/datum/role/malfAI/malfai in malf.members)
 									if (T.mind == malfai.antag)
@@ -242,7 +242,7 @@ That prevents a few funky behaviors.
 						if(C.AI)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							var/datum/faction/malf_silicons/malf = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+							var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 							if(malf)
 								for (var/datum/role/malfAI/malfai in malf.members)
 									if (T.mind == malfai.antag)

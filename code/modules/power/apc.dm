@@ -130,7 +130,7 @@
 /obj/machinery/power/apc/Destroy()
 	apc_list -= src
 	if(malfai && operating)
-		var/datum/faction/malf_silicons/GM = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
 			GM.apcs--
 	area.apc = null
@@ -859,7 +859,7 @@
 	else if(href_list["breaker"])
 		operating = !operating
 		if(malfai)
-			var/datum/faction/malf_silicons/GM = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+			var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 			if(GM && is_station_level(z))
 				operating ? GM.apcs++ : GM.apcs--
 
@@ -916,7 +916,7 @@
 				if(!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
-					var/datum/faction/malf_silicons/GM = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+					var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 					if(GM && is_station_level(z))
 						GM.apcs++
 					if(malfai.parent)
@@ -1247,7 +1247,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		var/datum/faction/malf_silicons/GM = find_active_first_faction_by_type(/datum/faction/malf_silicons)
+		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
 			GM.apcs--
 	stat |= BROKEN

@@ -523,7 +523,7 @@
 	candidates = shuffle(candidates)
 
 	if(fac_type)
-		var/datum/faction/FF = find_active_first_faction_by_type(fac_type)
+		var/datum/faction/FF = find_faction_by_type(fac_type)
 		if(!FF)
 			FF = SSticker.mode.CreateFaction(fac_type, FALSE, TRUE)
 			if(!FF)
@@ -672,7 +672,7 @@
 	mind.assigned_role = "Alien"
 
 	if(!isalien(src))
-		var/datum/faction/infestation/I = find_active_first_faction_by_type(/datum/faction/infestation)
+		var/datum/faction/infestation/I = find_faction_by_type(/datum/faction/infestation)
 		if(!I)
 			I = SSticker.mode.CreateFaction(/datum/faction/infestation)
 			I.forgeObjectives()

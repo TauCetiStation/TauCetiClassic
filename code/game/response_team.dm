@@ -82,7 +82,7 @@ var/can_call_ert
 			else
 				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
 
-			var/datum/faction/strike_team/ert/ERT = find_active_first_faction_by_type(/datum/faction/strike_team/ert)
+			var/datum/faction/strike_team/ert/ERT = find_faction_by_type(/datum/faction/strike_team/ert)
 			if(ERT)
 				add_faction_member(ERT, new_commando, FALSE)
 

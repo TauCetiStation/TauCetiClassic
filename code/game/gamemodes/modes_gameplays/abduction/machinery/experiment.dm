@@ -177,7 +177,7 @@
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 
 		var/datum/faction/abductors/req_f
-		for(var/datum/faction/abductors/F in find_active_all_faction_by_type(/datum/faction/abductors))
+		for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
 			if(F.team_number == team)
 				req_f = F
 				break

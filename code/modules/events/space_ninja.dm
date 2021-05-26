@@ -44,7 +44,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
 
-	var/datum/faction/ninja/N = find_active_first_faction_by_type(/datum/faction/ninja)
+	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
 	if(!N)
 		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
 	add_faction_member(N, new_ninja, FALSE)
@@ -93,7 +93,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	And there is now a mode with two types of bad guys.*/
 
 	for(var/type in subtypesof(/datum/faction))
-		var/datum/faction/F = find_active_first_faction_by_type(type)
+		var/datum/faction/F = find_faction_by_type(type)
 		if(!F)
 			continue
 		for(var/datum/role/R in F.members)
