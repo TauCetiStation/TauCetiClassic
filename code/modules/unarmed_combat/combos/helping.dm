@@ -48,8 +48,7 @@
 		victim.Stun(1)
 
 		victim_G.adjust_position(adjust_time = 0, force_loc = TRUE, force_dir = turn(attacker.dir, 180))
-		// Currently grab position adjusting changes your pixel_y to 0.
-		victim.pixel_y += 4
+		victim.pixel_y = 4
 
 		var/shake_degree = min(scale_value(15, scale_damage_coeff, victim, attacker, attack_obj), 30)
 		var/max_shake_height = min(scale_value(4, scale_damage_coeff, victim, attacker, attack_obj), 8)
