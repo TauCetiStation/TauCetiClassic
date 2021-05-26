@@ -44,8 +44,8 @@
 			for(var/datum/role/blob_overmind/R in members)
 				var/mob/camera/blob/B = R.antag.current
 				if(istype(B))
-					max_blob_points = INFINITY
-					blob_points = INFINITY
+					B.max_blob_points = INFINITY
+					B.blob_points = INFINITY
 			. = TRUE
 		else if(SSticker.station_was_nuked)
 			. = TRUE
