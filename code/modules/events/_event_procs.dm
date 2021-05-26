@@ -41,7 +41,7 @@
 			if(R.module && (R.modtype == "Engineering"))
 				active_with_role["Engineer"]++
 
-			if(R.module && (R.modtype in list("Surgeon", "Crisis")))
+			if(R.module && (R.modtype == "Medical"))
 				active_with_role["Medical"]++
 
 			if(R.module && (R.modtype == "Security"))

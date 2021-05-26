@@ -728,6 +728,7 @@
 #include "code\game\objects\effects\spawners\gibspawner.dm"
 #include "code\game\objects\effects\spawners\lootdrop.dm"
 #include "code\game\objects\effects\temp_visual\cult.dm"
+#include "code\game\objects\effects\temp_visual\miscellaneous.dm"
 #include "code\game\objects\effects\temp_visual\temp_visual.dm"
 #include "code\game\objects\items\airbag.dm"
 #include "code\game\objects\items\apc_frame.dm"
