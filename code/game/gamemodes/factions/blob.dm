@@ -57,11 +57,6 @@
 
 	return .
 
-/datum/faction/blob_conglomerate/HandleNewMind(datum/mind/M)
-	. = ..()
-	if(.)
-		OnPostSetup() //We didn't finish setting up!
-
 /datum/faction/blob_conglomerate/process()
 	. = ..()
 	if(!blobwincount)
@@ -115,7 +110,6 @@
 			for (var/mob/living/silicon/ai/aiPlayer in ai_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
-				to_chat(aiPlayer, "Laws Updated: [law]")
 			SSshuttle.always_fake_recall = TRUE //Quarantine
 		if(FS_ENDGAME)
 			var/datum/announcement/centcomm/blob/critical/announcement = new
@@ -131,8 +125,6 @@
 			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
 				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
-				to_chat(aiPlayer, "Laws Updated: [law]")
-			..() //Set thematic, set alert
 		if (FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
 			announcement.play()
@@ -166,7 +158,7 @@ Message ends."}
 
 		if(FS_ENDGAME)
 			var/nukecode = "ERROR"
-			for(var/obj/machinery/nuclearbomb/bomb in machines)
+			for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 				if(bomb && bomb.r_code)
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code

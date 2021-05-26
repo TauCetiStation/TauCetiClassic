@@ -24,10 +24,6 @@
 	..()
 	time_to_burst = rand(TIME_MIN, TIME_MAX)
 
-/datum/role/blob_overmind/OnPostSetup(laterole = FALSE)
-	. = ..()
-	SSshuttle.always_fake_recall = TRUE
-
 /datum/role/blob_overmind/process()
 	..()
 	if(!antag || istype(antag.current,/mob/camera/blob) || !antag.current || isobserver(antag.current))
