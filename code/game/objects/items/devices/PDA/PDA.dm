@@ -95,8 +95,8 @@
 		update_icon()
 
 /obj/item/device/pda/CtrlClick(mob/user)
-    if (can_use(user))
-        verb_remove_pen()
+	if (can_use(user))
+		verb_remove_pen()
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
