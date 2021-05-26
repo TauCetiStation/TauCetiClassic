@@ -665,7 +665,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 			if(!is_mining_level(T.z))//only report capsules away from the mining level
 				message_admins("[key_name_admin(usr)] [ADMIN_QUE(usr)] [ADMIN_FLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
-				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
+				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [COORD(T)]")
 			template.load(T, centered = TRUE)
 
 		new /datum/effect/effect/system/smoke_spread(T)
