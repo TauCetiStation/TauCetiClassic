@@ -718,9 +718,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
-		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
+	if (alert(src, "Are you sure you want to delete:\n[O]\nat [COORD(O)]?", "Confirmation", "Yes", "No") == "Yes")
+		log_admin("[key_name(usr)] deleted [O] at [COORD(O)]")
+		message_admins("[key_name_admin(usr)] deleted [O] at [COORD(O)]")
 		feedback_add_details("admin_verb","DEL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		if(isturf(O))
 			var/turf/T = O
@@ -761,8 +761,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				return
 
 		explosion(O, devastation, heavy, light, flash)
-		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at ([O.x],[O.y],[O.z])")
+		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at [COORD(O)]")
+		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flash]) at [COORD(O)]")
 		feedback_add_details("admin_verb","EXPL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return
 	else
@@ -782,8 +782,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (heavy || light)
 
 		empulse(O, heavy, light)
-		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at ([O.x],[O.y],[O.z])")
+		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at [COORD(O)]")
+		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at [COORD(O)]")
 		feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 		return
