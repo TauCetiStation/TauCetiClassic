@@ -291,10 +291,10 @@
 	return "telekinesishead[fat]_s"
 
 /datum/dna/gene/basic/invisibility
-	name="Invisibility"
-	activation_messages=list("You feel the light pass through your body.")
-	mutation=INVISIBILITY
-	activation_prob=30
+	name = "Invisibility"
+	activation_messages = list("You feel the light pass through your body.")
+	mutation = INVISIBILITY
+	activation_prob = 30
 
 /datum/dna/gene/basic/invisibility/New()
 	block=INVISBLOCK
