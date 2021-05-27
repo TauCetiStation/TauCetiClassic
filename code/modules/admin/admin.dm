@@ -1022,8 +1022,8 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/toggle_deathmatch_arena()
 	set category = "Server"
-	set desc="Toggle arena on the round end."
-	set name="Toggle Roundend Deathmatch"
+	set desc = "Toggle arena on the round end."
+	set name = "Toggle Roundend Deathmatch"
 	config.deathmatch_arena = !config.deathmatch_arena
 	log_admin("[key_name(usr)] toggled Deathmatch Arena to [config.deathmatch_arena].")
 	message_admins("[key_name_admin(usr)] toggled Deathmatch Arena [config.deathmatch_arena ? "on" : "off"].")
