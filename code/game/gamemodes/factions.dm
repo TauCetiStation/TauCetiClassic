@@ -264,7 +264,7 @@
 
 /datum/faction/proc/GetFactionHeader() //Returns what will show when the factions objective completion is summarized
 	var/icon/logo = get_logo_icon()
-	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10px;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10px;'>"}
+	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10;'>"}
 	return header
 
 

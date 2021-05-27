@@ -171,9 +171,7 @@
 
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/mind/mind)
 	var/icon/logo = get_logo_icon()
-	if(!antag || !antag.current)
-		return
-	var/mob/M = antag.current
+	var/mob/M = antag?.current
 	if (M)
 		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
 	[name] <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
