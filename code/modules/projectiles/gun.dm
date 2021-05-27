@@ -89,16 +89,13 @@
 	var/obj/item/I = get_active_hand()
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/G = I
-		if(src.client.gun_mode)
-			G.Fire(A, src)
-		else
-			if(isliving(A))
-				var/mob/living/M = A
-				if(M in G.target)
-					M.NotTargeted(G)
-				else
-					G.PreFire(M, src)
-				return
+		if(isliving(A))
+			var/mob/living/M = A
+			if(M in G.target)
+				M.NotTargeted(G)
+			else
+				G.PreFire(M, src)
+			return
 	..()
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
