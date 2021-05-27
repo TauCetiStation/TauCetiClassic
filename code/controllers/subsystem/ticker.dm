@@ -265,6 +265,8 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
+		SSevents.start_roundstart_event()
+
 		for(var/mob/dead/new_player/N in new_player_list)
 			if(N.client)
 				N.show_titlescreen()

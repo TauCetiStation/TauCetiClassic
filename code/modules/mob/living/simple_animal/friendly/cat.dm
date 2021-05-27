@@ -140,6 +140,10 @@
 	name = "Runtime"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
 
+/mob/living/simple_animal/cat/Runtime/atom_init()
+	. = ..()
+	chief_animal_list += src
+
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"
 	desc = "It's a SyndiCat droid."

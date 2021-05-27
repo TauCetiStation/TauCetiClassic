@@ -44,6 +44,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/atom_init()
 	. = ..()
 	update_icon(1)
+	scrap_list += src
 
 
 /obj/effect/scrapshot
