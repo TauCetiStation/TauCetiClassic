@@ -1259,7 +1259,7 @@
 		remoteview_target = null
 		reset_view(0) //##Z2
 
-/mob/living/carbon/human/proc/invis()
+/mob/living/carbon/human/proc/toggle_invis_power()
 	set name = "Toggle invisibility"
 	set category = "Superpower"
 	inv_state = !inv_state
