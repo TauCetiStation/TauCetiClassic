@@ -196,7 +196,8 @@
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/fix_chest_internal
 	allowed_tools = list(
-	/obj/item/stack/medical/advanced/bruise_pack= 100,
+	/obj/item/stack/medical/advanced/bruise_ointment_pack = 100,
+	/obj/item/stack/medical/advanced/bruise_pack = 100,
 	/obj/item/stack/medical/bruise_pack = 20,
 	/obj/item/stack/medical/bruise_pack/tajaran = 70
 	)
@@ -217,7 +218,7 @@
 
 /datum/surgery_step/ribcage/fix_chest_internal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack) || istype(tool, /obj/item/stack/medical/advanced/bruise_ointment_pack))
 		tool_name = "regenerative membrane"
 	if (istype(tool, /obj/item/stack/medical/bruise_pack))
 		if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
@@ -239,7 +240,7 @@
 
 /datum/surgery_step/ribcage/fix_chest_internal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack) || istype(tool, /obj/item/stack/medical/advanced/bruise_ointment_pack))
 		tool_name = "regenerative membrane"
 	if (istype(tool, /obj/item/stack/medical/bruise_pack))
 		if (istype(tool, /obj/item/stack/medical/bruise_pack/tajaran))
@@ -263,7 +264,7 @@
 	"<span class='warning'>Your hand slips, getting mess and tearing the inside of [target]'s chest with \the [tool]!</span>")
 	var/dam_amt = 2
 
-	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack))
+	if (istype(tool, /obj/item/stack/medical/advanced/bruise_pack) || istype(tool, /obj/item/stack/medical/advanced/bruise_ointment_pack))
 		target.adjustToxLoss(5)
 
 	else if (istype(tool, /obj/item/stack/medical/bruise_pack))
@@ -506,7 +507,7 @@
 		target.dna = PB.brainmob.dna
 	qdel(tool)
 	target.stat = CONSCIOUS
-	
+
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -730,6 +731,6 @@
 	tool.forceMove(accum)
 
 	var/obj/item/weapon/stock_parts/cell/C = tool
-	
+
 	target.nutrition = C.charge
 

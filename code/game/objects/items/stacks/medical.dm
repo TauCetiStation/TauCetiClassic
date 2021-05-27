@@ -228,37 +228,6 @@
 
 	repeating = TRUE
 
-/obj/item/stack/medical/advanced/bruise_pack/robot
-	name = "advanced trauma and burn kit"
-	singular_name = "advanced trauma and burn kit"
-	desc = "An advanced trauma and burn kit for severe injuries."
-	icon_state = "traumakit"
-	item_state = "traumakit"
-	heal_brute = 12
-	heal_burn = 12
-	amount = 12
-	max_amount = 12
-	var/charge_cost = 50
-	origin_tech = "biotech=1"
-	var/charge_tick = 0
-	var/recharge_time = 5
-
-	other_delay = 10
-
-	repeating = TRUE
-
-/obj/item/stack/medical/advanced/bruise_pack/robot/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			if(amount < max_amount)
-				R.cell.use(charge_cost)
-				amount++
-	return 1
-
 /obj/item/stack/medical/advanced/bruise_pack/update_icon()
 	icon_state = "[initial(icon_state)][amount]"
 
@@ -307,7 +276,41 @@
 		return TRUE
 	return ..()
 
-/obj/item/stack/medical/advanced/bruise_pack/robot/heal(mob/living/L, mob/living/user)
+/obj/item/stack/medical/advanced/bruise_ointment_pack
+	name = "advanced trauma-burn kit"
+	singular_name = "advanced trauma and burn kit"
+	desc = "An advanced trauma and burn kit for severe injuries."
+	icon_state = "traumaburnkit"
+	item_state = "traumaburnkit"
+	heal_brute = 12
+	heal_burn = 12
+	amount = 6
+	max_amount = 6
+	origin_tech = "biotech=1"
+
+	other_delay = 10
+
+	repeating = TRUE
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/announce_heal(mob/living/L, mob/user)
+	..()
+	playsound(src, pick(SOUNDIN_BANDAGE), VOL_EFFECTS_MASTER, 15)
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/can_heal(mob/living/L, mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+	if(BP.is_bandaged() && BP.is_disinfected() && BP.is_salved())
+		to_chat(user, "<span class='warning'>The wounds on [L]'s [BP.name] have already been treated and salved.</span>")
+		return FALSE
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
@@ -325,17 +328,51 @@
 				user.visible_message("<span class='notice'>\The [user] smears some bioglue over [W.desc] on [H]'s [BP.name].</span>", \
 									"<span class='notice'>You smear some bioglue over [W.desc] on [H]'s [BP.name].</span>")
 			W.bandage()
-			if(!BP.is_salved())
-				BP.heal_damage(0, heal_burn)
-				BP.salve()
 			W.disinfect()
 			W.heal_damage(heal_brute)
 			break
-
+		if(!BP.is_salved())
+			BP.heal_damage(0, heal_burn)
+			BP.salve()
 		BP.update_damages()
 		H.update_bandage()
 		return TRUE
 	return ..()
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/robot
+	amount = 12
+	max_amount = 12
+	var/charge_cost = 50
+	var/charge_tick = 0
+	var/recharge_time = 5
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/robot/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/robot/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/robot/update_icon()
+	if (amount == 0)
+		icon_state = "traumaburnkitempty"
+	icon_state = "[initial(icon_state)][amount]"
+
+/obj/item/stack/medical/advanced/bruise_ointment_pack/robot/process() //Every [recharge_time] seconds, recharge kit
+	charge_tick++
+	if(charge_tick < recharge_time) return 0
+	charge_tick = 0
+
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			if(src.amount < src.max_amount)
+				R.cell.use(charge_cost)
+				src.amount++
+
+	update_icon()
+	return 1
 
 /obj/item/stack/medical/advanced/ointment
 	name = "advanced burn kit"
