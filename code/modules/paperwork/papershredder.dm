@@ -107,7 +107,7 @@
 	if(empty_into && !istype(empty_into))
 		empty_into = null
 
-	if(empty_into?.contents.len>0)
+	if(empty_into?.contents.len > 0)
 		to_chat(user, "<span class='notice'>\The [empty_into] is full.</span>")
 		return
 
