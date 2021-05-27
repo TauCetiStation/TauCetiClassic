@@ -530,7 +530,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!config.deathmatch_arena)
 		return
 	for(var/mob/living/M in global.player_list)
-		if(!(M.client.prefs.eorg_enabled))
+		if(!M.client.prefs.eorg_enabled)
 			continue
 		var/mob/living/carbon/human/L = new(pick(eorgwarp))
 		M.mind.transfer_to(L)
