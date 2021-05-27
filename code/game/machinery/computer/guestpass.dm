@@ -45,7 +45,7 @@
 	var/giv_name = "NOT SPECIFIED"
 	var/reason = "NOT SPECIFIED"
 	var/duration = 5
-	var/print_cooldown = 0
+	var/next_print = 0
 
 	var/list/internal_log = list()
 	var/mode = FALSE // FALSE - making pass, TRUE - viewing logs
@@ -100,8 +100,8 @@
 		data["printmsg"] = "Card has no access."
 	else if(!length(accesses))
 		data["printmsg"] = "No access types selected."
-	else if(print_cooldown > world.time)
-		data["printmsg"] = "Busy for [(round((print_cooldown - world.time) / 10))]s.."
+	else if(next_print > world.time)
+		data["printmsg"] = "Busy for [(round((next_print - world.time) / 10))]s.."
 	else
 		data["printmsg"] = "Print Pass"
 		data["canprint"] = TRUE
@@ -168,7 +168,7 @@
 		if("issue")
 			if(!length(accesses))
 				return
-			if(print_cooldown > world.time)
+			if(next_print > world.time)
 				return
 			var/number = add_zero("[rand(0, 9999)]", 4)
 			var/entry = "\[[worldtime2text()]] Pass #[number] issued by [scan.registered_name] ([scan.assignment]) to [giv_name]. Reason: [reason]. Grants access to following areas: "
@@ -183,7 +183,7 @@
 			pass.expiration_time = world.time + duration MINUTES
 			pass.reason = reason
 			pass.name = "guest pass #[number]"
-			print_cooldown = world.time + 10 SECONDS
+			next_print = world.time + 10 SECONDS
 			entry += ". Expires at [time_stamp("hh:mm:ss", pass.expiration_time)]."
 			internal_log += entry
 		if("access")
