@@ -280,3 +280,6 @@ OOC_ROUND_ONLY
 SECOND_TOPIC_LIMIT 10
 
 MINUTE_TOPIC_LIMIT 100
+
+## This config option enables or disables deathmatch arena after round end.
+DEATHMATCH_ARENA 1

@@ -1563,6 +1563,8 @@ var/list/WALLITEMS = typecacheof(list(
 
 	return contains(location.loc)
 
+#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
 //Inverts the colour of an HTML string
 /proc/invertHTMLcolor(HTMLstring)
 	if(!istext(HTMLstring))
