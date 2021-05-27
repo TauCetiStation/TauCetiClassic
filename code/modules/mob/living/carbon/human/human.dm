@@ -1275,7 +1275,7 @@
 		inv_state=FALSE
 		return
 
-	if(inv_state==TRUE)
+	if(inv_state)
 		remove_overlay(27)
 		visible_message("<span class='notice'>\The [src] suddenly disappears! </span>","<span class='notice'>You disappear.</span>")
 	else
