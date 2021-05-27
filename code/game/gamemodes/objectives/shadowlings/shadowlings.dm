@@ -3,4 +3,4 @@
 
 /datum/objective/enthrall/check_completion()
 	var/datum/faction/shadowlings/S = faction
-	return S.shadowling_ascended
+	return istype(S) && S.shadowling_ascended

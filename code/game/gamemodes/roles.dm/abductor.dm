@@ -44,7 +44,7 @@
 
 /datum/role/abductor/proc/get_team_num()
 	var/datum/faction/abductors/A = faction
-	return A.team_number
+	return istype(A) && A.team_number
 
 /datum/role/abductor/agent
 	name = "Agent"
@@ -60,17 +60,19 @@
 
 /datum/role/abductor/agent/equip_class()
 	var/mob/living/carbon/human/agent = antag.current
-	var/datum/faction/abductors/A = faction
-
-	var/obj/machinery/abductor/console/console = A.get_team_console()
-	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
-	if(console)
-		console.vest = V
 	agent.equip_to_slot_or_del(V, SLOT_WEAR_SUIT)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), SLOT_BELT)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
+
+	var/datum/faction/abductors/A = faction
+	if(!istype(A))
+		return
+	var/obj/machinery/abductor/console/console = A.get_team_console()
+	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
+	if(console)
+		console.vest = V
 
 /datum/role/abductor/scientist
 	name = "Scientist"
@@ -86,11 +88,14 @@
 
 /datum/role/abductor/scientist/equip_class()
 	var/mob/living/carbon/human/scientist = antag.current
-	var/datum/faction/abductors/A = faction
-
-	var/obj/machinery/abductor/console/console = A.get_team_console()
 	var/obj/item/device/abductor/gizmo/G = new /obj/item/device/abductor/gizmo(scientist)
 	scientist.equip_to_slot_or_del(G, SLOT_IN_BACKPACK)
+
+	var/datum/faction/abductors/A = faction
+	if(!istype(A))
+		return
+
+	var/obj/machinery/abductor/console/console = A.get_team_console()
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	beamplant.imp_in = scientist
 	beamplant.implanted = 1

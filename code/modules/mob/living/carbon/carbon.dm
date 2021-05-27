@@ -69,7 +69,7 @@
 /mob/living/carbon/MiddleClickOn(atom/A)
 	if(mind)
 		var/datum/role/changeling/C = mind.GetRole(CHANGELING)
-		if(!stat && C?.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
 		else

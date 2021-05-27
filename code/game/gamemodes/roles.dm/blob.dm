@@ -48,7 +48,8 @@
 
 	if (faction)
 		var/datum/faction/blob_conglomerate/the_bleb = faction
-		the_bleb.declared = TRUE
+		if(istype(the_bleb))
+			the_bleb.declared = TRUE
 
 	if(iscarbon(antag.current))
 		var/mob/living/carbon/C = antag.current

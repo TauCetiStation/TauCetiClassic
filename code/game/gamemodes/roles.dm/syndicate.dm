@@ -71,7 +71,7 @@
 /datum/role/syndicate/operative/leader/OnPostSetup(laterole)
 	. = ..()
 	var/datum/faction/nuclear/N = faction
-	if (N.nuke_code)
+	if (istype(N) && N.nuke_code)
 		antag.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [N.nuke_code]", 0)
 		to_chat(antag.current, "The nuclear authorization code is: <B>[N.nuke_code]</B>")
 		var/obj/item/weapon/paper/P = new

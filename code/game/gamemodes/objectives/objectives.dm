@@ -775,7 +775,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/heist/inviolate_crew/check_completion()
 	var/datum/faction/heist/H = faction
-	if(H.is_raider_crew_safe())
+	if(istype(H) && H.is_raider_crew_safe())
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 

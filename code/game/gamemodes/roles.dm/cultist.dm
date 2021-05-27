@@ -62,7 +62,7 @@
 
 /datum/role/cultist/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	var/datum/faction/cult/C = faction
-	if(C)
+	if(istype(C))
 		if(href_list["cult_tome"])
 			var/mob/living/carbon/human/H = M.current
 			if(istype(H))
