@@ -1271,7 +1271,7 @@
 		return
 
 	if(!(INVISIBILITY in mutations))
-		src.verbs -= /mob/living/carbon/human/proc/invis
+		verbs -= /mob/living/carbon/human/proc/invis
 		inv_state=FALSE
 		return
 
