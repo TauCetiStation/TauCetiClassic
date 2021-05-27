@@ -1264,7 +1264,7 @@
 	set category = "Superpower"
 	inv_state = !inv_state
 
-	if(stat!= CONSCIOUS)
+	if(stat != CONSCIOUS)
 		inv_state = FALSE
 		apply_overlay(27)
 		regenerate_icons()
