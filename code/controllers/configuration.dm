@@ -137,15 +137,18 @@ var/list/net_announcer_secret = list()
 	var/expected_round_length = 90 MINUTES
 	// If the first delay has a custom start time
 	// No custom time
-	var/list/event_first_run = list(EVENT_LEVEL_MUNDANE = null,
+	var/list/event_first_run = list(EVENT_LEVEL_ROUNDSTART = null,
+									EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
 									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
-	var/list/event_delay_lower = list(EVENT_LEVEL_MUNDANE  = 10 MINUTES,
+	var/list/event_delay_lower = list(EVENT_LEVEL_ROUNDSTART = null,
+									  EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
 	// The upper delay until next event
-	var/list/event_delay_upper = list(EVENT_LEVEL_MUNDANE  = 15 MINUTES,
+	var/list/event_delay_upper = list(EVENT_LEVEL_ROUNDSTART = null,
+									  EVENT_LEVEL_MUNDANE  = 15 MINUTES,
 									  EVENT_LEVEL_MODERATE = 45 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
 
