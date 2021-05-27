@@ -96,8 +96,7 @@
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
 	stacktypes = list(
-		/obj/item/stack/medical/advanced/bruise_pack = 5,
-		/obj/item/stack/medical/advanced/ointment = 5,
+		/obj/item/stack/medical/advanced/bruise_pack/robot = 12,
 		/obj/item/stack/nanopaste = 5,
 		/obj/item/stack/medical/splint = 10
 		)
@@ -117,8 +116,7 @@
 	modules += new /obj/item/weapon/surgicaldrill(src)
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/mini(src)
-	modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
-	modules += new /obj/item/stack/medical/advanced/ointment(src)
+	modules += new /obj/item/stack/medical/advanced/bruise_pack/robot(src)
 	modules += new /obj/item/stack/nanopaste(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/gripper/medical(src)
