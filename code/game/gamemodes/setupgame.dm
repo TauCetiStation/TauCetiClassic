@@ -39,6 +39,7 @@
 	XRAYBLOCK          = getAssignedBlock("XRAY",          numsToAssign, DNA_HARD_BOUNDS)
 	COLDBLOCK          = getAssignedBlock("COLD",          numsToAssign, DNA_HARD_BOUNDS)
 	SHOCKIMMUNITYBLOCK = getAssignedBlock("SHOCKIMMUNITY", numsToAssign, DNA_HARD_BOUNDS)
+	INVISBLOCK         = getAssignedBlock("INVISIBILITY",  numsToAssign, DNA_HARD_BOUNDS)
 	//Minor Powers (BEA)
 	NOBREATHBLOCK      = getAssignedBlock("NOBREATH",      numsToAssign, DNA_HARDER_BOUNDS)
 	REMOTEVIEWBLOCK    = getAssignedBlock("REMOTEVIEW",    numsToAssign, DNA_HARDER_BOUNDS)

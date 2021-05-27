@@ -20,6 +20,8 @@
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
 
+	var/inv_state = FALSE // variable used by invisibility
+
 	var/last_massage = 0
 	var/massages_done_right = 0
 
@@ -1256,6 +1258,30 @@
 	else
 		remoteview_target = null
 		reset_view(0) //##Z2
+
+/mob/living/carbon/human/proc/invis()
+	set name = "Toggle invisibility"
+	set category = "Superpower"
+	inv_state = !inv_state
+
+	if(stat!= CONSCIOUS)
+		inv_state=FALSE
+		apply_overlay(27)
+		regenerate_icons()
+		return
+
+	if(!(INVISIBILITY in mutations))
+		src.verbs -= /mob/living/carbon/human/proc/invis
+		inv_state=FALSE
+		return
+
+	if(inv_state==TRUE)
+		remove_overlay(27)
+		visible_message("<span class='notice'>\The [src] suddenly disappears! </span>","<span class='notice'>You disappear.</span>")
+	else
+		apply_overlay(27)
+		regenerate_icons()
+		visible_message("<span class='notice'>\The [src] suddenly appears out of thin air! </span>","<span class='notice'>You become visible again.</span>")
 
 /mob/living/carbon/human/proc/get_visible_gender()
 	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))

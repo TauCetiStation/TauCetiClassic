@@ -289,3 +289,16 @@
 
 /datum/dna/gene/basic/tk/OnDrawUnderlays(mob/M,g,fat)
 	return "telekinesishead[fat]_s"
+
+/datum/dna/gene/basic/invisibility
+	name="Invisibility"
+	activation_messages=list("You feel light passes through your body.")
+	mutation=INVISIBILITY
+	activation_prob=30
+
+/datum/dna/gene/basic/invisibility/New()
+	block=INVISBLOCK
+
+/datum/dna/gene/basic/invisibility/activate(mob/M)
+	..(M)
+	M.verbs += /mob/living/carbon/human/proc/invis

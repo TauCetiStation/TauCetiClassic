@@ -342,6 +342,23 @@
 	block = MORPHBLOCK
 	. = ..()
 
+
+/obj/item/weapon/dnainjector/invisibility
+	name = "DNA-Injector (Invisibility)"
+	desc = "Activates incognito mode."
+	datatype = DNA2_BUF_SE
+	value = 0xFFF
+
+/obj/item/weapon/dnainjector/invisibility/atom_init()
+	block = INVISBLOCK
+	. = ..()
+
+/obj/item/weapon/dnainjector/antiinvisibility
+	name = "DNA-Injector (Anti-Invisibility)"
+	desc = "Makes you actually transparent."
+	datatype = DNA2_BUF_SE
+	value = 0x001
+
 /* No COLDBLOCK on bay
 /obj/item/weapon/dnainjector/cold
 	name = "DNA-Injector (Cold)"
