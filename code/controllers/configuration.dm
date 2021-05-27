@@ -207,6 +207,8 @@ var/list/net_announcer_secret = list()
 	var/minutetopiclimit = 100
 	var/secondtopiclimit = 10
 
+	var/deathmatch_arena = TRUE
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -632,7 +634,7 @@ var/list/net_announcer_secret = list()
 
 				if("client_limit_panic_bunker_count")
 					config.client_limit_panic_bunker_count = text2num(value)
-				
+
 				if("client_limit_panic_bunker_mentor_pass_cap")
 					config.client_limit_panic_bunker_mentor_pass_cap = text2num(value)
 
@@ -710,6 +712,8 @@ var/list/net_announcer_secret = list()
 					config.starlight = TRUE
 				if("nightshift")
 					config.nightshift = TRUE
+				if("deathmatch_arena")
+					config.deathmatch_arena = text2num(value)
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
