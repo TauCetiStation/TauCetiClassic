@@ -31,14 +31,11 @@ var/list/GPS_list = list()
 /obj/item/device/gps/atom_init()
 	. = ..()
 	GPS_list.Add(src)
-	poi_list.Add(src)
-	if(name == initial(name))
-		name = "global positioning system ([gpstag])"
+	name = "global positioning system ([gpstag])"
 	update_icon()
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
-	poi_list.Remove(src)
 	return ..()
 
 /obj/item/device/gps/update_icon()
