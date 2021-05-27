@@ -195,6 +195,10 @@
 	icon_broken = "secbroken"
 	icon_off = "secoff"
 
+/obj/structure/closet/secure_closet/security/atom_init(mapload)
+	. = ..()
+	sec_closets_list += src
+
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/security(src)

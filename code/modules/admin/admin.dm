@@ -1020,6 +1020,15 @@ var/global/BSACooldown = 0
 	message_admins("[key_name(usr)] toggled Job restrictions for xenos.")
 	feedback_add_details("admin_verb","TJR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggle_deathmatch_arena()
+	set category = "Server"
+	set desc = "Toggle arena on the round end."
+	set name = "Toggle Roundend Deathmatch"
+	config.deathmatch_arena = !config.deathmatch_arena
+	log_admin("[key_name(usr)] toggled Deathmatch Arena to [config.deathmatch_arena].")
+	message_admins("[key_name_admin(usr)] toggled Deathmatch Arena [config.deathmatch_arena ? "on" : "off"].")
+	feedback_add_details("admin_verb","TDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
