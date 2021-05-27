@@ -301,4 +301,4 @@
 
 /datum/dna/gene/basic/invisibility/activate(mob/M)
 	..()
-	M.verbs += /mob/living/carbon/human/proc/invis
+	M.verbs += /mob/living/carbon/human/proc/toggle_invis_power
