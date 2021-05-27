@@ -91,8 +91,9 @@
 	var/obj/item/I = get_active_hand()
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/G = I
-		if(client.gun_mode && G.can_fire())
-			G.Fire(A, src)
+		if(client.gun_mode)
+			if(G.can_fire())
+				G.Fire(A, src)
 		else
 			if(isliving(A))
 				var/mob/living/M = A
