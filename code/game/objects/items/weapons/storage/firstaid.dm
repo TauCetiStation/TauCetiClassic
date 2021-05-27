@@ -122,6 +122,25 @@
 	var/wrapper_color
 	var/label
 
+/obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/user)
+	if(!istype(W))
+		return
+
+	if(istype(W, /obj/item/weapon/airlock_painter))
+		var/obj/item/weapon/airlock_painter/A = W
+		if(!A.can_use(user, 1))
+			return
+		var/new_color = input(user, "Choose color!") as color|null
+		if(!new_color)
+			return
+		if(!in_range(src, usr) || !A.use(1))
+			return
+		wrapper_color = new_color
+		update_icon()
+		return
+
+	return ..()
+
 /obj/item/weapon/storage/pill_bottle/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !istype(target) || target != user)
 		return 1
