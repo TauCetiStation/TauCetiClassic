@@ -164,6 +164,7 @@
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(loc)
 			P.name = "activity log"
 			P.info = dat
+			P.update_icon()
 		if("issue")
 			if(!length(accesses))
 				return
