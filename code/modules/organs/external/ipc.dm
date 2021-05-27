@@ -15,6 +15,7 @@
 	var/ipc_head = "Default"
 	var/screen_toggle = TRUE
 	var/screen_brightness = 2
+	var/display_text
 
 	controller_type = /datum/bodypart_controller/robot/ipc
 

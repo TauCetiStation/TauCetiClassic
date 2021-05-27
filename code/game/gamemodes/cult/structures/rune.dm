@@ -11,7 +11,7 @@
 	var/datum/religion/religion
 	var/mob/creator
 
-/obj/effect/rune/atom_init(mapload, datum/religion/R, mob/user)
+/obj/effect/rune/atom_init(mapload, datum/religion/R, mob/user, rand_icon = FALSE)
 	. = ..()
 	if(R)
 		ASSERT(user)
@@ -24,6 +24,13 @@
 		else
 			var/list/L = religion.runes_by_mob[creator]
 			L += src
+
+	if(rand_icon)
+		var/list/all_words = RUNE_WORDS
+		var/list/words = list()
+		for(var/i in 1 to 3)
+			words += pick_n_take(all_words)
+		icon = get_uristrune_cult(TRUE, words)
 
 	var/image/I = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	I.override = TRUE

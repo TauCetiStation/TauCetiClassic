@@ -149,7 +149,7 @@
 			if(bancid)
 				banreason = "[banreason] (CUSTOM CID)"
 		else
-			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
+			message_admins("Ban process: A mob matching [playermob.ckey] was found at location [COORD(playermob)]. Custom ip and computer id fields replaced with the ip and computer id from the located mob")
 
 		DB_ban_record(bantype, playermob, banduration, banreason, banjob, banckey, banip, bancid )
 
@@ -1503,9 +1503,9 @@
 		//Location
 		if(isturf(T))
 			if(isarea(T.loc))
-				location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
+				location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [COORD(T)] in area <b>[T.loc]</b>)"
 			else
-				location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z])"
+				location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [COORD(T)])"
 
 		//Job + antagonist
 		if(M.mind)

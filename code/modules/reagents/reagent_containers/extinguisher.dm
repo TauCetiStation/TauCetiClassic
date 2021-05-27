@@ -47,10 +47,12 @@
 		icon_state = "[initial(icon_state)]"
 	reagents.add_reagent(reagent_inside, volume)
 
+	extinguisher_list += src
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -94,7 +96,7 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/golden
 	name = "golden fire extinguisher"

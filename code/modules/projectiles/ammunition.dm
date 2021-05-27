@@ -100,6 +100,16 @@
 			return 1
 	return 0
 
+/obj/item/ammo_box/proc/make_empty(deleting = TRUE)
+	if(deleting)
+		stored_ammo = list()
+		update_icon()
+	else
+		var/turf/T = get_turf(src)
+		for(var/obj/ammo in stored_ammo)
+			stored_ammo -= ammo
+			ammo.forceMove(T)
+
 /obj/item/ammo_box/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = 0
 	if(istype(I, /obj/item/ammo_box))
