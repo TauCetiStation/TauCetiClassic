@@ -192,9 +192,11 @@
 	can_hold = list(
 		/obj/item/weapon/reagent_containers/blood,
 		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/pill,
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/organ/internal,
 		/obj/item/organ/external,
+		/obj/item/brain,
 		/obj/item/robot_parts/l_arm,
 		/obj/item/robot_parts/r_arm,
 		/obj/item/robot_parts/l_leg,
