@@ -292,7 +292,7 @@
 
 /datum/dna/gene/basic/invisibility
 	name="Invisibility"
-	activation_messages=list("You feel light passes through your body.")
+	activation_messages=list("You feel the light pass through your body.")
 	mutation=INVISIBILITY
 	activation_prob=30
 
