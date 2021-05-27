@@ -1261,13 +1261,12 @@
 		reset_view(0) //##Z2
 
 /mob/living/carbon/human/proc/toggle_invis_power()
-	if(stat != CONSCIOUS)
-		inv_state = FALSE
-		return
-		
 	set name = "Toggle invisibility"
 	set category = "Superpower"
 	inv_state = !inv_state
+	if(stat != CONSCIOUS)
+		inv_state = FALSE
+		return
 
 	if(!(INVISIBILITY in mutations))
 		verbs -= /mob/living/carbon/human/proc/invis
