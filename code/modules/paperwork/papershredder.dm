@@ -17,8 +17,8 @@
 	icon = 'icons/obj/papershredder.dmi'
 	icon_state = "shredder-off"
 	var/shred_anim = "shredder-shredding"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 200
