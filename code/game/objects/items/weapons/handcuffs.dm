@@ -46,6 +46,8 @@
 
 	if (ishuman(target) || isIAN(target) || ismonkey(target))
 		target.log_combat(user, "handcuffed (attempt) with [name]")
+		target.visible_message("<span class='warning'><B>[user]</B> attempts to handcuff <B>[target]</B>!</span>", \
+			 "<span class='warning'><B>[user]</B> attempts to handcuff you!</span>")
 
 		if(do_mob(user, target, HUMAN_STRIP_DELAY) && mob_can_equip(target, SLOT_HANDCUFFED))
 			if(!isrobot(user) && !isIAN(user) && user != target)

@@ -35,7 +35,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovable_rod/atom_init(mapload, turf/end)
 	. = ..()
 	if(notify)
-		message_admins("[src] has spawned at [src.x],[src.y],[src.z] [ADMIN_JMP(src)] [ADMIN_FLW(src)].")
+		message_admins("[src] has spawned at [COORD(src)] [ADMIN_JMP(src)] [ADMIN_FLW(src)].")
 	poi_list += src
 	z_original = z
 	destination = end
