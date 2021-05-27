@@ -300,5 +300,5 @@
 	block=INVISBLOCK
 
 /datum/dna/gene/basic/invisibility/activate(mob/M)
-	..(M)
+	..()
 	M.verbs += /mob/living/carbon/human/proc/invis
