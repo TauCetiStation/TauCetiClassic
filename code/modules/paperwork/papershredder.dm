@@ -167,7 +167,8 @@
 	..()
 	pixel_x = rand(-5,5)
 	pixel_y = rand(-5,5)
-	if(prob(65)) color = pick("#BABABA","#7F7F7F")
+	if(prob(65))
+		color = pick("#BABABA", "#7F7F7F")
 
 /obj/item/weapon/shreddedp/attackby(var/obj/item/P as obj, var/mob/user)
 	if(istype(P, /obj/item/weapon/lighter))
