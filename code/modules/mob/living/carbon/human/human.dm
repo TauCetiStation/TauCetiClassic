@@ -1269,7 +1269,7 @@
 		return
 
 	if(!(INVISIBILITY in mutations))
-		verbs -= /mob/living/carbon/human/proc/invis
+		verbs -= /mob/living/carbon/human/proc/toggle_invis_power
 		inv_state=FALSE
 		return
 
