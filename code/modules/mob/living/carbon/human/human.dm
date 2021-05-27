@@ -1,5 +1,6 @@
 #define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
+#define BODY_OVERLAY 27
 
 /mob/living/carbon/human
 	name = "unknown"
@@ -1260,15 +1261,13 @@
 		reset_view(0) //##Z2
 
 /mob/living/carbon/human/proc/toggle_invis_power()
+	if(stat != CONSCIOUS)
+		inv_state = FALSE
+		return
+		
 	set name = "Toggle invisibility"
 	set category = "Superpower"
 	inv_state = !inv_state
-
-	if(stat != CONSCIOUS)
-		inv_state = FALSE
-		apply_overlay(27)
-		regenerate_icons()
-		return
 
 	if(!(INVISIBILITY in mutations))
 		verbs -= /mob/living/carbon/human/proc/invis
@@ -1276,10 +1275,10 @@
 		return
 
 	if(inv_state)
-		remove_overlay(27)
+		remove_overlay(BODY_OVERLAY)
 		visible_message("<span class='notice'>\The [src] suddenly disappears! </span>","<span class='notice'>You disappear.</span>")
 	else
-		apply_overlay(27)
+		apply_overlay(BODY_OVERLAY)
 		regenerate_icons()
 		visible_message("<span class='notice'>\The [src] suddenly appears out of thin air! </span>","<span class='notice'>You become visible again.</span>")
 
