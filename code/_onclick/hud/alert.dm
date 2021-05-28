@@ -81,6 +81,7 @@
 	if(!ui)
 		ui = new(user, src, "AlertModal")
 		ui.open()
+
 /datum/tgui_modal/tgui_close(mob/user)
 	. = ..()
 	closed = TRUE

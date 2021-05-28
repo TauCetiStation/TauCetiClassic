@@ -1265,7 +1265,7 @@ var/global/BSACooldown = 0
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = tgui_alert(question, "Place ghost in control of mob?", list("Yes", "No"))
+	var/ask = tgui_alert(usr, question, "Place ghost in control of mob?", list("Yes", "No"))
 	if (ask != "Yes")
 		return 1
 

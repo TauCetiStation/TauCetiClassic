@@ -265,7 +265,7 @@ SUBSYSTEM_DEF(events)
 			EC.delay_modifier = delay
 			admin_log_and_message_admins("has set the interval modifier for [severity_to_string[EC.severity]] events to [EC.delay_modifier].")
 	else if(href_list["stop"])
-		if(tgui_alert(usr,"Stopping an event may have unintended side-effects. Continue?", list("Stopping Event!","Yes","No")) != "Yes")
+		if(tgui_alert(usr, "Stopping an event may have unintended side-effects. Continue?", list("Stopping Event!","Yes","No")) != "Yes")
 			return
 		var/datum/event/E = locate(href_list["stop"])
 		var/datum/event_meta/EM = E.event_meta
@@ -302,7 +302,7 @@ SUBSYSTEM_DEF(events)
 		EM.enabled = !EM.enabled
 		admin_log_and_message_admins("has [EM.enabled ? "enabled" : "disabled"] the [severity_to_string[EM.severity]] event '[EM.name]'.")
 	else if(href_list["remove"])
-		if(tgui_alert(usr,"This will remove the event from rotation. Continue?", list("Removing Event!","Yes","No")) != "Yes")
+		if(tgui_alert(usr, "This will remove the event from rotation. Continue?", list("Removing Event!","Yes","No")) != "Yes")
 			return
 		var/datum/event_meta/EM = locate(href_list["remove"])
 		var/datum/event_container/EC = locate(href_list["EC"])
@@ -311,7 +311,7 @@ SUBSYSTEM_DEF(events)
 	else if(href_list["add"])
 		if(!new_event.name || !new_event.event_type)
 			return
-		if(tgui_alert(usr,"This will add a new event to the rotation. Continue?", list("Add Event!","Yes","No")) != "Yes")
+		if(tgui_alert(usr, "This will add a new event to the rotation. Continue?", list("Add Event!","Yes","No")) != "Yes")
 			return
 		new_event.severity = selected_event_container.severity
 		selected_event_container.available_events += new_event

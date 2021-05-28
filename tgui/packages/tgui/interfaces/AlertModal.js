@@ -69,7 +69,7 @@ export class AlertModal extends Component {
       <Window
         title={title}
         width={350}
-        height={150}
+        height={180}
         canClose={timeout > 0}>
         {timeout && <Loader value={timeout} />}
         <Window.Content

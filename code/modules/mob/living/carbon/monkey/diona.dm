@@ -166,7 +166,7 @@
 		return
 
 	if(injecting)
-		switch(tgui_alert(user, "Would you like to stop injecting, or change chemical?","Choose.", list("Stop injecting","Change chemical")))
+		switch(tgui_alert(usr, "Would you like to stop injecting, or change chemical?","Choose.", list("Stop injecting","Change chemical")))
 			if("Stop injecting")
 				injecting = null
 				return

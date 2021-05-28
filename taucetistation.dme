@@ -139,6 +139,7 @@
 #include "code\_onclick\hud\_defines.dm"
 #include "code\_onclick\hud\action.dm"
 #include "code\_onclick\hud\ai.dm"
+#include "code\_onclick\hud\alert.dm"
 #include "code\_onclick\hud\alien.dm"
 #include "code\_onclick\hud\default_hud.dm"
 #include "code\_onclick\hud\facehugger.dm"

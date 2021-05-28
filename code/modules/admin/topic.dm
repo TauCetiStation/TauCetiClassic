@@ -164,7 +164,7 @@
 			return
 		switch(task)
 			if("add")
-				var/response = tgui_alert(usr, "Who do you want to add?","Message", usr("Admin","Mentor","Cancel"))
+				var/response = tgui_alert(usr, "Who do you want to add?","Message", list("Admin","Mentor","Cancel"))
 				switch(response)
 					if("Admin")
 						add_admin()
