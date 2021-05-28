@@ -23,6 +23,7 @@ export class AlertModal extends Component {
 
     this.buttonRefs = [createRef()];
     this.state = { current: 0 };
+
   }
 
   componentDidMount() {
@@ -69,7 +70,7 @@ export class AlertModal extends Component {
       <Window
         title={title}
         width={350}
-        height={180}
+        height={150}
         canClose={timeout > 0}>
         {timeout && <Loader value={timeout} />}
         <Window.Content
