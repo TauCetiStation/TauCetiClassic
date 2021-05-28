@@ -632,8 +632,8 @@ var/const/INGEST = 2
 
 	if(!isnull(user))
 		var/turf/T = get_turf(target)
-		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([T.x],[T.y],[T.z]) [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([T.x],[T.y],[T.z])")
+		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([COORD(T)]) [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([COORD(T)])")
 
 		if(ismob(target))
 			var/mob/living/L = target

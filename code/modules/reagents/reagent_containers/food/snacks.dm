@@ -67,7 +67,8 @@
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
+					M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 				else
 					user.visible_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>")
 					return
@@ -76,7 +77,8 @@
 
 				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-				user.visible_message("<span class='rose'>[user] feeds [M] [src].</span>")
+				M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 			else
 				to_chat(user, "This creature does not seem to have a mouth!</span>")

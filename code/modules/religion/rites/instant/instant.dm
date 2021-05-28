@@ -7,6 +7,7 @@
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Для моих богов!!"
 	favor_cost = 50
+	can_talismaned = FALSE
 
 /datum/religion_rites/instant/cult/sacrifice/can_start(mob/living/user, obj/AOG)
 	if(!..())
@@ -73,6 +74,7 @@
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Служи ему!!!"
 	favor_cost = 100
+	can_talismaned = FALSE
 
 /datum/religion_rites/instant/cult/convert/proc/can_convert(mob/living/user, obj/AOG)
 	if(!ishuman(AOG.buckled_mob))
@@ -113,7 +115,7 @@
 	return TRUE
 
 /datum/religion_rites/instant/cult/emp
-	name = "ЕМП"
+	name = "ЭМИ"
 	desc = "Производит электрический импульс фотонов."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Энергетический импульс!!!"
@@ -193,6 +195,7 @@
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Восстань из мертвых!!!"
 	favor_cost = 300
+	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_OBSCURE = 2,
@@ -295,7 +298,7 @@
 
 /datum/religion_rites/instant/cult/create_slave/invoke_effect(mob/living/user, obj/AOG)
 	..()
-	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 15 SECONDS)
+	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 15 SECONDS)
 	if(!candidates.len)
 		to_chat(user, "<span class='warning'>Ниодна душа не захотела вселяться в гомункула.</span>")
 		return FALSE
@@ -303,7 +306,7 @@
 	for(var/i in 1 to divine_power)
 		var/mob/M = pick(candidates)
 		var/mob/living/carbon/human/homunculus/H = new(get_turf(AOG))
-		var/area/area = get_area(AOG)
+
 		H.visible_message("<span class='userdanger'>На алтаре появляется фигура. Фигура... человека.</span>", \
 			"<span class='[religion.style_text]'>Вы чувствуете наслаждение от очередного вашего воскрешения.</span>", \
 			"<span class='userdanger'>Вы слышите, как течет жидкость.</span>")
@@ -323,9 +326,9 @@
 		to_chat(H, "<span class='[religion.style_text]'>Твоя кровь пульсирует, а голова раскалывается. Мир становится красным. Внезапно ты осознаешь ужаснейшую истину. Вуаль реальности повредилась. В твоей некогда гнившей ране пустило корни что-то зловещее.</span>")
 		to_chat(H, "<span class='[religion.style_text]'>Помогай своим собратьям в их темных делах. Их цель - твоя цель, а ваша - их. Отплати Темнейшему за свое воскрешение достойно.</span>")
 
-		slave_enter_area(H, area)
+		slave_enter_area(H, get_area(AOG))
 		RegisterSignal(H, list(COMSIG_ENTER_AREA), .proc/slave_enter_area)
-		RegisterSignal(H.species, list(COMSIG_SPECIES_LOSS), .proc/remove_curse)
+		RegisterSignal(H, list(COMSIG_SPECIES_LOSS), .proc/remove_curse)
 	return TRUE
 
 /datum/religion_rites/instant/cult/freedom
@@ -492,6 +495,7 @@
 	ritual_length = (15 SECONDS)
 	invoke_msg = "Защитись же!!"
 	favor_cost = 300
+	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_CHAOS = 2,
@@ -526,7 +530,7 @@
 	H.take_overall_damage(10, 20)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	H.AddComponent(/datum/component/forcefield, "power aura", 50 * divine_power, 1 MINUTE, 40 SECONDS, R, FALSE, TRUE)
+	H.AddComponent(/datum/component/forcefield, "power aura", 30 * divine_power, 1 MINUTE, 2.5 MINUTE, R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE

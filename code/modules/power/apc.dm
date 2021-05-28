@@ -826,6 +826,8 @@
 
 			return 0
 	else
+		if(locked)
+			return FALSE
 		if((!in_range(src, user) || !istype(src.loc, /turf)))
 			nanomanager.close_user_uis(user, src)
 

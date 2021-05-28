@@ -55,10 +55,12 @@
 		update_icon()
 		return 1
 	else
-		user.visible_message("<span class='warning'>[user] attempts to feed [M] [src].</span>")
+		M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 		if(!do_mob(user, M))
 			return
-		user.visible_message("<span class='warning'>[user] feeds [M] [src].</span>")
+		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 		M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
@@ -130,8 +132,6 @@
 		to_chat(user, "<span class = 'notice'>You splash the solution onto [target].</span>")
 
 		reagents.standard_splash(target, user=user)
-
-	update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/proc/refill_by_borg(user, refill, trans)
 	reagents.add_reagent(refill, trans)

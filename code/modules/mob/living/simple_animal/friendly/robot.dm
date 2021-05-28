@@ -32,6 +32,10 @@
 	var/act_emag
 	var/obj/machinery/computer/rdconsole/rdconsole = null
 
+/mob/living/simple_animal/det5/atom_init()
+	. = ..()
+	chief_animal_list += src
+
 /mob/living/simple_animal/det5/Life()
 	..()
 	if(health <= 0)
