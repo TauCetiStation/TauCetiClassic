@@ -234,7 +234,7 @@
 		// Warp all Players to Prison
 		if("prisonwarp")
 			if(!SSticker)
-				alert("The game hasn't started yet!", null, null, null, null, null)
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","PW")
@@ -269,7 +269,7 @@
 		// Everyone is the traitor
 		if("traitor_all")
 			if(!SSticker)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			var/objective = sanitize(input("Enter an objective"))
 			if(!objective)
@@ -435,7 +435,7 @@
 		if("virus")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","V")
-			var/answer = alert("Do you want this to be a greater disease or a lesser one?",,"Greater","Lesser")
+			var/answer = tgui_alert(usr,"Do you want this to be a greater disease or a lesser one?",,list("Greater","Lesser"))
 			if(answer=="Lesser")
 				virus2_lesser_infection()
 				message_admins("[key_name_admin(usr)] has triggered a lesser virus outbreak.")
@@ -632,10 +632,10 @@
 		// Show Game Mode
 		if("showgm")
 			if(!SSticker)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr,"The game hasn't started yet!")
 			else if (SSticker.mode)
-				alert("The game mode is [SSticker.mode.name]")
-			else alert("For some reason there's a ticker, but not a game mode")
+				tgui_alert(usr,"The game mode is [SSticker.mode.name]")
+			else tgui_alert(usr,"For some reason there's a ticker, but not a game mode")
 		// Show Crew Manifest
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
@@ -685,7 +685,7 @@
 
 		// Set Night Shift Mode
 		if("night_shift_set")
-			var/val = alert(usr, "What do you want to set night shift to?", "Night Shift", "On", "Off", "Automatic")
+			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
 					SSnightshift.can_fire = TRUE
@@ -750,7 +750,7 @@
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		if("topicspam")
 			var/count = config.minutetopiclimit * 2
-			if(alert("Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,"Yes","No") == "Yes")
+			if(tgui_alert("Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,list("Yes","No")) == "Yes")
 				to_chat(usr, "<span class='interface'>You are lost your keys to control this station. Please wait...</span>")
 				usr.client.holder.disassociate()
 				message_admins("[key_name_admin(usr)] started topic spam.")

@@ -23,9 +23,13 @@ const DEFAULT_SIZE = [400, 600];
 export class Window extends Component {
   componentDidMount() {
     const { config, suspended } = useBackend(this.context);
+    const { canClose = true } = this.props;
     if (suspended) {
       return;
     }
+    Byond.winset(window.__windowId__, {
+      'can-close': Boolean(canClose),
+    });
     logger.log('mounting');
     const options = {
       size: DEFAULT_SIZE,
