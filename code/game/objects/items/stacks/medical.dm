@@ -357,6 +357,7 @@
 /obj/item/stack/medical/advanced/bruise_ointment_pack/robot/update_icon()
 	if (amount == 0)
 		icon_state = "traumaburnkitempty"
+		return
 	icon_state = "[initial(icon_state)][amount]"
 
 /obj/item/stack/medical/advanced/bruise_ointment_pack/robot/process() //Every [recharge_time] seconds, recharge kit
@@ -367,9 +368,9 @@
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
-			if(src.amount < src.max_amount)
+			if(amount < max_amount)
 				R.cell.use(charge_cost)
-				src.amount++
+				amount++
 
 	update_icon()
 	return 1
