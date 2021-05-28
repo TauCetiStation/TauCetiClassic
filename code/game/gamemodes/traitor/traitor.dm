@@ -64,7 +64,7 @@
 /datum/game_mode/traitor/post_setup()
 	if(prob((traitors.len / 2.0 - 1) * 15)) //no sub-traitors if 2 or less traitors
 		var/spawnertypes = 3	//yep magic number, it best what can be here
-		switch(rand(1,80 + max(0, (traitors.len / 3.0 - 1) * 50))) //can spawn both only if 4 or more traitors
+		switch(rand(1, 80 + max(0, (traitors.len / 3.0 - 1) * 50))) //can spawn both only if 4 or more traitors
 			if(1 to 40)
 				spawnertypes = 1
 			if(41 to 80)
