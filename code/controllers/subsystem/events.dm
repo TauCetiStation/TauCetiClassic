@@ -10,15 +10,23 @@ SUBSYSTEM_DEF(events)
 	var/list/finished_events = list()
 	var/list/allEvents = list()
 	var/list/event_containers = list(
-			EVENT_LEVEL_MUNDANE  = new/datum/event_container/mundane,
-			EVENT_LEVEL_MODERATE = new/datum/event_container/moderate,
-			EVENT_LEVEL_MAJOR    = new/datum/event_container/major
+			EVENT_LEVEL_ROUNDSTART = new/datum/event_container/roundstart,
+			EVENT_LEVEL_MUNDANE    = new/datum/event_container/mundane,
+			EVENT_LEVEL_MODERATE   = new/datum/event_container/moderate,
+			EVENT_LEVEL_MAJOR      = new/datum/event_container/major,
 		)
 
 	var/datum/event_meta/new_event = new
 
 /datum/controller/subsystem/events/Initialize()
-	allEvents = subtypesof(/datum/event) - /datum/event/anomaly
+	var/list/black_types = list(
+			/datum/event/anomaly,
+			/datum/event/roundstart,
+			/datum/event/roundstart/area,
+			/datum/event/roundstart/area/replace,
+			/datum/event/roundstart/area/maintenance_spawn,
+	)
+	allEvents = subtypesof(/datum/event) - black_types
 	return ..()
 
 /datum/controller/subsystem/events/fire()
@@ -28,6 +36,11 @@ SUBSYSTEM_DEF(events)
 	for(var/i in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
+
+/datum/controller/subsystem/events/proc/start_roundstart_event()
+	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
+	for(var/i in 1 to rand(1, 3))
+		EC.start_event()
 
 /datum/controller/subsystem/events/proc/event_complete(datum/event/E)
 	if(!E.event_meta)	// datum/event is used here and there for random reasons, maintaining "backwards compatibility"
@@ -41,7 +54,7 @@ SUBSYSTEM_DEF(events)
 	if(!E.severity)
 		theseverity = EVENT_LEVEL_MODERATE
 
-	if(!E.severity == EVENT_LEVEL_MUNDANE && !E.severity == EVENT_LEVEL_MODERATE && !E.severity == EVENT_LEVEL_MAJOR)
+	if(E.severity != EVENT_LEVEL_ROUNDSTART && E.severity != EVENT_LEVEL_MUNDANE && E.severity != EVENT_LEVEL_MODERATE && E.severity != EVENT_LEVEL_MAJOR)
 		theseverity = EVENT_LEVEL_MODERATE //just to be careful
 
 	if(E.severity)

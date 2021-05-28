@@ -16,6 +16,7 @@
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
+	toilet_list += src
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE * 1.5)

@@ -517,3 +517,11 @@
 	for(var/obj/O in contents)
 		remove_from_storage(O, T)
 		INVOKE_ASYNC(O, /obj.proc/tumble_async, 2)
+
+/obj/item/weapon/storage/proc/make_empty(delete = TRUE)
+	var/turf/T = get_turf(src)
+	for(var/A in contents)
+		if(delete)
+			qdel(A)
+		else
+			remove_from_storage(A, T)
