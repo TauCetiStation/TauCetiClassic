@@ -167,9 +167,6 @@
 /obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
 	if (proximity)
 		return
-	if(!ishuman(user))
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click* *click*</span>", SHOWMSG_AUDIO)

@@ -213,9 +213,6 @@
 	if(!isobj(target))
 		return
 	var/obj/O = target
-	if(!ishuman(user))
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
 	switch(mode)
 		if(CARD_MODE)
 			if(istype(O, /obj/item/toy/cards))
