@@ -19,6 +19,10 @@ var/global/list/all_objectives = list()
 	all_objectives -= src
 	return ..()
 
+/datum/objective/proc/calculate_completion()
+	completed = check_completion()
+	return completed
+
 /datum/objective/proc/check_completion()
 	return completed
 

@@ -9,7 +9,7 @@
 	name = F_BLOBCONGLOMERATE
 	ID = F_BLOBCONGLOMERATE
 	logo_state = "blob-logo"
-	required_pref = BLOBOVERMIND
+	required_pref = ROLE_BLOB
 
 	initroletype = /datum/role/blob_overmind
 	roletype = /datum/role/blob_overmind/cerebrate

@@ -206,6 +206,7 @@
 		score_results += "<br><br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			objective.extra_info()
+			objective.calculate_completion()
 			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			count++
