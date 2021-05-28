@@ -128,7 +128,7 @@
 	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>Вы без понятия что с этим делать.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 	close_machine(target)
 
@@ -142,14 +142,14 @@
 	if(user.is_busy(null, FALSE)) // prevents spam too.
 		return
 
-	to_chat(user, "<span class='notice'>Вы стараетесь изо всех сил выбраться из капсулы, упираясь ногами... (Потребуется около 30 секунд.)</span>")
-	audible_message("<span class='notice'>Вы слышите глухой стук, исходящий из криогенной камеры.</span>")
+	to_chat(user, "<span class='notice'>Вы пытаетесь выбраться из капсулы, толкаясь ногами... (Потребуется около 30 секунд.)</span>")
+	audible_message("<span class='notice'>Вы слышите глухой стук из криокамеры.</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
-	set name = "Извлечь из криогенной камеры"
+	set name = "Извлечь из Криокамеры"
 	set desc = "Начать процедуру открытия криогенной камеры."
 	set category = "Object"
 	set src in oview(1)
@@ -171,11 +171,11 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Кто-то внутри криогенной камеры!")
+			to_chat(user, "Кто-то внутри криокамеры!")
 		else
 			to_chat(user, "Вы едва можете различить форму того, что плавает в криогенной камере.")
 	else
-		to_chat(user, "[src] выглядит пустой.")
+		to_chat(user, "Криокамера выглядит пустой.")
 
  /**
   * The ui_interact proc is used to open and update Nano UIs
@@ -247,7 +247,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>Вы без понятия что с этим делать.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 
 	if(user == occupant)
@@ -259,7 +259,7 @@
 			update_icon()
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>Вы без понятия что с этим делать.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 
 	if(user == occupant)
