@@ -1013,7 +1013,7 @@
 				current.regenerate_icons()
 				log_admin("[key_name(usr)] turned [current] into abductor.")
 			if("equip")
-				var/gear = tgui_alert(admin,"Agent or Scientist Gear","Gear", list("Agent","Scientist"))
+				var/gear = tgui_alert(usr,"Agent or Scientist Gear","Gear", list("Agent","Scientist"))
 				if(gear)
 					for (var/obj/item/I in current)
 						if (istype(I, /obj/item/weapon/implant))

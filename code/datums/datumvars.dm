@@ -770,7 +770,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(tgui_alert(usr,"Confirm mob type change?", list("Transform","Cancel") != "Transform")	return
+		if(tgui_alert(usr,"Confirm mob type change?", list("Transform","Cancel") != "Transform"))	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
