@@ -58,8 +58,7 @@
 /obj/machinery/computer/guestpass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(!scan)
-			if(user.drop_from_inventory(O, src))
-				I.forceMove(src)
+			if(user.drop_from_inventory(I, src))
 				scan = I
 				updateUsrDialog()
 		else
