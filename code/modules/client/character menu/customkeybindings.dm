@@ -63,7 +63,14 @@
 		var shift = e.shiftKey ? 1 : 0;
 		var numpad = (95 < e.keyCode && e.keyCode < 112) ? 1 : 0;
 		var escPressed = e.keyCode == 27 ? 1 : 0;
-		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+e.key+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
+		var sanitizedKey = e.key;
+		if (47 < e.keyCode && e.keyCode < 58) {
+			sanitizedKey = String.fromCharCode(e.keyCode);
+		}
+		else if (64 < e.keyCode && e.keyCode < 91) {
+			sanitizedKey = String.fromCharCode(e.keyCode);
+		}
+		var url = 'byond://?_src_=prefs;preference=keybindings_set;keybinding=[kb.name];old_key=[old_key];clear_key='+escPressed+';key='+sanitizedKey+';alt='+alt+';ctrl='+ctrl+';shift='+shift+';numpad='+numpad+';key_code='+e.keyCode;
 		window.location=url;
 		deedDone = true;
 	}
@@ -111,7 +118,6 @@
 			var/CtrlMod = text2num(href_list["ctrl"]) ? "Ctrl" : ""
 			var/ShiftMod = text2num(href_list["shift"]) ? "Shift" : ""
 			var/numpad = text2num(href_list["numpad"]) ? "Numpad" : ""
-			// var/key_code = text2num(href_list["key_code"])
 
 			if(global._kbMap[new_key])
 				new_key = global._kbMap[new_key]
@@ -149,6 +155,8 @@
 			var/list/old_keys = splittext(href_list["old_keys"], ",")
 
 			for(var/old_key in old_keys)
+				if(!key_bindings[old_key])
+					continue
 				key_bindings[old_key] -= kb_name
 				if(!length(key_bindings[old_key]))
 					key_bindings -= old_key
