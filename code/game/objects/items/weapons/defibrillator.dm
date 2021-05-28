@@ -423,13 +423,6 @@
 	make_announcement("pings, \"Defibrillation successful.\"")
 	playsound(src, 'sound/items/surgery/defib_success.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-/obj/item/weapon/twohanded/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
-	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
-	if (IO.heart_status == HEART_FAILURE)
-		IO.heart_fibrillate()
-	..()
-	return
-
 /obj/item/weapon/twohanded/shockpaddles/proc/do_electrocute(mob/living/carbon/human/H, mob/user, target_zone)
 	var/obj/item/organ/external/affecting = H.get_bodypart(target_zone)
 	if(!affecting)
@@ -499,26 +492,6 @@
 			playsound(src, 'sound/items/surgery/defib_safetyOff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		update_icon()
 	..()
-
-/obj/item/weapon/twohanded/shockpaddles/robot
-	name = "defibrillator paddles"
-	desc = "A pair of advanced shockpaddles powered by a robot's internal power cell, able to penetrate thick clothing."
-	charge_cost = 50
-	combat = TRUE
-	cooldown_time = 3 SECONDS
-
-/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.charge >= charge_amt)
-
-/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.use(charge_amt))
-
-/obj/item/weapon/twohanded/shockpaddles/robot/attack_self(mob/user)
-	return //No, this can't be wielded
 
 /*
 	Shockpaddles that are linked to a base unit
