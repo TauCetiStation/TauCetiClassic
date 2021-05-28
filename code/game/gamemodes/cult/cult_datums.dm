@@ -5,7 +5,7 @@
 	// Used only for sprite generation
 	var/list/words = list()
 
-	var/static/list/all_words = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+	var/static/list/all_words = RUNE_WORDS
 
 /datum/rune/New(holder)
 	src.holder = holder

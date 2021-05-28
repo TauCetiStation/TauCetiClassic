@@ -265,6 +265,8 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
+		SSevents.start_roundstart_event()
+
 		for(var/mob/dead/new_player/N in new_player_list)
 			if(N.client)
 				N.show_titlescreen()
@@ -518,10 +520,26 @@ SUBSYSTEM_DEF(ticker)
 
 	scoreboard(ai_completions)
 
+
+	teleport_players_to_eorg_area()
+
 	//Ask the event manager to print round end information
 	SSevents.RoundEnd()
 
 	return 1
+
+/datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
+	if(!config.deathmatch_arena)
+		return
+	for(var/mob/living/M in global.player_list)
+		if(!M.client.prefs.eorg_enabled)
+			continue
+		var/mob/living/carbon/human/L = new(pick(eorgwarp))
+		M.mind.transfer_to(L)
+		L.equipOutfit(/datum/outfit/arena)
+		L.name = "Gladiator ([rand(1, 1000)])"
+		L.real_name = L.name
+		to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
 	var/text = "<br><FONT size = 5><b>Additionally, the following players earned achievements:</b></FONT>"
