@@ -99,7 +99,7 @@ var/list/GPS_list = list()
 
 		var/list/signal = list("tag" = G.gpstag, "area" = null, "position" = null)
 		if(!G.emped)
-			signal["area"] = get_area(src)
+			signal["area"] = get_area(G)
 			signal["position"] = POS_VECTOR(GT)
 		signals += list(signal)
 	data["signals"] = signals
