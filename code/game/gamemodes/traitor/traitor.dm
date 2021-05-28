@@ -63,21 +63,18 @@
 
 /datum/game_mode/traitor/post_setup()
 	if(prob((traitors.len / 2.0 - 1) * 15)) //no sub-traitors if 2 or less traitors
+		var/list/possible_subroles = list(TRAITOR_DOUBLE_AGENT, TRAITOR_SUPPLIER)
 		var/spawnertypes = 3	//yep magic number, it best what can be here
-		switch(rand(1, 80 + max(0, (traitors.len / 3.0 - 1) * 50))) //can spawn both only if 4 or more traitors
-			if(1 to 40)
-				spawnertypes = 1
-			if(41 to 80)
-				spawnertypes = 2
-		var/list/datum/mind/localtraitors = traitors.Copy()
-		if(spawnertypes > 1)
-			var/datum/mind/double = pick(localtraitors)
-			localtraitors -= double
-			double.sub_role = TRAITOR_DOUBLE_AGENT
-		if(spawnertypes == 1 || spawnertypes == 3)
-			var/datum/mind/supplier = pick(localtraitors)
-			localtraitors -= supplier
-			supplier.sub_role = TRAITOR_SUPPLIER
+		var/both = prob(max(0, (traitors.len / 3.0 - 1) * 50)) //can spawn both only if 4 or more traitors
+		if(both)
+        	var/list/datum/mind/localtraitors = traitors.Copy()
+        	for(var/i in possible_subroles)
+        		var/datum/mind/role = pick(localtraitors)
+        		role.sub_role = i
+        		localtraitors -= role
+		else
+			var/datum/mind/role = pick(traitors)
+            role.sub_role = pick(possible_subroles)
 			
 	for(var/datum/mind/traitor in traitors)
 		if (!config.objectives_disabled && !traitor.sub_role)
