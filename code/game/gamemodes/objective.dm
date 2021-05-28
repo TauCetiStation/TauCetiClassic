@@ -42,7 +42,7 @@ var/global/list/all_objectives = list()
 	explanation_text = "Provide other Syndicate agents any equipment and support they need to succeed their mission."
 
 /datum/objective/syndisupport/check_completion()
-	if(SSticker.mode.traitorswon > max((SSticker.mode.traitors.len-1)/2,1))
+	if(SSticker.mode.traitorswon > max((SSticker.mode.traitors.len - 1) / 2 , 1))
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
@@ -50,7 +50,7 @@ var/global/list/all_objectives = list()
 	explanation_text = "Make sure other Syndicate agents not succeed their mission."
 
 /datum/objective/doubleagent/check_completion()
-	if(SSticker.mode.traitorswon < max((SSticker.mode.traitors.len-1)/4,1))
+	if(SSticker.mode.traitorswon < max((SSticker.mode.traitors.len - 1) / 4 , 1))
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
