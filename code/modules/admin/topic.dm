@@ -36,7 +36,7 @@
 			return
 
 		var/stealth = FALSE
-		if(alert(usr, "Do you want a question for a pool of players in round?", "Stealth Antags", "Yes", "No") == "Yes")
+		if(alert(usr, "Do you want to ask a pool of players about wanting to be a role?", "Stealth Antags", "Yes", "No") == "No")
 			stealth = TRUE
 			message_admins("[key_name(usr)] has attempted to spawn secretly.")
 		switch(href_list["makeAntag"])

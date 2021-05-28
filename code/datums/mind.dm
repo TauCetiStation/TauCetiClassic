@@ -515,9 +515,9 @@
 		candidates = pollGhostCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100)
 	else
 		if(stealth)
-			candidates = joined_player_list
+			candidates = alive_mob_list
 		else
-			candidates = pollCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100, joined_player_list)
+			candidates = pollCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100, alive_mob_list)
 
 	var/recruit_count = 0
 	if(!candidates.len)
@@ -531,18 +531,20 @@
 			FF = SSticker.mode.CreateFaction(fac_type, FALSE, TRUE)
 			if(!FF)
 				return FALSE
-			var/mob/H = pick(candidates)
-			candidates.Remove(H)
-			if(isobserver(H))
-				H = makeBody(H)
-			var/datum/mind/M = H.mind
-			if(FF.HandleNewMind(M))
-				var/datum/role/RR = FF.get_member_by_mind(M)
-				RR.OnPostSetup()
-				RR.Greet(GREET_LATEJOIN)
-				message_admins("[key_name(H)] has been recruited as leader of [FF.name] via create antagonist verb.")
-				recruit_count++
-				count--
+			for(var/mob/H in candidates)
+				candidates.Remove(H)
+				if(!H.mind)
+					continue
+				if(isobserver(H))
+					H = makeBody(H)
+				var/datum/mind/M = H.mind
+				if(FF.HandleNewMind(M))
+					var/datum/role/RR = FF.get_member_by_mind(M)
+					RR.OnPostSetup()
+					RR.Greet(GREET_LATEJOIN)
+					message_admins("[key_name(H)] has been recruited as leader of [FF.name] via create antagonist verb.")
+					recruit_count++
+					count--
 
 		while(count > 0 && candidates.len)
 			var/mob/H = pick(candidates)

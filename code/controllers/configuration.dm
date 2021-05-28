@@ -788,10 +788,10 @@ var/list/net_announcer_secret = list()
 	var/list/runnable_modes_names = list()
 	for (var/type in bundle.possible_gamemodes)
 		var/datum/game_mode/M = new type()
-		if (!name || !(M.config_name in config_name_by_real))
+		if (!M.name || !(M.config_name in config_name_by_real))
 			qdel(M)
 			continue
-		if (probabilities[M.name] <= 0)
+		if (probabilities[M.config_name] <= 0)
 			qdel(M)
 			continue
 		if (global.master_last_mode == M.name)
