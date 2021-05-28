@@ -107,18 +107,20 @@
 		if(!(M.assigned_role in required_jobs))
 			return FALSE
 
-	var/datum/preferences/prefs = M.current.client.prefs
-	var/datum/species/S = all_species[prefs.species]
+	if(M?.current?.client)
+		var/datum/preferences/prefs = M.current.client.prefs
+		var/datum/species/S = all_species[prefs.species]
 
-	if(!S.can_be_role(name))
-		return FALSE
-
-	for(var/specie_flag in restricted_species_flags)
-		if(S.flags[specie_flag])
+		if(!S.can_be_role(name))
 			return FALSE
+
+		for(var/specie_flag in restricted_species_flags)
+			if(S.flags[specie_flag])
+				return FALSE
 
 	if(is_type_in_list(src, M.antag_roles)) //No double double agent agent
 		return FALSE
+
 	return TRUE
 
 // Return TRUE on success, FALSE on failure.

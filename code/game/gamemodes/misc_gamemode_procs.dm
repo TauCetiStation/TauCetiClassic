@@ -33,7 +33,7 @@
 
 			// If they're a traitor or likewise, give them extra TC in exchange.
 			var/datum/role/syndicate/S = man.mind.GetRoleByType(/datum/role/syndicate)
-			var/obj/item/device/uplink/hidden/suplink = S.find_syndicate_uplink(S.antag.current)
+			var/obj/item/device/uplink/hidden/suplink = S.find_syndicate_uplink(man)
 			if(suplink)
 				var/extra = 8
 				suplink.uses += extra

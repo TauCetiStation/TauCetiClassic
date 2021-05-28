@@ -158,9 +158,11 @@ SUBSYSTEM_DEF(ticker)
 
 	var/init_start = world.timeofday
 
+	log_mode("Current master mode is [master_mode]")
 	if(config.is_bundle_by_name(master_mode))
 		//Create and announce mode
 		bundle = config.get_bundle_by_name(master_mode)
+		log_mode("Current bundle is [bundle.name]")
 
 		var/list/datum/game_mode/runnable_modes = config.get_runnable_modes(bundle)
 		if(!runnable_modes.len)

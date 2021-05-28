@@ -29,6 +29,8 @@
 
 /datum/role/custom/Topic(href, href_list)
 	var/datum/mind/M = locate(href_list["custom_mind"])
+	if(!M)
+		return
 
 	if(href_list["set_custom_name"])
 		var/new_name = input(M.current, "Введите название", "Настройки Роли", name)

@@ -500,7 +500,7 @@
 
 	return (duration <= world.time - brigged_since)
 
-/datum/admins/proc/makeAntag(datum/role/role_type, datum/faction/fac_type, count = 1, recruitment_source = FROM_PLAYERS)
+/datum/admins/proc/makeAntag(datum/role/role_type, datum/faction/fac_type, count = 1, recruitment_source = FROM_PLAYERS, stealth = TRUE)
 	var/role_req
 	var/role_name
 	if(fac_type)
@@ -514,7 +514,10 @@
 	if(recruitment_source == FROM_GHOSTS)
 		candidates = pollGhostCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100)
 	else
-		candidates = pollCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100, player_list)
+		if(stealth)
+			candidates = joined_player_list
+		else
+			candidates = pollCandidates("Do you want to be [fac_type ? "in" : "a"] [role_name]?", role_req, role_req, 100, joined_player_list)
 
 	var/recruit_count = 0
 	if(!candidates.len)
@@ -542,9 +545,10 @@
 				count--
 
 		while(count > 0 && candidates.len)
-			count--
-			var/mob/living/carbon/human/H = pick(candidates)
+			var/mob/H = pick(candidates)
 			candidates.Remove(H)
+			if(!H.mind)
+				continue
 			var/initial_role = initial(FF.initroletype.id)
 			if(initial_role in H.mind.antag_roles) // Ex: a head rev being made a revolutionary.
 				continue
@@ -558,6 +562,7 @@
 				RR.Greet(GREET_LATEJOIN)
 				message_admins("[key_name(H)] has been recruited as recruit of [FF.name] via create antagonist verb.")
 				recruit_count++
+			count--
 
 		FF.OnPostSetup()
 		FF.forgeObjectives()
