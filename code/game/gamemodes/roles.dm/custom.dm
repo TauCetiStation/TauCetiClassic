@@ -33,17 +33,17 @@
 		return
 
 	if(href_list["set_custom_name"])
-		var/new_name = input(M.current, "Введите название", "Настройки Роли", name)
+		var/new_name = input(usr, "Введите название", "Настройки Роли", name)
 		if(!new_name)
 			return
 		name = new_name
 
 	else if(href_list["set_custom_logo"])
-		var/new_logo = input(M.current, "Введите лого", "Настройки Роли", logo_state)
+		var/new_logo = input(usr, "Введите лого", "Настройки Роли", logo_state)
 		if(!new_logo)
 			return
 		if(!(new_logo in icon_states('icons/misc/logos.dmi')))
-			alert(M.current, "Вы ввели некорректно название логотипа. Попробуйте снова", "Ошибка")
+			alert(usr, "Вы ввели некорректно название логотипа. Попробуйте снова", "Ошибка")
 			return
 		logo_state = new_logo
 
