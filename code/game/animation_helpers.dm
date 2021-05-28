@@ -151,8 +151,8 @@
 	var/turf/old_turf = get_turf(old_loc)
 
 	I.loc = old_turf
-	I.plane = plane
-	I.layer = MOB_LAYER + 1
+	I.plane = GAME_PLANE
+	I.layer = INFRONT_MOB_LAYER
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -210,7 +210,7 @@
 
 	I.loc = old_turf
 	I.plane = GAME_PLANE
-	I.layer = MOB_LAYER + 1
+	I.layer = INFRONT_MOB_LAYER
 	I.transform = matrix() * 0
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -268,7 +268,7 @@
 
 	I.loc = loc
 	I.plane = GAME_PLANE
-	I.layer = MOB_LAYER + 1
+	I.layer = INFRONT_MOB_LAYER
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
