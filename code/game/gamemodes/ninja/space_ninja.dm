@@ -49,7 +49,7 @@
 	if(!toggle_space_ninja)
 		tgui_alert(usr,"Space Ninjas spawning is disabled.")
 		return
-	if(tgui_alert(usr,"Are you sure you want to send in a space ninja?", list("Yes","No"))=="No")
+	if(tgui_alert(usr,"Are you sure you want to send in a space ninja?",, list("Yes","No"))=="No")
 		return
 
 	var/mission
