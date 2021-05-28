@@ -309,7 +309,7 @@
 		beaker = I
 		I.forceMove(src)
 		user.visible_message(
-			"[user] помещает сосуд в криогенную камеру.",
+			"[user] помещает [I] в криокамеру.",
 			"<span class='notice'>Вы помещаете сосуд в криогенную камеру.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
