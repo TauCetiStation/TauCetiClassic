@@ -1809,6 +1809,15 @@ other types of metals and chemistry for reagents).
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
 
+/datum/design/ionrifle
+	name = "Ion Rifle"
+	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
+	id = "ionrifle"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1000, MAT_DIAMOND = 1000, MAT_URANIUM = 1000)
+	build_path = /obj/item/weapon/gun/energy/ionrifle
+	category = list("Weapons")
+
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."

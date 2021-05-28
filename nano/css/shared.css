@@ -723,6 +723,8 @@ th.misc {
 .sciTechTreeIcon.icon-module { background-position: -192px -288px; }
 .sciTechTreeIcon.icon-borgmodule { background-position: -224px -288px; }
 
+.sciTechTreeIcon.icon-ionrifle { background-position: 0px -320px; }
+
 .sciMenuButton {
     width: 300px;
     float: left;

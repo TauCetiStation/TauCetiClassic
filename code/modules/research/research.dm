@@ -881,7 +881,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "basic_combat"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.1
+	x = 0.2
 	y = 0.5
 	icon = "stunbaton"
 
@@ -929,7 +929,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "weapon_recharging"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.5
+	x = 0.4
 	y = 0.5
 	icon = "recharger"
 
@@ -945,7 +945,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "sec_computers"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.1
+	x = 0.2
 	y = 0.7
 	icon = "seccomputer"
 
@@ -961,7 +961,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "basic_lethal"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.7
+	x = 0.6
 	y = 0.5
 	icon = "ammobox"
 
@@ -977,7 +977,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "exotic_weaponry"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.7
+	x = 0.6
 	y = 0.3
 	icon = "tempgun"
 
@@ -993,7 +993,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "adv_exotic_weaponry"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.9
+	x = 0.7
 	y = 0.3
 	icon = "teslagun"
 
@@ -1009,7 +1009,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "adv_lethal"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.7
+	x = 0.6
 	y = 0.7
 	icon = "submachinegun"
 
@@ -1025,7 +1025,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "laser_weaponry"
 	tech_type = RESEARCH_COMBAT
 
-	x = 0.9
+	x = 0.7
 	y = 0.7
 	icon = "gun"
 
@@ -1034,6 +1034,22 @@ The tech datums are the actual "tech trees" that you improve through researching
 	cost = 5000
 
 	unlocks_designs = list("nuclear_gun", "plasma_10_gun", "plasma_104_gun", "plasma_mag", "lasercannon", "laserrifle")
+
+/datum/technology/ion_weaponry
+	name = "Ion Weaponry"
+	desc = "Ion Weaponry"
+	id = "ion_weaponry"
+	tech_type = RESEARCH_COMBAT
+
+	x = 0.8
+	y = 0.7
+	icon = "ionrifle"
+
+	required_technologies = list("laser_weaponry")
+	required_tech_levels = list()
+	cost = 8000
+
+	unlocks_designs = list("ionrifle")
 
 // Powerstorage
 
