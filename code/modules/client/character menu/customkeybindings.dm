@@ -119,6 +119,10 @@
 			var/ShiftMod = text2num(href_list["shift"]) ? "Shift" : ""
 			var/numpad = text2num(href_list["numpad"]) ? "Numpad" : ""
 
+			if(!new_key) // Just in case (; - not work although keyCode 186 and nothing should break)
+				user << browse(null, "window=capturekeypress")
+				return
+
 			if(global._kbMap[new_key])
 				new_key = global._kbMap[new_key]
 

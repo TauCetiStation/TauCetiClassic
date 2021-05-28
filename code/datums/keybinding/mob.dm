@@ -3,7 +3,7 @@
 	weight = WEIGHT_MOB
 
 /datum/keybinding/mob/stop_pulling
-	hotkey_keys = list("H", "Delete")
+	hotkey_keys = list("Delete")
 	name = "stop_pulling"
 	full_name = "Stop pulling"
 	description = ""

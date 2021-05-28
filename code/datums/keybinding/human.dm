@@ -15,3 +15,13 @@
 	var/mob/living/carbon/human/H = user.mob
 	H.quick_equip()
 	return TRUE
+
+/datum/keybinding/human/holster
+	hotkey_keys = list("H")
+	name = "holster"
+	full_name = "Holster"
+	description = "Draw or holster weapon."
+
+/datum/keybinding/human/holster/down(client/user)
+	var/mob/living/carbon/human/H = user.mob
+	H.holster_weapon()
