@@ -151,6 +151,7 @@ var/list/admin_verbs_server = list(
 	/client/proc/toggle_random_events,
 	/client/proc/nanomapgen_DumpImage,
 	/client/proc/adminchangemap,
+	/datum/admins/proc/toggle_deathmatch_arena,
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,

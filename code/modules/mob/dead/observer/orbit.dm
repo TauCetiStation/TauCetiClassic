@@ -9,7 +9,7 @@
 /datum/orbit_menu/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Orbit", "Orbit Menu")
+		ui = new(user, src, "Orbit", "Orbit Menu", 800, 600)
 		ui.open()
 
 /datum/orbit_menu/tgui_act(action, list/params, datum/tgui/ui)
@@ -41,6 +41,7 @@
 /datum/orbit_menu/tgui_static_data(mob/user)
 	var/list/data = list()
 	var/list/alive = list()
+	var/list/antagonists = list()
 	var/list/dead = list()
 	var/list/ghosts = list()
 	var/list/misc = list()
@@ -66,11 +67,21 @@
 			else
 				alive += list(serialized)
 
+				var/mob/dead/observer/O = user
+				if(O.antagHUD)
+					for(var/mob/A in mob_list - observer_list)
+						if(A.mind?.special_role)
+							var/antag_serialized = serialized.Copy()
+							antag_serialized["antag"] = A.mind.special_role
+							antagonists += list(antag_serialized)
+
+
 		else
 			misc += list(serialized)
 
 	data["alive"] = alive
 	data["dead"] = dead
+	data["antagonists"] = antagonists
 	data["ghosts"] = ghosts
 	data["misc"] = misc
 	data["npcs"] = npcs

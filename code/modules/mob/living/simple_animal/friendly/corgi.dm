@@ -114,6 +114,10 @@
 	butcher_results = list()
 	var/emagged = 0
 
+/mob/living/simple_animal/corgi/borgi/atom_init()
+	. = ..()
+	chief_animal_list += src
+
 /mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
 	if(!emagged && emagged < 2)
 		emagged = 1

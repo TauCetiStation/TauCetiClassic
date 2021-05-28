@@ -783,6 +783,10 @@
 					active_conversation = href_list["target"]
 					mode = 21
 
+		if("DM")		// Choice for sending messages from Crew Manifest
+			var/obj/item/device/pda/P = src.dm_find_pda(href_list["reciever"])
+			src.create_message(U, P, !href_list["notap"])
+
 		if("Select Conversation")
 			var/P = href_list["convo"]
 			for(var/n in conversations)
@@ -1102,6 +1106,24 @@
 		else
 			id.loc = get_turf(src)
 		id = null
+
+/obj/item/device/pda/proc/dm_find_pda(owner_name) // Find reciever PDA by name from Crew Manifest
+	var/pda_ref = null
+
+	for (var/obj/item/device/pda/P in PDAs)
+		if (!P.owner)
+			continue
+		else if(P.hidden)
+			continue
+		else if (P == src)
+			continue
+		else if (P.toff)
+			continue
+		else if (P.owner == owner_name)
+			pda_ref = P
+			continue
+
+	return pda_ref
 
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
 	if(tap && iscarbon(U))
