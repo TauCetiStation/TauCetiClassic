@@ -70,6 +70,9 @@
 		if("ninjastart")
 			ninjastart += loc
 			return INITIALIZE_HINT_QDEL
+		if("eorgwarp")
+			eorgwarp += loc
+			return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/sound_source
 	name = "Sound Source"
