@@ -1271,7 +1271,7 @@
 
 	if(!(INVISIBILITY in mutations))
 		verbs -= /mob/living/carbon/human/proc/toggle_invis_power
-		inv_state=FALSE
+		inv_state = FALSE
 		return
 
 	if(inv_state)
