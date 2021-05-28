@@ -84,9 +84,10 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-#define EVENT_LEVEL_MUNDANE 1
-#define EVENT_LEVEL_MODERATE 2
-#define EVENT_LEVEL_MAJOR 3
+#define EVENT_LEVEL_ROUNDSTART 1
+#define EVENT_LEVEL_MUNDANE 2
+#define EVENT_LEVEL_MODERATE 3
+#define EVENT_LEVEL_MAJOR 4
 
 //defines
 #define RESIZE_DEFAULT_SIZE 1
@@ -183,6 +184,8 @@
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 
+#define RUNE_WORDS list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
 
@@ -215,6 +218,16 @@
 #define DELAY2GLIDESIZE(delay) (world.icon_size / max(CEIL(delay / world.tick_lag), 1))
 
 #define PLASMAGUN_OVERCHARGE 30100
+
+#define VAR_SWAP(A, B)\
+	var/temp = A;\
+	A = B;\
+	B = temp;\
+
+#define LOC_SWAP(A, B)\
+	var/atom/temp = A.loc;\
+	A.forceMove(B.loc);\
+	B.forceMove(temp);\
 
 //! ## Overlays subsystem
 

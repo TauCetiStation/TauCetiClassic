@@ -67,6 +67,10 @@
 /proc/sanitize_safe(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
 	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra, ascii_only)
 
+/proc/paranoid_sanitize(t)
+	var/regex/alphanum_only = regex("\[^a-zA-Z0-9# ,.?!:;()]", "g")
+	return alphanum_only.Replace(t, "#")
+
 //Filters out undesirable characters from character names
 //todo: rewrite this
 /proc/sanitize_name(input, max_length = MAX_NAME_LEN, allow_numbers = 0, force_first_letter_uppercase = TRUE)
