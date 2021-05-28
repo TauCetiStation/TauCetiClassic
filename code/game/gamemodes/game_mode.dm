@@ -317,7 +317,7 @@
 	for(var/datum/role/R in orphaned_roles)
 		if (R.check_win())
 			return TRUE
-	if(SSticker.station_was_nuked)
+	if(SSticker.station_was_nuked || SSshuttle.location == SHUTTLE_AT_CENTCOM)
 		return TRUE
 	return FALSE
 
