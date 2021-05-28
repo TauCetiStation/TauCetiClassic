@@ -24,6 +24,10 @@
 	if(wear_mask)
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
+	var/obj/item/organ/external/head/MyHead = bodyparts_by_name[BP_HEAD]
+	if(!istype(MyHead) || MyHead.is_stump)
+		skipface = TRUE
+
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
 	var/t_His = "Its"
@@ -459,6 +463,11 @@
 
 	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
 		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
+
+	if(!skipface)
+		var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+		if(istype(BP) && !BP.disfigured && BP.ipc_head == "Default" && length(BP.display_text) && h_style == "IPC text screen")
+			msg += "Отображает на экране: \"<span class=\"emojify\">[BP.display_text]</span>\"\n"
 
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"

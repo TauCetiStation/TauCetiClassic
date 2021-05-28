@@ -274,12 +274,10 @@
 		radio_off_mob(M)
 
 /obj/item/device/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
-	var/list/all_items = M.GetAllContents()
+	var/list/all_items = M.get_all_contents_type(/obj/item/device/radio)
 
-	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio))
-			var/obj/item/device/radio/r = I
-			r.on = 0
+	for(var/obj/item/device/radio/R in all_items)
+		R.on = 0
 
 
 //RECALL IMPLANT
