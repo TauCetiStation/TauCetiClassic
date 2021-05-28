@@ -233,7 +233,6 @@
 	return score_results
 
 /datum/faction/Topic(href, href_list)
-	SHOULD_CALL_PARENT(TRUE)
 	..()
 	if(href_list["destroyfac"])
 		if(!check_rights(R_ADMIN))
