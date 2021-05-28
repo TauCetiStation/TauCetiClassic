@@ -156,20 +156,12 @@
 /obj/item/weapon/twohanded/shockpaddles/robot/try_revive(mob/living/carbon/human/H, mob/user)
 	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 	if (IO.heart_status == HEART_FAILURE)
-		do_mob(user, user, 2 SECONDS)
+		do_mob(user, H, 2 SECONDS)
 		if(IO.damage < 50)
 			visible_message("<span class='danger'>[user] performs a heart massage on [H]!</span>")
-			if(H.health < config.health_threshold_dead)
-				to_chat(user, "<span class='warning'>[H]'s body seems to be too weak, you do not detect a heart beat.</span>")
-			else
+			if(H.health > config.health_threshold_dead)
 				IO.heart_fibrillate()
 				to_chat(user, "<span class='notice'>You detect an irregular heartbeat coming form [H]'s body. It is in need of defibrillation you assume!</span>")
-
 		else
 			to_chat(user, "<span class='warning'>It seems [H]'s [IO] is too squishy... It doesn't beat at all!</span>")
 	..()
-
-
-
-
-
