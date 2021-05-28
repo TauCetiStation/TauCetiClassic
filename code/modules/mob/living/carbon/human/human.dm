@@ -1264,7 +1264,6 @@
 	set category = "Superpower"
 	
 	if(stat != CONSCIOUS)
-		inv_state = FALSE
 		return
 		
 	inv_state = !inv_state
@@ -1272,14 +1271,12 @@
 	if(!(INVISIBILITY in mutations))
 		verbs -= /mob/living/carbon/human/proc/toggle_invis_power
 		inv_state = FALSE
-		return
 
 	if(inv_state)
-		update_body()
 		visible_message("<span class='notice'>\The [src] suddenly disappears! </span>","<span class='notice'>You disappear.</span>")
 	else
-		update_body()
 		visible_message("<span class='notice'>\The [src] suddenly appears out of thin air! </span>","<span class='notice'>You become visible again.</span>")
+		update_body()
 
 /mob/living/carbon/human/proc/get_visible_gender()
 	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
