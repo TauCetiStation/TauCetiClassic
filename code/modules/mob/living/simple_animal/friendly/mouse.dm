@@ -195,3 +195,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+
+/mob/living/simple_animal/mouse/brown/Tom/atom_init()
+	. = ..()
+	chief_animal_list += src

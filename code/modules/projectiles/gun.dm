@@ -80,17 +80,20 @@
 /obj/item/weapon/gun/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-	if(user && user.client && user.client.gun_mode && !(target in target))
+	if(user && user.client && user.client.gun_mode && !(target in src.target))
 		PreFire(target,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
 		Fire(target,user,params) //Otherwise, fire normally.
 
 /mob/living/carbon/AltClickOn(atom/A)
+	if(next_move > world.time) // CD for clicks is checked before clicks with modifiers(shift, alt)
+		return
 	var/obj/item/I = get_active_hand()
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/G = I
-		if(src.client.gun_mode)
-			G.Fire(A, src)
+		if(client.gun_mode)
+			if(G.can_fire())
+				G.Fire(A, src)
 		else
 			if(isliving(A))
 				var/mob/living/M = A

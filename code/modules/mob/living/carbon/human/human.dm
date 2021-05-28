@@ -1831,6 +1831,48 @@
 			h_style = "IPC off screen"
 		update_hair()
 
+/mob/living/carbon/human/proc/IPC_display_text()
+	set category = "IPC"
+	set name = "Display Text On Screen"
+	set desc = "Display text on your monitor"
+
+	if(stat)
+		return
+
+	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || BP.is_stump)
+		return
+
+	if(BP.ipc_head != "Default")
+		to_chat(usr, "<span class='warning'>Your head has no screen!</span>")
+
+	var/S = input("Write something to display on your screen (emoticons supported):", "Display Text") as text|null
+	if(!S)
+		return
+	if(!length(S))
+		return
+
+	if(get_species() != IPC)
+		return
+
+	if(!BP.screen_toggle)
+		set_light(BP.screen_brightness)
+		BP.screen_toggle = TRUE
+
+	BP.display_text = S
+	h_style = "IPC text screen"
+	update_hair()
+
+	var/skipface = FALSE
+	if(head)
+		skipface = head.flags_inv & HIDEFACE
+	if(wear_mask)
+		skipface |= wear_mask.flags_inv & HIDEFACE
+
+	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
+		custom_emote(SHOWMSG_VISUAL, "отображает на экране, \"<span class=\"emojify\">[S]</span>\"")
+
+
 
 /mob/living/carbon/human/has_brain()
 	if(organs_by_name[O_BRAIN])

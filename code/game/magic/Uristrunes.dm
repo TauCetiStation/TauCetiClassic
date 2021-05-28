@@ -4,7 +4,7 @@
 		word_to_uristrune_table = list()
 
 		var/bit = 1
-		var/list/words = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+		var/list/words = RUNE_WORDS
 
 		while(length(words))
 			var/w = pick(words)
