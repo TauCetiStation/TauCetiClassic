@@ -223,8 +223,10 @@ Please contact me on #coderbus IRC. ~Carn x
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
+
 	if(inv_state)
 		return
+
 	var/list/standing = list()
 
 	var/fat = HAS_TRAIT(src, TRAIT_FAT) ? "fat" : null
