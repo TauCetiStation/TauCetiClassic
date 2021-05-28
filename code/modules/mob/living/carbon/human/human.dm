@@ -1276,7 +1276,7 @@
 		visible_message("<span class='notice'>\The [src] suddenly disappears! </span>","<span class='notice'>You disappear.</span>")
 	else
 		visible_message("<span class='notice'>\The [src] suddenly appears out of thin air! </span>","<span class='notice'>You become visible again.</span>")
-		update_body()
+	update_body()
 
 /mob/living/carbon/human/proc/get_visible_gender()
 	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT && ((head && head.flags_inv & HIDEMASK) || wear_mask))
