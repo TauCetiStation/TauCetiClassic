@@ -1,6 +1,5 @@
 #define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
-#define BODY_OVERLAY 27
 
 /mob/living/carbon/human
 	name = "unknown"
@@ -1276,11 +1275,10 @@
 		return
 
 	if(inv_state)
-		remove_overlay(BODY_OVERLAY)
+		update_body()
 		visible_message("<span class='notice'>\The [src] suddenly disappears! </span>","<span class='notice'>You disappear.</span>")
 	else
-		apply_overlay(BODY_OVERLAY)
-		regenerate_icons()
+		update_body()
 		visible_message("<span class='notice'>\The [src] suddenly appears out of thin air! </span>","<span class='notice'>You become visible again.</span>")
 
 /mob/living/carbon/human/proc/get_visible_gender()
