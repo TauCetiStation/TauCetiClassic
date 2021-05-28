@@ -243,7 +243,7 @@
 				continue
 			text += printplayerwithicon(traitor)
 
-			var/traitorwin = 1
+			var/traitorwin = TRUE
 			if(traitor.objectives && traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
@@ -253,7 +253,7 @@
 					else
 						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("traitor_objective","[objective.type]|FAIL")
-						traitorwin = 0
+						traitorwin = FALSE
 					count++
 
 			var/special_role_text
@@ -282,7 +282,7 @@
 	if(subtraitors.len) //now count roles depend on others success
 		for(var/datum/mind/traitor in subtraitors)
 			text += printplayerwithicon(traitor)
-			var/traitorwin = 1
+			var/traitorwin = TRUE
 			if(traitor.objectives && traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
@@ -292,7 +292,7 @@
 					else
 						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("traitor_objective","[objective.type]|FAIL")
-						traitorwin = 0
+						traitorwin = FALSE
 					count++
 
 			var/special_role_text = traitor.sub_role
