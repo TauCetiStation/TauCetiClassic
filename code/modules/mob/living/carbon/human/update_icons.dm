@@ -256,6 +256,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_tail_showing()
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
+	
 
 //HAIR OVERLAY
 /mob/living/carbon/human/proc/update_hair()
