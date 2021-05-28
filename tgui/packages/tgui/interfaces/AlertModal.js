@@ -81,7 +81,8 @@ export class AlertModal extends Component {
                 <Flex
                   direction="column"
                   className="AlertModal__Message"
-                  height="100%">
+                  height="100%"
+                  textAlign="center">
                   <Flex.Item>
                     <Box m={1}>
                       {message}
