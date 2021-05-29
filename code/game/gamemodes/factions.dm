@@ -183,6 +183,9 @@
 /datum/faction/proc/custom_result()
 	return ""
 
+/datum/faction/proc/custom_member_output()
+	return ""
+
 /datum/faction/proc/GetScoreboard()
 	var/count = 1
 	var/score_results = ""
@@ -218,16 +221,23 @@
 	antagonists_completion = list(list("faction" = ID, "html" = score_results))
 
 	score_results += "<ul>"
-	score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
+
+	var/custom_member_output = custom_member_output()
 	var/have_objectives = FALSE
-	for(var/datum/role/R in members)
-		var/results = R.GetScoreboard()
-		if(results)
-			score_results += results
-			score_results += "<br>"
-			if(R.objectives.objectives.len)
-				have_objectives = TRUE
+	if(custom_member_output)
+		score_results += custom_member_output
+	else
+		score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
+		for(var/datum/role/R in members)
+			var/results = R.GetScoreboard()
+			if(results)
+				score_results += results
+				score_results += "<br>"
+				if(R.objectives.objectives.len)
+					have_objectives = TRUE
+
 	score_results += "</ul>"
+
 	if(!have_objectives)
 		score_results += "<br>"
 

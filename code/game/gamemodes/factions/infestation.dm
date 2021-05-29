@@ -173,8 +173,8 @@
 
 	return text
 
-/datum/faction/infestation/GetScoreboard()
-	var/dat = ..()
+/datum/faction/infestation/custom_member_output()
+	var/dat = ""
 
 	var/list/aliens = count_hive_power(in_detail = TRUE)
 	var/icon/I
