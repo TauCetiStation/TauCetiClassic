@@ -1,14 +1,40 @@
-/datum/role/syndicate
+/datum/component/gamemode/syndicate
+	// Uplink
 	var/list/uplink_items_bought = list() //migrated from mind, used in GetScoreboard()
 	var/total_TC = 0
 	var/spent_TC = 0
-	var/uplink_uses = 20
+	var/uplink_uses
+
+	// Dont uplink
 	var/syndicate_awareness = SYNDICATE_UNAWARE
 
-/datum/role/syndicate/proc/give_uplink(mob/living/carbon/human/traitor_mob, crystals)
+/datum/component/gamemode/syndicate/Initialize(crystals)
+	..()
+	uplink_uses = crystals
+
+/datum/component/gamemode/syndicate/Destroy()
+	return ..()
+
+/datum/component/gamemode/syndicate/proc/get_current()
+	var/datum/role/role = parent
+	var/datum/mind/M = role.antag
+	if(!M)
+		return
+
+	var/mob/living/carbon/human/traitor_mob = M.current
+	if(!traitor_mob)
+		return
+
+	return traitor_mob
+
+/datum/component/gamemode/syndicate/proc/give_uplink()
+	var/mob/traitor_mob = get_current()
+	if(!traitor_mob)
+		return
+
 	// find a radio! toolbox(es), backpack, belt, headset
 	var/loc = ""
-	var/obj/item/R = locate() //Hide the uplink in a PDA if available, otherwise radio
+	var/obj/item/R //Hide the uplink in a PDA if available, otherwise radio
 
 	if(traitor_mob.client.prefs.uplinklocation == "Headset")
 		R = locate(/obj/item/device/radio) in traitor_mob.contents
@@ -39,42 +65,42 @@
 		if (!R)
 			to_chat(traitor_mob, "Unfortunately, neither a radio or a PDA relay could be installed.")
 
-	if (!R)
-		. = FALSE
-	else
-		if (istype(R, /obj/item/device/radio))
-			// generate list of radio freqs
-			var/obj/item/device/radio/target_radio = R
-			var/freq = 1441
-			var/list/freqlist = list()
-			while (freq <= 1489)
-				if (freq < 1451 || freq > 1459)
-					freqlist += freq
-				freq += 2
-				if ((freq % 2) == 0)
-					freq += 1
-			freq = freqlist[rand(1, freqlist.len)]
+	if (istype(R, /obj/item/device/radio))
+		// generate list of radio freqs
+		var/obj/item/device/radio/target_radio = R
+		var/freq = 1441
+		var/list/freqlist = list()
+		while (freq <= 1489)
+			if (freq < 1451 || freq > 1459)
+				freqlist += freq
+			freq += 2
+			if ((freq % 2) == 0)
+				freq += 1
+		freq = freqlist[rand(1, freqlist.len)]
+		var/obj/item/device/uplink/hidden/T = new(R)
+		T.uses = uplink_uses
+		target_radio.hidden_uplink = T
+		target_radio.traitor_frequency = freq
+		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
+		traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
+		total_TC += target_radio.hidden_uplink.uses
+	else if (istype(R, /obj/item/device/pda))
+		// generate a passcode if the uplink is hidden in a PDA
+		var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
+		var/obj/item/device/uplink/hidden/T = new(R)
+		T.uses = uplink_uses
+		R.hidden_uplink = T
+		var/obj/item/device/pda/P = R
+		P.lock_code = pda_pass
+		to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
+		traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
+		total_TC += R.hidden_uplink.uses
 
-			var/obj/item/device/uplink/hidden/T = new(R)
-			target_radio.hidden_uplink = T
-			target_radio.traitor_frequency = freq
-			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply dial the frequency [format_frequency(freq)] to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Radio Freq:</B> [format_frequency(freq)] ([R.name] [loc]).")
-			total_TC += target_radio.hidden_uplink.uses
-		else if (istype(R, /obj/item/device/pda))
-			// generate a passcode if the uplink is hidden in a PDA
-			var/pda_pass = "[rand(100,999)] [pick("Alpha","Bravo","Delta","Omega")]"
+/datum/component/gamemode/syndicate/proc/give_codewords()
+	var/mob/traitor_mob = get_current()
+	if(!traitor_mob)
+		return
 
-			var/obj/item/device/uplink/hidden/T = new(R)
-			R.hidden_uplink = T
-			var/obj/item/device/pda/P = R
-			P.lock_code = pda_pass
-
-			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
-			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
-			total_TC += R.hidden_uplink.uses
-
-/datum/role/syndicate/proc/give_codewords(mob/living/traitor_mob)
 	var/code_words = 0
 	if(prob(80))
 		ASSERT(global.syndicate_code_phrase.len)
@@ -104,38 +130,46 @@
 			syndicate_awareness = SYNDICATE_AWARE
 			to_chat(traitor_mob, "Use the code words, preferably in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
 
-/datum/role/syndicate/proc/give_intel(mob/living/traitor_mob)
+/datum/component/gamemode/syndicate/proc/give_intel()
+	var/mob/traitor_mob = get_current()
+	if(!traitor_mob)
+		return
+
 	ASSERT(traitor_mob)
 	give_codewords(traitor_mob)
 	ASSERT(traitor_mob.mind)
 
-/datum/role/syndicate/proc/equip_traitor(mob/living/carbon/human/traitor_mob)
-	if (!istype(traitor_mob))
+/datum/component/gamemode/syndicate/proc/equip_traitor()
+	var/mob/mob = get_current()
+	if(!mob)
 		return
 
-	if (antag?.assigned_role == "Clown")
+	give_intel()
+
+	if(!ishuman(mob))
+		return
+	var/mob/living/carbon/human/traitor_mob = mob
+
+	if (traitor_mob.mind?.assigned_role == "Clown")
 		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		traitor_mob.mutations.Remove(CLUMSY)
 
-	give_uplink(traitor_mob, uplink_uses)
+	give_uplink()
 
-	var/datum/role/R = traitor_mob.mind.GetRole(TRAITOR)
-	if(R)
-		for(var/datum/objective/dehead/D in R.objectives.GetObjectives())
-			var/obj/item/device/biocan/B = new (traitor_mob.loc)
-			var/list/slots = list (
+	var/datum/role/R = parent
+	for(var/datum/objective/dehead/D in R.objectives.GetObjectives())
+		var/obj/item/device/biocan/B = new (traitor_mob.loc)
+		var/list/slots = list(
 			"backpack" = SLOT_IN_BACKPACK,
 			"left hand" = SLOT_L_HAND,
 			"right hand" = SLOT_R_HAND,
-			)
-			var/where = traitor_mob.equip_in_one_of_slots(B, slots)
-			traitor_mob.update_icons()
-			if (!where)
-				to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
-			else
-				to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
-
-	give_intel(traitor_mob)
+		)
+		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
+		traitor_mob.update_icons()
+		if (!where)
+			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
+		else
+			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()
@@ -143,39 +177,26 @@
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
-/datum/role/syndicate/proc/find_syndicate_uplink(mob/living/carbon/human/human)
-	var/list/L = human.get_contents()
-	for(var/obj/item/I in L)
-		if(I.hidden_uplink)
-			return I.hidden_uplink
-	return null
-
-/datum/role/syndicate/proc/find_syndicate_pda(mob/living/carbon/human/human)
-	var/list/L = human.get_contents()
+/datum/component/gamemode/syndicate/proc/find_syndicate_pda(mob/living/carbon/human/human)
+	var/list/L = human.GetAllContents()
 	for(var/obj/item/I in L)
 		if(I.hidden_uplink)
 			return I
 	return null
 
-/datum/role/syndicate/proc/take_uplink(mob/living/carbon/human/human)
-	var/obj/item/I = find_syndicate_pda(human)
+/datum/component/gamemode/syndicate/proc/take_uplink()
+	var/mob/living/carbon/human/traitor_mob = get_current()
+	if(!traitor_mob || !istype(traitor_mob))
+		return
+
+	var/obj/item/I = find_syndicate_pda(traitor_mob)
 	if(I?.hidden_uplink)
 		QDEL_NULL(I.hidden_uplink)
 
-/datum/role/syndicate/proc/get_nt_opposed()
-	var/list/dudes = list()
-	for(var/mob/living/carbon/human/man in human_list)
-		if(man.client)
-			if(man.client.prefs.nanotrasen_relation == "Opposed")
-				dudes += man
-			else if(man.client.prefs.nanotrasen_relation == "Skeptical" && prob(50))
-				dudes += man
-	if(dudes.len == 0)
-		return null
-	return pick(dudes)
+/datum/component/gamemode/syndicate/OnPostSetup(datum/source, laterole)
+	equip_traitor()
 
-/datum/role/syndicate/GetScoreboard()
-	. = ..()
+/datum/component/gamemode/syndicate/GetScoreboard(datum/source)
 	if(total_TC)
 		if(spent_TC)
 			. += "<br><b>TC Remaining:</b> [total_TC - spent_TC]/[total_TC]"
@@ -185,19 +206,25 @@
 		else
 			. += "<br>The traitor was a smooth operator this round (did not purchase any uplink items)."
 
-/datum/role/syndicate/extraPanelButtons()
-	var/dat = ..()
-	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(antag.current)
-	if(guplink)
-		dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];telecrystalsSet=1;'>Telecrystals: [guplink.uses](Set telecrystals)</a>"
-		dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];removeuplink=1;'>(Remove uplink)</a>"
-	else
-		dat = " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];giveuplink=1;'>(Give uplink)</a>"
-	return dat
+/datum/component/gamemode/syndicate/extraPanelButtons(datum/source)
+	var/datum/role/role = parent
+	var/mob/living/carbon/human/traitor_mob = get_current()
+	if(!traitor_mob || !istype(traitor_mob))
+		return
 
-/datum/role/syndicate/RoleTopic(href, href_list, datum/mind/M, admin_auth)
+	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
+	if(guplink)
+		. += " - <a href='?src=\ref[role];mind=\ref[role.antag];role=\ref[src];telecrystalsSet=1;'>Telecrystals: [guplink.uses](Set telecrystals)</a>"
+		. += " - <a href='?src=\ref[role];mind=\ref[role.antag];role=\ref[src];removeuplink=1;'>(Remove uplink)</a>"
+	else
+		. = " - <a href='?src=\ref[role];mind=\ref[role.antag];role=\ref[src];giveuplink=1;'>(Give uplink)</a>"
+
+/datum/component/gamemode/syndicate/RoleTopic(datum/source, href, href_list, datum/mind/M, admin_auth)
+	if(!M || !M.current)
+		return
+
 	if(href_list["giveuplink"])
-		give_uplink(M.current, 20)
+		give_uplink()
 
 	if(href_list["telecrystalsSet"])
 		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(M.current)
@@ -210,5 +237,6 @@
 
 	if(href_list["removeuplink"])
 		take_uplink(M.current)
-		antag.memory = null
+		var/datum/role/role = parent
+		role.antag.memory = null
 		to_chat(M.current, "<span class='warning'>You have been stripped of your uplink.</span>")

@@ -136,9 +136,9 @@
 			domutcheck(antag.current, null)
 
 /datum/role/changeling/StatPanel()
-	stat("Chemical Storage", "[chem_charges]/[chem_storage]")
-	stat("Genetic Damage Time", geneticdamage)
-	stat("Absorbed DNA", absorbedcount)
+	stat(null, "Chemical Storage: [chem_charges]/[chem_storage]")
+	stat(null, "Genetic Damage Time: [geneticdamage]")
+	stat(null, "Absorbed DNA: [absorbedcount]")
 	if(purchasedpowers.len)
 		for(var/P in purchasedpowers)
 			var/obj/effect/proc_holder/changeling/S = P

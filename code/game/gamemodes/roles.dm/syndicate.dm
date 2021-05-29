@@ -1,14 +1,4 @@
-
-/datum/role/syndicate/operative/proc/NukeNameAssign(datum/mind/synd_mind)
-	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
-
-	if(!choose_name)
-		return
-
-	synd_mind.current.name = choose_name
-	synd_mind.current.real_name = choose_name
-
-/datum/role/syndicate/operative
+/datum/role/operative
 	name = NUKE_OP
 	id = NUKE_OP
 	disallow_job = TRUE
@@ -22,7 +12,20 @@
 
 	var/nuclear_outfit = /datum/outfit/nuclear
 
-/datum/role/syndicate/operative/OnPostSetup(laterole)
+/datum/role/operative/New()
+	..()
+	AddComponent(/datum/component/gamemode/syndicate, 20)
+
+/datum/role/operative/proc/NukeNameAssign(datum/mind/synd_mind)
+	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
+
+	if(!choose_name)
+		return
+
+	synd_mind.current.name = choose_name
+	synd_mind.current.real_name = choose_name
+
+/datum/role/operative/OnPostSetup(laterole)
 	. = ..()
 	antag.current.faction = "syndicate"
 	antag.current.real_name = "Gorlex Maradeurs Operative"
@@ -34,17 +37,17 @@
 
 	INVOKE_ASYNC(src, .proc/NukeNameAssign, antag)
 
-/datum/role/syndicate/operative/Greet(greeting, custom)
+/datum/role/operative/Greet(greeting, custom)
 	. = ..()
 	antag.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-/datum/role/syndicate/operative/extraPanelButtons()
+/datum/role/operative/extraPanelButtons()
 	var/dat = ..()
 	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tp=1;'>(Tp to base)</a>"
 	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];nuke_tellcode=1'>(Tell code)</a>"
 	return dat
 
-/datum/role/syndicate/operative/RoleTopic(href, href_list, datum/mind/M, admin_auth)
+/datum/role/operative/RoleTopic(href, href_list, datum/mind/M, admin_auth)
 	if(href_list["nuke_tp"])
 		antag.current.forceMove(get_turf(locate("landmark*Syndicate-Spawn")))
 
@@ -60,7 +63,7 @@
 		else
 			to_chat(usr, "<span class='warning'>No valid nuke found!</span>")
 
-/datum/role/syndicate/operative/leader
+/datum/role/operative/leader
 	name = NUKE_OP_LEADER
 	id = NUKE_OP_LEADER
 
@@ -68,7 +71,7 @@
 
 	nuclear_outfit = /datum/outfit/nuclear/leader
 
-/datum/role/syndicate/operative/leader/OnPostSetup(laterole)
+/datum/role/operative/leader/OnPostSetup(laterole)
 	. = ..()
 	var/datum/faction/nuclear/N = faction
 	if (istype(N) && N.nuke_code)

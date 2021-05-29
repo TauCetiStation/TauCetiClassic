@@ -33,5 +33,5 @@
 		return
 
 	var/mob/living/carbon/human/newtraitor = pick(possible_traitors)
-	create_and_setup_role(/datum/role/syndicate/traitor/syndcall, newtraitor)
+	create_and_setup_role(/datum/role/traitor/syndcall, newtraitor)
 

@@ -33,7 +33,8 @@
 	. = ..()
 	var/mob/living/carbon/human/abductor/H = antag.current
 	H.set_species(ABDUCTOR)
-	H.real_name = faction.name + " " + name
+	var/faction_name = faction ? faction.name : ""
+	H.real_name = faction_name + " " + name
 	H.mind.name = H.real_name
 	H.flavor_text = ""
 	equip_common(H)

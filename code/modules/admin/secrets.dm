@@ -275,9 +275,9 @@
 			for(var/mob/living/carbon/human/H in player_list)
 				if(H.stat == DEAD || !H.client || !H.mind) continue
 				if(is_special_character(H)) continue
-				create_and_setup_role(/datum/role/syndicate/traitor/syndbeacon, H)
+				create_and_setup_role(/datum/role/traitor/syndbeacon, H)
 			for(var/mob/living/silicon/A in player_list)
-				create_and_setup_role(/datum/role/syndicate/traitor/syndbeacon, A)
+				create_and_setup_role(/datum/role/traitor/syndbeacon, A)
 
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ShM")

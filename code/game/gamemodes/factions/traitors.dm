@@ -3,8 +3,8 @@
 	ID = TRAITOR
 	required_pref = ROLE_TRAITOR
 
-	roletype = /datum/role/syndicate/traitor
-	initroletype = /datum/role/syndicate/traitor
+	roletype = /datum/role/traitor
+	initroletype = /datum/role/traitor
 
 	min_roles = 1
 	max_roles = 4

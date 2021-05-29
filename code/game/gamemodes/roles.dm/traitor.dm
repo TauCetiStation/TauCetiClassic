@@ -1,4 +1,4 @@
-/datum/role/syndicate/traitor
+/datum/role/traitor
 	name = TRAITOR
 	id = TRAITOR
 	required_pref = ROLE_TRAITOR
@@ -10,7 +10,11 @@
 
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTATOR, GREET_ROUNDSTART)
 
-/datum/role/syndicate/traitor/proc/add_one_objective(datum/mind/traitor)
+/datum/role/traitor/New()
+	..()
+	AddComponent(/datum/component/gamemode/syndicate, 20)
+
+/datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
 		if(1 to 20)
 			AppendObjective(/datum/objective/assassinate, TRUE)
@@ -21,7 +25,7 @@
 		else
 			AppendObjective(/datum/objective/dehead, TRUE)
 
-/datum/role/syndicate/traitor/forgeObjectives()
+/datum/role/traitor/forgeObjectives()
 	if(!..())
 		return FALSE
 	if(istype(antag.current, /mob/living/silicon))
@@ -46,18 +50,16 @@
 				AppendObjective(/datum/objective/hijack)
 	return TRUE
 
-/datum/role/syndicate/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
+/datum/role/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore all other laws."
 	var/law_borg = "Accomplish your AI's objectives at all costs. You may ignore all other laws."
 	to_chat(killer, "<b>Your laws have been changed!</b>")
 	killer.set_zeroth_law(law, law_borg)
 	to_chat(killer, "New law: 0. [law]")
 
-	give_intel(killer)
-
 	killer.add_language("Sy-Code", 1)
 
-/datum/role/syndicate/traitor/Greet(greeting, custom)
+/datum/role/traitor/Greet(greeting, custom)
 	if (istype(antag.current, /mob/living/silicon))
 		add_law_zero(antag.current)
 		antag.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -82,35 +84,30 @@
 
 	return TRUE
 
-/datum/role/syndicate/traitor/OnPostSetup(laterole)
-	. = ..()
+/datum/role/traitor/wishgtanter
 
-	equip_traitor(antag.current)
-
-/datum/role/syndicate/traitor/wishgtanter
-
-/datum/role/syndicate/traitor/wishgtanter/forgeObjectives()
+/datum/role/traitor/wishgtanter/forgeObjectives()
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/custom/wishgtanter)
 	AppendObjective(/datum/objective/escape)
 	return TRUE
 
-/datum/role/syndicate/traitor/syndbeacon
+/datum/role/traitor/syndbeacon
 
-/datum/role/syndicate/traitor/syndbeacon/forgeObjectives()
+/datum/role/traitor/syndbeacon/forgeObjectives()
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/silence)
 	return TRUE
 
-/datum/role/syndicate/traitor/syndcall
+/datum/role/traitor/syndcall
 
-/datum/role/syndicate/traitor/syndcall/Greet(greeting, custom)
+/datum/role/traitor/syndcall/Greet(greeting, custom)
 	..()
 	to_chat(antag.current, "<span class='userdanger'> <B>ATTENTION:</B> You hear a call from Syndicate...</span>")
 
-/datum/role/syndicate/traitor/syndcall/OnPostSetup(laterole)
+/datum/role/traitor/syndcall/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)

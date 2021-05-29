@@ -32,12 +32,13 @@
 			suspects += man
 
 			// If they're a traitor or likewise, give them extra TC in exchange.
-			var/datum/role/syndicate/S = man.mind.GetRoleByType(/datum/role/syndicate)
-			var/obj/item/device/uplink/hidden/suplink = S.find_syndicate_uplink(man)
+			var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink(man)
 			if(suplink)
 				var/extra = 8
 				suplink.uses += extra
-				if(man.mind)
+				for(var/role in man.mind.antag_roles)
+					var/datum/role/R = man.mind.antag_roles[role]
+					var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
 					S.total_TC += extra
 				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
 			else
@@ -193,3 +194,22 @@
 	for(var/client/M in admins)
 		if(M.holder)
 			to_chat(M, msg)
+
+/proc/find_syndicate_uplink(mob/living/carbon/human/human)
+	var/list/L = human.GetAllContents()
+	for(var/obj/item/I in L)
+		if(I.hidden_uplink)
+			return I.hidden_uplink
+	return null
+
+/proc/get_nt_opposed()
+	var/list/dudes = list()
+	for(var/mob/living/carbon/human/man in human_list)
+		if(man.client)
+			if(man.client.prefs.nanotrasen_relation == "Opposed")
+				dudes += man
+			else if(man.client.prefs.nanotrasen_relation == "Skeptical" && prob(50))
+				dudes += man
+	if(dudes.len == 0)
+		return null
+	return pick(dudes)

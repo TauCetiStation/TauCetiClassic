@@ -10,7 +10,7 @@
 	ID = F_REVOLUTION
 	required_pref = ROLE_REV
 
-	initroletype = /datum/role/syndicate/rev_leader
+	initroletype = /datum/role/rev_leader
 	roletype = /datum/role/rev
 
 	min_roles = 2
@@ -46,7 +46,7 @@
 	return TRUE
 
 /datum/faction/revolution/proc/check_heads_victory()
-	for(var/datum/role/syndicate/rev_leader/R in members)
+	for(var/datum/role/rev_leader/R in members)
 		var/turf/T = get_turf(R.antag.current)
 		if(R.antag.current.stat != DEAD)
 			var/mob/living/carbon/C = R.antag
@@ -103,7 +103,7 @@
 	if(tried_to_add_revheads < world.time)
 		tried_to_add_revheads = world.time + 5 SECONDS
 		var/active_revs = 0
-		for(var/datum/role/syndicate/rev_leader/R in members)
+		for(var/datum/role/rev_leader/R in members)
 			if(R.antag?.current?.client?.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 				active_revs++
 
@@ -164,7 +164,7 @@
 
 /datum/faction/revolution/build_scorestat()
 	var/foecount = 0
-	for(var/datum/role/syndicate/rev_leader/lead in members)
+	for(var/datum/role/rev_leader/lead in members)
 		foecount++
 		if (!lead?.antag?.current)
 			score["opkilled"]++
@@ -199,7 +199,7 @@
 	var/revcount = 0
 	var/loycount = 0
 
-	for(var/datum/role/syndicate/rev_leader/lead in members)
+	for(var/datum/role/rev_leader/lead in members)
 		if (lead.antag?.current?.stat != DEAD)
 			foecount++
 	for(var/datum/role/rev/rev in members)

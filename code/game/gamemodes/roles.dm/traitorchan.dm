@@ -3,8 +3,6 @@
 	id = TRAITORCHAN
 	required_pref = ROLE_CHANGELING
 
-/datum/role/changeling/traitor/OnPostSetup(laterole)
-	. = ..()
-	var/datum/role/syndicate/traitor/temp_role = new /datum/role/syndicate/traitor()
-	temp_role.equip_traitor(antag.current)
-	temp_role.Drop()
+/datum/role/changeling/traitor/New()
+	..()
+	AddComponent(/datum/component/gamemode/syndicate, 20)

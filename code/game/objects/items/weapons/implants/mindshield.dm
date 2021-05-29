@@ -67,12 +67,14 @@
 	. = ..()
 	if(.)
 		if(M.mind)
-			var/cleared_role = TRUE
-			var/datum/role/syndicate/S = M.mind.GetRoleByType(/datum/role/syndicate)
-			if(S)
-				S.RemoveFromRole(M.mind)
-			else
-				cleared_role = FALSE
+			var/cleared_role = FALSE
+			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, HEADREV)
+			for(var/role in remove_roles)
+				var/datum/role/R = M.mind.GetRole(role)
+				if(!R)
+					continue
+				R.RemoveFromRole(M.mind)
+				cleared_role = TRUE
 
 			if(cleared_role)
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.

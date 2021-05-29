@@ -232,11 +232,15 @@ var/global/regex/code_response_highlight_rule
 	if(!traitor_mind)
 		return message
 
-	var/datum/role/syndicate/S = traitor_mind.GetRoleByType(/datum/role/syndicate)
-	if(!S)
-		return message
+	var/awareness = 0
+	for(var/role in traitor_mind.antag_roles)
+		var/datum/role/R = traitor_mind.antag_roles[role]
+		var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+		if(!S)
+			continue
+		if(S.syndicate_awareness > awareness)
+			awareness = S.syndicate_awareness
 
-	var/awareness = S.syndicate_awareness
 	if(!awareness)
 		return message
 

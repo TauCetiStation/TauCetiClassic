@@ -138,6 +138,7 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
+	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
 
 /datum/role/process()
 	return
@@ -295,7 +296,8 @@
 	return text
 
 /datum/role/proc/extraPanelButtons(datum/mind/M)
-	return ""
+	var/signal_buttons = SEND_SIGNAL(src, COMSIG_ROLE_PANELBUTTONS)
+	return signal_buttons ? signal_buttons : ""
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
 	var/text = ""
@@ -339,7 +341,10 @@
 
 /datum/role/proc/GetScoreboard()
 	SHOULD_CALL_PARENT(TRUE)
-	return Declare()
+	var/dat = Declare()
+	var/signal_buttons = SEND_SIGNAL(src, COMSIG_ROLE_GETSCOREBOARD)
+	dat += signal_buttons ? signal_buttons : ""
+	return dat
 
 // DO NOT OVERRIDE
 /datum/role/Topic(href, href_list)
@@ -355,6 +360,9 @@
 	if(!M)
 		return
 	RoleTopic(href, href_list, M, check_rights(R_ADMIN))
+	SEND_SIGNAL(src, COMSIG_ROLE_ROLETOPIC, href, href_list, M, check_rights(R_ADMIN))
+
+	M.edit_memory() // Update window
 
 // USE THIS INSTEAD (global)
 /datum/role/proc/RoleTopic(href, href_list, datum/mind/M, admin_auth)

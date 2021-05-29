@@ -21,7 +21,7 @@
 	. = ..()
 	to_chat(antag.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
 
-/datum/role/syndicate/rev_leader
+/datum/role/rev_leader
 	name = HEADREV
 	id = HEADREV
 	required_pref = ROLE_REV
@@ -34,7 +34,11 @@
 
 	var/rev_cooldown = 0
 
-/datum/role/syndicate/rev_leader/OnPostSetup(laterole)
+/datum/role/rev_leader/New()
+	..()
+	AddComponent(/datum/component/gamemode/syndicate, 20)
+
+/datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
 	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
 
@@ -48,9 +52,6 @@
 		if(M && !isrevhead(M) && !(M in already_considered))
 			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
-
-	if(!laterole)
-		equip_traitor(antag.current)
 
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
@@ -80,7 +81,7 @@
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate") || role_available_in_minutes(M, ROLE_REV))
 		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
 	else
-		var/datum/role/syndicate/rev_leader/lead = mind.GetRole(HEADREV)
+		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
 		if(world.time < lead.rev_cooldown)
 			to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
 			return

@@ -6,7 +6,7 @@
 	logo_state = "nuke-logo"
 	required_pref = ROLE_OPERATIVE
 
-	initroletype = /datum/role/syndicate/operative
+	initroletype = /datum/role/operative
 
 	min_roles = 2
 	max_roles = 6
@@ -47,7 +47,7 @@
 
 /datum/faction/nuclear/get_initrole_type()
 	if(!leader)
-		return /datum/role/syndicate/operative/leader
+		return /datum/role/operative/leader
 	return ..()
 
 /datum/faction/nuclear/can_setup(num_players)
@@ -71,7 +71,7 @@
 /datum/faction/nuclear/HandleNewMind(datum/mind/M)
 	. = ..()
 	if(.)
-		var/datum/role/R = locate(/datum/role/syndicate/operative/leader) in members
+		var/datum/role/R = locate(/datum/role/operative/leader) in members
 		if(R)
 			leader = R
 
@@ -103,7 +103,7 @@
 	var/spawnpos = 1
 
 	for(var/datum/role/role in members)
-		if(istype(role, /datum/role/syndicate/operative/leader))
+		if(istype(role, /datum/role/operative/leader))
 			role.antag.current.forceMove(synd_comm_spawn)
 		else
 			if(spawnpos > synd_spawn.len)
