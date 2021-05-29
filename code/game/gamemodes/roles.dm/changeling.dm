@@ -79,13 +79,19 @@
 		AppendObjective(/datum/objective/escape)
 	return TRUE
 
-/datum/role/changeling/proc/changelingRegen()
-	if(antag)
-		chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
-		geneticdamage = max(0, geneticdamage-1)
+/datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
+	antag?.current?.hud_used.lingchemdisplay.invisibility = 101
+	. = ..()
 
-		antag.current.invisibility = 0
-		antag.current.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[chem_charges]</font></div>"
+/datum/role/changeling/proc/changelingRegen()
+	if(!antag)
+		return
+	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
+	geneticdamage = max(0, geneticdamage-1)
+
+	if(antag.current?.hud_used?.lingchemdisplay)
+		antag.current.hud_used.lingchemdisplay.invisibility = 0
+		antag.current.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[chem_charges]</font></div>"
 
 /datum/role/changeling/proc/GetDNA(dna_owner)
 	var/datum/dna/chosen_dna
@@ -98,9 +104,6 @@
 /datum/role/changeling/process()
 	changelingRegen()
 	..()
-
-/datum/role/changeling/PostMindTransfer(mob/living/new_character, mob/living/old_character)
-	new_character.make_changeling() // Will also restore any & all genomes/powers we have
 
 /datum/role/changeling/GetScoreboard()
 	. = ..()
@@ -142,5 +145,5 @@
 	if(purchasedpowers.len)
 		for(var/P in purchasedpowers)
 			var/obj/effect/proc_holder/changeling/S = P
-			if(S.chemical_cost >= 0 && S.can_be_used_by(src))
+			if(S.chemical_cost >= 0 && S.can_be_used_by(antag?.current))
 				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S)

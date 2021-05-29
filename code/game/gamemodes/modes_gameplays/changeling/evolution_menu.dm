@@ -340,6 +340,7 @@ var/list/sting_paths
 
 	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 	if(!C)
+		create_and_setup_role(/datum/role/changeling, src, TRUE)
 		return
 
 	if(!sting_paths)

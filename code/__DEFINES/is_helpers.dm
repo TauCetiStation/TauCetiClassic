@@ -134,8 +134,6 @@
 
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
 
-#define hasFactionIcons(H) (H?.mind && H.mind.hasFactionsWithHUDIcons())
-
 #define isabductorsci(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_SCI) : FALSE)
 
 #define isabductoragent(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_AGENT) : FALSE)

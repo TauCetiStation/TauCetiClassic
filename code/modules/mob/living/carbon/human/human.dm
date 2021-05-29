@@ -190,10 +190,10 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
-		if(mind)
-			for(var/role in mind.antag_roles)
-				var/datum/role/R = mind.antag_roles[role]
-				stat(R.StatPanel())
+	if(mind)
+		for(var/role in mind.antag_roles)
+			var/datum/role/R = mind.antag_roles[role]
+			stat(R.StatPanel())
 
 	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
 		var/obj/item/clothing/suit/space/rig/rig = wear_suit
