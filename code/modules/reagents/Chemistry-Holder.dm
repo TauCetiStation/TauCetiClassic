@@ -100,7 +100,8 @@ var/const/INGEST = 2
 	if(amount > 2000) return
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
-	B.volume = 1000
+	B.volume = maximum_volume
+	B.reagents.maximum_volume = maximum_volume
 
 	var/datum/reagents/BR = B.reagents
 	var/datum/reagents/R = target.reagents
@@ -617,8 +618,33 @@ var/const/INGEST = 2
 	if(icon_from_reagents)
 		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 	return D
-///////////////////////////////////////////////////////////////////////////////////
 
+/datum/reagents/proc/standard_splash(atom/target, amount=null, mob/living/user=null)
+	if(total_volume <= 0)
+		return
+
+	if(isnull(amount))
+		amount = total_volume
+
+	var/datum/reagents/splash = new()
+	splash.maximum_volume = maximum_volume
+	trans_to(splash, amount=amount)
+
+	if(!isnull(user))
+		var/turf/T = get_turf(target)
+		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([COORD(T)]) [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([COORD(T)])")
+
+		if(ismob(target))
+			var/mob/living/L = target
+			var/contained = splash.get_reagents()
+
+			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
+
+	splash.reaction(target, TOUCH)
+	splash.clear_reagents()
+
+///////////////////////////////////////////////////////////////////////////////////
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
