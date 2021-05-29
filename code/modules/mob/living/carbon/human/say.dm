@@ -179,13 +179,13 @@
 			return
 		if("changeling")
 			if(ischangeling(src))
-				var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = message
 				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [n_message]")
 				for(var/mob/Changeling in mob_list)
 					if(ischangeling(Changeling))
 						to_chat(Changeling, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
-						var/datum/role/changeling/CC = Changeling.mind.GetRole(CHANGELING)
+						var/datum/role/changeling/CC = Changeling.mind.GetRoleByType(/datum/role/changeling)
 						for(var/M in CC.essences)
 							to_chat(M, "<span class='changeling'><b>[C.changelingID]:</b> [n_message]</span>")
 
@@ -194,7 +194,7 @@
 			return
 		if("alientalk")
 			if(ischangeling(src))
-				var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = message
 				for(var/M in C.essences)
 					to_chat(M, "<span class='shadowling'><b>[C.changelingID]:</b> [n_message]</span>")
@@ -261,7 +261,7 @@
 		else
 			return name
 	if(ischangeling(src))
-		var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.mimicing)
 			return C.mimicing
 	if(special_voice)

@@ -13,7 +13,7 @@
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
 	. = ..()
-	changeling = host.mind.GetRole(CHANGELING)
+	changeling = host.mind.GetRoleByType(/datum/role/changeling)
 	changeling.essences += src
 	name = victim.mind.name
 	victim.mind.transfer_to(src)
@@ -103,7 +103,7 @@
 		for(var/mob/M in mob_list)
 			if(ischangeling(M))
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
-				var/datum/role/changeling/C = M.mind.GetRole(CHANGELING)
+				var/datum/role/changeling/C = M.mind.GetRoleByType(/datum/role/changeling)
 				for(var/mob in C.essences)
 					to_chat(mob, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
 			else if(isobserver(M) && M.client)
@@ -258,7 +258,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!changeling || changeling.controled_by)
 		return
 	var/dat = ""
@@ -316,7 +316,7 @@
 /mob/living/carbon/proc/delegate_body_to_essence(mob/living/parasite/essence/E)
 	if(!ischangeling(src))
 		return FALSE
-	var/datum/role/changeling/changeling = mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = mind.GetRoleByType(/datum/role/changeling)
 	var/changing_changeling_key = TRUE
 	if(changeling.delegating)
 		return FALSE
@@ -346,7 +346,7 @@
 /obj/effect/proc_holder/changeling/manage_essencies/Topic(href, href_list)
 	if(!ischangeling(usr))
 		return
-	var/datum/role/changeling/C = usr.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = usr.mind.GetRoleByType(/datum/role/changeling)
 	if(C.controled_by)
 		return
 	if(href_list["share_body"])

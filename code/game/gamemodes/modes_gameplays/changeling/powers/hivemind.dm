@@ -5,7 +5,7 @@
 	genomecost = 0
 
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(mob/user)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!changeling.faction)
 		return
 
@@ -39,7 +39,7 @@
 	genomecost = 0
 
 /obj/effect/proc_holder/changeling/hivemind_download/sting_action(mob/user)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!changeling.faction)
 		return
 

@@ -7,6 +7,6 @@
 
 /obj/effect/proc_holder/changeling/boost_range/on_purchase(mob/user)
 	..()
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.sting_range = 2
 	return

@@ -10,7 +10,7 @@
 	if(!..())
 		return
 
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(changeling.isabsorbing)
 		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return
@@ -27,7 +27,7 @@
 	return changeling.can_absorb_dna(user,target)
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/living/user)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
 	changeling.isabsorbing = 1
@@ -75,7 +75,7 @@
 		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
 
-		var/datum/role/changeling/C = target.mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = target.mind.GetRoleByType(/datum/role/changeling)
 		if(C)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(C.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += C.absorbedcount

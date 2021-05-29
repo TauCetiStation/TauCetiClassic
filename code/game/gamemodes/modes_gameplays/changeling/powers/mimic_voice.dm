@@ -8,7 +8,7 @@
 
 // Fake Voice
 /obj/effect/proc_holder/changeling/mimicvoice/sting_action(mob/user)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(changeling.mimicing)
 		changeling.mimicing = ""
 		changeling.chem_recharge_slowdown -= 0.25

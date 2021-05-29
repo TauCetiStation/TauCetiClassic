@@ -2,7 +2,7 @@
 	if(iszombie(src))
 		return src.zombie_movement_delay()
 	if(ischangeling(src))
-		var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.strained_muscles)
 			if(!has_gravity(src))
 				return -3   // speed boost in space.

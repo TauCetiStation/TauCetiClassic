@@ -22,7 +22,7 @@
 		S.Weaken(3)
 
 	// Prevents having Regenerate verb after rebirth.
-	var/datum/role/changeling/C = M.GetRole(CHANGELING)
+	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
 	C.purchasedpowers -= locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers
 
 	// In case we did it out of stasis
@@ -80,7 +80,7 @@
 			BP.hidden = egg
 		if(origin)
 			egg.origin = origin
-			var/datum/role/changeling/C = origin.GetRole(CHANGELING)
+			var/datum/role/changeling/C = origin.GetRoleByType(/datum/role/changeling)
 			if(C)
 				for(var/mob/living/parasite/essence/E in src)
 					E.loc = egg
@@ -121,7 +121,7 @@
 	if(origin && origin.current && origin.current.stat != DEAD)
 		return
 	origin.transfer_to(M)
-	var/datum/role/changeling/C = origin.GetRole(CHANGELING)
+	var/datum/role/changeling/C = origin.GetRoleByType(/datum/role/changeling)
 	if(C)
 		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.changeling_update_languages(C.absorbed_languages)

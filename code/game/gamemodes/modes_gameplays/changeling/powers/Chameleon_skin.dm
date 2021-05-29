@@ -47,7 +47,7 @@
 	to_chat(owner, "<span class='notice'>We feel oddly exposed.</span>")
 	owner.alpha = 255
 	STOP_PROCESSING(SSobj, src)
-	var/datum/role/changeling/C = owner.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 	C.chem_recharge_slowdown -= 0.25
 	owner.invisibility = 0
 
@@ -55,5 +55,5 @@
 	to_chat(owner, "<span class='notice'>We feel one with our surroundings.</span>")
 	owner.alpha = 200
 	START_PROCESSING(SSobj, src)
-	var/datum/role/changeling/C = owner.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 	C.chem_recharge_slowdown += 0.25

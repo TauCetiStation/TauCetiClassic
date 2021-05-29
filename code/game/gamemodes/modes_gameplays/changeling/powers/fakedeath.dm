@@ -34,7 +34,7 @@
 
 	if(NOCLONE in user.mutations)
 		to_chat(user, "<span class='notice'>We could not begin our stasis, something damaged all our DNA.</span>")
-		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 		C.instatis = FALSE
 		user.fake_death = FALSE
 		return
@@ -48,7 +48,7 @@
 /obj/effect/proc_holder/changeling/fakedeath/proc/give_revive_ability(mob/living/user)
 	if(!ischangeling(user))
 		return
-	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(C?.purchasedpowers)
 		C.instatis = FALSE
 		user.fake_death = FALSE
@@ -67,7 +67,7 @@
 				C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
-	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(C.instatis) //We already regenerating, no need to start second time in a row.
 		return
 	if(locate(/obj/effect/proc_holder/changeling/revive) in C.purchasedpowers)

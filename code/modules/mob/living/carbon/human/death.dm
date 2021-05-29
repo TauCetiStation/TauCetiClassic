@@ -112,7 +112,7 @@
 			timeofdeath = 0
 
 		if(BP.brainmob && ischangeling(BP.brainmob)) //cuz fuck runtimes
-			var/datum/role/changeling/Host = BP.brainmob.mind.GetRole(CHANGELING)
+			var/datum/role/changeling/Host = BP.brainmob.mind.GetRoleByType(/datum/role/changeling)
 			if(Host.chem_charges >= 35 && Host.geneticdamage < 10)
 				for(var/obj/effect/proc_holder/changeling/headcrab/crab in Host.purchasedpowers)
 					if(istype(crab))

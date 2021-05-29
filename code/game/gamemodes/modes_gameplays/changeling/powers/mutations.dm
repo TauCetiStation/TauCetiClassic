@@ -51,7 +51,7 @@
 	var/blood_on_castoff = 0
 
 /obj/effect/proc_holder/changeling/suit/try_to_sting(mob/user, mob/target)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!ishuman(user) || !changeling)
 		return
 
@@ -89,7 +89,7 @@
 	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, 1, 1, 1)
 	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, 1, 1, 1)
 
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
 	return 1
 
@@ -188,7 +188,7 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 		var/mob/M = loc
-		var/datum/role/changeling/C = M.mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = M.mind.GetRoleByType(/datum/role/changeling)
 		if(C.absorbedcount)
 			remaining_uses +=  C.absorbedcount
 

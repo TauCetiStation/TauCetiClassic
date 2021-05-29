@@ -2,7 +2,7 @@
 	..()
 	if(!ischangeling(src))
 		return
-	var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 	if(C && !C.delegating && length(C.essences) > 0)
 
 		if(C.trusted_entity && C.trusted_entity.client)

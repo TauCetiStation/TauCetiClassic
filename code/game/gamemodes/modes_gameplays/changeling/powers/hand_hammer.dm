@@ -33,7 +33,7 @@
 /obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)
 	if(!ischangeling(user))
 		return 0
-	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!C)
 		return 0
 	if(C.chem_charges < req_chem)

@@ -15,7 +15,7 @@
 		to_chat(user,"<span class='danger'>We are still exhausted.</span>")
 		return
 	owner = user
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	active = !active
 	if(active)
 		if(changeling.chem_charges < 10) // we doesn't use req_chem variable cuz we always switch this ability
@@ -40,7 +40,7 @@
 			to_chat(owner,"<span class='danger'>We collapse in exhaustion.</span>")
 			owner.Weaken(3)
 			owner.emote("gasp")
-			var/datum/role/changeling/C = owner.mind.GetRole(CHANGELING)
+			var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 			C.strained_muscles = 0
 			active = !active
 
@@ -48,7 +48,7 @@
 			active = !active
 			to_chat(owner,"<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			owner.Weaken(2)
-			var/datum/role/changeling/C = owner.mind.GetRole(CHANGELING)
+			var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 			C.strained_muscles = 0
 		if(stacks == 10)
 			to_chat(owner,"<span class='warning'>Our legs are really starting to hurt...</span>")

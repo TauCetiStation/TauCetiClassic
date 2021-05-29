@@ -12,7 +12,7 @@
 
 	if(config.traitor_scaling)
 		max_roles = max_traitors - 1 + prob(traitor_prob)
-		log_game("Number of traitors: [max_roles]")
+		log_mode("Number of traitors: [max_roles]")
 		message_admins("Players counted: [num_players]  Number of traitors chosen: [max_roles]")
 	else
 		max_roles = max(1, min(num_players, traitors_possible))
@@ -20,24 +20,15 @@
 	abandon_allowed = 1
 	return TRUE
 
-/datum/faction/traitor/auto/HandleRecruitedMind(datum/mind/M, override = FALSE)
-	var/datum/role/R = ..()
-	if(!R)
-		return
-
-	R.Greet(GREET_AUTOTATOR)
-	R.OnPostSetup()
-	R.forgeObjectives()
-	R.AnnounceObjectives()
-
-	return R
-
 /datum/faction/traitor/auto/proc/traitorcheckloop()
+	log_mode("Try add new autotraitor.")
 	if(SSshuttle.departed)
+		log_mode("But shuttle was departed.")
 		return
 
 	if(SSshuttle.online) //shuttle in the way, but may be revoked
 		addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
+		log_mode("But shuttle was online.")
 		return
 
 	var/list/possible_autotraitor = list()
@@ -70,9 +61,9 @@
 
 	if(traitorcount < max_traitors)
 		if(prob(traitor_prob))
-			message_admins("Making a new Traitor.")
+			log_mode("Making a new Traitor.")
 			if(!possible_autotraitor.len)
-				message_admins("No potential traitors.  Cancelling new traitor.")
+				log_mode("No potential traitors.  Cancelling new traitor.")
 				addtimer(CALLBACK(src, .proc/traitorcheckloop), SPAWN_CD)
 				return
 

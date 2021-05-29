@@ -23,7 +23,7 @@
 	user.digitalcamo = !user.digitalcamo
 
 	spawn(0)
-		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 		while(user && user.digitalcamo && C)
 			C.chem_charges = max(C.chem_charges - 1, 0)
 			sleep(40)

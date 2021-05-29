@@ -7,7 +7,7 @@
 	max_genetic_damage = 20
 
 /obj/effect/proc_holder/changeling/humanform/sting_action(mob/living/carbon/user)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
 		names += "[DNA.real_name]"

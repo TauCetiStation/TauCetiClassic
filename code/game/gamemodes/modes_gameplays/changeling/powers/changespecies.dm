@@ -10,7 +10,7 @@
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/change_species/sting_action(mob/living/carbon/human/user)
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(changeling.absorbed_species.len < 2)
 		to_chat(src, "<span class='warning'>We do not know of any other species genomes to use.</span>")
 		return

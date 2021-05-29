@@ -148,7 +148,7 @@
 
 #define isvoxraider(H) (H?.mind ? H.mind.GetRole(VOXRAIDER) : FALSE)
 
-#define ischangeling(H) (H?.mind ? H.mind.GetRole(CHANGELING) : FALSE)
+#define ischangeling(H) (H?.mind ? H.mind.GetRoleByType(/datum/role/changeling) : FALSE)
 
 #define isanyrev(H) (isrevnothead(H) || isrevhead(H))
 

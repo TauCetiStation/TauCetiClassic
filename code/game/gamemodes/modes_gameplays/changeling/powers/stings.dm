@@ -8,7 +8,7 @@
 	var/mob/user = usr
 	if(!user || !ischangeling(user))
 		return
-	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!(C.chosen_sting))
 		set_sting(user)
 	else
@@ -17,27 +17,27 @@
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
 	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
-	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	C.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
 	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
-	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	C.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
 	user.hud_used.lingstingdisplay.invisibility = 101
 
 /mob/living/carbon/proc/unset_sting()
-	var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 	if(C && C.chosen_sting)
 		C.chosen_sting.unset_sting(src)
 
 /obj/effect/proc_holder/changeling/sting/can_sting(mob/user, mob/target)
 	if(!..())
 		return
-	var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!C.chosen_sting)
 		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
@@ -75,7 +75,7 @@
 			if(I.flags & THICKMATERIAL)
 				to_chat(user, "<span class='warning'>We broke our sting about our's armor!</span>")
 				unset_sting(user)
-				var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+				var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 				C.chem_charges -= rand(5,10)
 				H.drip(10)
 				return 1
@@ -93,7 +93,7 @@
 					var/mob/living/carbon/human/HU = user
 					HU.drip(10)
 			unset_sting(user)
-			var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+			var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 			C.chem_charges -= rand(5,10)
 
 			return 1
@@ -145,7 +145,7 @@
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
 	var/mob/user = usr
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/list/names = list()
 	for(var/datum/dna/DNA in changeling.absorbed_dna)
 		names += "[DNA.real_name]"
@@ -190,13 +190,13 @@
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/living/carbon/target)
 	if(..())
-		var/datum/role/changeling/C = user.mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 		return C.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	if(sting_fail(user,target))
 		return 0
-	var/datum/role/changeling/changeling = user.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 
 	target.dna.real_name = target.real_name
 	changeling.absorbed_dna |= target.dna

@@ -68,7 +68,7 @@
 
 /mob/living/carbon/MiddleClickOn(atom/A)
 	if(mind)
-		var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
@@ -77,7 +77,7 @@
 
 /mob/living/carbon/AltClickOn(atom/A)
 	if(mind)
-		var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
@@ -719,7 +719,7 @@
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
 	if(!ischangeling(src))
 		return
-	var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 	if(length(C.essences) < 1)
 		return
 	if(loc == NewLoc)

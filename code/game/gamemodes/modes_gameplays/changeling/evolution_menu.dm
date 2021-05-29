@@ -10,7 +10,7 @@ var/list/sting_paths
 /obj/effect/proc_holder/changeling/evolution_menu/Click()
 	if(!usr || !ischangeling(usr))
 		return
-	var/datum/role/changeling/changeling = usr.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/changeling = usr.mind.GetRoleByType(/datum/role/changeling)
 
 	if(!sting_paths)
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
@@ -291,7 +291,7 @@ var/list/sting_paths
 	if(!(iscarbon(usr) && ischangeling(usr)))
 		return
 
-	var/datum/role/changeling/C = usr.mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = usr.mind.GetRoleByType(/datum/role/changeling)
 	if(href_list["P"])
 		C.purchasePower(usr, href_list["P"])
 	var/dat = create_menu(C)
@@ -338,7 +338,7 @@ var/list/sting_paths
 	if(!ishuman(src) && !ismonkey(src))
 		return
 
-	var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 	if(!C)
 		return
 
@@ -389,7 +389,7 @@ var/list/sting_paths
 			digitalcamo = 0
 			if(digitaldisguise)
 				digitaldisguise.override = 0
-			var/datum/role/changeling/C = mind.GetRole(CHANGELING)
+			var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 			C.reset()
 			for(var/obj/effect/proc_holder/changeling/p in C.purchasedpowers)
 				if(!(p.genomecost == 0 && keep_free_powers))

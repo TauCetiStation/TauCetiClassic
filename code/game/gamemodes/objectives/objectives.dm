@@ -615,7 +615,7 @@ var/global/list/all_objectives = list()
 
 /datum/objective/absorb/check_completion()
 	if(owner)
-		var/datum/role/changeling/C = owner.GetRole(CHANGELING)
+		var/datum/role/changeling/C = owner.GetRoleByType(/datum/role/changeling)
 		if(C && C.absorbed_dna && (C.absorbedcount >= target_amount))
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS

@@ -121,9 +121,6 @@
 	score["crewscore"] -= messpoints
 	score["crewscore"] -= plaguepoints
 
-	// Show the score - might add "ranks" later
-	to_chat(world, "<b>The crew's final score is:</b>")
-	to_chat(world, "<b><font size='4'>[score["crewscore"]]</font></b>")
 	if(one_mob)
 		one_mob.scorestats(completions)
 	else
@@ -132,6 +129,10 @@
 				E.scorestats(completions)
 
 /mob/proc/scorestats(completions)//omg why we count this for every player
+	// Show the score - might add "ranks" later
+	to_chat(src, "<b>The crew's final score is:</b>")
+	to_chat(src, "<b><font size='4'>[score["crewscore"]]</font></b>")
+
 	var/dat = completions
 	dat += {"<h2>Round Statistics and Score</h2><div class='Section'>"}
 
