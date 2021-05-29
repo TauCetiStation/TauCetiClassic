@@ -118,46 +118,46 @@
 /obj/machinery/chem_dispenser/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return
-	
-	if(action == "change_amount")
-		var/new_amount = clamp(round(text2num(params["new_amount"])), 0, 100)
-		if(amount == new_amount)
-			return
+	switch(action)
+		if("change_amount")
+			var/new_amount = clamp(round(text2num(params["new_amount"])), 0, 100)
+			if(amount == new_amount)
+				return
 
-		amount = new_amount
+			amount = new_amount
 
-		if(iscarbon(usr))
-			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+			
+		if("dispense")
+			. = TRUE
+			if (!beaker || !dispensable_reagents.Find(params["chemical"]))
+				return
+			
+			var/datum/reagents/R = beaker.reagents
+			var/space = R.maximum_volume - R.total_volume
+
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
+			if ((space > 0) && (energy * 10 >= min(amount, space)))
+				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
+
+			R.add_reagent(params["chemical"], min(amount, energy * 10, space))
+			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 		
-	if(action == "dispense")
-		. = TRUE
-		if (!beaker || !dispensable_reagents.Find(params["chemical"]))
-			return
-		
-		var/datum/reagents/R = beaker.reagents
-		var/space = R.maximum_volume - R.total_volume
+		if("eject_beaker")
+			. = TRUE
+			if(!beaker)
+				return
 
-		if(iscarbon(usr))
-			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+			beaker.loc = loc
+			beaker = null
 
-		if ((space > 0) && (energy * 10 >= min(amount, space)))
-			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
-		R.add_reagent(params["chemical"], min(amount, energy * 10, space))
-		energy = max(energy - min(amount, energy * 10, space) / 10, 0)
-	
-	if(action == "eject_beaker")
-		. = TRUE
-		if(!beaker)
-			return
-
-		beaker.loc = loc
-		beaker = null
-
-		if(iscarbon(usr))
-			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
-
-		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
