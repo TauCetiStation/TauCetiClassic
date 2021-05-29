@@ -22,9 +22,7 @@ var/global/list/cached_icons = list()
 		return
 	if(istype(target, /turf/simulated) && reagents.total_volume > 0)
 		user.visible_message("<span class='notice'>[target] has been splashed by [user] with [src].</span>", "<span class='notice'>You splash [target] with [src].</span>")
-		reagents.reaction(target, TOUCH)
-		reagents.remove_any(5)
-		log_game("[key_name(usr)] splashed [src.reagents.get_reagents()] on [target], location [COORD(target)]")
+		reagents.standard_splash(target, amount=5, user=user)
 	else
 		..()
 

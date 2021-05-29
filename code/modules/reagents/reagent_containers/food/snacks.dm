@@ -371,7 +371,8 @@
 	if(prob(13))
 		if(global.chicken_count < MAX_CHICKENS)
 			new /mob/living/simple_animal/chick(loc)
-	reagents.reaction(hit_atom, TOUCH)
+	// Yeah, eggs splash too it turns out.
+	reagents.standard_splash(hit_atom, user=throwingdatum.thrower)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
 

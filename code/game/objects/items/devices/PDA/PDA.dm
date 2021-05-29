@@ -93,7 +93,9 @@
 	if (can_use(user) && id)
 		remove_id()
 		update_icon()
-	else if (can_use(user))
+
+/obj/item/device/pda/CtrlClick(mob/user)
+	if (can_use(user))
 		verb_remove_pen()
 
 /obj/item/device/pda/medical
@@ -575,7 +577,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
 	        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "pda.tmpl", title, 520, 400)
+		ui = new(user, src, ui_key, "pda.tmpl", title, 590, 430)
 		// when the ui is first opened this is the data it will use
 
 		ui.load_cached_data(ManifestJSON)
@@ -780,6 +782,10 @@
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
 					mode = 21
+
+		if("DM")		// Choice for sending messages from Crew Manifest
+			var/obj/item/device/pda/P = src.dm_find_pda(href_list["reciever"])
+			src.create_message(U, P, !href_list["notap"])
 
 		if("Select Conversation")
 			var/P = href_list["convo"]
@@ -1100,6 +1106,24 @@
 		else
 			id.loc = get_turf(src)
 		id = null
+
+/obj/item/device/pda/proc/dm_find_pda(owner_name) // Find reciever PDA by name from Crew Manifest
+	var/pda_ref = null
+
+	for (var/obj/item/device/pda/P in PDAs)
+		if (!P.owner)
+			continue
+		else if(P.hidden)
+			continue
+		else if (P == src)
+			continue
+		else if (P.toff)
+			continue
+		else if (P.owner == owner_name)
+			pda_ref = P
+			continue
+
+	return pda_ref
 
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
 	if(tap && iscarbon(U))

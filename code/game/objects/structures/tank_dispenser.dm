@@ -22,6 +22,8 @@
 	. = ..()
 	update_icon()
 
+	tank_dispenser_list += src
+
 
 /obj/structure/dispenser/update_icon()
 	cut_overlays()

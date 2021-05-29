@@ -392,6 +392,8 @@
 	. = ..()
 	reagents.add_reagent("cleaner", volume)
 
+	cleaners_list += src
+
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
 	name = "pepperspray"
