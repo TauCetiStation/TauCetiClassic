@@ -151,7 +151,7 @@
 			if(!beaker)
 				return
 
-			beaker.loc = loc
+			beaker.forceMove(loc)
 			beaker = null
 
 			if(iscarbon(usr))
