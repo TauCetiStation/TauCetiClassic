@@ -290,7 +290,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/attack_self(mob/user)
 	if (!is_open_container())
 		flags |= OPENCONTAINER
-		flags += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
+		verbs += /obj/item/weapon/reagent_containers/food/drinks/proc/gulp_whole
 		playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		to_chat(user, "<span class='notice'>You open the [src].</span>")
 		update_icon()
