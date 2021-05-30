@@ -227,14 +227,23 @@
 	if(custom_member_output)
 		score_results += custom_member_output
 	else
+		var/list/name_by_members = list()
 		score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
 		for(var/datum/role/R in members)
-			var/results = R.GetScoreboard()
-			if(results)
-				score_results += results
-				score_results += "<br>"
-				if(R.objectives.objectives.len)
-					have_objectives = TRUE
+			if(!name_by_members[R.name])
+				name_by_members[R.name] = list()
+			name_by_members[R.name] += R
+
+		for(var/name in name_by_members)
+			score_results += "<b>[name]:</b><ul>"
+			for(var/datum/role/R in name_by_members[name])
+				var/results = R.GetScoreboard()
+				if(results)
+					score_results += results
+					score_results += "<br>"
+					if(R.objectives.objectives.len)
+						have_objectives = TRUE
+			score_results += "</ul>"
 
 	score_results += "</ul>"
 
@@ -274,7 +283,7 @@
 
 /datum/faction/proc/GetFactionHeader() //Returns what will show when the factions objective completion is summarized
 	var/icon/logo = get_logo_icon()
-	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10;'> <FONT size = 2><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10;'>"}
+	var/header = {"<img src='data:image/png;base64, [icon2base64(logo)]' style='position:relative; top:10;'> <FONT size = 3><B>[capitalize(name)]</B></FONT> <img src='data:image/png;base64,[icon2base64(logo)]' style='position:relative; top:10;'>"}
 	return header
 
 
