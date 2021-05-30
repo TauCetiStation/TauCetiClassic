@@ -111,7 +111,7 @@
 		var/datum/preferences/prefs = M.current.client.prefs
 		var/datum/species/S = all_species[prefs.species]
 
-		if(!S.can_be_role(name))
+		if(!S.can_be_role(required_pref))
 			return FALSE
 
 		for(var/specie_flag in restricted_species_flags)

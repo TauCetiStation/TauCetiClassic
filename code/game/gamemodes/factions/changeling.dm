@@ -1,7 +1,7 @@
 /datum/faction/changeling
 	name = F_HIVEMIND
 	ID = F_HIVEMIND
-	required_pref = CHANGELING
+	required_pref = ROLE_CHANGELING
 
 	initroletype = /datum/role/changeling
 	roletype = /datum/role/changeling

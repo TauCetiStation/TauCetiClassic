@@ -96,7 +96,7 @@
 /datum/faction/blob_conglomerate/stage(new_stage)
 	switch(new_stage)
 		if(FS_DORMANT)
-			if (!declared)
+			if(!declared)
 				declared = TRUE
 				var/datum/announcement/centcomm/blob/outbreak5/announcement = new
 				announcement.play()
@@ -107,7 +107,7 @@
 				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
-			for (var/mob/living/silicon/ai/aiPlayer in ai_list)
+			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.always_fake_recall = TRUE //Quarantine
@@ -132,9 +132,8 @@
 			send_intercept(FS_DEFEATED)
 			SSshuttle.always_fake_recall = FALSE
 			declared = FALSE
-			for(var/mob/living/silicon/ai/aiPlayer in player_list)
+			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
 				aiPlayer.set_zeroth_law("")
-				to_chat(aiPlayer, "Laws Updated. Lockdown has been lifted.")
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""

@@ -7,6 +7,7 @@
 	antag_hud_name = "changeling"
 
 	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 	logo_state = "change-logoa"
 
 	var/list/absorbed_dna = list()
