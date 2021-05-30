@@ -45,7 +45,7 @@
 				laws.ion[index] = temp
 
 		if (!is_special_character(src) || mind.original != src)
-			if(master.zeroth_borg) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
+			if(!isnull(master.zeroth_borg)) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
 				temp = master.zeroth_borg
 			else
 				temp = master.zeroth
