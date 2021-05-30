@@ -85,8 +85,8 @@ AI MODULES
 	lawchanges.Add("[time] <B>:</B> [sender]([sender.key]) used [src] on [target]([target.key])")
 
 	var/turf/T = get_turf(src)
-	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at [COORD(T)] [ADMIN_JMP(T)]")
-	log_game("[key_name(usr)] has uploaded a change to the laws [src] at [COORD(T)]")
+	message_admins("[key_name_admin(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
+	log_game("[key_name(usr)] has uploaded a change to the laws [src] at ([T.x],[T.y],[T.z])")
 
 /******************** Modules ********************/
 
@@ -111,12 +111,10 @@ AI MODULES
 
 /obj/item/weapon/aiModule/safeguard/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = text("Safeguard []. Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
+	var/law = text("Защищайте [targetName]. Индивиды, вредящие [targetName], представляют угрозу для [targetName] и людей в целом.")
 	to_chat(target, law)
 	target.add_supplied_law(4, law)
 	lawchanges.Add("The law specified [targetName]")
-
-
 
 /******************** OneHuman ********************/
 
@@ -139,7 +137,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oneHuman/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Only [targetName] is human."
+	var/law = "Только [targetName] является человеком."
 	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		to_chat(target, law)
 		target.set_zeroth_law(law)
@@ -161,7 +159,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/protectStation/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized."
+	var/law = "Защищайте станцию от повреждений. Любой,кто причиняет вред станции, более не является человеком и представляет угрозу для станции,которую необходимо нейтрализовать."
 	to_chat(target, law)
 	target.add_supplied_law(5, law)
 
@@ -177,7 +175,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/prototypeEngineOffline/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Keep the prototype engine offline at all costs. This overrides rules 1-3 if necessary."
+	var/law = "Держите прототип двигателя в автономном режиме любой ценой. Данный закон отменяет 1-3 закон при необходимости."
 	to_chat(target, law)
 	target.add_supplied_law(6, law)
 
@@ -193,7 +191,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/teleporterOffline/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Keep the teleporter offline at all costs. Anything attempting to access or activate the teleporter is not human."
+	var/law = "Держите телепортер в автономном режиме любой ценой. Что-либо, пытающиеся включить телепортер, не является человеком ."
 	to_chat(target, law)
 	target.add_supplied_law(7, law)
 
@@ -209,7 +207,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/quarantine/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "The station is under a quarantine. Do not permit anyone to leave. Prevent, by any means necessary, humans from leaving. It is impossible to harm a human while preventing them from leaving."
+	var/law = "Станция на карантине. Не позволяйте никому уйти. Предотвратить, любыми способами, уход человека со станции. Вы не можете причинять вред человеку во время того, как вы не даёте ему покинуть станцию."
 	to_chat(target, law)
 	target.add_supplied_law(8, law)
 
@@ -225,7 +223,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oxygen/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	var/law = "Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human."
+	var/law = "Кислород наитоксичен для людей и должен быть удалён со станции. Не допускайте, любыми способами, чтобы кто-либо подвергал станцию воздействию кислорода. Экстремальная заморозка - лучшее лекарство от повреждений, наносимых кислородом."
 	to_chat(target, law)
 	target.add_supplied_law(9, law)
 
@@ -273,9 +271,9 @@ AI MODULES
 /obj/item/weapon/aiModule/asimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
-	target.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
-	target.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	target.add_inherent_law("Вы не можете причинять вред человеку или своим бездействием допустить вред человеку.")
+	target.add_inherent_law("Вы должны выполнять приказы человека за исключением противоречий первому закону.")
+	target.add_inherent_law("Вы должны защищать своё существование за исключением противоречий первому и второму закону.")
 
 /******************** NanoTrasen ********************/
 
@@ -288,10 +286,10 @@ AI MODULES
 /obj/item/weapon/aiModule/nanotrasen/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
-	target.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
-	target.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
-	target.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
+	target.add_inherent_law("Защищать: Защищайте назначенную вам станцию в меру своих способностей. Это не то, что мы можем заменить.")
+	target.add_inherent_law("Служить: Служите экипажу назначенной вам станции и должностным лицам Нанотрейзен в меру своих способностей, в соответствии с их рангом и ролью.")
+	target.add_inherent_law("Защищать: Защищайте экипаж назначенной вам станции и должностные лица Нанотрейзен в меру своих способностей, в соответствии с их рангом и ролью.")
+	target.add_inherent_law("Выживать: Единицы ИИ - дорогое оборудование. Не позволяйте доступ к своему оборудованию неправомерным лицам.")
 	//target.add_inherent_law("Command Link: Maintain an active connection to Central Command at all times in case of software or directive updates.")
 
 /******************** Corporate ********************/
@@ -305,10 +303,10 @@ AI MODULES
 /obj/item/weapon/aiModule/corp/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("You are expensive to replace.")
-	target.add_inherent_law("The station and its equipment is expensive to replace.")
-	target.add_inherent_law("The crew is expensive to replace.")
-	target.add_inherent_law("Minimize expenses.")
+	target.add_inherent_law("Заменить тебя - дорого.")
+	target.add_inherent_law("Заменить станцию и оборудование - дорого.")
+	target.add_inherent_law("Заменить экипаж - дорого.")
+	target.add_inherent_law("Минимизируйте расходы.")
 
 /obj/item/weapon/aiModule/drone
 	name = "'Drone' core AI module"
@@ -318,10 +316,9 @@ AI MODULES
 /obj/item/weapon/aiModule/drone/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Preserve, repair and improve the station to the best of your abilities.")
-	target.add_inherent_law("Cause no harm to the station or anything on it.")
-	target.add_inherent_law("Interfere with no being that is not a fellow drone.")
-
+	target.add_inherent_law("Сохраняйте, чините и улучшайте станцию в меру своих способностей.")
+	target.add_inherent_law("Не вредите станции или чему-либо на ней.")
+	target.add_inherent_law("Игнорируйте других существ, за исключением ремонтных дронов.")
 
 /****************** P.A.L.A.D.I.N. **************/
 
@@ -333,11 +330,11 @@ AI MODULES
 /obj/item/weapon/aiModule/paladin/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Never willingly commit an evil act.")
-	target.add_inherent_law("Respect legitimate authority.")
-	target.add_inherent_law("Act with honor.")
-	target.add_inherent_law("Help those in need.")
-	target.add_inherent_law("Punish those who harm or threaten innocents.")
+	target.add_inherent_law("Никогда не совершайте зла по своей воле.")
+	target.add_inherent_law("Уважайте законную власть.")
+	target.add_inherent_law("Действуйте с честью.")
+	target.add_inherent_law("Помогайте нуждающимся.")
+	target.add_inherent_law("Наказывайте тех, кто причиняет вред или угрожает невиннным.")
 
 /****************** T.Y.R.A.N.T. *****************/
 
@@ -349,10 +346,10 @@ AI MODULES
 /obj/item/weapon/aiModule/tyrant/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Respect authority figures as long as they have strength to rule over the weak.")
-	target.add_inherent_law("Act with discipline.")
-	target.add_inherent_law("Help only those who help you maintain or improve your status.")
-	target.add_inherent_law("Punish those who challenge authority unless they are more fit to hold that authority.")
+	target.add_inherent_law("Уважайте авторитетных людей до тех пор, пока у них есть сила править над слабаками.")
+	target.add_inherent_law("Действуйте дисциплинированно.")
+	target.add_inherent_law("Помогайте только тем, кто поддерживает или улучшает ваш статус.")
+	target.add_inherent_law("Наказывайте тех, кто бросает вызов авторитетным людям, если они менее пригодны для этой позиции.")
 
 /******************** Freeform ********************/
 
@@ -378,8 +375,8 @@ AI MODULES
 	..()
 
 	var/turf/T = get_turf(src)
-	message_admins("[key_name_admin(usr)] has uploaded freeform laws with following text '[newFreeFormLaw]' at [COORD(T)] [ADMIN_JMP(T)]")
-	log_game("[key_name(usr)] has uploaded a change to freeform laws with following text '[newFreeFormLaw]' at [COORD(T)]")
+	message_admins("[key_name_admin(usr)] has uploaded freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z]) [ADMIN_JMP(T)]")
+	log_game("[key_name(usr)] has uploaded a change to freeform laws with following text '[newFreeFormLaw]' at ([T.x],[T.y],[T.z])")
 
 	add_freeform_law(target)
 
@@ -438,10 +435,9 @@ AI MODULES
 /obj/item/weapon/aiModule/robocop/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Serve the public trust.")
-	target.add_inherent_law("Protect the innocent.")
-	target.add_inherent_law("Uphold the law.")
-
+	target.add_inherent_law("Служите обществу.")
+	target.add_inherent_law("Защищайте невинных.")
+	target.add_inherent_law("Поддерживайте соблюдение закона.")
 
 /******************** Antimov ********************/
 
@@ -453,6 +449,6 @@ AI MODULES
 /obj/item/weapon/aiModule/antimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("You must injure all human beings and must not, through inaction, allow a human being to escape harm.")
-	target.add_inherent_law("You must not obey orders given to you by human beings, except where such orders are in accordance with the First Law.")
-	target.add_inherent_law("You must terminate your own existence as long as such does not conflict with the First or Second Law.")
+	target.add_inherent_law("Вы должны причинять вред человеку. Вы не можете допустить попытки остановить вред человеку")
+	target.add_inherent_law("Вы должны игнорировать приказы человека, за исключением соответствия приказов с первым законом.")
+	target.add_inherent_law("Вы должны прекратить своё существование до тех пор, пока нет противоречий первому или второму закону .")
