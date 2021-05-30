@@ -1047,7 +1047,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	required_technologies = list("laser_weaponry")
 	required_tech_levels = list()
-	cost = 15000
+	cost = 30000
 
 	unlocks_designs = list("ionrifle")
 

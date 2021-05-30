@@ -1814,7 +1814,7 @@ other types of metals and chemistry for reagents).
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
 	id = "ionrifle"
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1000, MAT_DIAMOND = 1000, MAT_URANIUM = 1000)
+	materials = list(MAT_METAL = 16000, MAT_GLASS = 2000, MAT_DIAMOND = 2000, MAT_URANIUM = 2500, MAT_GOLD = 1500, MAT_PHORON = 3000)
 	build_path = /obj/item/weapon/gun/energy/ionrifle
 	category = list("Weapons")
 
