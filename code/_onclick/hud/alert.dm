@@ -76,6 +76,7 @@
 /datum/tgui_modal/proc/wait()
 	while (!choice && !closed)
 		stoplag(1)
+
 /datum/tgui_modal/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -85,8 +86,10 @@
 /datum/tgui_modal/tgui_close(mob/user)
 	. = ..()
 	closed = TRUE
+
 /datum/tgui_modal/tgui_state(mob/user)
 	return global.always_state
+
 /datum/tgui_modal/tgui_data(mob/user)
 	. = list(
 		"title" = title,
@@ -95,6 +98,7 @@
 	)
 	if(timeout)
 		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
+
 /datum/tgui_modal/tgui_act(action, list/params)
 	. = ..()
 	if (.)
@@ -106,6 +110,7 @@
 			choice = params["choice"]
 			SStgui.close_uis(src)
 			return TRUE
+
 /**
  * # async tgui_modal
  *
@@ -114,21 +119,26 @@
 /datum/tgui_modal/async
 	/// The callback to be invoked by the tgui_modal upon having a choice made.
 	var/datum/callback/callback
+
 /datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout)
 	..(user, title, message, buttons, timeout)
 	src.callback = callback
+
 /datum/tgui_modal/async/Destroy(force, ...)
 	QDEL_NULL(callback)
 	. = ..()
+
 /datum/tgui_modal/async/tgui_close(mob/user)
 	. = ..()
 	qdel(src)
+
 /datum/tgui_modal/async/tgui_act(action, list/params)
 	. = ..()
 	if (!. || choice == null)
 		return
 	callback.InvokeAsync(choice)
 	qdel(src)
+
 /datum/tgui_modal/async/wait()
 	return
 
