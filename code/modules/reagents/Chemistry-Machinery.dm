@@ -82,7 +82,7 @@
 /obj/machinery/chem_dispenser/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ChemDispenser", ui_title, 380, 650)
+		ui = new(user, src, "ChemDispenser", ui_title)
 		ui.open()
 
 /obj/machinery/chem_dispenser/tgui_data(mob/user)
