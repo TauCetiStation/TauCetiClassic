@@ -1,5 +1,7 @@
-#define TIME_MIN 600
-#define TIME_MAX 1800
+// One iteration of process is 20 ticks
+// see in SSticker.wait
+#define TIME_MIN 300
+#define TIME_MAX 900
 
 /datum/role/blob_overmind
 	name = BLOBOVERMIND
@@ -26,15 +28,15 @@
 
 /datum/role/blob_overmind/process()
 	..()
-	if(!antag || istype(antag.current,/mob/camera/blob) || !antag.current || isobserver(antag.current))
+	if(!antag || istype(antag.current, /mob/camera/blob) || !antag.current)
 		return
 	if(countdown > time_to_burst)
 		return
 
 	countdown++
-	if(countdown == time_to_burst / 4)
+	if(countdown == round(time_to_burst / 4))
 		to_chat(antag.current, "<span class='alert'>You feel tired and bloated.</span>")
-	else if(countdown == time_to_burst / 2)
+	else if(countdown == round(time_to_burst / 2))
 		to_chat(antag.current, "<span class='alert'>You feel like you are about to burst.</span>")
 	else if(countdown == time_to_burst)
 		burst()
