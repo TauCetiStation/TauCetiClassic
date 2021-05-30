@@ -1,10 +1,13 @@
 /datum/game_mode/traitorchan
 	name = "TraitorChan"
 	config_name = "traitorchan"
-	factions_allowed = list(/datum/faction/traitor/traitorchan)
+	factions_allowed = list(
+		/datum/faction/traitor/traitorchan,
+		/datum/faction/traitor,
+	)
 
-	minimum_player_count = 3
-	minimum_players_bundles = 25
+	minimum_player_count = 0
+	minimum_players_bundles = 45
 
 /datum/game_mode/traitorchan/announce()
 	to_chat(world, "<B>The current game mode is - [name]!</B>")
