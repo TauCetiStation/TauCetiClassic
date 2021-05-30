@@ -968,8 +968,7 @@ Example:
 
 ```jsx
 <Window
-  theme="hackerman"
-  resizable>
+  theme="hackerman">
   <Window.Content scrollable>
     Hello, world!
   </Window.Content>

@@ -45,7 +45,6 @@ export class Window extends Component {
 
   render() {
     const {
-      resizable,
       theme,
       title,
       children,
@@ -85,7 +84,7 @@ export class Window extends Component {
             <div className="Window__dimmer" />
           )}
         </div>
-        {fancy && resizable && (
+        {fancy && (
           <Fragment>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />
