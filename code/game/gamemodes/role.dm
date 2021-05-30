@@ -291,7 +291,7 @@
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
 
-	antagonists_completion = list(list("role" = id, "html" = text))
+	antagonists_completion += list(list("role" = id, "html" = text))
 
 	return text
 

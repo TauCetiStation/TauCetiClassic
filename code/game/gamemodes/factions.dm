@@ -218,7 +218,7 @@
 
 		score_results += "</ul>"
 
-	antagonists_completion = list(list("faction" = ID, "html" = score_results))
+	antagonists_completion += list(list("faction" = ID, "html" = score_results))
 
 	score_results += "<ul>"
 
