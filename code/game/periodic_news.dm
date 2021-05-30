@@ -8,6 +8,10 @@
 	var/channel_name = "Tau Ceti Daily"
 	var/can_be_redacted = 0
 
+/datum/news_announcement/New()
+	if(channel_name == "Tau Ceti Daily")
+		channel_name = "[system_name()] Daily" // meh but whatever
+
 /datum/news_announcement/revolution_inciting_event/paycuts_suspicion
 	author = "Unauthorized"
 
@@ -107,7 +111,7 @@
 var/global/list/newscaster_standard_feeds = list(/datum/news_announcement/bluespace_research, /datum/news_announcement/lotus_tree, /datum/news_announcement/random_junk,  /datum/news_announcement/food_riots)
 
 /proc/process_newscaster()
-	check_for_newscaster_updates(ticker.mode.newscaster_announcements)
+	check_for_newscaster_updates(SSticker.mode.newscaster_announcements)
 
 var/global/tmp/announced_news_types = list()
 /proc/check_for_newscaster_updates(type)

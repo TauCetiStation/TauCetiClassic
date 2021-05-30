@@ -8,6 +8,8 @@
 	density = 1
 	anchored = 1
 
+	var/datum/announcement/centcomm/bsa/announcement = new
+
 /obj/machinery/artillerycontrol/process()
 	if(src.reload<180)
 		src.reload++
@@ -22,14 +24,22 @@
 	density = 0
 
 /obj/machinery/artillerycontrol/ui_interact(mob/user)
-	var/dat = "<B>Bluespace Artillery Control:</B><BR>"
+	var/dat = ""
 	dat += "Locked on<BR>"
 	dat += "<B>Charge progress: [reload]/180:</B><BR>"
-	dat += "The Bluespace Artillery in mode : <a href='?src=\ref[src];toggle=1'>[intensity ? "<font color=red>Destroy</font>" : "<font color=green>Hurt</font>"]</a><br>"
+	dat += "The Bluespace Artillery in mode: "
+	if(intensity)
+		dat += "<a class='red' href='?src=\ref[src];toggle=1'>Destroy</a>"
+	else
+		dat += "<a class='green' href='?src=\ref[src];toggle=1'>Hurt</a>"
+	dat += "<br>"
 	dat += "<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>"
 	dat += "Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"
-	user << browse(entity_ja(dat), "window=scroll")
-	onclose(user, "scroll")
+
+	var/datum/browser/popup = new(user, "scroll", "Bluespace Artillery Control")
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)
 	. = ..()
@@ -50,8 +60,8 @@
 		var/loc = pick(L)
 		if(loc)
 			if(intensity)
-				command_alert("Bluespace artillery fire detected in [thearea.name]. Brace for impact.")
-				message_admins("[key_name_admin(usr)] has launched an artillery strike at [thearea.name].")
+				announcement.play(thearea)
+				message_admins("[key_name_admin(usr)] has launched an artillery strike at [thearea.name]. [ADMIN_JMP(thearea)]")
 				explosion(loc,2,5,11)
 			else
 				explosion(loc,2,1,0)

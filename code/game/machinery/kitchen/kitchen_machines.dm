@@ -4,7 +4,7 @@
 	layer = 2.9
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = OPENCONTAINER | NOREACT
@@ -81,23 +81,23 @@
 	default_deconstruction_crowbar(O)
 
 	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/weapon/wirecutters)) // If it's broken and they're using a wirecutters.
+		if(src.broken == 2 && iswirecutter(O)) // If it's broken and they're using a wirecutters.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
+		else if(src.broken == 1 && iswelder(O) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (!user.is_busy(src) && do_after(user,20,target = src))
+			if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
@@ -110,11 +110,11 @@
 		else
 			to_chat(user, "<span class='danger'>It's broken!</span>")
 			return 1
-	else if(istype(O, /obj/item/weapon/reagent_containers/spray/))
+	else if(istype(O, /obj/item/weapon/reagent_containers/spray))
 		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
 		if(clean_spray.reagents.has_reagent("cleaner",clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner",clean_spray.amount_per_transfer_from_this,1)
-			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
+			playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 			user.visible_message( \
 				"<span class='notice'>[user] has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -129,12 +129,12 @@
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return 1
 
-	else if(istype(O, /obj/item/weapon/soap/)) // If they're trying to clean it then let them
+	else if(istype(O, /obj/item/weapon/soap)) // If they're trying to clean it then let them
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if (!user.is_busy(src) && do_after(user,20,target=src))
+		if (!user.is_busy(src) && O.use_tool(src, user, 20, volume = 100))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -144,7 +144,7 @@
 			src.icon_state = off_icon
 			src.flags = OPENCONTAINER
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
-		to_chat(user, "\red It's dirty!")
+		to_chat(user, "<span class='warning'>It's dirty!</span>")
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
@@ -192,7 +192,7 @@
 ********************/
 
 /obj/machinery/kitchen_machine/ui_interact(mob/user)
-	var/dat = "<div class='statusDisplay'>"
+	var/dat = "<div class='Section'>"
 	if(src.broken > 0)
 		dat += "ERROR: >> 0 --Responce input zero<BR>Contact your operator of the device manifactor support.</div>"
 	else if(src.operating)
@@ -249,8 +249,7 @@
 
 	var/datum/browser/popup = new(user, name, name, 400, 400)
 	popup.set_content(dat)
-	popup.open(0)
-	onclose(user, "[name]")
+	popup.open()
 
 /***********************************
 *   Kitchen Machine Handling/Cooking
@@ -338,18 +337,18 @@
 	return 0
 
 /obj/machinery/kitchen_machine/proc/start()
-	src.visible_message("\blue [src] turns on.", "\blue You hear a [src].")
+	src.visible_message("<span class='notice'>[src] turns on.</span>", "<span class='notice'>You hear a [src].</span>")
 	src.operating = 1
 	src.icon_state = on_icon
 	src.updateUsrDialog()
 	if(on_icon == "mw1")
-		playsound(src.loc, 'sound/machines/microwave.ogg', 70)
+		playsound(src, 'sound/machines/microwave.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "oven_on")
-		playsound(src.loc, 'sound/machines/stove.ogg', 80)
+		playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "candymaker_on")
-		playsound(src.loc, 'sound/machines/candy.ogg', 90)
+		playsound(src, 'sound/machines/candy.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "grill_on")
-		playsound(src.loc, 'sound/machines/grill.ogg', 80)
+		playsound(src, 'sound/machines/grill.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/machinery/kitchen_machine/proc/abort()
@@ -358,7 +357,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/stop()
-	playsound(src.loc, 'sound/machines/ding.ogg', 60, 1)
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = off_icon
 	src.updateUsrDialog()
@@ -369,16 +368,16 @@
 	if (src.reagents.total_volume)
 		src.dirty++
 	src.reagents.clear_reagents()
-	to_chat(usr, "\blue You dispose of [src] contents.")
+	to_chat(usr, "<span class='notice'>You dispose of [src] contents.</span>")
 	src.updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/muck_start()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) // Play a splat sound
+	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER) // Play a splat sound
 	src.icon_state = dirty_icon // Make it look dirty!!
 
 /obj/machinery/kitchen_machine/proc/muck_finish()
-	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	src.visible_message("\red [src] gets covered in muck!")
+	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
+	src.visible_message("<span class='warning'>[src] gets covered in muck!</span>")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments
 	src.icon_state = dirty_icon // Make it look dirty too
@@ -390,7 +389,7 @@
 	s.set_up(2, 1, src)
 	s.start()
 	src.icon_state = broken_icon // Make it look all busted up and shit
-	src.visible_message("\red [src] breaks!") //Let them know they're stupid
+	src.visible_message("<span class='warning'>[src] breaks!</span>") //Let them know they're stupid
 	src.broken = 2 // Make it broken so it can't be used util fixed
 	src.flags = null //So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards
@@ -451,7 +450,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/oven
@@ -473,7 +472,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/grill
@@ -495,7 +494,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/candymaker
@@ -517,5 +516,5 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()

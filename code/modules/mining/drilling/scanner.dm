@@ -27,12 +27,12 @@
 
 	to_chat(user, "You begin sweeping \the [src] about, scanning for metal deposits.")
 
-	if(!do_after(user, speed, target = src))
+	if(!use_tool(src, user, speed, volume = 50))
 		return
 
 	find_ore(user)
 
-	to_chat(user, "[bicon(src)] \blue The scanner beeps and displays a readout.")
+	to_chat(user, "[bicon(src)] <span class='notice'>The scanner beeps and displays a readout.</span>")
 
 	show_ore_count(user)
 
@@ -94,7 +94,8 @@
 
 	if(!istype(usr, /mob/living))
 		return
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, "You have moved too far away.")

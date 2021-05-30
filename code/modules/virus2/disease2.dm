@@ -43,7 +43,7 @@
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
-/datum/disease2/disease/proc/addeffect(var/datum/disease2/effectholder/holder)
+/datum/disease2/disease/proc/addeffect(datum/disease2/effectholder/holder)
 	if(holder == null)
 		return
 	if(effects.len < max_symptoms)
@@ -106,15 +106,19 @@
 
 	if(mob.stat == DEAD)
 		return
-	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly
+	if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(prob(5))
 			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
 
 	//Space antibiotics stop disease completely
-	if(!mob.is_infected_with_zombie_virus() && mob.reagents.has_reagent("spaceacillin"))
-		if(stage == 1 && prob(20))
-			src.cure(mob)
-		return
+	if(mob.reagents.has_reagent("spaceacillin"))
+		if(!mob.is_infected_with_zombie_virus())
+			if(stage == 1 && prob(20))
+				src.cure(mob)
+			return
+		else
+			if(prob(50)) //Antibiotics slow down zombie virus progression but dont stop it completely
+				return
 
 	//Virus food speeds up disease progress
 	if(mob.reagents.has_reagent("virusfood"))
@@ -148,12 +152,13 @@
 	for(var/mob/living/carbon/M in oview(radius,mob))
 		if(airborne_can_reach(get_turf(mob), get_turf(M)))
 			infect_virus2(M,src)
+			mob.med_hud_set_status()
 
 /datum/disease2/disease/proc/cure(mob/living/carbon/mob)
 	for(var/datum/disease2/effectholder/e in effects)
 		e.effect.deactivate(mob, e, src)
 	mob.virus2.Remove("[uniqueID]")
-	mob.hud_updateflag |= 1 << STATUS_HUD
+	mob.med_hud_set_status()
 
 /datum/disease2/disease/proc/getcopy()
 	var/datum/disease2/disease/disease = new /datum/disease2/disease

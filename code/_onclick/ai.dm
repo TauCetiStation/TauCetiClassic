@@ -10,8 +10,7 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(atom/A, params)
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
+	if(client.buildmode) // handled in normal click.
 		return
 
 	if(control_disabled || stat) return
@@ -38,19 +37,19 @@
 	A.add_hiddenprint(src)
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"] && modifiers["ctrl"])
+	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
-	if(modifiers["middle"])
+	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(modifiers[ALT_CLICK]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
 
@@ -150,6 +149,7 @@
 	else
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
+	diag_hud_set_electrified()
 	return
 
 //

@@ -2,14 +2,11 @@
 /datum/hud/proc/unplayer_hud()
 	return
 
-/datum/hud/proc/ghost_hud()
-	return
-
-/datum/hud/proc/brain_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
+/datum/hud/proc/brain_hud()
 	mymob.client.screen = list()
 	mymob.client.screen += mymob.client.void
 
-/datum/hud/proc/blob_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
+/datum/hud/proc/blob_hud()
 
 	blobpwrdisplay = new /obj/screen()
 	blobpwrdisplay.name = "blob power"
@@ -30,7 +27,7 @@
 	mymob.client.screen += mymob.client.void
 
 
-/datum/hud/proc/changeling_essence_hud(ui_style = 'icons/mob/screen1_Midnight.dmi')
+/datum/hud/proc/changeling_essence_hud()
 	var/mob/living/parasite/essence/E = mymob
 
 	E.voice = new /obj/screen/essence_voice()
@@ -97,7 +94,7 @@
 	if(!E.host)
 		return
 	if(!(E.flags_allowed & ESSENCE_SELF_VOICE))
-		to_chat(E, "<span class='userdanger'>Your host forbade you speaking with your voice")
+		to_chat(E, "<span class='userdanger'>Your host forbade you speaking with your voice.</span>")
 		return
 	if(E.self_voice)
 		icon_state = "voice_off"
@@ -110,7 +107,7 @@
 	if(!E.host)
 		return
 	if(!(E.flags_allowed & ESSENCE_PHANTOM))
-		to_chat(E, "<span class='userdanger'>Your host forbade you own phantom")
+		to_chat(E, "<span class='userdanger'>Your host forbade you own phantom.</span>")
 		return
 	if(E.phantom.showed)
 		E.phantom.hide_phantom()

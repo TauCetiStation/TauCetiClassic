@@ -26,14 +26,14 @@
 		if(src.mob)
 			var/mob/A = src.mob
 			A.forceMove(T)
-			log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-			message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
+			log_admin("[key_name(usr)] jumped to [COORD(T)] in [T.loc]")
+			message_admins("[key_name_admin(usr)] jumped to [COORD(T)] in [T.loc]")
 			feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
 	return
 
-/client/proc/jumptomob(mob/M in mob_list)
+/client/proc/jumptomob(mob/M in (global.mob_list - global.dummy_mob_list))
 	set category = "Admin"
 	set name = "Jump to Mob"
 
@@ -100,7 +100,7 @@
 	else
 		alert("Admin jumping disabled")
 
-/client/proc/Getmob(mob/M in mob_list)
+/client/proc/Getmob(mob/M in (global.mob_list - global.dummy_mob_list))
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport."

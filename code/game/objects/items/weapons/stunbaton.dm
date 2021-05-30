@@ -3,20 +3,31 @@
 	desc = "A stun baton for incapacitating people with."
 	icon_state = "stunbaton"
 	item_state = "baton"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 	throwforce = 7
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
 
+	sweep_step = 2
+
 	origin_tech = "combat=2"
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b>")
-		return (FIRELOSS)
+/obj/item/weapon/melee/baton/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_sweep = TRUE
+	SCB.can_spin = TRUE
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/melee/baton/suicide_act(mob/user)
+	to_chat(viewers(user), "<span class='warning'><b>[user] is putting the live [src.name] in \his mouth! It looks like \he's trying to commit suicide.</b></span>")
+	return (FIRELOSS)
 
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
@@ -26,7 +37,7 @@
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You grab the [src] on the wrong side.")
+		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
 		user.Weaken(30)
 		charges--
 		if(charges < 1)
@@ -36,7 +47,7 @@
 	if(charges > 0)
 		status = !status
 		to_chat(user, "<span class='notice'>\The [src] is now [status ? "on" : "off"].</span>")
-		playsound(src.loc, "sparks", 75, 1, -1)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		update_icon()
 	else
 		status = 0
@@ -53,17 +64,20 @@
 			update_icon()
 		return
 
-	var/mob/living/carbon/human/H = M
 	if(isrobot(M))
-		..()
-		return
+		return ..()
 
-	if(user.a_intent == "hurt")
-		if(!..()) return
+	var/mob/living/carbon/human/H = M
+
+	if(user.a_intent == INTENT_HARM)
+		. = ..()
+		// A mob can be deleted after the attack, so we gotta be wary of that.
+		if(!. || QDELETED(H))
+			return
 		//H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 
 	if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
@@ -84,19 +98,17 @@
 			charges--
 		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
 
-		if(!(user.a_intent == "hurt"))
-			user.attack_log += "\[[time_stamp()]\]<font color='red'> attempted to stun [H.name] ([H.ckey]) with [src.name]</font>"
-			H.attack_log += "\[[time_stamp()]\]<font color='orange'> stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-			msg_admin_attack("[key_name(user)] attempted to stun [key_name(H)] with [src.name]")
+		if(!(user.a_intent == INTENT_HARM))
+			H.log_combat(user, "stunned (attempt) with [name]")
 
-		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 		if(charges < 1)
 			status = 0
 			update_icon()
 
 	add_fingerprint(user)
 
-/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if (prob(50))
 		if(istype(hit_atom, /mob/living))
@@ -115,7 +127,7 @@
 				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
 
 				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
-				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]" )
+				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)

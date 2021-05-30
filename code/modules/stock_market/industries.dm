@@ -35,7 +35,7 @@
 	A.opinion = rand(-1, 1)
 
 	A.subtitle = A.detokenize(pick(subtitle_templates), tokens, add_tokens)
-	var/article = {"%company_name% %expand_influence% %industry%. [ucfirst(product_name)] %hit_shelves% %this_time% "}
+	var/article = {"%company_name% %expand_influence% %industry%. [capitalize(product_name)] %hit_shelves% %this_time% "}
 	if(A.opinion > 0)
 		A.headline = A.detokenize(pick(title_templates), tokens, add_tokens)
 		article += "but %positive_outcome%, %signifying% the %resounding% %success% the product is. The %stock_market% is %excited% over this %development%, and %stockholder% optimism is expected to %rise% as well as the stock value. Our advice: %buy%."
@@ -82,7 +82,7 @@
 	var/list/prefix = list("[company_name]'s ", "the [company_name] ", "the fully automatic ", "the full-duplex ", "the semi-automatic ", "the drone-mounted ", "the industry-leading ", "the world-class ")
 	var/list/suffix = list(" of farming", " multiplex", " +[rand(1,15)]", " [consonant()][rand(1000, 9999)]", " hybrid", " maximus", " extreme")
 	return "[pick(prefix)][pick(products)][pick(suffix)]"
-	
+
 
 /datum/industry/it
 		name = "Information Technology"

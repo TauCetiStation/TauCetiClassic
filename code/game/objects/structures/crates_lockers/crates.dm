@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
@@ -32,7 +30,7 @@
 				s.start()
 				return 2
 
-	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	for(var/obj/O in src)
 		O.forceMove(get_turf(src))
 	icon_state = icon_opened
@@ -49,7 +47,7 @@
 	if(!src.can_close())
 		return 0
 
-	playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	var/itemcount = 0
 	for(var/obj/O in get_turf(src))
 		if(itemcount >= storage_capacity)
@@ -68,15 +66,12 @@
 	return 1
 
 /obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
-	if(opened)
-		if(isrobot(user))
-			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
-	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
+	if(opened || istype(W, /obj/item/weapon/grab))
+		return ..()
+
+	else if(istype(W, /obj/item/weapon/packageWrap))	//OOP? Doesn't heard.
 		return
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(W))
 		if(rigged)
 			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
@@ -92,10 +87,10 @@
 			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			user.drop_item()
 			W.forceMove(src)
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(W))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
-			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 			rigged = 0
 	else
 		return attack_hand(user)
@@ -136,14 +131,19 @@
 /obj/structure/closet/crate/secure/atom_init()
 	. = ..()
 	if(locked)
-		overlays.Cut()
-		overlays += redlight
+		cut_overlays()
+		add_overlay(redlight)
 	else
-		overlays.Cut()
-		overlays += greenlight
+		cut_overlays()
+		add_overlay(greenlight)
 
 /obj/structure/closet/crate/secure/can_open()
 	return !locked
+
+/obj/structure/closet/crate/secure/AltClick(mob/user)
+	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
+		src.togglelock(user)
+	..()
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
 	if(src.opened)
@@ -157,8 +157,8 @@
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
 				to_chat(O, "<span class='notice'>The crate has been [locked ? null : "un"]locked by [user].</span>")
-		overlays.Cut()
-		overlays += locked ? redlight : greenlight
+		cut_overlays()
+		add_overlay(locked ? redlight : greenlight)
 	else
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
@@ -167,7 +167,7 @@
 	set category = "Object"
 	set name = "Toggle Lock"
 
-	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(usr.incapacitated()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
 	if(ishuman(usr))
@@ -187,36 +187,42 @@
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user)
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
-	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
-		user.SetNextMove(CLICK_CD_MELEE)
-		overlays.Cut()
-		overlays += emag
-		overlays += sparks
-		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-		playsound(src.loc, "sparks", 60, 1)
-		src.locked = 0
-		src.broken = 1
-		to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
+	if(locked && istype(W, /obj/item/weapon/melee/energy/blade))
+		emag_act(user)
 		return
 	if(!opened)
 		src.togglelock(user)
 		return
 	return ..()
 
+/obj/structure/closet/crate/secure/emag_act(mob/user)
+	if(!locked)
+		return FALSE
+	user.SetNextMove(CLICK_CD_MELEE)
+	cut_overlays()
+	add_overlay(emag)
+	add_overlay(sparks)
+	spawn(6) cut_overlay(sparks) //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	src.locked = 0
+	src.broken = 1
+	to_chat(user, "<span class='notice'>You unlock \the [src].</span>")
+	return TRUE
+
 /obj/structure/closet/crate/secure/emp_act(severity)
 	for(var/obj/O in src)
-		O.emp_act(severity)
+		O.emplode(severity)
 	if(!broken && !opened  && prob(50/severity))
 		if(!locked)
 			src.locked = 1
-			overlays.Cut()
-			overlays += redlight
+			cut_overlays()
+			add_overlay(redlight)
 		else
-			overlays.Cut()
-			overlays += emag
-			overlays += sparks
-			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
-			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+			cut_overlays()
+			add_overlay(emag)
+			add_overlay(sparks)
+			spawn(6) cut_overlay(sparks) //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
 			src.locked = 0
 	if(!opened && prob(20/severity))
 		if(!locked)
@@ -401,6 +407,14 @@
 	icon_opened = "hydrosecurecrateopen"
 	icon_closed = "hydrosecurecrate"
 
+/obj/structure/closet/crate/secure/miningsec
+	desc = "Crate for incredulous miners."
+	name = "secure mining crate"
+	icon_state = "miningsecurecrate"
+	icon_opened = "miningsecurecrateopen"
+	icon_closed = "miningsecurecrate"
+	req_access = list(access_mining)
+
 /obj/structure/closet/crate/secure/woodseccrate
 	desc = "A secure wooden crate."
 	name = "Secure wooden crate"
@@ -516,3 +530,43 @@
 	new /obj/item/seeds/plastiseed(src)
 	new /obj/item/seeds/plumpmycelium(src)
 	new /obj/item/seeds/chantermycelium(src)
+
+/obj/structure/closet/crate/seized_inventory
+	name = "crate (seized inventory)"
+
+/obj/structure/closet/crate/seized_inventory/PopulateContents()
+	var/contraband_num = rand(0, 7)
+	var/obj/item/device/contraband_finder/seeker = new(null)
+
+	var/list/contraband_types = seeker.contraband_items
+	var/list/danger_types = seeker.danger_items
+
+	var/list/contraband_reagents = seeker.contraband_reagents
+	var/list/danger_reagents = seeker.danger_reagents
+
+	if(!length(contraband_types) && !length(danger_types))
+		return
+
+	for(var/i in 1 to contraband_num)
+		var/type_to_spawn
+		if(prob(90) && length(contraband_types))
+			type_to_spawn = pick(contraband_types)
+		else if(length(danger_types))
+			type_to_spawn = pick(danger_types)
+
+		if(type_to_spawn)
+			var/obj/item/I = new type_to_spawn(src)
+
+			if(I && I.reagents && (length(contraband_reagents) || length(danger_reagents)))
+				var/reagents_to_add = rand(0, I.reagents.maximum_volume)
+				spawn_reagents_loop:
+					while(TRUE)
+						var/current_reagent_to_add = rand(1, max(1, reagents_to_add))
+						reagents_to_add -= current_reagent_to_add
+						if(reagents_to_add <= 0)
+							break spawn_reagents_loop
+
+						if(prob(90) && length(contraband_reagents))
+							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
+						else if(length(danger_reagents))
+							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)

@@ -1,23 +1,3 @@
-var/list/forbidden_varedit_object_types = list(
-		/datum/admins,                     //Admins editing their own admin-power object? Yup, sounds like a good idea.
-		/datum/configuration,
-		/obj/machinery/blackbox_recorder,  //Prevents people messing with feedback gathering
-		/datum/feedback_variable,          //Prevents people messing with feedback gathering
-		/datum/timedevent,                 //Nope.avi
-		/datum/craft_or_build,
-		/datum/stack_recipe
-	)
-
-/client/proc/cmd_modify_ticker_variables()
-	set category = "Debug"
-	set name = "Edit Ticker Variables"
-
-	if (ticker == null)
-		to_chat(src, "Game hasn't started yet.")
-	else
-		src.modify_variables(ticker)
-		feedback_add_details("admin_verb","ETV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /client/proc/mod_list_add_ass() //haha
 
 	var/class = "text"
@@ -127,7 +107,7 @@ var/list/forbidden_varedit_object_types = list(
 	if(!islist(L))
 		to_chat(usr, "Still not a list")
 		return
-		
+
 
 	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 	var/list/names = sortList(L)
@@ -270,13 +250,8 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/icons_modifying = list("resize")
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type", "AI_Interact")
-	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
-	var/list/fully_locked = list("holder", "player_next_age_tick", "resize_rev")
-
-	if(is_type_in_list(O, forbidden_varedit_object_types))
-		to_chat(usr, "\red It is forbidden to edit this object's variables.")
+	if(is_type_in_list(O, VE_PROTECTED_TYPES))
+		to_chat(usr, "<span class='warning'>It is forbidden to edit this object's variables.</span>")
 		return
 
 	var/class
@@ -288,17 +263,17 @@ var/list/forbidden_varedit_object_types = list(
 			to_chat(src, "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])")
 			return
 
-		if(param_var_name in fully_locked)
-			to_chat(usr, "\red It is forbidden to edit this variable.")
+		if(param_var_name in VE_FULLY_LOCKED)
+			to_chat(usr, "<span class='warning'>It is forbidden to edit this variable.</span>")
 			return
 
-		if(!autodetect_class && (param_var_name in typechange_locked))
+		if((param_var_name in VE_DEBUG) && !check_rights(R_DEBUG))
 			return
 
-		if((param_var_name in locked) && !check_rights(R_DEBUG))
+		if((param_var_name in VE_ICONS) && !check_rights(R_DEBUG|R_EVENT))
 			return
 
-		if((param_var_name in icons_modifying) && !check_rights(R_DEBUG|R_EVENT))
+		if((param_var_name in VE_HIDDEN_LOG) && !check_rights(R_LOG))
 			return
 
 		variable = param_var_name
@@ -310,6 +285,11 @@ var/list/forbidden_varedit_object_types = list(
 				to_chat(usr, "Unable to determine variable type.")
 				class = null
 				autodetect_class = null
+
+			else if (variable in global.bitfields)
+				to_chat(usr, "Variable appears to be <b>BITFIELD</b>.")
+				class = "bitfield"
+
 			else if(isnum(var_value))
 				to_chat(usr, "Variable appears to be <b>NUM</b>.")
 				class = "num"
@@ -355,7 +335,7 @@ var/list/forbidden_varedit_object_types = list(
 		if(!variable)	return
 		var_value = O.vars[variable]
 
-		if(variable == "holder" || (variable in locked))
+		if(variable == "holder" || (variable in VE_DEBUG))
 			if(!check_rights(R_DEBUG))	return
 
 	if(!autodetect_class)
@@ -364,6 +344,10 @@ var/list/forbidden_varedit_object_types = list(
 		var/default
 		if(isnull(var_value))
 			to_chat(usr, "Unable to determine variable type.")
+
+		else if (variable in global.bitfields)
+			to_chat(usr, "Variable appears to be <b>BITFIELD</b>.")
+			class = "bitfield"
 
 		else if(isnum(var_value))
 			to_chat(usr, "Variable appears to be <b>NUM</b>.")
@@ -423,10 +407,10 @@ var/list/forbidden_varedit_object_types = list(
 				to_chat(usr, "If a direction, direction is: [dir]")
 
 		if(src.holder && src.holder.marked_datum)
-			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text", "bitfield",
 				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
 		else
-			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
+			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text", "bitfield",
 				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
 
 		if(!class)
@@ -470,18 +454,57 @@ var/list/forbidden_varedit_object_types = list(
 			return .(O.vars[variable])
 
 		if("text")
-			var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable])) as null|text
-			if(isnull(var_new))
-				return
-			O.vars[variable] = var_new
-
+			switch(variable)
+				if("light_color")
+					var/var_new = input("Select new color:", "Color", O.vars[variable]) as null|color
+					if(isnull(var_new))
+						return
+					O.set_light(l_color = var_new)
+				if("ckey")
+					var/var_new = ckey(input("Enter new text:", "Text", O.vars[variable]) as null|text)
+					if(isnull(var_new))
+						return
+					O.vars[variable] = var_new
+				else
+					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable]) as null|text)
+					if(isnull(var_new))
+						return
+					O.vars[variable] = var_new
 		if("num")
 			switch(variable)
+				if("opacity")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_opacity(var_new)
 				if("light_range")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
 					O.set_light(var_new)
+				if("light_power")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_light(l_power = var_new)
+				if("dynamic_lighting")
+					if(!isarea(O) && !isturf(O))
+						to_chat(usr, "This can only be used on instances of type /area and /turf")
+						return
+					var/var_new = alert("dynamic_lighting", ,
+						"DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"
+						)
+					switch(var_new)
+						if("DYNAMIC_LIGHTING_DISABLED")
+							var_new = DYNAMIC_LIGHTING_DISABLED
+						if("DYNAMIC_LIGHTING_ENABLED")
+							var_new = DYNAMIC_LIGHTING_ENABLED
+						if("DYNAMIC_LIGHTING_FORCED")
+							var_new = DYNAMIC_LIGHTING_FORCED
+					if(isnull(var_new))
+						return
+					var/area/A = O
+					A.set_dynamic_lighting(var_new)
 				if("player_ingame_age")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new) || var_new < 0)
@@ -494,11 +517,11 @@ var/list/forbidden_varedit_object_types = list(
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
-					if((O.vars[variable] == 2) && (var_new < 2))//Bringing the dead back to life
+					if((O.vars[variable] == DEAD) && (var_new < DEAD))//Bringing the dead back to life
 						dead_mob_list -= O
-						living_mob_list += O
-					if((O.vars[variable] < 2) && (var_new == 2))//Kill him
-						living_mob_list -= O
+						alive_mob_list += O
+					if((O.vars[variable] < DEAD) && (var_new == DEAD))//Kill him
+						alive_mob_list -= O
 						dead_mob_list += O
 					O.vars[variable] = var_new
 				if("resize")
@@ -532,6 +555,11 @@ var/list/forbidden_varedit_object_types = list(
 
 		if("mob reference")
 			var/var_new = input("Select reference:","Reference",O.vars[variable]) as null|mob in world
+			if(var_new==null) return
+			O.vars[variable] = var_new
+
+		if("bitfield")
+			var/var_new = input_bitfield(usr, "Editing bitfield: [variable]", variable, O.vars[variable], null, 400)
 			if(var_new==null) return
 			O.vars[variable] = var_new
 

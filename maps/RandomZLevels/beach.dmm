@@ -37,7 +37,10 @@
 /turf/unsimulated/beach/sand,
 /area/awaymission/beach)
 "h" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center{
+	active = 1;
+	name = "Beach Gateway"
+	},
 /turf/unsimulated/beach/sand,
 /area/awaymission/beach)
 "i" = (
@@ -100,8 +103,6 @@
 /area/awaymission/beach)
 "t" = (
 /obj/structure/closet/gmcloset{
-	icon_closed = "black";
-	icon_state = "black";
 	name = "formal wardrobe"
 	},
 /turf/unsimulated/floor{
@@ -116,7 +117,7 @@
 /area/awaymission/beach)
 "v" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -178,9 +179,7 @@
 	},
 /area/awaymission/beach)
 "F" = (
-/obj/structure/mineral_door/wood{
-	icon_state = "wood"
-	},
+/obj/structure/mineral_door/wood,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},

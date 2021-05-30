@@ -47,11 +47,12 @@
 	selected = "CR"
 
 /obj/item/weapon/game_kit/MouseDrop(mob/user)
+	. = ..()
 	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
 		interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
-	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a> <a href='?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
+	var/dat = text("<a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a> <a href='?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
 	//board interface update
 	for (var/y = 1 to 8)
 		dat += "<tr>"
@@ -59,26 +60,25 @@
 		for (var/x = 1 to 8)
 			var/color = (y + x) % 2 ? "#999999" : istype(src, /obj/item/weapon/game_kit/chaplain) ? "#a2fad1" : "#ffffff"		//Color the squares in black and white or black and green in case of the chaplain kit.
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)		//Copy the part of the board_stat string.
-			dat += "<td>"
 			dat += "<td style='background-color:[color]' width=32 height=32>"
 			if (piece != "BB")		//If it is not "BB", but codename of the piece, then place picture of this piece onto the board
-				dat += "<a href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
+				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
 			else		//If it is "BB" - place empty square
-				dat += "<a href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
+				dat += "<a class='nobg' href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
 			dat += "</td>"
 		dat += "</tr>"
 
 	//Pieces for people to click and place on the board
 	dat += "</table><HR><B>Chips:</B><BR>"
 	for (var/piece in list("CB", "CR"))
-		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 
 	dat += "<HR><B>Chess pieces:</B><BR>"
 	for (var/piece in list("WP", "WK", "WQ", "WI", "WN", "WR"))
-		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 	dat += "<br>"
 	for (var/piece in list("BP", "BK", "BQ", "BI", "BN", "BR"))
-		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
+		dat += "<a class='nobg' href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 	data = dat
 
 /obj/item/weapon/game_kit/attack_ai(mob/user)
@@ -92,12 +92,13 @@
 	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
 	return interact(user)
 
-/obj/item/weapon/game_kit/chaplain/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/occult_scanner))
-		var/obj/item/device/occult_scanner/OS = W
-		OS.scanned_type = src.type
+/obj/item/weapon/game_kit/chaplain/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+	else
+		return ..()
 
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
@@ -105,20 +106,17 @@
 	assets.send(user)
 	if (!( data ))
 		update()
-	user << browse(entity_ja(data), "window=game_kit")
-	onclose(user, "game_kit")
+
+	var/datum/browser/popup = new(user, "game_kit", "Game Board", 400, 515, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(data)
+	popup.open()
 
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
-	if(!istype(src, /obj/item/weapon/game_kit/chaplain))
-		if(usr.stat)
-			return
-	else
-		if(usr.stat == UNCONSCIOUS)
-			return
 
-	if (usr.restrained())
-		return
+	if (usr.incapacitated())
+		if(!istype(usr, /mob/dead/observer) || !istype(src, /obj/item/weapon/game_kit/chaplain))
+			return
 
 	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
 		if (href_list["s_piece"])

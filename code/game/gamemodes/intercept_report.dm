@@ -57,13 +57,9 @@
 
 /datum/intercept_text/proc/build(mode_type, datum/mind/correct_person)
 	switch(mode_type)
-		if("revolution")
+		if("rp-revolution")
 			src.text = ""
 			src.build_rev(correct_person)
-			return src.text
-		if("gang")
-			src.text = ""
-			src.build_gang(correct_person)
 			return src.text
 		if("cult")
 			src.text = ""
@@ -226,7 +222,7 @@
 				changeling_job = correct_person:assigned_role
 	else
 		changeling_job = pick(joblist)
-	if(prob(prob_right_dude) && ticker.mode == "changeling")
+	if(prob(prob_right_dude) && SSticker.mode == "changeling")
 		if(correct_person:assigned_role=="MODE")
 			changeling_name = correct_person:current
 		else

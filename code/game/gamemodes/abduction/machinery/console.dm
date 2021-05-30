@@ -66,7 +66,7 @@
 		dat += "<a href='?src=\ref[src];dispense=tool'>Science Tool</A><br>"
 		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
 		if(show_price_list)
-			dat += "<div class='statusDisplay'>[get_price_list()]</div>"
+			dat += "<div class='Section'>[get_price_list()]</div>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
@@ -78,7 +78,7 @@
 		if(gizmo && gizmo.marked)
 			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
-			dat += "<span class='linkOff'>Retrieve Mark</span><br>"
+			dat += "<span class='disabled'>Retrieve Mark</span><br>"
 	else
 		dat += "<span class='bad'>NO TELEPAD DETECTED</span></br>"
 
@@ -87,20 +87,19 @@
 		var/mode = vest.mode
 		if(mode == VEST_STEALTH)
 			dat += "<a href='?src=\ref[src];flip_vest=1'>Combat</A>"
-			dat += "<span class='linkOff'>Stealth</span>"
+			dat += "<span class='disabled'>Stealth</span>"
 		else
-			dat += "<span class='linkOff'>Combat</span>"
+			dat += "<span class='disabled'>Combat</span>"
 			dat += "<a href='?src=\ref[src];flip_vest=1'>Stealth</A>"
 
 		dat += "<br>"
 		dat += "<a href='?src=\ref[src];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<font color = #7E8D9F><b>Selected: </b></font>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
+		dat += "<span class='gray bold'>Selected: </span>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 
-	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
+	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/abductor/console/Topic(href, href_list)
@@ -176,12 +175,12 @@
 		vest.SetDisguise(chosen)
 
 /obj/machinery/abductor/console/proc/Initialize()
-	for(var/obj/machinery/abductor/pad/p in machines)
+	for(var/obj/machinery/abductor/pad/p in abductor_machinery_list)
 		if(p.team == team)
 			pad = p
 			break
 
-	for(var/obj/machinery/abductor/experiment/e in machines)
+	for(var/obj/machinery/abductor/experiment/e in abductor_machinery_list)
 		if(e.team == team)
 			experiment = e
 			e.console = src
@@ -212,7 +211,7 @@
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 	else
-		..()
+		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)

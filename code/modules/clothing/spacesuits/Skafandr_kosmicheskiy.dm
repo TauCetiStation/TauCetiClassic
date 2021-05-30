@@ -1,22 +1,26 @@
 /obj/item/clothing/head/helmet/space/sk
-	name = "skafandr kosmicheskiy helmet"
-	desc = "SK-1 Spacesuit helmet. The first spacesuit helmet ever used. Reminds you of Vostok spaceflight and Yuri Gagarin"
-	icon_state = "sk"
-	item_state = "sk"
+	name = "ERVOS helmet"
+	desc = "Emergency Rescue VOid Suit helmet"
+	icon_state = "ervos"
+	item_state = "ervos_head"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	siemens_coefficient = 0.65
 	species_restricted = list("exclude" , DIONA , VOX)
 
 /obj/item/clothing/suit/space/sk
-	name = "skafandr kosmicheskiy"
-	icon_state = "sk"
-	item_state = "sk"
-	desc = "SK-1 Spacesuit. The first spacesuit ever used. Reminds you of Vostok spaceflight and Yuri Gagarin"
+	name = "ERVOS"
+	icon_state = "ervos"
+	item_state = "ervos"
+	desc = "Emergency Rescue VOid Suit"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	slowdown = 4
 	siemens_coefficient = 0.65
+
+/obj/item/clothing/suit/space/sk/atom_init()
+	. = ..()
+	flags |= ONESIZEFITSALL
 
 /obj/item/clothing/suit/space/sk/equipped()
 	..()

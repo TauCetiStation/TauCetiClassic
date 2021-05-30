@@ -22,7 +22,6 @@
 /area/awaymission)
 "g" = (
 /obj/structure/ladder{
-	height = 0;
 	id = "arcticwaste"
 	},
 /turf/simulated/floor/plating/snow,
@@ -77,8 +76,7 @@
 /area/awaymission)
 "q" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/awaymission)
@@ -158,8 +156,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission)
 "D" = (
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
+/obj/machinery/gateway/center{
+	name = "Arctic Gateway"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission)
@@ -184,7 +182,6 @@
 /area/awaymission)
 "H" = (
 /turf/simulated/floor/plating{
-	dir = 2;
 	icon_state = "warnplate"
 	},
 /area/awaymission)
@@ -213,7 +210,6 @@
 "L" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	dir = 2;
 	icon_state = "warnplate"
 	},
 /area/awaymission)
@@ -229,7 +225,7 @@
 /area/awaymission)
 "O" = (
 /turf/space,
-/area/planet/clown)
+/area/custom/planet/clown)
 "P" = (
 /obj/structure/ladder{
 	height = 1;

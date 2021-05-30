@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 // The communications computer
 /obj/machinery/computer/communications
 	name = "Communications Console"
@@ -20,6 +18,8 @@
 	var/message_cooldown = 0
 	var/centcomm_message_cooldown = 0
 	var/tmp_alertlevel = 0
+	var/last_seclevel_change = 0 // prevents announcement sounds spam
+	var/last_announcement = 0    // ^ ^ ^
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
 	var/const/STATE_CANCELSHUTTLE = 3
@@ -35,6 +35,37 @@
 	var/stat_msg1
 	var/stat_msg2
 
+	var/datum/announcement/station/command/announcement = new
+
+/obj/machinery/computer/communications/atom_init()
+	. = ..()
+	communications_list += src
+
+/obj/machinery/computer/communications/Destroy()
+	communications_list -= src
+
+	for(var/obj/machinery/computer/communications/commconsole in communications_list)
+		if(istype(commconsole.loc, /turf))
+			return ..()
+
+	for(var/obj/item/weapon/circuitboard/communications/commboard in circuitboard_communications_list)
+		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
+			return ..()
+
+	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
+		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+			return ..()
+
+	if(sent_strike_team)
+		return ..()
+
+	SSshuttle.incall(2)
+	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	SSshuttle.announce_emer_called.play()
+
+	return ..()
+
 /obj/machinery/computer/communications/process()
 	if(..())
 		if(state != STATE_STATUSDISPLAY)
@@ -46,8 +77,8 @@
 	if(!.)
 		return
 
-	if (src.z > ZLEVEL_STATION)
-		to_chat(usr, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+	if (!is_station_level(z))
+		to_chat(usr, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return FALSE
 	if(!href_list["operation"])
 		return FALSE
@@ -69,7 +100,7 @@
 				if (I && istype(I))
 					if(src.check_access(I))
 						authenticated = 1
-					if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
+					if((access_captain in I.access) || (access_hop in I.access) || (access_hos in I.access))
 						authenticated = 2
 		if("logout")
 			authenticated = 0
@@ -77,6 +108,11 @@
 		if("swipeidseclevel")
 			var/mob/M = usr
 			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			if(last_seclevel_change > world.time)
+				to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't change the security level that fast.</span>")
+				return
+			else
+				last_seclevel_change = world.time + 1 MINUTE
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -90,14 +126,14 @@
 					if(security_level != old_level)
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
+						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()]. [ADMIN_JMP(usr)]")
 						switch(security_level)
 							if(SEC_LEVEL_GREEN)
 								feedback_inc("alert_comms_green",1)
 							if(SEC_LEVEL_BLUE)
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
-				else:
+				else
 					to_chat(usr, "You are not authorized to do this.")
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
@@ -105,17 +141,18 @@
 				to_chat(usr, "You need to swipe your ID.")
 
 		if("announce")
-			if(src.authenticated==2)
-				if(message_cooldown)	return
-				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
+			if(src.authenticated == 2)
+				if(last_announcement > world.time)
+					to_chat(usr, "<span class='warning'>A red light flashes on the console. It looks like you can't make announcements that fast.</span>")
+					return
+				else
+					last_announcement = world.time + 1 MINUTE
+				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "Priority Announcement") as null|message, extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
-				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				announcement.play(input) //This should really tell who is, IE HoP, CE, HoS, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
-				message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-				message_cooldown = 1
-				spawn(600)//One minute cooldown
-					message_cooldown = 0
+				message_admins("[key_name_admin(usr)] has made a captain announcement. [ADMIN_JMP(usr)]")
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -170,27 +207,29 @@
 					post_status("message", stat_msg1, stat_msg2)
 				if("alert")
 					post_status("alert", href_list["alert"])
+				if("default")
+					post_status("default")
 				else
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = sanitize_safe(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
+			stat_msg1 = sanitize(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = sanitize_safe(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
+			stat_msg2 = sanitize(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 
 		// OMG CENTCOMM LETTERHEAD
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldown)
-					to_chat(usr, "\red Arrays recycling.  Please stand by.")
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				to_chat(usr, "\blue Message transmitted.")
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				log_say("[key_name(usr)] has made an IA Centcomm announcement: [input]")
 				CM.cooldown = 55
 
@@ -199,13 +238,13 @@
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.cooldown)
-					to_chat(usr, "\red Arrays recycling.  Please stand by.")
+					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
 				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				to_chat(usr, "\blue Message transmitted.")
+				to_chat(usr, "<span class='notice'>Message transmitted.</span>")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.cooldown = 55 //about one minute
 
@@ -259,59 +298,58 @@
 			state = STATE_ALERT_LEVEL
 	src.updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(obj/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag/))
-		src.emagged = 1
-		to_chat(user, "You scramble the communication routing circuits!")
-	else
-		..()
-	return
+/obj/machinery/computer/communications/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	src.emagged = 1
+	to_chat(user, "You scramble the communication routing circuits!")
+	return TRUE
 
 /obj/machinery/computer/communications/ui_interact(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
+	if (!SSmapping.has_level(z))
+		to_chat(user, "<span class='warning'><b>Unable to establish a connection</b>:</span> You're too far away from the station!")
 		return
 
-	var/dat = "<head><title>Communications Console</title></head><body>"
-	if (SSshuttle.online && SSshuttle.location==0)
-		var/timeleft = SSshuttle.timeleft()
-		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
+	var/dat = ""
+	if (SSshuttle.online && SSshuttle.location == 0)
+		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [shuttleeta2text()]<BR>"
 
 	if (issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
-			user << browse(entity_ja(dat), "window=communications;size=400x500")
-			onclose(user, "communications")
+			var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
+			popup.set_content(dat)
+			popup.open()
 		return
 
 	switch(src.state)
 		if(STATE_DEFAULT)
 			if (src.authenticated)
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=logout'>Log Out</A>"
 				if (src.authenticated==2)
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A> \]"
+					dat += "<BR><A HREF='?src=\ref[src];operation=announce'>Make An Announcement</A>"
 					if(src.emagged == 0)
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentcomm'>Send an emergency message to Centcomm</A> \]"
+						dat += "<BR><A HREF='?src=\ref[src];operation=MessageCentcomm'>Send an emergency message to Centcomm</A>"
 					else
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageSyndicate'>Send an emergency message to \[UNKNOWN\]</A> \]"
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
+						dat += "<BR><A HREF='?src=\ref[src];operation=MessageSyndicate'>Send an emergency message to \[UNKNOWN\]</A>"
+						dat += "<BR><A HREF='?src=\ref[src];operation=RestoreBackup'>Restore Backup Routing Data</A>"
 
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change alert level</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=changeseclevel'>Change alert level</A>"
 				if(SSshuttle.location==0)
 					if (SSshuttle.online)
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
+						dat += "<BR><A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A>"
 					else
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
+						dat += "<BR><A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A>"
 
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=status'>Set Status Display</A>"
 			else
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=login'>Log In</A> \]"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=login'>Log In</A>"
+			dat += "<BR><A HREF='?src=\ref[src];operation=messagelist'>Message List</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
+			dat += "Are you sure you want to call the shuttle? <A HREF='?src=\ref[src];operation=callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A>"
 		if(STATE_CANCELSHUTTLE)
-			dat += "Are you sure you want to cancel the shuttle? \[ <A HREF='?src=\ref[src];operation=cancelshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A> \]"
+			dat += "Are you sure you want to cancel the shuttle? <A HREF='?src=\ref[src];operation=cancelshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=main'>Cancel</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
@@ -320,29 +358,29 @@
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
+					dat += "<BR><BR><A HREF='?src=\ref[src];operation=delmessage'>Delete"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)
 				return
 		if(STATE_DELMESSAGE)
 			if (src.currmsg)
-				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
+				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A>"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)
 				return
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
-			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A> \]<BR>"
-			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A> \]"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A><BR>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=default'>Default</A><BR>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A><BR>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A>"
 			dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
 			dat += "<li> Line 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += "\[ Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>None</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
+			dat += " Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A><BR><HR>"
 		if(STATE_ALERT_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
@@ -355,11 +393,11 @@
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 
-	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	user << browse(entity_ja(dat), "window=communications;size=400x500")
-	onclose(user, "communications")
+	dat += "<BR>[(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]"
 
-
+	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/communications/proc/interact_ai(mob/living/silicon/ai/user)
@@ -367,11 +405,11 @@
 	switch(src.aistate)
 		if(STATE_DEFAULT)
 			if(SSshuttle.location==0 && !SSshuttle.online)
-				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
-			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
+				dat += "<BR><A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A>"
+			dat += "<BR><A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A>"
+			dat += "<BR><A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A>"
 		if(STATE_CALLSHUTTLE)
-			dat += "Are you sure you want to call the shuttle? \[ <A HREF='?src=\ref[src];operation=ai-callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-main'>Cancel</A> \]"
+			dat += "Are you sure you want to call the shuttle? <A HREF='?src=\ref[src];operation=ai-callshuttle2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-main'>Cancel</A>"
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
@@ -379,14 +417,14 @@
 		if(STATE_VIEWMESSAGE)
 			if (src.aicurrmsg)
 				dat += "<B>[src.messagetitle[src.aicurrmsg]]</B><BR><BR>[src.messagetext[src.aicurrmsg]]"
-				dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A> \]"
+				dat += "<BR><BR><A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
 				src.attack_hand(user)
 				return null
 		if(STATE_DELMESSAGE)
 			if(src.aicurrmsg)
-				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
+				dat += "Are you sure you want to delete this message? <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A>"
 			else
 				src.aistate = STATE_MESSAGELIST
 				src.attack_hand(user)
@@ -394,22 +432,22 @@
 
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
-			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A> \]<BR>"
-			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A> \]"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A><BR>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A><BR>"
+			dat += "<A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A>"
 			dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
 			dat += "<li> Line 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += "\[ Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>None</A> |"
+			dat += "Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>None</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A><BR><HR>"
 
 
-	dat += "<BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
+	dat += "<BR>[(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]"
 	return dat
 
 /proc/call_shuttle_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location))
+	if ((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(sent_strike_team == 1)
@@ -428,22 +466,21 @@
 		to_chat(user, "The emergency shuttle is already on its way.")
 		return
 
-	if(ticker.mode.name == "blob")
+	if(SSticker.mode.name == "blob")
 		to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 		return
 
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
+	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
+	SSshuttle.announce_emer_called.play()
 
 	make_maint_all_access(FALSE)
 
 	return
 
 /proc/init_shift_change(mob/user, force = 0)
-	if ((!( ticker ) || SSshuttle.location))
+	if ((!( SSticker ) || SSshuttle.location))
 		return
 
 	if(SSshuttle.direction == -1)
@@ -468,28 +505,33 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
+		if(SSticker.mode.name == "blob")
 			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
 
 	SSshuttle.shuttlealert(1)
 	SSshuttle.incall()
 	log_game("[key_name(user)] has called the shuttle.")
-	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-	captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+	message_admins("[key_name_admin(user)] has called the shuttle. [ADMIN_JMP(user)]")
+	SSshuttle.announce_crew_called.play()
 
 	return
 
 /proc/cancel_call_proc(mob/user)
-	if ((!( ticker ) || SSshuttle.location || SSshuttle.direction == 0 || SSshuttle.timeleft() < 300))
+	if ((!( SSticker ) || SSshuttle.location || SSshuttle.direction == 0))
+		to_chat(user, "The console is not responding.")
 		return
-	if((ticker.mode.name == "blob")||(ticker.mode.name == "meteor"))
+	if(SSshuttle.timeleft() < 300)
+		to_chat(user, "Shuttle is close and it's too late for cancellation.")
+		return
+	if((SSticker.mode.name == "blob"))//why??
+		to_chat(user, "The console is not responding.")
 		return
 
 	if(SSshuttle.direction != -1 && SSshuttle.online) //check that shuttle isn't already heading to centcomm
 		SSshuttle.recall()
 		log_game("[key_name(user)] has recalled the shuttle.")
-		message_admins("[key_name_admin(user)] has recalled the shuttle. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+		message_admins("[key_name_admin(user)] has recalled the shuttle. [ADMIN_JMP(user)]")
 
 		if(timer_maint_revoke_id)
 			deltimer(timer_maint_revoke_id)
@@ -522,52 +564,9 @@
 	frequency.post_signal(src, status_signal)
 
 
-/obj/machinery/computer/communications/Destroy()
-
-	for(var/obj/machinery/computer/communications/commconsole in machines)
-		if(istype(commconsole.loc, /turf) && commconsole != src)
-			return ..()
-
-	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
-		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
-			return ..()
-
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
-
-	if(sent_strike_team)
-		return ..()
-
-	SSshuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
-
-	return ..()
-
-/obj/item/weapon/circuitboard/communications/Destroy()
-
-	for(var/obj/machinery/computer/communications/commconsole in machines)
-		if(istype(commconsole.loc,/turf))
-			return ..()
-
-	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
-		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)) && commboard != src)
-			return ..()
-
-	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
-			return ..()
-
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
-		return ..()
-
-	SSshuttle.incall(2)
-	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-	world << sound('sound/AI/shuttlecalled.ogg')
-
-	return ..()
+/obj/machinery/computer/communications/evac
+	name = "Shuttle communications console"
+	desc = "This can be used for various important functions."
+	icon_state = "erokez"
+	state_broken_preset = "erokezb"
+	state_nopower_preset = "erokez0"

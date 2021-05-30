@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/barnyardcurse
-	name = "Curse of the Barnyard"
-	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
+	name = "Скотоклятье"
+	desc = "Обрекает жертву носить обезличивающую, неснимаемую маску домашнего животного."
 	school = "transmutation"
 	charge_type = "recharge"
 	charge_max = 150
@@ -50,7 +50,7 @@
 	magichead.canremove = 0
 	target.visible_message("<span class='danger'>[target]'s face bursts into flames, and a barnyard animal's head takes its place!</span>", \
 						   "<span class='danger'>Your face burns up, and shortly after the fire you realise you have the face of a barnyard animal!</span>")
-	playsound(target, mSounds[randM], 100, 1)
+	playsound(target, mSounds[randM], VOL_EFFECTS_MASTER)
 	target.remove_from_mob(target.wear_mask)
-	target.equip_to_slot_if_possible(magichead, slot_wear_mask)
+	target.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK)
 	target.flash_eyes()

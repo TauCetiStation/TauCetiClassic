@@ -15,8 +15,13 @@
 	return TRUE
 
 
-/atom/MouseDrop(atom/over)
+/atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)
+		return
+	var/obj/item/I = usr.get_active_hand()
+	if(I && (SEND_SIGNAL(I, COMSIG_ITEM_MOUSEDROP_ONTO, over, src, usr) & COMPONENT_NO_MOUSEDROP))
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
@@ -25,4 +30,4 @@
 
 // recieve a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
-	return
+	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)

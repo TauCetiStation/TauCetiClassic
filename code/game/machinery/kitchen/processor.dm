@@ -41,11 +41,7 @@
 
 	/* objs */
 /datum/food_processor_process/meat
-	input = /obj/item/weapon/reagent_containers/food/snacks/meat
-	output = /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
-
-/datum/food_processor_process/meat2
-	input = /obj/item/weapon/syntiflesh
+	input = /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	output = /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 
 /datum/food_processor_process/potato
@@ -96,7 +92,7 @@
 	var/mob/living/carbon/monkey/O = what
 	if (O.client) //grief-proof
 		O.loc = loc
-		O.visible_message("\blue Suddenly [O] jumps out from the processor!", \
+		O.visible_message("<span class='notice'>Suddenly [O] jumps out from the processor!</span>", \
 				"You jump out from the processor", \
 				"You hear chimp")
 		return
@@ -132,7 +128,7 @@
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user)
 	if(processing)
-		to_chat(user, "\red The processor is in the process of processing.")
+		to_chat(user, "<span class='warning'>The processor is in the process of processing.</span>")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
 		return
@@ -149,7 +145,7 @@
 	default_deconstruction_crowbar(O)
 
 	if(contents.len > 0) //TODO: several items at once? several different items?
-		to_chat(user, "\red Something is already in the processing chamber.")
+		to_chat(user, "<span class='warning'>Something is already in the processing chamber.</span>")
 		return 1
 	var/what = O
 	if (istype(O, /obj/item/weapon/grab))
@@ -158,7 +154,7 @@
 
 	var/datum/food_processor_process/P = select_recipe(what)
 	if (!P)
-		to_chat(user, "\red That probably won't blend.")
+		to_chat(user, "<span class='warning'>That probably won't blend.</span>")
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
@@ -171,17 +167,17 @@
 	if(.)
 		return
 	if(processing)
-		to_chat(user, "\red The processor is in the process of processing.")
+		to_chat(user, "<span class='warning'>The processor is in the process of processing.</span>")
 		return 1
 	if(contents.len == 0)
-		to_chat(user, "\red The processor is empty.")
+		to_chat(user, "<span class='warning'>The processor is empty.</span>")
 		return 1
 	user.SetNextMove(CLICK_CD_INTERACT)
 	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
 		"<span class='italics'>You hear a food processor.</span>")
-	playsound(loc, 'sound/machines/blender.ogg', 50, 1)
+	playsound(src, 'sound/machines/blender.ogg', VOL_EFFECTS_MASTER, 35)
 	use_power(500)
 	var/total_time = 0
 	for(var/O in contents)
@@ -198,5 +194,5 @@
 			continue
 		P.process_food(loc, O, src)
 	processing = FALSE
-	visible_message("\blue \the [src] finished processing.", \
+	visible_message("<span class='notice'>\the [src] finished processing.</span>", \
 		"You hear the food processor stopping/")

@@ -18,7 +18,7 @@ Passive gate is similar to the regular pump except:
 	desc = "A one-way air valve that can be used to regulate input or output pressure, and flow rate. Does not require power."
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	interact_offline = TRUE
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
@@ -52,6 +52,7 @@ Passive gate is similar to the regular pump except:
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon()
+	..()
 	icon_state = (unlocked && flowing) ? "on" : "off"
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_underlays()

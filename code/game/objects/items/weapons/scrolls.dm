@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20
@@ -14,19 +14,21 @@
 
 /obj/item/weapon/teleportation_scroll/attack_self(mob/user)
 	user.set_machine(src)
-	var/dat = "<B>Teleportation Scroll:</B><BR>"
+	var/dat = ""
 	dat += "Number of uses: [src.uses]<BR>"
 	dat += "<HR>"
 	dat += "<B>Four uses use them wisely:</B><BR>"
 	dat += "<A href='byond://?src=\ref[src];spell_teleport=1'>Teleport</A><BR>"
 	dat += "Kind regards,<br>Wizards Federation<br><br>P.S. Don't forget to bring your gear, you'll need it to cast most spells.<HR>"
-	user << browse(entity_ja(dat), "window=scroll")
-	onclose(user, "scroll")
+
+	var/datum/browser/popup = new(user, "scroll", "Teleportation Scroll:", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /obj/item/weapon/teleportation_scroll/Topic(href, href_list)
 	..()
-	if (usr.stat || usr.restrained() || src.loc != usr)
+	if (usr.incapacitated() || src.loc != usr)
 		return
 	var/mob/living/carbon/human/H = usr
 	if (!( istype(H, /mob/living/carbon/human)))
@@ -43,10 +45,12 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) in teleportlocs
+	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in teleportlocs
+	if(!A)
+		return
 	var/area/thearea = teleportlocs[A]
 
-	if (user.stat || user.restrained())
+	if (user.incapacitated())
 		return
 	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
 		return

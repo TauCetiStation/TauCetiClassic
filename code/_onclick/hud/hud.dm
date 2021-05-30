@@ -4,8 +4,8 @@
 */
 
 /datum/hud/var/obj/screen/grab_intent
-/datum/hud/var/obj/screen/hurt_intent
-/datum/hud/var/obj/screen/disarm_intent
+/datum/hud/var/obj/screen/harm_intent
+/datum/hud/var/obj/screen/push_intent
 /datum/hud/var/obj/screen/help_intent
 
 /*
@@ -13,6 +13,17 @@
 	Used to show and hide huds for all the different mob types,
 	including inventories and item quick actions.
 */
+
+// The default UI style is the first one in the list
+var/global/list/available_ui_styles = list(
+	"White" = 'icons/mob/screen1_White.dmi',
+	"Midnight" = 'icons/mob/screen1_Midnight.dmi',
+	"old" = 'icons/mob/screen1_old.dmi',
+	"Orange" = 'icons/mob/screen1_Orange.dmi'
+	)
+
+/proc/ui_style2icon(ui_style)
+	return global.available_ui_styles[ui_style] || global.available_ui_styles[global.available_ui_styles[1]]
 
 /datum/hud
 	var/mob/mymob
@@ -41,18 +52,27 @@
 	var/action_buttons_hidden = 0
 	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
+	// subtypes can override this to force a specific UI style
+	var/ui_style
+
 /datum/hud/New(mob/owner)
 	mymob = owner
+
+	if (!ui_style)
+		// will fall back to the default if any of these are null
+		ui_style = ui_style2icon(mymob.client && mymob.client.prefs && mymob.client.prefs.UI_style)
+
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
+		instance.backdrop(mymob)
+
 	instantiate()
-	..()
 
 /datum/hud/Destroy()
 	grab_intent = null
-	hurt_intent = null
-	disarm_intent = null
+	harm_intent = null
+	push_intent = null
 	help_intent = null
 	lingchemdisplay = null
 	blobpwrdisplay = null
@@ -130,34 +150,35 @@
 	if(!mymob.client)
 		return 0
 
-	var/ui_style = ui_style2icon(mymob.client.prefs.UI_style)
 	var/ui_color = mymob.client.prefs.UI_style_color
 	var/ui_alpha = mymob.client.prefs.UI_style_alpha
 
 	if(ishuman(mymob))
-		human_hud(ui_style, ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
+		human_hud(ui_color, ui_alpha) // Pass the player the UI style chosen in preferences
 	else if(isIAN(mymob))
 		ian_hud()
 	else if(ismonkey(mymob))
-		monkey_hud(ui_style)
+		monkey_hud()
 	else if(isbrain(mymob))
-		brain_hud(ui_style)
+		brain_hud()
 	else if(isfacehugger(mymob))
 		facehugger_hud()
-	else if(islarva(mymob))
+	else if(isxenolarva(mymob))
 		larva_hud()
-	else if(isalien(mymob))
+	else if(isxeno(mymob))
 		alien_hud()
 	else if(isAI(mymob))
 		ai_hud()
 	else if(isrobot(mymob))
 		robot_hud()
 	else if(isobserver(mymob))
-		ghost_hud()
+		show_hud(HUD_STYLE_STANDARD)
 	else if(isovermind(mymob))
 		blob_hud()
 	else if(isessence(mymob))
 		changeling_essence_hud()
+	else if(isliving(mymob))
+		default_hud(ui_color, ui_alpha)
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
@@ -253,13 +274,22 @@
 			mymob.client.screen += plane_masters[thing]
 	hud_version = display_hud_version
 	create_parallax()
+	plane_masters_update()
+
+/datum/hud/proc/plane_masters_update()
+	// Plane masters are always shown to OUR mob, never to observers
+	for(var/thing in plane_masters)
+		var/obj/screen/plane_master/PM = plane_masters[thing]
+		PM.backdrop(mymob)
+		mymob.client.screen += PM
+
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
-/mob/verb/button_pressed_F12(var/full = 0 as null)
+/mob/verb/button_pressed_F12()
 	set name = "F12"
 	set hidden = 1
 
 	if(hud_used && client)
-		if(ishuman(src))
+		if(ishuman(src) || isobserver(src))
 			hud_used.show_hud() //Shows the next hud preset
 			to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
 		else

@@ -1,9 +1,9 @@
-proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+/proc/createRandomZlevel()
+	if(awaydestinations.len)	//crude, but it saves another var! //todo: need new var for this
 		return
 
 	var/list/potentialRandomZlevels = list()
-	to_chat(world, "\red \b Searching for away missions...")
+	to_chat(world, "<span class='warning'><b>Searching for away missions...</b></span>")
 	var/list/Lines = file2list("maps/RandomZLevels/fileList.txt")
 	if(!Lines.len)	return
 	for (var/t in Lines)
@@ -13,17 +13,15 @@ proc/createRandomZlevel()
 		t = trim(t)
 		if (length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if (t[1] == "#")
 			continue
 
 		var/pos = findtext(t, " ")
 		var/name = null
-	//	var/value = null
 
 		if (pos)
             // No, don't do lowertext here, that breaks paths on linux
 			name = copytext(t, 1, pos)
-		//	value = copytext(t, pos + 1)
 		else
             // No, don't do lowertext here, that breaks paths on linux
 			name = t
@@ -35,20 +33,15 @@ proc/createRandomZlevel()
 
 
 	if(potentialRandomZlevels.len)
-		to_chat(world, "\red \b Loading away mission...")
+		to_chat(world, "<span class='warning'><b>Loading away mission...</b></span>")
 
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
 			maploader.load_map(file)
 
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
-
-		to_chat(world, "\red \b Away mission loaded.")
+		to_chat(world, "<span class='warning'><b>Away mission loaded.</b></span>")
 
 	else
-		to_chat(world, "\red \b No away missions found.")
+		to_chat(world, "<span class='warning'><b>No away missions found.</b></span>")
 		return

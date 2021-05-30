@@ -1,48 +1,103 @@
-/mob/living/carbon/verb/give()
+/mob/living/carbon/verb/give(mob/M in oview(1))
 	set category = "IC"
 	set name = "Give"
-	set src in view(1)
 
-	if(src.stat == DEAD || usr.stat == DEAD || src.client == null)
+
+	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
-	if(src == usr || isalien(src) || isslime(src))
-		to_chat(usr, "<span class='red'>I feel stupider, suddenly.</span>")
-		return
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
-		if(BP && !BP.is_usable())
-			return
-	var/obj/item/I = usr.get_active_hand()
+	var/obj/item/I = src.get_active_hand()
 	if(!I)
-		to_chat(usr, "<span class='red'>You don't have anything in your hand to give to [src.name]</span>")
+		to_chat(src, "<span class='red'>You don't have anything in your hand to give to [M]</span>")
 		return
 	if(I.flags & (ABSTRACT | DROPDEL))
-		to_chat(usr, "<span class='red'>You can't give this to [name]</span>")
+		to_chat(src, "<span class='red'>You can't give this to [name]</span>")
 		return
-	if(!src.get_active_hand() || !src.get_inactive_hand())
-		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
-			if("Yes")
-				if(!I)
-					return
-				if(!Adjacent(usr))
-					to_chat(usr, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
-					to_chat(src, "<span class='red'>[usr.name] moved too far away.</span>")
-					return
-				if(usr.get_active_hand() != I)
-					to_chat(usr, "<span class='red'>You need to keep the item in your active hand.</span>")
-					to_chat(src, "<span class='red'>[usr.name] seem to have given up on giving \the [I.name] to you.</span>")
-					return
-				if(src.get_active_hand() && src.get_inactive_hand())
-					to_chat(src, "<span class='red'>Your hands are full.</span>")
-					to_chat(usr, "<span class='red'>Their hands are full.</span>")
-					return
-				else
-					usr.drop_item()
-					src.put_in_hands(I)
-				I.add_fingerprint(src)
-				src.visible_message("<span class='notice'>[usr.name] handed \the [I.name] to [src.name].</span>")
-			if("No")
-				src.visible_message("<span class='red'>[usr.name] tried to hand [I.name] to [src.name] but [src.name] didn't want it.</span>")
-	else
-		to_chat(usr, "<span class='red'>[src.name]'s hands are full.</span>")
+	if(HULK in M.mutations)
+		if(I.w_class < ITEM_SIZE_LARGE)
+			to_chat(src, "<span class='red'>[I] is too small for [name] to hold.</span>")
+			return
+	switch(alert(M,"[src] wants to give you \a [I]?",,"Yes","No"))
+		if("Yes")
+			if(!can_give(M, show_warnings = TRUE))
+				return
+			if(!M.can_accept_gives(src, show_warnings = TRUE))
+				return
+			if(QDELETED(I))
+				return
+			if(!Adjacent(M))
+				to_chat(src, "<span class='red'>You need to stay in reaching distance while giving an object.</span>")
+				to_chat(M, "<span class='red'>[src] moved too far away.</span>")
+				return
+			if(get_active_hand() != I)
+				to_chat(src, "<span class='red'>You need to keep the item in your active hand.</span>")
+				to_chat(M, "<span class='red'>[src] seem to have given up on giving \the [I] to you.</span>")
+				return
+			else
+				drop_from_inventory(I)
+				M.put_in_hands(I)
+			I.add_fingerprint(M)
+			M.visible_message("<span class='notice'>[src] handed \the [I] to [M].</span>")
+		if("No")
+			M.visible_message("<span class='red'>[src] tried to hand [I] to [M] but [M] didn't want it.</span>")
+
+
+/mob/living/carbon/proc/can_give(mob/M, show_warnings = FALSE)
+	if(M.incapacitated())
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>[M] is incapable of being given anything to.</span>")
+		return FALSE
+	if(incapacitated())
+		if(show_warnings)
+			to_chat(src, "<span class='warning'>You are of giving anything.</span>")
+		return FALSE
+	return TRUE
+
+/mob/proc/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(show_warnings)
+		to_chat(giver, "<span class='red'>[src] doesn't have hands for you to give them anything.</span>")
+	return FALSE
+
+/mob/living/carbon/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(get_active_hand() && get_inactive_hand())
+		if(show_warnings)
+			to_chat(giver, "<span class='red'>[src]'s hands are full.</span>")
+		return FALSE
+
+	var/obj/item/item_in_hand = giver.get_active_hand()
+	if(item_in_hand)
+		if(istype(item_in_hand, /obj/item/weapon/twohanded))
+			var/obj/item/weapon/twohanded/T = item_in_hand
+			if(T.wielded || T.only_twohand)
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
+				return FALSE
+		if(istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))
+			var/obj/item/weapon/gun/projectile/automatic/l6_saw/T = item_in_hand
+			if(T.wielded)
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
+				return FALSE
+	return TRUE
+
+/mob/living/carbon/ian/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(get_active_hand() && get_inactive_hand())
+		if(show_warnings)
+			to_chat(giver, "<span class='red'>[src]'s mouth is full.</span>")
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/can_accept_gives(mob/giver, show_warnings = FALSE)
+	var/obj/item/organ/external/left_hand = bodyparts_by_name[BP_L_ARM]
+	var/obj/item/organ/external/right_hand = bodyparts_by_name[BP_R_ARM]
+	if((!left_hand || !left_hand.is_usable() || l_hand) && (!right_hand || !right_hand.is_usable() || r_hand))
+		to_chat(giver, "<span class='red'>[src] can't take</span>")
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/slime/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(show_warnings)
+		to_chat(giver, "<span class='red'>[src] doesn't have hands for you to give them anything.</span>")
+	return FALSE
+
+/mob/living/carbon/xenomorph/can_accept_gives(mob/giver, show_warnings = FALSE)
+	if(show_warnings)
+		to_chat(giver, "<span class='red'>[src] doesn't have hands for you to give them anything.</span>")
+	return FALSE

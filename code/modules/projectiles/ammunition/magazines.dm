@@ -68,6 +68,9 @@
 	max_ammo = 8
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/shotcom/nonlethal
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	name = "double-barrel shotgun internal magazine"
 	desc = "This doesn't even exist!"
@@ -81,6 +84,14 @@
 	desc = "This doesn't even exist!"
 	ammo_type = /obj/item/ammo_casing/caseless/rocket
 	caliber = "rocket"
+	max_ammo = 1
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
+	name = "bazooka internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/caseless/rocket/anti_singulo
+	caliber = "rocket_as"
 	max_ammo = 1
 	multiload = 0
 
@@ -133,18 +144,17 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
-	max_ammo = 8
-	multiple_sprites = 2
+	max_ammo = 12
 
-/obj/item/ammo_box/magazine/m9mmr_2
+/obj/item/ammo_box/magazine/m9mm_2/rubber
 	name = "magazine (9mm rubber)"
-	icon_state = "9mm_mag"
-	origin_tech = "combat=2"
+	icon_state = "9mmr_mag"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 	caliber = "9mm"
-	max_ammo = 8
-	multiple_sprites = 2
 
+/obj/item/ammo_box/magazine/m9mm_2/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/magazine/msmg9mm
 	name = "SMG magazine (9mm)"
@@ -157,15 +167,6 @@
 /obj/item/ammo_box/magazine/msmg9mm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-/*
-/obj/item/ammo_box/magazine/m10mm
-	name = "magazine (10mm)"
-	icon_state = "9x19p"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	caliber = "10mm"
-	max_ammo = 8
-	multiple_sprites = 2 */
 
 /obj/item/ammo_box/magazine/m12mm
 	name = "magazine (.45)"
@@ -178,6 +179,56 @@
 /obj/item/ammo_box/magazine/m12mm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+
+/obj/item/ammo_box/magazine/m12mm/hp
+	name = "magazine (.45 HP)"
+	desc = "Magazine, full of high power submachinegun ammo."
+	icon_state = "12mmhp"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45hp
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/hp/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
+/obj/item/ammo_box/magazine/m12mm/hv
+	name = "magazine (.45 HV)"
+	desc = "Magazine, full of high velocity submachinegun ammo."
+	icon_state = "12mmhv"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45hv
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/hv/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
+
+/obj/item/ammo_box/magazine/m12mm/imp
+	name = "magazine (.45 IMP)"
+	desc = "Magazine, full of impact submachinegun ammo."
+	icon_state = "12mmimp"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/c45imp
+	caliber = ".45S"
+	max_ammo = 15
+
+/obj/item/ammo_box/magazine/m12mm/imp/update_icon()
+	..()
+	if(ammo_count() == 1)
+		icon_state = "[initial(icon_state)]-1"
+	else
+		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+
 
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"
@@ -199,30 +250,30 @@
 
 /obj/item/ammo_box/magazine/c45m/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
+	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/c45r
 	name = "magazine (.45 rubber)"
-	icon_state = "45"
+	icon_state = "45r"
 	ammo_type = /obj/item/ammo_casing/c45r
 	caliber = ".45"
 	max_ammo = 7
 
 /obj/item/ammo_box/magazine/c45r/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ammo_count() ? "7" : "0"]"
+	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "Mac-10 magazine (9mm)"
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "uzi9mm-32"
+	icon_state = "uzi9mm"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 32
 
 /obj/item/ammo_box/magazine/uzim9mm/update_icon()
 	..()
-	icon_state = "uzi9mm-[round(ammo_count(),4)]"
+	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/magazine/uzim45
 	name = "Uzi magazine (.45)"
@@ -276,29 +327,9 @@
 /obj/item/ammo_box/magazine/chameleon
 	name = "magazine (.45)"
 	icon_state = "45"
-	ammo_type = "/obj/item/ammo_casing/chameleon"
+	ammo_type = /obj/item/ammo_casing/chameleon
 	max_ammo = 7
 	multiple_sprites = 1
-
-/obj/item/ammo_box/magazine/l10mag
-	name = "L10-c battery"
-	desc = "A special battery with protection from EM pulse."
-	icon_state = "l10_clip"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/l10
-	caliber = "energy"
-	max_ammo = 25
-
-/obj/item/ammo_box/magazine/l10mag/examine(mob/user)
-	..()
-	if(src in view(1, user))
-		to_chat(user, "<span class='notice'>You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%.</span>")
-
-/obj/item/ammo_box/magazine/l10mag/attack_self(mob/user)
-	return
-
-/obj/item/ammo_box/magazine/l10mag/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/magazine/c5_9mm
 	name = "magazine (9mm rubber)"
@@ -421,20 +452,24 @@
 	..()
 	icon_state = "[initial(icon_state)]-[round(ammo_count(),10)]"
 
-/obj/item/ammo_box/magazine/borg45/attackby(obj/item/A, mob/user)
-	if (istype(A, /obj/item/weapon/gun/projectile/automatic/borg))
-		var/obj/item/weapon/gun/projectile/automatic/borg/SMG = A
+/obj/item/ammo_box/magazine/borg45/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/gun/projectile/automatic/borg))
+		var/obj/item/weapon/gun/projectile/automatic/borg/SMG = I
 		if (!SMG.magazine)
 			SMG.magazine = src
-			SMG.magazine.loc = SMG
+			SMG.magazine.forceMove(SMG)
+			playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [SMG].</span>")
 			SMG.chamber_round()
-			A.update_icon()
+			I.update_icon()
 			update_icon()
-			return 1
+			return TRUE
+
 		else if (SMG.magazine)
 			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
-	return 0
+			return
+
+	return ..()
 
 /obj/item/ammo_box/magazine/m12g
 	name = "shotgun magazine (12g buckshot)"
@@ -446,7 +481,7 @@
 
 /obj/item/ammo_box/magazine/m12g/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ceil(ammo_count(0) / 8) * 8]"
+	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 8) * 8]"
 
 
 /obj/item/ammo_box/magazine/m12g/stun
@@ -472,7 +507,7 @@
 
 /obj/item/ammo_box/magazine/m556/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ceil(ammo_count(0) / 30) * 30]"
+	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 30) * 30]"
 
 /obj/item/ammo_box/magazine/m556/incendiary
 	name = "A28 magazine (5.56mm incendiary)"
@@ -489,4 +524,75 @@
 
 /obj/item/ammo_box/magazine/a74mm/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[ceil(ammo_count(0) / 30) * 30]"
+	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 30) * 30]"
+
+/obj/item/ammo_box/magazine/plasma
+	name = "plasma weapon battery pack"
+	desc = "A special battery case with protection against EM pulse. Uses fast charge method. Has standardized dimensions and can be used with any plasma type gun of this series. Power cell can be replaced."
+	icon_state = "plasma_clip"
+	origin_tech = "combat=2"
+	ammo_type = null // unused, those are inside guns of this type.
+	caliber = "plasma"
+	max_ammo = 0 // not used with this magazine.
+
+	var/obj/item/weapon/stock_parts/cell/power_supply
+	var/cell_type = /obj/item/weapon/stock_parts/cell/super // we balance ammo consumption and amount over this type of battery, because even this battery still requires basic materials to craft.
+
+/obj/item/ammo_box/magazine/plasma/atom_init()
+	. = ..()
+	if(cell_type)
+		power_supply = new cell_type(src)
+	else
+		power_supply = new(src)
+	update_icon()
+
+/obj/item/ammo_box/magazine/plasma/Destroy()
+	QDEL_NULL(power_supply)
+	return ..()
+
+/obj/item/ammo_box/magazine/plasma/attackby(obj/item/I, mob/user, params)
+	if(power_supply && isscrewdriver(I))
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		user.put_in_hands(power_supply)
+		power_supply = null
+		update_icon()
+
+	else if(istype(I, /obj/item/weapon/stock_parts/cell) && !power_supply && user.drop_from_inventory(I, src))
+		playsound(src, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
+		power_supply = I
+		update_icon()
+
+	else
+		return ..()
+
+/obj/item/ammo_box/magazine/plasma/get_round(keep = FALSE)
+	return null
+
+/obj/item/ammo_box/magazine/plasma/proc/get_charge()
+	if(!power_supply)
+		return 0
+	return power_supply.charge
+
+/obj/item/ammo_box/magazine/plasma/proc/has_overcharge()
+	return power_supply.charge > PLASMAGUN_OVERCHARGE
+
+/obj/item/ammo_box/magazine/plasma/ammo_count() // we don't use this proc
+	return 0
+
+/obj/item/ammo_box/magazine/plasma/examine(mob/user)
+	. = ..(user, 1)
+	if(.)
+		to_chat(user, "<span class='notice'>You see a charge meter, it reads: [power_supply ? round(power_supply.charge * 100 / power_supply.maxcharge) : "nan"]%.</span>")
+
+/obj/item/ammo_box/magazine/plasma/attack_self(mob/user) // check parent proc before adding ..() or removing this one.
+	return
+
+/obj/item/ammo_box/magazine/plasma/update_icon()
+	if(!power_supply)
+		icon_state = "[initial(icon_state)]-0"
+		return
+	// yes, it stops reporting accurate data for icon if its overflowing with energy till it drops charge under certain amount.
+	icon_state = "[initial(icon_state)]-[has_overcharge() ? "oc" : CEIL(power_supply.charge / power_supply.maxcharge * 5) * 20]"
+
+/obj/item/ammo_box/magazine/plasma/emp_act() // just incase if someone adds emp_act in parent.
+	return

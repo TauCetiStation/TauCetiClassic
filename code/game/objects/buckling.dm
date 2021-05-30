@@ -1,8 +1,12 @@
 /atom/movable
 	var/can_buckle = 0
 	var/buckle_movable = 0
-	var/buckle_lying = -1 //bed-like behavior, forces mob.lying = buckle_lying if != -1
-	var/buckle_require_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
+	//bed-like behavior, forces mob.lying = buckle_lying if != -1
+	var/buckle_lying = -1
+	// Delay in ticks for the lying anim on buckle_lying objs.
+	var/buckle_delay = 2
+	//require people to be handcuffed before being able to buckle. eg: pipes
+	var/buckle_require_restraints = 0
 	var/mob/living/buckled_mob = null
 
 /atom/movable/attack_hand(mob/living/user)
@@ -10,14 +14,32 @@
 	if(can_buckle && buckled_mob && istype(user))
 		user_unbuckle_mob(user)
 
+/atom/movable/attack_robot(mob/living/user)
+	if(Adjacent(user) && user_unbuckle_mob(user))
+		return
+	return ..()
+
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
 	if(can_buckle && istype(M) && !buckled_mob && istype(user))
 		user_buckle_mob(M, user)
 
+/atom/movable/proc/can_buckle(mob/living/M)
+	if(!can_buckle)
+		return FALSE
+	if(!istype(M) || (M.loc != loc))
+		return FALSE
+	if(M.buckled || buckled_mob)
+		return FALSE
+	if(M.pinned.len)
+		return FALSE
+	if(buckle_require_restraints && !M.restrained())
+		return FALSE
+	return M != src
+
 /atom/movable/proc/buckle_mob(mob/living/M)
-	if(!can_buckle || !istype(M) || (M.loc != loc) || M.buckled || src.buckled_mob || M.pinned.len || (buckle_require_restraints && !M.restrained()) || M == src)
-		return 0
+	if(!can_buckle(M))
+		return FALSE
 
 	//reset pulling
 	if(M.pulledby)
@@ -29,10 +51,13 @@
 	M.set_dir(dir)
 	buckled_mob = M
 	post_buckle_mob(M)
-	M.throw_alert("buckled", new_master = src)
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_BUCKLE, M)
+
+	M.throw_alert("buckled", /obj/screen/alert/buckled, new_master = src)
 	correct_pixel_shift(M)
 	M.update_canmove()
-	return 1
+	return TRUE
 
 /atom/movable/proc/unbuckle_mob()
 	if(buckled_mob && buckled_mob.buckled == src && buckled_mob.can_unbuckle(usr))
@@ -42,6 +67,7 @@
 		buckled_mob.update_canmove()
 		buckled_mob.clear_alert("buckled")
 		correct_pixel_shift(buckled_mob)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob)
 		buckled_mob = null
 
 		post_buckle_mob(.)
@@ -49,18 +75,21 @@
 /atom/movable/proc/correct_pixel_shift(mob/living/carbon/C)
 	if(!istype(C))
 		return
-	if(C.lying)
-		C.pixel_x = C.get_standard_pixel_x_offset()
-		C.pixel_y = C.get_standard_pixel_y_offset()
+	C.update_transform()
 
 /atom/movable/proc/post_buckle_mob(mob/living/M)
 	return
 
 /atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
-	if(!ticker)
+	if(!SSticker)
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
+		return
 
 	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
+		return
+
+	if(user.is_busy())
+		to_chat(user, "<span class='warning'>You can't buckle [M] while doing something.</span>")
 		return
 
 	if(istype(M, /mob/living/simple_animal/construct))
@@ -69,6 +98,10 @@
 
 	if(isslime(M))
 		to_chat(user, "<span class='warning'>The [M] is too squishy to buckle in.</span>")
+		return
+
+	if(issilicon(M))
+		to_chat(user, "<span class='warning'>The [M] is too heavy to buckle in.</span>")
 		return
 
 	add_fingerprint(user)
@@ -87,6 +120,10 @@
 				"<span class='notice'>You hear metal clanking.</span>")
 
 /atom/movable/proc/user_unbuckle_mob(mob/user)
+	if(user.is_busy())
+		to_chat(user, "<span class='warning'>You can't unbuckle [src] while doing something.</span>")
+		return
+
 	var/mob/living/M = unbuckle_mob()
 	if(M)
 		if(M != user)

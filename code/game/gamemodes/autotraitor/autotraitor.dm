@@ -16,6 +16,7 @@
 	..()
 	to_chat(world, "<B>Game mode is AutoTraitor. Traitors will be added to the round automagically as needed.</B>")
 
+
 /datum/game_mode/traitor/autotraitor/pre_setup()
 
 	if(config.protect_roles_from_antagonist)
@@ -26,15 +27,11 @@
 			if(player.assigned_role == job)
 				antag_candidates -= player
 
-
-	for(var/mob/dead/new_player/P in mob_list)
-		if(P.client && P.ready)
-			num_players++
-
 	//var/r = rand(5)
 	var/num_traitors = 1
 	var/max_traitors = 1
 	var/traitor_prob = 0
+	num_players = num_players()
 	max_traitors = round(num_players / 10) + 1
 	traitor_prob = (num_players - (max_traitors - 1) * 10) * 10
 
@@ -70,8 +67,8 @@
 
 
 /datum/game_mode/traitor/autotraitor/post_setup()
-	..()
 	abandon_allowed = 1
+	return ..()
 
 /datum/game_mode/proc/traitorcheckloop()
 	if(SSshuttle.departed)
@@ -86,7 +83,7 @@
 	var/playercount = 0
 	var/traitorcount = 0
 
-	for(var/mob/living/player in mob_list)
+	for(var/mob/living/player in living_list)
 		if (player.client && player.mind && player.stat != DEAD)
 			playercount++
 			if(player.mind.special_role)
@@ -140,12 +137,13 @@
 				equip_traitor(newtraitor)
 
 			traitors += newtraitor.mind
-			to_chat(newtraitor, "\red <B>ATTENTION:</B> \black It is time to pay your debt to the Syndicate...")
+			to_chat(newtraitor, "<span class='warning'><B>ATTENTION:</B></span> It is time to pay your debt to the Syndicate...")
 			to_chat(newtraitor, "<B>You are now a traitor.</B>")
 			newtraitor.mind.special_role = "traitor"
-			newtraitor.hud_updateflag |= 1 << SPECIALROLE_HUD
+			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", newtraitor)
+
 			var/obj_count = 1
-			to_chat(newtraitor, "\blue Your current objectives:")
+			to_chat(newtraitor, "<span class='notice'>Your current objectives:</span>")
 			if(!config.objectives_disabled)
 				for(var/datum/objective/objective in newtraitor.mind.objectives)
 					to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
@@ -171,12 +169,12 @@
 			return
 	//message_admins("Late Join Check")
 	if((character.client && (ROLE_TRAITOR in character.client.prefs.be_role)) && !jobban_isbanned(character, "Syndicate") \
-	 && !jobban_isbanned(character, ROLE_TRAITOR) && !role_available_in_minutes(character, ROLE_TRAITOR))
+	 && !jobban_isbanned(character, ROLE_TRAITOR) && !role_available_in_minutes(character, ROLE_TRAITOR) && isloyal(character, FALSE))
 		//message_admins("Late Joiner has Be Syndicate")
 		//message_admins("Checking number of players")
 		var/playercount = 0
 		var/traitorcount = 0
-		for(var/mob/living/player in mob_list)
+		for(var/mob/living/player in living_list)
 
 			if (player.client && player.mind && player.stat != DEAD)
 				playercount += 1
@@ -205,13 +203,14 @@
 					forge_traitor_objectives(character.mind)
 				equip_traitor(character)
 				traitors += character.mind
-				to_chat(character, "\red <B>You are the traitor.</B>")
+				to_chat(character, "<span class='warning'><B>You are the traitor.</B></span>")
 				character.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", character)
 				if (config.objectives_disabled)
 					to_chat(character, "<i>You have been selected this round as an antagonist- <font color=blue>Within the rules,</font> try to act as an opposing force to the crew- This can be via corporate payoff, personal motives, or maybe just being a dick. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonist.</i></b>")
 				else
 					var/obj_count = 1
-					to_chat(character, "\blue Your current objectives:")
+					to_chat(character, "<span class='notice'>Your current objectives:</span>")
 					for(var/datum/objective/objective in character.mind.objectives)
 						to_chat(character, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 						obj_count++

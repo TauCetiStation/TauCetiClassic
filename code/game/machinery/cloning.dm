@@ -25,7 +25,7 @@
 	var/biomass = CLONE_BIOMASS * 3
 	var/speed_coeff
 	var/efficiency
-	light_color = "#00FF00"
+	light_color = "#00ff00"
 
 /obj/machinery/clonepod/atom_init()
 	. = ..()
@@ -58,7 +58,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/datum/dna2/record/buf=null
 	var/read_only = 0 //Well,it's still a floppy disk
 
@@ -74,12 +74,9 @@
 	. = ..()
 	Initialize()
 	buf.types=DNA2_BUF_UE|DNA2_BUF_UI
-	//data = "066000033000000000AF00330660FF4DB002690"
-	//data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
 	buf.dna.real_name="God Emperor of Mankind"
 	buf.dna.unique_enzymes = md5(buf.dna.real_name)
-	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
-	//buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
+	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x000,0x000,0x000,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
 	buf.dna.UpdateUI()
 
 /obj/item/weapon/disk/data/monkey
@@ -105,15 +102,23 @@
 	var/mob/selected = null
 	for(var/mob/M in player_list)
 		//Dead people only thanks!
-		if ((M.stat != DEAD) || (!M.client))
+		if((M.stat != DEAD) || (!M.client))
 			continue
 		//They need a brain!
-		if ((istype(M, /mob/living/carbon/human)) && (M:brain_op_stage >= 4.0))
-			continue
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!H.has_brain())
+				continue
+		//They must return in the body
+		else if(isobserver(M))
+			var/mob/dead/observer/O = M
+			if(!O.can_reenter_corpse)
+				continue
 
-		if (M.ckey == find_key)
+		if(M.ckey == find_key)
 			selected = M
 			break
+
 	return selected
 
 //Disk stuff.
@@ -160,43 +165,35 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(datum/dna2/record/R)
 	if(panel_open)
-		return 0
+		return FALSE
 	if(mess || attempting)
-		return 0
+		return FALSE
 	var/datum/mind/clonemind = locate(R.mind)
-	if(!istype(clonemind,/datum/mind))	//not a mind
-		return 0
-	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
-		return 0
-	if(clonemind.active)	//somebody is using that mind
-		if( ckey(clonemind.key)!=R.ckey )
-			return 0
-	else
-		for(var/mob/dead/observer/G in player_list)
-			if(G.ckey == R.ckey)
-				if(G.can_reenter_corpse)
-					break
-				else
-					return 0
+	if(!istype(clonemind, /datum/mind)) //not a mind
+		return FALSE
+	if(clonemind.current && clonemind.current.stat != DEAD) //mind is associated with a non-dead body
+		return FALSE
+	if(clonemind.active) //somebody is using that mind
+		if(ckey(clonemind.key) != R.ckey )
+			return FALSE
 
+	src.attempting = TRUE //One at a time!!
+	src.locked = TRUE
 
-	src.attempting = 1 //One at a time!!
-	src.locked = 1
-
-	src.eject_wait = 1
+	src.eject_wait = TRUE
 	spawn(30)
-		src.eject_wait = 0
+		src.eject_wait = FALSE
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
 	occupant = H
 
-	if(!R.dna.real_name)	//to prevent null names
+	if(!R.dna.real_name) //to prevent null names
 		R.dna.real_name = "clone ([rand(0,999)])"
 	H.real_name = R.dna.real_name
 
 	src.icon_state = "pod_1"
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE) //Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
@@ -207,20 +204,13 @@
 	H.ckey = R.ckey
 	to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you as your body regenerates.</b><br><i>So this is what cloning feels like?</i></span>")
 
-	// -- Mode/mind specific stuff goes here
-	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-	if(mode)
-		mode.update_icon(H)
+	for(var/V in R.quirks)
+		new V(H)
 
-	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
-		ticker.mode.update_all_rev_icons() //So the icon actually appears
-	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gang) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gang))
-		ticker.mode.update_all_gang_icons()
-	if(H.mind in ticker.mode.syndicates)
-		ticker.mode.update_all_synd_icons()
-	if (H.mind in ticker.mode.cult)
-		ticker.mode.add_cultist(src.occupant.mind)
-		ticker.mode.update_all_cult_icons() //So the icon actually appears
+	// -- Mode/mind specific stuff goes here
+	if(global.cult_religion)
+		if(occupant.mind in global.cult_religion.members_minds)
+			global.cult_religion.add_member(occupant, occupant.mind.holy_role)
 
 	// -- End mode specific stuff
 
@@ -228,7 +218,7 @@
 		H.dna = new /datum/dna()
 		H.dna.real_name = H.real_name
 	else
-		H.dna=R.dna
+		H.dna = R.dna
 	H.UpdateAppearance()
 	//if(efficiency > 2)
 	//	for(var/A in bad_se_blocks)
@@ -246,9 +236,9 @@
 
 	for(var/datum/language/L in R.languages)
 		H.add_language(L.name)
-	H.suiciding = 0
-	src.attempting = 0
-	return 1
+	H.suiciding = FALSE
+	src.attempting = FALSE
+	return TRUE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -332,22 +322,23 @@
 		else
 			src.locked = 0
 			to_chat(user, "System unlocked.")
-	else if (istype(W, /obj/item/weapon/card/emag))
-		if (isnull(src.occupant))
-			return
-		user.SetNextMove(CLICK_CD_INTERACT)
-		to_chat(user, "You force an emergency ejection.")
-		src.locked = 0
-		src.go_out()
-		return
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		to_chat(user, "\blue \The [src] processes \the [W].")
+		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
 		biomass += 50
 		user.drop_item()
 		qdel(W)
 		return
 	else
 		..()
+
+/obj/machinery/clonepod/emag_act(mob/user)
+	if(isnull(src.occupant))
+		return FALSE
+	user.SetNextMove(CLICK_CD_INTERACT)
+	to_chat(user, "You force an emergency ejection.")
+	src.locked = 0
+	src.go_out()
+	return TRUE
 
 //Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
@@ -367,7 +358,7 @@
 
 	if(!usr)
 		return
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -381,21 +372,10 @@
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
-
-		/*
-		for(var/obj/O in src)
-			O.loc = src.loc
-		*/
 		return
 
 	if (!(src.occupant))
 		return
-
-	/*
-	for(var/obj/O in src)
-		O.loc = src.loc
-	*/
-
 	if (src.occupant.client)
 		src.occupant.client.eye = src.occupant.client.mob
 		src.occupant.client.perspective = MOB_PERSPECTIVE
@@ -422,7 +402,7 @@
 	return
 
 /obj/machinery/clonepod/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	src.go_out()
 	return
@@ -462,7 +442,7 @@
 
 /obj/item/weapon/storage/box/disks
 	name = "Diskette Box"
-	icon_state = "disk_kit"
+	icon_state = "disk_box"
 
 /obj/item/weapon/storage/box/disks/atom_init()
 	. = ..()
@@ -496,11 +476,5 @@
 	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
-
-//SOME SCRAPS I GUESS
-/* EMP grenade/spell effect
-		if(istype(A, /obj/machinery/clonepod))
-			A:malfunction()
-*/
 
 #undef CLONE_INITIAL_DAMAGE

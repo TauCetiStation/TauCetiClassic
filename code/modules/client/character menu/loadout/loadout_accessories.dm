@@ -1,6 +1,6 @@
 /datum/gear/accessory
 	subtype_path = /datum/gear/accessory
-	slot = slot_wear_mask
+	slot = SLOT_WEAR_MASK
 	sort_category = "Accessories"
 
 /datum/gear/accessory/scarf
@@ -34,12 +34,8 @@
 	display_name = "Zhan Headscarf"
 	path = /obj/item/clothing/head/headscarf
 
-/datum/gear/accessory/bandana
-	display_name = "Bandana"
-	path = /obj/item/clothing/mask/bandana/red
-
 /datum/gear/accessory/haircomb
-	display_name = "Purple comb"
+	display_name = "Black comb"
 	path = /obj/item/weapon/haircomb
 
 /datum/gear/accessory/lipstick
@@ -71,7 +67,7 @@
 /datum/gear/accessory/armband
 	display_name = "Armband selection"
 	path = /obj/item/clothing/accessory/armband
-	allowed_roles = list("Security Officer")
+	allowed_roles = list("Security Officer", "Security Cadet", "Warden", "Detective", "Head of Security", "Forensic Technician" )
 
 /datum/gear/accessory/armband/New()
 	..()
@@ -100,3 +96,12 @@
 /datum/gear/accessory/gold_collar
 	display_name = "Gold Collar"
 	path = /obj/item/clothing/mask/tie/collar2
+
+/datum/gear/accessory/metal_cross
+	display_name = "Metal cross"
+	path = /obj/item/clothing/accessory/metal_cross
+
+/datum/gear/accessory/bronze_cross
+	display_name = "Bronze cross"
+	path = /obj/item/clothing/accessory/bronze_cross
+	cost = 2

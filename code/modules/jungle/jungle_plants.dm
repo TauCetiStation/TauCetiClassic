@@ -32,12 +32,12 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(indestructable)
 			//this bush marks the edge of the map, you can't destroy it
-			to_chat(user, "\red You flail away at the undergrowth, but it's too thick here.")
+			to_chat(user, "<span class='warning'>You flail away at the undergrowth, but it's too thick here.</span>")
 		else
-			user.visible_message("\red <b>[user] begins clearing away [src].</b>","\red <b>You begin clearing away [src].</b>")
+			user.visible_message("<span class='warning'><b>[user] begins clearing away [src].</b></span>","<span class='warning'><b>You begin clearing away [src].</b></span>")
 			spawn(rand(15,30))
 				if(get_dist(user,src) < 2)
-					to_chat(user, "\blue You clear away [src].")
+					to_chat(user, "<span class='notice'>You clear away [src].</span>")
 					new/obj/item/stack/sheet/wood(loc, rand(3,15))
 					if(prob(50))
 						icon_state = "stump[rand(1,2)]"
@@ -66,7 +66,7 @@ var/jungle_plants_init = 0
 	reagent_effects = shuffle(reagent_effects)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/jungle_fruit
-	seed = ""
+	seed_type = null
 	name = "jungle fruit"
 	desc = "It smells weird and looks off."
 	icon = 'code/modules/jungle/jungle.dmi'
@@ -99,14 +99,14 @@ var/jungle_plants_init = 0
 	fruit_g = rand(1,255)
 	fruit_b = fruit_type * 36
 	fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
-	overlays += fruit_overlay
+	add_overlay(fruit_overlay)
 	plant_strength = rand(20,200)
 
 /obj/structure/jungle_plant/attack_hand(mob/user)
 	if(fruits_left > 0)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		fruits_left--
-		to_chat(user, "\blue You pick a fruit off [src].")
+		to_chat(user, "<span class='notice'>You pick a fruit off [src].</span>")
 
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/jungle_fruit/J = new (src.loc)
 		J.potency = plant_strength
@@ -115,9 +115,9 @@ var/jungle_plants_init = 0
 		J.bitesize = 1+round(J.reagents.total_volume / 2, 1)
 		J.attack_hand(user)
 
-		overlays -= fruit_overlay
+		cut_overlay(fruit_overlay)
 		fruit_overlay = icon('code/modules/jungle/jungle.dmi',"fruit[fruits_left]")
 		fruit_overlay.Blend(rgb(fruit_r, fruit_g, fruit_b), ICON_ADD)
-		overlays += fruit_overlay
+		add_overlay(fruit_overlay)
 	else
-		to_chat(user, "\red There are no fruit left on [src].")
+		to_chat(user, "<span class='warning'>There are no fruit left on [src].</span>")

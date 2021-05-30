@@ -10,12 +10,12 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheet"
 	item_state = "bedsheet"
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	layer = 4.0
 	throwforce = 1
 	throw_speed = 1
 	throw_range = 2
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_color = "white"
 
 
@@ -28,6 +28,19 @@ LINEN BINS
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
+	if(I.sharp && isturf(loc)) // you can cut only bedsheet lying on the floor
+		if(!ishuman(user))
+			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
+			return
+		user.visible_message("<span class='notice'>[user] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
+		if(do_after(user, 40, target = src))
+			user.visible_message("<span class='notice'>[user] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
+			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src))
+			R.amount = 3
+			qdel(src)
+		return
+	return ..()
 
 /obj/item/weapon/bedsheet/blue
 	icon_state = "sheetblue"
@@ -112,12 +125,11 @@ LINEN BINS
 	item_color = "brown"
 
 /obj/item/weapon/bedsheet/psych
-	icon = 'icons/obj/items.dmi'
-	icon_state = "sheetbrown"
+	icon_state = "sheetpsych"
 	item_color = "brown"
 
 /obj/item/weapon/bedsheet/centcom
-	name = "\improper Centcom bedsheet"
+	name = "Centcom bedsheet"
 	desc = "Woven with advanced nanothread for warmth as well as being very decorated, essential for all officials."
 	icon_state = "sheetcentcom"
 	item_color = "centcom"
@@ -184,9 +196,9 @@ LINEN BINS
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		user.drop_item()
-		I.loc = src
+
+	else if(amount && !hidden && I.w_class < ITEM_SIZE_LARGE)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+		user.drop_from_inventory(I, src)
 		hidden = I
 		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
 

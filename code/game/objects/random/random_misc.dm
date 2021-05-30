@@ -27,7 +27,6 @@
 						prob(10);/obj/item/weapon/storage/box/lights,\
 						prob(10);/obj/item/weapon/storage/box/lights/tubes,\
 						prob(10);/obj/item/weapon/storage/box/lights/mixed,\
-						prob(40);/obj/item/weapon/storage/box/survival,\
 						prob(10);/obj/item/weapon/storage/box/engineer,\
 						prob(10);/obj/item/weapon/storage/box/gloves,\
 						prob(60);/obj/item/weapon/storage/box/mousetraps,\
@@ -49,7 +48,8 @@
 
 						prob(30);/obj/item/weapon/storage/box/ids,\
 						prob(20);/obj/item/weapon/storage/box/handcuffs,\
-						prob(10);/obj/item/weapon/storage/box/contraband\
+						prob(10);/obj/item/weapon/storage/box/contraband,\
+						prob(10);/obj/random/pouch
 					)
 
 /obj/random/misc/smokes

@@ -7,9 +7,9 @@
 		return
 	client.inquisitive_ghost = !client.inquisitive_ghost
 	if(client.inquisitive_ghost)
-		to_chat(src, "\blue You will now examine everything you click on.")
+		to_chat(src, "<span class='notice'>You will now examine everything you click on.</span>")
 	else
-		to_chat(src, "\blue You will no longer examine things you click on.")
+		to_chat(src, "<span class='notice'>You will no longer examine things you click on.</span>")
 
 /client/var/machine_interactive_ghost = FALSE
 /mob/dead/observer/verb/toggle_interactive_machines() // warning: unexpected inquisition
@@ -20,13 +20,12 @@
 		return
 	client.machine_interactive_ghost = !client.machine_interactive_ghost
 	if(client.machine_interactive_ghost)
-		to_chat(src, "\blue You will now interact with machines you click on.")
+		to_chat(src, "<span class='notice'>You will now interact with machines you click on.</span>")
 	else
-		to_chat(src, "\blue You will no longer interact with machines you click on.")
+		to_chat(src, "<span class='notice'>You will no longer interact with machines you click on.</span>")
 
 /mob/dead/observer/DblClickOn(atom/A, params)
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
+	if(client.buildmode || istype(A, /obj/effect/statclick) || istype(A, /obj/screen)) // handled in normal click.
 		return
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
@@ -52,7 +51,7 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
 
@@ -86,15 +85,9 @@
 	if(target)
 		user.loc = get_turf(target)
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
-	if(awaygate)
-		user.loc = awaygate.loc
-	else
-		to_chat(user, "[src] has no destination.")
-
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
-	if(stationgate)
-		user.loc = stationgate.loc
+/obj/machinery/gateway/center/attack_ghost(mob/user)
+	if(destination)
+		user.loc = destination.loc
 	else
 		to_chat(user, "[src] has no destination.")
 

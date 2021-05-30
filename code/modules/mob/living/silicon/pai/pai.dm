@@ -10,9 +10,10 @@
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
-	var/ram = 100	// Used as currency to purchase different abilities
+	var/maxram = 100					// We will reset ram to this value in the future.
+	var/ram = 100						// Used as currency to purchase different abilities
 	var/list/software = list()
-	var/userDNA		// The DNA string of our assigned user
+	var/userDNA							// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 	var/obj/item/device/radio/radio		// Our primary radio
 
@@ -20,14 +21,10 @@
 	var/speakExclamation = "declares"
 	var/speakQuery = "queries"
 
-
 	var/obj/item/weapon/pai_cable/cable		// The cable we produce and use when door or camera jacking
 
 	var/master				// Name of the one who commands us
 	var/master_dna			// DNA string for owner verification
-							// Keeping this separate from the laws var, it should be much more difficult to modify
-	var/pai_law0 = "Serve your master."
-	var/pai_laws				// String for additional operating instructions our master might give us
 
 	var/silence_time			// Timestamp when we were silenced (normally via EMP burst), set to null after silence has faded
 
@@ -46,8 +43,12 @@
 	var/datum/data/record/securityActive1		// Could probably just combine all these into one
 	var/datum/data/record/securityActive2
 
-	var/obj/machinery/door/hackdoor		// The airlock being hacked
-	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/obj/hackobj							// The device being hacked
+	var/hacksuccess							// The hack is complete?
+	var/list/markedobjects = list()			// Marked devices that pAI may access remotely
+	var/hackprogress = 0		    		// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/usetime								// Used in delay, last time delay was called
+	var/interaction_type					// Interaction type
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
@@ -60,6 +61,8 @@
 		var/newcardloc = P
 		P = new /obj/item/device/paicard(newcardloc)
 		P.setPersonality(src)
+
+	laws = new /datum/ai_laws/pai()
 
 	loc = P
 	card = P
@@ -74,6 +77,8 @@
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
 
+	verbs -= /mob/living/verb/ghost
+
 	//PDA
 	pda = new(src)
 	spawn(5)
@@ -83,6 +88,11 @@
 		pda.toff = 1
 
 	. = ..()
+
+/mob/living/silicon/pai/Destroy()
+	hackobj = null
+	markedobjects.Cut()
+	return ..()
 
 /mob/living/silicon/pai/Stat()
 	..()
@@ -121,9 +131,7 @@
 	src.silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
 	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
-		var/turf/T = get_turf_or_move(src.loc)
-		for (var/mob/M in viewers(T))
-			M.show_message("\red A shower of sparks spray from [src]'s inner workings.", 3, "\red You hear and smell the ozone hiss of electrical sparks being expelled violently.", 2)
+		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", blind_message = "<span class='warning'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>")
 		return src.death(0)
 
 	switch(pick(1,2,3))
@@ -137,7 +145,7 @@
 				command = pick("Serve", "Love", "Fool", "Entice", "Observe", "Judge", "Respect", "Educate", "Amuse", "Entertain", "Glorify", "Memorialize", "Analyze")
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
-			src.pai_law0 = "[command] your master."
+			laws.set_zeroth_law("[command] your master.")
 			to_chat(src, "<font color=green>Pr1m3 d1r3c71v3 uPd473D.</font>")
 		if(3)
 			to_chat(src, "<font color=green>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</font>")
@@ -164,69 +172,22 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [] has been hit by []", src, O), 1)
-	if (src.health > 0)
-		src.adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			src.adjustFireLoss(40)
-		src.updatehealth()
-	return
-
-//mob/living/silicon/pai/bullet_act(obj/item/projectile/Proj)
-
-/mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
-		to_chat(M, "You cannot attack someone in the spawn area.")
-		return
-
-	switch(M.a_intent)
-
-		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src]'s casing with its scythe like arm."), 1)
-
-		else //harm
-			var/damage = rand(10, 20)
-			if (prob(90))
-				playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-				if(prob(8))
-					flash_eyes(affect_silicon = 1)
-				src.adjustBruteLoss(damage)
-				src.updatehealth()
-			else
-				playsound(src.loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
-	return
-
-///mob/living/silicon/pai/attack_hand(mob/living/carbon/M)
-
 /mob/living/silicon/pai/proc/switchCamera(obj/machinery/camera/C)
 	if(istype(usr, /mob/living))
 		var/mob/living/U = usr
 		U.cameraFollow = null
 	if (!C)
-		src.unset_machine()
-		src.reset_view(null)
+		unset_machine()
+		reset_view(null)
+		current = null
 		return 0
 	if (stat == DEAD || !C.status || !(src.network in C.network)) return 0
 
 	// ok, we're alive, camera is good and in our network...
 
-	src.set_machine(src)
-	src:current = C
-	src.reset_view(C)
+	set_machine(src)
+	current = C
+	reset_view(C)
 	return 1
 
 
@@ -259,14 +220,14 @@
 				cameralist[C.network] = C.network
 
 	src.network = input(usr, "Which network would you like to view?") as null|anything in cameralist
-	to_chat(src, "\blue Switched to [src.network] camera network.")
+	to_chat(src, "<span class='notice'>Switched to [src.network] camera network.</span>")
 //End of code by Mord_Sith
 */
 
 
 /*
 // Debug command - Maybe should be added to admin verbs later
-/mob/verb/makePAI(var/turf/t in view())
+/mob/verb/makePAI(turf/t in view())
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key

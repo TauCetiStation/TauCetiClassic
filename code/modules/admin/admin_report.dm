@@ -3,35 +3,34 @@
 // they can only be read by admins and moderators.
 
 // a single admin report
-datum/admin_report/var
-	ID     // the ID of the report
-	body   // the content of the report
-	author // key of the author
-	date   // date on which this was created
-	done   // whether this was handled
+/datum/admin_report
+	var/ID     // the ID of the report
+	var/body   // the content of the report
+	var/author // key of the author
+	var/date   // date on which this was created
+	var/done   // whether this was handled
 
-	offender_key // store the key of the offender
-	offender_cid // store the cid of the offender
+	var/offender_key // store the key of the offender
+	var/offender_cid // store the cid of the offender
 
-datum/report_topic_handler
-	Topic(href,href_list)
-		..()
-		var/client/C = locate(href_list["client"])
-		if(href_list["action"] == "show_reports")
-			C.display_admin_reports()
-		else if(href_list["action"] == "remove")
-			C.mark_report_done(text2num(href_list["ID"]))
-		else if(href_list["action"] == "edit")
-			C.edit_report(text2num(href_list["ID"]))
+/datum/report_topic_handler/Topic(href,href_list)
+	..()
+	var/client/C = locate(href_list["client"])
+	if(href_list["action"] == "show_reports")
+		C.display_admin_reports()
+	else if(href_list["action"] == "remove")
+		C.mark_report_done(text2num(href_list["ID"]))
+	else if(href_list["action"] == "edit")
+		C.edit_report(text2num(href_list["ID"]))
 
 var/datum/report_topic_handler/report_topic_handler
 
-world/New()
+/world/New()
 	..()
 	report_topic_handler = new
 
 // add a new news datums
-proc/make_report(body, author, okey, cid)
+/proc/make_report(body, author, okey, cid)
 	var/savefile/Reports = new("data/reports.sav")
 	var/list/reports
 	var/lastID
@@ -57,7 +56,7 @@ proc/make_report(body, author, okey, cid)
 	Reports["lastID"] << lastID
 
 // load the reports from disk
-proc/load_reports()
+/proc/load_reports()
 	var/savefile/Reports = new("data/reports.sav")
 	var/list/reports
 
@@ -68,7 +67,7 @@ proc/load_reports()
 	return reports
 
 // check if there are any unhandled reports
-client/proc/unhandled_reports()
+/client/proc/unhandled_reports()
 	if(!src.holder) return 0
 	var/list/reports = load_reports()
 
@@ -80,7 +79,7 @@ client/proc/unhandled_reports()
 	return 0
 
 // checks if the player has an unhandled report against him
-client/proc/is_reported()
+/client/proc/is_reported()
 	var/list/reports = load_reports()
 
 	for(var/datum/admin_report/N in reports) if(!N.done)
@@ -90,7 +89,7 @@ client/proc/is_reported()
 	return 0
 
 // display only the reports that haven't been handled
-client/proc/display_admin_reports()
+/client/proc/display_admin_reports()
 	set category = "Admin"
 	set name = "Display Admin Reports"
 	if(!src.holder) return
@@ -115,10 +114,11 @@ client/proc/display_admin_reports()
 	else
 		output += "Whoops, no reports!"
 
-	usr << browse(entity_ja(output), "window=news;size=600x400")
+	var/datum/browser/popup = new(usr, "window=news", "Display Admin Reports", 600, 400, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(output)
+	popup.open()
 
-
-client/proc/Report(mob/M as mob in world)
+/client/proc/Report(mob/M as mob in not_world)
 	set category = "Admin"
 	if(!src.holder)
 		return
@@ -136,7 +136,7 @@ client/proc/Report(mob/M as mob in world)
 	spawn(1)
 		display_admin_reports()
 
-client/proc/mark_report_done(ID)
+/client/proc/mark_report_done(ID)
 	if(!src.holder || src.holder.level < 0)
 		return
 
@@ -157,9 +157,9 @@ client/proc/mark_report_done(ID)
 	Reports["reports"]   << reports
 
 
-client/proc/edit_report(ID as num)
+/client/proc/edit_report(ID as num)
 	if(!src.holder || src.holder.level < 0)
-		to_chat(src, "<b>You tried to modify the news, but you're not an admin!")
+		to_chat(src, "<b>You tried to modify the news, but you're not an admin!</b>")
 		return
 
 	var/savefile/Reports = new("data/reports.sav")

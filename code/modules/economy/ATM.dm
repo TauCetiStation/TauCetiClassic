@@ -20,7 +20,7 @@ log transactions
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/datum/money_account/authenticated_account
 	var/number_incorrect_tries = 0
@@ -64,28 +64,16 @@ log transactions
 	for(var/obj/item/weapon/spacecash/S in src)
 		S.loc = src.loc
 		if(prob(50))
-			playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 		else
-			playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+			playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
 		break
 
 /obj/machinery/atm/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card))
 		if(emagged > 0)
 			//prevent inserting id into an emagged ATM
-			to_chat(user, "\red [bicon(src)] CARD READER ERROR. This system has been compromised!")
-			return
-		else if(istype(I,/obj/item/weapon/card/emag))
-			//short out the machine, shoot sparks, spew money!
-			emagged = 1
-			spark_system.start()
-			print_money_stock(rand(100,500))
-			//we don't want to grief people by locking their id in an emagged ATM
-			release_held_id(user)
-
-			//display a message to the user
-			var/response = pick("Initiating withdraw. Have a nice day!", "CRITICAL ERROR: Activating cash chamber panic siphon.","PIN Code accepted! Emptying account balance.", "Jackpot!")
-			to_chat(user, "\red [bicon(src)] The [src] beeps: \"[response]\"")
+			to_chat(user, "<span class='warning'>[bicon(src)] CARD READER ERROR. This system has been compromised!</span>")
 			return
 
 		var/obj/item/weapon/card/id/idcard = I
@@ -105,11 +93,11 @@ log transactions
 					return
 				else
 					money_stock += SC.worth
-			authenticated_account.money += SC.worth
+			authenticated_account.adjust_money(SC.worth)
 			if(prob(50))
-				playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 			else
-				playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+				playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
 
 			//create a transaction log entry
 			var/datum/transaction/T = new()
@@ -127,6 +115,18 @@ log transactions
 	else
 		..()
 
+/obj/machinery/atm/emag_act(mob/user)
+	//short out the machine, shoot sparks, spew money!
+	emagged = 1
+	spark_system.start()
+	print_money_stock(rand(100,500))
+	//we don't want to grief people by locking their id in an emagged ATM
+	release_held_id(user)
+	//display a message to the user
+	var/response = pick("Initiating withdraw. Have a nice day!", "CRITICAL ERROR: Activating cash chamber panic siphon.","PIN Code accepted! Emptying account balance.", "Jackpot!")
+	to_chat(user, "<span class='warning'>[bicon(src)] The [src] beeps: \"[response]\"</span>")
+	return TRUE
+
 /obj/machinery/atm/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
@@ -138,7 +138,7 @@ log transactions
 		return
 
 	//js replicated from obj/machinery/computer/card
-	var/dat = "<h1>NanoTrasen Automatic Teller Machine</h1>"
+	var/dat = ""
 	dat += "For all your monetary needs!<br>"
 	dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br/>"
 
@@ -151,7 +151,7 @@ log transactions
 			dat += "<span class='alert'>Maximum number of pin attempts exceeded! Access to this ATM has been temporarily disabled.</span>"
 		else if(authenticated_account)
 			if(authenticated_account.suspended)
-				dat += "\red<b>Access to this account has been suspended, and the funds within frozen.</b>"
+				dat += "<span class='warning'><b>Access to this account has been suspended, and the funds within frozen.</b></span>"
 			else
 				switch(view_screen)
 					if(CHANGE_SECURITY_LEVEL)
@@ -226,12 +226,14 @@ log transactions
 			dat += "<input type='submit' value='Submit'><br>"
 			dat += "</form>"
 
-	user << browse(entity_ja(dat),"window=atm;size=550x650")
+	var/datum/browser/popup = new(user, "atm", "NanoTrasen Automatic Teller Machine", 550, 650)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/atm/is_operational_topic()
 	return TRUE
 
-/obj/machinery/atm/Topic(var/href, var/href_list)
+/obj/machinery/atm/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -248,7 +250,7 @@ log transactions
 						var/transfer_purpose = href_list["purpose"]
 						if(charge_to_account(target_account_number, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
 							to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
-							authenticated_account.money -= transfer_amount
+							authenticated_account.adjust_money(-transfer_amount)
 
 							//create an entry in the account transaction log
 							var/datum/transaction/T = new()
@@ -288,7 +290,7 @@ log transactions
 							if(number_incorrect_tries > max_pin_attempts)
 								//lock down the atm
 								ticks_left_locked_down = 30
-								playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+								playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
 
 								//create an entry in the account transaction log
 								var/datum/money_account/failed_account = get_account(tried_account_num)
@@ -301,14 +303,14 @@ log transactions
 									T.time = worldtime2text()
 									failed_account.transaction_log.Add(T)
 							else
-								to_chat(usr, "\red [bicon(src)] Incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining.")
+								to_chat(usr, "<span class='warning'>[bicon(src)] Incorrect pin/account combination entered, [max_pin_attempts - number_incorrect_tries] attempts remaining.</span>")
 								previous_account_number = tried_account_num
-								playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
+								playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 						else
-							to_chat(usr, "\red [bicon(src)] incorrect pin/account combination entered.")
+							to_chat(usr, "<span class='warning'>[bicon(src)] incorrect pin/account combination entered.</span>")
 							number_incorrect_tries = 0
 					else
-						playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+						playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 						ticks_left_timeout = 120
 						view_screen = NO_SCREEN
 
@@ -321,7 +323,7 @@ log transactions
 						T.time = worldtime2text()
 						authenticated_account.transaction_log.Add(T)
 
-						to_chat(usr, "\blue [bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'")
+						to_chat(usr, "<span class='notice'>[bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'</span>")
 
 					previous_account_number = tried_account_num
 			if("withdrawal")
@@ -331,8 +333,8 @@ log transactions
 				else if(authenticated_account && amount > 0)
 					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 					if(amount <= authenticated_account.money)
-						authenticated_account.money -= amount
-						playsound(src, 'sound/machines/chime.ogg', 50, 1)
+						authenticated_account.adjust_money(-amount)
+						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 						if(response == "Chip")
 							spawn_ewallet(amount,src.loc)
 						else
@@ -360,15 +362,16 @@ log transactions
 					R.info += "<i>Balance:</i> $[authenticated_account.money]<br>"
 					R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
 					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
+					R.update_icon()
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
-					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
+					S.stamp_paper(R, "Automatic Teller Machine")
 
 				if(prob(50))
-					playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 				else
-					playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
 			if ("print_transaction")
 				if(authenticated_account)
 					var/obj/item/weapon/paper/R = new(src.loc)
@@ -397,27 +400,31 @@ log transactions
 						R.info += "<td>[T.source_terminal]</td>"
 						R.info += "</tr>"
 					R.info += "</table>"
+					R.update_icon()
 
 					//stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
-					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
+					S.stamp_paper(R, "Automatic Teller Machine")
 
 				if(prob(50))
-					playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 				else
-					playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
+					playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
 
 			if("insert_card")
 				if(!held_card)
 					//this might happen if the user had the browser window open when somebody emagged it
 					if(emagged > 0)
-						to_chat(usr, "\red [bicon(src)] The ATM card reader rejected your ID because this machine has been sabotaged!")
+						to_chat(usr, "<span class='warning'>[bicon(src)] The ATM card reader rejected your ID because this machine has been sabotaged!</span>")
 					else
 						var/obj/item/I = usr.get_active_hand()
 						if (istype(I, /obj/item/weapon/card/id))
 							usr.drop_item()
 							I.loc = src
 							held_card = I
+							if(ishuman(usr))
+								var/mob/living/carbon/human/H = usr
+								H.sec_hud_set_ID()
 				else
 					release_held_id(usr)
 			if("logout")
@@ -439,7 +446,7 @@ log transactions
 			if(I)
 				authenticated_account = attempt_account_access(I.associated_account_number)
 				if(authenticated_account)
-					to_chat(human_user, "\blue [bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'")
+					to_chat(human_user, "<span class='notice'>[bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'</span>")
 
 					//create a transaction log entry
 					var/datum/transaction/T = new()

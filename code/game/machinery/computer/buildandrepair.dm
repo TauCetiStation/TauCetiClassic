@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/structure/computerframe
 	density = 1
 	anchored = 0
@@ -13,7 +11,7 @@
 /obj/item/weapon/circuitboard
 	density = 0
 	anchored = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
@@ -41,6 +39,14 @@
 	name = "Circuit board (Message Monitor)"
 	build_path = /obj/machinery/computer/message_monitor
 	origin_tech = "programming=3"
+/obj/item/weapon/circuitboard/camera_advanced
+	name = "circuit board (Advanced Camera Console)"
+	build_path = /obj/machinery/computer/camera_advanced
+	req_access = list(access_security)
+/obj/item/weapon/circuitboard/camera_advanced/xenobio
+	name = "circuit board (Slime management console)"
+	build_path = /obj/machinery/computer/camera_advanced/xenobio
+	origin_tech = "biotech=3;bluespace=3"
 /obj/item/weapon/circuitboard/security
 	name = "Circuit board (Security)"
 	build_path = /obj/machinery/computer/security
@@ -79,7 +85,33 @@
 
 /obj/item/weapon/circuitboard/communications/atom_init()
 	. = ..()
+	circuitboard_communications_list += src
 	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/circuitboard/communications/Destroy()
+	circuitboard_communications_list -= src
+
+	for(var/obj/machinery/computer/communications/commconsole in communications_list)
+		if(istype(commconsole.loc,/turf))
+			return ..()
+
+	for(var/obj/item/weapon/circuitboard/communications/commboard in circuitboard_communications_list)
+		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)))
+			return ..()
+
+	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
+		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+			return ..()
+
+	if(SSticker.mode.name == "rp-revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+		return ..()
+
+	SSshuttle.incall(2)
+	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
+	SSshuttle.announce_emer_called.play()
+
+	return ..()
 
 /obj/item/weapon/circuitboard/communications/process()
 	cooldown = max(cooldown - 1, 0)
@@ -159,6 +191,7 @@
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core
+	req_access = list(access_heads)
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = /obj/machinery/computer/mecha
@@ -244,13 +277,8 @@
 	origin_tech = "programming=1"
 
 
-/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !hacked)
-		to_chat(user, "\blue Special supplies unlocked.")
-		hacked = TRUE
-		contraband_enabled = TRUE
-		return
-	else if(istype(I,/obj/item/device/multitool))
+/obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
+	if(ismultitool(I))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
 		if(catastasis)
@@ -267,12 +295,20 @@
 
 			if("Cancel")
 				return
-			else
-				to_chat(user, "DERP! BUG! Report this (And what you were doing to cause it) to Agouri")
-	return
 
-/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	else
+		return ..()
+
+/obj/item/weapon/circuitboard/computer/cargo/emag_act(mob/user)
+	if(hacked)
+		return FALSE
+	to_chat(user, "<span class='notice'>Special supplies unlocked.</span>")
+	hacked = TRUE
+	contraband_enabled = TRUE
+	return TRUE
+
+/obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "circuit board (Library Visitor Console)"
 			build_path = /obj/machinery/computer/libraryconsole
@@ -281,28 +317,22 @@
 			name = "circuit board (Book Inventory Management Console)"
 			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
-	return
+	else
+		return ..()
 
-/obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/card/emag))
+/obj/item/weapon/circuitboard/security/attackby(obj/item/I, mob/user, params)
+	if(istype(I,/obj/item/weapon/card/id))
 		if(emagged)
-			to_chat(user, "Circuit lock is already removed.")
-			return
-		to_chat(user, "\blue You override the circuit lock and open controls.")
-		emagged = 1
-		locked = 0
-	else if(istype(I,/obj/item/weapon/card/id))
-		if(emagged)
-			to_chat(user, "\red Circuit lock does not respond.")
+			to_chat(user, "<span class='warning'>Circuit lock does not respond.</span>")
 			return
 		if(check_access(I))
 			locked = !locked
-			to_chat(user, "\blue You [locked ? "" : "un"]lock the circuit controls.")
+			to_chat(user, "<span class='notice'>You [locked ? "" : "un"]lock the circuit controls.</span>")
 		else
-			to_chat(user, "\red Access denied.")
-	else if(istype(I,/obj/item/device/multitool))
+			to_chat(user, "<span class='warning'>Access denied.</span>")
+	else if(ismultitool(I))
 		if(locked)
-			to_chat(user, "\red Circuit controls are locked.")
+			to_chat(user, "<span class='warning'>Circuit controls are locked.</span>")
 			return
 		var/existing_networks = jointext(network,",")
 		var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera console circuit to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Multitool-Circuitboard interface", input_default(existing_networks)), MAX_LNAME_LEN)
@@ -315,112 +345,136 @@
 			to_chat(usr, "No network found please hang up and try your call again.")
 			return
 		network = tempnetwork
-	return
+	else
+		return ..()
 
-/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user)
-	if(istype(I,/obj/item/weapon/screwdriver))
-		user.visible_message("\blue \the [user] adjusts the jumper on the [src]'s access protocol pins.", "\blue You adjust the jumper on the access protocol pins.")
-		switch(src.build_path)
+/obj/item/weapon/circuitboard/security/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "Circuit lock is already removed.")
+		return FALSE
+	to_chat(user, "<span class='notice'>You override the circuit lock and open controls.</span>")
+	emagged = 1
+	locked = 0
+	return TRUE
 
-			if(/obj/machinery/computer/rdconsole/core)
-				src.name = "Circuit Board (RD Console - Robotics)"
-				src.build_path = /obj/machinery/computer/rdconsole/robotics
-				to_chat(user, "\blue Access protocols set to robotics.")
+/obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card/id))
+		if(check_access(I))
+			user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
+			switch(src.build_path)
 
-			if(/obj/machinery/computer/rdconsole/robotics)
-				src.name = "Circuit Board (RD Console - Mining)"
-				src.build_path = /obj/machinery/computer/rdconsole/mining
-				to_chat(user, "\blue Access protocols set to mining.")
+				if(/obj/machinery/computer/rdconsole/core)
+					src.name = "Circuit Board (RD Console - Robotics)"
+					src.build_path = /obj/machinery/computer/rdconsole/robotics
+					to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
 
-			if(/obj/machinery/computer/rdconsole/mining)
-				src.name = "Circuit Board (RD Console)"
-				src.build_path = /obj/machinery/computer/rdconsole/core
-				to_chat(user, "\blue Access protocols set to default.")
+				if(/obj/machinery/computer/rdconsole/robotics)
+					src.name = "Circuit Board (RD Console - Mining)"
+					src.build_path = /obj/machinery/computer/rdconsole/mining
+					to_chat(user, "<span class='notice'>Access protocols set to mining.</span>")
 
-		/*if(src.build_path == /obj/machinery/computer/rdconsole/core)
-			src.name = "Circuit Board (RD Console - Robotics)"
-			src.build_path = /obj/machinery/computer/rdconsole/robotics
-			to_chat(user, "\blue Access protocols set to robotics.")
+				if(/obj/machinery/computer/rdconsole/mining)
+					src.name = "Circuit Board (RD Console)"
+					src.build_path = /obj/machinery/computer/rdconsole/core
+					to_chat(user, "<span class='notice'>Access protocols set to default.</span>")
 		else
-			src.name = "Circuit Board (RD Console)"
-			src.build_path = /obj/machinery/computer/rdconsole/core
-			to_chat(user, "\blue Access protocols set to default.")*/
-	return
+			to_chat(user, "<span class='warning'>Access denied.</span>")
+	else
+		return ..()
 
 /obj/structure/computerframe/attackby(obj/item/P, mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
+		return
+
+	if((state != 0) && (state != 1) && iswrench(P))
+		if(user.is_busy(src))
+			return
+
+		var/list/possible_directions = list()
+		for(var/direction_to_check in (cardinal - NORTH - dir))
+			possible_directions += dir2text(direction_to_check)
+
+		var/dir_choise = input(user, "Choose the direction where to turn \the [src].", "Choose the direction.", null) as null|anything in possible_directions
+
+		if(!dir_choise || !user || !(user in range(1, src)) || user.is_busy(src))
+			return
+
+		if(P.use_tool(src, user, 20, volume = 50) && src && P)
+			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
+			set_dir(text2dir(dir_choise))
+
+		return
+
 	switch(state)
 		if(0)
-			if(istype(P, /obj/item/weapon/wrench))
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
-					to_chat(user, "\blue You wrench the frame into place.")
+			if(iswrench(P))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
+					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = 1
 					src.state = 1
-			if(istype(P, /obj/item/weapon/weldingtool))
+			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
-				if(!WT.remove_fuel(0, user))
-					to_chat(user, "The welding tool must be on to complete this task.")
-					return
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
-					if(!src || !WT.isOn()) return
-					to_chat(user, "\blue You deconstruct the frame.")
-					new /obj/item/stack/sheet/metal( src.loc, 5 )
-					qdel(src)
+				if(WT.use(0, user))
+					to_chat(user, "<span class='notice'>You start deconstruct the frame.</span>")
+					if(WT.use_tool(src, user, 20, volume = 50))
+						to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
+						new /obj/item/stack/sheet/metal( src.loc, 5 )
+						qdel(src)
 		if(1)
-			if(istype(P, /obj/item/weapon/wrench))
-				if(user.is_busy(src)) return
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if(do_after(user, 20, target = src))
-					to_chat(user, "\blue You unfasten the frame.")
+			if(iswrench(P))
+				if(user.is_busy(src))
+					return
+				if(P.use_tool(src, user, 20, volume = 50))
+					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = 0
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "computer")
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-					to_chat(user, "\blue You place the circuit board inside the frame.")
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					icon_state = "1"
 					circuit = P
 					user.drop_item()
 					circuit.add_fingerprint(user)
 					P.loc = null
 				else
-					to_chat(user, "\red This frame does not accept circuit boards of this type!")
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				to_chat(user, "\blue You screw the circuit board into place.")
+					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
+			if(isscrewdriver(P) && circuit)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
-			if(istype(P, /obj/item/weapon/crowbar) && circuit)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				to_chat(user, "\blue You remove the circuit board.")
+			if(iscrowbar(P) && circuit)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "0"
 				circuit.loc = src.loc
 				src.circuit = null
 		if(2)
-			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				to_chat(user, "\blue You unfasten the circuit board.")
+			if(isscrewdriver(P) && circuit)
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(iscoil(P))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
-					if(user.is_busy(src)) return
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if(C.use(5))
-							to_chat(user, "\blue You add cables to the frame.")
-							src.state = 3
-							src.icon_state = "3"
+					if(user.is_busy(src))
+						return
+					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
+						to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
+						src.state = 3
+						src.icon_state = "3"
 		if(3)
-			if(istype(P, /obj/item/weapon/wirecutters))
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				to_chat(user, "\blue You remove the cables.")
+			if(iswirecutter(P))
+				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -429,21 +483,56 @@
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() >= 2)
 					if(user.is_busy(src)) return
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-					if(do_after(user, 20, target = src))
-						if(G.use(2))
-							to_chat(user, "\blue You put in the glass panel.")
-							src.state = 4
-							src.icon_state = "4"
+					if(G.use_tool(src, user, 20, amount = 2, volume = 50))
+						to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
+						src.state = 4
+						src.icon_state = "4"
 		if(4)
-			if(istype(P, /obj/item/weapon/crowbar))
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-				to_chat(user, "\blue You remove the glass panel.")
+			if(iscrowbar(P))
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
-			if(istype(P, /obj/item/weapon/screwdriver))
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				to_chat(user, "\blue You connect the monitor.")
-				new src.circuit.build_path (src.loc, circuit)
+			if(isscrewdriver(P))
+				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
+				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
+				new_computer.set_dir(dir)
+				transfer_fingerprints_to(new_computer)
 				qdel(src)
+
+/obj/structure/computerframe/verb/rotate()
+	set category = "Object"
+	set name = "Rotate"
+	set src in oview(1)
+
+	// virtual present
+	if (isAI(usr) || ispAI(usr))
+		return
+	// state restrict
+	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+		return
+	// species restrict
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>It's too complicated for you.</span>")
+		return
+
+	var/obj/item/I = usr.get_active_hand()
+
+	if (!I || !iswrench(I))
+		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
+		return
+
+	var/list/possible_directions = list()
+	for(var/direction_to_check in (cardinal - NORTH - dir))
+		possible_directions += dir2text(direction_to_check)
+
+	var/dir_choise = input(usr, "Choose the direction where to turn \the [src].", "Choose the direction.", null) as null|anything in possible_directions
+
+	if(!dir_choise || !usr || !(usr in range(1, src)) || usr.is_busy(src))
+		return
+
+	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
+		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
+		set_dir(text2dir(dir_choise))

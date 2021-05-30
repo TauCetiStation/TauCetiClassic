@@ -39,9 +39,9 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(istype(O, /obj/item/weapon/organ))
-		var/obj/item/weapon/organ/IO = O
-		if(IO.specie == DIONA)
+	if(istype(O, /obj/item/organ/external))
+		var/obj/item/organ/external/IO = O
+		if(IO.species.name == DIONA)
 			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
 			var/t_amount = 0
 			var/t_max = rand(1,4)
@@ -49,11 +49,11 @@
 				new /obj/item/seeds/replicapod(loc)
 			qdel(IO)
 
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
-		var/seed = text2path(F.seed)
+		var/seed = F.seed_type
 		var/t_amount = 0
 		var/t_max = rand(1,4)
 		while(t_amount < t_max)
@@ -68,11 +68,11 @@
 			t_amount++
 		qdel(O)
 
-	else if(istype(O, /obj/item/weapon/grown/))
+	else if(istype(O, /obj/item/weapon/grown))
 		var/obj/item/weapon/grown/F = O
 		user.drop_item()
 		to_chat(user, "<span class='notice'>You extract some seeds from the [F.name].</span>")
-		var/seed = text2path(F.seed)
+		var/seed = F.seed_type
 		var/t_amount = 0
 		var/t_max = rand(1,4)
 		while(t_amount < t_max)

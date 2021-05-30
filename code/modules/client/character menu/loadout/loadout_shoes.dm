@@ -1,7 +1,7 @@
 /datum/gear/shoes
 	display_name = "Sandals"
 	path = /obj/item/clothing/shoes/sandal
-	slot = slot_shoes
+	slot = SLOT_SHOES
 	sort_category = "Shoes and Footwear"
 
 /datum/gear/shoes/color
@@ -27,13 +27,13 @@
 
 /datum/gear/shoes/boots
 	display_name = "Boot selection"
-	path = /obj/item/clothing/shoes/jackboots
+	path = /obj/item/clothing/shoes/boots
 
 /datum/gear/shoes/boots/New()
 	..()
 	var/boots = list()
-	boots["jackboots"] = /obj/item/clothing/shoes/jackboots
-	boots["workboots"] = /obj/item/clothing/shoes/workboots
+	boots["jackboots"] = /obj/item/clothing/shoes/boots
+	boots["workboots"] = /obj/item/clothing/shoes/boots/work
 	gear_tweaks += new/datum/gear_tweak/path(boots)
 
 /datum/gear/shoes/kung

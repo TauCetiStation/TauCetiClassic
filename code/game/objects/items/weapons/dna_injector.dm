@@ -8,7 +8,7 @@
 	var/s_time = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = ITEM_SIZE_TINY
 	var/uses = 1
 	var/nofail
 	var/is_bullet = 0
@@ -81,6 +81,7 @@
 				if (buf.types & DNA2_BUF_UE) //unique enzymes? yes
 					M.real_name = buf.dna.real_name
 					M.name = buf.dna.real_name
+					M.dna.unique_enzymes = buf.dna.unique_enzymes // bullshit
 				uses--
 			else
 				M.dna.SetUIValue(block,src.GetValue())
@@ -107,35 +108,38 @@
 	if(!M.try_inject(user, TRUE))
 		return
 
-	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [name] by [user.name] ([user.ckey])</font>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [name] to inject [M.name] ([M.ckey])</font>")
+	M.log_combat(user, "injected with [name]")
 
 	if (buf.types & DNA2_BUF_SE)
 		if(block)// Isolated injector
 			//testing("Isolated block [block] injector with contents: [GetValue()]")
 			if (GetState() && block == MONKEYBLOCK)
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY) [ADMIN_JMP(user)]")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] (MONKEY) [ADMIN_JMP(user)]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
-				log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY)")
+				log_game("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
 			else
-				log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] ([assigned_blocks[block]]) [ADMIN_JMP(user)]")
+				log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] ([assigned_blocks[block]])")
 
 		else
 			//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 			if (GetState(MONKEYBLOCK))
-				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY) [ADMIN_JMP(user)]")
+				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] (MONKEY) [ADMIN_JMP(user)]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
-				log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY)")
+				log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
 			else
 				//message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
+	else if (buf.types & DNA2_BUF_UE)
+		message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] (UE of [buf.dna.real_name])")
+		log_attack("[key_name(user)] injected [key_name(M)] with the [name] (UE of [buf.dna.real_name])")
+		user.visible_message("<span class='warning'>[user] injects [M] with the DNA Injector!</span>")
 	else
 		//message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 		log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
-
-		add_fingerprint(user)
 		user.visible_message("<span class='warning'>[user] injects [M] with the DNA Injector!</span>")
 
+	add_fingerprint(user)
 	inject(M, user)
 
 

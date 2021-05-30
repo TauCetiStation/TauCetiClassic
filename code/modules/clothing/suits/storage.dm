@@ -4,9 +4,7 @@
 /obj/item/clothing/suit/storage/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.storage_slots = 2	//two slots
-	pockets.max_w_class = 2		//fit only pocket sized items
-	pockets.max_combined_w_class = 4
+	pockets.set_slots(slots = 2, slot_size = 2) //two slots, fit only pocket sized items
 
 /obj/item/clothing/suit/storage/Destroy()
 	qdel(pockets)
@@ -21,14 +19,14 @@
 	if (pockets && pockets.handle_mousedrop(usr, over_object))
 		..(over_object)
 
-/obj/item/clothing/suit/storage/attackby(obj/item/W, mob/user)
-	..()
-	if(pockets)
-		pockets.attackby(W, user)
+/obj/item/clothing/suit/storage/attackby(obj/item/I, mob/user, params)
+	if(pockets && user.a_intent != INTENT_HARM && pockets.attackby(I, user, params))
+		return
+	return ..()
 
 /obj/item/clothing/suit/storage/emp_act(severity)
 	if(pockets)
-		pockets.emp_act(severity)
+		pockets.emplode(severity)
 	..()
 
 /obj/item/clothing/suit/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)

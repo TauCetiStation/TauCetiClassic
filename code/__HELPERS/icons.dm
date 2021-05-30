@@ -107,7 +107,7 @@ AngleToHue(hue)
     Converts an angle to a hue in the valid range.
 RotateHue(hsv, angle)
     Takes an HSV or HSVA value and rotates the hue forward through red, green, and blue by an angle from 0 to 360.
-    (Rotating red by 60� produces yellow.) The result is another HSV or HSVA color with the same saturation and value
+    (Rotating red by 60° produces yellow.) The result is another HSV or HSVA color with the same saturation and value
     as the original, but a different hue.
 GrayScale(rgb)
     Takes an RGB or RGBA color and converts it to grayscale. Returns an RGB or RGBA string.
@@ -121,7 +121,7 @@ Get Flat Icon DEMO by DarkCampainger
 
 This is a test for the get flat icon proc, modified approprietly for icons and their states.
 Probably not a good idea to run this unless you want to see how the proc works in detail.
-mob
+/mob
 	icon = 'old_or_unused.dmi'
 	icon_state = "green"
 
@@ -132,27 +132,27 @@ mob
 		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
 
 		// Testing image overlays
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32)
-		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32)
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32))
+		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32))
 
 		// Testing icon file overlays (defaults to mob's state)
-		overlays += '_flat_demoIcons2.dmi'
+		add_overlay('_flat_demoIcons2.dmi')
 
 		// Testing icon_state overlays (defaults to mob's icon)
-		overlays += "white"
+		add_overlay("white")
 
 		// Testing dynamic icon overlays
 		var/icon/I = icon('old_or_unused.dmi', icon_state="aqua")
 		I.Shift(NORTH,16,1)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing dynamic image overlays
 		I=image(icon=I,pixel_x = -32, pixel_y = 32)
-		overlays+=I
+		add_overlay(I)
 
 		// Testing object types (and layers)
-		overlays+=/obj/effect/overlayTest
+		add_overlay(/obj/effect/overlayTest)
 
 		loc = locate (10,10,1)
 	verb
@@ -182,7 +182,7 @@ mob
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32)))
 
 		Stress_Test()
 			set name = "5. Stress Test"
@@ -199,14 +199,14 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-obj/effect/overlayTest
+/obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24
 	pixel_y = 24
 	layer = TURF_LAYER // Should appear below the rest of the overlays
 
-world
+/world
 	view = "7x7"
 	maxx = 20
 	maxy = 20
@@ -215,85 +215,84 @@ world
 
 #define TO_HEX_DIGIT(n) ascii2text((n&15) + ((n&15)<10 ? 48 : 87))
 
-icon
-	proc/MakeLying()
-		var/icon/I = new(src,dir=SOUTH)
-		I.BecomeLying()
-		return I
+/icon/proc/MakeLying()
+	var/icon/I = new(src,dir=SOUTH)
+	I.BecomeLying()
+	return I
 
-	proc/BecomeLying()
-		Turn(90)
-		Shift(SOUTH,6)
-		Shift(EAST,1)
+/icon/proc/BecomeLying()
+	Turn(90)
+	Shift(SOUTH,6)
+	Shift(EAST,1)
 
-	// Multiply all alpha values by this float
-	proc/ChangeOpacity(opacity = 1.0)
-		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
+// Multiply all alpha values by this float
+/icon/proc/ChangeOpacity(opacity = 1.0)
+	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
 
-	// Convert to grayscale
-	proc/GrayScale()
-		MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
+// Convert to grayscale
+/icon/proc/GrayScale()
+	MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
 
-	proc/ColorTone(tone)
-		GrayScale()
+/icon/proc/ColorTone(tone)
+	GrayScale()
 
-		var/list/TONE = ReadRGB(tone)
-		var/gray = round(TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11, 1)
+	var/list/TONE = ReadRGB(tone)
+	var/gray = round(TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11, 1)
 
-		var/icon/upper = (255-gray) ? new(src) : null
+	var/icon/upper = (255-gray) ? new(src) : null
 
-		if(gray)
-			MapColors(255/gray,0,0, 0,255/gray,0, 0,0,255/gray, 0,0,0)
-			Blend(tone, ICON_MULTIPLY)
-		else SetIntensity(0)
-		if(255-gray)
-			upper.Blend(rgb(gray,gray,gray), ICON_SUBTRACT)
-			upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),0, 0,0,0,0, 0,0,0,1)
-			Blend(upper, ICON_ADD)
+	if(gray)
+		MapColors(255/gray,0,0, 0,255/gray,0, 0,0,255/gray, 0,0,0)
+		Blend(tone, ICON_MULTIPLY)
+	else SetIntensity(0)
+	if(255-gray)
+		upper.Blend(rgb(gray,gray,gray), ICON_SUBTRACT)
+		upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),0, 0,0,0,0, 0,0,0,1)
+		Blend(upper, ICON_ADD)
 
-	// Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
-	proc/MinColors(icon)
-		var/icon/I = new(src)
-		I.Opaque()
-		I.Blend(icon, ICON_SUBTRACT)
-		Blend(I, ICON_SUBTRACT)
+// Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
+/icon/proc/MinColors(icon)
+	var/icon/I = new(src)
+	I.Opaque()
+	I.Blend(icon, ICON_SUBTRACT)
+	Blend(I, ICON_SUBTRACT)
 
-	// Take the maximum color of two icons; combine opacity as if blending with ICON_OR
-	proc/MaxColors(icon)
-		var/icon/I
-		if(isicon(icon))
-			I = new(icon)
-		else
-			// solid color
-			I = new(src)
-			I.Blend("#000000", ICON_OVERLAY)
-			I.SwapColor("#000000", null)
-			I.Blend(icon, ICON_OVERLAY)
-		var/icon/J = new(src)
-		J.Opaque()
-		I.Blend(J, ICON_SUBTRACT)
-		Blend(I, ICON_OR)
+// Take the maximum color of two icons; combine opacity as if blending with ICON_OR
+/icon/proc/MaxColors(icon)
+	var/icon/I
+	if(isicon(icon))
+		I = new(icon)
+	else
+		// solid color
+		I = new(src)
+		I.Blend("#000000", ICON_OVERLAY)
+		I.SwapColor("#000000", null)
+		I.Blend(icon, ICON_OVERLAY)
+	var/icon/J = new(src)
+	J.Opaque()
+	I.Blend(J, ICON_SUBTRACT)
+	Blend(I, ICON_OR)
 
-	// make this icon fully opaque--transparent pixels become black
-	proc/Opaque(background = "#000000")
-		SwapColor(null, background)
-		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
+// make this icon fully opaque--transparent pixels become black
+/icon/proc/Opaque(background = "#000000")
+	SwapColor(null, background)
+	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
 
-	// Change a grayscale icon into a white icon where the original color becomes the alpha
-	// I.e., black -> transparent, gray -> translucent white, white -> solid white
-	proc/BecomeAlphaMask()
-		SwapColor(null, "#000000ff")	// don't let transparent become gray
-		MapColors(0,0,0,0.3, 0,0,0,0.59, 0,0,0,0.11, 0,0,0,0, 1,1,1,0)
+// Change a grayscale icon into a white icon where the original color becomes the alpha
+// I.e., black -> transparent, gray -> translucent white, white -> solid white
+/icon/proc/BecomeAlphaMask()
+	SwapColor(null, "#000000ff")	// don't let transparent become gray
+	MapColors(0,0,0,0.3, 0,0,0,0.59, 0,0,0,0.11, 0,0,0,0, 1,1,1,0)
 
-	proc/UseAlphaMask(mask)
-		Opaque()
-		AddAlphaMask(mask)
+/icon/proc/UseAlphaMask(mask)
+	Opaque()
+	AddAlphaMask(mask)
 
-	proc/AddAlphaMask(mask)
-		var/icon/M = new(mask)
-		M.Blend("#ffffff", ICON_SUBTRACT)
-		// apply mask
-		Blend(M, ICON_ADD)
+/icon/proc/AddAlphaMask(mask)
+	var/icon/M = new(mask)
+	M.Blend("#ffffff", ICON_SUBTRACT)
+	// apply mask
+	Blend(M, ICON_ADD)
 
 /*
 	HSV format is represented as "#hhhssvv" or "#hhhssvvaa"
@@ -317,7 +316,7 @@ icon
 		Higher value means brighter color
  */
 
-proc/ReadRGB(rgb)
+/proc/ReadRGB(rgb)
 	if(!rgb) return
 
 	// interpret the HSV or HSVA value
@@ -367,7 +366,7 @@ proc/ReadRGB(rgb)
 	. = list(r, g, b)
 	if(usealpha) . += alpha
 
-proc/ReadHSV(hsv)
+/proc/ReadHSV(hsv)
 	if(!hsv) return
 
 	// interpret the HSV or HSVA value
@@ -406,7 +405,7 @@ proc/ReadHSV(hsv)
 	. = list(hue, sat, val)
 	if(usealpha) . += alpha
 
-proc/HSVtoRGB(hsv)
+/proc/HSVtoRGB(hsv)
 	if(!hsv) return "#000000"
 	var/list/HSV = ReadHSV(hsv)
 	if(!HSV) return "#000000"
@@ -434,7 +433,7 @@ proc/HSVtoRGB(hsv)
 
 	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
 
-proc/RGBtoHSV(rgb)
+/proc/RGBtoHSV(rgb)
 	if(!rgb) return "#0000000"
 	var/list/RGB = ReadRGB(rgb)
 	if(!RGB) return "#0000000"
@@ -465,7 +464,7 @@ proc/RGBtoHSV(rgb)
 
 	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
 
-proc/hsv(hue, sat, val, alpha)
+/proc/hsv(hue, sat, val, alpha)
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
 	if((hue & 0xFF) == 0xFF)
@@ -498,7 +497,7 @@ proc/hsv(hue, sat, val, alpha)
 
 	amount<0 or amount>1 are allowed
  */
-proc/BlendHSV(hsv1, hsv2, amount)
+/proc/BlendHSV(hsv1, hsv2, amount)
 	var/list/HSV1 = ReadHSV(hsv1)
 	var/list/HSV2 = ReadHSV(hsv2)
 
@@ -552,7 +551,7 @@ proc/BlendHSV(hsv1, hsv2, amount)
 
 	amount<0 or amount>1 are allowed
  */
-proc/BlendRGB(rgb1, rgb2, amount)
+/proc/BlendRGB(rgb1, rgb2, amount)
 	var/list/RGB1 = ReadRGB(rgb1)
 	var/list/RGB2 = ReadRGB(rgb2)
 
@@ -568,10 +567,10 @@ proc/BlendRGB(rgb1, rgb2, amount)
 
 	return isnull(alpha) ? rgb(r, g, b) : rgb(r, g, b, alpha)
 
-proc/BlendRGBasHSV(rgb1, rgb2, amount)
+/proc/BlendRGBasHSV(rgb1, rgb2, amount)
 	return HSVtoRGB(RGBtoHSV(rgb1), RGBtoHSV(rgb2), amount)
 
-proc/HueToAngle(hue)
+/proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
@@ -579,7 +578,7 @@ proc/HueToAngle(hue)
 	hue -= hue >> 8
 	return hue / (1530/360)
 
-proc/AngleToHue(angle)
+/proc/AngleToHue(angle)
 	// normalize hsv in case anything is screwy
 	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
 	var/hue = angle * (1530/360)
@@ -589,7 +588,7 @@ proc/AngleToHue(angle)
 
 
 // positive angle rotates forward through red->green->blue
-proc/RotateHue(hsv, angle)
+/proc/RotateHue(hsv, angle)
 	var/list/HSV = ReadHSV(hsv)
 
 	// normalize hsv in case anything is screwy
@@ -611,13 +610,13 @@ proc/RotateHue(hsv, angle)
 	return hsv(HSV[1], HSV[2], HSV[3], (HSV.len > 3 ? HSV[4] : null))
 
 // Convert an rgb color to grayscale
-proc/GrayScale(rgb)
+/proc/GrayScale(rgb)
 	var/list/RGB = ReadRGB(rgb)
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	return (RGB.len > 3) ? rgb(gray, gray, gray, RGB[4]) : rgb(gray, gray, gray)
 
 // Change grayscale color to black->tone->white range
-proc/ColorTone(rgb, tone)
+/proc/ColorTone(rgb, tone)
 	var/list/RGB = ReadRGB(rgb)
 	var/list/TONE = ReadRGB(tone)
 
@@ -666,12 +665,22 @@ The _flatIcons list is a cache for generated icon files.
 			noIcon = TRUE // Do not render this object.
 
 	var/curdir
-	if(!exact && (A.dir != 2))
-		curdir = A.dir
-	else if(exact)
-		curdir = 2
-	else
+	var/base_icon_dir	//We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
+	if(!exact && (!A.dir || A.dir == SOUTH))
 		curdir = defdir
+	else if(exact)
+		curdir = SOUTH
+	else
+		curdir = A.dir
+
+	//Try to remove/optimize this section ASAP, CPU hog.
+	//Determines if there's directionals.
+	if(!noIcon && curdir != SOUTH)
+		if(!length(icon_states(icon(curicon, curstate, curdir))))
+			base_icon_dir = SOUTH
+
+	if(!base_icon_dir)
+		base_icon_dir = curdir
 
 	var/curblend
 	if(A.blend_mode == BLEND_DEFAULT)
@@ -684,7 +693,7 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=base_icon_dir)
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend
@@ -734,10 +743,17 @@ The _flatIcons list is a cache for generated icon files.
 
 	var/icon/add // Icon of overlay being added
 
-		// Current dimensions of flattened icon
-	var/{flatX1=1;flatX2=flat.Width();flatY1=1;flatY2=flat.Height()}
-		// Dimensions of overlay being added
-	var/{addX1;addX2;addY1;addY2}
+	// Current dimensions of flattened icon
+	var/flatX1 = 1
+	var/flatX2 = flat.Width()
+	var/flatY1 = 1
+	var/flatY2 = flat.Height()
+
+	// Dimensions of overlay being added
+	var/addX1
+	var/addX2
+	var/addY1
+	var/addY2
 
 	for(var/I in layers)
 
@@ -804,7 +820,7 @@ The _flatIcons list is a cache for generated icon files.
 			if(2)	I.pixel_x++
 			if(3)	I.pixel_y--
 			if(4)	I.pixel_y++
-		overlays += I//And finally add the overlay.
+		add_overlay(I)//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
@@ -814,6 +830,18 @@ The _flatIcons list is a cache for generated icon files.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 
+/proc/build_disappear_icon(atom/A)
+	var/icon/disappear_icon = new(getFlatIcon(A))
+	var/W = disappear_icon.Width()
+	var/H = disappear_icon.Height()
+	var/icon/T = icon('icons/effects/effects.dmi',"disappear")
+	if(W != world.icon_size || H != world.icon_size)
+		T.Scale(W, H)
+	T.BecomeAlphaMask()
+	disappear_icon.MapColors(rgb(45,45,45), rgb(70,70,70), rgb(30,30,30), rgb(0,0,0))
+	disappear_icon.AddAlphaMask(T)
+	return disappear_icon
+
 //For photo camera.
 /proc/build_composite_icon(atom/A)
 	var/icon/composite = icon(A.icon, A.icon_state, A.dir, 1)
@@ -822,17 +850,7 @@ The _flatIcons list is a cache for generated icon files.
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
 
-proc/adjust_brightness(color, value)
-	if (!color) return "#FFFFFF"
-	if (!value) return color
-
-	var/list/RGB = ReadRGB(color)
-	RGB[1] = Clamp(RGB[1]+value,0,255)
-	RGB[2] = Clamp(RGB[2]+value,0,255)
-	RGB[3] = Clamp(RGB[3]+value,0,255)
-	return rgb(RGB[1],RGB[2],RGB[3])
-
-proc/sort_atoms_by_layer(list/atoms)
+/proc/sort_atoms_by_layer(list/atoms)
 	// Comb sort icons based on levels
 	var/list/result = atoms.Copy()
 	var/gap = result.len
@@ -853,36 +871,30 @@ proc/sort_atoms_by_layer(list/atoms)
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs)
+/proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs, dummy_key, showDirs = cardinal)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = new(null, prefs.species)
+		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key, prefs?.species)
 
 		if(prefs)
 			prefs.copy_to(body)
+		var/datum/species/S = all_species[prefs.species]
+		if(S)
+			S.before_job_equip(body, J, TRUE)
 		if(J)
 			J.equip(body, TRUE)
+		if(S)
+			S.after_job_equip(body, J, TRUE)
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
-		body.dir = NORTH
-		var/icon/partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=NORTH)
-
-		body.dir = SOUTH
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=SOUTH)
-
-		body.dir = WEST
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=WEST)
-
-		body.dir = EAST
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=EAST)
-
-		qdel(body)
+		for(var/D in showDirs)
+			body.set_dir(D)
+			COMPILE_OVERLAYS(body)
+			var/icon/partial = getFlatIcon(body)
+			out_icon.Insert(partial,dir=D)
 
 		humanoid_icon_cache[icon_id] = out_icon
+		dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)
 		return out_icon
 	else
 		return humanoid_icon_cache[icon_id]

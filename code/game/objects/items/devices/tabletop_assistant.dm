@@ -18,7 +18,7 @@
 	item_state = "analyzer"
 	w_class = ITEM_SIZE_NORMAL
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 20
@@ -54,12 +54,12 @@
 	icon_state = "[icon_temp]_[interaction_mode]"
 
 /obj/item/device/tabletop_assistant/proc/update()
-	var/dat = "<CENTER><B>Tabletop Assistant</B></CENTER><BR><a href='?src=\ref[src];mode=1'>[mode]</a><HR>"
+	var/dat = "<a href='?src=\ref[src];mode=1'>[mode]</a><HR>"
 	switch(mode)
 		if(CARD_MODE)
 			dat += "<a href='?src=\ref[src];cardpickup=1'>Card Pick Up Count</a><BR>"
 			dat += "<a href='?src=\ref[src];cardremovecasino=1'>Remove \"Casino\" Cards</a><BR>"
-			dat += "<a href='?src=\ref[src];cardsort=1'>Sort Card Deck<BR></a>"
+			dat += "<a href='?src=\ref[src];cardsort=1'>Sort Card Deck</a><BR>"
 			dat += "<a href='?src=\ref[src];carddeductlost=1'>Lost Cards Deduction</a><BR>"
 			dat += "<a href='?src=\ref[src];cardtakecertain=1'>Take Certain Card</a><BR>"
 			if(interaction_mode == CARD_PICKUP_MODE)
@@ -93,14 +93,13 @@
 /obj/item/device/tabletop_assistant/interact(mob/user)
 	user.machine = src
 	update()
-	user << browse(entity_ja(data), "window=tabletop_assistant")
-	onclose(user, "tabletop_assistant")
+
+	var/datum/browser/popup = new(user, "tabletop_assistant", "Tabletop Assistant")
+	popup.set_content(data)
+	popup.open()
 
 /obj/item/device/tabletop_assistant/Topic(href, href_list)
 	..()
-
-	if(usr.stat)
-		return
 
 	if(usr.incapacitated())
 		return
@@ -194,6 +193,7 @@
 		var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 		P.info = result_log
 		P.name = "Dice Roll Log"
+		P.update_icon()
 		report_time = world.time + 100 // Ten seconds delay.
 	if(href_list["diceclearresult"])
 		result_log = ""
@@ -207,14 +207,13 @@
 		return
 	interact(user)
 
-/obj/item/device/tabletop_assistant/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/tabletop_assistant/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(user.stat)
+	if(!isobj(target))
 		return
-	if(!istype(O))
-		return
-	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	var/obj/O = target
+	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	switch(mode)
@@ -274,6 +273,7 @@
 						var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 						P.info = output_message
 						P.name = "Missing Cards Report"
+						P.update_icon()
 						report_time = world.time + 100 // 10 seconds delay.
 					if(CARD_PICK_MODE)
 						if(C.cards.len == 0)

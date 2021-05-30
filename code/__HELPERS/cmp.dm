@@ -29,15 +29,15 @@ var/cmp_field = "name"
 /proc/cmp_ckey_dsc(client/a, client/b)
 	return sorttext(a.ckey, b.ckey)
 
-/proc/cmp_subsystem_init(datum/subsystem/a, datum/subsystem/b)
+/proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return b.init_order - a.init_order
 
-/proc/cmp_subsystem_display(datum/subsystem/a, datum/subsystem/b)
+/proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	if(a.display_order == b.display_order)
 		return sorttext(b.name, a.name)
 	return a.display_order - b.display_order
 
-/proc/cmp_subsystem_priority(datum/subsystem/a, datum/subsystem/b)
+/proc/cmp_subsystem_priority(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return a.priority - b.priority
 
 /proc/cmp_timer(datum/timedevent/a, datum/timedevent/b)
@@ -51,3 +51,22 @@ var/cmp_field = "name"
 		. = B.failures - A.failures
 	if (!.)
 		. = B.qdels - A.qdels
+
+
+/proc/cmp_quirk_asc(datum/quirk/A, datum/quirk/B)
+	var/a_sign = num2sign(initial(A.value) * -1)
+	var/b_sign = num2sign(initial(B.value) * -1)
+
+	// Neutral traits go last.
+	if(a_sign == 0)
+		a_sign = 2
+	if(b_sign == 0)
+		b_sign = 2
+
+	var/a_name = initial(A.name)
+	var/b_name = initial(B.name)
+
+	if(a_sign != b_sign)
+		return a_sign - b_sign
+	else
+		return sorttext(b_name, a_name)

@@ -39,9 +39,9 @@
 	var/obj/machinery/atmospherics/node2 = NODE2
 	var/obj/machinery/atmospherics/node3 = NODE3
 
-	overlays.Cut()
-	overlays += icon_manager.get_atmos_icon("manifold", , pipe_color, "core" + icon_connect_type)
-	overlays += icon_manager.get_atmos_icon("manifold", , , "clamps" + icon_connect_type)
+	cut_overlays()
+	add_overlay(icon_manager.get_atmos_icon("manifold", , pipe_color, "core" + icon_connect_type))
+	add_overlay(icon_manager.get_atmos_icon("manifold", , , "clamps" + icon_connect_type))
 	underlays.Cut()
 
 	var/turf/T = get_turf(src)
@@ -120,6 +120,7 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = GAS_PIPE_HIDDEN_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply
 	name = "Air supply pipe manifold"
@@ -128,6 +129,7 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = GAS_PIPE_HIDDEN_SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/hidden/yellow
 	color = PIPE_COLOR_YELLOW

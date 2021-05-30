@@ -73,7 +73,7 @@ nanoui is used to open and update nano browser uis
   *
   * @return /nanoui new nanoui object
   */
-/datum/nanoui/New(nuser, nsrc_object, nui_key, ntemplate_filename, ntitle = 0, nwidth = 0, nheight = 0, var/atom/nref = null, var/datum/nanoui/master_ui = null, var/datum/topic_state/custom_state = null)
+/datum/nanoui/New(nuser, nsrc_object, nui_key, ntemplate_filename, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null, datum/nanoui/master_ui = null, datum/topic_state/custom_state = null)
 	user = nuser
 	src_object = nsrc_object
 	ui_key = nui_key
@@ -189,6 +189,7 @@ nanoui is used to open and update nano browser uis
 			"autoUpdateContent" = auto_update_content,
 			"showMap" = show_map,
 			"mapZLevel" = map_z_level,
+			"mapName" = SSmapping.station_image,
 			"user" = list("name" = user.name)
 		)
 	return config_data
@@ -207,6 +208,8 @@ nanoui is used to open and update nano browser uis
 
 	if (!isnull(data))
 		send_data["data"] = data
+	else
+		send_data["data"] = list() // in case if it's null and we're sending cached_data(I guess it can't happen but it's better to be sure anyway)
 
 	return send_data
 
@@ -350,22 +353,29 @@ nanoui is used to open and update nano browser uis
 
 	var/template_data_json = "{}" // An empty JSON object
 	if (templates.len > 0)
-		template_data_json = list2json(templates)
+		template_data_json = replacetext(json_encode(templates), "'", "`")
 
 	var/list/send_data = get_send_data(initial_data)
-	var/initial_data_json = list2json(send_data, cached_data)
+	var/initial_data_json = json_encode(send_data)
 
-	var/url_parameters_json = list2json(list("src" = "\ref[src]"))
+	if(cached_data)
+		initial_data_json = copytext(initial_data_json, 1, -2) + ",\"cached\":[cached_data]}}"
+
+	initial_data_json = replacetext(initial_data_json, "'", "`")
+
+	var/url_parameters_json = json_encode(list("src" = "\ref[src]"))
 
 	return {"
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<script type="text/javascript" src="error_handler.js"></script>
 		<script type='text/javascript'>
+			var triggerError = attachErrorHandler('nanoui', true);
+
 			function receiveUpdateData(jsonString)
 			{
-				jsonString = jsonString.replace(/¶/g, "&#1103;");//fx fo ja
 				// We need both jQuery and NanoStateManager to be able to recieve data
 				// At the moment any data received before those libraries are loaded will be lost
 				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')
@@ -435,7 +445,7 @@ nanoui is used to open and update nano browser uis
 	winset(user, window_id, "on-close=\"nanoclose [params]\"")
 
 /**
- * Appends already processed json txt to the list2json proc when setting initial-data and data pushes
+ * Appends already processed json txt to the json_encode proc when setting initial-data and data pushes
  * Used for data that is fucking huge like manifests and camera lists that doesn't change often.
  * And we only want to process them when they change.
  * Fuck javascript
@@ -459,8 +469,13 @@ nanoui is used to open and update nano browser uis
 
 	var/list/send_data = get_send_data(data)
 
-	//user << list2json(data) // used for debugging
-	user << output(list2params(list(list2json(send_data,cached_data))),"[window_id].browser:receiveUpdateData")
+	//user << json_encode(data) // used for debugging
+
+	var/send_json = json_encode(send_data)
+	if(cached_data)
+		send_json = copytext(send_json, 1, -2) + ",\"cached\":[cached_data]}}"
+
+	user << output(list2params(list(replacetext(send_json, "'", "`"))),"[window_id].browser:receiveUpdateData")
 
  /**
   * This Topic() proc is called whenever a user clicks on a link within a Nano UI

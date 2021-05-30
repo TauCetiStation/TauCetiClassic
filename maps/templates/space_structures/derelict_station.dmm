@@ -1,0 +1,12562 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"ac" = (
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ad" = (
+/turf/simulated/floor/airless,
+/area/space)
+"ae" = (
+/turf/simulated/wall/r_wall,
+/area/space)
+"af" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"ag" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/solar_control)
+"ah" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Turbine Maintenance";
+	req_access = list(10)
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"ai" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/solar_control)
+"aj" = (
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"ak" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"al" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"am" = (
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"an" = (
+/obj/machinery/door/airlock/external{
+	name = "Air Bridge Access"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"ao" = (
+/obj/machinery/door/airlock/external{
+	name = "External Engineering"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"ap" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aq" = (
+/turf/simulated/wall,
+/area/space)
+"ar" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"as" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar{
+	id = "derelictsolar";
+	name = "Derelict Solar Array"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/solar/starboard)
+"at" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"au" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar{
+	id = "derelictsolar";
+	name = "Derelict Solar Array"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/solar/starboard)
+"av" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Starboard Solar APC";
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aw" = (
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"ax" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar_control{
+	id = "derelictsolar";
+	name = "Primary Solar Control"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"ay" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"az" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"aA" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aB" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aC" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aD" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aE" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aF" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/machinery/computer/monitor{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aG" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"aH" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/window/eastleft,
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aI" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aJ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"aL" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aM" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aN" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aO" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aP" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"aQ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Engineering"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"aR" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aS" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aT" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aU" = (
+/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aV" = (
+/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aW" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"aX" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
+"aY" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/bridge/access)
+"aZ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall,
+/area/space_structures/derelict/bridge/access)
+"ba" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Starboard Solar Access";
+	req_access = list(10)
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bb" = (
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bc" = (
+/obj/structure/rack,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bd" = (
+/obj/structure/rack,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"be" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bf" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bg" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bh" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bi" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall,
+/area/space_structures/derelict/bridge/access)
+"bj" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bk" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/starboard)
+"bl" = (
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"bm" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bn" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"bo" = (
+/obj/structure/grille,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"bp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"bq" = (
+/obj/machinery/door/airlock/command{
+	name = "E.V.A.";
+	req_access = list(18)
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"br" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bs" = (
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"bt" = (
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/space)
+"bu" = (
+/obj/item/stack/cable_coil/cut/red,
+/turf/space,
+/area/space)
+"bv" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bw" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"bx" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"by" = (
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bz" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/singularity_engine)
+"bA" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bB" = (
+/obj/machinery/door/window,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bC" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bD" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/bridge)
+"bE" = (
+/obj/structure/sign/warning/electricshock,
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/singularity_engine)
+"bF" = (
+/obj/structure/sign/warning/securearea,
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/singularity_engine)
+"bG" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access = list(10)
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"bH" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access = list(10)
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space_structures/derelict/singularity_engine)
+"bI" = (
+/obj/structure/sign/warning/securearea{
+	name = "ENGINEERING ACCESS"
+	},
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/singularity_engine)
+"bJ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"bK" = (
+/obj/structure/computerframe,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bL" = (
+/obj/structure/computerframe,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bM" = (
+/obj/structure/table,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bN" = (
+/obj/machinery/computer/security,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bO" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil/red{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bP" = (
+/obj/structure/table,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bQ" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bR" = (
+/obj/item/weapon/grenade/empgrenade,
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bS" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"bT" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/singularity_engine)
+"bU" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space_structures/derelict/singularity_engine)
+"bV" = (
+/obj/item/stack/cable_coil/cut/red,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"bW" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"bX" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/singularity_engine)
+"bY" = (
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"bZ" = (
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"ca" = (
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge)
+"cb" = (
+/obj/structure/table,
+/obj/item/weapon/paper/crumpled,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cc" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cd" = (
+/obj/structure/window/reinforced,
+/obj/machinery/portable_atmospherics/canister/phoron,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"ce" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cf" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cg" = (
+/obj/structure/window/reinforced,
+/obj/item/weapon/table_parts/reinforced,
+/obj/item/weapon/table_parts/reinforced,
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/singularity_engine)
+"ch" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"ci" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cj" = (
+/obj/machinery/power/emitter{
+	dir = 1;
+	icon_state = "emitter"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"ck" = (
+/obj/machinery/field_generator,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cl" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"cm" = (
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"cn" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"co" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"cp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cs" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cu" = (
+/obj/machinery/door/window/eastleft{
+	name = "Heads of Staff";
+	req_access = list(19)
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"cv" = (
+/obj/structure/table,
+/obj/item/device/paicard,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cw" = (
+/obj/structure/stool,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cx" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cy" = (
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"cB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"cC" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"cE" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cF" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cG" = (
+/obj/item/weapon/paper{
+	info = "<b>Objective #1</b>: Destroy the station with a nuclear device.";
+	name = "Objectives of a Nuclear Operative"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cH" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"cI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cJ" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cK" = (
+/obj/structure/table,
+/obj/item/weapon/screwdriver,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cL" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cM" = (
+/obj/item/stack/rods,
+/turf/space,
+/area/space)
+"cN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cO" = (
+/obj/item/weapon/shard,
+/obj/structure/grille{
+	destroyed = 1
+	},
+/obj/effect/decal/remains/human{
+	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
+	name = "Syndicate agent remains"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cP" = (
+/obj/item/clothing/suit/space/syndicate,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cQ" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cR" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space_structures/derelict/singularity_engine)
+"cS" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cV" = (
+/obj/structure/table,
+/obj/item/weapon/rack_parts,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cW" = (
+/obj/structure/table,
+/obj/structure/window/basic,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cX" = (
+/obj/structure/window/basic,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cY" = (
+/obj/structure/table,
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"cZ" = (
+/obj/structure/table,
+/obj/machinery/light/small,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"da" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"db" = (
+/obj/item/clothing/head/helmet/swat,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dc" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dd" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"de" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"df" = (
+/obj/machinery/door/window,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge/access)
+"dg" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/bridge)
+"dh" = (
+/obj/machinery/door/window{
+	name = "Captain's Quarters";
+	req_access = list(20)
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/bridge)
+"di" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dj" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dk" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dl" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dm" = (
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dn" = (
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"do" = (
+/obj/structure/table,
+/obj/item/device/aicard,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dp" = (
+/obj/structure/table,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dq" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil/red{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dr" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell{
+	charge = 100;
+	maxcharge = 15000
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"ds" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dt" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"du" = (
+/turf/simulated/floor/airless{
+	icon_state = "circuit"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dv" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dw" = (
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dx" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dy" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/bridge/access)
+"dz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dA" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dB" = (
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dC" = (
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dE" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dF" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/airless{
+	icon_state = "circuit"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dH" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/bridge/access)
+"dI" = (
+/obj/structure/table,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dJ" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dK" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dL" = (
+/obj/structure/grille,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dN" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Tech Storage";
+	req_access = list(23)
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dO" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/bridge/access)
+"dP" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/access)
+"dQ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dR" = (
+/obj/item/weapon/screwdriver,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dS" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dT" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"dU" = (
+/obj/structure/table,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"dV" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/hallway/primary)
+"dW" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/hallway/primary)
+"dX" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/hallway/primary)
+"dY" = (
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"dZ" = (
+/obj/item/weapon/table_parts/reinforced,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"ea" = (
+/obj/item/weapon/ore/slag,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"eb" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"ec" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"ed" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/hallway/primary)
+"ee" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"ef" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/hallway/primary)
+"eg" = (
+/obj/structure/window/basic{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"eh" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"ei" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"ej" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"ek" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"el" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"em" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/hallway/primary)
+"en" = (
+/turf/simulated/floor/airless{
+	icon_state = "floorscorched2"
+	},
+/area/space_structures/derelict/hallway/primary)
+"eo" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"ep" = (
+/obj/structure/grille,
+/obj/structure/window/basic{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"eq" = (
+/turf/simulated/floor/airless{
+	icon_state = "floorscorched2"
+	},
+/area/space)
+"er" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space)
+"es" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"et" = (
+/obj/machinery/door/window,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"eu" = (
+/turf/simulated/floor/airless{
+	icon_state = "floorscorched1"
+	},
+/area/space)
+"ev" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"ew" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"ex" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/singularity_engine)
+"ey" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"ez" = (
+/obj/item/weapon/crowbar,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"eA" = (
+/obj/structure/grille,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"eB" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space)
+"eC" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"eD" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"eE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"eF" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"eG" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/arrival)
+"eH" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/arrival)
+"eI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"eJ" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/hallway/primary)
+"eK" = (
+/obj/structure/window/basic{
+	dir = 5
+	},
+/turf/space,
+/area/space)
+"eL" = (
+/obj/structure/table,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"eM" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"eN" = (
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"eO" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"eP" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"eQ" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/medical/chapel)
+"eR" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/space)
+"eS" = (
+/obj/structure/grille,
+/turf/space,
+/area/space_structures/derelict/singularity_engine)
+"eT" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/singularity_engine)
+"eU" = (
+/obj/structure/lattice,
+/obj/structure/window/basic,
+/turf/space,
+/area/space)
+"eV" = (
+/turf/simulated/floor/airless{
+	icon_state = "floorscorched2"
+	},
+/area/space_structures/derelict/arrival)
+"eW" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/arrival)
+"eX" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/arrival)
+"eY" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"eZ" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fa" = (
+/obj/structure/closet/coffin,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fb" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/medical)
+"fc" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"fd" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"fe" = (
+/obj/item/weapon/shard,
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"ff" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"fg" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"fh" = (
+/obj/machinery/door/airlock/external{
+	name = "External Engineering"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"fi" = (
+/obj/structure/grille,
+/turf/space,
+/area/space)
+"fj" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/hallway/primary)
+"fk" = (
+/obj/machinery/door/window{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"fl" = (
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"fm" = (
+/obj/item/weapon/firstaid_arm_assembly,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"fn" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/medical)
+"fo" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/medical)
+"fp" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"fq" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/singularity_engine)
+"fs" = (
+/obj/structure/window/basic{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"ft" = (
+/obj/structure/lattice,
+/obj/structure/window/basic{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"fu" = (
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"fv" = (
+/obj/machinery/door/airlock/medical{
+	name = "Morgue";
+	req_access = list(6)
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fw" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"fx" = (
+/obj/item/stack/medical/bruise_pack,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"fy" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space)
+"fz" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"fA" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"fB" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fC" = (
+/obj/item/weapon/storage/box/lights/mixed,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"fD" = (
+/obj/item/weapon/disk/data/demo,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"fE" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space)
+"fF" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"fG" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"fH" = (
+/obj/machinery/door/morgue{
+	name = "coffin storage";
+	req_access = list(22)
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fI" = (
+/obj/structure/morgue,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fJ" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"fK" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"fL" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space)
+"fM" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/hallway/primary)
+"fN" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"fO" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"fP" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fQ" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fR" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fS" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"fT" = (
+/obj/item/stack/medical/bruise_pack,
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/medical)
+"fU" = (
+/obj/item/stack/medical/ointment,
+/turf/simulated/floor/airless{
+	icon_state = "damaged3"
+	},
+/area/space_structures/derelict/medical)
+"fV" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"fW" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"fX" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/space,
+/area/space)
+"fY" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"fZ" = (
+/turf/simulated/floor{
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"ga" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"gb" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gc" = (
+/obj/item/weapon/cigbutt,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gd" = (
+/obj/machinery/door/airlock/glass{
+	name = "Med-Sci";
+	req_access = list(9)
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/medical)
+"gf" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"gg" = (
+/obj/structure/window/reinforced,
+/turf/space,
+/area/space)
+"gh" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/space,
+/area/space)
+"gi" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"gj" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"gk" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"gl" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/wall,
+/area/space_structures/derelict/medical/chapel)
+"gm" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall,
+/area/space_structures/derelict/medical/chapel)
+"gn" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"go" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gq" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gr" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gs" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/medical)
+"gt" = (
+/obj/structure/closet/wardrobe/genetics_white,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gu" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"gv" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"gw" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"gx" = (
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space)
+"gy" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"gz" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"gA" = (
+/obj/item/weapon/pen,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"gB" = (
+/obj/machinery/door/poddoor{
+	id = "derelict_gun";
+	name = "Derelict Mass Driver"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/medical/chapel)
+"gC" = (
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/medical/chapel)
+"gD" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "derelict_gun"
+	},
+/obj/machinery/door/window{
+	dir = 4;
+	req_access = list(25)
+	},
+/obj/structure/closet/coffin,
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/medical/chapel)
+"gE" = (
+/obj/machinery/door/window{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/medical/chapel)
+"gF" = (
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/medical/chapel)
+"gG" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/medical/chapel)
+"gH" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Worn-out APC";
+	pixel_x = 24
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/medical/chapel)
+"gI" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gJ" = (
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/obj/structure/cable,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gK" = (
+/obj/item/stack/medical/ointment,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gL" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gM" = (
+/obj/structure/closet/l3closet/general,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"gN" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"gO" = (
+/obj/structure/window/basic,
+/turf/space,
+/area/space)
+"gP" = (
+/obj/structure/window/basic{
+	dir = 8
+	},
+/turf/space,
+/area/space)
+"gQ" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"gR" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"gS" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"gT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"gU" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"gV" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"gW" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"gX" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"gY" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"gZ" = (
+/obj/machinery/door/window,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/medical/chapel)
+"ha" = (
+/obj/machinery/door/window/southleft,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"hb" = (
+/obj/machinery/door/window/southright,
+/turf/simulated/floor/airless{
+	icon_state = "white"
+	},
+/area/space_structures/derelict/medical)
+"hc" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hd" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"he" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/hallway/primary)
+"hf" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research{
+	name = "Toxins Research";
+	req_access = list(7)
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hg" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"hh" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"hi" = (
+/obj/structure/window/basic{
+	dir = 8
+	},
+/obj/structure/window/basic,
+/turf/space,
+/area/space)
+"hj" = (
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/space,
+/area/space)
+"hk" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"hl" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hm" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"hn" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"ho" = (
+/obj/structure/window/basic{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"hp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"hq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"hr" = (
+/obj/structure/window/basic,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"hs" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research{
+	name = "Toxins Research";
+	req_access = list(7)
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/arrival)
+"ht" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"hu" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"hv" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"hw" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"hx" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hy" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hz" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hA" = (
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hB" = (
+/obj/structure/window/basic{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"hC" = (
+/obj/structure/window/basic{
+	dir = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"hD" = (
+/obj/structure/grille,
+/obj/structure/window/basic{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"hE" = (
+/obj/structure/window/basic{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"hF" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"hG" = (
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"hH" = (
+/obj/structure/table,
+/obj/machinery/computer/pod/old{
+	id = "derelict_gun";
+	name = "ProComp IIe";
+	pixel_y = 7
+	},
+/turf/simulated/floor{
+	icon_state = "chapel"
+	},
+/area/space_structures/derelict/medical/chapel)
+"hI" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hJ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hK" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hL" = (
+/obj/structure/girder,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hM" = (
+/obj/machinery/portable_atmospherics/powered/pump,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"hN" = (
+/obj/machinery/door/window,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hO" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hP" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hQ" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hR" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/hallway/primary)
+"hS" = (
+/obj/machinery/door/airlock/security{
+	name = "Gas Storage";
+	req_access = list(3)
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"hT" = (
+/obj/structure/lattice,
+/obj/structure/window/basic{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"hU" = (
+/obj/structure/girder,
+/obj/structure/window/basic,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/arrival)
+"hV" = (
+/obj/structure/stool/bed,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"hW" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"hX" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"hY" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"hZ" = (
+/obj/machinery/door/airlock/security{
+	name = "Security";
+	req_access = list(1)
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"ia" = (
+/obj/item/weapon/cigbutt,
+/turf/space,
+/area/space)
+"ib" = (
+/obj/structure/window/basic{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"ic" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"id" = (
+/obj/structure/table,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"ie" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"if" = (
+/obj/machinery/vending/sovietsoda,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"ig" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	name = "Worn-out APC";
+	pixel_y = -24
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"ih" = (
+/obj/structure/table,
+/turf/simulated/floor/airless,
+/area/space)
+"ii" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"ij" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"ik" = (
+/obj/structure/lattice,
+/obj/item/stack/cable_coil/cut/red,
+/turf/space,
+/area/space)
+"il" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"im" = (
+/obj/structure/stool,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"in" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Atmospherics Access";
+	req_access = list(24)
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"io" = (
+/obj/structure/closet/wardrobe/orange,
+/turf/simulated/floor/airless,
+/area/space)
+"ip" = (
+/obj/structure/window/basic{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"iq" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"ir" = (
+/obj/structure/closet/wardrobe,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"is" = (
+/turf/simulated/floor/airless{
+	icon_state = "floorscorched1"
+	},
+/area/space_structures/derelict/hallway/primary)
+"it" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/airless,
+/area/space)
+"iu" = (
+/obj/structure/window/reinforced,
+/turf/simulated/floor/airless,
+/area/space)
+"iv" = (
+/obj/structure/grille,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iw" = (
+/obj/structure/stool/bed,
+/turf/simulated/floor/airless,
+/area/space)
+"ix" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"iy" = (
+/turf/simulated/floor/airless{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/derelict/hallway/primary)
+"iz" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged5"
+	},
+/area/space_structures/derelict/hallway/primary)
+"iA" = (
+/obj/structure/table,
+/obj/item/device/healthanalyzer,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/primary)
+"iB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iC" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"iD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"iF" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"iG" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iH" = (
+/turf/simulated/wall,
+/area/space_structures/derelict/hallway/secondary)
+"iI" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"iJ" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/hallway/secondary)
+"iK" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iL" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iM" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/space)
+"iN" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/hallway/secondary)
+"iO" = (
+/obj/structure/window/basic{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"iP" = (
+/obj/structure/grille,
+/obj/item/weapon/shard,
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iQ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 60
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iR" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"iS" = (
+/obj/item/stack/rods,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"iT" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/space,
+/area/space)
+"iU" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/weapon/wirecutters,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"iV" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"iW" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"iX" = (
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"iY" = (
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"iZ" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"ja" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Aux Storage";
+	req_access = list(23)
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jb" = (
+/obj/structure/falsewall,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jc" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jd" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"je" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jf" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jg" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict9"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jh" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "derelict10"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"ji" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict11"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jj" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict12"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jk" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict13"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jl" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict14"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jm" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict15"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jn" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "derelict16"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jo" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jp" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jq" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jr" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict1"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"js" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict2"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jt" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict3"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"ju" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict4"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jv" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict5"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jw" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict6"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jx" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict7"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jy" = (
+/turf/simulated/floor/airless{
+	icon_state = "derelict8"
+	},
+/area/space_structures/derelict/hallway/secondary)
+"jz" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space_structures/derelict/hallway/secondary)
+"jA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jC" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jD" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/bridge/ai_upload)
+"jE" = (
+/obj/machinery/door/airlock/command{
+	name = "AI Upload";
+	req_access = list(16)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jF" = (
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jG" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jH" = (
+/obj/structure/window/basic{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jI" = (
+/obj/structure/window/basic{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jK" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jL" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jM" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/bridge/ai_upload)
+"jN" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/bridge/ai_upload)
+"jO" = (
+/obj/machinery/door/airlock/command{
+	name = "AI Upload";
+	req_access = list(16)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jP" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jQ" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jR" = (
+/obj/machinery/power/smes,
+/obj/structure/cable,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jS" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jT" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict/bridge/ai_upload)
+"jU" = (
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jV" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jW" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jX" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/machinery/power/solar_control{
+	id = "derelictsolar";
+	name = "Primary Solar Control"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jY" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"jZ" = (
+/obj/item/weapon/paper{
+	desc = "";
+	info = "The Syndicate have cunningly disguised a Syndicate Uplink as your PDA. Simply enter the code \"678 Bravo\" into the ringtone select to unlock its hidden features. <br><br><b>Objective #1</b>. Kill the God damn AI in a fire blast that it rocks the station. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>";
+	name = "Mission Objectives"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "damaged2"
+	},
+/area/space_structures/derelict/bridge/ai_upload)
+"ka" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/clothing/head/helmet/space/syndicate,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"kb" = (
+/obj/item/stack/rods,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"kc" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right"
+	},
+/turf/simulated/floor/airless,
+/area/space)
+"kd" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"ke" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"kf" = (
+/obj/item/clothing/suit/space/syndicate,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"kg" = (
+/obj/effect/decal/remains/human{
+	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
+	name = "Syndicate agent remains"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+"kh" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/r_wall,
+/area/space_structures/derelict/bridge/ai_upload)
+"ki" = (
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"kj" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"kk" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar{
+	id = "derelictsolar";
+	name = "Derelict Solar Array"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/solar/aft)
+"kl" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"km" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar{
+	id = "derelictsolar";
+	name = "Derelict Solar Array"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"kn" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"ko" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"kp" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"kq" = (
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"kr" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"ks" = (
+/obj/structure/cable,
+/obj/machinery/power/solar{
+	id = "derelictsolar";
+	name = "Derelict Solar Array"
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/solar/aft)
+"kt" = (
+/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"ku" = (
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/solar/aft)
+"kv" = (
+/obj/structure/table,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor,
+/area/space_structures/derelict/bridge)
+"kw" = (
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/airless,
+/area/space_structures/derelict/bridge/ai_upload)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+gg
+gB
+gU
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+fO
+fO
+gh
+gC
+gV
+fO
+fO
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eQ
+eQ
+eQ
+eQ
+eQ
+fP
+fY
+gi
+gC
+gW
+fY
+fP
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+fa
+fa
+eQ
+fQ
+fZ
+gj
+gC
+gX
+fZ
+fQ
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eY
+fa
+eQ
+fR
+ga
+gk
+gC
+gY
+ga
+fR
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eY
+eY
+eQ
+fQ
+fZ
+gj
+gD
+gX
+fZ
+hw
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eY
+fB
+eQ
+fR
+ga
+fR
+ga
+fR
+ga
+fR
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eY
+eY
+eQ
+fQ
+hH
+fQ
+fZ
+fQ
+fZ
+fQ
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eY
+eY
+eQ
+fR
+ga
+fR
+ga
+fR
+ga
+fR
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eY
+eY
+fH
+fQ
+fZ
+fQ
+fZ
+fQ
+fZ
+fQ
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eQ
+eQ
+eQ
+eQ
+eQ
+eQ
+gE
+eQ
+eQ
+eQ
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eQ
+eY
+fI
+fI
+eY
+eQ
+gF
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eZ
+eY
+eQ
+eY
+eY
+eY
+eY
+eQ
+gF
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+eQ
+eZ
+fI
+fI
+eY
+eQ
+gF
+eQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+fa
+eY
+eQ
+eY
+eY
+eY
+eY
+eQ
+gG
+eQ
+dV
+dV
+dV
+dV
+dV
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eY
+eY
+fv
+eY
+fI
+fI
+eY
+eQ
+gF
+eQ
+dY
+dY
+dY
+dY
+dY
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+fa
+eY
+eQ
+eY
+eY
+eY
+eY
+gl
+gH
+gZ
+dY
+dY
+dY
+dY
+dY
+dY
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eQ
+eQ
+eQ
+eQ
+fv
+eQ
+fv
+eQ
+gm
+eQ
+eQ
+dY
+dY
+dY
+dV
+dV
+dV
+dV
+ey
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+fb
+fl
+fw
+fl
+fl
+fl
+fl
+gn
+gI
+dV
+dY
+dY
+dY
+dV
+hV
+id
+dV
+ey
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+fc
+fl
+fl
+fl
+fl
+fl
+fl
+go
+fl
+dV
+dY
+dY
+dY
+dV
+hl
+dY
+dV
+ey
+ey
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+fc
+fl
+fl
+fl
+fl
+fl
+fl
+go
+fl
+dV
+hl
+dY
+dY
+dY
+dY
+ie
+dV
+ey
+ey
+ey
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+fc
+fm
+fl
+fl
+fl
+fl
+fl
+go
+fl
+dV
+dY
+dY
+dY
+dV
+dV
+dV
+dV
+dY
+is
+ey
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+bz
+bz
+bz
+ab
+ab
+aa
+aa
+aa
+aa
+fb
+fl
+fl
+fl
+fl
+fl
+fl
+gq
+gJ
+dV
+dY
+dY
+dY
+dV
+hV
+id
+dV
+is
+iy
+ey
+ey
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+ab
+aa
+aa
+aa
+fd
+fn
+fx
+fl
+fJ
+fS
+gb
+gr
+gb
+dV
+dY
+dY
+dY
+dV
+hl
+dY
+dV
+ey
+dY
+is
+ey
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bz
+bz
+dI
+ci
+dZ
+bz
+bz
+ab
+ab
+aa
+aa
+fe
+fo
+fn
+fn
+fl
+fl
+fl
+go
+gK
+dV
+dY
+dY
+dY
+hN
+dY
+id
+dV
+is
+iz
+dY
+ey
+ey
+dV
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aq
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bz
+bz
+cs
+bS
+bU
+cs
+cs
+bz
+bz
+ab
+aa
+eR
+ff
+ff
+fo
+fo
+fn
+fT
+gc
+go
+fl
+dV
+dV
+dV
+hI
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dY
+dV
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+iH
+je
+je
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+dB
+dv
+dQ
+dQ
+eh
+bz
+bz
+bz
+aa
+aa
+fg
+ff
+ff
+ff
+fo
+fn
+fl
+go
+fl
+dV
+dY
+hx
+dY
+dY
+hW
+if
+dY
+dY
+hx
+dY
+dY
+dY
+dV
+ey
+aa
+ey
+ey
+ab
+ey
+aa
+aa
+iI
+iY
+je
+jz
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+dC
+cU
+dl
+dl
+cq
+bz
+bz
+bz
+bX
+bW
+fb
+fp
+ff
+ff
+ff
+fU
+fn
+go
+fb
+dV
+dY
+dY
+dY
+dY
+hW
+dY
+dY
+im
+dY
+dY
+dY
+dY
+dV
+ey
+ey
+iX
+ey
+dV
+ey
+ab
+ey
+iH
+iY
+je
+jA
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+bz
+bz
+cd
+cp
+bW
+cs
+bS
+cs
+cs
+cs
+cs
+cs
+bT
+cs
+bS
+cs
+bS
+bU
+bW
+bW
+fh
+ab
+ff
+ff
+ff
+fo
+fn
+gs
+gL
+ha
+gy
+gy
+gy
+hO
+hW
+dY
+dY
+id
+iA
+id
+im
+dY
+dV
+fj
+ef
+ey
+ey
+ey
+ey
+ey
+ey
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ab
+bz
+bz
+ce
+cp
+cs
+bT
+bU
+bS
+cs
+cs
+cs
+bT
+bT
+bU
+bT
+cs
+ev
+bT
+bX
+eS
+ab
+ab
+ff
+ff
+ff
+ff
+fo
+fo
+fl
+hb
+dY
+dY
+dY
+hd
+hX
+dY
+im
+id
+id
+id
+im
+dY
+dV
+dX
+ey
+dX
+dY
+dV
+dX
+ey
+ey
+iH
+jf
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+bt
+bz
+bz
+bS
+cf
+cp
+cs
+bU
+bS
+cN
+di
+di
+dD
+cs
+bT
+cQ
+ei
+di
+ew
+eC
+ab
+ab
+fi
+ab
+ab
+aa
+aa
+ff
+ff
+fo
+fb
+dV
+dY
+dY
+dY
+hd
+hN
+dY
+dY
+im
+dY
+dY
+dY
+dY
+dY
+dY
+dY
+ey
+dY
+dV
+ef
+ey
+ef
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+bz
+bz
+bT
+cg
+cp
+cs
+bS
+cN
+da
+dj
+da
+dE
+bW
+bU
+ea
+ec
+bW
+bW
+bW
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+fV
+ff
+fo
+fb
+dV
+dY
+gz
+dY
+hd
+hY
+dY
+dY
+dY
+gz
+dY
+dY
+dY
+dV
+iz
+dY
+dY
+ef
+dV
+dY
+dX
+dY
+ja
+iY
+iY
+iH
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+bz
+bE
+bU
+cf
+cq
+cs
+cG
+cO
+db
+bT
+bT
+bW
+bW
+bW
+bW
+bW
+bW
+bS
+bW
+ew
+bW
+cs
+bz
+bz
+ab
+ab
+fb
+gd
+fb
+fb
+dV
+dV
+dV
+dV
+hP
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+iR
+dV
+dV
+ey
+dV
+dV
+dV
+dV
+dV
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+bt
+bz
+bz
+bV
+bS
+bW
+bT
+bS
+cP
+dc
+bW
+bW
+dF
+du
+du
+du
+du
+bS
+bU
+bS
+cS
+eT
+cs
+bz
+bz
+bz
+ab
+fb
+ff
+gt
+fb
+dV
+dY
+hx
+dY
+hd
+hx
+dY
+dV
+ad
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+aq
+aa
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ac
+ac
+ac
+bF
+bS
+ch
+cr
+bS
+bU
+cQ
+bW
+bW
+du
+aa
+aa
+aa
+aa
+aa
+du
+bW
+eD
+dl
+cs
+bS
+cs
+bz
+bz
+bz
+fb
+gd
+fb
+fb
+dV
+dY
+dY
+dY
+hd
+dY
+dY
+dV
+ac
+ac
+ac
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+ac
+aq
+aa
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+ab
+ab
+ab
+ac
+ac
+bs
+bz
+bH
+bG
+bz
+cy
+bS
+bW
+bW
+bW
+du
+aa
+aa
+aa
+aa
+aa
+du
+bW
+bS
+cs
+bS
+bT
+fq
+bz
+fC
+bz
+fb
+ac
+eB
+gM
+dV
+dY
+dY
+dY
+hQ
+gy
+ig
+dV
+ac
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+ac
+aq
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+ac
+ac
+ac
+bG
+bW
+bW
+bX
+cs
+bW
+cR
+bW
+bW
+du
+aa
+aa
+aa
+aa
+aa
+du
+bW
+bT
+cs
+bS
+bT
+bU
+bW
+bW
+bz
+fW
+ac
+ac
+gx
+dV
+dY
+dY
+dY
+hd
+dY
+dY
+dV
+ac
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+iH
+jg
+jr
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+bs
+ac
+ac
+bH
+bW
+bW
+bX
+bW
+bW
+bW
+bW
+bW
+du
+aa
+aa
+aa
+aa
+aa
+du
+bT
+bU
+cs
+dS
+bT
+bS
+bz
+bW
+bz
+fW
+ac
+ac
+eB
+dV
+dY
+dY
+dY
+hd
+dY
+dY
+dV
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+iH
+jh
+js
+iH
+aq
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ac
+ac
+bI
+bX
+bX
+bz
+cs
+cs
+bW
+bW
+bW
+du
+aa
+aa
+aa
+aa
+aa
+du
+bS
+cf
+eI
+cs
+bS
+cs
+bz
+bz
+bz
+ab
+ac
+ac
+er
+dV
+dV
+dV
+dY
+hd
+dY
+dY
+dV
+ab
+aa
+aa
+aa
+aa
+aa
+ab
+ac
+aa
+aa
+aa
+aa
+ab
+ab
+iH
+ji
+jt
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+ab
+bt
+bz
+bz
+bW
+ci
+bW
+cs
+bS
+cS
+dd
+bW
+bW
+du
+du
+du
+du
+du
+bW
+bW
+ch
+cp
+cs
+cs
+bz
+bz
+bz
+ab
+aa
+aa
+gu
+gN
+dV
+dV
+dV
+dY
+hd
+dY
+dY
+dV
+ab
+ab
+ab
+aa
+aa
+aa
+ac
+ac
+ab
+aa
+ab
+ab
+ab
+ab
+jb
+jj
+ju
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+bz
+bz
+bS
+bS
+cs
+bS
+bS
+cT
+dd
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+bW
+cf
+cp
+bS
+cs
+bz
+bz
+ab
+ab
+ab
+ab
+gv
+ac
+er
+dV
+dV
+hl
+hd
+dY
+dY
+dV
+aq
+ab
+ab
+ab
+ab
+ab
+ac
+bs
+ac
+ab
+ab
+aa
+aa
+aa
+iH
+jk
+jv
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+bz
+bz
+bU
+bS
+bU
+bT
+bS
+cU
+de
+dk
+dv
+dv
+dJ
+dR
+bW
+bW
+bW
+ex
+eD
+cq
+bT
+bS
+bz
+bz
+ab
+aa
+aa
+ab
+ac
+er
+gx
+dV
+dV
+dY
+hd
+dY
+dY
+in
+ac
+ac
+aa
+aa
+aa
+aa
+ab
+ac
+ac
+aa
+ab
+aa
+aa
+aa
+iH
+jl
+jw
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+bt
+bz
+bz
+bS
+bS
+cs
+bT
+bS
+cs
+cU
+dl
+dl
+cq
+bW
+bW
+eb
+ej
+es
+es
+eE
+bS
+bU
+bT
+bz
+bz
+ab
+aa
+fX
+ab
+ac
+ac
+gx
+dV
+dY
+hJ
+hK
+dY
+dY
+dV
+ac
+ac
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+iH
+jm
+jx
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ae
+ab
+bz
+bz
+cj
+cs
+cs
+bU
+bT
+bS
+cs
+bW
+bW
+cs
+cs
+bW
+cs
+bT
+bU
+bT
+bS
+cs
+bz
+bz
+ab
+aa
+fK
+aa
+ab
+ac
+ac
+gx
+dV
+dY
+hd
+dY
+ed
+ed
+ed
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+iH
+jn
+jy
+iH
+co
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bz
+bz
+ck
+bW
+cs
+bS
+bU
+bT
+dm
+cs
+cs
+dK
+dS
+cs
+cs
+bT
+cs
+bT
+cs
+cs
+bz
+bz
+aa
+aa
+fK
+aa
+aa
+gw
+eB
+er
+dV
+dY
+hd
+dY
+ed
+ad
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+iH
+iY
+iY
+jB
+co
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(46,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+bz
+bS
+dL
+dT
+bS
+cS
+bz
+bz
+bz
+bz
+bz
+bz
+ab
+ac
+fD
+fL
+ac
+ac
+gx
+gx
+ac
+dV
+dY
+hd
+dY
+ed
+ad
+ac
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+iH
+iY
+iY
+jB
+co
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(47,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+bz
+cs
+dM
+dM
+ec
+dE
+bz
+bz
+bz
+bz
+bz
+bz
+ab
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+dY
+hd
+dY
+ed
+ih
+ac
+ab
+ab
+aa
+ab
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ae
+bz
+bW
+bS
+bS
+bU
+cs
+bz
+bz
+aa
+aa
+aa
+aa
+ey
+ey
+ef
+dX
+dV
+dY
+dY
+dY
+dY
+dY
+dY
+hd
+dY
+ed
+ad
+ac
+co
+ab
+aa
+ab
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ap
+ap
+ap
+ap
+ap
+ap
+aa
+ap
+ap
+ap
+ap
+"}
+(49,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+bz
+bz
+cs
+dU
+dZ
+bz
+bz
+ab
+aa
+ek
+ee
+ee
+ee
+dW
+dW
+fM
+fM
+gy
+gy
+gy
+hc
+gy
+hy
+hK
+dY
+ed
+ad
+ad
+ac
+ab
+aa
+ik
+aa
+aa
+bu
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+iH
+iY
+iY
+jB
+ap
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+"}
+(50,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+bz
+bz
+bz
+bz
+ed
+ed
+ed
+ab
+ek
+eF
+ey
+ef
+ef
+dX
+dX
+dX
+dX
+dY
+dY
+dY
+hd
+dY
+hd
+dY
+dY
+hZ
+ii
+ii
+ad
+ac
+ac
+ac
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+iH
+iY
+iY
+iH
+ae
+ae
+af
+ab
+ab
+ik
+ac
+ac
+ae
+aa
+aa
+kk
+ko
+ks
+aa
+kk
+ko
+ks
+aa
+ap
+"}
+(51,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+aa
+ab
+bz
+bz
+ed
+ek
+ee
+ee
+eF
+ef
+ef
+dX
+dX
+dX
+dX
+dY
+dV
+dY
+dY
+gz
+hd
+dY
+hz
+gy
+hR
+hR
+ij
+ij
+it
+ij
+ij
+iG
+iL
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+ab
+aa
+iH
+iY
+iY
+jB
+ap
+aa
+ac
+ab
+ac
+ac
+eB
+ad
+aa
+aa
+aa
+kk
+kp
+ks
+aa
+kk
+kp
+ks
+aa
+ap
+"}
+(52,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aY
+aY
+aY
+aY
+aY
+dV
+dV
+el
+dV
+dV
+dV
+dV
+dV
+dV
+dY
+dV
+dV
+dV
+dV
+dV
+dV
+dV
+hd
+dV
+dV
+dV
+ed
+ad
+ad
+ad
+iu
+ad
+ad
+ad
+iM
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+iH
+iY
+iY
+jB
+ap
+aa
+ac
+ac
+ac
+eB
+kc
+ad
+jD
+aa
+aa
+kk
+kp
+ks
+aa
+kk
+kp
+ks
+aa
+ap
+"}
+(53,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bu
+aa
+aa
+aa
+aa
+aa
+aa
+aY
+dn
+dw
+ds
+aZ
+dW
+ee
+em
+dV
+dX
+dX
+dY
+dV
+dY
+dY
+dY
+dV
+dY
+ey
+dY
+dY
+dY
+hd
+dY
+dY
+dY
+hS
+ad
+ae
+ae
+iv
+iB
+iD
+ad
+iM
+ac
+ac
+aa
+aa
+ab
+aa
+aa
+ac
+ad
+iH
+iY
+iY
+jB
+ap
+aa
+jD
+jD
+jD
+jD
+jU
+jD
+jD
+aa
+aa
+aa
+kq
+aa
+aa
+aa
+kq
+aa
+aa
+ap
+"}
+(54,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bu
+aY
+dn
+dx
+dn
+dN
+dX
+ef
+en
+dV
+ey
+ey
+dY
+dV
+en
+dX
+dX
+dV
+en
+dY
+dY
+dX
+dY
+hd
+dX
+dY
+dY
+ed
+ed
+ae
+ih
+ad
+ad
+ad
+ad
+iM
+ad
+ac
+ac
+aa
+ab
+aa
+aa
+ac
+ad
+iH
+iY
+iY
+jB
+ap
+aa
+jM
+jR
+jV
+jX
+kd
+kh
+kh
+ki
+kj
+kl
+kr
+kl
+kl
+kl
+kt
+kn
+kn
+ap
+"}
+(55,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bu
+aa
+aa
+bu
+aa
+aa
+aa
+aa
+aa
+aY
+dn
+dx
+dn
+aY
+dX
+dX
+dX
+et
+ey
+dX
+dY
+dY
+dX
+ey
+dX
+dV
+dX
+ey
+dY
+dY
+dY
+he
+dY
+dX
+dY
+hL
+dV
+aq
+ad
+ad
+iw
+iw
+ad
+iM
+ad
+ac
+ac
+ac
+ae
+aa
+ac
+ad
+ad
+iH
+iY
+iY
+iH
+jD
+jD
+jN
+jD
+jW
+jD
+ke
+jD
+jD
+aa
+aa
+aa
+kq
+aa
+aa
+aa
+kq
+aa
+aa
+ac
+"}
+(56,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bu
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aY
+do
+dx
+dn
+dO
+dY
+dY
+dY
+dV
+dV
+dX
+dX
+dV
+en
+en
+ey
+en
+en
+en
+dY
+gz
+ey
+hd
+dY
+dX
+dY
+dX
+dV
+aq
+io
+iw
+iw
+iw
+ad
+iM
+ad
+ad
+ad
+ad
+ae
+ac
+ad
+ad
+ad
+iH
+jo
+iW
+iW
+jE
+jJ
+jO
+jS
+jS
+jY
+jU
+jU
+jD
+aa
+aa
+kk
+kp
+ks
+aa
+kk
+kp
+ks
+aa
+ap
+"}
+(57,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+bu
+ae
+aa
+aa
+aa
+aa
+aa
+ab
+aY
+dp
+dx
+dn
+dO
+dY
+dY
+eo
+dV
+dY
+dY
+eJ
+dV
+dV
+en
+ed
+ed
+ed
+ed
+ed
+ed
+dY
+hd
+ey
+dY
+dY
+dV
+dV
+aq
+aq
+aq
+aq
+aq
+iH
+iN
+iJ
+iJ
+iJ
+iJ
+iJ
+iH
+iH
+iH
+iH
+iH
+jp
+iY
+je
+jD
+jD
+jD
+jT
+jU
+kw
+kf
+jU
+jD
+aa
+aa
+km
+kp
+kn
+aa
+kk
+kp
+ks
+aa
+ap
+"}
+(58,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+ab
+ab
+aY
+dq
+dx
+dn
+dO
+dY
+dY
+dY
+dV
+ez
+dY
+dY
+dV
+en
+fj
+ed
+eB
+eq
+eq
+fE
+ed
+dY
+hd
+dY
+hA
+hL
+aq
+aa
+aa
+ab
+ab
+ab
+ab
+iI
+iO
+iS
+iU
+iW
+iW
+iW
+iW
+iW
+iW
+iW
+jc
+jq
+iY
+je
+je
+jK
+jP
+jU
+jU
+jZ
+kg
+jW
+jD
+aa
+aa
+kn
+bu
+aa
+bu
+kk
+ku
+ks
+aa
+ac
+"}
+(59,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+aa
+aa
+aa
+ab
+ab
+ab
+aY
+dr
+dx
+dn
+dO
+dY
+eg
+eg
+dV
+eA
+dY
+dV
+dV
+en
+en
+ed
+eq
+fE
+fy
+eq
+ed
+ed
+hf
+ed
+ed
+ed
+aa
+aa
+aa
+ab
+ab
+aa
+ab
+iJ
+iJ
+iJ
+iV
+iV
+iV
+iV
+iV
+iV
+iJ
+iY
+iY
+je
+iY
+iY
+iY
+jK
+jP
+jU
+jU
+ka
+jU
+jU
+jD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+"}
+(60,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aq
+aq
+aa
+aa
+aa
+aa
+aa
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+dy
+aY
+aY
+aY
+aY
+ep
+dV
+eA
+dV
+dV
+dV
+fj
+ey
+ed
+eB
+eq
+aa
+aa
+ac
+dV
+hd
+dV
+dt
+dt
+ab
+aa
+aa
+aa
+ab
+aa
+aa
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+iH
+iZ
+iY
+iY
+iY
+iY
+iY
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+ap
+ap
+ap
+ap
+ac
+ap
+ap
+ac
+ac
+ap
+ac
+"}
+(61,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aY
+bb
+bb
+bb
+bn
+bb
+bv
+bA
+bb
+bv
+bA
+bb
+bb
+bb
+aY
+aY
+dn
+dx
+dH
+dn
+aY
+dt
+aa
+dV
+dV
+dV
+dV
+dV
+en
+fs
+ed
+fE
+eq
+aa
+aa
+ab
+gO
+hg
+ft
+ab
+ab
+aa
+aa
+cM
+ab
+ab
+aa
+aa
+ae
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+iH
+iY
+iY
+iY
+iY
+je
+jL
+jQ
+jQ
+jQ
+kb
+jQ
+jQ
+jQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(62,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aY
+bb
+bb
+bb
+bn
+bb
+bb
+bB
+bb
+bb
+bB
+bl
+bb
+bb
+aY
+aY
+dn
+dx
+dn
+dn
+aY
+ac
+ab
+dV
+dV
+aa
+aa
+eU
+ac
+aq
+ab
+aa
+aa
+aa
+aa
+ab
+gO
+hg
+aq
+aa
+aa
+aa
+aa
+aa
+ab
+bu
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+jd
+iV
+iV
+jC
+jF
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(63,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aY
+bc
+bf
+be
+bo
+be
+bw
+bC
+be
+bw
+cl
+be
+cz
+be
+be
+df
+ds
+dz
+ds
+dP
+aY
+aY
+ab
+ab
+ab
+aa
+ab
+eU
+eq
+aq
+ab
+ab
+ab
+ab
+ab
+ac
+aq
+hh
+hm
+hB
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+gg
+jG
+jL
+jQ
+jQ
+jQ
+jQ
+jQ
+kb
+kb
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(64,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aY
+bd
+bg
+bb
+bp
+bb
+bb
+bA
+bb
+bb
+bA
+bb
+bg
+bb
+aY
+aY
+dn
+dn
+dn
+dn
+aY
+aY
+ab
+ab
+ac
+aa
+ab
+aq
+eq
+ft
+ab
+aa
+aa
+aa
+aa
+ab
+gP
+hi
+hg
+hB
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+gg
+jH
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(65,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aY
+bc
+bg
+bb
+bq
+bb
+bb
+bA
+bb
+bb
+bA
+bb
+cB
+bb
+bb
+aY
+dn
+dA
+dn
+dn
+aY
+aa
+aa
+aa
+ab
+ab
+ac
+aq
+eq
+ft
+aa
+aa
+aa
+aa
+aa
+ac
+aa
+gO
+hn
+hB
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+gg
+jI
+gU
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(66,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+aa
+aa
+aa
+aa
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aY
+bc
+bh
+bb
+aY
+aY
+br
+aY
+bJ
+bJ
+cm
+cu
+cC
+cH
+bJ
+aY
+aY
+aY
+aY
+aY
+aY
+ab
+aa
+aa
+ab
+aa
+aa
+aq
+ac
+ft
+aa
+aa
+bu
+aa
+aa
+ab
+aa
+aa
+ho
+hC
+aa
+aa
+ia
+aa
+aa
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+je
+gU
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(67,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ac
+ag
+ai
+al
+an
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+aY
+aY
+bi
+aY
+aY
+aY
+bx
+aY
+bK
+bY
+bZ
+bZ
+cE
+bM
+cV
+dg
+ae
+ab
+ab
+bu
+ab
+aa
+aa
+aa
+ab
+aa
+eK
+eK
+eq
+ft
+aa
+aa
+aa
+aa
+aa
+ab
+aa
+aq
+hp
+dt
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+gU
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(68,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ac
+ag
+aj
+aj
+aj
+aj
+aj
+ai
+av
+aB
+aF
+aM
+aB
+aZ
+be
+bj
+bl
+bb
+bl
+bb
+aY
+bL
+bZ
+bZ
+bZ
+cE
+bM
+cW
+dg
+ab
+aa
+aa
+aa
+ab
+aa
+aa
+aa
+ac
+ac
+eH
+eV
+eW
+eG
+fy
+aa
+aa
+aa
+aa
+ab
+aa
+aq
+hq
+aq
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+iT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(69,1,1) = {"
+aa
+aa
+ab
+ab
+aa
+ac
+ah
+aj
+aj
+aj
+am
+aj
+ai
+aw
+aC
+aj
+aN
+aj
+aY
+bb
+bb
+bb
+bb
+bb
+bb
+aY
+bM
+ca
+ca
+bZ
+cE
+bZ
+cX
+dh
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+eH
+eV
+eV
+eG
+er
+aa
+aa
+aa
+aa
+ac
+ab
+hj
+hr
+aa
+aa
+aa
+ab
+ik
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+fX
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(70,1,1) = {"
+aa
+aa
+ab
+aa
+ac
+ac
+ag
+ak
+am
+aj
+aj
+aj
+ai
+ax
+aD
+aG
+aN
+aj
+aY
+bb
+bb
+bm
+bl
+bb
+bb
+aY
+bN
+bZ
+bZ
+bZ
+cF
+cI
+cY
+dg
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+eq
+ad
+eH
+eW
+eX
+eG
+fy
+fy
+aa
+aa
+aa
+ab
+aa
+aq
+hn
+hD
+aa
+aa
+aa
+ik
+aa
+aa
+ab
+aa
+aa
+cM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(71,1,1) = {"
+aa
+aa
+ab
+ab
+ac
+ad
+ag
+aj
+aj
+aj
+aj
+aj
+ai
+ay
+aE
+aH
+aO
+aj
+aY
+aY
+aY
+aY
+aY
+bb
+bb
+aY
+bO
+bZ
+bZ
+cv
+ca
+cJ
+cZ
+dg
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aq
+aq
+aq
+eH
+eW
+eX
+eG
+ac
+ab
+fE
+aa
+aa
+ab
+aa
+aq
+hg
+hD
+aa
+aa
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+iT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(72,1,1) = {"
+aa
+aa
+ab
+ac
+ac
+ad
+ag
+ai
+ai
+aj
+am
+aj
+al
+aj
+aj
+aI
+aj
+aj
+aY
+bb
+aY
+bb
+aY
+bb
+bb
+aY
+bP
+bZ
+bZ
+bZ
+bZ
+bZ
+bK
+dg
+ae
+ab
+ab
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+eH
+eX
+eW
+eG
+bs
+fE
+ab
+eB
+eG
+ac
+aa
+aq
+hn
+hB
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(73,1,1) = {"
+aa
+aa
+ac
+ac
+ad
+ad
+ae
+aa
+ai
+aj
+aj
+aj
+ar
+aj
+aj
+aJ
+aP
+aj
+ba
+bb
+ba
+bb
+br
+bb
+by
+aY
+bM
+bZ
+ca
+bZ
+bZ
+cJ
+bK
+bD
+dt
+ab
+aa
+aa
+aa
+aa
+ac
+ac
+ae
+eG
+eH
+eH
+fk
+eG
+eG
+eG
+eG
+eG
+eG
+ac
+ab
+eU
+hn
+hE
+aa
+hT
+eH
+eH
+ip
+ip
+ip
+ip
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(74,1,1) = {"
+aa
+ac
+ad
+ad
+ad
+ac
+ae
+aa
+ai
+ai
+ao
+ai
+ai
+az
+az
+aK
+aQ
+aX
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+bQ
+cb
+bZ
+cw
+bZ
+cK
+kv
+bD
+ac
+aa
+aa
+aa
+aa
+ac
+ac
+er
+ad
+eG
+eL
+eL
+eN
+eN
+eL
+fF
+eN
+eH
+eG
+eG
+eG
+eG
+hs
+eG
+eW
+hU
+ib
+il
+iq
+iq
+iq
+iE
+iK
+iP
+iT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(75,1,1) = {"
+ab
+ac
+ac
+ad
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aR
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+bD
+bR
+cc
+cn
+cx
+cn
+cL
+cc
+bD
+aq
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+eq
+eG
+eM
+eL
+eN
+eN
+eL
+fF
+eN
+eN
+eN
+eN
+gQ
+eH
+ht
+eH
+eH
+eH
+ic
+eN
+eN
+il
+eN
+iF
+fu
+iF
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(76,1,1) = {"
+aa
+ab
+ae
+ae
+af
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aS
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+ap
+ap
+ap
+ap
+co
+ap
+ap
+ac
+co
+ap
+ap
+aa
+aa
+ac
+ac
+ac
+ac
+eu
+er
+eG
+eN
+eL
+eN
+fu
+eN
+eN
+eN
+eN
+eN
+eN
+eN
+eN
+hu
+eN
+eN
+eN
+eN
+eN
+eN
+eN
+eN
+iE
+gN
+iQ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(77,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+as
+as
+as
+aa
+aT
+aa
+as
+as
+as
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cM
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ad
+eq
+ad
+eB
+eG
+eO
+eN
+eN
+eN
+eL
+fF
+eN
+eH
+eH
+eN
+eN
+eN
+hv
+hF
+eH
+eH
+eN
+fu
+eN
+eN
+eN
+gS
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(78,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+at
+aA
+aA
+aL
+aU
+aL
+aA
+aA
+bk
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ae
+ae
+ae
+ae
+ae
+eG
+eN
+eN
+eN
+eN
+fz
+fG
+fN
+eH
+gf
+eN
+eN
+eN
+fu
+eN
+eN
+eH
+gA
+eN
+eN
+eN
+eN
+gS
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(79,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+au
+au
+au
+aa
+aR
+aa
+au
+au
+au
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aq
+aq
+aq
+aq
+aq
+aq
+eH
+eP
+eP
+eP
+eN
+eN
+eN
+eL
+eH
+gf
+eN
+eN
+eN
+eN
+eN
+eN
+eH
+ic
+eN
+fu
+eN
+eN
+gS
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(80,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aR
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+er
+ad
+ad
+eH
+eP
+eP
+eP
+eN
+fA
+eN
+eL
+eH
+gf
+gA
+gR
+eN
+eN
+hG
+hM
+eH
+eN
+eN
+eN
+eN
+eN
+gS
+ac
+aq
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(81,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+as
+as
+as
+aa
+aR
+aa
+as
+as
+as
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aq
+dt
+aq
+aq
+dt
+aq
+eH
+eH
+eH
+eH
+eH
+eH
+eH
+eH
+eH
+eH
+eH
+eH
+hk
+eH
+eH
+eH
+eH
+eN
+eN
+eN
+eN
+eN
+gS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(82,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+at
+aA
+aA
+aL
+aV
+aL
+aA
+aA
+bk
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+gS
+fu
+gS
+aa
+aa
+eG
+eG
+fu
+eH
+eH
+eH
+gS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(83,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+au
+au
+au
+aa
+aW
+aa
+au
+au
+au
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+gT
+hk
+gT
+aa
+aa
+aa
+eG
+eN
+eN
+ix
+gA
+gS
+aa
+aa
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(84,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aW
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eG
+eN
+ir
+eN
+iC
+gS
+aa
+aa
+ac
+aa
+ac
+aa
+ac
+aa
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(85,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+eG
+eG
+eG
+eG
+eG
+eG
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(86,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

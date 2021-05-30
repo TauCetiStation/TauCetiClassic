@@ -45,11 +45,10 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "al" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_y = 0
+	name = "HIGH VOLTAGE"
 	},
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/cave)
@@ -65,7 +64,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "ap" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "aq" = (
@@ -114,7 +113,7 @@
 /area/awaymission/labs/cave)
 "ax" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "ay" = (
@@ -188,13 +187,9 @@
 	pixel_y = 7
 	},
 /obj/item/stack/cable_coil{
-	pixel_x = 0;
 	pixel_y = 3
 	},
-/obj/item/stack/cable_coil{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/stack/cable_coil,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "aK" = (
@@ -227,7 +222,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "aN" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/unsimulated/desert,
 /area/awaymission/labs/cave)
 "aO" = (
@@ -273,7 +268,7 @@
 	},
 /area/awaymission/labs/cave)
 "aY" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -338,7 +333,7 @@
 "bi" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/simple_animal/hostile/xenomorph/drone,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "bj" = (
@@ -419,9 +414,8 @@
 /area/awaymission/labs/cave)
 "bv" = (
 /turf/unsimulated/jungle/rock,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "bw" = (
@@ -439,8 +433,7 @@
 /area/awaymission/labs/cave)
 "by" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -453,9 +446,8 @@
 	oxygen = 21.8366;
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "bA" = (
@@ -470,7 +462,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "bC" = (
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -495,7 +487,7 @@
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/researchdivision)
 "bH" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
 	icon_state = "white"
@@ -536,14 +528,6 @@
 	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
-"bO" = (
-/obj/structure/morgue{
-	icon_state = "morgue1"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/awaymission/labs/researchdivision)
 "bP" = (
 /obj/structure/kitchenspike,
 /turf/simulated/floor{
@@ -560,23 +544,19 @@
 /area/awaymission/labs/cave)
 "bR" = (
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "bS" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -608,7 +588,7 @@
 /area/awaymission/labs/researchdivision)
 "bX" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/simple_animal/hostile/xenomorph/drone,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "bY" = (
@@ -618,13 +598,11 @@
 	},
 /area/awaymission/labs/cave)
 "bZ" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	frequency = 1379;
-	id_tag = "medsci_pump";
-	on = 1
+	id_tag = "medsci_pump"
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -646,8 +624,7 @@
 "cc" = (
 /obj/machinery/dna_scannernew,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -663,9 +640,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "ce" = (
@@ -727,9 +703,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cl" = (
@@ -767,9 +742,8 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cp" = (
@@ -792,11 +766,8 @@
 /area/awaymission/labs/researchdivision)
 "ct" = (
 /obj/structure/stool/bed/chair,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -819,7 +790,7 @@
 /area/awaymission/labs/researchdivision)
 "cw" = (
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "warnwhitecorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -886,9 +857,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cF" = (
@@ -937,12 +907,12 @@
 	},
 /area/awaymission/labs/researchdivision)
 "cL" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "cM" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien,
+/mob/living/simple_animal/hostile/xenomorph,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -961,15 +931,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cO" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -977,8 +945,7 @@
 /area/awaymission/labs/researchdivision)
 "cP" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -987,8 +954,7 @@
 "cQ" = (
 /obj/structure/stool/bed/roller,
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1039,23 +1005,20 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cV" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cW" = (
@@ -1066,9 +1029,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cX" = (
@@ -1085,15 +1047,13 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cY" = (
@@ -1103,9 +1063,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "cZ" = (
@@ -1122,9 +1081,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "da" = (
@@ -1137,18 +1095,16 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "db" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "dc" = (
@@ -1200,9 +1156,8 @@
 "dj" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1210,7 +1165,7 @@
 /area/awaymission/labs/researchdivision)
 "dk" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/simple_animal/hostile/xenomorph/drone,
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "dl" = (
@@ -1221,11 +1176,8 @@
 	},
 /area/awaymission/labs/researchdivision)
 "dm" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
-/obj/effect/alien/weeds/node,
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1280,9 +1232,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "ds" = (
@@ -1300,11 +1251,10 @@
 /area/awaymission/labs/researchdivision)
 "dt" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1374,8 +1324,8 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump,
-/obj/effect/alien/weeds{
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/structure/alien/weeds{
 	icon_state = "flesh2"
 	},
 /turf/simulated/floor,
@@ -1413,8 +1363,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -1472,7 +1421,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/machinery/microwave,
+/obj/machinery/kitchen_machine/microwave,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -1485,7 +1434,7 @@
 /area/awaymission/labs/researchdivision)
 "dP" = (
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
 	icon_state = "damaged2"
 	},
@@ -1573,11 +1522,11 @@
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "ee" = (
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "ef" = (
-/obj/machinery/turretcover,
+/obj/machinery/porta_turret,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "eg" = (
@@ -1638,12 +1587,9 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	opacity = 1
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -1703,7 +1649,7 @@
 	},
 /area/awaymission/labs/militarydivision)
 "ev" = (
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/simulated/floor/airless{
 	icon_state = "floorscorched1"
 	},
@@ -1727,8 +1673,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -1736,8 +1681,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/gateway)
@@ -1747,8 +1691,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -1758,8 +1701,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -1773,10 +1715,9 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "eD" = (
@@ -1796,9 +1737,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "eE" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
+/obj/machinery/power/smes,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -1829,8 +1768,7 @@
 "eI" = (
 /obj/structure/closet/secure_closet/medical1,
 /obj/machinery/camera{
-	c_tag = "Prison Bedroom";
-	dir = 2
+	c_tag = "Prison Bedroom"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1852,7 +1790,6 @@
 "eL" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -1914,9 +1851,8 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "eT" = (
@@ -1970,8 +1906,7 @@
 /area/awaymission/labs/gateway)
 "eZ" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -2030,10 +1965,9 @@
 /area/awaymission/labs/researchdivision)
 "fh" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	layer = 2.4;
-	on = 1
+	layer = 2.4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2067,7 +2001,6 @@
 /area/awaymission/labs/militarydivision)
 "fm" = (
 /obj/machinery/door/airlock/hatch{
-	id_tag = null;
 	name = "Armory Door"
 	},
 /turf/simulated/floor{
@@ -2103,7 +2036,7 @@
 	},
 /area/awaymission/labs/gateway)
 "fq" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center,
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
 "fr" = (
@@ -2123,8 +2056,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/closet/crate/secure/weapon,
 /obj/structure/cable{
@@ -2141,8 +2073,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -2191,9 +2122,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "fz" = (
@@ -2226,9 +2156,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "fD" = (
@@ -2260,10 +2189,8 @@
 /obj/machinery/door_control{
 	id = "miningdorm2";
 	name = "Gateway Door Control";
-	normaldoorcontrol = 1;
 	pixel_x = 25;
-	pixel_y = 0;
-	req_access_txt = "0";
+	req_access = list(0);
 	specialfunctions = 4
 	},
 /obj/structure/table/reinforced,
@@ -2328,10 +2255,9 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fO" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	layer = 2.4;
-	on = 1
+	layer = 2.4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2373,11 +2299,10 @@
 	pixel_x = 2;
 	pixel_y = 8
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "mining_maineast_pump";
-	on = 1
+	id_tag = "mining_maineast_pump"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2404,7 +2329,7 @@
 	},
 /area/awaymission/labs/militarydivision)
 "fV" = (
-/obj/machinery/atmospherics/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -2418,8 +2343,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -2431,8 +2355,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -2530,10 +2453,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = 0;
-	pixel_y = 0
-	},
+/obj/item/weapon/storage/firstaid/adv,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -2546,8 +2466,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -2560,11 +2479,10 @@
 /area/awaymission/labs/militarydivision)
 "gk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "mining_maineast_pump";
-	on = 1
+	id_tag = "mining_maineast_pump"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2754,7 +2672,6 @@
 /area/awaymission/labs/researchdivision)
 "gI" = (
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -2778,7 +2695,7 @@
 	name = "James MacDonald"
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -2847,13 +2764,11 @@
 "gW" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/atmospherics/unary/vent_scrubber{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -2913,8 +2828,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/computer/rdconsole/core,
 /turf/simulated/floor{
@@ -2985,8 +2899,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -2995,8 +2908,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -3006,8 +2918,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -3015,8 +2926,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -3037,8 +2947,7 @@
 /area/awaymission/labs/researchdivision)
 "hr" = (
 /obj/machinery/shower{
-	dir = 4;
-	icon_state = "shower"
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -3085,8 +2994,7 @@
 /area/awaymission/labs/researchdivision)
 "hw" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/machinery/r_n_d/circuit_imprinter,
 /turf/simulated/floor{
@@ -3098,8 +3006,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/r_n_d/destructive_analyzer,
 /turf/simulated/floor{
@@ -3155,7 +3062,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
 "hE" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -3163,7 +3070,6 @@
 	id_tag = "n2_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
-	on = 1;
 	pressure_checks = 2;
 	pump_direction = 0
 	},
@@ -3176,13 +3082,11 @@
 "hG" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -3207,8 +3111,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
@@ -3216,8 +3119,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3230,8 +3132,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/researchdivision)
@@ -3244,8 +3145,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/item/weapon/stock_parts/cell/hyper,
 /obj/structure/cable{
@@ -3263,8 +3163,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -3274,8 +3173,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -3285,8 +3183,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3309,7 +3206,7 @@
 /area/awaymission/labs/researchdivision)
 "hR" = (
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -3325,7 +3222,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/researchdivision)
@@ -3386,7 +3283,6 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3398,20 +3294,17 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
 "id" = (
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
 "ie" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3421,7 +3314,6 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3485,8 +3377,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3496,9 +3387,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "io" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable,
 /obj/structure/cable{
 	d2 = 8;
@@ -3541,15 +3430,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
 "it" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	layer = 2.4;
-	on = 1
+	layer = 2.4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -3571,7 +3458,6 @@
 "ix" = (
 /obj/machinery/camera{
 	c_tag = "Dormitory South";
-	c_tag_order = 999;
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -3594,7 +3480,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "iB" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -3602,7 +3488,6 @@
 	id_tag = "waste_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
-	on = 1;
 	pressure_checks = 2;
 	pump_direction = 0
 	},
@@ -3707,7 +3592,6 @@
 	name = "Team Leader's Desk"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3721,7 +3605,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3731,14 +3614,12 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
 "iR" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3747,7 +3628,6 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3764,8 +3644,7 @@
 /area/awaymission/labs/militarydivision)
 "iV" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -3780,8 +3659,7 @@
 /area/awaymission/labs/command)
 "iX" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -3813,8 +3691,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
@@ -3828,13 +3705,12 @@
 /area/awaymission/labs/researchdivision)
 "jc" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/research_and_development{
+/obj/item/weapon/book/manual/wiki/research_and_development{
 	pixel_x = -1;
 	pixel_y = 4
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -3900,10 +3776,9 @@
 	},
 /area/awaymission/labs/militarydivision)
 "jl" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
-	on = 1;
 	pressure_checks = 0
 	},
 /turf/simulated/floor{
@@ -3918,15 +3793,13 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3937,8 +3810,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3946,7 +3818,6 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3956,11 +3827,9 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3969,11 +3838,9 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -3984,11 +3851,9 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -4003,7 +3868,6 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -4067,8 +3931,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4076,8 +3939,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -4091,8 +3953,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
@@ -4112,11 +3973,10 @@
 	},
 /area/awaymission/labs/researchdivision)
 "jE" = (
-/obj/machinery/turretcover,
+/obj/machinery/porta_turret,
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "jF" = (
@@ -4162,14 +4022,6 @@
 	icon_state = "white"
 	},
 /area/awaymission/labs/researchdivision)
-"jJ" = (
-/obj/machinery/porta_turret_cover,
-/turf/unsimulated/desert,
-/area/awaymission/desert{
-	dynamic_lighting = 1;
-	luminosity = 1;
-	name = "Desert"
-	})
 "jK" = (
 /obj/effect/landmark{
 	name = "awaystart"
@@ -4185,7 +4037,6 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
@@ -4196,13 +4047,12 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
 "jO" = (
 /obj/structure/table,
-/obj/item/weapon/butch{
+/obj/item/weapon/kitchenknife/butch{
 	pixel_y = 3
 	},
 /obj/item/weapon/kitchenknife{
@@ -4257,7 +4107,7 @@
 	},
 /area/awaymission/labs/researchdivision)
 "jV" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	pixel_y = 28
 	},
 /turf/simulated/floor,
@@ -4275,31 +4125,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
-"jY" = (
-/obj/structure/sign/securearea{
-	pixel_x = 0;
-	pixel_y = 28
-	},
-/turf/simulated/floor,
-/area/awaymission/labs/command)
 "jZ" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "carpet"
 	},
 /area/awaymission/labs/militarydivision)
 "ka" = (
 /obj/structure/table,
-/obj/machinery/microwave{
+/obj/machinery/kitchen_machine/microwave{
 	pixel_x = -2;
 	pixel_y = 8
 	},
@@ -4323,7 +4164,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "delivery";
-	name = "floor";
 	temperature = 393.15
 	},
 /area/awaymission/labs/researchdivision)
@@ -4351,10 +4191,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
-	on = 1;
 	pressure_checks = 0
 	},
 /turf/simulated/floor,
@@ -4365,9 +4204,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kj" = (
@@ -4395,12 +4233,9 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	opacity = 1
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
@@ -4415,9 +4250,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "ko" = (
@@ -4464,7 +4298,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "kt" = (
-/obj/machinery/turretcover,
+/obj/machinery/porta_turret,
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "ku" = (
@@ -4483,9 +4317,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kv" = (
@@ -4502,9 +4335,8 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kw" = (
@@ -4521,9 +4353,8 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kx" = (
@@ -4547,9 +4378,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "ky" = (
@@ -4563,11 +4393,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "kz" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4604,15 +4431,13 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kG" = (
@@ -4655,9 +4480,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kK" = (
@@ -4668,8 +4492,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -4689,26 +4512,23 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kM" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kN" = (
@@ -4720,17 +4540,15 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kO" = (
@@ -4744,17 +4562,15 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kP" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/command)
@@ -4767,8 +4583,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4777,8 +4592,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4791,11 +4605,10 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "kT" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "engineering_aux_pump";
-	on = 1
+	id_tag = "engineering_aux_pump"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4814,9 +4627,8 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kV" = (
@@ -4839,9 +4651,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kW" = (
@@ -4851,17 +4662,15 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "kX" = (
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_y = 0
+	name = "HIGH VOLTAGE"
 	},
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/solars)
@@ -4876,25 +4685,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
-	name = "Desert"
-	})
-"kZ" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	temperature = 393.15
-	},
-/area/awaymission/desert{
-	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "la" = (
@@ -4924,8 +4716,7 @@
 /area/awaymission/labs/solars)
 "ld" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "High-Security Division";
-	p_open = 0
+	name = "High-Security Division"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4934,9 +4725,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lf" = (
@@ -4980,9 +4770,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "lj" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5004,9 +4792,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "ll" = (
@@ -5025,9 +4812,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "ln" = (
@@ -5036,29 +4822,13 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
-	name = "Desert"
-	})
-"lo" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/awaymission/desert{
-	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lp" = (
@@ -5075,9 +4845,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lq" = (
@@ -5090,9 +4859,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lr" = (
@@ -5104,9 +4872,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "ls" = (
@@ -5115,8 +4882,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
@@ -5125,8 +4891,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
@@ -5135,8 +4900,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -5172,23 +4936,12 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/labs/solars)
-"ly" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
@@ -5254,9 +5007,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lE" = (
@@ -5272,9 +5024,8 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lF" = (
@@ -5287,21 +5038,16 @@
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	opacity = 1
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "lG" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	frequency = 1379;
-	id_tag = "medsci_pump";
-	on = 1
+	id_tag = "medsci_pump"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -5326,17 +5072,15 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lI" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lJ" = (
@@ -5363,8 +5107,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable,
 /obj/machinery/power/terminal{
@@ -5400,9 +5143,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lO" = (
@@ -5421,9 +5163,8 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lP" = (
@@ -5441,9 +5182,8 @@
 	icon_state = "solarpanel";
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lQ" = (
@@ -5468,9 +5208,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lR" = (
@@ -5489,9 +5228,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lS" = (
@@ -5511,9 +5249,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lT" = (
@@ -5526,9 +5263,8 @@
 /turf/simulated/floor/plating{
 	temperature = 393.15
 	},
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "lU" = (
@@ -5555,9 +5291,7 @@
 /obj/item/stack/cable_coil{
 	pixel_y = 3
 	},
-/obj/item/stack/cable_coil{
-	pixel_y = 0
-	},
+/obj/item/stack/cable_coil,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
 "lX" = (
@@ -5567,11 +5301,11 @@
 "lY" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/simple_animal/hostile/xenomorph/sentinel,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "lZ" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -5579,11 +5313,10 @@
 	id_tag = "waste_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
-	on = 1;
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "ma" = (
@@ -5669,7 +5402,7 @@
 /area/awaymission/labs/command)
 "mr" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/simple_animal/hostile/xenomorph/sentinel,
 /turf/simulated/floor/airless{
 	icon_state = "floorscorched2"
 	},
@@ -5698,12 +5431,9 @@
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	opacity = 1
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -5727,12 +5457,9 @@
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	opacity = 1
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -5767,8 +5494,7 @@
 "mD" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "delivery";
-	name = "floor"
+	icon_state = "delivery"
 	},
 /area/awaymission/labs/cargo)
 "mE" = (
@@ -5791,20 +5517,16 @@
 	},
 /area/awaymission/labs/cargo)
 "mH" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	frequency = 1379;
-	id_tag = "medsci_pump";
-	on = 1
+	id_tag = "medsci_pump"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "mI" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Virology APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -5817,8 +5539,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -5843,18 +5564,17 @@
 /area/awaymission/labs/cargo)
 "mM" = (
 /obj/structure/table,
-/obj/machinery/microwave{
+/obj/machinery/kitchen_machine/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/labs/civilian)
 "mN" = (
 /obj/structure/table,
-/obj/machinery/microwave{
+/obj/machinery/kitchen_machine/microwave{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -5862,7 +5582,6 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/labs/civilian)
@@ -5870,11 +5589,10 @@
 /obj/machinery/atmospherics/pipe/simple{
 	color = "blue";
 	icon_state = "intact-b-f";
-	level = 1;
-	name = "pipe"
+	level = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -5945,9 +5663,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/civilian)
 "mX" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -5967,11 +5684,10 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "mZ" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "mining_outpost_pump";
-	on = 1
+	id_tag = "mining_outpost_pump"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6047,11 +5763,10 @@
 	},
 /area/awaymission/labs/civilian)
 "nk" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "engineering_aux_pump";
-	on = 1
+	id_tag = "engineering_aux_pump"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6077,7 +5792,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
@@ -6085,11 +5800,10 @@
 	id_tag = "waste_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
-	on = 1;
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "np" = (
@@ -6135,14 +5849,12 @@
 	name = "Emergency Sandstorm Protection Lockdown"
 	},
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/labs/command)
 "nu" = (
 /obj/machinery/computer/crew,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/labs/command)
@@ -6152,8 +5864,7 @@
 /area/awaymission/labs/cargo)
 "nw" = (
 /turf/simulated/floor{
-	icon_state = "delivery";
-	name = "floor"
+	icon_state = "delivery"
 	},
 /area/awaymission/labs/cargo)
 "nx" = (
@@ -6219,7 +5930,7 @@
 /area/awaymission/labs/cave)
 "nE" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/sentinel,
+/mob/living/simple_animal/hostile/xenomorph/sentinel,
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "nF" = (
@@ -6250,8 +5961,7 @@
 	dir = 1
 	},
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -6317,14 +6027,12 @@
 	dir = 1
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -6335,8 +6043,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
 /area/awaymission/labs/command)
@@ -6345,8 +6052,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -6355,8 +6061,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -6364,12 +6069,10 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
-	icon_state = "delivery";
-	name = "floor"
+	icon_state = "delivery"
 	},
 /area/awaymission/labs/cargo)
 "nX" = (
@@ -6377,8 +6080,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -6388,8 +6090,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
 /area/awaymission/labs/cargo)
@@ -6409,7 +6110,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "oa" = (
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "ob" = (
@@ -6424,8 +6125,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -6461,29 +6161,23 @@
 /area/awaymission/labs/civilian)
 "og" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "oh" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "oi" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "oj" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -6495,8 +6189,7 @@
 "ok" = (
 /obj/structure/table,
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/item/device/multitool,
 /turf/simulated/floor{
@@ -6515,8 +6208,7 @@
 /obj/item/weapon/wrench,
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
-	c_tag = "Bridge West";
-	dir = 2
+	c_tag = "Bridge West"
 	},
 /obj/item/device/assembly/timer,
 /obj/item/device/assembly/signaler,
@@ -6541,8 +6233,7 @@
 "op" = (
 /obj/structure/table,
 /obj/machinery/camera{
-	c_tag = "Bridge East";
-	dir = 2
+	c_tag = "Bridge East"
 	},
 /obj/item/weapon/storage/fancy/donut_box,
 /turf/simulated/floor{
@@ -6560,8 +6251,7 @@
 "or" = (
 /obj/structure/table,
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /obj/item/weapon/storage/toolbox/emergency,
 /turf/simulated/floor{
@@ -6571,8 +6261,7 @@
 /area/awaymission/labs/command)
 "os" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6607,13 +6296,12 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "oy" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
-	on = 1;
 	pressure_checks = 0
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "oz" = (
@@ -6633,12 +6321,11 @@
 /area/awaymission/labs/civilian)
 "oB" = (
 /obj/structure/table,
-/obj/item/weapon/butch{
+/obj/item/weapon/kitchenknife/butch{
 	pixel_y = 3
 	},
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6657,8 +6344,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -6669,8 +6355,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -6681,8 +6366,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6724,9 +6408,8 @@
 "oJ" = (
 /obj/machinery/conveyor,
 /turf/unsimulated/desert,
-/area/awaymission/desert{
+/area/awaymission/labs/desert{
 	dynamic_lighting = 1;
-	luminosity = 1;
 	name = "Desert"
 	})
 "oK" = (
@@ -6741,7 +6424,7 @@
 /obj/item/clothing/accessory/medal/gold/heroism,
 /obj/item/clothing/under/rank/head_of_security/corp,
 /obj/item/clothing/accessory/holster/armpit,
-/obj/item/clothing/suit/armor/hos/coat,
+/obj/item/clothing/suit/armor/hos,
 /obj/item/weapon/disk/nuclear,
 /turf/simulated/floor{
 	icon_state = "wood"
@@ -6762,8 +6445,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -6771,8 +6453,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
@@ -6816,15 +6497,13 @@
 /area/awaymission/labs/civilian)
 "oT" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 8;
 	environ = 0;
 	equipment = 0;
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -6857,13 +6536,12 @@
 "oW" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access = list(19)
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6871,14 +6549,12 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6886,8 +6562,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -6900,8 +6575,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -6921,7 +6595,7 @@
 "pb" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge";
-	req_access_txt = "19"
+	req_access = list(19)
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6950,7 +6624,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "pg" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /turf/unsimulated/desert,
@@ -7004,8 +6678,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -7032,20 +6705,16 @@
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	opacity = 1
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
 "ps" = (
 /obj/machinery/computer/arcade,
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7088,8 +6757,7 @@
 /area/awaymission/labs/civilian)
 "py" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7103,8 +6771,7 @@
 /area/awaymission/labs/civilian)
 "pA" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7144,7 +6811,7 @@
 /area/awaymission/labs/civilian)
 "pH" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/tray{
+/obj/item/weapon/storage/visuals/tray{
 	pixel_y = 6
 	},
 /obj/structure/cable{
@@ -7161,8 +6828,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7173,8 +6839,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -7189,8 +6854,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall,
 /area/awaymission/labs/civilian)
@@ -7201,8 +6865,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -7225,11 +6888,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "engineering_aux_pump";
-	on = 1
+	id_tag = "engineering_aux_pump"
 	},
 /turf/simulated/floor{
 	icon_state = "wood"
@@ -7271,7 +6933,7 @@
 	},
 /area/awaymission/labs/command)
 "pU" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "flesh2"
 	},
 /turf/unsimulated/desert,
@@ -7281,8 +6943,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/effect/landmark/mobcorpse/syndicatesoldier,
 /turf/simulated/floor{
@@ -7313,7 +6974,7 @@
 	},
 /area/awaymission/labs/command)
 "pZ" = (
-/obj/effect/alien/weeds,
+/obj/structure/alien/weeds,
 /turf/unsimulated/desert,
 /area/awaymission/labs/cave)
 "qa" = (
@@ -7333,7 +6994,7 @@
 	},
 /area/awaymission/labs/command)
 "qc" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "flesh2"
 	},
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -7407,8 +7068,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "wood"
@@ -7418,8 +7078,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -7465,11 +7124,9 @@
 	},
 /area/awaymission/labs/command)
 "qr" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	frequency = 1379;
-	id_tag = "medsci_pump";
-	on = 1
+	id_tag = "medsci_pump"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -7484,15 +7141,13 @@
 /area/awaymission/labs/cave)
 "qt" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/unsimulated/desert,
 /area/awaymission/labs/cave)
 "qu" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7538,7 +7193,6 @@
 "qA" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/ammo_casing/c9mm{
-	pixel_x = 0;
 	pixel_y = -4
 	},
 /turf/simulated/floor,
@@ -7611,8 +7265,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -7625,8 +7278,7 @@
 /area/awaymission/labs/command)
 "qK" = (
 /obj/item/ammo_casing/c9mm{
-	pixel_x = 1;
-	pixel_y = 0
+	pixel_x = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7661,7 +7313,7 @@
 /area/awaymission/labs/command)
 "qP" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
 	icon_state = "wood"
 	},
@@ -7743,13 +7395,10 @@
 	},
 /area/awaymission/labs/command)
 "qV" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
 	},
-/obj/effect/alien/weeds/node,
+/obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -7789,16 +7438,14 @@
 	},
 /area/awaymission/labs/command)
 "ra" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/unsimulated/desert,
 /area/awaymission/labs/cave)
 "rb" = (
-/obj/effect/gibspawner/robot{
-	pixel_y = 0
-	},
+/obj/effect/gibspawner/robot,
 /turf/simulated/floor/airless{
 	icon_state = "damaged5"
 	},
@@ -7817,20 +7464,16 @@
 	},
 /area/awaymission/labs/civilian)
 "rd" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
-	on = 1;
 	pressure_checks = 0
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "re" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -7850,7 +7493,7 @@
 /obj/machinery/door/airlock/vault{
 	icon_state = "door_locked";
 	locked = 1;
-	req_access_txt = "53"
+	req_access = list(53)
 	},
 /turf/simulated/floor{
 	icon_state = "vault"
@@ -7880,8 +7523,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7891,8 +7533,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -7961,7 +7602,7 @@
 	},
 /area/awaymission/labs/command)
 "rv" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/blood/gibs/down,
@@ -8049,7 +7690,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "rI" = (
-/obj/effect/alien/weeds{
+/obj/structure/alien/weeds{
 	icon_state = "weeds1"
 	},
 /obj/effect/decal/cleanable/blood/gibs/limb,
@@ -8096,7 +7737,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "rO" = (
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/simple_animal/hostile/xenomorph/drone,
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "rP" = (
@@ -8156,9 +7797,7 @@
 "rV" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/structure/mirror{
 	pixel_x = 26
@@ -8195,8 +7834,7 @@
 /area/awaymission/labs/security)
 "sa" = (
 /obj/machinery/shower{
-	dir = 4;
-	icon_state = "shower"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -8229,7 +7867,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "sg" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
 "sh" = (
@@ -8285,9 +7923,8 @@
 	},
 /area/awaymission/labs/civilian)
 "so" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -8303,8 +7940,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -8334,12 +7970,9 @@
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	opacity = 1
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8523,7 +8156,7 @@
 /area/awaymission/labs/security)
 "sV" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "sW" = (
@@ -8542,7 +8175,7 @@
 /area/awaymission/labs/security)
 "sZ" = (
 /obj/effect/decal/cleanable/blood,
-/mob/living/simple_animal/hostile/alien/drone,
+/mob/living/simple_animal/hostile/xenomorph/drone,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -8566,8 +8199,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8580,8 +8212,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8592,8 +8223,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8606,8 +8236,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8630,8 +8259,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
 /area/awaymission/labs/security)
@@ -8639,8 +8267,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8651,8 +8278,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8661,13 +8287,9 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "tk" = (
@@ -8675,8 +8297,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8687,8 +8308,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8732,11 +8352,8 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/clothing/accessory/stethoscope,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8766,11 +8383,10 @@
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "tu" = (
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "engineering_aux_pump";
-	on = 1
+	id_tag = "engineering_aux_pump"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8819,15 +8435,13 @@
 /area/awaymission/labs/security)
 "tC" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
 "tD" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8851,11 +8465,8 @@
 	},
 /area/awaymission/labs/medical)
 "tG" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8863,8 +8474,7 @@
 /area/awaymission/labs/medical)
 "tH" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8903,11 +8513,10 @@
 /area/awaymission/labs/medical)
 "tM" = (
 /obj/machinery/body_scanconsole,
-/obj/machinery/atmospherics/unary/vent_pump{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	frequency = 1379;
-	id_tag = "engineering_aux_pump";
-	on = 1
+	id_tag = "engineering_aux_pump"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -9008,8 +8617,7 @@
 /area/awaymission/labs/security)
 "tZ" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -9048,10 +8656,8 @@
 /area/awaymission/labs/security)
 "ug" = (
 /obj/machinery/power/apc{
-	cell_type = 5000;
 	dir = 1;
 	name = "Virology APC";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -9195,13 +8801,13 @@
 /area/awaymission/labs/security)
 "uC" = (
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/security)
 "uD" = (
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "warningcorner"
 	},
 /area/awaymission/labs/security)
@@ -9235,7 +8841,7 @@
 "uI" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red,
-/obj/item/weapon/book/manual/security_space_law{
+/obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -9267,7 +8873,7 @@
 "uO" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/item/weapon/gun/energy/stunrevolver{
+/obj/item/weapon/gun/energy/taser/stunrevolver{
 	pixel_y = 6
 	},
 /turf/simulated/floor{
@@ -9277,9 +8883,8 @@
 "uP" = (
 /obj/machinery/recharger,
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -9289,7 +8894,6 @@
 "uQ" = (
 /obj/machinery/recharger,
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 0;
 	pixel_y = -30
 	},
 /obj/structure/table/reinforced,
@@ -18979,7 +18583,7 @@ bR
 bR
 bR
 bR
-kZ
+kM
 bR
 bR
 bR
@@ -19236,7 +18840,7 @@ bR
 bR
 bR
 bR
-kZ
+kM
 bR
 bR
 bR
@@ -25404,7 +25008,7 @@ bR
 hy
 ji
 hU
-ly
+lz
 lM
 lV
 hy
@@ -27460,7 +27064,7 @@ bR
 bR
 bR
 bR
-lo
+kF
 bR
 bR
 bR
@@ -27717,7 +27321,7 @@ bR
 bR
 bR
 bR
-lo
+kF
 bR
 bR
 bR
@@ -27974,7 +27578,7 @@ bR
 bR
 bR
 bR
-lo
+kF
 bR
 bR
 bR
@@ -31821,7 +31425,7 @@ jz
 iy
 iy
 ii
-jY
+jV
 iy
 kH
 iy
@@ -35381,7 +34985,7 @@ ac
 an
 ac
 bG
-bO
+bM
 bM
 bM
 bN
@@ -36702,7 +36306,7 @@ iK
 jc
 jG
 bG
-jJ
+jE
 bR
 bR
 bR

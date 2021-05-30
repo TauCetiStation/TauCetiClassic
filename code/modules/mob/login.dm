@@ -17,10 +17,10 @@
 					spawn() alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 				if(matches)
 					if(M.client)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as <A href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name_admin(M)]</A>.</font>")
+						message_admins("<font color='red'><B>Notice: </B></font><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as <A href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name_admin(M)]</A>.</font>", R_LOG)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)].")
 					else
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>")
+						message_admins("<font color='red'><B>Notice: </B></font><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>", R_LOG)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
@@ -32,7 +32,7 @@
 	client.screen = list()				//remove hud items just in case
 	if(hud_used)
 		qdel(hud_used)		//remove the hud objects
-	hud_used = new /datum/hud(src)
+	hud_used = new hud_type(src)
 	client.pixel_x = 0
 	client.pixel_y = 0
 	next_move = 1
@@ -56,7 +56,15 @@
 	blocker.alpha = 255
 	blocker.layer = ABOVE_HUD_LAYER
 	blocker.plane = ABOVE_HUD_PLANE
-	blocker.mouse_opacity = 0
+	blocker.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	// atom_huds
+	reload_huds()
+
+	//Reload alternate appearances
+	update_all_alt_apperance()
+
+	add_click_catcher()
 
 	client.screen += blocker
 

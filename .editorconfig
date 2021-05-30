@@ -1,4 +1,8 @@
 [*]
-insert_final_newline = false
+insert_final_newline = true
 indent_style = tab
 indent_size = 4
+trim_trailing_whitespace = true
+
+[*.dm]
+end_of_line = lf

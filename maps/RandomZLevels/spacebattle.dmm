@@ -21,8 +21,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "ae" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 1;
-	icon_state = "propulsion"
+	dir = 1
 	},
 /turf/space,
 /area/awaymission/spacebattle/syndicate2)
@@ -47,8 +46,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "ai" = (
 /obj/structure/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "heater"
+	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -148,8 +146,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "ax" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 1;
-	icon_state = "propulsion"
+	dir = 1
 	},
 /turf/space,
 /area/awaymission/spacebattle/syndicate3)
@@ -182,8 +179,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "aC" = (
 /obj/structure/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "heater"
+	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -287,8 +283,7 @@
 /area/awaymission/spacebattle/syndicate1)
 "aR" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 1;
-	icon_state = "propulsion"
+	dir = 1
 	},
 /turf/space,
 /area/awaymission/spacebattle/syndicate1)
@@ -323,8 +318,7 @@
 /area/awaymission/spacebattle/syndicate1)
 "aX" = (
 /obj/structure/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "heater"
+	dir = 1
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -332,8 +326,7 @@
 "aY" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "heater"
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -343,8 +336,7 @@
 "aZ" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "heater"
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -446,10 +438,8 @@
 /area/awaymission/spacebattle/syndicate2)
 "bn" = (
 /obj/machinery/door/poddoor{
-	icon_state = "pdoor1";
 	id = "spacebattlepod3";
-	name = "Front Hull Door";
-	opacity = 1
+	name = "Front Hull Door"
 	},
 /turf/simulated/shuttle/plating,
 /area/awaymission/spacebattle/syndicate2)
@@ -645,8 +635,7 @@
 "bP" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "heater"
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -661,8 +650,7 @@
 "bR" = (
 /obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
-	dir = 1;
-	icon_state = "heater"
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -687,14 +675,7 @@
 /area/awaymission/spacebattle/cruiser)
 "bU" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_s6"
-	},
-/area/awaymission/spacebattle/cruiser)
-"bV" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall12"
 	},
 /area/awaymission/spacebattle/cruiser)
 "bW" = (
@@ -709,7 +690,6 @@
 /area/awaymission/spacebattle/cruiser)
 "bY" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_s10"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -722,8 +702,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ca" = (
 /obj/structure/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "heater"
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -764,8 +743,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ch" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4;
-	icon_state = "propulsion"
+	dir = 4
 	},
 /turf/space,
 /area/awaymission/spacebattle/cruiser)
@@ -786,8 +764,7 @@
 	density = 0;
 	icon_state = "pdoor0";
 	id = "spacebattlepod";
-	name = "Front Hull Door";
-	opacity = 1
+	name = "Front Hull Door"
 	},
 /turf/simulated/shuttle/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -906,7 +883,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/sausage,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -914,7 +890,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/condiment/enzyme,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -922,7 +897,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/kitchenknife,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -930,21 +904,18 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/kitchen/rollingpin,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
 "cI" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
 "cJ" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -952,7 +923,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/kitchen_machine/microwave,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -985,7 +955,6 @@
 /area/awaymission/spacebattle/cruiser)
 "cR" = (
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -1009,7 +978,6 @@
 "cV" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -1017,22 +985,19 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/fries,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
 "cX" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/stew,
+/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
 "cY" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "cafeteria"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -1140,18 +1105,6 @@
 	icon_state = "bar"
 	},
 /area/awaymission/spacebattle/cruiser)
-"dq" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall7"
-	},
-/area/awaymission/spacebattle/cruiser)
-"dr" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall11"
-	},
-/area/awaymission/spacebattle/cruiser)
 "ds" = (
 /turf/simulated/floor{
 	icon_state = "damaged4"
@@ -1165,8 +1118,7 @@
 	density = 0;
 	icon_state = "pdoor0";
 	id = "spacebattlepod2";
-	name = "Front Hull Door";
-	opacity = 1
+	name = "Front Hull Door"
 	},
 /turf/simulated/shuttle/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -1181,7 +1133,6 @@
 /area/awaymission/spacebattle/cruiser)
 "dv" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_s5"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -1206,7 +1157,7 @@
 	mobname = "Nathaniel Waters";
 	name = "Nathaniel Waters"
 	},
-/obj/item/weapon/butch,
+/obj/item/weapon/kitchenknife/butch,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -1503,8 +1454,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "eq" = (
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
+/obj/machinery/gateway/center{
+	name = "NMV Daedalus Gateway"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -1586,12 +1537,6 @@
 	icon_state = "red"
 	},
 /area/awaymission/spacebattle/cruiser)
-"eE" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall3"
-	},
-/area/awaymission/spacebattle/cruiser)
 "eF" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
@@ -1640,7 +1585,6 @@
 /area/awaymission/spacebattle/cruiser)
 "eL" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall13"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -1814,12 +1758,6 @@
 "fn" = (
 /obj/machinery/computer/security/telescreen,
 /turf/simulated/shuttle/wall,
-/area/awaymission/spacebattle/cruiser)
-"fo" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall_s9"
-	},
 /area/awaymission/spacebattle/cruiser)
 "fp" = (
 /obj/machinery/door/airlock/external,
@@ -2216,18 +2154,15 @@
 /area/awaymission/spacebattle/cruiser)
 "gw" = (
 /obj/machinery/door_control{
-	dir = 2;
 	id = "spacebattlestorage";
 	name = "Secure Storage";
-	pixel_x = 24;
-	pixel_y = 0
+	pixel_x = 24
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gx" = (
 /obj/machinery/computer/operating,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -2236,7 +2171,6 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/circular_saw,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -2244,7 +2178,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/retractor,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -2252,7 +2185,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/hemostat,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -2260,7 +2192,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/scalpel,
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/spacebattle/cruiser)
@@ -2525,8 +2456,7 @@
 /area/awaymission/spacebattle/syndicate7)
 "hq" = (
 /obj/structure/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "heater"
+	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2672,12 +2602,6 @@
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/spacebattle/syndicate7)
-"hL" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "swall14"
-	},
-/area/awaymission/spacebattle/cruiser)
 "hM" = (
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
@@ -2766,8 +2690,7 @@
 /area/awaymission/spacebattle/syndicate7)
 "hZ" = (
 /obj/machinery/shower{
-	dir = 4;
-	icon_state = "shower"
+	dir = 4
 	},
 /obj/item/weapon/bikehorn/rubberducky,
 /turf/simulated/floor{
@@ -2781,8 +2704,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ib" = (
 /obj/machinery/shower{
-	dir = 8;
-	icon_state = "shower"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -2832,8 +2754,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ij" = (
 /obj/machinery/shower{
-	dir = 4;
-	icon_state = "shower"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -2841,8 +2762,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ik" = (
 /obj/machinery/shower{
-	dir = 8;
-	icon_state = "shower"
+	dir = 8
 	},
 /obj/item/weapon/soap,
 /turf/simulated/floor{
@@ -2907,9 +2827,7 @@
 "is" = (
 /obj/structure/sink{
 	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -3264,7 +3182,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "jx" = (
-/turf/simulated/wall/mineral/clown,
+/turf/simulated/wall/mineral/bananium,
 /area)
 "jy" = (
 /obj/machinery/sleeper{
@@ -22175,7 +22093,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ca
 ca
 ca
@@ -22214,7 +22132,7 @@ ca
 ca
 ca
 ca
-bV
+bX
 ab
 ab
 ab
@@ -22432,7 +22350,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cb
 ci
 ci
@@ -22471,7 +22389,7 @@ cx
 ci
 ci
 cb
-bV
+bX
 ab
 ab
 ab
@@ -22689,7 +22607,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cc
 ce
 ce
@@ -22728,7 +22646,7 @@ ce
 ce
 ce
 iA
-bV
+bX
 ab
 ab
 ab
@@ -22985,7 +22903,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -23242,7 +23160,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -23499,7 +23417,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -23756,7 +23674,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -24013,7 +23931,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -24270,7 +24188,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -24488,7 +24406,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -24527,7 +24445,7 @@ ct
 ce
 ce
 ix
-bV
+bX
 ab
 ab
 ab
@@ -24745,7 +24663,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -24784,7 +24702,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -25002,7 +24920,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -25041,7 +24959,7 @@ ce
 iw
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -25259,7 +25177,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -25298,7 +25216,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -25516,7 +25434,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -25555,7 +25473,7 @@ ce
 ix
 ce
 cN
-bV
+bX
 ab
 ab
 ab
@@ -25773,7 +25691,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -25812,7 +25730,7 @@ ce
 cP
 ce
 cN
-bV
+bX
 ab
 ab
 ab
@@ -26030,7 +25948,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -26069,7 +25987,7 @@ ce
 cO
 cP
 cP
-bV
+bX
 ab
 ab
 ab
@@ -26287,7 +26205,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 cs
@@ -26326,7 +26244,7 @@ ce
 ce
 iy
 cr
-bV
+bX
 ab
 ab
 ab
@@ -26544,7 +26462,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ct
@@ -26583,7 +26501,7 @@ ce
 cr
 cP
 cP
-bV
+bX
 ab
 ab
 ab
@@ -27058,17 +26976,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 cB
 cB
 cB
 cB
 cB
 cB
-bV
+bX
 cM
 cM
 cM
@@ -27087,17 +27005,17 @@ gX
 gX
 hs
 hB
-bV
+bX
 hZ
 ia
 ij
 ia
 ij
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -27315,17 +27233,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
-ce
-ce
-ce
+bX
 ce
 ce
 ce
-bV
+ce
+ce
+ce
+bX
 cM
 ef
 ep
@@ -27344,17 +27262,17 @@ gX
 gX
 hs
 hs
-bV
+bX
 ia
 ia
 ia
 ia
 ia
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -27572,17 +27490,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 cC
 ce
 cC
 ce
 cC
 ce
-bV
+bX
 cM
 eg
 eq
@@ -27601,17 +27519,17 @@ gY
 hj
 hs
 hs
-bV
+bX
 ib
 ia
 ik
 ia
 ib
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -27829,17 +27747,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
-ce
-ce
-ce
+bX
 ce
 ce
 ce
-bV
+ce
+ce
+ce
+bX
 cM
 eh
 er
@@ -27858,17 +27776,17 @@ cM
 cM
 hs
 hs
-hL
+bW
 cg
 cg
 cg
 gJ
 ig
 if
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -28086,17 +28004,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 cC
 ce
 cC
 ce
 cC
 ce
-bV
+bX
 cM
 cM
 cM
@@ -28115,17 +28033,17 @@ cM
 cM
 hs
 hs
-bV
+bX
 ic
 if
 ia
 in
 ia
 ia
-bV
+bX
 ix
 ce
-bV
+bX
 ab
 ab
 ab
@@ -28343,17 +28261,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
-ce
-ce
-ce
+bX
 ce
 ce
 ce
-bV
+ce
+ce
+ce
+bX
 dN
 cM
 cM
@@ -28372,17 +28290,17 @@ cM
 cM
 iO
 iO
-hL
+bW
 cg
 ig
 ia
 ia
 ia
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -28600,17 +28518,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 cC
 cQ
 cC
 ce
 cC
 ce
-bV
+bX
 dO
 dO
 cM
@@ -28629,17 +28547,17 @@ cM
 cM
 iO
 iO
-bV
+bX
 ic
 if
 ia
 ia
 ia
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -28857,17 +28775,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
-ce
-ce
-ce
+bX
 ce
 ce
 ce
-bV
+ce
+ce
+ce
+bX
 dP
 ei
 cM
@@ -28886,17 +28804,17 @@ cM
 cM
 eX
 eX
-hL
+bW
 cg
 ig
 ia
 ia
 ia
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -29114,17 +29032,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 cC
 ce
 cC
 ce
 cC
 ce
-bV
+bX
 dQ
 ej
 cM
@@ -29143,17 +29061,17 @@ cM
 cM
 eX
 hC
-bV
+bX
 ic
 if
 ia
 ia
 ia
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -29371,17 +29289,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
-ce
-ce
-ce
+bX
 ce
 ce
 ce
-bV
+ce
+ce
+ce
+bX
 dR
 dR
 cM
@@ -29400,17 +29318,17 @@ cM
 cM
 eX
 eX
-hL
+bW
 cg
 ig
 ia
 ia
 ia
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -29628,17 +29546,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 cC
 ce
 cC
 ce
 cC
 ct
-bV
+bX
 dR
 dR
 cM
@@ -29657,17 +29575,17 @@ cM
 cM
 eX
 hD
-bV
+bX
 ic
 if
 il
 io
 il
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -29885,17 +29803,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 ce
 ce
 ce
 ce
 ce
 do
-bV
+bX
 dS
 dS
 cM
@@ -29914,17 +29832,17 @@ cM
 cM
 hu
 hD
-hL
+bW
 cg
 ig
 ia
 ia
 ia
 ia
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -30142,17 +30060,17 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
-bV
+bX
 cD
 ce
 ce
 ce
 ce
 ct
-bV
+bX
 dS
 dS
 cM
@@ -30171,17 +30089,17 @@ cM
 cM
 hu
 hE
-bV
+bX
 ic
 if
 ia
 ia
 is
 is
-bV
+bX
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -30438,7 +30356,7 @@ cg
 eM
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -30656,7 +30574,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -30695,7 +30613,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -30913,7 +30831,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 ce
 ce
 ce
@@ -30952,7 +30870,7 @@ ce
 ce
 ce
 ce
-bV
+bX
 ab
 ab
 ab
@@ -31209,7 +31127,7 @@ cg
 cT
 ce
 cm
-bV
+bX
 ab
 ab
 ab
@@ -31434,7 +31352,7 @@ bX
 cE
 cR
 cR
-bV
+bX
 dc
 dc
 dc
@@ -31948,7 +31866,7 @@ bX
 cG
 cR
 cR
-bV
+bX
 dc
 dp
 dc
@@ -34272,10 +34190,10 @@ cg
 cg
 cg
 cg
-dq
+cu
 cf
 cf
-dq
+cu
 cg
 cg
 cg
@@ -34293,7 +34211,7 @@ cL
 cu
 cg
 cg
-fo
+ie
 ab
 ab
 ab
@@ -34514,7 +34432,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cM
 cM
 bX
@@ -34547,7 +34465,7 @@ ce
 bX
 cM
 cM
-bV
+bX
 ab
 ab
 ab
@@ -34771,7 +34689,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cM
 cM
 bX
@@ -34804,7 +34722,7 @@ ce
 bX
 cM
 cM
-bV
+bX
 ab
 ab
 ab
@@ -35028,7 +34946,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cM
 cM
 bX
@@ -35061,7 +34979,7 @@ ce
 bX
 cM
 cM
-bV
+bX
 ab
 ab
 ab
@@ -35285,7 +35203,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cM
 cM
 bX
@@ -35318,7 +35236,7 @@ ce
 bX
 cM
 cM
-bV
+bX
 ab
 ab
 ab
@@ -35542,7 +35460,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cM
 cM
 bX
@@ -35575,7 +35493,7 @@ ce
 bX
 cM
 cM
-bV
+bX
 ab
 ab
 ab
@@ -35799,7 +35717,7 @@ ab
 ab
 ab
 ab
-bV
+bX
 cM
 cM
 bX
@@ -35809,30 +35727,30 @@ bW
 cg
 cg
 cg
-dq
-eE
-eE
-eE
-eE
+cu
+cg
+cg
+cg
+cg
 eM
 fs
 fR
 cv
-eE
-eE
-eE
-eE
-dq
-eE
-eE
-eE
+cg
+cg
+cg
+cg
+cu
+cg
+cg
+cg
 eL
 ce
 ce
 bX
 cM
 cM
-bV
+bX
 ab
 ab
 ab
@@ -36089,7 +36007,7 @@ ce
 bX
 cL
 cL
-fo
+ie
 ab
 ab
 ab
@@ -43515,11 +43433,11 @@ ab
 bY
 cg
 cg
-dq
-dq
-dq
-dq
-dq
+cu
+cu
+cu
+cu
+cu
 cT
 ce
 cm
@@ -44031,9 +43949,9 @@ ab
 ab
 ab
 cv
-dr
-dr
-dr
+dy
+dy
+dy
 eL
 ce
 ce
@@ -50199,9 +50117,9 @@ ab
 ab
 ab
 cw
-dq
-dq
-dq
+cu
+cu
+cu
 eL
 ce
 ce
@@ -50711,11 +50629,11 @@ ab
 bU
 cg
 cg
-dr
-dr
-dr
-dr
-dr
+dy
+dy
+dy
+dy
+dy
 eM
 ce
 ce
@@ -54575,7 +54493,7 @@ dg
 db
 dg
 db
-fo
+ie
 ab
 ab
 bY
@@ -54590,7 +54508,7 @@ dg
 db
 dg
 db
-fo
+ie
 ab
 ab
 ab

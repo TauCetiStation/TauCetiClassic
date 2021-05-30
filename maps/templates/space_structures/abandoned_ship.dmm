@@ -1,0 +1,2035 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space_structures/abandoned_ship)
+"ac" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space_structures/abandoned_ship)
+"ad" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall14"
+	},
+/area/space_structures/abandoned_ship)
+"ae" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s10"
+	},
+/area/space_structures/abandoned_ship)
+"af" = (
+/obj/structure/scrap_cube,
+/turf/space,
+/area/space)
+"ag" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/abandoned_ship)
+"ah" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ai" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aj" = (
+/obj/machinery/sleeper,
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ak" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/vending/medical,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"al" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space_structures/abandoned_ship)
+"am" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall13"
+	},
+/area/space_structures/abandoned_ship)
+"an" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/abandoned_ship)
+"ao" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall11"
+	},
+/area/space_structures/abandoned_ship)
+"ap" = (
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aq" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/roller,
+/obj/item/weapon/FixOVein,
+/obj/item/weapon/bonegel,
+/obj/item/weapon/bonesetter,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ar" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall15"
+	},
+/area/space_structures/abandoned_ship)
+"as" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space_structures/abandoned_ship)
+"at" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "heater1"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/abandoned_ship)
+"au" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/space,
+/area/space_structures/abandoned_ship)
+"aw" = (
+/obj/machinery/bodyscanner,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ax" = (
+/obj/machinery/body_scanconsole,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ay" = (
+/obj/item/weapon/scalpel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"az" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/space_structures/abandoned_ship)
+"aA" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/abandoned_ship)
+"aB" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space_structures/abandoned_ship)
+"aC" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/abandoned_ship)
+"aE" = (
+/obj/machinery/door/airlock/glass{
+	name = "Hibernation Pods"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aF" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/abandoned_ship)
+"aG" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aH" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb2,
+/obj/item/device/guitar,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aI" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/space_structures/abandoned_ship)
+"aJ" = (
+/obj/item/device/multitool,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aK" = (
+/obj/item/weapon/stock_parts/cell{
+	charge = 100;
+	maxcharge = 15000
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aL" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aM" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/abandoned_ship)
+"aN" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/abandoned_ship)
+"aO" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/abandoned_ship)
+"aP" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space_structures/abandoned_ship)
+"aQ" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aR" = (
+/obj/structure/table,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aS" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aT" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/abandoned_ship)
+"aU" = (
+/obj/machinery/door/airlock/glass,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aV" = (
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aW" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/abandoned_ship)
+"aX" = (
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aY" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"aZ" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ba" = (
+/obj/machinery/door/window,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bb" = (
+/obj/item/weapon/soap,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bc" = (
+/obj/machinery/washing_machine,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bd" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"be" = (
+/obj/structure/table,
+/obj/item/weapon/gun/energy/laser/retro,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bf" = (
+/obj/structure/table,
+/obj/item/clothing/accessory/medal/gold/captain,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bg" = (
+/obj/structure/table,
+/obj/item/weapon/tank/oxygen,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bh" = (
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bi" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bj" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space)
+"bk" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall14"
+	},
+/area/space)
+"bl" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space)
+"bm" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s10"
+	},
+/area/space)
+"bn" = (
+/obj/structure/table,
+/obj/item/device/analyzer,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bo" = (
+/obj/effect/decal/remains/human,
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bp" = (
+/obj/machinery/door/airlock/glass{
+	name = "Living Module"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bq" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"br" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bs" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/space)
+"bt" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space)
+"bu" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space)
+"bv" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space)
+"bw" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall11"
+	},
+/area/space)
+"bx" = (
+/obj/structure/table,
+/obj/item/clothing/accessory/medal/silver/security,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"by" = (
+/obj/structure/table,
+/obj/item/clothing/accessory/medal/gold/heroism,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bz" = (
+/obj/machinery/door/window/northright,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bA" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/weapon/syntiflesh,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bB" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/abandoned_ship)
+"bC" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bD" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space)
+"bE" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/abandoned_ship)
+"bF" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space_structures/abandoned_ship)
+"bG" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space)
+"bH" = (
+/obj/item/weapon/table_parts,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/area/space)
+"bI" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor3"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space)
+"bJ" = (
+/obj/machinery/light_switch{
+	pixel_x = 27
+	},
+/obj/machinery/vending/sovietsoda,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bK" = (
+/obj/machinery/light/small,
+/obj/structure/dispenser/oxygen,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bL" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space)
+"bM" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall13"
+	},
+/area/space)
+"bN" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space)
+"bO" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bP" = (
+/obj/structure/stool/bed/chair/metal,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bQ" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s10"
+	},
+/area/space_structures/abandoned_ship)
+"bR" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bS" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/obj/item/stack/cable_coil/cut/red,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bT" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/item/weapon/tank/emergency_oxygen,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bU" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/clothing/mask/breath,
+/obj/item/weapon/storage/toolbox/emergency,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bV" = (
+/obj/machinery/vending/engivend,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bW" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bX" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space_structures/abandoned_ship)
+"bY" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"bZ" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_r"
+	},
+/turf/space,
+/area/space_structures/abandoned_ship)
+"ca" = (
+/obj/machinery/door/poddoor{
+	id = "oldship_gun";
+	name = "Pod Bay Door"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"cb" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "oldship_gun"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"cc" = (
+/obj/effect/decal/cleanable/ash,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"cd" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ce" = (
+/obj/machinery/door/airlock/glass{
+	name = "Pod Bay"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"cf" = (
+/obj/effect/decal/remains/human,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"cg" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/abandoned_ship)
+"ch" = (
+/obj/machinery/computer/pod{
+	dir = 4;
+	id = "oldship_gun"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ci" = (
+/obj/machinery/vending/tool,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"cj" = (
+/obj/structure/table,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/device/radio/off,
+/obj/item/weapon/circuitboard/security,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+"ck" = (
+/obj/machinery/light/small,
+/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/cable,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/abandoned_ship)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+az
+aI
+aD
+aD
+aD
+aD
+aD
+aD
+aD
+aI
+az
+bF
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+ab
+ar
+aB
+aQ
+ah
+ah
+be
+bn
+bx
+ah
+ah
+bO
+bQ
+am
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+af
+ab
+ar
+aB
+ah
+ah
+ah
+ah
+bf
+bo
+by
+ah
+ah
+bP
+bR
+ad
+ca
+bF
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+ab
+ao
+am
+aC
+aG
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+bP
+bS
+ac
+cb
+ac
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+ac
+ap
+bB
+al
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aT
+ar
+aU
+ao
+bF
+aa
+af
+"}
+(7,1,1) = {"
+ab
+ag
+ah
+aw
+ac
+aH
+aR
+aR
+aX
+ah
+ah
+ah
+aY
+bJ
+aT
+ar
+aB
+ah
+ch
+bB
+bF
+aa
+"}
+(8,1,1) = {"
+ac
+ah
+ah
+ax
+ad
+aI
+aI
+aI
+aI
+aD
+aU
+aD
+aI
+aI
+ar
+aB
+ah
+ah
+ah
+ah
+ac
+aa
+"}
+(9,1,1) = {"
+ac
+ai
+ah
+ah
+aD
+aJ
+ah
+ah
+ah
+aS
+ah
+ah
+ah
+ah
+ac
+bT
+ah
+aS
+ah
+ci
+ac
+aa
+"}
+(10,1,1) = {"
+ac
+aj
+ah
+ah
+aD
+ah
+ah
+ah
+aY
+ah
+ah
+ah
+ah
+ah
+ac
+bU
+ah
+ah
+ah
+cj
+ac
+aa
+"}
+(11,1,1) = {"
+ac
+ak
+ah
+ay
+aD
+aK
+ah
+aT
+aI
+aI
+aI
+aI
+al
+ah
+ac
+bV
+ah
+cc
+bY
+ck
+ac
+aa
+"}
+(12,1,1) = {"
+ad
+al
+ah
+ah
+ac
+ah
+ah
+aU
+ah
+ah
+ah
+bz
+ac
+ah
+ad
+al
+ah
+cd
+ah
+aT
+am
+aa
+"}
+(13,1,1) = {"
+ae
+am
+aq
+ah
+ac
+ah
+ah
+ac
+aZ
+bg
+bi
+bA
+ac
+bh
+bB
+ao
+aI
+ce
+az
+ar
+bE
+aa
+"}
+(14,1,1) = {"
+aa
+ad
+al
+ah
+aE
+ah
+ah
+ac
+ba
+ah
+aX
+ah
+aU
+ah
+ah
+bW
+bY
+cf
+ad
+am
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+ae
+ar
+az
+am
+aL
+aS
+bB
+aI
+aI
+aI
+aI
+aB
+ah
+ah
+ah
+ah
+aT
+ar
+aP
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+ae
+ar
+am
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+aS
+aK
+aT
+ar
+bE
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+ae
+am
+ah
+ah
+ah
+aX
+ah
+ah
+ah
+ah
+ah
+ah
+br
+ad
+bE
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+af
+aa
+ab
+ao
+aM
+az
+aI
+aI
+aD
+bp
+aD
+aI
+aI
+az
+aM
+ao
+bF
+af
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+ab
+as
+aA
+aN
+ac
+aV
+ah
+ah
+ah
+ah
+ah
+bK
+ac
+aA
+aA
+cg
+bF
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+ab
+as
+aA
+aF
+aO
+ar
+aW
+bb
+ah
+ah
+ah
+ah
+aT
+ar
+bX
+aF
+aA
+cg
+bF
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+ac
+at
+at
+at
+ac
+ae
+am
+bc
+ah
+aS
+ah
+ah
+ad
+bE
+ac
+at
+at
+at
+ac
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+an
+au
+au
+au
+aP
+aa
+ad
+aW
+ah
+ah
+ah
+aT
+am
+aa
+ae
+bZ
+bZ
+bZ
+bE
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ar
+aW
+ah
+aT
+ar
+bE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ar
+bq
+ar
+bE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+br
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ar
+bq
+ar
+bF
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+aB
+ah
+bB
+am
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+bh
+ah
+br
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+bi
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ah
+ah
+ah
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+bh
+ah
+bC
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+al
+ai
+aT
+am
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ao
+bq
+ao
+bE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bd
+bd
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bd
+aa
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bd
+aa
+bd
+bd
+bd
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bj
+bs
+bD
+bs
+bL
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bk
+bt
+bu
+bG
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(45,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(46,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bH
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(47,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bl
+bu
+bu
+bu
+bl
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(49,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bk
+bv
+bu
+bI
+bM
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(50,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bm
+bw
+bD
+bw
+bN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

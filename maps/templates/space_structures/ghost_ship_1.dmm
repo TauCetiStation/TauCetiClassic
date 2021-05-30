@@ -1,0 +1,2339 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1;
+	icon_state = "propulsion_l"
+	},
+/turf/space,
+/area/space_structures/ghostship)
+"ac" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/ghostship)
+"ad" = (
+/obj/structure/window/reinforced,
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"ae" = (
+/obj/structure/window/reinforced,
+/obj/structure/shuttle/engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"af" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/ghostship)
+"ag" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/ghostship)
+"ah" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space_structures/ghostship)
+"ai" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/shuttle/plating,
+/area/space_structures/ghostship)
+"aj" = (
+/obj/machinery/computer/pod{
+	id = "spacebattlepod";
+	name = "Hull Door Control"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/space_structures/ghostship)
+"ak" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"al" = (
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"am" = (
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/effect/landmark/corpse/commander{
+	corpseid = null;
+	corpseidaccess = null;
+	corpseidjob = null;
+	corpseradio = null;
+	mobname = "Dave Mitchell";
+	name = "Dave Mitchell"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"an" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"ao" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space_structures/ghostship)
+"ap" = (
+/turf/simulated/floor/airless,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/ghostship)
+"aq" = (
+/obj/structure/window/phoronreinforced{
+	dir = 5
+	},
+/obj/machinery/shieldgen,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"ar" = (
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
+	name = "power storage unit"
+	},
+/turf/simulated/floor,
+/area/space_structures/ghostship)
+"as" = (
+/obj/structure/grille,
+/obj/structure/shuttle/window,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"at" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 1;
+	icon_state = "propulsion_r"
+	},
+/turf/space,
+/area/space_structures/ghostship)
+"au" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/ghostship)
+"av" = (
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/ghostship)
+"aw" = (
+/obj/machinery/blackbox_recorder,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"ax" = (
+/obj/structure/computerframe{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"ay" = (
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/ghostship)
+"az" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/ghostship)
+"aA" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/space_structures/ghostship)
+"aB" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "3"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"aC" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"aD" = (
+/turf/simulated/floor/airless,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s6"
+	},
+/area/space_structures/ghostship)
+"aE" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/ghostship)
+"aF" = (
+/turf/simulated/floor/airless,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/ghostship)
+"aG" = (
+/turf/space,
+/area/space_structures/ghostship)
+"aH" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/ghostship)
+"aI" = (
+/obj/item/ammo_casing/a12mm,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"aJ" = (
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"aK" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s10"
+	},
+/area/space_structures/ghostship)
+"aL" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "spacebattlepod";
+	name = "Front Hull Door"
+	},
+/turf/simulated/shuttle/plating,
+/area/space_structures/ghostship)
+"aM" = (
+/turf/simulated/floor/airless,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/ghostship)
+"aN" = (
+/obj/item/stack/sheet/metal,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"aO" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/obj/item/stack/rods,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"aP" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/space)
+"aQ" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/ghostship)
+"aR" = (
+/turf/simulated/floor{
+	icon_state = "damaged3"
+	},
+/area/space_structures/ghostship)
+"aS" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/metal,
+/turf/space,
+/area/space)
+"aT" = (
+/obj/structure/sign/nanotrasen,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space_structures/ghostship)
+"aU" = (
+/turf/simulated/floor/airless,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space_structures/ghostship)
+"aV" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/metal,
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/space,
+/area/space_structures/ghostship)
+"aW" = (
+/obj/effect/landmark/corpse/syndicatesoldier{
+	corpseid = null;
+	corpseidaccess = null;
+	corpseidjob = null
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"aX" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "engine"
+	},
+/turf/space,
+/area/space_structures/ghostship)
+"aY" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall2"
+	},
+/area/space_structures/ghostship)
+"aZ" = (
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/space_structures/ghostship)
+"ba" = (
+/obj/machinery/telecomms/relay,
+/obj/machinery/light_construct,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bb" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/item/device/flashlight/seclite,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bc" = (
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/space_structures/ghostship)
+"bd" = (
+/obj/structure/stool/bed/chair{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/space_structures/ghostship)
+"be" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space_structures/ghostship)
+"bf" = (
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/space_structures/ghostship)
+"bg" = (
+/obj/machinery/power/emitter,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"bi" = (
+/obj/structure/stool/bed/chair{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor4"
+	},
+/area/space_structures/ghostship)
+"bl" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/ghostship)
+"bm" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/ghostship)
+"bn" = (
+/turf/simulated/floor/airless,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s10"
+	},
+/area/space_structures/ghostship)
+"bo" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/space_structures/ghostship)
+"bp" = (
+/obj/structure/table/reinforced,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bq" = (
+/obj/item/stack/rods,
+/turf/space,
+/area/space)
+"bs" = (
+/obj/effect/landmark/corpse/engineer/rig{
+	corpseid = null;
+	corpseidaccess = null;
+	corpseidjob = null;
+	corpseradio = null;
+	mobname = "Salem Rodriguez";
+	name = "Salem Rodriguez"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bt" = (
+/obj/effect/landmark/corpse/bridgeofficer{
+	corpseid = null;
+	corpseidaccess = null;
+	corpseidjob = null;
+	corpseradio = null;
+	mobname = "Hector Gregory";
+	name = "Hector Gregory"
+	},
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bu" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 4
+	},
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bv" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/space_structures/ghostship)
+"bw" = (
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/space_structures/ghostship)
+"bx" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/grenade/chem_grenade,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"by" = (
+/obj/item/ammo_casing/a12mm,
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/grenade/chem_grenade,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bz" = (
+/obj/item/stack/sheet/metal,
+/obj/item/ammo_casing/a12mm,
+/turf/simulated/floor,
+/area/space_structures/ghostship)
+"bA" = (
+/obj/item/stack/cable_coil,
+/turf/space,
+/area/space)
+"bG" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bH" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space/elite,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bJ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall11"
+	},
+/area/space_structures/ghostship)
+"bK" = (
+/turf/simulated/floor,
+/area/space_structures/ghostship)
+"bM" = (
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/space_structures/ghostship)
+"bN" = (
+/obj/machinery/light_construct,
+/turf/simulated/floor/airless/ceiling,
+/area/space_structures/ghostship)
+"bO" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bP" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/space,
+/area/space_structures/ghostship)
+"bR" = (
+/obj/item/stack/sheet/metal,
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/space_structures/ghostship)
+"bS" = (
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/space_structures/ghostship)
+"bT" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bU" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall14"
+	},
+/area/space_structures/ghostship)
+"bV" = (
+/obj/effect/landmark/corpse/engineer{
+	corpseid = null;
+	corpseidaccess = null;
+	corpseidjob = null;
+	corpseradio = null;
+	mobname = "Dmitry Petrov";
+	name = "Dmitry Petrov"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"bW" = (
+/obj/structure/sign/nanotrasen,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall8"
+	},
+/area/space_structures/ghostship)
+"bX" = (
+/turf/simulated/floor{
+	icon_state = "damaged5"
+	},
+/area/space_structures/ghostship)
+"bY" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall15"
+	},
+/area/space_structures/ghostship)
+"bZ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall4"
+	},
+/area/space_structures/ghostship)
+"ca" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall13"
+	},
+/area/space_structures/ghostship)
+"cb" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/donkpocket,
+/obj/machinery/light_construct{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cc" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cd" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"ce" = (
+/obj/machinery/telecomms/hub,
+/obj/machinery/light_construct,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cf" = (
+/obj/structure/lattice,
+/obj/item/stack/rods,
+/turf/space,
+/area/space)
+"cg" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/bluespace_crystal,
+/obj/item/weapon/grenade/chem_grenade,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"ch" = (
+/obj/structure/closet/toolcloset,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/ghostship)
+"ci" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cj" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/bluespace_crystal,
+/obj/item/rig_module/nuclear_generator,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"ck" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_l"
+	},
+/turf/space,
+/area/space_structures/ghostship)
+"cl" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "engine"
+	},
+/area/space_structures/ghostship)
+"cm" = (
+/obj/structure/table/reinforced,
+/turf/simulated/floor,
+/area/space_structures/ghostship)
+"cn" = (
+/obj/structure/scrap/vehicle,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/ghostship)
+"co" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/space_structures/ghostship)
+"cp" = (
+/obj/item/ammo_casing/a12mm,
+/obj/machinery/door/unpowered/shuttle/officer,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cq" = (
+/obj/machinery/door/unpowered/shuttle/officer,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cr" = (
+/mob/living/simple_animal/hostile/viscerator,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cs" = (
+/obj/structure/scrap/vehicle,
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/space_structures/ghostship)
+"ct" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/space_structures/ghostship)
+"cu" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/metal,
+/turf/space,
+/area/space_structures/ghostship)
+"cv" = (
+/obj/effect/landmark/corpse/bridgeofficer{
+	corpseid = null;
+	corpseidaccess = null;
+	corpseidjob = null;
+	corpseradio = null;
+	mobname = "Hector Gregory";
+	name = "Hector Gregory"
+	},
+/obj/item/weapon/gun/projectile/shotgun/combat,
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cx" = (
+/obj/structure/sign/warning/nosmoking,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space_structures/ghostship)
+"cy" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cz" = (
+/obj/effect/landmark/corpse/bridgeofficer{
+	corpseid = null;
+	corpseidaccess = null;
+	corpseidjob = null;
+	corpseradio = null;
+	mobname = "Sergey Liam";
+	name = "Sergey Liam"
+	},
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cA" = (
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 4
+	},
+/obj/item/ammo_casing/a12mm{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/ammo_casing/a12mm{
+	pixel_x = 2;
+	pixel_y = -7
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/space_structures/ghostship)
+"cD" = (
+/obj/structure/scrap/vehicle,
+/turf/simulated/floor{
+	icon_state = "damaged5"
+	},
+/area/space_structures/ghostship)
+"cE" = (
+/obj/item/stack/sheet/plasteel,
+/turf/space,
+/area/space)
+"cG" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall1"
+	},
+/area/space_structures/ghostship)
+"cH" = (
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/space_structures/ghostship)
+"cK" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "1"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cL" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cM" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cN" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "5"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cO" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "6"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cP" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "7"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cQ" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cR" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "9"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cS" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "10"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cU" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "11"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"cV" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/bluespace_crystal,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"cX" = (
+/obj/item/stack/sheet/metal,
+/turf/space,
+/area/space)
+"cZ" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "12"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"da" = (
+/obj/structure/window/phoronreinforced{
+	dir = 5
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"dc" = (
+/obj/structure/sign/warning/radiation,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space_structures/ghostship)
+"dd" = (
+/obj/machinery/door/unpowered/shuttle/officer,
+/turf/simulated/floor{
+	icon_state = "damaged5"
+	},
+/area/space_structures/ghostship)
+"dg" = (
+/obj/structure/scrap/guns,
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/space_structures/ghostship)
+"dh" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "13"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"dl" = (
+/turf/simulated/floor/airless/ceiling,
+/area/space_structures/ghostship)
+"dn" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "14"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"dq" = (
+/obj/structure/scrap/vehicle,
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/space_structures/ghostship)
+"ds" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall8"
+	},
+/area/space_structures/ghostship)
+"dv" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space_structures/ghostship)
+"dQ" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "21"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"go" = (
+/obj/structure/computerframe{
+	anchored = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/ghostship)
+"hW" = (
+/obj/structure/table/reinforced,
+/obj/machinery/kitchen_machine/microwave,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"jP" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "27"
+	},
+/obj/item/weapon/stock_parts/cell/bluespace,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"ne" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "33"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"nh" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "25"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"nr" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space_structures/ghostship)
+"oI" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "31"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"pU" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "15"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"qN" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "34"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"tW" = (
+/obj/effect/landmark/corpse/bridgeofficer{
+	mobname = "John Price";
+	name = "John Price"
+	},
+/obj/item/ammo_casing/a12mm,
+/obj/item/ammo_casing/a12mm,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"wX" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "20"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"zW" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "32"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"Ah" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "26"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"DN" = (
+/obj/item/clothing/head/helmet/space/globose/black,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"DZ" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "22"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"Ft" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "35"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"FT" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"Hy" = (
+/obj/item/stack/sheet/metal,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/ghostship)
+"Hz" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "17"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"II" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "24"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"Kx" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "23"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"KJ" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "19"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"Ls" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "29"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"NE" = (
+/obj/item/stack/rods,
+/turf/simulated/floor{
+	icon_state = "damaged2"
+	},
+/area/space_structures/ghostship)
+"NH" = (
+/obj/machinery/computer/monitor,
+/turf/simulated/floor,
+/area/space_structures/ghostship)
+"Pv" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "16"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"PI" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "burst_r"
+	},
+/turf/space,
+/area/space_structures/ghostship)
+"SG" = (
+/obj/machinery/telecomms/server,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"UP" = (
+/obj/structure/lattice,
+/obj/structure/scrap/vehicle,
+/turf/space,
+/area/space_structures/ghostship)
+"WC" = (
+/obj/structure/artilleryplaceholder/decorative{
+	icon_state = "30"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"Xl" = (
+/obj/item/clothing/suit/space/globose/black,
+/turf/simulated/floor/airless,
+/area/space_structures/ghostship)
+"YH" = (
+/obj/structure/artilleryplaceholder{
+	icon_state = "18"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/ghostship)
+"YP" = (
+/obj/structure/sign/warning/fire,
+/turf/simulated/shuttle/wall{
+	icon_state = "swall4"
+	},
+/area/space_structures/ghostship)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bq
+aa
+aa
+aa
+aa
+aa
+aa
+cE
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bP
+bq
+aa
+cX
+aa
+bP
+PI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+cX
+aa
+aa
+aa
+cX
+bZ
+aa
+ck
+aa
+aa
+aa
+aa
+aa
+aa
+cl
+cl
+aa
+aa
+aa
+aa
+cX
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aG
+aa
+cl
+aa
+bP
+aa
+bP
+bP
+aa
+cm
+NH
+YP
+ci
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ah
+co
+aC
+aa
+aa
+aa
+bq
+bA
+cl
+aa
+aC
+aX
+aa
+aC
+aa
+bA
+aG
+co
+aC
+aa
+aa
+cE
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aG
+bU
+az
+aa
+aa
+cE
+aC
+cm
+aa
+aa
+aa
+cl
+ar
+aa
+aR
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aa
+bA
+cf
+cn
+aa
+aC
+cm
+aC
+ar
+aE
+aa
+aa
+aa
+cX
+dq
+aa
+aa
+aH
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+bs
+aa
+aa
+aS
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+cX
+bX
+aa
+aa
+aa
+aJ
+ca
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aa
+aC
+aa
+aa
+cE
+bM
+bg
+cX
+aa
+UP
+bK
+bV
+aR
+aa
+bq
+aC
+bX
+aT
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dv
+aE
+aa
+aa
+cs
+aC
+aC
+aa
+aa
+co
+aa
+aJ
+aE
+aa
+bq
+aa
+aC
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+bq
+aY
+bY
+aa
+aa
+bq
+aa
+aa
+aJ
+aC
+bY
+cG
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+cE
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dv
+bf
+ch
+dv
+aC
+aa
+aa
+aC
+cH
+ci
+aS
+aa
+bM
+aC
+aa
+cE
+bq
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cE
+aa
+aC
+aa
+ci
+aa
+aa
+bA
+aS
+aC
+bX
+bX
+dv
+bS
+aE
+aa
+aa
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ao
+co
+ap
+bX
+bM
+aC
+aa
+aa
+cH
+aE
+nr
+dv
+bX
+bX
+aJ
+aC
+aC
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ao
+bY
+ap
+bX
+nr
+cH
+aa
+bq
+cD
+bX
+Hy
+aJ
+dv
+bX
+bM
+aC
+aJ
+bY
+aH
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ao
+bY
+ap
+bX
+aE
+aJ
+bX
+aa
+aC
+aE
+aC
+bM
+FT
+dv
+SG
+aJ
+aJ
+aJ
+aF
+bY
+aH
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+af
+bJ
+ap
+aJ
+aJ
+aD
+co
+co
+bJ
+aC
+aa
+dd
+aY
+bo
+bJ
+co
+co
+aM
+aJ
+aJ
+aF
+bJ
+aH
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+dv
+aA
+aJ
+aE
+aD
+bY
+bY
+ap
+bl
+aa
+aV
+bX
+cH
+aJ
+aJ
+bT
+bY
+bY
+aM
+aJ
+Xl
+aJ
+dv
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+dv
+aE
+aJ
+aD
+bY
+ap
+ds
+bX
+ct
+ci
+aa
+aC
+cy
+bG
+cy
+aJ
+ds
+aF
+bY
+aM
+aJ
+DN
+dv
+aa
+aa
+"}
+(20,1,1) = {"
+ac
+be
+be
+be
+be
+be
+av
+aY
+bJ
+ap
+aI
+cp
+aJ
+cu
+aE
+bq
+dg
+NE
+aI
+bX
+aJ
+cq
+aJ
+aF
+bJ
+cG
+cq
+dv
+aa
+aa
+"}
+(21,1,1) = {"
+at
+ad
+bi
+bi
+bi
+aj
+be
+av
+cH
+bR
+aI
+bZ
+cH
+aI
+cy
+bM
+bM
+nr
+aJ
+aJ
+aJ
+bZ
+aJ
+aJ
+aJ
+aJ
+aJ
+dv
+aa
+aa
+"}
+(22,1,1) = {"
+ai
+bc
+bc
+bc
+bc
+bc
+aL
+cH
+aZ
+aD
+bo
+bY
+aM
+aJ
+bu
+aJ
+aJ
+aJ
+aJ
+aJ
+aD
+bY
+bo
+aM
+tW
+aJ
+aJ
+dv
+aa
+aa
+"}
+(23,1,1) = {"
+ab
+ae
+bd
+bd
+bd
+bc
+be
+ay
+bz
+dv
+aa
+aK
+bY
+bo
+bo
+cG
+cq
+aY
+bo
+bo
+bY
+bm
+aa
+dv
+aJ
+aJ
+aJ
+dv
+aa
+aa
+"}
+(24,1,1) = {"
+ag
+be
+be
+be
+be
+be
+ay
+aE
+bK
+dv
+aa
+aa
+dv
+bx
+bv
+aJ
+aJ
+aJ
+bv
+bx
+dv
+aa
+aa
+dv
+aJ
+cc
+aJ
+dv
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+ao
+ca
+bM
+cH
+bM
+bU
+au
+aa
+dv
+by
+cA
+aJ
+aJ
+aJ
+dl
+cg
+dv
+aa
+ao
+ca
+aJ
+aJ
+aJ
+bU
+aH
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+bU
+ap
+aJ
+aW
+bM
+aF
+ca
+aa
+dv
+cV
+dl
+cK
+dh
+nh
+dl
+cj
+dv
+aa
+bU
+ap
+cr
+cd
+cr
+bn
+ca
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+dv
+ak
+aI
+aJ
+aJ
+bp
+dv
+aa
+dv
+aJ
+dl
+cL
+dn
+ci
+dl
+aJ
+dv
+aa
+dv
+hW
+aJ
+bH
+cz
+bp
+dv
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+dv
+an
+aJ
+al
+aJ
+ba
+dv
+aa
+aQ
+aU
+dl
+aB
+pU
+Ah
+dl
+aD
+az
+aa
+dv
+cb
+cr
+aJ
+cr
+ce
+dv
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+dv
+aw
+aJ
+am
+aJ
+bt
+dv
+aa
+aa
+dc
+dl
+cM
+Pv
+jP
+dl
+dc
+aa
+aa
+dv
+aJ
+cv
+aJ
+aJ
+aJ
+dv
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+bW
+bO
+aJ
+aJ
+bO
+bb
+ds
+aa
+aa
+cx
+dl
+cN
+Hz
+go
+dl
+cx
+aa
+aa
+ds
+bO
+bO
+aJ
+bO
+bO
+bW
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+as
+ax
+aN
+bp
+ax
+ax
+as
+aa
+aa
+dv
+dl
+cO
+YH
+Ls
+dl
+dv
+aa
+aa
+as
+ax
+ax
+bp
+ax
+ax
+as
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+as
+as
+aO
+as
+as
+as
+as
+aa
+aa
+dv
+dl
+cP
+KJ
+WC
+dl
+dv
+aa
+aa
+as
+as
+as
+as
+as
+as
+as
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aP
+aa
+aa
+aa
+aa
+aa
+aa
+dv
+bw
+cQ
+wX
+oI
+bN
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dv
+dl
+cR
+dQ
+zW
+dl
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dv
+dl
+cS
+DZ
+ne
+dl
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dv
+dl
+cU
+Kx
+qN
+dl
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+dv
+dl
+cZ
+II
+Ft
+dl
+dv
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bW
+aq
+da
+da
+da
+aq
+bW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

@@ -1,5 +1,3 @@
-
-
 /obj/effect/scrap_pile_generator
 	name = "Gererates Scrap Pile"
 	icon_state = "rock"
@@ -32,13 +30,11 @@
 			makesparse |= get_step(T, todir)
 	makesparse -= makescrap
 	for(var/turf/T in makescrap)
-		if(!locate(/obj/structure/scrap in T.contents))
+		if(!(locate(/obj/structure/scrap) in T.contents))
 			new maintype(T)
 	for(var/turf/T in makesparse)
-		if(!locate(/obj/structure/scrap in T.contents))
+		if(!(locate(/obj/structure/scrap) in T.contents))
 			new subtype(T)
-
-
 
 /turf/simulated/mineral/airfull
 	basetype = /turf/simulated/floor/plating/ironsand
@@ -51,12 +47,26 @@
 	var/turf/A
 	for (var/newdir in alldirs)
 		A = get_step(src, newdir)
-		if(!A.density && !locate(/obj/structure/scrap in A.contents))
+		if(!A.density && !(locate(/obj/structure/scrap) in A.contents))
 			new /obj/random/scrap/dense_weighted(A)
+
+/turf/proc/resource_definition()
+	LAZYINITLIST(resources)
+	LAZYSET(resources, "silicates", rand(3,6))
+	LAZYSET(resources, "carbonaceous rock", rand(3,6))
+	LAZYSET(resources, "iron", rand(2,4))
+	LAZYSET(resources, "gold", rand(0,4))
+	LAZYSET(resources, "silver", rand(0,1))
+	LAZYSET(resources, "uranium", rand(0,4))
+	LAZYSET(resources, "diamond", rand(0,1))
+	LAZYSET(resources, "phoron", rand(2,4))
+	LAZYSET(resources, "osmium", rand(0,2))
+	LAZYSET(resources, "hydrogen", rand(2,4))
 
 /turf/simulated/floor/plating/ironsand/junkyard
 	var/dug = 0
-
+	has_resources = 1
+	can_deconstruct = FALSE
 
 /turf/simulated/floor/plating/ironsand/junkyard/surround_by_scrap()
 	if(prob(1))
@@ -124,7 +134,7 @@
 		if(!istype(T, /turf))
 			return 0
 		if (!dug)
-			if(!user.is_busy() && do_after(user, 60, target = src))
+			if(!user.is_busy() && W.use_tool(src, user, 60))
 				if(!dug) //someone else digged here
 					visible_message("<span class='notice'>\The [user] shovels new grave.</span>")
 					new /obj/structure/pit(src)

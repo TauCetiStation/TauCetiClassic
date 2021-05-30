@@ -28,17 +28,17 @@
 	blood_datum = /datum/dirt_cover/green_blood
 
 
-/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/monkey/diona/is_facehuggable()
+	return FALSE
 
-	//Let people pick the little buggers up.
-	if(M.a_intent == "grab")
-		if(M.species && M.species.name == DIONA)
-			visible_message("<span class='notice'>[M] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
-			if(M.is_busy() || !do_after(M, 40, target = src))
-				return
-			merging(M)
-			return
-	..()
+/mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	if(attacker.get_species() == DIONA)
+		visible_message("<span class='notice'>[attacker] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
+		if(attacker.is_busy() || !do_after(attacker, 4 SECONDS, target = src))
+			return TRUE
+		merging(attacker)
+		return TRUE
+	return ..()
 
 /mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
@@ -129,7 +129,11 @@
 		to_chat(src, "<span class='notice'>It would appear, that you do not have enough nutrition to pass knowledge onto [gestalt].</span>")
 		return
 
-	var/langdiff = languages - gestalt.languages
+	var/list/langdiff = languages - gestalt.languages
+	if(langdiff.len == 0)
+		to_chat(src, "<span class='notice'>It would appear, that [gestalt] already knows all you could give.</span>")
+		return
+
 	var/datum/language/L = pick(langdiff)
 	to_chat(gestalt, "<span class ='notice'>It would seem [src] is trying to pass on their knowledge onto you.</span>")
 	to_chat(src, "<span class='notice'>You concentrate your willpower on transcribing [L.name] onto [gestalt], this may take a while.</span>")
@@ -141,7 +145,7 @@
 	to_chat(src, "<span class='notice'>It would seem you have passed on [L.name] onto [gestalt] succesfully.</span>")
 	to_chat(gestalt, "<span class='notice'>It would seem you have acquired knowledge of [L.name]!</span>")
 	if(prob(50))
-		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span")
+		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span>")
 		remove_language(L.name)
 
 /mob/living/carbon/monkey/diona/verb/synthesize()
@@ -190,7 +194,7 @@
 
 	src.nutrition -= ((10-target.nutrilevel)*5)
 	target.nutrilevel = 10
-	src.visible_message("\red [src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.","\red You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.")
+	src.visible_message("<span class='warning'>[src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.</span>","<span class='warning'>You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.</span>")
 
 /mob/living/carbon/monkey/diona/verb/eat_weeds()
 
@@ -209,7 +213,7 @@
 
 	src.reagents.add_reagent("nutriment", target.weedlevel)
 	target.weedlevel = 0
-	src.visible_message("\red [src] begins rooting through [target], ripping out weeds and eating them noisily.","\red You begin rooting through [target], ripping out weeds and eating them noisily.")
+	src.visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
 
 /mob/living/carbon/monkey/diona/verb/evolve()
 
@@ -234,7 +238,7 @@
 		return
 
 	src.split()
-	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.","\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
+	src.visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>","<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>")
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
 	adult.set_species(DIONA)
@@ -270,14 +274,14 @@
 	if(!M || !src) return
 
 	if(M.species.flags[NO_BLOOD])
-		to_chat(src, "\red That donor has no blood to take.")
+		to_chat(src, "<span class='warning'>That donor has no blood to take.</span>")
 		return
 
 	if(donors.Find(M.real_name))
-		to_chat(src, "\red That donor offers you nothing new.")
+		to_chat(src, "<span class='warning'>That donor offers you nothing new.</span>")
 		return
 
-	src.visible_message("\red [src] flicks out a feeler and neatly steals a sample of [M]'s blood.","\red You flick out a feeler and neatly steal a sample of [M]'s blood.")
+	src.visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
 		languages |= L
@@ -292,12 +296,12 @@
 
 	if(donors.len == 5)
 		ready_evolve = 1
-		to_chat(src, "\green You feel ready to move on to your next stage of growth.")
+		to_chat(src, "<span class='notice'>You feel ready to move on to your next stage of growth.</span>")
 	else if(donors.len == 3)
 		universal_understand = 1
-		to_chat(src, "\green You feel your awareness expand, and realize you know how to understand the creatures around you.")
+		to_chat(src, "<span class='notice'>You feel your awareness expand, and realize you know how to understand the creatures around you.</span>")
 	else
-		to_chat(src, "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.")
+		to_chat(src, "<span class='notice'>The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.</span>")
 
 
 /mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
@@ -307,16 +311,16 @@
 			return 1
 	return ..()
 
-/mob/living/carbon/monkey/diona/say(var/message)
+/mob/living/carbon/monkey/diona/say(message)
 	var/verb = "says"
 	var/message_range = world.view
 
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (Muted).")
+			to_chat(src, "<span class='warning'>You cannot speak in IC (Muted).</span>")
 			return
 
-	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = copytext_char(trim(message), 1, MAX_MESSAGE_LEN)
 
 	if(stat == DEAD)
 		return say_dead(message)
@@ -324,7 +328,7 @@
 	var/datum/language/speaking = parse_language(message)
 	if(speaking)
 		verb = speaking.speech_verb
-		message = trim(copytext(message,2+length(speaking.key)))
+		message = trim(copytext_char(message,2+length_char(speaking.key)))
 
 	if(!message || stat)
 		return

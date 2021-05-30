@@ -11,6 +11,7 @@
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
+	desc = "Charges exosuits. It consumes a lot of energy when working."
 	density = 1
 	anchored = 1
 	dir = 4
@@ -32,7 +33,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 	recharging_turf = get_step(loc, dir)
 
@@ -75,7 +76,7 @@
 	default_deconstruction_crowbar(I)
 
 	if(panel_open)
-		if(istype(I, /obj/item/device/multitool))
+		if(ismultitool(I))
 			var/obj/item/device/multitool/MT = I
 			if(istype(MT.buffer, /obj/machinery/computer/mech_bay_power_console))
 				recharge_console = MT.buffer
@@ -90,13 +91,15 @@
 	anchored = 1
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "recharge_comp"
+	state_broken_preset = "techb"
+	state_nopower_preset = "tech0"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 
 /obj/machinery/computer/mech_bay_power_console/attackby(obj/item/I, mob/user)
 	..()
-	if(istype(I, /obj/item/device/multitool))
+	if(ismultitool(I))
 		var/obj/item/device/multitool/MT = I
 		MT.buffer = src
 		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")
@@ -104,18 +107,21 @@
 /obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user)
 	var/data
 	if(!recharge_port)
-		data += "<div class='statusDisplay'>No recharging port detected.</div><BR>"
+		data += "<div class='Section'>No recharging port detected.</div><BR>"
 		data += "<A href='?src=\ref[src];reconnect=1'>Reconnect</A>"
 	else
-		data += "<h3>Mech status</h3>"
+		data += "<div class='Section__title'>Mech status</div>"
 		if(!recharge_port.recharging_mech)
-			data += "<div class='statusDisplay'>No mech detected.</div>"
+			data += "<div class='Section'>No mech detected.</div>"
 		else
-			data += "<div class='statusDisplay'>Integrity: [recharge_port.recharging_mech.health]<BR>"
-			if(recharge_port.recharging_mech.cell.crit_fail)
-				data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
+			data += "<div class='Section'>Integrity: [recharge_port.recharging_mech.health]<BR>"
+			if(!recharge_port.recharging_mech.cell)
+				data += "<span class='bad'>No cell detected in the mech.</span><BR>"
 			else
-				data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
+				if(recharge_port.recharging_mech.cell.crit_fail)
+					data += "<span class='bad'>WARNING : the mech cell seems faulty!</span></div>"
+				else
+					data += "Power: [recharge_port.recharging_mech.cell.charge]/[recharge_port.recharging_mech.cell.maxcharge]</div>"
 
 	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
 	popup.set_content(data)
@@ -152,6 +158,7 @@
 	update_icon()
 
 /obj/machinery/computer/mech_bay_power_console/update_icon()
+	. = ..()
 	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge))
 		icon_state = "recharge_comp"
 	else

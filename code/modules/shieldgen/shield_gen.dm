@@ -8,7 +8,7 @@
 /obj/machinery/shield_gen
 	name = "shield generator"
 	desc = "Machine that generates an impenetrable field of energy when activated."
-	icon = 'code/modules/shieldgen/shielding.dmi'
+	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "generator0"
 	var/active = 0
 	var/field_radius = 3
@@ -25,7 +25,7 @@
 	var/time_since_fail = 100
 	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
 	//
-	use_power = 1			//0 use nothing
+	use_power = IDLE_POWER_USE			//0 use nothing
 							//1 use idle power
 							//2 use active power
 	idle_power_usage = 20
@@ -50,25 +50,16 @@
 /obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = W
-		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
+		if((access_captain in C.access) || (access_security in C.access) || (access_engine in C.access))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			to_chat(user, "\red Access denied.")
-	else if(istype(W, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(prob(75))
-			src.locked = !src.locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-			updateDialog()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("\blue [bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].")
+		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 
 		if(active)
 			toggle()
@@ -89,19 +80,29 @@
 	else
 		..()
 
+/obj/machinery/shield_gen/emag_act(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	return TRUE
+
 /obj/machinery/shield_gen/ui_interact(mob/user)
 	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
-	var/t = "<B>Shield Generator Control Console</B><BR><br>"
+	var/t = ""
 	if(locked && !isobserver(user))
-		t += "<i>Swipe your ID card to begin.</i>"
+		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"
-		t += "This generator is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
-		t += "[time_since_fail > 2 ? "<font color=green>Field is stable.</font>" : "<font color=red>Warning, field is unstable!</font>"]<br>"
+		t += "[owned_capacitor ? "<span class='green'>Charge capacitor connected.</span>" : "<span class='red'>Unable to locate charge capacitor!</span>"]<br>"
+		t += "This generator is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
+		t += "[time_since_fail > 2 ? "<span class='green'>Field is stable.</span>" : "<span class='red'>Warning, field is unstable!</span>"]<br>"
 		t += "Coverage diameter (restart required): \
 		<a href='?src=\ref[src];change_radius=-50'>---</a> \
 		<a href='?src=\ref[src];change_radius=-5'>--</a> \
@@ -117,17 +118,19 @@
 		<a href='?src=\ref[src];strengthen_rate=0.1'>++</a><br>"
 		t += "Additional energy required to charge: [field.len * strengthen_rate / energy_conversion_rate] Watts/sec<br>"
 		t += "Maximum field strength: \
-		<a href='?src=\ref[src];target_field_strength=-100'>\[min\]</a> \
+		<a href='?src=\ref[src];target_field_strength=-100'>min</a> \
 		<a href='?src=\ref[src];target_field_strength=-10'>--</a> \
 		<a href='?src=\ref[src];target_field_strength=-1'>-</a> \
 		[target_field_strength] Renwicks \
 		<a href='?src=\ref[src];target_field_strength=1'>+</a> \
 		<a href='?src=\ref[src];target_field_strength=10'>++</a> \
-		<a href='?src=\ref[src];target_field_strength=100'>\[max\]</a><br>"
+		<a href='?src=\ref[src];target_field_strength=100'>max</a><br>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(entity_ja(t), "window=shield_generator;size=500x400")
+
+	var/datum/browser/popup = new(user, "shield_generator", "Shield Generator Control Console", 500, 400)
+	popup.set_content(t)
+	popup.open()
 
 /obj/machinery/shield_gen/process()
 
@@ -166,11 +169,6 @@
 		average_field_strength = 0
 
 /obj/machinery/shield_gen/Topic(href, href_list[])
-	if(href_list["close"])
-		usr << browse(null, "window=shield_generator")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -212,10 +210,12 @@
 			spawn(rand(0, 15))
 				src.icon_state = "generator0"
 				stat |= NOPOWER
+				update_power_use()
 			if (src.active)
 				toggle()
+	update_power_use()
 
-/obj/machinery/shield_gen/ex_act(var/severity)
+/obj/machinery/shield_gen/ex_act(severity)
 
 	if(active)
 		toggle()

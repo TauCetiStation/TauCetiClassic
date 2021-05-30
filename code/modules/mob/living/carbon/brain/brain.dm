@@ -1,11 +1,9 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /mob/living/carbon/brain
 	var/obj/item/container = null
 	var/timeofhostdeath = 0
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/alert = null
-	use_me = 0 //Can't use the me verb, it's a freaking immobile brain
+	me_verb_allowed = 0 //Can't use the emote proc, it's a freaking immobile brain
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
 
@@ -53,6 +51,10 @@
 /mob/living/carbon/brain/update_canmove()
 	if(in_contents_of(/obj/mecha))
 		canmove = 1
-		use_me = 1 //If it can move, let it emote
 	else							canmove = 0
 	return canmove
+
+/mob/living/carbon/brain/update_hud()
+	if(client)
+		if(hud_used)
+			hud_used.reload_fullscreen()

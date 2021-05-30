@@ -37,16 +37,15 @@
 
 	for(var/datum/intruder_tools/T in tools)
 		dat += "[T.name] ([T.cost]):"
-		var/buyable = (available_telecrystalls >= T.cost)
-		dat += "<a href ='?src=\ref[src];buy=\ref[T]'>[buyable ? "Buy"  : "<font color='grey'>Buy</font>"]</a> | "
+		var/buyable = (stored_uplink && stored_uplink.hidden_uplink && available_telecrystalls >= T.cost)
+		dat += "<a [!buyable ? "class='disabled'" : null] href ='?src=\ref[src];buy=\ref[T]'>Buy</a> | "
 		dat += "<a href ='?src=\ref[src];desc=\ref[T]'>Show Desc</a><BR>"
 		if(show_tool_desc == T)
 			dat += "[T.desc]<BR>"
 		dat += "<BR>"
 
-	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500)
+	var/datum/browser/popup = new(user, "intruder_computer", "Management Console of Intruding", 700, 500, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/intruder_station/Topic(href, href_list)
@@ -88,6 +87,15 @@
 		console.tools -= src
 		qdel(src)
 
+
+/datum/intruder_tools/war_device
+	name = "War Device"
+	desc = "Device to send a declaration of hostilities to the target, delaying your shuttle departure for 20 minutes while they prepare for your assault.  \
+			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
+			Must be used within five minutes, or your benefactors will lose interest."
+	delete_dat_after_buying = TRUE
+	item = /obj/item/device/nuclear_challenge
+
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
 	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuit's in addition."
@@ -96,7 +104,7 @@
 
 /datum/intruder_tools/shuttle_unlocker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	var/area/cur_area = get_area(console)
-	if(!istype(cur_area, /area/syndicate_mothership))
+	if(!istype(cur_area, /area/custom/syndicate_mothership))
 		to_chat(user, "<span class='userdanger'>If you see this, Please, Notify nearest coder or mapper about wrong place of this station!</span>")
 		return
 
@@ -104,7 +112,7 @@
 		if(shutter.dock_tag == "Syndicate_shuttle")
 			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
 			qdel(shutter)
-			playsound(console, 'sound/machines/twobeep.ogg', 50, 2)
+			playsound(console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			for(var/datum/intruder_tools/gateway_locker/D in console.tools)
 				console.tools -= D
 				qdel(D)
@@ -157,8 +165,21 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/rig
 	cost = 8
 
+/datum/intruder_tools/heavy_rig
+	name = "Heavy Syndi Rig"
+	desc = "Combat rig fitted with heavy armor plates made to endure even the greatest damage, developed off existing 'Striker' space suit."
+	item = /obj/item/weapon/storage/box/syndie_kit/heavy_rig
+	cost = 12
+
 /datum/intruder_tools/armor
 	name = "Syndi Assault Armor"
 	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
 	item = /obj/item/weapon/storage/box/syndie_kit/armor
 	cost = 4
+
+/datum/intruder_tools/hazmat
+	name = "Experimental Chemical Warfare Kit"
+	desc = "Experimental kit consisting of menacing hazmat space suit designed to strike terror into Nanotrasen employees and chemical tank filled with deadly mix of poisons, drugs and combustible fuel. The tank comes with a handy meister attached. Additional chemicals can be bought via uplink to refill the tank."
+	item = /obj/item/weapon/storage/box/syndie_kit/chemical
+	cost = 20
+	delete_dat_after_buying = TRUE

@@ -23,7 +23,7 @@
 		return
 	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his [weapon_name_simple] into an arm!</span>",
 	 "<span class='notice'>We assimilate the [weapon_name_simple] from our body.</span>",
-	 "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	 "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	return ..(user, target)
 
 /obj/effect/proc_holder/changeling/weapon/sting_action(mob/user)
@@ -68,7 +68,7 @@
 			var/turf/simulated/T = get_turf(H)
 			if(istype(T))
 				T.add_blood(H) //So real blood decals
-				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+				playsound(H, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER) //So real sounds
 
 		changeling.geneticdamage += genetic_damage //Casting off a space suit leaves you weak for a few seconds.
 		changeling.chem_recharge_slowdown -= recharge_slowdown
@@ -86,8 +86,8 @@
 	user.drop_from_inventory(user.head)
 	user.drop_from_inventory(user.wear_suit)
 
-	user.equip_to_slot_if_possible(new suit_type(user), slot_wear_suit, 1, 1, 1)
-	user.equip_to_slot_if_possible(new helmet_type(user), slot_head, 1, 1, 1)
+	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, 1, 1, 1)
+	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, 1, 1, 1)
 
 	var/datum/changeling/changeling = user.mind.changeling
 	changeling.chem_recharge_slowdown += recharge_slowdown
@@ -113,7 +113,7 @@
 	item_state = "arm_blade"
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	force = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
@@ -125,10 +125,10 @@
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/melee/arm_blade/dropped(mob/user)
-	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate the blade back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	qdel(src)
+	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his blade into an arm!</span>", "<span class='notice'>We assimilate the blade back into our body.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
+	..()
 
-/obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity)
+/obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(istype(target, /obj/structure/table))
@@ -198,7 +198,7 @@
 			visible_message(
 				"<span class='warning'>With a sickening crunch, [H] reforms his shield into an arm!</span>",
 				"<span class='notice'>We assimilate our shield into our body</span>",
-				"<span class='warning>You hear organic matter ripping and tearing!</span>"
+				"<span class='warning'>You hear organic matter ripping and tearing!</span>"
 				)
 		qdel(src)
 		return 0

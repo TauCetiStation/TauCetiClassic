@@ -15,7 +15,7 @@
 	desc = "Has a valve and pump attached to it."
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 
@@ -46,18 +46,18 @@
 	var/pressure_checks_default = PRESSURE_CHECKS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_vent_out"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = 0
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_vent_in"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_vent_in"
 	external_pressure_bound = 0
 	external_pressure_bound_default = 0
@@ -96,12 +96,12 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "Large Air Vent"
-	power_channel = EQUIP
+	power_channel = STATIC_EQUIP
 	power_rating = 15000	//15 kW ~ 20 HP
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
 	icon_state = "map_vent_out"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/atom_init()
 	. = ..()
@@ -111,7 +111,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/engine
 	name = "Engine Core Vent"
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	power_rating = 30000	//15 kW ~ 20 HP
 
 /obj/machinery/atmospherics/components/unary/vent_pump/engine/atom_init()
@@ -124,13 +124,15 @@
 	if(!check_icon_cache())
 		return
 
-	overlays.Cut()
+	cut_overlays()
 
 	var/vent_icon = "vent"
 
 	var/turf/T = get_turf(src)
 	if(!istype(T))
 		return
+
+	..()
 
 	var/obj/machinery/atmospherics/node = NODE1
 
@@ -144,7 +146,7 @@
 	else
 		vent_icon += "[use_power ? "[pump_direction ? "out" : "in"]" : "off"]"
 
-	overlays += icon_manager.get_atmos_icon("device", , , vent_icon)
+	add_overlay(icon_manager.get_atmos_icon("device", , , vent_icon))
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_underlays()
 	if(..())
@@ -183,7 +185,7 @@
 	if (hibernate > world.time)
 		return
 	if (!NODE1)
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 	if(!can_pump())
 		return
 
@@ -290,10 +292,10 @@
 		pump_direction = 1
 
 	if(signal.data["power"] != null)
-		use_power = text2num(signal.data["power"])
+		set_power_use(text2num(signal.data["power"]))
 
 	if(signal.data["power_toggle"] != null)
-		use_power = !use_power
+		set_power_use(!use_power)
 
 	if(signal.data["checks"] != null)
 		if (signal.data["checks"] == "default")
@@ -327,6 +329,12 @@
 				ONE_ATMOSPHERE * 50
 			)
 
+	if(signal.data["reset_internal_pressure"] != null)
+		internal_pressure_bound = internal_pressure_bound_default
+
+	if(signal.data["reset_external_pressure"] != null)
+		external_pressure_bound = external_pressure_bound_default
+
 	if(signal.data["adjust_internal_pressure"] != null)
 		internal_pressure_bound = between(
 			0,
@@ -356,8 +364,9 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		if(user.is_busy()) return
+	if(iswelder(W))
+		if(user.is_busy(src))
+			return
 
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -365,13 +374,11 @@
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
 			return
 
-		if(!WT.remove_fuel(0, user))
+		if(!WT.use(0, user))
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
-		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-
-		if(!do_after(user, 20, null, src))
+		if(!WT.use_tool(src, user, 20, volume = 50))
 			to_chat(user, "<span class='notice'>You must remain close to finish this task.</span>")
 			return
 

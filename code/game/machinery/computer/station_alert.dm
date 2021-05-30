@@ -2,14 +2,21 @@
 /obj/machinery/computer/station_alert
 	name = "Station Alert Console"
 	desc = "Used to access the station's automated alert system."
-	icon_state = "alert:0"
+	icon_state = "atmos"
 	light_color = "#e6ffff"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
+/obj/machinery/computer/station_alert/atom_init()
+	. = ..()
+	station_alert_list += src
+
+/obj/machinery/computer/station_alert/Destroy()
+	station_alert_list -= src
+	return ..()
+
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"
+	var/dat = ""
 	for (var/cat in src.alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
 		var/list/L = src.alarms[cat]
@@ -27,8 +34,10 @@
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
-	user << browse(entity_ja(dat), "window=alerts")
-	onclose(user, "alerts")
+
+	var/datum/browser/popup = new(user, "window=alerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, alarmsource)
 	if(stat & (BROKEN))
@@ -86,6 +95,6 @@
 			var/list/L = src.alarms[cat]
 			if(L.len) active_alarms = 1
 		if(active_alarms)
-			icon_state = "alert:2"
+			icon_state = "atmos_alert_2"
 		else
-			icon_state = "alert:0"
+			icon_state = "atmos_alert_0"

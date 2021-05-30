@@ -16,47 +16,47 @@
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return 1
 
-/obj/item/device/transfer_valve/attackby(obj/item/item, mob/user)
-	if(istype(item, /obj/item/weapon/tank))
+/obj/item/device/transfer_valve/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/tank))
 		if(tank_one && tank_two)
 			to_chat(user, "<span class='warning'>There are already two tanks attached, remove one first.</span>")
 			return
 
 		if(!tank_one)
-			tank_one = item
-			user.drop_item()
-			item.loc = src
+			tank_one = I
+			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 		else if(!tank_two)
-			tank_two = item
-			user.drop_item()
-			item.loc = src
+			tank_two = I
+			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='notice'>You attach the tank to the transfer valve.</span>")
 
 		update_icon()
 		nanomanager.update_uis(src) // update all UIs attached to src
+
 //TODO: Have this take an assemblyholder
-	else if(isassembly(item))
-		var/obj/item/device/assembly/A = item
+	else if(isassembly(I))
+		var/obj/item/device/assembly/A = I
 		if(A.secured)
 			to_chat(user, "<span class='notice'>The device is secured.</span>")
 			return
 		if(attached_device)
 			to_chat(user, "<span class='warning'>There is already an device attached to the valve, remove it first.</span>")
 			return
-		user.remove_from_mob(item)
+		user.drop_from_inventory(A, src)
 		attached_device = A
-		A.loc = src
-		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
+		to_chat(user, "<span class='notice'>You attach the [A] to the valve controls and secure it.</span>")
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
-		bombers += "[key_name(user)] attached a [item] to a transfer valve."
-		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
+		bombers += "[key_name(user)] attached a [A] to a transfer valve."
+		message_admins("[key_name_admin(user)] attached a [A] to a transfer valve. [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] attached a [A] to a transfer valve.")
 		attacher = user
 		nanomanager.update_uis(src) // update all UIs attached to src
-	return
+
+	else
+		return ..()
 
 
 /obj/item/device/transfer_valve/HasProximity(atom/movable/AM)
@@ -96,7 +96,7 @@
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()
-	if ( usr.stat || usr.restrained() )
+	if ( usr.incapacitated() )
 		return 0
 	if (src.loc != usr)
 		return 0
@@ -133,7 +133,7 @@
 			toggle = 1
 
 /obj/item/device/transfer_valve/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)
@@ -142,13 +142,13 @@
 	icon_state = "valve"
 
 	if(tank_one)
-		overlays += "[tank_one.icon_state]"
+		add_overlay("[tank_one.icon_state]")
 	if(tank_two)
 		var/icon/J = new(icon, icon_state = "[tank_two.icon_state]")
 		J.Shift(WEST, 13)
 		underlays += J
 	if(attached_device)
-		overlays += "device"
+		add_overlay("device")
 
 /obj/item/device/transfer_valve/proc/merge_gases()
 	tank_two.air_contents.volume += tank_one.air_contents.volume
@@ -196,7 +196,7 @@
 		log_str += " Last touched by: [src.fingerprintslast][last_touch_info]"
 		bombers += log_str
 		message_admins(log_str)
-		log_game(log_str)
+		log_game("Bomb valve opened in [A.name] with [attached_device ? attached_device : "no device"] attacher: [attacher_name], last touched by [mob ? "[key_name(mob)]" : "[src.fingerprintslast][last_touch_info]"]")
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)

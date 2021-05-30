@@ -1,3 +1,5 @@
+#define NOTHING_FILTER "Nothing"
+
 /obj/machinery/atmospherics/components/trinary/filter
 	icon = 'icons/atmos/filter.dmi'
 	icon_state = "map"
@@ -13,20 +15,10 @@
 
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_FILTER
 
-	/*
-	Filter types:
-	-1: Nothing
-	 0: Phoron: Phoron, Oxygen Agent B
-	 1: Oxygen: Oxygen ONLY
-	 2: Nitrogen: Nitrogen ONLY
-	 3: Carbon Dioxide: Carbon Dioxide ONLY
-	 4: Sleeping Agent (N2O)
-	*/
-	var/filter_type = -1
+	var/filter_type = NOTHING_FILTER  // or gas id
 	var/list/filtered_out = list()
-
-
 	frequency = 0
+	var/filters_dat
 
 /obj/machinery/atmospherics/components/trinary/filter/on
 	icon_state = "map_on"
@@ -40,17 +32,9 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/atom_init()
 	. = ..()
-	switch(filter_type)
-		if(0) //removing hydrocarbons
-			filtered_out = list("phoron")
-		if(1) //removing O2
-			filtered_out = list("oxygen")
-		if(2) //removing N2
-			filtered_out = list("nitrogen")
-		if(3) //removing CO2
-			filtered_out = list("carbon_dioxide")
-		if(4)//removing N2O
-			filtered_out = list("sleeping_agent")
+
+	if(filter_type != NOTHING_FILTER)
+		filtered_out = list("[filter_type]")
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -60,7 +44,12 @@
 	air2.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air3.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
+	for(var/id in gas_data.gases)
+		if(gas_data.gases_knowable[id])
+			filters_dat += "<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"
+
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
+	..()
 	if(istype(src, /obj/machinery/atmospherics/components/trinary/filter/m_filter))
 		icon_state = "m"
 	else
@@ -126,40 +115,25 @@
 /obj/machinery/atmospherics/components/trinary/filter/ui_interact(user) // -- TLE
 	var/dat
 	var/current_filter_type
-	switch(filter_type)
-		if(0)
-			current_filter_type = "Phoron"
-		if(1)
-			current_filter_type = "Oxygen"
-		if(2)
-			current_filter_type = "Nitrogen"
-		if(3)
-			current_filter_type = "Carbon Dioxide"
-		if(4)
-			current_filter_type = "Nitrous Oxide"
-		if(-1)
-			current_filter_type = "Nothing"
-		else
-			current_filter_type = "ERROR - Report this bug to the admin, please!"
+
+	current_filter_type = filter_type
 
 	dat += {"
 			<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
-			<b>Filtering: </b>[current_filter_type]<br><HR>
-			<h4>Set Filter Type:</h4>
-			<A href='?src=\ref[src];filterset=0'>Phoron</A><BR>
-			<A href='?src=\ref[src];filterset=1'>Oxygen</A><BR>
-			<A href='?src=\ref[src];filterset=2'>Nitrogen</A><BR>
-			<A href='?src=\ref[src];filterset=3'>Carbon Dioxide</A><BR>
-			<A href='?src=\ref[src];filterset=4'>Nitrous Oxide</A><BR>
-			<A href='?src=\ref[src];filterset=-1'>Nothing</A><BR>
+			<b>Filtering: </b>[ current_filter_type != NOTHING_FILTER ? gas_data.name[current_filter_type] : NOTHING_FILTER ]<br><HR>
+			<h4>Set Filter Type:</h4>"}
+	dat += filters_dat
+	dat += {"
+			<A href='?src=\ref[src];filterset=NOTHING_FILTER'>[NOTHING_FILTER]</A><BR>
 			<HR>
 			<B>Set Flow Rate Limit:</B>
 			[src.set_flow_rate]L/s | <a href='?src=\ref[src];set_flow_rate=1'>Change</a><BR>
 			<B>Flow rate: </B>[round(last_flow_rate, 0.1)]L/s
 			"}
 
-	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=atmo_filter")
-	onclose(user, "atmo_filter")
+	var/datum/browser/popup = new(user, "atmo_filter", "[src.name] control")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list) // -- TLE
 	if(!..())
@@ -169,20 +143,15 @@
 	add_fingerprint(usr)
 
 	if(href_list["filterset"])
-		filter_type = text2num(href_list["filterset"])
+		if(gas_data.gases_knowable[href_list["filterset"]])
+			filter_type = href_list["filterset"]
+		else
+			filter_type = NOTHING_FILTER
 
 		filtered_out.Cut() //no need to create new lists unnecessarily
-		switch(filter_type)
-			if(0) // removing hydrocarbons
-				filtered_out += "phoron"
-			if(1) // removing O2
-				filtered_out += "oxygen"
-			if(2) // removing N2
-				filtered_out += "nitrogen"
-			if(3) // removing CO2
-				filtered_out += "carbon_dioxide"
-			if(4) // removing N2O
-				filtered_out += "sleeping_agent"
+
+		if(filter_type != NOTHING_FILTER)
+			filtered_out += filter_type
 
 	var/datum/gas_mixture/air1 = AIR1
 
@@ -214,3 +183,5 @@
 			initialize_directions = EAST|WEST|NORTH
 		if(WEST)
 			initialize_directions = WEST|SOUTH|EAST
+
+#undef NOTHING_FILTER

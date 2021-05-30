@@ -1,9 +1,12 @@
 #define ARRIVAL_SHUTTLE_MOVE_TIME 175
 #define ARRIVAL_SHUTTLE_COOLDOWN 650
+#define ARRIVAL_SHUTTLE_VELOCITY 0
+#define ARRIVAL_SHUTTLE_TRANSIT 1
+#define ARRIVAL_SHUTTLE_EXODUS 2
 
 
-var/location = 0 // 0 - Start 2 - NSS Exodus 1 - transit
-var/moving = 0
+var/location = ARRIVAL_SHUTTLE_VELOCITY // 0 - Start 2 - NSS Exodus 1 - transit
+var/moving = FALSE
 var/area/curr_location
 var/lastMove = 0
 
@@ -17,12 +20,14 @@ var/lastMove = 0
 
 
 /obj/machinery/computer/arrival_shuttle/atom_init()
-//	curr_location= locate(/area/shuttle/arrival/pre_game)
+//	curr_location= locate(/area/shuttle/arrival/velocity)
+	arrival_note = "Arrival shuttle docked with the [station_name()]."
+	department_note = "Arrival shuttle left the [station_name()]."
 	radio = new (src)
 	. = ..()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
-	if(moving || location != 2 || !SSshuttle)
+	if(moving || location != ARRIVAL_SHUTTLE_EXODUS || !SSshuttle)
 		return
 	var/myArea = get_area(src)
 	if(SSshuttle.forbidden_atoms_check(myArea))
@@ -41,21 +46,21 @@ var/lastMove = 0
 		return
 	if(!arrival_shuttle_ready_move())
 		return
-	moving = 1
+	moving = TRUE
 	lastMove = world.time
 	var/area/fromArea
 	var/area/toArea
 	var/area/destArea
 	var/destLocation
 
-	if(location == 0)
-		fromArea = locate(/area/shuttle/arrival/pre_game)
+	if(location == ARRIVAL_SHUTTLE_VELOCITY)
+		fromArea = locate(/area/shuttle/arrival/velocity)
 		destArea = locate(/area/shuttle/arrival/station)
-		destLocation = 2
-	else if(location == 2)
+		destLocation = ARRIVAL_SHUTTLE_EXODUS
+	else if(location == ARRIVAL_SHUTTLE_EXODUS)
 		fromArea = locate(/area/shuttle/arrival/station)
-		destArea = locate(/area/shuttle/arrival/pre_game)
-		destLocation = 0
+		destArea = locate(/area/shuttle/arrival/velocity)
+		destLocation = ARRIVAL_SHUTTLE_VELOCITY
 	else
 		return
 
@@ -82,83 +87,64 @@ var/lastMove = 0
 
 	toArea.parallax_movedir = WEST
 	fromArea.move_contents_to(toArea, null, WEST)
-	shake_mobs(toArea)
+	location = ARRIVAL_SHUTTLE_TRANSIT
+	play_flying_sound(toArea)
+	SSshuttle.shake_mobs_in_area(toArea, EAST)
 
-	location = 1
 	curr_location = toArea
 	fromArea = toArea
 	toArea = destArea
+
 	sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
 	curr_location.parallax_slowdown()
 	sleep(PARALLAX_LOOP_TIME)
 
 	fromArea.move_contents_to(toArea, null, WEST)
-	radio.autosay(arrival_note, "Arrivals Alert System")
 
-	shake_mobs(toArea)
+	// Sending message only on EXODUS
+	if (destLocation == ARRIVAL_SHUTTLE_EXODUS)
+		if (!radio_message_via_ai(arrival_note))
+			radio.autosay(arrival_note, "Arrivals Alert System")
 
 	location = destLocation
+	play_flying_sound(toArea)
+	SSshuttle.shake_mobs_in_area(toArea, WEST)
+
 	curr_location = destArea
-	moving = 0
+	moving = FALSE
 	open_doors(toArea, location)
 
-	if(location == 2)
+	if(location == ARRIVAL_SHUTTLE_EXODUS)
 		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
-	SSshuttle.undock_act(/area/centcom/arrival, "velocity_1")
-	SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_1")
+	SSshuttle.undock_act(/area/velocity, "velocity_1")
+	SSshuttle.undock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 	SSshuttle.undock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
 		if(0) //Velocity
-			SSshuttle.dock_act(/area/centcom/arrival, "velocity_1")
+			SSshuttle.dock_act(/area/velocity, "velocity_1")
 			SSshuttle.dock_act(A)
 
 		if(2) //Station
-			SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_1")
+			SSshuttle.dock_act(/area/station/hallway/secondary/arrival, "arrival_1")
 			SSshuttle.dock_act(A)
 
-/obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)
+/obj/machinery/computer/arrival_shuttle/proc/play_flying_sound(area/A)
 	for(var/mob/M in A)
 		if(M.client)
-			spawn(0)
-				if(M.buckled)
-					shake_camera(M, 2, 1)
-				else
-					shake_camera(M, 4, 2)
-		M.Weaken(4)
-		if(isliving(M) && !M.buckled)
-			var/mob/living/L = M
-			if(isturf(L.loc))
-				for(var/i=0, i < 5, i++)
-					var/turf/T = L.loc
-					var/hit = 0
-					T = get_step(T, EAST)
-					if(T.density)
-						hit = 1
-						if(i > 1)
-							L.adjustBruteLoss(10)
-						break
-					else
-						for(var/atom/movable/AM in T.contents)
-							if(AM.density)
-								hit = 1
-								if(i > 1)
-									L.adjustBruteLoss(10)
-									if(isliving(AM))
-										var/mob/living/bumped = AM
-										bumped.adjustBruteLoss(10)
-								break
-					if(hit)
-						break
-					step(L, EAST)
+			if(location == ARRIVAL_SHUTTLE_TRANSIT)
+				M.playsound_local(null, 'sound/effects/shuttle_flying.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
-	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
-	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x100")
+	var/dat = "<center><div class='Section'>Shuttle location: <b>[curr_location]</b><br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><A href='?src=\ref[src];move=1'>Send</A></div></center>"
+	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 450, 350)
+	popup.set_content(dat)
+	popup.open()
+
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
 	. = ..()
@@ -168,11 +154,13 @@ var/lastMove = 0
 	if(href_list["move"])
 		if(!arrival_shuttle_ready_move())
 			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
-		else if(!moving && location == 0)
+		else if(!moving && location == ARRIVAL_SHUTTLE_VELOCITY)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			arrival_shuttle_move()
 		else
 			to_chat(usr, "<span class='notice'>Shuttle is already moving or docked with station.</span>")
+
+		usr.client.guard.velocity_console = TRUE
 
 /obj/machinery/computer/arrival_shuttle/dock
 	name = "Arrival Shuttle Communication Console"
@@ -180,8 +168,10 @@ var/lastMove = 0
 	icon_state = "wagon"
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
-	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x100")
+	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
+	var/datum/browser/popup = new(user, "researchshuttle", "[src.name]", 200, 130)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
 	. = ..()
@@ -191,8 +181,19 @@ var/lastMove = 0
 	if(href_list["back"])
 		if(!arrival_shuttle_ready_move())
 			to_chat(usr, "<span class='notice'>Shuttle is not ready to move yet.</span>")
-		else if(!moving && location == 2)
+		else if(!moving && location == ARRIVAL_SHUTTLE_EXODUS)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
 			arrival_shuttle_move()
 		else
 			to_chat(usr, "<span class='notice'>Shuttle is already moving or docked with station.</span>")
+
+		usr.client.guard.velocity_console_dock = TRUE
+
+/obj/machinery/computer/arrival_shuttle/proc/radio_message_via_ai(msg)
+	if (!msg)
+		return FALSE
+	for (var/mob/living/silicon/ai/A in ai_list)
+		if (A.can_retransmit_messages())
+			A.retransmit_message(msg)
+			return TRUE
+	return FALSE

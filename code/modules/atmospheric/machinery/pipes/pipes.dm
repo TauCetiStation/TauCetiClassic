@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/pipe
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	can_buckle = 1
 	buckle_require_restraints = 1
 	buckle_lying = -1
@@ -83,7 +83,7 @@
 	parent = P
 
 /*
-/obj/machinery/atmospherics/pipe/add_underlay(var/obj/machinery/atmospherics/node, var/direction)
+/obj/machinery/atmospherics/pipe/add_underlay(obj/machinery/atmospherics/node, direction)
 	if(istype(src, /obj/machinery/atmospherics/components/unary/tank))	//todo: move tanks to unary devices
 		return ..()
 
@@ -110,3 +110,9 @@
 		return node.pipe_color
 	else
 		return pipe_color
+
+/obj/machinery/atmospherics/pipe/attack_hand(mob/living/carbon/human/H)
+	if(can_buckle && buckled_mob && istype(H))
+		user_unbuckle_mob(H)
+	else
+		..()

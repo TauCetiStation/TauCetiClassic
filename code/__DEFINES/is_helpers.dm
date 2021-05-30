@@ -5,21 +5,21 @@
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 // CARBON
-#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/queen))
+#define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
 
-#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
+#define isxenodrone(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/drone))
 
-#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+#define isxenosentinel(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/sentinel))
 
-#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+#define isxenohunter(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/hunter))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
+#define isxenoadult(A) (istype(A, /mob/living/carbon/xenomorph/humanoid))
 
-#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
+#define isxenolarva(A) (istype(A, /mob/living/carbon/xenomorph/larva))
 
-#define isfacehugger(A) (istype(A, /mob/living/carbon/alien/facehugger))
+#define isfacehugger(A) (istype(A, /mob/living/carbon/xenomorph/facehugger))
 
-#define isalien(A) (istype(A, /mob/living/carbon/alien))
+#define isxeno(A) (istype(A, /mob/living/carbon/xenomorph))
 
 #define isbrain(A) (istype(A, /mob/living/carbon/brain))
 
@@ -67,6 +67,8 @@
 
 #define isessence(A) (istype(A, /mob/living/parasite/essence))
 
+#define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -81,11 +83,7 @@
 
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
-#define islist(A) (istype(A, /list))
-
 #define ismachinery(A) (istype(A, /obj/machinery))
-
-#define ismovableatom(A) (istype(A, /atom/movable))
 
 // GOONCHAT PORT
 
@@ -107,3 +105,23 @@
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
+
+// TOOLS HELPERS
+
+#define iswrench(A) istype(A, /obj/item/weapon/wrench)
+
+#define iswelder(A) istype(A, /obj/item/weapon/weldingtool)
+
+#define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
+
+#define isscrewdriver(A) istype(A, /obj/item/weapon/screwdriver)
+
+#define iscrowbar(A) istype(A, /obj/item/weapon/crowbar)
+
+#define ismultitool(A) istype(A, /obj/item/device/multitool)
+
+#define iscoil(A) istype(A, /obj/item/stack/cable_coil)
+
+// OBJECTS
+
+#define isitem(A) (istype(A, /obj/item))

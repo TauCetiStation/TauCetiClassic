@@ -1,6 +1,5 @@
-var/datum/subsystem/machines/SSmachine
-
-/datum/subsystem/machines
+SUBSYSTEM_DEF(machines)
+/datum/controller/subsystem/machines
 	name = "Machines"
 
 	init_order    = SS_INIT_MACHINES
@@ -12,13 +11,12 @@ var/datum/subsystem/machines/SSmachine
 	var/list/currentrun = list()
 	var/list/powernets  = list()
 
-
-/datum/subsystem/machines/Initialize()
+/datum/controller/subsystem/machines/Initialize()
 	makepowernets()
 	fire()
 	..()
 
-/datum/subsystem/machines/proc/makepowernets()
+/datum/controller/subsystem/machines/proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
 		qdel(PN)
 	powernets.Cut()
@@ -29,15 +27,12 @@ var/datum/subsystem/machines/SSmachine
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
-/datum/subsystem/machines/New()
-	NEW_SS_GLOBAL(SSmachine)
 
-
-/datum/subsystem/machines/stat_entry()
+/datum/controller/subsystem/machines/stat_entry()
 	..("M:[processing.len]|PN:[powernets.len]")
 
 
-/datum/subsystem/machines/fire(resumed = 0)
+/datum/controller/subsystem/machines/fire(resumed = 0)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
@@ -50,17 +45,13 @@ var/datum/subsystem/machines/SSmachine
 	while(currentrun.len)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if (!QDELETED(thing) && thing.process(seconds) != PROCESS_KILL)
-			if(thing.use_power)
-				thing.auto_use_power() //add back the power state
-		else
+		if (QDELETED(thing) || thing.process(seconds) == PROCESS_KILL)
 			processing -= thing
-			if (!QDELETED(thing))
-				thing.isprocessing = 0
+			thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return
 
-/datum/subsystem/machines/proc/setup_template_powernets(list/cables)
+/datum/controller/subsystem/machines/proc/setup_template_powernets(list/cables)
 	for(var/A in cables)
 		var/obj/structure/cable/PC = A
 		if(!PC.powernet)
@@ -68,8 +59,8 @@ var/datum/subsystem/machines/SSmachine
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
-/datum/subsystem/machines/Recover()
-	if (istype(SSmachine.processing))
-		processing = SSmachine.processing
-	if (istype(SSmachine.powernets))
-		powernets = SSmachine.powernets
+/datum/controller/subsystem/machines/Recover()
+	if (istype(SSmachines.processing))
+		processing = SSmachines.processing
+	if (istype(SSmachines.powernets))
+		powernets = SSmachines.powernets

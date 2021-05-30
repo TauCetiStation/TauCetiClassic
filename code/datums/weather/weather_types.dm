@@ -17,7 +17,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/space)
-	target_z = ZLEVEL_STATION
+	target_ztrait = ZTRAIT_STATION
 
 	overlay_layer = 2.1 //Covers floors only
 	immunity_type = "lava"
@@ -51,7 +51,7 @@
 	end_duration = 0
 
 	area_type = /area
-	target_z = ZLEVEL_STATION
+	target_ztrait = ZTRAIT_STATION
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/V in impacted_areas)
@@ -73,22 +73,22 @@
 
 	telegraph_message = "<span class='boldwarning'>An eerie moan rises on the wind. Sheets of sand blacken the horizon. Seek shelter.</span>"
 	telegraph_duration = 300
-	telegraph_sound = 'sound/ambience/ash_storm_windup.ogg'
+	telegraph_sound = 'sound/ambience/specific/ash_storm_windup.ogg'
 	telegraph_overlay = "light_ash"
 
 	weather_message = "<span class='userdanger'><i>Smoldering clouds of scorching trash billow down around you! Get inside!</i></span>"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
-	weather_sound = 'sound/ambience/ash_storm_start.ogg'
+	weather_sound = 'sound/ambience/specific/ash_storm_start.ogg'
 	weather_overlay = "ash_storm"
 	weather_alpha = 170
 	overlay_layer = 10
 	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now.</span>"
 	end_duration = 300
-	end_sound = 'sound/ambience/ash_storm_end.ogg'
+	end_sound = 'sound/ambience/specific/ash_storm_end.ogg'
 	end_overlay = "light_ash"
 	area_type = /area/awaymission/junkyard
-	target_z = ZLEVEL_JUNKYARD
+	target_ztrait = ZTRAIT_JUNKYARD
 
 	immunity_type = "ash"
 	var/spawn_tornadoes = 1
@@ -131,7 +131,7 @@
 	desc = "A passing ash storm blankets the area in harmless embers."
 
 	weather_message = "<span class='notice'>Gentle embers waft down around you like grotesque snow. The storm seems to have passed you by...</span>"
-	weather_sound = 'sound/ambience/ash_storm_windup.ogg'
+	weather_sound = 'sound/ambience/specific/ash_storm_windup.ogg'
 	weather_overlay = "light_ash"
 
 	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the ground beneath your feet.</span>"
@@ -154,16 +154,17 @@
 	weather_color = "green"
 	weather_overlay = "ash_storm"
 	weather_alpha = 40
-	weather_sound = 'sound/AI/radiation.ogg'
 	overlay_layer = 2.1
 	end_duration = 100
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
-	protected_areas = list(/area/maintenance, /area/crew_quarters, /area/storage/emergency, /area/storage/emergency2, /area/storage/emergency3, /area/storage/tech)
-	target_z = ZLEVEL_STATION
+	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech)
+	target_ztrait = ZTRAIT_STATION
 
 	immunity_type = "rad"
+
+	var/datum/announcement/centcomm/anomaly/radstorm_passed/announcement = new
 
 /datum/weather/rad_storm/telegraph()
 	..()
@@ -175,6 +176,10 @@
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
+
+			if(HULK in H.mutations)
+				H.try_mutate_to_hulk()
+
 			if(H.dna && H.dna.species && !H.species.flags[IS_SYNTHETIC])
 				if(prob(max(0,100-resist)) && prob(10))
 					if (prob(75))
@@ -187,7 +192,7 @@
 /datum/weather/rad_storm/end()
 	if(..())
 		return
-	command_alert("The station has passed the radiation belt. Please report to medbay if you experience any unusual symptoms. Maintenance will lose all access again shortly.", "Anomaly Alert")
+	announcement.play()
 	if(timer_maint_revoke_id)
 		deltimer(timer_maint_revoke_id)
 		timer_maint_revoke_id = 0
@@ -219,21 +224,21 @@
 
 	telegraph_duration = 400
 	telegraph_message = "<span class='danger'>Stinging droplets start to fall upon you..</span>"
-	telegraph_sound = 'sound/ambience/acidrain_start.ogg'
+	telegraph_sound = 'sound/ambience/specific/acidrain_start.ogg'
 
 	weather_message = "<span class='userdanger'><i>Your skin melts underneath the rain!</i></span>"
 	weather_overlay = "acid_rain"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
-	weather_sound = 'sound/ambience/acidrain_mid.ogg'
+	weather_sound = 'sound/ambience/specific/acidrain_mid.ogg'
 	overlay_layer = 10
 	end_duration = 100
 	weather_alpha = 60
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
-	end_sound = 'sound/ambience/acidrain_end.ogg'
+	end_sound = 'sound/ambience/specific/acidrain_end.ogg'
 	additional_action = TRUE
 	area_type = /area/awaymission/junkyard
-	target_z = ZLEVEL_JUNKYARD
+	target_ztrait = ZTRAIT_JUNKYARD
 
 	immunity_type = "acid" // temp
 
@@ -241,7 +246,7 @@
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
-	if(!istype(/turf/, L.loc))
+	if(!istype(/turf, L.loc))
 		return
 	L.water_act(5)
 	if(!prob(L.getarmor(null, "bio")))

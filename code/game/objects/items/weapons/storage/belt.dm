@@ -2,11 +2,17 @@
 	name = "belt"
 	desc = "Can hold various things."
 	icon = 'icons/obj/clothing/belts.dmi'
+	force = 1.0
 	icon_state = "utilitybelt"
 	item_state = "utility"
-	slot_flags = SLOT_BELT
+	storage_slots = 7
+	slot_flags = SLOT_FLAGS_BELT
+	hitsound = list('sound/items/misc/belt-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined")
 	use_to_pickup = TRUE
+
+	// since belt is not considered "clothing", we can't enforce species-bodytype-based restrictions on it. YET. ~Luduk
+	// sprite_sheet_slot = SPRITE_SHEET_BELT
 
 /obj/item/weapon/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
@@ -14,17 +20,19 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list(
-		"/obj/item/weapon/crowbar",
-		"/obj/item/weapon/screwdriver",
-		"/obj/item/weapon/weldingtool",
-		"/obj/item/weapon/wirecutters",
-		"/obj/item/weapon/wrench",
-		"/obj/item/device/multitool",
-		"/obj/item/device/flashlight",
-		"/obj/item/stack/cable_coil",
-		"/obj/item/device/t_scanner",
-		"/obj/item/device/analyzer",
-		"/obj/item/taperoll/engineering")
+		/obj/item/weapon/crowbar,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/weldingtool,
+		/obj/item/weapon/wirecutters,
+		/obj/item/weapon/wrench,
+		/obj/item/device/multitool,
+		/obj/item/device/flashlight,
+		/obj/item/stack/cable_coil,
+		/obj/item/device/t_scanner,
+		/obj/item/device/analyzer,
+		/obj/item/taperoll/engineering,
+		/obj/item/weapon/gun/energy/pyrometer,
+		/obj/item/device/science_tool)
 
 
 /obj/item/weapon/storage/belt/utility/full/atom_init()
@@ -54,23 +62,26 @@
 	icon_state = "medicalbelt"
 	item_state = "medical"
 	can_hold = list(
-		"/obj/item/device/healthanalyzer",
-		"/obj/item/weapon/dnainjector",
-		"/obj/item/weapon/reagent_containers/dropper",
-		"/obj/item/weapon/reagent_containers/glass/beaker",
-		"/obj/item/weapon/reagent_containers/glass/bottle",
-		"/obj/item/weapon/reagent_containers/pill",
-		"/obj/item/weapon/reagent_containers/syringe",
-		"/obj/item/weapon/reagent_containers/glass/dispenser",
-		"/obj/item/weapon/lighter/zippo",
-		"/obj/item/weapon/storage/fancy/cigarettes",
-		"/obj/item/weapon/storage/pill_bottle",
-		"/obj/item/stack/medical",
-		"/obj/item/device/flashlight/pen",
-		"/obj/item/clothing/mask/surgical",
-		"/obj/item/clothing/gloves/latex",
-	    "/obj/item/weapon/reagent_containers/hypospray",
-	    "/obj/item/device/sensor_device"
+		/obj/item/device/healthanalyzer,
+		/obj/item/device/plant_analyzer,
+		/obj/item/device/robotanalyzer,
+		/obj/item/weapon/dnainjector,
+		/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/bottle,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/lighter,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/stack/medical,
+		/obj/item/device/flashlight/pen,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/clothing/gloves/latex,
+	    /obj/item/weapon/reagent_containers/hypospray,
+	    /obj/item/device/sensor_device,
+	    /obj/item/device/mass_spectrometer,
+	    /obj/item/device/reagent_scanner
 	    )
 /obj/item/weapon/storage/belt/medical/surg
 	name = "Surgery belt"
@@ -78,30 +89,29 @@
 	icon_state = "medicalbelt"
 	item_state = "medical"
 	storage_slots = 9
-	max_w_class = 3
-	max_combined_w_class = 21
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
-		"/obj/item/device/healthanalyzer",
-		"/obj/item/weapon/reagent_containers/glass/beaker",
-		"/obj/item/weapon/reagent_containers/glass/bottle",
-		"/obj/item/weapon/reagent_containers/pill",
-		"/obj/item/weapon/reagent_containers/syringe",
-		"/obj/item/weapon/storage/fancy/cigarettes",
-		"/obj/item/weapon/storage/pill_bottle",
-		"/obj/item/stack/medical",
-		"/obj/item/device/flashlight/pen",
-		"/obj/item/clothing/mask/surgical",
-		"/obj/item/clothing/gloves/latex",
-	    "/obj/item/weapon/reagent_containers/hypospray",
-	    "/obj/item/weapon/retractor",
-	    "/obj/item/weapon/hemostat",
-	    "/obj/item/weapon/cautery",
-	    "/obj/item/weapon/surgicaldrill",
-	    "/obj/item/weapon/scalpel",
-	    "/obj/item/weapon/circular_saw",
-	    "/obj/item/weapon/bonegel",
-	    "/obj/item/weapon/FixOVein",
-	    "/obj/item/weapon/bonesetter"
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/bottle,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/stack/medical,
+		/obj/item/device/flashlight/pen,
+		/obj/item/clothing/mask/surgical,
+		/obj/item/clothing/gloves/latex,
+	    /obj/item/weapon/reagent_containers/hypospray,
+	    /obj/item/weapon/retractor,
+	    /obj/item/weapon/hemostat,
+	    /obj/item/weapon/cautery,
+	    /obj/item/weapon/surgicaldrill,
+	    /obj/item/weapon/scalpel,
+	    /obj/item/weapon/circular_saw,
+	    /obj/item/weapon/bonegel,
+	    /obj/item/weapon/FixOVein,
+	    /obj/item/weapon/bonesetter
 	)
 /obj/item/weapon/storage/belt/medical/surg/full/atom_init()
 	. = ..()
@@ -120,32 +130,38 @@
 	desc = "Can hold security gear like handcuffs and flashes."
 	icon_state = "securitybelt"
 	item_state = "security"//Could likely use a better one.
+	force = 5
 	storage_slots = 7
-	max_w_class = 3
-	max_combined_w_class = 21
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
-		"/obj/item/weapon/grenade/flashbang",
-		"/obj/item/weapon/reagent_containers/spray/pepper",
-		"/obj/item/weapon/handcuffs",
-		"/obj/item/device/hailer",
-		"/obj/item/device/flash",
-		"/obj/item/clothing/glasses",
-		"/obj/item/ammo_casing/shotgun",
-		"/obj/item/ammo_box/magazine",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
-		"/obj/item/weapon/melee/baton",
-		"/obj/item/weapon/lighter/zippo",
-		"/obj/item/weapon/cigpacket",
-		"/obj/item/clothing/glasses/hud/security",
-		"/obj/item/device/flashlight",
-		"/obj/item/device/pda",
-		"/obj/item/weapon/melee",
-		"/obj/item/taperoll/police",
-		"/obj/item/weapon/gun/energy/taser",
-		"/obj/item/weapon/shield/riot/tele",
-		"/obj/item/device/flashlight/seclite"
+		/obj/item/weapon/grenade/flashbang,
+		/obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/handcuffs,
+		/obj/item/device/hailer,
+		/obj/item/device/flash,
+		/obj/item/clothing/glasses,
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
+		/obj/item/weapon/melee/baton,
+		/obj/item/weapon/lighter,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/clothing/glasses/hud/security,
+		/obj/item/device/flashlight,
+		/obj/item/device/pda,
+		/obj/item/weapon/melee,
+		/obj/item/taperoll/police,
+		/obj/item/weapon/gun/energy/taser/stunrevolver,
+		/obj/item/weapon/shield/riot/tele,
+		/obj/item/device/flashlight/seclite
 		)
+
+/obj/item/weapon/storage/belt/security/German
+	name = "German Belt"
+	desc = "A belt from military soldier set."
+	icon_state = "Leather_Belt_Officer"
+	icon_state = "Leather_Belt_Officer"
+	item_color = "Leather_Belt_Officer"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -154,7 +170,7 @@
 	item_state = "soulstonebelt"
 	storage_slots = 6
 	can_hold = list(
-		"/obj/item/device/soulstone"
+		/obj/item/device/soulstone
 		)
 
 /obj/item/weapon/storage/belt/soulstone/full/atom_init()
@@ -167,9 +183,10 @@
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
 	item_state = "champion"
+	force = 5
 	storage_slots = 1
 	can_hold = list(
-		"/obj/item/clothing/mask/luchador"
+		/obj/item/clothing/mask/luchador
 		)
 
 /obj/item/weapon/storage/belt/security/tactical
@@ -178,29 +195,27 @@
 	icon_state = "swatbelt"
 	item_state = "swatbelt"
 	storage_slots = 9
-	max_w_class = 3
-	max_combined_w_class = 21
+	max_w_class = ITEM_SIZE_NORMAL
 	can_hold = list(
-		"/obj/item/weapon/grenade/flashbang",
-		"/obj/item/weapon/reagent_containers/spray/pepper",
-		"/obj/item/weapon/handcuffs",
-		"/obj/item/device/flash",
-		"/obj/item/clothing/glasses",
-		"/obj/item/ammo_casing/shotgun",
-		"/obj/item/ammo_box/magazine",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/normal",
-		"/obj/item/weapon/reagent_containers/food/snacks/donut/jelly",
-		"/obj/item/weapon/melee/baton",
-		"/obj/item/weapon/gun/energy/taser",
-		"/obj/item/weapon/lighter/zippo",
-		"/obj/item/weapon/cigpacket",
-		"/obj/item/clothing/glasses/hud/security",
-		"/obj/item/device/flashlight",
-		"/obj/item/device/pda",
-		"/obj/item/taperoll/police",
-		"/obj/item/device/radio/headset",
-		"/obj/item/weapon/melee",
-		"/obj/item/device/flashlight/seclite"
+		/obj/item/weapon/grenade/flashbang,
+		/obj/item/weapon/reagent_containers/spray/pepper,
+		/obj/item/weapon/handcuffs,
+		/obj/item/device/flash,
+		/obj/item/clothing/glasses,
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_box,
+		/obj/item/weapon/reagent_containers/food/snacks/donut,
+		/obj/item/weapon/melee/baton,
+		/obj/item/weapon/gun/energy/taser/stunrevolver,
+		/obj/item/weapon/lighter,
+		/obj/item/weapon/storage/fancy/cigarettes,
+		/obj/item/clothing/glasses/hud/security,
+		/obj/item/device/flashlight,
+		/obj/item/device/pda,
+		/obj/item/taperoll/police,
+		/obj/item/device/radio/headset,
+		/obj/item/weapon/melee,
+		/obj/item/device/flashlight/seclite
 		)
 
 /obj/item/weapon/storage/belt/military
@@ -208,4 +223,5 @@
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
 	item_state = "militarybelt"
+	force = 10
 	can_hold = list()

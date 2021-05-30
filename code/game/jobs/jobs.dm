@@ -12,7 +12,8 @@ var/const/ATMOSTECH			=(1<<7)
 var/const/AI				=(1<<8)
 var/const/CYBORG			=(1<<9)
 var/const/FORENSIC			=(1<<10)
-
+var/const/CADET             =(1<<11)
+var/const/TECHNICASSISTANT	=(1<<12)
 
 var/const/MEDSCI			=(1<<1)
 
@@ -27,7 +28,9 @@ var/const/PSYCHIATRIST		=(1<<7)
 var/const/ROBOTICIST		=(1<<8)
 var/const/XENOBIOLOGIST		=(1<<9)
 var/const/PARAMEDIC			=(1<<10)
-var/const/XENOARCHEOLOGIST	=(1<<11)
+var/const/XENOARCHAEOLOGIST	=(1<<11)
+var/const/INTERN			=(1<<12)
+var/const/RESEARCHASSISTANT	=(1<<13)
 
 
 var/const/CIVILIAN			=(1<<2)
@@ -67,6 +70,7 @@ var/list/engineering_positions = list(
 	"Chief Engineer",
 	"Station Engineer",
 	"Atmospheric Technician",
+	"Technical Assistant"
 )
 
 
@@ -77,7 +81,8 @@ var/list/medical_positions = list(
 	"Psychiatrist",
 	"Chemist",
 	"Virologist",
-	"Paramedic"
+	"Paramedic",
+	"Medical Intern"
 )
 
 
@@ -87,7 +92,8 @@ var/list/science_positions = list(
 	"Geneticist",	//Part of both medical and science
 	"Roboticist",
 	"Xenobiologist",
-	"Xenoarchaeologist"
+	"Xenoarchaeologist",
+	"Research Assistant"
 )
 
 //BS12 EDIT
@@ -115,7 +121,8 @@ var/list/security_positions = list(
 	"Warden",
 	"Detective",
 	"Security Officer",
-	"Forensic Technician"
+	"Forensic Technician",
+	"Security Cadet"
 )
 
 
@@ -125,9 +132,6 @@ var/list/nonhuman_positions = list(
 	"pAI"
 )
 
-
-/proc/guest_jobbans(job)
-	return job in command_positions
 
 /proc/get_job_datums()
 	var/list/occupations = list()
@@ -149,3 +153,46 @@ var/list/nonhuman_positions = list(
 			titles = J.alt_titles
 
 	return titles
+
+/proc/my_subordinate_staff(head_rank)	//the function takes a rank, returns a list of subordinate personnel
+
+	var/all_staff = data_core.get_manifest()	//crew manifest
+	var/list/data = list()	//it will be returned
+	var/list/own_department = list()
+	var/list/QM_staff = list("Cargo Technician", "Shaft Miner", "Recycler")	//QM's boys
+
+	switch(head_rank)	//What departments do we manage?
+		if("Admin")
+			own_department = list("heads", "sec", "eng", "med", "sci", "civ", "misc")	//all except bots
+		if("Captain")
+			own_department = list("sec", "eng", "med", "sci", "civ", "misc")	//exept "heads", repetitions we don't need
+		if("Head of Personnel")
+			own_department = list("civ", "misc")
+		if("Head of Security")
+			own_department = list("sec")
+		if("Chief Engineer")
+			own_department = list("eng")
+		if("Research Director")
+			own_department = list("sci")
+		if("Chief Medical Officer")
+			own_department = list("med")
+		if("Quartermaster")
+			own_department = list("civ")
+
+	for(var/department in own_department)
+		for(var/person in all_staff[department])
+			if(head_rank == person["rank"])	//we will not change the salary for yourself
+				continue
+			if(department == "med" && (head_rank == "Admin" || head_rank == "Captain") && person["rank"] == "Geneticist")	//so that the geneticist would not repeat twice
+				continue	//there is a geneticist in "sci"
+			if(department == "heads" && person["rank"] != "Captain")	//in "heads" we need only Captain
+				continue
+			if(department == "civ")
+				if(head_rank != "Admin" && person["rank"] == "Internal Affairs Agent")	//only CentCom can change IAA's salary
+					continue
+				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
+					continue
+			var/datum/money_account/account = person["acc_datum"]
+			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = account.owner_salary, "acc_datum" = person["acc_datum"], "acc_number" = person["account"])
+
+	return data	// --> list(real_name, assignment, salary, /datum/money_account/, account_number)

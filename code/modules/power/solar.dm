@@ -18,7 +18,7 @@
 	icon_state = "sp_base"
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
@@ -40,7 +40,7 @@
 	..()
 	SSsun.solars.Remove(src)
 
-/obj/machinery/power/solar/connect_to_network(var/process)
+/obj/machinery/power/solar/connect_to_network(process)
 	var/to_return = ..()
 	if(process)
 		SSsun.solars.Add(src)
@@ -61,13 +61,13 @@
 
 	if(iscrowbar(W))
 		if(user.is_busy()) return
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 50,target = src))
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.loc = src.loc
 				S.give_glass()
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
 			qdel(src)
 		return
@@ -99,12 +99,12 @@
 
 /obj/machinery/power/solar/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
-		src.dir = angle2dir(adir)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
+		src.set_dir(angle2dir(adir))
 	return
 
 
@@ -126,7 +126,7 @@
 	if(!control)	return
 
 	if(adir != ndir)
-		adir = (360+adir+dd_range(-10,10,ndir-adir))%360
+		adir = (360+adir+clamp(ndir-adir,-10,10)) % 360
 		update_icon()
 		update_solar_exposure()
 
@@ -143,13 +143,6 @@
 	stat |= BROKEN
 	update_icon()
 	return
-
-
-/obj/machinery/power/solar/meteorhit()
-	if(stat & !BROKEN)
-		broken()
-	else
-		qdel(src)
 
 
 /obj/machinery/power/solar/ex_act(severity)
@@ -196,7 +189,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	item_state = "electropack"
-	w_class = 4 // Pretty big!
+	w_class = ITEM_SIZE_LARGE // Pretty big!
 	anchored = 0
 	var/tracker = 0
 	var/glass_type = null
@@ -212,47 +205,44 @@
 		glass_type = null
 
 
-/obj/item/solar_assembly/attackby(obj/item/weapon/W, mob/user)
-
+/obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)
 	if(!anchored && isturf(loc))
-		if(iswrench(W))
-			anchored = 1
+		if(iswrench(I))
+			anchored = TRUE
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			return 1
+			return TRUE
 	else
-		if(iswrench(W))
-			anchored = 0
+		if(iswrench(I))
+			anchored = FALSE
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			return 1
+			return TRUE
 
-		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
-			var/obj/item/stack/sheet/S = W
+		if(istype(I, /obj/item/stack/sheet/glass) || istype(I, /obj/item/stack/sheet/rglass))
+			var/obj/item/stack/sheet/S = I
 			if(S.use(2))
-				glass_type = W.type
-				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				glass_type = I.type
+				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>")
 				if(tracker)
 					new /obj/machinery/power/tracker(get_turf(src), src)
 				else
 					new /obj/machinery/power/solar(get_turf(src), src)
-			return 1
+			return TRUE
 
 	if(!tracker)
-		if(istype(W, /obj/item/weapon/tracker_electronics))
+		if(istype(I, /obj/item/weapon/tracker_electronics))
 			tracker = 1
-			user.drop_item()
-			qdel(W)
+			qdel(I)
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
-			return 1
+			return TRUE
 	else
-		if(iscrowbar(W))
+		if(iscrowbar(I))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")
-			return 1
-	..()
+			return TRUE
+
+	return ..()
 
 //
 // Solar Control Computer
@@ -266,7 +256,7 @@
 	light_color = "#b88b2e"
 	anchored = 1
 	density = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 20
 	var/light_range_on = 1.5
@@ -299,29 +289,29 @@
 
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
-		icon_state = "broken"
+		icon_state = "powerb"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	if(stat & NOPOWER)
-		icon_state = "c_unpowered"
+		icon_state = "power0"
 		set_light(0)
-		overlays.Cut()
+		cut_overlays()
 		return
 	icon_state = "solar"
 	set_light(light_range_on, light_power_on)
-	overlays.Cut()
+	cut_overlays()
 	if(cdir > 0)
-		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
+		add_overlay(image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir)))
 	return
 
 /obj/machinery/power/solar_control/attackby(I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		if(user.is_busy()) return
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 20, target = src))
 			if (src.stat & BROKEN)
-				to_chat(user, "\blue The broken glass falls out.")
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				new /obj/item/weapon/shard( src.loc )
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
@@ -333,7 +323,7 @@
 				A.anchored = 1
 				qdel(src)
 			else
-				to_chat(user, "\blue You disconnect the monitor.")
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
 				for (var/obj/C in src)
@@ -385,7 +375,7 @@
 		user << browse(null, "window=solcon")
 		return
 
-	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
+	var/t = "<TT><PRE>"
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
 	t += "Station Rotational Period: [60/abs(SSsun.rate)] minutes<BR>"
 	t += "Station Rotational Direction: [SSsun.rate<0 ? "CCW" : "CW"]<BR>"
@@ -408,17 +398,13 @@
 			t += "<A href='?src=\ref[src];trackdir=1'>CW</A> <B>CCW</B><BR>"
 		if(1)
 			t += "<B>CW</B> <A href='?src=\ref[src];trackdir=-1'>CCW</A><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
-	user << browse(entity_ja(t), "window=solcon")
-	onclose(user, "solcon")
+
+	var/datum/browser/popup = new(user, "solcon", "Solar Generator Control")
+	popup.set_content(t)
+	popup.open()
 
 
 /obj/machinery/power/solar_control/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=solcon")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -430,12 +416,12 @@
 
 	else if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = dd_range(0, 359, (360 + src.cdir + text2num(href_list["cdir"])) % 360)
+			src.cdir = clamp((360 + src.cdir + text2num(href_list["cdir"])) % 360, 0, 359)
 			spawn(1)
 				set_panels(cdir)
 				update_icon()
 		if(href_list["tdir"])
-			src.trackrate = dd_range(0, 360, src.trackrate + text2num(href_list["tdir"]))
+			src.trackrate = clamp(src.trackrate + text2num(href_list["tdir"]), 0, 360)
 			if(src.trackrate)
 				nexttime = world.time + 6000 / trackrate
 
@@ -477,16 +463,13 @@
 		spawn(rand(0, 15))
 			stat |= NOPOWER
 			update_icon()
+			update_power_use()
+	update_power_use()
 
 
 /obj/machinery/power/solar_control/proc/broken()
 	stat |= BROKEN
 	update_icon()
-
-
-/obj/machinery/power/solar_control/meteorhit()
-	broken()
-	return
 
 
 /obj/machinery/power/solar_control/ex_act(severity)

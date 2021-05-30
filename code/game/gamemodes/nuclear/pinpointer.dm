@@ -1,9 +1,12 @@
+#define SEARCH_FOR_DISK 0
+#define SEARCH_FOR_OBJECT 1
+
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
 	icon_state = "pinoff"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	w_class = 2.0
+	slot_flags = SLOT_FLAGS_BELT
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -21,8 +24,6 @@
 		to_chat(user, "<span class='notice'>You deactivate the pinpointer</span>")
 	active = !active
 
-
-
 /obj/item/weapon/pinpointer/process()
 	if(!active)
 		return
@@ -32,7 +33,7 @@
 			icon_state = "pinonnull"
 			return
 	if(target)
-		dir = get_dir(src, target)
+		set_dir(get_dir(src, target))
 		var/turf/self_turf = get_turf(src)
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.z != self_turf.z)
@@ -50,7 +51,7 @@
 
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
-	for(var/obj/machinery/nuclearbomb/bomb in machines)
+	for(var/obj/machinery/nuclearbomb/bomb in poi_list)
 		if(bomb.timing)
 			to_chat(user, "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]")
 
@@ -96,7 +97,7 @@
 
 		if("Other Signature")
 			mode = SEARCH_FOR_OBJECT
-			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "" , "Item" , "DNA"))
+			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "Item" , "DNA", "AI System"))
 				if("Item")
 					var/datum/objective/steal/itemlist
 					itemlist = itemlist // To supress a 'variable defined but not used' error.
@@ -112,12 +113,21 @@
 					var/DNAstring = sanitize(input("Input DNA string to search for." , "Please Enter String." , ""))
 					if(!DNAstring)
 						return
-					for(var/mob/living/carbon/M in mob_list)
+					for(var/mob/living/carbon/M in carbon_list)
 						if(!M.dna)
 							continue
 						if(M.dna.unique_enzymes == DNAstring)
 							target = M
 							break
+				if("AI System")
+					if(!global.ai_list.len)
+						to_chat(usr, "Failed to locate active AI system!")
+						return
+					var/target_ai = input("Select AI to search for", "AI Select") as null|anything in global.ai_list
+					if(!target_ai)
+						return
+					target = target_ai
+					to_chat(usr, "You set the pinpointer to locate [target]")
 
 	return attack_self(usr)
 
@@ -125,7 +135,7 @@
 
 /obj/item/weapon/pinpointer/nukeop/attack_self(mob/user)
 	..()
-	if(SEARCH_FOR_OBJECT)
+	if(mode == SEARCH_FOR_OBJECT)
 		to_chat(user, "<span class='notice'>Authentication Disk Locator active.</span>")
 	else
 		to_chat(user, "<span class='notice'>Shuttle Locator active.</span>")
@@ -138,12 +148,12 @@
 			if(!target)
 				icon_state = "pinonnull"
 				return
-			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)	//Plays a beep
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)	//Plays a beep
 			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
 	else
 		mode = SEARCH_FOR_DISK
 		if(istype(target, /obj/machinery/computer/syndicate_station))
-			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 			target = null
 	return ..()

@@ -2,6 +2,8 @@
 	name = "Cure Research Machine"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	circuit = /obj/item/weapon/circuitboard/curefab
 	var/curing
 	var/virusing
@@ -13,12 +15,12 @@
 		var/mob/living/carbon/C = user
 		if(!container)
 			container = I
-			C.drop_item()
-			I.loc = src
+			C.drop_from_inventory(I, src)
 		return
+
 	if(istype(I,/obj/item/weapon/virusdish))
 		if(virusing)
-			to_chat(user, "<b>The pathogen materializer is still recharging..")
+			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
@@ -26,16 +28,13 @@
 		data["virus2"] |= I:virus2
 		product.reagents.add_reagent("blood",30,data)
 
-		virusing = 1
-		addtimer(CALLBACK(src, .proc/unvirus), 1200)
+		virusing = TRUE
+		VARSET_IN(src, virusing, FALSE, 1200)
 
 		state("The [src.name] Buzzes", "blue")
 		return
-	..()
-	return
 
-/obj/machinery/computer/curer/proc/unvirus()
-	virusing = 0
+	return ..()
 
 /obj/machinery/computer/curer/ui_interact(mob/user)
 	var/dat
@@ -61,8 +60,9 @@
 	else
 		dat = "Please insert a container."
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "[src.name]", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/curer/process()
 	..()

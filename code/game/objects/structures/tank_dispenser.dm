@@ -22,15 +22,17 @@
 	. = ..()
 	update_icon()
 
+	tank_dispenser_list += src
+
 
 /obj/structure/dispenser/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	switch(oxygentanks)
-		if(1 to 3)	overlays += "oxygen-[oxygentanks]"
-		if(4 to INFINITY) overlays += "oxygen-4"
+		if(1 to 3)	add_overlay("oxygen-[oxygentanks]")
+		if(4 to INFINITY) add_overlay("oxygen-4")
 	switch(phorontanks)
-		if(1 to 4)	overlays += "phoron-[phorontanks]"
-		if(5 to INFINITY) overlays += "phoron-5"
+		if(1 to 4)	add_overlay("phoron-[phorontanks]")
+		if(5 to INFINITY) add_overlay("phoron-5")
 
 
 /obj/structure/dispenser/attack_hand(mob/user)
@@ -67,7 +69,7 @@
 			to_chat(user, "<span class='notice'>[src] is full.</span>")
 		updateUsrDialog()
 		return
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		if(anchored)
 			to_chat(user, "<span class='notice'>You lean down and unwrench [src].</span>")
 			anchored = 0
@@ -77,7 +79,7 @@
 		return
 
 /obj/structure/dispenser/Topic(href, href_list)
-	if(usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return
 	if(Adjacent(usr))
 		usr.set_machine(src)

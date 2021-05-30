@@ -4,7 +4,7 @@
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	throw_speed = 3
 	throw_range = 7
 	var/amount = 30					//How much paper is in the bin.
@@ -12,7 +12,8 @@
 
 
 /obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
-	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
+	. = ..()
+	if(user == usr && (!usr.incapacitated() && (usr.contents.Find(src) || in_range(src, usr))))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal) && !isessence(usr))
 			if( !usr.get_active_hand() )		//if active hand is empty
 				attack_hand(usr, 1, 1)
@@ -60,17 +61,14 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
+	if(!istype(I, /obj/item/weapon/paper))
+		return ..()
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user)
-	if(!istype(i))
-		return
-
-	user.drop_item()
-	i.loc = src
-	to_chat(user, "<span class='notice'>You put [i] in [src].</span>")
-	papers.Add(i)
+	user.drop_from_inventory(I, src)
+	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+	papers.Add(I)
 	amount++
-
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()

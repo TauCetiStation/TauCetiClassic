@@ -11,7 +11,7 @@
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	flags = CONDUCT
 	force = 5.0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
@@ -24,33 +24,33 @@
 	if(istype(O, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/A = O
 		if(A.emagged || A.malfhack)
-			to_chat(user, "\red There is a software error with the device.")
+			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
-			to_chat(user, "\blue The device's software appears to be fine.")
+			to_chat(user, "<span class='notice'>The device's software appears to be fine.</span>")
 			return 1
 	else if(istype(O, /obj/machinery/door))
 		var/obj/machinery/door/D = O
 		if(D.operating == -1)
-			to_chat(user, "\red There is a software error with the device.")
+			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
-			to_chat(user, "\blue The device's software appears to be fine.")
+			to_chat(user, "<span class='notice'>The device's software appears to be fine.</span>")
 			return 1
 	else if(istype(O, /obj/machinery))
 		var/obj/machinery/A = O
 		if(A.emagged)
-			to_chat(user, "\red There is a software error with the device.")
+			to_chat(user, "<span class='warning'>There is a software error with the device.</span>")
 			return 0
 		else
-			to_chat(user, "\blue The device's software appears to be fine.")
+			to_chat(user, "<span class='notice'>The device's software appears to be fine.</span>")
 			return 1
 
-/obj/item/device/debugger/afterattack(obj/O, mob/user, proximity)
+/obj/item/device/debugger/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(user.is_busy()) return
-	if(istype(O, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/apc = O
+	if(istype(target, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/apc = target
 		if(apc.opened || apc.wiresexposed)
 			to_chat(user, "<span class='notice'>Error... Close that F$@^$#$ cover NOW!</span>")
 		else if(apc.stat & (BROKEN|MAINT))
@@ -71,8 +71,8 @@
 					else
 						to_chat(user, "<span class='notice'>Please... Do not interrupt hacking process.</span>")
 		return
-	else if(istype(O, /obj/machinery/door))
-		var/obj/machinery/door/D = O
+	else if(istype(target, /obj/machinery/door))
+		var/obj/machinery/door/D = target
 		if(!D.density)
 			to_chat(user, "<span class='notice'>Error... Close that F$@^$#$ door NOW!</span>")
 		else

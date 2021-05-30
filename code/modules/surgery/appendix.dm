@@ -31,7 +31,6 @@
 	max_duration = 90
 
 /datum/surgery_step/appendectomy/cut_appendix/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.appendix == 0
 
 /datum/surgery_step/appendectomy/cut_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -41,15 +40,15 @@
 	..()
 
 /datum/surgery_step/appendectomy/cut_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has separated [target]'s appendix with \the [tool]." , \
-	"\blue You have separated [target]'s appendix with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has separated [target]'s appendix with \the [tool].</span>" , \
+	"<span class='notice'>You have separated [target]'s appendix with \the [tool].</span>")
 	target.op_stage.appendix = 1
 
 /datum/surgery_step/appendectomy/cut_appendix/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
-	user.visible_message("\red [user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!", \
-	"\red Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!")
-	BP.createwound(CUT, 50, 1)
+	user.visible_message("<span class='warning'>[user]'s hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, slicing an artery inside [target]'s abdomen with \the [tool]!</span>")
+	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/appendectomy/remove_appendix
 	allowed_tools = list(
@@ -62,7 +61,6 @@
 	max_duration = 80
 
 /datum/surgery_step/appendectomy/remove_appendix/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))	return 0
 	return ..() && target.op_stage.appendix == 1
 
 /datum/surgery_step/appendectomy/remove_appendix/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -72,8 +70,8 @@
 	..()
 
 /datum/surgery_step/appendectomy/remove_appendix/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("\blue [user] has removed [target]'s appendix with \the [tool].", \
-	"\blue You have removed [target]'s appendix with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has removed [target]'s appendix with \the [tool].</span>", \
+	"<span class='notice'>You have removed [target]'s appendix with \the [tool].</span>")
 	var/app = 0
 	for(var/datum/disease/appendicitis/appendicitis in target.viruses)
 		app = 1
@@ -87,6 +85,6 @@
 
 /datum/surgery_step/appendectomy/remove_appendix/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
-	user.visible_message("\red [user]'s hand slips, nicking organs in [target]'s abdomen with \the [tool]!", \
-	"\red Your hand slips, nicking organs in [target]'s abdomen with \the [tool]!")
-	BP.createwound(BRUISE, 20)
+	user.visible_message("<span class='warning'>[user]'s hand slips, nicking organs in [target]'s abdomen with \the [tool]!</span>", \
+	"<span class='warning'>Your hand slips, nicking organs in [target]'s abdomen with \the [tool]!</span>")
+	BP.take_damage(20, 0, used_weapon = tool)

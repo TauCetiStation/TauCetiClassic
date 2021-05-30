@@ -5,7 +5,7 @@
 	item_state = "ygloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	item_color="yellow"
+	item_color = "yellow"
 
 /obj/item/clothing/gloves/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap copies of the coveted gloves, no way this can end badly."
@@ -14,8 +14,6 @@
 	item_state = "ygloves"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
 	permeability_coefficient = 0.05
-
-	item_color="yellow"
 
 /obj/item/clothing/gloves/fyellow/atom_init()
 	. = ..()
@@ -27,7 +25,7 @@
 	name = "black gloves"
 	icon_state = "black"
 	item_state = "bgloves"
-	item_color="brown"
+	item_color = "black"
 
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
@@ -46,13 +44,19 @@
 	name = "chief engineer's gloves"
 	item_color = "chief"			//Exists for washing machines.
 
+/obj/item/clothing/gloves/white
+	name = "white gloves"
+	desc = "These look pretty fancy."
+	icon_state = "latex"
+	item_state = "lgloves"
+	item_color = "white"
 
 /obj/item/clothing/gloves/orange
 	name = "orange gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
 	item_state = "orangegloves"
-	item_color="orange"
+	item_color = "orange"
 
 /obj/item/clothing/gloves/red
 	name = "red gloves"
@@ -77,28 +81,28 @@
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
 	item_state = "bluegloves"
-	item_color="blue"
+	item_color = "blue"
 
 /obj/item/clothing/gloves/purple
 	name = "purple gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "purple"
 	item_state = "purplegloves"
-	item_color="purple"
+	item_color = "purple"
 
 /obj/item/clothing/gloves/green
 	name = "green gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
 	item_state = "greengloves"
-	item_color="green"
+	item_color = "green"
 
 /obj/item/clothing/gloves/grey
 	name = "grey gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "gray"
 	item_state = "graygloves"
-	item_color="grey"
+	item_color = "grey"
 
 /obj/item/clothing/gloves/grey/rd
 	item_color = "director"			//Exists for washing machines. Is not different from gray gloves in any way.
@@ -112,14 +116,31 @@
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "lightbrown"
 	item_state = "lightbrowngloves"
-	item_color="light brown"
+	item_color = "light brown"
 
 /obj/item/clothing/gloves/brown
 	name = "brown gloves"
 	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
 	item_state = "browngloves"
-	item_color="brown"
+	item_color = "brown"
 
 /obj/item/clothing/gloves/brown/cargo
 	item_color = "cargo"				//Exists for washing machines. Is not different from brown gloves in any way.
+
+/obj/effect/spawner/lootdrop/gloves
+	name = "random gloves"
+	desc = "These gloves are supposed to be a random color..."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	icon_state = "random_gloves"
+	loot = list(
+		/obj/item/clothing/gloves/orange = 1,
+		/obj/item/clothing/gloves/red = 1,
+		/obj/item/clothing/gloves/blue = 1,
+		/obj/item/clothing/gloves/purple = 1,
+		/obj/item/clothing/gloves/green = 1,
+		/obj/item/clothing/gloves/grey = 1,
+		/obj/item/clothing/gloves/light_brown = 1,
+		/obj/item/clothing/gloves/brown = 1,
+		/obj/item/clothing/gloves/white = 1,
+		/obj/item/clothing/gloves/rainbow = 1)

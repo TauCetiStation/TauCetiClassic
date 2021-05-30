@@ -23,16 +23,17 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/device/radio/headset/heads/captain(src)
 	new /obj/item/clothing/gloves/captain(src)
-	new /obj/item/clothing/accessory/holster/waist(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun/head(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/clothing/suit/armor/captain(src)
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
 	new /obj/item/device/remote_device/captain(src)
 	new /obj/item/airbag(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/captain(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	#endif
@@ -58,10 +59,11 @@
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/box/ids(src)
 
-	new /obj/item/clothing/accessory/holster/waist(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun/head(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/airbag(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 
 /obj/structure/closet/secure_closet/hop2
 	name = "Head of Personnel's Attire"
@@ -89,7 +91,6 @@
 	new /obj/item/clothing/under/rank/head_of_personnel_whimsy(src)
 	new /obj/item/clothing/under/rank/goodman_shirt(src)
 	new /obj/item/clothing/suit/goodman_jacket(src)
-	new /obj/item/airbag(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "Head of Security's Locker"
@@ -107,19 +108,15 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 
-	new /obj/item/clothing/head/helmet/HoS(src)
 	new /obj/item/clothing/head/helmet/HoS/dermal(src)
+	new /obj/item/clothing/head/hos_peakedcap(src)
 	new /obj/item/device/remote_device/head_of_security(src)
-	new /obj/item/clothing/under/rank/head_of_security_fem(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/cartridge/hos(src)
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/taperoll/police(src)
-	new /obj/item/clothing/under/rank/head_of_security/jensen(src)
-	new /obj/item/clothing/suit/armor/hos/jensen(src)
 	new /obj/item/clothing/gloves/black/hos(src)
 	new /obj/item/clothing/glasses/thermal/hos_thermals(src)
 	new /obj/item/weapon/shield/riot/tele(src)
@@ -128,15 +125,17 @@
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/accessory/holster/waist(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/melee/telebaton(src)
-	new /obj/item/weapon/gun/energy/gun(src)
+	new /obj/item/weapon/gun/energy/gun/hos(src)
 	new /obj/item/device/flashlight/flare(src)
-	new /obj/item/clothing/under/rank/head_of_security/turtleneck(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/airbag(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)
+	new /obj/item/weapon/gun/energy/taser(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -164,11 +163,9 @@
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/suit/storage/flak/warden(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/clothing/glasses/sunglasses/sechud(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash(src)
@@ -176,8 +173,14 @@
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/storage/box/holobadge(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/clothing/shoes/boots(src)
+	new /obj/item/device/hailer(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)
+	new /obj/item/weapon/gun/energy/taser(src)
+	new /obj/item/weapon/storage/box/mines/shock(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	#endif
@@ -192,6 +195,10 @@
 	icon_broken = "secbroken"
 	icon_off = "secoff"
 
+/obj/structure/closet/secure_closet/security/atom_init(mapload)
+	. = ..()
+	sec_closets_list += src
+
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/security(src)
@@ -203,19 +210,21 @@
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
-	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/glasses/sunglasses/sechud(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/device/hailer(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)
+	new /obj/item/weapon/gun/energy/taser(src)
 	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/security(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/ushanka(src)
 	#endif
@@ -256,16 +265,6 @@
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	new /obj/item/clothing/under/det(src)
-	new /obj/item/clothing/under/det/black(src)
-	new /obj/item/clothing/under/det/slob(src)
-	new /obj/item/clothing/under/det/max_payne(src)
-	new /obj/item/clothing/suit/storage/det_suit(src)
-	new /obj/item/clothing/suit/storage/det_suit/black(src)
-	new /obj/item/clothing/suit/storage/det_suit/max_payne(src)
-	new /obj/item/clothing/gloves/black(src)
-	new /obj/item/clothing/head/det_hat(src)
-	new /obj/item/clothing/head/det_hat/black(src)
-	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
@@ -273,8 +272,10 @@
 	for (var/i in 1 to 2)
 		new /obj/item/ammo_box/magazine/c45r(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)
 	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 
 /obj/structure/closet/secure_closet/detective/update_icon()
 	if(broken)
@@ -308,7 +309,7 @@
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "Courtroom Locker"
-	req_access = list(access_court)
+	req_access = list(access_security)
 
 /obj/structure/closet/secure_closet/courtroom/PopulateContents()
 	new /obj/item/clothing/shoes/brown(src)
@@ -366,3 +367,4 @@
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
+	new /obj/item/toy/crayon/chalk(src)

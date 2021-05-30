@@ -1,12 +1,10 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
 	interact_offline = TRUE
@@ -16,7 +14,7 @@
                                         /obj/item/weapon/gun/energy,
                                         /obj/item/weapon/melee/baton,
                                         /obj/item/weapon/twohanded/shockpaddles/standalone,
-                                        /obj/item/ammo_box/magazine/l10mag
+                                        /obj/item/ammo_box/magazine/plasma
                                     )
 
 /obj/machinery/recharger/atom_init()
@@ -40,10 +38,10 @@
 		// Checks to make sure he's not in space doing it, and that the area got proper power.
 		var/area/a = get_area(src)
 		if(!isarea(a))
-			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 		if(!a.power_equip && a.requires_power)
-			to_chat(user, "\red The [name] blinks red as you try to insert the item!")
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 
 		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
@@ -54,20 +52,21 @@
 		user.drop_item()
 		G.loc = src
 		charging = G
-		use_power = 2
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		set_power_use(ACTIVE_POWER_USE)
 		update_icon()
-	else if(istype(G, /obj/item/weapon/wrench))
+	else if(iswrench(G))
 		if(charging)
-			to_chat(user, "\red Remove the weapon first!")
+			to_chat(user, "<span class='warning'>Remove the weapon first!</span>")
 			return
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
-		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	if (anchored && !charging)
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
 			return
 
-		if(panel_open && istype(G, /obj/item/weapon/crowbar))
+		if(panel_open && iscrowbar(G))
 			default_deconstruction_crowbar(G)
 			return
 
@@ -84,7 +83,8 @@
 		charging.update_icon()
 		charging.loc = loc
 		charging = null
-		use_power = 1
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		set_power_use(IDLE_POWER_USE)
 		update_icon()
 
 /obj/machinery/recharger/process()
@@ -121,16 +121,12 @@
 			else
 				icon_state = "recharger2"
 			return
-		if(istype(charging, /obj/item/ammo_box/magazine/l10mag))
-			var/obj/item/ammo_box/magazine/l10mag/M = charging
-			if (M.stored_ammo.len < M.max_ammo)
-				M.stored_ammo += new M.ammo_type(M)
-				if(prob(80)) //double charging speed
-					if (M.stored_ammo.len < M.max_ammo)
-						M.stored_ammo += new M.ammo_type(M)
-				update_icon()
+		if(istype(charging, /obj/item/ammo_box/magazine/plasma))
+			var/obj/item/ammo_box/magazine/plasma/M = charging
+			if(M.power_supply.charge < M.power_supply.maxcharge)
+				M.power_supply.give(2000 * recharge_coeff) // fast charge (and yes, this can be abused to charge cells faster, but it means that you need a free magazine for that purpose).
 				icon_state = "recharger1"
-				use_power(500 * recharge_coeff)
+				use_power(5000 * recharge_coeff)
 			else
 				icon_state = "recharger2"
 
@@ -142,7 +138,7 @@
 	if(istype(charging,  /obj/item/weapon/gun/energy))
 		var/obj/item/weapon/gun/energy/E = charging
 		if(E.power_supply)
-			E.power_supply.emp_act(severity)
+			E.power_supply.emplode(severity)
 
 	else if(istype(charging, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = charging
@@ -195,16 +191,12 @@
 				use_power(200 * recharge_coeff)
 			else
 				icon_state = "wrecharger2"
-		if(istype(charging, /obj/item/ammo_box/magazine/l10mag))
-			var/obj/item/ammo_box/magazine/l10mag/M = charging
-			if (M.stored_ammo.len < M.max_ammo)
-				M.stored_ammo += new M.ammo_type(M)
-				if(prob(80)) //double charging speed
-					if (M.stored_ammo.len < M.max_ammo)
-						M.stored_ammo += new M.ammo_type(M)
-				update_icon()
+		if(istype(charging, /obj/item/ammo_box/magazine/plasma))
+			var/obj/item/ammo_box/magazine/plasma/M = charging
+			if(M.power_supply.charge < M.power_supply.maxcharge)
+				M.power_supply.give(2000 * recharge_coeff)
 				icon_state = "wrecharger1"
-				use_power(500 * recharge_coeff)
+				use_power(5000 * recharge_coeff)
 			else
 				icon_state = "wrecharger2"
 

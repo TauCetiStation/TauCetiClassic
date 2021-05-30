@@ -5,7 +5,7 @@
 	var/obj/item/clothing/head/helmet/part1 = null
 	var/obj/item/device/radio/electropack/part2 = null
 	var/status = 0
-	w_class = 5.0
+	w_class = ITEM_SIZE_HUGE
 	flags = CONDUCT
 
 /obj/item/assembly/shock_kit/Destroy()
@@ -13,8 +13,8 @@
 	qdel(part2)
 	return ..()
 
-/obj/item/assembly/shock_kit/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench) && !status)
+/obj/item/assembly/shock_kit/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I) && !status)
 		var/turf/T = loc
 		if(ismob(T))
 			T = T.loc
@@ -26,11 +26,12 @@
 		part2 = null
 		qdel(src)
 		return
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(I))
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "secured" : "unsecured"]!</span>")
-	add_fingerprint(user)
-	return
+		add_fingerprint(user)
+		return
+	return ..()
 
 /obj/item/assembly/shock_kit/attack_self(mob/user)
 	part1.attack_self(user, status)

@@ -73,6 +73,8 @@
 	name = "Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 	light_color = "#78eeea"
 	circuit = /obj/item/weapon/circuitboard/air_management
 
@@ -83,8 +85,9 @@
 
 
 /obj/machinery/computer/general_air_control/ui_interact(mob/user)
-	user << browse(entity_ja(return_text()),"window=computer")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "window=computer", src.name)
+	popup.set_content(return_text())
+	popup.open()
 
 /obj/machinery/computer/general_air_control/process()
 	..()
@@ -152,6 +155,8 @@
 /obj/machinery/computer/general_air_control/large_tank_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tank"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 
 	frequency = 1441
 	var/input_tag

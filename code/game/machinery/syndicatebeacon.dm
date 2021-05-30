@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 //  Beacon randomly spawns in space
 //	When a non-traitor (no special role in /mind) uses it, he is given the choice to become a traitor
 //	If he accepts there is a random chance he will be accepted, rejected, or rejected and killed
@@ -7,14 +5,14 @@
 
 
 /obj/machinery/syndicate_beacon
-	name = "ominous beacon"
+	name = "Ominous Beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/temptext = ""
 	var/selfdestructing = 0
@@ -38,8 +36,10 @@
 			if(!selfdestructing)
 				dat += "<br><br><A href='?src=\ref[src];betraitor=1;traitormob=\ref[user]'>\"[pick("I want to switch teams.", "I want to work for you.", "Let me join you.", "I can be of use to you.", "You want me working for you, and here's why...", "Give me an objective.", "How's the 401k over at the Syndicate?")]\"</A><BR>"
 	dat += temptext
-	user << browse(entity_ja(dat), "window=syndbeacon")
-	onclose(user, "syndbeacon")
+
+	var/datum/browser/popup = new(user, "window=syndbeacon", src.name)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/syndicate_beacon/is_operational_topic()
 	return TRUE
@@ -68,9 +68,10 @@
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
-			ticker.mode.equip_traitor(N)
-			ticker.mode.traitors += N.mind
+			SSticker.mode.equip_traitor(N)
+			SSticker.mode.traitors += N.mind
 			N.mind.special_role = "traitor"
+			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", N)
 			var/objective = "Free Objective"
 			switch(rand(1,100))
 				if(1 to 50)
@@ -96,7 +97,7 @@
 
 			to_chat(M, "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>")
 
-			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>)")
+			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. [ADMIN_JMP(N)]")
 
 			var/obj_count = 1
 			for(var/datum/objective/OBJ in M.mind.objectives)
@@ -123,7 +124,7 @@
 	density = TRUE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"
@@ -133,25 +134,25 @@
 /obj/machinery/singularity_beacon/proc/Activate(mob/user = null)
 	if(!checkWirePower())
 		if(user)
-			to_chat(user, "\blue The connected wire doesn't have enough current.")
+			to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
 		return 1
-	for(var/obj/singularity/singulo in world)
+	for(var/obj/singularity/singulo in poi_list)
 		if(singulo.z == z)
 			singulo.target = src
 	icon_state = "[icontype]1"
 	active = 1
 	if(user)
-		to_chat(user, "\blue You activate the beacon.")
+		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
 
 
 /obj/machinery/singularity_beacon/proc/Deactivate(mob/user = null)
-	for(var/obj/singularity/singulo in world)
+	for(var/obj/singularity/singulo in poi_list)
 		if(singulo.target == src)
 			singulo.target = null
 	icon_state = "[icontype]0"
 	active = 0
 	if(user)
-		to_chat(user, "\blue You deactivate the beacon.")
+		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
 
 
 /obj/machinery/singularity_beacon/attack_ai(mob/user)
@@ -166,20 +167,20 @@
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
-		to_chat(user, "\red You need to screw the beacon to the floor first!")
+		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
 		return 1
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/screwdriver))
+	if(isscrewdriver(W))
 		if(active)
-			to_chat(user, "\red You need to deactivate the beacon first!")
+			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return
 
 		if(stat & SCREWED)
 			stat &= ~SCREWED
 			anchored = 0
-			to_chat(user, "\blue You unscrew the beacon from the floor.")
+			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			attached = null
 			return
 		else
@@ -191,7 +192,7 @@
 				return
 			stat |= SCREWED
 			anchored = 1
-			to_chat(user, "\blue You screw the beacon to the floor and attach the cable.")
+			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	..()
 	return

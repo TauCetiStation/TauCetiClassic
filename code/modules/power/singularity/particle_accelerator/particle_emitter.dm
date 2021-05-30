@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/structure/particle_accelerator/particle_emitter
 	name = "EM Containment Grid"
 	desc_holder = "This launchs the Alpha particles, might not want to stand near this end."
@@ -39,11 +37,14 @@
 		switch(strength)
 			if(0)
 				A = new/obj/effect/accelerated_particle/weak(T, dir)
+				playsound(src, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MISC, 30, FALSE)
 			if(1)
 				A = new/obj/effect/accelerated_particle(T, dir)
+				playsound(src, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MISC, 70, FALSE)
 			if(2)
 				A = new/obj/effect/accelerated_particle/strong(T, dir)
+				playsound(src, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MISC, null, FALSE) // null for default, which is maximum volume.
 		if(A)
-			A.dir = src.dir
+			A.set_dir(src.dir)
 			return 1
 	return 0

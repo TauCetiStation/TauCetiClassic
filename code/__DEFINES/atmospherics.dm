@@ -1,3 +1,12 @@
+//ATMOS
+//stuff you should probably leave well alone!
+#define R_IDEAL_GAS_EQUATION	8.31 	//kPa*L/(K*mol)
+#define ONE_ATMOSPHERE			101.325	//kPa
+
+#define T0C 273.15	// 0degC
+#define T20C 293.15	// 20degC
+#define TCMB 2.7	// -270.3degC
+
 #define PIPE_SIMPLE_STRAIGHT        0
 #define PIPE_SIMPLE_BENT            1
 #define PIPE_HE_STRAIGHT            2
@@ -60,6 +69,9 @@
 //#define PIPE_FUEL_DOWN              50
 // Z-Level stuff
 #define PIPE_FUEL_CAP               51
+// Digital T-valves
+#define PIPE_DTVALVE                52
+#define PIPE_DTVALVEM               53
 
 #define CONNECT_TYPE_REGULAR    1
 #define CONNECT_TYPE_SUPPLY     2

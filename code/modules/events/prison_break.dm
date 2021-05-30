@@ -1,6 +1,6 @@
 /datum/event/prison_break
 	announceWhen	= 50
-	oneShot			= 1
+	announcement = new /datum/announcement/centcomm/greytide
 
 	var/releaseWhen = 25
 	var/list/area/prisonAreas = list()
@@ -16,7 +16,7 @@
 
 /datum/event/prison_break/announce()
 	if(prisonAreas && prisonAreas.len > 0)
-		command_alert("[pick("Gr3y.T1d3 virus","Malignant trojan")] detected in [station_name()] imprisonment subroutines. Recommend station AI involvement.", "Security Alert")
+		announcement.play()
 	else
 		world.log << "ERROR: Could not initate grey-tide. Unable find prison or brig area."
 		kill()
@@ -24,7 +24,7 @@
 
 /datum/event/prison_break/start()
 	for(var/area/A in all_areas)
-		if(istype(A, /area/security/prison) || istype(A, /area/security/brig))
+		if(istype(A, /area/station/security/prison) || istype(A, /area/station/security/brig))
 			prisonAreas += A
 
 	if(prisonAreas && prisonAreas.len > 0)

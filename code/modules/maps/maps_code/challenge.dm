@@ -5,7 +5,7 @@
 	icon_state = "away"
 
 /area/awaymission/challenge/main
-	name = "\improper Danger Room"
+	name = "Danger Room"
 	icon_state = "away1"
 	requires_power = 0
 
@@ -23,7 +23,7 @@
 	anchored = 1
 	density = 1
 
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 

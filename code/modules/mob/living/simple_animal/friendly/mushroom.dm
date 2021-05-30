@@ -15,3 +15,6 @@
 	response_harm   = "whacks the"
 	harm_intent_damage = 5
 	ventcrawler = 2
+
+	has_head = TRUE
+	has_leg = TRUE

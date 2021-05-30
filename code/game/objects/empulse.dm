@@ -1,12 +1,17 @@
-proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
+/proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 	if(!epicenter) return
 
 	if(!istype(epicenter, /turf))
 		epicenter = get_turf(epicenter.loc)
 
 	if(log)
-		message_admins("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>JMP</a>)")
+		message_admins("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] [ADMIN_JMP(epicenter)]")
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
+
+	var/power = heavy_range * 2 + light_range
+	for(var/obj/item/device/radio/beacon/interaction_watcher/W in interaction_watcher_list)
+		if(get_dist(W, epicenter) < 10)
+			W.react_empulse(epicenter, power)
 
 	if(heavy_range > 1)
 		var/obj/effect/overlay/pulse = new /obj/effect/overlay(epicenter)
@@ -20,19 +25,19 @@ proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 		light_range = heavy_range
 
 	for(var/mob/M in range(heavy_range, epicenter))
-		M << 'sound/effects/EMPulse.ogg'
+		M.playsound_local(null, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	for(var/atom/T in range(light_range, epicenter))
 		var/distance = get_dist(epicenter, T)
 		if(distance < 0)
 			distance = 0
 		if(distance < heavy_range)
-			T.emp_act(1)
+			T.emplode(1)
 		else if(distance == heavy_range)
 			if(prob(50))
-				T.emp_act(1)
+				T.emplode(1)
 			else
-				T.emp_act(2)
+				T.emplode(2)
 		else if(distance <= light_range)
-			T.emp_act(2)
+			T.emplode(2)
 	return 1

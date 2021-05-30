@@ -7,7 +7,8 @@
 	opacity = 1
 	density = 1
 	layer = DOOR_LAYER
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
+	hud_possible = list(DIAG_AIRLOCK_HUD)
 	var/base_layer = DOOR_LAYER
 	var/icon_state_open  = "door0"
 	var/icon_state_close = "door1"
@@ -24,8 +25,8 @@
 	var/block_air_zones = 1 //If set, air zones cannot merge across the door even when it is opened.
 	var/emergency = 0 // Emergency access override
 
-	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
-	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
+	var/door_open_sound  = 'sound/machines/airlock/toggle.ogg'
+	var/door_close_sound = 'sound/machines/airlock/toggle.ogg'
 
 	var/dock_tag
 
@@ -39,12 +40,19 @@
 		layer = base_layer //Under all objects if opened. 2.7 due to tables being at 2.6
 		explosion_resistance = 0
 
+	prepare_huds()
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+	diag_hud_set_electrified()
+
 	update_nearby_tiles(need_rebuild=1)
 
 
 /obj/machinery/door/Destroy()
 	density = 0
 	update_nearby_tiles()
+	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.remove_from_hud(src)
 	return ..()
 
 //process()
@@ -95,26 +103,50 @@
 
 
 /obj/machinery/door/proc/bumpopen(mob/user)
-	if(operating)	return
 	if(user.last_airflow > world.time - vsc.airflow_delay) //Fakkit
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
-		user = null
+	if(!density)
+		return
+	try_open(user)
 
-	if(density)
-		if(allowed(user) || emergency)
+/obj/machinery/door/proc/try_open(mob/user, obj/item/tool = null)
+	if(operating)
+		return
+
+	add_fingerprint(user)
+
+	if(ishuman(user) && prob(40) && density)
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
+			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
+			if(!istype(H.head, /obj/item/clothing/head/helmet))
+				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+				H.Stun(8)
+				H.Weaken(5)
+				BP.take_damage(10, 0, used_weapon = "Hematoma")
+			else
+				visible_message("<span class='userdanger'> [user] headbutts the [src]. Good thing they're wearing a helmet.</span>")
+			return
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+	var/atom/check_access = user
+
+	if(!requiresID())
+		check_access = null
+
+	if(allowed(check_access) || emergency)
+		if(density)
 			open()
 		else
-			do_animate("deny")
-	return
+			close()
+		return
 
-/obj/machinery/door/meteorhit(obj/M)
-	src.open()
-	return
+	if(density)
+		do_animate("deny")
 
 /obj/machinery/door/attack_hand(mob/user)
-	return attackby(user, user)
+	try_open(user)
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
@@ -133,7 +165,7 @@
 		return
 	if(src.operating)
 		return
-	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
+	if(src.density && hasPower() && istype(I, /obj/item/weapon/melee/energy/blade))
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
 		if(!open())
@@ -142,21 +174,18 @@
 		return 1
 	if(isrobot(user))
 		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
-	if(!Adjacent(user))
-		user = null
-	if(!src.requiresID())
-		user = null
-	user.SetNextMove(CLICK_CD_INTERACT)
-	if(src.allowed(user))
-		if(src.density)
-			open()
-		else
-			close()
-		return
-	if(src.density)
-		do_animate("deny")
-	return
+	add_fingerprint(user)
+	try_open(user, I)
 
+/obj/machinery/door/emag_act(mob/user)
+	if(src.density && hasPower())
+		update_icon(AIRLOCK_EMAG)
+		sleep(6)
+		if(!open())
+			update_icon(AIRLOCK_CLOSED)
+		operating = -1
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/blob_act()
 	if(prob(40))
@@ -170,8 +199,10 @@
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
+			diag_hud_set_electrified()
 			spawn(300)
 				secondsElectrified = 0
+				diag_hud_set_electrified()
 	..()
 
 
@@ -260,14 +291,14 @@
  */
 
 /obj/machinery/door/proc/open_checks(forced)
-	if(!operating && ticker)
+	if(!operating && SSticker)
 		if(!forced)
 			return normal_open_checks()
 		return TRUE
 	return FALSE
 
 /obj/machinery/door/proc/close_checks(forced)
-	if(!operating && ticker)
+	if(!operating && SSticker)
 		if(!forced)
 			return normal_close_checks()
 		return TRUE
@@ -307,23 +338,23 @@
  */
 
 /obj/machinery/door/proc/do_open()
-	playsound(src, door_open_sound, 100, 1)
+	playsound(src, door_open_sound, VOL_EFFECTS_MASTER)
 	do_animate("opening")
-	sleep(3)
+	sleep(2)
 	set_opacity(FALSE)
 	density = FALSE
-	sleep(9)
+	sleep(4)
 	layer = base_layer
 	explosion_resistance = 0
 	update_icon()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/do_close()
-	playsound(src, door_close_sound, 100, 1)
+	playsound(src, door_close_sound, VOL_EFFECTS_MASTER)
 	do_animate("closing")
-	sleep(3)
+	sleep(2)
 	density = TRUE
-	sleep(9)
+	sleep(4)
 	if(visible && !glass)
 		set_opacity(TRUE)
 	layer = base_layer + DOOR_CLOSED_MOD
@@ -369,8 +400,8 @@
 		else
 			source.thermal_conductivity = initial(source.thermal_conductivity)
 
-/obj/machinery/door/Move(new_loc, new_dir)
-	..()
+/obj/machinery/door/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	update_nearby_tiles()
 
 /obj/machinery/door/proc/hasPower()

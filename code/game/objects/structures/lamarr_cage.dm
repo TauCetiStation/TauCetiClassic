@@ -40,22 +40,16 @@
 		qdel(src)
 
 
-/obj/structure/lamarr/meteorhit(obj/O)
-		new /obj/item/weapon/shard( src.loc )
-		Break()
-		qdel(src)
-
-
 /obj/structure/lamarr/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
-			playsound(src, "shatter", 70, 1)
+			playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 			Break()
 	else
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/structure/lamarr/update_icon()

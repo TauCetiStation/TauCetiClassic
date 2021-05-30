@@ -22,6 +22,10 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	holder_type = /obj/item/weapon/holder/cat
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/obj/item/inventory_mouth
 
 /mob/living/simple_animal/cat/Life()
@@ -31,9 +35,9 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(!M.stat)
 					M.splat()
-					emote(pick("\red splats the [M]!","\red toys with the [M]","worries the [M]"))
+					emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
 					movement_target = null
-					stop_automated_movement = 0
+					stop_automated_movement = FALSE
 					break
 
 	..()
@@ -50,16 +54,16 @@
 			turns_since_scan = 0
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
 				movement_target = null
-				stop_automated_movement = 0
+				stop_automated_movement = FALSE
 				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
 					if(isturf(snack.loc) && !snack.stat)
 						movement_target = snack
 						break
 			if(movement_target)
-				stop_automated_movement = 1
+				stop_automated_movement = TRUE
 				walk_to(src,movement_target,0,3)
 
 /mob/living/simple_animal/cat/death()
@@ -76,14 +80,14 @@
 		return ..()
 
 	//This REALLY needs to be moved to a general mob proc somewhere.
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		get_scooped(H)
 		return
 	else
 		return ..()
 
 /mob/living/simple_animal/cat/show_inv(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 
 	user.set_machine(src)
@@ -94,14 +98,12 @@
 	else
 		dat = "<br><b>Mouth:</b><a href='?src=\ref[src];add_inv=mouth'>Nothing</a>"
 
-	//dat += "<br><a href='?src=\ref[user];mach_close=mob[type]'>Close</a>"
-
 	var/datum/browser/popup = new(user, "mob[type]", "Inventory of [name]", 325, 500)
 	popup.set_content(dat)
 	popup.open()
 
 /mob/living/simple_animal/cat/Topic(href, href_list)
-	if(usr.stat || stat || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
+	if(usr.incapacitated() || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr)))
 		return
 
 	//Removing from inventory
@@ -128,15 +130,19 @@
 		..()
 
 /mob/living/simple_animal/cat/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 
 	if(inventory_mouth)
-		overlays += image('icons/mob/animal.dmi',inventory_mouth.icon_state)
+		add_overlay(image('icons/mob/animal.dmi',inventory_mouth.icon_state))
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
+
+/mob/living/simple_animal/cat/Runtime/atom_init()
+	. = ..()
+	chief_animal_list += src
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"

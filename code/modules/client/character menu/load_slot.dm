@@ -12,8 +12,4 @@
 			if(i==default_slot)
 				name = "<b>[name]</b>"
 			. += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
-		. += "<br><table width='50%' cellpadding='1' cellspacing='0'>"
-		. += "<td background='dossier_photos.png' style='background-repeat: no-repeat'>"
-		. += "<img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
-		. += "</td>"
-		. += "</table>"
+	. += "</center>"

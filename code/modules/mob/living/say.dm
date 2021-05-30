@@ -35,62 +35,45 @@ var/list/department_radio_keys = list(
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":Í" = "right ear",	"#Í" = "right ear",		".Í" = "right ear",
-	  ":‰" = "left ear",	"#‰" = "left ear",		".‰" = "left ear",
-	  ":¯" = "intercom",	"#¯" = "intercom",		".¯" = "intercom",
-	  ":" = "department",	"#" = "department",	"." = "department",
-	  ":Ò" = "Command",		"#Ò" = "Command",		".Ò" = "Command",
-	  ":Ú" = "Science",		"#Ú" = "Science",		".Ú" = "Science",
-	  ":¸" = "Medical",		"#¸" = "Medical",		".¸" = "Medical",
-	  ":Û" = "Engineering",	"#Û" = "Engineering",	".Û" = "Engineering",
-	  ":˚" = "Security",	"#˚" = "Security",		".˚" = "Security",
-	  ":ˆ" = "whisper",		"#ˆ" = "whisper",		".ˆ" = "whisper",
-	  ":Ë" = "binary",		"#Ë" = "binary",		".Ë" = "binary",
-	  ":Ù" = "alientalk",	"#Ù" = "alientalk",		".Ù" = "alientalk",
-	  ":Â" = "Syndicate",	"#Â" = "Syndicate",		".Â" = "Syndicate",
-	  ":„" = "Supply",		"#„" = "Supply",		".„" = "Supply",
-	  ":Ô" = "changeling",	"#Ô" = "changeling",	".Ô" = "changeling",
-	  ":‚" = "dronechat",	"#‚" = "dronechat",		".‚" = "dronechat",
+	  ":–∫" = "right ear",	"#–∫" = "right ear",		".–∫" = "right ear",
+	  ":–¥" = "left ear",	"#–¥" = "left ear",		".–¥" = "left ear",
+	  ":—à" = "intercom",	"#—à" = "intercom",		".—à" = "intercom",
+	  ":—Ä" = "department",	"#—Ä" = "department",	".—Ä" = "department",
+	  ":—Å" = "Command",		"#—Å" = "Command",		".—Å" = "Command",
+	  ":—Ç" = "Science",		"#—Ç" = "Science",		".—Ç" = "Science",
+	  ":—å" = "Medical",		"#—å" = "Medical",		".—å" = "Medical",
+	  ":—É" = "Engineering",	"#—É" = "Engineering",	".—É" = "Engineering",
+	  ":—ã" = "Security",	"#—ã" = "Security",		".—ã" = "Security",
+	  ":—Ü" = "whisper",		"#—Ü" = "whisper",		".—Ü" = "whisper",
+	  ":–∏" = "binary",		"#–∏" = "binary",		".–∏" = "binary",
+	  ":—Ñ" = "alientalk",	"#—Ñ" = "alientalk",		".—Ñ" = "alientalk",
+	  ":–µ" = "Syndicate",	"#–µ" = "Syndicate",		".–µ" = "Syndicate",
+	  ":–≥" = "Supply",		"#–≥" = "Supply",		".–≥" = "Supply",
+	  ":–ø" = "changeling",	"#–ø" = "changeling",	".–ø" = "changeling",
+	  ":–≤" = "dronechat",	"#–≤" = "dronechat",		".–≤" = "dronechat",
 
-	  ": " = "right ear",	"# " = "right ear",		". " = "right ear",
-	  ":ƒ" = "left ear",	"#ƒ" = "left ear",		".ƒ" = "left ear",
-	  ":ÿ" = "intercom",	"#ÿ" = "intercom",		".ÿ" = "intercom",
-	  ":–" = "department",	"#–" = "department",	".–" = "department",
-	  ":—" = "Command",		"#—" = "Command",		".—" = "Command",
-	  ":“" = "Science",		"#“" = "Science",		".“" = "Science",
-	  ":‹" = "Medical",		"#‹" = "Medical",		".‹" = "Medical",
-	  ":”" = "Engineering",	"#”" = "Engineering",	".”" = "Engineering",
-	  ":€" = "Security",	"#€" = "Security",		".€" = "Security",
-	  ":÷" = "whisper",		"#÷" = "whisper",		".÷" = "whisper",
-	  ":»" = "binary",		"#»" = "binary",		".»" = "binary",
-	  ":‘" = "alientalk",	"#‘" = "alientalk",		".‘" = "alientalk",
-	  ":≈" = "Syndicate",	"#≈" = "Syndicate",		".≈" = "Syndicate",
-	  ":√" = "Supply",		"#√" = "Supply",		".√" = "Supply",
-	  ":œ" = "changeling",	"#œ" = "changeling",	".œ" = "changeling",
-	  ":¬" = "dronechat",	"#¬" = "dronechat",		".¬" = "dronechat"
+	  ":–ö" = "right ear",	"#–ö" = "right ear",		".–ö" = "right ear",
+	  ":–î" = "left ear",	"#–î" = "left ear",		".–î" = "left ear",
+	  ":–®" = "intercom",	"#–®" = "intercom",		".–®" = "intercom",
+	  ":–†" = "department",	"#–†" = "department",	".–†" = "department",
+	  ":–°" = "Command",		"#–°" = "Command",		".–°" = "Command",
+	  ":–¢" = "Science",		"#–¢" = "Science",		".–¢" = "Science",
+	  ":–¨" = "Medical",		"#–¨" = "Medical",		".–¨" = "Medical",
+	  ":–£" = "Engineering",	"#–£" = "Engineering",	".–£" = "Engineering",
+	  ":–´" = "Security",	"#–´" = "Security",		".–´" = "Security",
+	  ":–¶" = "whisper",		"#–¶" = "whisper",		".–¶" = "whisper",
+	  ":–ò" = "binary",		"#–ò" = "binary",		".–ò" = "binary",
+	  ":–§" = "alientalk",	"#–§" = "alientalk",		".–§" = "alientalk",
+	  ":–ï" = "Syndicate",	"#–ï" = "Syndicate",		".–ï" = "Syndicate",
+	  ":–ì" = "Supply",		"#–ì" = "Supply",		".–ì" = "Supply",
+	  ":–ü" = "changeling",	"#–ü" = "changeling",	".–ü" = "changeling",
+	  ":–í" = "dronechat",	"#–í" = "dronechat",		".–í" = "dronechat"
 )
 
 /mob/living/proc/binarycheck()
 	if (istype(src, /mob/living/silicon/pai))
 		return
 	if (issilicon(src))
-		return 1
-	if (!ishuman(src))
-		return
-	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
-		var/obj/item/device/radio/headset/dongle
-		if(istype(H.l_ear,/obj/item/device/radio/headset))
-			dongle = H.l_ear
-		else
-			dongle = H.r_ear
-		if(!istype(dongle))
-			return
-		if(dongle.translate_binary)
-			return 1
-
-/mob/living/proc/hivecheck()
-	if (isalien(src))
 		return 1
 	if (!ishuman(src))
 		return
@@ -113,11 +96,16 @@ var/list/department_radio_keys = list(
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
-
 	if(sanitize)
 		message = sanitize(message)
+		if(!message)
+			return
 
 	var/turf/T = get_turf(src)
+
+	//log
+	var/area/A = get_area(src)
+	log_say("[key_name(src)] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 
 	//handle nonverbal and sign languages here
 	if (speaking)
@@ -137,9 +125,9 @@ var/list/department_radio_keys = list(
 		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
-					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>")
+					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
 				if (speech_sound)
-					src.playsound_local(get_turf(src), speech_sound, sound_vol * 0.5, 1)
+					playsound_local(src, speech_sound, VOL_EFFECTS_MASTER, sound_vol * 0.5)
 
 		speech_sound = null	//so we don't play it twice.
 
@@ -161,23 +149,16 @@ var/list/department_radio_keys = list(
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
-		for(var/I in hear)
-			if(istype(I, /mob/))
-				var/mob/M = I
-				listening += M
-				hearturfs += M.locs[1]
-				for(var/obj/O in M.contents)
-					listening_obj |= O
-			else if(istype(I, /obj/))
-				var/obj/O = I
-				hearturfs += O.locs[1]
-				listening_obj |= O
+		for(var/atom/movable/AM in hear)
+			listening |= AM.get_listeners()
+			listening_obj |= AM.get_listening_objs()
+			hearturfs += AM.locs[1]
 
 		for(var/mob/M in player_list)
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
-			if(M.loc && M.locs[1] in hearturfs)
+			if(M.loc && (M.locs[1] in hearturfs))
 				listening |= M
 
 	//speech bubble
@@ -185,11 +166,10 @@ var/list/department_radio_keys = list(
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/speech_bubble_test = say_test(message)
-	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
+	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	spawn(0)
-		flick_overlay(I, speech_bubble_recipients, 30)
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 
@@ -198,16 +178,11 @@ var/list/department_radio_keys = list(
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
-	var/area/A = get_area(src)
-	log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 	return 1
 
-/mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
+/mob/living/proc/say_signlang(message, verb="gestures", datum/language/language)
 	for (var/mob/O in viewers(src, null))
 		O.hear_signlang(message, verb, language, src)
 
 /obj/effect/speech_bubble
 	var/mob/parent
-
-/mob/living/proc/GetVoice()
-	return name

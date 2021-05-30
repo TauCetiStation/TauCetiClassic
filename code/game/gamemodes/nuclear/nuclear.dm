@@ -8,16 +8,16 @@
 	config_tag = "nuclear"
 	role_type = ROLE_OPERATIVE
 	required_players = 15
-	required_players_secret = 15
-	required_enemies = 1
-	recommended_enemies = 5
+	required_players_bundles = 25
+	required_enemies = 2
+	recommended_enemies = 6
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "hudsyndicate"
 
 	votable = 0
 
 	uplink_welcome = "Corporate Backed Uplink Console:"
 	uplink_uses = 20
-
-	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
 	var/nukes_left = 1 // Call 3714-PRAY right now and order more nukes! Limited offer!
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
@@ -26,28 +26,32 @@
 
 /datum/game_mode/nuclear/announce()
 	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")
-	to_chat(world, "<B>Gorlex Maradeurs are approaching NSS Exodus!</B>")
+	to_chat(world, "<B>Gorlex Maradeurs are approaching [station_name()]!</B>")
 	to_chat(world, "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!")
 
-/datum/game_mode/nuclear/can_start()//This could be better, will likely have to recode it later
+/datum/game_mode/nuclear/can_start()
+	if (!..())
+		return FALSE
+	// Looking for map to nuclear spawn points
+	var/spwn_synd = FALSE
+	var/spwn_comm = FALSE
+	for(var/obj/effect/landmark/A in landmarks_list)
+		if(A.name == "Syndicate-Commander")
+			spwn_comm = TRUE
+		else if (A.name == "Syndicate-Spawn")
+			spwn_synd = TRUE
+		if (spwn_synd && spwn_comm)
+			return TRUE
+	return FALSE
+
+/datum/game_mode/nuclear/assign_outsider_antag_roles()
 	if(!..())
-		return 0
-
+		return FALSE
 	var/agent_number = 0
-
-    /*
-	 * if(antag_candidates.len > agents_possible)
-	 * 	agent_number = agents_possible
-	 * else
-	 * 	agent_number = antag_candidates.len
-	 *
-	 * if(agent_number > n_players)
-	 *	agent_number = n_players/2
-	 */
 
 	//Antag number should scale to active crew.
 	var/n_players = num_players()
-	agent_number = Clamp((n_players/5), 2, 6)
+	agent_number = clamp((n_players/5), required_enemies, recommended_enemies)
 
 	if(antag_candidates.len < agent_number)
 		agent_number = antag_candidates.len
@@ -63,53 +67,11 @@
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 	//	log_game("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative")
 	//	message_admins("[synd_mind.key] with age [synd_mind.current.client.player_age] has been selected as a nuclear operative",0,1)
-	return 1
-
+	return TRUE
 
 /datum/game_mode/nuclear/pre_setup()
 	return 1
 
-
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/update_all_synd_icons()
-	spawn(0)
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/image/I in synd_mind.current.client.images)
-						if(I.icon_state == "synd")
-							qdel(I)
-
-		for(var/datum/mind/synd_mind in syndicates)
-			if(synd_mind.current)
-				if(synd_mind.current.client)
-					for(var/datum/mind/synd_mind_1 in syndicates)
-						if(synd_mind_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = synd_mind_1.current, icon_state = "synd")
-							synd_mind.current.client.images += I
-
-/datum/game_mode/proc/update_synd_icons_added(datum/mind/synd_mind)
-	spawn(0)
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				var/I = image('icons/mob/mob.dmi', loc = synd_mind.current, icon_state = "synd")
-				synd_mind.current.client.images += I
-
-/datum/game_mode/proc/update_synd_icons_removed(datum/mind/synd_mind)
-	spawn(0)
-		for(var/datum/mind/synd in syndicates)
-			if(synd.current)
-				if(synd.current.client)
-					for(var/image/I in synd.current.client.images)
-						if(I.icon_state == "synd" && I.loc == synd_mind.current)
-							qdel(I)
-
-		if(synd_mind.current)
-			if(synd_mind.current.client)
-				for(var/image/I in synd_mind.current.client.images)
-					if(I.icon_state == "synd")
-						qdel(I)
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -151,11 +113,10 @@
 		if(!leader_selected)
 			log_debug("Leader - [synd_mind]")
 			synd_mind.current.loc = synd_comm_spawn
+			equip_syndicate(synd_mind.current, 1)
 			prepare_syndicate_leader(synd_mind, nuke_code)
 			leader_selected = 1
 			greet_syndicate(synd_mind, 0, 1)
-			equip_syndicate(synd_mind.current, 1)
-
 		else
 			log_debug("[synd_mind] - not a leader")
 			greet_syndicate(synd_mind)
@@ -172,9 +133,6 @@
 			forge_syndicate_objectives(synd_mind)
 
 		spawnpos++
-		update_synd_icons_added(synd_mind)
-
-	update_all_synd_icons()
 
 	if(uplinklocker)
 		var/obj/structure/closet/C = new /obj/structure/closet/syndicate/nuclear(uplinklocker.loc)
@@ -189,7 +147,6 @@
 
 	return ..()
 
-
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	if (nuke_code)
 		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0)
@@ -197,12 +154,13 @@
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
-		if (ticker.mode.config_tag=="nuclear")
+		P.update_icon()
+		if (SSticker.mode.config_tag=="nuclear")
 			P.loc = synd_mind.current.loc
 		else
 			var/mob/living/carbon/human/H = synd_mind.current
 			P.loc = H.loc
-			H.equip_to_slot_or_del(P, slot_r_store, 0)
+			H.equip_to_slot_or_del(P, SLOT_R_STORE, 0)
 			H.update_icons()
 
 	else
@@ -219,61 +177,40 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1, boss=0)
+	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", syndicate.current)
 	if (you_are)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs agent</font>!</span>")
 	if(boss)
 		to_chat(syndicate.current, "<span class = 'info'>You are a <font color='red'>Gorlex Maradeurs Commander</font>!</span>")
 	var/obj_count = 1
+	syndicate.current.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!config.objectives_disabled)
 		for(var/datum/objective/objective in syndicate.objectives)
 			to_chat(syndicate.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		to_chat(syndicate.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(syndicate.current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return
 
+/datum/game_mode/proc/remove_nuclear(mob/M)
+	syndicates -= M
+	M.mind.special_role = null
+	remove_antag_hud(ANTAG_HUD_OPS, M)
+	M.mind.remove_objectives()
+	M.mind.current.faction = "neutral"
 
 /datum/game_mode/proc/random_radio_frequency()
 	return 1337 // WHY??? -- Doohl
 
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, boss)
-	var/radio_freq = SYND_FREQ
-
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(synd_mob)
-	R.set_frequency(radio_freq)
-	synd_mob.equip_to_slot_or_del(R, slot_l_ear)
-
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
-	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
-	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), slot_back)
-	if(synd_mob.backbag == 4) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), slot_back)
-	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(synd_mob), slot_in_backpack)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/c20r(synd_mob), slot_belt)
-	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(synd_mob.back), slot_in_backpack)
+	var/nuclear_outfit = /datum/outfit/nuclear
 	if(boss)
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/commander(synd_mob), slot_wear_id)
-	else
-		synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/nuker(synd_mob), slot_wear_id)
+		nuclear_outfit = /datum/outfit/nuclear/leader
+	synd_mob.equipOutfit(nuclear_outfit)
 
-	if(synd_mob.species)
-		var/race = synd_mob.species.name
-
-		if(race == UNATHI)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), slot_in_backpack)
-		else if(race == TAJARAN)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), slot_in_backpack)
-		else if(race == SKRELL)
-			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), slot_in_backpack)
-
-	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
-	E.imp_in = synd_mob
-	E.implanted = 1
-	synd_mob.update_icons()
+	synd_mob.add_language("Sy-Code")
 	return 1
 
 
@@ -291,14 +228,13 @@
 					return 0
 	return 1
 
-
 /datum/game_mode/nuclear/declare_completion()
 	if(config.objectives_disabled)
 		return
 	var/disk_rescued = 1
 	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
 		var/disk_area = get_area(D)
-		if(!is_type_in_list(disk_area, centcom_areas))
+		if(!is_type_in_typecache(disk_area, centcom_areas_typecache))
 			disk_rescued = 0
 			break
 	var/crew_evacuated = (SSshuttle.location==2)
@@ -311,58 +247,126 @@
 	//herp //Used for tracking if the syndies got the shuttle off of the z-level	//NO, DON'T FUCKING NAME VARS LIKE THIS
 
 	if      (!disk_rescued &&  station_was_nuked &&          !syndies_didnt_escape)
-		feedback_set_details("round_end_result","win - syndicate nuke")
-		completion_text += "<FONT size = 3, color='red'><B>Syndicate Major Victory!</B></FONT>"
-		completion_text += "<BR><B>Gorlex Maradeurs operatives have destroyed NSS Exodus!</B>"
+		mode_result = "win - syndicate nuke"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Syndicate Major Victory!</span>"
+		completion_text += "<br><b>Gorlex Maradeurs operatives have destroyed [station_name()]!</b>"
 		score["roleswon"]++
 
 	else if (!disk_rescued &&  station_was_nuked &&           syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - syndicate nuke - did not evacuate in time")
-		completion_text += "<FONT size = 3, color='red'><B>Total Annihilation</B></FONT>"
-		completion_text += "<BR><B>Gorlex Maradeurs operatives destroyed NSS Exodus but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
+		mode_result = "halfwin - syndicate nuke - did not evacuate in time"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Total Annihilation</span>"
+		completion_text += "<br><b>Gorlex Maradeurs operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</b> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station && !syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - blew wrong station")
-		completion_text += "<FONT size = 3, color='red'><B>Crew Minor Victory</B></FONT>"
-		completion_text += "<BR><B>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't NSS Exodus.</B> Next time, don't lose the disk!"
+		mode_result = "halfwin - blew wrong station"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Crew Minor Victory</span>"
+		completion_text += "<br><b>Gorlex Maradeurs operatives secured the authentication disk but blew up something that wasn't [station_name()].</b> Next time, don't lose the disk!"
 
 	else if (!disk_rescued && !station_was_nuked &&  nuke_off_station &&  syndies_didnt_escape)
-		feedback_set_details("round_end_result","halfwin - blew wrong station - did not evacuate in time")
-		completion_text += "<FONT size = 3, color='red'><B>Gorlex Maradeurs operatives have earned Darwin Award!</B></FONT>"
-		completion_text += "<BR><B>Gorlex Maradeurs operatives blew up something that wasn't NSS Exodus and got caught in the explosion.</B> Next time, don't lose the disk!"
+		mode_result = "halfwin - blew wrong station - did not evacuate in time"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Gorlex Maradeurs span earned Darwin Award!</span>"
+		completion_text += "<br><b>Gorlex Maradeurs operatives blew up something that wasn't [station_name()] and got caught in the explosion.</b> Next time, don't lose the disk!"
 
 	else if ( disk_rescued                                         && is_operatives_are_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
-		completion_text += "<FONT size = 3, color='red'><B>Crew Major Victory!</B></FONT>"
-		completion_text += "<BR><B>The Research Staff has saved the disc and killed the Gorlex Maradeurs Operatives</B>"
+		mode_result = "loss - evacuation - disk secured - syndi team dead"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Crew Major Victory!</span>"
+		completion_text += "<br><b>The Research Staff has saved the disc and killed the Gorlex Maradeurs Operatives</b>"
 
 	else if ( disk_rescued                                        )
-		feedback_set_details("round_end_result","loss - evacuation - disk secured")
-		completion_text += "<FONT size = 3, color='red'><B>Crew Major Victory</B></FONT>"
-		completion_text += "<BR><B>The Research Staff has saved the disc and stopped the Gorlex Maradeurs Operatives!</B>"
+		mode_result = "loss - evacuation - disk secured"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Crew Major Victory</span>"
+		completion_text += "<br><b>The Research Staff has saved the disc and stopped the Gorlex Maradeurs Operatives!</b>"
 
 	else if (!disk_rescued                                         && is_operatives_are_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
-		completion_text += "<FONT size = 3, color='red'><B>Syndicate Minor Victory!</B></FONT>"
-		completion_text += "<BR><B>The Research Staff failed to secure the authentication disk but did manage to kill most of the Gorlex Maradeurs Operatives!</B>"
+		mode_result = "loss - evacuation - disk not secured"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Syndicate Minor Victory!</span>"
+		completion_text += "<br><b>The Research Staff failed to secure the authentication disk but did manage to kill most of the Gorlex Maradeurs Operatives!</b>"
 
 	else if (!disk_rescued                                         &&  crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - detonation averted")
-		completion_text += "<FONT size = 3, color='red'><B>Syndicate Minor Victory!</B></FONT>"
-		completion_text += "<BR><B>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of NSS Exodus was averted.</B> Next time, don't lose the disk!"
+		mode_result = "halfwin - detonation averted"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Syndicate Minor Victory!</span>"
+		completion_text += "<br><b>Gorlex Maradeurs operatives recovered the abandoned authentication disk but detonation of [station_name()] was averted.</b> Next time, don't lose the disk!"
 
 	else if (!disk_rescued                                         && !crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - interrupted")
-		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory</B></FONT>"
-		completion_text += "<BR><B>Round was mysteriously interrupted!</B>"
+		mode_result = "halfwin - interrupted"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='font-color: red; font-weight: bold;'>Neutral Victory</span>"
+		completion_text += "<br><b>Round was mysteriously interrupted!</b>"
 
 	..()
 	return 1
 
+/datum/game_mode/nuclear/modestat()
+	var/dat = ""
+	var/foecount = 0
+	var/crewcount = 0
+	var/diskdat = ""
+	var/bombdat = null
+	var/datum/game_mode/nuclear/GM = SSticker.mode
+	for(var/datum/mind/M in GM.syndicates)
+		foecount++
+	for(var/mob/living/C in alive_mob_list)
+		if (!istype(C,/mob/living/carbon/human) || !istype(C,/mob/living/silicon/robot) || !istype(C,/mob/living/silicon/ai))
+			continue
+		if (!C.client)
+			continue
+		crewcount++
+
+	for(var/obj/item/weapon/disk/nuclear/N in poi_list)
+		if(!N)
+			continue
+		var/atom/disk_loc = N.loc
+		while(!istype(disk_loc, /turf))
+			if(istype(disk_loc, /mob))
+				var/mob/M = disk_loc
+				diskdat += "Carried by [M.real_name] "
+			if(istype(disk_loc, /obj))
+				var/obj/O = disk_loc
+				diskdat += "in \a [O.name] "
+			disk_loc = disk_loc.loc
+		diskdat += "in [disk_loc.loc]"
+		break // Should only need one go-round, probably
+	var/nukedpenalty = 0
+	for(var/obj/machinery/nuclearbomb/NUKE in poi_list)
+		//if (NUKE.r_code == "Nope") continue
+		if (NUKE.detonated == 0)
+			continue
+		var/turf/T = NUKE.loc
+		bombdat = T.loc
+		if (istype(T,/area/shuttle/syndicate) || istype(T,/area/custom/wizard_station) || istype(T,/area/station/solar))
+			nukedpenalty = 1000
+		else if (istype(T,/area/station/security/main) || istype(T,/area/station/security/brig) || istype(T,/area/station/security/armoury) || istype(T,/area/station/security/checkpoint))
+			nukedpenalty = 50000
+		else if (istype(T,/area/station/engineering))
+			nukedpenalty = 100000
+		else
+			nukedpenalty = 10000
+		break
+	if (!diskdat)
+		diskdat = "Uh oh. Something has fucked up! Report this."
+	dat += {"<B><U>MODE STATS</U></B><BR>
+	<B>Number of Operatives:</B> [foecount]<BR>
+	<B>Number of Surviving Crew:</B> [crewcount]<BR>
+	<B>Final Location of Nuke:</B> [bombdat]<BR>
+	<B>Final Location of Disk:</B> [diskdat]<BR><BR>
+	<B>Operatives Arrested:</B> [score["arrested"]] ([score["arrested"] * 1000] Points)<BR>
+	<B>Operatives Killed:</B> [score["opkilled"]] ([score["opkilled"] * 250] Points)<BR>
+	<B>Station Destroyed:</B> [score["nuked"] ? "Yes" : "No"] (-[nukedpenalty] Points)<BR>
+	<B>All Operatives Arrested:</B> [score["allarrested"] ? "Yes" : "No"] (Score tripled)<BR>
+	<HR>"}
+	return dat
 
 /datum/game_mode/proc/auto_declare_completion_nuclear()
 	var/text = ""
-	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+	if( syndicates.len || (SSticker && istype(SSticker.mode,/datum/game_mode/nuclear)) )
 		text += printlogo("nuke", "syndicate operatives")
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayerwithicon(syndicate)
@@ -370,29 +374,18 @@
 		var/obj/item/nuclear_uplink = src:nuclear_uplink
 		if(nuclear_uplink && nuclear_uplink.hidden_uplink)
 			if(nuclear_uplink.hidden_uplink.purchase_log.len)
-				text += "<BR><B>The tools used by the syndicate operatives were:</B> "
+				text += "<br><b>The tools used by the syndicate operatives were:</b> "
 				for(var/entry in nuclear_uplink.hidden_uplink.purchase_log)
-					text += "<BR>[entry]TC(s)"
+					text += "<br>[entry]TC(s)"
 			else
-				text += "<BR>The nukeops were smooth operators this round (did not purchase any uplink items)."
-		text += "<BR><HR>"
+				text += "<br>The nukeops were smooth operators this round (did not purchase any uplink items)."
+
+	if(text)
+		antagonists_completion += list(list("mode" = "nuclear", "html" = text))
+		text = "<div class='Section'>[text]</div>"
+
 	return text
 
-
-/*/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
-
-	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			to_chat(M, "That name is reserved.")
-			return nukelastname(M)
-
-	return newname
-*/
 /proc/NukeNameAssign(datum/mind/synd_mind)
 	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
 

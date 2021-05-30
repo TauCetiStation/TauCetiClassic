@@ -13,31 +13,20 @@
 		access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 		access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 		access_heads, access_construction, access_sec_doors, access_minisat,
-		access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload
+		access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload, access_engineering_lobby
 	)
+	salary = 250
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
-
-/datum/job/chief_engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_engineer(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/white(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/ce(H), slot_l_ear)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/ce(H), slot_l_store)
-
-	return TRUE
+	outfit = /datum/outfit/job/chief_engineer
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
+	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
 
 
 /datum/job/engineer
@@ -50,33 +39,12 @@
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction)
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_lobby)
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
+	outfit = /datum/outfit/job/engineer
+	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
-	restricted_species = list(IPC)
-
-/datum/job/engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/engineer(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
-	if(prob(75))
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/yellow(H), slot_head)
-	else
-		H.equip_to_slot_or_del(new /obj/item/clothing/head/hardhat/yellow/visor(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/device/t_scanner(H), slot_r_store)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/engineering(H), slot_l_store)
-	if(visualsOnly)
-		return
-
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_l_ear)
-
-	return TRUE
 
 
 /datum/job/atmos
@@ -89,27 +57,27 @@
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
 	idtype = /obj/item/weapon/card/id/eng
-	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks)
+	access = list(access_atmospherics, access_maint_tunnels, access_emergency_storage, access_construction, access_external_airlocks, access_engineering_lobby)
+	salary = 160
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 600
+	outfit = /datum/outfit/job/atmos
 
-/datum/job/atmos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
-	switch(H.backbag)
-		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/industrial(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/eng(H), slot_back)
-		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/atmos(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech/(H), slot_belt)
 
-	if(visualsOnly)
-		return
+/datum/job/technical_assistant
+	title = "Technical Assistant"
+	flag = TECHNICASSISTANT
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 3
+	spawn_positions = 3
+	supervisors = "the chief engineer"
+	selection_color = "#fff5cc"
+	idtype = /obj/item/weapon/card/id/eng
+	access = list(access_engineering_lobby, access_construction, access_maint_tunnels)
+	salary = 50
+	outfit = /datum/outfit/job/technical_assistant
 
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_l_ear)
-
-	return TRUE
 
 /proc/get_airlock_wires_identification()
 	var/list/wire_list = same_wires[/obj/machinery/door/airlock]

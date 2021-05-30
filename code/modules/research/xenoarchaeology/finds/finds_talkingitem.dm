@@ -58,7 +58,7 @@
 		var/list/options = list("[holder_atom] seems to be listening intently to [source]...",\
 			"[holder_atom] seems to be focussing on [source]...",\
 			"[holder_atom] seems to turn it's attention to [source]...")
-		holder_atom.loc.visible_message("\blue [bicon(holder_atom)] [pick(options)]")
+		holder_atom.loc.visible_message("<span class='notice'>[bicon(holder_atom)] [pick(options)]</span>")
 
 	if(prob(20))
 		spawn(2)
@@ -83,13 +83,7 @@
 		text = "[pick(heard_words)]"
 	else
 		text = pick(splittext(word, " "))
-	if(lentext(text)==1)
-		text=uppertext(text)
-	else
-		var/cap = copytext(text,1,2)
-		cap = uppertext(cap)
-		cap += copytext(text,2,lentext(text)+1)
-		text=cap
+	text = capitalize(text)
 	var/q = 0
 	msg+=text
 	//TODO:CYRILLIC
@@ -114,14 +108,12 @@
 			msg+="!"
 
 	var/list/listening = viewers(holder_atom)
-	for(var/mob/M in mob_list)
+	for(var/mob/M in observer_list)
 		if (!M.client)
-			continue //skip monkeys and leavers
-		if (isnewplayer(M))
-			continue
-		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-			listening|=M
+			continue //skip leavers
+		if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
+			listening |= M
 
 	for(var/mob/M in listening)
-		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, \blue\"[msg]\"")
+		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, <span class='notice'>\"[msg]\"</span>")
 	last_talk_time = world.time

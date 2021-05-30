@@ -1,11 +1,9 @@
-var/global/list/obj/machinery/message_server/message_servers = list()
-
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
 	var/message = "Blank" //transferred message
 
-/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "")
+/datum/data_pda_msg/New(param_rec = "",param_sender = "",param_message = "")
 
 	if(param_rec)
 		recipient = param_rec
@@ -22,7 +20,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/id_auth = "Unauthenticated"
 	var/priority = "Normal"
 
-/datum/data_rc_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_stamp = "",var/param_id_auth = "",var/param_priority)
+/datum/data_rc_msg/New(param_rec = "",param_sender = "",param_message = "",param_stamp = "",param_id_auth = "",param_priority)
 	if(param_rec)
 		rec_dpt = param_rec
 	if(param_sender)
@@ -50,7 +48,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	name = "Messaging Server"
 	density = TRUE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 
@@ -91,13 +89,38 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 /obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
+	var/authmsg = "[message]<br>"
+	if(id_auth)
+		authmsg += "[id_auth]<br>"
+	if(stamp)
+		authmsg += "[stamp]<br>"
+	for(var/obj/machinery/requests_console/Console in requests_console_list)
+		if(ckey(Console.department) == ckey(recipient))
+			switch(priority)
+				if(2)		//High priority
+					if(Console.newmessagepriority < 2)
+						Console.newmessagepriority = 2
+						Console.icon_state = "req_comp2"
+					if(!Console.silent)
+						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [sender]'")
+					Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></FONT></B><BR>[authmsg]"
+				else		// Normal priority
+					if(Console.newmessagepriority < 1)
+						Console.newmessagepriority = 1
+						Console.icon_state = "req_comp1"
+					if(!Console.silent)
+						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'Message from [sender]'")
+					Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></B><BR>[message]"
+			Console.set_light(2)
 
 /obj/machinery/message_server/attack_hand(user)
 	. = ..()
 	if(.)
 		return
 
-//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
+//	user << "<span class='notice'>There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays.</span>"
 	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
@@ -118,7 +141,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/value
 	var/details
 
-/datum/feedback_variable/New(var/param_variable,var/param_value = 0)
+/datum/feedback_variable/New(param_variable,param_value = 0)
 	variable = param_variable
 	value = param_value
 
@@ -177,7 +200,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	name = "Blackbox Recorder"
 	density = 1
 	anchored = 1.0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/list/messages = list()		//Stores messages of non-standard frequencies
@@ -191,6 +214,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/msg_security = list()
 	var/list/msg_deathsquad = list()
 	var/list/msg_syndicate = list()
+	var/list/msg_heist = list()
 	var/list/msg_mining = list()
 	var/list/msg_cargo = list()
 
@@ -205,7 +229,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 	blackbox = src
 
 /obj/machinery/blackbox_recorder/Destroy()
-	var/turf/T = locate(1,1,2)
+	var/centcom_z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
+	var/turf/T = locate(1,1, centcom_z)
 	if(T)
 		blackbox = null
 		var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)
@@ -217,6 +242,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 		BR.msg_security = msg_security
 		BR.msg_deathsquad = msg_deathsquad
 		BR.msg_syndicate = msg_syndicate
+		BR.msg_heist = msg_heist
 		BR.msg_mining = msg_mining
 		BR.msg_cargo = msg_cargo
 		BR.feedback = feedback
@@ -242,7 +268,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for(var/obj/machinery/message_server/MS in machines)
+	for(var/obj/machinery/message_server/MS in message_servers)
 		if(MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
 		if(MS.rc_msgs.len > rc_msg_amt)
@@ -258,6 +284,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","SEC-[msg_security.len]")
 	feedback_add_details("radio_usage","DTH-[msg_deathsquad.len]")
 	feedback_add_details("radio_usage","SYN-[msg_syndicate.len]")
+	feedback_add_details("radio_usage","VOX-[msg_heist.len]")
 	feedback_add_details("radio_usage","MIN-[msg_mining.len]")
 	feedback_add_details("radio_usage","CAR-[msg_cargo.len]")
 	feedback_add_details("radio_usage","OTH-[messages.len]")
@@ -273,28 +300,19 @@ var/obj/machinery/blackbox_recorder/blackbox
 	if(!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
-	establish_db_connection()
-	if(!dbcon.IsConnected()) return
-	var/round_id
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM erro_feedback")
-	query.Execute()
-	while(query.NextRow())
-		round_id = query.item[1]
-
-	if(!isnum(round_id))
-		round_id = text2num(round_id)
-	round_id++
+	if(!establish_db_connection("erro_feedback"))
+		return
 
 	for(var/datum/feedback_variable/FV in feedback)
-		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
+		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [global.round_id], \"[sanitize_sql(FV.get_variable())]\", [sanitize_sql(FV.get_value())], \"[sanitize_sql(FV.get_details())]\")"
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
 
-proc/feedback_set(variable,value)
+/proc/feedback_set(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -302,10 +320,10 @@ proc/feedback_set(variable,value)
 
 	FV.set_value(value)
 
-proc/feedback_inc(variable,value)
+/proc/feedback_inc(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -313,10 +331,10 @@ proc/feedback_inc(variable,value)
 
 	FV.inc(value)
 
-proc/feedback_dec(variable,value)
+/proc/feedback_dec(variable,value)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
+	variable = sanitize_sql(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -324,11 +342,11 @@ proc/feedback_dec(variable,value)
 
 	FV.dec(value)
 
-proc/feedback_set_details(variable,details)
+/proc/feedback_set_details(variable,details)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+	variable = sanitize_sql(variable)
+	details = sanitize_sql(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -336,11 +354,11 @@ proc/feedback_set_details(variable,details)
 
 	FV.set_details(details)
 
-proc/feedback_add_details(variable,details)
+/proc/feedback_add_details(variable,details)
 	if(!blackbox) return
 
-	variable = sql_sanitize_text(variable)
-	details = sql_sanitize_text(details)
+	variable = sanitize_sql(variable)
+	details = sanitize_sql(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 

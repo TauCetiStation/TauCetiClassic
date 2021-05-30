@@ -1,9 +1,9 @@
 /obj/effect/proc_holder/spell/targeted/mind_transfer
-	name = "Mind Transfer"
-	desc = "This spell allows the user to switch bodies with a target."
+	name = "Обмен Разумом"
+	desc = "Позволяет поменяться телом с целью."
 
 	school = "transmutation"
-	charge_max = 600
+	charge_max = 1800
 	clothes_req = 0
 	invocation = "GIN'YU CAPAN"
 	invocation_type = "whisper"
@@ -53,6 +53,19 @@ Also, you never added distance checking after target is selected. I've went ahea
 
 	if(target.mind.special_role in protected_roles)
 		to_chat(user, "Their mind is resisting your spell.")
+		return
+
+	//If target has mindshield/loyalty implant we break it, adding some brainloss
+	if(ismindshielded(target))
+		to_chat(user, "Their mind seems to be protected, so you only manage to break it")
+		to_chat(target, "You feel a flash of pain in your head")
+		for(var/obj/item/weapon/implant/mindshield/L in target)
+			if(L.implanted && L.imp_in == target)
+				qdel(L)
+		target.sec_hud_set_implants()
+		target.adjustBrainLoss(15)
+		user.Paralyse(paralysis_amount_caster)
+		target.Paralyse(paralysis_amount_victim)
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.

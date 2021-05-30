@@ -20,8 +20,6 @@
 /datum/export/coin/get_cost(obj/O, contr = 0, emag = 0)
 	var/price = 0
 	switch(O.name)
-		if(COIN_STANDARD)
-			price = 15
 		if(COIN_IRON)
 			price = 50
 		if(COIN_SILVER)
@@ -32,7 +30,7 @@
 			price = 180
 		if(COIN_PHORON)
 			price = 220
-		if(COIN_PLATINUM)
+		if(COIN_PLATINUM, COIN_MYTHRIL)
 			price = 300
 		if(COIN_DIAMOND)
 			price = 350

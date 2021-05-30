@@ -13,17 +13,17 @@
 		return
 	else
 		wet = wet_weight
-		SSdry.drying |= src
+		SSdrying.drying |= src
 
 /obj/item/Destroy()
-	SSdry.drying -= src
+	SSdrying.drying -= src
 	return ..()
 
 /obj/item/proc/dry_process()
 	if(!src) return
 
 	if(wet < 1)
-		SSdry.drying -= src
+		SSdrying.drying -= src
 		return
 
 	if(dry_inprocess < 1)

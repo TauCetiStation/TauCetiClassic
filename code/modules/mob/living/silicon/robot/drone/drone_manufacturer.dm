@@ -4,7 +4,7 @@
 
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 
@@ -21,10 +21,11 @@
 	else
 		icon_state = "drone_fab_nopower"
 		stat |= NOPOWER
+	update_power_use()
 
 /obj/machinery/drone_fabricator/process()
 
-	if(ticker.current_state < GAME_STATE_PLAYING)
+	if(SSticker.current_state < GAME_STATE_PLAYING)
 		return
 
 	if(stat & NOPOWER || !produce_drones)
@@ -49,7 +50,7 @@
 
 /obj/machinery/drone_fabricator/proc/count_drones()
 	var/drones = 0
-	for(var/mob/living/silicon/robot/drone/D in mob_list)
+	for(var/mob/living/silicon/robot/drone/D in drone_list)
 		if(D.key && D.client)
 			drones++
 	return drones
@@ -81,8 +82,8 @@
 	set name = "Join As Drone"
 	set desc = "If there is a powered, enabled fabricator in the game world with a prepared chassis, join as a maintenance drone."
 
-	if(ticker.current_state < GAME_STATE_PLAYING)
-		to_chat(src, "\red The game hasn't started yet!")
+	if(SSticker.current_state < GAME_STATE_PLAYING)
+		to_chat(src, "<span class='warning'>The game hasn't started yet!</span>")
 		return
 
 	if (usr != src)
@@ -92,11 +93,11 @@
 		return
 
 	if(!(config.allow_drone_spawn))
-		to_chat(src, "\red That verb is not currently permitted.")
+		to_chat(src, "<span class='warning'>That verb is not currently permitted.</span>")
 		return
 
 	if(jobban_isbanned(src, ROLE_DRONE))
-		to_chat(usr, "\red You are banned from playing synthetics and cannot spawn as a drone.")
+		to_chat(usr, "<span class='warning'>You are banned from playing synthetics and cannot spawn as a drone.</span>")
 		return
 
 	var/available_in_minutes = role_available_in_minutes(src, ROLE_DRONE)
@@ -108,7 +109,7 @@
 	if(istype(src,/mob/dead/observer))
 		var/mob/dead/observer/G = src
 		if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
-			to_chat(usr, "\blue <B>Upon using the antagHUD you forfeighted the ability to join the round.</B>")
+			to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
 			return
 
 	var/deathtimeminutes = round(deathtime / 600)
@@ -139,11 +140,11 @@
 			continue
 
 		if(DF.count_drones() >= config.max_maint_drones)
-			to_chat(src, "\red There are too many active drones in the world for you to spawn.")
+			to_chat(src, "<span class='warning'>There are too many active drones in the world for you to spawn.</span>")
 			return
 
 		if(DF.drone_progress >= 100)
 			DF.create_drone(src.client)
 			return
 
-	to_chat(src, "\red There are no available drone spawn points, sorry.")
+	to_chat(src, "<span class='warning'>There are no available drone spawn points, sorry.</span>")

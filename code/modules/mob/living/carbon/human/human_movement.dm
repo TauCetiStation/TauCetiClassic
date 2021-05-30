@@ -1,5 +1,6 @@
 /mob/living/carbon/human/movement_delay()
-
+	if(iszombie(src))
+		return src.zombie_movement_delay()
 	if(mind && mind.changeling && mind.changeling.strained_muscles)
 		if(!has_gravity(src))
 			return -3   // speed boost in space.
@@ -21,6 +22,9 @@
 	if(RUN in mutations)
 		tally -= 0.5
 
+	if(HAS_TRAIT(src, TRAIT_FAT))
+		tally += 1.5
+
 	if(crawling)
 		tally += 7
 
@@ -31,50 +35,50 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - nutrition) / 5 // So overeat would be 100 and default level would be 80
+	var/hungry = (500 - get_nutrition()) / 5 // So overeat would be 100 and default level would be 80
 	if(hungry >= 70)
 		tally += hungry / 50
 
+	if(buckled) // so, if we buckled we have large debuff
+		tally += 5.5
+
+	var/hands_or_legs
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/bodypart_name in list(BP_L_ARM , BP_R_ARM))
-			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.status & ORGAN_DESTROYED))
-				tally += 6
-			else if(BP.status & ORGAN_SPLINTED)
-				tally += 0.8
-			else if(BP.status & ORGAN_BROKEN)
-				tally += 3
+		hands_or_legs = list(BP_L_ARM , BP_R_ARM)
 	else
-		var/chem_nullify_debuff = FALSE
-		if(!species.flags[NO_BLOOD] && ( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns (no blood = no chemical effects).
-			chem_nullify_debuff = TRUE
+		hands_or_legs = list(BP_L_LEG , BP_R_LEG)
 
-		if(wear_suit && wear_suit.slowdown && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
-			tally += wear_suit.slowdown
+	for(var/bodypart_name in hands_or_legs)
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
+		if(!BP || (BP.is_stump))
+			tally += 6
+		else if(BP.status & ORGAN_SPLINTED)
+			tally += 0.8
+		else if(BP.status & ORGAN_BROKEN)
+			tally += 3
 
-		if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
-			tally += back.slowdown
+	// hyperzine removes equipment slowdowns (no blood = no chemical effects).
+	var/chem_nullify_debuff = FALSE
+	if(!species.flags[NO_BLOOD] && (reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")))
+		chem_nullify_debuff = TRUE
 
-		if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+	if(wear_suit && wear_suit.slowdown && !species.flags[IS_SYNTHETIC] && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
+		tally += wear_suit.slowdown
+
+	if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
+		tally += back.slowdown
+
+	if (shoes)
+		if (shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
 			tally += shoes.slowdown
+	else
+		tally += species.speed_mod_no_shoes
 
-		if(!chem_nullify_debuff)
-			for(var/x in list(l_hand, r_hand))
-				var/obj/item/O = x
-				if(O && !(O.flags & ABSTRACT) && O.w_class >= ITEM_SIZE_NORMAL)
-					tally += 0.5 * (O.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
-
-		if(buckled) // so, if we buckled we have large debuff
-			tally += 5.5
-
-		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
-			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(!BP || (BP.status & ORGAN_DESTROYED))
-				tally += 6
-			else if(BP.status & ORGAN_SPLINTED)
-				tally += 0.8
-			else if(BP.status & ORGAN_BROKEN)
-				tally += 3
+	if(!chem_nullify_debuff)
+		for(var/x in list(l_hand, r_hand))
+			var/obj/item/I = x
+			if(I && !(I.flags & ABSTRACT) && I.w_class >= ITEM_SIZE_NORMAL)
+				tally += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
 
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
@@ -82,11 +86,18 @@
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if(FAT in mutations)
-		tally += 1.5
+	if(bodytemperature < species.cold_level_1)
+		tally += (species.cold_level_1 - bodytemperature) / 10 * 1.75
 
-	if(bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+	var/turf/T = get_turf(src)
+	if(T)
+		tally += T.slowdown
+		var/obj/effect/fluid/F = locate(/obj/effect/fluid) in T
+		if(F)
+			tally += F.fluid_amount * 0.005
+
+	if(get_species() == UNATHI && bodytemperature > species.body_temperature)
+		tally -= min((bodytemperature - species.body_temperature) / 10, 1) //will be on the border of heat_level_1
 
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
@@ -111,4 +122,4 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return shoes && shoes.negates_gravity()
+	return ((shoes && shoes.negates_gravity()) || (wear_suit && wear_suit.negates_gravity()))

@@ -2,8 +2,10 @@
 	name = "Area Air Control"
 	desc = "A computer used to control the stationary scrubbers and pumps in the area."
 	icon_state = "area_atmos"
+	state_broken_preset = "atmosb"
+	state_nopower_preset = "atmos0"
 	light_color = "#e6ffff"
-	circuit = "/obj/item/weapon/circuitboard/area_atmos"
+	circuit = /obj/item/weapon/circuitboard/area_atmos
 
 	var/list/connectedscrubbers = new()
 	var/status = ""
@@ -21,46 +23,35 @@
 	scanscrubbers()
 
 /obj/machinery/computer/area_atmos/ui_interact(mob/user)
+	var/area_atmos_css = {"
+	<style>
+	a.green:link{
+		color:#00CC00;
+		}
+	a.green:visited{
+		color:#00CC00;
+		}
+	a.green:hover{
+		color:#00CC00;
+		}
+	a.green:active{
+		color:#00CC00;
+		}
+	a.red:link{
+		color:#FF0000;
+		}
+	a.red:visited{
+		color:#FF0000;
+		}
+	a.red:hover{
+		color:#FF0000;
+		}
+	a.red:active{
+		color:#FF0000;
+		}
+	</style>"}
 	var/dat = {"
-	<html>
-		<head>
-			<style type="text/css">
-				a.green:link
-				{
-					color:#00CC00;
-				}
-				a.green:visited
-				{
-					color:#00CC00;
-				}
-				a.green:hover
-				{
-					color:#00CC00;
-				}
-				a.green:active
-				{
-					color:#00CC00;
-				}
-				a.red:link
-				{
-					color:#FF0000;
-				}
-				a.red:visited
-				{
-					color:#FF0000;
-				}
-				a.red:hover
-				{
-					color:#FF0000;
-				}
-				a.red:active
-				{
-					color:#FF0000;
-				}
-			</style>
-		</head>
-		<body>
-			<center><h1>Area Air Control</h1></center>
+			<center><h1></h1></center>
 			<font color="red">[status]</font><br>
 			<a href="?src=\ref[src];scan=1">Scan</a>
 			<table border="1" width="90%">"}
@@ -74,9 +65,13 @@
 	dat += {"
 			</table><br>
 			<i>[zone]</i>
-		</body>
-	</html>"}
-	user << browse("[entity_ja(dat)]", "window=miningshuttle;size=400x400")
+			"}
+
+	var/datum/browser/popup = new(user, "miningshuttle", "Area Air Control", ntheme = CSS_THEME_LIGHT)
+	popup.add_head_content(area_atmos_css)
+	popup.set_content(dat)
+	popup.open()
+
 	status = ""
 
 /obj/machinery/computer/area_atmos/Topic(href, href_list)
@@ -127,48 +122,31 @@
 
 /obj/machinery/computer/area_atmos/area/validscrubber(obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber)
 	if(!isobj(scrubber))
-		return 0
+		return FALSE
 
-	/*
-	wow this is stupid, someone help me
-	*/
-	var/turf/T_src = get_turf(src)
-	if(!T_src.loc) return 0
-	var/area/A_src = T_src.loc
-	if (A_src.master)
-		A_src = A_src.master
+	var/area/A_src = get_area(src)
+	var/area/A_scrub = get_area(scrubber)
+	if(!A_src || !A_scrub)
+		return FALSE
 
-	var/turf/T_scrub = get_turf(scrubber)
-	if(!T_scrub.loc) return 0
-	var/area/A_scrub = T_scrub.loc
-	if (A_scrub.master)
-		A_scrub = A_scrub.master
+	if(A_src != A_scrub)
+		return FALSE
 
-	if(A_scrub != A_src)
-		return 0
-
-	return 1
+	return TRUE
 
 /obj/machinery/computer/area_atmos/area/scanscrubbers()
 	connectedscrubbers = new()
 
-	var/found = 0
+	var/area/A = get_area(src)
+	if(!A)
+		return
 
-	var/turf/T = get_turf(src)
-	if(!T.loc) return
-	var/area/A = T.loc
-	if (A.master)
-		A = A.master
-	for(var/obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber in world )
-		var/turf/T2 = get_turf(scrubber)
-		if(T2 && T2.loc)
-			var/area/A2 = T2.loc
-			if(istype(A2) && A2.master && A2.master == A )
-				connectedscrubbers += scrubber
-				found = 1
+	for(var/obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber in scrubber_huge_list)
+		var/area/A2 = get_area(scrubber)
+		if(A2 && A2 == A)
+			connectedscrubbers += scrubber
 
-
-	if(!found)
+	if(!length(connectedscrubbers))
 		status = "ERROR: No scrubber found!"
 
 	src.updateUsrDialog()

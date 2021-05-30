@@ -4,10 +4,9 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ccharger0"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 60
-	power_channel = EQUIP
 	interact_offline = TRUE
 	var/obj/item/weapon/stock_parts/cell/charging = null
 	var/chargelevel = -1
@@ -23,17 +22,18 @@
 
 		if(chargelevel != newlevel)
 
-			overlays.Cut()
-			overlays += "ccharger-o[newlevel]"
+			cut_overlays()
+			add_overlay("ccharger-o[newlevel]")
 
 			chargelevel = newlevel
 	else
-		overlays.Cut()
+		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
-	if(charging)
-		to_chat(user, "Current charge: [charging.charge]")
+	if(in_range(user, src))
+		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
+		if(charging)
+			to_chat(user, "Current charge: [charging.charge]")
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
@@ -41,14 +41,14 @@
 
 	if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
 		if(charging)
-			to_chat(user, "\red There is already a cell in the charger.")
+			to_chat(user, "<span class='warning'>There is already a cell in the charger.</span>")
 			return
 		else
 			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
 			if(!isarea(a))
 				return
 			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "\red The [name] blinks red as you try to insert the cell!")
+				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
 				return
 
 			user.drop_item()
@@ -57,14 +57,14 @@
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
 		updateicon()
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(charging)
-			to_chat(user, "\red Remove the cell first!")
+			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
 
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	. = ..()
@@ -89,7 +89,7 @@
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(charging)
-		charging.emp_act(severity)
+		charging.emplode(severity)
 	..(severity)
 
 

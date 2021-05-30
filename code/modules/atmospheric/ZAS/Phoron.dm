@@ -54,11 +54,11 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	//Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
 	if(!contaminated)
 		contaminated = TRUE
-		overlays += contamination_overlay
+		add_overlay(contamination_overlay)
 
 /obj/item/proc/decontaminate()
 	contaminated = FALSE
-	overlays -= contamination_overlay
+	cut_overlay(contamination_overlay)
 
 /mob/proc/contaminate()
 
@@ -86,7 +86,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		contaminate()
 
 	//Anything else requires them to not be dead.
-	if(stat >= 2)
+	if(stat >= 2 || species.flags[IS_SYNTHETIC])
 		return
 
 	//Burn skin if exposed.
@@ -166,7 +166,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(gloves) gloves.contaminate()
 
 
-turf/Entered(obj/item/I)
+/turf/Entered(obj/item/I)
 	. = ..()
 	//Items that are in phoron, but not on a mob, can still be contaminated.
 	if(istype(I) && vsc && vsc.plc.CLOTH_CONTAMINATION && I.can_contaminate())

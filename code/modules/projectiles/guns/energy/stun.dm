@@ -4,17 +4,16 @@
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/electrode)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
-
-/obj/item/weapon/gun/energy/taser/attack_self(mob/living/user)
-	select_fire(user)
+	can_be_holstered = TRUE
+	cell_type = /obj/item/weapon/stock_parts/cell/crap
 
 /obj/item/weapon/gun/energy/taser/cyborg
 	name = "taser gun"
 	desc = "A small, low capacity gun used for non-lethal takedowns."
 	icon_state = "taser"
-	fire_sound = 'sound/weapons/Taser.ogg'
-	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
+	fire_sound = 'sound/weapons/guns/gunpulse_Taser.ogg'
+	ammo_type = list(/obj/item/ammo_casing/energy/stun)
+	cell_type = /obj/item/weapon/stock_parts/cell/secborg
 	var/charge_tick = 0
 	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
 
@@ -44,28 +43,27 @@
 
 
 
-/obj/item/weapon/gun/energy/stunrevolver
+/obj/item/weapon/gun/energy/taser/stunrevolver
 	name = "stun revolver"
 	desc = "A high-tech revolver that fires stun cartridges. The stun cartridges can be recharged using a conventional energy weapon recharger."
 	icon_state = "stunrevolver"
+	item_state = "taser"
 	origin_tech = "combat=3;materials=3;powerstorage=2"
-	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun, /obj/item/ammo_casing/energy/electrode/gun)
-	cell_type = "/obj/item/weapon/stock_parts/cell"
-
-/obj/item/weapon/gun/energy/stunrevolver/attack_self(mob/living/user)
-	select_fire(user)
+	ammo_type = list(/obj/item/ammo_casing/energy/stun/gun)
+	cell_type = /obj/item/weapon/stock_parts/cell
 
 /obj/item/weapon/gun/energy/crossbow
-	name = "mini energy-crossbow"
-	desc = "A weapon favored by many of the syndicates stealth specialists."
+	name = "foam dart crossbow"
+	desc = "A weapon favored by many overactive children. Ages 8 and up."
 	icon_state = "crossbow"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "crossbow"
 	m_amt = 2000
 	origin_tech = "combat=2;magnets=2;syndicate=5"
 	silenced = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
-	cell_type = "/obj/item/weapon/stock_parts/cell/crap"
+	can_be_holstered = TRUE
+	cell_type = /obj/item/weapon/stock_parts/cell/crap
 	var/charge_tick = 0
 
 
@@ -94,6 +92,7 @@
 /obj/item/weapon/gun/energy/crossbow/largecrossbow
 	name = "Energy Crossbow"
 	desc = "A weapon favored by syndicate infiltration teams."
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
+	can_be_holstered = FALSE
 	force = 10
 	m_amt = 200000

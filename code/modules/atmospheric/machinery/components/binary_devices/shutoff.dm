@@ -15,6 +15,7 @@
 	var/override_counter = 0
 
 /obj/machinery/atmospherics/components/binary/valve/shutoff/update_icon()
+	..()
 	icon_state = "vclamp[open]"
 
 /obj/machinery/atmospherics/components/binary/valve/shutoff/attack_hand(mob/user)

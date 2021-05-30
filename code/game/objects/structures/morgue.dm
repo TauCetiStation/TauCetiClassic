@@ -16,24 +16,38 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	dir = EAST
-	density = 1
-	var/obj/structure/m_tray/connected = null
+	density = TRUE
 	anchored = 1.0
-	var/check_delay = 0
 
-/obj/structure/morgue/atom_init()
-	START_PROCESSING(SSobj, src)
+	var/obj/structure/m_tray/connected = null
+	var/check_delay = 0
+	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
 
 /obj/structure/morgue/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(connected)
 	return ..()
 
+/obj/structure/morgue/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The speaker is [beeper ? "enabled" : "disabled"]. Alt-click to toggle it.</span>")
+
+/obj/structure/morgue/AltClick(mob/user)
+	..()
+	if(!CanUseTopic(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	beeper = !beeper
+	to_chat(user, "<span class='notice'>You turn the speaker function [beeper ? "on" : "off"].</span>")
+
 /obj/structure/morgue/proc/update()
 	if (connected)
+		STOP_PROCESSING(SSobj, src)
 		icon_state = "morgue0"
 	else
 		if (contents.len)
+			START_PROCESSING(SSobj, src)
 			icon_state = "morgue2"
 		else
 			icon_state = "morgue1"
@@ -67,7 +81,7 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in compiled)
-		if((H.brain_op_stage == 4.0) || H.suiciding || !H.ckey)
+		if(H.stat != DEAD || (NOCLONE in H.mutations) || H.species.flags[NO_SCAN] || !H.has_brain() || H.suiciding || !H.ckey || !H.mind)
 			continue
 
 		return TRUE
@@ -83,6 +97,8 @@
 		return //nothing inside
 
 	if (has_clonable_bodies())
+		if(beeper)
+			playsound(src, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		icon_state = "morgue3"
 	else
 		update()
@@ -95,16 +111,18 @@
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(1,src)
-		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
 		qdel(connected)
 		connected = null
 		update()
 
 /obj/structure/morgue/proc/open()
 	if (!connected)
-		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER, 10)
 		connected = new /obj/structure/m_tray( loc )
-		step(connected, dir)
+		connected.Move(get_step(src, dir))
 		connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, dir)
 		if (T.contents.Find(connected))
@@ -116,7 +134,7 @@
 					var/mob/M = A
 					M.instant_vision_update(0)
 			connected.icon_state = "morguet"
-			connected.dir = dir
+			connected.set_dir(dir)
 		else
 			qdel(connected)
 			connected = null
@@ -152,7 +170,7 @@
 		..()
 
 /obj/structure/morgue/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	connected = new /obj/structure/m_tray( loc )
 	step(connected, dir)
@@ -203,7 +221,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
@@ -282,7 +300,7 @@
 
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("\red Uh-oh, that was a bad idea.", 1)
+//		user.show_message("<span class='warning'>Uh-oh, that was a bad idea.</span>", 1)
 //		//usr << "Uh-oh, that was a bad idea."
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
@@ -295,11 +313,11 @@
 		for(var/atom/movable/A in src.connected.loc)
 			if(!A.anchored)
 				A.loc = src
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		qdel(src.connected)
 		src.connected = null
 	else if (src.locked == 0)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
 		src.connected.layer = BELOW_CONTAINERS_LAYER
@@ -332,7 +350,7 @@
 		..()
 
 /obj/structure/crematorium/relaymove(mob/user)
-	if (user.stat || locked)
+	if (user.incapacitated() || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
@@ -357,28 +375,23 @@
 		return //don't let you cremate something twice or w/e
 
 	if(contents.len <= 0)
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a hollow crackle.</span>", 1)
-			return
+		audible_message("<span class='rose'>You hear a hollow crackle.</span>")
+		return
 
 	else
 		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
 			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
-		for (var/mob/M in viewers(src))
-			M.show_message("<span class='rose'>You hear a roar as the crematorium activates.</span>", 1)
+		audible_message("<span class='rose'>You hear a roar as the crematorium activates.</span>")
 
 		cremating = 1
 		locked = 1
 
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
-				M.emote("scream",,, 1)
-			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
-			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
-			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+				M.emote("scream")
+			M.log_combat(user, "cremated")
 			M.death(1)
 			M.ghostize(bancheck = TRUE)
 			qdel(M)
@@ -390,7 +403,7 @@
 		sleep(30)
 		cremating = 0
 		locked = 0
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
 
 
@@ -427,7 +440,7 @@
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
-	if (!ismob(user) || user.stat || user.lying || user.stunned)
+	if (!ismob(user) || user.incapacitated())
 		return
 	O.loc = src.loc
 	if (user != O)
@@ -447,5 +460,5 @@
 			if (!C.cremating)
 				for(var/mob/living/M in C.contents)
 					user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
-					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). [ADMIN_JMP(user)]")
 				C.cremate(user)

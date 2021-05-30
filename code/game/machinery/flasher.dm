@@ -5,6 +5,8 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = FALSE
@@ -12,6 +14,14 @@
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = TRUE
+
+/obj/machinery/flasher/atom_init()
+	. = ..()
+	flasher_list += src
+
+/obj/machinery/flasher/Destroy()
+	flasher_list -= src
+	return ..()
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
@@ -26,22 +36,21 @@
 	if ( powered() )
 		stat &= ~NOPOWER
 		icon_state = "[base_state]1"
-//		src.sd_SetLuminosity(2)
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
-//		src.sd_SetLuminosity(0)
+	update_power_use()
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wirecutters))
+	if (iswirecutter(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
-			user.visible_message("\red [user] has disconnected the [src]'s flashbulb!", "\red You disconnect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='warning'>You disconnect the [src]'s flashbulb!</span>")
 		if (!src.disable)
-			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
+			user.visible_message("<span class='warning'>[user] has connected the [src]'s flashbulb!</span>", "<span class='warning'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai(mob/user)
@@ -57,8 +66,9 @@
 	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
 		return
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("[base_state]_flash", src)
+	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	src.last_flash = world.time
 	use_power(1000)
 
@@ -71,7 +81,7 @@
 			if(!H.eyecheck() <= 0)
 				continue
 
-		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
+		if (istype(O, /mob/living/carbon/xenomorph))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
 		O.Weaken(strength)
@@ -105,18 +115,18 @@
 			src.flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
+	if (iswrench(W))
 		add_fingerprint(user)
 		src.anchored = !src.anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
 
 		if (!src.anchored)
-			user.show_message(text("\red [src] can now be moved."))
-			src.overlays.Cut()
+			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
+			src.cut_overlays()
 
 		else if (src.anchored)
-			user.show_message(text("\red [src] is now secured."))
-			src.overlays += "[base_state]-s"
+			to_chat(user, "<span class='warning'>[src] is now secured.</span>")
+			src.add_overlay("[base_state]-s")
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)
@@ -131,7 +141,7 @@
 	active = 1
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/flasher/M in machines)
+	for(var/obj/machinery/flasher/M in flasher_list)
 		if(M.id == id)
 			spawn()
 				M.flash()

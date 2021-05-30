@@ -27,9 +27,12 @@
 /obj/machinery/atmospherics/proc/ventcrawl_to(mob/living/user, obj/machinery/atmospherics/target_move, direction)
 	if(target_move)
 		if(is_type_in_list(target_move, ventcrawl_machinery) && target_move.can_crawl_through())
+			to_chat(user, "You start to climb out the ventilation system.")
+			if(user.is_busy() || !do_after(user, 20, null, target_move))
+				return
 			user.remove_ventcrawl()
 			user.forceMove(target_move.loc) //handles entering and so on
-			user.visible_message("You hear something squeezing through the ducts.", "You climb out the ventilation system.")
+			user.visible_message("You hear something squeezing through the ducts.", "You climbed out the ventilation system.")
 		else if(target_move.can_crawl_through())
 			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
 			if(pipenetdiff.len)
@@ -39,12 +42,15 @@
 			user.client.eye = target_move //if we don't do this, Byond only updates the eye every tick - required for smooth movement
 			if(world.time > user.next_play_vent)
 				user.next_play_vent = world.time + 30
-				playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
+				playsound(src, 'sound/machines/ventcrawl.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	else
 		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && src.can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+			to_chat(user, "You start to climb out the ventilation system.")
+			if(user.is_busy() || !do_after(user, 20, null, loc))
+				return
 			user.remove_ventcrawl()
 			user.forceMove(src.loc)
-			user.visible_message("You hear something squeezing through the pipes.", "You climb out the ventilation system.")
+			user.visible_message("You hear something squeezing through the pipes.", "You climbed out the ventilation system.")
 	user.canmove = FALSE
 	spawn(1)
 		user.canmove = TRUE
@@ -78,6 +84,22 @@
 
 /obj/machinery/atmospherics/components/binary/valve/can_crawl_through()
 	return open
+
+/obj/machinery/atmospherics/proc/suitable_for_ventcrawl()
+	return FALSE
+
+/obj/machinery/atmospherics/pipe/suitable_for_ventcrawl()
+	var/connections = 0	//count the number of pipes connected
+	for(var/node in nodes)
+		if(!node)
+			continue
+		connections++
+	if(connections == device_type)
+		return	FALSE//This means that there are no free holes and we cannot get into the pipe.
+	return TRUE
+
+/obj/machinery/atmospherics/components/suitable_for_ventcrawl()
+	return can_crawl_through()
 
 /obj/machinery/atmospherics/proc/findConnecting(direction)
 	for(var/obj/machinery/atmospherics/target in get_step(src, direction))

@@ -84,8 +84,10 @@ FLOOR SAFES
 			var/obj/item/P = contents[i]
 			dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
 		dat += "</table></center>"
-	user << browse("<html><head><title>[name]</title></head><body>[entity_ja(dat)]</body></html>", "window=safe;size=350x300")
 
+	var/datum/browser/popup = new(user, "safe", src.name, 350, 300)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/structure/safe/Topic(href, href_list)
 	if(!ishuman(usr))	return
@@ -135,7 +137,7 @@ FLOOR SAFES
 		return
 
 	if(href_list["retrieve"])
-		user << browse("", "window=safe") // Close the menu
+		user << browse(null, "window=safe") // Close the menu
 
 		var/obj/item/P = locate(href_list["retrieve"]) in src
 		if(open)
@@ -161,15 +163,11 @@ FLOOR SAFES
 			to_chat(user, "Hold [I] in one of your hands while you manipulate the dial.")
 
 
-obj/structure/safe/blob_act()
+/obj/structure/safe/blob_act()
 	return
 
 
-obj/structure/safe/ex_act(severity)
-	return
-
-
-obj/structure/safe/meteorhit(obj/O)
+/obj/structure/safe/ex_act(severity)
 	return
 
 

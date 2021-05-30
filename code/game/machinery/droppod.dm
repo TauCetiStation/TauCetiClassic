@@ -49,7 +49,7 @@
 		new /obj/item/device/camera_bug(loc)
 	CancelAdvancedAiming(1) // just to be sure
 	if(intruder)
-		overlays -= mob_overlay
+		cut_overlay(mob_overlay)
 		QDEL_NULL(mob_overlay)
 		intruder << browse(null, "window=droppod")
 		intruder.forceMove(turf)
@@ -57,7 +57,7 @@
 	if(second_intruder)
 		second_intruder.forceMove(turf)
 		second_intruder = null
-	overlays.Cut()
+	cut_overlays()
 	if(Stored_Nuclear)
 		Stored_Nuclear.forceMove(turf)
 		Stored_Nuclear = null
@@ -73,11 +73,6 @@
 	return ..()
 
 /obj/structure/droppod/blob_act()
-	if(flags & STATE_DROPING)
-		return
-	return ..()
-
-/obj/structure/droppod/meteorhit()
 	if(flags & STATE_DROPING)
 		return
 	return ..()
@@ -105,33 +100,33 @@
 	..()
 	if(!black_list_areas)
 		black_list_areas = list(
-			/area/aisat,
-			/area/turret_protected/aisat,
-			/area/turret_protected/ai,
-			/area/turret_protected/ai_upload,
-			/area/turret_protected/aisat_interior,
-			/area/ai_monitored/storage/secure,
-			/area/tcommsat/computer,
-			/area/tcommsat/chamber,
-			/area/AIsattele,
-			/area/crew_quarters/captain,
-			/area/crew_quarters/heads,
-			/area/bridge,
-			/area/bridge/meeting_room,
-			/area/teleporter,
-			/area/security/nuke_storage,
-			/area/security/armoury,
-			/area/security/warden,
-			/area/security/main,
-			/area/security/brig,
-			/area/security/range,
-			/area/security/hos,
-			/area/security/prison,
-			/area/security/execution,
-			/area/security/forensic_office,
-			/area/security/detectives_office,
-			/area/server,
-			/area/comms
+			/area/station/aisat,
+			/area/station/aisat/antechamber,
+			/area/station/aisat/ai_chamber,
+			/area/station/bridge/ai_upload,
+			/area/station/aisat/antechamber_interior,
+			/area/station/ai_monitored/storage_secure,
+			/area/station/tcommsat/computer,
+			/area/station/tcommsat/chamber,
+			/area/station/aisat/teleport,
+			/area/station/bridge/captain_quarters,
+			/area/station/bridge/hop_office,
+			/area/station/bridge,
+			/area/station/bridge/meeting_room,
+			/area/station/bridge/teleporter,
+			/area/station/bridge/nuke_storage,
+			/area/station/security/armoury,
+			/area/station/security/warden,
+			/area/station/security/main,
+			/area/station/security/brig,
+			/area/station/security/range,
+			/area/station/security/hos,
+			/area/station/security/prison,
+			/area/station/security/execution,
+			/area/station/security/forensic_office,
+			/area/station/security/detectives_office,
+			/area/station/bridge/server,
+			/area/station/bridge/comms
 			)
 	if(!areas)
 		areas = teleportlocs.Copy()
@@ -148,7 +143,7 @@
 	set name = "Enter Drop Pod"
 	set src in orange(1)
 
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr == second_intruder || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == second_intruder || usr.incapacitated())
 		return
 	if(stored_dna)
 		var/passed = FALSE
@@ -169,10 +164,10 @@
 	if(do_after(usr, 10, 1, src) && !intruder && !usr.buckled && usr != second_intruder)
 		usr.forceMove(src)
 		mob_overlay = image(usr.icon, usr.icon_state)
-		mob_overlay.overlays = usr.overlays
+		mob_overlay.copy_overlays(usr)
 		mob_overlay.pixel_x = 1
 		mob_overlay.pixel_y = 25
-		overlays += mob_overlay
+		add_overlay(mob_overlay)
 		intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside
 	return
@@ -186,7 +181,7 @@
 		return
 	intruder << browse(null, "window=droppod")
 	CancelAdvancedAiming() // just to be sure
-	overlays -= mob_overlay
+	cut_overlay(mob_overlay)
 	QDEL_NULL(mob_overlay)
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
 	if(item_state)
@@ -199,7 +194,7 @@
 	set category = "Drop Pod"
 	set name = "Enter Drop Pod as Passenger"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.stat == DEAD || usr.incapacitated() || usr.lying)
+	if(!(ishuman(usr) || isrobot(usr)) || usr == intruder || usr.incapacitated())
 		return
 	if (usr.buckled)
 		to_chat(usr, "<span class='warning'>You can't climb into the [src] while buckled!</span>")
@@ -248,14 +243,14 @@
 	if(!isturf(loc))
 		to_chat(intruder, "<span class='userdanger'>You must be on ground to drop!</span>")
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 	more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
@@ -294,7 +289,7 @@
 	intruder.client.eye = eyeobj
 
 /obj/structure/droppod/proc/ChooseTarget()
-	if(!eyeobj || eyeobj.z == ZLEVEL_CENTCOMM)
+	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
 	if(teleport_turf.obscured)
@@ -323,7 +318,7 @@
 	set category = "Drop Pod"
 	set name = "Start Drop"
 	set src = orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
 		if(intruder != usr)
@@ -355,7 +350,7 @@
 
 /obj/structure/droppod/proc/StartDrop()
 	verbs -= /obj/structure/droppod/verb/Start_Verb
-	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 	flags |= STATE_DROPING
 	density = FALSE
 	opacity = FALSE
@@ -377,7 +372,7 @@
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, src))
 		T.break_tile_to_plating()
-	playsound(loc, 'sound/effects/drop_land.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_land.ogg', VOL_EFFECTS_MASTER)
 	density = TRUE
 	opacity = TRUE
 	AimTarget = null
@@ -385,7 +380,7 @@
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
 	if(item_state)
 		icon_state += item_state
-	overlays -= image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+	cut_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 	new /obj/effect/overlay/droppod_open(loc, item_state)
 	sleep(50)
 	if(uses <= 0)
@@ -401,7 +396,7 @@
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(istype(O, /obj/item/weapon/screwdriver))
+	if(isscrewdriver(O))
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -412,16 +407,16 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(istype(O, /obj/item/weapon/weldingtool))
+	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(obj_integrity < max_integrity && WT.remove_fuel(0, user))
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		if(obj_integrity < max_integrity && WT.use(0, user))
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
-		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
+		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)
 		return ..()
@@ -457,7 +452,7 @@
 	set category = "Drop Pod"
 	set name = "Eject Items"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !isturf(loc))
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !isturf(loc))
 		return
 	if(flags & IS_LOCKED)
 		to_chat(usr, "<span class='danger'>Interface is block down!</span>")
@@ -476,7 +471,7 @@
 	set category = "Drop Pod"
 	set name = "Nuclear Bomb"
 	set src in orange(1)
-	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !Stored_Nuclear)
+	if(!(ishuman(usr) || isrobot(usr))|| usr.incapacitated() || flags & STATE_DROPING || !Stored_Nuclear)
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
@@ -494,7 +489,7 @@
 
 /obj/structure/droppod/bullet_act(obj/item/projectile/Proj)
 	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
 		take_damage(Proj.damage)
 		if(!(flags & IS_LOCKED))
@@ -509,10 +504,10 @@
 		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
 		qdel(src)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
+/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
 	..()
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
+	take_damage(attacker.melee_damage)
 
 /********Stats********/
 
@@ -523,12 +518,12 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(entity_ja(get_stats_html()), "window=droppod")
+	intruder << browse(get_stats_html(), "window=droppod")
 	return
 
 /obj/structure/droppod/proc/get_stats_html()
 	var/output = {"<html>
-				<head><title>[name] data</title>
+				<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[name] data</title>
 				<style>
 				body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
 				hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
@@ -598,7 +593,7 @@
 				<div class='wr'>
 				<div class='header'>Storage</div>
 				<div class='links'>
-				<a href='?src=\ref[src];eject_items=1'>Eject Items</span><br>
+				<a href='?src=\ref[src];eject_items=1'>Eject Items<br>
 				[Stored_Nuclear ? "<a href='?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
 				[second_intruder ? "<a href='?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
 				</div>
@@ -659,10 +654,10 @@
 		if(flags & IS_LOCKED)
 			flags &= ~IS_LOCKED
 			to_chat(intruder, "<span class='notice'>You unblocked [src].</span>")
-			overlays -= image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+			cut_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 		else
 			flags |= IS_LOCKED
-			overlays += image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+			add_overlay(image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3))
 			to_chat(intruder, "<span class='notice'>You blocked [src].</span>")
 		send_byjax(intruder, "droppod.browser", "commands", get_commands())
 		return
@@ -693,14 +688,14 @@
 	flags = POOR_AIMING
 
 /obj/structure/droppod/Syndi/Aiming()
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 		[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 		more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.Dropod_used = TRUE
+		war_device_activation_forbidden = TRUE
 
 	if(droped)
 		if(!(flags & IS_LOCKED))
@@ -710,7 +705,7 @@
 			to_chat(intruder, "<span class='userdanger'>You must be on ground to drop!</span>")
 			return
 		var/list/L = list()
-		for(var/turf/T in get_area_turfs(/area/syndicate_mothership/droppod_garage))
+		for(var/turf/T in get_area_turfs(/area/custom/syndicate_mothership/droppod_garage))
 			if(!T.density)
 				L+=T
 		AimTarget = pick(L)
@@ -723,7 +718,7 @@
 	droped = TRUE
 
 /obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
-	..()
+	. = ..()
 	if(flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)
 			uses++ // this allow only to return to the base.
@@ -754,7 +749,7 @@
 /obj/item/device/drop_caller/attack_self(mob/user)
 	if(!iscarbon(user))
 		return
-	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+	playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 	var/obj/spawn_drop = new drop_type(get_turf(user))
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
@@ -770,7 +765,7 @@
 
 /obj/item/device/drop_caller/Syndi/attack_self(mob/user) //hardcoded spawning Syndi Drop Pods only in "syndicate garage"
 	var/area/syndicate_loc = get_area(user)
-	if(!istype(syndicate_loc, /area/syndicate_mothership/droppod_garage))
+	if(!istype(syndicate_loc, /area/custom/syndicate_mothership/droppod_garage))
 		to_chat(user, "<span class='userdanger'>You must be in the Drop Launch zone.</span>")
 		return
 	var/min_pods_spawned = INFINITY
@@ -782,7 +777,7 @@
 	if(chosen_place)
 		chosen_place.pods_spawned += 6
 		var/obj/spawn_drop = new drop_type(chosen_place.loc)
-		playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+		playsound(src, 'sound/effects/drop_start.ogg', VOL_EFFECTS_MASTER)
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
@@ -797,4 +792,4 @@
 	desc = "Simple Aim system, can be installed in poor Drop pods"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "aim_system"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL

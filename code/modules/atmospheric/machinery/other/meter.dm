@@ -5,10 +5,10 @@
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = 1.0
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	frequency = 0
 	var/id
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 5
 
@@ -107,12 +107,12 @@
 	return ..()
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
+	if (!iswrench(W))
 		return ..()
-	if(user.is_busy()) return
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+	if(user.is_busy(src))
+		return
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40 * W.toolspeed, src))
+	if (W.use_tool(src, user, 40, volume = 50))
 		user.visible_message(
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",

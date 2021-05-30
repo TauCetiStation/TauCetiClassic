@@ -26,10 +26,10 @@
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly elastic whip.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
 /obj/item/weapon/changeling_whip/dropped(mob/user)
-	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his whip into an arm!</span>", "<span class='notice'>We assimilate the Whip back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
+	user.visible_message("<span class='warning'>With a sickening crunch, [user] reforms his whip into an arm!</span>", "<span class='notice'>We assimilate the Whip back into our body.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	..()
 
-/obj/item/weapon/changeling_whip/afterattack(atom/A, mob/living/carbon/human/user)
+/obj/item/weapon/changeling_whip/afterattack(atom/target, mob/user, proximity, params)
 	if(!istype(user))
 		return
 	if(user.incapacitated() || user.lying)
@@ -41,17 +41,17 @@
 	next_click = world.time + 10
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	switch(user.a_intent)
-		if(I_GRAB)
+		if(INTENT_GRAB)
 			LE.grabber = TRUE
-		if(I_DISARM)
+		if(INTENT_PUSH)
 			if(prob(65))
 				LE.weaken = 2.5
-		if(I_HURT)
+		if(INTENT_HARM)
 			LE.damage = 30
 		else
 			LE.agony = 15
 	LE.host = user
-	LE.Fire(A, user)
+	LE.Fire(target, user)
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"
@@ -68,7 +68,7 @@
 	tracer_type = /obj/effect/projectile/changeling/tracer
 	impact_type = /obj/effect/projectile/changeling/impact
 
-/obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/changeling_whip/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isturf(target))
 		return FALSE
 	var/atom/movable/T = target
@@ -86,11 +86,7 @@
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
 	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
-			var/obj/item/weapon/grab/G = new(host,T)
-			host.put_in_inactive_hand(G)
-			G.state = GRAB_AGGRESSIVE
-			G.icon_state = "grabbed1"
-			G.synch()
+			host.Grab(T, GRAB_AGGRESSIVE, FALSE)
 		else if(istype(T, /obj/item))
 			host.put_in_inactive_hand(T)
 

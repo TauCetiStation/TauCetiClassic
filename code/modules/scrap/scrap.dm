@@ -37,7 +37,6 @@ var/global/list/scrap_base_cache = list()
 
 
 
-
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(loc, loot_max)
 	forceMove(container)
@@ -45,6 +44,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/atom_init()
 	. = ..()
 	update_icon(1)
+	scrap_list += src
 
 
 /obj/effect/scrapshot
@@ -92,9 +92,10 @@ var/global/list/scrap_base_cache = list()
 	if(prob(big_item_chance))
 		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
 		big_item = CATCH.get_item(/obj/random/structures/structure_pack)
-		big_item.forceMove(src)
-		if(prob(66))
-			big_item.make_old()
+		if(big_item)
+			big_item.forceMove(src)
+			if(prob(66))
+				big_item.make_old()
 		qdel(CATCH)
 
 
@@ -108,10 +109,11 @@ var/global/list/scrap_base_cache = list()
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
 		new loot_path(src)
-	for(var/obj/item/loot in contents)
-		if(prob(66)) loot.make_old()
+	for(var/obj/item/I in contents)
+		if(prob(66))
+			I.make_old()
 	loot = new(src)
-	loot.max_w_class = 5
+	loot.set_slots(slots = 7, slot_size = ITEM_SIZE_HUGE)
 	shuffle_loot()
 
 /obj/structure/scrap/Destroy()
@@ -122,24 +124,24 @@ var/global/list/scrap_base_cache = list()
 	return ..()
 
 //stupid shard copypaste
-/obj/structure/scrap/Crossed(AM as mob|obj)
-	if(ismob(AM))
+/obj/structure/scrap/Crossed(atom/movable/AM)
+	if(ismob(AM) &&  !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		var/mob/M = AM
-		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
-		if(ishuman(M))
+		playsound(src, 'sound/effects/glass_step.ogg', VOL_EFFECTS_MASTER)
+		if(ishuman(M) && !M.buckled)
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.status & ORGAN_ROBOT)
+				if(BP.is_robotic())
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
 				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 				H.updatehealth()
-	..()
+	. = ..()
 
 /obj/structure/scrap/proc/shuffle_loot()
 	try_make_loot()
@@ -175,9 +177,9 @@ var/global/list/scrap_base_cache = list()
 			for(var/i=1 to num)
 				var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
 				I.color = pick("#996633", "#663300", "#666666", "")
-				base_icon.overlays += randomize_image(I)
+				base_icon.add_overlay(randomize_image(I))
 			scrap_base_cache["[icontype][icon_state][ID]"] = base_icon
-		overlays += scrap_base_cache["[icontype][icon_state][ID]"]
+		add_overlay(scrap_base_cache["[icontype][icon_state][ID]"])
 	if(loot_generated)
 		underlays.Cut()
 		for(var/obj/O in loot.contents)
@@ -197,11 +199,16 @@ var/global/list/scrap_base_cache = list()
 		if(victim.species.flags[IS_SYNTHETIC])
 			return 0
 		if(victim.gloves)
-			return 0
+			if(istype(victim.gloves, /obj/item/clothing/gloves))
+				var/obj/item/clothing/gloves/G = victim.gloves
+				if(G.protect_fingers)
+					return
 		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 		if(!BP)
 			return 0
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
+			return 0
+		if(victim.species.flags[NO_MINORCUTS])
 			return 0
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
@@ -226,7 +233,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/MouseDrop(obj/over_object)
 	..(over_object)
 
-/obj/structure/scrap/proc/dig_out_lump(newloc = loc, var/hard_dig = 0)
+/obj/structure/scrap/proc/dig_out_lump(newloc = loc, hard_dig = 0)
 	src.dig_amount--
 	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
@@ -248,7 +255,7 @@ var/global/list/scrap_base_cache = list()
 		do_dig = 50
 	if(do_dig  && !user.is_busy())
 		user.do_attack_animation(src)
-		if(do_after(user, do_dig, target = src))
+		if(W.use_tool(src, user, do_dig))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc, 0)
@@ -266,16 +273,31 @@ var/global/list/scrap_base_cache = list()
 	base_max = 14
 	base_spread = 16
 
+//todo: icon?
+/obj/structure/scrap/newyear
+	loot_list = list(
+		/obj/random/plushie,
+		/obj/random/plushie,
+		/obj/random/randomfigure,
+		/obj/random/randomfigure,
+		/obj/random/randomfigure,
+		/obj/random/randomtoy,
+		/obj/random/randomtoy,
+		/obj/random/randomtoy,
+		/obj/random/cloth/ny_random_cloth,
+		/obj/random/cloth/ny_random_cloth,
+	)
+
 /obj/structure/scrap/medical
 	icontype = "medical"
 	name = "medical refuse pile"
 	desc = "Pile of medical refuse. They sure don't cut expenses on these. "
 	parts_icon = 'icons/obj/structures/scrap/medical_trash.dmi'
 	loot_list = list(
-		/obj/random/meds/medical_supply/,
-		/obj/random/meds/medical_supply/,
-		/obj/random/meds/medical_supply/,
-		/obj/random/meds/medical_supply/,
+		/obj/random/meds/medical_supply,
+		/obj/random/meds/medical_supply,
+		/obj/random/meds/medical_supply,
+		/obj/random/meds/medical_supply,
 		/obj/random/materials/rods_scrap,
 		/obj/item/weapon/shard
 	)
@@ -317,8 +339,8 @@ var/global/list/scrap_base_cache = list()
 	desc = "Pile of military supply refuse. Who thought it was a clever idea to throw that out?"
 	parts_icon = 'icons/obj/structures/scrap/guns_trash.dmi'
 	loot_list = list(
-		/obj/preset/storage/weapons/random/,
-		/obj/preset/storage/weapons/random/,
+		/obj/preset/storage/weapons/random,
+		/obj/preset/storage/weapons/random,
 		/obj/random/tools/powercell,
 		/obj/random/guns/energy_weapon,
 		/obj/item/toy/gun,
@@ -515,6 +537,6 @@ var/global/list/scrap_base_cache = list()
 	if(master_item)
 		master_item.update_icon()
 
-/obj/item/weapon/storage/internal/updating/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/internal/updating/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	if(..())
 		SSjunkyard.add_junk_to_stats("[W.type]")

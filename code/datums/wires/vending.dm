@@ -18,18 +18,18 @@ var/const/VENDING_WIRE_SHUT_UP    = 16
 	if(V.stat & (BROKEN|NOPOWER))
 		return FALSE
 
-	if(V.seconds_electrified && !issilicon(user))
+	if((world.time < V.electrified_until || V.electrified_until < 0) && !issilicon(user))
 		if(V.shock(user, 100))
 			return TRUE
 
-/datum/wires/vending/get_interact_window()
+/datum/wires/vending/get_status()
 	var/obj/machinery/vending/V = holder
 	. += ..()
-	. += "<br>The orange light is [V.seconds_electrified ? "off" : "on"]."
-	. += "<br>The red light is [V.shoot_inventory ? "off" : "blinking"]."
-	. += "<br>The green light is [V.extended_inventory ? "on" : "off"]."
-	. += "<br>The [V.scan_id ? "purple" : "yellow"] light is on."
-	. += "<br>The blue light is [V.shut_up ? "off" : "on"]."
+	. += "The orange light is [(world.time < V.electrified_until || V.electrified_until < 0) ? "off" : "on"]."
+	. += "The red light is [V.shoot_inventory ? "off" : "blinking"]."
+	. += "The green light is [V.extended_inventory ? "on" : "off"]."
+	. += "The [V.scan_id ? "purple" : "yellow"] light is on."
+	. += "The blue light is [V.shut_up ? "off" : "on"]."
 
 /datum/wires/vending/update_cut(index, mended)
 	var/obj/machinery/vending/V = holder
@@ -37,21 +37,23 @@ var/const/VENDING_WIRE_SHUT_UP    = 16
 	switch(index)
 		if(VENDING_WIRE_THROW)
 			V.shoot_inventory = !mended
+			V.update_wires_check()
 
 		if(VENDING_WIRE_CONTRABAND)
-			V.extended_inventory = !mended
+			V.set_extended_inventory(!mended)
 
 		if(VENDING_WIRE_ELECTRIFY)
 			if(mended)
-				V.seconds_electrified = 0
+				V.electrified_until = 0
 			else
-				V.seconds_electrified = -1
+				V.electrified_until = -1
 
 		if(VENDING_WIRE_IDSCAN)
 			V.scan_id = TRUE
 
 		if(VENDING_WIRE_SHUT_UP)
 			V.shut_up = !mended
+			V.update_wires_check()
 
 /datum/wires/vending/update_pulsed(index)
 	var/obj/machinery/vending/V = holder
@@ -59,15 +61,17 @@ var/const/VENDING_WIRE_SHUT_UP    = 16
 	switch(index)
 		if(VENDING_WIRE_THROW)
 			V.shoot_inventory = !V.shoot_inventory
+			V.update_wires_check()
 
 		if(VENDING_WIRE_CONTRABAND)
-			V.extended_inventory = !V.extended_inventory
+			V.set_extended_inventory(!V.extended_inventory)
 
 		if(VENDING_WIRE_ELECTRIFY)
-			V.seconds_electrified = 30
+			V.electrified_until = world.time + 30 SECONDS
 
 		if(VENDING_WIRE_IDSCAN)
 			V.scan_id = !V.scan_id
 
 		if(VENDING_WIRE_SHUT_UP)
 			V.shut_up = !V.shut_up
+			V.update_wires_check()

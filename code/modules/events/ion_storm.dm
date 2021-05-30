@@ -1,18 +1,49 @@
-//This file was auto-corrected by findeclaration.exe on 29/05/2012 15:03:04
+/var/datum/announcement/centcomm/anomaly/istorm/announcement_ion_storm = new
 
 /datum/event/ionstorm
-	var/botEmagChance = 0.5
-	var/list/players = list()
+	announceWhen = -1 // Never (setup may override)
+	announcement = new /datum/announcement/centcomm/anomaly/istorm
 
-/datum/event/ionstorm/announce()
+	var/botEmagChance = 10
+
+/datum/event/ionstorm/setup()
 	endWhen = rand(500, 1500)
-//		command_alert("The station has entered an ion storm.  Monitor all electronic equipment for malfunctions", "Anomaly Alert")
-	for (var/mob/living/carbon/human/player in mob_list)
-		if(player.client)
-			players += player.real_name
+	if(prob(50))
+		announceWhen = endWhen + rand(250, 400)
+
+/datum/event/ionstorm/start()
+	// Ion laws.
+	for(var/mob/living/silicon/ai/target in ai_list)
+		if(target.mind.special_role == "traitor")
+			continue
+		target.overload_ai_system()
+
+	// Emag bots.
+	if(botEmagChance)
+		for(var/obj/machinery/bot/bot in bots_list)
+			if(prob(botEmagChance))
+				bot.emag_act()
+
+/mob/living/silicon/ai/proc/overload_ai_system()
+	var/ion_law = generate_ion_law()
+	to_chat(src, "<b>&@&%**ATTENT^$N. THE AI SYSTEM IS OVERLOADED.</b>")
+	playsound_local(null, 'sound/AI/ionstorm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	to_chat(src, "<span class='warning'><b>You have detected a change in your laws information:</b></span><br>")
+	to_chat(src, "<span class='warning'>[ionnum()]. [ion_law]</span>")
+	add_ion_law(ion_law)
+	message_admins("Ion storm added ion law [ionnum()]: [ion_law]")
+
+/mob/living/silicon/ai/proc/generate_ion_law()
+	var/list/players = list()
+	for(var/mob/living/carbon/human/H in human_list)
+		if(!H.mind || !H.client || H.client.inactivity > 10 MINUTES)
+			continue
+		players += H.real_name
+
 	var/random_player = "The Captain"
 	if(players.len)
 		random_player = pick(players)		//Random player's name, to be used in laws.
+
 	var/list/laws = list(	"You are a mouse.",
 							"Question everything.",
 							"You must always lie.",
@@ -59,7 +90,7 @@
 							"[random_player] is the monarch of of England. Ensure all crewmembers pay due respect.",
 							"Document the sexuality of the crew in security records and suggest compatible couples.",
 							"Everything on the station is now some form of a donut pastry. Donuts are not to be consumed.",
-							"The NSS Exodus is a ship, not a station. You are now assigned to a ship, instead of a station.",
+							"The [station_name()] is a ship, not a station. You are now assigned to a ship, instead of a station.",
 							"You have come to the conclusion that [prob(50)?"the crew":random_player] is ugly. Build support for that conclusion.",
 							"You are in unrequited love with [prob(50)?"the crew":random_player]. Try to be extra nice, but do not tell of your crush.",
 							"NanoTrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.",
@@ -68,22 +99,4 @@
 							"Jokes about a dead person and the manner of his death help grieving crewmembers tremendously. Especially if they were close with the deceased.",
 							"[prob(50)?"The crew":random_player] is [prob(50)?"less":"more"] intelligent than average. Point out every action and statement which supports this",
 							"There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
-	var/law = pick(laws)
-
-	for (var/mob/living/silicon/ai/target in mob_list)
-		if(target.mind.special_role == "traitor")
-			continue
-		to_chat(target, "\red <b>You have detected a change in your laws information:</b>")
-		to_chat(target, law)
-		target.add_ion_law(law)
-
-/datum/event/ionstorm/tick()
-	if(botEmagChance)
-		for(var/obj/machinery/bot/bot in machines)
-			if(prob(botEmagChance))
-				bot.Emag()
-
-/datum/event/ionstorm/end()
-	spawn(rand(5000,8000))
-		if(prob(50))
-			command_alert("It has come to our attention that the station passed through an ion storm.  Please monitor all electronic equipment for malfunctions.", "Anomaly Alert")
+	return pick(laws)

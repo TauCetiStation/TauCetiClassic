@@ -2,7 +2,6 @@
 	//var/datum/module/mod		//not used
 	var/m_amt = 0	// metal
 	var/g_amt = 0	// glass
-	var/w_amt = 0	// waster amounts
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/crit_fail = 0
@@ -31,6 +30,15 @@
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
+
+/obj/proc/get_current_temperature()
+	/*
+	It actually returns a rise in temperature from the enviroment since I don't know why.
+	Before it was called "is_hot". And it returned 0 if something is not any hotter than it should be.
+
+	Slap me on the wrist if you ever will need this to return a meaningful value. ~Luduk
+	*/
+	return 0
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -111,7 +119,7 @@
 		// check for TK users
 
 		if (ishuman(usr))
-			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
+			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab))
 				if(!(usr in nearby))
 					if(usr.client && usr.machine==src)
 						is_in_use = 1
@@ -137,13 +145,7 @@
 	..()
 
 /obj/proc/damage_flags()
-	. = 0
-	if(has_edge(src))
-		. |= DAM_EDGE
-	if(is_sharp(src))
-		. |= DAM_SHARP
-		if(damtype == BURN)
-			. |= DAM_LASER
+	return FALSE
 
 /obj/proc/interact(mob/user)
 	return
@@ -154,11 +156,10 @@
 /obj/proc/update_icon()
 	return
 
-/mob/proc/unset_machine(obj/O)
-	if(O && O == src.machine)
-		src.machine = null
-	else
-		src.machine = null
+/mob/proc/unset_machine()
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
 
 /mob/proc/set_machine(obj/O)
 	if(src.machine)
@@ -166,6 +167,9 @@
 	src.machine = O
 	if(istype(O))
 		O.in_use = 1
+
+/atom/movable/proc/on_unset_machine(mob/user)
+	return
 
 /obj/item/proc/updateSelfDialog()
 	var/mob/M = src.loc
@@ -182,6 +186,24 @@
 /obj/proc/hides_under_flooring()
 	return level == 1
 
+/atom/movable/proc/get_listeners()
+	. = list()
+	for(var/mob/M in contents)
+		. |= M.get_listeners()
+
+/mob/get_listeners()
+	. = list(src)
+	for(var/mob/M in contents)
+		. |= M.get_listeners()
+
+/atom/movable/proc/get_listening_objs()
+	return list(src)
+
+/mob/get_listening_objs()
+	. = list()
+	for(var/atom/movable/AM in contents)
+		. |= AM.get_listening_objs()
+
 /obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
 	if(talking_atom)
 		talking_atom.catchMessage(text, M)
@@ -189,7 +211,7 @@
 	var/mob/mo = locate(/mob) in src
 	if(mo)
 		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
-		mo.show_message(rendered, 2)
+		mo.oldshow_message(rendered, 2)
 		*/
 	return
 
@@ -197,11 +219,7 @@
 	being_shocked = 1
 	var/power_bounced = power / 2
 	tesla_zap(src, 3, power_bounced)
-	spawn(10)
-		reset_shocked()
-
-/obj/proc/reset_shocked()
-	being_shocked = 0
+	VARSET_IN(src, being_shocked, FALSE, 10)
 
 //mob - who is being feed
 //user - who is feeding
@@ -226,6 +244,12 @@
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
 				return FALSE
+		if(Feeded.species.flags[IS_SYNTHETIC])
+			if(Feeded == user)
+				to_chat(user, "<span class='warning'>You can't [eatverb] [food], you have a monitor for a head!</span>")
+			else
+				to_chat(user, "<span class='warning'>You can't feed [Feeded] with [food], they have a monitor for a head!</span>")
+			return FALSE
 		return TRUE
 	if(isIAN(mob))
 		var/mob/living/carbon/ian/dumdum = mob
@@ -241,3 +265,13 @@
 
 /obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	return !density
+
+// To be called from things that spill objects on the floor.
+// Makes an object move around randomly for a couple of tiles.
+/obj/proc/tumble_async(dist)
+	if(dist >= 1)
+		dist += rand(0, 1)
+		for(var/i in 1 to dist)
+			if(src)
+				step(src, pick(cardinal))
+				sleep(rand(2, 4))

@@ -3,8 +3,9 @@
 	desc = "It's useful for igniting flammable items."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
+	plane = FLOOR_PLANE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	var/id = null
@@ -18,6 +19,11 @@
 	use_power(50)
 	on = !on
 	icon_state = text("igniter[]", on)
+
+/obj/machinery/igniter/get_current_temperature()
+	if(on)
+		return 1000
+	return ..()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
 	if (on && !(stat & NOPOWER))
@@ -35,6 +41,7 @@
 		icon_state = "igniter[src.on]"
 	else
 		icon_state = "igniter0"
+	update_power_use()
 
 // Wall mounted remote-control igniter.
 
@@ -56,19 +63,20 @@
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]-p"
+	update_power_use()
 
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	if (istype(W, /obj/item/weapon/screwdriver))
+	if (isscrewdriver(W))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
-			user.visible_message("\red [user] has disabled the [src]!", "\red You disable the connection to the [src].")
+			user.visible_message("<span class='warning'>[user] has disabled the [src]!</span>", "<span class='warning'>You disable the connection to the [src].</span>")
 			icon_state = "[base_state]-d"
 		if (!src.disable)
-			user.visible_message("\red [user] has reconnected the [src]!", "\red You fix the connection to the [src].")
+			user.visible_message("<span class='warning'>[user] has reconnected the [src]!</span>", "<span class='warning'>You fix the connection to the [src].</span>")
 			if(src.powered())
 				icon_state = "[base_state]"
 			else
@@ -121,6 +129,8 @@
 
 	active = 1
 	icon_state = "launcheract"
+	message_admins("Ignition switch was activated at [COORD(src)] [ADMIN_JMP(src)] Last touched by: [key_name(usr)] [ADMIN_JMP(usr)]")
+	log_game("Ignition switch was activated at [COORD(src)] Last touched by: [key_name(usr)]")
 
 	for(var/obj/machinery/sparker/M in machines)
 		if (M.id == id)

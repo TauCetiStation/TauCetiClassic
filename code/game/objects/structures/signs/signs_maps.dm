@@ -51,21 +51,21 @@
 	icon_state = "direction_holodeck"
 
 /obj/structure/sign/deck/bridge
-	name = "\improper Bridge Deck"
+	name = "Bridge Deck"
 	icon_state = "deck-b"
 
 /obj/structure/sign/deck/first
-	name = "\improper First Deck"
+	name = "First Deck"
 	icon_state = "deck-1"
 
 /obj/structure/sign/deck/second
-	name = "\improper Second Deck"
+	name = "Second Deck"
 	icon_state = "deck-2"
 
 /obj/structure/sign/deck/third
-	name = "\improper Third Deck"
+	name = "Third Deck"
 	icon_state = "deck-3"
 
 /obj/structure/sign/deck/fourth
-	name = "\improper Fourth Deck"
+	name = "Fourth Deck"
 	icon_state = "deck-4"

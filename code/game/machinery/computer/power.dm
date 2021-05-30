@@ -8,7 +8,7 @@
 	light_color = "#ffcc33"
 	density = 1
 	anchored = 1
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 80
 	circuit = /obj/item/weapon/circuitboard/powermonitor
@@ -44,13 +44,12 @@
 			return
 
 
-	var/t = "<TT><B>Power Monitoring</B><HR>"
+	var/t = "<TT>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	if(!powernet)
-		t += "\red No connection"
+		t += "<span class='warning'>No connection</span>"
 	else
 
 		var/list/L = list()
@@ -77,16 +76,12 @@
 
 		t += "</FONT></PRE></TT>"
 
-	user << browse(entity_ja(t), "window=powcomp;size=450x900")
-	onclose(user, "powcomp")
+	var/datum/browser/popup = new(user, "powcomp", "Power Monitoring", 450, 900)
+	popup.set_content(t)
+	popup.open()
 
 
 /obj/machinery/computer/monitor/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=powcomp")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return

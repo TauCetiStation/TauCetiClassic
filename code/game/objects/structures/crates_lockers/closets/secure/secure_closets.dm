@@ -28,9 +28,14 @@
 	else
 		return 0
 
+/obj/structure/closet/secure_closet/AltClick(mob/user)
+	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
+		src.togglelock(user)
+	..()
+
 /obj/structure/closet/secure_closet/emp_act(severity)
 	for(var/obj/O in src)
-		O.emp_act(severity)
+		O.emplode(severity)
 	if(!broken)
 		if(prob(50/severity))
 			src.locked = !src.locked
@@ -63,39 +68,38 @@
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
 /obj/structure/closet/secure_closet/attackby(obj/item/weapon/W, mob/user)
-	if(src.opened)
-		if(istype(W, /obj/item/weapon/grab))
-			if(src.large)
-				src.MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
-			else
-				to_chat(user, "<span class='notice'>The locker is too small to stuff [W:affecting] into!</span>")
-		if(isrobot(user))
-			return
-		user.drop_item()
-		if(W)
-			W.forceMove(src.loc)
-	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
+	if(opened  || istype(W, /obj/item/weapon/grab))
+		return ..()
+	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
 		broken = 1
 		locked = 0
 		user.SetNextMove(CLICK_CD_MELEE)
 		desc = "It appears to be broken."
 		icon_state = icon_off
 		flick(icon_broken, src)
-		if(istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber))
-			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
-			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("<span class='warning'>The locker has been sliced open by [user] with an [W.name]!</span>", 1, "You hear metal being sliced and sparks flying.", 2)
-		else
-			for(var/mob/O in viewers(user, 3))
-				O.show_message("<span class='warning'>The locker has been broken by [user] with an electromagnetic card!</span>", 1, "You hear a faint electrical spark.", 2)
-	else if(istype(W,/obj/item/weapon/packageWrap) || istype(W,/obj/item/weapon/weldingtool))
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, src.loc)
+		spark_system.start()
+		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
+
+	else if(istype(W,/obj/item/weapon/packageWrap) || iswelder(W))
 		return ..(W,user)
 	else
 		togglelock(user)
+
+/obj/structure/closet/secure_closet/emag_act(mob/user)
+	if(broken)
+		return FALSE
+	broken = 1
+	locked = 0
+	user.SetNextMove(CLICK_CD_MELEE)
+	desc = "It appears to be broken."
+	icon_state = icon_off
+	flick(icon_broken, src)
+	visible_message("<span class='notice'>The locker has been sliced open by [user] with an electromagnetic card!</span>", blind_message = "<span class='warning'>You hear a faint electrical spark.</span>", viewing_distance = 3)
+	return TRUE
 
 /obj/structure/closet/secure_closet/attack_hand(mob/user)
 	src.add_fingerprint(user)
@@ -113,7 +117,7 @@
 	set category = "Object"
 	set name = "Toggle Lock"
 
-	if(!usr.canmove || usr.stat || usr.restrained()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
+	if(usr.incapacitated()) // Don't use it if you're not able to! Checks for stuns, ghost and restrain
 		return
 
 	if(ishuman(usr))
@@ -123,13 +127,13 @@
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
 /obj/structure/closet/secure_closet/update_icon()//Putting the welded stuff in updateicon() so it's easy to overwrite for special cases (Fridges, cabinets, and whatnot)
-	overlays.Cut()
+	cut_overlays()
 	if(!opened)
 		if(locked)
 			icon_state = icon_locked
 		else
 			icon_state = icon_closed
 		if(welded)
-			overlays += "welded"
+			add_overlay("welded")
 	else
 		icon_state = icon_opened

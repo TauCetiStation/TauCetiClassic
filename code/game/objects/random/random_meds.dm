@@ -5,7 +5,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pill_canister"
 /obj/random/meds/pills/item_to_spawn()
-		return pick(subtypesof(/obj/item/weapon/storage/pill_bottle/))
+		return pick(subtypesof(/obj/item/weapon/storage/pill_bottle))
 
 /obj/random/meds/medkit
 	name = "Random Medkit"
@@ -45,7 +45,7 @@
 	name = "Random Surgery Equipment"
 	desc = "This is a random medical surgery equipment."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw3"
+	icon_state = "saw"
 /obj/random/meds/medical_tool/item_to_spawn()
 		return pick(\
 						/obj/item/weapon/circular_saw,\
@@ -83,7 +83,7 @@
 	name = "Random Chemical bottle"
 	desc = "This is a random Chemical bottle."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw3"
+	icon_state = "saw"
 /obj/random/meds/chemical_bottle/item_to_spawn()
 		return pick(\
 						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/ammonia,\
@@ -94,6 +94,7 @@
 						prob(5);/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,\
 						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/mutagen,\
 						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate,\
+						prob(3);/obj/item/weapon/reagent_containers/glass/bottle/acid,\
 						prob(1);/obj/item/weapon/reagent_containers/glass/bottle/random\
 					)
 

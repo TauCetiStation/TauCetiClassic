@@ -1,6 +1,8 @@
 /datum/event/rogue_drone
 	startWhen = 10
 	endWhen = 1000
+	announcement = new /datum/announcement/centcomm/icarus_lost
+	announcement_end = new /datum/announcement/centcomm/icarus_recovered
 	var/list/drones_list = list()
 
 /datum/event/rogue_drone/start()
@@ -30,7 +32,7 @@
 		msg = "Contact has been lost with a combat drone wing operating out of the NMV Icarus. If any are sighted in the area, approach with caution."
 	else
 		msg = "Unidentified hackers have targetted a combat drone wing deployed from the NMV Icarus. If any are sighted in the area, approach with caution."
-	command_alert(msg, "Rogue drone alert")
+	announcement.play(msg)
 
 /datum/event/rogue_drone/tick()
 	return
@@ -41,13 +43,15 @@
 		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 		sparks.set_up(3, 0, D.loc)
 		sparks.start()
-		D.z = config.admin_levels[1]
-		D.has_loot = 0
+		D.z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
+		D.has_loot = FALSE
 
 		qdel(D)
 		num_recovered++
 
+	var/msg
 	if(num_recovered > drones_list.len * 0.75)
-		command_alert("Icarus drone control reports the malfunctioning wing has been recovered safely.", "Rogue drone alert")
+		msg = "Icarus drone control reports the malfunctioning wing has been recovered safely."
 	else
-		command_alert("Icarus drone control registers disappointment at the loss of the drones, but the survivors have been recovered.", "Rogue drone alert")
+		msg = "Icarus drone control registers disappointment at the loss of the drones, but the survivors have been recovered."
+	announcement_end.play(msg)

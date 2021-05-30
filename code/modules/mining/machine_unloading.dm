@@ -7,6 +7,7 @@
 	icon_state = "unloader"
 	density = 1
 	anchored = 1.0
+	speed_process = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 
@@ -31,8 +32,7 @@
 			var/obj/structure/ore_box/BOX = locate(/obj/structure/ore_box, input.loc)
 			var/i = 0
 			for (var/obj/item/weapon/ore/O in BOX.contents)
-				BOX.contents -= O
-				O.loc = output.loc
+				O.Move(output.loc)
 				i++
 				if (i>=10)
 					return
@@ -42,7 +42,7 @@
 			for (i = 0; i<10; i++)
 				O = locate(/obj/item, input.loc)
 				if (O)
-					O.loc = src.output.loc
+					O.Move(output.loc)
 				else
 					return
 	return

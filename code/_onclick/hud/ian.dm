@@ -41,8 +41,8 @@
 		return
 
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 
 	switch(icon_x)
 		if(4 to 29)
@@ -54,7 +54,7 @@
 
 
 /datum/hud/proc/ian_hud()
-	if(!(is_alien_whitelisted(mymob, "ian") || (config.allow_donators && mymob.client.donator && !is_alien_whitelisted_banned(mymob, "ian"))))
+	if(!(is_alien_whitelisted(mymob, "ian") || (mymob.client.supporter && !is_alien_whitelisted_banned(mymob, "ian"))))
 		return
 
 	var/ui_style = 'icons/mob/screen_corgi.dmi'
@@ -69,10 +69,61 @@
 	using = new
 	using.name = "act_intent"
 	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
 	src.adding += using
 	action_intent = using
+
+//intent small hud objects
+	var/icon/ico
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+	using = new /obj/screen( src )
+	using.name = INTENT_HELP
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	help_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+	using = new /obj/screen( src )
+	using.name = INTENT_PUSH
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	push_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = INTENT_GRAB
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	grab_intent = using
+
+	ico = new(ui_style, "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+	using = new /obj/screen( src )
+	using.name = INTENT_HARM
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = ABOVE_HUD_LAYER
+	using.plane = ABOVE_HUD_PLANE
+	src.adding += using
+	harm_intent = using
 
 	using = new
 	using.name = "resist"
@@ -116,7 +167,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hair"
 	inv_box.screen_loc = ui_ian_head
-	inv_box.slot_id = slot_head
+	inv_box.slot_id = SLOT_HEAD
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.other += inv_box
@@ -134,7 +185,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mouth"
 	inv_box.screen_loc = ui_ian_mouth
-	inv_box.slot_id = slot_mouth
+	inv_box.slot_id = SLOT_MOUTH
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.r_hand_hud_object = inv_box
@@ -145,7 +196,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
 	inv_box.screen_loc = ui_ian_neck
-	inv_box.slot_id = slot_neck
+	inv_box.slot_id = SLOT_NECK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
@@ -155,7 +206,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_ian_back
-	inv_box.slot_id = slot_back
+	inv_box.slot_id = SLOT_BACK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
@@ -173,8 +224,8 @@
 
 	mymob.zone_sel = new
 	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
 
 	mymob.client.screen = list(mymob.zone_sel, mymob.healths, mymob.pullin)
 	mymob.client.screen += adding + other + hotkeybuttons

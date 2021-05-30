@@ -1,4 +1,4 @@
-/atom/movable/proc/nano_host()
+/datum/proc/nano_host()
 	return src
 
 /obj/nano_module/nano_host()
@@ -46,7 +46,7 @@
 		return
 	if(z in config.admin_levels)						// Syndicate borgs can interact with everything on the admin level
 		return STATUS_INTERACTIVE
-	if(istype(get_area(src), /area/syndicate_station))	// If elsewhere, they can interact with everything on the syndicate shuttle
+	if(istype(get_area(src), /area/shuttle/syndicate))	// If elsewhere, they can interact with everything on the syndicate shuttle
 		return STATUS_INTERACTIVE
 	if(istype(src_object, /obj/machinery))				// Otherwise they can only interact with emagged machinery
 		var/obj/machinery/Machine = src_object
@@ -61,7 +61,7 @@
 	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
 	// unless it's on the same level as the object it's interacting with.
 	var/turf/T = get_turf(src_object)
-	if(!T || !(z == T.z || (T.z in config.player_levels)))
+	if(!T || !(z == T.z || (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))))
 		return STATUS_CLOSE
 
 	// If an object is in view then we can interact with it
@@ -83,7 +83,7 @@
 /mob/living/proc/shared_living_nano_interaction(src_object)
 	if (stat != CONSCIOUS)
 		return STATUS_CLOSE						// no updates, close the interface
-	else if (restrained() || lying || stat || stunned || weakened)
+	else if (incapacitated())
 		return STATUS_UPDATE					// update only (orange visibility)
 	return STATUS_INTERACTIVE
 
@@ -117,7 +117,7 @@
 			. = loc.contents_nano_distance(src_object, src)
 		else
 			. = shared_living_nano_distance(src_object)
-	if(STATUS_INTERACTIVE)
+	if(. == STATUS_INTERACTIVE)
 		return STATUS_UPDATE
 
 /mob/living/carbon/human/can_use_topic(src_object, datum/topic_state/custom_state)
@@ -127,7 +127,7 @@
 		if(. == STATUS_UPDATE && (TK in mutations))	// If we have telekinesis and remain close enough, allow interaction.
 			return STATUS_INTERACTIVE
 
-/mob/living/carbon/alien/humanoid/can_use_topic(src_object, datum/topic_state/custom_state)
+/mob/living/carbon/xenomorph/humanoid/can_use_topic(src_object, datum/topic_state/custom_state)
 	. = shared_living_nano_interaction(src_object)
 	if(. == STATUS_INTERACTIVE && !(custom_state && (custom_state.flags & NANO_IGNORE_DISTANCE)))
 		. = shared_living_nano_distance(src_object)

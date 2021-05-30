@@ -12,7 +12,7 @@
 	var/datum/dirt_cover/dirt_overlay  //style reasons
 
 	var/last_bumped = 0
-	var/pass_flags = 0
+	var/pass_flags = NONE
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
 	var/simulated = 1 //filter for actions - used by lighting overlays
@@ -21,6 +21,18 @@
 	var/resize_rev = 1	//helps to restore default size
 
 	var/initialized = FALSE
+
+	/// a very temporary list of overlays to remove
+	var/list/remove_overlays
+	/// a very temporary list of overlays to add
+	var/list/add_overlays
+
+	///This atom's HUD (med/sec, etc) images. Associative list.
+	var/list/image/hud_list = null
+	///HUD images that this atom can provide.
+	var/list/hud_possible
+	///Current alternate_apperances on atom
+	var/list/datum/atom_hud/alternate_appearance/alternate_appearances
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -46,6 +58,7 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
+	SSdemo.mark_new(src)
 
 	var/list/created = SSatoms.created_atoms
 	if(created)
@@ -65,6 +78,8 @@
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
+	SHOULD_NOT_SLEEP(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
@@ -83,14 +98,25 @@
 	return
 
 /atom/Destroy()
+	if(alternate_appearances)
+		var/prev_key // There is a runtime when the index remains in list, but the type or other devilry disappears
+		for(var/K in alternate_appearances)
+			// ghost apperance qdeling in main apperance
+			if(K == "[prev_key]_observer")
+				continue
+			prev_key = K
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
+			AA.remove_from_hud(src)
+
 	if(reagents)
 		QDEL_NULL(reagents)
 
 	LAZYCLEARLIST(overlays)
 
-	if(light)
-		light.destroy()
-		light = null
+	QDEL_NULL(light)
+
+	var/area/A = get_area(src)
+	A?.Exited(src, null)
 
 	return ..()
 
@@ -101,7 +127,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(ismovableatom(A))
+		else if(ismovable(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -140,11 +166,11 @@
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
-	proc/can_subract_container()
-		return flags & EXTRACT_CONTAINER
+/atom/proc/can_subract_container()
+	return flags & EXTRACT_CONTAINER
 
-	proc/can_add_container()
-		return flags & INSERT_CONTAINER
+/atom/proc/can_add_container()
+	return flags & INSERT_CONTAINER
 */
 
 /atom/proc/can_mob_interact(mob/user)
@@ -158,9 +184,6 @@
 			return FALSE
 	return TRUE
 
-/atom/proc/meteorhit(obj/meteor)
-	return
-
 /atom/proc/allow_drop()
 	return 1
 
@@ -170,12 +193,20 @@
 /atom/proc/HasProximity(atom/movable/AM)
 	return
 
+/atom/proc/emplode(severity)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_EMP_ACT, severity) & COMPONENT_PREVENT_EMP)
+		return FALSE
+	return emp_act(severity)
+
 /atom/proc/emp_act(severity)
 	return
 
+/atom/proc/emag_act()
+	return FALSE
+
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
-	P.on_hit(src, 0, def_zone)
+	P.on_hit(src, def_zone, 0)
 	. = 0
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -211,16 +242,48 @@
 			found += A.search_contents_for(path,filter_path)
 	return found
 
+
+/**
+  * Get the name of this object for examine
+  *
+  * You can override what is returned from this proc by registering to listen for the
+  * [COMSIG_ATOM_GET_EXAMINE_NAME] signal
+  */
+/atom/proc/get_examine_name(mob/user, atom/alt_obj)
+	var/list/override
+	if(!dirt_overlay)
+		. = "\a [alt_obj ? alt_obj.name : src]."
+		override = list("", gender == PLURAL ? "some" : "a", " ", "[alt_obj ? alt_obj.name : name]", ".")
+	else
+		. = "<span class='danger'> \a [dirt_description()]!</span>"
+		override = list("<span class='danger'>", gender == PLURAL ? "some" : "a", " ", "[dirt_description(alt_obj)]", "!</span>")
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
+		. = override.Join("")
+
+///Generate the full examine string of this atom (including icon for goonchat)
+/atom/proc/get_examine_string(mob/user, thats = FALSE, atom/alt_obj)
+	return "[bicon(alt_obj ? alt_obj : src)] [thats ? "That's ": ""][get_examine_name(user, alt_obj)]"
+
 /atom/proc/examine(mob/user, distance = -1)
-	//This reformat names to get a/an properly working on item descriptions when they are bloody
-	var/f_name = "\a [src]."
-	if(dirt_overlay) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
-		f_name = "<span class='danger'>\a [dirt_description()]!</span>"
-	to_chat(user, "[bicon(src)] That's [f_name]")
-	if(desc)
+	var/atom/alt_obj
+
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[key]
+			if(!AA.alternate_obj || !(user in AA.hudusers))
+				continue
+			alt_obj = AA.alternate_obj
+			break
+
+	to_chat(user, get_examine_string(user, TRUE, alt_obj))
+
+	if(alt_obj)
+		to_chat(user, alt_obj.desc)
+	else if(desc)
 		to_chat(user, desc)
+
 	// *****RM
-	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
@@ -232,18 +295,21 @@
 		else
 			to_chat(user, "Nothing.")
 
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
 
-/atom/proc/dirt_description()
+/atom/proc/dirt_description(atom/alt_obj)
 	if(dirt_overlay)
-		return "[dirt_overlay.name]-covered [name]"
+		return "[dirt_overlay.name]-covered [alt_obj ? alt_obj.name : name]"
 	else
-		return name
+		return "[alt_obj ? alt_obj.name : name]"
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
 	dir = new_dir
+	if(.)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 /atom/proc/relaymove()
 	return
@@ -252,6 +318,9 @@
 	return
 
 /atom/proc/blob_act()
+	return
+
+/atom/proc/airlock_crush_act()
 	return
 
 /atom/proc/fire_act()
@@ -263,7 +332,7 @@
 /atom/proc/singularity_pull()
 	return
 
-/atom/proc/hitby(atom/movable/AM)
+/atom/proc/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)
@@ -350,7 +419,7 @@
 		// Add the fingerprints
 		//
 		if(fingerprints[full_print])
-			switch(stringpercent(fingerprints[full_print]))		//tells us how many stars are in the current prints.
+			switch(stringpercent_ascii(fingerprints[full_print]))		//tells us how many stars are in the current prints.
 
 				if(28 to 32)
 					if(prob(1))
@@ -423,19 +492,19 @@
 /atom/proc/add_blood(mob/living/carbon/human/M)
 	if(flags & NOBLOODY) return 0
 	.=1
-	if (!( istype(M, /mob/living/carbon/human) ))
+	if (!istype(M))
 		return 0
+
+	if(M.species.flags[NO_BLOOD_TRAILS])
+		return 0
+
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(new M.species.blood_color)
-//	blood_color = "#A10808"
-//	if (M.species)
-//		blood_color = M.species.blood_color
-	return
+	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
 	if(flags & NOBLOODY) return 0
@@ -445,25 +514,6 @@
 	else
 		dirt_overlay.add_dirt(dirt_datum)
 	return 1
-
-/atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
-	if( istype(src, /turf/simulated) )
-		var/obj/effect/decal/cleanable/vomit/this = new /obj/effect/decal/cleanable/vomit(src)
-
-		// Make toxins vomit look different
-		if(toxvomit)
-			var/datum/reagents/R = M.reagents
-			if(!locate(/datum/reagent/luminophore) in R.reagent_list)
-				this.icon_state = "vomittox_[pick(1,4)]"
-			else
-				this.icon_state = "vomittox_nc_[pick(1,4)]"
-				this.alpha = 127
-				var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in R.reagent_list
-				this.color = new_color.color
-				this.light_color = this.color
-				this.set_light(3)
-				this.stop_light()
-
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
@@ -502,14 +552,11 @@
 //This proc is called on the location of an atom when the atom is Destroy()'d
 /atom/proc/handle_atom_del(atom/A)
 
-// Byond seemingly calls stat, each tick.
-// Calling things each tick can get expensive real quick.
-// So we slow this down a little.
-// See: http://www.byond.com/docs/ref/info.html#/client/proc/Stat
-/atom/Stat()
-	. = ..()
-	sleep(1)
-	stoplag()
+/atom/Entered(atom/movable/AM, atom/oldLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
+
+/atom/Exited(atom/movable/AM, atom/newLoc)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, AM, newLoc)
 
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)
@@ -523,3 +570,135 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
+
+/atom/proc/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	return
+
+/turf/simulated/handle_slip(mob/living/carbon/C, weaken_amount, obj/O, lube)
+	if(has_gravity(src))
+		var/obj/buckled_obj
+		if(C.buckled)
+			buckled_obj = C.buckled
+			if(!(lube & GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
+				return FALSE
+		else
+			if((C.lying && !C.crawling) || !(C.status_flags & CANWEAKEN)) // can't slip unbuckled mob if they're lying or can't fall.
+				return FALSE
+			if(C.m_intent == MOVE_INTENT_WALK && (lube & NO_SLIP_WHEN_WALKING))
+				return FALSE
+		if(!(lube & SLIDE_ICE))
+			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+
+		var/olddir = C.dir
+
+		if(!(lube & SLIDE_ICE))
+			C.Weaken(weaken_amount)
+			C.stop_pulling()
+		else
+			C.Weaken(2)
+
+		if(buckled_obj)
+			buckled_obj.unbuckle_mob(C)
+			lube |= SLIDE_ICE
+
+		if(lube & SLIDE)
+			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
+			C.take_bodypart_damage(2) // Was 5 -- TLE
+		else if(lube & SLIDE_ICE)
+			var/has_NOSLIP = FALSE
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if((istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP) || (istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP))
+					has_NOSLIP = TRUE
+			if (C.m_intent == MOVE_INTENT_RUN && !has_NOSLIP && prob(30))
+				if(C.force_moving) //If we're already slipping extend it
+					qdel(C.force_moving)
+				new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
+			else
+				C.inertia_dir = 0
+		return TRUE
+
+/turf/space/handle_slip()
+	return
+
+// Recursive function to find everything this atom is holding.
+/atom/proc/get_contents(obj/item/weapon/storage/Storage = null)
+	var/list/L = list()
+
+	if(Storage) //If it called itself
+		L += Storage.return_inv()
+
+		//Leave this commented out, it will cause storage items to exponentially add duplicate to the list
+		//for(var/obj/item/weapon/storage/S in Storage.return_inv()) //Check for storage items
+		//	L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in Storage.return_inv()) //Check for gift-wrapped items
+			var/atom/movable/AM = locate() in G.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage))
+					L += get_contents(AM)
+
+		for(var/obj/item/smallDelivery/D in Storage.return_inv()) //Check for package wrapped items
+			var/atom/movable/AM = locate() in D.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage)) //this should never happen
+					L += get_contents(AM)
+		return L
+
+	else
+
+		L += src.contents
+		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+			L += get_contents(S)
+
+		for(var/obj/item/weapon/gift/G in src.contents) //Check for gift-wrapped items
+			var/atom/movable/AM = locate() in G.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage))
+					L += get_contents(AM)
+
+		for(var/obj/item/smallDelivery/D in src.contents) //Check for package wrapped items
+			var/atom/movable/AM = locate() in D.contents
+			if(AM)
+				L += AM
+				if(istype(AM, /obj/item/weapon/storage)) //this should never happen
+					L += get_contents(AM)
+		return L
+
+// Called after we wrench/unwrench this object
+/obj/proc/wrenched_change()
+	return
+
+/atom/proc/shake_act(severity, recursive = TRUE)
+	if(isturf(loc))
+		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+
+/atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
+	return
+
+/turf/shake_act(severity, recursive = TRUE)
+	for(var/atom/A in contents)
+		A.shake_act(severity - 1)
+	INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+
+	if(severity >= 3)
+		for(var/dir_ in cardinal)
+			var/turf/T = get_step(src, dir_)
+			T.shake_act(severity - 1, recursive = FALSE)
+
+/mob/shake_act(severity, recursive = TRUE)
+	..()
+	shake_camera(src, 0.5 SECONDS, severity)
+
+/atom/proc/get_name(mob/user)
+	if(alternate_appearances)
+		for(var/key in alternate_appearances)
+			var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+			if(!AA.alternate_obj || !(user in AA.hudusers))
+				continue
+			return AA.alternate_obj.name
+	return name

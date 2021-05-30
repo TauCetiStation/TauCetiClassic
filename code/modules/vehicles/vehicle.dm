@@ -37,15 +37,18 @@
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/Move()
+/obj/vehicle/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(can_move())
 		var/old_loc = get_turf(src)
 
 		var/init_anc = anchored
 		anchored = 0
-		if(!..())
+		. = ..()
+		if(!.)
 			anchored = init_anc
-			return 0
+			if(load && !istype(load, /datum/vehicle_dummy_load))
+				load.set_dir(dir)
+			return
 
 		set_dir(get_dir(old_loc, loc))
 		anchored = init_anc
@@ -55,9 +58,8 @@
 		if(load && !istype(load, /datum/vehicle_dummy_load))
 			load.Move(loc, dir)
 
-		return 1
 	else
-		return 0
+		return FALSE
 
 /obj/vehicle/proc/can_move()
 	if(world.time <= l_move_time + move_delay)
@@ -71,21 +73,21 @@
 /obj/vehicle/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/hand_labeler))
 		return
-	else if(istype(W, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(W))
 		open = !open
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(on && open)
 			turn_off()
 		update_icon()
 		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
-	else if(istype(W, /obj/item/weapon/weldingtool))
+	else if(iswelder(W))
 		var/obj/item/weapon/weldingtool/T = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(T.welding)
+		if(T.isOn())
 			if(health < maxhealth)
 				if(open)
 					health = min(maxhealth, health + 20)
-					playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
+					playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
 					check_move_delay()
 				else
@@ -94,25 +96,19 @@
 				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 		else
 			to_chat(user, "<span class='notice'>Unable to repair while [src] is off.</span>")
-	else if(hasvar(W,"force") && hasvar(W,"damtype"))
+	else
 		switch(W.damtype)
 			if("fire")
 				health -= W.force * fire_dam_coeff
 			if("brute")
 				health -= W.force * brute_dam_coeff
-		..()
 		healthcheck()
-	else
-		..()
+		return ..()
 
 /obj/vehicle/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	healthcheck()
-
-/obj/vehicle/meteorhit()
-	explode()
-	return
 
 /obj/vehicle/blob_act()
 	src.health -= rand(20,40)*fire_dam_coeff
@@ -158,17 +154,15 @@
 	if(stat)
 		return 0
 	on = 1
-	luminosity = initial(luminosity)
 	update_icon()
 	return 1
 
 /obj/vehicle/proc/turn_off()
 	on = 0
-	luminosity = 0
 	update_icon()
 
 /obj/vehicle/proc/explode()
-	src.visible_message("<span class='danger'>[src] blows apart!</span>", 1)
+	src.visible_message("<span class='danger'>[src] blows apart!</span>")
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/stack/rods(Tsec)

@@ -7,9 +7,11 @@
 	config_tag = "wizard"
 	role_type = ROLE_WIZARD
 	required_players = 2
-	required_players_secret = 10
+	required_players_bundles = 10
 	required_enemies = 1
 	recommended_enemies = 1
+	antag_hud_type = ANTAG_HUD_WIZ
+	antag_hud_name = "hudwizard"
 
 	votable = 0
 
@@ -20,28 +22,27 @@
 
 /datum/game_mode/wizard/announce()
 	to_chat(world, "<B>The current game mode is - Wizard!</B>")
-	to_chat(world, "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>")
+	to_chat(world, "<B>There is a <span class='warning'>SPACE WIZARD</span> on the station. You can't let him achieve his objective!</B>")
 
+/datum/game_mode/wizard/can_start()
+	return (..() && wizardstart.len != 0)
 
-/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
-	if(!..())
-		return 0
+/datum/game_mode/wizard/assign_outsider_antag_roles()
+	if (!..())
+		return FALSE
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
 	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
-	if(wizardstart.len == 0)
-		to_chat(wizard.current, "<span class='danger'>A starting location for you could not be found, please report this bug!</span>")
-		return 0
-	return 1
+	return TRUE
 
 
 /datum/game_mode/wizard/pre_setup()
 	for(var/datum/mind/wizard in wizards)
 		wizard.current.loc = pick(wizardstart)
-	return 1
+	return TRUE
 
 
 /datum/game_mode/wizard/post_setup()
@@ -54,7 +55,6 @@
 		greet_wizard(wizard)
 
 	return ..()
-
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	if (config.objectives_disabled)
@@ -72,7 +72,7 @@
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = wizard
 				wizard.objectives += survive_objective
-		
+
 		if(31 to 60)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = wizard
@@ -123,10 +123,14 @@
 		wizard_mob.name = newname
 		if(wizard_mob.mind)
 			wizard_mob.mind.name = newname
+		if(istype(wizard_mob.dna, /datum/dna))
+			var/datum/dna/dna = wizard_mob.dna
+			dna.real_name = newname
 	return
 
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
+	add_antag_hud(ANTAG_HUD_WIZ, "hudwizard", wizard.current)
 	if (you_are)
 		to_chat(wizard.current, "<span class='danger'>You are the Space Wizard!</span>")
 	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
@@ -136,7 +140,7 @@
 			to_chat(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 	else
-		to_chat(wizard.current, "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
+		to_chat(wizard.current, "<span class='info'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 	return
 
 
@@ -162,18 +166,19 @@
 	qdel(wizard_mob.r_store)
 	qdel(wizard_mob.l_store)
 
-	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_l_ear)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(wizard_mob), slot_shoes)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), slot_wear_suit)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), slot_head)
-	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), slot_back)
-	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(wizard_mob), slot_back)
-	if(wizard_mob.backbag == 4) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(wizard_mob), slot_back)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box(wizard_mob), slot_in_backpack)
-//	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), SLOT_L_EAR)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), SLOT_W_UNIFORM)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(wizard_mob), SLOT_SHOES)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard_mob), SLOT_WEAR_SUIT)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard_mob), SLOT_HEAD)
+	if(wizard_mob.backbag == 2) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(wizard_mob), SLOT_BACK)
+	if(wizard_mob.backbag == 3) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/alt(wizard_mob), SLOT_BACK)
+	if(wizard_mob.backbag == 4) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(wizard_mob), SLOT_BACK)
+	if(wizard_mob.backbag == 5) wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(wizard_mob), SLOT_BACK)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box(wizard_mob), SLOT_IN_BACKPACK)
+//	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), SLOT_L_STORE) For scrying gem.
+	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), SLOT_R_STORE)
+	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), SLOT_R_HAND)
 
 	to_chat(wizard_mob, "<span class='info'>You will find a list of available spells in your spell book. Choose your magic arsenal carefully.</span>")
 	to_chat(wizard_mob, "<span class='info'>In your pockets you will find a teleport scroll. Use it as needed.</span>")
@@ -206,23 +211,26 @@
 /datum/game_mode/wizard/declare_completion()
 	var/prefinal_text = ""
 	var/final_text = ""
-	completion_text += "<B>Wizard mode resume:</B><BR>"
+	completion_text += "<h3>Wizard mode resume:</h3>"
 
 	for(var/datum/mind/wizard in wizards)
 		if(wizard.current.stat == DEAD || finished)
-			feedback_set_details("round_end_result","loss - wizard killed")
-			prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</I> has been <font color='red'><b>killed</b></font by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</FONT><BR>"
+			mode_result = "loss - wizard killed"
+			feedback_set_details("round_end_result",mode_result)
+			prefinal_text = "<span>Wizard <b>[wizard.name]</b> <i>([wizard.key])</i> has been <span style='color: red; font-weight: bold;'>killed</span> by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span><br>"
 		else
 			var/failed = 0
 			for(var/datum/objective/objective in wizard.objectives)
 				if(!objective.check_completion())
 					failed = 1
 			if(!failed)
-				feedback_set_details("round_end_result","win - wizard alive")
-				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to <font color='green'><B>complete</B></font> his mission! The Space Wizards Federation understood that station crew - easy target and will use them next time.</FONT><BR>"
+				mode_result = "win - wizard alive"
+				feedback_set_details("round_end_result",mode_result)
+				prefinal_text = "<span>Wizard <b>[wizard.name]</b> <i>([wizard.key])</i> managed to <span style='color: green; font-weight: bold;'>complete</span> his mission! The Space Wizards Federation understood that station crew - easy target and will use them next time.</span><br>"
 			else
-				feedback_set_details("round_end_result","loss - wizard alive")
-				prefinal_text = "<FONT size = 3>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to stay alive, but <font color='red'><B>failed</B></font> his mission! The Space Wizards Federation wouldn't forget this shame!</FONT><BR>"
+				mode_result = "loss - wizard alive"
+				feedback_set_details("round_end_result",mode_result)
+				prefinal_text = "<span>Wizard <b>[wizard.name]</b><i> ([wizard.key])</i> managed to stay alive, but <span style='color: red; font-weight: bold;'>failed</span> his mission! The Space Wizards Federation wouldn't forget this shame!</span><br>"
 		final_text += "[prefinal_text]"
 
 	completion_text += "[final_text]"
@@ -243,40 +251,44 @@
 			if(!config.objectives_disabled)
 				for(var/datum/objective/objective in wizard.objectives)
 					if(objective.check_completion())
-						text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 						feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
 					else
-						text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 						feedback_add_details("wizard_objective","[objective.type]|FAIL")
 						wizardwin = 0
 					count++
 
 				if(wizard.current && wizard.current.stat!=2 && wizardwin)
-					text += "<BR><FONT color='green'><B>The wizard was successful!</B></FONT>"
+					text += "<br><FONT color='green'><b>The wizard was successful!</b></FONT>"
 					feedback_add_details("wizard_success","SUCCESS")
 					score["roleswon"]++
 				else
-					text += "<BR><FONT color='red'><B>The wizard has failed!</B></FONT>"
+					text += "<br><FONT color='red'><b>The wizard has failed!</b></FONT>"
 					feedback_add_details("wizard_success","FAIL")
 				if(wizard.current && wizard.current.spell_list)
-					text += "<BR><B>[wizard.name] used the following spells: </B>"
+					text += "<br><b>[wizard.name] used the following spells: </b>"
 					var/i = 1
 					for(var/obj/effect/proc_holder/spell/S in wizard.current.spell_list)
 						var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
 						end_icons += spellicon
 						var/tempstate = end_icons.len
-						text += {"<BR><img src="logo_[tempstate].png"> [S.name]"}
+						text += {"<br><img src="logo_[tempstate].png"> [S.name]"}
 						if(wizard.current.spell_list.len > i)
 							text += ", "
 						i++
-				text += "<BR>"
-		text += "<HR>"
+				text += "<br>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "wizard", "html" = text))
+		text = "<div class='Section'>[text]</div>"
+
 	return text
 
 //OTHER PROCS
 
 //To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(mob/M)
+/mob/proc/spellremove()
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
 		qdel(spell_to_remove)
 	spell_list.Cut()

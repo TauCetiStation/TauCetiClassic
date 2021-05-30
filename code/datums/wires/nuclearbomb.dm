@@ -14,12 +14,12 @@ var/const/NUKE_WIRE_SAFETY = 4
 /datum/wires/nuclearbomb/additional_checks_and_effects(mob/living/user)
 	return isdrone(user)
 
-/datum/wires/nuclearbomb/get_interact_window()
+/datum/wires/nuclearbomb/get_status()
 	var/obj/machinery/nuclearbomb/N = holder
 	. = ..()
-	. += "<br>The device is [N.timing ? "shaking!" : "still."]"
-	. += "<br>The device is [N.safety ? "quiet" : "whirring"]."
-	. += "<br>The lights are [N.lighthack ? "static" : "functional"]."
+	. += "The device is [N.timing ? "shaking!" : "still."]"
+	. += "The device is [N.safety ? "quiet" : "whirring"]."
+	. += "The lights are [N.lighthack ? "static" : "functional"]."
 
 /datum/wires/nuclearbomb/update_cut(index, mended)
 	var/obj/machinery/nuclearbomb/N = holder
@@ -38,7 +38,7 @@ var/const/NUKE_WIRE_SAFETY = 4
 					set_security_level("red")
 
 		if(NUKE_WIRE_SAFETY)
-			if(N.timing)
+			if(N.timing > 0)
 				N.explode()
 
 /datum/wires/nuclearbomb/update_pulsed(index)
@@ -50,7 +50,7 @@ var/const/NUKE_WIRE_SAFETY = 4
 			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 100)
 
 		if(NUKE_WIRE_TIMING)
-			if(N.timing)
+			if(N.timing > 0)
 				N.explode()
 
 		if(NUKE_WIRE_SAFETY)

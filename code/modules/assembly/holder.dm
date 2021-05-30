@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 10
 
@@ -59,15 +59,15 @@
 
 
 /obj/item/device/assembly_holder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(a_left)
-		overlays += "[a_left.icon_state]_left"
+		add_overlay("[a_left.icon_state]_left")
 		for(var/O in a_left.attached_overlays)
-			overlays += "[O]_l"
+			add_overlay("[O]_l")
 	if(a_right)
-		src.overlays += "[a_right.icon_state]_right"
+		src.add_overlay("[a_right.icon_state]_right")
 		for(var/O in a_right.attached_overlays)
-			overlays += "[O]_r"
+			add_overlay("[O]_r")
 	if(master)
 		master.update_icon()
 
@@ -89,7 +89,8 @@
 		special_assembly.HasProximity(AM)
 
 
-/obj/item/device/assembly_holder/Crossed(atom/movable/AM as mob|obj)
+/obj/item/device/assembly_holder/Crossed(atom/movable/AM)
+	. = ..()
 	if(a_left)
 		a_left.Crossed(AM)
 	if(a_right)
@@ -109,12 +110,11 @@
 			S.on_found(finder)
 
 
-/obj/item/device/assembly_holder/Move()
-	..()
+/obj/item/device/assembly_holder/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()
-	return
 
 /obj/item/device/assembly_holder/hear_talk(mob/living/M, msg, verb, datum/language/speaking)
 	if(a_left)
@@ -132,33 +132,30 @@
 	..()
 	return
 
-
-/obj/item/device/assembly_holder/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+/obj/item/device/assembly_holder/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(!a_left || !a_right)
-			to_chat(user, "\red BUG:Assembly part missing, please report this!")
+			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return
 		a_left.toggle_secure()
 		a_right.toggle_secure()
 		secured = !secured
 		if(secured)
-			to_chat(user, "\blue \The [src] is ready!")
+			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else
-			to_chat(user, "\blue \The [src] can now be taken apart!")
+			to_chat(user, "<span class='notice'>\The [src] can now be taken apart!</span>")
 		update_icon()
 		return
-	else if(W.IsSpecialAssembly())
-		attach_special(W, user)
+	else if(I.IsSpecialAssembly())
+		attach_special(I, user)
 	else
-		..()
-	return
-
+		return ..()
 
 /obj/item/device/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
-			to_chat(user, "\red Assembly part missing!")
+			to_chat(user, "<span class='warning'>Assembly part missing!</span>")
 			return
 		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
 			switch(alert("Which side would you like to use?",,"Left","Right"))
@@ -228,7 +225,7 @@
 	set category = "Object"
 	set src in usr
 
-	if ( !(usr.stat || usr.restrained()) )
+	if (!usr.incapacitated())
 		var/obj/item/device/assembly_holder/holder
 		if(istype(src,/obj/item/weapon/grenade/chem_grenade))
 			var/obj/item/weapon/grenade/chem_grenade/gren = src

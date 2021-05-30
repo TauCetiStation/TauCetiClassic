@@ -155,7 +155,7 @@
 	return thermal_energy
 
 //Returns the thermal energy change required to get to a new temperature
-/datum/gas_mixture/proc/get_thermal_energy_change(var/new_temperature)
+/datum/gas_mixture/proc/get_thermal_energy_change(new_temperature)
 	return heat_capacity()*(max(new_temperature, 0) - temperature)
 
 
@@ -303,7 +303,7 @@
 
 
 //Checks if we are within acceptable range of another gas_mixture to suspend processing or merge.
-/datum/gas_mixture/proc/compare(const/datum/gas_mixture/sample, var/vacuum_exception = 0)
+/datum/gas_mixture/proc/compare(const/datum/gas_mixture/sample, vacuum_exception = 0)
 	if(!sample)
 		return FALSE
 
@@ -460,7 +460,7 @@
 	return share_ratio(unsim_air, unsim_air.group_multiplier, max(1, max(group_multiplier + 3, 1) + unsim_air.group_multiplier), one_way = TRUE)
 
 //Equalizes a list of gas mixtures.  Used for pipe networks.
-/proc/equalize_gases(datum/gas_mixture/list/gases)
+/proc/equalize_gases(list/datum/gas_mixture/gases)
 	//Calculate totals from individual components
 	var/total_volume = 0
 	var/total_thermal_energy = 0

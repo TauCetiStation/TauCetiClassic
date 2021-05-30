@@ -1,19 +1,20 @@
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
-	. = ..(environment)
 	if(loc && loc.check_fluid_depth(30))
 		var/total_depth = loc.get_fluid_depth()
 		water_act(total_depth)
 		for(var/obj/item/I in contents)
 			I.water_act(total_depth)
 
-/obj/effect/fluid/Crossed(mob/living/carbon/C)
-	if(fluid_amount > FLUID_SHALLOW)
+/obj/effect/fluid/Crossed(atom/movable/AM)
+	. = ..()
+	if(!iscarbon(AM))
 		return
-	if(!istype(C))
+	var/mob/living/carbon/C = AM
+	if(fluid_amount > FLUID_SHALLOW)
 		return
 
 	if(prob(2))
-		if(C.m_intent == "run")
+		if(C.m_intent == "run" && !C.buckled)
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				if(istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP)
@@ -32,11 +33,9 @@
 
 			C.stop_pulling()
 			to_chat(C, "<span class='notice'>You slipped on the wet floor!</span>")
-			playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 			C.Stun(5)
 			C.Weaken(2)
-	else
-		playsound(loc, 'sound/effects/waterstep.ogg', 50, 1, -3)
 
 	if(prob(5))
 		if(ishuman(C))

@@ -8,6 +8,8 @@
 	species_restricted = null
 	body_parts_covered = HEAD|FACE
 	blockTracking = 1
+	force = 0
+	hitsound = list()
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
@@ -30,7 +32,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell//Starts out with a high-capacity cell using New().
 	var/datum/effect/effect/system/spark_spread/spark_system//To create sparks.
 	var/reagent_list[] = list("tricordrazine","tramadol","dexalinp","spaceacillin","anti_toxin","nutriment","radium","hyronalin")//The reagents ids which are added to the suit at New().
-	var/stored_research[]//For stealing station research.
+	var/list/stored_research//For stealing station research.
 	var/obj/item/weapon/disk/tech_disk/t_disk//To copy design onto disk.
 
 		//Other articles of ninja gear worn together, used to easily reference them after initializing.

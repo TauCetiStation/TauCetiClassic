@@ -1,18 +1,20 @@
 /client/proc/library_debug_remove()
 	set category = "Debug"
 	set name = "Library: Remove by id"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_DEBUG))	return
 
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "BD POTRACHENO")
 		return
 
-	var/id = input("Book ID:") as num
+	var/id = input("Book ID:") as num|null
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT author, title FROM library WHERE id='[id]'")
+	if(!id)
+		return
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT author, title FROM erro_library WHERE id='[id]'")
 	if(!query.Execute())
-		to_chat(usr, query.ErrorMsg())
+		to_chat(usr, "SQL ERROR")
 
 	var/author
 	var/title
@@ -25,23 +27,25 @@
 	if(input != "Confirm")
 		return
 
-	query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[id]'")
+	query = dbcon.NewQuery("DELETE FROM erro_library WHERE id='[id]'")
 	if(!query.Execute())
-		to_chat(usr, query.ErrorMsg())
+		to_chat(usr, "SQL ERROR")
 
 /client/proc/library_debug_read()
 	set category = "Debug"
 	set name = "Library: Read by id"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_DEBUG))	return
 
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "BD POTRACHENO")
 		return
 
-	var/id = input("Book ID:") as num
+	var/id = input("Book ID:") as num|null
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[id]'")
+	if(!id)
+		return
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id='[id]'")
 	query.Execute()
 
 	var/author
@@ -53,17 +57,15 @@
 		content = query.item[4]
 		break
 
-	var/book = "<HEAD><TITLE>[title], [author]</TITLE></HEAD><BODY>\n"
-	book += content
-
-	usr << browse(entity_ja(content), "window=content")
+	var/datum/browser/popup = new(usr, "window=content", "[title], [author]", ntheme = CSS_THEME_LIGHT)
+	popup.set_content(content)
+	popup.open()
 
 /datum/admins/proc/library_recycle_bin()
 	set category = "Admin"
 	set name = "Library: Recycle bin"
 
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
+	if(!establish_db_connection("erro_library"))
 		to_chat(usr, "Database is not connected.")
 		return
 
@@ -73,11 +75,11 @@
 		to_chat(usr, "Error: you are not an admin!")
 		return
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, title, author, ckey, deletereason FROM library WHERE deletereason IS NOT NULL")
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, title, author, ckey, deletereason FROM erro_library WHERE deletereason IS NOT NULL")
 	if(!query.Execute())
 		return
 
-	var/catalog = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n"
+	var/catalog = ""
 	catalog += "<table border=1 rules=all frame=void cellspacing=0 cellpadding=3><HR><tr><td>ID</td><td>TITLE</td><td>AUTHOR</td><td>CKEY</td><td>REASON</td><td>OPTIONS</td></tr></HR>"
 	var/permitted = check_rights(R_PERMISSIONS,0)
 	while(query.NextRow())
@@ -89,6 +91,6 @@
 		catalog += "<tr><td>[id]</td><td>[title]</td><td>[author]</td><td>[ckey]</td><td>[reason]</td><td><a href='?src=\ref[src];readbook=[id]'>Read</a>[permitted ? "<BR><a href='?src=\ref[src];restorebook=[id]'>Restore</a><BR>" : null][permitted ? "<a href='?src=\ref[src];deletebook=[id]'>Delete</a><BR>" : null]</td></tr>"
 	catalog += "</table>"
 
-
-	usr << browse(entity_ja(catalog), "window=librecyclebin;size=500x500")
-	onclose(usr, "librecyclebin")
+	var/datum/browser/popup = new(usr, "window=librecyclebin", "Book Inventory Management", 500, 500, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(catalog)
+	popup.open()

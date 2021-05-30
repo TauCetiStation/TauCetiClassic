@@ -4,7 +4,7 @@
 /area)
 "b" = (
 /turf/simulated/mineral,
-/area/mine/unexplored)
+/area/asteroid/mine/unexplored)
 "c" = (
 /turf/simulated/wall/r_wall,
 /area/awaymission/listeningpost)
@@ -53,7 +53,7 @@
 /area/awaymission/listeningpost)
 "l" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "m" = (
 /obj/machinery/computer/message_monitor,
 /turf/simulated/floor,
@@ -63,8 +63,7 @@
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate{
-	desc = "A weary looking syndicate operative.";
-	faction = "syndicate"
+	desc = "A weary looking syndicate operative."
 	},
 /turf/simulated/floor,
 /area/awaymission/listeningpost)
@@ -111,13 +110,13 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/mineral,
-/area/mine/unexplored)
+/area/asteroid/mine/unexplored)
 "t" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/mineral,
-/area/mine/unexplored)
+/area/asteroid/mine/unexplored)
 "u" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -144,7 +143,7 @@
 "y" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/mineral,
-/area/mine/unexplored)
+/area/asteroid/mine/unexplored)
 "z" = (
 /obj/machinery/vending/cola,
 /turf/simulated/floor,
@@ -217,7 +216,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/mineral,
-/area/mine/unexplored)
+/area/asteroid/mine/unexplored)
 "G" = (
 /obj/machinery/door/airlock{
 	name = "Toilet"
@@ -231,8 +230,7 @@
 /area/awaymission/listeningpost)
 "I" = (
 /obj/machinery/shower{
-	dir = 8;
-	icon_state = "shower"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -240,8 +238,7 @@
 /area/awaymission/listeningpost)
 "J" = (
 /obj/structure/toilet{
-	dir = 8;
-	icon_state = "toilet00"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -249,92 +246,85 @@
 /area/awaymission/listeningpost)
 "K" = (
 /turf/space,
-/area/mine/unexplored)
+/area/asteroid/mine/unexplored)
 "L" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "M" = (
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "N" = (
 /obj/machinery/gateway{
-	dir = 9;
-	icon_state = "off"
+	dir = 9
 	},
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "O" = (
 /obj/machinery/gateway{
-	dir = 1;
-	icon_state = "off"
+	dir = 1
 	},
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "P" = (
 /obj/machinery/gateway{
-	dir = 5;
-	icon_state = "off"
+	dir = 5
 	},
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "Q" = (
 /obj/machinery/gateway{
-	dir = 8;
-	icon_state = "off"
+	dir = 8
 	},
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "R" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center,
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "S" = (
 /obj/machinery/gateway{
-	dir = 4;
-	icon_state = "off"
+	dir = 4
 	},
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "T" = (
 /obj/machinery/gateway{
-	dir = 10;
-	icon_state = "off"
+	dir = 10
 	},
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "U" = (
 /obj/machinery/gateway,
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 "V" = (
 /obj/machinery/gateway{
-	dir = 6;
-	icon_state = "off"
+	dir = 6
 	},
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},
-/area/mine/explored)
+/area/asteroid/mine/explored)
 
 (1,1,1) = {"
 a

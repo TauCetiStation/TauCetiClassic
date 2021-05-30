@@ -6,12 +6,14 @@
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
+	data = list()
+
 /datum/reagent/consumable/on_general_digest(mob/living/M)
 	..()
 	var/mob_met_factor = 1
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		mob_met_factor = C.metabolism_factor
+		mob_met_factor = C.get_metabolism_factor() * 0.25
 	if(volume > last_volume)
 		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
 		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
@@ -31,8 +33,8 @@
 	id = "nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 1 // 1 nutriment reagent should be 2.5 nutrition, see custom metabolism below.
-	custom_metabolism = FOOD_METABOLISM
+	nutriment_factor = 8 // 1 nutriment reagent is 10 nutrition actually, which is confusing, but it works.
+	custom_metabolism = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 
@@ -79,19 +81,19 @@
 	name = "Sprinkles"
 	id = "sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	color = "#FF00FF" // rgb: 255, 0, 255
+	color = "#ff00ff" // rgb: 255, 0, 255
 	taste_message = "sweetness"
 
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
-	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain"))
+	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
 		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/syndicream
 	name = "Cream filling"
 	id = "syndicream"
 	description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
-	color = "#AB7878" // rgb: 171, 120, 120
+	color = "#ab7878" // rgb: 171, 120, 120
 
 /datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
 	..()
@@ -129,7 +131,7 @@
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
 	nutriment_factor = 2
-	color = "#F5EAEA" // rgb: 245, 234, 234
+	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
 
@@ -138,14 +140,14 @@
 	id = "capsaicin"
 	description = "This is what makes chilis hot."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 179, 16, 8
+	color = "#b31008" // rgb: 179, 16, 8
 	taste_message = "<span class='warning'>HOTNESS</span>"
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 15)
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
@@ -160,18 +162,21 @@
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
 				M.bodytemperature += rand(15,20)
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
 	name = "Condensed Capsaicin"
 	id = "condensedcapsaicin"
 	description = "A chemical agent used for self-defense and in police work."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 179, 16, 8
+	color = "#b31008" // rgb: 179, 16, 8
 	taste_message = "<span class='userdanger'>PURE FIRE</span>"
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!isliving(M))
+		return
+	var/datum/species/S = all_species[M.get_species()]
+	if(S && S.flags[NO_PAIN])
 		return
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -209,11 +214,11 @@
 				return
 			else if (eyes_covered) // Eye cover is better than mouth cover
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
-				victim.emote("scream",,, 1)
+				victim.emote("scream")
 				victim.eye_blurry = max(M.eye_blurry, 5)
 				return
 			else // Oh dear :D
-				victim.emote("scream",,, 1)
+				victim.emote("scream")
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)
@@ -230,8 +235,8 @@
 	id = "frostoil"
 	description = "A special oil that noticably chills the body. Extracted from Ice Peppers."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 139, 166, 233
-	taste_message = "<font color='lightblue'>cold</span>"
+	color = "#b31008" // rgb: 139, 166, 233
+	taste_message = "<font color='lightblue'>cold</font>"
 	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
@@ -245,6 +250,7 @@
 	holder.remove_reagent(src.id, FOOD_METABOLISM)
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	for(var/mob/living/carbon/slime/M in T)
 		M.adjustToxLoss(rand(15,30))
 
@@ -253,7 +259,7 @@
 	id = "sodiumchloride"
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = "#ffffff" // rgb: 255,255,255
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "salt"
 
@@ -295,7 +301,7 @@
 	name = "Psilocybin"
 	id = "psilocybin"
 	description = "A strong psycotropic derived from certain species of mushroom."
-	color = "#E700E7" // rgb: 231, 0, 231
+	color = "#e700e7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = FOOD_METABOLISM * 0.5
 	restrict_species = list(IPC, DIONA)
@@ -303,9 +309,9 @@
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
 	..()
 	M.druggy = max(M.druggy, 30)
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 5)
 			if(!M.stuttering)
 				M.stuttering = 1
@@ -328,7 +334,7 @@
 			M.druggy = max(M.druggy, 40)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
-	data++
+	data["ticks"]++
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
@@ -340,9 +346,10 @@
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
 
-/datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
-	if (!istype(T)) return
-	src = null
+/datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, volume)
+	. = ..()
+	if (!istype(T))
+		return
 	if(volume >= 3)
 		T.make_wet_floor(WATER_FLOOR)
 	var/hotspot = (locate(/obj/fire) in T)
@@ -358,14 +365,14 @@
 	id = "enzyme"
 	description = "A universal enzyme used in the preperation of certain chemicals and foods."
 	reagent_state = LIQUID
-	color = "#365E30" // rgb: 54, 94, 48
+	color = "#365e30" // rgb: 54, 94, 48
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
 	id = "dry_ramen"
-	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
+	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and chicken flavored chemicals that boil in contact with water."
 	reagent_state = SOLID
 	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
@@ -376,7 +383,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -386,25 +393,40 @@
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/hell_ramen
-	name = "Hell Ramen"
+	name = "Spicy Ramen"
 	id = "hell_ramen"
-	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
 	reagent_state = LIQUID
-	nutriment_factor = 10
+	nutriment_factor = 4
 	color = "#302000" // rgb: 48, 32, 0
-	taste_message = "SPICY ramen"
+	taste_message = "dry ramen with SPICY flavor"
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
-	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+	if(M.bodytemperature < BODYTEMP_NORMAL + 40) // Not Tajaran friendly food (by the time of writing this, Tajaran has 330 heat limit, while this is 350 and human 360.
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
+
+/datum/reagent/consumable/hot_hell_ramen
+	name = "Hot Spicy Ramen"
+	id = "hot_hell_ramen"
+	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
+	reagent_state = LIQUID
+	nutriment_factor = 4
+	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "SPICY ramen"
+
+/datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
+	..()
+	if(M.bodytemperature < BODYTEMP_NORMAL + 40)
+		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/rice
 	name = "Rice"
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 2
-	color = "#FFFFFF" // rgb: 0, 0, 0
+	nutriment_factor = 8
+	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
 
@@ -413,8 +435,8 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 2
-	color = "#801E28" // rgb: 128, 30, 40
+	nutriment_factor = 8
+	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT
 
@@ -423,7 +445,8 @@
 	id = "egg"
 	description = "A runny and viscous mixture of clear and yellow fluids."
 	reagent_state = LIQUID
-	color = "#F0C814"
+	nutriment_factor = 4
+	color = "#f0c814"
 	taste_message = "eggs"
 	diet_flags = DIET_MEAT
 
@@ -432,7 +455,8 @@
 	id = "cheese"
 	description = "Some cheese. Pour it out to make it solid."
 	reagent_state = SOLID
-	color = "#FFFF00"
+	nutriment_factor = 4
+	color = "#ffff00"
 	taste_message = "cheese"
 	diet_flags = DIET_DAIRY
 
@@ -441,6 +465,7 @@
 	id = "beans"
 	description = "A dish made of mashed beans cooked with lard."
 	reagent_state = LIQUID
+	nutriment_factor = 4
 	color = "#684435"
 	taste_message = "burritos"
 	diet_flags = DIET_MEAT
@@ -450,6 +475,7 @@
 	id = "bread"
 	description = "Bread! Yep, bread."
 	reagent_state = SOLID
-	color = "#9C5013"
+	nutriment_factor = 4
+	color = "#9c5013"
 	taste_message = "bread"
 	diet_flags = DIET_PLANT

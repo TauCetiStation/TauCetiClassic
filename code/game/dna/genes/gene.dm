@@ -29,7 +29,7 @@
 * Is the gene active in this mob's DNA?
 */
 /datum/dna/gene/proc/is_active(mob/M)
-	return M.active_genes && type in M.active_genes
+	return M.active_genes && (type in M.active_genes)
 
 // Return 1 if we can activate.
 // HANDLE MUTCHK_FORCED HERE!
@@ -115,10 +115,10 @@
 	M.mutations.Add(mutation)
 	if(activation_messages.len)
 		var/msg = pick(activation_messages)
-		to_chat(M, "\blue [msg]")
+		to_chat(M, "<span class='notice'>[msg]</span>")
 
 /datum/dna/gene/basic/deactivate(mob/M)
 	M.mutations.Remove(mutation)
 	if(deactivation_messages.len)
 		var/msg = pick(deactivation_messages)
-		to_chat(M, "\red [msg]")
+		to_chat(M, "<span class='warning'>[msg]</span>")

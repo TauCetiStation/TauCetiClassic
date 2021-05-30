@@ -5,7 +5,6 @@
 	item_state = "signaler"
 	m_amt = 1000
 	g_amt = 200
-	w_amt = 100
 	origin_tech = "magnets=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 
@@ -69,15 +68,17 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(entity_ja(dat), "window=radio")
-	onclose(user, "radio")
+
+	var/datum/browser/popup = new(user, "radio")
+	popup.set_content(dat)
+	popup.open()
 	return
 
 
 /obj/item/device/assembly/signaler/Topic(href, href_list)
 	..()
 
-	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
 		return
@@ -116,18 +117,18 @@ Code:
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
 	if(usr)
-		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		message_admins("[key_name_admin(usr)] used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-		log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+		lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
+		message_admins("[key_name_admin(usr)] used [src], location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code] [ADMIN_JMP(usr)]")
+		log_game("[usr.ckey]([usr]) used [src], location [COORD(T)],frequency: [format_frequency(frequency)], code:[code]")
 	else
-		lastsignalers.Add("[time] <B>:</B> (\red NO USER FOUND) used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		message_admins("(\red NO USER FOUND)  used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-		log_game("(NO USER FOUND) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+		lastsignalers.Add("[time] <B>:</B> (<span class='warning'>NO USER FOUND</span>) used [src] @ location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
+		message_admins("(<span class='warning'>NO USER FOUND</span>) used [src], location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
+		log_game("(NO USER FOUND) used [src], location [COORD(T)],frequency: [format_frequency(frequency)], code:[code]")
 
 	return
 
 /*
-		for(var/obj/item/device/assembly/signaler/S in world)
+		for(var/obj/item/device/assembly/signaler/S in not_world)
 			if(!S)	continue
 			if(S == src)	continue
 			if((S.frequency == src.frequency) && (S.code == src.code))
@@ -146,6 +147,12 @@ Code:
 	return 1
 
 
+/obj/item/device/assembly/signaler/attach_assembly(obj/item/device/assembly/A, mob/user)
+	. = ..()
+	message_admins("[key_name_admin(user)] attached \the [A] to \the [src]. [ADMIN_JMP(user)]")
+	log_game("[key_name(user)] attached \the [A] to \the [src].")
+
+
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
 	if(!signal)	return 0
 	if(signal.encryption != code)	return 0
@@ -153,8 +160,7 @@ Code:
 	pulse(1)
 
 	if(!holder)
-		for(var/mob/O in hearers(1, src.loc))
-			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
+		audible_message("[bicon(src)] *beep* *beep*", hearing_distance = 1)
 	return
 
 
@@ -189,7 +195,7 @@ Code:
 	set desc = "BOOOOM!"
 	deadman = 1
 	START_PROCESSING(SSobj, src)
-	usr.visible_message("\red [usr] moves their finger over [src]'s signal button...")
+	usr.visible_message("<span class='warning'>[usr] moves their finger over [src]'s signal button...</span>")
 
 // Embedded signaller used in anomalies.
 /obj/item/device/assembly/signaler/anomaly

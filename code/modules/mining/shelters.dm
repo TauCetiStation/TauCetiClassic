@@ -13,10 +13,10 @@
 	blacklisted_turfs += typecacheof(/turf/simulated/wall)
 	whitelisted_turfs = list()
 	banned_areas = typecacheof(/area/shuttle)
-	banned_areas += typecacheof(/area/holodeck)
-	banned_areas += typecacheof(/area/vox_station)
-	banned_areas += typecacheof(/area/syndicate_station)
-	banned_areas += typecacheof(/area/supply)
+	banned_areas += typecacheof(/area/station/civilian/holodeck)
+	banned_areas += typecacheof(/area/shuttle/vox)
+	banned_areas += typecacheof(/area/shuttle/syndicate)
+	banned_areas += typecacheof(/area/shuttle/supply)
 
 /datum/map_template/shelter/proc/id()
 	if(shelter_id)
@@ -41,15 +41,24 @@
 				return SHELTER_DEPLOY_ANCHORED_OBJECTS
 	return SHELTER_DEPLOY_ALLOWED
 
+/datum/map_template/shelter/New()
+	. = ..()
+	whitelisted_turfs = typecacheof(/turf/simulated/mineral)
+
 /datum/map_template/shelter/alpha
 	name = "Shelter Alpha"
 	shelter_id = "shelter_alpha"
-	description = "A cosy self-contained pressurized shelter, with \
-		built-in navigation, entertainment, medical facilities and a \
-		sleeping area! Order now, and we'll throw in a TINY FAN, \
-		absolutely free!"
+	description = "A cosy self-contained pressurized shelter, with built-in navigation, entertainment, medical facilities and a sleeping area! Order now, and we'll throw in a TINY FAN, absolutely free!"
+	mappath = "maps/templates/shelter_1.dmm"
+
+/datum/map_template/shelter/beta
+	name = "Shelter Beta"
+	shelter_id = "shelter_beta"
+	description = "Good, convenient shelter. Suitable for survival."
 	mappath = "maps/templates/shelter_2.dmm"
 
-/datum/map_template/shelter/alpha/New()
-	. = ..()
-	whitelisted_turfs = typecacheof(/turf/simulated/mineral)
+/datum/map_template/shelter/gamma
+	name = "Shelter Gamma"
+	shelter_id = "shelter_gamma"
+	description = "Rare and expensive shelter. Hmm, maybe invite my friends to a party?"
+	mappath = "maps/templates/shelter_3.dmm"

@@ -10,7 +10,7 @@
 	var/datum/omni_port/output
 	var/max_output_pressure = MAX_OMNI_PRESSURE
 
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -167,13 +167,13 @@
 	switch(href_list["command"])
 		if("power")
 			if(!configuring)
-				use_power = !use_power
+				set_power_use(!use_power)
 			else
-				use_power = 0
+				set_power_use(NO_POWER_USE)
 		if("configure")
 			configuring = !configuring
 			if(configuring)
-				use_power = 0
+				set_power_use(NO_POWER_USE)
 
 	//only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
 	if(configuring && !use_power)

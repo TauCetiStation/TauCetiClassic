@@ -1,8 +1,8 @@
 /obj/effect/flood
 	name = ""
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = FLY_LAYER
-	color = "#66D1FF"
+	color = "#66d1ff"
 	icon = 'icons/effects/liquids.dmi'
 	icon_state = "ocean"
 	alpha = FLUID_MAX_ALPHA
@@ -51,7 +51,7 @@
 	return ..()
 
 /turf/simulated/atom_init()
-	if((ticker.current_state == GAME_STATE_PLAYING) && SSfluids)
+	if((SSticker.current_state == GAME_STATE_PLAYING) && SSfluids)
 		fluid_update()
 	. = ..()
 

@@ -4,14 +4,14 @@
 	icon_state = "paint sprayer"
 	item_state = "paint sprayer"
 
-	w_class = 2.0
+	w_class = ITEM_SIZE_NORMAL
 
 	m_amt = 50
 	g_amt = 50
 	origin_tech = "engineering=1"
 
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 
 	var/static/list/modes // used to dye pipes, contains pipe colors.
 	var/obj/item/device/toner/ink
@@ -28,10 +28,13 @@
 
 	//This proc doesn't just check if the painter can be used, but also uses it.
 	//Only call this if you are certain that the painter will be used right after this check!
-/obj/item/weapon/airlock_painter/proc/use(mob/user, cost)
-	if(can_use(user, cost))
+/obj/item/weapon/airlock_painter/use(cost)
+	if(cost < 0)
+		stack_trace("[src.type]/use() called with a negative parameter [cost]")
+		return 0
+	if(can_use(usr, cost))
 		ink.charges -= cost
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
 		return 1
 	else
 		return 0
@@ -65,39 +68,40 @@
 		ink_level = "dangerously high"
 	to_chat(user, "<span class='notice'>Its ink levels look [ink_level].</span>")
 
-/obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/toner))
+/obj/item/weapon/airlock_painter/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/toner))
 		if(ink)
 			to_chat(user, "<span class='notice'>\the [name] already contains \a [ink].</span>")
 			return
-		user.drop_item()
-		W.loc = src
-		to_chat(user, "<span class='notice'>You install \the [W] into \the [name].</span>")
-		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		user.drop_from_inventory(I, src)
+		to_chat(user, "<span class='notice'>You install \the [I] into \the [name].</span>")
+		ink = I
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
+
+	else
+		return ..()
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		ink.loc = user.loc
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")
 		ink = null
 
-/obj/item/weapon/airlock_painter/afterattack(atom/A, mob/user, proximity)
+/obj/item/weapon/airlock_painter/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
-	if(!istype(A, /obj/machinery/atmospherics/pipe) || \
-		istype(A, /obj/machinery/atmospherics/components/unary/tank) || \
-		istype(A, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
-		!in_range(user, A))
+	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
+		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
+		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
+		!in_range(user, target))
 	{
 		return
 	}
 
-	var/obj/machinery/atmospherics/pipe/P = A
+	var/obj/machinery/atmospherics/pipe/P = target
 
 	var/selected_color = input("Which colour do you want to use?", "Universal painter") in modes
 	if(!selected_color)

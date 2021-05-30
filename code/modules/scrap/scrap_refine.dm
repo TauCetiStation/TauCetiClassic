@@ -30,7 +30,7 @@
 	desc = "This thing is messed up beyond any recognition. Into the grinder it goes!"
 	icon = 'icons/obj/structures/scrap/refine.dmi'
 	icon_state = "unrefined"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/scrap_lump/atom_init()
 	. = ..()

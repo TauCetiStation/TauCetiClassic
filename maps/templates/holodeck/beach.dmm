@@ -4,98 +4,98 @@
 	dir = 9;
 	icon_state = "beach"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "b" = (
 /turf/simulated/floor/beach/sand{
 	dir = 1;
 	icon_state = "beach"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "c" = (
 /turf/simulated/floor/beach/sand{
 	dir = 5;
 	icon_state = "beach"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "d" = (
 /turf/simulated/floor/beach/sand{
 	dir = 8;
 	icon_state = "beach"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "e" = (
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert0"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "f" = (
 /turf/simulated/floor/beach/sand{
 	dir = 8;
 	icon_state = "beachcorner"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "g" = (
 /turf/simulated/floor/beach/sand{
 	dir = 4;
 	icon_state = "beachcorner"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "h" = (
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert3"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "i" = (
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "j" = (
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert1"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "k" = (
 /obj/item/weapon/inflatable_duck,
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert0"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "l" = (
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert0"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "m" = (
 /obj/effect/overlay/palmtree_l,
 /obj/effect/overlay/coconut,
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert0"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "n" = (
 /obj/effect/overlay/palmtree_r,
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "o" = (
 /turf/simulated/floor/beach/sand{
 	icon_state = "seashallow"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "p" = (
 /obj/item/weapon/beach_ball,
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 "q" = (
 /turf/simulated/floor/beach/sand{
 	icon_state = "desert4"
 	},
-/area/holodeck/source_beach)
+/area/station/civilian/holodeck/source_beach)
 
 (1,1,1) = {"
 o

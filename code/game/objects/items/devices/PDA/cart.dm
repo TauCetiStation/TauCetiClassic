@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 	var/obj/item/radio/integrated/radio = null
 	var/access_security = 0
@@ -35,8 +35,7 @@
 	var/list/stored_data = list()
 
 /obj/item/weapon/cartridge/Destroy()
-	if(radio)
-		qdel(radio)
+	QDEL_NULL(radio)
 	return ..()
 
 /obj/item/weapon/cartridge/engineering
@@ -228,8 +227,8 @@
 						user = user_client.mob
 
 				if(user)
-					log_admin("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2]")
-					message_admins("STATUS: [user] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
+					log_admin("STATUS: [key_name(user)] set status screen with [PDA]. Message: [data1] [data2]")
+					message_admins("STATUS: [key_name_admin(user)] set status screen with [PDA]. Message: [data1] [data2] [ADMIN_FLW(user)]")
 				else
 					var/turf/PDA_turf = get_turf(PDA)
 					log_admin("STATUS: UNKNOWN set status screen with [PDA]. Message: [data1] [data2]")
@@ -273,7 +272,7 @@
 	/*		Power Monitor (Mode: 43 / 433)			*/
 	if(mode==43)
 		var/pMonData[0]
-		for(var/obj/machinery/computer/monitor/pMon in machines)
+		for(var/obj/machinery/computer/monitor/pMon in computer_list)
 			if(!(pMon.stat & (NOPOWER|BROKEN)) )
 				pMonData[++pMonData.len] = list ("Name" = pMon.name, "ref" = "\ref[pMon]")
 				if(isnull(powmonitor))
@@ -468,7 +467,7 @@
 		else
 			JaniData["user_loc"] = list("x" = 0, "y" = 0)
 		var/MopData[0]
-		for(var/obj/item/weapon/mop/M in world)
+		for(var/obj/item/weapon/mop/M in mop_list)
 			var/turf/ml = get_turf(M)
 			if(ml)
 				if(ml.z != cl.z)
@@ -481,7 +480,7 @@
 
 
 		var/BucketData[0]
-		for(var/obj/structure/mopbucket/B in world)
+		for(var/obj/structure/mopbucket/B in mopbucket_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
@@ -493,7 +492,7 @@
 			BucketData[++BucketData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 
 		var/CbotData[0]
-		for(var/obj/machinery/bot/cleanbot/B in machines)
+		for(var/obj/machinery/bot/cleanbot/B in bots_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
@@ -505,13 +504,13 @@
 		if(!CbotData.len)
 			CbotData[++CbotData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 		var/CartData[0]
-		for(var/obj/structure/janitorialcart/B in world)
+		for(var/obj/structure/stool/bed/chair/janitorialcart/B in janitorialcart_list)
 			var/turf/bl = get_turf(B)
 			if(bl)
 				if(bl.z != cl.z)
 					continue
 				var/direction = get_dir(src,B)
-				CartData[++CartData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.reagents.total_volume/100)
+				CartData[++CartData.len] = list("x" = bl.x, "y" = bl.y, "dir" = uppertext(dir2text(direction)), "status" = B.mybucket ? B.mybucket.reagents.total_volume / 100 : "No bucket.")
 		if(!CartData.len)
 			CartData[++CartData.len] = list("x" = 0, "y" = 0, dir=null, status = null)
 
@@ -533,7 +532,7 @@
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+	if (usr.incapacitated() || !in_range(loc, usr))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return

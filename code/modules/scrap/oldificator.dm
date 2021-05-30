@@ -1,8 +1,9 @@
-/obj/proc/make_old()
+/obj/proc/make_old(change_looks = TRUE)
 	color = pick("#996633", "#663300", "#666666")
 	light_color = color
-	name = pick("old ", "expired ", "dirty ") + initial(name)
-	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
+	if(change_looks)
+		name = pick("old ", "expired ", "dirty ") + initial(name)
+		desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
 	reliability = rand(100)
@@ -35,8 +36,14 @@
 	if(prob(75))
 		storage_slots = max(contents.len, max(0, storage_slots - pick(2, 2, 2, 3, 3, 4)))
 	if(prob(75))
-		max_combined_w_class = max_combined_w_class / 2
+		max_storage_space = max_storage_space / 2
 	..()
+
+/obj/machinery/chem_dispenser/make_old()
+	..()
+	var/to_delete_amount = rand(1, dispensable_reagents.len)
+	for(var/i in 1 to to_delete_amount)
+		pick_n_take(dispensable_reagents)
 
 /obj/item/weapon/reagent_containers/make_old()
 	for(var/datum/reagent/R in reagents.reagent_list)
@@ -45,7 +52,7 @@
 	..()
 
 /obj/item/ammo_box/make_old()
-	var/del_count = rand(0,contents.len)
+	var/del_count = rand(0,stored_ammo.len)
 	for(var/i = 1 to del_count)
 		var/removed_item = pick(stored_ammo)
 		stored_ammo -= removed_item
@@ -126,14 +133,14 @@
 	if(prob(35))
 		contaminate()
 	if(prob(75))
-		generate_dirt_cover()
-		add_dirt_cover(pick(subtypesof(/datum/dirt_cover)))
+		generate_blood_overlay()
+		add_dirt_cover(pick(global.all_dirt_covers))
 	..()
 
 
 
 /obj/item/weapon/aiModule/broken // -- TLE
-	name = "\improper broken core AI module"
+	name = "broken core AI module"
 	desc = "broken Core AI Module: 'Reconfigures the AI's core laws.'"
 
 /obj/machinery/broken/atom_init()
@@ -147,7 +154,7 @@
 
 /obj/item/weapon/aiModule/broken/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
-	IonStorm(0)
+	target.overload_ai_system()
 	explosion(sender.loc, 1, 1, 1, 3)
 	sender.drop_from_inventory(src)
 	qdel(src)
@@ -162,15 +169,8 @@
 	..()
 
 /obj/item/clothing/glasses/hud/make_old()
-	if(prob(75) && !istype(src, /obj/item/clothing/glasses/hud/broken))
-		var/obj/item/clothing/glasses/hud/broken/brokenhud= new /obj/item/clothing/glasses/hud/broken
-		brokenhud.name = src.name
-		brokenhud.desc = src.desc
-		brokenhud.icon = src.icon
-		brokenhud.icon_state = src.icon_state
-		brokenhud.item_state = src.item_state
-		brokenhud.make_old()
-		qdel(src)
+	if(prob(75))
+		broke_hud()
 	..()
 
 /obj/item/clothing/glasses/make_old()
@@ -212,26 +212,7 @@
 /obj/machinery/vending/make_old()
 	..()
 	if(prob(60))
-		seconds_electrified = -1
-	if(prob(60))
-		shut_up = 0
-	if(prob(60))
-		shoot_inventory = 1
-	if(prob(75))
-		var/del_count = rand(0,product_records.len)
-		for(var/i = 1 to del_count)
-			var/removed_item = pick(contents)
-			contents -= removed_item
-
-/obj/structure/closet/critter/make_old()
-	..()
-	if(prob(50))
-		content_mob = /mob/living/simple_animal/hostile/giant_spider
-
-/obj/machinery/vending/make_old()
-	..()
-	if(prob(60))
-		seconds_electrified = -1
+		electrified_until = -1
 	if(prob(60))
 		shut_up = 0
 	if(prob(60))
@@ -241,12 +222,17 @@
 		for(var/i = 1 to del_count)
 			var/removed_item = pick(product_records)
 			product_records -= removed_item
+			qdel(removed_item)
+	update_wires_check()
 
-
-/obj/item/clothing/glasses/sunglasses/sechud/make_old()
+/obj/structure/closet/critter/make_old()
 	..()
-	if(hud && prob(75))
-		hud = new /obj/item/clothing/glasses/hud/broken
+	if(prob(50))
+		content_mob = /mob/living/simple_animal/hostile/giant_spider
+
+/obj/item/clothing/glasses/sunglasses/hud/sechud/make_old()
+	..()
+	broke_hud()
 
 /obj/effect/decal/mecha_wreckage/make_old()
 	salvage_num = 8

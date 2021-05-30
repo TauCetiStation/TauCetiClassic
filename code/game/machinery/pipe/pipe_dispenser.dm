@@ -4,7 +4,7 @@
 	icon_state = "pipe_d"
 	density = TRUE
 	anchored = TRUE
-	use_power = 0 // i see no point in that, better implement battery feature.
+	use_power = NO_POWER_USE // i see no point in that, better implement battery feature.
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
@@ -22,6 +22,8 @@
 		<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
 		<A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
 		<A href='?src=\ref[src];make=43;dir=1'>Manual T-Valve - Mirrored</A><BR>
+		<A href='?src=\ref[src];make=52;dir=1'>Digital T-Valve</A><BR>
+		<A href='?src=\ref[src];make=53;dir=1'>Digital T-Valve - Mirrored</A><BR>
 		<b>Supply pipes:</b><BR>
 		<A href='?src=\ref[src];make=29;dir=1'>Pipe</A><BR>
 		<A href='?src=\ref[src];make=30;dir=5'>Bent Pipe</A><BR>
@@ -65,8 +67,9 @@
 		"}
 //What number the make points to is in the define # at the top of construction.dm in same folder
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
-	onclose(user, "pipedispenser")
+	var/datum/browser/popup = new(user, "pipedispenser", src.name)
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 /obj/machinery/pipedispenser/is_operational_topic()
 	return TRUE
@@ -104,11 +107,10 @@
 		user.drop_item()
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench) && !user.is_busy(src))
+	else if (iswrench(W) && !user.is_busy(src))
 		if (unwrenched == 0)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
-			if (do_after(user, 40, target = src))
+			if(W.use_tool(src, user, 40, volume = 50))
 				user.visible_message( \
 					"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
@@ -119,9 +121,8 @@
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
 		else /*if (unwrenched==1)*/
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
-			if (do_after(user, 20, target = src))
+			if(W.use_tool(src, user, 20, volume = 50))
 				user.visible_message( \
 					"<span class='notice'>\The [user] fastens \the [src].</span>", \
 					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \
@@ -139,11 +140,11 @@
 	icon_state = "pipe_d"
 	density = TRUE
 	anchored = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
-/obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
+/obj/machinery/pipedispenser/disposal/Crossed(obj/structure/disposalconstruct/pipe as obj)
 	if(istype(pipe) && !pipe.anchored)
 		qdel(pipe)
 
@@ -152,9 +153,11 @@ Nah
 
 //Allow you to drag-drop disposal pipes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
-	if(!iscarbon(usr) && !isrobot(usr))
+	if(usr.incapacitated())
 		return
-	if(!usr.canmove || usr.stat || usr.restrained())
+
+	if(!usr.IsAdvancedToolUser())
+		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
 	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
@@ -170,6 +173,7 @@ Nah
 		<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
 		<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
 		<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+		<A href='?src=\ref[src];dmake=8'>Sorting Junction</A><BR>
 		<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
 		<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
 		<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
@@ -177,7 +181,9 @@ Nah
 		<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
 		"}
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
+	var/datum/browser/popup = new(user, "pipedispenser", src.name)
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
 
 // 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 
@@ -214,6 +220,8 @@ Nah
 				if(7)
 					C.ptype = 8
 					C.density = 1
+				if(8)
+					C.ptype = 9
 			C.add_fingerprint(usr)
 			C.update()
 			wait = 1

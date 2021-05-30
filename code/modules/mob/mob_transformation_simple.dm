@@ -5,7 +5,7 @@
 /mob/proc/change_mob_type(new_type = null, turf/location = null, new_name = null, delete_old_mob = 0)
 
 	if(isnewplayer(src))
-		to_chat(usr, "\red cannot convert players who have not entered yet.")
+		to_chat(usr, "<span class='warning'>cannot convert players who have not entered yet.</span>")
 		return
 
 	if(!new_type)
@@ -19,7 +19,7 @@
 		return
 
 	if( new_type == /mob/dead/new_player )
-		to_chat(usr, "\red cannot convert into a new_player mob type.")
+		to_chat(usr, "<span class='warning'>cannot convert into a new_player mob type.</span>")
 		return
 
 	var/mob/M

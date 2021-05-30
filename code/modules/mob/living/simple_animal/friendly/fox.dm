@@ -20,7 +20,14 @@
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 
+	has_head = TRUE
+	has_leg = TRUE
+
 //Captain fox
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"
+
+/mob/living/simple_animal/fox/Renault/atom_init()
+	. = ..()
+	chief_animal_list += src

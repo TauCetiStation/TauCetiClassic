@@ -21,7 +21,6 @@ Buildable meters
 /obj/item/pipe/atom_init(mapload, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	. = ..()
 	if (make_from)
-
 		src.set_dir(make_from.dir)
 		src.pipename = make_from.name
 		color = make_from.pipe_color
@@ -97,8 +96,12 @@ Buildable meters
 			src.pipe_type = PIPE_PASSIVE_GATE
 		else if(istype(make_from, /obj/machinery/atmospherics/components/unary/heat_exchanger))
 			src.pipe_type = PIPE_HEAT_EXCHANGE
+		else if(istype(make_from, /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital))
+			src.pipe_type = PIPE_DTVALVEM
 		else if(istype(make_from, /obj/machinery/atmospherics/components/trinary/tvalve/mirrored))
 			src.pipe_type = PIPE_MTVALVEM
+		else if(istype(make_from, /obj/machinery/atmospherics/components/trinary/tvalve/digital))
+			src.pipe_type = PIPE_DTVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/components/trinary/tvalve))
 			src.pipe_type = PIPE_MTVALVE
 		else if(istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w/visible/supply) || istype(make_from, /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply))
@@ -203,7 +206,7 @@ Buildable meters
 		"scrubbers pipe down",
 		"supply pipe cap",
 		"scrubbers pipe cap",
-		"t-valve m",
+		"t-valve m", // Manual T-valve (mirrored)
 		"shutoff valve",
 ///// Fuel pipes
 		"fuel pipe",
@@ -213,6 +216,9 @@ Buildable meters
 		"fuel pipe up",
 		"fuel down",
 		"fuel pipe cap",
+///// Digital T-valves
+		"digital t-valve",
+		"digital t-valve m",
 	)
 	name = nlist[pipe_type + 1] + " fitting"
 	var/list/islist = list(
@@ -262,7 +268,7 @@ Buildable meters
 		"cap",
 		"cap",
 		"cap",
-		"mtvalvem",
+		"mtvalvem", // Manual T-valve (mirrored)
 		"svalve",
 ///// Fuel pipes
 		"simple",
@@ -272,29 +278,29 @@ Buildable meters
 		"cap",
 		"cap",
 		"cap",
+///// Digital T-valves
+		"dtvalve",
+		"dtvalvem"
 	)
 	icon_state = islist[pipe_type + 1]
 
 //called when a turf is attacked with a pipe item
-
-//called when a turf is attacked with a pipe item
-/obj/item/pipe/afterattack(turf/simulated/floor/target, mob/user, proximity)
+/obj/item/pipe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
-	if(istype(target))
+	if(istype(target, /turf/simulated/floor))
 		user.drop_from_inventory(src, target)
 	else
 		return ..()
 
 // rotate the pipe item clockwise
-
 /obj/item/pipe/verb/rotate()
 	set category = "Object"
 	set name = "Rotate Pipe"
 	set src in view(1)
 
-	if ( usr.stat || usr.restrained() )
+	if (usr.incapacitated())
 		return
 
 	set_dir(turn(dir, -90))
@@ -307,8 +313,8 @@ Buildable meters
 	else if (pipe_type in list (PIPE_MANIFOLD4W, PIPE_SUPPLY_MANIFOLD4W, PIPE_SCRUBBERS_MANIFOLD4W, PIPE_FUEL_MANIFOLD4W))
 		set_dir(SOUTH)
 
-/obj/item/pipe/Move()
-	..()
+/obj/item/pipe/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_SUPPLY_BENT, PIPE_SCRUBBERS_BENT, PIPE_HE_BENT, PIPE_FUEL_BENT)) && (dir in cardinal))
 		set_dir(dir|turn(dir, 90))
 	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
@@ -316,6 +322,23 @@ Buildable meters
 			set_dir(NORTH)
 		else if(dir == WEST)
 			set_dir(EAST)
+
+/obj/item/pipe/proc/mirror()
+	var/list/mirrored_devices = list(
+		"[PIPE_GAS_FILTER]" = PIPE_GAS_FILTER_M,
+		"[PIPE_GAS_FILTER_M]" = PIPE_GAS_FILTER,
+		"[PIPE_GAS_MIXER]" = PIPE_GAS_MIXER_M,
+		"[PIPE_GAS_MIXER_M]" = PIPE_GAS_MIXER,
+		"[PIPE_MTVALVE]" = PIPE_MTVALVEM,
+		"[PIPE_MTVALVEM]" = PIPE_MTVALVE,
+		"[PIPE_DTVALVE]" = PIPE_DTVALVEM,
+		"[PIPE_DTVALVEM]" = PIPE_DTVALVE
+	)
+
+	var/new_pipe_type = mirrored_devices["[pipe_type]"]
+	if (new_pipe_type)
+		pipe_type = new_pipe_type
+		update()
 
 // returns all pipe's endpoints
 
@@ -351,9 +374,9 @@ Buildable meters
 			return dir|flip|cw|acw
 		if(PIPE_MANIFOLD, PIPE_SUPPLY_MANIFOLD, PIPE_SCRUBBERS_MANIFOLD, PIPE_FUEL_MANIFOLD)
 			return flip|cw|acw
-		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER, PIPE_MTVALVE)
+		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER, PIPE_MTVALVE, PIPE_DTVALVE)
 			return dir|flip|cw
-		if(PIPE_GAS_FILTER_M, PIPE_GAS_MIXER_M, PIPE_MTVALVEM)
+		if(PIPE_GAS_FILTER_M, PIPE_GAS_MIXER_M, PIPE_MTVALVEM, PIPE_DTVALVEM)
 			return dir|flip|acw
 		if(PIPE_GAS_MIXER_T)
 			return dir|cw|acw
@@ -389,10 +412,11 @@ Buildable meters
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
-/obj/item/pipe/attackby(obj/item/weapon/W, mob/user)
-	..()
-	//*
-	if (!istype(W, /obj/item/weapon/wrench))
+/obj/item/pipe/attackby(obj/item/I, mob/user, params)
+	if (isscrewdriver(I))
+		mirror()
+		return
+	if (!iswrench(I))
 		return ..()
 	if (!isturf(loc))
 		return TRUE
@@ -410,6 +434,17 @@ Buildable meters
 		if((M.initialize_directions & pipe_dir) && M.check_connect_types_construction(M, src))	// matches at least one direction on either type of pipe & same connection type
 			to_chat(user, "<span class='warning'>There is already a pipe of the same type at this location.</span>")
 			return TRUE
+
+	for(var/D in cardinal)
+		if(D & pipe_dir)
+			var/turf/T = get_step(src, D)
+			if(T)
+				var/dir_to_pipe = get_dir(T, src)
+				for(var/obj/machinery/atmospherics/M in T)
+					if((M.initialize_directions & dir_to_pipe) && M.check_connect_types_construction(M, src) && !M.has_free_nodes())	// blocks construction if that leads to connection conflicts.
+						to_chat(user, "<span class='warning'>[M] has no free nodes.</span>")
+						return TRUE
+
 	// no conflicts found
 
 	//TODO: Move all of this stuff into the various pipe constructors.
@@ -655,8 +690,28 @@ Buildable meters
 
 			V.construction()
 
-		if(PIPE_MTVALVEM)		//manual t-valve
+		if(PIPE_MTVALVEM)		//manual t-valve (mirrored)
 			var/obj/machinery/atmospherics/components/trinary/tvalve/mirrored/V = new(loc)
+			V.set_dir(dir)
+			V.initialize_directions = pipe_dir
+
+			if (pipename)
+				V.name = pipename
+
+			V.construction()
+
+		if(PIPE_DTVALVE)		//digital t-valve
+			var/obj/machinery/atmospherics/components/trinary/tvalve/digital/V = new(loc)
+			V.set_dir(dir)
+			V.initialize_directions = pipe_dir
+
+			if (pipename)
+				V.name = pipename
+
+			V.construction()
+
+		if(PIPE_DTVALVEM)		//digital t-valve (mirrored)
+			var/obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital/V = new(loc)
 			V.set_dir(dir)
 			V.initialize_directions = pipe_dir
 
@@ -727,14 +782,13 @@ Buildable meters
 			var/obj/machinery/atmospherics/components/omni/filter/P = new(loc)
 			P.construction()
 
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message(
 		"[user] fastens the [src].",
 		"<span class='notice'>You have fastened the [src].</span>",
 		"You hear ratchet.")
 	qdel(src)	// remove the pipe item
 
-	return
 	 //TODO: DEFERRED
 
 // ensure that setterm() is called for a newly connected pipeline
@@ -747,18 +801,16 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 
-/obj/item/pipe_meter/attackby(obj/item/weapon/W, mob/user)
-	..()
-
-	if (!istype(W, /obj/item/weapon/wrench))
+/obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
+	if (!iswrench(I))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")
 		return TRUE
 
 	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe</span>")
 	qdel(src)

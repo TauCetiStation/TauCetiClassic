@@ -1,7 +1,7 @@
 /datum/gear/head
-	display_name = "bandana"
-	path = /obj/item/clothing/head/bandana
-	slot = slot_head
+	display_name = "Top hat"
+	path = /obj/item/clothing/head/that
+	slot = SLOT_HEAD
 	sort_category = "Hats and Headwear"
 
 /datum/gear/head/cap
@@ -21,9 +21,20 @@
 	colors["rainbow"] = /obj/item/clothing/head/soft/rainbow
 	gear_tweaks += new/datum/gear_tweak/path(colors)
 
-/datum/gear/head/that
-	display_name = "Top hat"
-	path = /obj/item/clothing/head/that
+/datum/gear/head/bandana
+	display_name = "Bandana selection"
+	path = /obj/item/clothing/head/bandana
+
+/datum/gear/head/bandana/New()
+	..()
+	var/bandanas = list()
+	bandanas["red"] = /obj/item/clothing/mask/bandana/red
+	bandanas["blue"] = /obj/item/clothing/mask/bandana/blue
+	bandanas["green"] = /obj/item/clothing/mask/bandana/green
+	bandanas["gold"] = /obj/item/clothing/mask/bandana/gold
+	bandanas["black"] = /obj/item/clothing/mask/bandana/black
+	bandanas["orange"] = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+	gear_tweaks += new/datum/gear_tweak/path(bandanas)
 
 /datum/gear/head/flatcap
 	display_name = "Flat cap"
@@ -58,9 +69,13 @@
 	path = /obj/item/clothing/head/det_hat/fluff/kung
 	cost = 1
 
+/datum/gear/head/black_hood
+	display_name = "Black hood"
+	path = /obj/item/clothing/head/black_hood
+
 /datum/gear/head/beret
 	display_name = "Beret selection"
-	path = /obj/item/clothing/head/beret/red
+	path = /obj/item/clothing/head/beret
 
 /datum/gear/head/beret/New()
 	..()

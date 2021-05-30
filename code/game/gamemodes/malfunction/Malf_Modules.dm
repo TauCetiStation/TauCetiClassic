@@ -54,13 +54,13 @@ robot_fabricator
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];clear=1'>Clear</A>"
 	else if(processing_time <= 0)
-		dat = "<B> No processing time is left available. No more modules are able to be chosen at this time."
+		dat = "<B> No processing time is left available. No more modules are able to be chosen at this time.</B>"
 	else
 		dat = "<B>Select use of processing time: (currently [processing_time] left.)</B><BR>"
 		dat += "<HR>"
 		dat += "<B>Install Module:</B><BR>"
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
-		var/is_malf = istype(ticker.mode, /datum/game_mode/malfunction)
+		var/is_malf = istype(SSticker.mode, /datum/game_mode/malfunction)
 		for(var/module in available_modules)
 			var/datum/AI_Module/module_type = module
 			if(initial(module_type.only_for_malf_gamemode) && !is_malf)
@@ -68,8 +68,9 @@ robot_fabricator
 			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> ([initial(module_type.price)])<BR>"
 		dat += "<HR>"
 
-	user << browse(entity_ja(dat), "window=modpicker")
-	onclose(user, "modpicker")
+	var/datum/browser/popup = new(user, "window=modpicker")
+	popup.set_content(dat)
+	popup.open()
 
 /datum/AI_Module/module_picker/Topic(href, href_list)
 	..()
@@ -115,7 +116,7 @@ robot_fabricator
 	set category = "Malfunction"
 	set name = "System Override"
 	set desc = "Start the victory timer."
-	var/datum/game_mode/malfunction/cur_malf = ticker.mode
+	var/datum/game_mode/malfunction/cur_malf = SSticker.mode
 	if(!istype(cur_malf))
 		to_chat(src, "<span class='red'>You cannot begin a takeover in this round type!</span>")
 		return
@@ -123,12 +124,12 @@ robot_fabricator
 		to_chat(src,"<span class='notice'>You've already begun your takeover.</span>")
 		return
 	if(cur_malf.apcs < APC_MIN_TO_MALF_DECLARE)
-		to_chat(src,"<span class='red'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.</span>")
+		to_chat(src,"<span class='red'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [SSticker.mode:apcs] APCs so far.</span>")
 		return
 	if(cur_malf.AI_malf_revealed < 4)
-		if(alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
+		if(alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [SSticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
 			return
-		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
+		cur_malf.announce_forth.play()
 
 	cur_malf.takeover()
 
@@ -140,17 +141,17 @@ robot_fabricator
 	set category = "Malfunction"
 	set name = "Explode"
 	set desc = "Station go boom."
-	var/datum/game_mode/malfunction/cur_malf = ticker.mode
+	var/datum/game_mode/malfunction/cur_malf = SSticker.mode
 	if(!istype(cur_malf))
 		to_chat(src, "Uh oh, wrong game mode. Please contact a coder.")
 		return
 	cur_malf.ai_win()
 
-/datum/AI_Module/large/
+/datum/AI_Module/large
 	uses = 1
 	price = MALF_LARGE_MODULE_PRICE
 
-/datum/AI_Module/small/
+/datum/AI_Module/small
 	uses = 5
 	price = MALF_SMALL_MODULE_PRICE
 
@@ -160,7 +161,9 @@ robot_fabricator
 	need_only_once = TRUE
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
-	for(var/mob/living/silicon/ai/ai in player_list)
+	for(var/mob/living/silicon/ai/ai in ai_list)
+		if(!ai.client)
+			continue
 		ai.fire_res_on_core = TRUE
 	to_chat(owner, "<span class='notice'>Core fireproofed.</span>")
 
@@ -188,9 +191,9 @@ robot_fabricator
 	var/datum/AI_Module/large/disable_rcd/rcdmod = current_modules["RCD disable"]
 	if(rcdmod.uses)
 		rcdmod.uses--
-		for(var/obj/item/weapon/rcd/rcd in world)
+		for(var/obj/item/weapon/rcd/rcd in rcd_list)
 			rcd.disabled = TRUE
-		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in world)
+		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in mecha_rcd_list)
 			rcd.disabled = TRUE
 		to_chat(src, "<span class='notice'>RCD-disabling pulse emitted.</span>")
 	else
@@ -207,7 +210,7 @@ robot_fabricator
 	var/datum/AI_Module/small/disable_dr/drmod = current_modules["DR disable"]
 	if(drmod.uses)
 		drmod.uses--
-		for(var/obj/item/device/remote_device/dr in world)
+		for(var/obj/item/device/remote_device/dr in remote_device_list)
 			dr.disabled = TRUE
 		to_chat(src, "<span class='notice'>DR-disabling pulse emitted.</span>")
 	else
@@ -286,7 +289,7 @@ robot_fabricator
 		to_chat(src, "<span class='red'>[blackout.module_name] module activation failed. Out of uses.</span>")
 		return
 	blackout.uses--
-	for(var/obj/machinery/power/apc/apc in machines)
+	for(var/obj/machinery/power/apc/apc in apc_list)
 		if(prob(30 * apc.overload))
 			apc.overload_lighting()
 		else
@@ -300,7 +303,7 @@ robot_fabricator
 	only_for_malf_gamemode = TRUE
 
 /datum/AI_Module/small/interhack/BuyedNewHandle()
-	var/datum/game_mode/malfunction/cur_malf = ticker.mode
+	var/datum/game_mode/malfunction/cur_malf = SSticker.mode
 	if(!istype(cur_malf)) //Is it possible? Probably not
 		qdel(src)
 		return

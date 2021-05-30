@@ -14,7 +14,7 @@
 	set category = "Object"
 	if(target)
 		stop_aim()
-		usr.visible_message("\blue \The [usr] lowers \the [src]...")
+		usr.visible_message("<span class='notice'>\The [usr] lowers \the [src]...</span>")
 
 //Clicking gun will still lower aim for guns that don't overwrite this
 /obj/item/weapon/gun/attack_self()
@@ -29,7 +29,7 @@
 	return ..()
 
 /obj/item/weapon/gun/equipped(mob/user, slot)
-	if (slot != slot_l_hand && slot != slot_r_hand)
+	if (slot != SLOT_L_HAND && slot != SLOT_R_HAND)
 		stop_aim()
 		if (user.client)
 			user.client.remove_gun_icons()
@@ -51,11 +51,11 @@
 		Aim(A) 	//Clicked a mob, aim at them
 	else  		//Didn't click someone, check if there is anyone along that guntrace
 		var/mob/living/M = GunTrace(usr.x,usr.y,A.x,A.y,usr.z,usr)  //Find dat mob.
-		if(M && isliving(M) && M in view(user) && !(M in target))
+		if(M && isliving(M) && (M in view(user)) && !(M in target))
 			Aim(M) //Aha!  Aim at them!
 		else if(!ismob(M) || (ismob(M) && !(M in view(user)))) //Nope!  They weren't there!
 			Fire(A,user,params)  //Fire like normal, then.
-	usr.dir = get_cardinal_dir(src, A)
+	usr.set_dir(get_cardinal_dir(src, A))
 
 //Aiming at the target mob.
 /obj/item/weapon/gun/proc/Aim(mob/living/M)
@@ -66,9 +66,9 @@
 				if(L)
 					L.NotTargeted(src)
 			qdel(target)
-			usr.visible_message("\red <b>[usr] turns \the [src] on [M]!</b>")
+			usr.visible_message("<span class='warning'><b>[usr] turns \the [src] on [M]!</b></span>")
 		else
-			usr.visible_message("\red <b>[usr] aims \a [src] at [M]!</b>")
+			usr.visible_message("<span class='warning'><b>[usr] aims \a [src] at [M]!</b></span>")
 		M.Targeted(src)
 
 //HE MOVED, SHOOT HIM!
@@ -85,21 +85,17 @@
 			if(firing_check == 1)
 				Fire(T,usr, reflex = 1)
 		else if(!told_cant_shoot)
-			to_chat(M, "\red They can't be hit from here!")
+			to_chat(M, "<span class='warning'>They can't be hit from here!</span>")
 			told_cant_shoot = 1
 			spawn(30)
 				told_cant_shoot = 0
 	else
 		click_empty(M)
 
-	usr.dir = get_cardinal_dir(src, T)
+	usr.set_dir(get_cardinal_dir(src, T))
 
 	if (!firerate) // If firerate is set to lower aim after one shot, untarget the target
 		T.NotTargeted(src)
-
-//Yay, math!
-
-#define SIGN(X) ((X<0)?-1:1)
 
 /proc/GunTrace(X1,Y1,X2,Y2,Z=1,exc_obj,PX1=16,PY1=16,PX2=16,PY2=16)
 	//bluh << "Tracin' [X1],[Y1] to [X2],[Y2] on floor [Z]."
@@ -119,11 +115,10 @@
 				if(M) return M
 				Y1+=s
 	else
-		var
-			m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
-			b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-			signX = SIGN(X2-X1)
-			signY = SIGN(Y2-Y1)
+		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
+		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
 		if(X1<X2) b+=m
 		while(1)
 			var/xvert = round(m*X1+b-Y1)
@@ -139,11 +134,11 @@
 
 
 //Targeting management procs
-/mob/var
-	list/targeted_by
-	last_move_intent = -100
-	last_target_click = -5
-	target_locked = null
+/mob
+	var/list/targeted_by
+	var/last_move_intent = -100
+	var/last_target_click = -5
+	var/target_locked = null
 
 /mob/living/proc/Targeted(obj/item/weapon/gun/I) //Self explanitory.
 	if(!I.target)
@@ -157,15 +152,15 @@
 	else
 		return
 	for(var/mob/living/K in viewers(usr))
-		K << 'sound/weapons/TargetOn.ogg'
+		K.playsound_local(null, 'sound/weapons/guns/TargetOn.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!targeted_by) targeted_by = list()
 	targeted_by += I
 	I.lock_time = world.time + 20 //Target has 2 second to realize they're targeted and stop (or target the opponent).
-	to_chat(src, "((\red <b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b> \black While targeted, they may \
+	to_chat(src, "((<span class='warning'><b>Your character is being targeted. They have 2 seconds to stop any click or move actions.</b></span> While targeted, they may \
 	drag and drop items in or into the map, speak, and click on interface buttons. Clicking on the map objects (floors and walls are fine), their items \
-	 (other than a weapon to de-target), or moving will result in being fired upon. \red The aggressor may also fire manually, \
-	 so try not to get on their bad side.\black ))")
+	 (other than a weapon to de-target), or moving will result in being fired upon. <span class='warning'>The aggressor may also fire manually, \
+	 so try not to get on their bad side.</span> ))")
 
 	if(targeted_by.len == 1)
 		spawn(0)
@@ -173,7 +168,7 @@
 			if(ishuman(src)) //Until this part rewrite.
 				update_targeted()
 			else
-				overlays += target_locked
+				add_overlay(target_locked)
 			spawn(0)
 				sleep(20)
 				if(target_locked)
@@ -188,9 +183,6 @@
 		else
 			I.lower_aim()
 			return
-		if(m_intent == "run" && T.client.target_can_move == 1 && T.client.target_can_run == 0)
-			to_chat(src, "\red Your move intent is now set to walk, as your targeter permits it.")//Self explanitory.
-			set_m_intent("walk")
 
 		//Processing the aiming. Should be probably in separate object with process() but lasy.
 		while(targeted_by && T.client)
@@ -217,7 +209,7 @@
 /mob/living/proc/NotTargeted(obj/item/weapon/gun/I)
 	if(!I.silenced)
 		for(var/mob/living/M in viewers(src))
-			M << 'sound/weapons/TargetOff.ogg'
+			M.playsound_local(null, 'sound/weapons/guns/TargetOff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	targeted_by -= I
 	I.target.Remove(src) //De-target them
 	if(!I.target.len)
@@ -230,7 +222,7 @@
 		qdel(targeted_by)
 	spawn(1) update_targeted()
 
-/mob/living/Move(NewLoc, direct)
+/mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	for(var/obj/item/weapon/gun/G in targeted_by) //Handle moving out of the gunner's view.
 		var/mob/living/M = G.loc
@@ -243,11 +235,11 @@
 					M.NotTargeted(G)
 
 //If you move out of range, it isn't going to still stay locked on you any more.
-/client/var
-	target_can_move = 0
-	target_can_run = 0
-	target_can_click = 0
-	gun_mode = 0
+/client
+	var/target_can_move = 0
+	var/target_can_run = 0
+	var/target_can_click = 0
+	var/gun_mode = 0
 
 //These are called by the on-screen buttons, adjusting what the victim can and cannot do.
 /client/proc/add_gun_icons()
@@ -320,18 +312,10 @@
 				if(target_can_move)
 					to_chat(M, "Your character may now <b>walk</b> at the discretion of their targeter.")
 					if(!target_can_run)
-						to_chat(M, "\red Your move intent is now set to walk, as your targeter permits it.")
-						M.set_m_intent("walk")
+						to_chat(M, "<span class='warning'>Your move intent is now set to walk, as your targeter permits it.</span>")
+						M.set_m_intent(MOVE_INTENT_WALK)
 				else
-					to_chat(M, "\red <b>Your character will now be shot if they move.</b>")
-
-/mob/living/proc/set_m_intent(intent)
-	if (intent != "walk" && intent != "run")
-		return 0
-	m_intent = intent
-	if(hud_used)
-		if (hud_used.move_intent)
-			hud_used.move_intent.icon_state = intent == "walk" ? "walking" : "running"
+					to_chat(M, "<span class='warning'><b>Your character will now be shot if they move.</b></span>")
 
 /client/verb/AllowTargetRun()
 	set hidden=1
@@ -349,14 +333,14 @@
 		usr.gun_run_icon.name = "[target_can_run ? "Disallow" : "Allow"] Running"
 
 	//Handling change for all the guns on client
-	for(var/obj/item/weapon/gun/G in src)
+	for(var/obj/item/weapon/gun/G in mob)
 		G.lock_time = world.time + 5
 		if(G.target)
 			for(var/mob/living/M in G.target)
 				if(target_can_run)
 					to_chat(M, "Your character may now <b>run</b> at the discretion of their targeter.")
 				else
-					to_chat(M, "\red <b>Your character will now be shot if they run.</b>")
+					to_chat(M, "<span class='warning'><b>Your character will now be shot if they run.</b></span>")
 
 /client/verb/AllowTargetClick()
 	set hidden=1
@@ -373,11 +357,11 @@
 		usr.item_use_icon.name = "[target_can_click ? "Disallow" : "Allow"] Item Use"
 
 	//Handling change for all the guns on client
-	for(var/obj/item/weapon/gun/G in src)
+	for(var/obj/item/weapon/gun/G in mob)
 		G.lock_time = world.time + 5
 		if(G.target)
 			for(var/mob/living/M in G.target)
 				if(target_can_click)
 					to_chat(M, "Your character may now <b>use items</b> at the discretion of their targeter.")
 				else
-					to_chat(M, "\red <b>Your character will now be shot if they use items.</b>")
+					to_chat(M, "<span class='warning'><b>Your character will now be shot if they use items.</b></span>")

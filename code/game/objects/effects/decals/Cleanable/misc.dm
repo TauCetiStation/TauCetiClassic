@@ -39,7 +39,7 @@
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "dirt"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
@@ -67,6 +67,7 @@
 	desc = "Somebody should remove that."
 	density = 0
 	anchored = 1
+	plane = GAME_PLANE
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb1"
@@ -85,6 +86,7 @@
 	desc = "Somebody should remove that."
 	density = 0
 	anchored = 1
+	plane = GAME_PLANE
 	layer = 3
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cobweb2"
@@ -162,5 +164,5 @@ var/list/toilet_overlay_cache = list()
 		shadeOverlay = toilet_overlay_cache["[type]s"] = new/icon('icons/effects/crayondecal.dmi',"[type]s", 2.1)
 		shadeOverlay.Blend(shade, ICON_ADD)
 
-	overlays += mainOverlay
-	overlays += shadeOverlay
+	add_overlay(mainOverlay)
+	add_overlay(shadeOverlay)

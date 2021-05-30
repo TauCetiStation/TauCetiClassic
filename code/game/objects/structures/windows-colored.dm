@@ -1,106 +1,47 @@
-var/global/wcBrig
-var/global/wcBar
-var/global/wcCommon
-var/global/wcDw
-
-
 //for all window/New and door/window/New
 /proc/color_windows(area = "common")
-	var/list/common = list("#379963", "#0d8395", "#58b5c3", "#49e46e", "#8fcf44", "#cc99ff", "#ff6600", "#3399ff", "#969696", "#ffffff")
+	var/static/wcCommon
 	if(!wcCommon)
-		wcCommon = pick(common)
+		wcCommon = pick(list("#379963", "#0d8395", "#58b5c3", "#49e46e", "#8fcf44", "#cc99ff", "#ff6600", "#3399ff", "#969696", "#ffffff"))
 	return wcCommon
+
+/proc/painting_objects(list/possible_areas, color)
+	for(var/type in possible_areas)
+		for(var/obj/structure/window/W in get_area_by_type(type))
+			W.color = color
+		for(var/obj/machinery/door/window/D in get_area_by_type(type))
+			D.color = color
 
 //replaces color in some area
 /proc/color_windows_init()
-	var/list/brig = list("#aa0808", "#7f0606", "#ff0000", "#ff0000")
-	var/list/bar = list("#0d8395", "#58b5c3", "#58c366", "#90d79a", "#3399ff", "#00ffff", "#ff6600", "#ffffff")
-	var/list/dw = list("#993300", "#ff6600", "#ffcc00", "#ff9933")
-
-	wcBrig = pick(brig)
-	wcBar = pick(bar)
-	wcDw = pick(dw)
-
-	//BRIG
-	var/wsBrigList = list(
-		/area/security/armoury,
-		/area/security/brig,
-		/area/security/detectives_office,
-		/area/security/hos,
-		/area/security/lobby,
-		/area/security/main,
-		/area/security/prison,
-		/area/security/warden,
-		/area/security/range,
-		/area/security/forensic_office
-		)
-
-	for(var/A in wsBrigList)
-		for(var/obj/structure/window/W in locate(A))
-			W.color = wcBrig
-		for(var/obj/machinery/door/window/D in locate(A))
-			D.color = wcBrig
-
+	//RED (Only sec stuff honestly)
+	var/list/red = list("#aa0808", "#990707", "#e50909", "#e50909")
 	//BAR
-	for(var/obj/structure/window/W in locate(/area/crew_quarters/bar))
-		W.color = wcBar
-	for(var/obj/machinery/door/window/D in locate(/area/crew_quarters/bar))
-		D.color = wcBar
-
+	var/list/bar = list("#0d8395", "#58b5c3", "#58c366", "#90d79a", "#3399ff", "#00ffff", "#ff6600", "#ffffff")
 	//DWARFS
-	for(var/obj/structure/window/W in locate(/area/mine/dwarf))
-		W.color = wcDw
-	for(var/obj/machinery/door/window/D in locate(/area/mine/dwarf))
-		D.color = wcDw
+	var/list/dw = list("#993300", "#ff6600", "#ffcc00", "#ff9933")
+	//PURPLE (RnD + Research outpost)
+	var/list/purple = list("#ba62b1", "#ba3fad", "#a54f9e", "#b549d1")
+	//BROWN (Mining + Cargo)
+	var/list/brown = list("#9e5312", "#99761e", "#a56b00", "#d87f2b")
+	//GREEN (Virology and Hydro areas)
+	var/list/green = list("#aed18b", "#7bce23", "#5a9619", "#709348")
+	//BLUE (Some of Medbay areas)
+	var/list/blue = list("#054166", "#5995ba", "#1e719e", "#7cb8dd")
 
-	//IGNORE COLORED
-	var/wsIgnoreList = list(
-		/area/shuttle,
-		/area/shuttle/arrival,
-		/area/shuttle/arrival/pre_game,
-		/area/shuttle/arrival/transit,
-		/area/shuttle/arrival/station,
-		/area/shuttle/escape,
-		/area/shuttle/escape/station,
-		/area/shuttle/escape/centcom,
-		/area/shuttle/escape/transit,
-		/area/shuttle/escape_pod1,
-		/area/shuttle/escape_pod1/station,
-		/area/shuttle/escape_pod1/centcom,
-		/area/shuttle/escape_pod1/transit,
-		/area/shuttle/escape_pod2,
-		/area/shuttle/escape_pod2/station,
-		/area/shuttle/escape_pod2/centcom,
-		/area/shuttle/escape_pod2/transit,
-		/area/shuttle/escape_pod3,
-		/area/shuttle/escape_pod3/station,
-		/area/shuttle/escape_pod3/centcom,
-		/area/shuttle/escape_pod3/transit,
-		/area/shuttle/escape_pod5,
-		/area/shuttle/escape_pod5/station,
-		/area/shuttle/escape_pod5/centcom,
-		/area/shuttle/escape_pod5/transit,
-		/area/shuttle/mining,
-		/area/shuttle/mining/station,
-		/area/shuttle/mining/outpost,
-		/area/shuttle/transport1/centcom,
-		/area/shuttle/transport1/station,
-		/area/shuttle/alien/base,
-		/area/shuttle/alien/mine,
-		/area/shuttle/specops/centcom,
-		/area/shuttle/specops/station,
-		/area/shuttle/syndicate_elite/mothership,
-		/area/shuttle/syndicate_elite/station,
-		/area/shuttle/administration/centcom,
-		/area/shuttle/administration/station,
-		/area/shuttle/research,
-		/area/shuttle/vox/station
-		)
+	var/list/color_by_types = list(
+		pick(red)    = typesof(/area/station/security),
+		pick(purple) = typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost) + /area/station/medical/genetics,
+		pick(brown)  = typesof(/area/station/cargo) + typesof(/area/asteroid/mine),
+		pick(green)  = list(/area/station/medical/virology,
+							/area/station/civilian/hydroponics,
+							/area/asteroid/research_outpost/maintstore1,
+							/area/asteroid/research_outpost/sample),
+		pick(blue)   = typesof(/area/station/medical),
+		pick(bar)    = list(/area/station/civilian/bar),
+		pick(dw)     = list(/area/asteroid/mine/dwarf),
+		COLOR_WHITE  = typesof(/area/shuttle),
+	)
 
-	for(var/A in wsIgnoreList)
-		for(var/obj/structure/window/W in locate(A))
-			W.color = "ffffff"
-		for(var/obj/machinery/door/window/D in locate(A))
-			D.color = "ffffff"
-
-	return 1
+	for(var/color in color_by_types)
+		painting_objects(color_by_types[color], color)

@@ -18,7 +18,7 @@
 	name = victim.mind.name
 	victim.mind.transfer_to(src)
 	enter_host(host)
-	overlays = victim.overlays
+	copy_overlays(victim, TRUE)
 	phantom = new(src, src)
 	phantom.create_overlay(src)
 
@@ -64,9 +64,6 @@
 			clear_fullscreen(scr)
 		for(var/alert in alerts)
 			clear_alert(alert)
-		for(var/image/hud in client.images)
-			if(copytext(hud.icon_state, 1, 4) == "hud")
-				client.images.Remove(hud)
 
 /mob/living/parasite/essence/proc/transfer(atom/new_host)
 	exit_host()
@@ -87,7 +84,7 @@
 		if(!(flags_allowed & ESSENCE_SPEAK_TO_HOST))
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking to him</span>")
 			return
-		message = copytext(message, 3) // deleting prefix
+		message = copytext_char(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
 		for(var/M in changeling.essences)
 			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
@@ -101,7 +98,7 @@
 		if(!(flags_allowed & ESSENCE_HIVEMIND))
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking in hivemind</span>")
 			return
-		message = copytext(message, 3) // deleting prefix
+		message = copytext_char(message, 3) // deleting prefix
 		var/n_message = sanitize(message)
 		for(var/mob/M in mob_list)
 			if(M.mind && M.mind.changeling)
@@ -213,24 +210,10 @@
 	see_in_dark = host.see_in_dark
 	see_invisible = host.see_invisible
 
-	for(var/image/hud in client.images) // hud shit goes here
-		if(copytext(hud.icon_state, 1, 4) == "hud")
-			client.images.Remove(hud)
 	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
-		set_EyesVision(H.sightglassesmod)
 		if(H.glasses)
-			if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				var/obj/item/clothing/glasses/sunglasses/sechud/O = H.glasses
-				if(O.hud)
-					O.hud.process_hud(src)
-			else if(istype(H.glasses, /obj/item/clothing/glasses/hud))
-				var/obj/item/clothing/glasses/hud/O = H.glasses
-				O.process_hud(src)
-			else if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed))
-				var/obj/item/clothing/glasses/sunglasses/hud/secmed/O = H.glasses
-				O.process_hud(src)
-
+			set_EyesVision(H.sightglassesmod)
 
 		for(var/scr in screens) // screens shit
 			if(!(scr in host.screens))
@@ -248,14 +231,14 @@
 			var/obj/screen/alert/host_alert = host.alerts[alert]
 			if(length(host_alert.overlays) > 0)
 				continue
-			var/obj/screen/alert/new_alert = throw_alert(alert)
+			var/obj/screen/alert/new_alert = throw_alert(alert, host_alert.type)
 			if(new_alert)
 				new_alert.icon_state = host_alert.icon_state
 
 		if(healthdoll && host.healthdoll)
-			healthdoll.overlays.Cut()
+			healthdoll.cut_overlays()
 			healthdoll.icon_state = host.healthdoll.icon_state
-			healthdoll.overlays += host.healthdoll.overlays
+			healthdoll.add_overlay(host.healthdoll.overlays)
 		if(healths && host.healths)
 			healths.icon_state = host.healths.icon_state
 		if(internals && host.internals)
@@ -280,7 +263,7 @@
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)
 		dat += "Essence of [M.name] is [M.client ? "<font color='green'>active</font>" : "<font color='red'>hibernating</font>"]<BR> \
-		<a href ='?src=\ref[src];permissions=\ref[M]'>(See permissions)</a>\
+		<a href ='?src=\ref[src];permissions=\ref[M]'>See permissions</a>\
 		 <a href ='?src=\ref[src];trusted=\ref[M]'>[changeling.trusted_entity == M ? "T" : "unt"]rusted</a>"
 		if(M.client)
 			dat += " <a href ='?src=\ref[src];share_body=\ref[M]'>Delegate Control</a><BR>"
@@ -405,7 +388,7 @@
 /obj/effect/essence_phantom
 	anchored = TRUE
 	invisibility = SEE_INVISIBLE_OBSERVER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/showed = FALSE
 	var/mob/living/parasite/essence/host
 	var/image/overlay
@@ -422,7 +405,7 @@
 	name = f_overlay.name
 	overlay = image(f_overlay.icon, f_overlay.icon_state)
 	overlay.alpha = 200
-	overlay.overlays = f_overlay.overlays
+	overlay.copy_overlays(f_overlay)
 	overlay.loc = src
 
 /obj/effect/essence_phantom/proc/show_phantom(atom/place)

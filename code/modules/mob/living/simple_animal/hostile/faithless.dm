@@ -15,10 +15,9 @@
 	environment_smash = 1
 
 	harm_intent_damage = 10
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage = 15
 	attacktext = "grips"
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = list('sound/voice/growl1.ogg')
 
 	min_oxy = 0
 	max_oxy = 0
@@ -32,6 +31,11 @@
 	speed = 4
 
 	faction = "faithless"
+
+	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/faithless/Process_Spacemove(movement_dir = 0)
 	return 1

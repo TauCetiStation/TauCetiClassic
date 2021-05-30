@@ -8,6 +8,7 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "eye"
 	alpha = 127
+	hud_possible = list(ANTAG_HUD, HOLY_HUD)
 	var/list/visibleCameraChunks = list()
 	var/mob/living/master = null
 	invisibility = INVISIBILITY_AI_EYE
@@ -16,7 +17,12 @@
 /mob/camera/Eye/ai
 	var/mob/living/silicon/ai/ai = null
 
+/mob/camera/Eye/ai/atom_init()
+	. = ..()
+	ai_eyes_list += src
+
 /mob/camera/Eye/ai/Destroy()
+	ai_eyes_list -= src
 	ai = null
 	return ..()
 
@@ -38,8 +44,8 @@
 	return ..()
 
 // Movement code. Returns 0 to stop air movement from moving it.
-/mob/camera/Eye/Move()
-	return 0
+/mob/camera/Eye/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	return FALSE
 
 // Hide popout menu verbs
 /mob/camera/Eye/examinate(atom/A as mob|obj|turf in view())
@@ -74,23 +80,15 @@
 		return loc
 
 // AI MOVEMENT
-
-// The AI's "eye". Described on the top of the page.
-
-/mob/living/silicon/ai
-	var/mob/camera/Eye/ai/eyeobj = new()
-	var/sprint = 10
-	var/cooldown = 0
-	var/acceleration = 1
-	var/obj/machinery/hologram/holopad/holo = null
-
 // Intiliaze the eye by assigning it's "ai" variable to us. Then set it's loc to us.
-/mob/living/silicon/ai/atom_init()
-	. = ..()
+/mob/living/silicon/ai/proc/create_eye()
+	if(eyeobj)
+		return
+	eyeobj = new()
 	eyeobj.master = src
 	eyeobj.ai = src
+	eyeobj.setLoc(loc)
 	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
-	eyeobj.loc = loc
 
 /mob/living/silicon/ai/Destroy()
 	if(eyeobj)
@@ -110,7 +108,7 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 
-/client/proc/AIMove(n, direct, mob/living/silicon/ai/user)
+/client/proc/AIMove(n, direct, mob/living/silicon/ai/user)		//Needs to be removed in favor of remote_control and relaymove()
 
 	var/initial = initial(user.sprint)
 	var/max_sprint = 50
@@ -136,11 +134,6 @@
 
 
 // Return to the Core.
-
-/mob/living/silicon/ai/proc/core()
-
-	view_core()
-
 
 /mob/living/silicon/ai/proc/view_core()
 	camera = null

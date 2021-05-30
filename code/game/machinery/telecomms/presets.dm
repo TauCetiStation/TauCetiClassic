@@ -7,7 +7,6 @@
 
 /obj/machinery/telecomms/relay/preset/station
 	id = "Station Relay"
-	listening_level = 1
 	autolinkers = list("s_relay")
 
 /obj/machinery/telecomms/relay/preset/telecomms
@@ -20,17 +19,14 @@
 
 /obj/machinery/telecomms/relay/preset/ruskie
 	id = "Ruskie Relay"
-	hide = 1
-	toggled = 0
+	hide = TRUE
+	toggled = FALSE
 	autolinkers = list("r_relay")
 
 /obj/machinery/telecomms/relay/preset/centcom
 	id = "Centcom Relay"
-	hide = 1
-	toggled = 1
-	//anchored = 1
-	//use_power = 0
-	//idle_power_usage = 0
+	hide = TRUE
+	toggled = TRUE
 	heatgen = 0
 	autolinkers = list("c_relay")
 
@@ -80,7 +76,7 @@
 	network = "tcommsat"
 	heatgen = 0
 	autolinkers = list("receiverCent")
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 
 
 //Buses
@@ -117,7 +113,7 @@
 /obj/machinery/telecomms/bus/preset_cent
 	id = "CentComm Bus"
 	network = "tcommsat"
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 	heatgen = 0
 	autolinkers = list("processorCent", "centcomm")
 
@@ -199,7 +195,7 @@
 
 /obj/machinery/telecomms/server/presets/centcomm
 	id = "CentComm Server"
-	freq_listening = list(1345, 1341)
+	freq_listening = list(1345, 1341, 1245)
 	heatgen = 0
 	autolinkers = list("centcomm")
 

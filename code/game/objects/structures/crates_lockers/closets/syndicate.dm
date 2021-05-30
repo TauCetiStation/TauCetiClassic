@@ -17,6 +17,9 @@
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/weapon/kitchenknife/combat(src)
+	new /obj/item/weapon/storage/pouch/pistol_holster(src) // Perhaps this may encourage actually buying pistols.
+	new /obj/item/weapon/storage/pouch/ammo(src)
 
 
 /obj/structure/closet/syndicate/nuclear
@@ -45,6 +48,7 @@
 		var/obj/item/weapon/paper/P = new(src)
 		P.name = "IOU"
 		P.info = "Sorry man, we needed the money so we sold your stash. It's ok, we'll double our money for sure this time!"
+		P.update_icon()
 
 	//Metal (common ore)
 	if(pickednum >= 2) // WEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE~

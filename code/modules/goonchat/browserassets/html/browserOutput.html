@@ -10,6 +10,7 @@
 
 	<!-- Completely skip loading any normal scripts if below IE8; we won't use them -->
 	<!--[if gte IE 8]><!-->
+		<script type="text/javascript" src="error_handler.js"></script>
 		<script type="text/javascript" src="jquery.min.js"></script>
 		<script type="text/javascript" src="json2.min.js"></script>
 	<!--<![endif]-->
@@ -27,7 +28,7 @@
 	<![endif]-->
 	<!--[if gte IE 8]><!-->
 	<div id="loading">
-		<i class="icon-spinner icon-2x"></i>
+		<i class="fas fa-spinner fa-2x"></i>
 		<div>
 			Loading...<br><br>
 			If this takes longer than 30 seconds, it will automatically reload a maximum of 5 times.<br>
@@ -35,25 +36,28 @@
 		</div>
 	</div>
 	<div id="messages">
-
 	</div>
 	<div id="userBar" style="display: none;">
 		<div id="ping">
-			<i class="icon-circle" id="pingDot"></i>
+			<i class="fas fa-circle" id="pingDot"></i>
 			<span class="ms" id="pingMs">--ms</span>
 		</div>
 		<div id="options">
-			<a href="#" class="toggle" id="toggleOptions" title="Options"><i class="icon-cog"></i></a>
-			<div class="sub" id="subOptions">
-				<a href="#" id="decreaseFont"><span>Decrease font size</span> <i class="icon-font">-</i></a>
-				<a href="#" id="increaseFont"><span>Increase font size</span> <i class="icon-font">+</i></a>
-				<a href="#" id="chooseFont">Change font <i class="icon-font"></i></a>
-				<a href="#" id="togglePing"><span>Toggle ping display</span> <i class="icon-circle"></i></a>
-				<a href="#" id="highlightTerm"><span>Highlight string</span> <i class="icon-tag"></i></a>
-				<a href="#" id="emojiPicker"><span>Emoji picker</span> <i class="icon-smile"></i></a>
-				<a href="#" id="saveLog"><span>Save chat log</span> <i class="icon-save"></i></a>
-				<a href="#" id="clearMessages"><span>Clear all messages</span> <i class="icon-eraser"></i></a>
-			</div>
+			<a href="#" class="subCell toggle" id="toggleOptions" title="Options"><i class="fas fa-cog"></i></a>
+		</div>
+		<div id="emoji">
+			<a href="#" id="emojiPicker" class="subCell toggle" title="Emoji picker"><i class="far fa-smile"></i></a>
+		</div>
+		<div class="sub" id="subOptions">
+			<a href="#" class="subCell increaseFont" id="increaseFont"><span class="subCell-title">Increase font size</span> <i class="fas fa-font">+</i></a>
+			<a href="#" class="subCell decreaseFont topCell" id="decreaseFont"><span class="subCell-title">Decrease font size</span> <i class="fas fa-font">-</i></a>
+			<a href="#" class="subCell increaseLineHeight" id="increaseLineHeight"><span class="subCell-title">Increase line height</span> <i class="fas fa-text-height">+</i></a>
+			<a href="#" class="subCell decreaseLineHeight" id="decreaseLineHeight"><span class="subCell-title">Decrease line height</span> <i class="fas fa-text-height">-</i></a>
+			<a href="#" class="subCell togglePing" id="togglePing"><span class="subCell-title">Toggle ping display</span> <i class="fas fa-circle"></i></a>
+			<a href="#" class="subCell highlightTerm" id="highlightTerm"><span class="subCell-title">Highlight string</span> <i class="fas fa-tag"></i></a>
+			<a href="#" class="subCell saveLog" id="saveLog"><span class="subCell-title">Save chat log</span> <i class="fas fa-save"></i></a>
+			<a href="#" class="subCell toggleCombine" id="toggleCombine"><span class="subCell-title">Toggle line combining</span> <i class="fas fa-filter"></i></a>
+			<a href="#" class="subCell clearMessages" id="clearMessages"><span class="subCell-title">Clear all messages</span> <i class="fas fa-eraser"></i></a>
 		</div>
 	</div>
 	<script type="text/javascript" src="browserOutput.js"></script>

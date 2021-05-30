@@ -5,7 +5,7 @@
 	desc = "Nothing is being built."
 	density = 1
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
@@ -14,6 +14,7 @@
 	var/time_coeff_tech = 1
 	var/resource_coeff = 1
 	var/resource_coeff_tech = 1
+	var/efficiency_coeff = 0
 	var/list/resources = list(
 								MAT_METAL=0,
 								MAT_GLASS=0,
@@ -45,7 +46,8 @@
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",
 								"Cyborg Components",
-								"Misc"
+								"Misc",
+								"Stock Parts",
 								)
 
 /obj/machinery/mecha_part_fabricator/atom_init()
@@ -81,20 +83,10 @@
 	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
+	efficiency_coeff = max(round(T * 0.3), 1)
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/weapon/card/id/I)
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return 0
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return 0
-	return 1
-
-/obj/machinery/mecha_part_fabricator/proc/emag()
+/obj/machinery/mecha_part_fabricator/emag_act(mob/user)
 	switch(emagged)
 		if(0)
 			emagged = 0.5
@@ -105,13 +97,15 @@
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
 			sleep(30)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
-			req_access = null
+			req_access = list()
 			emagged = 1
 		if(0.5)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
+			return FALSE
 		if(1)
 			visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"No records in User DB\"")
-	return
+			return FALSE
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -164,16 +158,23 @@
 	being_built = D
 	desc = "It's building \a [initial(D.name)]."
 	remove_resources(D)
-	overlays += "fab-active"
-	use_power = 2
+	add_overlay("fab-active")
+	set_power_use(ACTIVE_POWER_USE)
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
-	use_power = 1
-	overlays -= "fab-active"
+	set_power_use(IDLE_POWER_USE)
+	cut_overlay("fab-active")
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
 	var/I = new D.build_path(location)
+	if(isobj(I))
+		var/obj/O = I
+		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
+
+		files.design_reliabilities[D.id] += files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** files.design_created_prototypes[D.id])
+		files.design_reliabilities[D.id] = max(round(files.design_reliabilities[D.id], 5), 1)
+		files.design_created_prototypes[D.id]++
 	if(istype(I, /obj/item))
 		var/obj/item/Item = I
 		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
@@ -203,7 +204,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !IS_INTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
 		return 0
 	queue.Cut(index,++index)
 	return 1
@@ -250,19 +251,24 @@
 	if(!files)
 		return
 	var/output
-	for(var/datum/tech/T in files.known_tech)
+	for(var/tech_tree_id in files.tech_trees)
+		var/datum/tech/T = files.tech_trees[tech_tree_id]
 		if(T && T.level > 1)
 			var/diff
 			switch(T.id)
-				if("materials")
+				if("engineering")
 					//one materials level is 1/32, so that max level is 0.75 coefficient
 					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level-1))/32,0.01)
+					if(diff < 0.75)
+						diff = 0.75
 					if(resource_coeff_tech>diff)
 						resource_coeff_tech = diff
 						output+="Production efficiency increased.<br>"
-				if("programming")
+				if("robotics")
 					//one materials level is 1/40, so that max level is 0.8 coefficient
 					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level-1))/40,0.1)
+					if(diff < 0.8)
+						diff = 0.8
 					if(time_coeff_tech>diff)
 						time_coeff_tech = diff
 						output+="Production routines updated.<br>"
@@ -274,14 +280,10 @@
 	updateUsrDialog()
 	sleep(30) //only sleep if called by user
 
-	for(var/obj/machinery/computer/rdconsole/RDC in oview(6,src))
+	for(var/obj/machinery/computer/rdconsole/RDC in oview(7,src))
 		if(!RDC.sync)
 			continue
-		for(var/datum/tech/T in RDC.files.known_tech)
-			files.AddTech2Known(T)
-		for(var/datum/design/D in RDC.files.known_designs)
-			files.AddDesign2Known(D)
-		files.RefreshResearch()
+		files.download_from(RDC.files)
 		temp = "Processed equipment designs.<br>"
 		//check if the tech coefficients have changed
 		temp += update_tech()
@@ -327,6 +329,7 @@
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
 	dat = {"<html>
 			  <head>
+			  <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 			  <title>[name]</title>
 				<style>
 				.res_name {font-weight: bold; text-transform: capitalize;}
@@ -355,7 +358,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
+	user << browse(dat, "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
@@ -415,8 +418,8 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = F.getNum("index")
 		var/new_index = index + F.getNum("queue_move")
-		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
-			if(IsInRange(new_index,1,queue.len))
+		if(isnum(index) && isnum(new_index) && IS_INTEGER(index) && IS_INTEGER(new_index))
+			if(IS_IN_RANGE(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 
@@ -500,11 +503,6 @@
 
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
-
-	if(istype(W, /obj/item/weapon/card/emag))
-		emag()
-		return
-
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
@@ -512,7 +510,7 @@
 		return
 
 	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
+		if(iscrowbar(W))
 			for(var/material in resources)
 				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
@@ -550,7 +548,7 @@
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			add_overlay("fab-load-[material2name(material)]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -558,7 +556,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

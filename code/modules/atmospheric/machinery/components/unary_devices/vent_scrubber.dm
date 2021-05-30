@@ -9,7 +9,7 @@
 	desc = "Has a valve and pump attached to it."
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 
@@ -31,7 +31,7 @@
 	var/area_uid
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_scrubber_on"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/atom_init()
@@ -60,13 +60,13 @@
 	if (frequency)
 		set_frequency(frequency)
 
-	broadcast_status()
-
 	if(!scrubbing_gas)
 		scrubbing_gas = list()
 		for(var/g in gas_data.gases)
 			if(g != "oxygen" && g != "nitrogen")
 				scrubbing_gas += g
+
+	broadcast_status()
 
 	..()
 
@@ -74,12 +74,14 @@
 	if(!check_icon_cache())
 		return
 
-	overlays.Cut()
+	cut_overlays()
 
 
 	var/turf/T = get_turf(src)
 	if(!istype(T))
 		return
+
+	..()
 
 	var/scrubber_icon = "scrubber"
 	if(welded)
@@ -90,7 +92,7 @@
 		else
 			scrubber_icon += "[use_power ? "[scrubbing ? "on" : "in"]" : "off"]"
 
-	overlays += icon_manager.get_atmos_icon("device", , , scrubber_icon)
+	add_overlay(icon_manager.get_atmos_icon("device", , , scrubber_icon))
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_underlays()
 	if(..())
@@ -152,7 +154,7 @@
 	if (hibernate > world.time)
 		return
 	if (!NODE1)
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 	//broadcast_status()
 	if(!use_power || (stat & (NOPOWER|BROKEN)))
 		return
@@ -195,21 +197,21 @@
 		return FALSE
 
 	if(signal.data["power"] != null)
-		use_power = text2num(signal.data["power"])
+		set_power_use(text2num(signal.data["power"]))
 	if(signal.data["power_toggle"] != null)
-		use_power = !use_power
+		set_power_use(!use_power)
 
 	if(signal.data["panic_siphon"]) //must be before if("scrubbing" thing
 		panic = text2num(signal.data["panic_siphon"])
 		if(panic)
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			scrubbing = SIPHONING
 		else
 			scrubbing = SCRUBBING
 	if(signal.data["toggle_panic_siphon"] != null)
 		panic = !panic
 		if(panic)
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			scrubbing = SIPHONING
 		else
 			scrubbing = SCRUBBING
@@ -265,8 +267,9 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		if(user.is_busy()) return
+	if(iswelder(W))
+		if(user.is_busy(src))
+			return
 
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -274,13 +277,11 @@
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
 			return
 
-		if(!WT.remove_fuel(0, user))
+		if(!WT.use(0, user))
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
-		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
-
-		if(!do_after(user, 20, null, src))
+		if(!WT.use_tool(src, user, 20, volume = 50))
 			to_chat(user, "<span class='notice'>You must remain close to finish this task.</span>")
 			return
 

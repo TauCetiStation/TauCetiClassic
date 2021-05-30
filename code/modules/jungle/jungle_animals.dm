@@ -62,15 +62,14 @@
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 50
 	health = 50
 
 	harm_intent_damage = 8
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "slashes"
-	attack_sound = 'sound/weapons/bite.ogg'
+	melee_damage = 15
+	attacktext = "gnaw"
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
 	var/stalk_tick_delay = 3
@@ -120,15 +119,14 @@
 	response_help = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm = "hits the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 25
 	health = 25
 
 	harm_intent_damage = 2
-	melee_damage_lower = 3
-	melee_damage_upper = 10
-	attacktext = "bites"
-	attack_sound = 'sound/weapons/bite.ogg'
+	melee_damage = 7
+	attacktext = "gnaw"
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	layer = 3.1		//so they can stay hidde under the /obj/structure/bush
 	var/stalk_tick_delay = 3

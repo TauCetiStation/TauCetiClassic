@@ -14,7 +14,7 @@
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
 	if(!overmind)
-		create_overmind(new_overmind)
+		INVOKE_ASYNC(src, .proc/create_overmind, new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
 	. = ..()
@@ -50,8 +50,10 @@
 		last_resource_collection = world.time
 
 	health = min(initial(health), health + 1)
-	for(var/i = 1; i < 8; i += i)
-		Pulse(0, i)
+	if(overmind)
+		overmind.update_health_hud()
+	for(var/dir in cardinal)
+		Pulse(BLOB_CORE_MAX_PATH, dir)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue
@@ -75,9 +77,10 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		candidates = get_candidates(ROLE_BLOB)
+		candidates = pollGhostCandidates("Would you like to be a BLOB?!", ROLE_BLOB)
 		if(candidates.len)
-			C = pick(candidates)
+			var/mob/M = pick(candidates)
+			C = M.client
 	else
 		C = new_overmind
 

@@ -1,13 +1,12 @@
 /datum/job
-
-	//The name of the job
+	//The name of the job, used for preferences, bans and more. Make sure you know what you're doing before changing this.
 	var/title = "NOPE"
 
 	var/list/access = list()
 
-	//Bitflags for the job
-	var/flag = 0
-	var/department_flag = 0
+	//Bitflags for the job  (Ha-ha we no longer use bitflags this is useless)
+	var/flag = 0 // Deprecated (is here only for savefile compatibility)
+	var/department_flag = 0 // Deprecated (is here only for savefile compatibility)
 
 	//Players will be allowed to spawn in as jobs that are set to "Station"
 	var/faction = "None"
@@ -30,7 +29,7 @@
 	//the type of the ID the player will have
 	var/idtype = /obj/item/weapon/card/id
 
-	//List of alternate titles, if any
+	//List of alternate titles, if any. outfits as assoc values.
 	var/list/alt_titles
 
 	//If this is set to 1, a text is printed to the player when jobs are assigned, telling him that he should let admins know that he has to disconnect.
@@ -39,13 +38,57 @@
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
+	var/outfit = null
+
 	//If you have use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_ingame_minutes ingame minutes old. (meaning they must play a game.)
 	var/minimal_player_ingame_minutes = 0
 
-	var/list/restricted_species = list()
+	//Should we spawn and give him his selected loadout items
+	var/give_loadout_items = TRUE
 
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/salary = 0
+	//salary ratio - for global salary changes
+	var/salary_ratio = 1
+
+	/*
+		HEY YOU!
+		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
+		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		~Luduk
+	*/
+	/// Species that can not be this job.
+	var/list/restricted_species = list()
+	/// Species flags that can not do this job.
+	var/list/restricted_species_flags = list()
+
+	// What movesets does this job grant.
+	var/list/moveset_types
+
+/datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	return
+
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, alt_title)
+	if(!H)
+		return FALSE
+
+	var/outfit_type = get_outfit(H, alt_title)
+	if(outfit_type)
+		H.equipOutfit(outfit_type, visualsOnly)
+
+	for(var/moveset in moveset_types)
+		H.add_moveset(new moveset(), MOVESET_JOB)
+
+	post_equip(H, visualsOnly)
 	return TRUE
+
+/datum/job/proc/get_outfit(mob/living/carbon/human/H, alt_title)
+	if(H.mind)
+		if(alt_titles && H.mind.role_alt_title)
+			return alt_titles[H.mind.role_alt_title] || outfit
+	if(alt_title && alt_titles)
+		return alt_titles[alt_title] || outfit
+	return outfit
 
 /datum/job/proc/get_access()
 	return access.Copy()
@@ -60,11 +103,25 @@
 			return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
 
-
-/datum/job/proc/is_species_permitted(client/C)
+/datum/job/proc/is_species_permitted(species)
 	if(!config.use_alien_job_restriction)
 		return TRUE
-	return !(C.prefs.species in restricted_species)
+	if(species in restricted_species)
+		return FALSE
+
+	var/datum/species/S = all_species[species]
+	if(S && special_species_check(S))
+		for(var/flag in restricted_species_flags)
+			if(S.flags[flag] == restricted_species_flags[flag])
+				return FALSE
+
+		return TRUE
+
+	return FALSE
+
+/// Return TRUE to allow the species S to be this job.
+/datum/job/proc/special_species_check(datum/species/S)
+	return TRUE
 
 /datum/job/proc/available_in_days(client/C)
 	if(!C)
@@ -112,44 +169,8 @@
 
 	return max(0, roles_ingame_minute_unlock[role] - C.player_ingame_age)
 
-/datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
-	if(!istype(H))
-		return
-	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
-		for(var/obj/item/I in H.back.contents)
-			I.add_fingerprint(H,1)
-	if(H.wear_id)
-		H.wear_id.add_fingerprint(H,1)
-	if(H.w_uniform)
-		H.w_uniform.add_fingerprint(H,1)
-	if(H.wear_suit)
-		H.wear_suit.add_fingerprint(H,1)
-	if(H.wear_mask)
-		H.wear_mask.add_fingerprint(H,1)
-	if(H.head)
-		H.head.add_fingerprint(H,1)
-	if(H.shoes)
-		H.shoes.add_fingerprint(H,1)
-	if(H.gloves)
-		H.gloves.add_fingerprint(H,1)
-	if(H.l_ear)
-		H.l_ear.add_fingerprint(H,1)
-	if(H.r_ear)
-		H.r_ear.add_fingerprint(H,1)
-	if(H.glasses)
-		H.glasses.add_fingerprint(H,1)
-	if(H.belt)
-		H.belt.add_fingerprint(H,1)
-		for(var/obj/item/I in H.belt.contents)
-			I.add_fingerprint(H,1)
-	if(H.s_store)
-		H.s_store.add_fingerprint(H,1)
-	if(H.l_store)
-		H.l_store.add_fingerprint(H,1)
-	if(H.r_store)
-		H.r_store.add_fingerprint(H,1)
-	return 1
-
 /datum/job/proc/is_position_available()
 	return (current_positions < total_positions) || (total_positions == -1)
+
+/datum/job/proc/map_check()
+	return TRUE

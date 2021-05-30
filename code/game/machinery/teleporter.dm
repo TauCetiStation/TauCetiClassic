@@ -2,7 +2,7 @@
 	name = "Teleporter Control Console"
 	desc = "Used to control a linked teleportation Hub and Station."
 	icon_state = "teleport"
-	circuit = "/obj/item/weapon/circuitboard/teleporter"
+	circuit = /obj/item/weapon/circuitboard/teleporter
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null
@@ -14,12 +14,14 @@
 /obj/machinery/computer/teleporter/atom_init()
 	id = "[rand(1000, 9999)]"
 	. = ..()
+	teleporter_list += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/teleporter/atom_init_late()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
+	teleporter_list -= src
 	if (power_station)
 		power_station.teleporter_console = null
 		power_station = null
@@ -28,8 +30,8 @@
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
+	for(var/newdir in cardinal)
+		power_station = locate(/obj/machinery/teleport/station, get_step(src, newdir))
 		if(power_station)
 			break
 	return power_station
@@ -49,11 +51,11 @@
 /obj/machinery/computer/teleporter/ui_interact(mob/user)
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
-		data += "<div class='statusDisplay'>No power station linked.</div>"
+		data += "<div class='Section'>No power station linked.</div>"
 	else if(!power_station.teleporter_hub)
-		data += "<div class='statusDisplay'>No hub linked.</div>"
+		data += "<div class='Section'>No hub linked.</div>"
 	else
-		data += "<div class='statusDisplay'>Current regime: [regime_set]<BR>"
+		data += "<div class='Section'>Current regime: [regime_set]<BR>"
 		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
 		if(calibrating)
 			data += "Calibration: <font color='yellow'>In Progress</font>"
@@ -69,8 +71,8 @@
 			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
 			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
 		else
-			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
-			data += "<span class='linkOff'>Eject GPS device</span><BR>"
+			data += "<BR><span class='disabled'>Get target from memory</span><BR>"
+			data += "<span class='disabled'>Eject GPS device</span><BR>"
 		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
@@ -153,11 +155,11 @@
 		var/list/L = list()
 		var/list/areaindex = list()
 
-		for(var/obj/item/device/radio/beacon/R in world)
+		for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
-			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
+			if(is_centcom_level(T.z) || !SSmapping.has_level(T.z))
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -166,7 +168,7 @@
 				areaindex[tmpname] = 1
 			L[tmpname] = R
 
-		for (var/obj/item/weapon/implant/tracking/I in world)
+		for (var/obj/item/weapon/implant/tracking/I in implant_list)
 			if (!I.implanted || !ismob(I.loc))
 				continue
 			else
@@ -176,7 +178,8 @@
 						continue
 				var/turf/T = get_turf(M)
 				if(!T)	continue
-				if(T.z == ZLEVEL_CENTCOMM)	continue
+				if(is_centcom_level(T.z))
+					continue
 				var/tmpname = M.real_name
 				if(areaindex[tmpname])
 					tmpname = "[tmpname] ([++areaindex[tmpname]])"
@@ -198,7 +201,7 @@
 			var/turf/T = get_turf(R)
 			if (!T || !R.teleporter_hub || !R.teleporter_console)
 				continue
-			if(T.z == ZLEVEL_CENTCOMM || T.z > 7)
+			if(is_centcom_level(T.z))
 				continue
 			var/tmpname = T.loc.name
 			if(areaindex[tmpname])
@@ -231,7 +234,7 @@
 	desc = "It's the hub of a teleporting machine."
 	icon_state = "tele0"
 	var/accurate = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/obj/machinery/teleport/station/power_station
@@ -273,7 +276,7 @@
 	return power_station
 
 /obj/machinery/teleport/hub/Bumped(M)
-	if(z == ZLEVEL_CENTCOMM)
+	if(is_centcom_level(z))
 		to_chat(M, "You can't use this here.")
 	if(is_ready())
 		teleport(M)
@@ -296,21 +299,25 @@
 	if (!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
+	if(is_centcom_level(com.target.z))
+		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
+		return
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
-					//Effects similar to mutagen.
-					randmuti(human)
-					randmutb(human)
-					domutcheck(human)
-					human.UpdateAppearance()
-			//		if(human.dna && human.dna.species.id == "human")
-			//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
-			//			human.set_species(/datum/species/fly)
+					// Effects similar to mutagen.
+					if(!human.species.flags[IS_SYNTHETIC])
+						randmuti(human)
+						randmutb(human)
+						domutcheck(human)
+						human.UpdateAppearance()
+				//		if(human.dna && human.dna.species.id == "human")
+				//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+				//			human.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+						human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
 	return
 
@@ -338,7 +345,7 @@
 	name = "station"
 	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
 	icon_state = "controller"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 2000
 	var/engaged = 0
@@ -392,7 +399,7 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/multitool) && !panel_open)
+	if(ismultitool(W) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 			if(linked_stations.len < efficiency)
@@ -411,12 +418,12 @@
 	default_deconstruction_crowbar(W)
 
 	if(panel_open)
-		if(istype(W, /obj/item/device/multitool))
+		if(ismultitool(W))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 			return
-		if(istype(W, /obj/item/weapon/wirecutters))
+		if(iswirecutter(W))
 			link_console_and_hub()
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return

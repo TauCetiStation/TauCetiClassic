@@ -4,7 +4,7 @@
 	icon_state = "borgcharger0"
 	density = FALSE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 50
 	var/max_internal_charge = 15000 		// Two charged borgs in a row with default cell
@@ -13,7 +13,6 @@
 	var/charging_cap_passive = 2500			// Passive Cap - Recharging internal capacitor when no cyborg is inside
 	var/icon_update_tick = 0				// Used to update icon only once every 10 ticks
 	var/construct_op = 0
-	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
 	var/locked = TRUE
 	var/open = TRUE
 	var/recharge_speed
@@ -72,7 +71,7 @@
 
 	if(idle_power_usage != charge_diff) // Force update, but only when our power usage changed this tick.
 		idle_power_usage = charge_diff
-		update_use_power(1,1)
+		set_power_use(IDLE_POWER_USE)
 
 	current_internal_charge = min((current_internal_charge + ((charge_diff - 50) * CELLRATE)), max_internal_charge)
 
@@ -96,7 +95,7 @@
 	return ((current_internal_charge / max_internal_charge) * 100)
 
 /obj/machinery/recharge_station/relaymove(mob/user)
-	if(user.stat)
+	if(user.incapacitated())
 		return
 	open_machine()
 
@@ -105,7 +104,7 @@
 		..(severity)
 		return
 	if(occupant)
-		occupant.emp_act(severity)
+		occupant.emplode(severity)
 	open_machine()
 	..(severity)
 
@@ -142,7 +141,7 @@
 			occupant.client.perspective = MOB_PERSPECTIVE
 		occupant.forceMove(loc)
 		occupant = null
-		use_power = 1
+		set_power_use(IDLE_POWER_USE)
 	open = 1
 	density = 0
 	build_icon()
@@ -155,7 +154,7 @@
 				R.client.perspective = EYE_PERSPECTIVE
 			R.forceMove(src)
 			occupant = R
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 			add_fingerprint(R)
 			break
 		open = 0
@@ -164,20 +163,20 @@
 
 /obj/machinery/recharge_station/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	switch(round(chargepercentage()))
 		if(1 to 20)
-			overlays += image('icons/obj/objects.dmi', "statn_c0")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c0"))
 		if(21 to 40)
-			overlays += image('icons/obj/objects.dmi', "statn_c20")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c20"))
 		if(41 to 60)
-			overlays += image('icons/obj/objects.dmi', "statn_c40")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c40"))
 		if(61 to 80)
-			overlays += image('icons/obj/objects.dmi', "statn_c60")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c60"))
 		if(81 to 98)
-			overlays += image('icons/obj/objects.dmi', "statn_c80")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c80"))
 		if(99 to 110)
-			overlays += image('icons/obj/objects.dmi', "statn_c100")
+			add_overlay(image('icons/obj/objects.dmi', "statn_c100"))
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if(NOPOWER|BROKEN)

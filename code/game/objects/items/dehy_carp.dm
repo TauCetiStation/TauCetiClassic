@@ -5,6 +5,7 @@
 
 // Child of carpplushie because this should do everything the toy does and more
 /obj/item/toy/carpplushie/dehy_carp
+	icon_state = "carpplushie"
 	var/mob/owner = null	// Carp doesn't attack owner, set when using in hand
 	var/owned = 1	// Boolean, no owner to begin with
 
@@ -18,12 +19,12 @@
 	return ..()
 
 
-/obj/item/toy/carpplushie/dehy_carp/afterattack(obj/O, mob/user,proximity)
+/obj/item/toy/carpplushie/dehy_carp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(O,/obj/structure/sink))
+	if(istype(target,/obj/structure/sink))
 		to_chat(user, "<span class='notice'>You place [src] under a stream of water...</span>")
 		user.drop_item()
-		loc = get_turf(O)
+		loc = get_turf(target)
 		return Swell()
 	..()
 

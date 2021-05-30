@@ -5,12 +5,13 @@
 	item_color = "webbing"
 	slot = "utility"
 	var/slots = 3
+	var/max_w_class = ITEM_SIZE_SMALL //pocket sized
 	var/obj/item/weapon/storage/internal/hold
 
 /obj/item/clothing/accessory/storage/atom_init()
 	. = ..()
 	hold = new/obj/item/weapon/storage/internal(src)
-	hold.storage_slots = slots
+	hold.set_slots(slots, max_w_class)
 
 /obj/item/clothing/accessory/storage/attack_hand(mob/user)
 	if (has_suit) // if we are part of a suit
@@ -27,11 +28,12 @@
 	if (hold.handle_mousedrop(usr, over_object))
 		..(over_object)
 
-/obj/item/clothing/accessory/storage/attackby(obj/item/W, mob/user)
-	return hold.attackby(W, user)
+/obj/item/clothing/accessory/storage/attack_accessory(obj/item/I, mob/user, params)
+	hold.attackby(I, user, params)
+	return TRUE
 
 /obj/item/clothing/accessory/storage/emp_act(severity)
-	hold.emp_act(severity)
+	hold.emplode(severity)
 	..()
 
 /obj/item/clothing/accessory/storage/hear_talk(mob/M, msg, verb, datum/language/speaking)
@@ -79,15 +81,21 @@
 	icon_state = "unathiharness2"
 	item_color = "unathiharness2"
 	slots = 2
+	max_w_class = ITEM_SIZE_NORMAL //for knives
 
 /obj/item/clothing/accessory/storage/knifeharness/atom_init()
 	. = ..()
-	hold.max_combined_w_class = 4
 	hold.can_hold = list(
-		"/obj/item/weapon/hatchet/unathiknife",
-		"/obj/item/weapon/kitchenknife/plastic",
-		"/obj/item/weapon/kitchenknife",
-		"/obj/item/weapon/kitchenknife/ritual"
+		/obj/item/weapon/hatchet/unathiknife,
+		/obj/item/weapon/kitchenknife/plastic,
+		/obj/item/weapon/kitchenknife,
+		/obj/item/weapon/kitchenknife/ritual
 		)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
+
+/obj/item/clothing/accessory/storage/black_vest/mauser_belt
+	name = "Mauser holster"
+	desc = "A gun holster."
+	icon_state = "Leather_belt_Mauser"
+	item_color = "Leather_belt_Mauser"

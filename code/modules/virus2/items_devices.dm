@@ -1,20 +1,20 @@
 ///////////////ANTIBODY SCANNER///////////////
 
 /obj/item/device/antibody_scanner
-	name = "\improper Antibody Scanner"
+	name = "Antibody Scanner"
 	desc = "Scans living beings for antibodies in their blood."
 	icon_state = "health"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT
 
 /obj/item/device/antibody_scanner/attack(mob/M, mob/user)
-	if(!istype(M,/mob/living/carbon/))
+	if(!istype(M,/mob/living/carbon))
 		report("Scan aborted: Incompatible target.", user)
 		return
 
 	var/mob/living/carbon/C = M
-	if (istype(C,/mob/living/carbon/human/))
+	if (istype(C,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C
 		if(H.species && H.species.flags[NO_BLOOD])
 			report("Scan aborted: The target does not have blood.", user)
@@ -31,7 +31,7 @@
 		report("Antibodies detected: [antigens2string(C.antibodies)]", user)
 
 /obj/item/device/antibody_scanner/proc/report(text, mob/user)
-	to_chat(user, "\blue [bicon(src)] \The [src] beeps, \"[text]\"")
+	to_chat(user, "<span class='notice'>[bicon(src)] \The [src] beeps, \"[text]\"</span>")
 
 ///////////////VIRUS DISH///////////////
 
@@ -53,15 +53,16 @@
 	virus2.makerandom()
 	//growth = 100//rand(5, 50)
 
-/obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
+/obj/item/weapon/virusdish/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
 		return
-	..()
+
+	. = ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
-		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)")
-		log_game("Virus dish shattered by [user.ckey]([user]) in ([src.x],[src.y],[src.z])")
+		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(src)]")
+		log_game("Virus dish shattered by [key_name(user)] in [COORD(src)]")
 		if(virus2.infectionchance > 0)
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
@@ -81,9 +82,11 @@
 	icon_state = "implantcase-b"
 	desc = "The bacteria in the dish are completely dead."
 
-/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
-	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
-		return ..()
+/obj/item/weapon/ruinedvirusdish/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
+		return
+
+	. = ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")

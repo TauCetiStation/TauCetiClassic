@@ -20,7 +20,7 @@ Thus, the two variables affect pump operation are set in New():
 	desc = "A pump that moves gas by pressure."
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 7500    // 7500 W ~ 10 HP
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -47,10 +47,11 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/on
 	icon_state = "map_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon()
+	..()
 	if(!powered())
 		icon_state = "off"
 	else
@@ -153,12 +154,12 @@ Thus, the two variables affect pump operation are set in New():
 
 	if(signal.data["power"])
 		if(text2num(signal.data["power"]))
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 		else
-			use_power = 0
+			set_power_use(NO_POWER_USE)
 
 	if("power_toggle" in signal.data)
-		use_power = !use_power
+		set_power_use(!use_power)
 
 	if(signal.data["set_output_pressure"])
 		target_pressure = between(
@@ -179,7 +180,7 @@ Thus, the two variables affect pump operation are set in New():
 		return FALSE
 
 	if(href_list["power"])
-		use_power = !use_power
+		set_power_use(!use_power)
 
 	switch(href_list["set_press"])
 		if ("min")

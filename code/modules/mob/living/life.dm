@@ -8,14 +8,13 @@
 		return
 
 	if(stat != DEAD)
-		handle_actions()
 		add_ingame_age()
 
 	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
 		pull_debuff = 0
 	update_gravity(mob_has_gravity())
 
-	handle_actions()
+	handle_combat()
 
 	if(client)
 		handle_regular_hud_updates()
@@ -39,21 +38,41 @@
 
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return FALSE
 
 	handle_vision()
+	handle_actions()
 	update_action_buttons()
 
-	return 1
+	if(pullin)
+		if(pulling)
+			pullin.icon_state = "pull1"
+		else
+			pullin.icon_state = "pull0"
+
+	return TRUE
+
+/mob/living/proc/is_vision_obstructed()
+	if(istype(loc, /obj/item/weapon/holder))
+		if(ishuman(loc.loc))
+			var/mob/living/H = loc.loc
+			return H.is_vision_obstructed()
+		else
+			return TRUE
+	if(istype(src, /mob/living/carbon/monkey/diona) && ishuman(loc))
+		var/mob/living/H = loc
+		if(H.get_species() == DIONA)
+			return FALSE
+	return loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside)
 
 /mob/living/proc/handle_vision()
 	update_sight()
 
 	if(stat != DEAD)
 		if(blinded)
-			throw_alert("blind")
+			throw_alert("blind", /obj/screen/alert/blind)
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-		else if(loc && !isturf(loc) && !is_type_in_list(loc, ignore_vision_inside))
+		else if(is_vision_obstructed() && !(XRAY in mutations))
 			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
 		else
 			clear_alert("blind")
@@ -75,10 +94,10 @@
 					clear_fullscreen("high")
 
 		if(machine)
-			if (!( machine.check_eye(src) ))
+			if (!(machine.check_eye(src)))
 				reset_view(null)
 		else
-			if(!client.adminobs)
+			if(!client.adminobs && !force_remote_viewing)
 				reset_view(null)
 
 /mob/living/proc/update_sight()

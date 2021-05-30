@@ -1,5 +1,6 @@
-//костыль, в будущем что-то сделать с этим
+//РєРѕСЃС‚С‹Р»СЊ, РІ Р±СѓРґСѓС‰РµРј С‡С‚Рѕ-С‚Рѕ СЃРґРµР»Р°С‚СЊ СЃ СЌС‚РёРј
 /obj/structure/object_wall
+	layer = 2
 	name = "shuttle wall"
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
 	density = 1
@@ -26,7 +27,8 @@
 	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'
 
 /obj/structure/object_wall/standart
-	icon = 'code/modules/locations/shuttles/shuttle.dmi'
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall1"
 
 /obj/structure/object_wall/pod
 	icon = 'code/modules/locations/shuttles/pod.dmi'
@@ -42,3 +44,7 @@
 /obj/structure/object_wall/cargo
 	icon = 'code/modules/locations/shuttles/cargo.dmi'
 	icon_state = "0,5"
+
+/obj/structure/object_wall/evac
+	icon = 'code/modules/locations/shuttles/evac_shuttle.dmi'
+	icon_state = "9,1"

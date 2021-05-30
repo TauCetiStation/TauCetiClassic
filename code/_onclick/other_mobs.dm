@@ -6,8 +6,8 @@
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A)
 	var/obj/item/organ/external/BP = bodyparts_by_name[hand ? BP_L_ARM : BP_R_ARM]
-	if(BP && !BP.is_usable())
-		to_chat(src, "<span class='notice'>You try to move your [BP.name], but cannot!</span>")
+	if(!BP || !BP.is_usable())
+		to_chat(src, "<span class='notice'>You try to move your [BP ? BP.name : "hand"], but cannot!</span>")
 		return
 	..()
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
@@ -15,7 +15,7 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-	if(istype(G) && G.Touch(A,1))
+	if(istype(G) && G.Touch(src, A, TRUE))
 		return
 
 	//if(!A.can_mob_interact(src)) maybe in future...
@@ -55,7 +55,7 @@
 	things considerably
 */
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
-	if(a_intent != "harm" || !ismob(A)) return
+	if(a_intent != INTENT_HARM || !ismob(A)) return
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 	SetNextMove(CLICK_CD_MELEE)

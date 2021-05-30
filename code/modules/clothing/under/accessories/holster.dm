@@ -6,29 +6,25 @@
 	slot = "utility"
 	var/obj/item/weapon/gun/holstered = null
 
-//subtypes can override this to specify what can be holstered
-/obj/item/clothing/accessory/holster/proc/can_holster(obj/item/weapon/gun/W)
-	return W.isHandgun()
-
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user)
 	if(holstered)
 		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
-		return
+		return FALSE
 
-	if (!istype(I, /obj/item/weapon/gun))
+	if (!istype(I, /obj/item/weapon/gun) && !I.can_be_holstered)
 		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
-		return
+		return FALSE
 
-	var/obj/item/weapon/gun/W = I
-	if (!can_holster(W))
-		to_chat(user, "<span class='warning'>This [W] won't fit in the [src]!</span>")
-		return
+	if (!I.can_be_holstered)
+		to_chat(user, "<span class='warning'>This [I] won't fit in the [src]!</span>")
+		return FALSE
 
-	holstered = W
-	user.drop_from_inventory(holstered)
-	holstered.loc = src
+	holstered = I
+	user.drop_from_inventory(holstered, src)
 	holstered.add_fingerprint(user)
 	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "<span class='notice'>You holster the [holstered].</span>")
+	update_icon()
+	return TRUE
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user)
 	if(!holstered)
@@ -37,7 +33,7 @@
 	if(istype(user.get_active_hand(), /obj) && istype(user.get_inactive_hand(), /obj))
 		to_chat(user, "<span class='warning'>You need an empty hand to draw the [holstered]!</span>")
 	else
-		if(user.a_intent == I_HURT)
+		if(user.a_intent == INTENT_HARM)
 			user.visible_message(
 				"<span class='warning'>[user] draws the [holstered], ready to shoot!</span>",
 				"<span class='warning'>You draw the [holstered], ready to shoot!</span>")
@@ -48,6 +44,8 @@
 		user.put_in_hands(holstered)
 		holstered.add_fingerprint(user)
 		holstered = null
+		update_icon()
+
 
 /obj/item/clothing/accessory/holster/attack_hand(mob/user)
 	if (has_suit)	//if we are part of a suit
@@ -57,12 +55,12 @@
 
 	..(user)
 
-/obj/item/clothing/accessory/holster/attackby(obj/item/W, mob/user)
-	holster(W, user)
+/obj/item/clothing/accessory/holster/attack_accessory(obj/item/I, mob/user, params)
+	return holster(I, user)
 
 /obj/item/clothing/accessory/holster/emp_act(severity)
 	if (holstered)
-		holstered.emp_act(severity)
+		holstered.emplode(severity)
 	..()
 
 /obj/item/clothing/accessory/holster/examine(mob/user)
@@ -114,14 +112,12 @@
 /obj/item/clothing/accessory/holster/armpit
 	name = "shoulder holster"
 	desc = "A worn-out handgun holster. Perfect for concealed carry."
-	icon_state = "holster"
+	icon_state = "holster_armpit"
 	item_color = "holster"
 
-/obj/item/clothing/accessory/holster/waist
-	name = "shoulder holster"
-	desc = "A handgun holster. Made of expensive leather."
-	icon_state = "holster"
-	item_color = "holster_low"
+/obj/item/clothing/accessory/holster/armpit/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][holstered ? "_loaded" : ""]"
 
 /obj/item/clothing/accessory/holster/mafia
 	name = "gun holster"

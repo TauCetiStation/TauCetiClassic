@@ -20,6 +20,16 @@ On top of that, now people can add component-speciic procs/vars if they want!
 		A.volume = 200
 		AIR_I = A
 
+/obj/machinery/atmospherics/components/update_icon()
+	if(!isturf(loc))
+		return
+	var/turf/T = loc
+
+	if(level == 2 || !T.intact)
+		plane = GAME_PLANE
+	else
+		plane = FLOOR_PLANE
+
 /*
 	Pipenet stuff; housekeeping
 */

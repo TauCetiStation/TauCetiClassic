@@ -20,6 +20,7 @@
 	var/list/targetTurfs
 	var/list/wallList
 	var/density
+	var/color //it is used to give color to smoke, despite the reagents in it
 
 
 /datum/effect/effect/system/smoke_spread/chem/New()
@@ -41,7 +42,7 @@
 	cardinals = c
 	carry.copy_to(chemholder, carry.total_volume)
 
-	if(istype(loca, /turf/))
+	if(istype(loca, /turf))
 		location = loca
 	else
 		location = get_turf(loca)
@@ -142,7 +143,8 @@
 
 
 	//build smoke icon
-	var/color = mix_color_from_reagents(chemholder.reagents.reagent_list)
+	if(!color)
+		color = mix_color_from_reagents(chemholder.reagents.reagent_list)
 	var/icon/I
 	if(color)
 		I = icon('icons/effects/chemsmoke.dmi')
@@ -165,9 +167,9 @@
 
 		var/offset = 0
 		var/points = round((radius * 2 * PI) / arcLength)
-		var/angle = round(ToDegrees(arcLength / radius), 1)
+		var/angle = round(TO_DEGREES(arcLength / radius), 1)
 
-		if(!IsInteger(radius))
+		if(!IS_INTEGER(radius))
 			offset = 45		//degrees
 
 		for(var/j = 0, j < points, j++)
@@ -191,7 +193,7 @@
 		chemholder.reagents.copy_to(smoke, chemholder.reagents.total_volume / dist, safety = 1)	//copy reagents to the smoke so mob/breathe() can handle inhaling the reagents
 	smoke.icon = I
 	smoke.layer = 6
-	smoke.dir = pick(cardinal)
+	smoke.set_dir(pick(cardinal))
 	smoke.pixel_x = -32 + rand(-8,8)
 	smoke.pixel_y = -32 + rand(-8,8)
 	walk_to(smoke, T)

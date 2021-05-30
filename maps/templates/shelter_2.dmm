@@ -2,110 +2,211 @@
 "a" = (
 /obj/structure/inflatable/survival,
 /turf/simulated/floor/pod,
-/area/survivalpod)
+/area/custom/survivalpod)
 "b" = (
-/obj/structure/sign/mining/survival{
-	dir = 1;
-	icon_state = "survival"
-	},
 /obj/structure/inflatable/survival,
+/obj/structure/sign/mining/survival,
 /turf/simulated/floor/pod,
-/area/survivalpod)
+/area/custom/survivalpod)
 "c" = (
-/obj/structure/fans,
 /turf/simulated/floor/pod,
-/area/survivalpod)
-"d" = (
+/area/custom/survivalpod)
+"e" = (
+/obj/structure/table,
+/obj/item/device/guitar,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"g" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"i" = (
+/obj/structure/inflatable/door/survival_pod,
+/obj/structure/fans/tiny,
+/turf/simulated/floor/pod,
+/area/custom/survivalpod)
+"j" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/stool/bed/pod,
+/obj/item/weapon/bedsheet/blue,
+/turf/simulated/floor/pod,
+/area/custom/survivalpod)
+"l" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"r" = (
 /obj/machinery/smartfridge/survival_pod,
 /turf/simulated/floor/pod,
-/area/survivalpod)
-"e" = (
-/obj/item/device/gps/computer,
+/area/custom/survivalpod)
+"s" = (
+/obj/structure/fans,
 /turf/simulated/floor/pod,
-/area/survivalpod)
-"f" = (
-/obj/structure/sign/mining/survival{
-	dir = 8
-	},
-/obj/structure/inflatable/survival,
+/area/custom/survivalpod)
+"t" = (
+/obj/machinery/sleeper/survival_pod,
 /turf/simulated/floor/pod,
-/area/survivalpod)
-"g" = (
-/obj/structure/stool/bed/pod,
-/obj/item/weapon/bedsheet,
-/turf/simulated/floor/pod,
-/area/survivalpod)
-"h" = (
-/turf/simulated/floor/pod,
-/area/survivalpod)
-"i" = (
-/obj/structure/sign/mining/survival{
-	dir = 4;
-	icon_state = "survival"
-	},
-/obj/structure/inflatable/survival,
-/turf/simulated/floor/pod,
-/area/survivalpod)
-"j" = (
+/area/custom/survivalpod)
+"v" = (
+/obj/structure/window/reinforced,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
 /turf/simulated/floor/pod,
-/area/survivalpod)
-"k" = (
-/obj/structure/stool/bed/chair/comfy/beige{
+/area/custom/survivalpod)
+"x" = (
+/obj/structure/inflatable/survival,
+/obj/structure/sign/mining/survival{
+	dir = 4
+	},
+/turf/simulated/floor/pod,
+/area/custom/survivalpod)
+"y" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_x = -4
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"z" = (
+/obj/structure/inflatable/survival,
+/obj/structure/sign/mining,
+/turf/simulated/floor/pod,
+/area/custom/survivalpod)
+"B" = (
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"F" = (
+/obj/structure/stool/bed/chair/comfy/beige,
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"G" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"J" = (
+/obj/item/device/gps/computer,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/pod,
+/area/custom/survivalpod)
+"P" = (
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"U" = (
+/obj/structure/inflatable/survival,
+/obj/structure/sign/mining/survival{
 	dir = 8
 	},
 /turf/simulated/floor/pod,
-/area/survivalpod)
-"l" = (
-/obj/structure/sign/mining/survival,
+/area/custom/survivalpod)
+"W" = (
+/obj/structure/stool/bed/chair/comfy/beige{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue,
+/area/custom/survivalpod)
+"X" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/stool/bed/pod,
+/obj/item/weapon/bedsheet/blue,
+/turf/simulated/floor/pod,
+/area/custom/survivalpod)
+"Y" = (
 /obj/structure/inflatable/survival,
+/obj/structure/sign/mining/survival{
+	dir = 1
+	},
 /turf/simulated/floor/pod,
-/area/survivalpod)
-"m" = (
-/obj/structure/fans/tiny,
-/obj/structure/inflatable/door/survival_pod,
-/turf/simulated/floor/pod,
-/area/survivalpod)
-"n" = (
-/obj/structure/sign/mining,
-/obj/structure/inflatable/survival,
-/turf/simulated/floor/pod,
-/area/survivalpod)
+/area/custom/survivalpod)
 
 (1,1,1) = {"
 a
 a
-f
+a
+U
+a
 a
 a
 "}
 (2,1,1) = {"
 a
-c
+s
+t
+v
 g
-j
-l
+G
+a
 "}
 (3,1,1) = {"
+a
+r
+c
+c
+P
+P
 b
-d
-h
-h
-m
 "}
 (4,1,1) = {"
-a
-e
-g
-k
-n
+Y
+J
+j
+X
+P
+P
+i
 "}
 (5,1,1) = {"
 a
+l
+P
+P
+P
+W
+z
+"}
+(6,1,1) = {"
 a
-i
+B
+y
+P
+F
+e
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+x
+a
 a
 a
 "}

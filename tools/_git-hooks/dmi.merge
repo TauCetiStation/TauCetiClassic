@@ -1,0 +1,2 @@
+icons merge driver
+./tools/dmi-merge-tool/dmimerge.sh %O %A %B

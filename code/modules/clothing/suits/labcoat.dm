@@ -8,22 +8,26 @@
 	var/is_button_up = 1
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|ARMS
-	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper)
+	allowed = list(/obj/item/device/analyzer,/obj/item/stack/medical,/obj/item/weapon/dnainjector,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/hypospray,/obj/item/device/healthanalyzer,/obj/item/device/flashlight/pen,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/storage/pill_bottle,/obj/item/weapon/paper,/obj/item/weapon/gun/energy/pyrometer,/obj/item/device/science_tool)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
+	var/base_icon_state = null // used for fluff labcoats
 
 /obj/item/clothing/suit/storage/labcoat/verb/toggle()
 	set name = "Toggle Labcoat Buttons"
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 	if(!can_button_up)
 		to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how silly you are.")
 		return 0
 
 	if(!src.is_button_up)
-		src.icon_state = initial(icon_state)
+		if(base_icon_state)
+			icon_state = base_icon_state
+		else
+			icon_state = initial(icon_state)
 		to_chat(usr, "You button up your labcoat.")
 		src.is_button_up = 1
 	else

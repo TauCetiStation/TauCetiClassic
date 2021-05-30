@@ -8,72 +8,17 @@
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
-	alt_titles = list("Technical Assistant","Medical Intern","Research Assistant","Security Cadet",
-	"Lawyer","Mecha Operator","Private Eye","Reporter","Security Cadet","Waiter","Vice Officer","Paranormal Investigator")
-
-/datum/job/assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)
-		return 0
-
-	if(visualsOnly)
-		H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), slot_w_uniform)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-		return
-
-	if (H.mind.role_alt_title)
-		switch(H.mind.role_alt_title)
-			if("Technical Assistant")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/yellow(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/yellow(H), slot_shoes)
-			if("Medical Intern")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/lightblue(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/blue(H), slot_shoes)
-			if("Research Assistant")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
-			if("Lawyer")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/bluesuit(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/lawyer/bluejacket(H), slot_wear_suit)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-				H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer2(H), slot_belt)
-				H.equip_to_slot_or_del(new /obj/item/weapon/storage/briefcase(H), slot_l_hand)
-			if("Mecha Operator")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/mecha_operator(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-				H.equip_to_slot_or_del(new /obj/item/clothing/gloves/fingerless(H), slot_gloves)
-				H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
-			if("Private Eye")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-				H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/leathercoat(H), slot_wear_suit)
-				H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
-				H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
-			if("Reporter")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/black(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-				H.equip_to_slot_or_del(new /obj/item/device/pda/reporter(H), slot_belt)
-			if("Security Cadet")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-			if("Test Subject")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/jane_sidsuit(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-			if("Waiter")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/waiter(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-			if("Vice Officer")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/vice	(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-				H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
-			if("Paranormal Investigator")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/indiana	(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
-				H.equip_to_slot_or_del(new /obj/item/clothing/head/indiana(H), slot_head)
-				H.equip_to_slot_or_del(new /obj/item/device/occult_scanner(H), slot_l_store)
-				H.equip_to_slot_or_del(new /obj/item/weapon/occult_pinpointer(H), slot_r_store)
-
-	return TRUE
+	salary = 20
+	alt_titles = list(
+		"Lawyer"         = /datum/outfit/job/assistant/lawyer,
+		"Mecha Operator" = /datum/outfit/job/assistant/mecha_operator,
+		"Private Eye"    = /datum/outfit/job/assistant/private_eye,
+		"Reporter"       = /datum/outfit/job/assistant/reporter,
+		"Waiter"         = /datum/outfit/job/assistant/waiter,
+		"Vice Officer"   = /datum/outfit/job/assistant/vice_officer,
+		"Paranormal Investigator" = /datum/outfit/job/assistant/paranormal_investigator
+		)
+	outfit = /datum/outfit/job/assistant/test_subject
 
 /datum/job/assistant/get_access()
 	if(config.assistant_maint)

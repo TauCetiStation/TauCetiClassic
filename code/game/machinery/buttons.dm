@@ -6,7 +6,7 @@
 	var/id = null
 	var/active = FALSE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 
@@ -18,7 +18,7 @@
 	var/id = null
 	var/active = FALSE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 
@@ -30,7 +30,7 @@
 	var/id = null
 	var/active = FALSE
 	anchored = TRUE
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 
@@ -45,3 +45,13 @@
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
+
+/obj/machinery/windowtint
+	name = "window tint control"
+	desc = "A remote control switch for polarized windows."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light0"
+	anchored = TRUE
+	var/id = null
+	var/active = FALSE
+	var/range = 7

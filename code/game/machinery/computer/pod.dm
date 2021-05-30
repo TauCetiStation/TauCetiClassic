@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/pod
 	name = "Pod Launch Control"
 	desc = "A controll for launching pods. Some people prefer firing Mechas."
@@ -18,7 +16,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/pod/atom_init_late()
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in mass_driver_list)
 		if(M.id == id)
 			connected = M
 
@@ -30,26 +28,26 @@
 		to_chat(viewers(), "Cannot locate mass driver connector. Cancelling firing sequence!")
 		return
 
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in poddoor_list)
 		if(M.id == id)
 			M.open()
 
 	sleep(20)
 
-	for(var/obj/machinery/mass_driver/M in machines)
+	for(var/obj/machinery/mass_driver/M in mass_driver_list)
 		if(M.id == id)
 			M.power = connected.power
 			M.drive()
 
 	sleep(50)
-	for(var/obj/machinery/door/poddoor/M in machines)
+	for(var/obj/machinery/door/poddoor/M in poddoor_list)
 		if(M.id == id)
 			M.close()
 			return
 	return
 
 /obj/machinery/computer/pod/ui_interact(mob/user)
-	var/dat = "<HTML><BODY><TT><B>[title]</B>"
+	var/dat = "<TT>"
 	if(connected)
 		var/d2
 		if(timing)	//door controls do not need timers.
@@ -69,9 +67,11 @@
 		dat += "<HR>\nPower Level: [temp]<BR>\n<A href = '?src=\ref[src];alarm=1'>Firing Sequence</A><BR>\n<A href = '?src=\ref[src];drive=1'>Test Fire Driver</A><BR>\n<A href = '?src=\ref[src];door=1'>Toggle Outer Door</A><BR>"
 	else
 		dat += "<BR>\n<A href = '?src=\ref[src];door=1'>Toggle Outer Door</A><BR>"
-	dat += "<BR><BR><A href='?src=\ref[user];mach_close=computer'>Close</A></TT></BODY></HTML>"
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	dat += "</TT>"
+
+	var/datum/browser/popup = new(user, "computer", "[title]", 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/pod/process()
@@ -101,7 +101,7 @@
 	if(href_list["alarm"])
 		alarm()
 	if(href_list["drive"])
-		for(var/obj/machinery/mass_driver/M in machines)
+		for(var/obj/machinery/mass_driver/M in mass_driver_list)
 			if(M.id == id)
 				M.power = connected.power
 				M.drive()
@@ -113,7 +113,7 @@
 		time += tp
 		time = min(max(round(time), 0), 120)
 	if(href_list["door"])
-		for(var/obj/machinery/door/poddoor/M in machines)
+		for(var/obj/machinery/door/poddoor/M in poddoor_list)
 			if(M.id == id)
 				if(M.density)
 					M.open()
@@ -123,12 +123,13 @@
 
 
 /obj/machinery/computer/pod/old
-	icon_state = "oldcomp"
+	icon_state = "computer_old"
 	name = "DoorMex Control Computer"
 	title = "Door Controls"
 
 /obj/machinery/computer/pod/old/syndicate
 	name = "ProComp Executive IIc"
+	icon_state = "computer_regular"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
 	req_access = list(access_syndicate)

@@ -9,7 +9,7 @@
 
 /obj/effect/decal/cleanable/liquid_fuel/atom_init(mapload, amt = 1)
 	amount = amt
-	..()
+	. = ..()
 
 	//Be absorbed by any other liquid fuel in the tile.
 	for(var/obj/effect/decal/cleanable/liquid_fuel/other in loc)
@@ -39,12 +39,23 @@
 					new/obj/effect/decal/cleanable/liquid_fuel(target, amount * 0.25)
 					amount *= 0.75
 
+/obj/effect/decal/cleanable/liquid_fuel/Crossed(atom/movable/AM)
+	. = ..()
+	if(!isliving(AM))
+		return
+	var/mob/living/L = AM
+	if(L.crawling)
+		L.adjust_fire_stacks(10)
+	if(L.fire_stacks <= 5)
+		L.adjust_fire_stacks(5)
+
+
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel
 		icon_state = "mustard"
 		anchored = 0
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/atom_init(mapload, amt = 1, d = 0)
-	dir = d //Setting this direction means you won't get torched by your own flamethrower.
+	set_dir(d) //Setting this direction means you won't get torched by your own flamethrower.
 	. = ..()
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Spread()
@@ -62,6 +73,14 @@
 			continue
 		if(O.CanPass(null, S, 0, 0) && S.CanPass(null, O, 0, 0))
 			new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O, amount * 0.25, d)
+			for(var/mob/living/L in O.loc)
+				L.adjust_fire_stacks(10)
 			O.hotspot_expose((T20C * 2) + 380, 500) //Light flamethrower fuel on fire immediately.
 
 	amount *= 0.25
+
+/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.adjust_fire_stacks(5)

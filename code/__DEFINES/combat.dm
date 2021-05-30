@@ -55,11 +55,11 @@
 #define MOB_STATUS_FLAGS_DEFAULT (CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH)
 
 //Grab levels
-#define GRAB_PASSIVE	1
-#define GRAB_AGGRESSIVE	2
-#define GRAB_NECK		3
-#define GRAB_UPGRADING	4
-#define GRAB_KILL		5
+#define GRAB_NONE         0
+#define GRAB_PASSIVE      1
+#define GRAB_AGGRESSIVE   2
+#define GRAB_NECK         3
+#define GRAB_KILL         4
 
 #define HOSTILE_STANCE_IDLE 	 1
 #define HOSTILE_STANCE_ALERT 	 2
@@ -67,4 +67,8 @@
 #define HOSTILE_STANCE_ATTACKING 4
 #define HOSTILE_STANCE_TIRED 	 5
 
-#define UPGRADE_COOLDOWN	40
+// Combo system.
+// Sources of movesets.
+#define MOVESET_JOB "moveset_job"
+#define MOVESET_SPECIES "moveset_species"
+#define MOVESET_TYPE "moveset_type"

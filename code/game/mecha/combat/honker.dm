@@ -48,9 +48,9 @@
 						<b>PowerHONK charge: </b>[isnull(cell_charge)?"No powercell installed":"[cell.percent()]%"]<br>
 						<b>Air source: </b>[use_internal_tank?"Internal Airtank":"Environment"]<br>
 						<b>AirHONK pressure: </b>[tank_pressure]kPa<br>
-						<b>AirHONK temperature: </b>[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C<br>
+						<b>AirHONK temperature: </b>[tank_temperature] K|[tank_temperature - T0C]&deg;C<br>
 						<b>HONK pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
-						<b>HONK temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
+						<b>HONK temperature: </b> [return_temperature()] K|[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
 						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
@@ -58,7 +58,7 @@
 
 /obj/mecha/combat/honker/get_stats_html()
 	var/output = {"<html>
-						<head><title>[src.name] data</title>
+						<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[src.name] data</title>
 						<style>
 						body {color: #00ff00; background: #32CD32; font-family:"Courier",monospace; font-size: 12px;}
 						hr {border: 1px solid #0f0; color: #fff; background-color: #000;}
@@ -128,7 +128,7 @@
 		return
 	var/output = "<b>Honk-ON-Systems:</b><div style=\"margin-left: 15px;\">"
 	for(var/obj/item/mecha_parts/mecha_equipment/MT in equipment)
-		output += "[selected==MT?"<b id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</b>":"</a>"]<br>"
+		output += "[selected==MT?"<b><span id='\ref[MT]'>":"<a id='\ref[MT]' href='?src=\ref[src];select_equip=\ref[MT]'>"][MT.get_equip_info()][selected==MT?"</span></b>":"</a>"]<br>"
 	output += "</div>"
 	return output
 
@@ -138,25 +138,16 @@
 	var/result = step(src,direction)
 	if(result)
 		if(!squeak)
-			playsound(src, "clownstep", 70, 1)
+			playsound(src, pick(SOUNDIN_CLOWNSTEP), VOL_EFFECTS_MASTER)
 			squeak = 1
 		else
 			squeak = 0
 	return result
 
-obj/mecha/combat/honker/Topic(href, href_list)
+/obj/mecha/combat/honker/Topic(href, href_list)
 	..()
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])
 			if("sadtrombone")
-				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+				playsound(src, 'sound/misc/sadtrombone.ogg', VOL_EFFECTS_MASTER)
 	return
-
-proc/rand_hex_color()
-	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
-	var/color=""
-	for (var/i=0;i<6;i++)
-		color = color+pick(colors)
-	return color
-
-

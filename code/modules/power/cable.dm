@@ -9,12 +9,11 @@
 
 /* Cable directions (d1 and d2)
 
-
-  9   1   5
-	\ | /
-  8 - 0 - 4
-	/ | \
-  10  2   6
+>  9   1   5
+>    \ | /
+>  8 - 0 - 4
+>    / | \
+>  10  2   6
 
 If d1 = 0 and d2 = 0, there's no cable
 If d1 = 0 and d2 = dir, it's a O-X cable, getting from the center of the tile to dir (knot cable)
@@ -104,6 +103,17 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/attack_tk(mob/user)
 	return
 
+/obj/structure/cable/proc/remove_cable(turf/T, mob/user)
+	// 0-X cables are 1 unit, X-X cables are 2 units long
+	var/atom/newcable = new /obj/item/stack/cable_coil(T, (d1 ? 2 : 1), color)
+
+	if(user)
+		newcable.fingerprintslast = user.key
+		user.SetNextMove(CLICK_CD_RAPID)
+		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
+
+	qdel(src)
+
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
 //   - Cable coil : merge cables
@@ -115,31 +125,21 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 
 		if (shock(user, 50))
 			return
 
-		var/atom/newcable
-		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			newcable = new /obj/item/stack/cable_coil(T, 2, color)
-		else
-			newcable = new /obj/item/stack/cable_coil(T, 1, color)
-		newcable.fingerprintslast = user.key
-		user.SetNextMove(CLICK_CD_RAPID)
-
-		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
-
-		qdel(src)
+		remove_cable(T, user)
 
 		return	// not needed, but for clarity
 
 
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(W))
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/device/multitool))
+	else if(ismultitool(W))
 
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")
@@ -383,6 +383,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
+	force = 1.0
 	icon_state = "coil"
 	amount = MAXCOIL
 	max_amount = MAXCOIL
@@ -395,15 +396,16 @@ By design, d1 is the smallest direction and d2 is the highest
 	m_amt = 50
 	g_amt = 20
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	item_state = "coil"
+	hitsound = list('sound/items/tools/cable-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = ITEM_SIZE_SMALL
+	merge_type = /obj/item/stack/cable_coil
 
 /obj/item/stack/cable_coil/cyborg
-	merge_type = /obj/item/stack/cable_coil
-	max_amount = 50
+	max_amount = 90
 	m_amt = 0
 	g_amt = 0
 
@@ -430,7 +432,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/mob/living/carbon/human/H = M
 
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
-		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
+		if(!BP.is_robotic() || user.a_intent != INTENT_HELP)
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])
@@ -461,24 +463,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "coil"
 		name = "cable coil"
-
-/obj/item/stack/cable_coil/verb/make_restraint()
-	set name = "Make Cable Restraints"
-	set category = "Object"
-	var/mob/M = usr
-
-	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
-		if(!istype(usr.loc,/turf))
-			return
-		if(!src.use(15))
-			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
-			return
-		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
-		B.color = color
-		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do that.</span>")
-	..()
 
 ///////////////////////////////////////////////
 // Cable laying procedures
@@ -675,6 +659,19 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/red
 	color = COLOR_RED
 
-/obj/item/stack/cable_coil/random/atom_init()
-	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GRAY)
-	. = ..()
+/obj/item/stack/cable_coil/gray
+	color = COLOR_GRAY
+
+/obj/item/stack/cable_coil/random/atom_init(mapload, new_amount = null)
+	..()
+	var/new_type = pick(/obj/item/stack/cable_coil/yellow,
+						/obj/item/stack/cable_coil/blue,
+						/obj/item/stack/cable_coil/green,
+						/obj/item/stack/cable_coil/pink,
+						/obj/item/stack/cable_coil/orange,
+						/obj/item/stack/cable_coil/cyan,
+						/obj/item/stack/cable_coil/red,
+						/obj/item/stack/cable_coil/gray,
+						/obj/item/stack/cable_coil)
+	new new_type(loc, new_amount)
+	return INITIALIZE_HINT_QDEL

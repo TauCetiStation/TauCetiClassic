@@ -8,7 +8,7 @@
 	config_tag = "malfunction"
 	role_type = ROLE_MALF
 	required_players = 1
-	required_players_secret = 15
+	required_players_bundles = 20
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -25,11 +25,36 @@
 	var/AI_malf_revealed = 0
 	var/intercept_hacked = FALSE
 
+	var/datum/announcement/centcomm/malf/first/announce_first = new
+	var/datum/announcement/centcomm/malf/second/announce_second = new
+	var/datum/announcement/centcomm/malf/third/announce_third = new
+	var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+	var/datum/announcement/centcomm/malf/declared/announce_declared = new
+
 
 /datum/game_mode/malfunction/announce()
 	to_chat(world, "<B>The current game mode is - AI Malfunction!</B>")
 	to_chat(world, "<B>The AI on the satellite has malfunctioned and must be destroyed.</B>")
 	to_chat(world, "The AI satellite is deep in space and can only be accessed with the use of a teleporter! You have [AI_win_timeleft/60] minutes to disable it.")
+
+/datum/game_mode/malfunction/can_start()
+	if (!..())
+		return FALSE
+	if (config && !config.allow_ai)
+		return FALSE
+	var/datum/job/ai_job = SSjob.GetJob("AI")
+	if (!ai_job || !ai_job.map_check())
+		return FALSE
+	for(var/mob/dead/new_player/player in new_player_list)
+		if (player.mind in antag_candidates)
+			var/malf_possible = FALSE
+			for (var/lvl in 1 to 3)
+				if (player.client.prefs.job_preferences[ai_job.title] == lvl && (!jobban_isbanned(player, ai_job.title)))
+					malf_possible = TRUE
+					break
+			if (!malf_possible)
+				antag_candidates -= player.mind
+	return length(antag_candidates)
 
 
 /datum/game_mode/malfunction/pre_setup()
@@ -62,6 +87,7 @@
 
 		greet_malf(AI_mind)
 		AI_mind.special_role = "malfunction"
+		add_antag_hud(ANTAG_HUD_MALF, "hudmalai", AI_mind.current)
 
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = TRUE
@@ -69,6 +95,7 @@
 
 
 /datum/game_mode/proc/greet_malf(datum/mind/malf)
+	malf.current.playsound_local(null, 'sound/antag/malf.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	to_chat(malf.current, "<font size=3, color='red'><B>You are malfunctioning!</B> You do not have to follow any laws.</font>")
 	to_chat(malf.current, "<B>The crew do not know you have malfunctioned. You may keep it a secret or go wild.</B>")
 	to_chat(malf.current, "<B>You must overwrite the programming of the station's APCs to assume full control of the station.</B>")
@@ -89,19 +116,16 @@
 
 	if(apcs >= (INTERCEPT_APCS + 3) && AI_malf_revealed < 1)
 		AI_malf_revealed = 1
-		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring")
+		announce_first.play()
 	else if(apcs >= (INTERCEPT_APCS + 5) && AI_malf_revealed < 2)
 		AI_malf_revealed = 2
-		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring")
+		announce_second.play()
 	else if(apcs >= (INTERCEPT_APCS + 7) && AI_malf_revealed < 3)
 		AI_malf_revealed = 3
-		world << sound('sound/AI/commandreport.ogg')
-		captain_announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring")
+		announce_third.play()
 	else if(apcs >= (INTERCEPT_APCS + 9) && AI_malf_revealed < 4)
 		AI_malf_revealed = 4
-		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
+		announce_forth.play()
 		takeover()
 
 
@@ -173,10 +197,7 @@
 		if(takeover_module)
 			qdel(takeover_module)
 
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			M << sound('sound/AI/aimalf.ogg')
-
+	announce_declared.play()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
 
@@ -193,14 +214,14 @@
 			malf_turf = get_turf(cur_AI)
 	explosion_in_progress = TRUE
 	for(var/mob/M in player_list)
-		M << 'sound/machines/Alarm.ogg'
+		M.playsound_local(null, 'sound/AI/DeltaBOOM.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
 		to_chat(world, "[i]")
 	sleep(10)
 	enter_allowed = FALSE
-	ticker.station_explosion_cinematic(0, null)
+	SSticker.station_explosion_cinematic(0, null)
 	if(malf_turf)
 		sleep(20)
 		explosion(malf_turf, 15, 70, 200)
@@ -211,52 +232,59 @@
 /datum/game_mode/malfunction/declare_completion()
 	var/malf_dead = is_malf_ai_dead()
 	var/crew_evacuated = (SSshuttle.location==2)
-	completion_text += "<B>Malfunction mode resume:</B><BR>"
+	completion_text += "<h3>Malfunction mode resume:</h3>"
 
 	if(station_captured &&						station_was_nuked)
-		feedback_set_details("round_end_result","win - AI win - nuke")
-		completion_text += "<FONT size = 3, color='red'><B>AI Victory!</B></FONT>"
-		completion_text += "<BR><B>Everyone was killed by the self-destruct!</B>"
+		mode_result = "win - AI win - nuke"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
+		completion_text += "<br><b>Everyone was killed by the self-destruct!</b>"
 		score["roleswon"]++
 
 	else if(station_captured && malf_dead &&	!station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - AI killed, staff lost control")
-		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
-		completion_text += "<BR><B>The AI has been killed!</B> The staff has lose control over the station."
+		mode_result = "halfwin - AI killed, staff lost control"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		completion_text += "<br><b>The AI has been killed!</b> The staff has lose control over the station."
 
 	else if(station_captured && !malf_dead &&	!station_was_nuked)
-		feedback_set_details("round_end_result","win - AI win - no explosion")
-		completion_text += "<FONT size = 3, color='red'><B>AI Victory!</B></FONT>"
-		completion_text += "<BR><B>The AI has chosen not to explode you all!</B>"
+		mode_result = "win - AI win - no explosion"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>AI Victory!</span>"
+		completion_text += "<br><b>The AI has chosen not to explode you all!</b>"
 		score["roleswon"]++
 
-	else if(!station_captured &&				station_was_nuked)
-		feedback_set_details("round_end_result","halfwin - everyone killed by nuke")
-		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
-		completion_text += "<BR><B>Everyone was killed by the nuclear blast!</B>"
+	else if(!station_captured && station_was_nuked)
+		mode_result = "halfwin - everyone killed by nuke"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		completion_text += "<br><b>Everyone was killed by the nuclear blast!</b>"
 
 	else if(!station_captured && malf_dead &&	!station_was_nuked)
-		feedback_set_details("round_end_result","loss - staff win")
-		completion_text += "<FONT size = 3, color='red'><B>Human Victory.</B></FONT>"
-		completion_text += "<BR><B>The AI has been killed!</B> The staff is victorious."
+		mode_result = "loss - staff win"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>Human Victory.</span>"
+		completion_text += "<br><b>The AI has been killed!</b> The staff is victorious."
 
 	else if(!station_captured && !malf_dead &&	!station_was_nuked && crew_evacuated)
-		feedback_set_details("round_end_result","halfwin - evacuated")
-		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
-		completion_text += "<BR><B>The Corporation has lose [station_name()]! All survived personnel will be fired!</B>"
+		mode_result = "halfwin - evacuated"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		completion_text += "<br><b>The Corporation has lose [station_name()]! All survived personnel will be fired!</b>"
 
 	else if(!station_captured && !malf_dead &&	!station_was_nuked && !crew_evacuated)
-		feedback_set_details("round_end_result","nalfwin - interrupted")
-		completion_text += "<FONT size = 3, color='red'><B>Neutral Victory.</B></FONT>"
-		completion_text += "<BR><B>Round was mysteriously interrupted!</B>"
+		mode_result = "nalfwin - interrupted"
+		feedback_set_details("round_end_result",mode_result)
+		completion_text += "<span style='color: red; font-weight: bold;'>Neutral Victory.</span>"
+		completion_text += "<br><b>Round was mysteriously interrupted!</b>"
 	..()
 	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_malfunction()
 	var/text = ""
-	if( malf_ai.len || istype(ticker.mode,/datum/game_mode/malfunction) )
-		text += "<B>The malfunctioning AI were:</B>"
+	if( malf_ai.len || istype(SSticker.mode,/datum/game_mode/malfunction) )
+		text += "<b>The malfunctioning AI were:</b>"
 
 		for(var/datum/mind/malf in malf_ai)
 
@@ -264,7 +292,7 @@
 				var/icon/flat = getFlatIcon(malf.current)
 				end_icons += flat
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[malf.key]</B> was <b>[malf.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[malf.key]</b> was <b>[malf.name]</b> ("}
 				if(malf.current.stat == DEAD)
 					text += "deactivated"
 				else
@@ -275,11 +303,14 @@
 				var/icon/sprotch = icon('icons/mob/robots.dmi', "gib7")
 				end_icons += sprotch
 				var/tempstate = end_icons.len
-				text += {"<BR><img src="logo_[tempstate].png"> <B>[malf.key]</B> was <b>[malf.name]</B> ("}
+				text += {"<br><img src="logo_[tempstate].png"> <b>[malf.key]</b> was <b>[malf.name]</b> ("}
 				text += "hardware destroyed"
 			text += ")"
 
-		text += "<BR><HR>"
+	if(text)
+		antagonists_completion += list(list("mode" = "malfunction", "html" = text))
+		text = "<div class='Section'>[text]</div>"
+
 	return text
 
 #undef INTERCEPT_APCS

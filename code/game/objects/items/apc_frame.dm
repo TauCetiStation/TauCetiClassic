@@ -7,11 +7,12 @@
 	icon_state = "apc_frame"
 	flags = CONDUCT
 
-/obj/item/apc_frame/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (istype(W, /obj/item/weapon/wrench))
+/obj/item/apc_frame/attackby(obj/item/I, mob/user, params)
+	if(iswrench(I))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
+	else
+		return ..()
 
 /obj/item/apc_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -22,17 +23,17 @@
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
 	if (!istype(loc, /turf/simulated/floor))
-		to_chat(usr, "\red APC cannot be placed on this spot.")
+		to_chat(usr, "<span class='warning'>APC cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || istype(A,/area/space))
-		to_chat(usr, "\red APC cannot be placed in this area.")
+		to_chat(usr, "<span class='warning'>APC cannot be placed in this area.</span>")
 		return
 	if (A.get_apc())
-		to_chat(usr, "\red This area already has APC.")
+		to_chat(usr, "<span class='warning'>This area already has APC.</span>")
 		return //only one APC per area
 	for(var/obj/machinery/power/terminal/T in loc)
 		if (T.master)
-			to_chat(usr, "\red There is another network terminal here.")
+			to_chat(usr, "<span class='warning'>There is another network terminal here.</span>")
 			return
 		else
 			new /obj/item/stack/cable_coil/random(loc, 10)

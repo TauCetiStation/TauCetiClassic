@@ -12,7 +12,7 @@
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
-		to_chat(usr, "\red The [src] will not function on a deceased robot.")
+		to_chat(usr, "<span class='warning'>The [src] will not function on a deceased robot.</span>")
 		return 1
 	return 0
 
@@ -30,6 +30,7 @@
 	R.icon_state = "robot"
 	qdel(R.module)
 	R.module = null
+	R.sensor_huds = R.def_sensor_huds
 	R.camera.remove_networks(list("Engineering","Medical","MINE"))
 	R.updatename("Default")
 	R.status_flags |= CANPUSH
@@ -71,6 +72,7 @@
 				R.key = ghost.key
 
 	R.stat = CONSCIOUS
+	playsound(src, 'sound/misc/robot_restart.ogg', VOL_EFFECTS_MASTER, 70, FALSE)
 	return 1
 
 
@@ -149,7 +151,7 @@
 	return 1
 
 
-/obj/item/borg/upgrade/syndicate/
+/obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a robot."
 	icon_state = "cyborg_upgrade3"
@@ -161,6 +163,6 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.throw_alert("hacked")
+	R.throw_alert("hacked", /obj/screen/alert/hacked)
 	R.emagged = 1
 	return 1

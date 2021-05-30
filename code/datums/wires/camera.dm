@@ -10,13 +10,13 @@ var/const/CAMERA_WIRE_NOTHING2 = 32
 	holder_type = /obj/machinery/camera
 	wire_count = 6
 
-/datum/wires/camera/get_interact_window()
+/datum/wires/camera/get_status()
 	var/obj/machinery/camera/C = holder
 	. = ..()
-	. += "<br>[(C.view_range == initial(C.view_range) ? "The focus light is on." : "The focus light is off.")]"
-	. += "<br>[(C.can_use() ? "The power link light is on." : "The power link light is off.")]"
-	. += "<br>[(C.light_disabled ? "The camera light is off." : "The camera light is on.")]"
-	. += "<br>[(C.alarm_on ? "The alarm light is on." : "The alarm light is off.")]"
+	. += "[(C.view_range == initial(C.view_range) ? "The focus light is on." : "The focus light is off.")]"
+	. += "[(C.can_use(check_paint = FALSE) ? "The power link light is on." : "The power link light is off.")]"
+	. += "[(C.light_disabled ? "The camera light is off." : "The camera light is on.")]"
+	. += "[(C.alarm_on ? "The alarm light is on." : "The alarm light is off.")]"
 
 /datum/wires/camera/can_use()
 	var/obj/machinery/camera/C = holder

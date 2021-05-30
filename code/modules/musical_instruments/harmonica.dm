@@ -22,15 +22,26 @@
 	channel = rand(1000, 1024)
 
 /obj/item/device/harmonica/proc/play(mob/living/carbon/user)
+	var/static/list/tunes = list(
+		'sound/musical_instruments/harmonica/fharp1.ogg',
+		'sound/musical_instruments/harmonica/fharp2.ogg',
+		'sound/musical_instruments/harmonica/fharp3.ogg',
+		'sound/musical_instruments/harmonica/fharp4.ogg',
+		'sound/musical_instruments/harmonica/fharp5.ogg',
+		'sound/musical_instruments/harmonica/fharp6.ogg',
+		'sound/musical_instruments/harmonica/fharp7.ogg',
+		'sound/musical_instruments/harmonica/fharp8.ogg'
+		)
+	var/static/list/message = list(
+		"plays a bluesy",
+		"plays a warm",
+		"plays a delightful",
+		"plays a chilling",
+		"plays a upbeat"
+		)
 	last_played = world.time + cooldown
-	playsound(src, "sound/musical_instruments/harmonica/fharp[rand(1, 8)].ogg", 50, 1, falloff = 5, channel = channel)
-	var/message = pick(
-		"[user] plays a bluesy tune with his harmonica!",
-		"[user] plays a warm tune with his harmonica!",
-		"[user] plays a delightful tune with his harmonica!",
-		"[user] plays a chilling tune with his harmonica!",
-		"[user] plays a upbeat tune with his harmonica!")
-	user.visible_message("<span class='notice'>[message]</span>")
+	playsound(src, pick(tunes), VOL_EFFECTS_INSTRUMENT, null, FALSE, falloff = 5, channel = channel)
+	user.visible_message("<span class='notice'>[user] [pick(message)] tune with his harmonica!</span>")
 
 /obj/item/device/harmonica/dropped(mob/user)
 	var/sound/melody = sound()

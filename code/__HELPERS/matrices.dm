@@ -25,6 +25,57 @@
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
 
+//Dumps the matrix data in format a-f
+/matrix/proc/tolist()
+	. = list()
+	. += a
+	. += b
+	. += c
+	. += d
+	. += e
+	. += f
+
+//Dumps the matrix data in a matrix-grid format
+/*
+  a d 0
+  b e 0
+  c f 1
+*/
+/matrix/proc/togrid()
+	. = list()
+	. += a
+	. += d
+	. += 0
+	. += b
+	. += e
+	. += 0
+	. += c
+	. += f
+	. += 1
+
+//The X pixel offset of this matrix
+/matrix/proc/get_x_shift()
+	. = c
+
+//The Y pixel offset of this matrix
+/matrix/proc/get_y_shift()
+	. = f
+
+/matrix/proc/get_x_skew()
+	. = b
+
+/matrix/proc/get_y_skew()
+	. = d
+
+//Skews a matrix in a particular direction
+//Missing arguments are treated as no skew in that direction
+
+//As Rotation is defined as a scale+skew, these procs will break any existing rotation
+//Unless the result is multiplied against the current matrix
+/matrix/proc/set_skew(x = 0, y = 0)
+	b = x
+	d = y
+
 /datum/ColorMatrix
 	var/list/matrix
 	var/combined = 1
@@ -59,10 +110,9 @@
 	return mat
 
 /datum/ColorMatrix/proc/SetSaturation(s, c = 1, b = null)
-	var
-		sr = (1 - s) * lumR
-		sg = (1 - s) * lumG
-		sb = (1 - s) * lumB
+	var/sr = (1 - s) * lumR
+	var/sg = (1 - s) * lumG
+	var/sb = (1 - s) * lumB
 
 	matrix = list(c * (sr + s), c * (sr),     c * (sr),
 				  c * (sg),     c * (sg + s), c * (sg),
@@ -132,43 +182,45 @@
 						  0,0,-1,
 						  1,1,1)
 		if("nightsight")
-			matrix = list(-1,-1,-1,
+			matrix = list(1,1,1,
 						  0,0,0,
 						  0,0,0,
-						  1,1,1)
+						  0.3,0.3,0.3)
 		if("nightsight_glasses")
-			matrix = list(0,0,1,
-						  1,0,0,
-						  0,1,0,
-						  0.8,0.8,0.8)
+			matrix = list(1,1,1,
+						  0,0,0,
+						  0,0,0,
+						  0.2,0.2,0.2)
 		if("thermal")
-			matrix = list(1.4,0.8,0.8,
-						  0,0,0,
-						  0,0,0,
-						  -0.2,-0.2,-0.2)
+			matrix = list(1.3, 0.85, 0.85,
+						  0, 0, 0,
+						  0, 0, 0,
+						  -0.1, 0, 0)
 		if("nvg")
-			matrix = list(0,0,0,
-						  1.7,1,1.6,
-						  0,0,0,
-						  -0.2,0.4,-0.2)
+			matrix = list(0, 0, 0,
+						  1.7, 1, 1.6,
+						  0, 0, 0,
+						  -0.2, 0.3, -0.2)
 		if("nvg_military")
 			matrix = list(0,0,0,
 						  1.2,1.4,1.1,
 						  0,0,0,
 						  -0.2,-0.2,-0.2)
 		if("meson")
-			matrix = list(0,0,0,
-						  1.7,1.9,1.6,
-						  0,0,0,
-						  -0.5,-0.4,-0.5)
+			matrix = list(0, 0, 0,
+						  1.6, 1.3, 1.6,
+						  0, 0, 0,
+						  -0.4, 0, -0.4)
 		if("sci")
-			matrix = list(1,0,0.05,
-						  0.05,0.95,0.05,
-						  0.05,0,1)
+			matrix = list(1, 0, 0.05,
+						  0.05, 0.95, 0.05,
+						  0.05, 0, 1,
+						  0, 0, 0)
 		if("greyscale")
-			matrix = list(0.33,0.33,0.33,
-						  0.59,0.59,0.59,
-						  0.11,0.11,0.11)
+			matrix =  list(0.33, 0.33, 0.33,
+						   0.33, 0.33, 0.33,
+						   0.33, 0.33, 0.33,
+						   0, 0, 0)
 		if("sepia")
 			matrix = list(0.393,0.349,0.272,
 						  0.769,0.686,0.534,

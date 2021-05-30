@@ -3,12 +3,54 @@
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
 /mob/living/silicon/robot/get_active_hand()
+	if(module_active)
+		var/obj/item/W = SEND_SIGNAL(module_active, COMSIG_HAND_GET_ITEM)
+		if(W)
+			return W
 	return module_active
 
-/*-------TODOOOOOOOOOO--------*/
+// I'd rather do this then have something broken.
+/mob/living/silicon/robot/get_inactive_hand()
+	return module_active
+
+/mob/living/silicon/robot/put_in_active_hand(obj/item/W)
+	if(lying && !(W.flags & ABSTRACT))
+		return FALSE
+	if(!istype(W))
+		return FALSE
+	if(W.anchored)
+		return FALSE
+	if(module_active)
+		return SEND_SIGNAL(module_active, COMSIG_HAND_PUT_IN, W, src)
+	return FALSE
+
+/mob/living/silicon/robot/put_in_inactive_hand(obj/item/W)
+	return put_in_active_hand(W)
+
+/mob/living/silicon/robot/put_in_hands(obj/item/W)
+	if(!W)
+		return FALSE
+	if(put_in_active_hand(W))
+		return TRUE
+	else
+		W.forceMove(get_turf(src))
+		return FALSE
+
+/mob/living/silicon/robot/drop_item(atom/T)
+	if(module_active)
+		return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
+	return FALSE
+
+/mob/living/silicon/robot/remove_from_mob(obj/O, atom/T)
+	if(!O)
+		return FALSE
+	if(!module_active || SEND_SIGNAL(module_active, COMSIG_HAND_GET_ITEM) != O)
+		return FALSE
+
+	return SEND_SIGNAL(module_active, COMSIG_HAND_DROP_ITEM, T, src)
 
 /mob/living/silicon/robot/u_equip(obj/W)
-	if(!W || (W != get_active_hand()))
+	if(!W || (W != module_active))
 		return 0
 	uneq_active()
 	return 1
@@ -89,7 +131,6 @@
 		return 1
 	else
 		return 0
-	updateicon()
 
 //Helper procs for cyborg modules on the UI.
 //These are hackish but they help clean up code elsewhere.

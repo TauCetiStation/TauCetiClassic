@@ -1,4 +1,3 @@
-
 /obj/machinery/account_database
 	name = "Accounts uplink terminal"
 	desc = "Access transaction logs, account data and all kinds of other financial records."
@@ -19,7 +18,7 @@
 		return 0
 	if(access_cent_captain in held_card.access)
 		return 2
-	else if(access_hop in held_card.access || access_captain in held_card.access)
+	else if((access_hop in held_card.access) || (access_captain in held_card.access))
 		return 1
 
 /obj/machinery/account_database/proc/create_transation(target, reason, amount)
@@ -122,19 +121,16 @@
 			if("add_funds")
 				var/amount = input("Enter the amount you wish to add", "Silently add funds") as num
 				if(detailed_account_view)
-					detailed_account_view.money += amount
+					detailed_account_view.adjust_money(amount)
 
 			if("remove_funds")
 				var/amount = input("Enter the amount you wish to remove", "Silently remove funds") as num
 				if(detailed_account_view)
-					detailed_account_view.money -= amount
+					detailed_account_view.adjust_money(-amount)
 
 			if("toggle_suspension")
 				if(detailed_account_view)
 					detailed_account_view.suspended = !detailed_account_view.suspended
-					var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-					if(mode)
-						mode.suspension_directive(detailed_account_view)
 
 			if("finalise_create_account")
 				var/account_name = href_list["holder_name"]
@@ -182,15 +178,11 @@
 				var/account_trx = create_transation(station_account.owner_name, "Revoke payroll", "([funds])")
 				var/station_trx = create_transation(detailed_account_view.owner_name, "Revoke payroll", funds)
 
-				station_account.money += funds
+				station_account.adjust_money(funds)
 				detailed_account_view.money = 0
 
 				detailed_account_view.transaction_log.Add(account_trx)
 				station_account.transaction_log.Add(station_trx)
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.payroll_directive(detailed_account_view)
 
 			if("print")
 				var/text
@@ -267,4 +259,5 @@
 					"}
 
 				P.info = text
+				P.update_icon()
 				state("The terminal prints out a report.")

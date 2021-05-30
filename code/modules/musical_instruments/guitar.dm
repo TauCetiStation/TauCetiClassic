@@ -4,7 +4,7 @@
 	icon = 'icons/obj/musician.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"
-	hitsound = 'sound/musical_instruments/guitar/1hit.ogg'
+	hitsound = list('sound/musical_instruments/guitar/1hit.ogg')
 	force = 10
 	attack_verb = list("played metal", "made concert", "crashed", "smashed")
 

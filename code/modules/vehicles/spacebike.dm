@@ -27,7 +27,7 @@
 	desc = "A keyring with a small steel key."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys_bike"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 	var/id = 0
 
 /obj/item/weapon/key/spacebike/examine(mob/user)
@@ -42,8 +42,13 @@
 	id = rand(1,1000)
 	key = new(src)
 	key.id = id
-	overlays += image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1)
+	add_overlay(image('icons/obj/vehicles.dmi', "[icon_state]_off_overlay", MOB_LAYER + 1))
 	icon_state = "[bike_icon]_off"
+
+/obj/vehicle/space/spacebike/Destroy()
+	QDEL_NULL(ion)
+	QDEL_NULL(key)
+	return ..()
 
 /obj/vehicle/space/spacebike/examine(mob/user)
 	..()
@@ -62,6 +67,9 @@
 	if(isessence(user))
 		return
 	if(user.incapacitated() || user.lying)
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 	if(!load(M))
 		to_chat(user, "<span class='warning'>You were unable to load \the [M] onto \the [src].</span>")
@@ -95,12 +103,12 @@
 			K.loc = src
 			key = K
 			user.SetNextMove(CLICK_CD_INTERACT)
-			playsound(loc, 'sound/items/insert_key.ogg', 25, 1)
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You put the key into the slot.</span>")
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key
 			verbs += /obj/vehicle/space/spacebike/verb/toggle_engine
 		return
-	..()
+	return ..()
 
 /obj/vehicle/space/spacebike/Bump(atom/A)
 	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
@@ -120,11 +128,9 @@
 				unload(Driver)
 			visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 
-			Driver.attack_log += text("\[[time_stamp()]\] <font color='red'>drives over [L.name] ([L.ckey])</font>")
-			L.attack_log += text("\[[time_stamp()]\] <font color='orange'>was driven over by [Driver.name] ([Driver.ckey])</font>")
-			msg_admin_attack("[key_name(Driver)] drives over [key_name(L)] with space bike (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+			L.log_combat(Driver, "driven over with [src]")
 
-			playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+			playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 			L.stop_pulling()
 			L.apply_effects(8,5)
 			L.lying = 1
@@ -141,15 +147,15 @@
 	return Move(get_step(src, direction))
 
 
-/obj/vehicle/space/spacebike/Move(var/turf/destination)
+/obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
-	if(istype(destination,/turf/space) || pulledby)
+	if(istype(NewLoc, /turf/space) || pulledby)
 		if(!space_speed)
-			return 0
+			return FALSE
 		move_delay = space_speed + slow_cooef
 	else
 		if(!land_speed)
-			return 0
+			return FALSE
 		move_delay = land_speed + slow_cooef
 	return ..()
 
@@ -250,17 +256,13 @@
 	..()
 
 /obj/vehicle/space/spacebike/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(on)
-		overlays += image('icons/obj/vehicles.dmi', "[bike_icon]_on_overlay", MOB_LAYER + 1)
+		add_overlay(image('icons/obj/vehicles.dmi', "[bike_icon]_on_overlay", MOB_LAYER + 1))
 		icon_state = "[bike_icon]_on"
 	else
-		overlays += image('icons/obj/vehicles.dmi', "[bike_icon]_off_overlay", MOB_LAYER + 1)
+		add_overlay(image('icons/obj/vehicles.dmi', "[bike_icon]_off_overlay", MOB_LAYER + 1))
 		icon_state = "[bike_icon]_off"
 
 	..()
-
-/obj/vehicle/space/spacebike/Destroy()
-	qdel(ion)
-	return ..()

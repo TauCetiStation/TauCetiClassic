@@ -10,16 +10,25 @@
 	var/parallax_movedir = 0
 	var/parallax_layers_max = 3
 	var/parallax_animate_timer
+	var/parallax_theme
 
 /datum/hud/proc/create_parallax()
 	var/client/C = mymob.client
 	if (!apply_parallax_pref())
 		return
 
-	if(!length(C.parallax_layers_cached))
+	if(!length(C.parallax_layers_cached) || C.parallax_theme != C.prefs.parallax_theme)
+		C.parallax_theme = C.prefs.parallax_theme
 		C.parallax_layers_cached = list()
-		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
-		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
+		switch(C.prefs.parallax_theme)
+			if(PARALLAX_THEME_CLASSIC)
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
+			if(PARALLAX_THEME_TG)
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view, 'icons/effects/parallax_tg.dmi')
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view, 'icons/effects/parallax_tg.dmi')
+				//C.parallax_layers_cached += new /obj/screen/parallax_layer/planet(null, C.view, 'icons/effects/parallax_tg.dmi') awaiting for new planet image in replace for lavaland
+				C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view, 'icons/effects/parallax_tg.dmi')
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -28,9 +37,24 @@
 
 	C.screen |= (C.parallax_layers)
 
+	var/obj/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
+
+	PM.color = list(
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		1, 1, 1, 1,
+		0, 0, 0, 0
+		)
+
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
 	C.screen -= (C.parallax_layers_cached)
+
+	var/obj/screen/plane_master/PM = plane_masters["[PLANE_SPACE]"]
+
+	PM.color = initial(PM.color)
+
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
@@ -122,12 +146,6 @@
 			continue
 
 		var/newstate = initial(L.icon_state)
-		if (animatedir)
-			if(animatedir == NORTH || animatedir == SOUTH)
-				newstate += "_vertical"
-			else
-				newstate += "_horizontal"
-
 		var/T = PARALLAX_LOOP_TIME / L.speed
 
 		if (newstate in icon_states(L.icon))
@@ -168,20 +186,30 @@
 
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
+		L.update_status(mymob)
 		if (L.view_sized != C.view)
 			L.update_o(C.view)
-		var/change_x = offset_x * L.speed
-		L.offset_x -= change_x
-		var/change_y = offset_y * L.speed
-		L.offset_y -= change_y
-		if(L.offset_x > 240)
-			L.offset_x -= 480
-		if(L.offset_x < -240)
-			L.offset_x += 480
-		if(L.offset_y > 240)
-			L.offset_y -= 480
-		if(L.offset_y < -240)
-			L.offset_y += 480
+
+		var/change_x
+		var/change_y
+
+		if(L.absolute)
+			L.offset_x = -(posobj.x - SSparallax.planet_x_offset) * L.speed
+			L.offset_y = -(posobj.y - SSparallax.planet_y_offset) * L.speed
+		else
+			change_x = offset_x * L.speed
+			L.offset_x -= change_x
+			change_y = offset_y * L.speed
+			L.offset_y -= change_y
+
+			if(L.offset_x > 240)
+				L.offset_x -= 480
+			if(L.offset_x < -240)
+				L.offset_x += 480
+			if(L.offset_y > 240)
+				L.offset_y -= 480
+			if(L.offset_y < -240)
+				L.offset_y += 480
 
 
 		if(!areaobj.parallax_movedir && C.dont_animate_parallax <= world.time && (offset_x || offset_y) && abs(offset_x) <= max(C.parallax_throttle/world.tick_lag+1,1) && abs(offset_y) <= max(C.parallax_throttle/world.tick_lag+1,1) && (round(abs(change_x)) > 1 || round(abs(change_y)) > 1))
@@ -205,16 +233,21 @@
 				AM.update_parallax_contents()
 
 /obj/screen/parallax_layer
-	icon = 'icons/effects/parallax.dmi'
+	icon = 'icons/effects/parallax_classic.dmi'
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
 	var/view_sized
+	var/absolute = FALSE
 	blend_mode = BLEND_ADD
 	plane = PLANE_SPACE_PARALLAX
 	screen_loc = "CENTER-7,CENTER-7"
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/screen/parallax_layer/New(loc, view, _icon)
+	if(_icon)
+		icon = _icon
+	..()
 
 /obj/screen/parallax_layer/atom_init(mapload, view)
 	. = ..()
@@ -226,17 +259,20 @@
 	if (!view)
 		view = world.view
 	var/list/new_overlays = list()
-	var/count = ceil(view/(480/world.icon_size))+1
+	var/count = CEIL(view/(480/world.icon_size))+1
 	for(var/x in -count to count)
 		for(var/y in -count to count)
 			if(x == 0 && y == 0)
 				continue
-			var/image/I = image(icon, null, icon_state)
-			I.transform = matrix(1, 0, x*480, 0, 1, y*480)
-			new_overlays += I
+			var/mutable_appearance/texture_overlay = mutable_appearance(icon, icon_state)
+			texture_overlay.transform = matrix(1, 0, x*480, 0, 1, y*480)
+			new_overlays += texture_overlay
 
 	overlays = new_overlays
 	view_sized = view
+
+/obj/screen/parallax_layer/proc/update_status(mob/M)
+	return
 
 /obj/screen/parallax_layer/layer_1
 	icon_state = "layer1"
@@ -248,8 +284,24 @@
 	speed = 1
 	layer = 2
 
+/obj/screen/parallax_layer/layer_3
+	icon_state = "layer3"
+	speed = 1.4
+	layer = 3
 
-#undef LOOP_NONE
-#undef LOOP_NORMAL
-#undef LOOP_REVERSE
-#undef LOOP_TIME
+/obj/screen/parallax_layer/planet
+	icon_state = "planet"
+	blend_mode = BLEND_OVERLAY
+	absolute = TRUE //Status of seperation
+	speed = 3
+	layer = 30
+
+/obj/screen/parallax_layer/planet/update_status(mob/M)
+	var/turf/T = get_turf(M)
+	if(T && is_station_level(T.z))
+		invisibility = 0
+	else
+		invisibility = INVISIBILITY_ABSTRACT
+
+/obj/screen/parallax_layer/planet/update_o()
+	return //Shit wont move

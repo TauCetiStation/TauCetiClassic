@@ -1,35 +1,35 @@
 /obj/item/weapon/storage/wallet
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
-	storage_slots = 10
+	max_storage_space = 10
 	icon_state = "wallet"
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	can_hold = list(
-		"/obj/item/weapon/spacecash",
-		"/obj/item/weapon/card",
-		"/obj/item/clothing/mask/cigarette",
-		"/obj/item/device/flashlight/pen",
-		"/obj/item/seeds",
-		"/obj/item/stack/medical",
-		"/obj/item/toy/crayon",
-		"/obj/item/weapon/coin",
-		"/obj/item/weapon/dice",
-		"/obj/item/weapon/disk",
-		"/obj/item/weapon/implanter",
-		"/obj/item/weapon/lighter",
-		"/obj/item/weapon/match",
-		"/obj/item/weapon/paper",
-		"/obj/item/weapon/pen",
-		"/obj/item/weapon/photo",
-		"/obj/item/weapon/reagent_containers/dropper",
-		"/obj/item/weapon/screwdriver",
-		"/obj/item/weapon/stamp")
-	slot_flags = SLOT_ID
+		/obj/item/weapon/spacecash,
+		/obj/item/weapon/card,
+		/obj/item/clothing/mask/cigarette,
+		/obj/item/device/flashlight/pen,
+		/obj/item/seeds,
+		/obj/item/stack/medical,
+		/obj/item/toy/crayon,
+		/obj/item/weapon/coin,
+		/obj/item/weapon/dice,
+		/obj/item/weapon/disk,
+		/obj/item/weapon/implanter,
+		/obj/item/weapon/lighter,
+		/obj/item/weapon/match,
+		/obj/item/weapon/paper,
+		/obj/item/weapon/pen,
+		/obj/item/weapon/photo,
+		/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/screwdriver,
+		/obj/item/weapon/stamp)
+	slot_flags = SLOT_FLAGS_ID
 
 	var/obj/item/weapon/card/id/front_id = null
 
 
-/obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	. = ..(W, new_location)
 	if(.)
 		if(W == front_id)
@@ -37,13 +37,17 @@
 			name = initial(name)
 			update_icon()
 
-/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	. = ..(W, prevent_warning)
 	if(.)
 		if(!front_id && istype(W, /obj/item/weapon/card/id))
 			front_id = W
 			name = "[name] ([front_id])"
 			update_icon()
+			if(ishuman(loc))
+				var/mob/living/carbon/human/H = loc
+				if(H.wear_id == src)
+					H.sec_hud_set_ID()
 
 /obj/item/weapon/storage/wallet/update_icon()
 

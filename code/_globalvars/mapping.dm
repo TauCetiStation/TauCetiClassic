@@ -28,6 +28,7 @@ var/list/prisonsecuritywarp = list()	//prison security goes to these
 var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
 var/list/ninjastart = list()
+var/list/eorgwarp = list()
 var/list/cardinal = list(NORTH, SOUTH, EAST, WEST)
 var/list/cardinalz = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)
 var/list/cornerdirs = list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
@@ -37,14 +38,6 @@ var/list/reverse_dir = list(2, 1, 3, 8, 10, 9, 11, 4, 6, 5, 7, 12, 14, 13, 15, 3
 
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
-
-var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
-//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
-//(Exceptions: extended, sandbox and nuke) -Errorage
-//Was list("3" = 30, "4" = 70).
-//Spacing should be a reliable method of getting rid of a body -- Urist.
-//Go away Urist, I'm restoring this to the longer list. ~Errorage
-
 
 //List of preloaded templates
 var/list/datum/map_template/map_templates = list()
@@ -56,3 +49,4 @@ var/list/datum/map_template/map_templates = list()
 //var/list/datum/map_template/shuttle_templates = list()
 var/list/datum/map_template/shelter_templates = list()
 var/list/datum/map_template/holoscene_templates = list()
+var/list/datum/map_template/spacestructures_templates = list()

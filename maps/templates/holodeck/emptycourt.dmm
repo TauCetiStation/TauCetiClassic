@@ -3,77 +3,75 @@
 /turf/simulated/floor/holofloor{
 	icon_state = "dark"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "b" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "c" = (
 /turf/simulated/floor/holofloor{
 	dir = 9;
 	icon_state = "red"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "d" = (
 /turf/simulated/floor/holofloor{
 	dir = 1;
 	icon_state = "red"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "e" = (
 /turf/simulated/floor/holofloor{
 	dir = 1;
 	icon_state = "green"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "f" = (
 /turf/simulated/floor/holofloor{
 	dir = 8;
 	icon_state = "red"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "g" = (
 /turf/simulated/floor/holofloor,
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "h" = (
 /turf/simulated/floor/holofloor{
 	dir = 5;
 	icon_state = "green"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "i" = (
 /turf/simulated/floor/holofloor{
 	dir = 10;
 	icon_state = "red"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "j" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "green"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "k" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "red"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "l" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "green"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 "m" = (
 /turf/simulated/floor/holofloor{
 	dir = 6;
 	icon_state = "green"
 	},
-/area/holodeck/source_emptycourt)
+/area/station/civilian/holodeck/source_emptycourt)
 
 (1,1,1) = {"
 c

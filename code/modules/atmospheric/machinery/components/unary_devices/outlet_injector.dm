@@ -10,7 +10,7 @@
 	desc = "Passively injects air into its surroundings. Has a valve attached to it that can control flow rate."
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 15000   // 15000 W ~ 20 HP
 
@@ -25,7 +25,7 @@
 	layer = GAS_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	icon_state = "map_injector_on"
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atom_init()
@@ -39,6 +39,7 @@
 	..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon()
+	..()
 	if(!powered())
 		icon_state = "off"
 	else
@@ -125,10 +126,10 @@
 		return FALSE
 
 	if(signal.data["power"])
-		use_power = text2num(signal.data["power"])
+		set_power_use(text2num(signal.data["power"]))
 
 	if(signal.data["power_toggle"])
-		use_power = !use_power
+		set_power_use(!use_power)
 
 	if(signal.data["inject"])
 		inject()

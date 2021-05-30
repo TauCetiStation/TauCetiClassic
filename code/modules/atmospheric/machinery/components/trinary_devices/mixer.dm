@@ -6,7 +6,7 @@
 	name = "gas mixer"
 
 	can_unwrench = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 3700    // This also doubles as a measure of how powerful the mixer is, in Watts. 3700 W ~ 5 HP
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -22,9 +22,10 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/on
 	icon_state = "map_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_icon(safety = FALSE)
+	..()
 	if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/m_mixer))
 		icon_state = "m"
 	else if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/t_mixer))
@@ -38,7 +39,7 @@
 		icon_state += use_power ? "on" : "off"
 	else
 		icon_state += "off"
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 
 /obj/machinery/atmospherics/components/trinary/mixer/update_underlays()
 	if(..())
@@ -90,7 +91,7 @@
 	var/datum/gas_mixture/air3 = AIR3
 
 	//Figure out the amount of moles to transfer
-	var/transfer_moles = (set_flow_rate * mixing_inputs[air1] / air1.volume) * air1.total_moles + (set_flow_rate * mixing_inputs[air1] / air2.volume) * air2.total_moles
+	var/transfer_moles = (set_flow_rate * mixing_inputs[air1] / air1.volume) * air1.total_moles + (set_flow_rate * mixing_inputs[air2] / air2.volume) * air2.total_moles
 
 	var/power_draw = -1
 	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
@@ -137,8 +138,10 @@
 				<a href='?src=\ref[src];node2_c=0.1'>+</a>
 				"}
 
-	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=atmo_mixer")
-	onclose(user, "atmo_mixer")
+	var/datum/browser/popup = new(user, "atmo_mixer", "[src.name] control")
+	popup.set_content("<TT>[dat]</TT>")
+	popup.open()
+
 
 /obj/machinery/atmospherics/components/trinary/mixer/Topic(href, href_list)
 	if(!..())
@@ -173,7 +176,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/t_mixer/on
 	icon_state = "tmap_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/trinary/mixer/t_mixer/SetInitDirections()
 	switch(dir)
@@ -194,7 +197,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/m_mixer/on
 	icon_state = "mmap_on"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/atmospherics/components/trinary/mixer/m_mixer/SetInitDirections()
 	switch(dir)

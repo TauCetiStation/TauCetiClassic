@@ -1,5 +1,7 @@
 /turf/simulated
 	name = "station"
+	plane = FLOOR_PLANE
+
 	var/wet = 0
 	var/image/wet_overlay = null
 	var/thermite = 0
@@ -8,16 +10,23 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 	var/dirt = 0
+	var/footstep
+	var/barefootstep
+	var/clawfootstep
+	var/heavyfootstep
 
 /turf/simulated/atom_init()
-	. = ..()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/atom_init_late()
 	levelupdate()
 
 /turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir, blooddatum = null)
 	var/typepath
 	if(ishuman(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
-	else if(isalien(M))
+	else if(isxeno(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/claws
 	else // can shomeone make shlime footprint shprites later pwetty pwease?
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints/paws
@@ -31,13 +40,13 @@
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "<span class='warning'>Movement is admin-disabled.</span>")//This is to identify lag problems
 		return
 
 	if (istype(A, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/Hulk = A
 		if(!Hulk.lying)
-			playsound(src, 'sound/effects/hulk_step.ogg', 50, 1)
+			playsound(src, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
 	if (istype(A,/mob/living/carbon))
 		var/mob/living/carbon/M = A
 		if(M.lying && !M.crawling)        return
@@ -51,30 +60,6 @@
 				dirtoverlay.alpha = 20
 			else
 				dirtoverlay.alpha = min(dirtoverlay.alpha+5, 255)
-
-		if(istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
-
-			//Footstep sound
-			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
-				var/obj/item/clothing/shoes/O = H.shoes
-
-				var/footstepsound = "footsteps"
-
-				if(istype(H.shoes, /obj/item/clothing/shoes/clown_shoes))
-					if(prob(25))
-						footstepsound = "clownstep"
-				if(H.shoes.wet)
-					footstepsound = 'sound/effects/waterstep.ogg'
-
-				if(H.m_intent == "run")
-					if(O.footstep >= 2)
-						O.footstep = 0
-						playsound(src, footstepsound, 50, 1)
-					else
-						O.footstep++
-				else
-					playsound(src, footstepsound, 20, 1)
 
 		// Tracking blood
 		var/list/bloodDNA = null
@@ -93,51 +78,11 @@
 
 		if (bloodDNA)
 			src.AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
-			var/turf/simulated/from = get_step(M,reverse_direction(M.dir))
+			var/turf/simulated/from = get_step(M, turn(M.dir, 180))
 			if(istype(from) && from)
 				from.AddTracks(M,bloodDNA,0,M.dir,blooddatum) // Going
 
 			bloodDNA = null
-
-		switch (src.wet)
-			if(1)
-				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && !((istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)))
-						M.slip("the wet floor", 5, 3)
-					else
-						M.inertia_dir = 0
-						return
-				else
-					if (M.m_intent == "run")
-						M.slip("the wet floor", 5, 3)
-					else
-						M.inertia_dir = 0
-						return
-
-			if(2) //lube                //can cause infinite loops - needs work
-				M.stop_pulling()
-				step(M, M.dir)
-				spawn(1) step(M, M.dir)
-				spawn(2) step(M, M.dir)
-				spawn(3) step(M, M.dir)
-				spawn(4) step(M, M.dir)
-				M.take_bodypart_damage(2) // Was 5 -- TLE
-				M.slip("the floor", 0, 10)
-			if(3) // Ice
-				if(istype(M, /mob/living/carbon/human)) // Added check since monkeys don't have shoes
-					if ((M.m_intent == "run") && (!(istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP) || !(istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)) && prob(30))
-						M.slip("the icy floor", 4, 3)
-						step(M, M.dir)
-					else
-						M.inertia_dir = 0
-						return
-				else
-					if (M.m_intent == "run" && prob(30))
-						M.slip("the icy floor", 4, 3)
-						step(M, M.dir)
-					else
-						M.inertia_dir = 0
-						return
 
 	..()
 
@@ -159,7 +104,7 @@
 
 	//Species-specific blood.
 	if(M.species)
-		newblood.basedatum = new M.species.blood_color
+		newblood.basedatum = new(M.species.blood_datum)
 	else
 		newblood.basedatum = new/datum/dirt_cover/red_blood()
 
@@ -186,35 +131,60 @@
 
 		//Species-specific blood.
 		if(H.species)
-			this.basedatum = new/datum/dirt_cover(H.species.blood_color)
+			this.basedatum = new(H.species.blood_datum)
 		else
 			this.basedatum = new/datum/dirt_cover/red_blood()
 		this.update_icon()
 
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 
-	else if( istype(M, /mob/living/carbon/alien ))
+	else if( istype(M, /mob/living/carbon/xenomorph ))
 		var/obj/effect/decal/cleanable/blood/xeno/this = new /obj/effect/decal/cleanable/blood/xeno(src)
 		this.blood_DNA["UNKNOWN BLOOD"] = "X*"
 
 	else if( istype(M, /mob/living/silicon/robot ))
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
+/turf/simulated/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
+	// Make toxins vomit look different
+	if(toxvomit)
+		var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
+		if(!new_color)
+			V.icon_state = "vomittox_[pick(1,4)]"
+		else
+			V.icon_state = "vomittox_nc_[pick(1,4)]"
+			V.alpha = 127
+			V.color = new_color.color
+			V.light_color = V.color
+			V.set_light(3)
+			V.stop_light()
+
 //Wet floor procs.
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)
+	addtimer(CALLBACK(src, .proc/make_dry_floor), rand(71 SECONDS, 80 SECONDS), TIMER_UNIQUE|TIMER_OVERRIDE)
 	if(wet < severity)
 		wet = severity
+		UpdateSlip()
 
 		if(severity < LUBE_FLOOR) // Thats right, lube does not add nor clean wet overlay. So if the floor was wet before and we add lube, wet overlay simply stays longer.
 			if(!wet_overlay)      // For stealth - floor must be dry, so added lube effect will be invisible.
 				wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
-				overlays += wet_overlay
-
-		addtimer(CALLBACK(src, .proc/make_dry_floor), rand(710,800), TIMER_UNIQUE|TIMER_OVERRIDE)
+				add_overlay(wet_overlay)
 
 /turf/simulated/proc/make_dry_floor()
 	if(wet)
 		if(wet_overlay)
-			overlays -= wet_overlay
+			cut_overlay(wet_overlay)
 			wet_overlay = null
 		wet = 0
+		UpdateSlip()
+
+/turf/simulated/proc/UpdateSlip()
+	switch(wet)
+		if(WATER_FLOOR)
+			AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+		if(LUBE_FLOOR)
+			AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
+		else
+			qdel(GetComponent(/datum/component/slippery))

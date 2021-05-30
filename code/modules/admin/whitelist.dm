@@ -10,6 +10,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Whitelist Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -32,7 +33,7 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=whitelist;size=600x500")
+	usr << browse(output,"window=whitelist;size=600x500")
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
@@ -45,6 +46,7 @@
 	var/output = {"<!DOCTYPE html>
 <html>
 <head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 <title>Whitelist Panel for [user_ckey]</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
@@ -81,7 +83,7 @@
 </body>
 </html>"}
 
-	usr << browse(entity_ja(output),"window=whitelist_user;size=750x500")
+	usr << browse(output,"window=whitelist_user;size=750x500")
 
 /datum/admins/proc/whitelist_add_user()
 	if(!check_rights(R_WHITELIST))
@@ -151,7 +153,7 @@
 
 	target_ckey = ckey(target_ckey)
 	role = lowertext(role)
-	reason = sql_sanitize_text(reason)
+	reason = sanitize_sql(reason)
 	adm_ckey = ckey(adm_ckey)
 
 	if(!target_ckey || !role || !reason || !adm_ckey)
@@ -170,17 +172,14 @@
 			to_chat(usr, "<span class='warning'>[role] for [target_ckey] already exists in whitelist.</span>")
 		return FALSE
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_whitelist"))
 		if(!added_by_bot)
 			to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
 		return FALSE
 
-	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `whitelist` (`ckey`, `role`, `ban`, `reason`, `addby`, `addtm`, `editby`, `edittm`) VALUES ('[target_ckey]', '[role]', '0', '[reason]', '[adm_ckey]', NOW(), '[adm_ckey]', NOW());")
+	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_whitelist` (`ckey`, `role`, `ban`, `reason`, `addby`, `addtm`, `editby`, `edittm`) VALUES ('[target_ckey]', '[sanitize_sql(role)]', '0', '[reason]', '[adm_ckey]', NOW(), '[adm_ckey]', NOW());")
 	if(!insert_query.Execute())
-		var/fail_msg = insert_query.ErrorMsg()
-		world.log << "SQL ERROR (I): [fail_msg]"
-		message_admins("SQL ERROR (I): [fail_msg]")
+		message_admins("SQL ERROR")
 		return FALSE
 
 	if(!role_whitelist[target_ckey])
@@ -191,13 +190,23 @@
 	if(!added_by_bot)
 		message_admins("[key_name_admin(usr)] [msg]")
 		log_admin("[key_name(usr)] [msg]")
-		send2slack_logs(key_name(usr), msg, "(WHITELIST)")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINWL),
+			attachment_title = "WHITELIST",
+			attachment_msg = "**[key_name(usr)]** [msg]",
+			attachment_color = BRIDGE_COLOR_ADMINWL,
+		)
 		usr.client.holder.whitelist_panel()
 		usr.client.holder.whitelist_view(target_ckey)
 	else
 		message_admins("[adm_ckey] [msg]")
 		log_admin("[adm_ckey] [msg]")
-		send2slack_logs(adm_ckey, msg, "(WHITELIST BOT)")
+		world.send2bridge(
+			type = list(BRIDGE_ADMINWL),
+			attachment_title = "WHITELIST BOT",
+			attachment_msg = "**[adm_ckey]** [msg]",
+			attachment_color = BRIDGE_COLOR_ADMINWL,
+		)
 	return TRUE
 
 /datum/admins/proc/whitelist_DB_edit(target_ckey, role, ban, ban_edit, reason, adm_ckey)
@@ -207,7 +216,7 @@
 
 	target_ckey = ckey(target_ckey)
 	role = lowertext(role)
-	reason = sql_sanitize_text(reason)
+	reason = sanitize_sql(reason)
 	adm_ckey = ckey(adm_ckey)
 
 	if(!target_ckey || !role || !reason || !adm_ckey)
@@ -228,21 +237,18 @@
 		to_chat(usr, "<span class='warning'>[role] for [target_ckey] does not exist in whitelist.</span>")
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_whitelist"))
 		to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
 		return
 
 	var/sql_update
 	if(ban_edit)
-		sql_update = "UPDATE `whitelist` SET ban = '[ban]', reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[role]'"
+		sql_update = "UPDATE `erro_whitelist` SET ban = '[sanitize_sql(ban)]', reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
 	else
-		sql_update = "UPDATE `whitelist` SET reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[role]'"
+		sql_update = "UPDATE `erro_whitelist` SET reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
 	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
 	if(!query_update.Execute())
-		var/fail_msg = query_update.ErrorMsg()
-		world.log << "SQL ERROR (U): [fail_msg]"
-		message_admins("SQL ERROR (U): [fail_msg]")
+		message_admins("SQL ERROR")
 		return
 
 	var/msg = "changed reason in whitelist from [sanitize(role_whitelist[target_ckey][role]["reason"])] to [sanitize(reason)] for [target_ckey] as [role]."
@@ -255,8 +261,13 @@
 	role_whitelist[target_ckey][role]["edittm"] = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 
 	message_admins("[key_name_admin(usr)] [msg]")
-	log_admin("[key_name(usr)] [msg]")
-	send2slack_logs(key_name(usr), msg, "(WHITELIST)")
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINWL),
+		attachment_title = "WHITELIST",
+		attachment_msg = "**[key_name(usr)]** [msg]",
+		attachment_color = BRIDGE_COLOR_ADMINWL,
+	)
 
 	whitelist_view(target_ckey)
 
@@ -266,12 +277,11 @@
 
 	role_whitelist = list()
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_whitelist"))
 		world.log << "SQL ERROR (L): whitelist: connection failed to SQL database."
 		return
 
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT * FROM whitelist")
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT * FROM erro_whitelist")
 
 	if(!select_query.Execute())
 		world.log << "SQL ERROR (L): whitelist: [select_query.ErrorMsg()]."
@@ -310,7 +320,7 @@
 			return FALSE
 		return TRUE
 
-	if(M.client && config.whitelisted_species_by_time[role] && M.client.player_ingame_age >= config.whitelisted_species_by_time[role])
+	if(M.client && config.whitelisted_species_by_time[role] && (isnum(M.client.player_ingame_age) && M.client.player_ingame_age >= config.whitelisted_species_by_time[role]))
 		return TRUE
 
 	return FALSE

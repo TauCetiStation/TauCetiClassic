@@ -43,23 +43,16 @@
 			occupied = 0
 		qdel(src)
 
-
-/obj/structure/displaycase/meteorhit(obj/O)
-		new /obj/item/weapon/shard( src.loc )
-		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
-		qdel(src)
-
-
 /obj/structure/displaycase/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))
 			src.density = 0
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
-			playsound(src, "shatter", 70, 1)
+			playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 			update_icon()
 	else
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/structure/displaycase/update_icon()
@@ -71,11 +64,12 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	src.health -= W.force
-	src.healthcheck()
-	..()
-	return
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	. = ..()
+	health -= W.force
+	healthcheck()
 
 /obj/structure/displaycase/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -83,7 +77,7 @@
 /obj/structure/displaycase/attack_hand(mob/user)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
-		to_chat(user, "\b You deactivate the hover field built into the case.")
+		to_chat(user, "<b>You deactivate the hover field built into the case.</b>")
 		src.occupied = 0
 		src.add_fingerprint(user)
 		update_icon()

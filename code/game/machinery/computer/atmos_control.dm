@@ -1,13 +1,13 @@
 /obj/item/weapon/circuitboard/atmoscontrol
-	name = "\improper Central Atmospherics Computer Circuitboard"
+	name = "Central Atmospherics Computer Circuitboard"
 	build_path = /obj/machinery/computer/atmoscontrol
 
 /obj/machinery/computer/atmoscontrol
-	name = "\improper Central Atmospherics Computer"
+	name = "Central Atmospherics Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	light_color = "#00b000"
-	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
+	circuit = /obj/item/weapon/circuitboard/atmoscontrol
 	req_access = list(access_ce)
 	allowed_checks = ALLOWED_CHECK_NONE
 
@@ -25,33 +25,31 @@
 	if(current)
 		dat += specific()
 	else
-		for(var/obj/machinery/alarm/alarm in machines)
+		for(var/obj/machinery/alarm/alarm in alarm_list)
 			if(alarm.hidden_from_console)
 				continue
-			dat += "<a href='?src=\ref[src]&alarm=\ref[alarm]'>"
+			var/color
 			switch(max(alarm.danger_level, alarm.alarm_area.atmosalm))
-				if (0)
-					dat += "<font color=green>"
 				if (1)
-					dat += "<font color=blue>"
+					color = "average"
 				if (2)
-					dat += "<font color=red>"
-			dat += "[alarm]</font></a><br/>"
-	user << browse(entity_ja(dat), "window=atmoscontrol")
+					color = "bad"
+			dat += "<a class='[color]' href='?src=\ref[src]&alarm=\ref[alarm]'>[alarm]</a><br/>"
 
-/obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		user.visible_message("<span class='red'>\The [user] swipes \a [I] through \the [src], causing the screen to flash!</span>",
-			                 "<span class='red'>You swipe your [I] through \the [src], the screen flashing as you gain full control.</span>",
-			                 "You hear the swipe of a card through a reader, and an electronic warble.")
+	var/datum/browser/popup = new(user, "atmoscontrol")
+	popup.set_content(dat)
+	popup.open()
 
-		emagged = TRUE
-		overridden = TRUE
-		return
+/obj/machinery/computer/atmoscontrol/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	user.visible_message("<span class='red'>\The [user] swipes \a suspicious card through \the [src], causing the screen to flash!</span>",
+			             "<span class='red'>You swipe your card through \the [src], the screen flashing as you gain full control.</span>",
+			             "You hear the swipe of a card through a reader, and an electronic warble.")
 
-	return ..()
-
-// This is here for non nano support which this computer is actually uses for now.
+	emagged = TRUE
+	overridden = TRUE
+	return TRUE
 
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = get_turf(src)
@@ -60,7 +58,7 @@
 	var/output = "<b>Air Status:</b><br>"
 
 	if(total == 0)
-		output += "<font color='red'><b>Warning: Cannot obtain air sample for analysis.</b></font>"
+		output += "<span class='red'><b>Warning: Cannot obtain air sample for analysis.</b></span>"
 		return output
 
 	output += {"
@@ -290,9 +288,9 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 <HR>
 "}
 			if (current.mode == AALARM_MODE_PANIC)
-				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
+				output += "<span class='red'><B>PANIC SYPHON ACTIVE</B></span><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
 			else
-				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
+				output += "<A class='red' href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><B>ACTIVATE PANIC SYPHON IN AREA</B></A>"
 
 			output += "<br><br>Atmospheric Lockdown: <a href='?src=\ref[src];alarm=\ref[current];atmos_unlock=[current.alarm_area.air_doors_activated]'>[current.alarm_area.air_doors_activated ? "<b>ENABLED</b>" : "Disabled"]</a>"
 		if (AALARM_SCREEN_VENT)
@@ -303,10 +301,10 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 					var/list/data = current.alarm_area.air_vent_info[id_tag]
 					var/state = ""
 					if(!data)
-						state = "<font color='red'> can not be found!</font>"
+						state = "<span class='red'> can not be found!</span>"
 						data = list("external" = 0) //for "0" instead of empty string
 					else if (data["timestamp"] + AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
+						state = "<span class='red'> not responding!</span>"
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
 <B>Operating:</B>
@@ -346,10 +344,10 @@ siphoning
 					var/list/data = current.alarm_area.air_scrub_info[id_tag]
 					var/state = ""
 					if(!data)
-						state = "<font color='red'> can not be found!</font>"
+						state = "<span class='red'> can not be found!</span>"
 						data = list("external" = 0) //for "0" instead of empty string
 					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
-						state = "<font color='red'> not responding!</font>"
+						state = "<span class='red'> not responding!</span>"
 
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
@@ -371,8 +369,8 @@ Nitrous Oxide
 <BR>
 "}
 					sensor_data += {"
-<B>Panic syphon:</B> [data["panic"]?"<font color='red'><B>PANIC SYPHON ACTIVATED</B></font>":""]
-<A href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'><font color='[(data["panic"]?"blue'>Dea":"red'>A")]ctivate</font></A><BR>
+<B>Panic syphon:</B> [data["panic"]?"<span class='red'><B>PANIC SYPHON ACTIVATED</B></span>":""]
+<A [data["panic"]? null :" class='red'" ] href='?src=\ref[src];alarm=\ref[current];id_tag=[id_tag];command=panic_siphon;val=[!data["panic"]]'>[(data["panic"]?"Dea":"A")]ctivate</A><BR>
 <HR>
 "}
 			else
@@ -384,11 +382,11 @@ Nitrous Oxide
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
 <b>Air machinery mode for the area:</b><ul>"}
 			var/list/modes = list(AALARM_MODE_SCRUBBING   = "Filtering - Scrubs out contaminants",\
-					AALARM_MODE_REPLACEMENT = "<font color='blue'>Replace Air - Siphons out air while replacing</font>",\
-					AALARM_MODE_PANIC       = "<font color='red'>Panic - Siphons air out of the room</font>",\
-					AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
-					AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
-					AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
+					AALARM_MODE_REPLACEMENT = "<span class='blue'>Replace Air - Siphons out air while replacing</span>",\
+					AALARM_MODE_PANIC       = "<span class='red'>Panic - Siphons air out of the room</span>",\
+					AALARM_MODE_CYCLE       = "<span class='red'>Cycle - Siphons air before replacing</span>",\
+					AALARM_MODE_FILL        = "<span class='green'>Fill - Shuts off scrubbers and opens vents</span>",\
+					AALARM_MODE_OFF         = "<span class='blue'>Off - Shuts off vents and scrubbers</span>",)
 			for(var/m in 1 to modes.len)
 				if (current.mode==m)
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}

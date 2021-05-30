@@ -46,6 +46,14 @@ Class Variables:
    manual (num)
       Currently unused.
 
+    min_operational_temperature (num)
+        The minimal value returned by get_current_temperature() if the machine is currently
+        "running".
+
+    max_operational_temperature (num)
+        The maximum value returned by get_current_temperature() if the machine is currently
+        "running".
+
 Class Procs:
    New()                     'game/machinery/machine.dm'
 
@@ -99,18 +107,20 @@ Class Procs:
 	layer = DEFAULT_MACHINERY_LAYER
 	var/stat = 0
 	var/emagged = 0
-	var/use_power = 1
+	var/use_power = IDLE_POWER_USE
 		//0 = dont run the auto
 		//1 = run auto, use idle
 		//2 = run auto, use active
 	var/idle_power_usage = 0
 	var/active_power_usage = 0
-	var/power_channel = EQUIP
+	var/power_channel = STATIC_EQUIP
 		//EQUIP,ENVIRON or LIGHT
+	var/current_power_usage = 0 // How much power are we currently using, dont change by hand, change power_usage vars and then use set_power_use
+	var/area/current_power_area // What area are we powering currently
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
-	var/global/gl_uid = 1
+	var/static/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0
 	var/mob/living/occupant = null
@@ -122,18 +132,34 @@ Class Procs:
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+	var/speed_process = FALSE  // Process as fast as possible?
+
+	var/min_operational_temperature = 5
+	var/max_operational_temperature = 10
 
 /obj/machinery/atom_init()
 	. = ..()
 	machines += src
-	START_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		START_PROCESSING(SSfastprocess, src)
+	else
+		START_PROCESSING(SSmachines, src)
+
 	power_change()
+	update_power_use()
 
 /obj/machinery/Destroy()
 	if(frequency)
 		set_frequency(null)
+
+	set_power_use(NO_POWER_USE)
 	machines -= src
-	STOP_PROCESSING(SSmachine, src)
+
+	if (speed_process)
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		STOP_PROCESSING(SSmachines, src)
 
 	dropContents()
 	return ..()
@@ -162,7 +188,7 @@ Class Procs:
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
 		pulse2.anchored = 1
-		pulse2.dir = pick(cardinal)
+		pulse2.set_dir(pick(cardinal))
 
 		QDEL_IN(pulse2, 10)
 	..()
@@ -226,35 +252,48 @@ Class Procs:
 	if(prob(50))
 		qdel(src)
 
-//sets the use_power var and then forces an area power update @ 7e65984ae2ec4e7eaaecc8da0bfa75642c3489c7 bay12
-/obj/machinery/proc/update_use_power(new_use_power, force_update = 0)
-	if ((new_use_power == use_power) && !force_update)
-		return	//don't need to do anything
+// The main proc that controls power usage of a machine, change use_power only with this proc
+/obj/machinery/proc/set_power_use(new_use_power)
+	if(current_power_usage && current_power_area) // We are tracking the area that is powering us so we can remove power from the right one if we got moved or something
+		current_power_area.removeStaticPower(current_power_usage, power_channel)
+		current_power_area = null
 
+	current_power_usage = 0
 	use_power = new_use_power
 
-	//force area power update
-	//use_power() forces an area power update on the next tick so have to pass the correct power amount for this tick
-	if (use_power >= 2)
-		use_power(active_power_usage)
-	else if (use_power == 1)
-		use_power(idle_power_usage)
-	else
-		use_power(0)
+	var/area/A = get_area(src)
+	if(!A || !anchored || stat & NOPOWER) // Unwrenched machines aren't plugged in, unpowered machines don't use power
+		return
 
-/obj/machinery/proc/auto_use_power()
-	if(!powered(power_channel))
-		return 0
-	if(src.use_power == 1)
-		use_power(idle_power_usage,power_channel, 1)
-	else if(src.use_power >= 2)
-		use_power(active_power_usage,power_channel, 1)
-	return 1
+	if(use_power == IDLE_POWER_USE && idle_power_usage)
+		current_power_area = A
+		current_power_usage = idle_power_usage
+		current_power_area.addStaticPower(current_power_usage, power_channel)
+	else if(use_power == ACTIVE_POWER_USE && active_power_usage)
+		current_power_area = A
+		current_power_usage = active_power_usage
+		current_power_area.addStaticPower(current_power_usage, power_channel)
+
+/obj/machinery/proc/update_power_use()
+	set_power_use(use_power)
+
+// Unwrenching = unpluging from a power source
+/obj/machinery/wrenched_change()
+	update_power_use()
 
 //By default, we check everything.
 //But sometimes, we need to override this check.
 /obj/machinery/proc/is_operational_topic()
 	return !((stat & (NOPOWER|BROKEN|MAINT|EMPED)) || (panel_open && !interact_open))
+
+/obj/machinery/get_current_temperature()
+	if(!is_operational_topic())
+		return 0
+
+	if(emagged)
+		return max_operational_temperature += rand(10, 20)
+
+	return rand(min_operational_temperature, max_operational_temperature)
 
 /obj/machinery/Topic(href, href_list)
 	..()
@@ -275,7 +314,7 @@ Class Procs:
 	add_fingerprint(usr)
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1
+	A.powerupdate = 1
 
 	return TRUE
 
@@ -325,7 +364,7 @@ Class Procs:
 		return 1
 	if(!is_interactable())
 		return 1
-	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || IsAdminGhost(user)))
+	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	if (!can_mob_interact(user))
@@ -333,17 +372,21 @@ Class Procs:
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
 		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
-			DW.Topic("close=1", list("close"="1"))
+			user << browse(null, "window=wires")
+			user.unset_machine(src)
 	if((allowed_checks & ALLOWED_CHECK_A_HAND) && !emagged && !allowed(user))
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return 1
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1 // <- wtf is this var and its comments...
+	A.powerupdate = 1 // <- wtf is this var and its comments...
 
 	interact(user)
 	return 0
+
+/obj/machinery/tgui_close(mob/user)
+	user.unset_machine(src)
 
 /obj/machinery/CheckParts(list/parts_list)
 	..()
@@ -359,7 +402,7 @@ Class Procs:
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
@@ -368,7 +411,7 @@ Class Procs:
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
 		deconstruction()
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
 		transfer_fingerprints_to(M)
 		M.state = 2
@@ -381,7 +424,7 @@ Class Procs:
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
 			panel_open = 1
 			icon_state = icon_state_open
@@ -395,8 +438,8 @@ Class Procs:
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = turn(dir,-90)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		set_dir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
 	return 0
@@ -405,11 +448,11 @@ Class Procs:
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, time/W.toolspeed, target = src))
+		if(W.use_tool(src, user, time, volume = 50))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
+			wrenched_change()
 		return 1
 	return 0
 
@@ -421,7 +464,7 @@ Class Procs:
 			var/P
 			if(W.works_from_distance)
 				to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-				for(var/var/obj/item/C in component_parts)
+				for(var/obj/item/C in component_parts)
 					to_chat(user, "<span class='notice'>    [C.name]</span>")
 			for(var/obj/item/weapon/stock_parts/A in component_parts)
 				for(var/D in CB.req_components)
@@ -442,7 +485,7 @@ Class Procs:
 			RefreshParts()
 		else
 			to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-			for(var/var/obj/item/C in component_parts)
+			for(var/obj/item/C in component_parts)
 				to_chat(user, "<span class='notice'>    [C.name]</span>")
 		if(shouldplaysound)
 			W.play_rped_sound()
@@ -463,15 +506,14 @@ Class Procs:
 	return
 
 /obj/machinery/proc/state(msg)
-	for(var/mob/O in hearers(src, null))
-		O.show_message("[bicon(src)] <span class = 'notice'>[msg]</span>", 2)
+	audible_message("[bicon(src)] <span class = 'notice'>[msg]</span>")
 
 /obj/machinery/proc/ping(text=null)
 	if (!text)
 		text = "\The [src] pings."
 
 	state(text, "blue")
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /obj/machinery/tesla_act(power)
 	..()

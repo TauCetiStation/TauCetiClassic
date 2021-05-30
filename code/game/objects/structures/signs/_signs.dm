@@ -13,14 +13,13 @@
 	icon_state = "backing"
 
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && buildable_sign)
-		if(user.is_busy())
+	if(iswrench(W) && buildable_sign)
+		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
-		if(do_after(user,40,target = src))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+		if(W.use_tool(src, user, 40, volume = 50))
+			playsound(src, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
 			var/obj/item/sign_backing/SB = new (get_turf(user))
@@ -74,7 +73,7 @@
 		//It's import to clone the pixel layout information
 		//Otherwise signs revert to being on the turf and
 		//move jarringly
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(src, 'sound/effects/spray2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
 		newsign.pixel_x = pixel_x
 		newsign.pixel_y = pixel_y
@@ -83,10 +82,10 @@
 	else
 		switch(W.damtype)
 			if("fire")
-				playsound(loc, 'sound/items/welder.ogg', 80, 1)
+				playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 				src.health -= W.force * 1
 			if("brute")
-				playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
+				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 				src.health -= W.force * 0.75
 			else
 		if (src.health <= 0)
@@ -103,32 +102,34 @@
 	w_class = ITEM_SIZE_LARGE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
-/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity, params)
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>",
 							 "<span class='notice'>You attach the sign to [T].</span>")
-		playsound(T, 'sound/items/deconstruct.ogg', 50, 1)
+		playsound(T, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 		new sign_path(T)
 		qdel(src)
 	else
 		return ..()
 
-/obj/item/sign_backing/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/weldingtool))
-		playsound(loc, 'sound/items/welder.ogg', 50, 1)
-		new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
-		qdel(src)
-
+/obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
+	if(iswelder(I))
+		if(I.use(0, user))
+			if(I.use_tool(src, user, 20, volume = 50))
+				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
+				qdel(src)
+				return
+	return ..()
 /obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen Logo"
+	name = "Nanotrasen Logo"
 	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 
 /obj/structure/sign/mark
 	layer = TURF_LAYER
 	icon = 'icons/misc/mark.dmi'
-	name = "\improper Symbol"
+	name = "Symbol"
 	desc = "You look at a symbol."
 	icon_state = "b1"
 
@@ -137,7 +138,7 @@
 	icon_state = "C"
 
 /obj/structure/sign/chinese
-	name = "\improper chinese restaurant sign"
+	name = "chinese restaurant sign"
 	desc = "A glowing dragon invites you in."
 	icon_state = "chinese"
 	light_color = "#d00023"
@@ -145,11 +146,26 @@
 	light_range = 3
 
 /obj/structure/sign/barber
-	name = "\improper barbershop sign"
+	name = "barbershop sign"
 	desc = "A glowing red-blue-white stripe you won't mistake for any other!"
 	icon_state = "barber"
 
 /obj/structure/sign/monkey_painting
-	name = "\improper Mr. Deempisi portrait"
+	name = "Mr. Deempisi portrait"
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
 	icon_state = "monkey_painting"
+
+/obj/structure/sign/shuttle_medbay
+	name = "medbay sign"
+	desc = "High-tech screen, showing you where shuttle medbay is."
+	icon_state = "shuttlemed"
+
+/obj/structure/sign/shuttle_brig
+	name = "brig sign"
+	desc = "High-tech screen, showing you where shuttle brig is."
+	icon_state = "shuttlebrig"
+
+/obj/structure/sign/shuttle_eng
+	name = "engineering sign"
+	desc = "High-tech screen, showing you where shuttle engineering is."
+	icon_state = "shuttleng"

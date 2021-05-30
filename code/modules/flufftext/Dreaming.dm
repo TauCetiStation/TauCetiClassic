@@ -44,12 +44,17 @@ var/list/nightmares = list(
 			to_chat(src, "<span class='warning italic'>... [pick(nightmares)] ...</span>")
 			adjustHalLoss(4) // Nightmares are quite agonizing. Since just sleeping remove 3 HalLoss, adding 4 here would in total give just 1 haldamage/life tick.
 			if(prob(10))
-				var/list/creepysounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',
-				'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',
-				'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',
-				'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',
-				'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-				src << pick(creepysounds)
+				var/list/creepysounds = list('sound/effects/ghost.ogg',               'sound/effects/ghost2.ogg',
+				                             'sound/hallucinations/wail.ogg',         'sound/effects/screech.ogg',
+				                             'sound/hallucinations/behind_you1.ogg',  'sound/hallucinations/behind_you2.ogg',
+				                             'sound/hallucinations/far_noise.ogg',    'sound/hallucinations/i_see_you_3.ogg',
+				                             'sound/hallucinations/im_here1.ogg',     'sound/hallucinations/im_here2.ogg',
+				                             'sound/hallucinations/i_see_you_1.ogg',  'sound/hallucinations/i_see_you_2.ogg',
+				                             'sound/hallucinations/look_up1.ogg',     'sound/hallucinations/look_up2.ogg',
+				                             'sound/hallucinations/over_here1.ogg',   'sound/hallucinations/over_here2.ogg',
+				                             'sound/hallucinations/over_here3.ogg',   'sound/hallucinations/turn_around1.ogg',
+				                             'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg')
+				playsound_local(null, pick(creepysounds), VOL_EFFECTS_MASTER, 40, FALSE)
 		else
 			to_chat(src, "<span class='notice italic'>... [pick(dreams)] ...</span>")
 		sleep(rand(40,70))
@@ -61,7 +66,7 @@ var/list/nightmares = list(
 	return TRUE
 
 /mob/living/carbon/proc/handle_dreams()
-	if(client && !dreaming && prob(5))
+	if(client && !dreaming && prob(10))
 		dream()
 
 /mob/living/carbon/var/dreaming = NOT_DREAMING

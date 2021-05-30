@@ -5,10 +5,9 @@
 	icon = 'icons/mob/hulk.dmi'
 	icon_state = "hulk"
 	icon_living = "hulk"
-	maxHealth = 200
-	health = 200
+	maxHealth = 300
+	health = 300
 	immune_to_ssd = 1
-	anchored = 1
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -16,19 +15,18 @@
 	response_disarm = "flails at"
 	response_harm   = "punches"
 
-	harm_intent_damage = 0
-	melee_damage_lower = 5
-	melee_damage_upper = 20
-	attacktext = "brutally crushes"
+	harm_intent_damage = 7
+	melee_damage = 13
+	attacktext = "brutally crush"
 	environment_smash = 2
 
 	speed = 1
-	a_intent = "harm"
-	stop_automated_movement = 1
+	a_intent = INTENT_HARM
+	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -40,7 +38,12 @@
 	minbodytemp = 0
 	var/hulk_powers = list()
 	var/mob/living/original_body
-	var/health_regen = 1
+	var/health_regen = 1.5
+
+	animalistic = FALSE
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
@@ -55,16 +58,15 @@
 	icon = 'icons/mob/hulk_zilla.dmi'
 	icon_state = "zilla"
 	icon_living = "zilla"
-	maxHealth = 400
-	health = 400
+	maxHealth = 300
+	health = 300
 
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "brutally bites"
+	melee_damage = 15
+	attacktext = "brutally gnaw"
 
 	speed = 2
 
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_mill,
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_gas,
@@ -73,6 +75,27 @@
 						/obj/effect/proc_holder/spell/aoe_turf/hulk_lazor
 							)
 	health_regen = 3
+
+/mob/living/simple_animal/hulk/Clowan
+	name = "Champion of Honk"
+	real_name = "Champion of Honk"
+	desc = ""
+	icon = 'icons/mob/GyperHonk.dmi'
+	icon_state = "Clowan"
+	icon_living = "Clowan"
+	maxHealth = 300
+	health = 300
+	melee_damage = 5
+	attacktext = "brutally HONK"
+
+	speed = 3
+
+	attack_sound = list('sound/items/bikehorn.ogg')
+	health_regen = 3
+
+	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/HulkHONK,
+						/obj/effect/proc_holder/spell/aoe_turf/clown_joke
+							)
 
 /mob/living/simple_animal/hulk/atom_init()
 	..()
@@ -84,7 +107,7 @@
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
-	to_chat(src, "\blue Can eat limbs (left mouse button).")
+	to_chat(src, "<span class='notice'>Can eat limbs (left mouse button).</span>")
 
 /mob/living/simple_animal/hulk/Life()
 	if(health < 1)
@@ -92,22 +115,23 @@
 		return
 
 	var/matrix/Mx = matrix()
-	if(health <= 35)
+	if(health < maxHealth * 0.2)
 		Mx.Scale(0.75)
 		Mx.Translate(0,-5)
-	else if(health <= 75)
+	else if(health < maxHealth * 0.4)
 		Mx.Scale(0.8)
 		Mx.Translate(0,-4)
-	else if(health <= 135)
+	else if(health < maxHealth * 0.6)
 		Mx.Scale(0.85)
 		Mx.Translate(0,-3)
-	else if(health <= 175)
+	else if(health < maxHealth * 0.8)
 		Mx.Scale(0.9)
 		Mx.Translate(0,-2)
 	else
 		Mx.Scale(1)
 		Mx.Translate(0,0)
 	transform = Mx
+	default_transform = Mx
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(environment)
@@ -139,7 +163,7 @@
 	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 	smoke.set_up(10, 0, src.loc)
 	smoke.start()
-	playsound(src.loc, 'sound/effects/bamf.ogg', 50, 2)
+	playsound(src, 'sound/effects/bamf.ogg', VOL_EFFECTS_MASTER)
 
 	var/obj/effect/decal/remains/human/RH = new /obj/effect/decal/remains/human(src.loc)
 	var/matrix/Mx = matrix()
@@ -190,23 +214,19 @@
 			if (O.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with [O] by [user]. ")
+			visible_message("<span class='warning'><b>[src] has been attacked with [O] by [user].</b></span>")
 		else
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [O] bounces harmlessly off of [src]. ")
+			visible_message("<span class='warning'><b>[O] bounces harmlessly off of [src].</b></span>")
 	else
-		to_chat(usr, "\red This weapon is ineffective, it does no damage.")
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("\red [user] gently taps [src] with [O]. ")
+		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
+		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
 /mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
-	..()
-	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug) || istype(P, /obj/item/projectile/bullet/weakbullet))
-		health -= P.agony / 10
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
+
+	health -= P.agony / 10
 
 /mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
 	do_attack_animation(D)
@@ -227,21 +247,21 @@
 	if(D.density)
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
-		playsound(D, 'sound/machines/electric_door_open.ogg', 30, 1, -4)
+		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
 		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
 
 /mob/living/proc/hulk_scream(obj/target, chance)
 	if(prob(chance))
-		visible_message("<span class='userdanger'>[src] has punched \the <B>[target]!</span>",\
+		visible_message("<span class='userdanger'>[src] has punched \the [target]!</span>",\
 		"<span class='userdanger'>You punch the [target]!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
+		playsound(target, 'sound/effects/hulk_hit_airlock.ogg', VOL_EFFECTS_MASTER, 75)
 		return 0
 	else
 		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
 		visible_message("<span class='userdanger'>[src] has destroyed some mechanic in the [target]!</span>",\
 		"<span class='userdanger'>You destroy some mechanic in the [target] door, which holds it in place!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+		playsound(target, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 		return 1

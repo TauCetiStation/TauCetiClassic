@@ -29,19 +29,25 @@ var/list/score=list(
 	"researchdone"   = 0,
 	"eventsendured"  = 0, // how many random events did the station survive?
 	"powerloss"      = 0, // how many APCs have poor charge?
-	"escapees"       = 0, // how many people got out alive?
-	"deadcrew"       = 0, // dead bodies on the station, oh no
 	"mess"           = 0, // how much poo, puke, gibs, etc went uncleaned
 	"meals"          = 0,
 	"disease"        = 0, // how many rampant, uncured diseases are on board the station
 	"deadcommand"    = 0, // used during rev, how many command staff perished
 	"arrested"       = 0, // how many traitors/revs/whatever are alive in the brig
 	"traitorswon"    = 0, // how many traitors were successful?
-	"roleswon"        = 0, // how many roles were successful?
+	"roleswon"       = 0, // how many roles were successful?
 	"allarrested"    = 0, // did the crew catch all the enemies alive?
 	"opkilled"       = 0, // used during nuke mode, how many operatives died?
 	"disc"           = 0, // is the disc safe and secure?
 	"nuked"          = 0, // was the station blown into little bits?
+	"destranomaly"   = 0, // anomaly of cult
+
+	//crew
+	"crew_escaped"   = 0,      // how many people got out alive?
+	"crew_dead"      = 0,      // dead bodies on the station, oh no
+	"crew_total"     = 0,      // how many people was registred as crew
+	"crew_survived"  = 0,      // how many people was registred as crew
+	"captain"        = list(), // who was captain of the shift (or captains?...)
 
 	// these ones are mainly for the stat panel
 	"powerbonus"    = 0, // if all APCs on the station are running optimally, big bonus
@@ -49,22 +55,31 @@ var/list/score=list(
 	"deadaipenalty" = 0, // is the AI dead? if so, big penalty
 	"foodeaten"     = 0, // nom nom nom
 	"clownabuse"    = 0, // how many times a clown was punched, struck or otherwise maligned
-	"richestname"   = null, // this is all stuff to show who was the richest alive on the shuttle
-	"richestjob"    = null,  // kinda pointless if you dont have a money system i guess
+	"richestname"   = 0, // this is all stuff to show who was the richest alive on the shuttle
+	"richestjob"    = 0, // kinda pointless if you dont have a money system i guess
 	"richestcash"   = 0,
-	"richestkey"    = null,
-	"dmgestname"    = null, // who had the most damage on the shuttle (but was still alive)
-	"dmgestjob"     = null,
+	"richestkey"    = 0,
+	"dmgestname"    = 0, // who had the most damage on the shuttle (but was still alive)
+	"dmgestjob"     = 0,
 	"dmgestdamage"  = 0,
-	"dmgestkey"     = null
+	"dmgestkey"     = 0
 )
 
+//line format: key, name, title, desc
 var/global/list/achievements = list()
 
+//line format: type, title, time, content
+var/global/list/centcomm_communications = list()
+
+//line format: mode, html
+var/global/list/antagonists_completion = list()
 
 // Icons that appear on the Round End pop-up browser
 var/global/list/end_icons = list()
 var/endgame_info_logged = 0
+
+// Xenomorphs
+var/facehuggers_control_type = FACEHUGGERS_PLAYABLE
 
 // Unsorted stuff
 var/global_message_cooldown = 1
@@ -78,5 +93,15 @@ var/list/ignore_vision_inside = list(
 	/obj/machinery/dna_scannernew,
 	/obj/machinery/sleeper,
 	/obj/effect/dummy,
-	/obj/structure/droppod
+	/obj/structure/droppod,
+	/obj/item/organ/external/head/skeleton,
 	)
+
+// Is initiated in setup_religions(). Used to save all info about chaplain's religion.
+var/global/datum/religion/chaplain/chaplain_religion
+// Cultists religion. You/I can change it?
+var/global/datum/religion/cult/cult_religion
+var/global/list/datum/religion/all_religions = list()
+
+var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
+var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.

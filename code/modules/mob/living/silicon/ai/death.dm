@@ -1,8 +1,6 @@
 /mob/living/silicon/ai/death(gibbed)
 	if(stat == DEAD)	return
 	stat = DEAD
-	if (src.custom_sprite == 1)//check for custom AI sprite, defaulting to blue screen if no.
-		icon_state = "[ckey]-ai-crash"
 	if("[icon_state]_dead" in icon_states(src.icon,1))
 		icon_state = "[icon_state]_dead"
 	else
@@ -19,42 +17,41 @@
 
 	var/callshuttle = 0
 
-	for(var/obj/machinery/computer/communications/commconsole in world)
-		if(commconsole.z == ZLEVEL_CENTCOMM)
+	for(var/obj/machinery/computer/communications/commconsole in communications_list)
+		if(is_centcom_level(commconsole.z))
 			continue
 		if(istype(commconsole.loc,/turf))
 			break
 		callshuttle++
 
-	for(var/obj/item/weapon/circuitboard/communications/commboard in world)
-		if(commboard.z == ZLEVEL_CENTCOMM)
+	for(var/obj/item/weapon/circuitboard/communications/commboard in circuitboard_communications_list)
+		if(is_centcom_level(commboard.z))
 			continue
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			break
 		callshuttle++
 
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
-		if(shuttlecaller.z == ZLEVEL_CENTCOMM)
+		if(is_centcom_level(shuttlecaller.z))
 			continue
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break
 		callshuttle++
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(SSticker.mode.name == "rp-revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
 		callshuttle = 0
 
 	if(callshuttle == 3) //if all three conditions are met
 		SSshuttle.incall(2)
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-		world << sound('sound/AI/shuttlecalled.ogg')
+		SSshuttle.announce_emer_called.play()
 
 	if(explosive)
 		spawn(10)
 			explosion(src.loc, 3, 6, 12, 15)
 
-	for(var/obj/machinery/ai_status_display/O in world) //change status
+	for(var/obj/machinery/ai_status_display/O in ai_status_display_list) //change status
 		spawn( 0 )
 		O.mode = 2
 		if (istype(loc, /obj/item/device/aicard))

@@ -11,27 +11,49 @@ html, body {
 }
 body {
 	background: #fff;
-    font-family: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 9pt;
-    line-height: 1.2;
+	font-family: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 18px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	word-wrap: break-word;
 }
-h1, h2, h3, h4, h5, h6 {color: #00f; font-family: Georgia, Verdana, sans-serif;}
+
 img {
 	margin: 0;
 	padding: 0;
-	line-height: 1;
+	/* -ms-interpolation-mode: nearest-neighbor; */
+	/* image-rendering: pixelated; */
 }
 img.icon {
-	width: 16px;
-	height: 16px;
+	height: 1em;
+	min-height: 16px;
+	width: auto;
+	vertical-align: bottom;
 }
 a {color: #0000ff;}
+a.visited {color: #ff00ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
 
+/* "repeated" badge class for combined messages */
+.r:before {
+	content: 'x';
+}
+.r {
+	display: inline-block;
+	min-width: 0.5em;
+	font-size: 0.7em;
+	padding: 0.2em 0.3em;
+	margin-left: 2px;
+	line-height: 1;
+	color: white;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: crimson;
+	border-radius: 10px;
+}
 
 /*****************************************
 *
@@ -63,9 +85,9 @@ a.popt {text-decoration: none;}
 	padding: 8px;
 	background: #ddd;
 	text-decoration: none;
-    font-variant: small-caps;
-    font-size: 1.1em;
-    font-weight: bold;
+	font-variant: small-caps;
+	font-size: 16px;
+	font-weight: bold;
 	color: #333;
 }
 #newMessages:hover {background: #ccc;}
@@ -73,7 +95,7 @@ a.popt {text-decoration: none;}
 #ping {
 	position: fixed;
 	top: 0;
-	right: 40px;
+	right: 80px;
 	width: 45px;
 	background: #ddd;
 	height: 30px;
@@ -83,50 +105,66 @@ a.popt {text-decoration: none;}
 #ping .ms {
 	display: block;
 	text-align: center;
-	font-size: 8pt;
+	font-size: 10px;
 	padding-top: 2px;
 }
-#options {
+#userBar {
 	position: fixed;
 	top: 0;
 	right: 0;
 }
-#options a {
+
+#userBar .subCell {
 	background: #ddd;
-    height: 30px;
+	height: 30px;
 	padding: 5px 0;
 	display: block;
 	color: #333;
 	text-decoration: none;
-    line-height: 28px;
-    border-top: 1px solid #b4b4b4;
+	line-height: 28px;
+	border-top: 1px solid #b4b4b4;
 }
-#options a:hover {background: #ccc;}
-#options .toggle {
+
+
+#userBar .subCell:hover {background: #ccc;}
+#userBar .subCell:active {background: #999;}
+#userBar .toggle {
 	width: 40px;
-    background: #ccc;
-    border-top: 0;
-    float: right;
-    text-align: center;
+	background: #ccc;
+	border-top: 0;
+	float: right;
+	text-align: center;
 }
-#options .sub {clear: both; display: none; width: 160px;}
-#options .sub.scroll {overflow-y: scroll;}
-#options .sub a {padding: 5px 0 5px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
-#options .sub span {
+#userBar .sub {clear: both; display: none; width: 180px;}
+#userBar .sub.scroll {overflow-y: scroll;}
+#userBar .sub.subCell {padding: 3px 0 3px 8px; line-height: 30px; font-size: 0.9em; clear: both;}
+
+#userBar .sub .subCell-title {
 	display: block;
 	line-height: 30px;
 	float: left;
+	margin-left: 5px;
+	font-size: 0.85em;
 }
-#options .sub i {
+
+#userBar .sub i {
 	display: block;
-	padding: 0 5px;
 	font-size: 1.1em;
 	width: 22px;
 	text-align: center;
 	line-height: 30px;
 	float: right;
+	white-space: nowrap;
 }
-#options #decreaseFont {border-top: 0;}
+
+#userBar .sub input {
+	position: absolute;
+	padding: 7px 5px;
+	width: 121px;
+	line-height: 30px;
+	float: left;
+}
+#userBar .topCell {border-top: 0;}
 
 /* POPUPS */
 .popup {
@@ -215,25 +253,51 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #226b4e;}
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #08457e; text-decoration: underline;}
+.motd {
+	color: #470062;
+	border-left: 3px solid #470062;
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {/* color: #08457e; */ color: inherit; text-decoration: underline;}
 .motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover {color: #1560bd;}
+
+/* ANNOUNCEMENTS */
+.host_announcements {
+	border-left: 3px solid #800000;
+	color: #800000;
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
+.host_announcements h1, .host_announcements h2, .host_announcements h3, .host_announcements h4, .host_announcements h5, .host_announcements h6 {
+	color: #800000;
+	text-decoration: underline;
+}
+.host_announcements hr {
+	margin: 8px auto;
+	width: 60%;
+	border: 0;
+	border-top: 1px dashed #800000;
+}
+
+/* TEST MERGES */
+.test_merges {
+	border-left: 3px solid #000; /* #013220 */
+	padding-left: 8px;
+	margin-bottom: 4px;
+}
+
 
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .adminooc, .adminlooc, .admin, .adminobserverooc, .adminooc, .adminobserver, .adminsay, .wet {font-weight: bold;}
 
 /* ADD HERE FOR ITALIC */
-.italic {font-style: italic;}
+.italic, .italics {font-style: italic;}
 
 /* OUTPUT COLORS */
 .highlight {background: yellow;}
-h1, h2, h3, h4, h5, h6	{color: #0000ff;font-family: Georgia, Verdana, sans-serif;}
+h1, h2, h3, h4, h5, h6	{display: inline-block; font-family: Georgia, Verdana, sans-serif;}
 em						{font-style: normal;	font-weight: bold;}
-.motd					{color: #226b4e;	font-family: Verdana, sans-serif;}
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6
-						{color: #08457e;	text-decoration: underline;}
-.motd a, .motd a:link, .motd a:visited, .motd a:active, .motd a:hover
-						{color: #1560bd;}
 
 /* OOC */
 .adminobserverooc		{color: #0099cc;}
@@ -244,18 +308,22 @@ em						{font-style: normal;	font-weight: bold;}
 .adminnotice			{color: #0000ff;}
 .boldannounce			{color: #ff0000; font-weight: bold;}
 .success				{color: #00BF36; font-weight: bold;}
+.vote					{color: purple;}
 
 /* Miscellaneous */
 .say					{}
 .alert					{color: #ff0000;}
 h1.alert, h2.alert		{color: #000000;}
-.emote					{					font-style: italic;}
-.selecteddna			{color: #FFFFFF; 	background-color: #001B1B}
+.emote					{font-style: italic;}
+.selecteddna			{color: #FFFFFF; background-color: #001B1B}
 .artefact				{color: #ffa500;}
+.electronicblue			{color: #00BFFF; background-color: #414141}
+.piety					{color: #ceca0e; text-shadow: 3px 3px 6px rgba(0,0,0,0.2);}
 
 /* Radio Channels */
 .comradio				{color: #193A7A;}
 .syndradio				{color: #6D3F40;}
+.voxradio				{color: #88900e;}
 .centradio				{color: #5C5C8A;}
 .airadio				{color: #FF00FF;}
 .secradio				{color: #A30000;}
@@ -268,7 +336,12 @@ h1.alert, h2.alert		{color: #000000;}
 .radio					{color: #008000;}
 .deptradio				{color: #993399;}
 .deadsay				{color: #5c00e6;}
+.ghostalert				{color: #6600ff; font-style: italic; font-weight: bold;}
 .newscaster				{color: #800000;}
+
+.binarysay    			{color: #20c20e; background-color: #414141; display: block;}
+.binarysay a  			{color: #00ff00;}
+.binarysay a:active, .binarysay a:visited {color: #88ff88;}
 
 /* Game Messages */
 .attack					{color: #ff0000;}
@@ -279,7 +352,6 @@ h1.alert, h2.alert		{color: #000000;}
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
 .danger					{color: #ff0000;	font-weight: bold;}
 .warning				{color: #ff0000;	font-style: italic;}
-.italics				{font-style: italic;}
 .red					{color: #ff0000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
@@ -298,7 +370,9 @@ h1.alert, h2.alert		{color: #000000;}
 .abductor_team3			{color: #6E4040;	font-style: italic;}
 .abductor_team4			{color: #800080;	font-style: italic;}
 .cult					{color: #800080;	font-weight: bold; font-style: italic;}
-.alien					{color: #543354;}
+.alien					{color: #6b286b;	font-style: italic;}
+.hive,	.hive_queen		{color: #420a81;	font-weight: bold;}
+.hive_queen				{font-size: medium;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 
@@ -307,15 +381,18 @@ h1.alert, h2.alert		{color: #000000;}
 .modooc					{color: #184880;	font-weight: bold;}
 .adminmod				{color: #402A14;	font-weight: bold;}
 
+.admin_announce {display: inline-block; width: 100%; color: #000; background: #bababa;}
+
 /* Languages */
 .tajaran				{color: #803B56;}
 .tajaran_signlang		{color: #941C1C;}
 .skrell					{color: #00CED1;}
-.soghun					{color: #228B22;}
+.soghun					{color: #73a800;}
 .vox					{color: #AA00AA;}
 .rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 .ipc					{color: #505050;	font-weight: bold;	font-family: "Times New Roman", Times, serif;}
+.syndcode				{color: #C21B1B;}
 
 .interface				{color: #330033;}
 
@@ -326,3 +403,44 @@ h1.alert, h2.alert		{color: #000000;}
 /* HELPER CLASSES */
 .text-normal {font-weight: normal; font-style: normal;}
 .hidden {display: none; visibility: hidden;}
+
+/* Popup windows */
+.embedded_tip{position: relative; display: inline;}
+.embedded_tip .embedded_tip-text{
+	display: none;
+	position: absolute;
+	padding: 5px;
+	z-index: 1;
+	bottom: 125%;
+	width: 90vw;
+	word-wrap: break-word;
+	background-color:#353535;
+	color:white;
+	border:1px solid black;
+}
+.embedded_tip:hover .embedded_tip-text{display: block;}
+.embedded_tip-mark{font-style: italic;}
+
+table.staffwho {
+	border-spacing: 0;
+	border-collapse:collapse;
+	color: #333;
+	line-height: 1;
+}
+table.staffwho td, table.staffwho th {
+	margin:0;
+	padding: 2px 4px;
+	font-size: 13px;
+}
+
+table.staffwho th {
+	text-transform: uppercase;
+	text-align: left;
+	color: #807473;
+	font-size: 12px;
+	font-weight: bold;
+}
+table.staffwho .Admins    {color:#E67E22;}
+table.staffwho .Mentors   {color:#E91E63;}
+table.staffwho .Developers{color:#5E5ED1;}
+table.staffwho .Xenovisors{color:#2ECC71;}

@@ -30,10 +30,10 @@
 	var/datum/industry/industry = null
 
 /datum/stock/proc/changeOptimism(dn)
-	optimism = Clamp(optimism + dn, OPTIMISM_MIN, OPTIMISM_MAX)
+	optimism = clamp(optimism + dn, OPTIMISM_MIN, OPTIMISM_MAX)
 
 /datum/stock/proc/setOptimism(n)
-	optimism = Clamp(n, OPTIMISM_MIN, OPTIMISM_MAX)
+	optimism = clamp(n, OPTIMISM_MIN, OPTIMISM_MAX)
 
 /datum/stock/proc/addEvent(datum/stockEvent/E)
 	events |= E
@@ -88,7 +88,7 @@
 			changeOptimism(0.01)
 
 	if(performance)
-		performance = Clamp(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
+		performance = clamp(rand(900,1050) * 0.001 * performance, PERFORMANCE_MIN, PERFORMANCE_MAX)
 
 	disp_value_change = (change > 0) ? 1 : ((change < 0) ? -1 : 0)
 	last_value = current_value
@@ -107,14 +107,12 @@
 		fluctuation_counter = 0
 		fluctuate()
 
-/datum/stock/proc/modifyAccount(whose, by, force = 0)
-	if (SSshuttle.points)
-		if (by < 0 && SSshuttle.points + by < 0 && !force)
-			return 0
-		SSshuttle.points += by
-		stockExchange.balanceLog(whose, by)
-		return 1
-	return 0
+/datum/stock/proc/modifyAccount(whose, amount)
+	. = FALSE
+	if (SSshuttle && isnum(SSshuttle.points) && (amount > 0 || SSshuttle.points + amount > 0))
+		SSshuttle.points += amount
+		stockExchange.balanceLog(whose, amount)
+		. = TRUE
 
 /datum/stock/proc/buyShares(who, howmany)
 	if (howmany <= 0)
@@ -148,7 +146,11 @@
 	return 0
 
 /datum/stock/proc/displayValues(mob/user)
-	user << browse(plotBarGraph(values, "[name] share value per share"), "window=stock_[name];size=450x450")
+	var/dat = plotBarGraph(values, "[name] share value per share")
+
+	var/datum/browser/popup = new(user, "stock_[name]", null, 450, 450)
+	popup.set_content(dat)
+	popup.open()
 
 #undef OPTIMISM_MAX
 #undef OPTIMISM_MIN

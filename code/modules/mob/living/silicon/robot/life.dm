@@ -2,13 +2,14 @@
 	set invisibility = 0
 	//set background = 1
 
-	if (src.monkeyizing)
+	if (notransform)
 		return
 
 	src.blinded = null
 
 	//Status updates, death etc.
 	clamp_values()
+	handle_fire()
 	handle_regular_status_updates()
 	handle_actions()
 
@@ -27,7 +28,7 @@
 //	SetStunned(min(stunned, 30))
 	SetParalysis(min(paralysis, 30))
 //	SetWeakened(min(weakened, 20))
-	sleeping = 0
+	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
 	adjustOxyLoss(0)
@@ -54,11 +55,12 @@
 		src.has_power = 1
 	else
 		if (src.has_power)
-			to_chat(src, "\red You are now running on emergency backup power.")
+			to_chat(src, "<span class='warning'>You are now running on emergency backup power.</span>")
 		src.has_power = 0
 		if(lights_on) // Light is on but there is no power!
 			lights_on = 0
 			set_light(0)
+	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
@@ -70,9 +72,8 @@
 
 	updatehealth()
 
-	if(src.sleeping)
+	if(IsSleeping())
 		Paralyse(3)
-		src.sleeping--
 
 	if(src.resting)
 		Weaken(5)
@@ -155,7 +156,7 @@
 	if(!client)
 		return 0
 
-	if (src.stat == DEAD || XRAY in mutations || src.sight_mode & BORGXRAY)
+	if (src.stat == DEAD || (XRAY in mutations) || (src.sight_mode & BORGXRAY))
 		set_EyesVision()
 		src.sight |= SEE_TURFS
 		src.sight |= SEE_MOBS
@@ -184,16 +185,6 @@
 		src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 	regular_hud_updates()
-
-	var/obj/item/borg/sight/hud/hud = (locate(/obj/item/borg/sight/hud) in src)
-	if(hud && hud.hud)
-		hud.hud.process_hud(src)
-	else
-		switch(src.sensor_mode)
-			if (SEC_HUD)
-				process_sec_hud(src,0)
-			if (MED_HUD)
-				process_med_hud(src,0)
 
 	if (src.healths)
 		if (src.stat != DEAD)
@@ -233,18 +224,14 @@
 			src.healths.icon_state = "health7"
 
 	if (src.syndicate && src.client)
-		if(ticker.mode.name == "traitor")
-			for(var/datum/mind/tra in ticker.mode.traitors)
-				if(tra.current)
-					var/I = image('icons/mob/mob.dmi', loc = tra.current, icon_state = "traitor")
-					src.client.images += I
 		if(src.connected_ai)
 			src.connected_ai.connected_robots -= src
-			src.connected_ai = null
+			src.set_ai_link(null)
 		if(src.mind)
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"
-				ticker.mode.traitors += src.mind
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", src)
+				SSticker.mode.traitors += src.mind
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
@@ -252,19 +239,19 @@
 			if(0.75 to INFINITY)
 				clear_alert("charge")
 			if(0.5 to 0.75)
-				throw_alert("charge","lowcell",1)
+				throw_alert("charge", /obj/screen/alert/lowcell, 60)
 			if(0.25 to 0.5)
-				throw_alert("charge","lowcell",2)
+				throw_alert("charge", /obj/screen/alert/lowcell, 40)
 			if(0.01 to 0.25)
-				throw_alert("charge","lowcell",3)
+				throw_alert("charge", /obj/screen/alert/lowcell, 20)
 			else
-				throw_alert("charge","emptycell")
+				throw_alert("charge", /obj/screen/alert/emptycell)
 	else
-		throw_alert("charge","nocell")
+		throw_alert("charge", /obj/screen/alert/nocell)
 
 	if(pullin)
 		if(pulling)
-			pullin.icon_state = "pull"
+			pullin.icon_state = "pull1"
 		else
 			pullin.icon_state = "pull0"
 
@@ -291,7 +278,7 @@
 		killswitch_time --
 		if(killswitch_time <= 0)
 			if(src.client)
-				to_chat(src, "\red <B>Killswitch Activated")
+				to_chat(src, "<span class='danger'>Killswitch Activated</span>")
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -302,7 +289,7 @@
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client)
-				to_chat(src, "\red <B>Weapon Lock Timed Out!")
+				to_chat(src, "<span class='danger'>Weapon Lock Timed Out!</span>")
 			weapon_lock = 0
 			weaponlock_time = 120
 
@@ -312,3 +299,20 @@
 	else
 		canmove = TRUE
 	return canmove
+
+//Robots on fire
+/mob/living/silicon/robot/handle_fire()
+	if(..())
+		return
+	if(fire_stacks > 0)
+		fire_stacks--
+		fire_stacks = max(0, fire_stacks)
+	else
+		ExtinguishMob()
+		return TRUE
+
+/mob/living/silicon/robot/update_fire()
+	if(on_fire)
+		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+	else
+		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))

@@ -6,10 +6,9 @@
 /obj/item/clothing/head/plaguedoctorhat,
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "b" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/suit/chickensuit,
@@ -18,10 +17,9 @@
 /obj/item/clothing/under/owl,
 /obj/item/clothing/mask/gas/owl_mask,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "c" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/under/gladiator,
@@ -31,10 +29,9 @@
 /obj/item/clothing/mask/gas/sexyclown,
 /obj/item/clothing/mask/gas/sexymime,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "d" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/under/gimmick/rank/captain/suit,
@@ -42,13 +39,22 @@
 /obj/item/clothing/suit/storage/labcoat/mad,
 /obj/item/clothing/glasses/gglasses,
 /obj/item/clothing/mask/cigarette/cigar/havana,
-/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/holoboots,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "e" = (
+/obj/structure/rack/holorack,
+/obj/item/clothing/under/soviet,
+/obj/item/clothing/head/ushanka,
+/obj/item/clothing/suit/imperium_monk,
+/obj/item/clothing/mask/gas/cyborg,
+/turf/simulated/floor/holofloor{
+	icon_state = "cult"
+	},
+/area/station/civilian/holodeck/source_theatre)
+"f" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/under/schoolgirl,
 /obj/item/clothing/head/kitty,
@@ -58,11 +64,10 @@
 /obj/item/clothing/head/rabbitears,
 /obj/item/clothing/glasses/sunglasses/blindfold,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
-"f" = (
+/area/station/civilian/holodeck/source_theatre)
+"g" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/under/suit_jacket,
@@ -74,21 +79,9 @@
 /obj/item/clothing/under/sl_suit,
 /obj/item/clothing/mask/fakemoustache,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
-"g" = (
-/obj/structure/rack/holorack,
-/obj/item/clothing/under/soviet,
-/obj/item/clothing/head/ushanka,
-/obj/item/clothing/suit/imperium_monk,
-/obj/item/clothing/mask/gas/cyborg,
-/turf/simulated/floor/holofloor{
-	dir = 2;
-	icon_state = "cult"
-	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "h" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/suit/wizrobe/marisa/fake,
@@ -100,10 +93,9 @@
 /obj/item/clothing/suit/wizrobe/fake,
 /obj/item/clothing/head/wizard/fake,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "i" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/gloves/white,
@@ -112,122 +104,117 @@
 /obj/item/clothing/head/cueball,
 /obj/item/clothing/suit/holidaypriest,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "j" = (
 /obj/structure/rack/holorack,
 /obj/item/clothing/under/kilt,
-/obj/item/clothing/head/beret,
 /obj/item/clothing/under/pirate,
 /obj/item/clothing/suit/pirate,
 /obj/item/clothing/head/pirate,
 /obj/item/clothing/glasses/eyepatch,
+/obj/item/clothing/head/beret/red,
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "k" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "cult"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "l" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "wood"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "siding1"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "m" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "quiltystair"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "n" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "wood"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "o" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet6-2"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "p" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet14-10"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "q" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet10-8"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "s" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet7-3"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "t" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet15-15"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "u" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet11-12"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "w" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet5-1"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "x" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet13-5"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "y" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet9-4"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 "A" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "wood"
 	},
-/area/holodeck/source_theatre)
+/area/station/civilian/holodeck/source_theatre)
 
 (1,1,1) = {"
 a
-k
-k
+d
+f
 k
 l
 n
@@ -261,7 +248,7 @@ x
 n
 "}
 (4,1,1) = {"
-d
+k
 k
 k
 k
@@ -273,7 +260,7 @@ x
 n
 "}
 (5,1,1) = {"
-e
+k
 k
 k
 k
@@ -285,7 +272,7 @@ x
 n
 "}
 (6,1,1) = {"
-f
+k
 k
 k
 k
@@ -297,7 +284,7 @@ x
 n
 "}
 (7,1,1) = {"
-g
+k
 k
 k
 k
@@ -334,8 +321,8 @@ n
 "}
 (10,1,1) = {"
 j
-k
-k
+e
+g
 k
 m
 n

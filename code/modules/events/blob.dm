@@ -1,28 +1,20 @@
 /datum/event/blob
 	announceWhen	= 12
 	endWhen			= 120
-
-	var/obj/effect/blob/core/Blob
-
-
-/datum/event/blob/announce()
-	command_alert("Confirmed outbreak of level 7 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
-	world << sound('sound/AI/outbreak7.ogg')
-
+	announcement = new /datum/announcement/centcomm/blob/outbreak5
 
 /datum/event/blob/start()
 	var/turf/T = pick(blobstart)
 	if(!T)
 		kill()
 		return
-	Blob = new /obj/effect/blob/core(T, 120)
-	for(var/i = 1; i < rand(3, 4), i++)
-		Blob.process()
 
-
-/datum/event/blob/tick()
-	if(!Blob)
+	var/list/candidates = pollGhostCandidates("Do you want to play as a BLOB?", ROLE_BLOB, poll_time = 150)
+	if(!candidates.len)
 		kill()
 		return
-	if(IsMultiple(activeFor, 3))
-		Blob.process()
+
+	var/mob/candidate = pick(candidates)
+
+	var/obj/effect/blob/core/B = new /obj/effect/blob/core(T, 120, candidate.client)
+	message_admins("[B] has spawned at [COORD(B)] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")

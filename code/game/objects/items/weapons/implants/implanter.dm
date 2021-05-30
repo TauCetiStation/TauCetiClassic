@@ -5,20 +5,17 @@
 	item_state = "syringe_0"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/obj/item/weapon/implant/imp = null
 
 /obj/item/weapon/implanter/proc/update()
-
-
-/obj/item/weapon/implanter/update()
 	if (imp)
 		icon_state = "implanter1"
 	else
 		icon_state = "implanter0"
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/implanter/attack(mob/living/M, mob/user, def_zone)
 	if (!iscarbon(M))
 		return
 	if (!user || !imp)
@@ -28,9 +25,7 @@
 
 	if(M == user || (!user.is_busy() && do_after(user, 50, target = M)))
 		if(src && imp)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			M.log_combat(user, "implanted with [name]")
 			if(imp.implanted(M))
 				user.visible_message("<span class ='userdanger'>[M] has been implanted by [user].</span>", "You implanted the implant into [M].")
 				imp.inject(M, def_zone)
@@ -63,11 +58,19 @@
 	. = ..()
 	update()
 
-/obj/item/weapon/implanter/adrenalin
-	name = "implanter-adrenalin"
+/obj/item/weapon/implanter/adrenaline
+	name = "implanter (A)"
 
-/obj/item/weapon/implanter/adrenalin/atom_init()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+/obj/item/weapon/implanter/adrenaline/atom_init()
+	imp = new /obj/item/weapon/implant/adrenaline(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/emp
+	name = "implanter (M)"
+
+/obj/item/weapon/implanter/emp/atom_init()
+	imp = new /obj/item/weapon/implant/emp(src)
 	. = ..()
 	update()
 
@@ -99,20 +102,22 @@
 		return
 	..()
 
-/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user)
-	if(istype(A,/obj/item) && imp)
+/obj/item/weapon/implanter/compressed/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	if(istype(target,/obj/item) && imp)
 		var/obj/item/weapon/implant/compressed/c = imp
 		if (c.scanned)
-			to_chat(user, "\red Something is already scanned inside the implant!")
+			to_chat(user, "<span class='warning'>Something is already scanned inside the implant!</span>")
 			return
-		c.scanned = A
-		if(istype(A.loc,/mob/living/carbon/human))
-			var/mob/living/carbon/human/H = A.loc
-			H.remove_from_mob(A)
-		else if(istype(A.loc,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = A.loc
-			S.remove_from_storage(A)
-		A.loc.contents.Remove(A)
+		c.scanned = target
+		if(istype(target.loc,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = target.loc
+			H.remove_from_mob(target)
+		else if(istype(target.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = target.loc
+			S.remove_from_storage(target)
+		target.loc.contents.Remove(target)
 		update()
 
 /obj/item/weapon/implanter/storage

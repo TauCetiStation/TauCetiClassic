@@ -13,16 +13,16 @@ var/can_call_ert
 	set desc = "Send an emergency response team to the station."
 
 	if(!holder)
-		to_chat(usr, "\red Only administrators may use this command.")
+		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
 		return
-	if(!ticker)
-		to_chat(usr, "\red The game hasn't started yet!")
+	if(!SSticker)
+		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
 		return
-	if(ticker.current_state == 1)
-		to_chat(usr, "\red The round hasn't started yet!")
+	if(SSticker.current_state == 1)
+		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
 		return
 	if(send_emergency_team)
-		to_chat(usr, "\red Central Command has already dispatched an emergency response team!")
+		to_chat(usr, "<span class='warning'>Central Command has already dispatched an emergency response team!</span>")
 		return
 	if(alert("Do you want to dispatch an Emergency Response Team?",,"Yes","No") != "Yes")
 		return
@@ -31,11 +31,12 @@ var/can_call_ert
 			if("No")
 				return
 	if(send_emergency_team)
-		to_chat(usr, "\red Looks like somebody beat you to it!")
+		to_chat(usr, "<span class='warning'>Looks like somebody beat you to it!</span>")
 		return
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
 	log_admin("[key_name(usr)] used Dispatch Response Team.")
+	feedback_set_details("ERT", "Admin dispatch")
 	trigger_armed_response_team(1)
 
 
@@ -50,7 +51,7 @@ var/can_call_ert
 			to_chat(usr, "An emergency response team has already been sent.")
 			return */
 		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
-			to_chat(usr, "<font color=red><b>You are jobbanned from the emergency reponse team!")
+			to_chat(usr, "<span class='danger'>You are jobbanned from the emergency reponse team!</span>")
 			return
 
 		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
@@ -75,12 +76,12 @@ var/can_call_ert
 			new_commando.key = usr.key
 			create_random_account_and_store_in_mind(new_commando)
 
-			to_chat(new_commando, "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.")
-			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.")
+			to_chat(new_commando, "<span class='notice'>You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
+			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
 			if(!leader_selected)
-				to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer only to your leader and CentComm officials.</b>")
+				to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
 			else
-				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however.")
+				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
 			return
 
 	else
@@ -90,7 +91,7 @@ var/can_call_ert
 /proc/percentage_dead()
 	var/total = 0
 	var/deadcount = 0
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		if(H.client) // Monkeys and mice don't have a client, amirite?
 			if(H.stat == DEAD) deadcount++
 			total++
@@ -102,7 +103,7 @@ var/can_call_ert
 /proc/percentage_antagonists()
 	var/total = 0
 	var/antagonists = 0
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in human_list)
 		if(is_special_character(H) >= 1)
 			antagonists++
 		total++
@@ -140,12 +141,13 @@ var/can_call_ert
 
 	// there's only a certain chance a team will be sent
 	if(!prob(send_team_chance))
-		command_alert("It would appear that an emergency response team was requested for [station_name()]. Unfortunately, we were unable to send one at this time.", "Central Command")
+		var/datum/announcement/centcomm/noert/announcement = new
+		announcement.play()
 		can_call_ert = 0 // Only one call per round, ladies.
 		return
 
-	command_alert("It would appear that an emergency response team was requested for [station_name()]. We will prepare and send one as soon as possible.", "Central Command")
-
+	var/datum/announcement/centcomm/yesert/announcement = new
+	announcement.play()
 	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1
 
@@ -195,30 +197,33 @@ var/can_call_ert
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-//hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
-	if(new_hstyle)
-		M.h_style = new_hstyle
-
-	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in facial_hair_styles_list
-	if(new_fstyle)
-		M.f_style = new_fstyle
-
 	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
 		else
 			M.gender = FEMALE
+
+	//hair
+	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	if(new_hstyle)
+		M.h_style = new_hstyle
+
+	// facial hair
+	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	if(new_fstyle)
+		M.f_style = new_fstyle
+
+
 	//M.rebuild_appearance()
+	M.apply_recolor()
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
 
 	M.real_name = commando_name
 	M.name = commando_name
-	M.age = !leader_selected ? rand(23,35) : rand(35,45)
+	M.age = !leader_selected ? rand(M.species.min_age, M.species.min_age * 1.5) : rand(M.species.min_age * 1.25, M.species.min_age * 1.75)
 
 	M.dna.ready_dna(M)//Creates DNA.
 
@@ -228,8 +233,9 @@ var/can_call_ert
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
-	if(!(M.mind in ticker.minds))
-		ticker.minds += M.mind//Adds them to regular mind list.
+	M.mind.add_antag_hud(ANTAG_HUD_ERT, "hudoperative", M)
+	if(!(M.mind in SSticker.minds))
+		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = spawn_location
 	M.equip_strike_team(leader_selected)
 	return M
@@ -237,32 +243,28 @@ var/can_call_ert
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
 	//Special radio setup
-	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_l_ear)
+	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), SLOT_L_EAR)
 
 	//Replaced with new ERT uniform
-	equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), slot_w_uniform)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), slot_gloves)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), slot_glasses)
+	equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), SLOT_W_UNIFORM)
+	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(src), SLOT_SHOES)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), SLOT_GLOVES)
+	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
 
 	if(leader_selected)
-		var/obj/item/weapon/card/id/ert/W = new(src)
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
 		W.rank = "Emergency Response Team Leader"
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		W.icon_state = "ert-leader"
-		equip_to_slot_or_del(W, slot_wear_id)
+		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	else
-		var/obj/item/weapon/card/id/ert/W = new(src)
-		W.assignment = "Emergency Response Team"
-		W.rank = "Emergency Response Team"
+		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.registered_name = real_name
 		W.name = "[real_name]'s ID Card ([W.assignment])"
-		W.icon_state = "ert"
-		equip_to_slot_or_del(W, slot_wear_id)
+		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
-	START_PROCESSING(SSobj, L)
 	return 1

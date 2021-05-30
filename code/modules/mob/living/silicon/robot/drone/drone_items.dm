@@ -17,16 +17,119 @@
 		/obj/item/light_fixture_frame,
 		/obj/item/apc_frame,
 		/obj/item/alarm_frame,
+		/obj/item/door_control_frame,
 		/obj/item/firealarm_frame,
 		/obj/item/weapon/table_parts,
 		/obj/item/weapon/rack_parts,
 		/obj/item/weapon/camera_assembly,
 		/obj/item/weapon/tank,
-		/obj/item/weapon/circuitboard
+		/obj/item/weapon/circuitboard,
+		/obj/item/weapon/light/tube,
+		/obj/item/weapon/light/bulb
 		)
 
 	//Item currently being held.
 	var/obj/item/wrapped = null
+
+
+/obj/item/weapon/gripper/atom_init()
+	. = ..()
+	RegisterSignal(src, list(COMSIG_HAND_IS), .proc/is_hand)
+	RegisterSignal(src, list(COMSIG_HAND_ATTACK), .proc/attack_as_hand)
+	RegisterSignal(src, list(COMSIG_HAND_DROP_ITEM), .proc/drop_item)
+	RegisterSignal(src, list(COMSIG_HAND_PUT_IN), .proc/put_in)
+	RegisterSignal(src, list(COMSIG_HAND_GET_ITEM), .proc/get_item)
+
+/obj/item/weapon/gripper/Destroy()
+	UnregisterSignal(src, list(COMSIG_HAND_IS, COMSIG_HAND_ATTACK,
+                               COMSIG_HAND_DROP_ITEM, COMSIG_HAND_PUT_IN, COMSIG_HAND_GET_ITEM))
+
+	return ..()
+
+
+/obj/item/weapon/gripper/proc/is_hand(datum/source, atom/T, mob/user, params)
+	return TRUE
+
+/obj/item/weapon/gripper/proc/clear_wrapped()
+	wrapped = null
+
+/obj/item/weapon/gripper/proc/wrap(obj/item/I)
+	wrapped = I
+	I.forceMove(src)
+	RegisterSignal(I, list(COMSIG_PARENT_PREQDELETED), .proc/clear_wrapped)
+
+/obj/item/weapon/gripper/proc/attack_as_hand(datum/source, atom/T, mob/user, params)
+	if(wrapped)
+		return
+
+	if(!(isturf(user.loc) && (isturf(T) || isturf(T.loc)) && T.Adjacent(user)))
+		return
+
+	//disable intent actions with mobs
+	if(ismob(T))
+		return
+
+	//handling opened apc with cell
+	if(istype(T, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/A = T
+		if(A.opened)
+			if(A.cell)
+
+				wrap(A.cell)
+
+				A.cell.add_fingerprint(user)
+				A.cell.updateicon()
+				A.cell = null
+
+				A.charging = FALSE
+				A.update_icon()
+
+				user.visible_message("<span class='warning'>[user] removes the power cell from [A]!</span>", "You remove the power cell.")
+				return
+
+	T.attack_hand(user)
+	return
+
+/obj/item/weapon/gripper/proc/drop_item(datum/source, atom/T, mob/user)
+	if(!wrapped)
+		return FALSE
+	var/obj/item/I = wrapped
+	if(T)
+		I.forceMove(T)
+	else
+		I.forceMove(get_turf(user))
+	UnregisterSignal(wrapped, list(COMSIG_PARENT_PREQDELETED))
+	wrapped = null
+	return TRUE
+
+/obj/item/weapon/gripper/proc/put_in(datum/source, obj/item/I, mob/user)
+	//Check if the item in gripper
+	if(wrapped)
+		return FALSE
+
+	//Check if the item is blacklisted.
+	var/grab = FALSE
+	for(var/typepath in can_hold)
+		if(istype(I, typepath))
+			grab = TRUE
+			break
+
+	//We can grab the item, finally.
+	if(grab)
+		if(user.pulling == I)
+			user.stop_pulling()
+		wrap(I)
+		to_chat(user, "You collect \the [I].")
+		return TRUE
+
+	to_chat(user, "<span class='warning'>Your gripper cannot hold \the [I].</span>")
+	return FALSE
+
+/obj/item/weapon/gripper/proc/get_item(datum/source, mob/user)
+	if(wrapped)
+		return wrapped
+	return src //return src to signal COMSIG_HAND_ATTACK
+
 
 /obj/item/weapon/gripper/paperwork
 	name = "paperwork gripper"
@@ -43,17 +146,6 @@
 		/obj/item/weapon/newspaper
 		)
 
-/obj/item/weapon/gripper/chemistry
-	name = "chemistry gripper"
-	desc = "A simple grasping tool for chemical work."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "gripper"
-
-	can_hold = list(
-		/obj/item/weapon/reagent_containers/glass,
-		/obj/item/weapon/storage/pill_bottle
-		)
-
 /obj/item/weapon/gripper/service
 	name = "service gripper"
 	desc = "A simple grasping tool for service work."
@@ -65,6 +157,52 @@
 		/obj/item/weapon/reagent_containers/food
 		)
 
+/obj/item/weapon/gripper/science
+	name = "science gripper"
+	desc = "A complex grasping tool for science work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/tank,
+		/obj/item/device/assembly/signaler,
+		/obj/item/device/gps,
+		/obj/item/weapon/reagent_containers/food/snacks/monkeycube,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/stack/sheet/metal,
+		/obj/item/stack/sheet/glass,
+		/obj/item/stack/cable_coil,
+		/obj/item/stack/sheet/mineral,
+		/obj/item/stack/sheet/plasteel,
+		/obj/item/weapon/circuitboard,
+		/obj/item/device/mmi,
+		/obj/item/brain,
+		/obj/item/device/mmi/posibrain,
+		/obj/item/robot_parts,
+		/obj/item/weapon/stock_parts,
+		/obj/item/device/flash
+		)
+
+/obj/item/weapon/gripper/medical
+	name = "medical gripper"
+	desc = "A holder for limbs and chemical containers."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/reagent_containers/blood,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/organ/internal,
+		/obj/item/organ/external,
+		/obj/item/brain,
+		/obj/item/robot_parts/l_arm,
+		/obj/item/robot_parts/r_arm,
+		/obj/item/robot_parts/l_leg,
+		/obj/item/robot_parts/r_leg
+		)
+
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
 	if(wrapped)
@@ -74,7 +212,10 @@
 	if(wrapped)
 		wrapped.attack_self(user)
 
-/obj/item/weapon/gripper/verb/drop_item()
+		if(QDELETED(wrapped))
+			wrapped = null
+
+/obj/item/weapon/gripper/verb/drop_item_verb()
 
 	set name = "Drop Item"
 	set desc = "Release an item from your magnetic gripper."
@@ -90,83 +231,17 @@
 		wrapped = null
 		return
 
-	to_chat(src.loc, "\red You drop \the [wrapped].")
-	wrapped.loc = get_turf(src)
+	to_chat(src.loc, "<span class='warning'>You drop \the [wrapped].</span>")
+	var/obj/item/I = wrapped
+	I.forceMove(get_turf(src))
 	wrapped = null
 	//update_icon()
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/gripper/afterattack(atom/target, mob/living/user, flag, params)
-
-	if(!target || !flag) //Target is invalid or we are not adjacent.
-		return
-
-	//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
-	if(!wrapped)
-		for(var/obj/item/thing in src.contents)
-			wrapped = thing
-			break
-
-	if(wrapped) //Already have an item.
-
-		wrapped.loc = user
-		//Pass the attack on to the target.
-		target.attackby(wrapped,user)
-
-		if(wrapped && src && wrapped.loc == user)
-			wrapped.loc = src
-
-		//Sanity/item use checks.
-
-		if(!wrapped || !user)
-			return
-
-		if(wrapped.loc != src.loc)
-			wrapped = null
-			return
-
-	if(istype(target,/obj/item)) //Check that we're not pocketing a mob.
-
-		//...and that the item is not in a container.
-		if(!isturf(target.loc))
-			return
-
-		var/obj/item/I = target
-
-		//Check if the item is blacklisted.
-		var/grab = 0
-		for(var/typepath in can_hold)
-			if(istype(I,typepath))
-				grab = 1
-				break
-
-		//We can grab the item, finally.
-		if(grab)
-			to_chat(user, "You collect \the [I].")
-			I.loc = src
-			wrapped = I
-			return
-		else
-			to_chat(user, "\red Your gripper cannot hold \the [target].")
-
-	else if(istype(target,/obj/machinery/power/apc))
-		var/obj/machinery/power/apc/A = target
-		if(A.opened)
-			if(A.cell)
-
-				wrapped = A.cell
-
-				A.cell.add_fingerprint(user)
-				A.cell.updateicon()
-				A.cell.loc = src
-				A.cell = null
-
-				A.charging = 0
-				A.update_icon()
-
-				user.visible_message("\red [user] removes the power cell from [A]!", "You remove the power cell.")
+/obj/item/weapon/gripper/afterattack(atom/target, mob/user, proximity, params)
+	return
 
 //TODO: Matter decompiler.
 /obj/item/weapon/matter_decompiler
@@ -187,9 +262,9 @@
 /obj/item/weapon/matter_decompiler/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/matter_decompiler/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/matter_decompiler/afterattack(atom/target, mob/user, proximity, params)
 
-	if(!flag) return //Not adjacent.
+	if(!proximity) return //Not adjacent.
 
 	//We only want to deal with using this on turfs. Specific items aren't important.
 	var/turf/T = get_turf(target)
@@ -201,7 +276,7 @@
 
 	for(var/mob/M in T)
 		if(istype(M,/mob/living/simple_animal/lizard) || istype(M,/mob/living/simple_animal/mouse))
-			src.loc.visible_message("\red [src.loc] sucks [M] into its decompiler. There's a horrible crunching noise.","\red It's a bit of a struggle, but you manage to suck [M] into your decompiler. It makes a series of visceral crunching noises.")
+			src.loc.visible_message("<span class='warning'>[src.loc] sucks [M] into its decompiler. There's a horrible crunching noise.</span>","<span class='warning'>It's a bit of a struggle, but you manage to suck [M] into your decompiler. It makes a series of visceral crunching noises.</span>")
 			new/obj/effect/decal/cleanable/blood/splatter(get_turf(src))
 			qdel(M)
 			stored_comms["wood"]++
@@ -217,15 +292,15 @@
 			if(!istype(D))
 				return
 			if(user.is_busy()) return
-			to_chat(D, "\red You begin decompiling the other drone.")
+			to_chat(D, "<span class='warning'>You begin decompiling the other drone.</span>")
 
 			if(!do_after(D,50,target = M))
-				to_chat(D, "\red You need to remain still while decompiling such a large object.")
+				to_chat(D, "<span class='warning'>You need to remain still while decompiling such a large object.</span>")
 				return
 
 			if(!M || !D) return
 
-			to_chat(D, "\red You carefully and thoroughly decompile your downed fellow, storing as much of its resources as you can within yourself.")
+			to_chat(D, "<span class='warning'>You carefully and thoroughly decompile your downed fellow, storing as much of its resources as you can within yourself.</span>")
 
 			qdel(M)
 			new/obj/effect/decal/cleanable/blood/oil(get_turf(src))
@@ -293,22 +368,22 @@
 		grabbed_something = 1
 
 	if(grabbed_something)
-		to_chat(user, "\blue You deploy your decompiler and clear out the contents of \the [T].")
+		to_chat(user, "<span class='notice'>You deploy your decompiler and clear out the contents of \the [T].</span>")
 	else
-		to_chat(user, "\red Nothing on \the [T] is useful to you.")
+		to_chat(user, "<span class='warning'>Nothing on \the [T] is useful to you.</span>")
 	return
 
 //PRETTIER TOOL LIST.
 /mob/living/silicon/robot/drone/installed_modules()
 
 	if(weapon_lock)
-		to_chat(src, "\red Weapon lock active, unable to use modules! Count:[weaponlock_time]")
+		to_chat(src, "<span class='warning'>Weapon lock active, unable to use modules! Count:[weaponlock_time]</span>")
 		return
 
 	if(!module)
 		module = new /obj/item/weapon/robot_module/drone(src)
 
-	var/dat = "<HEAD><TITLE>Drone modules</TITLE></HEAD><BODY>\n"
+	var/dat = ""
 	dat += {"
 	<B>Activated Modules</B>
 	<BR>
@@ -333,7 +408,7 @@
 		else
 			module_string += text("[O]: <A HREF=?src=\ref[src];act=\ref[O]>Activate</A><BR>")
 
-		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(istype(O,/obj/item/stack/cable_coil)))
+		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(iscoil(O)))
 			tools += module_string
 		else
 			resources += module_string
@@ -350,7 +425,9 @@
 
 	dat += resources
 
-	src << browse(entity_ja(dat), "window=robotmod")
+	var/datum/browser/popup = new(src, "robotmod", "Drone modules")
+	popup.set_content(dat)
+	popup.open()
 
 //Putting the decompiler here to avoid doing list checks every tick.
 /mob/living/silicon/robot/drone/use_power()

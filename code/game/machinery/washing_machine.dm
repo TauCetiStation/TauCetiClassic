@@ -1,10 +1,11 @@
 /obj/machinery/washing_machine
 	name = "Washing Machine"
+	desc = "Washes your bloody clothes."
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
@@ -40,7 +41,7 @@
 	else
 		state = 5
 	update_icon()
-	playsound(src, 'sound/items/washingmachine.ogg', 100, 1, 1)
+	playsound(src, 'sound/items/washingmachine.ogg', VOL_EFFECTS_MASTER)
 	sleep(210)
 	for(var/atom/A in contents)
 		A.clean_blood()
@@ -171,6 +172,12 @@
 						var/obj/item/clothing/shoes/orange/L = S
 						if (L.chained)
 							L.remove_cuffs()
+					if(new_shoe_icon_state == "orange1")
+						new_shoe_icon_state = "orange"
+					if(new_shoe_name == "shackles")
+						new_shoe_name = "orange shoes"
+					if(S.item_state == "o_shoes1")
+						S.item_state = "o_shoes"
 					S.icon_state = new_shoe_icon_state
 					S.item_color = wash_color
 					S.name = new_shoe_name
@@ -214,9 +221,9 @@
 	icon_state = "wm_[state][panel]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user)
-	/*if(istype(W,/obj/item/weapon/screwdriver))
+	/*if(isscrewdriver(W))
 		panel = !panel
-		to_chat(user, "\blue you [panel ? "open" : "close"] the [src]'s maintenance panel")*/
+		to_chat(user, "<span class='notice'>you [panel ? </span>"open" : "close"] the [src]'s maintenance panel")*/
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
@@ -282,6 +289,9 @@
 		if ( istype(W,/obj/item/clothing/head/helmet ) )
 			to_chat(user, "This item does not fit.")
 			return
+		if (istype(W, /obj/item/clothing/gloves/pipboy))
+			to_chat(user, "This item does not fit.")
+			return
 		if(!W.canremove) //if "can't drop" item
 			to_chat(user, "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return
@@ -292,9 +302,9 @@
 				W.loc = src
 				state = 3
 			else
-				to_chat(user, "\blue You can't put the item in right now.")
+				to_chat(user, "<span class='notice'>You can't put the item in right now.</span>")
 		else
-			to_chat(user, "\blue The washing machine is full.")
+			to_chat(user, "<span class='notice'>The washing machine is full.</span>")
 	else
 		..()
 	update_icon()
@@ -323,7 +333,7 @@
 			crayon = null
 			state = 1
 		if(5)
-			to_chat(user, "\red The [src] is busy.")
+			to_chat(user, "<span class='warning'>The [src] is busy.</span>")
 		if(6)
 			state = 7
 		if(7)

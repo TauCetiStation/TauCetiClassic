@@ -1,4 +1,4 @@
-//TODO: разложить все по полочкам
+//TODO: СЂР°Р·Р»РѕР¶РёС‚СЊ РІСЃРµ РїРѕ РїРѕР»РѕС‡РєР°Рј
 /obj/structure/sign/directions/velocity
 	name = "Direction sign"
 	icon = 'code/modules/locations/centcomm/tablo.dmi'
@@ -35,11 +35,11 @@
 /obj/structure/sign/tablo/display/display_90
 	icon = 'code/modules/locations/centcomm/monitor_90.dmi'*/
 
-//надеюсь в скором времени переписать
+//РЅР°РґРµСЋСЃСЊ РІ СЃРєРѕСЂРѕРј РІСЂРµРјРµРЅРё РїРµСЂРµРїРёСЃР°С‚СЊ
 /obj/machinery/information_display
 	anchored = 1
 	density = 0
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 25
 	var/mode = 1//1 - on
 				//2 - off
@@ -68,7 +68,7 @@
 	set name = "Switch monitor"
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS || !ishuman(usr))
+	if (usr.incapacitated() || !ishuman(usr))
 		return
 
 	add_fingerprint(usr)
@@ -79,12 +79,12 @@
 		if(1)//on
 			if(stat & (NOPOWER|BROKEN))
 				return
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 			icon_state = icon_state_on
 			mode = new_mode
 
 		if(2)//off
-			use_power = 0
+			set_power_use(NO_POWER_USE)
 			icon_state = "monitor_off"
 			mode = new_mode
 

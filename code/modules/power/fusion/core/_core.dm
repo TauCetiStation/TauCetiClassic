@@ -13,7 +13,7 @@ var/list/fusion_cores = list()
 	icon = 'icons/obj/machines/power/fusion.dmi'
 	icon_state = "core0"
 	density = TRUE
-	use_power = TRUE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 500 //multiplied by field strength
 	anchored = FALSE
@@ -49,7 +49,7 @@ var/list/fusion_cores = list()
 		return
 	if(href_list["str"])
 		var/dif = text2num(href_list["str"])
-		field_strength = Clamp(field_strength + dif, MIN_FIELD_STR, MAX_FIELD_STR)
+		field_strength = clamp(field_strength + dif, MIN_FIELD_STR, MAX_FIELD_STR)
 		active_power_usage = 500 * field_strength
 		if(owned_field)
 			owned_field.ChangeFieldStrength(field_strength)
@@ -60,7 +60,7 @@ var/list/fusion_cores = list()
 	owned_field = new(loc, src)
 	owned_field.ChangeFieldStrength(field_strength)
 	icon_state = "core1"
-	use_power = 2
+	set_power_use(ACTIVE_POWER_USE)
 	. = TRUE
 
 /obj/machinery/power/fusion_core/proc/Shutdown(force_rupture)
@@ -72,7 +72,7 @@ var/list/fusion_cores = list()
 			owned_field.RadiateAll()
 		qdel(owned_field)
 		owned_field = null
-	use_power = 1
+	set_power_use(IDLE_POWER_USE)
 
 /obj/machinery/power/fusion_core/proc/AddParticles(name, quantity = 1)
 	if(owned_field)
@@ -84,7 +84,7 @@ var/list/fusion_cores = list()
 		. = owned_field.bullet_act(Proj)
 
 /obj/machinery/power/fusion_core/proc/set_strength(value)
-	value = Clamp(value, MIN_FIELD_STR, MAX_FIELD_STR)
+	value = clamp(value, MIN_FIELD_STR, MAX_FIELD_STR)
 	field_strength = value
 	active_power_usage = 5 * value
 	if(owned_field)
@@ -116,8 +116,8 @@ var/list/fusion_cores = list()
 		return
 
 	else if(iswrench(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(anchored)
 			connect_to_network()

@@ -100,6 +100,7 @@
 /obj/item/radio/integrated/beepsky/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src, control_freq)
+	active = null
 	return ..()
 
 /obj/item/radio/integrated/mule
@@ -125,6 +126,7 @@
 	if(radio_controller)
 		radio_controller.remove_object(src, control_freq)
 		radio_controller.remove_object(src, beacon_freq)
+	active = null
 	return ..()
 
 	// receive radio signals
@@ -240,9 +242,9 @@
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/turf/T = get_turf(src)
-	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
-	message_admins("[key_name_admin(usr)] used [src], location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
-	log_game("[usr.ckey]([usr]) used [src], location ([T.x],[T.y],[T.z]),frequency: [format_frequency(frequency)], code:[code]")
+	lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code]")
+	message_admins("[key_name_admin(usr)] used [src], location [COORD(T)] <B>:</B> [format_frequency(frequency)]/[code] [ADMIN_JMP(usr)]")
+	log_game("[key_name(usr)] used [src], location [COORD(T)],frequency: [format_frequency(frequency)], code:[code]")
 
 	var/datum/signal/signal = new
 	signal.source = src

@@ -5,7 +5,7 @@
 	item_state = "lgloves"
 	force = 0
 	throwforce = 0
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 1
 	throw_range = 15
 	var/state
@@ -21,7 +21,7 @@
 /obj/item/latexballon/proc/burst()
 	if (!air_contents)
 		return
-	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
+	playsound(src, 'sound/weapons/guns/Gunshot.ogg', VOL_EFFECTS_MASTER)
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
 	loc.assume_air(air_contents)
@@ -43,6 +43,7 @@
 		burst()
 	return
 
-/obj/item/latexballon/attackby(obj/item/W, mob/user)
-	if(W.can_puncture())
+/obj/item/latexballon/attackby(obj/item/I, mob/user, params)
+	..()
+	if(I.can_puncture())
 		burst()

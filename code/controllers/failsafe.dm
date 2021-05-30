@@ -27,9 +27,9 @@ var/datum/controller/failsafe/Failsafe
 		if(istype(Failsafe))
 			qdel(Failsafe)
 	Failsafe = src
-	LaunchLoop()
+	Initialize()
 
-/datum/controller/failsafe/proc/LaunchLoop()
+/datum/controller/failsafe/Initialize()
 	set waitfor = 0
 	Failsafe.Loop()
 	qdel(Failsafe) //when Loop() returns, we delete ourselves and let the mc recreate us
@@ -53,7 +53,7 @@ var/datum/controller/failsafe/Failsafe
 						if(4,5)
 							--defcon
 						if(3)
-							to_chat(admins, "<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks.")
+							to_chat(admins, "<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks.</span>")
 							--defcon
 						if(2)
 							to_chat(admins, "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>")
@@ -92,7 +92,7 @@ var/datum/controller/failsafe/Failsafe
 /datum/controller/failsafe/proc/defcon_pretty()
 	return Failsafe.defcon
 
-/datum/controller/failsafe/proc/stat_entry()
+/datum/controller/failsafe/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 

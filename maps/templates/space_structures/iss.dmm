@@ -1,0 +1,1980 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space)
+"ac" = (
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/space)
+"ad" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/iss)
+"ae" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space_structures/iss)
+"af" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/iss)
+"ag" = (
+/obj/structure/table,
+/obj/item/ashtray/bronze,
+/obj/item/weapon/cigbutt/cigarbutt,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"ah" = (
+/obj/structure/computerframe{
+	anchored = 1;
+	dir = 2
+	},
+/obj/item/weapon/shard,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"ai" = (
+/obj/structure/table,
+/obj/item/weapon/disk/research_points,
+/obj/item/clothing/head/beret/centcomcaptain{
+	desc = "A white beret."
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aj" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/iss)
+"ak" = (
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space)
+"al" = (
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"am" = (
+/obj/structure/stool/bed/chair{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"an" = (
+/turf/simulated/floor/plating,
+/area/space)
+"ao" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space)
+"ap" = (
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space)
+"aq" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space)
+"ar" = (
+/obj/structure/filingcabinet/filingcabinet,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"as" = (
+/obj/item/weapon/gun/energy/laser/retro,
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"at" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/iss)
+"au" = (
+/obj/machinery/door/airlock/hatch{
+	locked = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"av" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/iss)
+"aw" = (
+/obj/machinery/door/airlock/hatch,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"ax" = (
+/obj/structure/closet/crate/freezer/rations,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"ay" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/civilian,
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"az" = (
+/obj/structure/rack,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aA" = (
+/obj/structure/rack,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aB" = (
+/obj/structure/closet/crate,
+/obj/item/trash/liquidfood,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aC" = (
+/obj/structure/table,
+/obj/item/weapon/storage/belt/utility/full,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aD" = (
+/obj/machinery/portable_atmospherics/canister/empty/oxygen,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aE" = (
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/obj/structure/rack,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aF" = (
+/obj/machinery/power/port_gen/pacman/mrs,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aG" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aH" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/iss)
+"aI" = (
+/turf/space,
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/iss)
+"aJ" = (
+/obj/machinery/power/smes,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aK" = (
+/obj/structure/showcase,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aL" = (
+/obj/machinery/power/solar_control,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aM" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/box/donkpockets,
+/obj/item/weapon/coin/silver,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aN" = (
+/obj/structure/stool/bed,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aO" = (
+/obj/structure/closet/crate/bin,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aP" = (
+/obj/machinery/power/port_gen/pacman/mrs,
+/turf/simulated/floor/plating,
+/area/space_structures/iss)
+"aQ" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aR" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aS" = (
+/obj/machinery/optable,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aT" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/bible,
+/obj/item/clothing/gloves/fingerless,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aU" = (
+/obj/structure/table,
+/obj/item/clothing/mask/gas/coloured,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aV" = (
+/obj/structure/closet/emcloset/legacy,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aW" = (
+/obj/structure/closet/secure_closet/medical2,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aX" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/reagent_containers/blood/AMinus,
+/obj/item/weapon/reagent_containers/blood/BPlus,
+/obj/item/weapon/reagent_containers/blood/empty,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aY" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"aZ" = (
+/obj/machinery/door/airlock/hatch{
+	name = "E.V.A"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"ba" = (
+/obj/structure/stool/bed,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"bb" = (
+/obj/structure/table,
+/obj/item/weapon/scalpel,
+/obj/item/weapon/retractor,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"bc" = (
+/obj/structure/closet/crate,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"bd" = (
+/obj/structure/closet/emcloset/legacy,
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"be" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Engineering"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"bf" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Dormitories"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"bg" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Medbay"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"bh" = (
+/obj/machinery/door/airlock/hatch{
+	name = "External Airlock"
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/space_structures/iss)
+"bi" = (
+/obj/machinery/door/airlock/hatch{
+	name = "External Airlock"
+	},
+/turf/space,
+/area/space_structures/iss)
+
+(1,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+aa
+ak
+ab
+ab
+ab
+ab
+ab
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+aa
+ak
+ac
+ac
+ac
+ac
+an
+ac
+ac
+ac
+ac
+ac
+an
+aq
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+aa
+ak
+ac
+ac
+ac
+ap
+ao
+ac
+ac
+ac
+ac
+ac
+ao
+an
+ap
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+ak
+ak
+ab
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+ac
+an
+an
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+ac
+ao
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+ae
+ae
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+aj
+ae
+aH
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ay
+al
+aD
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+aM
+al
+aN
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+ae
+aA
+al
+al
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+ba
+al
+aN
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+ae
+az
+al
+aE
+ae
+aa
+aa
+aa
+aa
+aa
+ae
+aw
+ae
+aa
+aa
+aa
+aa
+aa
+ae
+aN
+al
+aT
+ae
+aa
+aa
+aa
+ac
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+ac
+ab
+aa
+aa
+aa
+af
+ae
+aw
+ae
+aI
+aa
+aa
+aa
+aa
+aa
+ae
+al
+ae
+aa
+aa
+aa
+aa
+aa
+af
+ae
+bf
+ae
+aI
+aa
+aa
+aa
+ac
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+ac
+ab
+aa
+aa
+aa
+aa
+ae
+al
+ae
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+aw
+ae
+aH
+aa
+aa
+aa
+aa
+aa
+ae
+al
+ae
+aa
+aa
+aa
+ab
+ac
+aa
+aa
+"}
+(19,1,1) = {"
+ad
+ae
+aj
+ae
+at
+aa
+ad
+ae
+ae
+aZ
+ae
+ae
+aa
+aa
+aa
+ae
+ae
+al
+al
+al
+ae
+ae
+aa
+aa
+aa
+ae
+ae
+bf
+ae
+ae
+aH
+aa
+ab
+ac
+aa
+aa
+"}
+(20,1,1) = {"
+ae
+ag
+al
+ar
+ae
+aj
+ae
+ax
+aB
+al
+al
+ae
+ae
+aj
+ae
+ae
+al
+al
+al
+al
+al
+ae
+ae
+aj
+ae
+ae
+aO
+al
+bc
+aY
+ae
+ae
+ae
+ae
+ab
+ab
+"}
+(21,1,1) = {"
+ae
+ah
+am
+al
+aw
+al
+au
+al
+al
+al
+al
+aw
+al
+al
+al
+aw
+al
+aJ
+aK
+aL
+al
+aw
+al
+al
+al
+aw
+al
+al
+al
+al
+bh
+al
+al
+bi
+ab
+aa
+"}
+(22,1,1) = {"
+ae
+ai
+al
+as
+ae
+aj
+ae
+al
+aR
+al
+al
+ae
+ae
+aj
+ae
+ae
+al
+al
+al
+al
+al
+ae
+ae
+aj
+ae
+ae
+aP
+al
+bd
+aV
+ae
+ae
+ae
+ae
+ab
+ab
+"}
+(23,1,1) = {"
+af
+ae
+aj
+ae
+av
+aa
+af
+ae
+ae
+be
+ae
+ae
+aa
+aa
+aa
+ae
+ae
+al
+al
+al
+ae
+ae
+aa
+aa
+aa
+ae
+ae
+bg
+ae
+ae
+aI
+aa
+ab
+ac
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+ac
+ab
+aa
+aa
+aa
+aa
+ae
+al
+ae
+aa
+aa
+aa
+aa
+aa
+af
+ae
+aw
+ae
+aI
+aa
+aa
+aa
+aa
+aa
+ae
+al
+ae
+aa
+aa
+aa
+ab
+ac
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+ac
+ab
+aa
+aa
+aa
+ad
+ae
+be
+ae
+aH
+aa
+aa
+aa
+aa
+aa
+ae
+al
+ae
+aa
+aa
+aa
+aa
+aa
+ad
+ae
+aw
+ae
+aH
+aa
+aa
+aa
+ac
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+ae
+al
+al
+aF
+ae
+aa
+aa
+aa
+aa
+aa
+ae
+aw
+ae
+aa
+aa
+aa
+aa
+aa
+ae
+aQ
+al
+aW
+ae
+aa
+aa
+aa
+ac
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+ac
+aa
+aa
+aa
+aa
+ae
+aU
+al
+aG
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+bb
+al
+al
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+aC
+al
+ay
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+ae
+aS
+al
+aX
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+af
+ae
+ae
+ae
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+af
+ae
+aj
+ae
+aI
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(33,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(34,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ak
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+ak
+ak
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+aa
+ak
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ak
+aa
+ak
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ak
+aa
+ak
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}

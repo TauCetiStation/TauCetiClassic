@@ -2,9 +2,9 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
+	//w_class = ITEM_SIZE_SMALL
 	//flags = GLASSESCOVERSEYES
-	//slot_flags = SLOT_EYES
+	//slot_flags = SLOT_FLAGS_EYES
 	//var/vision_flags = 0
 	//var/darkness_view = 0//Base human is 2
 	//var/invisa_view = 0
@@ -13,7 +13,10 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
+	var/sightglassesmod = null
 	var/activation_sound = 'sound/items/buttonclick.ogg'
+
+	sprite_sheet_slot = SPRITE_SHEET_EYES
 
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
@@ -29,7 +32,7 @@
 				icon_state = initial(icon_state)
 				vision_flags = initial(vision_flags)
 				to_chat(usr, "You activate the optical matrix on the [src].")
-			playsound(src.loc, activation_sound, 10, 0)
+			playsound(src, activation_sound, VOL_EFFECTS_MASTER, 10, FALSE)
 			H.update_inv_glasses()
 			H.update_sight()
 
@@ -41,6 +44,7 @@
 	action_button_name = "Toggle Goggles"
 	origin_tech = "magnets=2;engineering=2"
 	toggleable = 1
+	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/meson/prescription
@@ -55,6 +59,7 @@
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
 	toggleable = 1
+	sightglassesmod = "sci"
 
 /obj/item/clothing/glasses/night
 	name = "night vision goggles"
@@ -66,6 +71,7 @@
 //	vision_flags = SEE_SELF
 	darkness_view = 7
 	toggleable = 1
+	sightglassesmod = "nvg"
 	action_button_name = "Toggle Goggles"
 	active = 1
 	off_state = "night"
@@ -172,18 +178,16 @@
 	set name = "Adjust welding goggles"
 	set src in usr
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(src.up)
-			src.up = !src.up
-			src.flags |= GLASSESCOVERSEYES
-			flags_inv |= HIDEEYES
+	if(!usr.incapacitated())
+		if(up)
+			up = !up
+			flags |= GLASSESCOVERSEYES
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
-			src.up = !src.up
-			src.flags &= ~HEADCOVERSEYES
-			flags_inv &= ~HIDEEYES
+			up = !up
+			flags &= ~GLASSESCOVERSEYES
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
@@ -203,6 +207,23 @@
 	item_state = "blindfold"
 	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
+/obj/item/clothing/glasses/sunglasses/blindfold/white
+	name = "blind personnel blindfold"
+	desc = "Indicates that the wearer suffers from blindness."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
+	var/colored_before = FALSE
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == SLOT_GLASSES)
+		update_icon(user)
+	..()
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
+	if(ishuman(user) && !colored_before)
+		colored_before = TRUE
+		color = rgb(user.r_eyes, user.g_eyes, user.b_eyes)
+
 /obj/item/clothing/glasses/sunglasses/prescription
 	name = "prescription sunglasses"
 	prescription = 1
@@ -212,17 +233,13 @@
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 
-/obj/item/clothing/glasses/sunglasses/sechud
+/obj/item/clothing/glasses/sunglasses/hud/sechud
 	name = "HUDsunglasses"
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
-	var/obj/item/clothing/glasses/hud/security/hud = null
+	hud_types = list(DATA_HUD_SECURITY)
 
-/obj/item/clothing/glasses/sunglasses/sechud/atom_init()
-	. = ..()
-	hud = new/obj/item/clothing/glasses/hud/security(src)
-
-/obj/item/clothing/glasses/sunglasses/sechud/tactical
+/obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
 	desc = "Flash-resistant goggles with inbuilt combat and security information."
 	icon_state = "swatgoggles"
@@ -236,12 +253,13 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 	toggleable = 1
+	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
-		to_chat(M, "\red The Optical Thermal Scanner overloads and blinds you!")
+		to_chat(M, "<span class='warning'>The Optical Thermal Scanner overloads and blinds you!</span>")
 		if(M.glasses == src)
 			M.eye_blind = 3
 			M.eye_blurry = 5
@@ -298,6 +316,11 @@
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	darkness_view = 7
+	toggleable = TRUE
+	sightglassesmod = "nvg"
+	action_button_name = "Toggle Goggles"
+	active = 1
+	off_state = "healthhudnight"
 
 /obj/item/clothing/glasses/gar
 	name = "gar glasses"
@@ -316,7 +339,7 @@
 	toggleable = 0
 	action_button_name = null
 
-/obj/item/clothing/glasses/sunglasses/sechud/gar
+/obj/item/clothing/glasses/sunglasses/hud/sechud/gar
 	name = "gar HUDsunglasses"
 	icon_state = "gars"
 	item_state = "gars"
@@ -326,7 +349,7 @@
 	icon_state = "supergarb"
 	item_state = "supergarb"
 
-/obj/item/clothing/glasses/sunglasses/sechud/gar/super
+/obj/item/clothing/glasses/sunglasses/hud/sechud/gar/super
 	name = "supergar HUDSunglasses"
 	icon_state = "supergars"
 	item_state = "supergars"
@@ -336,3 +359,22 @@
 	icon_state = "supergar"
 	item_state = "supergar"
 	toggleable = 0
+
+/obj/item/clothing/glasses/sunglasses/noir
+	name = "noir sunglasses"
+	desc = "Somehow these seem even more out-of-date than normal sunglasses."
+	action_button_name = "Toggle Noir"
+	sightglassesmod = "greyscale"
+	toggleable = TRUE
+
+/obj/item/clothing/glasses/sunglasses/noir/attack_self(mob/user)
+	toggle_noir()
+
+/obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
+	set name = "Toggle Noir"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+	active = !active
+	to_chat(usr, "<span class='notice'>You toggle the Noire Mode [active ? "on. Let the investigation begin." : "off."]</span>")

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /*
 Destructive Analyzer
 
@@ -27,10 +25,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 	for(var/obj/item/weapon/stock_parts/S in component_parts)
 		T += S.rating
 	decon_mod = T
-
-/obj/machinery/r_n_d/destructive_analyzer/meteorhit()
-	qdel(src)
-	return
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
@@ -79,6 +73,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		O.loc = src
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
 		flick("d_analyzer_la", src)
+		if(linked_console)
+			nanomanager.update_uis(linked_console)
 		addtimer(CALLBACK(src, .proc/unbusy), 10)
 		return 1
 	return
@@ -87,12 +83,57 @@ Note: Must be placed within 3 tiles of the R&D Console
 	icon_state = "d_analyzer_l"
 	busy = 0
 
-//For testing purposes only.
-/*/obj/item/weapon/deconstruction_test
-	name = "Test Item"
-	desc = "WTF?"
-	icon = 'icons/obj/weapons.dmi'
-	icon_state = "d20"
-	g_amt = 5000
-	m_amt = 5000
-	origin_tech = "materials=5;phorontech=5;syndicate=5;programming=9"*/
+/obj/machinery/r_n_d/destructive_analyzer/proc/deconstruct_item()
+	if(busy)
+		to_chat(usr, "<span class='warning'>The destructive analyzer is busy at the moment.</span>")
+		return
+	if(!loaded_item)
+		return
+
+	busy = TRUE
+	flick("d_analyzer_process", src)
+	if(linked_console)
+		linked_console.screen = "working"
+	addtimer(CALLBACK(src, .proc/finish_deconstructing), 24)
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/finish_deconstructing()
+	busy = FALSE
+	if(hacked)
+		return
+
+	if(linked_console)
+		linked_console.files.check_item_for_tech(loaded_item)
+		linked_console.files.research_points += linked_console.files.experiments.get_object_research_value(loaded_item)
+		linked_console.files.experiments.do_research_object(loaded_item)
+
+		if(linked_console.linked_lathe)
+			linked_console.linked_lathe.loaded_materials[MAT_METAL].amount += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.m_amt*(decon_mod/10))))
+			linked_console.linked_lathe.loaded_materials[MAT_GLASS].amount += round(min((linked_console.linked_lathe.max_material_storage - linked_console.linked_lathe.TotalMaterials()), (loaded_item.g_amt*(decon_mod/10))))
+
+	if(istype(loaded_item,/obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = loaded_item
+		if(S.amount == 1)
+			qdel(S)
+			icon_state = "d_analyzer"
+			loaded_item = null
+		else
+			S.use(1)
+	else
+		qdel(loaded_item)
+		icon_state = "d_analyzer"
+		loaded_item = null
+
+	use_power(250)
+	if(linked_console)
+		linked_console.screen = "main"
+		nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/eject_item()
+	if(busy)
+		to_chat(usr, "<span class='warning'>The destructive analyzer is busy at the moment.</span>")
+		return
+
+	if(loaded_item)
+		loaded_item.forceMove(loc)
+		loaded_item = null
+		icon_state = "d_analyzer"

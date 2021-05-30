@@ -58,19 +58,19 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/pipeturbine/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dP > 10)
-		overlays += image('icons/obj/pipeturbine.dmi', "moto-turb")
+		add_overlay(image('icons/obj/pipeturbine.dmi', "moto-turb"))
 	if (kin_energy > 100000)
-		overlays += image('icons/obj/pipeturbine.dmi', "low-turb")
+		add_overlay(image('icons/obj/pipeturbine.dmi', "low-turb"))
 	if (kin_energy > 500000)
-		overlays += image('icons/obj/pipeturbine.dmi', "med-turb")
+		add_overlay(image('icons/obj/pipeturbine.dmi', "med-turb"))
 	if (kin_energy > 1000000)
-		overlays += image('icons/obj/pipeturbine.dmi', "hi-turb")
+		add_overlay(image('icons/obj/pipeturbine.dmi', "hi-turb"))
 
 /obj/machinery/atmospherics/components/pipeturbine/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+	if(iswrench(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.visible_message(
 			"[user.name] [anchored ? "secures" : "unsecures"] the bolts holding [src.name] to the floor.", \
@@ -112,7 +112,7 @@
 	set name = "Rotate Circulator (Clockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	src.set_dir(turn(src.dir, -90))
@@ -123,7 +123,7 @@
 	set name = "Rotate Circulator (Counterclockwise)"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	src.set_dir(turn(src.dir, 90))
@@ -161,7 +161,7 @@
 
 
 /obj/machinery/power/turbinemotor/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		anchored = !anchored
 		turbine = null
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding \the [src] to the floor.</span>")
@@ -174,7 +174,7 @@
 	set name = "Rotate Motor Clockwise"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	set_dir(turn(dir, -90))
@@ -184,7 +184,7 @@
 	set name = "Rotate Motor Counterclockwise"
 	set src in view(1)
 
-	if (usr.stat || usr.restrained() || anchored)
+	if (usr.incapacitated() || anchored)
 		return
 
 	set_dir(turn(dir, 90))

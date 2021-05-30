@@ -3,19 +3,20 @@
 	desc = "A vaguely humanoid cardboard cutout. It's completely blank."
 	icon = 'icons/obj/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
-
+	var/painting = FALSE
 	var/lastattacker = null
+	var/static/list/coloring
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
-	if(user.a_intent == "help" || pushed_over)
+	if(user.a_intent == INTENT_HELP || pushed_over)
 		return ..()
 	user.SetNextMove(CLICK_CD_MELEE)
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
-	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 	push_over()
 
 /obj/item/cardboard_cutout/proc/push_over()
@@ -35,41 +36,62 @@
 	icon_state = initial(icon_state)
 	pushed_over = FALSE
 
-/obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user)
-	change_appearance(I, user)
-	if(I.flags & NOBLUDGEON)
+/obj/item/cardboard_cutout/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/toy/crayon))
+		if(painting)
+			return
+		painting = TRUE
+		change_appearance(I, user)
+		painting = FALSE
 		return
+
 	if(!I.force)
-		playsound(loc, 'sound/weapons/tap.ogg')
-	else if(I.hitsound)
-		playsound(loc, I.hitsound)
-
-	user.do_attack_animation(src)
-
-	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit \
-			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
-			with [I]!</span>")
-
-		if(prob(I.force))
-			push_over()
+		playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER)
+	else if(length(I.hitsound))
+		playsound(loc, pick(I.hitsound), VOL_EFFECTS_MASTER)
+	if(I.force && prob(I.force))
+		push_over()
+	return ..()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
-	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
+	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 	if(prob(P.damage))
 		push_over()
 
+/obj/item/cardboard_cutout/proc/populate_selection()
+	coloring = list(
+			"Assistant" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_greytide"),
+			"Clown" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_clown"),
+			"Mime" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_mime"),
+			"Traitor" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_traitor"),
+			"Nuke Op" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "[pick("cutout_flukecombat", "cutout_flukespace")]"),
+			"Cultist" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_cultist"),
+			"Revolutionary" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_viva"),
+			"Wizard" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_wizard"),
+			"Shadowling" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_shadowling"),
+			"Xenomorph" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_fukken_xeno"),
+			"Deathsquad Officer" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_deathsquad"),
+			"Ian" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_ian")
+			)
+
+
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
-	if(!istype(crayon,/obj/item/toy/crayon) || !user)
+	if(!user)
 		return
 	if(pushed_over)
 		to_chat(user,"<span class='warning'>Right [src] first!</span>")
 		return
-	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
+
+	if(!coloring)
+		populate_selection()
+
+	var/new_appearance = show_radial_menu(user, src, coloring, radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!new_appearance || !crayon)
 		return
-	if(!do_after(user, 10, FALSE, src, TRUE))
+	if(!user.Adjacent(src))
+		return
+	if(!do_after(user, 10, FALSE, src, FALSE))
 		return
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	alpha = 255
@@ -84,7 +106,7 @@
 			desc = "A cardboard cutout of a clown. You get the feeling that it should be in a corner."
 			icon_state = "cutout_clown"
 		if("Mime")
-			name = pick(clown_names)
+			name = "[pick(first_names_male)] [pick(last_names)]"
 			desc = "...(A cardboard cutout of a mime.)"
 			icon_state = "cutout_mime"
 		if("Traitor")
@@ -94,7 +116,7 @@
 		if("Nuke Op")
 			name = "[pick("Unknown", "COMMS", "Telecomms", "AI", "stealthy op", "STEALTH", "sneakybeaky", "MEDIC", "Medic")]"
 			desc = "A cardboard cutout of a nuclear operative."
-			icon_state = "cutout_fluke"
+			icon_state = "[pick("cutout_flukecombat", "cutout_flukespace")]"
 		if("Cultist")
 			name = "Unknown"
 			desc = "A cardboard cutout of a cultist."
@@ -108,7 +130,7 @@
 			desc = "A cardboard cutout of a wizard."
 			icon_state = "cutout_wizard"
 		if("Shadowling")
-			name = "Unknown"
+			name = pick(possibleShadowlingNames)
 			desc = "A cardboard cutout of a shadowling."
 			icon_state = "cutout_shadowling"
 		if("Xenomorph")

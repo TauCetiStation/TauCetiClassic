@@ -4,10 +4,9 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
 	flags = CONDUCT
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 100
 	g_amt = 0
-	w_amt = 0
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 10
@@ -100,26 +99,24 @@
 /obj/item/device/assembly/attach_assembly(obj/item/device/assembly/A, mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
 	if(holder.attach(A,src,user))
-		to_chat(user, "\blue You attach \the [A] to \the [src]!")
+		to_chat(user, "<span class='notice'>You attach \the [A] to \the [src]!</span>")
 		return 1
 	return 0
 
-
-/obj/item/device/assembly/attackby(obj/item/weapon/W, mob/user)
-	if(isassembly(W))
-		var/obj/item/device/assembly/A = W
-		if((!A.secured) && (!secured))
-			attach_assembly(A,user)
+/obj/item/device/assembly/attackby(obj/item/I, mob/user, params)
+	if(isassembly(I))
+		var/obj/item/device/assembly/A = I
+		if(!A.secured && !secured)
+			attach_assembly(A, user)
 			return
-	if(isscrewdriver(W))
-		if(toggle_secure())
-			to_chat(user, "\blue \The [src] is ready!")
-		else
-			to_chat(user, "\blue \The [src] can now be attached!")
-		return
-	..()
-	return
 
+	if(isscrewdriver(I))
+		if(toggle_secure())
+			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
+		else
+			to_chat(user, "<span class='notice'>\The [src] can now be attached!</span>")
+		return
+	return ..()
 
 /obj/item/device/assembly/process()
 	STOP_PROCESSING(SSobj, src)

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "pad-idle"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/efficiency
@@ -19,7 +19,7 @@
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 
 /obj/machinery/telepad/Destroy()
@@ -40,7 +40,7 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/device/multitool))
+		if(ismultitool(I))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
@@ -58,34 +58,40 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "pad-idle"
 	anchored = 1
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 500
 	var/stage = 0
+
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+	if(iswrench(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)
 			anchored = 0
 			to_chat(user, "<span class='notice'>The [src] can now be moved.</span>")
 		else if(!anchored)
 			anchored = 1
 			to_chat(user, "<span class='notice'>The [src] is now secured.</span>")
-	if(istype(W, /obj/item/weapon/screwdriver))
+		return
+	else if(isscrewdriver(W))
 		if(stage == 0)
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You unscrew the telepad's tracking beacon.</span>")
 			stage = 1
 		else if(stage == 1)
-			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You screw in the telepad's tracking beacon.</span>")
 			stage = 0
-	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
-		playsound(src, 'sound/items/Welder.ogg', 50, 1)
+		return
+	else if(iswelder(W) && stage == 1)
+		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You disassemble the telepad.</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		new /obj/item/stack/sheet/glass(get_turf(src))
 		qdel(src)
+		return
+	else
+		return ..()
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon
@@ -100,7 +106,7 @@
 	if(user)
 		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new /obj/machinery/telepad_cargo(user.loc)
-		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+		playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 	return
 
@@ -149,19 +155,20 @@
 	if(emagged)
 		if(mode == 0)
 			mode = 1
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+			playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			to_chat(user, "<span class='notice'>The telepad locator has become uncalibrated.</span>")
 		else
 			mode = 0
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+			playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			to_chat(user, "<span class='notice'>You calibrate the telepad locator.</span>")
 
-/obj/item/weapon/rcs/attackby(obj/item/W, mob/user)
-	if(istype(W,  /obj/item/weapon/card/emag) && emagged == 0)
+/obj/item/weapon/rcs/emag_act(mob/user)
+	if(emagged == 0)
 		emagged = 1
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You emag the RCS. Click on it to toggle between modes.</span>")
-		return
+		return TRUE
+	return FALSE

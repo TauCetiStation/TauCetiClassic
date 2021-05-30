@@ -18,8 +18,10 @@
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
 	var/tox_mod = 1                                      // Toxloss multiplier.
+	var/clone_mod = 1                                    // Cloneloss multiplier
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/speed_mod_no_shoes = 0                           // Speed ​​modifier without shoes.
 	var/siemens_coefficient = 1                          // How conductive is the specie.
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
@@ -31,6 +33,9 @@
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+	// Perhaps one day make this an assoc list of BODYPART_NAME = list(drops) ? ~Luduk
+	// Is used when a bodypart of this race is butchered. Otherwise there are overrides for flesh, robot, and bone bodyparts.
+	var/list/bodypart_butcher_results
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
@@ -48,6 +53,7 @@
 
 	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
+	var/synth_temp_max = 0			//IS_SYNTHETIC will cap at this value
 
 	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
@@ -63,8 +69,9 @@
 	var/list/flags = list()       // Various specific features.
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
-	var/datum/dirt_cover/blood_color = /datum/dirt_cover/red_blood //Red.
-	var/flesh_color = "#FFC896" //Pink.
+	var/blood_datum_path = /datum/dirt_cover/red_blood //Red.
+	var/datum/dirt_cover/blood_datum // this will contain reference and should only be used as read only.
+	var/flesh_color = "#ffc896" //Pink.
 	var/base_color      //Used when setting species.
 
 	//Used in icon caching.
@@ -74,17 +81,19 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"held" = 'icons/mob/path',
-		"uniform" = 'icons/mob/path',
-		"suit" = 'icons/mob/path',
-		"belt" = 'icons/mob/path'
-		"head" = 'icons/mob/path',
-		"back" = 'icons/mob/path',
-		"mask" = 'icons/mob/path',
-		"ears" = 'icons/mob/path',
-		"eyes" = 'icons/mob/path',
-		"feet" = 'icons/mob/path',
-		"gloves" = 'icons/mob/path'
+		SPRITE_SHEET_HELD = 'icons/mob/path',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/path',
+		SPRITE_SHEET_UNIFORM_FAT = 'icons/mob/path',
+		SPRITE_SHEET_SUIT = 'icons/mob/path',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/path',
+		SPRITE_SHEET_BELT = 'icons/mob/path'
+		SPRITE_SHEET_HEAD = 'icons/mob/path',
+		SPRITE_SHEET_BACK = 'icons/mob/path',
+		SPRITE_SHEET_MASK = 'icons/mob/path',
+		SPRITE_SHEET_EARS = 'icons/mob/path',
+		SPRITE_SHEET_EYES = 'icons/mob/path',
+		SPRITE_SHEET_FEET = 'icons/mob/path',
+		SPRITE_SHEET_GLOVES = 'icons/mob/path'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
@@ -115,38 +124,107 @@
 
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
+	var/list/survival_kit_items = list(/obj/item/clothing/mask/breath,
+	                                   /obj/item/weapon/tank/emergency_oxygen,
+	                                   /obj/item/weapon/reagent_containers/hypospray/autoinjector
+	                                   )
+
+	var/list/prevent_survival_kit_items = list()
+
+	var/list/replace_outfit = list()
+
+	var/min_age = 25 // The default, for Humans.
+	var/max_age = 85
+
+	var/list/prohibit_roles
+
+	// What movesets do these species grant.
+	var/list/moveset_types
+
+	// Bubble can be changed depending on species
+	var/typing_indicator_type = "default"
+
 /datum/species/New()
+	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
 
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
 
-/datum/species/proc/create_organs(mob/living/carbon/human/H) //Handles creation of mob organs.
+/datum/species/proc/can_be_role(role)
+	if(!prohibit_roles)
+		return TRUE
+	return !(role in prohibit_roles)
+
+/datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
+	if(deleteOld)
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			qdel(BP)
+		for(var/obj/item/organ/internal/IO in H.organs)
+			qdel(IO)
 
 	for(var/type in has_bodypart)
 		var/path = has_bodypart[type]
-		new path(null, H)
+		var/obj/item/organ/external/O = new path(null)
+		O.insert_organ(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
-		new path(null, H)
+		var/obj/item/organ/internal/O = new path(null)
+		O.insert_organ(H)
 
 	if(flags[IS_SYNTHETIC])
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
-				continue
-			BP.status |= ORGAN_ROBOT
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
+
+
+/**
+  * Replace human clothes in [outfit] on species clothes
+  *
+  * Called after pre_equip()
+  */
+/datum/species/proc/species_equip(mob/living/carbon/human/H, datum/outfit/O)
+	species_replace_outfit(O, replace_outfit)
+	call_species_equip_proc(H, O)
+	return
+
+// replaces default outfit (human outfit) on outfit from replace_outfit
+/datum/species/proc/species_replace_outfit(datum/outfit/O, list/replace_outfit = null)
+	if(replace_outfit.len)
+		var/list/outfit_types = list(
+			"[SLOT_W_UNIFORM]" = O.uniform,
+			"[SLOT_WEAR_SUIT]" = O.suit,
+			"[SLOT_BACK]" = O.back,
+			"[SLOT_BELT]" = O.belt,
+			"[SLOT_GLOVES]" = O.gloves,
+			"[SLOT_SHOES]" = O.shoes,
+			"[SLOT_HEAD]" = O.head,
+			"[SLOT_WEAR_MASK]" = O.mask,
+			"[SLOT_TIE]" = O.neck,
+			"[SLOT_L_EAR]" = O.l_ear,
+			"[SLOT_R_EAR]" = O.r_ear,
+			"[SLOT_GLASSES]" = O.glasses
+			)
+		for(var/I in outfit_types)
+			if(replace_outfit[outfit_types[I]])
+				O.change_slot_equip(text2num(I), replace_outfit[outfit_types[I]])
+
+/datum/species/proc/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return
 
 /datum/species/proc/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
 	return
 
 /datum/species/proc/on_gain(mob/living/carbon/human/H)
-	return
+	for(var/moveset in moveset_types)
+		H.add_moveset(new moveset(), MOVESET_SPECIES)
 
-/datum/species/proc/on_loose(mob/living/carbon/human/H)
-	return
+	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
+
+/datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
+	H.remove_moveset_source(MOVESET_SPECIES)
+
+	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -162,22 +240,17 @@
 			//H.is_jittery = 0
 			//H.jitteriness = 0
 			H.update_hair()
+	var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+	if(!IO)
+		return
+	IO.heart_stop()
 	return
 
-/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J) // Do we really need this proc? Perhaps.
+/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE) // Do we really need this proc? Perhaps.
 	return
 
-/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	var/obj/item/weapon/storage/box/SK
-	if(J.title in list("Shaft Miner", "Chief Engineer", "Station Engineer", "Atmospheric Technician"))
-		SK = new /obj/item/weapon/storage/box/engineer(H)
-	else
-		SK = new /obj/item/weapon/storage/box/survival(H)
-
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(SK, slot_r_hand)
-	else
-		H.equip_to_slot_or_del(SK, slot_in_backpack)
+/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+	return
 
 /datum/species/proc/on_life(mob/living/carbon/human/H)
 	return
@@ -194,17 +267,22 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	)
 
 	//If you wanted to add a species-level ability:
 	/*abilities = list(/client/proc/test_ability)*/
+
+	min_age = 25
+	max_age = 85
 
 /datum/species/unathi
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
-	tail = "sogtail"
+	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
@@ -228,17 +306,43 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
+	,NO_MINORCUTS = TRUE
+	,FACEHUGGABLE = TRUE
 	)
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#066000"
 
-/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	min_age = 25
+	max_age = 85
+
+	sprite_sheets = list(
+		SPRITE_SHEET_SUIT = 'icons/mob/species/unathi/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
+	)
+
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			)
+
+/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
+
+/datum/species/unathi/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.unathi_equip(H)
+
+/datum/species/unathi/on_gain(mob/living/M)
+	..()
+	M.verbs += /mob/living/carbon/human/proc/air_sample
+
+/datum/species/unathi/on_loose(mob/living/M)
+	M.verbs -= /mob/living/carbon/human/proc/air_sample
+	..()
 
 /datum/species/tajaran
 	name = TAJARAN
@@ -246,7 +350,7 @@
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
 	additional_languages = list("Siik'tajr")
-	tail = "tajtail"
+	tail = "tajaran"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
@@ -273,18 +377,35 @@
 	,HAS_UNDERWEAR = TRUE
 	,HAS_TAIL = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	,HAS_HAIR = TRUE
+	,FACEHUGGABLE = TRUE
 	)
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#333333"
 
-/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	min_age = 25
+	max_age = 85
+
+	sprite_sheets = list(
+		SPRITE_SHEET_SUIT = 'icons/mob/species/tajaran/suit.dmi',
+		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/tajaran/suit_fat.dmi'
+	)
+
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			)
+
+/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
+
+/datum/species/tajaran/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.tajaran_equip(H)
 
 /datum/species/skrell
 	name = SKRELL
@@ -294,7 +415,6 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_PLANT
-	metabolism_mod = SKRELL_METABOLISM_FACTOR
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	siemens_coefficient = 1.3 // Because they are wet and slimy.
@@ -304,6 +424,8 @@
 	,HAS_LIPS = TRUE
 	,HAS_UNDERWEAR = TRUE
 	,HAS_SKIN_COLOR = TRUE
+	,FACEHUGGABLE = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	)
 
 	has_organ = list(
@@ -316,17 +438,26 @@
 		)
 
 	eyes = "skrell_eyes"
-	blood_color = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	blood_datum_path = /datum/dirt_cover/purple_blood
+	flesh_color = "#8cd7a3"
+
+	min_age = 25
+	max_age = 150
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
+
+/datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.skrell_equip(H)
 
 /datum/species/vox
 	name = VOX
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
+	additional_languages = list("Tradeband")
+	tail = "vox_prim"
+
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
@@ -344,32 +475,87 @@
 	poison_type = "oxygen"
 
 	flags = list(
-		NO_SCAN = TRUE
+		IS_WHITELISTED = TRUE
+		,NO_SCAN = TRUE
+		,FACEHUGGABLE = TRUE
+		,HAS_TAIL = TRUE
+		,SPRITE_SHEET_RESTRICTION = TRUE
+		,HAS_HAIR_COLOR = TRUE
+		,NO_FAT = TRUE
 	)
-
-	blood_color = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
-
-	sprite_sheets = list(
-		"suit" = 'icons/mob/species/vox/suit.dmi',
-		"head" = 'icons/mob/species/vox/head.dmi',
-		"mask" = 'icons/mob/species/vox/masks.dmi',
-		"feet" = 'icons/mob/species/vox/shoes.dmi',
-		"gloves" = 'icons/mob/species/vox/gloves.dmi'
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart/vox,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/vox,
+		O_LIVER   = /obj/item/organ/internal/liver/vox,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox
 		)
 
-/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
-	if(!H.r_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_r_hand)
+	blood_datum_path = /datum/dirt_cover/blue_blood
+	flesh_color = "#808d11"
+
+	sprite_sheets = list(
+		// SPRITE_SHEET_HELD = 'icons/mob/species/vox/held.dmi',
+		SPRITE_SHEET_UNIFORM = 'icons/mob/species/vox/uniform.dmi',
+		SPRITE_SHEET_SUIT = 'icons/mob/species/vox/suit.dmi',
+		SPRITE_SHEET_BELT = 'icons/mob/belt.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/vox/helmet.dmi',
+		SPRITE_SHEET_BACK = 'icons/mob/back.dmi',
+		SPRITE_SHEET_MASK = 'icons/mob/species/vox/masks.dmi',
+		SPRITE_SHEET_EARS = 'icons/mob/ears.dmi',
+		SPRITE_SHEET_EYES = 'icons/mob/species/vox/eyes.dmi',
+		SPRITE_SHEET_FEET = 'icons/mob/species/vox/shoes.dmi',
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/vox/gloves.dmi'
+		)
+
+	survival_kit_items = list(/obj/item/weapon/tank/emergency_nitrogen,
+							/obj/item/clothing/mask/gas/vox,
+							/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+							/obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
+
+	min_age = 1
+	max_age = 100
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
+
+/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+	H.gender = NEUTER
+
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/magboots/vox
+			)
+
+/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+	..()
+	if(H.wear_mask)
+		qdel(H.wear_mask)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
+	if(!H.r_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_STORE)
+		H.internal = H.r_store
+	else if(!H.l_store)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_STORE)
+		H.internal = H.l_store
+	else if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_R_HAND)
 		H.internal = H.r_hand
 	else if(!H.l_hand)
-		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/emergency_nitrogen/double(src), SLOT_L_HAND)
 		H.internal = H.l_hand
-	H.internals.icon_state = "internal1"
+	if(H.shoes)
+		qdel(H.shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/magboots/vox(src), SLOT_SHOES)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
+
+/datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.vox_equip(H)
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
@@ -384,7 +570,7 @@
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
 
-	return ..()
+	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
@@ -398,7 +584,7 @@
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
 
-	return ..()
+	..()
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
@@ -423,7 +609,7 @@
 	brute_mod = 0.2
 	burn_mod = 0.2
 
-	eyes = "blank_eyes"
+	eyes = null
 	breath_type = "nitrogen"
 	poison_type = "oxygen"
 
@@ -432,19 +618,21 @@
 	,NO_BLOOD = TRUE
 	,HAS_TAIL = TRUE
 	,NO_PAIN = TRUE
+	,SPRITE_SHEET_RESTRICTION = TRUE
+	,NO_FAT = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/blue_blood
-	flesh_color = "#808D11"
-	tail = "armalis_tail"
+	blood_datum_path = /datum/dirt_cover/blue_blood
+	flesh_color = "#808d11"
+	tail = "vox_armalis"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
 
 	sprite_sheets = list(
-		"suit" = 'icons/mob/species/armalis/suit.dmi',
-		"gloves" = 'icons/mob/species/armalis/gloves.dmi',
-		"feet" = 'icons/mob/species/armalis/feet.dmi',
-		"head" = 'icons/mob/species/armalis/head.dmi',
-		"held" = 'icons/mob/species/armalis/held.dmi'
+		SPRITE_SHEET_SUIT = 'icons/mob/species/armalis/suit.dmi',
+		SPRITE_SHEET_GLOVES = 'icons/mob/species/armalis/gloves.dmi',
+		SPRITE_SHEET_FEET = 'icons/mob/species/armalis/feet.dmi',
+		SPRITE_SHEET_HEAD = 'icons/mob/species/armalis/head.dmi',
+		SPRITE_SHEET_HELD = 'icons/mob/species/armalis/held.dmi'
 		)
 
 /datum/species/diona
@@ -471,22 +659,26 @@
 
 	burn_mod = 1.3
 	speed_mod = 7
+	speed_mod_no_shoes = -2
 
-	restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these.
+	// restricted_inventory_slots = list(SLOT_WEAR_MASK, SLOT_GLASSES, SLOT_GLOVES, SLOT_SHOES) // These are trees. Not people. Deal with the fact that they don't have these. P.S. I may return to this one day ~Luduk.
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
+	bodypart_butcher_results = list(/obj/item/stack/sheet/wood = 1)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,NO_BREATHE = TRUE
 	,REQUIRE_LIGHT = TRUE
 	,NO_SCAN = TRUE
-	,IS_PLANT = TRUE
-	,RAD_ABSORB = TRUE
+	,NO_EMOTION = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	,NO_FINGERPRINT = TRUE
+	,IS_PLANT = TRUE
+	,NO_VOMIT = TRUE
+	,RAD_ABSORB = TRUE
 	)
 
 	has_bodypart = list(
@@ -508,10 +700,21 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
 		)
 
-	blood_color = /datum/dirt_cover/green_blood
-	flesh_color = "#907E4A"
+	blood_datum_path = /datum/dirt_cover/green_blood
+	flesh_color = "#907e4a"
 
 	has_gendered_icons = FALSE
+
+	survival_kit_items = list(/obj/item/device/flashlight/flare,
+	                          /obj/item/device/plant_analyzer
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
+	min_age = 1
+	max_age = 1000
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_CULTIST)
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -538,12 +741,6 @@
 		H.adjustToxLoss(-(light_amount))
 		H.adjustOxyLoss(-(light_amount))
 
-/datum/species/diona/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_in_backpack)
-
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
 
@@ -560,7 +757,7 @@
 		else
 			qdel(D)
 
-	H.visible_message("\red[H] splits apart with a wet slithering noise!")
+	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
 
 /datum/species/machine
 	name = IPC
@@ -571,7 +768,7 @@
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
-	eyes = "blank_eyes"
+	eyes = null
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -580,14 +777,21 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 500		//gives them about 25 seconds in space before taking damage
+	heat_level_1 = 400		//gives them about 15 seconds in space before taking damage
 	heat_level_2 = 1000
 	heat_level_3 = 2000
 
-	synth_temp_gain = 10 //this should cause IPCs to stabilize at ~80 C in a 20 C environment.
+	// This should cause IPCs to stabilize at ~52 C in a 20 C environment with fully functional cooling system
+	synth_temp_gain = 10
+	// IPCs heat up until ~306C. No more 2000C IPCs
+	synth_temp_max = 550
 
 	brute_mod = 1.5
 	burn_mod = 1
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
+
 	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
@@ -597,21 +801,28 @@
 	,NO_BREATHE = TRUE
 	,NO_SCAN = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_PAIN = TRUE
+	,NO_EMOTION = TRUE
+	,HAS_HAIR_COLOR = TRUE
 	,IS_SYNTHETIC = TRUE
+	,HAS_SKIN_COLOR = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	has_bodypart = list(
-		 BP_CHEST  = /obj/item/organ/external/chest
-		,BP_GROIN  = /obj/item/organ/external/groin
-		,BP_HEAD   = /obj/item/organ/external/head/ipc
-		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		 BP_CHEST  = /obj/item/organ/external/chest/robot/ipc
+		,BP_GROIN  = /obj/item/organ/external/groin/robot/ipc
+		,BP_HEAD   = /obj/item/organ/external/head/robot/ipc
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/robot/ipc
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/robot/ipc
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/robot/ipc
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/robot/ipc
 		)
 
 	has_organ = list(
@@ -623,14 +834,48 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
 		)
 
-	blood_color = /datum/dirt_cover/oil
+	blood_datum_path = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_in_backpack)
+	survival_kit_items = list(/obj/item/device/suit_cooling_unit/miniature,
+	                          /obj/item/stack/nanopaste
+	                          )
+
+	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen) // So they don't get the big engi oxy tank, since they need no tank.
+
+	min_age = 1
+	max_age = 125
+
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
+
+/datum/species/machine/on_gain(mob/living/carbon/human/H)
+	..()
+	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_display_text
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP)
+		H.set_light(BP.screen_brightness)
+
+/datum/species/machine/on_loose(mob/living/carbon/human/H)
+	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP && BP.screen_toggle)
+		H.set_light(0)
+	..()
+
+/datum/species/machine/handle_death(mob/living/carbon/human/H)
+	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
+	if(BP && BP.screen_toggle)
+		H.r_hair = 15
+		H.g_hair = 15
+		H.b_hair = 15
+		H.set_light(0)
+		if(BP.ipc_head == "Default")
+			H.h_style = "IPC off screen"
+		H.update_hair()
 
 /datum/species/abductor
 	name = ABDUCTOR
@@ -645,9 +890,13 @@
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_VOMIT = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/gray_blood
+	blood_datum_path = /datum/dirt_cover/gray_blood
+
+	min_age = 100
+	max_age = 500
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -663,22 +912,55 @@
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
-	dietflags = 0
+	dietflags = DIET_ALL
 
+	oxy_mod = 0
+	tox_mod = 0
+	clone_mod = 0
 	siemens_coefficient = 0
 
 	butcher_drops = list()
+	bodypart_butcher_results = list()
 
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
+	,NO_DNA = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_BLOOD_TRAILS = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
+	,NO_EMBED = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_EMOTION = TRUE
+	,NO_VOMIT = TRUE
+	,NO_MUTATION = TRUE
 	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest/skeleton
+		,BP_GROIN  = /obj/item/organ/external/groin/skeleton
+		,BP_HEAD   = /obj/item/organ/external/head/skeleton
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/skeleton
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/skeleton
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/skeleton
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton
+		)
+
+	has_organ = list(
+		 O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes
+		)
+
+	min_age = 1
+	max_age = 1000
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
+
+	H.status_flags &= ~(CANSTUN | CANPARALYSE)
 
 	return ..()
 
@@ -690,10 +972,14 @@
 /datum/unarmed_attack
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
-	var/attack_sound = "punch"
+	var/damType = BRUTE
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
-	var/sharp = 0
-	var/edge = 0
+	var/sharp = FALSE
+	var/edge = FALSE
+	var/list/attack_sound
+
+/datum/unarmed_attack/New()
+	attack_sound = SOUNDIN_PUNCH
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
@@ -703,15 +989,25 @@
 
 /datum/unarmed_attack/diona
 	attack_verb = list("lash", "bludgeon")
+	damage = 2
+
+/datum/unarmed_attack/slime_glomp
+	attack_verb = list("glomp")
 	damage = 5
+	damType = CLONE
+
+/datum/unarmed_attack/slime_glomp/New()
+	attack_sound = list('sound/effects/attackblob.ogg')
 
 /datum/unarmed_attack/claws
 	attack_verb = list("scratch", "claw")
-	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	damage = 5
-	sharp = 1
-	edge = 1
+	damage = 2
+	sharp = TRUE
+	edge = TRUE
+
+/datum/unarmed_attack/claws/New()
+	attack_sound = list('sound/weapons/slice.ogg')
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
@@ -738,12 +1034,13 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	blood_color = /datum/dirt_cover/black_blood
+	blood_datum_path = /datum/dirt_cover/black_blood
 	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
+	bodypart_butcher_results = list()
 
-	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
+	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE)
 
 	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
 
@@ -754,6 +1051,11 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_FINGERPRINT = TRUE
+	,NO_SCAN = TRUE
+	,NO_MINORCUTS = TRUE
+	,NO_VOMIT = TRUE
+	,NO_EMOTION = TRUE
+	,NO_MUTATION = TRUE
 	)
 
 	burn_mod = 2
@@ -761,6 +1063,8 @@
 
 	has_gendered_icons = FALSE
 
+	min_age = 1
+	max_age = 10000
 
 /datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -777,19 +1081,21 @@
 	deform = 'icons/mob/human_races/r_golem.dmi'
 	dietflags = 0 //this is ROCK
 
-	total_health = 200
+	total_health = 100
 	oxy_mod = 0
 	tox_mod = 0
 	brain_mod = 0
 	speed_mod = 2
 
-	blood_color = /datum/dirt_cover/adamant_blood
-	flesh_color = "#137E8F"
+	blood_datum_path = /datum/dirt_cover/adamant_blood
+	flesh_color = "#137e8f"
 
 	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
+	bodypart_butcher_results = list(/obj/item/weapon/ore/slag = 1)
 
 	flags = list(
 		NO_BLOOD = TRUE,
+		NO_DNA = TRUE,
 		NO_BREATHE = TRUE,
 		NO_SCAN = TRUE,
 		NO_PAIN = TRUE,
@@ -797,7 +1103,11 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
-		NO_FINGERPRINT = TRUE
+		NO_VOMIT = TRUE,
+		NO_FINGERPRINT = TRUE,
+		NO_MINORCUTS = TRUE,
+		NO_EMOTION = TRUE,
+		NO_MUTATION = TRUE
 		)
 
 	has_organ = list(
@@ -806,7 +1116,14 @@
 
 	has_gendered_icons = FALSE
 
+	min_age = 1
+	max_age = 1000
+
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
+	..()
+	// Clothing on the Golem is created before the hud_list is generated in the atom
+	H.prepare_huds()
+
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
 	H.dna.mutantrace = "adamantine"
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
@@ -815,14 +1132,12 @@
 		if(x)
 			H.remove_from_mob(x)
 
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/golem, slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, slot_wear_suit)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, slot_wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, slot_gloves)
-
-	return ..()
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/golem, SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, SLOT_WEAR_SUIT)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
 /datum/species/golem/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
@@ -843,7 +1158,7 @@
 			if(is_type_in_list(x, golem_items))
 				qdel(x)
 
-	return ..()
+	..()
 
 /datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_golem_digest(M)
@@ -856,6 +1171,7 @@
 
 	icobase = 'icons/mob/human_races/r_zombie.dmi'
 	deform = 'icons/mob/human_races/r_zombie.dmi'
+	has_gendered_icons = FALSE
 
 	flags = list(
 	NO_BREATHE = TRUE
@@ -864,13 +1180,19 @@
 	,NO_SCAN = TRUE
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_EMOTION = TRUE
 	)
 
 	brute_mod = 2
 	burn_mod = 1
+	oxy_mod = 0
+	tox_mod = 0
 	speed_mod = -0.2
 
-	var/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
+	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
+
+	min_age = 25
+	max_age = 85
 
 /datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
 	return ..()
@@ -881,13 +1203,12 @@
 	H.drop_l_hand()
 	H.drop_r_hand()
 
-	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, SLOT_L_HAND)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, SLOT_R_HAND)
 
-	for(var/obj/item/organ/external/organ in H.bodyparts)
-		organ.status |= ORGAN_ZOMBIE
+	add_zombie(H)
 
-	return ..()
+	..()
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
@@ -898,10 +1219,9 @@
 	if(istype(H.r_hand, /obj/item/weapon/melee/zombie_hand))
 		qdel(H.r_hand)
 
-	for(var/obj/item/organ/external/organ in H.bodyparts)
-		organ.status &= ~ORGAN_ZOMBIE
+	remove_zombie(H)
 
-	return ..()
+	..()
 
 
 /datum/species/zombie/tajaran
@@ -914,9 +1234,9 @@
 	burn_mod = 1.2
 	speed_mod = -0.8
 
-	tail = "zombie_tajtail"
+	tail = "tajaran_zombie"
 
-	flesh_color = "#AFA59E"
+	flesh_color = "#afa59e"
 	base_color = "#000000"
 
 	flags = list(
@@ -927,7 +1247,11 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
+
+	min_age = 25
+	max_age = 85
 
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL
@@ -936,9 +1260,12 @@
 	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
 
 	eyes = "skrell_eyes"
-	blood_color = /datum/dirt_cover/purple_blood
-	flesh_color = "#8CD7A3"
+	blood_datum_path = /datum/dirt_cover/purple_blood
+	flesh_color = "#8cd7a3"
 	base_color = "#000000"
+
+	min_age = 25
+	max_age = 150
 
 /datum/species/zombie/unathi
 	name = ZOMBIE_UNATHI
@@ -948,11 +1275,11 @@
 
 	brute_mod = 1.80
 	burn_mod = 0.90
-	speed_mod = 0.5
+	speed_mod = -0.2
 
-	tail = "zombie_sogtail"
+	tail = "unathi_zombie"
 
-	flesh_color = "#34AF10"
+	flesh_color = "#34af10"
 	base_color = "#000000"
 
 	flags = list(
@@ -963,4 +1290,38 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
+	,NO_EMOTION = TRUE
 	)
+
+	min_age = 25
+	max_age = 85
+
+/datum/species/slime
+	name = SLIME
+	icobase = 'icons/mob/human_races/r_slime.dmi'
+	deform = 'icons/mob/human_races/r_slime.dmi'
+
+	blood_datum_path = /datum/dirt_cover/blue_blood
+	flesh_color = "#05fffb"
+	unarmed_type = /datum/unarmed_attack/slime_glomp
+	has_gendered_icons = FALSE
+
+	cold_level_1 = 280
+	cold_level_2 = 230
+	cold_level_3 = 150
+
+	flags = list(
+	 NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,RAD_IMMUNE = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
+
+	min_age = 1
+	max_age = 85
+
+/datum/species/slime/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_slime_digest(M)

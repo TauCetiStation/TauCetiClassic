@@ -18,18 +18,22 @@
 	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
-	if(w_class > 0 && w_class < 4)
+	if(w_class < ITEM_SIZE_LARGE)
 		icon_state = "gift[w_class]"
 	else
 		icon_state = "gift[pick(1, 2, 3)]"
 
 /obj/item/weapon/gift/attack_self(mob/user)
-	user.drop_item()
-	if(src.gift)
-		user.put_in_active_hand(gift)
-		src.gift.add_fingerprint(user)
+	user.drop_from_inventory(src)
+	var/atom/movable/AM = locate() in contents
+	if(AM) //sometimes items can disappear. For example, bombs. --rastaf0
+		user.put_in_active_hand(AM)
+		AM.add_fingerprint(user)
 	else
-		to_chat(user, "\blue The gift was empty!")
+		to_chat(user, "<span class='warning'>The gift was empty!</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
+	if(sender)
+		to_chat(user, "<span class='notice'>Looks like it was from [sender]!</span>")
 	qdel(src)
 	return
 
@@ -38,18 +42,18 @@
 	return
 
 /obj/effect/spresent/relaymove(mob/user)
-	if (user.stat)
+	if (user.incapacitated())
 		return
-	to_chat(user, "\blue You cant move.")
+	to_chat(user, "<span class='notice'>You cant move.</span>")
 
 /obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
 	..()
 
-	if (!istype(W, /obj/item/weapon/wirecutters))
-		to_chat(user, "\blue I need wirecutters for that.")
+	if (!iswirecutter(W))
+		to_chat(user, "<span class='notice'>I need wirecutters for that.</span>")
 		return
 
-	to_chat(user, "\blue You cut open the present.")
+	to_chat(user, "<span class='notice'>You cut open the present.</span>")
 
 	for(var/mob/M in src) //Should only be one but whatever.
 		M.loc = src.loc
@@ -60,7 +64,7 @@
 	qdel(src)
 
 /obj/item/weapon/a_gift/attack_self(mob/M)
-	var/gift_type = pick(/obj/item/weapon/sord,
+	var/gift_type = pick(
 		/obj/item/weapon/storage/wallet,
 		/obj/item/weapon/storage/photo_album,
 		/obj/item/weapon/storage/box/snappops,
@@ -75,8 +79,8 @@
 		/obj/item/weapon/corncob,
 		/obj/item/weapon/poster/contraband,
 		/obj/item/weapon/poster/legit,
-		/obj/item/weapon/book/manual/barman_recipes,
-		/obj/item/weapon/book/manual/chef_recipes,
+		/obj/item/weapon/book/manual/wiki/barman_recipes,
+		/obj/item/weapon/book/manual/wiki/chefs_recipes,
 		/obj/item/weapon/bikehorn,
 		/obj/item/weapon/beach_ball,
 		/obj/item/weapon/beach_ball/holoball,
@@ -106,9 +110,15 @@
 		/obj/item/weapon/storage/belt/utility/full,
 		/obj/item/clothing/accessory/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
-		/obj/item/clothing/suit/jacket/leather/overcoat)
+		/obj/item/clothing/suit/jacket/leather/overcoat,
+		/obj/item/toy/carpplushie,
+		/obj/random/plushie,
+		/obj/item/toy/eight_ball,
+		/obj/item/toy/eight_ball/conch,
+		)
 
-	if(!ispath(gift_type,/obj/item))	return
+	if(!ispath(gift_type, /obj/item))
+		return
 
 	var/obj/item/I = new gift_type(M)
 	M.remove_from_mob(src)
@@ -127,40 +137,42 @@
 	icon_state = "wrap_paper"
 	var/amount = 20.0
 
-/obj/item/weapon/wrapping_paper/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if (!( locate(/obj/structure/table, src.loc) ))
-		to_chat(user, "\blue You MUST put the paper on a table!")
-	if (W.w_class < 4)
-		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors)))
+/obj/item/weapon/wrapping_paper/attackby(obj/item/I, mob/user, params)
+	if(!locate(/obj/structure/table, loc))
+		to_chat(user, "<span class='notice'>You MUST put the paper on a table!</span>")
+		return
+
+	if(I.w_class < ITEM_SIZE_LARGE)
+		if(iswirecutter(user.l_hand) || iswirecutter(user.r_hand) || istype(user.l_hand, /obj/item/weapon/scissors) || istype(user.r_hand, /obj/item/weapon/scissors))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
-				to_chat(user, "\blue You need more paper!")
+				to_chat(user, "<span class='notice'>You need more paper!</span>")
 				return
 			else
-				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
+				if(istype(I, /obj/item/smallDelivery) || istype(I, /obj/item/weapon/gift)) //No gift wrapping gifts!
 					return
 
 				src.amount -= a_used
 				user.drop_item()
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
-				G.size = W.w_class
+				G.size = I.w_class
 				G.w_class = G.size + 1
 				G.icon_state = text("gift[]", G.size)
-				G.gift = W
-				W.loc = G
+				I.forceMove(G)
 				G.add_fingerprint(user)
-				W.add_fingerprint(user)
+				I.add_fingerprint(user)
 				src.add_fingerprint(user)
+				#ifdef NEWYEARCONTENT
+				to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
+				#endif
 			if (src.amount <= 0)
 				new /obj/item/weapon/c_tube( src.loc )
 				qdel(src)
 				return
 		else
-			to_chat(user, "\blue You need scissors!")
+			to_chat(user, "<span class='notice'>You need scissors!</span>")
 	else
-		to_chat(user, "\blue The object is FAR too large!")
-	return
+		to_chat(user, "<span class='notice'>The object is FAR too large!</span>")
 
 
 /obj/item/weapon/wrapping_paper/examine(mob/user)
@@ -172,7 +184,7 @@
 	if (!istype(target, /mob/living/carbon/human)) return
 	var/mob/living/carbon/human/H = target
 
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket) || H.stat)
+	if (H.incapacitated())
 		if (src.amount > 2)
 			var/obj/effect/spresent/present = new /obj/effect/spresent (H.loc)
 			src.amount -= 2
@@ -183,11 +195,9 @@
 
 			H.loc = present
 
-			H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been wrapped with [src.name]  by [user.name] ([user.ckey])</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to wrap [H.name] ([H.ckey])</font>")
-			msg_admin_attack("[key_name(user)] used [src] to wrap [key_name(H)]")
+			H.log_combat(user, "wrapped with [name]")
 
 		else
-			to_chat(user, "\blue You need more paper.")
+			to_chat(user, "<span class='notice'>You need more paper.</span>")
 	else
 		to_chat(user, "They are moving around too much. A straightjacket would help.")

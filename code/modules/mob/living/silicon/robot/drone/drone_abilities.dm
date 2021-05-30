@@ -10,13 +10,13 @@
 		mail_destination = ""
 		return
 
-	to_chat(src, "\blue You configure your internal beacon, tagging yourself for delivery to '[new_tag]'.")
+	to_chat(src, "<span class='notice'>You configure your internal beacon, tagging yourself for delivery to '[new_tag]'.</span>")
 	mail_destination = new_tag
 
 	//Auto flush if we use this verb inside a disposal chute.
 	var/obj/machinery/disposal/D = src.loc
 	if(istype(D))
-		to_chat(src, "\blue \The [D] acknowledges your signal.")
+		to_chat(src, "<span class='notice'>\The [D] acknowledges your signal.</span>")
 		D.flush_count = D.flush_every_ticks
 
 	return
@@ -28,14 +28,11 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
-		to_chat(src, text("\blue You are now hiding."))
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
-		to_chat(src, text("\blue You have stopped hiding."))
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 //Actual picking-up event.
-/mob/living/silicon/robot/drone/attack_hand(mob/living/carbon/human/M)
-
-	if(M.a_intent == "help")
-		get_scooped(M)
-	..()
+/mob/living/silicon/robot/drone/helpReaction(mob/living/carbon/human/attacker, show_message = TRUE)
+	get_scooped(attacker)

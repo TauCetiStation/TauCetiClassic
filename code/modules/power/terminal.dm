@@ -60,7 +60,7 @@
 			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal[master ? " from [master]" : ""].</span>", \
 								"You begin to cut the cables...")
 
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			if(do_after(user, 50 , target = src))
 				if((master && master.can_terminal_dismantle()) || !master)
 					if(prob(50) && electrocute_mob(user, powernet, src))
@@ -74,7 +74,7 @@
 
 
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user)
-	if(istype(W, /obj/item/weapon/wirecutters))
+	if(iswirecutter(W))
 		dismantle(user)
 		return
 

@@ -7,10 +7,7 @@
 	desc = "A jar. You're not sure what it's supposed to hold."
 	icon_state = "jar"
 	item_state = "beaker"
-
-/obj/item/weapon/reagent_containers/food/drinks/jar/atom_init()
-	. = ..()
-	reagents.add_reagent("slime", 50)
+	list_reagents = list("slime" = 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/jar/on_reagent_change()
 	if (reagents.reagent_list.len > 0)

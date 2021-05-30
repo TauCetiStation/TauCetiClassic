@@ -5,13 +5,13 @@
 	var/effect // description of what happens when not treated
 	var/duration = 0 // delay between start() and finish()
 
-	proc/start(mob/living/carbon/human/H)
-		// start the side effect, this should give some cue as to what's happening,
-		// such as gasping. These cues need to be unique among side-effects.
+/datum/genetics/side_effect/proc/start(mob/living/carbon/human/H)
+	// start the side effect, this should give some cue as to what's happening,
+	// such as gasping. These cues need to be unique among side-effects.
 
-	proc/finish(mob/living/carbon/human/H)
-		// Finish the side-effect. This should first check whether the cure has been
-		// applied, and if not, cause bad things to happen.
+/datum/genetics/side_effect/proc/finish(mob/living/carbon/human/H)
+	// Finish the side-effect. This should first check whether the cure has been
+	// applied, and if not, cause bad things to happen.
 
 /datum/genetics/side_effect/genetic_burn
 	name = "Genetic Burn"
@@ -61,7 +61,7 @@
 	H.emote("me", 1, "has drool running down from his mouth and hair starts to cover whole body.")
 
 /datum/genetics/side_effect/monkey/finish(mob/living/carbon/human/H)
-	H.monkeyize()
+	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/genetics/side_effect/confuse
 	name = "Confuse"
@@ -91,7 +91,7 @@
 	H.h_style = "Skinhead"
 	H.update_hair()
 
-proc/trigger_side_effect(mob/living/carbon/human/H)
+/proc/trigger_side_effect(mob/living/carbon/human/H)
 	set waitfor = 0
 	if(!H || !istype(H))
 		return

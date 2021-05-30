@@ -26,7 +26,7 @@
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
 
-/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
+/obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/living/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/obj/item/weapon/grab/G = user.get_active_hand()
 	var/mob/living/carbon/human/target = G.affecting
@@ -58,7 +58,7 @@
 
 	changeling.absorb_dna(target)
 
-	if(user.nutrition < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
+	if(user.get_nutrition() < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
 	//Steal all of their languages!
 	for(var/language in target.languages)
 		if(!(language in changeling.absorbed_languages))
@@ -72,7 +72,7 @@
 
 	if(target.mind)//if the victim has got a mind
 
-		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
+		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
 
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
@@ -117,21 +117,23 @@
 	absorbedcount++ //all that done, let's increment the objective counter.
 
 //Checks if the target DNA is valid and absorbable.
-/datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/T)
-	if(T)
-		if(!ishuman(T))
-			to_chat(U, "<span class='warning'>[T] is too simple for absorption.</span>")
+/datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/C)
+	if(C)
+		if(!ishuman(C))
+			to_chat(U, "<span class='warning'>[C] is too simple for absorption.</span>")
 			return FALSE
+
+		var/mob/living/carbon/human/T = C
 
 		if((NOCLONE in T.mutations) || (HUSK in T.mutations))
 			to_chat(U, "<span class='warning'>DNA of [T] is ruined beyond usability!</span>")
 			return FALSE
 
-		if(T:species.flags[IS_SYNTHETIC] || T:species.flags[IS_PLANT])
+		if(T.species.flags[IS_SYNTHETIC] || T.species.flags[IS_PLANT])
 			to_chat(U, "<span class='warning'>[T] is not compatible with our biology.</span>")
 			return FALSE
 
-		if(T:species.flags[NO_SCAN])
+		if(T.species.flags[NO_SCAN])
 			to_chat(src, "<span class='warning'>We do not know how to parse this creature's DNA!</span>")
 			return FALSE
 

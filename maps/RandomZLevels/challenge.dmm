@@ -40,8 +40,6 @@
 /area/awaymission/challenge/start)
 "ai" = (
 /obj/machinery/firealarm{
-	dir = 2;
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/simulated/floor/airless,
@@ -52,8 +50,7 @@
 	},
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
-	name = "shuttle wall";
-	opacity = 1
+	name = "shuttle wall"
 	},
 /turf/space,
 /area/awaymission/challenge/start)
@@ -85,8 +82,7 @@
 "ao" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
-	name = "shuttle wall";
-	opacity = 1
+	name = "shuttle wall"
 	},
 /turf/space,
 /area/awaymission/challenge/start)
@@ -162,8 +158,7 @@
 "aD" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
-	name = "shuttle wall";
-	opacity = 1
+	name = "shuttle wall"
 	},
 /turf/space,
 /area/awaymission/challenge/main)
@@ -191,8 +186,7 @@
 /area/awaymission/challenge/main)
 "aJ" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
@@ -312,7 +306,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
-	req_access_txt = "151"
+	req_access = list(151)
 	},
 /turf/space,
 /area/awaymission/challenge/main)
@@ -321,7 +315,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
-	req_access_txt = "151"
+	req_access = list(151)
 	},
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
@@ -349,7 +343,7 @@
 /obj/machinery/door_control{
 	id = "syndieshutters";
 	name = "remote shutter control";
-	req_access_txt = "150"
+	req_access = list(150)
 	},
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
@@ -389,7 +383,7 @@
 /obj/machinery/door_control{
 	id = "syndieshutters";
 	name = "remote shutter control";
-	req_access_txt = "150"
+	req_access = list(150)
 	},
 /turf/unsimulated/floor{
 	dir = 6;
@@ -445,7 +439,6 @@
 	},
 /obj/structure/window/reinforced,
 /turf/unsimulated/floor{
-	dir = 2;
 	icon_state = "bar"
 	},
 /area/awaymission/challenge/main)
@@ -460,8 +453,7 @@
 /area/awaymission/challenge/main)
 "bt" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -505,13 +497,11 @@
 /area/awaymission/challenge/main)
 "bz" = (
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitecorner"
 	},
 /area/awaymission/challenge/main)
 "bA" = (
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/challenge/main)
@@ -600,8 +590,7 @@
 	id = "velocity_hall";
 	name = "Blast Door Control";
 	pixel_x = 24;
-	pixel_y = 0;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
@@ -621,7 +610,7 @@
 	name = "Warehouse Door Control";
 	pixel_x = -1;
 	pixel_y = -24;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /turf/space,
 /area/awaymission/challenge/main)
@@ -644,8 +633,7 @@
 	id = "velocity_hall";
 	name = "Blast Door Control";
 	pixel_x = 24;
-	pixel_y = 0;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
@@ -703,11 +691,8 @@
 /area/awaymission/challenge/end)
 "bY" = (
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "LoaddoorCK2";
-	name = "Supply Shuttle Loading Door";
-	opacity = 1
+	name = "Supply Shuttle Loading Door"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -715,11 +700,8 @@
 /area/awaymission/challenge/end)
 "bZ" = (
 /obj/machinery/door/poddoor{
-	density = 1;
-	icon_state = "pdoor1";
 	id = "QMLoaddoor2";
-	name = "Supply Shuttle Loading Door";
-	opacity = 1
+	name = "Supply Shuttle Loading Door"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/end)
@@ -737,8 +719,7 @@
 	id = "velocity_room02";
 	name = "Blast Door Control";
 	pixel_x = -25;
-	pixel_y = 0;
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/challenge/end)
@@ -777,9 +758,7 @@
 	dir = 1;
 	freerange = 1;
 	frequency = 1213;
-	listening = 1;
 	name = "Syndicate Ops Intercom";
-	pixel_y = 0;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -853,7 +832,7 @@
 /turf/space,
 /area)
 "ct" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/warning/securearea,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -876,8 +855,7 @@
 /area/awaymission/challenge/end)
 "cx" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor/bluegrid,
 /area/awaymission/challenge/end)
@@ -975,8 +953,7 @@
 /area/awaymission/challenge/end)
 "cJ" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -1001,9 +978,7 @@
 	dir = 1;
 	freerange = 1;
 	frequency = 1213;
-	listening = 1;
 	name = "Syndicate Ops Intercom";
-	pixel_y = 0;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -1041,16 +1016,14 @@
 	dir = 1;
 	freerange = 1;
 	frequency = 1213;
-	listening = 1;
 	name = "Syndicate Ops Intercom";
-	pixel_y = 0;
 	subspace_transmission = 1;
 	syndie = 1
 	},
 /turf/space,
 /area/awaymission/challenge/end)
 "cQ" = (
-/obj/machinery/atmospherics/unary/vent_pump/high_volume{
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 8;
 	frequency = 1331;
 	id_tag = "synd_pump"
@@ -1068,9 +1041,7 @@
 	dir = 1;
 	freerange = 1;
 	frequency = 1213;
-	listening = 1;
 	name = "Syndicate Ops Intercom";
-	pixel_y = 0;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -1096,9 +1067,7 @@
 	dir = 1;
 	freerange = 1;
 	frequency = 1213;
-	listening = 1;
 	name = "Syndicate Ops Intercom";
-	pixel_y = 0;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -1122,11 +1091,8 @@
 /area/awaymission/challenge/end)
 "cW" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
-	listening = 1;
 	name = "Station Intercom (General)";
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -1169,11 +1135,8 @@
 /area/awaymission/challenge/end)
 "db" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
-	listening = 1;
 	name = "Station Intercom (General)";
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1199,7 +1162,7 @@
 	opacity = 0
 	},
 /obj/machinery/door/airlock/glass{
-	req_access_txt = "101"
+	req_access = list(101)
 	},
 /obj/machinery/door/airlock/centcom,
 /turf/simulated/floor{
@@ -1237,11 +1200,8 @@
 /area/awaymission/challenge/end)
 "dh" = (
 /obj/item/device/radio/intercom{
-	broadcasting = 0;
-	listening = 1;
 	name = "Station Intercom (General)";
-	pixel_x = -30;
-	pixel_y = 0
+	pixel_x = -30
 	},
 /obj/structure/object_wall/wagon{
 	icon_state = "3,3"

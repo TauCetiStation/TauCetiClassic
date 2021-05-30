@@ -46,7 +46,7 @@
 				if( prob(sting_prob) && (M.stat == CONSCIOUS || (M.stat == UNCONSCIOUS && prob(25))) ) // Try to sting! If you're not moving, think about stinging.
 					M.apply_damage(min(strength, 2) + mut, BRUTE, null, null, DAM_SHARP) // Stinging. The more mutated I am, the harder I sting.
 					M.apply_damage((round(feral/10,1)*(max((round(strength/20,1)),1)))+toxic, TOX) // Bee venom based on how angry I am and how many there are of me!
-					to_chat(M, "\red You have been stung!")
+					to_chat(M, "<span class='warning'>You have been stung!</span>")
 					M.flash_pain()
 
 		//if we're chasing someone, get a little bit angry
@@ -79,7 +79,7 @@
 
 		//make some noise
 		if(prob(0.5))
-			src.visible_message("\blue [pick("Buzzzz.","Hmmmmm.","Bzzz.")]")
+			src.visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
 
 		//smoke, water and steam calms us down
 		var/calming = 0
@@ -98,11 +98,11 @@
 
 		if(calming)
 			if(feral > 0)
-				src.visible_message("\blue The bees calm down!")
+				src.visible_message("<span class='notice'>The bees calm down!</span>")
 			feral = -10
 			target_mob = null
 			target_turf = null
-			wander = 1
+			wander = TRUE
 
 		for(var/mob/living/simple_animal/bee/B in src.loc)
 			if(B == src)
@@ -136,7 +136,7 @@
 		if(target_mob)
 			if(target_mob in view(src,7))
 				target_turf = get_turf(target_mob)
-				wander = 0
+				wander = FALSE
 
 			else // My target's gone! But I might still be pissed! You there. You look like a good stinging target!
 				for(var/mob/living/carbon/G in view(src,7))
@@ -147,10 +147,10 @@
 			if(AStar(src, target_turf, /turf/proc/Distance, 1))
 				Move(get_step(src, get_dir(src,target_turf)))
 				if (prob(0.1))
-					src.visible_message("\blue The bees swarm after [target_mob]!")
+					src.visible_message("<span class='notice'>The bees swarm after [target_mob]!</span>")
 			if(src.loc == target_turf)
 				target_turf = null
-				wander = 1
+				wander = TRUE
 		else
 			//find some flowers, harvest
 			//angry bee swarms don't hang around

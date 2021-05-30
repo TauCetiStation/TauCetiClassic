@@ -26,13 +26,13 @@
 	if(default_deconstruction_crowbar(W, 1))
 		return
 
-	if(istype(W,/obj/item/weapon/wrench))
+	if(iswrench(W))
 
 		if(istype(get_turf(src), /turf/space))
 			to_chat(user, "<span class='notice'>You can't anchor something to empty space. Idiot.</span>")
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]anchor the brace.</span>")
 
 		anchored = !anchored
@@ -67,7 +67,8 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(usr.stat) return
+	if(usr.incapacitated())
+		return
 
 	if (src.anchored)
 		to_chat(usr, "It is anchored in place!")

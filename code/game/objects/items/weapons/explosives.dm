@@ -5,8 +5,8 @@
 	timer = newtime
 	to_chat(user, "Timer set for [timer] seconds.")
 
-/obj/item/weapon/plastique/afterattack(atom/target, mob/user, flag)
-	if (!flag)
+/obj/item/weapon/plastique/afterattack(atom/target, mob/user, proximity, params)
+	if (!proximity)
 		return
 	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
@@ -14,12 +14,11 @@
 	to_chat(user, "Planting explosives...")
 	if(ismob(target))
 		var/mob/living/M = target
-		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [M.real_name] ([M.ckey])</font>"
-		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [M.real_name] ([M.ckey]) [ADMIN_FLW(M)]")
+		M.log_combat(user, "planted (attempt) with [name]")
 		user.visible_message("<span class ='red'> [user.name] is trying to plant some kind of explosive on [M.name]!</span>")
 	else
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
-		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name] [ADMIN_JMP(target)]")
+		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name]", user)
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
@@ -32,7 +31,7 @@
 			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
 		else
 			location = target
-		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		target.add_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
 		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
 		addtimer(CALLBACK(src, .proc/prime_explosion, target, location), timer * 10)
 
@@ -49,7 +48,7 @@
 
 	explosion(location, 0, 0, 2, 3)
 	if(target && !QDELETED(target))
-		target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
+		target.cut_overlay(image('icons/obj/assemblies.dmi', "plastic-explosive2"))
 	if(src)
 		qdel(src)
 

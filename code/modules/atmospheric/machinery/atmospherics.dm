@@ -17,7 +17,7 @@ Pipelines + Other Objects -> Pipe network
 	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
-	power_channel = ENVIRON
+	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
 	var/nodealert = FALSE
@@ -29,7 +29,7 @@ Pipelines + Other Objects -> Pipe network
 	var/icon_connect_type = "" //"-supply" or "-scrubbers"
 
 	var/pipe_color
-	var/global/datum/pipe_icon_manager/icon_manager
+	var/static/datum/pipe_icon_manager/icon_manager
 
 	var/device_type = 0
 	var/list/obj/machinery/atmospherics/nodes
@@ -104,6 +104,13 @@ Pipelines + Other Objects -> Pipe network
 	if(target.initialize_directions & get_dir(target,src))
 		return 1
 
+/obj/machinery/atmospherics/proc/has_free_nodes()
+	var/connections_count = 0
+	for(DEVICE_TYPE_LOOP)
+		if(NODE_I)
+			connections_count++
+	return (connections_count != device_type)
+
 /obj/machinery/atmospherics/proc/pipeline_expansion()
 	return nodes
 
@@ -144,7 +151,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		return
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
@@ -159,19 +166,18 @@ Pipelines + Other Objects -> Pipe network
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
 			add_fingerprint(user)
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
 			if (internal_pressure > 2 * ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (do_after(user, 20 * W.toolspeed, target = src) && !QDELETED(src))
+			if (W.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",
 					"<span class='italics'>You hear ratchet.</span>")
-				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
+				log_investigate("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)
@@ -246,7 +252,7 @@ Pipelines + Other Objects -> Pipe network
 	else
 		return FALSE
 
-obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
+/obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
 	return (atmos1.connect_types & atmos2.connect_types)
 
 /obj/machinery/atmospherics/proc/check_connect_types_construction(obj/machinery/atmospherics/atmos1, obj/item/pipe/pipe2)

@@ -8,7 +8,7 @@
 	icon = 'icons/obj/remote_device.dmi'
 	icon_state = "rdc_white"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	var/mode = REMOTE_OPEN
 	var/region_access = list(0, 1, 2, 3, 4, 5, 6, 7) // look at access.dm
 	var/obj/item/weapon/card/id/ID
@@ -17,21 +17,28 @@
 
 /obj/item/device/remote_device/atom_init()
 	. = ..()
+	remote_device_list += src
 	ID = new/obj/item/weapon/card/id
 	ID.access = list()
 	for(var/access in region_access)
 		ID.access += get_region_accesses(access)
 
 /obj/item/device/remote_device/Destroy()
+	remote_device_list -= src
 	QDEL_NULL(ID)
 	return ..()
 
-/obj/item/device/remote_device/attackby(obj/item/weapon/card/emag/W, mob/user)
-	if(istype(W) && !emagged)
+/obj/item/device/remote_device/emag_act(mob/user)
+	if(!emagged)
 		emagged = TRUE
-		to_chat(user, "This device now can electrify doors")
+		to_chat(user, "<span class='notice'>You sneakily swipe through [src], and now it can electrify doors.</span>")
+		return TRUE
+	return FALSE
 
 /obj/item/device/remote_device/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
+		return
 	if(mode == REMOTE_OPEN)
 		if(emagged)
 			mode = REMOTE_ELECT
@@ -44,8 +51,14 @@
 		mode = REMOTE_BOLT
 	to_chat(user, "Now in mode: [mode].")
 
-/obj/item/device/remote_device/afterattack(obj/machinery/door/airlock/D, mob/user)
-	if(!istype(D) || disabled || user.client.eye != user.client.mob)
+/obj/item/device/remote_device/afterattack(atom/target, mob/user, proximity, params)
+	if(!istype(target, /obj/machinery/door/airlock))
+		return
+	var/obj/machinery/door/airlock/D = target
+	if(disabled || user.client.eye != user.client.mob)
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!D.hasPower())
 		to_chat(user, "<span class='danger'>[D] has no power!</span>")
@@ -76,6 +89,8 @@
 					D.secondsElectrified = 0
 				else
 					D.secondsElectrified = 10
+				D.diag_hud_set_electrified()
+		D.add_hiddenprint(user)
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")
 

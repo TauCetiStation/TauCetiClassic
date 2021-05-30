@@ -5,7 +5,7 @@
 /obj/machinery/shield_capacitor
 	name = "shield capacitor"
 	desc = "Machine that charges a shield generator."
-	icon = 'code/modules/shieldgen/shielding.dmi'
+	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "capacitor"
 	var/active = 1
 	density = 1
@@ -15,7 +15,7 @@
 	var/charge_limit = 200000
 	var/locked = 0
 	//
-	use_power = 1			//0 use nothing
+	use_power = IDLE_POWER_USE			//0 use nothing
 							//1 use idle power
 							//2 use active power
 	idle_power_usage = 10
@@ -37,25 +37,15 @@
 
 	if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = W
-		if(access_captain in C.access || access_security in C.access || access_engine in C.access)
+		if((access_captain in C.access) || (access_security in C.access) || (access_engine in C.access))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
-			to_chat(user, "\red Access denied.")
-	else if(istype(W, /obj/item/weapon/card/emag))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(prob(75))
-			src.locked = !src.locked
-			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
-			updateDialog()
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-
-	else if(istype(W, /obj/item/weapon/wrench))
+			to_chat(user, "<span class='warning'>Access denied.</span>")
+	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("\blue [bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].")
+		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
 
 		if(anchored)
 			spawn(0)
@@ -71,56 +61,63 @@
 	else
 		..()
 
+/obj/machinery/shield_capacitor/emag_act(mob/user)
+	if(prob(75))
+		src.locked = !src.locked
+		to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+		updateDialog()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(5, 1, src)
+	s.start()
+	return TRUE
+
 /obj/machinery/shield_capacitor/ui_interact(mob/user)
 	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_capacitor")
 			return
-	var/t = "<B>Shield Capacitor Control Console</B><br><br>"
+	var/t = ""
 	if(locked && !isobserver(user))
-		t += "<i>Swipe your ID card to begin.</i>"
+		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"
 	else
-		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
-		t += "[time_since_fail > 2 ? "<font color=green>Charging stable.</font>" : "<font color=red>Warning, low charge!</font>"]<br>"
+		t += "This capacitor is: [active ? "<span class='green'>Online</span>" : "<span class='red'>Offline</span>" ] <a href='?src=\ref[src];toggle=1'>[active ? "Deactivate" : "Activate"]</a><br>"
+		t += "[time_since_fail > 2 ? "<span class='green'>Charging stable.</span>" : "<span class='red'>Warning, low charge!</span>"]<br>"
 		t += "Charge: [stored_charge] Watts ([100 * stored_charge/max_charge]%)<br>"
 		t += "Charge rate: \
-		<a href='?src=\ref[src];charge_rate=-100000'>\[----\]</a> \
-		<a href='?src=\ref[src];charge_rate=-10000'>\[---\]</a> \
-		<a href='?src=\ref[src];charge_rate=-1000'>\[--\]</a> \
-		<a href='?src=\ref[src];charge_rate=-100'>\[-\]</a>[charge_rate] Watts/sec \
-		<a href='?src=\ref[src];charge_rate=100'>\[+\]</a> \
-		<a href='?src=\ref[src];charge_rate=1000'>\[++\]</a> \
-		<a href='?src=\ref[src];charge_rate=10000'>\[+++\]</a> \
-		<a href='?src=\ref[src];charge_rate=100000'>\[+++\]</a><br>"
+		<a href='?src=\ref[src];charge_rate=-100000'>----</a> \
+		<a href='?src=\ref[src];charge_rate=-10000'>---</a> \
+		<a href='?src=\ref[src];charge_rate=-1000'>--</a> \
+		<a href='?src=\ref[src];charge_rate=-100'>-</a>[charge_rate] Watts/sec \
+		<a href='?src=\ref[src];charge_rate=100'>+</a> \
+		<a href='?src=\ref[src];charge_rate=1000'>++</a> \
+		<a href='?src=\ref[src];charge_rate=10000'>+++</a> \
+		<a href='?src=\ref[src];charge_rate=100000'>+++</a><br>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
-	user << browse(entity_ja(t), "window=shield_capacitor;size=500x400")
+	var/datum/browser/popup = new(user, "shield_capacitor", "Shield Capacitor Control Console", 500, 400)
+	popup.set_content(t)
+	popup.open()
 
 /obj/machinery/shield_capacitor/process()
 	//
 	if(active)
-		use_power = 2
+		if(use_power == IDLE_POWER_USE)
+			set_power_use(ACTIVE_POWER_USE)
 		if(stored_charge + charge_rate > max_charge)
 			active_power_usage = max_charge - stored_charge
 		else
 			active_power_usage = charge_rate
 		stored_charge += active_power_usage
-	else
-		use_power = 1
+	else if(use_power == ACTIVE_POWER_USE)
+		set_power_use(IDLE_POWER_USE)
 
 	time_since_fail++
 	if(stored_charge < active_power_usage * 1.5)
 		time_since_fail = 0
 
 /obj/machinery/shield_capacitor/Topic(href, href_list[])
-	if(href_list["close"])
-		usr << browse(null, "window=shield_capacitor")
-		usr.unset_machine(src)
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
@@ -128,9 +125,9 @@
 	if( href_list["toggle"] )
 		active = !active
 		if(active)
-			use_power = 2
+			set_power_use(ACTIVE_POWER_USE)
 		else
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 	if( href_list["charge_rate"] )
 		charge_rate += text2num(href_list["charge_rate"])
 		if(charge_rate > charge_limit)
@@ -154,6 +151,8 @@
 			spawn(rand(0, 15))
 				src.icon_state = "capacitor"
 				stat |= NOPOWER
+				update_power_use()
+	update_power_use()
 
 /obj/machinery/shield_capacitor/verb/rotate()
 	set name = "Rotate capacitor clockwise"
@@ -163,5 +162,5 @@
 	if (src.anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return
-	src.dir = turn(src.dir, 270)
+	src.set_dir(turn(src.dir, 270))
 	return

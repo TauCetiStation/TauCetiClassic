@@ -1,11 +1,24 @@
+/obj/item/weapon/book/manual/wiki/new_excavation
+	name = "Big Guide to Excavation: New Edition"
+	icon_state = "bookExcavation"
+	item_state = "book6"
+	author = "Nanotrasen Standart Procedures"
+	title = "Big Guide to Excavation: New Edition"
+	wiki_page = "Guide_to_Xenoarchaeology"
+
+////////////////////////////////////////////////////////////////
+//Heres lying the old manuals. Dont remove, this is our legacy./
+////////////////////////////////////////////////////////////////
 
 /obj/item/weapon/book/manual/excavation
 	name = "Out on the Dig"
 	icon_state = "excavation"
+	item_state = "book6"
 	author = "Professor Patrick Mason, Curator of the Antiquities Museum on Ichar VII"
 	title = "Out on the Dig"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -115,10 +128,12 @@
 /obj/item/weapon/book/manual/mass_spectrometry
 	name = "High Power Mass Spectrometry: A Comprehensive Guide"
 	icon_state = "analysis"
+	item_state = "book6"
 	author = "Winton Rice, Chief Mass Spectrometry Technician at the Institute of Applied Sciences on Arcadia"
 	title = "High powered mass spectrometry, a comprehensive guide"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -186,10 +201,12 @@
 /obj/item/weapon/book/manual/anomaly_spectroscopy
 	name = "Spectroscopy: Analysing the Anomalies of the Cosmos"
 	icon_state = "anomaly"
+	item_state = "book6"
 	author = "Doctor Martin Boyle, Director Research at the Lower Hydrolian Sector Listening Array"
 	title = "Spectroscopy: Analysing the Anomalies of the Cosmos"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -211,10 +228,12 @@
 /obj/item/weapon/book/manual/materials_chemistry_analysis
 	name = "Materials Analysis and the Chemical Implications"
 	icon_state = "chemistry"
+	item_state = "book6"
 	author = "Jasper Pascal, Senior Lecturer in Materials Analysis at the University of Jol'Nar"
 	title = "Materials Analysis and the Chemical Implications"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -238,10 +257,12 @@
 /obj/item/weapon/book/manual/anomaly_testing
 	name = "Anomalous Materials and Energies"
 	icon_state = "triangulate"
+	item_state = "book6"
 	author = "Norman York, formerly of the Tyrolion Institute on Titan"
 	title = "Anomalous Materials and Energies"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -316,10 +337,12 @@
 /obj/item/weapon/book/manual/stasis
 	name = "Cellular Suspension, the New Cryogenics?"
 	icon_state = "stasis"
+	item_state = "book6"
 	author = "Elvin Schmidt"
 	title = "Cellular Suspension, the New Cryogenics?"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}

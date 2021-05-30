@@ -36,6 +36,7 @@
 #define DNA_UI_LENGTH      16 // Update this when you add something, or you WILL break shit.
 
 #define DNA_SE_LENGTH 27
+#define DNA_UNIQUE_ENZYMES_LEN 32
 // For later:
 //#define DNA_SE_LENGTH 50 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
 
@@ -90,19 +91,26 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Make a copy of this strand.
 // USE THIS WHEN COPYING STUFF OR YOU'LL GET CORRUPTION!
-/datum/dna/proc/Clone()
+/datum/dna/proc/Clone(transfer_SE = TRUE)
 	var/datum/dna/new_dna = new()
 	new_dna.unique_enzymes=unique_enzymes
 	new_dna.b_type=b_type
 	new_dna.mutantrace=mutantrace
 	new_dna.real_name=real_name
 	new_dna.species=species
-	for(var/b=1;b<=DNA_SE_LENGTH;b++)
-		new_dna.SE[b]=SE[b]
-		if(b<=DNA_UI_LENGTH)
-			new_dna.UI[b]=UI[b]
-	new_dna.UpdateUI()
-	new_dna.UpdateSE()
+
+	if(transfer_SE)
+		for (var/i in 1 to DNA_SE_LENGTH)
+			new_dna.SE[i]=SE[i]
+			if(i <= DNA_UI_LENGTH)
+				new_dna.UI[i]=UI[i]
+		new_dna.UpdateUI()
+		new_dna.UpdateSE()
+	else
+		for (var/i in 1 to DNA_UI_LENGTH)
+			new_dna.UI[i]=UI[i]
+		new_dna.ResetSE() // just to set some values (has UpdateSE())
+
 	return new_dna
 ///////////////////////////////////////
 // UNIQUE IDENTITY
@@ -326,7 +334,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 
 /proc/EncodeDNABlock(value)
-	return add_zero2(num2hex(value,1), 3)
+	return add_zero(num2hex(value,1), 3)
 
 /datum/dna/proc/UpdateUI()
 	src.uni_identity=""
@@ -354,7 +362,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		if(length(struc_enzymes)!= 3*DNA_SE_LENGTH)
 			ResetSE()
 
-		if(length(unique_enzymes) != 32)
+		if(length(unique_enzymes) != DNA_UNIQUE_ENZYMES_LEN)
 			unique_enzymes = md5(character.real_name)
 	else
 		if(length(uni_identity) != 3*DNA_UI_LENGTH)
@@ -371,3 +379,12 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	unique_enzymes = md5(character.real_name)
 	reg_dna[unique_enzymes] = character.real_name
+
+/datum/dna/proc/generate_unique_enzymes(mob/living/holder)
+	. = ""
+	if(istype(holder))
+		real_name = holder.real_name
+		. += md5(holder.real_name)
+	else
+		. += random_string(DNA_UNIQUE_ENZYMES_LEN, global.hex_characters)
+	return .

@@ -76,7 +76,7 @@
 		else
 			to_chat(mob, "both turfs can merge.")
 
-client/proc/ZASSettings()
+/client/proc/ZASSettings()
 	set category = "Debug"
 
 	vsc.SetDefault(mob)

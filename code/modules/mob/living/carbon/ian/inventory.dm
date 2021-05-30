@@ -1,51 +1,21 @@
 /mob/living/carbon/ian/show_inv(mob/user)
-	if(user.incapacitated() || !Adjacent(usr))
-		return
-
 	user.set_machine(src)
+	var/list/dat = list()
 
-	var/list/i_slots = list("Head" = head, "Mouth" = mouth, "Neck"  = neck, "Back"  = back)
+	dat += "<table>"
+	dat += "<tr><td><B>Mouth:</B></td><td><A href='?src=\ref[src];item=[SLOT_MOUTH]'>[(mouth && !(mouth.flags & ABSTRACT)) ? mouth : "<font color=grey>Empty</font>"]</a></td></tr>"
+	dat += "<tr><td>&nbsp;</td></tr>"
 
-	var/dat = ""
-	for(var/x in i_slots)
-		if(i_slots[x])
-			dat += "<br><b>[x]:</b> (<a href='?src=\ref[src];remove_inv=[x]'>[i_slots[x]]</a>)"
-		else
-			dat += "<br><b>[x]:</b> <a href='?src=\ref[src];add_inv=[x]'>Nothing</a>"
+	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[SLOT_BACK]'>[(back && !(back.flags & ABSTRACT)) ? back : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Head:</B></td><td><A href='?src=\ref[src];item=[SLOT_HEAD]'>[(head && !(head.flags & ABSTRACT)) ? head : "<font color=grey>Empty</font>"]</A></td></tr>"
+	dat += "<tr><td><B>Neck (ID):</B></td><td><A href='?src=\ref[src];item=[SLOT_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
-	dat += "<br><br><a href='?src=\ref[src];refresh=1'>Refresh</a>"
-	dat += "<br><a href='?src=\ref[src];close=1'>Close</a>"
+	dat += {"</table>
+	"}
 
-	var/datum/browser/popup = new(user, "dog", name, 325, 500)
-	popup.set_content(dat)
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 440, 500)
+	popup.set_content(dat.Join())
 	popup.open()
-
-/mob/living/carbon/ian/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=dog")
-		usr.unset_machine(src)
-		return
-
-	if(usr.incapacitated() || !Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
-		return
-
-	if(href_list["refresh"])
-		show_inv(usr)
-	else if(href_list["remove_inv"])
-		var/remove_from = href_list["remove_inv"]
-		if(get_slot_ref(remove_from))
-			un_equip_or_action(usr, remove_from)
-	else if(href_list["add_inv"])
-		var/add_to = href_list["add_inv"]
-		var/obj/item/item_to_add = usr.get_active_hand()
-		if(!item_to_add || (item_to_add.flags & (ABSTRACT | DROPDEL)))
-			to_chat(usr, "<span class='red'>You have nothing in your hand to put on its [add_to].</span>")
-			return
-		if(get_slot_ref(add_to))
-			to_chat(usr, "<span class='red'>It's is already wearing something.</span>")
-			return
-		else
-			un_equip_or_action(usr, add_to, item_to_add)
 
 //Returns the thing in our active hand (errr... mouth!)
 /mob/living/carbon/ian/get_active_hand()
@@ -64,126 +34,6 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/ian/proc/un_equip_or_action(mob/living/who, where, obj/item/this_item)
-	if(!who || !where || isanimal(who))
-		return
-
-	if(who.isHandsBusy)
-		return
-	who.isHandsBusy = TRUE
-
-	if(!Adjacent(who))
-		return
-
-	if(this_item)
-		var/message = "<span class='danger'>[who] is trying to put \a [this_item] on [src].</span>"
-		if(where == "dnainjector")
-			message = "<span class='danger'>[who] is trying to inject [src] with the [this_item]!</span>"
-		this_item.add_fingerprint(who)
-		who.visible_message(message)
-	else
-		if(where == "CPR")
-			if(!cpr_time)
-				return
-			cpr_time = FALSE
-			who.visible_message("<span class='danger'>[who] is trying perform CPR on [src]!</span>")
-		else
-			var/obj/item/slot_ref = get_slot_ref(where)
-			if(slot_ref)
-				who.visible_message(text("<span class='danger'>[] is trying to take off \a [] from []'s []!</span>", who, slot_ref, src, lowertext(where)))
-				slot_ref.add_fingerprint(who)
-			else
-				who.isHandsBusy = FALSE //invalid slot
-				return
-
-	if(do_after(who, HUMAN_STRIP_DELAY, target = src))
-		do_un_equip_or_action(who, where, this_item)
-
-	who.isHandsBusy = FALSE
-	cpr_time = TRUE
-
-/mob/living/carbon/ian/proc/do_un_equip_or_action(mob/living/who, where, obj/item/this_item)
-	if(!who || !where)
-		return
-	if(!Adjacent(who))
-		return
-	if(this_item && who.get_active_hand() != this_item)
-		return
-	if(who.incapacitated())
-		return
-
-	var/obj/item/slot_ref = get_slot_ref(where)
-	if(slot_ref)
-		if(!slot_ref.canremove)
-			who.visible_message(text("<span class='danger'>[] fails to take off \a [] from []'s [lowertext(where)]!</span>", who, slot_ref, src))
-			return
-		else
-			remove_from_mob(slot_ref)
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their [where] ([slot_ref]) removed by [who.name] ([who.ckey])</font>")
-			who.attack_log += text("\[[time_stamp()]\] <font color='red'>Removed [src.name]'s ([src.ckey]) [where] ([slot_ref])</font>")
-	else
-		switch(where)
-			if("CPR")
-				if(src.health > config.health_threshold_dead && src.health < config.health_threshold_crit)
-					var/suff = min(src.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
-					src.adjustOxyLoss(-suff)
-					src.updatehealth()
-					who.visible_message("<span class='warning'>[who] performs CPR on [src]!</span>")
-					to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
-					to_chat(who, "<span class='warning'>Repeat at least every 7 seconds.</span>")
-			if("dnainjector")
-				var/obj/item/weapon/dnainjector/S = this_item
-				if(!istype(S))
-					S.inuse = FALSE
-					return
-				S.inject(src, who)
-				if(S.s_time >= world.time + 30)
-					S.inuse = FALSE
-					return
-				S.s_time = world.time
-				who.visible_message("<span class='warning'>[who] injects [src] with the DNA Injector!</span>")
-				S.inuse = FALSE
-			else
-				if(this_item.mob_can_equip(src, get_slot_id(where)))
-					if(where == "Neck")
-						if(istype(this_item, /obj/item/weapon/handcuffs))
-							var/grabbing = FALSE
-							for (var/obj/item/weapon/grab/G in src.grabbed_by)
-								if (G.loc == who && G.state >= GRAB_AGGRESSIVE)
-									grabbing = TRUE
-							if (!grabbing)
-								to_chat(who, "<span class='warning'>Your grasp was broken before you could restrain [src]!</span>")
-								return
-					who.remove_from_mob(this_item)
-					equip_to_slot_if_possible(this_item, get_slot_id(where))
-					src.attack_log += text("\[[time_stamp()]\] <font color='orange'>[who.name] ([who.ckey]) placed on our [where] ([slot_ref])</font>")
-					who.attack_log += text("\[[time_stamp()]\] <font color='red'>Placed on [src.name]'s ([src.ckey]) [where] ([slot_ref])</font>")
-
-	if(usr.machine == src && in_range(src, usr))
-		show_inv(usr)
-
-/mob/living/carbon/ian/proc/get_slot_ref(slot)
-	switch(slot)
-		if("Head")
-			return head
-		if("Mouth")
-			return mouth
-		if("Neck")
-			return neck
-		if("Back")
-			return back
-
-/mob/living/carbon/ian/proc/get_slot_id(slot)
-	switch(slot)
-		if("Head")
-			return slot_head
-		if("Mouth")
-			return slot_mouth
-		if("Neck")
-			return slot_neck
-		if("Back")
-			return slot_back
-
 /mob/living/carbon/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
 	if(!slot)
 		return
@@ -199,23 +49,23 @@
 	W.loc = src
 
 	switch(slot)
-		if(slot_head)
+		if(SLOT_HEAD)
 			if(istype(W, /obj/item/clothing/mask/facehugger))
 				facehugger = TRUE
 			head = W
 			W.equipped(src, slot)
 			update_inv_head()
-		if(slot_mouth)
+		if(SLOT_MOUTH)
 			mouth = W
 			W.equipped(src, slot)
 			update_inv_mouth()
-		if(slot_neck)
+		if(SLOT_NECK)
 			if(istype(W, /obj/item/weapon/handcuffs))
 				handcuffed = W
 			neck = W
 			W.equipped(src, slot)
 			update_inv_neck()
-		if(slot_back)
+		if(SLOT_BACK)
 			back = W
 			W.equipped(src, slot)
 			update_inv_back()
@@ -226,6 +76,7 @@
 	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
+	W.slot_equipped = slot
 
 //Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
 /mob/living/carbon/ian/put_in_active_hand(obj/item/W)
@@ -241,7 +92,8 @@
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
-		W.equipped(src,slot_mouth)
+		W.slot_equipped = SLOT_MOUTH
+		W.equipped(src,SLOT_MOUTH)
 		if(client)
 			client.screen |= W
 		if(pulling == W)
@@ -266,6 +118,7 @@
 		W.plane = initial(W.plane)
 		W.appearance_flags = initial(W.appearance_flags)
 		W.dropped()
+		W.slot_equipped = initial(W.slot_equipped)
 		return FALSE
 
 /mob/living/carbon/ian/u_equip(obj/W)
@@ -314,7 +167,7 @@
 			name = "Hoppy"
 			emote_see = list("twitches its nose", "hops around a bit")
 			desc = "This is hoppy. It's a corgi-...urmm... bunny rabbit"
-		if(/obj/item/clothing/head/beret, /obj/item/clothing/head/collectable/beret)
+		if(/obj/item/clothing/head/beret/red, /obj/item/clothing/head/collectable/beret)
 			name = "Yann"
 			desc = "Mon dieu! C'est un chien!"
 			speak = list("le woof!", "le bark!", "JAPPE!!")
@@ -344,7 +197,7 @@
 			name = "Grandwizard [real_name]"
 			speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI  NATH!")
 		if(/obj/item/weapon/bedsheet)
-			name = "\improper Ghost"
+			name = "Ghost"
 			speak = list("WoooOOOooo~","AUUUUUUUUUUUUUUUUUU")
 			emote_see = list("stumbles around", "shivers")
 			emote_hear = list("howls","groans")

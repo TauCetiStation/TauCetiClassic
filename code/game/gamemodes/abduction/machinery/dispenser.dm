@@ -32,34 +32,16 @@
 		..()
 
 /obj/machinery/abductor/gland_dispenser/ui_interact(mob/user)
-	var/box_css = {"
-	<style>
-	a.box.gland {
-		float: left;
-		width: 20px;
-		height: 20px;
-		margin: 5px;
-		border-width: 1px;
-		border-style: solid;
-		border-color: rgba(0,0,0,.2);
-		text-align: center;
-		}
-	</style>"}
-	var/dat = ""
-	var/item_count = 0
-	for(var/i=1,i<=gland_colors.len,i++)
-		item_count++
-		var/g_color = gland_colors[i]
-		var/amount = amounts[i]
-		dat += "<a class='box gland' style='background-color:[g_color]' href='?src=\ref[src];dispense=[i]'>[amount]</a>"
-		if(item_count == 3) // Three boxes per line
-			dat +="</br></br>"
-			item_count = 0
+	var/dat
+	dat += "<center>"
+	for(var/i in 1 to gland_colors.len)
+		dat += "<a style='background-color:[gland_colors[i]]' href='?src=\ref[src];dispense=[i]'>[amounts[i]]</a>"
+		if(i % 3 == 0)
+			dat += "<br><br>"
+	dat += "</center>"
 
-	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200)
-	popup.add_head_content(box_css)
+	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200, ntheme = CSS_THEME_ABDUCTOR)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
@@ -69,6 +51,8 @@
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
+		return
+	return ..()
 
 /obj/machinery/abductor/gland_dispenser/Topic(href, href_list)
 	. = ..()

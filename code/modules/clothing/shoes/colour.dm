@@ -129,10 +129,11 @@
 	..()
 	remove_cuffs()
 
-/obj/item/clothing/shoes/orange/attackby(H, mob/user)
-	..()
-	if (istype(H, /obj/item/weapon/handcuffs))
-		attach_cuffs(H, user)
+/obj/item/clothing/shoes/orange/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/handcuffs))
+		attach_cuffs(I, user)
+		return
+	return ..()
 
 /obj/item/clothing/shoes/orange/attack_hand(mob/user)
 	var/confirmed = 1

@@ -1,7 +1,7 @@
 #define AB_ITEM 1
 #define AB_SPELL 2
 #define AB_INNATE 3
-#define AB_GENERIC 4
+//#define AB_GENERIC 4
 
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
@@ -13,7 +13,6 @@
 /datum/action
 	var/name = "Generic Action"
 	var/action_type = AB_ITEM
-	var/procname = null
 	var/atom/movable/target = null
 	var/check_flags = 0
 	var/processing = 0
@@ -24,12 +23,15 @@
 	var/background_icon_state = "bg_default"
 	var/mob/living/owner
 
-/datum/action/New(var/Target)
+/datum/action/New(Target)
 	target = Target
 
 /datum/action/Destroy()
 	if(owner)
 		Remove(owner)
+	target = null
+	QDEL_NULL(button)
+	return ..()
 
 /datum/action/proc/Grant(mob/living/T)
 	if(owner)
@@ -45,7 +47,6 @@
 	if(button)
 		if(T.client)
 			T.client.screen -= button
-		del(button)
 	T.actions.Remove(src)
 	T.update_action_buttons()
 	owner = null
@@ -68,9 +69,6 @@
 				Activate()
 			else
 				Deactivate()
-		if(AB_GENERIC)
-			if(target && procname)
-				call(target,procname)(usr)
 	return
 
 /datum/action/proc/Activate()
@@ -101,7 +99,7 @@
 		if(owner.restrained())
 			return 0
 	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned)
+		if(owner.stunned || owner.weakened)
 			return 0
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying && !owner.crawling)
@@ -121,9 +119,13 @@
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
 
+/obj/screen/movable/action_button/Destroy()
+	owner = null
+	return ..()
+
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		moved = 0
 		return 1
 	if(usr.next_move >= world.time) // Is this needed ?
@@ -137,7 +139,7 @@
 	icon = owner.button_icon
 	icon_state = owner.background_icon_state
 
-	overlays.Cut()
+	cut_overlays()
 	var/image/img
 	if(owner.action_type == AB_ITEM && owner.target)
 		var/obj/item/I = owner.target
@@ -146,7 +148,7 @@
 		img = image(owner.button_icon,src,owner.button_icon_state)
 	img.pixel_x = 0
 	img.pixel_y = 0
-	overlays += img
+	add_overlay(img)
 
 	if(!owner.IsAvailable())
 		color = rgb(128,0,0,128)
@@ -172,7 +174,7 @@
 	usr.update_action_buttons()
 
 /obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
-	if(isalien(user))
+	if(isxeno(user))
 		icon_state = "bg_alien"
 	else
 		icon_state = "bg_default"
@@ -180,9 +182,9 @@
 	return
 
 /obj/screen/movable/action_button/hide_toggle/UpdateIcon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/img = image(icon,src,hidden?"show":"hide")
-	overlays += img
+	add_overlay(img)
 	return
 
 //This is the proc used to update all the action buttons. Properly defined in /mob/living/

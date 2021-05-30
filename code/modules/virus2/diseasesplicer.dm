@@ -2,7 +2,6 @@
 	name = "Disease Splicer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "crew"
-
 	var/datum/disease2/effectholder/memorybank = null
 	var/list/species_buffer = null
 	var/analysed = 0
@@ -12,25 +11,26 @@
 	var/scanning = 0
 
 /obj/machinery/computer/diseasesplicer/attackby(obj/I, mob/user)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		return ..(I,user)
+	if(isscrewdriver(I))
+		return ..()
 
-	if(istype(I,/obj/item/weapon/virusdish))
+	else if(istype(I,/obj/item/weapon/virusdish))
 		var/mob/living/carbon/c = user
 		if (dish)
 			to_chat(user, "\The [src] is already loaded.")
 			return
 
 		dish = I
-		c.drop_item()
-		I.loc = src
+		c.drop_from_inventory(I, src)
+		return
 
-	if(istype(I,/obj/item/weapon/diseasedisk))
+	else if(istype(I,/obj/item/weapon/diseasedisk))
 		to_chat(user, "You upload the contents of the disk onto the buffer.")
 		memorybank = I:effect
 		species_buffer = I:species
 		analysed = I:analysed
 		qdel(I)
+		return
 
 	src.attack_hand(user)
 

@@ -1,3 +1,5 @@
+// not used atm
+// should be rewritten 
 
 /mob/dead/new_player/proc/handle_privacy_poll()
 	establish_db_connection()
@@ -5,7 +7,7 @@
 		return
 	var/voted = 0
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[src.ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_privacy WHERE ckey='[ckey(src.ckey)]'")
 	query.Execute()
 	while(query.NextRow())
 		voted = 1
@@ -39,8 +41,12 @@
 
 	output += "</div>"
 
-	src << browse(entity_ja(output),"window=privacypoll;size=600x500")
+	var/datum/browser/popup = new(src, "privacypoll", null, 600, 500)
+	popup.set_content(output)
+	popup.open()
+
 	return
+
 
 /datum/polloption
 	var/optionid
@@ -75,14 +81,18 @@
 
 		output += "</table>"
 
-		src << browse(entity_ja(output),"window=playerpolllist;size=500x300")
-
+		var/datum/browser/popup = new(src, "playerpolllist", null, 500, 300)
+		popup.set_content(output)
+		popup.open()
 
 
 /mob/dead/new_player/proc/poll_player(pollid = -1)
 	if(pollid == -1) return
 	establish_db_connection()
 	if(dbcon.IsConnected())
+
+		if(!isnum(pollid))
+			return
 
 		var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM erro_poll_question WHERE id = [pollid]")
 		select_query.Execute()
@@ -103,13 +113,17 @@
 			break
 
 		if(!found)
-			to_chat(usr, "\red Poll question details not found.")
+			to_chat(usr, "<span class='warning'>Poll question details not found.</span>")
 			return
 
 		switch(polltype)
 			//Polls that have enumerated options
 			if("OPTION")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+
+				if(!isnum(pollid))
+					return
+
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 				voted_query.Execute()
 
 				var/voted = 0
@@ -158,11 +172,16 @@
 
 				output += "</div>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x250")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 250)
+				popup.set_content(output)
+				popup.open()
 
 			//Polls with a text input
 			if("TEXT")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT replytext FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+				if(!isnum(pollid))
+					return
+
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT replytext FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 				voted_query.Execute()
 
 				var/voted = 0
@@ -200,11 +219,16 @@
 				else
 					output += "[vote_text]"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x500")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 500)
+				popup.set_content(output)
+				popup.open()
 
 			//Polls with a text input
 			if("NUMVAL")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM erro_poll_option o, erro_poll_vote v WHERE o.pollid = [pollid] AND v.ckey = '[usr.ckey]' AND o.id = v.optionid")
+				if(!isnum(pollid))
+					return
+
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM erro_poll_option o, erro_poll_vote v WHERE o.pollid = [pollid] AND v.ckey = '[ckey(usr.ckey)]' AND o.id = v.optionid")
 				voted_query.Execute()
 
 				var/output = "<div align='center'><B>Player poll</B>"
@@ -271,9 +295,15 @@
 					output += "<p><input type='submit' value='Submit'>"
 					output += "</form>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x500")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 500)
+				popup.set_content(output)
+				popup.open()
+
+
 			if("MULTICHOICE")
-				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+				if(!isnum(pollid))
+					return
+				var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 				voted_query.Execute()
 
 				var/list/votedfor = list()
@@ -333,7 +363,10 @@
 
 				output += "</div>"
 
-				src << browse(entity_ja(output),"window=playerpoll;size=500x250")
+				var/datum/browser/popup = new(src, "playerpoll", null, 500, 250)
+				popup.set_content(output)
+				popup.open()
+
 		return
 
 /mob/dead/new_player/proc/vote_on_poll(pollid = -1, optionid = -1, multichoice = 0)
@@ -360,7 +393,7 @@
 			break
 
 		if(!validpoll)
-			to_chat(usr, "\red Poll is not valid.")
+			to_chat(usr, "<span class='warning'>Poll is not valid.</span>")
 			return
 
 		var/DBQuery/select_query2 = dbcon.NewQuery("SELECT id FROM erro_poll_option WHERE id = [optionid] AND pollid = [pollid]")
@@ -373,12 +406,12 @@
 			break
 
 		if(!validoption)
-			to_chat(usr, "\red Poll option is not valid.")
+			to_chat(usr, "<span class='warning'>Poll option is not valid.</span>")
 			return
 
 		var/alreadyvoted = 0
 
-		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 		voted_query.Execute()
 
 		while(voted_query.NextRow())
@@ -387,11 +420,11 @@
 				break
 
 		if(!multichoice && alreadyvoted)
-			to_chat(usr, "\red You already voted in this poll.")
+			to_chat(usr, "<span class='warning'>You already voted in this poll.</span>")
 			return
 
 		if(multichoice && (alreadyvoted >= multiplechoiceoptions))
-			to_chat(usr, "\red You already have more than [multiplechoiceoptions] logged votes on this poll. Enough is enough. Contact the database admin if this is an error.")
+			to_chat(usr, "<span class='warning'>You already have more than [multiplechoiceoptions] logged votes on this poll. Enough is enough. Contact the database admin if this is an error.</span>")
 			return
 
 		var/adminrank = "Player"
@@ -399,10 +432,10 @@
 			adminrank = usr.client.holder.rank
 
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]')")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank) VALUES (null, Now(), [pollid], [optionid], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', '[sanitize_sql(adminrank)]')")
 		insert_query.Execute()
 
-		to_chat(usr, "\blue Vote successful.")
+		to_chat(usr, "<span class='notice'>Vote successful.</span>")
 		usr << browse(null,"window=playerpoll")
 
 
@@ -427,12 +460,12 @@
 			break
 
 		if(!validpoll)
-			to_chat(usr, "\red Poll is not valid.")
+			to_chat(usr, "<span class='warning'>Poll is not valid.</span>")
 			return
 
 		var/alreadyvoted = 0
 
-		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[usr.ckey]'")
+		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_textreply WHERE pollid = [pollid] AND ckey = '[ckey(usr.ckey)]'")
 		voted_query.Execute()
 
 		while(voted_query.NextRow())
@@ -440,7 +473,7 @@
 			break
 
 		if(alreadyvoted)
-			to_chat(usr, "\red You already sent your feedback for this poll.")
+			to_chat(usr, "<span class='warning'>You already sent your feedback for this poll.</span>")
 			return
 
 		var/adminrank = "Player"
@@ -457,10 +490,10 @@
 			to_chat(usr, "The text you entered was blank, contained illegal characters or was too long. Please correct the text and submit again.")
 			return
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_textreply (id ,datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (null, Now(), [pollid], '[usr.ckey]', '[usr.client.address]', '[replytext]', '[adminrank]')")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_textreply (id ,datetime ,pollid ,ckey ,ip ,replytext ,adminrank) VALUES (null, Now(), [pollid], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', '[sanitize_sql(replytext)]', '[sanitize_sql(adminrank)]')")
 		insert_query.Execute()
 
-		to_chat(usr, "\blue Feedback logging successful.")
+		to_chat(usr, "<span class='notice'>Feedback logging successful.</span>")
 		usr << browse(null,"window=playerpoll")
 
 
@@ -485,7 +518,7 @@
 			break
 
 		if(!validpoll)
-			to_chat(usr, "\red Poll is not valid.")
+			to_chat(usr, "<span class='warning'>Poll is not valid.</span>")
 			return
 
 		var/DBQuery/select_query2 = dbcon.NewQuery("SELECT id FROM erro_poll_option WHERE id = [optionid] AND pollid = [pollid]")
@@ -498,12 +531,12 @@
 			break
 
 		if(!validoption)
-			to_chat(usr, "\red Poll option is not valid.")
+			to_chat(usr, "<span class='warning'>Poll option is not valid.</span>")
 			return
 
 		var/alreadyvoted = 0
 
-		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE optionid = [optionid] AND ckey = '[usr.ckey]'")
+		var/DBQuery/voted_query = dbcon.NewQuery("SELECT id FROM erro_poll_vote WHERE optionid = [optionid] AND ckey = '[ckey(usr.ckey)]'")
 		voted_query.Execute()
 
 		while(voted_query.NextRow())
@@ -511,7 +544,7 @@
 			break
 
 		if(alreadyvoted)
-			to_chat(usr, "\red You already voted in this poll.")
+			to_chat(usr, "<span class='warning'>You already voted in this poll.</span>")
 			return
 
 		var/adminrank = "Player"
@@ -519,8 +552,8 @@
 			adminrank = usr.client.holder.rank
 
 
-		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[usr.ckey]', '[usr.client.address]', '[adminrank]', [(isnull(rating)) ? "null" : rating])")
+		var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO erro_poll_vote (id ,datetime ,pollid ,optionid ,ckey ,ip ,adminrank, rating) VALUES (null, Now(), [pollid], [optionid], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', '[sanitize_sql(adminrank)]', [(isnull(rating)) ? "null" : sanitize_sql(rating)])")
 		insert_query.Execute()
 
-		to_chat(usr, "\blue Vote successful.")
+		to_chat(usr, "<span class='notice'>Vote successful.</span>")
 		usr << browse(null,"window=playerpoll")

@@ -1,29 +1,49 @@
 /obj/item/weapon/twohanded/spear
-		icon = 'icons/obj/makeshift.dmi'
-		icon_state = "spearglass0"
-		name = "spear"
-		desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
-		force = 10
-		w_class = 4.0
-		slot_flags = SLOT_BACK
-		force_unwielded = 10
-		force_wielded = 18 // Was 13, Buffed - RR
-		throwforce = 15
-		flags = NOSHIELD
-		hitsound = 'sound/weapons/bladeslice.ogg'
-		attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "spearglass0"
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 10
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK
+	force_unwielded = 10
+	force_wielded = 18 // Was 13, Buffed - RR
+	throwforce = 15
+	flags = NOSHIELD
+	hitsound = list('sound/weapons/bladeslice.ogg')
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+
+/obj/item/weapon/twohanded/spear/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+
+	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
+	return wielded
+
+/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return wielded
 
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
-/obj/item/weapon/twohanded/spear/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/weapon/organ/head))
+/obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/organ/external/head))
 		if(loc == user)
 			user.drop_from_inventory(src)
-		var/obj/structure/headpole/H = new (get_turf(src), W, src)
-		user.drop_from_inventory(W, H)
+		var/obj/structure/headpole/H = new (get_turf(src), I, src)
+		user.drop_from_inventory(I, H)
 
+	else
+		return ..()
 
 /obj/item/clothing/head/helmet/battlebucket
 	icon = 'icons/obj/makeshift.dmi'
@@ -34,28 +54,35 @@
 	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 
 /obj/item/weapon/melee/cattleprod
-		icon = 'icons/obj/makeshift.dmi'
-		name = "stunprod"
-		desc = "An improvised stun baton."
-		icon_state = "stunprod"
-		item_state = "prod"
-		var/obj/item/weapon/stock_parts/cell/bcell = null
-		var/stunforce = 5
-		var/hitcost = 2500
-		force = 3
-		throwforce = 5
-		var/status = 0
-		slot_flags = null
+	icon = 'icons/obj/makeshift.dmi'
+	name = "stunprod"
+	desc = "An improvised stun baton."
+	icon_state = "stunprod"
+	item_state = "prod"
+	var/obj/item/weapon/stock_parts/cell/bcell = null
+	var/stunforce = 5
+	var/hitcost = 2000
+	force = 3
+	throwforce = 5
+	var/status = 0
+	slot_flags = null
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+
+	AddComponent(/datum/component/swiping, SCB)
+
 	update_icon()
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
-		playsound(loc, "sparks", 75, 1, -1)
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	else
 		status = 0
 		if(!bcell)
@@ -79,7 +106,7 @@
 		if(bcell.charge < (hitcost+chrgdeductamt)) // If after the deduction the baton doesn't have enough charge for a stun hit it turns off.
 			status = 0
 			update_icon()
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(bcell.use(chrgdeductamt))
 			return 1
 		else
@@ -93,27 +120,32 @@
 	else
 		icon_state = "[initial(name)]"
 
-/obj/item/weapon/melee/cattleprod/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+/obj/item/weapon/melee/cattleprod/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
+		var/obj/item/weapon/stock_parts/cell/C = I
+		if(C.maxcharge < hitcost)
+			to_chat(user, "<span class='notice'>[C]'s maximum capacity seems too small to be useful.</span>")
+			return
 		if(!bcell)
-			user.drop_item()
-			W.loc = src
-			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+			user.drop_from_inventory(C, src)
+			bcell = C
+			to_chat(user, "<span class='notice'>You install \a [C] in \the [src].</span>")
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
-	else if(istype(W, /obj/item/weapon/screwdriver))
+
+	else if(isscrewdriver(I))
 		if(bcell)
+			to_chat(user, "<span class='notice'>You remove \the [bcell] from the [src].</span>")
 			bcell.updateicon()
-			bcell.loc = get_turf(src.loc)
+			bcell.forceMove(get_turf(loc))
 			bcell = null
-			to_chat(user, "<span class='notice'>You remove the cell from the [src].</span>")
 			status = 0
 			update_icon()
 			return
-		..()
-	return
+
+	else
+		return ..()
 
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
@@ -127,14 +159,13 @@
 		..()
 		return
 
-	if(user.a_intent == "hurt")
+	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Beat [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Beaten by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[user.name] ([user.ckey]) beat [H.name] ([H.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		playsound(src.loc, "swing_hit", 50, 1, -1)
+		H.log_combat(user, "attacked with [name]")
+
+		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 	else if(!status)
 		H.visible_message("<span class='warning'>[M] has been prodded with the [src] by [user]. Luckily it was off.</span>")
 		return
@@ -154,11 +185,9 @@
 			deductcharge(hitcost)
 		H.visible_message("<span class='danger'>[M] has been stunned with the [src] by [user]!</span>")
 
-		user.attack_log += "\[[time_stamp()]\]<font color='red'> Stunned [H.name] ([H.ckey]) with [src.name]</font>"
-		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by [user.name] ([user.ckey]) with [src.name]</font>"
-		msg_admin_attack("[key_name(user)] stunned [key_name(H)] with [src.name]")
+		H.log_combat(user, "stunned with [name]")
 
-		playsound(src.loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 	//	if(charges < 1)
 	//		status = 0
 	//		update_icon()
@@ -182,6 +211,165 @@
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+
+/obj/item/weapon/noose
+	name = "noose"
+	desc = "A rolled noose."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "noose_rolled"
+	w_class = ITEM_SIZE_SMALL
+
+/obj/item/weapon/noose/attack_self(mob/user)
+	var/turf/user_turf = get_turf(user)
+	var/obj/structure/stool/bed/chair/noose/N
+	if(user_turf.density)
+		to_chat(user, "<span class='notice'>You can't build a noose over that.</span>")
+		return
+	if(locate(N) in user_turf)
+		to_chat(user, "<span class='notice'>You can't build a noose on a tile that has a noose.</span>")
+		return
+	user.visible_message("<span class='notice'>[user] starts constructing a noose</span>")
+	to_chat(user, "<span class='notice'>You begin to construct a noose...</span>")
+	if(!do_after(user, 5 SECONDS, target = user))
+		return
+	N = new(user_turf)
+	N.layer = FLY_LAYER // because of bed/chair/atom_init 
+	N.color = color
+	qdel(src)
+
+/obj/item/weapon/noose/attackby(obj/item/W, mob/user)
+	if(!iswirecutter(W))
+		return ..()
+	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
+	var/obj/item/stack/cable_coil/C = new(get_turf(src))
+	C.color = color
+	C.amount = 25
+	qdel(src)
+
+/obj/item/weapon/noose/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/stack/cable_coil/C in contents)
+		color = C.color
+
+/obj/item/weapon/transparant
+	icon_custom ='icons/mob/inhands/transparant.dmi'
+	icon_state = "blank"
+	item_state = "blank"
+	name = "blank sign"
+	desc = "Nothing."
+	var/not_bloody_state
+	var/not_bloody_item_state
+	var/delay_msg = 5 SECONDS
+	var/last_warn_msg = 0
+	force = 8
+	w_class = ITEM_SIZE_LARGE
+	throwforce = 5
+//	flags = NOSHIELD
+		//var/protest_text
+ 		//	var/protest_text_lenght = 100
+ 	//var/image/inhand_blood_overlay
+	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
+
+/obj/item/weapon/transparant/atom_init()
+	. = ..()
+	not_bloody_state = icon_state
+	not_bloody_item_state = item_state
+
+/obj/item/weapon/transparant/attackby(obj/item/I, mob/user, params)
+	if(icon_state!="blank")
+		to_chat(user, "<span class='notice'>Something allready written on this sign.</span>")
+		return
+
+	if(istype(I, /obj/item/weapon/pen))
+		var/defaultText = "FUK NT!1"
+		var/targName = sanitize(input(usr, "Just write something here", "Transparant text", input_default(defaultText)))
+		var/obj/item/weapon/transparant/text/W = new /obj/item/weapon/transparant/text
+		W.desc = targName
+		user.remove_from_mob(src)
+		user.put_in_hands(W)
+		qdel(src)
+		to_chat(user, "<span class='notice'>You writed: <span class='emojify'>[targName]</span> on your sign.</span>")
+		return
+
+	if(istype(I, /obj/item/toy/crayon))
+		var/paths = typesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant - /obj/item/weapon/transparant/text
+		var/targName = input(usr, "Choose transparant pattern", "Pattern list") in paths
+		if(!targName)
+			return
+		var/obj/item/weapon/transparant/W = new targName
+		qdel(src)
+		user.put_in_hands(W)
+		to_chat(user, "<span class='notice'>You painted your blank sign as [W.name].</span>")
+		return
+
+	return ..()
+
+/obj/item/weapon/transparant/attack_self(mob/user)
+	if(last_warn_msg < world.time)
+		user.visible_message("[user] shows you: [bicon(src)] [src.blood_DNA ? "bloody " : ""][src.name]: it says: <span class='emojify'>[src.desc]</span>")
+		last_warn_msg = world.time + delay_msg
+	else
+		to_chat(user, "<span class='notice'>You are too tired, to do that.</span>")
+		return
+
+/obj/item/weapon/transparant/attack(mob/M, mob/user)
+	..()
+	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
+
+/obj/item/weapon/transparant/update_icon()
+	if(blood_DNA)
+		icon_state = "bloody"
+		item_state = "bloody"
+	else
+		icon_state = not_bloody_state
+		item_state = not_bloody_item_state
+	..()
+	if(istype(src.loc, /mob/living))
+		var/mob/living/user = src.loc
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+
+/obj/item/weapon/transparant/clean_blood()
+	..()
+	update_icon()
+
+/obj/item/weapon/transparant/add_blood()
+	..()
+	update_icon()
+
+/obj/item/weapon/transparant/no_nt
+	icon_state = "no_nt"
+	item_state = "no_nt"
+	name = "no NT sign"
+	desc = "Nanotrasen go home! Nanotrasen go home!"
+
+/obj/item/weapon/transparant/peace
+	icon_state = "peace"
+	item_state = "peace"
+	name = "peace sign"
+	desc = "No more war! No more opression! No more violence!"
+
+/obj/item/weapon/transparant/text
+	icon_state = "text"
+	item_state = "text"
+	name = "text sign"
+	desc = "..."
+
+/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
+		var/list/resources_to_use = list()
+		resources_to_use[R] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
+		var/obj/item/weapon/transparant/W = new /obj/item/weapon/transparant
+		user.put_in_hands(W)
+		to_chat(user, "<span class='notice'>You attached a big cardboard sign to the metal rod, making a blank transparant.</span>")
+
+	else
+		return ..()

@@ -5,9 +5,10 @@
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
+	var/list/list_reagents = null
 	var/volume = 30
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
@@ -25,21 +26,20 @@
 	var/datum/reagents/R = new/datum/reagents(volume)
 	reagents = R
 	R.my_atom = src
+	add_initial_reagents()
+
+/obj/item/weapon/reagent_containers/proc/add_initial_reagents()
+	if(list_reagents)
+		reagents.add_reagent_list(list_reagents)
 
 /obj/item/weapon/reagent_containers/attack_self(mob/user)
 	return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	return
+	if(user.a_intent == INTENT_HARM) // Since we usually splash mobs or whatever, now we will also hit them.
+		..()
 
-// this prevented pills, food, and other things from being picked up by bags.
-// possibly intentional, but removing it allows us to not duplicate functionality.
-// -Sayu (storage conslidation)
-/*
-/obj/item/weapon/reagent_containers/attackby(obj/item/I, mob/user)
-	return
-*/
-/obj/item/weapon/reagent_containers/afterattack(obj/target, mob/user , flag)
+/obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
 	return
 
 /obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills

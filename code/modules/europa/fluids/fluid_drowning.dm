@@ -11,7 +11,7 @@
 	return TRUE
 
 /mob/living/carbon/human/can_drown()
-	if(!internal)
+	if(!internal && !istype(wear_mask, /obj/item/clothing/mask/snorkel))
 		var/obj/item/organ/internal/lungs/L = locate() in organs
 		return (L && !L.has_gills)
 	return FALSE

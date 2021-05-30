@@ -1,12 +1,10 @@
 
-#define NITROGEN_RETARDATION_FACTOR 4        //Higher == N2 slows reaction more
-#define THERMAL_RELEASE_MODIFIER 10                //Higher == less heat released during reaction
-#define PHORON_RELEASE_MODIFIER 1500                //Higher == less phoron released by reaction
-#define OXYGEN_RELEASE_MODIFIER 750        //Higher == less oxygen released at high temperature/power
-#define THERMAL_RELEASE_MODIFIER 750               //Higher == more heat released during reaction
-#define PLASMA_RELEASE_MODIFIER 1500                //Higher == less plasma released by reaction
-#define OXYGEN_RELEASE_MODIFIER 1500        //Higher == less oxygen released at high temperature/power
-#define REACTION_POWER_MODIFIER 1.1                //Higher == more overall power
+#define NITROGEN_RETARDATION_FACTOR 4   //Higher == N2 slows reaction more
+#define PHORON_RELEASE_MODIFIER 1500    //Higher == less phoron released by reaction
+#define THERMAL_RELEASE_MODIFIER 750    //Higher == more heat released during reaction
+#define PLASMA_RELEASE_MODIFIER 1500    //Higher == less plasma released by reaction
+#define OXYGEN_RELEASE_MODIFIER 1500    //Higher == less oxygen released at high temperature/power
+#define REACTION_POWER_MODIFIER 1.1     //Higher == more overall power
 
 
 //These would be what you would get at point blank, decreases with distance
@@ -18,7 +16,7 @@
 
 /obj/machinery/power/supermatter
 	name = "Supermatter"
-	desc = "A strangely translucent and iridescent crystal. \red You get headaches just from looking at it."
+	desc = "A strangely translucent and iridescent crystal. <span class='warning'>You get headaches just from looking at it.</span>"
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "darkmatter"
 	density = 1
@@ -38,7 +36,7 @@
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 1000
 
-	light_color = "#8A8A00"
+	light_color = "#8a8a00"
 
 	var/emergency_issued = 0
 
@@ -59,19 +57,19 @@
 
 	var/obj/item/device/radio/radio
 
-	shard //Small subtype, less efficient and more sensitive, but less boom.
-		name = "Supermatter Shard"
-		desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. \red You get headaches just from looking at it."
-		icon_state = "darkmatter_shard"
-		base_icon_state = "darkmatter_shard"
+/obj/machinery/power/supermatter/shard //Small subtype, less efficient and more sensitive, but less boom.
+	name = "Supermatter Shard"
+	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure. <span class='warning'>You get headaches just from looking at it.</span>"
+	icon_state = "darkmatter_shard"
+	base_icon_state = "darkmatter_shard"
 
-		warning_point = 50
-		emergency_point = 500
-		explosion_point = 900
+	warning_point = 50
+	emergency_point = 500
+	explosion_point = 900
 
-		gasefficency = 0.125
+	gasefficency = 0.125
 
-		explosion_power = 3 //3,6,9,12? Or is that too small?
+	explosion_power = 3 //3,6,9,12? Or is that too small?
 
 
 /obj/machinery/power/supermatter/atom_init()
@@ -84,9 +82,9 @@
 	. = ..()
 
 /obj/machinery/power/supermatter/proc/explode()
-		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
-		qdel(src)
-		return
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	qdel(src)
+	return
 
 /obj/machinery/power/supermatter/process()
 
@@ -119,7 +117,7 @@
 				lastwarning = world.timeofday
 
 		if(damage > explosion_point)
-			for(var/mob/living/mob in living_mob_list)
+			for(var/mob/living/mob in alive_mob_list)
 				if(istype(mob, /mob/living/carbon/human))
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
@@ -277,10 +275,10 @@
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
 	for(var/mob/living/l in range(10))
 		if(l in view())
-			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", 1,\
-				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
+			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", SHOWMSG_VISUAL,\
+				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", SHOWMSG_AUDIO)
 		else
-			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
+			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)
 		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
 		l.apply_effect(rads, IRRADIATE)
 

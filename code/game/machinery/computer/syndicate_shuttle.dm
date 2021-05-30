@@ -6,6 +6,8 @@
 	circuit = /obj/item/weapon/circuitboard/computer/syndicate_shuttle
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
+	state_broken_preset = "tcbossb"
+	state_nopower_preset = "tcboss0"
 	light_color = "#a91515"
 	req_access = list(access_syndicate)
 	var/area/curr_location
@@ -32,7 +34,7 @@
 	lastMove = world.time
 
 	if(curr_location.z != dest_location.z)
-		var/area/transit_location = locate(/area/syndicate_station/transit)
+		var/area/transit_location = locate(/area/shuttle/syndicate/transit)
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(SYNDICATE_SHUTTLE_MOVE_TIME)
@@ -54,42 +56,42 @@
 	<a href='?src=\ref[src];station_sw=1'>South West of SS13</a> |
 	<a href='?src=\ref[src];station_s=1'>South of SS13</a> |
 	<a href='?src=\ref[src];station_se=1'>South East of SS13</a><br>
-	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>
-	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
+	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>"}
 
-	user << browse(entity_ja(dat), "window=computer;size=575x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)
 	. = ..()
 	if(!. || !allowed(usr))
 		return
-	if(!Challenge)
+	if(war_device_activated)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
 		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
 		 	more minutes to allow them to prepare.</span>")
 			return
 	else
-		Challenge.shuttle_moved = TRUE
+		war_device_activation_forbidden = TRUE
 
 	if(href_list["syndicate"])
-		syndicate_move_to(/area/syndicate_station/start)
+		syndicate_move_to(/area/shuttle/syndicate/start)
 	else if(href_list["station_nw"])
-		syndicate_move_to(/area/syndicate_station/northwest)
+		syndicate_move_to(/area/shuttle/syndicate/northwest)
 	else if(href_list["station_n"])
-		syndicate_move_to(/area/syndicate_station/north)
+		syndicate_move_to(/area/shuttle/syndicate/north)
 	else if(href_list["station_ne"])
-		syndicate_move_to(/area/syndicate_station/northeast)
+		syndicate_move_to(/area/shuttle/syndicate/northeast)
 	else if(href_list["station_sw"])
-		syndicate_move_to(/area/syndicate_station/southwest)
+		syndicate_move_to(/area/shuttle/syndicate/southwest)
 	else if(href_list["station_s"])
-		syndicate_move_to(/area/syndicate_station/south)
+		syndicate_move_to(/area/shuttle/syndicate/south)
 	else if(href_list["station_se"])
-		syndicate_move_to(/area/syndicate_station/southeast)
+		syndicate_move_to(/area/shuttle/syndicate/southeast)
 	else if(href_list["mining"])
-		syndicate_move_to(/area/syndicate_station/mining)
+		syndicate_move_to(/area/shuttle/syndicate/mining)
 
 	updateUsrDialog()
 

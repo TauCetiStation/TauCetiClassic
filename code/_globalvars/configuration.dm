@@ -2,14 +2,19 @@ var/datum/configuration/config = null
 
 var/host = null
 var/join_motd = null
+var/host_announcements
+var/join_test_merge = null
+var/test_merges
 var/station_name = "NSS Exodus"
+var/system_name = "Tau Ceti"
 var/game_version = "TauCetiStation"
-var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
+var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
+var/gamestory_start_year = 2213
 var/changelog_hash = ""
 
 var/list/donators = list()
 
-var/aliens_allowed = 0
+var/aliens_allowed = 1
 var/ooc_allowed = 1
 var/looc_allowed = 1
 var/dsay_allowed = 1

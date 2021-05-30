@@ -8,11 +8,11 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = 4.0
-	slot_flags = SLOT_BACK	//ERROOOOO
+	w_class = ITEM_SIZE_LARGE
+	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	action_button_name = "Storage"
-	max_w_class = 3
-	max_combined_w_class = 21
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
 
 /obj/item/weapon/storage/backpack/ui_action_click()
@@ -22,22 +22,15 @@
 		close(loc)
 	opened = !opened
 
-/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
-	if (src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
+/obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
+	if(length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
-	if (slot == slot_back && src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
+	if (slot == SLOT_BACK && length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
 	..(user, slot)
-
-/*
-/obj/item/weapon/storage/backpack/dropped(mob/user)
-	if (loc == user && src.use_sound)
-		playsound(src.loc, src.use_sound, 50, 1, -5)
-	..(user)
-*/
 
 /*
  * Backpack Types
@@ -48,27 +41,28 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = 4
-	max_combined_w_class = 84
-	storage_slots = 21
+	max_w_class = ITEM_SIZE_LARGE
+	max_storage_space = 56
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
 	if(crit_fail)
-		to_chat(user, "<spam class='red'>The Bluespace generator isn't working.</span>")
+		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
 		return
-	if(istype(W, /obj/item/weapon/storage/backpack/holding) && !W.crit_fail)
-		to_chat(user, "<spam class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
-		qdel(W)
+
+	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
+		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
+		qdel(I)
 		return
-	..()
+
+	return ..()
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability))
 		return 1 //No failure
 	if (prob(src.reliability))
-		to_chat(user, "<spam class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
+		to_chat(user, "<span class='red'>The Bluespace portal resists your attempt to add another item.</span>")//light failure
 	else
-		to_chat(user, "<spam class='red'>The Bluespace generator malfunctions!</span>")
+		to_chat(user, "<span class='red'>The Bluespace generator malfunctions!</span>")
 		for (var/obj/O in src.contents) //it broke, delete what was in it
 			qdel(O)
 		crit_fail = 1
@@ -84,15 +78,15 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4.0
-	storage_slots = 20
-	max_w_class = 3
-	max_combined_w_class = 400 // can store a ton of shit!
+	w_class = ITEM_SIZE_LARGE
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = 80 // can store a ton of shit!
 
-/obj/item/weapon/storage/backpack/cultpack
-	name = "trophy rack"
-	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
-	icon_state = "cultpack"
+/obj/item/weapon/storage/backpack/chaplain
+	name = "chaplain's backpack"
+	desc = "A comfy capacious backpack for magic toys."
+	icon_state = "chaplain_backpack"
+	item_state = "chaplain_backpack"
 
 /obj/item/weapon/storage/backpack/clown
 	name = "Giggles von Honkerton"
@@ -225,6 +219,12 @@
 	desc = "A spacious backpack with lots of pockets, worn by medical members of a Nanotrasen Emergency Response Team."
 	icon_state = "ert_medical"
 
+//Stealth
+/obj/item/weapon/storage/backpack/ert/stealth
+	name = "emergency response team stealth backpack"
+	desc = "A backpack worn by stealth members of a NanoTrasen Emergency Response Team"
+	icon_state = "ert_stealth"
+
 /obj/item/weapon/storage/backpack/kitbag
 	name = "kitbag"
 	icon_state = "kitbag"
@@ -234,8 +234,41 @@
 	icon_state = "medbag"
 
 /obj/item/weapon/storage/backpack/alt
+	name = "sporty backpack"
+	desc = "Smaller and more comfortable version of an old boring backpack."
 	icon_state = "backpack-alt"
 	item_state = "backpack"
+
+/obj/item/weapon/storage/backpack/alt/vir
+	name = "virologist sporty backpack"
+	desc = "A sterile backpack with virologist colours."
+	icon_state = "backpack-vir-alt"
+	item_state = "backpack-vir"
+
+/obj/item/weapon/storage/backpack/alt/chem
+	name = "chemist sporty backpack"
+	desc = "A sterile backpack with chemist colours."
+	icon_state = "backpack-chem-alt"
+	item_state = "backpack-chem"
+
+/obj/item/weapon/storage/backpack/alt/gen
+	name = "geneticist sporty backpack"
+	desc = "A sterile backpack with geneticist colours."
+	icon_state = "backpack-gen-alt"
+	item_state = "backpack-gen"
+
+/obj/item/weapon/storage/backpack/alt/tox
+	name = "scientist sporty backpack"
+	desc = "Useful for holding research materials."
+	icon_state = "backpack-tox-alt"
+	item_state = "backpack-tox"
+
+/obj/item/weapon/storage/backpack/alt/hyd
+	name = "hydroponics sporty backpack"
+	desc = "A green backpack for plant related work."
+	icon_state = "backpack-hyd-alt"
+	item_state = "backpack-hyd"
+
 
 /obj/item/weapon/storage/backpack/backpack_vir
 	name = "virologist backpack"
@@ -278,12 +311,12 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
-	w_class = 3 //Can fit in backpacks itself.
-	max_combined_w_class = 15
+	w_class = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
+	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 
-/obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
+/obj/item/weapon/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
 		invisibility = 101
 		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
@@ -304,8 +337,7 @@
 	icon_state = "duffle-syndie"
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
-	max_combined_w_class = 30
-	storage_slots = 10
+	max_storage_space = DEFAULT_BACKPACK_STORAGE + 10
 	slowdown = 1
 
 /obj/item/weapon/storage/backpack/dufflebag/marinad
@@ -331,8 +363,7 @@
 	desc = "A suspicious looking dufflebag for holding surgery tools."
 	icon_state = "duffle-syndiemed"
 	item_state = "duffle-syndiemed"
-	max_combined_w_class = 40
-	storage_slots = 12
+	max_storage_space = DEFAULT_BACKPACK_STORAGE + 20
 
 /obj/item/weapon/storage/backpack/dufflebag/surgery/atom_init()
 	. = ..()

@@ -15,7 +15,7 @@
 
 	anchored = 1
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/chargesa = 1
 	var/insistinga = 0
@@ -51,16 +51,16 @@
 				user << "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart."
 				if (!(LASEREYES in user.mutations))
 					user.mutations.Add(LASEREYES)
-					user << "\blue You feel pressure building behind your eyes."
+					user << "<span class='notice'>You feel pressure building behind your eyes.</span>"
 				if (!(COLD_RESISTANCE in user.mutations))
 					user.mutations.Add(COLD_RESISTANCE)
-					user << "\blue Your body feels warm."
+					user << "<span class='notice'>Your body feels warm.</span>"
 				if (!(XRAY in user.mutations))
 					user.mutations.Add(XRAY)
 					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
 					user.see_in_dark = 8
 					user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-					user << "\blue The walls suddenly disappear."
+					user << "<span class='notice'>The walls suddenly disappear.</span>"
 				user.dna.mutantrace = "shadow"
 				user.update_mutantrace()
 			if("Wealth")
@@ -78,8 +78,9 @@
 			if("To Kill")
 				user << "<B>Your wish is granted, but at a terrible cost...</B>"
 				user << "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart."
-				ticker.mode.traitors += user.mind
+				SSticker.mode.traitors += user.mind
 				user.mind.special_role = "traitor"
+				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", user)
 				var/datum/objective/hijack/hijack = new
 				hijack.owner = user.mind
 				user.mind.objectives += hijack
@@ -93,7 +94,7 @@
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
-				for(var/mob/living/simple_animal/hostile/faithless/F in living_mob_list)
+				for(var/mob/living/simple_animal/hostile/faithless/F in alive_mob_list)
 					F.health = -10
 					F.stat = DEAD
 					F.icon_state = "faithless_dead"
@@ -108,16 +109,16 @@
 	density = 1
 	anchored = 1
 	layer = 3
-	icon = 'icons/mob/critter.dmi'
+	icon = 'icons/mob/animal.dmi'
 	icon_state = "blob"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
 /obj/effect/meatgrinder/atom_init()
 	. = ..()
 	icon_state = "blob"
 
-/obj/effect/meatgrinder/Crossed(AM as mob|obj)
+/obj/effect/meatgrinder/Crossed(atom/movable/AM)
+	. = ..()
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(mob/M)
@@ -128,21 +129,20 @@
 		for(var/mob/O in viewers(world.view, src.loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
-		call(src,triggerproc)(M)
+		trigger_act()
 
-/obj/effect/meatgrinder/proc/triggerrad1(mob)
+/obj/effect/meatgrinder/proc/trigger_act(mob)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	for(var/mob/O in viewers(world.view, src.loc))
 		s.set_up(3, 1, src)
 		s.start()
 		explosion(mob, 1, 0, 0, 0)
 		spawn(0)
-			del(src)
+			qdel(src)
 
 /obj/effect/meatgrinder
 	name = "Meat Grinder"
 	icon_state = "blob"
-	triggerproc = "triggerrad1"
 
 
 /////For the Wishgranter///////////
@@ -160,7 +160,7 @@
 	spawn(rand(800,1200))
 		if(C.stat == DEAD)
 			dead_mob_list -= C
-			living_mob_list += C
+			alive_mob_list += C
 		C.stat = CONSCIOUS
 		C.tod = null
 		C.setToxLoss(0)

@@ -66,7 +66,7 @@
 	ASSERT(parent)
 	parent.temporarily_store_air()
 	visible_message("<span class='danger'>\The [src] bursts!</span>");
-	playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 	var/datum/effect/effect/system/smoke_spread/smoke = new
 	smoke.set_up(1, 0, loc, 0)
 	smoke.start()
@@ -86,20 +86,20 @@
 
 	alpha = 255
 
-	overlays.Cut()
+	cut_overlays()
 
 	var/obj/machinery/atmospherics/node1 = NODE1
 	var/obj/machinery/atmospherics/node2 = NODE2
 
 	if(node1 && node2)
-		overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]intact[icon_connect_type]")
+		add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]intact[icon_connect_type]"))
 		//if(leaking)
 		//	leaking = FALSE
 	else
-		overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]exposed[node1?1:0][node2?1:0][icon_connect_type]")
+		add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]exposed[node1?1:0][node2?1:0][icon_connect_type]"))
 		//if(!leaking)
 		//	leaking = TRUE
-		//	START_PROCESSING(SSmachine, src)
+		//	START_PROCESSING(SSmachines, src)
 
 /obj/machinery/atmospherics/pipe/simple/update_underlays()
 	return
@@ -166,6 +166,7 @@
 	connect_types = CONNECT_TYPE_SCRUBBER
 	icon_connect_type = "-scrubbers"
 	color = PIPE_COLOR_RED
+	layer = GAS_PIPE_HIDDEN_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/hidden/supply
 	name = "Air supply pipe"
@@ -174,6 +175,7 @@
 	connect_types = CONNECT_TYPE_SUPPLY
 	icon_connect_type = "-supply"
 	color = PIPE_COLOR_BLUE
+	layer = GAS_PIPE_HIDDEN_SUPPLY_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/hidden/yellow
 	color = PIPE_COLOR_YELLOW

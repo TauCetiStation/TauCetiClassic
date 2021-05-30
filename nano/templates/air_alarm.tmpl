@@ -150,6 +150,15 @@ Used In File(s): \code\game\machinery\alarm.dm
 					{{:helper.link('Reset', null, { 'id_tag' : value.id_tag, 'command' : 'reset_external_pressure'})}}
 				</div>
 			</div>
+			<div class="item">
+				<div class="itemLabel">
+					Internal Pressure Bound:
+				</div>
+				<div class="itemContent">
+					{{:helper.link(helper.fixed(value.internal,2), null, { 'id_tag' : value.id_tag, 'command' : 'set_internal_pressure'})}}
+					{{:helper.link('Reset', null, { 'id_tag' : value.id_tag, 'command' : 'reset_internal_pressure'})}}
+				</div>
+			</div>
 			<HR>
 		{{empty}}
 			No vents connected.

@@ -5,6 +5,7 @@
  *	re-implemented in other classes.
  *
  *	Contains:
+ *		Book bag
  *		Trash Bag
  *		Bluespace trash bag
  *		Mining Satchel
@@ -21,7 +22,23 @@
 	allow_quick_empty = 1
 	display_contents_with_number = 0 // UNStABLE AS FuCK, turn on when it stops crashing clients
 	use_to_pickup = 1
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
+
+// -----------------------------
+//           Book bag
+// -----------------------------
+/obj/item/weapon/storage/bag/bookbag
+	name = "book bag"
+	desc = "A bag for knowledge."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "bookbag"
+	item_state = "bookbag"
+	display_contents_with_number = 0 //This would look really stupid otherwise
+	storage_slots = 7
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
+	w_class = ITEM_SIZE_LARGE //Bigger than a book because physics
+	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/bible, /obj/item/weapon/spellbook)
 
 // -----------------------------
 //          Trash bag
@@ -33,29 +50,62 @@
 	icon_state = "trashbag"
 	item_state = "trashbag"
 
-	w_class = 4
-	max_w_class = 2
-	storage_slots = 21
+	w_class = ITEM_SIZE_SMALL
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	can_hold = list() // any
-	cant_hold = list("/obj/item/weapon/disk/nuclear")
+	cant_hold = list(/obj/item/weapon/disk/nuclear)
+
+/obj/item/weapon/storage/bag/trash/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
+	. = ..()
+	if(.)
+		update_w_class()
+
+/obj/item/weapon/storage/bag/trash/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
+	. = ..()
+	if(.)
+		update_w_class()
+
+/obj/item/weapon/storage/bag/trash/can_be_inserted(obj/item/W, mob/user, stop_messages = FALSE)
+	if(istype(loc, /obj/item/weapon/storage))
+		if(!stop_messages)
+			to_chat(user, "<span class='notice'>Take [src] out of [loc] first.</span>")
+		return FALSE //causes problems if the bag expands and becomes larger than loc can hold, so disallow it
+	return ..()
+
+/obj/item/weapon/storage/bag/trash/proc/update_w_class()
+	w_class = initial(w_class)
+	for(var/obj/item/I in contents)
+		w_class = max(w_class, I.w_class)
+
+	var/cur_storage_space = storage_space_used()
+	while(base_storage_capacity(w_class) < cur_storage_space)
+		w_class++
+
+	w_class = min(ITEM_SIZE_HUGE, w_class)
+
+	update_icon()
+
+/obj/item/weapon/storage/bag/trash/get_storage_cost()
+	var/used_ratio = storage_space_used()/max_storage_space
+	return max(base_storage_cost(w_class), round(used_ratio*base_storage_cost(max_w_class), 1))
+
+/obj/item/weapon/storage/bag/trash/update_icon()
+	switch(w_class)
+		if(2)
+			icon_state = "[initial(icon_state)]"
+		if(3)
+			icon_state = "[initial(icon_state)]1"
+		if(4)
+			icon_state = "[initial(icon_state)]2"
+		if(5 to INFINITY)
+			icon_state = "[initial(icon_state)]3"
 
 /obj/item/weapon/storage/bag/trash/bluespace
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
-	max_combined_w_class = 120
-	storage_slots = 60
-
-/obj/item/weapon/storage/bag/trash/update_icon()
-	if(contents.len == 0)
-		icon_state = "[initial(icon_state)]"
-	else if(contents.len < 12)
-		icon_state = "[initial(icon_state)]1"
-	else if(contents.len < 21)
-		icon_state = "[initial(icon_state)]2"
-	else icon_state = "[initial(icon_state)]3"
-
-
+	max_storage_space = 56
 
 
 // -----------------------------
@@ -69,11 +119,11 @@
 	icon_state = "plasticbag"
 	item_state = "plasticbag"
 
-	w_class = 4
-	max_w_class = 2
-	storage_slots = 21
+	w_class = ITEM_SIZE_LARGE
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BOX_STORAGE
 	can_hold = list() // any
-	cant_hold = list("/obj/item/weapon/disk/nuclear")
+	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
 // -----------------------------
 //        Mining Satchel
@@ -84,17 +134,15 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
-	slot_flags = SLOT_BELT | SLOT_POCKET
-	w_class = 3
-	storage_slots = 50
-	max_combined_w_class = 100
-	can_hold = list("/obj/item/weapon/ore", "/obj/item/bluespace_crystal")
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
+	w_class = ITEM_SIZE_NORMAL
+	max_storage_space = 100
+	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
 
 /obj/item/weapon/storage/bag/ore/holding
 	name = "Mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
-	storage_slots = 150
-	max_combined_w_class = 300
+	max_storage_space = 300
 	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
 
@@ -106,11 +154,24 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
 	name = "Plant Bag"
-	storage_slots = 50; //the number of plant pieces it can carry.
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
-	w_class = 2
-	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/grown","/obj/item/seeds","/obj/item/weapon/grown")
+	max_storage_space = 100
+	max_w_class = ITEM_SIZE_NORMAL
+	w_class = ITEM_SIZE_SMALL
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
+
+// -----------------------------
+//          Bio bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/bio
+	name = "bio bag"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "biobag"
+	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
+	max_storage_space = 100
+	w_class = ITEM_SIZE_NORMAL
+	max_w_class = ITEM_SIZE_NORMAL
+	can_hold = list(/obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/blood,/obj/item/weapon/reagent_containers/food/snacks/monkeycube,/obj/item/organ)
 
 
 // -----------------------------
@@ -126,7 +187,8 @@
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 
 	var/capacity = 300; //the number of sheets it can carry.
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
+	storage_slots = 7
 
 	allow_quick_empty = 1 // this function is superceded
 
@@ -140,13 +202,13 @@
 		current += S.get_amount()
 	if(capacity == current)//If it's full, you're done
 		if(!stop_messages)
-			to_chat(usr, "\red The snatcher is full.")
+			to_chat(usr, "<span class='warning'>The snatcher is full.</span>")
 		return 0
 	return 1
 
 
 // Modified handle_item_insertion.  Would prefer not to, but...
-/obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S)) return 0
 
@@ -175,36 +237,10 @@
 		else
 			S.loc = src
 
-	orient2hud(usr)
-	if(usr.s_active)
-		usr.s_active.show_to(usr)
+	if(!NoUpdate)
+		update_ui_after_item_insertion()
 	update_icon()
 	return 1
-
-
-// Sets up numbered display to show the stack size of each stored mineral
-// NOTE: numbered display is turned off currently because it's broken
-/obj/item/weapon/storage/bag/sheetsnatcher/orient2hud(mob/user)
-	var/adjusted_contents = contents.len
-
-	//Numbered contents display
-	var/list/datum/numbered_display/numbered_contents
-	if(display_contents_with_number)
-		numbered_contents = list()
-		adjusted_contents = 0
-		for(var/obj/item/stack/sheet/I in contents)
-			adjusted_contents++
-			var/datum/numbered_display/D = new/datum/numbered_display(I)
-			D.number = I.get_amount()
-			numbered_contents.Add( D )
-
-	var/row_num = 0
-	var/col_count = min(7,storage_slots) -1
-	if (adjusted_contents > 7)
-		row_num = round((adjusted_contents-1) / 7) // 7 is the maximum allowed width.
-	src.standard_orient_objs(row_num, col_count, numbered_contents)
-	return
-
 
 // Modified quick_empty verb drops appropriate sized stacks
 /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty()
@@ -217,13 +253,11 @@
 			S.amount -= stacksize
 		if(!S.get_amount())
 			qdel(S) // todo: there's probably something missing here
-	orient2hud(usr)
-	if(usr.s_active)
-		usr.s_active.show_to(usr)
+	update_ui_after_item_removal()
 	update_icon()
 
 // Instead of removing
-/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S))
 		return 0
@@ -238,7 +272,7 @@
 		temp.amount = S.get_amount() - S.max_amount
 		S.amount = S.max_amount
 
-	return ..(S,new_location)
+	return ..(S, new_location, NoUpdate)
 
 // -----------------------------
 //    Sheet Snatcher (Cyborg)
@@ -258,7 +292,7 @@
 	icon_state = "cashbag"
 	name = "Cash bag"
 	desc = "A bag for carrying lots of cash. It's got a big dollar sign printed on the front."
-	storage_slots = 50; //the number of cash pieces it can carry.
-	max_combined_w_class = 100
-	w_class = 2
-	can_hold = list("/obj/item/weapon/coin","/obj/item/weapon/spacecash")
+	max_storage_space = 100
+	max_w_class = ITEM_SIZE_HUGE
+	w_class = ITEM_SIZE_SMALL
+	can_hold = list(/obj/item/weapon/coin,/obj/item/weapon/spacecash)

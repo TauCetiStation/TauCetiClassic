@@ -4,33 +4,38 @@
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
+	var/bodypart_type
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
 	part = BP_L_ARM
+	bodypart_type = /obj/item/organ/external/l_arm/robot
 
 /obj/item/robot_parts/r_arm
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
 	part = BP_R_ARM
+	bodypart_type = /obj/item/organ/external/r_arm/robot
 
 /obj/item/robot_parts/l_leg
 	name = "robot left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
 	part = BP_L_LEG
+	bodypart_type = /obj/item/organ/external/l_leg/robot
 
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
 	part = BP_R_LEG
+	bodypart_type = /obj/item/organ/external/r_leg/robot
 
 /obj/item/robot_parts/chest
 	name = "robot torso"
@@ -44,6 +49,7 @@
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
 	part = BP_HEAD
+	bodypart_type = /obj/item/organ/external/head/robot
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
 
@@ -58,26 +64,26 @@
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/robot_parts/robot_suit/atom_init()
 	. = ..()
 	update_icon()
 
 /obj/item/robot_parts/robot_suit/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(l_arm)
-		overlays += "l_arm+o"
+		add_overlay("l_arm+o")
 	if(r_arm)
-		overlays += "r_arm+o"
+		add_overlay("r_arm+o")
 	if(chest)
-		overlays += "chest+o"
+		add_overlay("chest+o")
 	if(l_leg)
-		overlays += "l_leg+o"
+		add_overlay("l_leg+o")
 	if(r_leg)
-		overlays += "r_leg+o"
+		add_overlay("r_leg+o")
 	if(head)
-		overlays += "head+o"
+		add_overlay("head+o")
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
 	if(l_arm && r_arm)
@@ -87,10 +93,18 @@
 				return 1
 	return 0
 
-/obj/item/robot_parts/robot_suit/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-		var/obj/item/stack/sheet/metal/M = W
+/obj/item/robot_parts/proc/can_attach()
+	return TRUE
+
+/obj/item/robot_parts/head/can_attach()
+	return flash1 && flash2
+
+/obj/item/robot_parts/chest/can_attach()
+	return cell && wires
+
+/obj/item/robot_parts/robot_suit/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
+		var/obj/item/stack/sheet/metal/M = I
 		if(!M.use(1))
 			return
 
@@ -98,13 +112,13 @@
 		B.loc = get_turf(src)
 		to_chat(user, "<span class='info'>You armed the robot frame!</span>")
 
-		if (user.get_inactive_hand()==src)
+		if(user.get_inactive_hand() == src)
 			user.remove_from_mob(src)
 			user.put_in_inactive_hand(B)
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(I))
 		if(contents.len)
 			to_chat(user, "<span class='info'>You disassemble robot frame to parts!</span>")
 			var/turf/T = get_turf(src)
@@ -115,88 +129,77 @@
 			r_leg = null
 			chest = null
 			head = null
-			overlays.Cut()
+			cut_overlays()
 			w_class = initial(w_class)
 		else
 			to_chat(user, "<span class='warning'>Nothing attached to robot frame!</span>")
-		return
 
-	if(istype(W, /obj/item/robot_parts/l_leg))
+	else if(istype(I, /obj/item/robot_parts/l_leg))
 		if(l_leg)
 			return
-		user.drop_item()
-		W.loc = src
-		l_leg = W
-		w_class = 4
+		user.drop_from_inventory(I, src)
+		l_leg = I
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
-		return
 
-	if(istype(W, /obj/item/robot_parts/r_leg))
+	else if(istype(I, /obj/item/robot_parts/r_leg))
 		if(r_leg)
 			return
-		user.drop_item()
-		W.loc = src
-		r_leg = W
-		w_class = 4
+		user.drop_from_inventory(I, src)
+		r_leg = I
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
-		return
 
-	if(istype(W, /obj/item/robot_parts/l_arm))
+	else if(istype(I, /obj/item/robot_parts/l_arm))
 		if(l_arm)
 			return
-		user.drop_item()
-		W.loc = src
-		l_arm = W
-		w_class = 4
+		user.drop_from_inventory(I, src)
+		l_arm = I
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
-		return
 
-	if(istype(W, /obj/item/robot_parts/r_arm))
+	else if(istype(I, /obj/item/robot_parts/r_arm))
 		if(r_arm)
 			return
-		user.drop_item()
-		W.loc = src
-		r_arm = W
-		w_class = 4
+		user.drop_from_inventory(I, src)
+		r_arm = I
+		w_class = ITEM_SIZE_LARGE
 		update_icon()
-		return
 
-	if(istype(W, /obj/item/robot_parts/chest))
+	else if(istype(I, /obj/item/robot_parts/chest))
 		if(chest)
 			return
-		if(W:wires && W:cell)
-			user.drop_item()
-			W.loc = src
-			chest = W
-			w_class = 4
+		var/obj/item/robot_parts/chest/C = I
+		if(C.can_attach())
+			user.drop_from_inventory(C, src)
+			chest = C
+			w_class = ITEM_SIZE_LARGE
 			update_icon()
-		else if(!W:wires)
-			to_chat(user, "<span class='info'>You need to attach wires to it first!</span>")
+		else if(!C.wires)
+			to_chat(user, "<span class='info'>You need to attach wires to [C] first!</span>")
 		else
-			to_chat(user, "<span class='info'>You need to attach a cell to it first!</span>")
-		return
+			to_chat(user, "<span class='info'>You need to attach a cell to [C] first!</span>")
 
-	if(istype(W, /obj/item/robot_parts/head))
+	else if(istype(I, /obj/item/robot_parts/head))
 		if(head)
 			return
-		if(W:flash2 && W:flash1)
-			user.drop_item()
-			W.loc = src
-			head = W
-			w_class = 4
+		var/obj/item/robot_parts/head/H = I
+		if(H.can_attach())
+			user.drop_from_inventory(H, src)
+			head = H
+			w_class = ITEM_SIZE_LARGE
 			update_icon()
 		else
-			to_chat(user, "<span class='info'>You need to attach a flash to it first!</span>")
-		return
+			to_chat(user, "<span class='info'>You need to attach a flash to [H] first!</span>")
 
-	if(istype(W, /obj/item/device/mmi))
-		var/obj/item/device/mmi/M = W
+	else if(istype(I, /obj/item/device/mmi))
+		var/obj/item/device/mmi/M = I
 		if(check_completion())
 			if(!istype(loc,/turf))
-				to_chat(user, "<span class='warning'>You can't put \the [W] in, the frame has to be standing on the ground to be perfectly precise.</span>")
+				to_chat(user, "<span class='warning'>You can't put \the [M] in, the frame has to be standing on the ground to be perfectly precise.</span>")
 				return
 			if(!M.brainmob)
-				to_chat(user, "<span class='warning'>Sticking an empty [W] into the frame would sort of defeat the purpose.</span>")
+				to_chat(user, "<span class='warning'>Sticking an empty [M] into the frame would sort of defeat the purpose.</span>")
 				return
 			if(!M.brainmob.key)
 				var/ghost_can_reenter = 0
@@ -206,27 +209,27 @@
 							ghost_can_reenter = 1
 							break
 				if(!ghost_can_reenter)
-					to_chat(user, "<span class='notice'>\The [W] is completely unresponsive; there's no point.</span>")
+					to_chat(user, "<span class='notice'>\The [M] is completely unresponsive; there's no point.</span>")
 					return
 
 			if(M.brainmob.stat == DEAD)
-				to_chat(user, "<span class='warning'>Sticking a dead [W] into the frame would sort of defeat the purpose.</span>")
+				to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 				return
 
-			if((M.brainmob.mind in ticker.mode.head_revolutionaries) || (M.brainmob.mind in ticker.mode.A_bosses) || (M.brainmob.mind in ticker.mode.B_bosses))
-				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [W].</span>")
+			if((M.brainmob.mind in SSticker.mode.head_revolutionaries))
+				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [M].</span>")
 				return
 
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
-				to_chat(user, "<span class='warning'>This [W] does not seem to fit.</span>")
+				to_chat(user, "<span class='warning'>This [M] does not seem to fit.</span>")
 				return
 
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
 			if(!O)	return
 
-			user.drop_item()
+			user.drop_from_inventory(M)
 
-			O.mmi = W
+			O.mmi = M
 			O.invisibility = 0
 			O.custom_name = created_name
 			O.updatename("Default")
@@ -239,8 +242,8 @@
 			O.job = "Cyborg"
 
 			O.cell = chest.cell
-			O.cell.loc = O
-			W.loc = O//Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
+			O.cell.forceMove(O)
+			I.forceMove(O) //Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
 
 			// Since we "magically" installed a cell, we also have to update the correct component.
 			if(O.cell)
@@ -249,17 +252,12 @@
 				cell_component.installed = 1
 
 			feedback_inc("cyborg_birth",1)
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.borgify_directive(O)
 			O.Namepick()
 
 			qdel(src)
 		else
 			to_chat(user, "<span class='info'>The MMI must go in after everything else!</span>")
-		return
-
-	if (istype(W, /obj/item/weapon/pen))
+	else if (istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, created_name), MAX_NAME_LEN)
 		if (!t)
 			return
@@ -268,43 +266,41 @@
 
 		created_name = t
 
-	return
+	else
+		return ..()
 
-/obj/item/robot_parts/chest/attackby(obj/item/W, mob/user)
-	..()
-
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
+/obj/item/robot_parts/chest/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='info'>You have already inserted a cell!</span>")
 			return
 
-		user.drop_item()
-		W.loc = src
-		cell = W
+		user.drop_from_inventory(I, src)
+		cell = I
 		to_chat(user, "<span class='info'>You insert the cell!</span>")
 
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(iscoil(I))
 		if(wires)
 			to_chat(user, "<span class='info'>You have already inserted wire!</span>")
 			return
 
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = I
 		if(!coil.use(1))
 			return
 
 		wires = 1.0
 		to_chat(user, "<span class='info'>You insert the wire!</span>")
 
-	else if(istype(W, /obj/item/weapon/crowbar))
+	else if(iscrowbar(I))
 		if(!cell)
 			to_chat(user, "<span class='warning'>No cell installed!</span>")
 			return
 
 		to_chat(user, "<span class='info'>You took out a cell!</span>")
-		cell.loc = get_turf(src)
+		cell.forceMove(get_turf(src))
 		cell = null
 
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(iswirecutter(I))
 		if(!wires)
 			to_chat(user, "<span class='warning'>No wires installed!</span>")
 			return
@@ -312,55 +308,51 @@
 		to_chat(user, "<span class='info'>You cut the wires!</span>")
 		new /obj/item/stack/cable_coil(get_turf(src), 1)
 		wires = 0.0
-		return
 
-/obj/item/robot_parts/head/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/device/flash))
-		if(istype(user,/mob/living/silicon/robot))
-			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
-			return
-		else if(flash1 && flash2)
+	else
+		return ..()
+
+/obj/item/robot_parts/head/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/flash))
+		if(flash1 && flash2)
 			to_chat(user, "<span class='info'>You have already inserted the eyes!</span>")
 			return
+		if(!user.drop_item(src))
+			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
+			return
 		else
-			user.drop_item()
-			W.loc = src
 			to_chat(user, "<span class='info'>You insert the flash into the eye socket!</span>")
 			if(flash1)
-				flash2 = W
+				flash2 = I
 			else
-				flash1 = W
-		return
+				flash1 = I
 
-	if(istype(W, /obj/item/weapon/crowbar))
+	else if(iscrowbar(I))
 		if(flash1 || flash2)
 			to_chat(user, "<span class='info'>You remove the flash from the eye socket!</span>")
 			if(flash2)
-				flash2.loc = get_turf(src)
+				flash2.forceMove(get_turf(src))
 				flash2 = null
 			else
-				flash1.loc = get_turf(src)
+				flash1.forceMove(get_turf(src))
 				flash1 = null
 		else
 			to_chat(user, "<span class='warning'>No flash installed!</span>")
-		return
 
-	if(istype(W, /obj/item/weapon/stock_parts/manipulator))
+	else if(istype(I, /obj/item/weapon/stock_parts/manipulator))
 		to_chat(user, "<span class='info'>You install some manipulators and modify the head, creating a functional spider-bot!</span>")
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
-		user.drop_item()
-		qdel(W)
+		qdel(I)
 		qdel(src)
-		return
-	return
 
-/obj/item/robot_parts/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/card/emag))
-		if(sabotaged)
-			to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
-		else
-			to_chat(user, "<span class='warning'>You slide [W] into the dataport on [src] and short out the safeties.</span>")
-			sabotaged = 1
-		return
-	..()
+	else
+		return ..()
+
+/obj/item/robot_parts/emag_act(mob/user)
+	if(sabotaged)
+		to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
+		return FALSE
+	else
+		to_chat(user, "<span class='warning'>You slide card into the dataport on [src] and short out the safeties.</span>")
+		sabotaged = 1
+		return TRUE

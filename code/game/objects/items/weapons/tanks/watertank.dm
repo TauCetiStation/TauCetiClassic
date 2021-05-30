@@ -2,7 +2,7 @@
 /obj/item/weapon/reagent_containers/watertank_backpack
 	name = "backpack water tank"
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
@@ -75,6 +75,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/MouseDrop()
+	. = ..()
 	if(ismob(loc))
 		if(!CanMouseDrop(src))
 			return
@@ -84,11 +85,11 @@
 		add_fingerprint(usr)
 		M.put_in_hands(src)
 
-/obj/item/weapon/reagent_containers/watertank_backpack/attackby(obj/item/W, mob/user, params)
-	if(W == noz)
+/obj/item/weapon/reagent_containers/watertank_backpack/attackby(obj/item/I, mob/user, params)
+	if(I == noz)
 		remove_noz()
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/reagent_containers/watertank_backpack/dropped(mob/user)
 	..()
@@ -133,7 +134,7 @@
 	else
 		qdel(src)
 
-/obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
+/obj/item/weapon/reagent_containers/spray/mister/afterattack(atom/target, mob/user, proximity, params)
 	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
 		return
 	..()
@@ -161,3 +162,25 @@
 	possible_transfer_amounts = list(5, 10)
 	spray_size = 1
 	spray_sizes = list(1,3)
+
+/obj/item/weapon/reagent_containers/watertank_backpack/syndie
+	name = "chemical tank"
+	desc = "A W.A.R.C.R.I.M.E.S. brand chemical backpack with nozzle to cover bodies in fresh chemical burns."
+	icon_state = "waterbackpacknuke"
+	item_state = "waterbackpacknuke"
+	volume = 1600
+	noz = /obj/item/weapon/reagent_containers/spray/mister/syndie
+	list_reagents = list("lexorin" = 200, "mindbreaker" = 200, "alphaamanitin" = 200, "space_drugs" = 200, "pacid" = 200, "fuel" = 200, "condensedcapsaicin" = 200, "stoxin" = 200)
+
+/obj/item/weapon/reagent_containers/spray/mister/syndie
+	name = "chemical spray nozzle"
+	desc = "Breath of death."
+	icon_state = "misternuke"
+	item_state = "misternuke"
+	triple_shot = TRUE
+	spray_size = 4
+	spray_sizes = list(2)
+	possible_transfer_amounts = null
+	spray_cloud_move_delay = 2
+	spray_cloud_react_delay = 0
+	volume = 1600

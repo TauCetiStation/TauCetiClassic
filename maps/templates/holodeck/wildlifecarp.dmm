@@ -4,7 +4,7 @@
 	icon_state = "engine";
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/source_wildlife)
+/area/station/civilian/holodeck/source_wildlife)
 "b" = (
 /obj/effect/landmark{
 	name = "Holocarp Spawn"
@@ -13,7 +13,7 @@
 	icon_state = "engine";
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/source_wildlife)
+/area/station/civilian/holodeck/source_wildlife)
 
 (1,1,1) = {"
 a

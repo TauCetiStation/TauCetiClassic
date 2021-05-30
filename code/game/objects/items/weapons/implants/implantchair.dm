@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/machinery/implantchair
 	name = "loyalty implanter"
 	desc = "Used to implant occupants with loyalty implants."
@@ -40,8 +38,10 @@
 	if(src.occupant)
 		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
 	user.set_machine(src)
-	user << browse(entity_ja(dat), "window=implant")
-	onclose(user, "implant")
+
+	var/datum/browser/popup = new(user, "implant")
+	popup.set_content(dat)
+	popup.open()
 
 
 /obj/machinery/implantchair/Topic(href, href_list)
@@ -99,10 +99,10 @@
 
 /obj/machinery/implantchair/proc/put_mob(mob/living/carbon/M)
 	if(!iscarbon(M))
-		to_chat(usr, "\red <B>The [src.name] cannot hold this!</B>")
+		to_chat(usr, "<span class='warning'><B>The [src.name] cannot hold this!</B></span>")
 		return
 	if(src.occupant)
-		to_chat(usr, "\red <B>The [src.name] is already occupied!</B>")
+		to_chat(usr, "<span class='warning'><B>The [src.name] is already occupied!</B></span>")
 		return
 	if(M.client)
 		M.client.perspective = EYE_PERSPECTIVE
@@ -136,7 +136,7 @@
 	set name = "Eject occupant"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != CONSCIOUS)
+	if(usr.incapacitated())
 		return
 	src.go_out(usr)
 	add_fingerprint(usr)
@@ -146,7 +146,7 @@
 	set name = "Move Inside"
 	set category = "Object"
 	set src in oview(1)
-	if(usr.stat != CONSCIOUS || stat & (NOPOWER|BROKEN))
+	if(usr.incapacitated() || stat & (NOPOWER|BROKEN))
 		return
 	put_mob(usr)
 	return

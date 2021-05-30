@@ -3,17 +3,23 @@
 #define ORGAN_ATTACHABLE 2
 #define ORGAN_BLEEDING   4
 #define ORGAN_BROKEN     8
-#define ORGAN_DESTROYED  16
-#define ORGAN_ROBOT      32
-#define ORGAN_SPLINTED   64
-#define ORGAN_DEAD       128
-#define ORGAN_MUTATED    256
-#define ORGAN_ARTERY_CUT 512
-#define ORGAN_ZOMBIE     1024
+#define ORGAN_SPLINTED   16
+#define ORGAN_DEAD       32
+#define ORGAN_MUTATED    64
+#define ORGAN_ARTERY_CUT 128
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1
 #define DROPLIMB_BURN  2
+
+#define DROPLIMB_THRESHOLD_EDGE    5
+#define DROPLIMB_THRESHOLD_TEAROFF 2
+#define DROPLIMB_THRESHOLD_DESTROY 1
+#define ORGAN_DAMAGE_SPILLOVER_MULTIPLIER 0.005
+
+#define BODYPART_ORGANIC   1
+#define BODYPART_ROBOTIC   2
+#define BODYPART_SKELETON  3
 
 // Bodypart defines
 #define BP_CHEST  "chest"
@@ -34,8 +40,7 @@
 #define O_KIDNEYS  "kidneys"
 #define O_APPENDIX "appendix"
 
-#define AGE_MIN 25			//youngest a character can be
-#define AGE_MAX 85			//oldest a character can be
+#define TARGET_ZONE_ALL list(BP_CHEST, BP_GROIN, BP_HEAD, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG, O_EYES, O_MOUTH)
 
 #define LEFT  1
 #define RIGHT 2
@@ -48,11 +53,15 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
-// intent flags
-#define I_HELP   "help"
-#define I_DISARM "disarm"
-#define I_GRAB   "grab"
-#define I_HURT   "hurt" // or harm? or hurt? or what?
+//intent defines
+#define INTENT_HELP   "help"
+#define INTENT_GRAB   "grab"
+#define INTENT_PUSH   "push"
+#define INTENT_HARM   "harm"
+//NOTE: INTENT_HOTKEY_* defines are not actual intents!
+//they are here to support hotkeys
+#define INTENT_HOTKEY_LEFT  "left"
+#define INTENT_HOTKEY_RIGHT "right"
 
 //proc/get_pulse methods
 #define GETPULSE_HAND	0	//less accurate (hand)
@@ -76,10 +85,9 @@
 #define ZOMBIE_TAJARAN "Zombie Tajaran"
 #define ZOMBIE_SKRELL  "Zombie Skrell"
 #define ZOMBIE_UNATHI  "Zombie Unathi"
+#define SLIME          "Slime"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
-
-#define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
 
 #define SHOES_SLOWDOWN -1.0			// How much shoes slow you down by default. Negative values speed you up
 
@@ -90,6 +98,8 @@
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
+#define NUTRITION_PERCENT_MAX 120
+#define NUTRITION_PERCENT_ZERO 0
 
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
@@ -100,13 +110,15 @@
 
 // Factor of how fast mob nutrition decreases
 #define METABOLISM_FACTOR 1 // standart (for humans, other)
-#define SKRELL_METABOLISM_FACTOR 2 // Twice the speed for half the sense!
 
 // Taste sensitivity - the more the more reagents you'll taste
 #define TASTE_SENSITIVITY_NORMAL 1
 #define TASTE_SENSITIVITY_SHARP 1.5
 #define TASTE_SENSITIVITY_DULL 0.75
 #define TASTE_SENSITIVITY_NO_TASTE 0
+
+// Roundstart "trait" system
+#define MAX_QUIRKS 6 // The maximum amount of quirks one character can have at roundstart
 
 //Ian can lick or sniff
 #define IAN_STANDARD 0
@@ -118,3 +130,34 @@
 #define CLICK_CD_INTERACT 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_AI 9
+#define CLICK_CD_GRAB 40
+#define CLICK_CD_ACTION 20 // used in grab actions
+
+#define NO_SLIP_WHEN_WALKING (1<<0)
+#define SLIDE                (1<<1)
+#define GALOSHES_DONT_HELP   (1<<2)
+#define SLIDE_ICE            (1<<3)
+
+//movement intent defines for the m_intent var
+#define MOVE_INTENT_WALK "walk"
+#define MOVE_INTENT_RUN  "run"
+
+// Indicators.
+#define IND_STAT          "stat"
+#define IND_STAT_NOCLIENT "stat_noclient"
+
+// Heart status
+#define HEART_NORMAL      "heart_normal"
+#define HEART_FAILURE     "heart_failure"
+#define HEART_FIBR        "heart_fibrillation"
+
+// Defibrillation
+#define DEFIB_TIME_LIMIT  (8 MINUTES) //past this many seconds, defib is useless. Currently 8 Minutes
+#define DEFIB_TIME_LOSS   (2 MINUTES) //past this many seconds, brain damage occurs. Currently 2 minutes
+#define MAX_BRAIN_DAMAGE  80
+
+// Awareness about syndicate, it`s agents and equipment
+#define SYNDICATE_UNAWARE  0
+#define SYNDICATE_PHRASES  1
+#define SYNDICATE_RESPONSE 2
+#define SYNDICATE_AWARE    3

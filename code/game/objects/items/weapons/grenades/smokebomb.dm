@@ -5,7 +5,7 @@
 	icon_state = "flashbang"
 	det_time = 20
 	item_state = "flashbang"
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	var/datum/effect/effect/system/smoke_spread/bad/smoke
 
 /obj/item/weapon/grenade/smokebomb/atom_init()
@@ -14,8 +14,8 @@
 	smoke.attach(src)
 
 /obj/item/weapon/grenade/smokebomb/prime()
-	playsound(src, 'sound/effects/smoke.ogg', 50, 1, -3)
-	smoke.set_up(10, 0, usr.loc)
+	playsound(src, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+	smoke.set_up(10, 0, src.loc)
 	spawn(0)
 		smoke.start()
 		sleep(10)

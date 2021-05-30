@@ -34,11 +34,12 @@
  * */
 
 /datum/recipe
-	var/list/reagents // example:  = list("berryjuice" = 5) // do not list same reagent twice
-	var/list/items // example: =list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
-	var/result //example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
-	var/time = 100 // 1/10 part of second
-	var/byproduct		// example: = /obj/item/weapon/kitchen/mould		// byproduct to return, such as a mould or trash
+	var/list/reagents       // example:  = list("berryjuice" = 5) // do not list same reagent twice
+	var/list/items          // example: = list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
+	var/list/excluded_items  // example: = list(/obj/iteam/weapon/welder) when items have =list(/obj/item/weapon)
+	var/result              // example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
+	var/time = 100          // 1/10 part of second
+	var/byproduct		    // example: = /obj/item/weapon/kitchen/mould		// byproduct to return, such as a mould or trash
 
 /datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
 	. = 1
@@ -55,7 +56,7 @@
 
 /datum/recipe/proc/check_items(obj/container) //1=precisely, 0=insufficiently, -1=superfluous
 	if (!items)
-		if (locate(/obj/) in container)
+		if (locate(/obj) in container)
 			return -1
 		else
 			return 1
@@ -63,11 +64,17 @@
 	var/list/checklist = items.Copy()
 	for (var/obj/O in container)
 		var/found = 0
-		for (var/type in checklist)
-			if (istype(O,type))
-				checklist-=type
-				found = 1
-				break
+		item_in_checklist:
+			for (var/type in checklist)
+				if (istype(O, type))
+					// checking if subtype in exlcude list
+					if (length(excluded_items))
+						for (var/excluded_type in excluded_items)
+							if (istype(O, excluded_type))
+								break item_in_checklist
+					checklist-=type
+					found = 1
+					break
 		if (!found)
 			. = -1
 	if (checklist.len)

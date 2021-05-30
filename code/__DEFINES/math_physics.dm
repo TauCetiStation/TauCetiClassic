@@ -1,5 +1,7 @@
 #define IDEAL_GAS_ENTROPY_CONSTANT 1164    // (mol^3 * s^3) / (kg^3 * L).
 
+#define WATTS_2_CELSIUM 1.16194            // (celsium / watts). The power required to heat up 1 kilo of water by 1 degree celsium.
+
 // Radiation constants.
 #define STEFAN_BOLTZMANN_CONSTANT    5.6704e-8 // W/(m^2*K^4).
 #define COSMIC_RADIATION_TEMPERATURE 3.15      // K.

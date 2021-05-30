@@ -1,12 +1,3 @@
-// String identifiers for associative list lookup
-//Disabilities flags for character setup
-#define DISABILITY_NEARSIGHTED 		1
-#define DISABILITY_COUGHING			2
-#define DISABILITY_EPILEPTIC 		4
-#define DISABILITY_TOURETTES 		8
-#define DISABILITY_NERVOUS			16
-#define DISABILITY_FATNESS			32
-
 // mob/var/list/mutations
 //"#49e46e
 #define STRUCDNASIZE 27
@@ -18,10 +9,9 @@
 #define XRAY			3
 #define HULK			4
 #define CLUMSY			5
-#define FAT				6
-#define HUSK			7
-#define NOCLONE			8
-#define LASEREYES		9 	// harm intent - click anywhere to shoot lasers from eyes
+#define HUSK			6
+#define NOCLONE			7
+#define LASEREYES		8 	// harm intent - click anywhere to shoot lasers from eyes
 
 	// Extra powers:
 //#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
@@ -60,6 +50,15 @@
 #define NO_SHOCK		109 	// insulated hands
 #define SMALLSIZE		110 	// table climbing
 #define RESIST_HEAT		111 	// Heat-resistance #Z2
+
+//Hulk activators
+#define ACTIVATOR_HEAVY_MUSCLE_LOAD "heavy muscle load"
+#define ACTIVATOR_ELECTRIC_SHOCK "electric shock"
+#define ACTIVATOR_VOMITING "vomiting"
+#define ACTIVATOR_BROKEN_BONE "broken bone"
+#define ACTIVATOR_EMITTER_BEAM "emitter beam"
+
+#define HULK_ACTIVATION_OPTIONS list(ACTIVATOR_HEAVY_MUSCLE_LOAD, ACTIVATOR_ELECTRIC_SHOCK, ACTIVATOR_VOMITING, ACTIVATOR_BROKEN_BONE, ACTIVATOR_EMITTER_BEAM)
 
 //disabilities
 #define NEARSIGHTED		1

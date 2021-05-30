@@ -81,7 +81,7 @@ var/list/ingredients_source = list(
 		dat += "<a href='?src=\ref[src];eject=1'>Eject [held_container]</a> "
 	else
 		dat += "No beaker inserted. "
-	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a> <a href='?src=\ref[src];close=1'>Close</a>"
+	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 
 	var/datum/browser/popup = new(user, "icecreamvat","Icecream Vat", 700, 400, src)
 	popup.set_content(dat)
@@ -172,18 +172,13 @@ var/list/ingredients_source = list(
 	return TRUE
 
 /obj/machinery/icecream_vat/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine(src)
-		usr << browse(null,"window=icecreamvat")
-		return FALSE
-
 	. = ..()
 	if(!.)
 		return
 
 	if(href_list["dispense"])
 		dispense_flavour = text2num(href_list["dispense"])
-		src.visible_message("\blue[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.")
+		src.visible_message("<span class='notice'>[usr] sets [src] to dispense [get_icecream_flavour_string(dispense_flavour)] flavoured icecream.</span>")
 	else if(href_list["cone"])
 		var/dispense_cone = text2num(href_list["cone"])
 		if(ingredients[dispense_cone] <= ingredients.len)
@@ -224,7 +219,7 @@ var/list/ingredients_source = list(
 /obj/item/weapon/reagent_containers/food/snacks/icecream/proc/add_ice_cream(flavour)
 	var/flavour_name = get_icecream_flavour_string(flavour)
 	name = "[flavour_name] icecream"
-	src.overlays += "icecream_[flavour_name]"
+	src.add_overlay("icecream_[flavour_name]")
 	desc = "Delicious [cone_type] cone with a dollop of [flavour_name] ice cream."
 	ice_creamed = 1
 

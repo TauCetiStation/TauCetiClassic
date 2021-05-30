@@ -17,7 +17,7 @@
 	unacidable = 1
 	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
@@ -34,12 +34,13 @@
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
 
+	var/dispersion = 0.0
+
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/fake = 0 //Fake projectile won't spam chat for admins with useless logs
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
-	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 	var/paused = FALSE //for suspending the projectile midair
 		//Effects
@@ -58,7 +59,7 @@
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
 
 	// effect types to be used
-	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact
+	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact(unless they ask to not be deleted)
 	var/muzzle_type
 	var/tracer_type
 	var/impact_type
@@ -67,6 +68,10 @@
 	var/datum/vector_loc/location		// current location of the projectile in pixel space
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
+
+	var/list/proj_act_sound = null // this probably could be merged into the one below, because bullet_act is too specific, while on_impact (Bump) handles bullet_act too.
+	// ^ the one above used in bullet_act for mobs, while this one below used in on_impact() which happens after Bump() or killed by process. v
+	var/proj_impact_sound = null // originally made for big plasma ball hit sound, and its okay when both proj_act_sound and this one plays at the same time.
 
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
@@ -79,7 +84,10 @@
 		set_light(light_range,light_power,light_color)
 
 /obj/item/projectile/Destroy()
-	QDEL_LIST(tracer_list)
+	for(var/obj/effect/projectile/P in tracer_list)
+		if(!P.deletes_itself)
+			qdel(P)
+	tracer_list = null
 	firer = null
 	starting = null
 	original = null
@@ -100,7 +108,7 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(!isliving(target))	return 0
 	if(isanimal(target))	return 0
 	var/mob/living/L = target
@@ -109,7 +117,8 @@
 	//called when the projectile stops flying because it collided with something
 /obj/item/projectile/proc/on_impact(atom/A)
 	impact_effect(effect_transform)		// generate impact effect
-	return
+	if(proj_impact_sound)
+		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
 	if(!istype(target) || !istype(user))
@@ -166,7 +175,8 @@
 		return 0
 
 	var/forcedodge = 0 // force the projectile to pass
-	var/mob/M = ismob(A) ? A : null
+	var/mob/living/M = isliving(A) ? A : null
+	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
 		if(!istype(A, /mob/living))
@@ -180,8 +190,8 @@
 				miss_modifier = - 100 // so sniper rifle and PTR-rifle projectiles cannot miss
 		if (istype(shot_from,/obj/item/weapon/gun))	//If you aim at someone beforehead, it'll hit more often.
 			var/obj/item/weapon/gun/daddy = shot_from //Kinda balanced by fact you need like 2 seconds to aim
-			if (daddy.target && original in daddy.target) //As opposed to no-delay pew pew
-				miss_modifier += -60
+			if (daddy.target && (original in daddy.target)) //As opposed to no-delay pew pew
+				miss_modifier -= 60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
 
@@ -198,6 +208,7 @@
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
+			playsound(M.loc, pick(SOUNDIN_BULLETMISSACT), VOL_EFFECTS_MASTER)
 
 		if(istype(A, /turf))
 			loc = A
@@ -211,18 +222,15 @@
 	else if(M)
 		if(silenced)
 			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-		else
+		else if(!fake)
 			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-		if(firer)
-			M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-			firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-			if(!fake)
-				msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+		if(old_firer)
+			M.log_combat(old_firer, "shot with <b>[type]</b>", alert_admins = !fake)
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			if(!fake)
-				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src]", M) //BS12 EDIT ALG
 
 
 	if(istype(A,/turf))
@@ -249,7 +257,7 @@
 		return 1
 
 
-/obj/item/projectile/process()
+/obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
 	var/first_step = 1
 
 	//plot the initial trajectory
@@ -257,7 +265,7 @@
 
 	spawn while(src && src.loc)
 		if(paused)
-			sleep(1)
+			stoplag(1)
 			continue
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours
@@ -290,7 +298,8 @@
 							return
 
 		if(first_step)
-			muzzle_effect(effect_transform)
+			if(boolet_number == 1) // so that it won't spam with muzzle effects incase of multiple pellets.
+				muzzle_effect(effect_transform)
 			first_step = 0
 		else if(!bumped)
 			tracer_effect(effect_transform)
@@ -306,6 +315,10 @@
 /obj/item/projectile/proc/setup_trajectory()
 	var/offset = 0
 
+	if(dispersion)
+		var/radius = round(dispersion * 9, 1)
+		offset = rand(-radius, radius)
+
 	// plot the initial trajectory
 	trajectory = new()
 	trajectory.setup(starting, original, pixel_x, pixel_y, angle_offset=offset)
@@ -315,7 +328,7 @@
 	effect_transform.Scale(trajectory.return_hypotenuse(), 1)
 	effect_transform.Turn(-trajectory.return_angle())		//no idea why this has to be inverted, but it works
 
-/obj/item/projectile/proc/muzzle_effect(var/matrix/T)
+/obj/item/projectile/proc/muzzle_effect(matrix/T)
 	if(silenced)
 		return
 
@@ -343,10 +356,12 @@
 			P.activate()
 
 /obj/item/projectile/proc/impact_effect(matrix/M)
-	if(ispath(tracer_type) && location)
+	if(ispath(impact_type) && location)
 		var/obj/effect/projectile/P = new impact_type(location.loc)
 
 		if(istype(P))
+			if(tracer_list)
+				tracer_list += P
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
 			P.pixel_y = location.pixel_y
@@ -362,7 +377,7 @@
 	current = T
 	yo = U.y - T.y
 	xo = U.x - T.x
-	INVOKE_ASYNC(src, .process)
+	process()
 
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!

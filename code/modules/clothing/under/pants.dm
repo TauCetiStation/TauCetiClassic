@@ -108,3 +108,21 @@
 	desc = "They look suspiciously similiar to the M65 standard military jacket, navy seal one."
 	icon_state = "milipants_navy"
 	item_color = "milipants_navy"
+
+/obj/item/clothing/under/pants/ddr_sport
+	name = "Black sport pants"
+	icon_state = "DDR_sport_pants"
+	item_state = "gy_suit"
+	item_color = "DDR_sport_pants"
+
+/obj/item/clothing/under/pants/blue_sport
+	name = "Blue sport pants"
+	icon_state = "blue_sport_pants"
+	item_state = "b_suit"
+	item_color = "blue_sport_pants"
+
+/obj/item/clothing/under/pants/black_sport
+	name = "Black sport pants"
+	icon_state = "black_sport_pants"
+	item_state = "bl_suit"
+	item_color = "black_sport_pants"

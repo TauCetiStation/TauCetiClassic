@@ -11,10 +11,9 @@
 	icon_dead = "basic"
 	health = 15
 	maxHealth = 15
-	melee_damage_lower = 2
-	melee_damage_upper = 3
-	attacktext = "claws"
-	projectilesound = 'sound/weapons/Gunshot.ogg'
+	melee_damage = 3
+	attacktext = "claw"
+	projectilesound = 'sound/weapons/guns/Gunshot.ogg'
 	projectiletype = /obj/item/projectile/hivebotbullet
 	faction = "hivebot"
 	min_oxy = 0
@@ -27,17 +26,22 @@
 	max_n2 = 0
 	minbodytemp = 0
 	speed = 4
+	typing_indicator_type = "machine"
+
+	animalistic = FALSE
+	has_arm = TRUE
+	has_leg = TRUE
 
 /mob/living/simple_animal/hostile/hivebot/range
 	name = "Hivebot"
 	desc = "A smallish robot, this one is armed!"
-	ranged = 1
+	ranged = TRUE
 	retreat_distance = 5
 	minimum_distance = 5
 
 /mob/living/simple_animal/hostile/hivebot/rapid
-	ranged = 1
-	rapid = 1
+	ranged = TRUE
+	amount_shoot = 3
 	retreat_distance = 5
 	minimum_distance = 5
 
@@ -45,7 +49,7 @@
 	name = "Strong Hivebot"
 	desc = "A robot, this one is armed and looks tough!"
 	health = 80
-	ranged = 1
+	ranged = TRUE
 
 /mob/living/simple_animal/hostile/hivebot/death()
 	..()
@@ -66,8 +70,7 @@
 	health = 200
 	maxHealth = 200
 	status_flags = 0
-	anchored = 1
-	stop_automated_movement = 1
+	stop_automated_movement = TRUE
 	var/bot_type = "norm"
 	var/bot_amt = 10
 	var/spawn_delay = 600
@@ -79,12 +82,12 @@
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 	smoke.set_up(5, 0, src.loc)
 	smoke.start()
-	visible_message("\red <B>The [src] warps in!</B>")
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 25, 1)
+	visible_message("<span class='warning'><B>The [src] warps in!</B></span>")
+	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 25)
 
 /mob/living/simple_animal/hostile/hivebot/tele/proc/warpbots()
 	icon_state = "def_radar"
-	visible_message("\red The [src] turns on!")
+	visible_message("<span class='warning'>The [src] turns on!</span>")
 	while(bot_amt > 0)
 		bot_amt--
 		switch(bot_type)

@@ -1,4 +1,4 @@
-/datum/hud/proc/monkey_hud(ui_style='icons/mob/screen1_old.dmi')
+/datum/hud/proc/monkey_hud()
 
 	src.adding = list()
 	src.other = list()
@@ -9,7 +9,7 @@
 	using = new /obj/screen()
 	using.name = "act_intent"
 	using.icon = ui_style
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
@@ -23,7 +23,7 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
 	using = new /obj/screen( src )
-	using.name = "help"
+	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
@@ -35,19 +35,19 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
 	using = new /obj/screen( src )
-	using.name = "disarm"
+	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
-	disarm_intent = using
+	push_intent = using
 
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
 	using = new /obj/screen( src )
-	using.name = "grab"
+	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
@@ -59,13 +59,13 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
 	using = new /obj/screen( src )
-	using.name = "harm"
+	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
-	hurt_intent = using
+	harm_intent = using
 
 //end intent small hud objects
 
@@ -95,7 +95,7 @@
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
 		inv_box.icon_state = "hand_r_active"
 	inv_box.screen_loc = ui_rhand
-	inv_box.slot_id = slot_r_hand
+	inv_box.slot_id = SLOT_R_HAND
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.r_hand_hud_object = inv_box
@@ -108,7 +108,7 @@
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
 		inv_box.icon_state = "hand_l_active"
 	inv_box.screen_loc = ui_lhand
-	inv_box.slot_id = slot_l_hand
+	inv_box.slot_id = SLOT_L_HAND
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.l_hand_hud_object = inv_box
@@ -137,7 +137,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
 	inv_box.screen_loc = ui_monkey_mask
-	inv_box.slot_id = slot_wear_mask
+	inv_box.slot_id = SLOT_WEAR_MASK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
@@ -147,7 +147,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_back
-	inv_box.slot_id = slot_back
+	inv_box.slot_id = SLOT_BACK
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
 	src.adding += inv_box
@@ -194,8 +194,8 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)

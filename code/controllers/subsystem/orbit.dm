@@ -1,6 +1,4 @@
-var/datum/subsystem/orbit/SSorbit
-
-/datum/subsystem/orbit
+SUBSYSTEM_DEF(orbit)
 	name = "Orbit"
 
 	priority = SS_PRIORITY_ORBIT
@@ -11,15 +9,11 @@ var/datum/subsystem/orbit/SSorbit
 	var/list/currentrun = list()
 	var/list/orbits     = list()
 
-/datum/subsystem/orbit/New()
-	NEW_SS_GLOBAL(SSorbit)
-
-
-/datum/subsystem/orbit/stat_entry()
+/datum/controller/subsystem/orbit/stat_entry()
 	..("P:[orbits.len]")
 
 
-/datum/subsystem/orbit/fire(resumed = 0)
+/datum/controller/subsystem/orbit/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = orbits.Copy()
 

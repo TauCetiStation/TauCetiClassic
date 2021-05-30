@@ -6,7 +6,7 @@
 	/*name = "Lockdown Control"
 	desc = "Used to control blast doors."
 	icon_state = "lockdown"
-	circuit = "/obj/item/weapon/circuitboard/lockdown"
+	circuit = /obj/item/weapon/circuitboard/lockdown
 	var/connected_doors
 	var/department*/
 	var/list/displayedNetworks
@@ -62,7 +62,7 @@
 			L.Add(D)
 
 /obj/machinery/computer/lockdown/ui_interact(mob/user)
-	var/t = "<B>Lockdown Control</B><BR>"
+	var/t = ""
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	t += "<table border=1>"
@@ -74,7 +74,7 @@
 		empty = 0
 		t += "<tr>"
 		if(curNetId in displayedNetworks)
-			t += "<td><a href='?src=\ref[src];hide_net=[curNetId]'>\[-\]</a><b> " + curNetId + "<b></td>"
+			t += "<td><a href='?src=\ref[src];hide_net=[curNetId]'>-</a><b> " + curNetId + "</b></td>"
 			t += "<td colspan=\"2\"><b><a href='?src=\ref[src];open_net=[curNetId]'>Open all</a> / <a href='?src=\ref[src];close_net=[curNetId]'>Close all</a></b></td>"
 			t += "</tr>"
 
@@ -89,21 +89,17 @@
 				t += "<td><b><a href='?src=\ref[D];toggle=1'>Toggle</a></b></td>"
 				t += "</tr>"
 		else
-			t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>\[+\]</a> <b>" + curNetId + "<b></td>"
+			t += "<td><a href='?src=\ref[src];show_net=[curNetId]'>+</a> <b>" + curNetId + "</b></td>"
 	t += "</table>"
 	if(empty)
-		t += "\red No networks connected.<br>"
+		t += "<span class='warning'>No networks connected.<br></span>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(entity_ja(t), "window=lockdown;size=550x600")
-	onclose(user, "lockdown")
+
+	var/datum/browser/popup = new(user, "lockdown", "Lockdown Control", 550, 600)
+	popup.set_content(t)
+	popup.open()
 
 /obj/machinery/computer/lockdown/Topic(href, href_list)
-	if(href_list["close"])
-		usr << browse(null, "window=lockdown")
-		usr.unset_machine(src)
-		return
-
 	. = ..()
 	if(!.)
 		return

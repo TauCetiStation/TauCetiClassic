@@ -10,7 +10,7 @@
 	return
 
 /obj/structure/largecrate/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/crowbar))
+	if(iscrowbar(W))
 		new /obj/item/stack/sheet/wood(src)
 		var/turf/T = get_turf(src)
 		for(var/atom/movable/M in contents)

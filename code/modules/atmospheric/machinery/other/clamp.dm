@@ -4,7 +4,7 @@
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "pclamp0"
 	anchored = TRUE
-	use_power = 0
+	use_power = NO_POWER_USE
 
 	var/obj/machinery/atmospherics/pipe/simple/target = null
 	var/open = TRUE
@@ -21,7 +21,7 @@
 
 	if(target)
 		update_networks()
-		dir = target.dir
+		set_dir(target.dir)
 
 /obj/machinery/clamp/proc/update_networks()
 	if(!target)
@@ -129,7 +129,7 @@
 
 	if(open && over_object == usr && Adjacent(usr))
 		to_chat(usr, "<span class='notice'>You begin to remove \the [src]...</span>")
-		if (do_after(usr, 30, src))
+		if(do_after(usr, 30, src))
 			to_chat(usr, "<span class='notice'>You have removed \the [src].</span>")
 
 			var/obj/item/clamp/C = new
@@ -148,13 +148,13 @@
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "pclamp0"
 
-/obj/item/clamp/afterattack(var/atom/A, mob/user as mob, proximity)
+/obj/item/clamp/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 
 	if (istype(A, /obj/machinery/atmospherics/pipe/simple))
 		to_chat(user, "<span class='notice'>You begin to attach \the [src] to \the [A]...</span>")
-		if (do_after(user, 30, src))
+		if(A.use_tool(src, user, 30, volume = 50))
 			to_chat(user, "<span class='notice'>You have attached \the [src] to \the [A].</span>")
 			new/obj/machinery/clamp(A.loc, A)
 			user.drop_from_inventory(src)

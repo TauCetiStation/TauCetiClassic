@@ -1,3 +1,11 @@
+/mob/living/proc/log_combat(mob/living/attacker, msg, alert_admins = TRUE)
+	if(!logs_combat)
+		return
+	attack_log += "\[[time_stamp()]\] <font color='orange'>Has been [msg], by [attacker.name] ([attacker.ckey])</font>"
+	attacker.attack_log += "\[[time_stamp()]\] <font color='red'>Has [msg] [src] ([ckey])</font>"
+	if(alert_admins)
+		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
+
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
@@ -18,6 +26,19 @@
 
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
+	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
+		if(istype(loc, /turf/simulated))
+			loc.add_blood(src)
+		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
+
+	if(check_shields(P, P.damage, "the [P.name]", P.dir))
+		P.on_hit(src, def_zone, 100)
+		return PROJECTILE_ABSORBED
+
+	. = mob_bullet_act(P, def_zone)
+	if(. != PROJECTILE_ALL_OK)
+		return
+
 	flash_weak_pain()
 
 	//Being hit while using a deadman switch
@@ -25,9 +46,9 @@
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
-			message_admins("\blue [key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])")
-			log_game("\blue [key_name(src)] triggers their deadman's switch!")
-			src.visible_message("\red [src] triggers their deadman's switch!")
+			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! [ADMIN_JMP(src)]</span>")
+			log_game("<span class='notice'>[key_name(src)] triggers their deadman's switch!</span>")
+			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Armor
@@ -43,13 +64,18 @@
 
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
-	P.on_hit(src, absorb, def_zone)
+		if(length(P.proj_act_sound))
+			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
+	P.on_hit(src, def_zone, absorb)
 
 	return absorb
 
+/mob/living/proc/mob_bullet_act(obj/item/projectile/P, def_zone) // this one can be used to help with the order of code things to run.
+	return PROJECTILE_ALL_OK
+
 //this proc handles being hit by a thrown atom
-/mob/living/hitby(atom/movable/AM)//Standardization and logging -Sieve
-	if(istype(AM,/obj/))
+/mob/living/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)//Standardization and logging -Sieve
+	if(istype(AM,/obj))
 		var/obj/O = AM
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))
@@ -58,7 +84,7 @@
 		var/throw_damage = O.throwforce * (AM.fly_speed / 5)
 
 		var/zone
-		var/mob/living/L = isliving(O.thrower) ? O.thrower : null
+		var/mob/living/L = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
 		if(L)
 			zone = check_zone(L.zone_sel.selecting)
 		else
@@ -75,7 +101,7 @@
 			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		if(O.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
+		if(throwingdatum.thrower != src && check_shields(AM, throw_damage, "[O]", get_dir(O,src)))
 			return
 
 		resolve_thrown_attack(O, throw_damage, dtype, zone)
@@ -83,10 +109,7 @@
 		if(L)
 			var/client/assailant = L.client
 			if(assailant)
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [L.name] ([assailant.ckey])</font>")
-				L.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
-				if(!ismouse(src))
-					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey]) [ADMIN_JMP(src)]")
+				log_combat(L, "hit with thrown [O]")
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
@@ -96,7 +119,7 @@
 				"<span class='danger'>You stagger under the impact!</span>")
 
 			var/atom/throw_target = get_edge_target_turf(src, get_dir(O.throw_source, src))
-			throw_at(throw_target, 5, 1, O.thrower, FALSE, null, null, CALLBACK(src, .proc/pin_to_turf, W))
+			throw_at(throw_target, 5, 1, throwingdatum.thrower, FALSE, null, null, CALLBACK(src, .proc/pin_to_turf, W))
 
 
 /mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)
@@ -110,7 +133,7 @@
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/created_wound = apply_damage(throw_damage, dtype, null, armor, damage_flags, O)
+	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
 	if(dtype == BRUTE && istype(O, /obj/item))
@@ -118,7 +141,7 @@
 		if(!I.can_embed || I.is_robot_module())
 			return
 
-		var/sharp = is_sharp(I)
+		var/sharp = I.is_sharp()
 
 		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
 		if (armor)
@@ -182,32 +205,62 @@
 
 // End BS12 momentum-transfer code.
 
-/mob/living/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
-	return FALSE
+/mob/living/proc/check_shields(atom/attacker, damage = 0, attack_text = "the attack", hit_dir = 0)
+	return SEND_SIGNAL(src, COMSIG_LIVING_CHECK_SHIELDS, attacker, damage, attack_text, hit_dir) & COMPONENT_ATTACK_SHIELDED
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		set_light(light_range + 3)
+		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
+		src.visible_message("<span class='warning'>[src] catches fire!</span>",
+						"<span class='userdanger'>You're set on fire!</span>")
+		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
+		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
 		fire_stacks = 0
-		set_light(max(0, light_range - 3))
+		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
+			qdel(F)
 		update_fire()
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
-    fire_stacks = Clamp(fire_stacks + add_fire_stacks, -20, 20)
+	fire_stacks = clamp(fire_stacks + add_fire_stacks, -20, 20)
+	if(on_fire && fire_stacks <= 0)
+		ExtinguishMob()
+
+/mob/living/proc/SpreadFire(mob/living/L)
+	if(!istype(L))
+		return
+
+	if(on_fire)
+		if(L.on_fire) // If they were also on fire
+			var/firesplit = (fire_stacks + L.fire_stacks)/2
+			fire_stacks = firesplit
+			L.fire_stacks = firesplit
+		else // If they were not
+			fire_stacks /= 2
+			L.fire_stacks += fire_stacks
+			if(L.IgniteMob()) // Ignite them
+				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
+
+	else if(L.on_fire) // If they were on fire and we were not
+		L.fire_stacks /= 2
+		fire_stacks += L.fire_stacks
+		IgniteMob() // Ignite us
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0)
-		fire_stacks++ //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks)//So we dry ourselves back to default, nonflammable.
+		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
-		return 1
+		return TRUE //the mob is no longer on fire, no need to do the rest.
+	if(fire_stacks > 0)
+		adjust_fire_stacks(-0.1) //the fire is slowly consumed
+	else
+		ExtinguishMob()
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
@@ -216,9 +269,6 @@
 		if(I.wet)
 			ExtinguishMob()
 			break
-	if(fire_stacks == 0)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
-		return
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(fire_burn_temperature(), 50)
 
@@ -235,10 +285,7 @@
 	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame.
 	return max(2.25 * round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE * (fire_stacks / FIRE_MAX_FIRESUIT_STACKS) ** 2), 700)
 
-//Mobs on Fire end
-
-/mob/living/regular_hud_updates()
-	..()
+/mob/living/proc/regular_hud_updates()
 	update_action_buttons()
 
 /mob/living/update_action_buttons()
@@ -295,5 +342,47 @@
 		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
-		return 1
+	return stat || paralysis || stunned || weakened || restrained(restrained_type)
+
+// These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
+// If targetzone is not specified, returns TRUE if the mob has the bodypart in general.
+/mob/living/proc/is_usable_eyes(targetzone = null)
+	return TRUE
+
+/mob/living/proc/is_usable_head(targetzone = null)
+	return FALSE
+
+/mob/living/proc/is_usable_arm(targetzone = null)
+	return FALSE
+
+/mob/living/proc/is_usable_leg(targetzone = null)
+	return FALSE
+
+/mob/living/proc/can_hit_zone(mob/living/attacker, targetzone)
+	switch(targetzone)
+		if(O_EYES)
+			return has_organ(O_EYES) && has_bodypart(BP_HEAD)
+		if(BP_HEAD, O_MOUTH)
+			return has_bodypart(BP_HEAD)
+		if(BP_L_ARM, BP_R_ARM)
+			return has_bodypart(targetzone)
+		if(BP_L_LEG, BP_R_LEG)
+			return has_bodypart(targetzone)
+		else
+			return TRUE
+
+// This proc guarantees no mouse vs queen tomfuckery.
+/mob/living/proc/is_bigger_than(mob/living/target)
+	if(target.small && !small)
+		return TRUE
+	if(maxHealth > target.maxHealth)
+		return TRUE
+	return FALSE
+
+/proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
+	var/ratio = dividend.maxHealth / divisor.maxHealth
+	if(dividend.small && !divisor.small)
+		ratio *= 0.5
+	else if(!dividend.small && divisor.small)
+		ratio *= 2.0
+	return ratio

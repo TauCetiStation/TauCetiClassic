@@ -17,11 +17,10 @@
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 60
 	health = 60
-	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage = 25
 
 	//Space bears aren't affected by atmos.
 	min_oxy = 0
@@ -36,6 +35,12 @@
 	var/stance_step = 0
 
 	faction = "russian"
+
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
+
+	has_head = TRUE
+	has_arm = TRUE
+	has_leg = TRUE
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -58,23 +63,23 @@
 	switch(stance)
 
 		if(HOSTILE_STANCE_TIRED)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			stance_step++
 			if(stance_step >= 10) //rests for 10 ticks
-				if(target && target in ListTargets(10))
+				if(target && (target in ListTargets(10)))
 					stance = HOSTILE_STANCE_ATTACK //If the mob he was chasing is still nearby, resume the attack, otherwise go idle.
 				else
 					stance = HOSTILE_STANCE_IDLE
 
 		if(HOSTILE_STANCE_ALERT)
-			stop_automated_movement = 1
+			stop_automated_movement = TRUE
 			var/found_mob = 0
-			if(target && target in ListTargets(10))
+			if(target && (target in ListTargets(10)))
 				if(CanAttack(target))
 					stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 					stance_step++
 					found_mob = 1
-					src.dir = get_dir(src,target)	//Keep staring at the mob
+					src.set_dir(get_dir(src,target))	//Keep staring at the mob
 
 					if(stance_step in list(1,4,7)) //every 3 ticks
 						var/action = pick( list( "growls at [target]", "stares angrily at [target]", "prepares to attack [target]", "closely watches [target]" ) )
@@ -105,12 +110,12 @@
 		target = user
 	..()
 
-/mob/living/simple_animal/hostile/bear/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/bear/attack_hand(mob/living/carbon/human/attacker)
 	if(stance != HOSTILE_STANCE_ATTACK && stance != HOSTILE_STANCE_ATTACKING)
 		stance = HOSTILE_STANCE_ALERT
 		stance_step = 6
-		target = M
-	..()
+		target = attacker
+	return ..()
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
 	return	//No drifting in space for space bears!

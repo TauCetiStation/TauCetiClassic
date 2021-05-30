@@ -4,7 +4,7 @@
 	icon_state = "explosion_particle"
 	opacity = 1
 	anchored = 1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/expl_particles/atom_init()
 	. = ..()
@@ -17,7 +17,7 @@
 
 /datum/effect/system/expl_particles/proc/set_up(n = 10, loca)
 	number = n
-	if(istype(loca, /turf/)) location = loca
+	if(istype(loca, /turf)) location = loca
 	else location = get_turf(loca)
 
 /datum/effect/system/expl_particles/proc/start()
@@ -36,7 +36,7 @@
 	icon_state = "explosion"
 	opacity = 1
 	anchored = 1
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
 	pixel_y = -32
 
@@ -48,7 +48,7 @@
 	var/turf/location
 
 /datum/effect/system/explosion/proc/set_up(loca)
-	if(istype(loca, /turf/)) location = loca
+	if(istype(loca, /turf)) location = loca
 	else location = get_turf(loca)
 
 /datum/effect/system/explosion/proc/start()

@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/lighting_shock
-	name = "Lighting Shock"
-	desc = "Hold your target with electricity for 5 seconds. Disarms target making drop all in hands and impossibility pick up it again."
+	name = "Электрический шок"
+	desc = "Шокирует вашу цель на 5 секунд. Также разоружает, заставляя выбросить все вещи в руках и не дает их поднять."
 	school = "transmutation"
 	charge_type = "recharge"
 	charge_max = 220
@@ -42,16 +42,16 @@
 	target.visible_message("<span class='danger'>[target] looks like is being blocked by something from the outside world...</span>", \
 						   "<span class='danger'>You feel how strange powers holding you...</span>")
 
-	playsound(target, 'sound/effects/electricity.ogg', 75, 2)
+	playsound(target, 'sound/effects/electricity.ogg', VOL_EFFECTS_MASTER)
 
 	// makes target drop weapons to floor
 	target.drop_from_inventory(target.l_hand)
 	target.drop_from_inventory(target.r_hand)
 
 	// don't let target pick up items, overlays for lighting effects
-	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
+	target.add_overlay(image(icon = 'icons/effects/effects.dmi', icon_state = "electricity"))
 	target.next_click = world.time + 50
 	// after time let target pick up items, removing overlays
-	
+
 	sleep(50)
-	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
+	target.cut_overlay(image(icon = 'icons/effects/effects.dmi', icon_state = "electricity"))

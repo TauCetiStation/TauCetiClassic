@@ -4,17 +4,14 @@
 	icon_state = "ionrifle"
 	item_state = "ionrifle"
 	origin_tech = "combat=2;magnets=4"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags =  CONDUCT
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
-/obj/item/weapon/gun/energy/ionrifle/isHandgun()
-	return 0
 
 /obj/item/weapon/gun/energy/ionrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)
@@ -48,6 +45,7 @@
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
 	origin_tech = "combat=5;materials=4;powerstorage=3"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 
 /obj/item/weapon/gun/energy/floragun
@@ -58,6 +56,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
+	can_be_holstered = TRUE
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
@@ -82,7 +81,7 @@
 	return 1
 
 /obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
-	select_fire(user)
+	..()
 	update_icon()
 
 /obj/item/weapon/gun/energy/meteorgun
@@ -90,9 +89,9 @@
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "riotgun"
 	item_state = "c20r"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
-	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
+	cell_type = /obj/item/weapon/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
@@ -126,39 +125,22 @@
 	item_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	w_class = 1
+	can_be_holstered = TRUE
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/gun/energy/mindflayer
 	name = "mind flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
-/*
-obj/item/weapon/gun/energy/staff/focus
-	name = "mental focus"
-	desc = "An artefact that channels the will of the user into destructive bolts of force. If you aren't careful with it, you might poke someone's brain out."
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "focus"
-	item_state = "focus"
-	projectile_type = "/obj/item/projectile/forcebolt"
-
-	attack_self(mob/living/user)
-		if(projectile_type == "/obj/item/projectile/forcebolt")
-			charge_cost = 200
-			to_chat(user, "\red The [src.name] will now strike a small area.")
-			projectile_type = "/obj/item/projectile/forcebolt/strong"
-		else
-			charge_cost = 100
-			to_chat(user, "\red The [src.name] will now strike only a single person.")
-			projectile_type = "/obj/item/projectile/forcebolt"
-	*/
 
 /obj/item/weapon/gun/energy/toxgun
 	name = "phoron pistol"
 	desc = "A specialized firearm designed to fire lethal bolts of phoron."
 	icon_state = "toxgun"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = "combat=5;phorontech=4"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/toxin)
 
 /obj/item/weapon/gun/energy/sniperrifle
@@ -169,21 +151,18 @@ obj/item/weapon/gun/energy/staff/focus
 	item_state = "w2500e"
 	origin_tech = "combat=6;materials=5;powerstorage=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/sniper)
-	slot_flags = SLOT_BACK
+	slot_flags = SLOT_FLAGS_BACK
 	fire_delay = 35
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	var/zoom = 0
 
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/gun/energy/sniperrifle/isHandgun()
-	return 0
-
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = ceil(ratio * 4) * 25
+	ratio = CEIL(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)
@@ -195,7 +174,13 @@ obj/item/weapon/gun/energy/staff/focus
 	return
 
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
-	user.client.view = world.view
+	if(zoom)
+		if(user.client)
+			user.client.view = world.view
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoom = 0
+	..()
 
 /*
 This is called from
@@ -204,13 +189,13 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 */
 
 /obj/item/weapon/gun/energy/sniperrifle/attack_self()
-	zoom()
+	toggle_zoom()
 
-/obj/item/weapon/gun/energy/sniperrifle/verb/zoom()
+/obj/item/weapon/gun/energy/sniperrifle/verb/toggle_zoom()
 	set category = "Object"
 	set name = "Use Sniper Scope"
 	set popup_menu = 0
-	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
+	if(usr.incapacitated() || !(istype(usr,/mob/living/carbon/human)))
 		to_chat(usr, "You are unable to focus down the scope of the rifle.")
 		return
 	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
@@ -233,16 +218,21 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
 
+/obj/item/weapon/gun/energy/sniperrifle/equipped(mob/user, slot)
+	if(zoom)
+		toggle_zoom()
+	..(user, slot)
+
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
 	desc = "With this weapon you'll be the boss at any Arena."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "relsotron"
 	item_state = "relsotron"
-	origin_tech = null
+	origin_tech = "combat=5;materials=4;powerstorage=4;magnets=4;engineering=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/rails)
 	fire_delay = 20
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
@@ -251,12 +241,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "tesla"
 	item_state = "tesla"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
+	can_be_holstered = FALSE
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE
-	var/spinspeed = 1
 
 /obj/item/weapon/gun/tesla/atom_init()
 	. = ..()
@@ -264,10 +254,10 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
-	if(do_after(user, 40 * spinspeed, target = src))
+	if(do_after(user, 40 * toolspeed, target = src))
 		if(charging && charge < 3)
 			charge++
-			playsound(loc, "sparks", 75, 1, -1)
+			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			if(charge < 3)
 				charge(user)
 			else
@@ -329,7 +319,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/weapon/gun/tesla/proc/Bolt(mob/origin, mob/living/target, mob/user, jumps)
 	origin.Beam(target, "lightning[rand(1,12)]", 'icons/effects/effects.dmi', time = 5)
 	target.electrocute_act(15 * (jumps + 1), src, , , 1)
-	playsound(target, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+	playsound(target, 'sound/machines/defib_zap.ogg', VOL_EFFECTS_MASTER)
 	var/list/possible_targets = new
 	for(var/mob/living/M in range(2, target))
 		if(user == M || !los_check(target, M) || origin == M || target == M)
@@ -338,7 +328,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(!possible_targets.len)
 		return
 	var/mob/living/next = pick(possible_targets)
-	msg_admin_attack("[origin.name] ([origin.ckey]) shot [target.name] ([target.ckey]) with a tesla bolt [ADMIN_JMP(origin)] [ADMIN_FLW(origin)]")
+	msg_admin_attack("[origin.name] ([origin.ckey]) shot [target.name] ([target.ckey]) with a tesla bolt", origin)
 	if(next && jumps > 0)
 		Bolt(target, next, user, --jumps)
 
@@ -359,6 +349,211 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "arctesla"
 	item_state = "arctesla"
-	w_class = 3.0
+	w_class = ITEM_SIZE_NORMAL
 	origin_tech = null
-	spinspeed = 0.5
+	toolspeed = 0.5
+
+/*
+	Pyrometers and stuff.
+*/
+/obj/item/weapon/gun/energy/pyrometer
+	name = "pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact."
+
+	w_class = ITEM_SIZE_SMALL
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "pyrometer"
+	item_state = "pyrometer"
+	origin_tech = "engineering=3;magnets=3"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer)
+
+	var/emagged = FALSE
+
+	var/panel_open = FALSE
+
+	// ML means my laser.
+	var/obj/item/weapon/stock_parts/micro_laser/ML
+	var/my_laser_type = /obj/item/weapon/stock_parts/micro_laser
+
+/obj/item/weapon/gun/energy/pyrometer/atom_init()
+	. = ..()
+	if(my_laser_type)
+		ML = new my_laser_type(src)
+
+/obj/item/weapon/gun/energy/pyrometer/newshot()
+	if(!ML)
+		visible_message("<span class='warning'>[src] clings, as it heats up.</span>")
+		return
+	return ..()
+
+/obj/item/weapon/gun/energy/pyrometer/attack_hand(mob/user)
+	if(panel_open && power_supply)
+		user.put_in_hands(power_supply)
+		power_supply = null
+		to_chat(user, "<span class='notice'>You take \the [power_supply] out of \the [src].</span>")
+	else
+		..()
+
+/obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		panel_open = !panel_open
+		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
+
+	else if(panel_open)
+		if(iscrowbar(I))
+			if(ML)
+				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
+				user.put_in_hands(ML)
+				ML = null
+				to_chat(user, "<span class='notice'>You take \the [ML] out of \the [src].</span>")
+		else if(istype(I, /obj/item/weapon/stock_parts/cell))
+			user.drop_from_inventory(I, src)
+			power_supply = I
+			to_chat(user, "<span class='notice'>You install [I] into \the [src].</span>")
+		else if(istype(I, /obj/item/weapon/stock_parts/micro_laser))
+			user.drop_from_inventory(I, src)
+			ML = I
+			to_chat(user, "<span class='notice'>You install [I] into \the [src].</span>")
+
+	else
+		return ..()
+
+/obj/item/weapon/gun/energy/pyrometer/emag_act(mob/user)
+	if(!emagged)
+		ammo_type += new /obj/item/ammo_casing/energy/pyrometer/emagged(src)
+		origin_tech += ";syndicate=1"
+
+		emagged = TRUE
+
+/obj/item/weapon/gun/energy/pyrometer/update_icon()
+	return
+
+/obj/item/weapon/gun/energy/pyrometer/announce_shot(mob/living/user)
+	return
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/universal
+	name = "universal pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct use physical contact. Comes with built-in multi-color laser pointer. And all possible pyrometer modes!"
+	icon_state = "pyrometer_robotics"
+	item_state = "pyrometer_robotics"
+
+	ammo_type = list(
+		/obj/item/ammo_casing/energy/pyrometer/science_phoron,
+		/obj/item/ammo_casing/energy/pyrometer/engineering,
+		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
+		/obj/item/ammo_casing/energy/pyrometer/medical,
+	)
+
+	// Doesn't come with those built-in. Must be manually put.
+	cell_type = null
+	my_laser_type = null
+
+
+/obj/item/weapon/gun/energy/pyrometer/ce
+	name = "chief engineer's tactical pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Comes with a neat sniper-scope!"
+	icon_state = "pyrometer_ce"
+	item_state = "pyrometer_ce"
+
+	ammo_type = list(
+		/obj/item/ammo_casing/energy/pyrometer/science_phoron,
+		/obj/item/ammo_casing/energy/pyrometer/engineering,
+		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
+	)
+
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
+
+	var/zoomed = FALSE
+
+/obj/item/weapon/gun/energy/pyrometer/ce/dropped(mob/user)
+	if(zoomed)
+		if(user.client)
+			user.client.view = world.view
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoomed = FALSE
+	..()
+
+/obj/item/weapon/gun/energy/pyrometer/ce/attack_self()
+	toggle_zoom()
+
+/obj/item/weapon/gun/energy/pyrometer/ce/verb/toggle_zoom()
+	set category = "Object"
+	set name = "Use Sniper Scope"
+	set src in usr
+
+	if(!ishuman(usr) || usr.incapacitated())
+		to_chat(usr, "You are unable to focus down the scope of the rifle.")
+		return
+
+	var/mob/living/carbon/human/user = usr
+
+	if(!zoomed && user.get_active_hand() != src)
+		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
+		return
+
+	if(user.client.view == world.view)
+		if(user.hud_used)
+			user.hud_used.show_hud(HUD_STYLE_REDUCED)
+		user.client.view = 12
+		zoomed = TRUE
+	else
+		usr.client.view = world.view
+		if(usr.hud_used)
+			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
+		zoomed = FALSE
+	to_chat(user, "<font color='[zoomed ? "blue" : "red"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
+
+/obj/item/weapon/gun/energy/pyrometer/ce/equipped(mob/user, slot)
+	if(zoomed)
+		toggle_zoom()
+	..()
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/science_phoron
+	name = "phoron-orienter pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is fine-tuned for detecting when your pipe is about to burst."
+	icon_state = "pyrometer_science_phoron"
+	item_state = "pyrometer_science_phoron"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/science_phoron)
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/engineering
+	name = "machinery pyrometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Detects overheated machinery."
+	icon_state = "pyrometer_engineering"
+	item_state = "pyrometer_engineering"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/engineering)
+
+/obj/item/weapon/gun/energy/pyrometer/engineering/robotics
+	icon_state = "pyrometer_robotics"
+	item_state = "pyrometer_robotics"
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/atmospherics
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine how much a living human would be screwed if he was to breath the air in the room you \"scan\"."
+	icon_state = "pyrometer_atmospherics"
+	item_state = "pyrometer_atmospherics"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/atmospherics)
+
+
+
+/obj/item/weapon/gun/energy/pyrometer/medical
+	name = "NC thermometer"
+	desc = "A tool used to quickly measure temperature without fear of harm due to direct user physical contact. Comes with built-in multi-color laser pointer. Is used to determine the temperature of your skeleton in the closet."
+	icon_state = "pyrometer_medical"
+	item_state = "pyrometer_medical"
+
+	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
+
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra

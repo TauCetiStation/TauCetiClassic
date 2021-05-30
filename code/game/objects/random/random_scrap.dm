@@ -61,6 +61,9 @@
 /obj/random/scrap/sparse_weighted/item_to_spawn()
 		return pick(\
 						prob(105);/obj/structure/scrap/poor,\
+						#ifdef NEWYEARCONTENT
+						prob(80);/obj/structure/scrap/newyear,\
+						#endif
 						prob(18);/obj/structure/scrap,\
 						prob(12);/obj/structure/scrap/medical,\
 						prob(12);/obj/structure/scrap/science,\

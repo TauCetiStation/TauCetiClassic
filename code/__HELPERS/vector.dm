@@ -78,13 +78,13 @@ return_location()
 		return
 
 	// calculate the angle
-	angle = Atan2(dx, dy) + angle_offset
+	angle = ATAN2(dx, dy) + angle_offset
 
 	// and some rounding to stop the increments jumping whole turfs - because byond favours certain angles
 	if(angle > -135 && angle < 45)
-		angle = ceil(angle)
+		angle = CEIL(angle)
 	else
-		angle = Floor(angle)
+		angle = FLOOR(angle, 1)
 
 	// calculate the offset per increment step
 	if(abs(angle) in list(0, 45, 90, 135, 180))		// check if the angle is a cardinal
@@ -93,11 +93,11 @@ return_location()
 		if(abs(angle) in list(45, 90, 135))
 			offset_y = sign(dy)
 	else if(abs(dy) > abs(dx))
-		offset_x = Cot(abs(angle))					// otherwise set the offsets
+		offset_x = COT(abs(angle))					// otherwise set the offsets
 		offset_y = sign(dy)
 	else
 		offset_x = sign(dx)
-		offset_y = Tan(angle)
+		offset_y = tan(angle)
 		if(dx < 0)
 			offset_y = -offset_y
 

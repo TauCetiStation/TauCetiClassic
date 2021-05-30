@@ -16,7 +16,7 @@ var/list/fusion_reactions
 /datum/fusion_reaction/proc/handle_reaction_special(obj/effect/fusion_em_field/holder)
 	return 0
 
-proc/get_fusion_reaction(p_react, s_react, m_energy)
+/proc/get_fusion_reaction(p_react, s_react, m_energy)
 	if(!fusion_reactions)
 		fusion_reactions = list()
 		for(var/rtype in typesof(/datum/fusion_reaction) - /datum/fusion_reaction)

@@ -2,8 +2,9 @@
 	desc = "A classic revolver. Uses 357 ammo."
 	name = "revolver"
 	icon_state = "revolver"
+	item_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	fire_sound = 'sound/weapons/guns/revolver_shot.ogg'
+	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
@@ -15,11 +16,11 @@
 /obj/item/weapon/gun/projectile/revolver/process_chamber()
 	return ..(0, 1)
 
-/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/A, mob/user)
-	var/num_loaded = magazine.attackby(A, user, 1)
+/obj/item/weapon/gun/projectile/revolver/attackby(obj/item/I, mob/user, params)
+	var/num_loaded = magazine.attackby(I, user, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
-		A.update_icon()
+		I.update_icon()
 		update_icon()
 		chamber_round()
 
@@ -49,6 +50,10 @@
 /obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
 	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
+
+/obj/item/weapon/gun/projectile/revolver/traitor
+	name = "cap gun"
+	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
 
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
@@ -82,16 +87,15 @@
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
 
-/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user)
-	..()
-	if(istype(A, /obj/item/weapon/screwdriver))
+/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/I, mob/user, params)
+	if(isscrewdriver(I))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && do_after(user, 30, target = src))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -104,7 +108,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(!user.is_busy() && do_after(user, 30, target = src))
+			if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -112,10 +116,14 @@
 				desc = initial(desc)
 				to_chat(user, "<span class='warning'>You remove the modifications on [src]! Now it will fire .38 rounds.</span>")
 
+	else
+		return ..()
+
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
+	item_state = "revolver"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!
@@ -140,7 +148,7 @@
 		chamber_round()
 	spun = 1
 
-/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/A, mob/user)
+/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = ..()
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(num_loaded)
@@ -150,8 +158,7 @@
 	if(get_ammo() > 0)
 		Spin()
 	update_icon()
-	A.update_icon()
-	return
+	I.update_icon()
 
 /obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user)
 	if(!spun && get_ammo(0,0))
@@ -171,7 +178,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
-/obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target, mob/user, proximity, params)
 	if(!spun && get_ammo(0,0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
@@ -187,7 +194,7 @@
 
 	if(target == user)
 		if(!chambered)
-			user.visible_message("\red *click*", "\red *click*")
+			user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 			return
 
 		if(isliving(target) && isliving(user))
@@ -195,11 +202,11 @@
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
 					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
-					playsound(user, fire_sound, 50, 1)
+					playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return
 				else
-					user.visible_message("\red *click*", "\red *click*")
+					user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
 					return
 	..()
 
@@ -208,9 +215,6 @@
 	desc = "A legend of Wild West."
 	icon_state = "peacemaker"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
-
-/obj/item/weapon/gun/projectile/revolver/peacemaker/isHandgun()
-	return 1
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
@@ -242,10 +246,11 @@
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "sawnshotgun"
-	w_class = 3.0
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_NORMAL
+	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"
 	desc = "Omar's coming!"
+	can_be_holstered = TRUE
 	short = 1
 
 /obj/item/weapon/gun/projectile/revolver/syndie

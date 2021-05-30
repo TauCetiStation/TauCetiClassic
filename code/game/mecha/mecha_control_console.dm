@@ -2,15 +2,17 @@
 	name = "Exosuit Control"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "mecha"
+	state_broken_preset = "techb"
+	state_nopower_preset = "tech0"
 	light_color = "#a97faa"
 	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/mecha_control"
+	circuit = /obj/item/weapon/circuitboard/mecha_control
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
-	var/dat = "<html><head><title>[name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
+	var/dat = ""
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
 		for(var/obj/item/mecha_parts/mecha_tracking/TR in mecha_tracking_list)
@@ -18,18 +20,18 @@
 			if(answer)
 				dat += {"<hr>[answer]<br/>
 						  <a href='?src=\ref[src];send_message=\ref[TR]'>Send message</a><br/>
-						  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=\ref[src];shock=\ref[TR]'>(EMP pulse)</a><br>"}
+						  <a href='?src=\ref[src];get_log=\ref[TR]'>Show exosuit log</a> | <a class='red' href='?src=\ref[src];shock=\ref[TR]'>EMP pulse</a><br>"}
 
 	if(screen == 1)
 		dat += "<h3>Log contents</h3>"
 		dat += "<a href='?src=\ref[src];return=1'>Return</a><hr>"
 		dat += "[stored_data]"
 
-	dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
-	dat += "</body></html>"
+	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 
-	user << browse(entity_ja(dat), "window=computer;size=400x500")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "computer", src.name, 400, 500)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	. = ..()
@@ -106,7 +108,7 @@
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	var/obj/mecha/M = in_mecha()
 	if(M)
-		M.emp_act(2)
+		M.emplode(2)
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
@@ -123,3 +125,4 @@
 	. = ..()
 	for (var/i in 1 to 7)
 		new /obj/item/mecha_parts/mecha_tracking(src)
+	make_exact_fit()

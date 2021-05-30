@@ -3,6 +3,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
 	layer = 3
+	plane = FLOOR_PLANE
 	anchored = 1.0
 	var/uses = 20
 	var/disabled = 1
@@ -22,6 +23,7 @@
 		else
 			icon_state = "motion0"
 			stat |= NOPOWER
+	update_power_use()
 
 /obj/machinery/ai_slipper/proc/setState(enabled, uses)
 	src.disabled = disabled
@@ -45,7 +47,7 @@
 				if (user.machine==src)
 					src.attack_hand(usr)
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
 	return
 
@@ -55,16 +57,17 @@
 	if (!istype(area))
 		to_chat(user, text("Turret badly positioned - area is [].", area))
 		return
-	var/t = "<TT><B>AI Liquid Dispenser</B> ([area.name])<HR>"
+	var/t = ""
 
 	if(locked && !issilicon_allowed(user) && !isobserver(user))
-		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
+		t += "<div class='NoticeBox'>Swipe ID card to unlock control panel.</div>"
 	else
 		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
 		t += text("Uses Left: [uses]. <A href='?src=\ref[src];toggleUse=1'>Activate the dispenser?</A><br>\n")
 
-	user << browse(entity_ja(t), "window=computer;size=575x450")
-	onclose(user, "computer")
+	var/datum/browser/popup = new(user, "window=computer", src.name, 575, 450)
+	popup.set_content(t)
+	popup.open()
 
 /obj/machinery/ai_slipper/Topic(href, href_list)
 	. = ..()

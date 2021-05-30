@@ -16,18 +16,18 @@
 
 	var/list/forbidden_type = list()
 
-/obj/item/device/modkit/afterattack(obj/O, mob/user)
-	if(get_dist(src,O)>1)
+/obj/item/device/modkit/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
 		return
 	if (!target_species)
 		return	//it shouldn't be null, okay?
 
 	var/allowed = 0
 	for (var/permitted_type in permitted_types)
-		if(istype(O, permitted_type) && !(O.type in forbidden_type))
+		if(istype(target, permitted_type) && !(target.type in forbidden_type))
 			allowed = 1
 
-	var/obj/item/clothing/I = O
+	var/obj/item/clothing/I = target
 	if (!istype(I) || !allowed)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
@@ -39,8 +39,8 @@
 		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
 		return
 
-	if(!isturf(O.loc))
-		to_chat(user, "<span class='warning'>[O] must be safely placed on the ground for modification.</span>")
+	if(!isturf(target.loc))
+		to_chat(user, "<span class='warning'>[target] must be safely placed on the ground for modification.</span>")
 		return
 
 	if(istype(I, /obj/item/clothing/head/helmet) && (parts & MODKIT_HELMET))
@@ -51,9 +51,9 @@
 		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
 		return
 
-	playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+	playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [O].</span>","<span class='red'> You open \the [src] and modify \the [O].</span>")
+	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [target].</span>","<span class='red'> You open \the [src] and modify \the [target].</span>")
 
 	I.refit_for_species(target_species)
 
@@ -80,6 +80,11 @@
 	name = "Skrellian hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/vox
+	name = "Vox hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/engineering
 	name = "Engineering hardsuit modification kit"
@@ -104,6 +109,11 @@
 	name = "Skrellian engineering hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/engineering/vox
+	name = "Vox engineering hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/engineering/chief
 	name = "Chief-engineers hardsuit modification kit"
@@ -127,6 +137,11 @@
 	name = "Unathi chief-engineers hardsuit modification kit"
 	target_species = UNATHI
 
+/obj/item/device/modkit/engineering/chief/vox
+	name = "Vox chief-engineers hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/atmos
 	name = "Atmospherics hardsuit modification kit"
@@ -146,6 +161,11 @@
 /obj/item/device/modkit/atmos/skrell
 	name = "Skrellian atmospherics hardsuit modification kit"
 	target_species = SKRELL
+
+/obj/item/device/modkit/atmos/vox
+	name = "Vox atmospherics hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/med
@@ -171,6 +191,11 @@
 	name = "Skrellian medical hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/med/vox
+	name = "Vox medical hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/med/cmo
 	name = "CMO hardsuit modification kit"
@@ -187,6 +212,11 @@
 /obj/item/device/modkit/med/cmo/unathi
 	name = "Unathi CMO hardsuit modification kit"
 	target_species = UNATHI
+
+/obj/item/device/modkit/med/cmo/vox
+	name = "Unathi CMO hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/sec
@@ -212,6 +242,11 @@
 	name = "Skrellian security hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/sec/vox
+	name = "Vox security hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/sec/hos
 	name = "HoS hardsuit modification kit"
@@ -228,6 +263,11 @@
 /obj/item/device/modkit/sec/hos/unathi
 	name = "Unathi HoS hardsuit modification kit"
 	target_species = UNATHI
+
+/obj/item/device/modkit/sec/hos/vox
+	name = "Vox HoS hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/mining
@@ -249,12 +289,19 @@
 	name = "Skrellian mining hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/mining/vox
+	name = "Vox mining hardsuit modification kit"
+	target_species = VOX
+
+
 
 /obj/item/device/modkit/syndie
 	name = "Gorlex hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/syndi,
-		/obj/item/clothing/suit/space/rig/syndi
+		/obj/item/clothing/suit/space/rig/syndi,
+		/obj/item/clothing/head/helmet/space/rig/syndi/heavy,
+		/obj/item/clothing/suit/space/rig/syndi/heavy
 		)
 
 /obj/item/device/modkit/syndie/tajaran
@@ -271,6 +318,11 @@
 	name = "Skrellian gorlex hardsuit modification kit"
 	target_species = SKRELL
 	parts = MODKIT_HELMET
+
+/obj/item/device/modkit/syndie/vox
+	name = "Vox gorlex hardsuit modification kit"
+	target_species = VOX
+
 
 
 /obj/item/device/modkit/wizard
@@ -291,3 +343,7 @@
 /obj/item/device/modkit/wizard/skrell
 	name = "Skrellian magical hardsuit modification kit"
 	target_species = SKRELL
+
+/obj/item/device/modkit/wizard/vox
+	name = "Vox magical hardsuit modification kit"
+	target_species = VOX

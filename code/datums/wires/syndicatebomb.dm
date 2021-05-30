@@ -32,7 +32,7 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 
 		if(SYNDIEBOMB_WIRE_UNBOLT)
 			if (!mended && S.anchored)
-				playsound(S.loc, 'sound/effects/stealthoff.ogg', 30, 1)
+				playsound(S, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER, 30)
 				S.loc.visible_message("<span class='notice'>[bicon(holder)] The bolts lift out of the ground!</span>")
 				S.anchored = FALSE
 
@@ -61,12 +61,12 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 			S.loc.visible_message("<span class='notice'>[bicon(holder)] The bolts spin in place for a moment.</span>")
 
 		if(SYNDIEBOMB_WIRE_DELAY)
-			playsound(S.loc, 'sound/machines/chime.ogg', 30, 1)
+			playsound(S.loc, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER, 30)
 			S.loc.visible_message("<span class='notice'>[bicon(holder)] The bomb chirps.</span>")
 			S.timer += 10
 
 		if(SYNDIEBOMB_WIRE_PROCEED)
-			playsound(S.loc, 'sound/machines/buzz-sigh.ogg', 30, 1)
+			playsound(S.loc, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER, 30)
 			S.loc.visible_message("<span class='warning'>[bicon(holder)] The bomb buzzes ominously!</span>")
 
 			if (S.timer >= 61) //Long fuse bombs can suddenly become more dangerous if you tinker with them
@@ -78,7 +78,7 @@ var/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if pulsed,
 
 		if(SYNDIEBOMB_WIRE_ACTIVATE)
 			if(!S.active && !S.defused)
-				playsound(S.loc, 'sound/machines/click.ogg', 30, 1)
+				playsound(S.loc, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 30)
 				S.loc.visible_message("<span class='warning'>[bicon(holder)] You hear the bomb start ticking!</span>")
 				S.active = TRUE
 

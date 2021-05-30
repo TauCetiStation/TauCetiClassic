@@ -2,16 +2,6 @@
 // Helpers for DNA2
 /////////////////////////////
 
-// Pads 0s to t until length == u
-/proc/add_zero2(t, u)
-	var/temp1
-	while (length(t) < u)
-		t = "0[t]"
-	temp1 = t
-	if (length(t) > u)
-		temp1 = copytext(t,2,u+1)
-	return temp1
-
 // DNA Gene activation boundaries, see dna2.dm.
 // Returns a list object with 4 numbers.
 /proc/GetDNABounds(block)
@@ -24,15 +14,29 @@
 /proc/randmutb(mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
-	M.dna.SetSEState(block, 1)
+	var/list/b_blocks = list(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK,EPILEPSYBLOCK)
+	var/list/possible_blocks = list()
+	for(var/block in b_blocks)
+		if(!M.dna.GetSEState(block))
+			possible_blocks.Add(block)
+	if(!possible_blocks.len)
+		return
+	var/block_pick = pick(possible_blocks)
+	M.dna.SetSEState(block_pick, 1)
 
 // Give Random Good Mutation to M
 /proc/randmutg(mob/living/M)
 	if(!M) return
 	M.dna.check_integrity()
-	var/block = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
-	M.dna.SetSEState(block, 1)
+	var/list/g_blocks = list(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK,COLDBLOCK)
+	var/list/possible_blocks = list()
+	for(var/block in g_blocks)
+		if(!M.dna.GetSEState(block))
+			possible_blocks.Add(block)
+	if(!possible_blocks.len)
+		return
+	var/block_pick = pick(possible_blocks)
+	M.dna.SetSEState(block_pick, 1)
 
 // Random Appearance Mutation
 /proc/randmuti(mob/living/M)
@@ -164,6 +168,7 @@
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[beard]
 
+		H.apply_recolor()
 		H.update_body()
 		H.update_hair()
 

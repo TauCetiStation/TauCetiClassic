@@ -53,9 +53,9 @@
 	else
 		icon_state = "sheater-off"
 
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
-		overlays += "sheater-open"
+		add_overlay("sheater-open")
 
 /obj/machinery/space_heater/examine(mob/user)
 	..()
@@ -80,14 +80,14 @@
 
 	var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 	var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-	targetTemperature = dd_range(minTemp, maxTemp, targetTemperature)
+	targetTemperature = clamp(targetTemperature, minTemp, maxTemp)
 
 /obj/machinery/space_heater/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
 	if(cell)
-		cell.emp_act(severity)
+		cell.emplode(severity)
 	..(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user)
@@ -109,7 +109,7 @@
 		else
 			to_chat(user, "The hatch must be open to insert a power cell.")
 			return
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
@@ -190,7 +190,7 @@
 
 		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
 		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = dd_range(minTemp, maxTemp, round(value, 1))
+		targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
 
 	else if(href_list["cellremove"] && panel_open)
 		if(cell)

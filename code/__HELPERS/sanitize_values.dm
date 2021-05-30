@@ -44,3 +44,17 @@
 			if(65 to 70)	. += ascii2text(ascii+32)	//letters A to F - translates to lowercase
 			else			return default
 	return .
+
+var/global/regex/IP_pattern = regex(@"^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$")
+
+/proc/sanitize_ip(addr)
+	// Return null if IP is invalid, return a valid IP otherwwise.
+	if(IP_pattern.Find(addr))
+		return addr
+	return null
+
+/proc/sanitize_cid(cid)
+	var/static/regex/cid_regex = regex(@"^[0-9]*$")
+	if(!istext(cid) || !cid_regex.Find(cid))
+		return FALSE
+	return cid

@@ -10,8 +10,10 @@
 	role_type = ROLE_ABDUCTOR
 	required_enemies = 2
 	recommended_enemies = 2
-	required_players = 15
-	required_players_secret = 15
+	required_players = 25
+	required_players_bundles = 25
+	antag_hud_type = ANTAG_HUD_ABDUCTOR
+	antag_hud_name = "abductor"
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/datum/mind/scientists = list()
@@ -25,7 +27,7 @@
 
 /datum/game_mode/abduction/announce()
 	to_chat(world, "<B>The current game mode is - Abduction!</B>")
-	to_chat(world, "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!")
+	to_chat(world, "There are alien <b>abductors</b> sent to [station_name()] to perform nefarious experiments!")
 	to_chat(world, "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones.")
 	to_chat(world, "<b>Crew</b> - don't get abducted and stop the abductors.")
 
@@ -65,11 +67,11 @@
 
 		scientist.assigned_role = "MODE"
 		scientist.special_role = "Abductor scientist"
-		log_game("[scientist.key] (ckey) has been selected as an abductor team [team_number] scientist.")
+		log_game("[key_name(scientist)] has been selected as an abductor team [team_number] scientist.")
 
 		agent.assigned_role = "MODE"
 		agent.special_role = "Abductor agent"
-		log_game("[agent.key] (ckey) has been selected as an abductor team [team_number] agent.")
+		log_game("[key_name(agent)] has been selected as an abductor team [team_number] agent.")
 
 		abductors |= agent
 		abductors |= scientist
@@ -127,6 +129,8 @@
 		equip_scientist(H,team_number)
 		greet_scientist(scientist,team_number)
 		H.regenerate_icons()
+		add_antag_hud(antag_hud_type, antag_hud_name, scientist.current)
+		add_antag_hud(antag_hud_type, antag_hud_name, agent.current)
 
 	return ..()
 
@@ -207,14 +211,14 @@
 	var/radio_freq = SYND_FREQ
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
 	R.set_frequency(radio_freq)
-	agent.equip_to_slot_or_del(R, slot_l_ear)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(agent), slot_shoes)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), slot_w_uniform) //they're greys gettit
-	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), slot_back)
+	agent.equip_to_slot_or_del(R, SLOT_L_EAR)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(agent), SLOT_SHOES)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), SLOT_W_UNIFORM) //they're greys gettit
+	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), SLOT_BACK)
 
 /datum/game_mode/abduction/proc/get_team_console(team)
 	var/obj/machinery/abductor/console/console
-	for(var/obj/machinery/abductor/console/c in machines)
+	for(var/obj/machinery/abductor/console/c in abductor_machinery_list)
 		if(c.team == team)
 			console = c
 			break
@@ -228,11 +232,11 @@
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
 	if(console!=null)
 		console.vest = V
-	agent.equip_to_slot_or_del(V, slot_wear_suit)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), slot_in_backpack)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), slot_belt)
-	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
+	agent.equip_to_slot_or_del(V, SLOT_WEAR_SUIT)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), SLOT_IN_BACKPACK)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), SLOT_BELT)
+	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
 
 /datum/game_mode/abduction/proc/equip_scientist(mob/living/carbon/human/scientist,team_number)
 	if(!team_number)
@@ -243,7 +247,7 @@
 	if(console!=null)
 		console.gizmo = G
 		G.console = console
-	scientist.equip_to_slot_or_del(G, slot_in_backpack)
+	scientist.equip_to_slot_or_del(G, SLOT_IN_BACKPACK)
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	beamplant.imp_in = scientist
 	beamplant.implanted = 1
@@ -257,24 +261,27 @@
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
 				SSshuttle.incall(0.5)
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
-				world << sound('sound/AI/shuttlecalled.ogg')
+				SSshuttle.announce_emer_called.play()
 				finished = 1
 				return ..()
 	return ..()
 
 /datum/game_mode/abduction/declare_completion()
-	completion_text += "<B>Abduction mode resume:</B><br>"
+	completion_text += "<h3>Abduction mode resume:</h3>"
 	for(var/team_number in 1 to abductor_teams)
 		var/obj/machinery/abductor/console/console = get_team_console(team_number)
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			completion_text += "<B>[team_name]</B> team managed to <font color='green'><B>complete</B></font> their mission! "
+			mode_result = "win - abductor complete mission"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<b>[team_name]</b> team managed to <span style='color: green; font-weight: bold;'>complete</span> their mission! "
 			completion_text += "[live_check(team_number)]"
 			completion_text += "[pick("Science of Galaxy","Greytide Science")] continues moving forward!<BR>"
 		else
-			completion_text += "<B>[team_name]</B> team <font color='red'>failed</font> their mission."
+			mode_result = "loss - staff stopped abductors"
+			feedback_set_details("round_end_result",mode_result)
+			completion_text += "<b>[team_name]</b> team <span style='color: red; font-weight: bold;'>failed</span> their mission."
 			completion_text += "[live_check(team_number)]"
 			completion_text += "Station crew managed to stop [pick("Science of Galaxy","Greytide Science")].<BR>"
 	..()
@@ -290,9 +297,9 @@
 		if((A.team == team_number) && (A.stat != DEAD))
 			alive++
 	if(alive >= 2)
-		text += "All of them <B>alive</B>. "
+		text += "All of them <b>alive</b>. "
 	else
-		text += "Someone from them is <B>dead</B>. "
+		text += "Someone from them is <b>dead</b>. "
 	return text
 
 /datum/game_mode/proc/auto_declare_completion_abduction()
@@ -300,7 +307,7 @@
 	if(abductors.len)
 		text += printlogo("abductor", "abductors")
 		for(var/team_name in abduction_teams)
-			text += "<BR><FONT size = 4, color = #800080><b>[team_name] members:</B></FONT>"
+			text += "<br><span style='color: #800080; font-weight: bold;'>[team_name] members:</span>"
 
 			for(var/datum/mind/abductor in abductors)
 				if(findtext(abductor.name,team_name))
@@ -311,30 +318,43 @@
 					if(!config.objectives_disabled)
 						for(var/datum/objective/objective in abductor.objectives)
 							if(objective.check_completion())
-								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+								text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
 								feedback_add_details("abductor_objective","[objective.type]|SUCCESS")
 							else
-								text += "<BR><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+								text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
 								feedback_add_details("abductor_objective","[objective.type]|FAIL")
 								abductorwin = 0
 							count++
 
 						if(abductor.current && abductor.current.stat!=2 && abductorwin)
-							text += "<BR><font color='green'><B>The abductor was successful!</B></font>"
+							text += "<br><span style='color: green; font-weight: bold;'>The abductor was successful!</span>"
 							feedback_add_details("abductor_success","SUCCESS")
 							score["roleswon"]++
 						else
-							text += "<BR><font color='red'><B>The abductor has failed!</B></font>"
+							text += "<br><span style='color: red; font-weight: bold;'>The abductor has failed!</span>"
 							feedback_add_details("abductor_success","FAIL")
 
-		text += "<BR>"
+		text += "<br>"
 		if(abductees.len)
-			text += "<BR><B>The abductees were:</B>"
+			text += "<br><b>The abductees were:</b>"
 			for(var/datum/mind/abductee_mind in abductees)
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
-		text += "<BR><HR>"
+
+	if(text)
+		antagonists_completion += list(list("mode" = "abduction", "html" = text))
+		text = "<div class='Section'>[text]</div>"
+
 	return text
+
+// Machinery
+/obj/machinery/abductor/atom_init()
+	. = ..()
+	abductor_machinery_list += src
+
+/obj/machinery/abductor/Destroy()
+	abductor_machinery_list -= src
+	return ..()
 
 //Landmarks
 // TODO: Split into seperate landmarks for prettier ships
@@ -343,12 +363,13 @@
 
 /obj/effect/landmark/abductor/console/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/landmark/abductor/console/atom_init_late()
 	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
 	c.team = team
 	c.Initialize()
-
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist
@@ -364,12 +385,12 @@
 	explanation_text = "Experiment on [target_amount] humans."
 
 /datum/objective/experiment/check_completion()
-	. = 0
+	. = OBJECTIVE_LOSS
 	var/ab_team = team
-	for(var/obj/machinery/abductor/experiment/E in machines)
+	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
 		if(E.team == ab_team)
 			if(E.points >= target_amount)
-				return 1
+				return OBJECTIVE_WIN
 
 /datum/objective/abductee
 //	dangerrating = 5
@@ -382,7 +403,7 @@
 	var/target = pick(list("pets","lights","monkeys","fruits","shoes","bars of soap"))
 	explanation_text += " [target]."
 
-datum/objective/abductee/capture
+/datum/objective/abductee/capture
 	explanation_text = "Capture"
 
 /datum/objective/abductee/capture/New()

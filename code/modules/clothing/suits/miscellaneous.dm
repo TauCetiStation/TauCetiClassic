@@ -8,25 +8,33 @@
 /*
  * Lasertag
  */
-/obj/item/clothing/suit/bluetag
-	name = "blue laser tag armour"
-	desc = "Blue Pride, Station Wide."
+/obj/item/clothing/suit/lasertag
+	name = "laser tag armour"
+	desc = "Be none's man, shoot everybody!"
 	icon_state = "bluetag"
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
 	siemens_coefficient = 3.0
 
-/obj/item/clothing/suit/redtag
+	var/lasertag_color = "none"
+
+/obj/item/clothing/suit/lasertag/bluetag
+	name = "blue laser tag armour"
+	desc = "Blue Pride, Station Wide."
+	icon_state = "bluetag"
+	item_state = "bluetag"
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	lasertag_color = "blue"
+
+/obj/item/clothing/suit/lasertag/redtag
 	name = "red laser tag armour"
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	blood_overlay_type = "armor"
-	body_parts_covered = UPPER_TORSO
-	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
-	siemens_coefficient = 3.0
+	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	lasertag_color = "red"
 
 /*
  * Costume
@@ -113,7 +121,7 @@
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "A plastic replica of the syndicate space suit, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -173,6 +181,32 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
 
+/obj/item/clothing/suit/cardborg/equipped(mob/living/user, slot)
+	..()
+	if(slot == SLOT_WEAR_SUIT)
+		disguise(user)
+
+/obj/item/clothing/suit/cardborg/dropped(mob/living/user)
+	..()
+	user.remove_alt_appearance("standard_borg_disguise")
+
+/obj/item/clothing/suit/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/cardborg/borghead)
+	if(istype(H))
+		if(!borghead)
+			borghead = H.head
+		if(istype(borghead, /obj/item/clothing/head/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
+			var/image/I = image(icon = 'icons/mob/robots.dmi' , icon_state = "robot", loc = H)
+			I.override = 1
+			I.add_overlay(mutable_appearance('icons/mob/robots.dmi', "eyes-robot")) //gotta look realistic
+			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", I) //you look like a robot to robots! (including yourself because you're totally a robot)
+
+/obj/item/clothing/suit/byzantine_dress
+	name = "Byzantine dress"
+	desc = "Fancy expensive clothes from Space Byzantium"
+	icon_state = "Byzantine_dress"
+	item_state = "Byzantine_dress"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
 /*
  * Misc
  */
@@ -197,6 +231,66 @@
 	desc = "A baggy shirt with a vintage game character on it. Why would someone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
+
+/obj/item/clothing/suit/blueshirt
+	name = "blue shirt"
+	desc = "A blue shirt with some strange symbols. Look out for aliens!"
+	icon_state = "blueshirt"
+	item_state = "blueshirt"
+
+/obj/item/clothing/suit/chemshirt
+	name = "chemistry shirt"
+	desc = "A nice orange shirt made from a special fabric that hides any reagent stains. Has a drawn beaker with some glowy acid inside. Wanna cook?"
+	icon_state = "chemshirt"
+	item_state = "chemshirt"
+
+/obj/item/clothing/suit/roundshirt
+	name = "science shirt"
+	desc = "A purple, sciency t-shirt with a picture of a burning star. Save the Earth! Oh wait, already too late for that"
+	icon_state = "roundshirt"
+	item_state = "roundshirt"
+
+/obj/item/clothing/suit/catshirt
+	name = "cat shirt"
+	desc = "Very comfy, grey t-shirt with a picture of a cute kitty. And the best part: any cat or tajaran hair blends into the design very well!"
+	icon_state = "catshirt"
+	item_state = "catshirt"
+
+/obj/item/clothing/suit/engishirt
+	name = "engineer shirt"
+	desc = "Loose t-shirt made of insulating material. Trust me i'm an engineer"
+	icon_state = "engishirt"
+	item_state = "engishirt"
+
+/obj/item/clothing/suit/badengishirt
+	name = "bad engineer shirt"
+	desc = "A loose T-shirt made of insulating material with a picture of gravitational singularity on it. Don't trust me i'm a bad engineer"
+	icon_state = "badengishirt"
+	item_state = "badengishirt"
+
+/obj/item/clothing/suit/docshirt
+	name = "doc shirt"
+	desc = "Nice white T-shirt, designed to show that you are a fashionable doctor. Blood stains are not included"
+	icon_state = "docshirt"
+	item_state = "docshirt"
+
+/obj/item/clothing/suit/battonshirt
+	name = "stunning shirt"
+	desc = "A red T-shirt made from durable Rip-Stop material with a picture of bloody stun batton on it. It makes you stunned"
+	icon_state = "battonshirt"
+	item_state = "battonshirt"
+
+/obj/item/clothing/suit/arstotzkashirt
+	name = "dictator shirt"
+	desc = "Grim-looking T-shirt with a picture of red eagle. A good banner for creating your own state in a single department"
+	icon_state = "arstotzkashirt"
+	item_state = "arstotzkashirt"
+
+/obj/item/clothing/suit/toxicshirt
+	name = "toxic shirt"
+	desc = "Acidic-green t-shirt in order to show who is the biggest asshole here"
+	icon_state = "toxicshirt"
+	item_state = "toxicshirt"
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -236,27 +330,12 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
-//Blue suit jacket toggle
-/obj/item/clothing/suit/suit/verb/toggle()
-	set name = "Toggle Jacket Buttons"
-	set category = "Object"
-	set src in usr
-
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
-
-	if(src.icon_state == "suitjacket_blue_open")
-		src.icon_state = "suitjacket_blue"
-		src.item_state = "suitjacket_blue"
-		to_chat(usr, "You button up the suit jacket.")
-	else if(src.icon_state == "suitjacket_blue")
-		src.icon_state = "suitjacket_blue_open"
-		src.item_state = "suitjacket_blue_open"
-		to_chat(usr, "You unbutton the suit jacket.")
-	else
-		to_chat(usr, "You button-up some imaginary buttons on your [src].")
-		return
-	usr.update_inv_wear_suit()
+/obj/item/clothing/suit/storage/postal_dude_coat
+	name = "black trenchcoat"
+	desc = "A black trenchcoat."
+	icon_state = "dude_coat"
+	item_state = "jensensuit"
+	item_color = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -283,18 +362,6 @@
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
 
-/obj/item/clothing/suit/browncoat
-	name = "brown leather coat"
-	desc = "A long, brown leather coat."
-	icon_state = "browncoat"
-	item_state = "browncoat"
-
-/obj/item/clothing/suit/neocoat
-	name = "black coat"
-	desc = "A flowing, black coat."
-	icon_state = "neocoat"
-	item_state = "neocoat"
-
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
 	desc = "A old coat"
@@ -308,28 +375,28 @@
 /obj/item/clothing/under/stripper/stripper_pink
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
-	icon_state = "stripper_p_under"
+	icon_state = "stripper_p"
 	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
-	icon_state = "stripper_g_under"
+	icon_state = "stripper_g"
 	item_color = "stripper_g"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_pink
+/obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
-	icon_state = "stripper_p_over"
+	icon_state = "stripper_p"
 	item_state = "stripper_p"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_green
+/obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
-	icon_state = "stripper_g_over"
+	icon_state = "stripper_g"
 	item_state = "stripper_g"
 	siemens_coefficient = 1
 
@@ -349,7 +416,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 //swimsuit
-/obj/item/clothing/under/swimsuit/
+/obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
 
@@ -419,7 +486,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 	if(!can_button_up)
 		to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how silly you are.")
@@ -490,10 +557,6 @@
 	icon_state = "trenchcoat_black"
 	item_state = "trenchcoat_black"
 
-/obj/item/clothing/suit/storage/det_suit/max_payne
-	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "maxcoat"
-
 /obj/item/clothing/suit/necromancer_hoodie
 	name = "necromancer hoodie"
 	desc = "This suit says to you 'hush'!"
@@ -534,7 +597,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(usr.incapacitated())
 		return 0
 
 	if(src.icon_state == "gmjacket_open")

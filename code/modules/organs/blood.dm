@@ -10,7 +10,7 @@ var/const/BLOOD_VOLUME_BAD = 224
 var/const/BLOOD_VOLUME_SURVIVE = 122
 
 /mob/living/carbon/human/var/datum/reagents/vessel	//Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/human/var/pale = 0			//Should affect how mob sprite is drawn, but currently doesn't.
 
 //Initializes blood vessels
 /mob/living/carbon/human/proc/make_blood()
@@ -59,55 +59,59 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	// Damaged heart virtually reduces the blood volume, as the blood isn't
 	// being pumped properly anymore.
 	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+	if(!IO)
+		return
 
-	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage)
+	if(IO.damage > 1 && IO.damage < IO.min_bruised_damage || IO.heart_status == HEART_FIBR)
 		blood_volume *= 0.8
 	else if(IO.damage >= IO.min_bruised_damage && IO.damage < IO.min_broken_damage)
 		blood_volume *= 0.6
-	else if(IO.damage >= IO.min_broken_damage && IO.damage < INFINITY)
+	else if((IO.damage >= IO.min_broken_damage && IO.damage < INFINITY) || IO.heart_status == HEART_FAILURE)
 		blood_volume *= 0.3
 
 	//Effects of bloodloss
-	switch(blood_volume)
-		if(BLOOD_VOLUME_SAFE to 10000)
-			if(pale)
-				pale = 0
-				update_body()
-		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-			if(!pale)
-				pale = 1
-				update_body()
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel [word]")
-			if(prob(1))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel [word]")
-			if(oxyloss < 20)
-				oxyloss += 3
-		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-			if(!pale)
-				pale = 1
-				update_body()
-			eye_blurry += 6
-			if(oxyloss < 50)
-				oxyloss += 10
-			oxyloss += 1
-			if(prob(15))
-				Paralyse(rand(1,3))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel extremely [word]")
-		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-			oxyloss += 5
-			toxloss += 3
-			if(prob(15))
-				var/word = pick("dizzy","woosey","faint")
-				to_chat(src, "\red You feel extremely [word]")
-		if(0 to BLOOD_VOLUME_SURVIVE)
-			// There currently is a strange bug here. If the mob is not below -100 health
-			// when death() is called, apparently they will be just fine, and this way it'll
-			// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
-			toxloss += 300 // just to be safe!
-			death()
+	if(!HAS_TRAIT(src, TRAIT_CPB))
+		switch(blood_volume)
+			if(BLOOD_VOLUME_SAFE to 10000)
+				if(pale)
+					pale = 0
+					update_body()
+			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+				if(!pale)
+					pale = 1
+					update_body()
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(prob(1))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel [word]</span>")
+				if(oxyloss < 20)
+					oxyloss += 3
+			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+				if(!pale)
+					pale = 1
+					update_body()
+				eye_blurry += 6
+				if(oxyloss < 50)
+					oxyloss += 10
+				oxyloss += 1
+				if(prob(15))
+					Paralyse(rand(1,3))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+				oxyloss += 5
+				toxloss += 3
+				if(prob(15))
+					var/word = pick("dizzy","woosey","faint")
+					to_chat(src, "<span class='warning'>You feel extremely [word]</span>")
+			if(0 to BLOOD_VOLUME_SURVIVE)
+				// There currently is a strange bug here. If the mob is not below -100 health
+				// when death() is called, apparently they will be just fine, and this way it'll
+				// spam deathgasp. Adjusting toxloss ensures the mob will stay dead.
+				if(!iszombie(src)) //zombies dont care about blood
+					toxloss += 300 // just to be safe!
+					death()
 
 	// Without enough blood you slowly go hungry.
 	if(blood_volume < BLOOD_VOLUME_SAFE)
@@ -120,7 +124,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/blood_max = 0
 	var/list/do_spray = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.status & ORGAN_ROBOT)
+		if(BP.is_robotic())
 			continue
 
 		var/open_wound
@@ -145,13 +149,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 						blood_max += W.damage / 40
 
 		if(BP.status & ORGAN_ARTERY_CUT)
-			var/bleed_amount = Floor((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity)
+			var/bleed_amount = FLOOR((vessel.total_volume / (BP.applied_pressure ? 400 : 250)) * BP.arterial_bleed_severity, 1)
 			if(bleed_amount)
 				if(open_wound)
 					blood_max += bleed_amount
 					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
 				else
 					vessel.remove_reagent("blood", bleed_amount)
+				playsound(src, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
 
 	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
 		return
@@ -176,7 +181,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			visible_message("<span class='danger'>Blood squirts from [pick(do_spray)]!</span>")
 		next_blood_squirt = world.time + 50
 		var/turf/sprayloc = get_turf(src)
-		blood_max -= drip(ceil(blood_max / 3), sprayloc)
+		blood_max -= drip(CEIL(blood_max / 3), sprayloc)
 		if(blood_max > 0)
 			blood_max -= blood_squirt(blood_max, sprayloc)
 			if(blood_max > 0)
@@ -187,7 +192,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 //Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
 	if(remove_blood(amt))
-		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_color)
+		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 		return amt
 	return 0
 
@@ -224,11 +229,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return B
 
 	// Update appearance.
-	B.basedatum = new basedatum() // source.data["blood_colour"] <- leaving this pointer, could be important for later.
+	B.basedatum = new(basedatum) // source.data["blood_colour"] <- leaving this pointer, could be important for later.
 	B.update_icon()
 	if(spray_dir)
 		B.icon_state = "squirt"
-		B.dir = spray_dir
+		B.set_dir(spray_dir)
 
 	// Update blood information.
 	if(source.data["blood_DNA"])
@@ -254,7 +259,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	var/spraydir = pick(alldirs)
-	amt = ceil(amt / BLOOD_SPRAY_DISTANCE)
+	amt = CEIL(amt / BLOOD_SPRAY_DISTANCE)
 	var/bled = 0
 
 	var/turf/old_sprayloc = sprayloc
@@ -331,13 +336,13 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.data["virus2"] = list()
 	B.data["virus2"] |= virus_copylist(src.virus2)
 	B.data["antibodies"] = src.antibodies
-	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
+	B.data["blood_DNA"] = src.dna.unique_enzymes
 	if(src.resistances && src.resistances.len)
 		if(B.data["resistances"])
 			B.data["resistances"] |= src.resistances.Copy()
 		else
 			B.data["resistances"] = src.resistances.Copy()
-	B.data["blood_type"] = copytext(src.dna.b_type,1,0)
+	B.data["blood_type"] = src.dna.b_type
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in src.reagents.reagent_list)
@@ -413,13 +418,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-proc/blood_incompatible(donor,receiver)
+/proc/blood_incompatible(donor,receiver)
 	if(!donor || !receiver) return 0
-	var
-		donor_antigen = copytext(donor,1,lentext(donor))
-		receiver_antigen = copytext(receiver,1,lentext(receiver))
-		donor_rh = (findtext(donor,"+")>0)
-		receiver_rh = (findtext(receiver,"+")>0)
+	var/donor_antigen = copytext(donor,1,-1)
+	var/receiver_antigen = copytext(receiver,1,-1)
+	var/donor_rh = (findtext(donor,"+")>0)
+	var/receiver_rh = (findtext(receiver,"+")>0)
 	if(donor_rh && !receiver_rh) return 1
 	switch(receiver_antigen)
 		if("A")

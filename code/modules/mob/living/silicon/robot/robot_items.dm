@@ -1,90 +1,6 @@
-// A special tray for the service droid. Allow droid to pick up and drop items as if they were using the tray normally
-// Click on table to unload, click on item to load. Otherwise works identically to a tray.
-// Unlike the base item "tray", robotrays ONLY pick up food, drinks and condiments.
-
-/obj/item/weapon/tray/robotray
+/obj/item/weapon/storage/visuals/tray/robotray
 	name = "RoboTray"
 	desc = "An autoloading tray specialized for carrying refreshments."
-
-/obj/item/weapon/tray/robotray/afterattack(atom/target, mob/user)
-	if ( !target )
-		return
-	// pick up items, mostly copied from base tray pickup proc
-	// see code\game\objects\items\weapons\kitchen.dm line 241
-	if ( istype(target,/obj/item))
-		if ( !isturf(target.loc) ) // Don't load up stuff if it's inside a container or mob!
-			return
-		var turf/pickup = target.loc
-
-		var addedSomething = 0
-
-		for(var/obj/item/weapon/reagent_containers/food/I in pickup)
-
-
-			if( I != src && !I.anchored && !istype(I, /obj/item/clothing/under) && !istype(I, /obj/item/clothing/suit) && !istype(I, /obj/item/projectile) )
-				var/add = 0
-				if(I.w_class == 1.0)
-					add = 1
-				else if(I.w_class == 2.0)
-					add = 3
-				else
-					add = 5
-				if(calc_carry() + add >= max_carry)
-					break
-
-				I.loc = src
-				carrying.Add(I)
-				overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
-				addedSomething = 1
-		if ( addedSomething )
-			user.visible_message("\blue [user] load some items onto their service tray.")
-
-		return
-
-	// Unloads the tray, copied from base item's proc dropped() and altered
-	// see code\game\objects\items\weapons\kitchen.dm line 263
-
-	if ( isturf(target) || istype(target,/obj/structure/table) )
-		var foundtable = istype(target,/obj/structure/table/)
-		if ( !foundtable ) //it must be a turf!
-			for(var/obj/structure/table/T in target)
-				foundtable = 1
-				break
-
-		var turf/dropspot
-		if ( !foundtable ) // don't unload things onto walls or other silly places.
-			dropspot = user.loc
-		else if ( isturf(target) ) // they clicked on a turf with a table in it
-			dropspot = target
-		else					// they clicked on a table
-			dropspot = target.loc
-
-
-		overlays = null
-
-		var droppedSomething = 0
-
-		for(var/obj/item/I in carrying)
-			I.loc = dropspot
-			carrying.Remove(I)
-			droppedSomething = 1
-			if(!foundtable && isturf(dropspot))
-				// if no table, presume that the person just shittily dropped the tray on the ground and made a mess everywhere!
-				spawn()
-					for(var/i = 1, i <= rand(1,2), i++)
-						if(I)
-							step(I, pick(NORTH,SOUTH,EAST,WEST))
-							sleep(rand(2,4))
-		if ( droppedSomething )
-			if ( foundtable )
-				user.visible_message("\blue [user] unloads their service tray.")
-			else
-				user.visible_message("\blue [user] drops all the items on their tray.")
-
-	return ..()
-
-
-
 
 // A special pen for service droids. Can be toggled to switch between normal writting mode, and paper rename mode
 // Allows service droids to rename paper items.
@@ -99,7 +15,7 @@
 	var/choice = input("Would you like to change colour or mode?") as null|anything in list("Colour","Mode")
 	if(!choice) return
 
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	switch(choice)
 		if("Colour")
@@ -141,9 +57,9 @@
 /obj/item/weapon/form_printer/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
 
-/obj/item/weapon/form_printer/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/form_printer/afterattack(atom/target, mob/user, proximity, params)
 
-	if(!target || !flag)
+	if(!target || !proximity)
 		return
 
 	if(istype(target,/obj/structure/table))
@@ -153,7 +69,7 @@
 	deploy_paper(get_turf(src))
 
 /obj/item/weapon/form_printer/proc/deploy_paper(turf/T)
-	T.visible_message("\blue \The [src.loc] dispenses a sheet of crisp white paper.")
+	T.visible_message("<span class='notice'>\The [src.loc] dispenses a sheet of crisp white paper.</span>")
 	new /obj/item/weapon/paper(T)
 
 //Personal shielding for the combat module.
@@ -185,16 +101,15 @@
 	item_state = "locator"
 	name = "Slime bloodlust pulse emitter"
 	desc = "Highly dangeroues experimental device that makes nearby slimes completely loose it. Has 5 uses."
-	var uses = 5
-	var mobu
+	var/uses = 5
+	var/mobu
 
 /obj/item/device/lustmodule/attack_self(mob/user)
 	if(uses > 0)
 		for(var/mob/living/carbon/slime/slime in viewers(get_turf_loc(user), null))
 			slime.tame = 0
 			slime.rabid = 1
-			for(var/mob/O in viewers(get_turf_loc(user), null))
-				O.show_message(text("\red The [slime] is driven into a frenzy!."), 1)
+			user.visible_message("<span class='warning'>The [slime] is driven into a frenzy!.</span>")
 		uses -= 1
 		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else
@@ -204,15 +119,16 @@
 
 /obj/item/weapon/pickaxe/cyb
 	name = "cyborg pickaxe"
-	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick_hand"
-	digspeed = 30
+	toolspeed = 0.6
 	desc = "A smaller, more precise version of the pickaxe (30 centimetre excavation depth)."
 	excavation_amount = 15
-	drill_sound = 'sound/items/Crowbar.ogg'
+	usesound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
+
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)
-	var/ampr = copytext(reject_bad_text(input(user,"Excavation depth?","Set excavation depth","")),1,MAX_NAME_LEN)
-	excavation_amount = 0 + text2num(ampr)/2
+	var/ampr = input(user,"Excavation depth?","Set excavation depth","") as num
+	excavation_amount = 0 + ampr/2
 	desc = "A smaller, more precise version of the pickaxe ([ampr] centimetre excavation depth)."

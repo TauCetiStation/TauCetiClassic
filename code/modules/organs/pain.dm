@@ -28,13 +28,13 @@
 	if(burning)
 		switch(amount)
 			if(1 to 10)
-				msg = "\red <b>Your [partname] burns.</b>"
+				msg = "<span class='warning'><b>Your [partname] burns.</b></span>"
 			if(11 to 90)
 				flash_weak_pain()
-				msg = "\red <b><font size=2>Your [partname] burns badly!</font></b>"
+				msg = "<span class='warning'><b><font size=2>Your [partname] burns badly!</font></b></span>"
 			if(91 to 10000)
 				flash_pain()
-				msg = "\red <b><font size=3>OH GOD! Your [partname] is on fire!</font></b>"
+				msg = "<span class='warning'><b><font size=3>OH GOD! Your [partname] is on fire!</font></b></span>"
 	else
 		switch(amount)
 			if(1 to 10)
@@ -66,9 +66,9 @@
 		return
 	if(analgesic)
 		return
-	var/msg = "\red <b>[message]</b>"
+	var/msg = "<span class='warning'><b>[message]</b></span>"
 	if(flash_strength >= 1)
-		msg = "\red <font size=3><b>[message]</b></font>"
+		msg = "<span class='warning'><font size=3><b>[message]</b></font></span>"
 
 	// Anti message spam checks
 	if(msg && ((msg != last_pain_message) || (world.time >= next_pain_time)))
@@ -93,10 +93,7 @@
 	var/maxdam = 0
 	var/obj/item/organ/external/damaged_organ = null
 	for(var/obj/item/organ/external/BP in bodyparts)
-		// amputated limbs don't cause pain
-		if(BP.amputated)
-			continue
-		if(BP.status & ORGAN_DEAD)
+		if(BP.status & ORGAN_DEAD || BP.is_robotic())
 			continue
 		var/dam = BP.get_damage()
 		// make the choice of the organ depend on damage,

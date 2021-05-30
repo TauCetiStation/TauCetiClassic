@@ -3,7 +3,6 @@
 	desc = "This spell conjures objs of the specified types in range."
 
 	var/list/summon_type = list() //determines what exactly will be summoned
-	//should be text, like list("/obj/machinery/bot/secbot/ed209")
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
@@ -22,7 +21,7 @@
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-	playsound(loc, sound, 50, 1)
+	playsound(usr, sound, VOL_EFFECTS_MASTER)
 
 	if(do_after(usr,delay,target=usr))
 		if(deleting_previous)
@@ -30,7 +29,7 @@
 			for(var/atom/A in previous_objects)
 				qdel(A)
 				previous_objects -= A
-		for(var/i in 0 to summon_amt)
+		for(var/i in 1 to summon_amt)
 			if(!targets.len)
 				break
 			var/summoned_object_type = pick(summon_type)
@@ -104,9 +103,26 @@
 		return 1
 	return 0
 
+/obj/effect/forcefield/cult
+	name = "Blood Shield"
+	desc = "Like erythrocyte, the cells form a force barrier."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "cultshield"
+
+/obj/effect/forcefield/cult/alt_app
+	icon = null
+	icon_state = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/forcefield/cult/alt_app/atom_init()
+	. = ..()
+	var/image/I = image('icons/effects/effects.dmi', src, "cultshield")
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/holy_role, "cult_wall", I)
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
-	name = "Paralysing Smoke"
-	desc = "This spell spawns a cloud of paralysing smoke."
+	name = "Парализующий Дым"
+	desc = "Это заклинание создает парализующий дым."
 
 	school = "conjuration"
 	charge_max = 200
@@ -114,6 +130,9 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 1
+
+	action_icon_state = "rot"
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
@@ -128,7 +147,7 @@
 	name = "Harvester Toxin"
 	id = "harvester"
 	description = "A toxic cloud."
-	color = "#9C3636"
+	color = "#9c3636"
 	toxpwr = 0
 	custom_metabolism = 1
 

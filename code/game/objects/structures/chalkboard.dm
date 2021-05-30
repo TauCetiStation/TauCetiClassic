@@ -19,15 +19,15 @@
 	set desc = "Make HONK!"
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 
 	if(!ishuman(usr))
-		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(content)
-		to_chat(usr, "\blue The board is full! Clean it to write again.")
+		to_chat(usr, "<span class='notice'>The board is full! Clean it to write again.</span>")
 		return
 
 	add_fingerprint(usr)
@@ -40,23 +40,23 @@
 	set desc = "Don't stare, just write."
 	set category = "Object"
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 
 
 	if(!ishuman(usr))
-		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(content)
-		to_chat(usr, "\blue The board is full! Clean it to write again.")
+		to_chat(usr, "<span class='notice'>The board is full! Clean it to write again.</span>")
 		return
 
 	//part wrom paper/write
 	var/t =  input("What do you want to write here? 20 lines or 2000 symbols max.", "Write", null, null) as message
 
 	if(length(t) > 2048)
-		to_chat(usr, "\blue You can't post it all on board!")
+		to_chat(usr, "<span class='notice'>You can't post it all on board!</span>")
 		return
 
 	t = sanitize(replacetext(t, "\n", "\[br\]"))
@@ -64,18 +64,18 @@
 	// check for exploits
 	for(var/bad in paper_blacklist)
 		if(findtext(t,bad))
-			to_chat(usr, "\blue You think to yourself, \"Hm.. this is only chalkboard...\"")
+			to_chat(usr, "<span class='notice'>You think to yourself, \"Hm.. this is only chalkboard...\"</span>")
 			log_admin("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			message_admins("Chalkboard: [usr] tried to use forbidden word in [src]: [bad].")
 			return
 
 	//t = replacetext(t, "\n", "<BR>")
-	t = parsepencode(t) // Encode everything from pencode to html
+	t = parsebbcode(t) // Encode everything from pencode to html
 
 	if(!t)
 		return
 	if(count_occurrences(t, "<BR>") > 20)
-		to_chat(usr, "\blue You can't post it all on board!")
+		to_chat(usr, "<span class='notice'>You can't post it all on board!</span>")
 		return
 
 	content = t
@@ -92,11 +92,11 @@
 	set category = "Object"
 //	set src in usr
 
-	if (usr.stat != CONSCIOUS)
+	if (usr.incapacitated())
 		return
 
 	if(!ishuman(usr))
-		to_chat(usr, "\red You want, but you don't. You try, but you can't.")
+		to_chat(usr, "<span class='warning'>You want, but you don't. You try, but you can't.</span>")
 		return
 
 	if(status != CB_WET)
@@ -124,7 +124,7 @@
 		if(CB_CONTENT)
 			desc = "Something is written out there, you start reading..."
 			desc += "<HR>"
-			desc +=	content
+			desc +=	"<span class='emojify'>[content]</span>"
 			desc += "<HR>"
 			icon_state = "board_text[rand(1, 5)]"
 
@@ -132,27 +132,6 @@
 			desc = "Oh! Something offensive is written on a chalkboard!"
 			icon_state = "board_honk[rand(1, 5)]"
 			content = "HONK"
-
-/obj/structure/chalkboard/proc/parsepencode(t)
-
-	t = replacetext(t, "\[center\]", "<center>")
-	t = replacetext(t, "\[/center\]", "</center>")
-	t = replacetext(t, "\[br\]", "<BR>")
-	t = replacetext(t, "\[b\]", "<B>")
-	t = replacetext(t, "\[/b\]", "</B>")
-	t = replacetext(t, "\[i\]", "<I>")
-	t = replacetext(t, "\[/i\]", "</I>")
-	t = replacetext(t, "\[u\]", "<U>")
-	t = replacetext(t, "\[/u\]", "</U>")
-	t = replacetext(t, "\[large\]", "<font size=\"4\">")
-	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[*\]", "<li>")
-	t = replacetext(t, "\[small\]", "<font size = \"1\">")
-	t = replacetext(t, "\[/small\]", "</font>")
-	t = replacetext(t, "\[list\]", "<ul>")
-	t = replacetext(t, "\[/list\]", "</ul>")
-
-	return t
 
 /obj/structure/chalkboard/proc/count_occurrences(string, substring)
 	var/count = 0

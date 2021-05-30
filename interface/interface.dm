@@ -23,57 +23,61 @@
 
 	var/hotkey_mode = {"<font color='purple'>
 Hotkey-Mode: (hotkey-mode must be on)
-\tTAB = toggle hotkey-mode
-\ta = left
-\ts = down
-\td = right
-\tw = up
-\tq = drop
-\te = equip
-\tr = throw
-\tt = say
-\tx = swap-hand
-\tz = activate held object (or y)
-\tf = cycle-intents-left
-\tg = cycle-intents-right
-\t1 = help-intent
-\t2 = disarm-intent
-\t3 = grab-intent
-\t4 = harm-intent
+\t TAB = toggle hotkey-mode
+\t a = left
+\t s = down
+\t d = right
+\t w = up
+\t q = drop
+\t e = equip
+\t r = throw
+\t t = say
+\t h = holder/unholder
+\t x = swap-hand
+\t z = click on held object (or y)
+\t b = click on self
+\t f = cycle-intents-left
+\t g = cycle-intents-right
+\t 1 = help-intent
+\t 2 = disarm-intent
+\t 3 = grab-intent
+\t 4 = harm-intent
 </font>"}
 
 	var/other = {"<font color='purple'>
 Any-Mode: (hotkey doesn't need to be on)
-\tCtrl+a = left
-\tCtrl+s = down
-\tCtrl+d = right
-\tCtrl+w = up
-\tCtrl+q = drop
-\tCtrl+e = equip
-\tCtrl+r = throw
-\tCtrl+x = swap-hand
-\tCtrl+z = activate held object (or Ctrl+y)
-\tCtrl+f = cycle-intents-left
-\tCtrl+g = cycle-intents-right
-\tCtrl+1 = help-intent
-\tCtrl+2 = disarm-intent
-\tCtrl+3 = grab-intent
-\tCtrl+4 = harm-intent
-\tDEL = pull
-\tINS = cycle-intents-right
-\tHOME = drop
-\tPGUP = swap-hand
-\tPGDN = activate held object
-\tEND = throw
+\t Ctrl+a = left
+\t Ctrl+s = down
+\t Ctrl+d = right
+\t Ctrl+w = up
+\t Ctrl+q = drop
+\t Ctrl+e = equip
+\t Ctrl+r = throw
+\t Ctrl+h = holder/unholder
+\t Ctrl+x = swap-hand
+\t Ctrl+z = click on held object (or Ctrl+y)
+\t Ctrl+b = click on self
+\t Ctrl+f = cycle-intents-left
+\t Ctrl+g = cycle-intents-right
+\t Ctrl+1 = help-intent
+\t Ctrl+2 = disarm-intent
+\t Ctrl+3 = grab-intent
+\t Ctrl+4 = harm-intent
+\t DEL = pull
+\t INS = cycle-intents-right
+\t HOME = drop
+\t PGUP = swap-hand
+\t PGDN = click on held object
+\t END = throw
 </font>"}
 
 	var/admin = {"<font color='purple'>
 Admin:
-\tF5 = Asay
-\tF6 = player-panel-new
-\tF7 = admin-pm
-\tF8 = Invisimin
-\tF9 = Mentorhelp
+\t F5 = Asay
+\t F6 = player-panel-new
+\t F7 = admin-pm
+\t F8 = Invisimin
+\t F9 = Mentorhelp
 </font>"}
 
 	to_chat(src, hotkey_mode)
@@ -81,33 +85,37 @@ Admin:
 	if(holder)
 		to_chat(src, admin)
 
+
+/client/verb/reportissue()
+	set name = "report-issue"
+	set desc = "Report an issue"
+	set hidden = 1
+
+	var/githuburl = config.repository_link
+	if(!githuburl)
+		to_chat(src, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")
+		return
+
+	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+	if(alert(message, "Report Issue", "Yes", "No") != "Yes")
+		return
+	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
+	var/servername = config.server_name
+	var/url_params = "[issue_template]"
+	if(global.round_id || config.server_name)
+		url_params += "Issue reported from [global.round_id ? " Round ID: [global.round_id][servername ? " ([servername])" : ""]" : servername]\n"
+	url_params += "Testmerges: ```[test_merges ? test_merges : "No test merges"]```\n"
+	url_params += "Reporting client version: [byond_version].[byond_build]\n"
+	DIRECT_OUTPUT(src, link("[githuburl]/issues/new?body=[url_encode(url_params)]"))
+
+	return
+
 /client/verb/changes()
 	set name = "Changelog"
 	set desc = "View the changelog."
 	set hidden = 1
 
-	getFiles(
-		'html/assets/images/icons/BugFix.png',
-		'html/assets/images/icons/CircledPlus.png',
-		'html/assets/images/icons/CircledMinus.png',
-		'html/assets/images/icons/Picture.png',
-		'html/assets/images/icons/Sound.png',
-		'html/assets/images/icons/SpellCheck.png',
-		'html/assets/images/icons/Wrench.png',
-		'html/assets/images/icons/Performance.png',
-		'html/assets/images/icons/NukeBurn.png',
-		'html/assets/images/icons/Balance.png',
-		'html/assets/images/icons/Map.png',
-		'html/assets/images/space.png',
-		'html/assets/css/bootstrap.min.css',
-		'html/assets/css/changelog.css',
-		'html/assets/scripts/jquery-3.2.1.min.js',
-		'html/assets/scripts/bootstrap.min.js',
-		'html/assets/scripts/changelog.js',
-		'html/changelog.html'
-	)
-
-	src << browse('html/changelog.html', "window=changes;size=675x650")
+	link_with_alert(src, config.changelog_link)
 
 	if(prefs.lastchangelog != changelog_hash)
 		prefs.lastchangelog = changelog_hash

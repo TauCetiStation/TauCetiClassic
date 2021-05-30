@@ -1,10 +1,10 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/operating
 	name = "Operating Computer"
 	density = 1
 	anchored = 1.0
 	icon_state = "operating"
+	state_broken_preset = "crewb"
+	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
 	circuit = /obj/item/weapon/circuitboard/operating
 	var/mob/living/carbon/human/victim = null
@@ -12,9 +12,9 @@
 
 /obj/machinery/computer/operating/atom_init()
 	. = ..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-		table = locate(/obj/machinery/optable, get_step(src, dir))
-		if (table)
+	for(var/newdir in cardinal)
+		table = locate(/obj/machinery/optable, get_step(src, newdir))
+		if(table)
 			table.computer = src
 			break
 
@@ -25,8 +25,7 @@
 			user << browse(null, "window=op")
 			return
 
-	var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[user];mach_close=op'>Close</A><br><br>" //| <A HREF='?src=\ref[user];update=1'>Update</A>"
+	var/dat = ""
 	if(src.table && (src.table.check_victim()))
 		src.victim = src.table.victim
 		dat += {"
@@ -51,8 +50,10 @@
 			<BR>
 			<B>No Patient Detected</B>
 			"}
-	user << browse(entity_ja(dat), "window=op")
-	onclose(user, "op")
+
+	var/datum/browser/popup = new(user, "window=op", "Operating Computer")
+	popup.set_content(dat)
+	popup.open()
 
 /obj/machinery/computer/operating/process()
 	if(..())

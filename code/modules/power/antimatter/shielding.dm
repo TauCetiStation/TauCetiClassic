@@ -1,5 +1,5 @@
 //like orange but only checks north/south/east/west for one step
-proc/cardinalrange(center)
+/proc/cardinalrange(center)
 	var/list/things = list()
 	for(var/direction in cardinal)
 		var/turf/T = get_step(center, direction)
@@ -16,7 +16,7 @@ proc/cardinalrange(center)
 	anchored = 1
 	density = 1
 	dir = 1
-	use_power = 0//Living things generally dont use power
+	use_power = NO_POWER_USE//Living things generally dont use power
 	idle_power_usage = 0
 	active_power_usage = 0
 
@@ -68,7 +68,7 @@ proc/cardinalrange(center)
 /obj/machinery/am_shielding/Destroy()
 	if(control_unit)	control_unit.remove_shielding(src)
 	if(processing)	shutdown_core()
-	visible_message("\red The [src.name] melts!")
+	visible_message("<span class='warning'>The [src.name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
 	return ..()
 
@@ -122,14 +122,14 @@ proc/cardinalrange(center)
 
 
 /obj/machinery/am_shielding/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/direction in alldirs)
 		var/machine = locate(/obj/machinery, get_step(loc, direction))
 		if((istype(machine, /obj/machinery/am_shielding) && machine:control_unit == control_unit)||(istype(machine, /obj/machinery/power/am_control_unit) && machine == control_unit))
-			overlays += "shield_[direction]"
+			add_overlay("shield_[direction]")
 
 	if(core_check())
-		overlays += "core"
+		add_overlay("core")
 		if(!processing) setup_core()
 	else if(processing) shutdown_core()
 
@@ -205,18 +205,16 @@ proc/cardinalrange(center)
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "box"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
 	m_amt = 100
-	w_amt = 2000
 
-/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
-		new/obj/machinery/am_shielding(src.loc)
+/obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
+	if(ismultitool(I) && istype(loc, /turf))
+		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 		return
-	..()
-	return
+	return ..()

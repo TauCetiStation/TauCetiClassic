@@ -43,7 +43,8 @@
 		new /obj/item/weapon/caution(src)
 	new /obj/item/device/lightreplacer(src)
 	new /obj/item/weapon/storage/bag/trash(src)
-	new /obj/item/clothing/shoes/galoshes(src)
+	new /obj/item/clothing/shoes/boots/galoshes(src)
+	new /obj/item/weapon/storage/pouch/small_generic(src) // Because I feel like poor janitor gets it bad.
 
 /*
  * Lawyer
@@ -88,13 +89,13 @@
 			new /obj/item/clothing/under/gimmick/rank/captain/suit(src)
 			new /obj/item/clothing/head/flatcap(src)
 			new /obj/item/clothing/mask/cigarette/cigar/havana(src)
-			new /obj/item/clothing/shoes/jackboots(src)
+			new /obj/item/clothing/shoes/boots(src)
 		if (5)
 			new /obj/item/clothing/under/schoolgirl(src)
 			new /obj/item/clothing/head/kitty(src)
 		if (6)
 			new /obj/item/clothing/under/blackskirt(src)
-			var/choice = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
+			var/choice = pick(/obj/item/clothing/head/chep, /obj/item/clothing/head/rabbitears)
 			new choice(src)
 			new /obj/item/clothing/glasses/sunglasses/blindfold(src)
 		if (7)
@@ -109,7 +110,7 @@
 				new /obj/item/clothing/head/cueball(src)
 		if (9)
 			new /obj/item/clothing/under/kilt(src)
-			new /obj/item/clothing/head/beret(src)
+			new /obj/item/clothing/head/beret/red(src)
 		if (10)
 			new /obj/item/clothing/suit/wcoat(src)
 			new /obj/item/clothing/glasses/monocle(src)

@@ -5,13 +5,13 @@
 
 	var/spell_type = null
 	var/desc = ""
-	var/category = "Offensive"
+	var/category = "Нападение"
 	var/log_name = "XX" //What it shows up as in logs
 	var/cost = 2
 	var/refundable = 1
 	var/surplus = -1 // -1 for infinite, not used by anything atm
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
-	var/buy_word = "Learn"
+	var/buy_word = "Выучить"
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
@@ -29,7 +29,7 @@
 		S = new spell_type()
 	feedback_add_details("wizard_spell_learned",log_name)
 	user.AddSpell(S)
-	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
+	to_chat(user, "<span class='notice'>Вы выучили [S.name].</span>")
 	return 1
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
@@ -43,16 +43,14 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	if(!istype(get_area(user), /area/wizard_station))
-		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
+	if(!istype(get_area(user), /area/custom/wizard_station))
+		to_chat(user, "<span clas=='warning'>Вернуть очки можно только в убежище.</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
 	for(var/obj/effect/proc_holder/spell/aspell in user.spell_list)
 		if(initial(S.name) == initial(aspell.name))
-			user.spell_list -= aspell
-			user.mind.spell_list -= aspell
-			qdel(aspell)
+			user.RemoveSpell(aspell)
 			qdel(S)
 			return cost
 	return -1
@@ -62,119 +60,119 @@
 	var/dat =""
 	dat += "<b>[initial(S.name)]</b>"
 	if(S.charge_type == "recharge")
-		dat += " Cooldown:[S.charge_max / 10]"
-	dat += " Cost:[cost]<br>"
+		dat += " Перезарядка: [S.charge_max / 10]"
+	dat += " Стоимость: [cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
-	dat += "[S.clothes_req ? "Needs wizard garb" : "Can be cast without wizard garb"]<br>"
+	dat += "[S.clothes_req ? "Нужна магическая одежда" : "Можно колдовать без одежды"]<br>"
 	return dat
 
 /datum/spellbook_entry/fireball
-	name = "Fireball"
+	name = "Огненный шар"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/res_touch
-	name = "Resurrection"
+	name = "Воскрешение"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/res_touch
 	log_name = "RT"
-	category = "Defensive"
+	category = "Оборона"
 	cost = 1
 
 /datum/spellbook_entry/heal_touch
-	name = "Heal"
+	name = "Лечение"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/heal
 	log_name = "HT"
-	category = "Defensive"
+	category = "Оборона"
 
 /datum/spellbook_entry/magicm
-	name = "Magic Missile"
+	name = "Магическая ракета"
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	log_name = "MM"
-	category = "Defensive"
+	category = "Оборона"
 
 /datum/spellbook_entry/disabletech
-	name = "Disable Tech"
+	name = "Отключить технологию"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	log_name = "DT"
-	category = "Defensive"
+	category = "Оборона"
 
 /datum/spellbook_entry/repulse
-	name = "Repulse"
+	name = "Репульс"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
 	log_name = "RP"
-	category = "Defensive"
+	category = "Оборона"
 
 /datum/spellbook_entry/timestop
-	name = "Time Stop"
+	name = "Остановка времени"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	log_name = "TS"
-	category = "Defensive"
+	category = "Оборона"
 	cost = 3
 
 /datum/spellbook_entry/smoke
-	name = "Smoke"
+	name = "Дым"
 	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
 	log_name = "SM"
-	category = "Defensive"
+	category = "Оборона"
 	cost = 1
 
 /datum/spellbook_entry/blind
-	name = "Blind"
+	name = "Ослепление"
 	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
 	log_name = "BD"
 
 /datum/spellbook_entry/mindswap
-	name = "Mindswap"
+	name = "Обмен разумом"
 	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
 	log_name = "MT"
-	category = "Mobility"
+	category = "Мобильность"
 
 /datum/spellbook_entry/forcewall
-	name = "Force Wall"
+	name = "Магическая стена"
 	spell_type = /obj/effect/proc_holder/spell/targeted/forcewall
 	log_name = "FW"
-	category = "Defensive"
+	category = "Оборона"
 	cost = 1
 
 /datum/spellbook_entry/blink
-	name = "Blink"
+	name = "Скачок"
 	spell_type = /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	log_name = "BL"
-	category = "Mobility"
+	category = "Мобильность"
 
 /datum/spellbook_entry/teleport
-	name = "Teleport"
+	name = "Телепорт"
 	spell_type = /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	log_name = "TP"
-	category = "Mobility"
+	category = "Мобильность"
 
 /datum/spellbook_entry/mutate
-	name = "Mutate"
+	name = "Мутация"
 	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	log_name = "MU"
 
 /datum/spellbook_entry/jaunt
-	name = "Ethereal Jaunt"
+	name = "Выход из тела"
 	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
 	log_name = "EJ"
-	category = "Mobility"
+	category = "Мобильность"
 
 /datum/spellbook_entry/knock
-	name = "Knock"
+	name = "Стук"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/knock
 	log_name = "KN"
-	category = "Mobility"
+	category = "Мобильность"
 	cost = 1
 
 /datum/spellbook_entry/summonitem
-	name = "Summon Item"
+	name = "Призвать предмет"
 	spell_type = /obj/effect/proc_holder/spell/targeted/summonitem
 	log_name = "IS"
-	category = "Assistance"
+	category = "Помощь"
 	cost = 1
 
 /datum/spellbook_entry/lightningbolt
-	name = "Lightning Bolt"
+	name = "Шаровая молния"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/tesla
 	log_name = "LB"
 	cost = 3
@@ -189,48 +187,60 @@
 		user.tesla_ignore = FALSE
 
 /datum/spellbook_entry/arcane_barrage
-	name = "Arcane Barrage"
+	name = "Чародейский обстрел"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/arcane_barrage
 	log_name = "AB"
 	cost = 3
 
 /datum/spellbook_entry/barnyard
-	name = "Barnyard Curse"
+	name = "Скотоклятье"
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	log_name = "BC"
 
+/datum/spellbook_entry/gnomecurse
+	name = "Гномий дар"
+	spell_type = /obj/effect/proc_holder/spell/targeted/gnomecurse
+	log_name = "GC"
+
 /datum/spellbook_entry/lighting_shock
-	name = "Lighting Shock"
+	name = "Электрический шок"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lighting_shock
 	log_name = "LS"
 
 /datum/spellbook_entry/charge
-	name = "Charge"
+	name = "Заряд"
 	spell_type = /obj/effect/proc_holder/spell/targeted/charge
 	log_name = "CH"
-	category = "Assistance"
+	category = "Помощь"
 	cost = 1
 
 /datum/spellbook_entry/spacetime_dist
-	name = "Spacetime Distortion"
+	name = "Искажение пространства-времени"
 	spell_type = /obj/effect/proc_holder/spell/targeted/spacetime_dist
 	log_name = "STD"
-	category = "Defensive"
+	category = "Оборона"
 	cost = 1
 
 /datum/spellbook_entry/the_traps
-	name = "The Traps!"
+	name = "Ловушки!"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
 	log_name = "TT"
-	category = "Offensive"
+	category = "Нападение"
 
 /datum/spellbook_entry/item
-	name = "Buy Item"
+	name = "Купить предмет"
 	refundable = 0
-	buy_word = "Summon"
+	buy_word = "Призвать"
 	var/item_path= null
 
+/datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
+	. = ..()
+	if(.)
+		return surplus != 0
+
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(surplus > 0)
+		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
 	return 1
@@ -238,49 +248,51 @@
 /datum/spellbook_entry/item/GetInfo()
 	var/dat =""
 	dat += "<b>[name]</b>"
-	dat += " Cost:[cost]<br>"
+	dat += " Стоимость: [cost]<br>"
 	dat += "<i>[desc]</i><br>"
 	if(surplus >= 0)
-		dat += "[surplus] left.<br>"
+		dat += "[surplus] осталось.<br>"
 	return dat
 
+/* Commented because admins ban everyone who uses this staff... Somebody should rebalance this thing
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
-	item_path = /obj/item/weapon/gun/magic/staff/change
+	item_path = /obj/item/weapon/gun/magic/change
 	log_name = "ST"
 	cost = 4
+*/
 
 /datum/spellbook_entry/item/staffanimation
-	name = "Staff of Animation"
-	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
-	item_path = /obj/item/weapon/gun/magic/staff/animate
+	name = "Посох анимации"
+	desc = "Магический посох, стреляющий болтами энергии древних, которые оживляют неодушевленные предметы. Магия не затрагивает машины."
+	item_path = /obj/item/weapon/gun/magic/animate
 	log_name = "SA"
-	category = "Assistance"
+	category = "Помощь"
 	cost = 3
 
 /datum/spellbook_entry/item/staffdoor
-	name = "Staff of Door Creation"
-	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
-	item_path = /obj/item/weapon/gun/magic/staff/doorcreation
+	name = "Посох создания дверей"
+	desc = "Специфичный посох, который может превращать твердые стены в двери. Плоезно с заклинаниями телепорта. Не работает со стеклом."
+	item_path = /obj/item/weapon/gun/magic/doorcreation
 	log_name = "SD"
-	category = "Mobility"
+	category = "Мобильность"
 	cost = 3
 
 /datum/spellbook_entry/item/staffhealing
-	name = "Staff of Healing"
-	desc = "An altruistic staff that can heal the lame and raise the dead."
-	item_path = /obj/item/weapon/gun/magic/staff/healing
+	name = "Посох лечения"
+	desc = "Посох, способный лечить больных и оживлять мертвых."
+	item_path = /obj/item/weapon/gun/magic/healing
 	log_name = "SH"
-	category = "Defensive"
+	category = "Оборона"
 	cost = 4
 
 /datum/spellbook_entry/item/soulstones
-	name = "Six Soul Stone Shards and the spell Artificer"
-	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
+	name = "Шесть осколков камня душ и заклинание ремесленника"
+	desc = "Осколки камня душ это древний инструмент, способный захватить и содержать в себе душу. Заклинание ремесленника позволяет создать тело для захваченой души."
 	item_path = /obj/item/weapon/storage/belt/soulstone/full
 	log_name = "SS"
-	category = "Assistance"
+	category = "Помощь"
 
 /datum/spellbook_entry/item/soulstones/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. =..()
@@ -289,19 +301,19 @@
 	return .
 
 /datum/spellbook_entry/item/necrostone
-	name = "A Necromantic Stone"
-	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
+	name = "Камень некромантии"
+	desc = "Камень некромантии позволяет оживить до трех мертвецов в виде скелетов, которыми вы можете командовать."
 	item_path = /obj/item/device/necromantic_stone
 	log_name = "NS"
-	category = "Assistance"
+	category = "Помощь"
 	cost = 3
 
 /datum/spellbook_entry/item/armor
-	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+	name = "Набор мастерской брони"
+	desc = "Набор замечательной брони, которая позволит вам колдовать и защитит от опасности как в виде людей, так и в виде космоса."
 	item_path = /obj/item/clothing/suit/space/rig/wizard
 	log_name = "HS"
-	category = "Defensive"
+	category = "Оборона"
 
 /datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
@@ -310,11 +322,11 @@
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/contract
-	name = "Contract of Apprenticeship"
-	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
+	name = "Контракт ученичества"
+	desc = "Магический контракт, что связывает учителя и ученика."
 	item_path = /obj/item/weapon/contract
 	log_name = "CT"
-	category = "Assistance"
+	category = "Помощь"
 	cost = CONTRACT_PRICE
 
 /datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
@@ -323,6 +335,15 @@
 	feedback_add_details("wizard_spell_learned",log_name)
 	return 1
 
+/datum/spellbook_entry/item/tophat
+	name = "Шляпа Wabbajack"
+	desc = "Магическая шляпа с собственным шляпным измерением."
+	item_path = /obj/item/clothing/head/wizard/tophat
+	log_name = "TH"
+	category = "Помощь"
+	refundable = FALSE
+	cost = 1
+	surplus = 1
 
 /*datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
@@ -341,7 +362,7 @@
 	cost = 1*/
 
 /datum/spellbook_entry/summon
-	name = "Summon Stuff"
+	name = "Призвать посох"
 	category = "Rituals"
 	refundable = 0
 	buy_word = "Cast"
@@ -354,21 +375,21 @@
 	var/dat =""
 	dat += "<b>[name]</b>"
 	if(cost > 0)
-		dat += " Cost:[cost]<br>"
+		dat += " Стоимость: [cost]<br>"
 	else
-		dat += " No Cost<br>"
+		dat += " Бесплатно<br>"
 	dat += "<i>[desc]</i><br>"
 	if(active)
-		dat += "<b>Already cast!</b><br>"
+		dat += "<b>Уже есть!</b><br>"
 	return dat
 
 /datum/spellbook_entry/summon/IsAvailible()
-	return ticker.mode // In case spellbook is placed on map
+	return SSticker.mode // In case spellbook is placed on map
 
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
 	var/uses = 10
@@ -402,40 +423,46 @@
 
 
 
-/obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/contract))
-		var/obj/item/weapon/contract/contract = O
+/obj/item/weapon/spellbook/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/contract))
+		var/obj/item/weapon/contract/contract = I
 		if(contract.uses != initial(contract.uses))
-			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
+			to_chat(user, "<span class='warning'>Контракт был использован, Вы не можете вернуть очки!</span>")
 		else
-			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
+			to_chat(user, "<span class='notice'>Вы скормили контракт обратно книге. Очки возвращены.</span>")
 			uses += CONTRACT_PRICE
-			qdel(O)
+			qdel(I)
+	else
+		return ..()
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""
 	switch(category)
-		if("Offensive")
-			dat += "Spells and items geared towards debilitating and destroying.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-		if("Defensive")
-			dat += "Spells and items geared towards improving your survivabilty or reducing foes' ability to attack.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-		if("Mobility")
-			dat += "Spells and items geared towards improving your ability to move. It is a good idea to take at least one.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
-		if("Assistance")
-			dat += "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilties.<BR><BR>"
-			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
-			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
+		if("Нападение")
+			dat += "Заклинания и предметы, направленные на разрушение.<BR><BR>"
+			dat += "Предметы не привязаны к вам и могут быть украдены.<BR>" 
+			dat += "Также их нельзя вернуть после покупки.<BR>"
+			dat += "Для заклинаний: Число после названия заклинания это время перезарядки.<BR>"
+		if("Оборона")
+			dat += "Заклинания, направленные на повышение вашей выживаемости или уменьшение выживаемости противника.<BR><BR>"
+			dat += "Предметы не привязаны к вам и могут быть украдены.<BR>" 
+			dat += "Также их нельзя вернуть после покупки.<BR>"
+			dat += "Для заклинаний: Число после названия заклинания это время перезарядки.<BR>"
+		if("Мобильность")
+			dat += "Заклинания и предметы, направленные на улучшение вашей способности перемещаться. Стоит попробовать хотя бы раз.<BR><BR>"
+			dat += "Предметы не привязаны к вам и могут быть украдены.<BR>" 
+			dat += "Также их нельзя вернуть после покупки.<BR>"
+			dat += "Для заклинаний: Число после названия заклинания это время перезарядки.<BR>"
+		if("Помощь")
+			dat += "Заклинания и предметы призывающие потусторонние силы для помощи вам или улучшения ваших способностей.<BR><BR>"
+			dat += "Предметы не привязаны к вам и могут быть украдены.<BR>" 
+			dat += "Также их нельзя вернуть после покупки.<BR>"
+			dat += "Для заклинаний: Число после названия заклинания это время перезарядки.<BR>"
 	return dat
 
 /obj/item/weapon/spellbook/proc/wrap(content)
 	var/dat = ""
-	dat +="<html><head><title>Spellbook</title></head>"
+	dat +="<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>Spellbook</title></head>"
 	dat += {"
 	<head>
 		<style type="text/css">
@@ -455,11 +482,11 @@
 
 /obj/item/weapon/spellbook/attack_self(mob/user)
 	if(!owner)
-		to_chat(user, "<span class='notice'>You bind the spellbook to yourself.</span>")
+		to_chat(user, "<span class='notice'>Вы привязали книгу к себе.</span>")
 		owner = user.mind
 		return
 	if(user.mind != owner)
-		to_chat(user, "<span class='warning'>The [name] does not recognize you as its owner and refuses to open!</span>")
+		to_chat(user, "<span class='warning'>[name] не распознала вас как владельца и отказывается открываться!</span>")
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -470,7 +497,7 @@
 		cat_dat[category] = "<hr>"
 		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=\ref[src];page=[category]'>[category]</a></li>"
 
-	dat += "<li><a><b>Points remaining : [uses]</b></a></li>"
+	dat += "<li><a><b>Оставшиеся очки: [uses]</b></a></li>"
 	dat += "</ul>"
 
 	var/datum/spellbook_entry/E
@@ -481,9 +508,9 @@
 		if(E.CanBuy(user,src))
 			spell_info+= "<a href='byond://?src=\ref[src];buy=[i]'>[E.buy_word]</A><br>"
 		else
-			spell_info+= "<span>Can't [E.buy_word]</span><br>"
+			spell_info+= "<span>Нельзя [E.buy_word]</span><br>"
 		if(E.CanRefund(user,src))
-			spell_info+= "<a href='byond://?src=\ref[src];refund=[i]'>Refund</A><br>"
+			spell_info+= "<a href='byond://?src=\ref[src];refund=[i]'>Вернуть</A><br>"
 		spell_info += "<hr>"
 		if(cat_dat[E.category])
 			cat_dat[E.category] += spell_info
@@ -494,7 +521,7 @@
 		dat += cat_dat[category]
 		dat += "</div>"
 
-	user << browse(wrap(entity_ja(dat)), "window=spellbook;size=700x500")
+	user << browse(wrap(dat), "window=spellbook;size=700x500")
 	onclose(user, "spellbook")
 	return
 
@@ -504,7 +531,7 @@
 		return 1
 	var/mob/living/carbon/human/H = usr
 
-	if(H.stat || H.restrained())
+	if(H.incapacitated())
 		return
 
 	var/datum/spellbook_entry/E = null

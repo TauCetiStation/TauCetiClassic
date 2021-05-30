@@ -1,36 +1,30 @@
-/obj/screen/alien
+/obj/screen/xenomorph
 	icon = 'icons/mob/screen1_xeno.dmi'
 
-/obj/screen/alien/leap
+/obj/screen/xenomorph/leap
 	name = "toggle leap"
 	icon_state = "leap_off"
 
-/obj/screen/alien/leap/Click()
-	if(istype(usr, /mob/living/carbon/alien/humanoid))
-		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
+/obj/screen/xenomorph/leap/Click()
+	if(istype(usr, /mob/living/carbon/xenomorph/humanoid))
+		var/mob/living/carbon/xenomorph/humanoid/hunter/AH = usr
 		AH.toggle_leap()
 
-/obj/screen/alien/nightvision
+/obj/screen/xenomorph/nightvision
 	name = "toggle night-vision"
 	icon_state = "nightvision1"
 
-/obj/screen/alien/nightvision/Click()
-	if(istype(usr, /mob/living/carbon/alien/))
-		var/mob/living/carbon/alien/A = usr
+/obj/screen/xenomorph/nightvision/Click()
+	if(istype(usr, /mob/living/carbon/xenomorph))
+		var/mob/living/carbon/xenomorph/A = usr
 		A.toggle_nvg()
 
-/*/obj/screen/alien/nightvision/Click()
-	var/mob/living/carbon/alien/A = usr
-	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
-	if(T)
-		T.fire(A)*/
-
-/obj/screen/alien/neurotoxin
+/obj/screen/xenomorph/neurotoxin
 	name = "toggle neurotoxin"
 	icon_state = "neurotoxin0"
 
-/obj/screen/alien/neurotoxin/Click()
-	var/mob/living/carbon/alien/humanoid/AH = usr
+/obj/screen/xenomorph/neurotoxin/Click()
+	var/mob/living/carbon/xenomorph/humanoid/AH = usr
 	AH.toggle_neurotoxin()
 
 /datum/hud/proc/alien_hud()
@@ -43,9 +37,9 @@
 
 	using = new /obj/screen()
 	using.name = "act_intent"
-	using.dir = SOUTHWEST
+	using.set_dir(SOUTHWEST)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
-	using.icon_state = (mymob.a_intent == "hurt" ? "harm" : mymob.a_intent)
+	using.icon_state = "intent_" + mymob.a_intent
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
@@ -59,7 +53,7 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
 	using = new /obj/screen( src )
-	using.name = "help"
+	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
@@ -71,19 +65,19 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
 	using = new /obj/screen( src )
-	using.name = "disarm"
+	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
-	disarm_intent = using
+	push_intent = using
 
 	ico = new('icons/mob/screen1_xeno.dmi', "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
 	using = new /obj/screen( src )
-	using.name = "grab"
+	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
@@ -95,19 +89,19 @@
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
 	using = new /obj/screen( src )
-	using.name = "harm"
+	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE
 	src.adding += using
-	hurt_intent = using
+	harm_intent = using
 
 //end intent small hud objects
 
 	using = new /obj/screen()
 	using.name = "mov_intent"
-	using.dir = SOUTHWEST
+	using.set_dir(SOUTHWEST)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
@@ -127,7 +121,7 @@
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "r_hand"
-	inv_box.dir = WEST
+	inv_box.set_dir(WEST)
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
 	inv_box.icon_state = "hand_r_inactive"
 	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
@@ -135,13 +129,13 @@
 	inv_box.screen_loc = ui_rhand
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = slot_r_hand
+	inv_box.slot_id = SLOT_R_HAND
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "l_hand"
-	inv_box.dir = EAST
+	inv_box.set_dir(EAST)
 	inv_box.icon = 'icons/mob/screen1_xeno.dmi'
 	inv_box.icon_state = "hand_l_inactive"
 	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
@@ -149,13 +143,13 @@
 	inv_box.screen_loc = ui_lhand
 	inv_box.layer = HUD_LAYER
 	inv_box.plane = HUD_PLANE
-	inv_box.slot_id = slot_l_hand
+	inv_box.slot_id = SLOT_L_HAND
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 
 	using = new /obj/screen/inventory()
 	using.name = "hand"
-	using.dir = SOUTH
+	using.set_dir(SOUTH)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
@@ -165,7 +159,7 @@
 
 	using = new /obj/screen/inventory()
 	using.name = "hand"
-	using.dir = SOUTH
+	using.set_dir(SOUTH)
 	using.icon = 'icons/mob/screen1_xeno.dmi'
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
@@ -173,7 +167,7 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	mymob.nightvisionicon = new /obj/screen/alien/nightvision()
+	mymob.nightvisionicon = new /obj/screen/xenomorph/nightvision()
 	mymob.nightvisionicon.screen_loc = ui_alien_nightvision
 	src.adding += mymob.nightvisionicon
 
@@ -186,13 +180,13 @@
 	using.plane = HUD_PLANE
 	src.adding += using
 
-	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
-		mymob.leap_icon = new /obj/screen/alien/leap()
+	if(istype(mymob, /mob/living/carbon/xenomorph/humanoid/hunter))
+		mymob.leap_icon = new /obj/screen/xenomorph/leap()
 		mymob.leap_icon.screen_loc = ui_storage2
 		src.adding += mymob.leap_icon
 
-	if(locate(/mob/living/carbon/alien/humanoid/proc/neurotoxin) in mymob.verbs)
-		mymob.neurotoxin_icon = new /obj/screen/alien/neurotoxin()
+	if(locate(/mob/living/carbon/xenomorph/humanoid/proc/neurotoxin) in mymob.verbs)
+		mymob.neurotoxin_icon = new /obj/screen/xenomorph/neurotoxin()
 		mymob.neurotoxin_icon.screen_loc = ui_storage1
 		src.adding += mymob.neurotoxin_icon
 
@@ -202,11 +196,13 @@
 	mymob.throw_icon.name = "throw"
 	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	mymob.alien_plasma_display = new /obj/screen()
-	mymob.alien_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.alien_plasma_display.icon_state = "power_display3"
-	mymob.alien_plasma_display.name = "plasma stored"
-	mymob.alien_plasma_display.screen_loc = ui_alienplasmadisplay
+	mymob.xenomorph_plasma_display = new /obj/screen()
+	mymob.xenomorph_plasma_display.icon = 'icons/mob/screen1_xeno.dmi'
+	mymob.xenomorph_plasma_display.icon_state = "power_display3"
+	mymob.xenomorph_plasma_display.name = "plasma stored"
+	mymob.xenomorph_plasma_display.screen_loc = ui_alienplasmadisplay
+	var/mob/living/carbon/xenomorph/X = mymob
+	X.updatePlasmaDisplay()
 
 	mymob.healths = new /obj/screen()
 	mymob.healths.icon = 'icons/mob/screen1_xeno.dmi'
@@ -221,11 +217,11 @@
 
 	mymob.zone_sel = new /obj/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_xeno.dmi'
-	mymob.zone_sel.overlays.Cut()
-	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+	mymob.zone_sel.cut_overlays()
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.alien_plasma_display, mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.healths, mymob.xenomorph_plasma_display, mymob.pullin) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 	mymob.client.screen += mymob.client.void

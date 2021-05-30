@@ -3,6 +3,8 @@
 	bruteloss += brute
 	fireloss += burn
 
+	updatehealth()
+
 /mob/living/silicon/robot/drone/heal_overall_damage(brute, burn)
 
 	bruteloss -= brute

@@ -10,8 +10,8 @@
 
 	var/turf/T = get_turf(usr)
 
-	message_admins("\blue [key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
-	log_admin("[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z]")
+	message_admins("<span class='notice'>[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [COORD(T)] [ADMIN_JMP(T)]</span>")
+	log_admin("[key_name(usr)] creates the [side_x]x[side_y] asteroid on [COORD(T)]")
 
 	var/datum/map_template/asteroid = new(map = generate_asteroid_mapfile(side_x, side_y))
 
@@ -21,10 +21,10 @@
 
 	for(var/mob/M in player_list)
 		if(M.z == T.z)
-			M << sound('sound/effects/Explosion3.ogg')
+			M.playsound_local(null, 'sound/effects/Explosion3.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	//shake the station!
-	for(var/mob/living/carbon/C in mob_list)
+	for(var/mob/living/carbon/C in carbon_list)
 		if(C.z == T.z)
 			if(C.buckled)
 				shake_camera(C, 4, 1)
@@ -40,7 +40,7 @@
 			targetAtoms += A
 
 	for(var/atom/movable/M in targetAtoms)
-		if(istype(M, /obj/machinery/atmospherics/) || istype(M,/obj/structure/cable/))
+		if(istype(M, /obj/machinery/atmospherics) || istype(M,/obj/structure/cable))
 			qdel(M)
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -55,7 +55,7 @@
 	//fix for basetypes coped from old turfs in mapload
 	for(var/turf/T2 in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 		                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-		if(istype(T, /turf/simulated/floor/plating/airless/asteroid/) || istype(T, /turf/simulated/mineral/))
+		if(istype(T, /turf/simulated/floor/plating/airless/asteroid) || istype(T, /turf/simulated/mineral))
 			T2.basetype = /turf/simulated/floor/plating/airless/asteroid
 
 #define SPACETURF    "a"
@@ -68,11 +68,11 @@
 /proc/generate_asteroid_mapfile(size_x, size_y)
 	var/map = "\
 		\"[SPACETURF]\" = (/turf/space,/area/space)\n\
-		\"[FLOORTURF]\" = (/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)\n\
-		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/mine/unexplored)\n\
-		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/mine/unexplored)\n\
-		\"[MOBTURF]\" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)\n\
-		\"[ARTTURF]\" = (/obj/machinery/artifact,/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)\n\
+		\"[FLOORTURF]\" = (/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
+		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/asteroid/mine/unexplored)\n\
+		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/asteroid/mine/unexplored)\n\
+		\"[MOBTURF]\" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
+		\"[ARTTURF]\" = (/obj/machinery/artifact,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
 		(1,1,1) = {\""
 
 	var/side_x = round(size_x / 10)//10% space from side

@@ -18,10 +18,9 @@
 	response_harm   = "flails at"
 
 	harm_intent_damage = 0
-	melee_damage_lower = 35
-	melee_damage_upper = 35
-	attacktext = "claws at"
-	attack_sound = 'sound/weapons/slash.ogg'
+	melee_damage = 35
+	attacktext = "claw"
+	attack_sound = list('sound/weapons/slash.ogg')
 
 	min_oxy = 0
 	max_oxy = 0
@@ -42,7 +41,7 @@
 	. = ..()
 	var/image/ascend = image("icon" = 'icons/mob/shadowling.dmi', "icon_state" = "shadowling_ascended_ms", "layer" = LIGHTING_LAYER + 1)
 	ascend.plane = LIGHTING_PLANE + 1
-	overlays += ascend
+	add_overlay(ascend)
 
 /mob/living/simple_animal/ascendant_shadowling/Life()
 	..()

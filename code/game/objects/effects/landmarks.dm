@@ -32,6 +32,9 @@
 		if("airtunnel_bottom")
 			airtunnel_bottom = y
 
+		if ("awaystart")
+			awaydestinations += src
+
 		if("monkey")
 			monkeystart += loc
 			return INITIALIZE_HINT_QDEL
@@ -67,6 +70,15 @@
 		if("ninjastart")
 			ninjastart += loc
 			return INITIALIZE_HINT_QDEL
+		if("eorgwarp")
+			eorgwarp += loc
+			return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/sound_source
+	name = "Sound Source"
+
+/obj/effect/landmark/sound_source/shuttle_docking
+	name = "Shuttle Docking"
 
 /obj/effect/landmark/start
 	name = "start"
@@ -139,7 +151,7 @@
 	new /obj/item/clothing/under/gimmick/rank/captain/suit(loc)
 	new /obj/item/clothing/head/flatcap(loc)
 	new /obj/item/clothing/mask/cigarette/cigar/havana(loc)
-	new /obj/item/clothing/shoes/jackboots(loc)
+	new /obj/item/clothing/shoes/boots(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/nyangirl/atom_init()
@@ -151,7 +163,7 @@
 /obj/effect/landmark/costume/maid/atom_init()
 	..()
 	new /obj/item/clothing/under/blackskirt(loc)
-	var/CHOICE = pick( /obj/item/clothing/head/beret , /obj/item/clothing/head/rabbitears )
+	var/CHOICE = pick(/obj/item/clothing/head/chep, /obj/item/clothing/head/rabbitears)
 	new CHOICE(loc)
 	new /obj/item/clothing/glasses/sunglasses/blindfold(loc)
 	return INITIALIZE_HINT_QDEL
@@ -175,7 +187,7 @@
 /obj/effect/landmark/costume/highlander/atom_init()
 	..()
 	new /obj/item/clothing/under/kilt(loc)
-	new /obj/item/clothing/head/beret(loc)
+	new /obj/item/clothing/head/beret/red(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/prig/atom_init()

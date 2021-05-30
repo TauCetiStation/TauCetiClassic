@@ -52,9 +52,11 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/update_icon()
 	color = basedatum.color
 
-/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
-	if(!istype(perp))
+/obj/effect/decal/cleanable/blood/Crossed(atom/movable/AM)
+	. = ..()
+	if(!iscarbon(AM) || HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
 		return
+	var/mob/living/carbon/perp = AM
 	if(amount < 1)
 		return
 	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
@@ -66,13 +68,13 @@ var/global/list/image/splatter_cache=list()
 		var/mob/living/carbon/human/H = perp
 		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
-		if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
+		if((!l_foot || l_foot.is_stump) && (!r_foot || r_foot.is_stump))
 			hasfeet = FALSE
 		if(perp.shoes && !perp.buckled)//Adding blood to shoes
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
 				if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
-					S.overlays.Cut()
+					S.cut_overlays()
 					S.add_dirt_cover(basedatum)
 				S.track_blood = max(amount,S.track_blood)
 				if(!S.blood_DNA)
@@ -119,11 +121,7 @@ var/global/list/image/splatter_cache=list()
 			user.blood_DNA = list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
-		user.hand_dirt_color = new/datum/dirt_cover(basedatum)
-		if(user.hand_dirt_color)
-			user.hand_dirt_color.add_dirt(basedatum)
-		else
-			user.hand_dirt_color = new/datum/dirt_cover(basedatum)
+		user.hand_dirt_datum = new(basedatum)
 		user.update_inv_gloves()
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
@@ -164,7 +162,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"<font>")
+	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"</font>")
 
 /obj/effect/decal/cleanable/blood/trail_holder
 	name = "blood"
@@ -187,9 +185,9 @@ var/global/list/image/splatter_cache=list()
 	anchored = 1
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "gibbl5"
+	icon_state = "gibbearcore"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
-	var/fleshcolor = "#FFFFFF"
+	var/fleshcolor = "#ffffff"
 
 /obj/effect/decal/cleanable/blood/gibs/remove_ex_blood()
 	return
@@ -198,26 +196,31 @@ var/global/list/image/splatter_cache=list()
 	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
 	giblets.color = fleshcolor
 	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	blood.Blend(basedatum.color,ICON_MULTIPLY)
+	blood.Blend(basedatum.color, ICON_MULTIPLY)
 
 	icon = blood
-	overlays.Cut()
-	overlays += giblets
+	cut_overlays()
+	add_overlay(giblets)
 
 /obj/effect/decal/cleanable/blood/gibs/up
+	icon_state = "gibup1" // for mapeditor
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibup1","gibup1","gibup1")
 
 /obj/effect/decal/cleanable/blood/gibs/down
+	icon_state = "gibdown1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6","gibdown1","gibdown1","gibdown1")
 
 /obj/effect/decal/cleanable/blood/gibs/body
+	icon_state = "gibhead"
 	random_icon_states = list("gibhead", "gibtorso")
 
 /obj/effect/decal/cleanable/blood/gibs/limb
+	icon_state = "gibleg"
 	random_icon_states = list("gibleg", "gibarm")
 
 /obj/effect/decal/cleanable/blood/gibs/core
-	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+	icon_state = "gibmid1"
+	random_icon_states = list("gibmid1", "gibmid2", "gibmid3", "gibbearcore")
 
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions)
@@ -236,6 +239,11 @@ var/global/list/image/splatter_cache=list()
 
 				if (step_to(src, get_step(src, direction), 0))
 					break
+
+/obj/effect/decal/cleanable/blood/gibs/Crossed(atom/movable/AM)
+	if(isliving(AM) && has_gravity(loc))
+		playsound(src, 'sound/effects/gib_step.ogg', VOL_EFFECTS_MASTER)
+	. = ..()
 
 
 /obj/effect/decal/cleanable/mucus

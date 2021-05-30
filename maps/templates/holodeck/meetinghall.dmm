@@ -1,122 +1,116 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "wooden"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "b" = (
-/obj/structure/flora/pottedplant{
+/obj/item/weapon/twohanded/flora/pottedplant{
 	icon_state = "plant-6"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "wooden"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "c" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet4-0"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "d" = (
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet8-0"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "e" = (
 /turf/simulated/floor/holofloor{
 	dir = 6;
 	icon_state = "carpetsymbol"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "f" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "siding1"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "g" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "wood_stairs2"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "h" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet10-8"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "i" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet11-12"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "j" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet9-4"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "k" = (
 /turf/simulated/floor/holofloor{
-	dir = 2;
 	icon_state = "grimy"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "m" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet14-10"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "n" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet15-15"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "o" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet13-5"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "p" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet6-2"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "q" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet7-3"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 "r" = (
 /obj/structure/holostool,
 /turf/simulated/floor/holofloor{
 	dir = 4;
 	icon_state = "carpet5-1"
 	},
-/area/holodeck/source_meetinghall)
+/area/station/civilian/holodeck/source_meetinghall)
 
 (1,1,1) = {"
 a

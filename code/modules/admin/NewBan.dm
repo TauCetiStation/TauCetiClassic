@@ -103,7 +103,7 @@ var/savefile/Banlist
 
 	Banlist.cd = "/base"
 	if ( Banlist.dir.Find("[ckey][computerid]") )
-		to_chat(usr, text("\red Ban already exists."))
+		to_chat(usr, text("<span class='warning'>Ban already exists.</span>"))
 		return 0
 	else
 		Banlist.dir.Add("[ckey][computerid]")
@@ -134,7 +134,7 @@ var/savefile/Banlist
 		message_admins("Ban Expired: [key]")
 	else
 		ban_unban_log_save("[key_name_admin(usr)] unbanned [key]")
-		log_admin("[key_name_admin(usr)] unbanned [key]")
+		log_admin("[key_name(usr)] unbanned [key]")
 		message_admins("[key_name_admin(usr)] unbanned: [key]")
 		feedback_inc("ban_unban",1)
 		usr.client.holder.DB_ban_unban( ckey(key), BANTYPE_ANY_FULLBAN)
@@ -165,7 +165,6 @@ var/savefile/Banlist
 /datum/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		count++
@@ -186,7 +185,10 @@ var/savefile/Banlist
 
 	dat += "</table>"
 	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
-	usr << browse(entity_ja(dat), "window=unbanp;size=875x400")
+
+	var/datum/browser/popup = new(usr, "window=unbanp", "Banpanel", 875, 400, ntheme = CSS_THEME_LIGHT)
+	popup.set_content(dat)
+	popup.open()
 
 //////////////////////////////////// DEBUG ////////////////////////////////////
 

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /*Composed of 7 parts
 3 Particle emitters
 proc
@@ -71,6 +69,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/strength = null
 	var/desc_holder = null
 
+/obj/structure/particle_accelerator/atom_init()
+	. = ..()
+	particle_accelerator_list += src
+
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = 0
 	if(master)
@@ -96,7 +98,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/structure/particle_accelerator/verb/rotateccw()
@@ -107,7 +109,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/structure/particle_accelerator/examine(mob/user)
@@ -133,11 +135,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return
 
 
-/obj/structure/particle_accelerator/Move()
-	..()
+/obj/structure/particle_accelerator/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
 	if(master && master.active)
 		master.toggle_power()
-		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.","singulo")
+		log_investigate("was moved whilst active; it <font color='red'>powered down</font>.",INVESTIGATE_SINGULO)
 
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)
@@ -161,11 +163,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		qdel(src)
 	return
 
-
-/obj/structure/particle_accelerator/meteorhit()
-	if(prob(50))
-		qdel(src)
-	return
 
 /obj/structure/particle_accelerator/update_icon()
 	switch(construction_state)
@@ -207,7 +204,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return 0
 
 
-/obj/structure/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
+/obj/structure/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))
@@ -217,18 +214,18 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 1
-				user.visible_message("[user.name] secures the [src.name] to the floor.", \
-					"You secure the external bolts.")
-				temp_state++
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 1
+					user.visible_message("[user.name] secures the [src.name] to the floor.", \
+						"You secure the external bolts.")
+					temp_state++
 		if(1)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 0
-				user.visible_message("[user.name] detaches the [src.name] from the floor.", \
-					"You remove the external bolts.")
-				temp_state--
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 0
+					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
+						"You remove the external bolts.")
+					temp_state--
 			else if(iscoil(O))
 				var/obj/item/stack/cable_coil/C = O
 				if(C.use(1))
@@ -257,7 +254,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 			update_state()
 		update_icon()
 		return 1
-	return 0
 
 
 
@@ -268,7 +264,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	icon_state = "none"
 	anchored = 0
 	density = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/construction_state = 0
@@ -287,7 +283,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/particle_accelerator/verb/rotateccw()
@@ -298,7 +294,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.dir = turn(src.dir, 90)
+	src.set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/particle_accelerator/update_icon()
@@ -349,17 +345,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	return
 
 
-/obj/machinery/particle_accelerator/meteorhit()
-	if(prob(50))
-		qdel(src)
-	return
-
-
 /obj/machinery/particle_accelerator/proc/update_state()
 	return 0
 
 
-/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/O, mob/user)
+/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
 	if(!(O) || !(user))
 		return 0
 	if(!ismob(user) || !isobj(O))
@@ -368,18 +358,18 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 1
-				user.visible_message("[user.name] secures the [src.name] to the floor.", \
-					"You secure the external bolts.")
-				temp_state++
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 1
+					user.visible_message("[user.name] secures the [src.name] to the floor.", \
+						"You secure the external bolts.")
+					temp_state++
 		if(1)
 			if(iswrench(O))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				src.anchored = 0
-				user.visible_message("[user.name] detaches the [src.name] from the floor.", \
-					"You remove the external bolts.")
-				temp_state--
+				if(O.use_tool(src, user, 20, volume = 75))
+					src.anchored = 0
+					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
+						"You remove the external bolts.")
+					temp_state--
 			else if(iscoil(O))
 				if(O:use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
@@ -406,10 +396,9 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		if(src.construction_state < 3)//Was taken apart, update state
 			update_state()
 			if(use_power)
-				use_power = 0
+				set_power_use(NO_POWER_USE)
 		src.construction_state = temp_state
 		if(src.construction_state >= 3)
-			use_power = 1
+			set_power_use(IDLE_POWER_USE)
 		update_icon()
 		return 1
-	return 0

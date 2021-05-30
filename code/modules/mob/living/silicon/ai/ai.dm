@@ -1,7 +1,7 @@
 #define AI_CHECK_WIRELESS 1
 #define AI_CHECK_RADIO 2
+#define EMERGENCY_MESSAGE_COOLDOWN 300
 
-var/list/ai_list = list()
 var/list/ai_verbs_default = list(
 //	/mob/living/silicon/ai/proc/ai_recall_shuttle,
 	/mob/living/silicon/ai/proc/ai_goto_location,
@@ -13,7 +13,9 @@ var/list/ai_verbs_default = list(
 	/mob/living/silicon/ai/proc/pick_icon,
 	/mob/living/silicon/ai/proc/show_laws_verb,
 	/mob/living/silicon/ai/proc/toggle_acceleration,
-	/mob/living/silicon/ai/proc/change_floor
+	/mob/living/silicon/ai/proc/toggle_retransmit,
+	/mob/living/silicon/ai/proc/change_floor,
+	/mob/living/silicon/ai/proc/ai_emergency_message
 )
 
 //Not sure why this is necessary...
@@ -29,7 +31,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
 	anchored = TRUE // -- TLE
 	density = TRUE
@@ -40,17 +42,16 @@ var/list/ai_verbs_default = list(
 	var/obj/machinery/camera/camera = null
 	var/list/connected_robots = list()
 	var/aiRestorePowerRoutine = 0
-	//var/list/laws = list()
-	var/viewalerts = 0
 	var/lawcheck[1]
 	var/holohack = FALSE
 	var/datum/AI_Module/active_module = null
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
-	var/icon/holo_icon//Default is assigned when AI is created.
+	var/icon/holo_icon //Default is assigned when AI is created.
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
-	var/custom_sprite = 0 //For our custom sprites
+	var/next_emergency_message_time = 0
+	var/allow_auto_broadcast_messages = TRUE // For disabling retransmiting
 //Hud stuff
 
 	//MALFUNCTION
@@ -73,8 +74,69 @@ var/list/ai_verbs_default = list(
 	var/last_announcement = ""
 	var/wipe_timer_id = 0
 
+	var/mob/camera/Eye/ai/eyeobj
+	var/sprint = 10
+	var/cooldown = 0
+	var/acceleration = 1
+	var/obj/machinery/hologram/holopad/holo = null
+
+	// Radial menu for choose skin of core
+	var/static/list/chooses_ai_cores
+	// Radial menu for choose skin of standart hologram
+	var/static/list/chooses_ai_holo
+	// Radial menu for choose skin of staff hologram
+	var/static/list/chooses_ai_staff
+	// Radial menu for choose category of holo type
+	var/static/list/chooses_holo_category
+	// Radilal menu.
+	var/static/list/name_by_state = list(
+		"Standard" = "ai",
+		"Rainbow" = "ai-clown",
+		"Clown" = "ai-clown2",
+		"Monochrome" = "ai-mono",
+		"Inverted" = "ai-u",
+		"Firewall" = "ai-magma",
+		"Green" = "ai-wierd",
+		"Red" = "ai-red",
+		"Static" = "ai-static",
+		"Text" = "ai-text",
+		"Smiley" = "ai-smiley",
+		"Matrix" = "ai-matrix",
+		"Angry" = "ai-angryface",
+		"Dorf" = "ai-dorf",
+		"Bliss" = "ai-bliss",
+		"Triumvirate" = "ai-triumvirate",
+		"Triumvirate Static" = "ai-triumvirate-malf",
+		"Soviet" = "ai-redoctober",
+		"Trapped" = "ai-hades",
+		"Heartline" = "ai-heartline",
+		"No Pulse" = "ai-heartline_dead",
+		"President" = "ai-president",
+		"BANNED" = "ai-banned",
+		"Helios" = "ai-helios",
+		"House" = "ai-house",
+		"Gigyas" = "ai-gigyas",
+		"Yuki" = "ai-yuki",
+		"SyndiCat" = "ai-syndicatmeow",
+		"Hiss!" = "ai-alien",
+		"Alter Ego" = "ai-alterego",
+		"Urist" = "ai-toodeep",
+		"Totally Not A Malf" = "ai-malf",
+		"Fuzz" = "ai-fuzz",
+		"Goon" = "ai-goon",
+		"Database" = "ai-database",
+		"Glitchman" = "ai-glitchman",
+		"AmericAI" = "ai-murica",
+		"NT" = "ai-nanotrasen",
+		"Gentoo" = "ai-gentoo",
+		"Hal 9000" = "ai-hal",
+	)
+
+	var/datum/announcement/station/command/ai/announcement = new
+
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
+	verbs -= /mob/living/verb/ghost
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(!holo || !isliving(A) || !in_range(eyeobj, A))
@@ -85,12 +147,13 @@ var/list/ai_verbs_default = list(
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
 	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
-	playsound(eyeobj, 'sound/weapons/bite.ogg', 100)
+	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
+	verbs += /mob/living/verb/ghost
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()
@@ -99,7 +162,7 @@ var/list/ai_verbs_default = list(
 	var/pickedName = null
 	while(!pickedName)
 		pickedName = pick(ai_names)
-		for (var/mob/living/silicon/ai/A in mob_list)
+		for (var/mob/living/silicon/ai/A in ai_list)
 			if (A.real_name == pickedName && possibleNames.len > 1) //fixing the theoretically possible infinite loop
 				possibleNames -= pickedName
 				pickedName = null
@@ -150,35 +213,34 @@ var/list/ai_verbs_default = list(
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
 
-			to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-			to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
-			to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-			to_chat(src, "To use something, simply click on it.")
-			to_chat(src, "Use say :b to speak to your cyborgs through binary.")
-			if (!(ticker && ticker.mode && (mind in ticker.mode.malf_ai)))
-				show_laws()
-				to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
+			announce_role()
 
 			job = "AI"
 
+	create_eye()
+
 	new /obj/machinery/ai_powersupply(src)
 
-	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
-	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
-
 	ai_list += src
+
+/mob/living/silicon/ai/proc/announce_role()
+	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
+	to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
+	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+	to_chat(src, "To use something, simply click on it.")
+	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
+	if (!(SSticker && SSticker.mode && (src.mind in SSticker.mode.malf_ai)))
+		src.show_laws()
+		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 /mob/living/silicon/ai/Destroy()
 	connected_robots.Cut()
 	ai_list -= src
 	qdel(eyeobj)
 	return ..()
+
+/mob/living/silicon/ai/IgniteMob()
+	return FALSE //No we're not flammable
 
 
 /*
@@ -188,8 +250,7 @@ var/list/ai_verbs_default = list(
 /obj/machinery/ai_powersupply
 	name="Power Supply"
 	active_power_usage=1000
-	use_power = 2
-	power_channel = EQUIP
+	use_power = ACTIVE_POWER_USE
 	var/mob/living/silicon/ai/powered_ai = null
 	invisibility = 100
 
@@ -213,88 +274,33 @@ var/list/ai_verbs_default = list(
 		return
 	if(!powered_ai.anchored)
 		forceMove(powered_ai.loc)
-		use_power = 0
+		set_power_use(NO_POWER_USE)
 	if(powered_ai.anchored)
-		use_power = 2
+		set_power_use(ACTIVE_POWER_USE)
+
+/mob/living/silicon/ai/proc/gen_radial_cores()
+	if(!chooses_ai_cores)
+		chooses_ai_cores = list()
+		for(var/name in name_by_state)
+			chooses_ai_cores[name] = image(icon = 'icons/mob/AI.dmi', icon_state = name_by_state[name])
 
 /mob/living/silicon/ai/proc/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
-	if(stat || aiRestorePowerRoutine)
+	if(check_unable())
 		return
-	if(!custom_sprite) //Check to see if custom sprite time, checking the appopriate file to change a var
-		var/file = file2text("config/custom_sprites.txt")
-		var/lines = splittext(file, "\n")
 
-		for(var/line in lines)
-		// split & clean up
-			var/list/Entry = splittext(line, ":")
-			for(var/i = 1 to Entry.len)
-				Entry[i] = trim(Entry[i])
+	gen_radial_cores()
 
-			if(Entry.len < 2)
-				continue;
-
-			if(Entry[1] == src.ckey && Entry[2] == src.real_name)
-				custom_sprite = 1 //They're in the list? Custom sprite time
-				icon = 'icons/mob/custom-synthetic.dmi'
-
-		//if(icon_state == initial(icon_state))
-	var/icontype = ""
-	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Rainbow","Clown", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static", "Soviet", "Trapped", "Heartline","No Pulse","President","BANNED","Helios","House","Yuki","Hiss!","Alter Ego","Urist","Totally Not A Malf","Fuzz","Goon","Database","Glitchman","AmericAI","NT","Gentoo","Hal 9000")
-	switch(icontype)
-		if("Custom") icon_state = "[src.ckey]-ai"
-		if("Rainbow") icon_state = "ai-clown"
-		if("Clown") icon_state = "ai-clown2"
-		if("Monochrome") icon_state = "ai-mono"
-		if("Inverted") icon_state = "ai-u"
-		if("Firewall") icon_state = "ai-magma"
-		if("Green") icon_state = "ai-wierd"
-		if("Red") icon_state = "ai-red"
-		if("Static") icon_state = "ai-static"
-		if("Text") icon_state = "ai-text"
-		if("Smiley") icon_state = "ai-smiley"
-		if("Matrix") icon_state = "ai-matrix"
-		if("Angry") icon_state = "ai-angryface"
-		if("Dorf") icon_state = "ai-dorf"
-		if("Bliss") icon_state = "ai-bliss"
-		if("Triumvirate") icon_state = "ai-triumvirate"
-		if("Triumvirate Static") icon_state = "ai-triumvirate-malf"
-		if("Soviet") icon_state = "ai-redoctober"
-		if("Trapped") icon_state = "ai-hades"
-		if("Heartline") icon_state = "ai-heartline"
-		if("No Pulse") icon_state = "ai-heartline_dead"
-		if("President") icon_state = "ai-president"
-		if("BANNED") icon_state = "ai-banned"
-		if("Helios") icon_state = "ai-helios"
-		if("House") icon_state = "ai-house"
-		if("Gigyas") icon_state = "ai-gigyas"
-		if("Yuki") icon_state = "ai-yuki"
-		if("SyndiCat") icon_state = "ai-syndicatmeow"
-		if("Yuki") icon_state = "ai-yuki"
-		if("Hiss!") icon_state = "ai-alien"
-		if("Alter Ego") icon_state = "ai-alterego"
-		if("Urist") icon_state = "ai-toodeep"
-		if("Totally Not A Malf") icon_state = "ai-malf"
-		if("Fuzz") icon_state = "ai-fuzz"
-		if("Goon") icon_state = "ai-goon"
-		if("Database") icon_state = "ai-database"
-		if("Glitchman") icon_state = "ai-glitchman"
-		if("AmericAI") icon_state = "ai-murica"
-		if("NT") icon_state = "ai-nanotrasen"
-		if("Gentoo") icon_state = "ai-gentoo"
-		if("Hal 9000") icon_state = "ai-hal"
-		else icon_state = "ai"
-	//else
-			//usr <<"You can only change your display once!"
-			//return
-
+	var/state = show_radial_menu(usr, eyeobj, chooses_ai_cores, radius = 50, tooltips = TRUE)
+	if(!state)
+		return
+	icon_state = name_by_state[state]
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
-	if(ticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = ticker.mode
+	if(SSticker.mode.name == "AI malfunction")
+		var/datum/game_mode/malfunction/malf = SSticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if (mind == malfai) // are we the evil one?
 				if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
@@ -303,31 +309,46 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/show_alerts()
 
-	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
-	dat += "<A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"
+	var/dat = ""
 	for (var/cat in alarms)
-		dat += text("<B>[]</B><BR>\n", cat)
+		dat += "<B>[cat]</B><BR>"
 		var/list/alarmlist = alarms[cat]
 		if (alarmlist.len)
 			for (var/area_name in alarmlist)
 				var/datum/alarm/alarm = alarmlist[area_name]
-				dat += "<NOBR>"
 
-				var/cameratext = ""
+				var/cameratext
 				if (alarm.cameras)
 					for (var/obj/machinery/camera/I in alarm.cameras)
-						cameratext += text("[]<A HREF=?src=\ref[];switchcamera=\ref[]>[]</A>", (cameratext=="") ? "" : " | ", src, I, I.c_tag)
-				dat += text("-- [] ([])", alarm.area.name, (cameratext)? cameratext : "No Camera")
+						cameratext += "<br>---- <A HREF=?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
+				dat += "-- [alarm.area.name] [cameratext ? cameratext : "No Camera"]"
 
 				if (alarm.sources.len > 1)
 					dat += text(" - [] sources", alarm.sources.len)
-				dat += "</NOBR><BR>\n"
+				dat += "<BR>\n"
 		else
 			dat += "-- All Systems Nominal<BR>\n"
 		dat += "<BR>\n"
 
-	viewalerts = 1
-	src << browse(entity_ja(dat), "window=aialerts&can_close=0")
+	var/datum/browser/popup = new(src, "window=aialerts", "Current Station Alerts")
+	popup.set_content(dat)
+	popup.open()
+
+/mob/living/silicon/ai/proc/can_retransmit_messages()
+	return (stat != DEAD && !control_disabled && aiRadio && !aiRadio.disabledAi && allow_auto_broadcast_messages)
+
+/mob/living/silicon/ai/proc/retransmit_message(message)
+	if (aiRadio)
+		aiRadio.talk_into(src, message)
+
+/mob/living/silicon/ai/proc/toggle_retransmit()
+	set category = "AI Commands"
+	set name = "Toggle Auto Messages"
+	if (allow_auto_broadcast_messages)
+		to_chat(usr, "Your core is <b>disconnected</b> from station information module.")
+	else
+		to_chat(usr, "Your core is <b>connected</b> to station information module.")
+	allow_auto_broadcast_messages = !allow_auto_broadcast_messages
 
 /mob/living/silicon/ai/var/message_cooldown = 0
 /mob/living/silicon/ai/proc/ai_announcement()
@@ -338,14 +359,18 @@ var/list/ai_verbs_default = list(
 	if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
-	var/input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement"))
+	var/input = sanitize(input(usr, "Please write a message to announce to the station crew.", "A.I. Announcement") as null|message)
+	if(message_cooldown)
+		to_chat(src, "Please allow one minute to pass between announcements.")
+		return
+
 	if(!input)
 		return
 
 	if(check_unable(AI_CHECK_WIRELESS | AI_CHECK_RADIO))
 		return
 
-	captain_announce(input, "A.I. Announcement", src.name)
+	announcement.play(src, input)
 	log_say("[key_name(usr)] has made an AI announcement: [input]")
 	message_admins("[key_name_admin(usr)] has made an AI announcement.")
 	message_cooldown = 1
@@ -357,7 +382,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert("Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+	var/confirm = alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
@@ -367,7 +392,7 @@ var/list/ai_verbs_default = list(
 
 	// hack to display shuttle timer
 	if(SSshuttle.online)
-		var/obj/machinery/computer/communications/C = locate() in machines
+		var/obj/machinery/computer/communications/C = locate() in communications_list
 		if(C)
 			C.post_status("shuttle")
 
@@ -384,6 +409,23 @@ var/list/ai_verbs_default = list(
 		F.color = f_color
 
 	to_chat(usr, "Floor color was change to [f_color]")
+
+/mob/living/silicon/ai/proc/ai_emergency_message()
+	set category = "AI Commands"
+	set name = "Send Emergency Message"
+
+	if(check_unable(AI_CHECK_WIRELESS))
+		return
+	if(world.time < next_emergency_message_time)
+		to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
+		return
+	var/input = sanitize(input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
+	if(!input)
+		return
+	Centcomm_announce(input, usr)
+	to_chat(usr, "<span class='notice'>Message transmitted.</span>")
+	log_say("[key_name(usr)] has sent an emergency message: [input]")
+	next_emergency_message_time = world.time + EMERGENCY_MESSAGE_COOLDOWN
 
 /mob/living/silicon/ai/proc/ai_recall_shuttle()
 	set category = "AI Commands"
@@ -448,12 +490,6 @@ var/list/ai_verbs_default = list(
 	if(usr != src)
 		return
 	..()
-	if (href_list["mach_close"])
-		if (href_list["mach_close"] == "aialerts")
-			viewalerts = 0
-		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
@@ -501,16 +537,20 @@ var/list/ai_verbs_default = list(
 		statelaws()
 
 	if (href_list["track"])
-		var/mob/target = locate(href_list["track"]) in mob_list
-		if(target && (!istype(target, /mob/living/carbon/human) || html_decode(href_list["trackname"]) == target:get_face_name()))
+		var/mob/target = locate(href_list["track"]) in living_list
+		if(target)
 			ai_actual_track(target)
-		else
-			to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
 			return
+		var/mob/living/carbon/human/H = locate(href_list["track"]) in living_list
+		if(html_decode(href_list["trackname"]) == H.get_visible_name())
+			ai_actual_track(H)
+			return
+		to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
+		return
 
 	else if (href_list["faketrack"])
-		var/mob/target = locate(href_list["track"]) in mob_list
-		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in mob_list
+		var/mob/target = locate(href_list["track"]) in living_list
+		var/mob/living/silicon/ai/A = locate(href_list["track2"]) in ai_list
 		if(A && target)
 
 			A.cameraFollow = target
@@ -527,69 +567,12 @@ var/list/ai_verbs_default = list(
 
 	return
 
-/mob/living/silicon/ai/meteorhit(obj/O)
-	for(var/mob/M in viewers(src, null))
-		M.show_message(text("\red [] has been hit by []", src, O), 1)
-		//Foreach goto(19)
-	if (health > 0)
-		adjustBruteLoss(30)
-		if ((O.icon_state == "flaming"))
-			adjustFireLoss(40)
-		updatehealth()
-	return
-
 /mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
-	..(Proj)
+	. = ..()
+	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
+		return
+
 	updatehealth()
-	return 2
-
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	switch(M.a_intent)
-
-		if ("help")
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe like arm."), 1)
-
-		else //harm
-			var/damage = rand(10, 20)
-			if (prob(90))
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-				if(prob(8))
-					flash_eyes(affect_silicon = 1)
-				adjustBruteLoss(damage)
-				updatehealth()
-			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				for(var/mob/O in viewers(src, null))
-					if ((O.client && !( O.blinded )))
-						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
-	return
-
-/mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()
 
 /mob/living/silicon/ai/reset_view(atom/A)
 	if(camera)
@@ -630,16 +613,11 @@ var/list/ai_verbs_default = list(
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 
-	if(viewalerts)
-		show_alerts()
-
 /mob/living/silicon/ai/cancelAlarm(class, area/A, source)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
 		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
-		if(viewalerts)
-			show_alerts()
 
 	return has_alarm
 
@@ -694,7 +672,7 @@ var/list/ai_verbs_default = list(
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	to_chat(src, "\blue Switched to [network] camera network.")
+	to_chat(src, "<span class='notice'>Switched to [network] camera network.</span>")
 //End of code by Mord_Sith
 
 
@@ -707,21 +685,69 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "HAL")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Dorfy", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet", "HAL", "Tribunal", "Tribunal Malfunctioning")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
-	for (var/obj/machinery/M in machines) //change status
-		if(istype(M, /obj/machinery/ai_status_display))
-			var/obj/machinery/ai_status_display/AISD = M
-			AISD.emotion = emote
-		//if Friend Computer, change ALL displays
-		else if(istype(M, /obj/machinery/status_display))
-
-			var/obj/machinery/status_display/SD = M
-			if(emote=="Friend Computer")
-				SD.friendc = 1
-			else
-				SD.friendc = 0
+	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
+		AISD.emotion = emote
+	if(emote == "Friend Computer")  //if Friend Computer, change ALL displays, else restore them to normal
+		for(var/obj/machinery/status_display/SD in status_display_list)
+			SD.friendc = TRUE
+	else
+		for(var/obj/machinery/status_display/SD in status_display_list)
+			SD.friendc = FALSE
 	return
+
+/mob/living/silicon/ai/proc/gen_ai_uniq_holo()
+	var/icon_list = list(
+		"Default",
+		"Floatingface",
+		"Alien",
+		"Carp",
+		"Queen",
+		"Rommie",
+		"Sonny",
+		"Miku",
+		"Medbot",
+	)
+
+	if(!chooses_ai_holo)
+		chooses_ai_holo = list()
+		var/i = 1
+		for(var/name_holo in icon_list)
+			chooses_ai_holo[name_holo] = getHologramIcon(icon('icons/mob/AI.dmi', "holo[i]"))
+			i++
+
+/mob/living/silicon/ai/proc/gen_ai_staff_holo()
+	if(!chooses_ai_staff)
+		chooses_ai_staff = list()
+
+	for(var/datum/data/record/t in data_core.locked) //Look in data core locked.
+		if(chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"])
+			continue
+
+		chooses_ai_staff["[t.fields["name"]]: [t.fields["rank"]]"] = getHologramIcon(icon(t.fields["image"])) //Pull names, rank, and image.
+
+/mob/living/silicon/ai/proc/gen_radial_holo(type)
+	switch(type)
+		if("Crew Member Category")
+			gen_ai_staff_holo()
+			if(chooses_ai_staff.len)
+				var/state = show_radial_menu(usr, eyeobj, chooses_ai_staff, radius = 38, tooltips = TRUE)
+				if(!state)
+					return
+				if(chooses_ai_staff[state])
+					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
+					holo_icon = chooses_ai_staff[state]
+			else
+				alert("No suitable records found. Aborting.")
+
+		if("Unique Category")
+			gen_ai_uniq_holo()
+			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
+			if(!state)
+				return
+			qdel(holo_icon)
+			holo_icon = chooses_ai_holo[state]
 
 //I am the icon meister. Bow fefore me.	//>fefore
 /mob/living/silicon/ai/proc/ai_hologram_change()
@@ -732,58 +758,15 @@ var/list/ai_verbs_default = list(
 	if(check_unable())
 		return
 
-	var/input
-	if(alert("Would you like to select a hologram based on a crew member or switch to unique avatar?",,"Crew Member","Unique")=="Crew Member")
+	if(!chooses_holo_category)
+		chooses_holo_category = list()
+		chooses_holo_category["Crew Member Category"] = getHologramIcon(icon('icons/mob/AI.dmi', "holo1"))
+		chooses_holo_category["Unique Category"] = getHologramIcon(icon('icons/mob/AI.dmi', "holo4"))
 
-		var/personnel_list[] = list()
-
-		for(var/datum/data/record/t in data_core.locked)//Look in data core locked.
-			personnel_list["[t.fields["name"]]: [t.fields["rank"]]"] = t.fields["image"]//Pull names, rank, and image.
-
-		if(personnel_list.len)
-			input = input("Select a crew member:") as null|anything in personnel_list
-			var/icon/character_icon = personnel_list[input]
-			if(character_icon)
-				qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-				holo_icon = getHologramIcon(icon(character_icon))
-		else
-			alert("No suitable records found. Aborting.")
-
-	else
-		var/icon_list[] = list(
-		"default",
-		"floating face",
-		"alien",
-		"carp",
-		"queen",
-		"rommie",
-		"sonny",
-		"miku",
-		"medbot"
-		)
-		input = input("Please select a hologram:") as null|anything in icon_list
-		if(input)
-			qdel(holo_icon)
-			switch(input)
-				if("default")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
-				if("floating face")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo2"))
-				if("alien")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
-				if("carp")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
-				if("queen")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo5"))
-				if("rommie")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo6"))
-				if("sonny")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo7"))
-				if("miku")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo8"))
-				if("medbot")
-					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo9"))
-	return
+	var/asnwer = show_radial_menu(usr, eyeobj, chooses_holo_category, tooltips = TRUE)
+	if(!asnwer)
+		return
+	gen_radial_holo(asnwer)
 
 /*/mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"
@@ -791,7 +774,7 @@ var/list/ai_verbs_default = list(
 
 	var/obj/machinery/power/apc/apc = src.loc
 	if(!istype(apc))
-		to_chat(src, "\blue You are already in your Main Core.")
+		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
 		return
 	apc.malfvacate()*/
 
@@ -838,22 +821,22 @@ var/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(user.is_busy()) return
 		if(anchored)
-			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
-			if(!do_after(user,40,target = src))
-				user.visible_message("\blue \The [user] decides not to unbolt \the [src].")
+			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")
+			if(!W.use_tool(src, user, 40, volume = 50))
+				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
-			user.visible_message("\blue \The [user] finishes unfastening \the [src]!")
+			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
 			anchored = 0
 			return
 		else
-			user.visible_message("\blue \The [user] starts to bolt \the [src] to the plating...")
-			if(!do_after(user,40,target = src))
-				user.visible_message("\blue \The [user] decides not to bolt \the [src].")
+			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
+			if(!W.use_tool(src, user, 40, volume = 50))
+				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
-			user.visible_message("\blue \The [user] finishes fastening down \the [src]!")
+			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")
 			anchored = 1
 			return
 	else
@@ -870,14 +853,14 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)
-		to_chat(usr, "\red You are dead!")
+		to_chat(usr, "<span class='warning'>You are dead!</span>")
 		return 1
 
 	if((flags & AI_CHECK_WIRELESS) && src.control_disabled)
-		to_chat(usr, "\red Wireless control is disabled!")
+		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
 		return 1
 	if((flags & AI_CHECK_RADIO) && src.aiRadio.disabledAi)
-		to_chat(src, "\red System Error - Transceiver Disabled!")
+		to_chat(src, "<span class='warning'>System Error - Transceiver Disabled!</span>")
 		return 1
 	return 0
 
@@ -899,5 +882,9 @@ var/list/ai_verbs_default = list(
 	else
 		to_chat(src, "[new_mod_name] module activation failed. Out of uses.")
 
+/mob/living/silicon/ai/CanObtainCentcommMessage()
+	return TRUE
+
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
+#undef EMERGENCY_MESSAGE_COOLDOWN

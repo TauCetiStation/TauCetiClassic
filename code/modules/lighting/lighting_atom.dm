@@ -7,27 +7,40 @@
 	var/tmp/list/light_sources       // Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
 
 // The proc you should always use to set the light of this atom.
-/atom/proc/set_light(l_range, l_power, l_color)
-	if(l_power != null) light_power = l_power
-	if(l_range != null) light_range = l_range
-	if(l_color != null) light_color = l_color
+// Nonesensical value for l_color default, so we can detect if it gets set to null.
+#define NONSENSICAL_VALUE -99999
+/atom/proc/set_light(l_range, l_power, l_color = NONSENSICAL_VALUE)
+	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
+		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
+	if (l_power != null)
+		light_power = l_power
+
+	if (l_range != null)
+		light_range = l_range
+
+	if (l_color != NONSENSICAL_VALUE)
+		light_color = l_color
 
 	update_light()
+
+#undef NONSENSICAL_VALUE
 
 // Will update the light (duh).
 // Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
-	if(!light_power || !light_range) // We won't emit light anyways, destroy the light source.
-		if(light)
-			light.destroy()
-			light = null
+	set waitfor = FALSE
+	if (QDELETED(src))
+		return
+
+	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
+		QDEL_NULL(light)
 	else
-		if(!istype(loc, /atom/movable)) // We choose what atom should be the top atom of the light here.
+		if (!ismovable(loc)) // We choose what atom should be the top atom of the light here.
 			. = src
 		else
 			. = loc
 
-		if(light) // Update the light or create it if it does not exist.
+		if (light) // Update the light or create it if it does not exist.
 			light.update(.)
 		else
 			light = new/datum/light_source(src, .)
@@ -35,67 +48,55 @@
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
 /atom/proc/set_opacity(new_opacity)
-	var/old_opacity = opacity
-	opacity = new_opacity
-	var/turf/T = loc
-	if(old_opacity != new_opacity && istype(T))
-		T.reconsider_lights()
-
-// This code makes the light be queued for update when it is moved.
-// Entered() should handle it, however Exited() can do it if it is being moved to nullspace (as there would be no Entered() call in that situation).
-/atom/Entered(atom/movable/Obj, atom/OldLoc) //Implemented here because forceMove() doesn't call Move()
-	. = ..()
-
-	if(Obj && OldLoc != src)
-		for(var/A in Obj.light_sources) // Cycle through the light sources on this atom and tell them to update.
-			if(!A)
-				continue
-
-			var/datum/light_source/L = A
-			L.source_atom.update_light()
-
-/atom/Exited(var/atom/movable/Obj, var/atom/newloc)
-	. = ..()
-
-	if(!newloc && Obj && newloc != src) // Incase the atom is being moved to nullspace, we handle queuing for a lighting update here.
-		for(var/A in Obj.light_sources) // Cycle through the light sources on this atom and tell them to update.
-			if(!A)
-				continue
-
-			var/datum/light_source/L = A
-			L.source_atom.update_light()
-
-/obj/item/equipped()
-	. = ..()
-	update_light()
-
-/obj/item/pickup()
-	. = ..()
-	update_light()
-
-/obj/item/dropped()
-	. = ..()
-	update_light()
-
-//Version of view() which ignores darkness, because BYOND doesn't have it.
-/proc/dview(range = world.view, center, invis_flags = 0)
-	if(!center)
+	if (new_opacity == opacity)
 		return
 
-	dview_mob.loc = center
+	opacity = new_opacity
+	var/turf/T = loc
+	if (!isturf(T))
+		return
 
-	dview_mob.see_invisible = invis_flags
+	if (new_opacity == TRUE)
+		T.has_opaque_atom = TRUE
+		T.reconsider_lights()
+	else
+		var/old_has_opaque_atom = T.has_opaque_atom
+		T.recalc_atom_opacity()
+		if (old_has_opaque_atom != T.has_opaque_atom)
+			T.reconsider_lights()
 
-	. = view(range, dview_mob)
-	dview_mob.loc = null
 
-var/mob/dview/dview_mob = new
+/atom/movable/Moved(atom/OldLoc, Dir)
+	. = ..()
+	var/datum/light_source/L
+	var/thing
+	for (thing in light_sources) // Cycle through the light sources on this atom and tell them to update.
+		L = thing
+		L.source_atom.update_light()
 
-/mob/dview
-	invisibility = 101
-	density = 0
+/atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = LIGHT_COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
+	return
 
-	anchored = 1
-	simulated = 0
+/turf/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = LIGHT_COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
+	if(!_duration)
+		stack_trace("Lighting FX obj created on a turf without a duration")
+	new /obj/effect/dummy/lighting_obj (src, _color, _range, _power, _duration)
 
-	see_in_dark = 1e6
+/obj/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = LIGHT_COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
+	var/temp_color
+	var/temp_power
+	var/temp_range
+	if(!_reset_lighting) //incase the obj already has a lighting color that you don't want cleared out after, ie computer monitors.
+		temp_color = light_color
+		temp_power = light_power
+		temp_range = light_range
+	set_light(_range, _power, _color)
+	addtimer(CALLBACK(src, /atom/proc/set_light, _reset_lighting ? initial(light_range) : temp_range, _reset_lighting ? initial(light_power) : temp_power, _reset_lighting ? initial(light_color) : temp_color), _duration, TIMER_OVERRIDE|TIMER_UNIQUE)
+
+/mob/living/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = LIGHT_COLOR_WHITE, _duration = FLASH_LIGHT_DURATION, _reset_lighting = TRUE)
+	mob_light(_color, _range, _power, _duration)
+
+/mob/living/proc/mob_light(_color, _range, _power, _duration)
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj = new (src, _color, _range, _power, _duration)
+	return mob_light_obj
+

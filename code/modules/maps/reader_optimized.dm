@@ -78,7 +78,8 @@ var/global/dmm_suite/preloader/_preloader = new
 				if(cropMap)
 					continue
 				else
-					world.maxz = zcrd //create a new z_level if needed
+					while (zcrd > world.maxz) //create a new z_level if needed
+						world.incrementMaxZ()
 
 			bounds[MAP_MINX] = min(bounds[MAP_MINX], xcrdStart)
 			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
@@ -145,7 +146,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /**
  * Fill a given tile with its area/turf/objects/mobs
- * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/mine/explored)
+ * Variable model is one full map line (e.g /turf/unsimulated/wall{icon_state = "rock"},/area/asteroid/mine/explored)
  *
  * WORKING :
  *
@@ -166,7 +167,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		same construction as those contained in a .dmm file, and instantiates them.
 	*/
 
-	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
+	var/list/members //will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/asteroid/mine/explored)
 	var/list/members_attributes //will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
 	var/list/cached = modelCache[model]
 	var/index
@@ -188,7 +189,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		var/dpos
 
 		do
-			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/mine/explored)
+			//finding next member (e.g /turf/unsimulated/wall{icon_state = "rock"} or /area/asteroid/mine/explored)
 			dpos = find_next_delimiter_position(model, old_position, ",", "{", "}") //find next delimiter (comma here) that's not within {...}
 
 			var/full_def = trim_text(copytext(model, old_position, dpos)) //full definition, e.g : /obj/foo/bar{variables=derp}
@@ -204,7 +205,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/list/fields = list()
 
 			if(variables_start)//if there's any variable
-				full_def = copytext(full_def,variables_start+1,length(full_def))//removing the last '}'
+				full_def = copytext(full_def,variables_start+1,-1)//removing the last '}'
 				fields = readlist(full_def, ";")
 
 			//then fill the members_attributes list with the corresponding variables
@@ -226,10 +227,18 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	//first instance the /area and remove it from the members list
 	index = members.len
-	if(members[index] != /area/template_noop)
+	if(members[index] != /area/custom/template_noop)
 		var/atom/instance
 		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
 		instance = locate(members[index])
+		// Below is a hackish way of getting /area with the exact type that we provide, because locate() can return child of the type that we need which is wrong
+		if(instance.type != members[index])
+			var/e = members[index]
+			if(areas_by_type[e])
+				instance = areas_by_type[e]
+			else
+				instance = new e
+		// End of the hack
 		if(crds)
 			instance.contents.Add(crds)
 
@@ -274,7 +283,7 @@ var/global/dmm_suite/preloader/_preloader = new
 //Helpers procs
 ////////////////
 
-/dmm_suite/proc/load_new_z_level(mappath)
+/dmm_suite/proc/load_new_z_level(mappath, linkage)
 	var/file = file(mappath)
 	if(isfile(file))
 		var/list/loaded_stuff = load_map(file)
@@ -286,6 +295,7 @@ var/global/dmm_suite/preloader/_preloader = new
 			return FALSE
 
 		//initialize things that are normally initialized after map load
+		SSmapping.add_new_zlevel(mappath, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage))
 		initTemplateBounds(bounds)
 		log_game("Z-level loaded [world.maxz]")
 		return TRUE
@@ -299,7 +309,9 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	if(crds)
 		if(ispath(path, /turf))
+			var/turf/turfpath = path
 			. = crds.ChangeTurf(path)
+			crds.basetype = initial(turfpath.basetype)
 		else
 			. = create_atom(path, crds) // first preloader pass
 
@@ -343,57 +355,67 @@ var/global/dmm_suite/preloader/_preloader = new
 //build a list from variables in text form (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 //return the filled list
 /dmm_suite/proc/readlist(text, delimiter=",")
-
-	var/list/to_return = list()
+	. = list()
+	if (!text)
+		return
 
 	var/position
 	var/old_position = 1
 
-	do
+	while(position != 0)
 		//find next delimiter that is not within  "..."
 		position = find_next_delimiter_position(text,old_position,delimiter)
 
 		//check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
 		var/equal_position = findtext(text,"=",old_position, position)
 
-		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)),1)//the name of the variable, must trim quotes to build a BYOND compliant associatives list
+		var/trim_left = trim_text(copytext(text,old_position,(equal_position ? equal_position : position)))
+		var/left_constant = delimiter == ";" ? trim_left : parse_constant(trim_left)
 		old_position = position + 1
 
-		if(equal_position)//associative var, so do the association
-			var/trim_right = trim_text(copytext(text,equal_position+1,position))//the content of the variable
+		if(equal_position && !isnum(left_constant))
+			// Associative var, so do the association.
+			// Note that numbers cannot be keys - the RHS is dropped if so.
+			var/trim_right = trim_text(copytext(text,equal_position+1,position))
+			var/right_constant = parse_constant(trim_right)
+			.[left_constant] = right_constant
 
-			//Check for string
-			if(findtext(trim_right,quote,1,2))
-				trim_right = copytext(trim_right,2,findtext(trim_right,quote,3,0))
+		else  // simple var
+			. += list(left_constant)
 
-			//Check for number
-			else if(isnum(text2num(trim_right)))
-				trim_right = text2num(trim_right)
+/dmm_suite/proc/parse_constant(text)
+	// number
+	var/num = text2num(text)
+	if(isnum(num))
+		return num
 
-			//Check for null
-			else if(trim_right == "null")
-				trim_right = null
+	// string
+	if(findtext(text,"\"",1,2))
+		return copytext(text,2,findtext(text,"\"",3,0))
 
-			//Check for list
-			else if(copytext(trim_right,1,5) == "list")
-				trim_right = readlist(copytext(trim_right,6,length(trim_right)))
+	// list
+	if(copytext(text,1,6) == "list(")
+		return readlist(copytext(text,6,-1))
 
-			//Check for file
-			else if(copytext(trim_right,1,2) == "'")
-				trim_right = file(copytext(trim_right,2,length(trim_right)))
+	// typepath
+	var/path = text2path(text)
+	if(ispath(path))
+		return path
 
-			//Check for path
-			else if(ispath(text2path(trim_right)))
-				trim_right = text2path(trim_right)
+	// file
+	if(copytext(text,1,2) == "'")
+		return file(copytext(text,2,-1))
 
-			to_return[trim_left] = trim_right
+	// null
+	if(text == "null")
+		return null
 
-		else//simple var
-			to_return[trim_left] = null
+	// not parsed:
+	// - pops: /obj{name="foo"}
+	// - new(), newlist(), icon(), matrix(), sound()
 
-	while(position != 0)
-
-	return to_return
+	// fallback: string
+	return text
 
 /dmm_suite/Destroy()
 	..()
@@ -422,7 +444,7 @@ var/global/dmm_suite/preloader/_preloader = new
 		what.vars[attribute] = value
 	use_preloader = FALSE
 
-/area/template_noop
+/area/custom/template_noop
 	name = "Area Passthrough"
 
 /turf/template_noop

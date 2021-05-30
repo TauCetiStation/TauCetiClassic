@@ -3,7 +3,7 @@
 #define LIST "list"
 #define ENTRY "entry"
 
-/obj/machinery/disease2/isolator/
+/obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
 	density = 1
 	anchored = 1
@@ -28,7 +28,9 @@
 		icon_state = "isolator"
 
 /obj/machinery/disease2/isolator/attackby(obj/O, mob/user)
-	if(!istype(O,/obj/item/weapon/reagent_containers/syringe)) return
+	if(!istype(O,/obj/item/weapon/reagent_containers/syringe))
+		return ..()
+
 	var/obj/item/weapon/reagent_containers/syringe/S = O
 
 	if(sample)
@@ -225,4 +227,5 @@
 				<u>Additional Notes:</u>&nbsp;
 "}
 
+	P.update_icon()
 	state("The nearby computer prints out a report.")

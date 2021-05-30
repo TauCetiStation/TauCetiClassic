@@ -1,134 +1,122 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /proc/invalidateCameraCache()
-	for(var/obj/machinery/computer/security/s in machines)
+	for(var/obj/machinery/computer/security/s in computer_list)
 		s.camera_cache = null
-	for(var/datum/alarm/A in world)
-		A.cameras = null
+	for(var/datum/alarm/A in datum_alarm_list)
+		A.cameras = list()
+
+#define DEFAULT_MAP_SIZE 15
 
 /obj/machinery/computer/security
 	name = "security camera monitor"
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
+	state_broken_preset = "securityb"
+	state_nopower_preset = "security0"
 	circuit = /obj/item/weapon/circuitboard/security
 	light_color = "#a91515"
-	var/obj/machinery/camera/current = null
+	var/obj/machinery/camera/active_camera = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
 
+	/// The turf where the camera was last updated.
+	var/turf/last_camera_turf
+	var/list/concurrent_users = list()
+
+	// Stuff needed to render the map
+	var/map_name
+	var/obj/screen/map_view/cam_screen
+	/// All the plane masters that need to be applied.
+	var/list/cam_plane_masters
+	var/obj/screen/background/cam_background
+
 	var/camera_cache = null
 
-/obj/machinery/computer/security/check_eye(mob/user)
-	if ((get_dist(user, src) > 1 || user.incapacitated() || user.blinded) && !issilicon(user) && !isobserver(user))
-		return null
-	if (!current || !current.can_use()) //camera doesn't work
-		reset_current()
-	var/list/viewing = viewers(src)
-	if(isrobot(user) && !viewing.Find(user))
-		return null
-	user.reset_view(current)
-	return 1
-
-/obj/machinery/computer/security/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	if(stat & (NOPOWER|BROKEN)) return
-	if(user.stat) return
-
-	var/data[0]
-
-	data["current"] = null
-
-	if(isnull(camera_cache))
-		cameranet.process_sort()
-
-		var/cameras[0]
-		for(var/obj/machinery/camera/C in cameranet.cameras)
-			if(!can_access_camera(C))
-				continue
-
-			var/cam = C.nano_structure()
-			cameras[++cameras.len] = cam
-
-			if(C == current)
-				data["current"] = cam
-
-		var/list/camera_list = list("cameras" = cameras)
-		camera_cache = list2json(camera_list)
-	else
-		if(current)
-			data["current"] = current.nano_structure()
-
-
-	if(ui)
-		ui.load_cached_data(camera_cache)
-
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "sec_camera.tmpl", "Camera Console", 900, 600)
-
-		// adding a template with the key "mapContent" enables the map ui functionality
-		ui.add_template("mapContent", "sec_camera_map_content.tmpl")
-		// adding a template with the key "mapHeader" replaces the map header content
-		ui.add_template("mapHeader", "sec_camera_map_header.tmpl")
-
-		ui.load_cached_data(camera_cache)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-
-/obj/machinery/computer/security/Topic(href, href_list)
+/obj/machinery/computer/security/atom_init()
 	. = ..()
-	if(!.)
+	// Map name has to start and end with an A-Z character,
+	// and definitely NOT with a square bracket or even a number.
+	// I wasted 6 hours on this. :agony:
+	map_name = "camera_console_\ref[src]_map"
+	// Initialize map objects
+	cam_screen = new
+	cam_screen.name = "screen"
+	cam_screen.assigned_map = map_name
+	cam_screen.del_on_map_removal = FALSE
+	cam_screen.screen_loc = "[map_name]:1,1"
+	cam_plane_masters = list()
+	for(var/plane in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/instance = new plane()
+		instance.assigned_map = map_name
+		instance.del_on_map_removal = FALSE
+		instance.screen_loc = "[map_name]:CENTER"
+		cam_plane_masters += instance
+	cam_background = new
+	cam_background.assigned_map = map_name
+	cam_background.del_on_map_removal = FALSE
+
+/obj/machinery/computer/security/Destroy()
+	qdel(cam_screen)
+	QDEL_LIST(cam_plane_masters)
+	qdel(cam_background)
+	return ..()
+
+/obj/machinery/computer/security/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/computer/security/proc/close_other_camera_uis(mob/user, datum/tgui/current_ui)
+	for(var/datum/tgui/ui in user.tgui_open_uis)
+		if((isnull(current_ui) || current_ui != ui) && ui.interface == "CameraConsole")
+			ui.close()
+
+/obj/machinery/computer/security/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	update_active_camera_screen()
+
+	close_other_camera_uis(user, ui)
+
+	if(!ui)
+		var/user_ref = "\ref[user]"
+		var/is_living = isliving(user)
+		// Ghosts shouldn't count towards concurrent users, which produces
+		// an audible terminal_on click.
+		if(is_living)
+			concurrent_users += user_ref
+		// Turn on the console
+		if(length(concurrent_users) == 1 && is_living)
+			playsound(src, 'sound/machines/terminal_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
+			use_power(active_power_usage)
+		// Register map objects
+		user.client.register_map_obj(cam_screen)
+		for(var/plane in cam_plane_masters)
+			user.client.register_map_obj(plane)
+		user.client.register_map_obj(cam_background)
+		// Open UI
+		ui = new(user, src, "CameraConsole", name)
+		ui.open()
+
+/obj/machinery/computer/security/tgui_state(mob/user)
+	return global.machinery_state
+
+/obj/machinery/computer/security/tgui_act(action, params)
+	. = ..()
+	if(.)
 		return
 
-	if(href_list["switchTo"])
-		if(usr.blinded)
-			return FALSE
-		var/obj/machinery/camera/C = locate(href_list["switchTo"]) in cameranet.cameras
-		if(!C)
-			return FALSE
-		switch_to_camera(usr, C)
-	else if(href_list["reset"])
-		if(usr.blinded)
-			return FALSE
-		reset_current()
-		usr.check_eye(current)
+	if(action == "switch_camera")
+		var/c_tag = params["name"]
+		var/list/cameras = get_cached_cameras()
+		var/obj/machinery/camera/selected_camera = cameras[c_tag]
+		
+		switch_to_camera(selected_camera)
 
-/obj/machinery/computer/security/attack_ghost(mob/user) // this should not ever be opened to ghots, there is simply no point (even for admin) and also this thing eats up ALOT of resources.
-	return
+		return TRUE
 
-/obj/machinery/computer/security/attack_hand(mob/user)
-	if (!network)
-		world.log << "A computer lacks a network at [x],[y],[z]."
-		return
-	if (!istype(network, /list))
-		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
-		return
+/obj/machinery/computer/security/proc/switch_to_camera(obj/machinery/camera/camera_to_switch)
+	active_camera = camera_to_switch
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
-	..()
-
-/obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
-	var/list/shared_networks = src.network & C.network
-	if(shared_networks.len)
-		return 1
-	return 0
-
-/obj/machinery/computer/security/proc/switch_to_camera(mob/user, obj/machinery/camera/C)
-	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
-	if(isAI(user))
-		var/mob/living/silicon/ai/A = user
-		// Only allow non-carded AIs to view because the interaction with the eye gets all wonky otherwise.
-		if(!A.is_in_chassis())
-			return 0
-
-		A.eyeobj.setLoc(get_turf(C))
-		A.client.eye = A.eyeobj
-		return 1
-	set_current(C)
-	if(!check_eye(user))
-		return 0
-	use_power(50)
-	return 1
+	update_active_camera_screen()
 
 //Camera control: moving.
 /obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
@@ -158,27 +146,122 @@
 	if(isnull(jump_to))
 		return
 	if(can_access_camera(jump_to))
-		switch_to_camera(user,jump_to)
+		switch_to_camera(jump_to)
 
-/obj/machinery/computer/security/proc/set_current(obj/machinery/camera/C)
-	if(current == C)
+/obj/machinery/computer/security/proc/update_active_camera_screen()
+	// Show static if can't use the camera
+	if(QDELETED(active_camera) || (istype(active_camera) && !active_camera.can_use()))
+		show_camera_static()
 		return
 
-	if(current)
-		reset_current()
+	var/list/visible_turfs = list()
 
-	src.current = C
-	if(current)
-		var/mob/living/L = current.loc
-		if(istype(L))
-			L.tracking_initiated()
+	// If we're not forcing an update for some reason and the cameras are in the same location,
+	// we don't need to update anything.
+	// Most security cameras will end here as they're not moving.
+	var/camera_turf = get_turf(active_camera)
+	if(last_camera_turf == camera_turf)
+		return
 
-/obj/machinery/computer/security/proc/reset_current()
-	if(current)
-		var/mob/living/L = current.loc
-		if(istype(L))
-			L.tracking_cancelled()
-	current = null
+	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
+	last_camera_turf = camera_turf
+	//hear() bypasses luminosity checks
+	var/list/visible_things = active_camera.isXRay() ? range(active_camera.view_range, camera_turf) : hear(active_camera.view_range, camera_turf)
+
+	for(var/turf/visible_turf in visible_things)
+		visible_turfs += visible_turf
+
+	var/list/bbox = get_bbox_of_atoms(visible_turfs)
+	var/size_x = bbox[3] - bbox[1] + 1
+	var/size_y = bbox[4] - bbox[2] + 1
+
+	cam_screen.vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)
+
+/obj/machinery/computer/security/tgui_close(mob/user)
+	. = ..()
+	var/user_ref = "\ref[user]"
+	var/is_living = isliving(user)
+	// Living creature or not, we remove you anyway.
+	concurrent_users -= user_ref
+	// Unregister map objects
+	if(user.client)
+		user.client.clear_map(map_name)
+	// Turn off the console
+	if(length(concurrent_users) == 0 && is_living)
+		active_camera = null
+		last_camera_turf = null
+		playsound(src, 'sound/machines/terminal_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
+		use_power(0)
+
+/obj/machinery/computer/security/proc/show_camera_static()
+	cam_screen.vis_contents.Cut()
+	cam_background.icon_state = "scanline2"
+	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+
+/obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
+	var/list/shared_networks = src.network & C.network
+	if(shared_networks.len)
+		return TRUE
+	return FALSE
+
+// Returns the list of cameras accessible from this computer
+/obj/machinery/computer/security/proc/get_available_cameras()
+	cameranet.process_sort()
+	var/list/L = list()
+	for (var/obj/machinery/camera/C in cameranet.cameras)
+		if(!can_access_camera(C))
+			continue
+		L.Add(C)
+	var/list/D = list()
+	for(var/obj/machinery/camera/C in L)
+		D["[C.c_tag]"] = C
+	return D
+
+/obj/machinery/computer/security/proc/get_cached_cameras()
+	if (isnull(camera_cache))
+		camera_cache = get_available_cameras()
+	
+	return camera_cache
+
+/obj/machinery/computer/security/tgui_data()
+	var/list/data = list()
+	data["network"] = network
+	data["activeCamera"] = null
+	if(!QDELETED(active_camera))
+		data["activeCamera"] = list(
+			name = active_camera.c_tag,
+			status = active_camera.status,
+		)
+	return data
+
+/obj/machinery/computer/security/tgui_static_data()
+	var/list/data = list()
+	data["mapRef"] = map_name
+	var/list/cameras = get_cached_cameras()
+	data["cameras"] = list()
+	for(var/i in cameras)
+		var/obj/machinery/camera/C = cameras[i]
+		if(!QDELETED(C))
+			data["cameras"] += list(list(
+				name = C.c_tag,
+			))
+
+	return data
+
+/obj/machinery/computer/security/attack_ghost(mob/user) // this should not ever be opened to ghots, there is simply no point (even for admin) and also this thing eats up ALOT of resources.
+	return
+
+/obj/machinery/computer/security/attack_hand(mob/user)
+	if (!network)
+		world.log << "A computer lacks a network at [COORD(src)]."
+		return
+	if (!istype(network, /list))
+		world.log << "The computer at [COORD(src)] has a network that is not a list!"
+		return
+
+	..()
 
 //Camera control: mouse.
 /atom/DblClick()
@@ -192,6 +275,8 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "telescreen"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#ffffbb"
 	network = list("thunder")
 	density = 0
@@ -200,7 +285,7 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
-		playsound(src.loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
 	return
 
 /obj/machinery/computer/security/telescreen/entertainment
@@ -208,13 +293,25 @@
 	desc = "Damn, why do they never have anything interesting on these things?"
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#ea4444"
 
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "security_det"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#3550b6"
+
+/obj/machinery/computer/security/wooden_tv/miami
+	name = "security camera monitor"
+	desc = "An old TV hooked into the stations camera network."
+	icon_state = "security_det_miami"
+	state_broken_preset = null
+	state_nopower_preset = null
+	light_color = "#f535aa"
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera monitor"
@@ -223,24 +320,40 @@
 	network = list("MINE")
 
 /obj/machinery/computer/security/engineering
-	name = "engineering camera monitor"
+	name = "alarms monitoring cameras"
 	desc = "Used to monitor fires and breaches."
 	icon_state = "engineeringcameras"
-	network = list("Engineering","Power Alarms","Atmosphere Alarms","Fire Alarms")
+	state_broken_preset = "powerb"
+	state_nopower_preset = "power0"
+	network = list("Power Alarms","Atmosphere Alarms","Fire Alarms")
 	light_color = "#b88b2e"
+
+/obj/machinery/computer/security/engineering/drone
+	name = "drone monitoring cameras"
+	desc = "Used to monitor drones and engineering borgs."
+	network = list("Engineering Robots")
 
 /obj/machinery/computer/security/nuclear
 	name = "head mounted camera monitor"
 	desc = "Used to access the built-in cameras in helmets."
 	icon_state = "syndicam"
+	state_broken_preset = "tcbossb"
+	state_nopower_preset = "tcboss0"
 	network = list("NUKE")
 	light_color = "#a91515"
+
+/obj/machinery/computer/security/nuclear/shiv
+	name = "pilot camera monitor"
+	desc = "Console used by fighter pilot to monitor the battlefield."
+	network = list("shiv")
 
 /obj/machinery/computer/security/abductor_ag
 	name = "agent observation monitor"
 	desc = "Used to access the cameras in agent helmet."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
+	state_broken_preset = null
+	state_nopower_preset = null
 	light_color = "#642850"
 	network = list()
 	var/team
@@ -257,5 +370,9 @@
 	desc = "Shows how subjects are living."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera_alt"
+	state_broken_preset = null
+	state_nopower_preset = null
 	network = list("SS13")
 	light_color = "#642850"
+
+#undef DEFAULT_MAP_SIZE

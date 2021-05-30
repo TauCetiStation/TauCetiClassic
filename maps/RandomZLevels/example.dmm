@@ -39,8 +39,6 @@
 "ag" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "area power controller";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -95,8 +93,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -120,7 +117,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center,
 /turf/simulated/floor,
 /area/awaymission/example)
 "ap" = (
@@ -163,8 +160,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -190,8 +186,7 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/example)
@@ -199,15 +194,13 @@
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
 "aA" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /obj/structure/table,
 /obj/item/weapon/paper/pamphlet,
@@ -215,8 +208,7 @@
 /area/awaymission/example)
 "aB" = (
 /obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -293,7 +285,6 @@
 /area/awaymission/example)
 "aQ" = (
 /turf/simulated/floor{
-	dir = 2;
 	icon_state = "whitehall"
 	},
 /area/awaymission/example)
@@ -439,8 +430,7 @@
 /area/awaymission/example)
 "bi" = (
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -589,7 +579,6 @@
 "bB" = (
 /obj/structure/sink{
 	dir = 8;
-	icon_state = "sink";
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -613,7 +602,7 @@
 "bE" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms";
-	req_access_txt = "0"
+	req_access = list(0)
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -631,17 +620,16 @@
 	density = 0;
 	pixel_y = 32
 	},
-/obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/book/manual/chef_recipes,
-/obj/item/weapon/book/manual/ripley_build_and_repair,
+/obj/item/weapon/book/manual/wiki/barman_recipes,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
 /area/awaymission/example)
 "bH" = (
 /obj/structure/stool/bed/chair/wood/normal{
-	dir = 4;
-	icon_state = "wooden_chair"
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -655,8 +643,7 @@
 /area/awaymission/example)
 "bJ" = (
 /obj/structure/stool/bed/chair/wood/normal{
-	dir = 8;
-	icon_state = "wooden_chair"
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -667,8 +654,8 @@
 	density = 0;
 	pixel_y = 32
 	},
-/obj/item/weapon/book/manual/security_space_law,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -682,8 +669,7 @@
 /area/awaymission/example)
 "bM" = (
 /obj/structure/stool/bed/chair/wood/normal{
-	dir = 1;
-	icon_state = "wooden_chair"
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -785,8 +771,7 @@
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/hand_labeler,
 /obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/awaymission/example)
@@ -849,8 +834,7 @@
 /area/awaymission/example)
 "co" = (
 /obj/machinery/light_construct/small{
-	dir = 8;
-	icon_state = "bulb-construct-stage1"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/awaymission/example)

@@ -3,8 +3,8 @@
 	desc = "A miniature machine that tracks suit sensors across the station."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner"
-	w_class = 2
-	slot_flags = SLOT_BELT
+	w_class = ITEM_SIZE_SMALL
+	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=3;materials=3;magnets=3"
 	var/obj/nano_module/crew_monitor/crew_monitor
 

@@ -11,7 +11,7 @@
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/atom_init()
-	dir = pick(1,2,3,4)
+	set_dir(pick(1,2,3,4))
 	. = ..()
 	update_nearby_tiles(need_rebuild = 1)
 
@@ -34,11 +34,11 @@
 		src.health -= aforce
 
 	//Play a fitting sound
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
+	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER)
 
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (src.health <= 0)
-		visible_message("\blue The [src] dissipates!")
+		visible_message("<span class='notice'>The [src] dissipates!</span>")
 		qdel(src)
 		return
 
@@ -46,24 +46,12 @@
 	spawn(20) if(src) opacity = 0
 
 	..()
-
-/obj/machinery/shield/meteorhit()
-	src.health -= max_health*0.75 //3/4 health as damage
-
-	if(src.health <= 0)
-		visible_message("\blue The [src] dissipates!")
-		qdel(src)
-		return
-
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-	return
 
 /obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
 	if(health <=0)
-		visible_message("\blue The [src] dissipates!")
+		visible_message("<span class='notice'>The [src] dissipates!</span>")
 		qdel(src)
 		return
 	opacity = 1
@@ -94,9 +82,9 @@
 	qdel(src)
 
 
-/obj/machinery/shield/hitby(AM)
+/obj/machinery/shield/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	//Let everyone know we've been hit!
-	visible_message("\red <B>[src] was hit by [AM].</B>")
+	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 
 	//Super realistic, resource-intensive, real-time damage calculations.
 	var/tforce = 0
@@ -108,11 +96,11 @@
 	src.health -= tforce
 
 	//This seemed to be the best sound for hitting a force field.
-	playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
+	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER)
 
 	//Handle the destruction of the shield
 	if (src.health <= 0)
-		visible_message("\blue The [src] dissipates!")
+		visible_message("<span class='notice'>The [src] dissipates!</span>")
 		qdel(src)
 		return
 
@@ -185,13 +173,6 @@
 	update_icon()
 	return
 
-/obj/machinery/shieldgen/meteorhit(obj/O)
-	src.health -= max_health*0.25 //A quarter of the machine's health
-	if (prob(5))
-		src.malfunction = 1
-	src.checkhp()
-	return
-
 /obj/machinery/shieldgen/ex_act(severity)
 	switch(severity)
 		if(1.0)
@@ -231,63 +212,53 @@
 		return 1
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.active)
-		user.visible_message("\blue [bicon(src)] [user] deactivated the shield generator.", \
-			"\blue [bicon(src)] You deactivate the shield generator.", \
+		user.visible_message("<span class='notice'>[bicon(src)] [user] deactivated the shield generator.</span>", \
+			"<span class='notice'>[bicon(src)] You deactivate the shield generator.</span>", \
 			"You hear heavy droning fade out.")
 		src.shields_down()
 	else
 		if(anchored)
-			user.visible_message("\blue [bicon(src)] [user] activated the shield generator.", \
-				"\blue [bicon(src)] You activate the shield generator.", \
+			user.visible_message("<span class='notice'>[bicon(src)] [user] activated the shield generator.</span>", \
+				"<span class='notice'>[bicon(src)] You activate the shield generator.</span>", \
 				"You hear heavy droning.")
 			src.shields_up()
 		else
 			to_chat(user, "The device must first be secured to the floor.")
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/emag))
-		malfunction = 1
-		user.SetNextMove(CLICK_CD_MELEE)
-		update_icon()
-
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+	if(isscrewdriver(W))
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(is_open)
-			to_chat(user, "\blue You close the panel.")
+			to_chat(user, "<span class='notice'>You close the panel.</span>")
 			is_open = 0
 		else
-			to_chat(user, "\blue You open the panel and expose the wiring.")
+			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 			is_open = 1
 
-	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+	else if(iscoil(W) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if(user.is_busy(src)) return
-		to_chat(user, "\blue You begin to replace the wires.")
+		to_chat(user, "<span class='notice'>You begin to replace the wires.</span>")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
-		if(do_after(user, 30, target = src))
-			if(QDELETED(src) || !coil.use(1))
-				return
-
+		if(coil.use_tool(src, user, 30, amount = 1, volume = 50))
 			health = max_health
 			malfunction = 0
-			to_chat(user, "\blue You repair the [src]!")
+			to_chat(user, "<span class='notice'>You repair the [src]!</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(iswrench(W))
 		if(locked)
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
 		if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			to_chat(user, "\blue You unsecure the [src] from the floor!")
+			to_chat(user, "<span class='notice'>You unsecure the [src] from the floor!</span>")
 			if(active)
-				to_chat(user, "\blue The [src] shuts off!")
+				to_chat(user, "<span class='notice'>The [src] shuts off!</span>")
 				src.shields_down()
 			anchored = 0
 		else
 			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			to_chat(user, "\blue You secure the [src] to the floor!")
+			to_chat(user, "<span class='notice'>You secure the [src] to the floor!</span>")
 			anchored = 1
 
 
@@ -296,11 +267,18 @@
 			src.locked = !src.locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
 		..()
 
+/obj/machinery/shieldgen/emag_act(mob/user)
+	if(malfunction)
+		return FALSE
+	malfunction = 1
+	user.SetNextMove(CLICK_CD_MELEE)
+	update_icon()
+	return TRUE
 
 /obj/machinery/shieldgen/update_icon()
 	if(active)
@@ -318,9 +296,9 @@
 	icon_state = "Shield_Gen"
 	anchored = FALSE
 	density = TRUE
-	req_access = list(access_teleporter)
+	req_access = list(access_research)
 	flags = CONDUCT
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/active = FALSE
 	var/power = 0
 	var/state = 0
@@ -365,13 +343,13 @@
 	if(.)
 		return
 	if(state != 1)
-		to_chat(user, "\red The shield generator needs to be firmly secured to the floor first.")
+		to_chat(user, "<span class='warning'>The shield generator needs to be firmly secured to the floor first.</span>")
 		return 1
 	if(src.locked && !issilicon(user) && !IsAdminGhost(user))
-		to_chat(user, "\red The controls are locked!")
+		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return 1
 	if(power != 1)
-		to_chat(user, "\red The shield generator needs to be powered by wire underneath.")
+		to_chat(user, "<span class='warning'>The shield generator needs to be powered by wire underneath.</span>")
 		return 1
 
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -417,7 +395,7 @@
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
-			src.visible_message("\red The [src.name] shuts down due to lack of power!", \
+			src.visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
@@ -465,25 +443,24 @@
 		T2 = T
 		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall/(src, G) //(ref to this gen, ref to connected gen)
 		CF.loc = T
-		CF.dir = field_dir
+		CF.set_dir(field_dir)
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if(iswrench(W))
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
-
-		else if(state == 0)
+		if(state == 0)
 			state = 1
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = 1
 			return
 
 		else if(state == 1)
 			state = 0
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You undo the external reinforcing bolts.")
 			src.anchored = 0
 			return
@@ -493,11 +470,11 @@
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
 		src.add_fingerprint(user)
-		visible_message("\red The [src.name] has been hit with \the [W.name] by [user.name]!")
+		visible_message("<span class='warning'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
 		user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
@@ -534,14 +511,16 @@
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
-		name = "Shield"
+		name = "energy shield"
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
-		icon_state = "shieldwall"
+		icon_state = "energyshield"
 		anchored = 1
 		density = 1
+		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/needs_power = 0
 		var/active = 1
 //		var/power = 10
@@ -621,9 +600,34 @@
 	if(air_group || (height==0)) return 1
 
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return prob(20)
+		if(prob(20))
+			if(istype(mover, /obj/item/projectile))
+				var/obj/item/projectile/P = mover
+				visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b></span>")
+				P.damage -= 10
+			return TRUE
+		else
+			if(istype(mover, /obj/item/projectile))
+				visible_message("<span class='warning'>\The [mover] hits the \the [src.name].</span>")
+			return FALSE
 	else
-		if (istype(mover, /obj/item/projectile))
-			return prob(10)
+		if(istype(mover, /obj/item/projectile))
+			var/obj/item/projectile/P = mover
+			if(P.damage > 15)
+				if(prob(10))
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</span></b>")
+					P.damage -= 10
+					return TRUE
+				else
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].</span>")
+					return FALSE
+			else
+				if(prob(5))
+					visible_message("<span class='warning'><b>\The [P.name] flies through the \the [src.name].</b></span>")
+					P.damage -= P.damage / 2
+					return TRUE
+				else
+					visible_message("<span class='warning'>\The [P.name] hits the \the [src.name].</span>")
+					return FALSE
 		else
 			return !src.density

@@ -1,38 +1,38 @@
 //randomly generated temples, indiana jones style (minus the cultists, probably)
 
-/area/jungle/temple_one
+/area/awaymission/jungle/temple_one
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple1"
 
-/area/jungle/temple_two
+/area/awaymission/jungle/temple_two
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple2"
 
-/area/jungle/temple_three
+/area/awaymission/jungle/temple_three
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple3"
 
-/area/jungle/temple_four
+/area/awaymission/jungle/temple_four
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple4"
 
-/area/jungle/temple_five
+/area/awaymission/jungle/temple_five
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple5"
 
-/area/jungle/temple_six
+/area/awaymission/jungle/temple_six
 	name = "temple"
-	dynamic_lighting = 1
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "temple6"
 
@@ -143,7 +143,7 @@
 				new /obj/item/clothing/under/psyche(C)
 			else
 				new /obj/item/clothing/under/syndicate/combat(C)
-				new /obj/item/clothing/shoes/swat(C)
+				new /obj/item/clothing/shoes/boots/swat(C)
 				new /obj/item/clothing/gloves/swat(C)
 				new /obj/item/clothing/mask/balaclava(C)
 		if("glasses")
@@ -225,7 +225,7 @@
 					new /obj/item/clothing/mask/facehugger(C)
 			/*else if(prob(50))
 				//something else very much alive and angry
-				var/spawn_type = pick(/mob/living/simple_animal/hostile/alien, /mob/living/simple_animal/hostile/alien/drone, /mob/living/simple_animal/hostile/alien/sentinel)
+				var/spawn_type = pick(/mob/living/simple_animal/hostile/xenomorph, /mob/living/simple_animal/hostile/xenomorph/drone, /mob/living/simple_animal/hostile/xenomorph/sentinel)
 				new spawn_type(C)*/
 
 			//33% chance of nothing
@@ -308,36 +308,36 @@
 
 	switch(trap_type)
 		if("sawburst")
-			to_chat(M, "\red <b>A sawblade shoots out of the ground and strikes you!</b>")
+			to_chat(M, "<span class='warning'><b>A sawblade shoots out of the ground and strikes you!</b></span>")
 			M.apply_damage(rand(5, 10), BRUTE, null, null, DAM_SHARP | DAM_EDGE)
 
 			var/atom/myloc = src.loc
 			var/image/flicker = image('code/modules/jungle/jungle.dmi',"sawblade")
-			myloc.overlays += flicker
+			myloc.add_overlay(flicker)
 			spawn(8)
-				myloc.overlays -= flicker
+				myloc.cut_overlay(flicker)
 				qdel(flicker)
 			//flick("sawblade",src)
 		if("poison_dart")
-			to_chat(M, "\red <b>You feel something small and sharp strike you!</b>")
+			to_chat(M, "<span class='warning'><b>You feel something small and sharp strike you!</b></span>")
 			M.apply_damage(rand(5,10), TOX)
 
 			var/atom/myloc = src.loc
 			var/image/flicker = image('code/modules/jungle/jungle.dmi',"dart[rand(1,3)]")
-			myloc.overlays += flicker
+			myloc.add_overlay(flicker)
 			spawn(8)
-				myloc.overlays -= flicker
+				myloc.cut_overlay(flicker)
 				qdel(flicker)
 			//flick("dart[rand(1,3)]",src)
 		if("flame_burst")
-			to_chat(M, "\red <b>A jet of fire comes out of nowhere!</b>")
+			to_chat(M, "<span class='warning'><b>A jet of fire comes out of nowhere!</b></span>")
 			M.apply_damage(rand(5,10), BURN)
 
 			var/atom/myloc = src.loc
 			var/image/flicker = image('code/modules/jungle/jungle.dmi',"flameburst")
-			myloc.overlays += flicker
+			myloc.add_overlay(flicker)
 			spawn(8)
-				myloc.overlays -= flicker
+				myloc.cut_overlay(flicker)
 				qdel(flicker)
 			//flick("flameburst",src)
 		if("phoron_gas")
@@ -347,18 +347,18 @@
 		if("thrower")
 			//edited version of obj/effect/step_trigger/thrower
 			var/throw_dir = pick(1,2,4,8)
-			M.visible_message("\red <b>The floor under [M] suddenly tips upward!</b>","\red <b>The floor tips upward under you!</b>")
+			M.visible_message("<span class='warning'><b>The floor under [M] suddenly tips upward!</b></span>","<span class='warning'><b>The floor tips upward under you!</b></span>")
 
 			var/atom/myloc = src.loc
 			var/image/flicker = image('code/modules/jungle/jungle.dmi',"throw[throw_dir]")
-			myloc.overlays += flicker
+			myloc.add_overlay(flicker)
 			var/turf/my_turf = get_turf(loc)
 			if(!my_turf.density)
 				my_turf.density = 1
 				spawn(8)
 					my_turf.density = 0
 			spawn(8)
-				myloc.overlays -= flicker
+				myloc.cut_overlay(flicker)
 				qdel(flicker)
 
 			var/dist = rand(1,5)
@@ -374,7 +374,7 @@
 
 				var/predir = M.dir
 				step(M, throw_dir)
-				M.dir = predir
+				M.set_dir(predir)
 
 //gives turf a different description, to try and trick players
 /obj/effect/step_trigger/trap/fake

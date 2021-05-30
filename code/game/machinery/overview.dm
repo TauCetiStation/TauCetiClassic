@@ -7,7 +7,7 @@
 	usr.set_machine(src)
 	if(!mapping)	return
 
-	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
+	log_game("[key_name(usr)] used station map L[z] in [get_turf(src)]")
 
 	src.drawmap(usr)
 
@@ -49,31 +49,31 @@
 
 			else
 				var/sense = 1
-				switch("[T.type]")
-					if("/turf/space")
+				switch(T.type)
+					if(/turf/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/simulated/floor")
+					if(/turf/simulated/floor)
 						colour = rgb(150,150,150)
 						var/turf/simulated/floor/TF = T
 						if(TF.burnt == 1)
 							sense = 0
 							colour = rgb(130,130,130)
 
-					if("/turf/simulated/floor/engine")
+					if(/turf/simulated/floor/engine)
 						colour = rgb(128,128,128)
 
-					if("/turf/simulated/wall")
+					if(/turf/simulated/wall)
 						colour = rgb(96,96,96)
 
-					if("/turf/simulated/wall/r_wall")
+					if(/turf/simulated/wall/r_wall)
 						colour = rgb(128,96,96)
 
-					if("/turf/unsimulated/floor")
+					if(/turf/unsimulated/floor)
 						colour  = rgb(240,240,240)
 
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+					if(/turf/unsimulated/wall)
 						colour  = rgb(140,140,140)
 
 					else
@@ -112,9 +112,9 @@
 
 				if(A.fire)
 
-					var/red = getr(colour)
-					var/green = getg(colour)
-					var/blue = getb(colour)
+					var/red = HEX_VAL_RED(colour)
+					var/green = HEX_VAL_GREEN(colour)
+					var/blue = HEX_VAL_BLUE(colour)
 
 
 					green = min(255, green+40)
@@ -204,12 +204,12 @@
 
 			else
 				var/sense = 1
-				switch("[T.type]")
-					if("/turf/space")
+				switch(T.type)
+					if(/turf/space)
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
+					if(/turf/simulated/floor, /turf/simulated/floor/engine)
 						var/datum/gas_mixture/environment = T.return_air()
 						var/turf_total = environment.total_moles
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
@@ -220,16 +220,16 @@
 							t1 = min(100, t1-100)
 							colour = rgb( t1*2.55, t1*2.55, 255)
 
-					if("/turf/simulated/wall")
+					if(/turf/simulated/wall)
 						colour = rgb(96,96,96)
 
-					if("/turf/simulated/wall/r_wall")
+					if(/turf/simulated/wall/r_wall)
 						colour = rgb(128,96,96)
 
-					if("/turf/unsimulated/floor")
+					if(/turf/unsimulated/floor)
 						colour  = rgb(240,240,240)
 
-					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+					if(/turf/unsimulated/wall)
 						colour  = rgb(140,140,140)
 
 					else
@@ -265,9 +265,9 @@
 
 				if(A.fire)
 
-					var/red = getr(colour)
-					var/green = getg(colour)
-					var/blue = getb(colour)
+					var/red = HEX_VAL_RED(colour)
+					var/green = HEX_VAL_GREEN(colour)
+					var/blue = HEX_VAL_BLUE(colour)
 
 
 					green = min(255, green+40)
@@ -341,16 +341,6 @@
 
 
 		return
-
-proc/getr(col)
-	return hex2num( copytext(col, 2,4))
-
-proc/getg(col)
-	return hex2num( copytext(col, 4,6))
-
-proc/getb(col)
-	return hex2num( copytext(col, 6))
-
 
 /mob/proc/clearmap()
 	src.client.screen -= src.mapobjs

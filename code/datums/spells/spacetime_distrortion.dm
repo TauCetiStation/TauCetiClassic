@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/spacetime_dist
-	name = "Spacetime Distortion"
-	desc = "Entangle the strings of spacetime to deny easy movement around you. The strings vibrate..."
+	name = "Искажение Пространства-Времени"
+	desc = "Искажает струны пространства-времени и делает перемещение в зоне действия более проблематичным. Струны вибрируют..."
 	charge_max = 700
 	var/duration = 150
 	range = 7
@@ -58,7 +58,7 @@
 	name = "spacetime distortion"
 	desc = "A distortion in spacetime. You can hear faint music..."
 	icon_state = "wave1"
-	color = "#8A2BE2"
+	color = "#8a2be2"
 	var/obj/effect/cross_action/spacetime_dist/linked_dist
 	var/busy = FALSE
 	var/sound
@@ -85,10 +85,11 @@
 	busy = TRUE
 	flick("purplesparkles", src)
 	AM.forceMove(get_turf(src))
-	playsound(AM, sound, 100, 1)
+	playsound(AM, sound, VOL_EFFECTS_MASTER)
 	busy = FALSE
 
 /obj/effect/cross_action/spacetime_dist/Crossed(atom/movable/AM)
+	. = ..()
 	if(!busy)
 		walk_link(AM)
 

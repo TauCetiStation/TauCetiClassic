@@ -4,12 +4,22 @@
 	//Called by: Movement, airflow.
 	//Inputs: The moving atom (optional), target turf, "height" and air group
 	//Outputs: Boolean if can pass.
-
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+	if(retVal & COMPONENT_CANTPASS)
+		return FALSE
+	else if(retVal & COMPONENT_CANPASS)
+		return TRUE
 	return (!density || !height || air_group)
 
 /turf/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(!target)
 		return FALSE
+
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+	if(retVal & COMPONENT_CANTPASS)
+		return FALSE
+	else if(retVal & COMPONENT_CANPASS)
+		return TRUE
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
 		return !density

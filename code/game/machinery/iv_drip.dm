@@ -1,5 +1,5 @@
 /obj/machinery/iv_drip
-	name = "\improper IV drip"
+	name = "IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
@@ -26,13 +26,13 @@
 		else
 			icon_state = "donateidle"
 
-	overlays = null
+	cut_overlays()
 
 	if(beaker)
 		if(attached)
-			overlays += "beakeractive"
+			add_overlay("beakeractive")
 		else
-			overlays += "beakeridle"
+			add_overlay("beakeridle")
 		if(beaker.reagents.total_volume)
 			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
 
@@ -47,7 +47,7 @@
 				if(91 to INFINITY)	filling.icon_state = "reagent100"
 
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
-			overlays += filling
+			add_overlay(filling)
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
@@ -156,9 +156,10 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(isliving(usr) && usr.stat != DEAD)
+	if(isliving(usr) && !usr.incapacitated())
 		mode = !mode
 		to_chat(usr, "The IV drip is now [mode ? "injecting" : "taking blood"].")
+		update_icon()
 
 /obj/machinery/iv_drip/examine(mob/user)
 	..()

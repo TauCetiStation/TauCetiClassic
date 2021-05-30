@@ -3,15 +3,23 @@
 	id = "toxin"
 	description = "A toxic chemical."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#cf3600" // rgb: 207, 54, 0
 	var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
 	custom_metabolism = 0.1
 	taste_message = "bitterness"
+	flags = list(IS_ORGANIC = TRUE)
+
+	// Most toxins use "ticks" to determine their effect. The list is initialized here to be used there later.
+	data = list()
 
 /datum/reagent/toxin/on_general_digest(mob/living/M)
 	..()
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr * REM)
+
+/datum/reagent/toxin/on_skrell_digest(mob/living/M)
+	..()
+	return !flags[IS_ORGANIC]
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
@@ -20,14 +28,16 @@
 	reagent_state = LIQUID
 	color = "#792300" // rgb: 121, 35, 0
 	toxpwr = 1
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	reagent_state = LIQUID
-	color = "#13BC5E" // rgb: 19, 188, 94
+	color = "#13bc5e" // rgb: 19, 188, 94
 	toxpwr = 0
+	flags = list()
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, volume)
 	if(!..())
@@ -55,6 +65,7 @@
 	reagent_state = LIQUID
 	color = "#ef0097" // rgb: 231, 27, 0
 	toxpwr = 3
+	flags = list()
 
 /datum/reagent/toxin/phoron/on_general_digest(mob/living/M)
 	..()
@@ -76,6 +87,7 @@
 	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_turf(turf/simulated/T, volume)
+	. = ..()
 	if(volume < 0)
 		return
 	if(volume > 300)
@@ -96,10 +108,11 @@
 	id = "lexorin"
 	description = "Lexorin temporarily stops respiration. Causes tissue damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	toxpwr = 0
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/lexorin/on_general_digest(mob/living/M)
 	..()
@@ -114,8 +127,9 @@
 	id = "slimejelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
 	reagent_state = LIQUID
-	color = "#801E28" // rgb: 128, 30, 40
+	color = "#801e28" // rgb: 128, 30, 40
 	toxpwr = 0
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/slimejelly/on_general_digest(mob/living/M)
 	..()
@@ -130,26 +144,39 @@
 	id = "cyanide"
 	description = "A highly toxic chemical."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 4
 	custom_metabolism = 0.4
+	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
 	M.adjustOxyLoss(4 * REM)
-	M.sleeping += 1
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
+		if(1 to 5)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
+		if(6 to INFINITY)
+			M.SetSleeping(20 SECONDS)
+			M.throw_alert("oxy", /obj/screen/alert/oxy)
+	if(data["ticks"] % 3 == 0)
+		M.emote("gasp")
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
 	id = "minttoxin"
 	description = "Useful for dealing with undesirable customers."
 	reagent_state = LIQUID
-	color = "#CF3600" // rgb: 207, 54, 0
+	color = "#cf3600" // rgb: 207, 54, 0
 	toxpwr = 0
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
 	..()
-	if(FAT in M.mutations)
+	if(HAS_TRAIT(M, TRAIT_FAT))
 		M.gib()
 
 /datum/reagent/toxin/carpotoxin
@@ -159,6 +186,7 @@
 	reagent_state = LIQUID
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
@@ -188,10 +216,11 @@
 	id = "mindbreaker"
 	description = "A powerful hallucinogen, it can cause fatal effects in users."
 	reagent_state = LIQUID
-	color = "#B31008" // rgb: 139, 166, 233
+	color = "#b31008" // rgb: 139, 166, 233
 	toxpwr = 0
 	custom_metabolism = 0.05
 	overdose = REAGENTS_OVERDOSE
+	flags = list()
 
 /datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M)
 	..()
@@ -202,11 +231,13 @@
 	id = "plantbgone"
 	description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
 	reagent_state = LIQUID
-	color = "#49002E" // rgb: 73, 0, 46
+	color = "#49002e" // rgb: 73, 0, 46
 	toxpwr = 1
+	flags = list()
 
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
+	. = ..()
 	if(istype(T, /turf/simulated/wall))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
@@ -215,8 +246,7 @@
 				if(E.name == "Wallrot")
 					qdel(E)
 
-			for(var/mob/O in viewers(W, null))
-				O.show_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>", 1)
+			W.visible_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>")
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds))
@@ -227,37 +257,75 @@
 		qdel(O)
 	else if(istype(O,/obj/effect/spacevine))
 		if(prob(50))
-			del(O) //Kills kudzu too.
+			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
 
 /datum/reagent/toxin/plantbgone/reaction_mob(mob/living/M, method=TOUCH, volume)
-	src = null
-	if(iscarbon(M))
+	if(!iscarbon(M))
+		return
+
+	if(!ishuman(M))
 		var/mob/living/carbon/C = M
-		if(!C.wear_mask) // If not wearing a mask
-			C.adjustToxLoss(2) // 4 toxic damage per application, doubled for some reason ~~(What could possible double it, if the toxpwr = 1 :hmm: :thinking:)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.dna)
-					if(H.species.flags[IS_PLANT]) //plantmen take a LOT of damage
-						H.adjustToxLoss(50)
+		if((method == INGEST) || C.wear_mask)
+			return
+		C.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/mob/living/carbon/human/H = M
+
+	if(!H.species.flags[IS_PLANT])
+		if((method == INGEST) || H.wear_mask || !H.need_breathe()) // different behaviour only for inhaling
+			return
+		H.adjustToxLoss(2 * toxpwr)
+		return
+
+	var/brute = toxpwr * 5 //plantmen take a LOT of damage
+	var/burn = toxpwr * 4
+
+	if(method == INGEST)
+		var/capped = min(volume, 5)
+		H.take_bodypart_damage(brute * capped, burn * capped)
+		return
+
+	var/list/bodyparts = H.get_damageable_bodyparts()
+	if(!bodyparts.len)
+		return
+
+	var/covered = get_human_covering(H)
+	var/list/targets = list()
+
+	for(var/obj/item/organ/external/BP in bodyparts) // get uncovered bodyparts
+		if(covered & BP.body_part)
+			continue
+		targets += BP
+
+	if(!targets.len)
+		return
+	var/coef = min(volume / 3, 5) * 2
+	brute *= coef
+	burn *= coef
+
+	for(var/obj/item/organ/external/BP in targets)
+		BP.take_damage(brute, burn)
+
 
 /datum/reagent/toxin/stoxin
 	name = "Sleep Toxin"
 	id = "stoxin"
 	description = "An effective hypnotic used to treat insomnia."
 	reagent_state = LIQUID
-	color = "#E895CC" // rgb: 232, 149, 204
+	color = "#e895cc" // rgb: 232, 149, 204
 	toxpwr = 0
 	custom_metabolism = 0.1
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/stoxin/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1 to 12)
 			if(prob(5))
 				M.emote("yawn")
@@ -270,7 +338,7 @@
 		if(50 to INFINITY)
 			M.Weaken(20)
 			M.drowsyness  = max(M.drowsyness, 30)
-	data++
+	data["ticks"]++
 
 /datum/reagent/toxin/chloralhydrate
 	name = "Chloral Hydrate"
@@ -283,29 +351,31 @@
 	overdose = 15
 	overdose_dam = 6
 	restrict_species = list(IPC, DIONA)
+	flags = list()
 
 /datum/reagent/toxin/chloralhydrate/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	data++
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	switch(data["ticks"])
 		if(1)
 			M.confused += 2
 			M.drowsyness += 2
 		if(2 to 199)
 			M.Weaken(30)
 		if(200 to INFINITY)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 
 /datum/reagent/toxin/potassium_chloride
 	name = "Potassium Chloride"
 	id = "potassium_chloride"
 	description = "A delicious salt that stops the heart when injected into cardiac muscle."
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 0
 	overdose = 30
+	flags = list()
 
 /datum/reagent/toxin/potassium_chloride/on_general_digest(mob/living/M)
 	..()
@@ -321,9 +391,10 @@
 	id = "potassium_chlorophoride"
 	description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
 	reagent_state = SOLID
-	color = "#FFFFFF" // rgb: 255,255,255
+	color = "#ffffff" // rgb: 255,255,255
 	toxpwr = 2
 	overdose = 20
+	flags = list()
 
 /datum/reagent/toxin/potassium_chlorophoride/on_general_digest(mob/living/M)
 	..()
@@ -340,33 +411,34 @@
 	id = "beer2"
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
 	reagent_state = LIQUID
-	color = "#FBBF0D" // rgb: 251, 191, 13
+	color = "#fbbf0d" // rgb: 251, 191, 13
 	custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
 	overdose = REAGENTS_OVERDOSE * 0.5
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/toxin/beer2/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
-	switch(data)
+	if(!data["ticks"])
+		data["ticks"] = 1
+	switch(data["ticks"])
 		if(1)
 			M.confused += 2
 			M.drowsyness += 2
 		if(2 to 50)
-			M.sleeping += 1
+			M.SetSleeping(20 SECONDS)
 		if(51 to INFINITY)
-			M.sleeping += 1
-			M.adjustToxLoss((data - 50) * REM)
-	data++
+			M.SetSleeping(20 SECONDS)
+			M.adjustToxLoss((data["ticks"] - 50) * REM)
+	data["ticks"]++
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder. @ TG Port
 	name = "Mute Toxin"
 	id = "mutetoxin"
 	description = "A toxin that temporarily paralyzes the vocal cords."
-	color = "#F0F8FF" // rgb: 240, 248, 255
+	color = "#f0f8ff" // rgb: 240, 248, 255
 	custom_metabolism = 0.4
 	toxpwr = 0
+	flags = list()
 
 /datum/reagent/toxin/mutetoxin/on_general_digest(mob/living/M)
 	..()
@@ -377,9 +449,10 @@
 	id = "sacid"
 	description = "A very corrosive mineral acid with the molecular formula H2SO4."
 	reagent_state = LIQUID
-	color = "#DB5008" // rgb: 219, 80, 8
+	color = "#db5008" // rgb: 219, 80, 8
 	toxpwr = 1
 	var/meltprob = 10
+	flags = list()
 
 /datum/reagent/toxin/acid/on_general_digest(mob/living/M)
 	..()
@@ -430,14 +503,14 @@
 				return
 
 		if(!M.unacidable)
-			if(istype(M, /mob/living/carbon/human) && volume >= 10)
+			if(ishuman(M) && volume >= 10)
 				var/mob/living/carbon/human/H = M
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+				var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
 				if(BP)
 					BP.take_damage(4 * toxpwr, 2 * toxpwr)
 					if(prob(meltprob)) //Applies disfigurement
-						H.emote("scream",,, 1)
-						H.status_flags |= DISFIGURED
+						H.emote("scream")
+						BP.disfigured = TRUE
 			else
 				M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr)) // uses min() and volume to make sure they aren't being sprayed in trace amounts (1 unit != insta rape) -- Doohl
 	else
@@ -458,9 +531,10 @@
 	id = "pacid"
 	description = "Polytrinic acid is a an extremely corrosive chemical substance."
 	reagent_state = LIQUID
-	color = "#8E18A9" // rgb: 142, 24, 169
+	color = "#8e18a9" // rgb: 142, 24, 169
 	toxpwr = 2
 	meltprob = 30
+	flags = list()
 
 //////////////////////////////////////////////
 //////////////New poisons///////////////////// // TODO: Make them a subtype of /toxin/
@@ -488,16 +562,18 @@
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
 
+	data = list()
+
 /datum/reagent/aflatoxin/on_general_digest(mob/living/M)
 	..()
 
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 
-	if(data >= 165)
+	if(data["ticks"] >= 165)
 		M.adjustToxLoss(4)
 		M.apply_effect(5*REM,IRRADIATE,0)
-	data++
+	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
 	name = "Chef's Special"
@@ -506,20 +582,21 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0.01
-	data = 1 //Used as a tally
 	taste_message = "DEATH"
 	restrict_species = list(IPC, DIONA)
+
+	data = list()
 
 /datum/reagent/chefspecial/on_general_digest(mob/living/M)
 	..()
 
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 
-	if(data >= 165)
+	if(data["ticks"] >= 165)
 		M.death(0)
 		M.attack_log += "\[[time_stamp()]\]<font color='red'>Died a quick and painless death by <font color='green'>Chef Excellence's Special Sauce</font>.</font>"
-	data++
+	data["ticks"]++
 
 /datum/reagent/dioxin
 	name = "Dioxin"
@@ -529,19 +606,21 @@
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0 //No metabolism
 
+	data = list()
+
 /datum/reagent/dioxin/on_general_digest(mob/living/M)
 	..()
-	if(!data)
-		data = 1
+	if(!data["ticks"])
+		data["ticks"] = 1
 
-	if(data >= 130)
+	if(data["ticks"] >= 130)
 		M.make_jittery(2)
 		M.make_dizzy(2)
 		switch (volume)
 			if(10 to 20)
 				if(prob(5))
 					M.emote(pick("twitch","giggle"))
-				if(data >=180)
+				if(data["ticks"] >=180)
 					M.adjustToxLoss(1)
 			if(20 to 30)
 				if(prob(10))
@@ -558,19 +637,19 @@
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
 						IO.take_damage(10, 0)
-	data++
+	data["ticks"]++
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
 	id = "mulligan"
 	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
 	reagent_state = LIQUID
-	color = "#5EFF3B" //RGB: 94, 255, 59
+	color = "#5eff3b" //RGB: 94, 255, 59
 	custom_metabolism = 1000
 
 /datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
 	..()
-	if(istype(H))
+	if(!istype(H) || H.species.flags[NO_DNA])
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
@@ -591,15 +670,48 @@
 	reagent_state = LIQUID
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
+	custom_metabolism = 0.02
+
+	data = list()
 
 /datum/reagent/slimetoxin/on_general_digest(mob/living/M)
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.dna && !H.dna.mutantrace)
-			to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-			H.dna.mutantrace = "slime"
-			H.update_mutantrace()
+		if(H.species.name == SLIME)
+			return
+		if(!data["ticks"])
+			data["ticks"] = 1
+		data["ticks"]++
+		switch(data["ticks"])
+			if(1)
+				to_chat(H, "<span class='warning'>You feel different, somehow...</span>")
+			if(2 to 11)
+				var/obj/item/organ/external/BP = pick(H.bodyparts)
+				if(BP.is_flesh())
+					BP.take_damage(10)
+					if(prob(25))
+						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
+						H.emote("scream")
+						BP.sever_artery()
+			if(12 to 21)
+				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
+				BP.take_damage(5)
+				if(prob(25))
+					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
+					H.emote("scream")
+			if(30)
+				if(H.set_species(SLIME))
+					to_chat(H, "<span class='warning'>Your flesh mutates and you feel free!</span>")
+					H.dna.mutantrace = "slime"
+					H.update_mutantrace()
+					for(var/obj/item/organ/external/BP in H.bodyparts)
+						BP.status = 0
+					for(var/obj/item/organ/internal/BP in H.organs)
+						BP.rejuvenate()
+			if(31 to 50)
+				M.heal_bodypart_damage(0,5)
+				M.adjustOxyLoss(-2 * REM)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -613,12 +725,12 @@
 	..()
 	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-		if(M.monkeyizing)
+		if(M.notransform)
 			return
-		M.monkeyizing = 1
+		M.notransform = TRUE
 		M.canmove = 0
 		M.icon = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.invisibility = 101
 		for(var/obj/item/W in M)
 			if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
@@ -627,8 +739,9 @@
 			W.layer = initial(W.layer)
 			W.loc = M.loc
 			W.dropped(M)
+		M.sec_hud_set_implants()
 		var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(M.loc)
-		new_mob.a_intent = "hurt"
+		new_mob.a_intent = INTENT_HARM
 		new_mob.universal_speak = 1
 		if(M.mind)
 			M.mind.transfer_to(new_mob)
@@ -653,7 +766,7 @@
 	..()
 	M.druggy = max(M.druggy, 15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
-		if(M.canmove && !M.restrained())
+		if(M.canmove && !M.incapacitated())
 			if(prob(10))
 				step(M, pick(cardinal))
 	if(prob(7))
@@ -698,7 +811,7 @@
 	id = "impedrezene"
 	description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
-
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
@@ -28,7 +26,7 @@
 
 
 /obj/effect/accelerated_particle/atom_init(mapload, dir = 2)
-	src.dir = dir
+	src.set_dir(dir)
 	if(movement_range > 20)
 		movement_range = 20
 	INVOKE_ASYNC(src, .proc/move, 1)
@@ -38,7 +36,7 @@
 	if (A)
 		if(ismob(A))
 			toxmob(A)
-		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/singularity/)))
+		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/singularity)))
 			A:energy += energy
 		else if(istype(A,/obj/machinery/power/fusion_core))
 			var/obj/machinery/power/fusion_core/collided_core = A
@@ -79,7 +77,7 @@
 			radiation = round(radiation/2,1)*/
 	M.apply_effect((radiation*3),IRRADIATE,0)
 	M.updatehealth()
-	//M << "\red You feel odd."
+	//M << "<span class='warning'>You feel odd.</span>"
 	return
 
 

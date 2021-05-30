@@ -7,7 +7,7 @@
 	icon_state = "freezer"
 	density = 1
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
 	layer = OBJ_LAYER
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -105,14 +105,14 @@
 		return FALSE
 
 	if(href_list["toggleStatus"])
-		use_power = !use_power
+		set_power_use(!use_power)
 		update_icon()
 	if(href_list["setPower"]) // setting power to 0 is redundant anyways
 		var/new_setting = between(0, text2num(href_list["setPower"]), 100)
 		set_power_level(new_setting)
 	if(href_list["temp"])
 		var/amount = text2num(href_list["temp"])
-		set_temperature = Clamp(set_temperature + amount, min_temperature, max_temperature)
+		set_temperature = clamp(set_temperature + amount, min_temperature, max_temperature)
 
 	add_fingerprint(usr)
 
@@ -122,7 +122,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/attackby(obj/item/O, mob/user)
 	if(default_deconstruction_screwdriver(user, initial(icon_state) + "-o", initial(icon_state), O))
-		use_power = FALSE
+		set_power_use(NO_POWER_USE)
 		update_icon()
 		return
 	if(default_deconstruction_crowbar(O))

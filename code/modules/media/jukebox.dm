@@ -22,34 +22,34 @@
 
 	var/emagged = 0
 
-	New(var/list/json)
-		title  = json["title"]
-		artist = json["artist"]
-		album  = json["album"]
+/datum/song_info/New(list/json)
+	title  = json["title"]
+	artist = json["artist"]
+	album  = json["album"]
 
-		url    = json["url"]
+	url    = json["url"]
 
-		length = text2num(json["length"])
+	length = text2num(json["length"])
 
-	proc/display()
-		var/str="\"[title]\""
-		if(artist!="")
-			str += ", by [artist]"
-		if(album!="")
-			str += ", from '[album]'"
-		return str
+/datum/song_info/proc/display()
+	var/str="\"[title]\""
+	if(artist!="")
+		str += ", by [artist]"
+	if(album!="")
+		str += ", from '[album]'"
+	return str
 
-	proc/displaytitle()
-		if(artist==""&&title=="")
-			return "\[NO TAGS\]"
-		var/str=""
-		if(artist!="")
-			str += "[artist] - "
-		if(title!="")
-			str += "\"[title]\""
-		else
-			str += "Untitled"
-		return str
+/datum/song_info/proc/displaytitle()
+	if(artist==""&&title=="")
+		return "\[NO TAGS\]"
+	var/str=""
+	if(artist!="")
+		str += "[artist] - "
+	if(title!="")
+		str += "\"[title]\""
+	else
+		str += "Untitled"
+	return str
 
 
 var/global/loopModeNames=list(
@@ -65,7 +65,6 @@ var/global/loopModeNames=list(
 	density = 1
 
 	anchored = 1
-	luminosity = 4 // Why was this 16
 	playing = 0
 
 	var/loop_mode = JUKEMODE_SHUFFLE
@@ -89,7 +88,7 @@ var/global/loopModeNames=list(
 	update_icon()
 
 /obj/machinery/media/jukebox/update_icon()
-	overlays = 0
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		if(stat & BROKEN)
 			icon_state = "[state_base]-broken"
@@ -100,9 +99,9 @@ var/global/loopModeNames=list(
 	icon_state = state_base
 	if(playing)
 		if(emagged)
-			overlays += "[state_base]-emagged"
+			add_overlay("[state_base]-emagged")
 		else
-			overlays += "[state_base]-running"
+			add_overlay("[state_base]-running")
 
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
@@ -110,10 +109,10 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/ui_interact(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & NOPOWER)
-		to_chat(usr, "\red You don't see anything to mess with.")
+		to_chat(usr, "<span class='warning'>You don't see anything to mess with.</span>")
 		return
 	if(stat & BROKEN && playlist!=null)
-		user.visible_message("\red <b>[user.name] smacks the side of \the [src.name].</b>","\red You hammer the side of \the [src.name].")
+		user.visible_message("<span class='warning'><b>[user.name] smacks the side of \the [src.name].</b></span>","<span class='warning'>You hammer the side of \the [src.name].</span>")
 		stat &= ~BROKEN
 		playlist=null
 		playing=emagged
@@ -144,37 +143,38 @@ var/global/loopModeNames=list(
 
 	var/datum/browser/popup = new (user,"jukebox",name,420,700)
 	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(istype(W, /obj/item/weapon/card/emag))
-		current_song = 0
-		if(!emagged)
-			playlist_id = "emagged"
-			last_reload=world.time
-			playlist=null
-			loop_mode = JUKEMODE_SHUFFLE
-			emagged = 1
-			playing = 1
-			user.visible_message("\red [user.name] slides something into the [src.name]'s card-reader.","\red You short out the [src.name].")
-			update_icon()
-			update_music()
-	else if(istype(W,/obj/item/weapon/wrench))
-		if(user.is_busy()) return
+	if(iswrench(W))
+		if(user.is_busy(src))
+			return
 		var/un = !anchored ? "" : "un"
-		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
-		if(do_after(user,30, target = src))
-			playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
+		if(W.use_tool(src, user, 30, volume = 50))
 			anchored = !anchored
-			user.visible_message("\blue [user.name] [un]locks \the [src.name]'s casters.","\red You [un]lock \the [src.name]'s casters.")
+			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
 			playing = emagged
 			update_music()
 			update_icon()
 	else
 		..()
+
+/obj/machinery/media/jukebox/emag_act(mob/user)
+	current_song = 0
+	if(!emagged)
+		playlist_id = "emagged"
+		last_reload=world.time
+		playlist=null
+		loop_mode = JUKEMODE_SHUFFLE
+		emagged = 1
+		playing = 1
+		user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
+		update_icon()
+		update_music()
+	return TRUE
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	. = ..()
@@ -182,7 +182,7 @@ var/global/loopModeNames=list(
 		return
 
 	if(emagged)
-		to_chat(usr, "\red You touch the bluescreened menu. Nothing happens. You feel dumber.")
+		to_chat(usr, "<span class='warning'>You touch the bluescreened menu. Nothing happens. You feel dumber.</span>")
 		return FALSE
 
 	if (href_list["power"])
@@ -192,7 +192,7 @@ var/global/loopModeNames=list(
 
 	if (href_list["playlist"])
 		if(!check_reload())
-			to_chat(usr, "\red You must wait 60 seconds between playlist reloads.")
+			to_chat(usr, "<span class='warning'>You must wait 60 seconds between playlist reloads.</span>")
 			return FALSE
 		playlist_id = href_list["playlist"]
 		last_reload = world.time
@@ -202,7 +202,7 @@ var/global/loopModeNames=list(
 		update_icon()
 
 	if (href_list["song"])
-		current_song=Clamp(text2num(href_list["song"]), 1, playlist.len)
+		current_song=clamp(text2num(href_list["song"]), 1, playlist.len)
 		update_music()
 		update_icon()
 
@@ -224,10 +224,7 @@ var/global/loopModeNames=list(
 				stat &= BROKEN
 				update_icon()
 				return
-			var/json_reader/reader = new()
-			reader.tokens = reader.ScanJson(json)
-			reader.i = 1
-			var/songdata = reader.read_value()
+			var/songdata = json_decode(json)
 			for(var/list/record in songdata)
 				playlist += new /datum/song_info(record)
 			if(playlist.len==0)
@@ -267,7 +264,7 @@ var/global/loopModeNames=list(
 		media_url = song.url
 		media_start_time = world.time
 		visible_message("<span class='notice'>[bicon(src)] \The [src] begins to play [song.display()].</span>","<em>You hear music.</em>")
-		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</notice>")
+		//visible_message("<span class='notice'>[bicon(src)] \The [src] warbles: [song.length/10]s @ [song.url]</span>")
 	else
 		media_url=""
 		media_start_time = 0
@@ -284,8 +281,8 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"mogesfm84"  = "Moges FM-84",
-		"moges" = "Moges Club Music",
+		"mogesfm84"  = "Moghes FM-84",
+		"moges" = "Moghes Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
@@ -296,6 +293,11 @@ var/global/loopModeNames=list(
 		"zvukbanok" = "Sounds of beer cans",
 		"eurobeat" = "Eurobeat",
 		"finland" = "Suomi wave",
+		"dreamsofvenus" = "Dreams of Venus",
+		"hiphop" = "Hip-Hop for Space Gangstas",
+		"vaporfunk" = "Qerrbalak VaporFunkFM",
+		"thematic" = "Side-Bursting Tunes",
+		"lofi" = "Sadness/Longing/Loneliness",
 	)
 
 // Relaxing elevator music~
@@ -309,8 +311,8 @@ var/global/loopModeNames=list(
 	// Must be defined on your server.
 	playlists=list(
 		"bar"  = "Bar Mix",
-		"mogesfm84"  = "Moges FM-84",
-		"moges" = "Moges Club Music",
+		"mogesfm84"  = "Moghes FM-84",
+		"moges" = "Moghes Club Music",
 		"club" = "Club Mix",
 		"customs" = "Customs Music",
 		"japan" = "Banzai Radio",
@@ -321,6 +323,11 @@ var/global/loopModeNames=list(
 		"zvukbanok" = "Sounds of beer cans",
 		"eurobeat" = "Eurobeat",
 		"finland" = "Suomi wave",
+		"dreamsofvenus" = "Dreams of Venus",
+		"hiphop" = "Hip-Hop for Space Gangstas",
+		"vaporfunk" = "Qerrbalak VaporFunkFM",
+		"thematic" = "Side-Bursting Tunes",
+		"lofi" = "Sadness/Longing/Loneliness",
 	)
 
 /obj/machinery/media/jukebox/techno
@@ -349,6 +356,6 @@ var/global/loopModeNames=list(
 		"lobby" = "Lobby Mix"
 	)
 	playlist_id = "lobby"
-	use_power = 0
+	use_power = NO_POWER_USE
 	invisibility=101
 	autoplay = 1

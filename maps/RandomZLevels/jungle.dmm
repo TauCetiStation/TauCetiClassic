@@ -9,934 +9,928 @@
 /turf/unsimulated/wall{
 	icon_state = "plasma6"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "ad" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma12"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "ae" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma10"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "af" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "ag" = (
 /obj/effect/landmark/loot_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "ah" = (
 /obj/effect/step_trigger/trap/fake,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "ai" = (
 /obj/effect/step_trigger/trap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aj" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma6"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "ak" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma12"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "al" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma10"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "am" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "an" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "ao" = (
 /obj/effect/step_trigger/trap/fake,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "ap" = (
 /obj/effect/landmark/loot_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aq" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma6"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "ar" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma12"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "as" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma10"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "at" = (
 /obj/effect/landmark/falsewall_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "au" = (
 /obj/effect/step_trigger/trap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "av" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aw" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "ax" = (
 /obj/effect/landmark/loot_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "ay" = (
 /obj/effect/step_trigger/trap/fake,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "az" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma5"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aA" = (
 /obj/effect/landmark/falsewall_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aB" = (
 /obj/effect/step_trigger/trap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aC" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aD" = (
 /obj/effect/landmark/falsewall_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aE" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma5"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aF" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma14"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aG" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma8"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aH" = (
 /obj/effect/landmark/door_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aI" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma4"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aJ" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aK" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma5"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aL" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma14"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aM" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma8"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aN" = (
 /obj/effect/landmark/door_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aO" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma4"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aP" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "aQ" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma14"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aR" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma8"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aS" = (
 /obj/effect/landmark/door_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aT" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma4"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aU" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "aV" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma13"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aW" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma7"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aX" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma11"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aY" = (
 /obj/effect/landmark/glowshroom_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "aZ" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma13"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "ba" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma1"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "bb" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma7"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "bc" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma11"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "bd" = (
 /obj/effect/landmark/glowshroom_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "be" = (
 /obj/effect/landmark/temple/destination,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "bf" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma1"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "bg" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma13"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "bh" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma2"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "bi" = (
 /obj/effect/landmark/temple/destination,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "bj" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma7"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "bk" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma11"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "bl" = (
 /obj/effect/landmark/glowshroom_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "bm" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma2"
 	},
-/area/jungle/temple_four)
+/area/awaymission/jungle/temple_four)
 "bn" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma1"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "bo" = (
 /obj/effect/landmark/temple/destination,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "bp" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma2"
 	},
-/area/jungle/temple_six)
+/area/awaymission/jungle/temple_six)
 "bq" = (
 /obj/effect/landmark/falsewall_spawner,
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
 	},
-/area/jungle/temple_two)
+/area/awaymission/jungle/temple_two)
 "br" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma6"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bs" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma12"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bt" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma10"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bu" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bv" = (
 /obj/effect/landmark/loot_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bw" = (
 /obj/effect/step_trigger/trap/fake,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bx" = (
 /obj/effect/step_trigger/trap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "by" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma6"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bz" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma12"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bA" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma10"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bB" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bC" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bD" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bE" = (
 /obj/effect/landmark/falsewall_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bF" = (
 /obj/effect/step_trigger/trap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bG" = (
 /obj/effect/landmark/loot_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bH" = (
 /obj/effect/step_trigger/trap/fake,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bI" = (
 /obj/effect/landmark/falsewall_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bJ" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma6"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "bK" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma12"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "bL" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma10"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "bM" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bN" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma3"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "bO" = (
 /obj/effect/landmark/loot_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "bP" = (
 /obj/effect/step_trigger/trap/fake,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "bQ" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma5"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bR" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma14"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bS" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma8"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bT" = (
 /obj/effect/landmark/door_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bU" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma4"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "bV" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma5"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bW" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma14"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bX" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma8"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bY" = (
 /obj/effect/landmark/door_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "bZ" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma4"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "ca" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cb" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cc" = (
 /obj/effect/step_trigger/trap,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cd" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma5"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "ce" = (
 /obj/effect/landmark/falsewall_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cf" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma14"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cg" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma8"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "ch" = (
 /obj/effect/landmark/door_spawner,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "ci" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma4"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cj" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma9"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "ck" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma13"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "cl" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma13"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cm" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma7"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "cn" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma11"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "co" = (
 /obj/effect/landmark/glowshroom_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "cp" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma7"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cq" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma11"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cr" = (
 /obj/effect/landmark/glowshroom_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cs" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma1"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "ct" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma1"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cu" = (
 /obj/effect/landmark/temple/destination,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "cv" = (
 /obj/effect/landmark/temple/destination,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cw" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma2"
 	},
-/area/jungle/temple_one)
+/area/awaymission/jungle/temple_one)
 "cx" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma2"
 	},
-/area/jungle/temple_three)
+/area/awaymission/jungle/temple_three)
 "cy" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma13"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cz" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma7"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cA" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma11"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cB" = (
 /obj/effect/landmark/glowshroom_spawn,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cC" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma1"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cD" = (
 /obj/effect/landmark/temple/destination,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cE" = (
 /turf/unsimulated/wall{
 	icon_state = "plasma2"
 	},
-/area/jungle/temple_five)
+/area/awaymission/jungle/temple_five)
 "cF" = (
 /turf/unsimulated/jungle/water/deep,
-/area/jungle)
+/area/awaymission/jungle)
 "cG" = (
 /turf/unsimulated/jungle/impenetrable,
-/area/jungle)
+/area/awaymission/jungle)
 "cH" = (
 /turf/unsimulated/jungle/rock,
-/area/jungle)
+/area/awaymission/jungle)
 "cI" = (
 /obj/structure/largecrate,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cJ" = (
 /obj/structure/closet/crate/secure/gear,
-/obj/item/weapon/extinguisher,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/minihoe,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cK" = (
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cL" = (
 /obj/effect/landmark/river_waypoint,
 /turf/unsimulated/jungle/water/deep,
-/area/jungle)
+/area/awaymission/jungle)
 "cM" = (
 /turf/unsimulated/jungle,
-/area/jungle)
+/area/awaymission/jungle)
 "cN" = (
 /obj/structure/stool/bed/roller,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "cO" = (
 /obj/item/weapon/storage/firstaid,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "cP" = (
 /obj/structure/stool,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cQ" = (
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "cR" = (
 /obj/item/trash/chips,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cS" = (
 /obj/item/trash/pistachios,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cT" = (
 /obj/item/weapon/firstaid_arm_assembly,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cU" = (
 /obj/structure/barricade/wooden,
-/obj/structure/sign/redcross,
+/obj/structure/sign/departments/medbay,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "cV" = (
 /obj/machinery/gateway{
-	dir = 9;
-	icon_state = "off"
+	dir = 9
 	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "cW" = (
 /obj/machinery/gateway{
-	dir = 1;
-	icon_state = "off"
+	dir = 1
 	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "cX" = (
 /obj/machinery/gateway{
-	dir = 5;
-	icon_state = "off"
+	dir = 5
 	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "cY" = (
 /obj/structure/barricade/wooden,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "cZ" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/pill_bottle/antitox,
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "da" = (
 /obj/structure/rack,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "db" = (
 /obj/machinery/gateway{
-	dir = 8;
-	icon_state = "off"
+	dir = 8
 	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "dc" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center{
+	name = "Jungle Gateway"
+	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "dd" = (
 /obj/machinery/gateway{
-	dir = 4;
-	icon_state = "off"
+	dir = 4
 	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "de" = (
 /obj/structure/reagent_dispensers,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "df" = (
 /obj/structure/rack,
 /obj/item/weapon/pen,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "dg" = (
 /obj/machinery/gateway{
-	dir = 10;
-	icon_state = "off"
+	dir = 10
 	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "dh" = (
 /obj/machinery/gateway,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "di" = (
 /obj/machinery/gateway{
-	dir = 6;
-	icon_state = "off"
+	dir = 6
 	},
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "dj" = (
 /obj/item/trash/raisins,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "dk" = (
 /obj/structure/closet/crate/secure/gear,
 /obj/item/weapon/hatchet,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "dl" = (
 /obj/effect/landmark/path_waypoint,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "dm" = (
 /obj/item/trash/sosjerky,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "dn" = (
 /obj/item/trash/chips,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "do" = (
 /turf/unsimulated/jungle/clear,
-/area/jungle/crash_ship_one)
+/area/awaymission/jungle/crash_ship_one)
 "dp" = (
 /obj/item/weapon/secbot_assembly,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "dq" = (
 /obj/item/trash/candy,
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "dr" = (
 /obj/item/weapon/rack_parts,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "ds" = (
 /obj/structure/barricade/wooden,
-/obj/structure/sign/securearea{
+/obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'DANGEROUS WILDLIFE'. Sounds like some of the local fauna are vicious.";
 	name = "DANGEROUS WILDLIFE"
 	},
 /turf/unsimulated/jungle/clear,
-/area/jungle)
+/area/awaymission/jungle)
 "dt" = (
 /obj/structure/largecrate,
 /turf/unsimulated/floor,
-/area/jungle)
+/area/awaymission/jungle)
 "du" = (
 /turf/unsimulated/jungle/clear,
-/area/jungle/crash_ship_two)
+/area/awaymission/jungle/crash_ship_two)
 "dv" = (
 /turf/unsimulated/jungle,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dw" = (
 /turf/unsimulated/jungle/path,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dx" = (
 /obj/item/weapon/shard,
 /turf/unsimulated/jungle/path,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dy" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/unsimulated/jungle/path,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dz" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /turf/unsimulated/jungle/path,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dA" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f6"
 	},
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dB" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -944,138 +938,131 @@
 	},
 /obj/structure/window/reinforced,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dC" = (
 /obj/structure/grille,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dD" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dF" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
 	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
+	icon_state = "swall_f10"
 	},
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dG" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall3"
 	},
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dH" = (
 /obj/effect/landmark/loot_spawn/low,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dI" = (
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dJ" = (
 /obj/item/weapon/hatchet,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dK" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dL" = (
 /obj/structure/girder,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dM" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
 /turf/unsimulated/jungle/path,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dN" = (
 /obj/item/weapon/stock_parts/cell,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dO" = (
 /obj/structure/grille{
-	density = 0;
-	icon_state = "brokengrille"
+	destroyed = 1
 	},
 /turf/unsimulated/jungle/path,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dP" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dQ" = (
 /obj/effect/landmark/path_waypoint,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dR" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/emergency,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dT" = (
 /obj/item/weapon/storage/firstaid/regular,
 /turf/unsimulated/jungle/path,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dU" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f5"
 	},
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dV" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/unsimulated/floor,
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dW" = (
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall12"
 	},
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dX" = (
 /turf/unsimulated/jungle/path,
 /turf/simulated/shuttle/wall{
-	dir = 2;
 	icon_state = "swall_f9"
 	},
-/area/jungle/crash_ship_source)
+/area/awaymission/jungle/crash_ship_source)
 "dY" = (
 /turf/unsimulated/jungle,
-/area/jungle/crash_ship_clean)
+/area/awaymission/jungle/crash_ship_clean)
 "dZ" = (
 /turf/unsimulated/jungle/clear,
-/area/jungle/crash_ship_three)
+/area/awaymission/jungle/crash_ship_three)
 "ea" = (
 /turf/unsimulated/jungle/clear,
-/area/jungle/crash_ship_four)
+/area/awaymission/jungle/crash_ship_four)
 "eb" = (
 /obj/machinery/jungle_controller,
 /turf/unsimulated/jungle/rock,
-/area/jungle)
+/area/awaymission/jungle)
 
 (1,1,1) = {"
 aa

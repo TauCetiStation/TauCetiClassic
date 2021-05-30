@@ -7,73 +7,113 @@
 	item_state = "analyzer"
 	desc = "A hand-held scanner able to diagnose robotic injuries."
 	flags = CONDUCT
-	slot_flags = SLOT_BELT
+	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 5
 	throw_range = 10
 	//matter = list("metal" = 200)
 	origin_tech = "magnets=1;biotech=1"
-	var/mode = 1;
+	var/mode = TRUE
+	var/output_to_chat = TRUE
+
+/obj/item/device/robotanalyzer/verb/toggle_output()
+	set name = "Toggle Output"
+	set category = "Object"
+
+	output_to_chat = !output_to_chat
+	if(output_to_chat)
+		to_chat(usr, "The scanner now outputs data to chat.")
+	else
+		to_chat(usr, "The scanner now outputs data in a seperate window.")
 
 /obj/item/device/robotanalyzer/attack(mob/living/M, mob/living/user)
-	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
-		to_chat(user, text("\red You try to analyze the floor's vitals!"))
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("\red [user] has analyzed the floor's vitals!"), 1)
-		user.show_message(text("\blue Analyzing Results for The floor:\n&emsp; Overall Status: Healthy"), 1)
-		user.show_message(text("\blue &emsp; Damage Specifics: [0]-[0]-[0]-[0]"), 1)
-		user.show_message("\blue Key: Suffocation/Toxin/Burns/Brute", 1)
-		user.show_message("\blue Body Temperature: ???", 1)
-		return
-	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(user, "\red You don't have the dexterity to do this!")
-		return
-	if(!istype(M, /mob/living/silicon/robot) && !(ishuman(M) && M:species.flags[IS_SYNTHETIC]))
-		to_chat(user, "\red You can't analyze non-robotic things!")
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span clas='warning'>You don't have the dexterity to do this!</span>")
 		return
 
-	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.","<span class='notice'> You have analyzed [M]'s components.")
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!H.species.flags[IS_SYNTHETIC])
+			to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
+			return
+	else
+		if(!istype(M, /mob/living/silicon/robot))
+			to_chat(user, "<span class='warning'>You can't analyze non-robotic things!</span>")
+			return
+
+	add_fingerprint(user)
+	if(( (CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class='warning'>You try to analyze the floor's vitals!</span>")
+		var/message = ""
+		if(!output_to_chat)
+			message += "<title>floor's scan results</title>"
+
+		message += "<span class='notice'>Analyzing Results for The floor:<br>&emsp; Overall Status: Healthy</span><br>"
+		message += "<span class='notice'>&emsp; Damage Specifics: 0-0-0-0</span><br>"
+		message += "<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span><br>"
+		message += "<span class='notice'>Body Temperature: ???</span><br>"
+
+		if(!output_to_chat)
+			var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
+			popup.set_content(message)
+			popup.open()
+		else
+			to_chat(user, message)
+		return
+
+	user.visible_message("<span class='notice'> [user] has analyzed [M]'s components.</span>","<span class='notice'> You have analyzed [M]'s components.</span>")
+
+	var/message = ""
+	if(!output_to_chat)
+		message += "<title>[M.name]'s scan results</title>"
+
 	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
 	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
-	user.show_message("\blue Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "fully disabled" : "[M.health - M.halloss]% functional"]")
-	user.show_message("&emsp; Key: <font color='#FFA500'>Electronics</font>/<font color='red'>Brute</font>", 1)
-	user.show_message("&emsp; Damage Specifics: <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font>")
-	if(M.tod && M.stat == DEAD)
-		user.show_message("\blue Time of Disable: [M.tod]")
 
-	if (istype(M, /mob/living/silicon/robot))
+	message += "<span class='notice'>Analyzing Results for [M]:<br>&emsp; Overall Status: [M.stat > 1 ? "fully disabled" : "[M.health - M.halloss]% functional"]</span><br>"
+	message += "&emsp; Key: <font color='#FFA500'>Electronics</font>/<font color='red'>Brute</font><br>"
+	message += "&emsp; Damage Specifics: <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
+	if(M.tod && M.stat == DEAD)
+		message += "<span class='notice'>Time of Disable: [M.tod]</span><br>"
+
+	if(istype(M, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/H = M
 		var/list/damaged = H.get_damaged_components(1,1,1)
-		user.show_message("\blue Localized Damage:",1)
+
+		message += "<span class='notice'>Localized Damage:</span><br>"
 		if(length(damaged)>0)
 			for(var/datum/robot_component/org in damaged)
-				user.show_message(text("\blue &emsp; []: [][] - [] - [] - []",	\
+				message += text("<span class='notice'>&emsp; []: [][] - [] - [] - []</span><br>",	\
 				capitalize(org.name),					\
 				(org.installed == -1)	?	"<font color='red'><b>DESTROYED</b></font> "							:"",\
 				(org.electronics_damage > 0)	?	"<font color='#FFA500'>[org.electronics_damage]</font>"	:0,	\
 				(org.brute_damage > 0)	?	"<font color='red'>[org.brute_damage]</font>"							:0,		\
 				(org.toggled)	?	"Toggled ON"	:	"<font color='red'>Toggled OFF</font>",\
-				(org.powered)	?	"Power ON"		:	"<font color='red'>Power OFF</font>"),1)
+				(org.powered)	?	"Power ON"		:	"<font color='red'>Power OFF</font>")
 		else
-			user.show_message("\blue &emsp; Components are OK.",1)
+			message += "<span class='notice'>&emsp; Components are OK.</span><br>"
 		if(H.emagged && prob(5))
-			user.show_message("\red &emsp; ERROR: INTERNAL SYSTEMS COMPROMISED",1)
+			message += "<span class='warning'>&emsp; ERROR: INTERNAL SYSTEMS COMPROMISED</span><br>"
 
-	if (ishuman(M) && M:species.flags[IS_SYNTHETIC])
+	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		user.show_message("\blue Localized Damage, Brute/Electronics:",1)
-		if(length(damaged)>0)
+		message += "<span class='notice'>Localized Damage, Brute/Electronics:</span><br>"
+		if(length(damaged) > 0)
 			for(var/obj/item/organ/external/BP in damaged)
-				user.show_message(text("\blue &emsp; []: [] - []",	\
+				message += text("<span class='notice'>&emsp; []: [] - []</span><br>",	\
 				capitalize(BP.name),					\
-				(BP.brute_dam > 0)	?	"\red [BP.brute_dam]"							:0,		\
-				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0),1)
+				(BP.brute_dam > 0)	?	"<span class='warning'>[BP.brute_dam]</span>"	:0,		\
+				(BP.burn_dam > 0)	?	"<font color='#FFA500'>[BP.burn_dam]</font>"	:0)
 		else
-			user.show_message("\blue &emsp; Components are OK.",1)
+			message += "<span class='notice'>&emsp; Components are OK.</span><br>"
 
-	user.show_message("\blue Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)", 1)
+	message += "<span class='notice'>Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 
-	src.add_fingerprint(user)
-	return
+	if(!output_to_chat)
+		var/datum/browser/popup = new(user, "[M.name]_scan_report", null, 400, 400)
+		popup.set_content(message)
+		popup.open()
+	else
+		to_chat(user, message)

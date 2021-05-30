@@ -3,9 +3,10 @@
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
-	density = 1
-	anchored = 1
-	var/active = 0
+	density = TRUE
+	anchored = TRUE
+
+	var/active = FALSE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
 	var/hacked = FALSE
 	var/static/obj/transit_loc = null
 
@@ -31,152 +32,46 @@
 	return ..()
 
 //this is da important part wot makes things go
-/obj/machinery/gateway/centerstation
+/obj/machinery/gateway/center
+	name = "Unknown Gateway"
 	density = TRUE
 	icon_state = "offcenter"
-	use_power = 1
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 50
+	active_power_usage = 5000
 
 	//warping vars
 	var/list/linked = list()
 	var/ready = FALSE			//have we got all the parts for a gateway?
-	var/wait = 0				//this just grabs world.time at world start
-	var/blocked = TRUE			// used in gateway_locker to allow/disallow entering to gateway while hacked
-	var/obj/machinery/gateway/centeraway/awaygate = null
+	var/blocked = FALSE			// used in gateway_locker to allow/disallow entering to gateway while hacked
+	var/atom/destination = null
 
-/obj/machinery/gateway/centerstation/atom_init()
+	var/block_exile_implant = TRUE
+
+/obj/machinery/gateway/center/atom_init()
 	. = ..()
-	wait = world.time + config.gateway_delay	//+ thirty minutes default
 
-/obj/machinery/gateway/centerstation/atom_init_late()
-	awaygate = locate(/obj/machinery/gateway/centeraway)
+/obj/machinery/gateway/center/atom_init_late()
+	detect()
+	gateways_list += src
 
-
-/obj/machinery/gateway/centerstation/update_icon()
-	icon_state = active ? "on" : "off"
-	icon_state += "center"
-	if(hacked)
-		icon_state += "_s"
-
-
-
-obj/machinery/gateway/centerstation/process()
-	if(stat & (NOPOWER) && active)
-		toggleoff()
-		return
 	if(active)
-		use_power(5000)
+		for(var/obj/machinery/gateway/G in linked)
+			G.active = 1
+			G.update_icon()
 
-
-/obj/machinery/gateway/centerstation/proc/detect()
-	linked = list()	//clear the list
-	var/turf/T = loc
-
-	for(var/i in alldirs)
-		T = get_step(loc, i)
-		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
-		if(G)
-			linked.Add(G)
-			continue
-
-		//this is only done if we fail to find a part
-		ready = 0
-		toggleoff()
-		break
-
-	if(linked.len == 8)
-		ready = 1
-
-
-/obj/machinery/gateway/centerstation/proc/toggleon(mob/user)
-	if(!ready || linked.len != 8 || !powered())
-		return
-	if(!awaygate)
-		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
-		return
-	if(world.time < wait)
-		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [round(((wait - world.time) / 10) / 60)] minutes.</span>")
-		return
-
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 1
-		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_open.ogg', 100, 2)
-	active = 1
-	update_icon()
-
-
-/obj/machinery/gateway/centerstation/proc/toggleoff()
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 0
-		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_close.ogg', 100, 2)
-	active = 0
-	update_icon()
-
-/obj/machinery/gateway/centerstation/attack_hand(mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-	. = ..()
-	if(.)
-		return
-	if(!ready)
-		detect()
-		return
-	if(!active)
-		toggleon(user)
-		return
-	toggleoff()
-
-
-//okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/M)
-	if(!ready || !active || !awaygate)
-		return
-	if(awaygate.calibrated)
-		if(hacked && blocked)
-			if(ismob(M))
-				to_chat(M, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
-			return
-		M.dir = SOUTH
-		enter_to_transit(M, get_step(awaygate.loc, SOUTH))
-	else
-		var/obj/effect/landmark/dest = pick(awaydestinations)
-		if(dest)
-			M.dir = SOUTH
-			enter_to_transit(M, dest.loc)
-			use_power(5000)
-
-
-/obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user)
-	if(istype(W,/obj/item/device/multitool))
-		to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
-	else
-		..()
-
-/////////////////////////////////////Away////////////////////////
-
-
-/obj/machinery/gateway/centeraway
-	density = TRUE
-	icon_state = "offcenter"
-	use_power = 0
-	var/calibrated = 1
-	var/list/linked = list()	//a list of the connected gateway chunks
-	var/ready = 0
-	var/obj/machinery/gateway/centerstation/stationgate = null
-
-
-/obj/machinery/gateway/centeraway/atom_init_late()
-	stationgate = locate(/obj/machinery/gateway/centerstation)
-
-
-/obj/machinery/gateway/centeraway/update_icon()
+/obj/machinery/gateway/center/update_icon()
 	icon_state = active ? "on" : "off"
 	icon_state += "center"
 	if(hacked)
 		icon_state += "_s"
 
+/obj/machinery/gateway/center/process()
+	if((stat & NOPOWER) && active)
+		toggleoff()
 
-/obj/machinery/gateway/centeraway/proc/detect()
+/obj/machinery/gateway/center/proc/detect() // now this checked only at the start. It's okay if it continues to work without some parts... right?
 	linked = list()	//clear the list
 	var/turf/T = loc
 
@@ -188,84 +83,121 @@ obj/machinery/gateway/centerstation/process()
 			continue
 
 		//this is only done if we fail to find a part
-		ready = 0
+		ready = FALSE
 		toggleoff()
 		break
 
 	if(linked.len == 8)
-		ready = 1
+		ready = TRUE
 
-
-/obj/machinery/gateway/centeraway/proc/toggleon(mob/user)
-	if(!ready || linked.len != 8)
-		return 0
-	if(!stationgate)
-		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
+/obj/machinery/gateway/center/proc/toggleon(mob/user)
+	if(!ready)
+		to_chat(user, "<span class='warning'>Error: Integrity check failed.</span>")
 		return
 
+	if(!destination)
+		to_chat(user, "<span class='notice'>Warning: No destination found, recalibration required. You can calibrate Gateway with multitool.</span>")
+
 	for(var/obj/machinery/gateway/G in linked)
-		G.active = 1
+		G.active = TRUE
 		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_open.ogg', 100, 2)
-	active = 1
+	playsound(src, 'sound/machines/gateway/gateway_open.ogg', VOL_EFFECTS_MASTER)
+	active = TRUE
 	update_icon()
 
+	set_power_use(ACTIVE_POWER_USE)
+	START_PROCESSING(SSmachines, src)
 
-/obj/machinery/gateway/centeraway/proc/toggleoff()
+/obj/machinery/gateway/center/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
-		G.active = 0
+		G.active = FALSE
 		G.update_icon()
-	playsound(src, 'sound/machines/gateway/gateway_close.ogg', 100, 2)
-	active = 0
+	playsound(src, 'sound/machines/gateway/gateway_close.ogg', VOL_EFFECTS_MASTER)
+	active = FALSE
 	update_icon()
 
-/obj/machinery/gateway/centeraway/attack_hand(mob/user)
+	set_power_use(IDLE_POWER_USE)
+	STOP_PROCESSING(SSmachines, src)
+
+/obj/machinery/gateway/center/proc/calibrate(user)
+	if(hacked)
+		to_chat(user, "<span class='bold warning'>Error: Recalibration is not possible.</span>.")
+		return
+	var/list/destinations_choice = list()
+	for(var/obj/machinery/gateway/center/G in gateways_list)
+		if(G.active && ready && powered() && src != G)
+			destinations_choice[G.name] = G
+
+	//away gates always should be able to allow pass on station
+	var/atom/station_gate = locate(/obj/machinery/gateway/center/station)
+	if(station_gate && !(station_gate in destinations_choice) && !istype(src,/obj/machinery/gateway/center/station))
+		destinations_choice[station_gate.name] = station_gate
+
+	if(length(awaydestinations))
+		destinations_choice["Unstable destination"] = pick(awaydestinations)
+
+	destinations_choice["None"] = null
+
+	var/user_pick = input(user, "Select a destination from the following candidates:","Gateway Destination",null) as null|anything in destinations_choice
+
+	if(user_pick && destinations_choice[user_pick])
+		destination = destinations_choice[user_pick]
+		to_chat(user, "<span class='warning bold'>Recalibration successful!</span>.")
+
+/obj/machinery/gateway/center/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	. = ..()
+
 	if(.)
 		return
-	if(!ready)
-		detect()
-		return
-	if(!active)
+
+	if(!active && powered())
 		toggleon(user)
 		return
+
 	toggleoff()
 
-
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/M)
+// okay, here's a good teleporting stuff
+/obj/machinery/gateway/center/Bumped(atom/movable/M)
 	if(!ready || !active)
 		return
-	if(iscarbon(M))
+
+	if(hacked && blocked)
+		if(ismob(M))
+			to_chat(M, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
+		return
+
+	if(!destination)
+		to_chat(M, "<span class='warning'>Error: No destination set, calibration required. You can calibrate Gateway with multitool.</span>")
+		return
+
+	if(block_exile_implant && iscarbon(M))
 		for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
-				to_chat(M, "The station gate has detected your exile implant and is blocking your entry.")
+				to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
 				return
-	M.dir = SOUTH
-	enter_to_transit(M, get_step(stationgate.loc, SOUTH))
 
+	M.set_dir(SOUTH)
+	enter_to_transit(M, get_step(destination.loc, SOUTH))
+	use_power(1000)
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user)
-	if(istype(W,/obj/item/device/multitool))
-		if(calibrated)
-			to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
-		else
-			to_chat(user, "<span class='notice'> <b>Recalibration successful!</b>:</span> This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
-			calibrated = 1
+/obj/machinery/gateway/center/attackby(obj/item/device/W, mob/user)
+	if(ismultitool(W))
+		calibrate(user)
 	else
 		..()
 
 /obj/machinery/gateway/proc/enter_to_transit(atom/movable/entered, turf/target)
-	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 	entered.freeze_movement = TRUE
 	entered.forceMove(transit_loc.loc)
 	if(isliving(entered))
 		var/mob/living/M = entered
 		M.Stun(10, 1, 1, 1)
-		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity=0; screen_loc="1,0"; } (src)
+		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity = MOUSE_OPACITY_TRANSPARENT; screen_loc="1,0"; } (src)
 		if(M.client)
 			M.client.screen += cinematic
-			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', 100, 2)
+			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target, cinematic), 100)
 	else
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)
@@ -282,10 +214,37 @@ obj/machinery/gateway/centerstation/process()
 		M.AdjustStunned(-10, 1, 1, 0)
 	entered.freeze_movement = FALSE
 	entered.forceMove(target)
-	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/gateway_transit
 
 /obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
+	. = ..()
 	if(!AM.freeze_movement)
 		qdel(AM) // THIS IS BLUESPACE FELLAS
+
+/* station gate tweaks */
+/obj/machinery/gateway/center/station
+	name = "NSS Exodus Gateway"
+	block_exile_implant = FALSE
+
+/obj/machinery/gateway/center/station/atom_init()
+	. = ..()
+	name = "[station_name()] Gateway"
+
+/obj/machinery/gateway/center/station/process()
+	..()
+	if(active && !hacked && !config.gateway_enabled)
+		toggleoff()
+
+/obj/machinery/gateway/center/station/calibrate(user)
+	if(!hacked && !config.gateway_enabled)
+		to_chat(user, "<span class='warning'>Error: Remote activation required, make a request to the CentComm for this.</span>")
+		return
+	..()
+
+/obj/machinery/gateway/center/station/toggleon(mob/user)
+	if(!hacked && !config.gateway_enabled)
+		to_chat(user, "<span class='warning'>Error: Remote activation required, make a request to the CentComm for this.</span>")
+		return
+	..()

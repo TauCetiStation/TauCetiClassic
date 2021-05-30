@@ -13,14 +13,13 @@
 	response_disarm = "pushes the"
 	response_harm = "hits the"
 	speed = 4
-	maxHealth = 250
-	health = 250
+	maxHealth = 150
+	health = 150
 
 	harm_intent_damage = 5
-	melee_damage_lower = 8
-	melee_damage_upper = 12
-	attacktext = "attacks"
-	attack_sound = 'sound/weapons/bite.ogg'
+	melee_damage = 10
+	attacktext = "attack"
+	attack_sound = list('sound/weapons/bite.ogg')
 
 	min_oxy = 0
 	max_oxy = 0
@@ -35,6 +34,9 @@
 	faction = "mimic"
 	move_to_delay = 8
 
+	animalistic = FALSE
+	has_head = TRUE
+
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
@@ -42,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/mimic/death()
 	..()
-	visible_message("\red <b>[src]</b> stops moving!")
+	visible_message("<span class='warning'><b>[src]</b> stops moving!</span>")
 	qdel(src)
 
 
@@ -57,8 +59,8 @@
 
 	attacktext = "bites"
 
-	stop_automated_movement = 1
-	wander = 0
+	stop_automated_movement = TRUE
+	wander = FALSE
 	var/attempt_open = 0
 
 // Pickup loot
@@ -167,13 +169,11 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 			destroy_objects = 1
 			if(O.density && O.anchored)
 				knockdown_people = 1
-				melee_damage_lower *= 2
-				melee_damage_upper *= 2
+				melee_damage *= 2
 		else if(istype(O, /obj/item))
 			var/obj/item/I = O
 			health = 15 * I.w_class
-			melee_damage_lower = 2 + I.force
-			melee_damage_upper = 2 + I.force
+			melee_damage = 2 + I.force
 			move_to_delay = 2 * I.w_class
 
 		maxHealth = health
@@ -188,7 +188,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		..()
 
 /mob/living/simple_animal/hostile/mimic/copy/AttackingTarget()
-	. =..()
+	. = ..()
 	if(knockdown_people)
 		var/mob/living/L = .
 		if(istype(L))
@@ -201,3 +201,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		LoseTarget()
 		creator = owner
 		faction = "\ref[owner]"
+
+/mob/living/simple_animal/hostile/mimic/copy/religion
+	response_help = "pets the"
+	attacktext = "hugs"
+	a_intent = INTENT_HELP

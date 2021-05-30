@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/summonitem
-	name = "Instant Summons"
-	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
+	name = "Мгновенный Призыв"
+	desc = "Используется для призыва помеченной вещи в вашу руку откуда угодно."
 	school = "transmutation"
 	charge_max = 100
 	clothes_req = 0
@@ -39,6 +39,24 @@
 		name = initial(name)
 		marked_item = null
 	else	//Getting previously marked item
+		// Preventing a nasty exlpoit where wizard traps himself in the hat with the hat.
+		// Note: probably should've been in area/custom/tophat/Entered(), but it gets called before Moved()
+		// And so the hat is put into wizard's hands *after* it teleports somewhere
+		// which leads to whole bunch of other problems
+		// so it resides here.
+
+		if(istype(marked_item, /obj/item/clothing/head/wizard/tophat) && istype(get_area(user), /area/custom/tophat))
+			var/obj/item/clothing/head/wizard/tophat/TP = marked_item
+			TP.jump_out()
+			var/area/new_area = teleportlocs[pick(teleportlocs)]
+			user.visible_message("<span class='danger'>[TP] becomes unstable as it enters itself, and now resides somewhere in [new_area]!</span>")
+
+			var/list/all_turfs = get_area_turfs(new_area.type)
+			var/turf/T = pick(all_turfs)
+
+			TP.forceMove(T)
+			return
+
 		var/obj/item_to_retrieve = marked_item
 		while(isobj(item_to_retrieve.loc))
 			item_to_retrieve = item_to_retrieve.loc
@@ -54,7 +72,7 @@
 		if(item_to_retrieve.anchored)
 			to_chat(user, "<span class='userdanger'>[item_to_retrieve] prevents summoning [marked_item]. It's located in [get_area(item_to_retrieve)]!</span>")
 			item_to_retrieve.SpinAnimation(5, 1)
-			playsound(item_to_retrieve, 'sound/magic/SummonItems_generic.ogg', 100, 1)
+			playsound(item_to_retrieve, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
 			if(alert("Do you want to unlink the [marked_item]?",,"Yes","No") == "Yes")
 				name = initial(name)
 				marked_item = null
@@ -66,4 +84,4 @@
 			else
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears in [user]'s hand!</span>")
 				user.put_in_hands(item_to_retrieve)
-			playsound(user, 'sound/magic/SummonItems_generic.ogg', 100, 1)
+			playsound(user, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)

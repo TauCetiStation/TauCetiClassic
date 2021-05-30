@@ -1,6 +1,6 @@
 //Corgi
 /mob/living/simple_animal/corgi
-	name = "\improper corgi"
+	name = "corgi"
 	real_name = "corgi"
 	desc = "It's a corgi."
 	icon_state = "corgi"
@@ -17,6 +17,10 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+
+	has_head = TRUE
+	has_leg = TRUE
+
 	var/facehugger
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
@@ -24,29 +28,27 @@
 	desc = "Tastes like... well you know..."
 
 /mob/living/simple_animal/corgi/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 
 /mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(!stat)
-			for(var/mob/M in viewers(user, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\blue [user] baps [name] on the nose with the rolled up [O]")
+			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 	else
 		..()
 
 /mob/living/simple_animal/corgi/puppy
-	name = "\improper corgi puppy"
+	name = "corgi puppy"
 	real_name = "corgi"
 	desc = "It's a corgi puppy."
 	icon_state = "puppy"
@@ -99,7 +101,7 @@
 			emote("me",1,pick("dances around","chases her tail"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					set_dir(i)
 					sleep(1)
 
 /mob/living/simple_animal/corgi/borgi
@@ -112,24 +114,21 @@
 	butcher_results = list()
 	var/emagged = 0
 
-/mob/living/simple_animal/corgi/borgi/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
-		user.SetNextMove(CLICK_CD_MELEE)
-		Emag(user)
-	else
-		..()
+/mob/living/simple_animal/corgi/borgi/atom_init()
+	. = ..()
+	chief_animal_list += src
 
-/mob/living/simple_animal/corgi/borgi/proc/Emag(user)
-	if(!emagged)
+/mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
+	if(!emagged && emagged < 2)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
 		spawn (1000)
 			src.explode()
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/corgi/borgi/proc/explode()
-	for(var/mob/M in viewers(src, null))
-		if (M.client)
-			M.show_message("\red [src] makes an odd whining noise.")
+	visible_message("<span class='warning'>[src] makes an odd whining noise.</span>")
 	sleep(10)
 	explosion(get_turf(src), 0, 1, 4, 7)
 	Die()
@@ -142,7 +141,7 @@
 	var/obj/item/projectile/beam/A = new /obj/item/projectile/beam(loc)
 	A.icon = 'icons/effects/genetics.dmi'
 	A.icon_state = "eyelasers"
-	playsound(src.loc, 'sound/weapons/taser2.ogg', 75, 1)
+	playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 	A.original = target
 	A.current = T
 	A.starting = T
@@ -167,7 +166,6 @@
 		s.start()
 
 /mob/living/simple_animal/corgi/borgi/proc/Die()
-	..()
 	visible_message("<b>[src]</b> blows apart!")
 	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

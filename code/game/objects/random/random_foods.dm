@@ -24,6 +24,7 @@
 		return pick(\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,\
 						prob(2);/obj/item/weapon/reagent_containers/food/drinks/dry_ramen,\
+						prob(2);/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen,\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/chips,\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/sosjerky,\
 						prob(2);/obj/item/weapon/reagent_containers/food/snacks/no_raisin,\
@@ -63,3 +64,21 @@
 						prob(2);/obj/random/foods/drink_can,\
 						prob(16);/obj/random/foods/food_trash\
 					)
+
+/obj/random/foods/donuts
+	name = "Random Donut"
+	desc = "This is a random donut for donut box."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "donut_classic"
+
+/obj/random/foods/donuts/item_to_spawn()
+	return pick(
+		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/classic,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/syndie,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/choco,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/banana,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/berry,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia,
+	)

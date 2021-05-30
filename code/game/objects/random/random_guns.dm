@@ -3,11 +3,11 @@
 	name = "Random Handgun"
 	desc = "This is a random security sidearm."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "sigi250"
+	icon_state = "9mm_glock"
 /obj/random/guns/handgun_security/item_to_spawn()
 		return pick(\
-						prob(3);/obj/item/weapon/gun/projectile/sigi,\
-						prob(1);/obj/item/weapon/gun/projectile/sigi/spec
+						prob(3);/obj/item/weapon/gun/projectile/glock,\
+						prob(1);/obj/item/weapon/gun/projectile/glock/spec
 					)
 
 /obj/random/guns/projectile_security
@@ -28,13 +28,14 @@
 	icon_state = "laser"
 /obj/random/guns/energy_weapon/item_to_spawn()
 		return pick(\
-						prob(25);/obj/item/weapon/gun/energy/taser,\
+						prob(25);/obj/item/weapon/gun/energy/taser/stunrevolver,\
 						prob(15);/obj/item/weapon/gun/energy/laser/retro,\
 						prob(15);/obj/item/weapon/gun/energy/laser/practice,\
 						prob(10);/obj/item/weapon/gun/energy/toxgun,\
 						prob(10);/obj/item/weapon/gun/energy/laser,\
 						prob(8);/obj/item/weapon/gun/energy/ionrifle,\
-						prob(4);/obj/item/weapon/gun/projectile/automatic/l10c,\
+						prob(4);/obj/item/weapon/gun/plasma,\
+						prob(4);/obj/item/weapon/gun/plasma/p104sass,\
 						prob(4);/obj/item/weapon/gun/energy/xray,\
 						prob(4);/obj/item/weapon/gun/energy/gun,\
 						prob(4);/obj/item/weapon/gun/energy/decloner,\
@@ -53,7 +54,7 @@
 	icon_state = "revolver"
 /obj/random/guns/projectile_handgun/item_to_spawn()
 		return pick(\
-						prob(15);/obj/item/weapon/gun/projectile/sigi,\
+						prob(15);/obj/item/weapon/gun/projectile/glock,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/colt1911,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/luger,\
@@ -65,7 +66,7 @@
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/deagle,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/gyropistol,\
-						prob(2);/obj/item/weapon/gun/projectile/sigi/spec,\
+						prob(2);/obj/item/weapon/gun/projectile/glock/spec,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba\
 					)
@@ -141,7 +142,7 @@
 						prob(25);/obj/item/ammo_casing/c9mmr,\
 						prob(5);/obj/item/ammo_box/c9mm,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/luger,\
-						prob(2);/obj/item/weapon/gun/projectile/sigi,\
+						prob(2);/obj/item/weapon/gun/projectile/glock,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol,\
 						prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi\
 					)
@@ -172,6 +173,6 @@
 						prob(200);/obj/item/ammo_casing/a357,\
 						prob(20);/obj/item/ammo_box/a357,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba,\
-						prob(2);/obj/item/weapon/gun/projectile/revolver/,\
+						prob(2);/obj/item/weapon/gun/projectile/revolver,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/syndie\
 					)

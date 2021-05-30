@@ -4,7 +4,7 @@
 	desc = "Place her into an apiary so she can get busy."
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed-kudzu"
-	w_class = 1
+	w_class = ITEM_SIZE_TINY
 
 /obj/item/weapon/bee_net
 	name = "bee net"
@@ -12,7 +12,7 @@
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "bee_net"
 	item_state = "bedsheet"
-	w_class = 3
+	w_class = ITEM_SIZE_NORMAL
 	var/caught_bees = 0
 
 /obj/item/weapon/bee_net/attack_self(mob/user)
@@ -21,9 +21,9 @@
 		if(B.feral < 0)
 			caught_bees += B.strength
 			qdel(B)
-			user.visible_message("\blue [user] nets some bees.","\blue You net up some of the becalmed bees.")
+			user.visible_message("<span class='notice'>[user] nets some bees.</span>","<span class='notice'>You net up some of the becalmed bees.</span>")
 		else
-			user.visible_message("\red [user] swings at some bees, they don't seem to like it.","\red You swing at some bees, they don't seem to like it.")
+			user.visible_message("<span class='warning'>[user] swings at some bees, they don't seem to like it.</span>","<span class='warning'>You swing at some bees, they don't seem to like it.</span>")
 			B.feral = 5
 			B.target_mob = user
 
@@ -59,7 +59,7 @@
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "apiary_item"
 	item_state = "giftbag"
-	w_class = 5
+	w_class = ITEM_SIZE_HUGE
 
 /obj/item/beezeez
 	name = "bottle of BeezEez"
@@ -87,35 +87,4 @@
 	name = "Honey"
 	id = "honey"
 	description = "A golden yellow syrup, loaded with sugary sweetness."
-	color = "#FFFF00"
-
-/obj/item/weapon/book/manual/hydroponics_beekeeping
-	name = "The Ins and Outs of Apiculture - A Precise Art"
-	icon_state ="bookHydroponicsBees"
-	author = "Beekeeper Dave"
-	title = "The Ins and Outs of Apiculture - A Precise Art"
-	dat = {"<html>
-				<head>
-				<style>
-				h1 {font-size: 18px; margin: 15px 0px 5px;}
-				h2 {font-size: 15px; margin: 15px 0px 5px;}
-				li {margin: 2px 0px 2px 15px;}
-				ul {margin: 5px; padding: 0px;}
-				ol {margin: 5px; padding: 0px 15px;}
-				body {font-size: 13px; font-family: Verdana;}
-				</style>
-				</head>
-				<body>
-				<h1>Raising Bees</h1>
-
-				Bees are loving but fickle creatures. Don't mess with their hive and stay away from any clusters of them, and you'll avoid their ire.
-				Sometimes, you'll need to dig around in there for those delicious sweeties though - in that case make sure you wear sealed protection gear
-				and carry an extinguisher or smoker with you - any bees chasing you, once calmed down, can thusly be netted and returned safely to the hive.<br.
-				<br>
-				BeezEez is a cure-all panacea for them, but use it too much and the hive may grow to apocalyptic proportions. Other than that, bees are excellent pets
-				for all the family and are excellent caretakers of one's garden: having a hive or two around will aid in the longevity and growth rate of plants,
-				and aid them in fighting off poisons and disease.
-
-				</body>
-			</html>
-			"}
+	color = "#ffff00"

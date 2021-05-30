@@ -1,7 +1,7 @@
 
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
-	use_power = 0
+	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/datum/gas_mixture/air_contents
@@ -67,7 +67,7 @@
 	anchored = TRUE // Prevent movement
 	return TRUE
 
-/obj/machinery/portable_atmospherics/Move()
+/obj/machinery/portable_atmospherics/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 	if(.)
 		disconnect()
@@ -99,19 +99,19 @@
 			T.forceMove(src)
 			holding = T
 			update_icon()
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (iswrench(W))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
 				user.SetNextMove(CLICK_CD_RAPID)
-				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message(
 					"[user] disconnects [src].",
 					"<span class='notice'>You unfasten [src] from the port.</span>",
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
 			else
-				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
+				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
 				if(!possible_port)
 					to_chat(user, "<span class='notice'>Nothing happens.</span>")
 					return
@@ -119,7 +119,7 @@
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
 				user.SetNextMove(CLICK_CD_RAPID)
-				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message(
 					"[user] connects [src].",
 					"<span class='notice'>You fasten [src] to the port.</span>",
@@ -162,7 +162,7 @@
 		C.forceMove(src)
 		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
 		power_change()
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(isscrewdriver(I))
 		if(!cell)
 			to_chat(user, "<span class='warning'>There is no power cell installed.</span>")
 			return
@@ -185,5 +185,5 @@
 			gases += ", [gas]"
 		else
 			gases = gas
-	log_admin("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
-	message_admins("[usr] ([usr.ckey]) opened '[src.name]' containing [gases].")
+	log_admin("[key_name(usr)] opened '[src.name]' containing [gases].")
+	message_admins("[key_name_admin(usr)] opened '[src.name]' containing [gases]. [ADMIN_JMP(src)]")

@@ -4,7 +4,7 @@
 	id = "coolant"
 	description = "Industrial cooling substance."
 	reagent_state = LIQUID
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = "#c8a5dc" // rgb: 200, 165, 220
 
 /datum/chemical_reaction/coolant
 	name = "Coolant"
@@ -16,7 +16,7 @@
 /obj/structure/reagent_dispensers/coolanttank
 	name = "coolant tank"
 	desc = "A tank of industrial coolant."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "coolanttank"
 	amount_per_transfer_from_this = 10
 
@@ -26,7 +26,7 @@
 
 /obj/structure/reagent_dispensers/coolanttank/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			explode()
 
 /obj/structure/reagent_dispensers/coolanttank/blob_act()
@@ -35,12 +35,12 @@
 /obj/structure/reagent_dispensers/coolanttank/ex_act()
 	explode()
 
-/obj/structure/reagent_dispensers/coolanttank/proc/explode()
+/obj/structure/reagent_dispensers/coolanttank/explode()
 	var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 	//S.attach(src)
 	S.set_up(5, 0, src.loc)
 	S.start()
-	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+	playsound(src, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 	var/datum/gas_mixture/env = src.loc.return_air()
 	if(env)

@@ -1,0 +1,1679 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f9"
+	},
+/area/space_structures/derelict_lab)
+"ac" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall12"
+	},
+/area/space_structures/derelict_lab)
+"ae" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall3"
+	},
+/area/space_structures/derelict_lab)
+"af" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f10"
+	},
+/area/space_structures/derelict_lab)
+"ag" = (
+/obj/machinery/chem_dispenser,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ah" = (
+/obj/machinery/door/airlock/virology/glass{
+	name = "Isolation B";
+	req_access = list(39)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ai" = (
+/obj/structure/table/glass,
+/obj/item/weapon/paper{
+	info = "Information about the virus from the planet Omicron-8. The virus behaves unpredictably. Five weeks ago, when you delivered it to us, it was calm, and caused only cough and a little nausea. A week later, the virus caused bloody vomiting and severe epilepsy. Two weeks after delivery, it caused strong aggression, and was transmitted not through airborne droplets, but through blood and saliva.";
+	name = "Report #1"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aj" = (
+/obj/structure/table/glass,
+/obj/structure/reagent_dispensers/virusfood{
+	pixel_y = 30
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ak" = (
+/obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"al" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/glass/beaker/large,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"am" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/landmark/corpse/doctor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"an" = (
+/obj/item/weapon/pen,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ao" = (
+/obj/item/weapon/paper{
+	info = "The preliminary name of the virus is PAX-12. 6 weeks after delivery, the infected began to attack the medical staff and security officers. Some infected are trying to get out of isolation cells.";
+	name = "Report #2"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ap" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aq" = (
+/obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ar" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"as" = (
+/turf/simulated/shuttle/wall,
+/area/space_structures/derelict_lab)
+"at" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"au" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"av" = (
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aw" = (
+/obj/structure/table/glass,
+/obj/item/weapon/disk/research_points,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ax" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s10"
+	},
+/area/space_structures/derelict_lab)
+"ay" = (
+/obj/structure/closet/emcloset,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"az" = (
+/obj/item/clothing/shoes/boots/combat,
+/obj/effect/decal/cleanable/blood,
+/obj/item/ammo_casing/c9mm,
+/obj/item/ammo_casing/c9mm,
+/obj/item/clothing/under/ert,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/shuttle/plating,
+/area/space_structures/derelict_lab)
+"aB" = (
+/obj/structure/table/glass,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aC" = (
+/obj/item/ammo_casing/c9mm,
+/obj/item/ammo_casing/c9mm,
+/obj/item/ammo_casing/c9mm,
+/obj/item/ammo_casing/c9mm,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aD" = (
+/obj/machinery/smartfridge/secure/virology,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aE" = (
+/obj/item/ammo_casing/c9mm,
+/obj/item/ammo_casing/c9mm,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aF" = (
+/obj/item/clothing/under/ert,
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aG" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aH" = (
+/obj/item/ammo_casing/a74,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aI" = (
+/obj/machinery/disease2/diseaseanalyser,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aK" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/fancy/vials,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aL" = (
+/obj/item/ammo_casing/a74,
+/obj/item/ammo_casing/a74,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aM" = (
+/obj/item/weapon/shard,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aN" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aP" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f6"
+	},
+/area/space_structures/derelict_lab)
+"aQ" = (
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aR" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall14"
+	},
+/area/space_structures/derelict_lab)
+"aS" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	dir = 3;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/derelict_lab)
+"aT" = (
+/obj/item/weapon/paper_bin,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aU" = (
+/turf/simulated/floor{
+	dir = 3;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/derelict_lab)
+"aW" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aX" = (
+/obj/machinery/door/airlock/virology/glass{
+	name = "Isolation A";
+	req_access = list(39)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"aZ" = (
+/obj/item/ammo_casing/a74,
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	dir = 3;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/derelict_lab)
+"ba" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_f5"
+	},
+/area/space_structures/derelict_lab)
+"bb" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "warnwhite"
+	},
+/area/space_structures/derelict_lab)
+"bc" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/obj/item/weapon/shard,
+/turf/simulated/shuttle/plating,
+/area/space_structures/derelict_lab)
+"bd" = (
+/obj/machinery/computer/centrifuge,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bg" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bi" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bj" = (
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bk" = (
+/obj/item/weapon/bedsheet/medical,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bl" = (
+/obj/effect/landmark/corpse/doctor,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bm" = (
+/obj/machinery/computer/diseasesplicer,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bn" = (
+/obj/machinery/disease2/incubator,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bo" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bp" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bq" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	icon_state = "warnwhite"
+	},
+/area/space_structures/derelict_lab)
+"br" = (
+/obj/item/ammo_casing/c9mm,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bs" = (
+/obj/structure/stool/bed,
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bt" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bu" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bv" = (
+/obj/structure/stool/bed,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bw" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/derelict_lab)
+"bx" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/derelict_lab)
+"by" = (
+/obj/machinery/door/airlock/virology/glass{
+	name = "Virology";
+	req_access = list(39)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bz" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/derelict_lab)
+"bA" = (
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/derelict_lab)
+"bB" = (
+/obj/machinery/door/airlock/security/glass,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bC" = (
+/obj/item/weapon/spike,
+/turf/space,
+/area/space)
+"bD" = (
+/obj/structure/closet/l3closet/general,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bE" = (
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/structure/dryer{
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bF" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bG" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall13"
+	},
+/area/space_structures/derelict_lab)
+"bH" = (
+/obj/structure/grille{
+	destroyed = 1
+	},
+/obj/item/weapon/shard,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bI" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bJ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"bK" = (
+/obj/structure/closet/l3closet/security,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bL" = (
+/obj/structure/rack,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bN" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bP" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/derelict_lab)
+"bQ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bR" = (
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bS" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bT" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bU" = (
+/obj/item/stack/sheet/metal,
+/turf/space,
+/area/space_structures/derelict_lab)
+"bV" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/derelict_lab)
+"bW" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s5"
+	},
+/area/space_structures/derelict_lab)
+"bX" = (
+/obj/machinery/light_construct/small,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bY" = (
+/obj/machinery/light/small,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"bZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ca" = (
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict_lab)
+"cb" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/glass/beaker,
+/obj/structure/reagent_dispensers/virusfood{
+	pixel_y = 30
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"cc" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/space)
+"cd" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall_s9"
+	},
+/area/space_structures/derelict_lab)
+"ce" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/filingcabinet/medical,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"cf" = (
+/obj/structure/stool/bed/chair/office/light,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"cg" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor{
+	icon_state = "damaged4"
+	},
+/area/space_structures/derelict_lab)
+"ch" = (
+/obj/machinery/door/airlock/engineering/glass,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/derelict_lab)
+"ci" = (
+/turf/simulated/floor{
+	icon_state = "warnwhite"
+	},
+/area/space_structures/derelict_lab)
+"cj" = (
+/obj/machinery/power/solar{
+	id = "portsolar";
+	name = "Port Solar Array"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/space_structures/derelict_lab)
+"ck" = (
+/obj/item/weapon/spike,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"cl" = (
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"cm" = (
+/obj/machinery/suit_storage_unit/science,
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
+"cn" = (
+/obj/machinery/suit_storage_unit/science,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
+"co" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
+"cp" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/engineering,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/rig/engineering,
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/derelict_lab)
+"cq" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/rig/engineering,
+/turf/simulated/floor,
+/area/space_structures/derelict_lab)
+"cr" = (
+/obj/item/weapon/spike,
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"cs" = (
+/obj/machinery/computer/rdconsole/core,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"ct" = (
+/obj/structure/table/glass,
+/obj/item/weapon/paper_bin,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"cu" = (
+/obj/effect/landmark/corpse/scientist,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"cv" = (
+/obj/machinery/door/airlock/research/glass{
+	name = "Research and Development";
+	req_access = list(7)
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"cw" = (
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/space_structures/derelict_lab)
+"cx" = (
+/obj/structure/lattice,
+/turf/space,
+/area/space_structures/derelict_lab)
+"cy" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"cz" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"cA" = (
+/obj/item/stack/cable_coil/red,
+/turf/space,
+/area/space_structures/derelict_lab)
+"cB" = (
+/obj/item/weapon/storage/briefcase/inflatable,
+/obj/structure/rack,
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
+"cC" = (
+/obj/item/stack/sheet/metal,
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"cD" = (
+/obj/item/stack/cable_coil/red{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"cE" = (
+/obj/structure/table/glass,
+/obj/item/device/antibody_scanner,
+/obj/item/device/healthanalyzer{
+	pixel_y = 2
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"cG" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"cH" = (
+/obj/item/stack/cable_coil/red{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/simulated/floor/plating/airless/catwalk,
+/area/space_structures/derelict_lab)
+"cI" = (
+/obj/item/weapon/paper{
+	info = "MSBL-113 entrusted: 1) Investigate an unknown virus strain from the planet Omicron 8. 2) Make a copy of the virus, and modify it with: a) Phoron b) Radiation c) Toxin LL-7. Received results must be documented. Responsible for maintaining records - Leonid Skvortsov. Sincerely, member of the expedition EKB-410 - L.Trovato.";
+	name = "Task"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"fi" = (
+/obj/item/weapon/shard,
+/turf/space,
+/area/space_structures/derelict_lab)
+"lt" = (
+/obj/item/weapon/twohanded/flora/floorleaf,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"mG" = (
+/obj/machinery/r_n_d/protolathe,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"oK" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"qp" = (
+/obj/machinery/autolathe,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"wY" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall7"
+	},
+/area/space_structures/derelict_lab)
+"Fc" = (
+/obj/machinery/r_n_d/destructive_analyzer,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/derelict_lab)
+"HA" = (
+/obj/structure/rack,
+/obj/item/device/radio/off,
+/turf/simulated/floor{
+	icon_state = "warndark"
+	},
+/area/space_structures/derelict_lab)
+"IX" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"LK" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "swall11"
+	},
+/area/space_structures/derelict_lab)
+"My" = (
+/obj/item/weapon/circuitboard/smes,
+/turf/space,
+/area/space_structures/derelict_lab)
+"Np" = (
+/obj/item/clothing/shoes/magboots,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/derelict_lab)
+"VN" = (
+/obj/item/weapon/spike,
+/turf/space,
+/area/space_structures/derelict_lab)
+"Yw" = (
+/turf/space,
+/area/space_structures/derelict_lab)
+"Zu" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "damaged1"
+	},
+/area/space_structures/derelict_lab)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aP
+ae
+ae
+ba
+aa
+aa
+aP
+ae
+ae
+ae
+bW
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aP
+ae
+ae
+as
+ay
+ay
+as
+ae
+ae
+bG
+bD
+bD
+ar
+aR
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+bW
+"}
+(3,1,1) = {"
+ac
+bo
+ak
+aB
+az
+ar
+bb
+bj
+bq
+by
+ar
+aW
+ar
+by
+bb
+ar
+ci
+ar
+cs
+bF
+mG
+ac
+"}
+(4,1,1) = {"
+ac
+ag
+aG
+ar
+aC
+ar
+as
+ae
+ae
+bG
+bE
+bN
+ar
+aR
+ae
+ae
+as
+an
+aB
+aG
+Fc
+ac
+"}
+(5,1,1) = {"
+ac
+aB
+al
+aB
+aE
+at
+ac
+aa
+aa
+af
+ae
+ae
+ae
+cd
+aa
+aa
+ac
+ar
+ct
+cI
+qp
+ac
+"}
+(6,1,1) = {"
+ac
+aD
+ar
+cE
+aE
+aW
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ar
+aB
+aG
+oK
+ac
+"}
+(7,1,1) = {"
+ac
+bm
+cf
+aK
+br
+aS
+aR
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ba
+aa
+ac
+bQ
+cu
+aW
+ar
+ac
+"}
+(8,1,1) = {"
+ac
+bd
+ar
+au
+ar
+aU
+aX
+ar
+bx
+at
+bF
+ar
+bP
+ar
+ac
+aa
+ac
+bR
+ar
+ar
+lt
+ac
+"}
+(9,1,1) = {"
+ac
+aI
+am
+av
+aL
+aZ
+aR
+ae
+aX
+ae
+ae
+ae
+aX
+ae
+bG
+aa
+aR
+ae
+cv
+wY
+ae
+cd
+"}
+(10,1,1) = {"
+ac
+bn
+ar
+aw
+ar
+aH
+ac
+bk
+at
+aM
+bZ
+ar
+at
+ar
+ac
+aa
+ac
+cm
+cy
+ac
+aa
+aa
+"}
+(11,1,1) = {"
+ac
+cb
+ar
+ar
+at
+ar
+bc
+bl
+bs
+ar
+bH
+ar
+bS
+bX
+ac
+aa
+ac
+cn
+cz
+ac
+aa
+aa
+"}
+(12,1,1) = {"
+ac
+ai
+aG
+ar
+aF
+ar
+bc
+at
+ar
+aB
+bZ
+aB
+ar
+ar
+ac
+aa
+ac
+cB
+cy
+aR
+ae
+ae
+"}
+(13,1,1) = {"
+ac
+ce
+ar
+aL
+aH
+aM
+aA
+bZ
+bu
+bZ
+bZ
+bZ
+bZ
+bZ
+ac
+aa
+ac
+co
+cy
+cy
+Np
+IX
+"}
+(14,1,1) = {"
+ac
+aB
+aG
+ar
+ar
+ar
+aA
+at
+ar
+aB
+bZ
+aB
+ar
+bj
+ac
+aa
+ac
+HA
+cy
+aR
+ae
+ae
+"}
+(15,1,1) = {"
+ac
+aj
+an
+aN
+ar
+bt
+aA
+ar
+bv
+ar
+bZ
+ar
+bT
+bY
+ac
+aa
+ac
+cp
+cy
+ac
+aa
+aa
+"}
+(16,1,1) = {"
+ac
+bn
+ar
+aB
+at
+ar
+ac
+bk
+ar
+ar
+bZ
+aN
+ar
+ar
+ac
+aa
+ac
+cq
+cy
+ac
+aa
+aa
+"}
+(17,1,1) = {"
+ac
+aI
+at
+aM
+ar
+aU
+aR
+ae
+ah
+ae
+ae
+ae
+ah
+ae
+bG
+aa
+aR
+ae
+ch
+LK
+ae
+bW
+"}
+(18,1,1) = {"
+ac
+bd
+ao
+aB
+ar
+aU
+ah
+ar
+bw
+ar
+bI
+ar
+bV
+ar
+ac
+aa
+ac
+bA
+bA
+bA
+Zu
+ac
+"}
+(19,1,1) = {"
+ac
+bm
+cf
+aK
+aT
+aU
+aR
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+cd
+aa
+ac
+bA
+Yw
+ca
+ca
+ac
+"}
+(20,1,1) = {"
+ac
+aD
+ar
+ar
+aQ
+at
+ac
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ac
+ca
+VN
+bU
+Yw
+Yw
+"}
+(21,1,1) = {"
+ac
+aB
+ap
+aB
+ar
+ar
+ac
+aa
+aa
+aP
+ae
+ae
+ae
+bW
+aa
+aa
+ac
+ca
+cA
+My
+VN
+bU
+"}
+(22,1,1) = {"
+ac
+ag
+aG
+ar
+ar
+ar
+as
+ae
+ae
+bG
+bK
+bK
+ar
+aR
+ae
+ae
+as
+bU
+VN
+VN
+Yw
+Yw
+"}
+(23,1,1) = {"
+ac
+bo
+aq
+aB
+ar
+ar
+bg
+bp
+bi
+bB
+bi
+bi
+bi
+ca
+bA
+cg
+bz
+bA
+VN
+VN
+VN
+Yw
+"}
+(24,1,1) = {"
+af
+ae
+ae
+as
+ay
+ay
+as
+ae
+ae
+bG
+bL
+bL
+ar
+aR
+ae
+ae
+ae
+ae
+cC
+Yw
+bU
+VN
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+ax
+ae
+ae
+ab
+aa
+aa
+af
+ae
+ae
+ae
+cd
+aa
+aa
+aa
+bC
+bJ
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Yw
+cj
+Yw
+cD
+VN
+fi
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Yw
+ck
+cr
+cG
+cl
+cl
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+VN
+cw
+Yw
+cH
+Yw
+Yw
+cc
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cc
+cw
+Yw
+fi
+cl
+Yw
+Yw
+cc
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cc
+cx
+cx
+cl
+cl
+Yw
+Yw
+aa
+"}

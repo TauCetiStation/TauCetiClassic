@@ -1,7 +1,7 @@
-/mob/living/carbon/human/var/list/bodyparts = list()
-/mob/living/carbon/human/var/list/bodyparts_by_name = list()
-/mob/living/carbon/human/var/list/organs = list()
-/mob/living/carbon/human/var/list/organs_by_name = list()
+/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts = list()
+/mob/living/carbon/human/var/list/obj/item/organ/external/bodyparts_by_name = list()
+/mob/living/carbon/human/var/list/obj/item/organ/internal/organs = list()
+/mob/living/carbon/human/var/list/obj/item/organ/internal/organs_by_name = list()
 
 /obj/item/organ
 	name = "organ"
@@ -23,17 +23,14 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
-/obj/item/organ/atom_init(mapload, mob/living/carbon/human/H)
-	if(istype(H))
-		insert_organ(H)
-
-	return ..()
-
-/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H)
-	STOP_PROCESSING(SSobj, src)
-
+/obj/item/organ/proc/set_owner(mob/living/carbon/human/H)
 	loc = null
 	owner = H
+
+/obj/item/organ/proc/insert_organ(mob/living/carbon/human/H, surgically = FALSE)
+	set_owner(H)
+
+	STOP_PROCESSING(SSobj, src)
 
 	if(parent_bodypart)
 		parent = owner.bodyparts_by_name[parent_bodypart]
@@ -61,6 +58,21 @@
 	else
 		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
 
+/obj/item/organ/proc/is_preserved()
+	if(istype(loc,/obj/item/organ))
+		var/obj/item/organ/O = loc
+		return O.is_preserved()
+	else
+		return (istype(loc,/obj/structure/closet/secure_closet/freezer) || istype(loc,/obj/structure/closet/crate/freezer))
+
+/obj/item/organ/examine(mob/user)
+	. = ..(user)
+	show_decay_status(user)
+
+/obj/item/organ/proc/show_decay_status(mob/user)
+	if(status & ORGAN_DEAD)
+		to_chat(user, "<span class='notice'>The decay has set into \the [src].</span>")
+
 //Handles chem traces
 /mob/living/carbon/human/proc/handle_trace_chems()
 	//New are added for reagents to random bodyparts.
@@ -68,17 +80,24 @@
 		var/obj/item/organ/external/BP = pick(bodyparts)
 		BP.trace_chemicals[A.name] = 100
 
-//Adds autopsy data for used_weapon.
-/obj/item/organ/proc/add_autopsy_data(used_weapon, damage)
-	var/datum/autopsy_data/W = autopsy_data[used_weapon]
+//Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
+/obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
+	var/datum/autopsy_data/W = autopsy_data[used_weapon + worldtime2text()]
 	if(!W)
 		W = new()
 		W.weapon = used_weapon
-		autopsy_data[used_weapon] = W
+		autopsy_data[used_weapon + worldtime2text()] = W
+
+	var/time = W.time_inflicted
+	if(time != worldtime2text())
+		W = new()
+		W.weapon = used_weapon
+		autopsy_data[used_weapon + worldtime2text()] = W
 
 	W.hits += 1
 	W.damage += damage
-	W.time_inflicted = world.time
+	W.time_inflicted = worldtime2text()
+	W.type_damage = type_damage
 
 // Takes care of bodypart and their organs related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_bodyparts()
@@ -103,7 +122,8 @@
 		return
 
 	for(var/obj/item/organ/external/BP in bad_bodyparts)
-		if(!BP)
+		if(!BP || QDELETED(BP))
+			bad_bodyparts -= BP
 			continue
 		if(!BP.need_process())
 			bad_bodyparts -= BP
@@ -168,8 +188,32 @@
 
 	// standing is poor
 	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
+		if(iszombie(src)) //zombies crawl when they can't stand
+			if(!crawling && !lying && !resting)
+				if(crawl_can_use())
+					crawl()
+				else
+					emote("collapse")
+					Weaken(5)
+
+			var/has_arm = FALSE
+			for(var/limb_tag in list(BP_L_ARM, BP_R_ARM))
+				var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
+				if(E && E.is_usable())
+					has_arm = TRUE
+					break
+			if(!has_arm) //need atleast one hand to crawl
+				Weaken(5)
+			return
+
 		if(!(lying || resting))
 			if(species && !species.flags[NO_PAIN])
-				emote("scream", auto = TRUE)
+				var/turf/T = get_turf(src)
+				var/do_we_scream = 1
+				for(var/obj/O in T.contents)
+					if(!(istype(O, /obj/structure/stool/bed/chair)))
+						do_we_scream = 0
+				if(do_we_scream)
+					emote("scream")
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.

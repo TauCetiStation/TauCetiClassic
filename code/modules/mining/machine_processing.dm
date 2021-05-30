@@ -16,17 +16,19 @@
 
 	var/show_value_list = 0
 	var/list/ore_values = list(
-							"glass" = 	1,
-							"iron" = 	1,
-							"coal" = 	1,
-							"steel" =	5,
-							"hydrogen"=	10,
-							"uranium" = 20,
-							"silver" = 	25,
-							"gold" = 	30,
-							"platinum"= 45,
-							"plasteel"= 50,
-							"diamond" = 70)
+							"glass" 			= 1,
+							"iron" 				= 1,
+							"coal" 				= 1,
+							"steel" 			= 5,
+							"hydrogen"			= 10,
+							"uranium" 			= 20,
+							"phoron" 			= 20,
+							"phoron glass"		= 25,
+							"silver" 			= 25,
+							"gold" 				= 30,
+							"platinum"			= 45,
+							"plasteel"			= 50,
+							"diamond" 			= 70)
 
 /obj/machinery/mineral/processing_unit_console/atom_init()
 	..()
@@ -49,44 +51,49 @@
 		if(!machine.ores_stored[ore] && !show_all_ores)
 			continue
 
-		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100><font color='"
+		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100>"
 		if(machine.ores_processing[ore])
 			switch(machine.ores_processing[ore])
 				if(0)
-					dat += "red'>not processing"
+					dat += "<span class='red'>not processing</span>"
 				if(1)
-					dat += "orange'>smelting"
+					dat += "<span class='orange'>smelting</span>"
 				if(2)
-					dat += "yellow'>compressing"
+					dat += "<span class='yellow'>compressing</span>"
 				if(3)
-					dat += "gray'>alloying"
+					dat += "<span class='gray'>alloying</span>"
 				if(4)
-					dat += "green'>drop"
+					dat += "<span class='green'>drop</span>"
 		else
-			dat += "red'>not processing"
-		dat += "</font></td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>\[change\]</a></td></tr>"
+			dat += "<span class='red'>not processing</span>"
+		dat += "</td><td width = 30><a href='?src=\ref[src];toggle_smelting=[ore]'>change</a></td></tr>"
 
 	dat += "</table><hr>"
 
-	dat += "Currently displaying [show_all_ores ? "all ore types" : "only available ore types"] <A href='?src=\ref[src];toggle_ores=1'>\[[show_all_ores ? "show less" : "show more"]\]</a><br>"
-	dat += "The ore processor is currently <A href='?src=\ref[src];toggle_power=1'>[(machine.active ? "<font color='lime'><b>processing</b></font>" : "<font color='maroon'><b>disabled</b></font>")]</a><br>"
+	dat += "Currently displaying [show_all_ores ? "all ore types" : "only available ore types"] <A href='?src=\ref[src];toggle_ores=1'>[show_all_ores ? "show less" : "show more"]</a><br>"
 
-	dat += "<br>"
+	dat += "The ore processor is currently "
+	if(machine.active)
+		dat += "<A class='green' href='?src=\ref[src];toggle_power=1'><b>processing</b></a>"
+	else
+		dat += "<A class='red' href='?src=\ref[src];toggle_power=1'><b>disabled</b></a>"
+
+	dat += "<br><br>"
 	dat += "<hr>"
 
-	dat += text("<b>Current unclaimed points:</b> [points]<br>")
+	dat += "<b>Current unclaimed points:</b> [points]<br>"
 
 	if(istype(inserted_id))
-		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];eject=1'>Eject ID</A><br>")
-		dat += text("<A href='?src=\ref[src];claim=1'>Claim points.</A><br>")
+		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];eject=1'>Eject ID</A><br>"
+		dat += "<A href='?src=\ref[src];claim=1'>Claim points</a><br>"
 	else
-		dat += text("No ID inserted.  <A href='?src=\ref[src];insert=1'>Insert ID</A><br>")
+		dat += "No ID inserted.  <A href='?src=\ref[src];insert=1'>Insert ID</A><br>"
 
 	dat += "<br>"
 
-	dat += "Resources Value List: <A href='?src=\ref[src];show_values=1'>\[[show_value_list ? "close" : "open"]\]</a><br>"
+	dat += "Resources Value List: <A href='?src=\ref[src];show_values=1'>[show_value_list ? "close" : "open"]</a><br>"
 	if(show_value_list)
-		dat += "<div class='statusDisplay'>[get_ore_values()]</div>"
+		dat += "<div class='Section'>[get_ore_values()]</div>"
 
 	var/datum/browser/popup = new(user, "window=processor_console", "Ore Processor Console", 400, 550)
 	popup.set_content(dat)
@@ -97,7 +104,7 @@
 	if(!.)
 		return
 
-	if(href_list["toggle_smelting"])
+	if(href_list["toggle_smelting"] && (href_list["toggle_smelting"] in machine.ores_processing))
 		var/choice = input("What setting do you wish to use for processing [href_list["toggle_smelting"]]?") as null|anything in list("Smelting","Compressing","Alloying","Drop","Nothing")
 		if(!choice)
 			return FALSE
@@ -161,14 +168,15 @@
 	density = 1
 	anchored = 1
 	light_range = 3
+	speed_process = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/obj/machinery/mineral/processing_unit_console/console = null
 	var/sheets_per_tick = 10
-	var/list/ores_processing[0]
-	var/list/ores_stored[0]
-	var/list/ore_data[0]
-	var/list/alloy_data[0]
+	var/list/ores_processing = list()
+	var/list/ores_stored = list()
+	var/list/ore_data = list()
+	var/list/alloy_data = list()
 	var/active = 0
 
 /obj/machinery/mineral/processing_unit/atom_init()
@@ -220,7 +228,7 @@
 			var/datum/ore/O = ore_data[metal]
 			if(!O) continue
 			if(ores_processing[metal] == 4) //Drop.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)
@@ -252,7 +260,7 @@
 							console.points += A.points
 							new A.product(output.loc)
 			else if(ores_processing[metal] == 2 && O.compresses_to) //Compressing.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(can_make%2>0) can_make--
 				if(!can_make || ores_stored[metal] < 1)
 					continue
@@ -262,7 +270,7 @@
 					console.points += O.points
 					new O.compresses_to(output.loc)
 			else if(ores_processing[metal] == 1 && O.smelts_to) //Smelting.
-				var/can_make = Clamp(ores_stored[metal],0,sheets_per_tick-sheets)
+				var/can_make = clamp(ores_stored[metal],0,sheets_per_tick-sheets)
 				if(!can_make || ores_stored[metal] < 1)
 					continue
 				for(var/i=0,i<can_make,i++)
@@ -276,5 +284,3 @@
 				new /obj/item/weapon/ore/slag(output.loc)
 		else
 			continue
-
-	console.updateUsrDialog()
