@@ -2,7 +2,7 @@
 	name = "TraitorChan"
 	config_name = "traitorchan"
 	factions_allowed = list(
-		/datum/faction/traitor/traitorchan,
+		/datum/faction/changeling/traitorchan,
 		/datum/faction/traitor,
 	)
 
