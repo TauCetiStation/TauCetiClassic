@@ -12,7 +12,7 @@
 #define HUSK			6
 #define NOCLONE			7
 #define LASEREYES		8 	// harm intent - click anywhere to shoot lasers from eyes
-#define INVISIBILITY    9
+#define INVISIBILITY	9
 
 	// Extra powers:
 //#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
