@@ -205,7 +205,7 @@
 	if(!host)
 		return
 	if(changeling)
-		hud_used.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
+		hud_used?.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
 
 	sight = host.sight
 	see_in_dark = host.see_in_dark

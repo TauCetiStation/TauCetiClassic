@@ -59,6 +59,9 @@
 	else
 		R = faction.HandleNewMind(M.mind)
 
+	if(!R)
+		return
+
 	R.Greet()
 	R.add_antag_hud()
 	R.forgeObjectives()
