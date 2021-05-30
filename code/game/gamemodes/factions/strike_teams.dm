@@ -7,7 +7,8 @@
 	if(!..())
 		return FALSE
 	var/datum/objective/custom/c = AppendObjective(/datum/objective/custom)
-	c.explanation_text = mission
+	if(c)
+		c.explanation_text = mission
 	return TRUE
 
 //________________________________________________

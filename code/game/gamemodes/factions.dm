@@ -156,15 +156,15 @@
 /datum/faction/proc/AppendObjective(objective_type,duplicates=0)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!duplicates && locate(objective_type) in objective_holder.GetObjectives())
-		return FALSE
+		return null
 	var/datum/objective/O
 	if(istype(objective_type, /datum/objective)) //Passed an actual objective
 		O = objective_type
 	else
 		O = new objective_type
 	if(objective_holder.AddObjective(O, null, src))
-		return TRUE
-	return FALSE
+		return O
+	return null
 
 /datum/faction/proc/GetObjectives()
 	return objective_holder.GetObjectives()

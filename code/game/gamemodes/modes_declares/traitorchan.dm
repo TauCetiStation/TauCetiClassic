@@ -6,7 +6,7 @@
 		/datum/faction/traitor,
 	)
 
-	minimum_player_count = 0
+	minimum_player_count = 20
 	minimum_players_bundles = 45
 
 /datum/game_mode/traitorchan/announce()

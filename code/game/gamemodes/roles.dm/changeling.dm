@@ -110,7 +110,7 @@
 	. = ..()
 	. += "<br><b>Changeling ID:</b> [changelingID]"
 	. += "<br><b>Genomes Absorbed:</b> [absorbedcount]"
-	. += "<br><b>Stored Essences:</b>"
+	. += "<br><b>Stored Essences:</b><br>"
 	for(var/mob/living/parasite/essence/E in essences)
 		. += printplayerwithicon(E)
 		. += "<br>"

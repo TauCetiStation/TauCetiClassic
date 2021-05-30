@@ -51,16 +51,17 @@
 					if(objective_p.target.current == second_ninja.antag.current)
 						continue
 					var/datum/objective/protect/ninja_objective = AppendObjective(/datum/objective/protect)
-
-					ninja_objective.target = objective_p.target
-					ninja_objective.explanation_text = "Protect [objective_p.target.current.real_name], the [objective_p.target.assigned_role]."
+					if(ninja_objective)
+						ninja_objective.target = objective_p.target
+						ninja_objective.explanation_text = "Protect [objective_p.target.current.real_name], the [objective_p.target.assigned_role]."
 
 				if(istype(objective_p, /datum/objective/steal))
 					var/datum/objective/steal/ninja_objective = AppendObjective(/datum/objective/steal)
 
-					ninja_objective.target = objective_p.target
-					ninja_objective.steal_target = objective_p.target
-					ninja_objective.explanation_text = objective_p.explanation_text
+					if(ninja_objective)
+						ninja_objective.target = objective_p.target
+						ninja_objective.steal_target = objective_p.target
+						ninja_objective.explanation_text = objective_p.explanation_text
 
 				if(istype(objective_p, /datum/objective/harm))
 					if(objective_p.target.current == antag.current)
@@ -68,12 +69,14 @@
 					if(objective_p.target.current == second_ninja.antag.current)
 						continue
 					var/datum/objective/protect/ninja_objective = AppendObjective(/datum/objective/protect)
-					ninja_objective.target = objective_p.target
-					ninja_objective.explanation_text = objective_p.explanation_text
+					if(ninja_objective)
+						ninja_objective.target = objective_p.target
+						ninja_objective.explanation_text = objective_p.explanation_text
 
 			var/datum/objective/assassinate/ninja_objective = AppendObjective(/datum/objective/assassinate)
-			ninja_objective.target = second_ninja.antag
-			ninja_objective.explanation_text = "Assassinate [second_ninja.antag.current.real_name], the [second_ninja.antag.special_role]."
+			if(ninja_objective)
+				ninja_objective.target = second_ninja.antag
+				ninja_objective.explanation_text = "Assassinate [second_ninja.antag.current.real_name], the [second_ninja.antag.special_role]."
 
 	return TRUE
 

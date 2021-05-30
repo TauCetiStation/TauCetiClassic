@@ -155,7 +155,7 @@
 
 /datum/role/proc/AppendObjective(objective_type, duplicates = 0)
 	if(!duplicates && locate(objective_type) in objectives)
-		return FALSE
+		return null
 	var/datum/objective/O
 	if(istype(objective_type, /datum/objective)) //Passed an actual objective
 		O = objective_type
@@ -163,7 +163,7 @@
 		O = new objective_type
 	if(objectives.AddObjective(O, antag))
 		return O
-	return FALSE
+	return null
 
 /datum/role/proc/get_logo_icon(custom)
 	if(custom)
@@ -181,7 +181,7 @@
 	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
 	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
 	 - <a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>"}
-	else
+	else if(antag)
 		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
 	[name] [antag.name]/[antag.key]<b><font color=red> - (DESTROYED)</font></b>
 	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
@@ -237,16 +237,14 @@
 		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>"
 
 	var/icon/logo = get_logo_icon()
-	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[antag.key]</b> was <b>[antag.name]</b> ("
+	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[M.mind.key]</b> was <b>[M.mind.name]</b> ("
 	if(M)
-		if(!antag.GetRole(id))
-			text += "removed"
-		else if(M.stat == DEAD)
+		if(M.stat == DEAD)
 			text += "died"
 		else
 			text += "survived"
-		if(antag.current.real_name != antag.name)
-			text += " as <b>[antag.current.real_name]</b>"
+		if(M.real_name != M.mind.name)
+			text += " as <b>[M.real_name]</b>"
 	else
 		text += "body destroyed"
 	text += ")"
