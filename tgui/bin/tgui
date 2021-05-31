@@ -23,8 +23,19 @@ fi
 base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
 base_dir="$(tgui-realpath "${base_dir}")"
 
-## Add locally installed node programs to path
-PATH="${PATH}:node_modules/.bin"
+## Make use of nvm if it exists
+if [[ -e "${HOME}/.nvm/nvm.sh" ]]; then
+  source "${HOME}/.nvm/nvm.sh"
+fi
+
+## Fall back to running Yarn from the repo
+if ! hash yarn 2>/dev/null; then
+  yarn_releases=("${base_dir}"/.yarn/releases/yarn-*.cjs)
+  yarn_release="${yarn_releases[0]}"
+  yarn() {
+    node "${yarn_release}" "${@}"
+  }
+fi
 
 
 ## Functions
@@ -38,27 +49,37 @@ task-install() {
 
 ## Runs webpack
 task-webpack() {
-  cd "${base_dir}/packages/tgui"
-  webpack "${@}"
+  cd "${base_dir}"
+  yarn run webpack-cli "${@}"
 }
 
 ## Runs a development server
 task-dev-server() {
-  cd "${base_dir}/packages/tgui-dev-server"
-  exec node --experimental-modules index.js "${@}"
+  cd "${base_dir}"
+  yarn node packages/tgui-dev-server/index.esm.js "${@}"
 }
 
 ## Run a linter through all packages
 task-eslint() {
   cd "${base_dir}"
-  eslint ./packages "${@}"
-  echo "tgui: eslint check passed"
+  yarn run eslint packages "${@}"
 }
 
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
   rm -rf packages/tgui/public/.tmp
+  ## Build artifacts
+  rm -rf public/.tmp
+  rm -f public/*.map
+  rm -f public/*.hot-update.*
+  ## Yarn artifacts
+  rm -rf .yarn/cache
+  rm -rf .yarn/unplugged
+  rm -rf .yarn/build-state.yml
+  rm -rf .yarn/install-state.gz
+  rm -f .pnp.js
+  ## NPM artifacts
   rm -rf **/node_modules
   rm -f **/package-lock.json
 }
@@ -67,7 +88,7 @@ task-clean() {
 task-validate-build() {
   cd "${base_dir}"
   local diff
-  diff="$(git diff packages/tgui/public/tgui.bundle.*)"
+  diff="$(git diff public/tgui.bundle.*)"
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
