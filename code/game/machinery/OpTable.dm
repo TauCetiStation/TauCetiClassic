@@ -73,7 +73,9 @@
 
 
 /obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
-	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
+	if(user.incapacitated())
+		return
+	if (iscarbon(A) && isturf(user.loc) && user.IsAdvancedToolUser())
 		var/mob/living/carbon/M = A
 		if (M.buckled)
 			M.buckled.user_unbuckle_mob(user)
