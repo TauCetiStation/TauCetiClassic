@@ -50,7 +50,15 @@
 			uniques.Add(new_objective)
 	return uniques
 
-/proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE)
+/proc/setup_role(datum/role/R, mob/P, post_setup)
+	R.Greet()
+	R.add_antag_hud()
+	R.forgeObjectives()
+	R.AnnounceObjectives()
+	if(post_setup)
+		R.OnPostSetup()
+
+/proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE, post_setup = FALSE)
 	ASSERT(faction)
 
 	var/datum/role/R
@@ -59,19 +67,10 @@
 	else
 		R = faction.HandleNewMind(M.mind)
 
-	if(!R)
-		return
-
-	R.Greet()
-	R.add_antag_hud()
-	R.forgeObjectives()
-	R.AnnounceObjectives()
+	if(R)
+		setup_role(R, M, post_setup)
 
 /proc/create_and_setup_role(role_type, mob/P, post_setup = TRUE)
 	var/datum/role/R = SSticker.mode.CreateRole(role_type, P)
-	R.Greet()
-	R.add_antag_hud()
-	R.forgeObjectives()
-	R.AnnounceObjectives()
-	if(post_setup)
-		R.OnPostSetup()
+	if(R)
+		setup_role(R, P, post_setup)
