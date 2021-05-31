@@ -265,6 +265,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
+	S["radial_anim"]		>> radial_anim
 	S["tooltip"]			>> tooltip
 	S["tooltip_size"]		>> tooltip_size
 	S["tooltip_font"]		>> tooltip_font
@@ -292,28 +293,29 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	ooccolor		= normalize_color(sanitize_hexcolor(ooccolor, initial(ooccolor)))
-	aooccolor		= normalize_color(sanitize_hexcolor(aooccolor, initial(aooccolor)))
-	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
-	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
-	toggles		= sanitize_integer(toggles, 0, 65535, initial(toggles))
-	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
-	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
-	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
-	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
-	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
-	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
-	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
-	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
-	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
-	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
-	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
-	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
-	tooltip_size = sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
-	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
-	outline_color = normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
-	eorg_enabled = sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
+	ooccolor			= normalize_color(sanitize_hexcolor(ooccolor, initial(ooccolor)))
+	aooccolor			= normalize_color(sanitize_hexcolor(aooccolor, initial(aooccolor)))
+	lastchangelog		= sanitize_text(lastchangelog, initial(lastchangelog))
+	UI_style			= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
+	default_slot		= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	toggles				= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	chat_toggles		= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
+	ghost_orbit 		= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
+	chat_ghostsight		= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
+	randomslot			= sanitize_integer(randomslot, 0, 1, initial(randomslot))
+	UI_style_color		= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
+	UI_style_alpha		= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
+	tgui_fancy			= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
+	tgui_lock			= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
+	parallax			= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
+	parallax_theme		= sanitize_text(parallax_theme, initial(parallax_theme))
+	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	radial_anim 		= sanitize_integer(radial_anim, 0, 1, initial(radial_anim))
+	tooltip 			= sanitize_integer(tooltip, 0, 1, initial(tooltip))
+	tooltip_size 		= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
+	outline_enabled 	= sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
+	outline_color 		= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
+	eorg_enabled 		= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -375,10 +377,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+	S["radial_anim"]		<< radial_anim
 	S["tooltip"]			<< tooltip
 	S["tooltip_size"]		<< tooltip_size
 	S["tooltip_font"]		<< tooltip_font
-
 	S["outline_enabled"]	<< outline_enabled
 	S["outline_color"]		<< outline_color
 	S["eorg_enabled"]		<< eorg_enabled

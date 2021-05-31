@@ -78,6 +78,10 @@
 	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Radial animations:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=radial_anim'><b>[radial_anim ? "Enabled" : "Disabled"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_animations'><b>[(toggles & SHOW_ANIMATIONS) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
@@ -175,6 +179,9 @@
 			if(parent && parent.screen && parent.screen.len)
 				var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
 				PM.backdrop(parent.mob)
+
+		if("radial_anim")
+			radial_anim = !radial_anim
 
 		if("parallax_theme")
 			switch(parallax_theme)

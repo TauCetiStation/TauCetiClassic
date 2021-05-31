@@ -201,6 +201,16 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		PM.backdrop(mob)
 	feedback_add_details("admin_verb","TAC")
 
+/client/verb/toggle_radial_animation()
+	set name = "Toggle Radial Animation"
+	set category = "Preferences"
+	set desc = "Toggles animation when a new radial menu appears"
+
+	prefs.radial_anim = !prefs.radial_anim
+	prefs.save_preferences()
+	to_chat(src, "Now you [prefs.radial_anim ? "will" : "won't"] see the animation of radial menu appearing")
+	feedback_add_details("admin_verb", "TRA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/verb/set_parallax_quality()
 	set name = "Set Parallax Quality"
 	set category = "Preferences"
@@ -277,7 +287,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.tgui_fancy = !prefs.tgui_fancy
 	prefs.save_preferences()
-	feedback_add_details("admin_verb", "TFTGUI")
+	feedback_add_details("admin_verb", "TFTGUI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_tooltip()
 	set name = "Tooltip: Show/Hide"
@@ -293,7 +303,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.save_preferences()
 	to_chat(src, "Name of items [prefs.tooltip ? "enabled" : "disabled"].")
-	feedback_add_details("admin_verb", "TTIP")
+	feedback_add_details("admin_verb", "TTIP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/change_font_tooltip()
 	set name = "Tooltip: Change Font"
@@ -313,7 +323,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.tooltip_font = font
 
 	prefs.save_preferences()
-	feedback_add_details("admin_verb", "FTIP")
+	feedback_add_details("admin_verb", "FTIP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/change_size_tooltip()
 	set name = "Tooltip: Change Size"
@@ -324,7 +334,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	tooltip.font_size = prefs.tooltip_size
 	prefs.save_preferences()
-	feedback_add_details("admin_verb", "LTIP")
+	feedback_add_details("admin_verb", "LTIP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_outline()
 	set name = "Toggle Outline"
@@ -334,7 +344,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.outline_enabled = !prefs.outline_enabled
 	prefs.save_preferences()
 	to_chat(src, "Outline is [prefs.outline_enabled ? "enabled" : "disabled"].")
-	feedback_add_details("admin_verb", "TO")
+	feedback_add_details("admin_verb", "TO") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/change_outline_color()
 	set name = "Change Outline Color"
@@ -347,7 +357,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.outline_color = pickedOutlineColor
 	prefs.save_preferences()
 	to_chat(src, "Outline color changed.")
-	feedback_add_details("admin_verb", "COC")
+	feedback_add_details("admin_verb", "COC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_eorg()
 	set name = "Toggle End of Round Deathmatch"
@@ -357,4 +367,4 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.eorg_enabled = !prefs.eorg_enabled
 	prefs.save_preferences()
 	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
-	feedback_add_details("admin_verb", "ED")
+	feedback_add_details("admin_verb", "ED") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

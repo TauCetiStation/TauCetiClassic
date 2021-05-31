@@ -313,6 +313,7 @@ var/global/list/radial_menus = list()
 		menu.radius = radius
 	if(istype(custom_check))
 		menu.custom_check_callback = custom_check
+	menu.entry_animation = user.client.prefs.radial_anim
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices, tooltips)
