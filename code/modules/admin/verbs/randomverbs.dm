@@ -1136,7 +1136,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/value = config.add_player_age_value
-	if(check_rights(R_PERMISSIONS,0) && tgui_alert("As +PERMISSIONS user you can set custom value. Set custom?", "Custom age?", list("Yes", "No")) == "Yes")
+	if(check_rights(R_PERMISSIONS,0) && tgui_alert(usr, "As +PERMISSIONS user you can set custom value. Set custom?", "Custom age?", list("Yes", "No")) == "Yes")
 		value = input("Enter custom in-game age value") as num|null
 
 	if(!value)

@@ -182,7 +182,7 @@
 	if (!establish_db_connection(STICKYBAN_TABLENAME, STICKYBAN_CKEY_MATCHED_TABLENAME, STICKYBAN_CID_MATCHED_TABLENAME, STICKYBAN_IP_MATCHED_TABLENAME))
 		to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 		return
-	if (tgui_alert("Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure", list("Yes","No")) == "No")
+	if (tgui_alert(usr, "Are you sure you want to put [ckey]'s stickyban on timeout until next round (or removed)?","Are you sure", list("Yes","No")) == "No")
 		return
 	var/ban = get_stickyban_from_ckey(ckey)
 	if (!ban)

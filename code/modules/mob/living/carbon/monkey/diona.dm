@@ -222,7 +222,7 @@
 	set desc = "Grow to a more complex form."
 
 	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
-		to_chat(src, tgui_alert("You are currently not whitelisted to play as a full diona."))
+		to_chat(src, tgui_alert(usr, "You are currently not whitelisted to play as a full diona."))
 		return 0
 
 	if(gestalt)

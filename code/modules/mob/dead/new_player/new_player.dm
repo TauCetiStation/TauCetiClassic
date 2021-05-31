@@ -130,7 +130,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, tgui_alert("You are currently not whitelisted to play [client.prefs.species]."))
+				to_chat(src, tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species]."))
 				return FALSE
 
 		LateChoices()
@@ -147,7 +147,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, tgui_alert("You are currently not whitelisted to play [client.prefs.species]."))
+				to_chat(src, tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species]."))
 				return FALSE
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return

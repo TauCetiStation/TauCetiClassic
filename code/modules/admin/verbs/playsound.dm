@@ -10,7 +10,7 @@ var/global/list/sounds_cache_local = list()
 
 
 
-	var/choice = tgui_alert("Category",, list("Cache", "File", "Cancel"))
+	var/choice = tgui_alert(usr,"Category",, list("Cache", "File", "Cancel"))
 	var/sound/S
 
 	switch(choice)
@@ -46,7 +46,7 @@ var/global/list/sounds_cache_local = list()
 	if(!check_rights(R_SOUNDS))
 		return
 
-	var/choice = tgui_alert("Category",, list("Cache", "File", "Cancel"))
+	var/choice = tgui_alert(usr, "Category",, list("Cache", "File", "Cancel"))
 	var/sound/S
 	var/set_vary
 
