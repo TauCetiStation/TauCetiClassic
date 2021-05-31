@@ -22,15 +22,26 @@ const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
   componentDidMount() {
-    const { config, suspended } = useBackend(this.context);
-    const { canClose = true } = this.props;
+    const { suspended } = useBackend(this.context);
     if (suspended) {
       return;
     }
-    Byond.winset(window.__windowId__, {
-      'can-close': Boolean(canClose),
-    });
     logger.log('mounting');
+    this.updateGeometry();
+  }
+
+  componentDidUpdate(prevProps) {
+    const shouldUpdateGeometry = (
+      this.props.width !== prevProps.width
+      || this.props.height !== prevProps.height
+    );
+    if (shouldUpdateGeometry) {
+      this.updateGeometry();
+    }
+  }
+
+  updateGeometry() {
+    const { config } = useBackend(this.context);
     const options = {
       size: DEFAULT_SIZE,
       ...config.window,
@@ -38,9 +49,10 @@ export class Window extends Component {
     if (this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
     }
-    setWindowKey(config.window.key);
-    recallWindowGeometry(config.window.key, options);
-    refocusLayout();
+    if (config.window?.key) {
+      setWindowKey(config.window.key);
+    }
+    recallWindowGeometry(options);
   }
 
   render() {

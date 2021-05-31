@@ -77,12 +77,11 @@ export class AlertModal extends Component {
           onFocus={focusCurrentButton}
           onClick={focusCurrentButton}>
           <Section fill>
-            <Flex direction="column" height="100%">
+            <Flex direction="column">
               <Flex.Item grow={1}>
                 <Flex
                   direction="column"
                   className="AlertModal__Message"
-                  height="100%"
                   textAlign="center">
                   <Flex.Item>
                     <Box m={1}>
