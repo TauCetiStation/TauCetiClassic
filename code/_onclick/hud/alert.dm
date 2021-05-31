@@ -57,6 +57,7 @@
 	var/timeout
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
+
 /datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
 	src.title = title
 	src.message = message
@@ -65,10 +66,12 @@
 		src.timeout = timeout
 		start_time = world.time
 		QDEL_IN(src, timeout)
+
 /datum/tgui_modal/Destroy(force, ...)
 	SStgui.close_uis(src)
 	QDEL_NULL(buttons)
 	. = ..()
+
 /**
  * Waits for a user's response to the tgui_modal's prompt before returning. Returns early if
  * the window was closed by the user.
