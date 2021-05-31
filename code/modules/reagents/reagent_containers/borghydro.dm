@@ -38,7 +38,7 @@
 	if(charge_tick < recharge_time) return 0
 	charge_tick = 0
 
-	if(!isrobot(src.loc))
+	if(!isrobot(loc))
 		return
 
 	var/mob/living/silicon/robot/R = src.loc
@@ -46,8 +46,6 @@
 		return
 
 	for(var/datum/reagents/charge_reagent in reagent_list)
-		//if(!Reag)
-		//	break
 		var/datum/reagents/RG = reagent_list[reagent_to_recharge]
 		if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
 			R.cell.use(charge_cost) 					//Take power from borg...
