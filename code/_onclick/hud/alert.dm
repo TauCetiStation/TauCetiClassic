@@ -36,6 +36,7 @@
 			
 	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
 	alert.tgui_interact(user)
+
 /**
  * # tgui_modal
  *
