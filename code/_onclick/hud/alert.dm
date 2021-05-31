@@ -29,11 +29,11 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client))
-			var/client/client = user
-			user = client.mob
-		else
+		if (!istype(user, /client))
 			return
+		var/client/client = user
+		user = client.mob
+			
 	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
 	alert.tgui_interact(user)
 /**
@@ -472,4 +472,3 @@
 		return
 	if(master)
 		return usr.client.Click(master, location, control, params)
-
