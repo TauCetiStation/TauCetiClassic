@@ -42,4 +42,4 @@
 		var/datum/role/role = user.mind.antag_roles[role_name]
 		if(!role.faction)
 			continue
-		add_faction_member(R.faction, R, TRUE)
+		add_faction_member(role.faction, R, TRUE)
