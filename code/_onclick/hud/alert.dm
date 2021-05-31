@@ -13,6 +13,7 @@
 	if (alert)
 		. = alert.choice
 		qdel(alert)
+
 /**
  * Creates an asynchronous TGUI alert window with an associated callback.
  *
