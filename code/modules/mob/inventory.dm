@@ -170,7 +170,13 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
+		var/atom/old_loc = W.loc
+
 		W.forceMove(src)		//TODO: move to equipped?
+
+		if(old_loc && (src != old_loc) && (src != old_loc.loc))
+			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
+
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.plane = ABOVE_HUD_PLANE
@@ -183,6 +189,7 @@ var/list/slot_equipment_priority = list(
 		update_inv_l_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
+
 		return 1
 	return 0
 
@@ -192,7 +199,13 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
+		var/atom/old_loc = W.loc
+
 		W.forceMove(src)
+
+		if(old_loc && (src != old_loc) && (src != old_loc.loc))
+			INVOKE_ASYNC(W, /atom/movable.proc/do_pickup_animation, src, old_loc)
+
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
@@ -205,6 +218,7 @@ var/list/slot_equipment_priority = list(
 		update_inv_r_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
+
 		return 1
 	return 0
 

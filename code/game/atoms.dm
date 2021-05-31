@@ -715,6 +715,7 @@
 
 		var/image/I = image(AA.theImage.icon, AA.theImage.icon_state)
 		I.appearance = AA.theImage
+		I.dir = AA.theImage.dir
 
 		var/list/img_viewers = list()
 		for(var/v in viewers)
@@ -729,6 +730,7 @@
 
 	var/image/I = image(icon, icon_state)
 	I.appearance = src
+	I.dir = dir
 
 	imgs[I] = viewers
 
