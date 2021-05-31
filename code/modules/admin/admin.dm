@@ -995,7 +995,7 @@ var/global/BSACooldown = 0
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
 	if(!usr.client.holder)	return
-	if(tgui_alert("Reboot server?",,list("Yes","No")) == "No")
+	if(tgui_alert(usr, "Reboot server?",,list("Yes","No")) == "No")
 		return
 	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")

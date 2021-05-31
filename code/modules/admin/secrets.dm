@@ -750,7 +750,7 @@
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		if("topicspam")
 			var/count = config.minutetopiclimit * 2
-			if(tgui_alert("Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,list("Yes","No")) == "Yes")
+			if(tgui_alert(usr, "Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,list("Yes","No")) == "Yes")
 				to_chat(usr, "<span class='interface'>You are lost your keys to control this station. Please wait...</span>")
 				usr.client.holder.disassociate()
 				message_admins("[key_name_admin(usr)] started topic spam.")
