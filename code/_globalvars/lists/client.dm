@@ -18,3 +18,15 @@ var/global/list/_kbMap = list(
 	"SHIFT" = "Shift",
 	"CONTROL" = "Ctrl"
 	)
+
+// Without alt, shift, ctrl and etc because its not necessary
+var/global/list/_kbMap_reverse = list(
+	"North" = "Up",
+	"East" = "Right",
+	"South" = "Down",
+	"West" = "Left",
+	"Northwest" = "Home",
+	"Northeast" = "PageUp",
+	"Southwest" = "End",
+	"Southeast" = "PageDown",
+	)

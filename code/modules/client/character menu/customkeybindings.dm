@@ -30,10 +30,12 @@
 				. += "</tr>"
 			else
 				var/bound_key = user_binds[kb.name][1]
-				. += "<tr><td width='40%'>[kb.full_name]</td><td width='15%'><a class='white fluid' href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a></td>"
+				var/normal_name = _kbMap_reverse[bound_key] ? _kbMap_reverse[bound_key] : bound_key
+				. += "<tr><td width='40%'>[kb.full_name]</td><td width='15%'><a class='white fluid' href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[normal_name]</a></td>"
 				for(var/bound_key_index in 2 to length(user_binds[kb.name]))
 					bound_key = user_binds[kb.name][bound_key_index]
-					. += "<td width='15%'><a class='white fluid' href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[bound_key]</a></td>"
+					normal_name = _kbMap_reverse[bound_key] ? _kbMap_reverse[bound_key] : bound_key
+					. += "<td width='15%'><a class='white fluid' href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=[bound_key]'>[normal_name]</a></td>"
 				if(length(user_binds[kb.name]) < MAX_KEYS_PER_KEYBIND)
 					. += "<td width='15%'><a class='white fluid' href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name]'>None</a></td>"
 				for(var/j in 1 to MAX_KEYS_PER_KEYBIND - (length(user_binds[kb.name]) + 1))
