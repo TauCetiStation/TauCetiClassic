@@ -462,7 +462,6 @@ log transactions
 	if(!held_card)
 		return
 
-	held_card.loc = src.loc
 	authenticated_account = null
 
 	if(ishuman(human_user) && !human_user.get_active_hand())

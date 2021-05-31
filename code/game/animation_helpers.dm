@@ -150,6 +150,9 @@
 
 	var/turf/old_turf = get_turf(old_loc)
 
+	I.pixel_x += old_loc.pixel_x + pixel_x
+	I.pixel_y += old_loc.pixel_y + pixel_y
+
 	I.loc = old_turf
 	I.plane = GAME_PLANE
 	I.layer = INFRONT_MOB_LAYER
@@ -158,10 +161,6 @@
 
 	if (ismob(target))
 		I.dir = target.dir
-
-	if (istype(old_loc, /obj/item/weapon/storage))
-		I.pixel_x += old_loc.pixel_x
-		I.pixel_y += old_loc.pixel_y
 
 	var/list/new_viewers = list()
 	for(var/v in viewers)
@@ -179,8 +178,8 @@
 	animate(I, transform = matrix(), time = 1)
 	sleep(1)
 
-	var/to_x = (target.x - old_turf.x) * 32
-	var/to_y = (target.y - old_turf.y) * 32
+	var/to_x = (target.x - old_turf.x) * 32 + target.pixel_x
+	var/to_y = (target.y - old_turf.y) * 32 + target.pixel_y
 
 	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, transform = matrix() * 0, easing = CUBIC_EASING)
 
@@ -208,6 +207,8 @@
 
 	var/turf/old_turf = get_turf(user)
 
+	I.pixel_x += user.pixel_x
+	I.pixel_y += user.pixel_y
 	I.loc = old_turf
 	I.plane = GAME_PLANE
 	I.layer = INFRONT_MOB_LAYER
@@ -228,8 +229,8 @@
 
 	flick_overlay(I, new_viewers, 4)
 
-	var/to_x = (target.x - old_turf.x) * 32 + pixel_x + additional_pixel_x
-	var/to_y = (target.y - old_turf.y) * 32 + pixel_y + additional_pixel_y
+	var/to_x = (target.x - old_turf.x) * 32 + pixel_x + additional_pixel_x + target.pixel_x
+	var/to_y = (target.y - old_turf.y) * 32 + pixel_y + additional_pixel_y + target.pixel_y
 
 	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, transform = matrix(), easing = CUBIC_EASING)
 
@@ -266,6 +267,8 @@
 
 	var/turf/old_turf = get_turf(src)
 
+	I.pixel_x += pixel_x
+	I.pixel_y += pixel_y
 	I.loc = loc
 	I.plane = GAME_PLANE
 	I.layer = INFRONT_MOB_LAYER
@@ -280,8 +283,8 @@
 
 	flick_overlay(I, new_viewers, 4)
 
-	var/to_x = (target.x - old_turf.x) * 32 + pixel_x
-	var/to_y = (target.y - old_turf.y) * 32 + pixel_y
+	var/to_x = (target.x - old_turf.x) * 32 + pixel_x + target.pixel_x
+	var/to_y = (target.y - old_turf.y) * 32 + pixel_y + target.pixel_y
 
 	animate(I, pixel_x = to_x, pixel_y = to_y, time = 3, easing = CUBIC_EASING)
 
