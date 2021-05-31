@@ -264,7 +264,7 @@
 	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 		if(RD.id == 1)
 			var/saved_interaction_score = RD.files.experiments.saved_best_score[inter_type]
-			var/saved_earned_points = max (RD.files.experiments.earned_score[inter_type], 1)
+			var/saved_earned_points = max(RD.files.experiments.earned_score[inter_type], 1)
 
 			var/added_score = max(0, score - saved_interaction_score)
 			var/already_earned_score = min(saved_interaction_score, score)
