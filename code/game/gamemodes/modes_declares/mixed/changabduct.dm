@@ -6,5 +6,5 @@
 		/datum/faction/abductors,
 	)
 
-	minimum_player_count = 60
-	minimum_players_bundles = 60
+	minimum_player_count = 50
+	minimum_players_bundles = 50

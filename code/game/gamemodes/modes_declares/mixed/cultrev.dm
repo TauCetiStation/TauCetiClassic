@@ -6,5 +6,5 @@
 		/datum/faction/revolution,
 	)
 
-	minimum_player_count = 60
-	minimum_players_bundles = 60
+	minimum_player_count = 55
+	minimum_players_bundles = 55
