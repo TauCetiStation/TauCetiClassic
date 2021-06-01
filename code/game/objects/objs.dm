@@ -275,3 +275,9 @@
 			if(src)
 				step(src, pick(cardinal))
 				sleep(rand(2, 4))
+
+/obj/examine(mob/user)
+	. = ..()
+	if(price > 0)
+		if(HAS_TRAIT(user, TRAIT_QUARTERMASTER))
+			to_chat(user, "<span class='notice'>[src] costs about [price] supply points.</span>")

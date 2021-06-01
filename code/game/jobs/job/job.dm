@@ -65,6 +65,8 @@
 	// What movesets does this job grant.
 	var/list/moveset_types
 
+	var/list/job_traits
+
 /datum/job/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	return
 
@@ -78,6 +80,9 @@
 
 	for(var/moveset in moveset_types)
 		H.add_moveset(new moveset(), MOVESET_JOB)
+
+	for(var/trait in job_traits)
+		ADD_TRAIT(H, trait, ROUNDSTART_TRAIT)
 
 	post_equip(H, visualsOnly)
 	return TRUE
