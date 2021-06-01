@@ -132,7 +132,7 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user)
 	if(istype(D, /obj/item/weapon/disk/research_points))
 		var/obj/item/weapon/disk/research_points/disk = D
-		to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
+		to_chat(user, "<span class='notice'>[name] received [disk.stored_points] Mb of useful data from [disk.name]</span>")
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
@@ -143,7 +143,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	else if(istype(D, /obj/item/device/science_tool))
 		var/research_points = files.experiments.read_science_tool(D)
 		if(research_points > 0)
-			to_chat(user, "<span class='notice'>[name] received [research_points] research points from uploaded data.</span>")
+			to_chat(user, "<span class='notice'>[name] received [research_points] Mb of useful data.</span>")
 			files.research_points += research_points
 		else
 			to_chat(user, "<span class='notice'>There was no usefull data inside [D.name]'s buffer.</span>")
@@ -479,7 +479,7 @@ cause a ton of data to be lost, an admin can go send it back.
 						"level" =          temp_tech[T],
 					))
 
-				// This calculates how much research points we missed because we already researched items with such orig_tech levels
+				// This calculates how much research data we missed because we already researched items with such orig_tech levels
 				var/research_value = files.experiments.get_object_research_value(linked_destroy.loaded_item, ignoreRepeat = TRUE)
 				var/tech_points_mod = research_value
 				if(research_value)

@@ -9,7 +9,7 @@ Variables:
 - researched_tech contains all researched technologies
 - design_by_id contains all existing /datum/design.
 - known_designs contains all researched /datum/design.
-- experiments contains data related to earning research points, more info in experiment.dm
+- experiments contains data related to earning research data, more info in experiment.dm
 - research_points is an amount of points that can be spend on researching technologies
 - design_categories_protolathe stores all unlocked categories for protolathe designs
 - design_categories_imprinter stores all unlocked categories for circuit imprinter designs
@@ -382,7 +382,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	var/list/required_technologies = list() // Ids of techologies that are required to be unlocked before this one. Should have same tech_type
 	var/list/required_tech_levels = list()  // list("biotech" = 5, ...) Ids and required levels of tech
-	var/cost = 100                          // How much research points required to unlock this techology
+	var/cost = 100                          // How much research data required to unlock this techology
 
 	var/reliability_upgrade_cost = 0        // Is set after researched, updated each time it is upgraded.
 	var/avg_reliability = 0                 // Shows the average reliability of designs in this tech. Is set after researched, updated each time it is upgraded.

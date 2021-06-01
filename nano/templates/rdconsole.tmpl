@@ -31,7 +31,7 @@
 			<div class='item'>
 				{{:helper.link("Circuit Construction Menu", 'video', {'go_screen' : 'circuit_imprinter'}, data.has_circuit_imprinter ? null : 'disabled', data.has_circuit_imprinter ? 'sciMenuButton' : null)}}
 			</div>
-			
+
 			<div class="statusDisplayRecords">
 				<div class="item">
 					<div class="itemContent" style="width: 100%;">
@@ -59,11 +59,11 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class='item'>
 				{{:helper.link("Settings", 'wrench', {'toggle_settings' : 1},null,'sciMenuButton')}}
 			</div>
-			
+
 			{{if data.show_settings}}
 				<div class='item'>
 					{{:helper.link("Sync Database with Network", 'transferthick-e-w', {'sync' : 1}, data.sync ? null : 'disabled')}}
@@ -79,11 +79,11 @@
 					{{:helper.link("Reset R&D Database", 'trash', {'reset' : 1})}}
 				</div>
 			{{/if}}
-			
+
 			<div class='item'>
 				{{:helper.link("Device Linkage Menu", 'link', {'toggle_link_menu' : 1},null,'sciMenuButton')}}
 			</div>
-			
+
 			{{if data.show_link_menu}}
 				<div class='item'>
 					{{:helper.link("Re-sync with Nearby Devices", 'link', {'find_device' : 1})}}
@@ -168,7 +168,7 @@
 									</td>
 								</tr>
 								{{/for}}
-								
+
 								{{for data.imprinter_data.materials}}
 								<tr>
 									<td><span class="average">{{:value.name}}</span></td><td>{{:value.amount}}</td>
@@ -202,7 +202,7 @@
 	<div class='item'>
 		{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}
 	</div>
-	
+
 	<table style="width: 100%">
 		<tr>
 			<td valign="top">
@@ -307,7 +307,7 @@
 								</td>
 							</tr>
 							{{/for}}
-							
+
 							{{for data.imprinter_data.materials}}
 							<tr>
 								<td><span class="average">{{:value.name}}</span></td><td>{{:value.amount}}</td>
@@ -360,7 +360,7 @@
 	<div class='item'>
 	{{:helper.link("Back", 'arrowreturn-1-w', {'go_screen' : 'main'},null,'fixedLeft')}}
 
-	<span class="average">Research points:</span> {{:data.research_points}} <span class="average">{{:data.tech_tree_name}} level:</span> {{:data.tech_tree_level}}
+	<span class="average">Research Data:</span> {{:data.research_points}} Mb    <span class="average">{{:data.tech_tree_name}} level:</span> {{:data.tech_tree_level}}
 	</div>
 	<div class='item'>
 
@@ -376,7 +376,7 @@
 				{{for data.lines}}
 					<div style="position: absolute;border-{{:value.istop?'top':'bottom'}}: 1px solid white;border-{{:value.isright?'right':'left'}}: 1px solid white;width: {{:value.width}}%;height: {{:value.height}}%;left: {{:value.line_x}}%;bottom: {{:value.line_y}}%"></div>
 				{{/for}}
-				
+
 				{{for data.techs}}
 					<div style="position: absolute; left: {{:value.x}}%; bottom: {{:value.y}}%;margin-left: -20px;margin-bottom: -20px;">
 						{{:helper.link("<div class='sciTechTreeIcon icon-"+value.icon+"'></div>", '', {'select_technology' : value.id}, null, "link sciTechTreeIconBox "+" "+((value.canresearch==0 && value.isresearched!=1)?'sciTechCantResearch':'')+" "+((value.isresearched==1)?'sciTechResearched':'')+" "+((value.id == data.selected_technology_id)?'sciTechSelected':'') )}}
@@ -390,13 +390,13 @@
 					{{:data.selected_technology.name}}
 					</br></br>
 					<b>Cost</b></br>
-					{{:data.selected_technology.cost}} Research Points
+					<strong>{{:data.selected_technology.cost}}</strong> Mb of Research Data
 					</br></br>
 					{{if data.selected_technology.isresearched}}
 						<b>Average Design Reliability Estimate</b></br>
 						{{:data.selected_technology.avg_reliability}}%</br>
 						<b>Reliability Upgrade Cost</b></br>
-						{{:data.selected_technology.reliability_upgrade_cost}} Research Points
+						<strong>{{:data.selected_technology.reliability_upgrade_cost}}</strong> Mb of Research Data
 						</br></br>
 					{{/if}}
 					<b>Requirements</b></br>

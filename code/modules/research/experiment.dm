@@ -1,4 +1,4 @@
-// Contains everything related to earning research points
+// Contains everything related to earning research data
 
 /datum/experiment_data
 	var/list/saved_best_score = list(
@@ -103,7 +103,7 @@
 		if(!(temp_tech[T] in saved_tech_levels[T]))
 			saved_tech_levels[T] += temp_tech[T]
 
-// Returns amount of research points received
+// Returns amount of research data received
 /datum/experiment_data/proc/read_science_tool(obj/item/device/science_tool/I)
 	var/points = 0
 
@@ -199,7 +199,7 @@
 		saved_best_score[interaction_type] = max(saved_best_score[interaction_type], O.saved_best_score[interaction_type])
 
 
-// Grants research points when explosion happens nearby
+// Grants research data when explosion happens nearby
 /obj/item/device/radio/beacon/interaction_watcher
 	name = "Kinetic Energy Scanner"
 	desc = "Scans the level of kinetic energy from explosions"
@@ -242,7 +242,7 @@
 		var/calculated_research_points = research_interaction("Anomalous means", 20000, new_score_coeff=1, repeat_score_coeff=0)
 
 		if(calculated_research_points > 0)
-			autosay("Destroyed via anomalous means, received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+			autosay("Destroyed via anomalous means, received [calculated_research_points] Mb of research data", name ,"Science", freq = radiochannels["Science"])
 		else
 			autosay("Destroyed via anomalous means, R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
@@ -271,7 +271,7 @@
 	var/calculated_research_points = research_interaction("Explosion", power, new_score_coeff=800, repeat_score_coeff=160)
 
 	if(calculated_research_points > 0)
-		autosay("Detected explosion with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected explosion with power level [power], received [calculated_research_points] Mb of research data", name ,"Science", freq = radiochannels["Science"])
 	else
 		autosay("Detected explosion with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
@@ -280,11 +280,11 @@
 	var/calculated_research_points = research_interaction("Empulse", power, new_score_coeff=600, repeat_score_coeff=120)
 
 	if(calculated_research_points > 0)
-		autosay("Detected EMP with power level [power], received [calculated_research_points] research points", name ,"Science", freq = radiochannels["Science"])
+		autosay("Detected EMP with power level [power], received [calculated_research_points] Mb of research data", name ,"Science", freq = radiochannels["Science"])
 	else
 		autosay("Detected EMP with power level [power], R&D console is missing or broken", name ,"Science", freq = radiochannels["Science"])
 
-// Universal tool to get research points from autopsy reports, virus info reports, archeology reports, slime cores
+// Universal tool to get research data from autopsy reports, virus info reports, archeology reports, slime cores
 /obj/item/device/science_tool
 	name = "science tool"
 	icon_state = "science"
@@ -320,7 +320,7 @@
 
 	if(istype(target, /obj/item/weapon/disk/research_points))
 		var/obj/item/weapon/disk/research_points/disk = target
-		to_chat(user, "<span class='notice'>[disk] stores approximately [disk.stored_points] research points</span>")
+		to_chat(user, "<span class='notice'>[disk] stores approximately [disk.stored_points] Mb of research data</span>")
 		return
 
 	if(istype(target,/obj/item/weapon/paper/autopsy_report))
