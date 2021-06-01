@@ -334,7 +334,7 @@
 	SSshuttle.announce_crew_called.play()
 
 /datum/faction/proc/check_win()
-	return
+	return TRUE
 
 /datum/faction/proc/minorVictoryText()
 	return ""

@@ -81,9 +81,6 @@
 	return dat
 
 /datum/faction/heist/check_win()
-	if(!..())
-		return FALSE
-
 	if(vox_shuttle_location && (vox_shuttle_location == "start"))
 		return TRUE
 
