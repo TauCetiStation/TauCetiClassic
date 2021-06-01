@@ -68,5 +68,7 @@
 	log_admin("[prefix]: [key_name(src)]: [msg] - heard by [mentor_number_present] non-AFK mentors and [admin_number_present] non-AFK admins.")
 
 /client/proc/get_mentorhelp()
-	var/msg = input(src, null, "mentorhelp \"text\"") as text|null
+	var/msg = sanitize(input(src, null, "mentorhelp \"text\"") as text|null)
+	if(!msg)
+		return
 	mentorhelp(msg)
