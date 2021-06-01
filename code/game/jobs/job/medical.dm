@@ -79,6 +79,7 @@
 		~Luduk
 	*/
 	restricted_species = list(IPC)
+	job_traits = list(TRAIT_MULE)
 
 // Slow species shouldn't be paramedics.
 /datum/job/paramedic/special_species_check(datum/species/S)

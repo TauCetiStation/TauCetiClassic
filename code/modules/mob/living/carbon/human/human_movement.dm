@@ -84,7 +84,8 @@
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
 
 	if(pull_debuff)
-		tally += pull_debuff
+		if(!HAS_TRAIT(src, TRAIT_MULE))
+			tally += pull_debuff
 
 	if(bodytemperature < species.cold_level_1)
 		tally += (species.cold_level_1 - bodytemperature) / 10 * 1.75

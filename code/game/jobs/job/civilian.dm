@@ -37,7 +37,7 @@
 	salary = 50
 	minimal_player_ingame_minutes = 480
 	outfit = /datum/outfit/job/cargo_tech
-
+	job_traits = list(TRAIT_MULE)
 
 /datum/job/mining
 	title = "Shaft Miner"

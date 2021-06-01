@@ -83,6 +83,7 @@
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_MERCHANT            "merchant"
+#define TRAIT_MULE                "mule"
 
 
 // common trait sources
