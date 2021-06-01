@@ -51,15 +51,14 @@
 	if(istype(W, /obj/item/weapon/storage))
 		empty_bin(user, W)
 		return
-	else if(default_unfasten_wrench(user, W))
+	if(default_unfasten_wrench(user, W))
 		return
-	else if(exchange_parts(user, W))
+	if(exchange_parts(user, W))
 		return
-	else if(default_deconstruction_screwdriver(user, W))
+	if(default_deconstruction_screwdriver(user, W))
 		return
-	else if(default_deconstruction_crowbar(user, W))
+	if(default_deconstruction_crowbar(user, W))
 		return
-	else
 		var/paper_result
 		for(var/shred_type in shred_amounts)
 			if(istype(W, shred_type))
@@ -85,7 +84,6 @@
 				paperamount = max_paper
 			update_icon()
 			return
-	return ..()
 
 /obj/machinery/papershredder/verb/empty_contents()
 	set name = "Empty bin"
@@ -101,7 +99,7 @@
 
 	empty_bin(usr)
 
-/obj/machinery/papershredder/proc/empty_bin(var/mob/living/user, var/obj/item/weapon/storage/empty_into)
+/obj/machinery/papershredder/proc/empty_bin(mob/living/user, obj/item/weapon/storage/empty_into)
 
 	// Sanity.
 	if(empty_into && !istype(empty_into))
@@ -114,7 +112,7 @@
 	while(paperamount)
 		var/obj/item/weapon/shreddedp/SP = get_shredded_paper()
 		if(!SP)
-				break
+			break
 		if(empty_into)
 			empty_into.handle_item_insertion(SP)
 			if(empty_into.contents.len >= empty_into.storage_slots)
@@ -138,7 +136,7 @@
 /obj/machinery/papershredder/power_change()
 	..()
 	addtimer(CALLBACK(src, .proc/update_icon), rand(0,15))
-		update_icon()
+	update_icon()
 
 /obj/machinery/papershredder/update_icon()
 	overlays.Cut()
@@ -169,15 +167,15 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	if(prob(65))
-		color = pick("#BABABA", "#7F7F7F")
+		color = pick("#bababa", "#7f7f7f")
 
-/obj/item/weapon/shreddedp/attackby(var/obj/item/P as obj, var/mob/user)
+/obj/item/weapon/shreddedp/attackby(obj/item/P as obj, mob/user)
 	if(istype(P, /obj/item/weapon/lighter))
 		burnpaper(P, user)
 	else
 		..()
 
-/obj/item/weapon/shreddedp/burnpaper(var/obj/item/weapon/lighter/P, var/mob/user)
+/obj/item/weapon/shreddedp/burnpaper(/obj/item/weapon/lighter/P, mob/user)
 	if(user.restrained())
 		return
 	if(!P.lit)
