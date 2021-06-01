@@ -218,8 +218,9 @@
 				return FALSE
 	return TRUE
 
-/datum/role/proc/printplayerwithicon(mob/M)
+/datum/role/proc/printplayerwithicon(datum/mind/mind)
 	var/text = ""
+	var/mob/M = mind.current
 	if(!M)
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
 		text += "<img src='data:image/png;base64,[icon2base64(sprotch)]' style='position:relative; top:10px;'/>"
@@ -234,16 +235,16 @@
 		else
 			end_icons += flat
 		var/tempstate = end_icons.len
-		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>"
+		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>" // change to base64?
 
 	var/icon/logo = get_logo_icon()
-	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[M.mind.key]</b> was <b>[M.mind.name]</b> ("
+	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[mind.key]</b> was <b>[mind.name]</b> ("
 	if(M)
 		if(M.stat == DEAD)
 			text += "died"
 		else
 			text += "survived"
-		if(M.real_name != M.mind.name)
+		if(M.real_name != mind.name)
 			text += " as <b>[M.real_name]</b>"
 	else
 		text += "body destroyed"
@@ -265,7 +266,7 @@
 	if(!M)
 		win = FALSE
 
-	text = printplayerwithicon(M)
+	text = printplayerwithicon(antag)
 
 	if(objectives.objectives.len > 0)
 		var/count = 1
