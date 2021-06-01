@@ -506,7 +506,7 @@
 		target.dna = PB.brainmob.dna
 	qdel(tool)
 	target.stat = CONSCIOUS
-	var/obj/item/organ/internal/heart/IO = target.organs_by_name[O_HEART]
+	var/obj/item/organ/internal/heart/IO
 	IO.heart_normalize()
 	target.stunned = 0
 	target.weakened = 0
