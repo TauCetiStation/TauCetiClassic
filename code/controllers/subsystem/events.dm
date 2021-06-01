@@ -265,7 +265,7 @@ SUBSYSTEM_DEF(events)
 			EC.delay_modifier = delay
 			admin_log_and_message_admins("has set the interval modifier for [severity_to_string[EC.severity]] events to [EC.delay_modifier].")
 	else if(href_list["stop"])
-		if(tgui_alert(usr, "Stopping an event may have unintended side-effects. Continue?", "Stopping Event!", list(Yes","No")) != "Yes")
+		if(tgui_alert(usr, "Stopping an event may have unintended side-effects. Continue?", "Stopping Event!", list("Yes","No")) != "Yes")
 			return
 		var/datum/event/E = locate(href_list["stop"])
 		var/datum/event_meta/EM = E.event_meta
