@@ -249,7 +249,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	set_sound_volume(slider, vol_raw)
 
 /proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.    
+	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
 
 /client/verb/show_volume_controls()
 	set name = ".showvolumecontrols"
