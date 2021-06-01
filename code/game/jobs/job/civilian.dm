@@ -21,7 +21,7 @@
 		~Luduk
 	*/
 	restricted_species = list(UNATHI, TAJARAN, VOX, DIONA)
-	job_traits = list(TRAIT_QUARTERMASTER)
+	job_traits = list(TRAIT_MERCHANT)
 
 /datum/job/cargo_tech
 	title = "Cargo Technician"

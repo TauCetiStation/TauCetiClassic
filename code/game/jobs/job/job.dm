@@ -82,7 +82,7 @@
 		H.add_moveset(new moveset(), MOVESET_JOB)
 
 	for(var/trait in job_traits)
-		ADD_TRAIT(H, trait, ROUNDSTART_TRAIT)
+		ADD_TRAIT(H, trait, JOB_TRAIT)
 
 	post_equip(H, visualsOnly)
 	return TRUE

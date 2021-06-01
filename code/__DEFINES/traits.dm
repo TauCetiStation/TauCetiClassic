@@ -82,12 +82,12 @@
 #define TRAIT_DALTONISM           "daltonism"
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
-#define TRAIT_QUARTERMASTER       "quartermaster"
+#define TRAIT_MERCHANT            "merchant"
 
 
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
-
 #define FEAR_TRAIT         "fear"
+#define JOB_TRAIT          "job"
