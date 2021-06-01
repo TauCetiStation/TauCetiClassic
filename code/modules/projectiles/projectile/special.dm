@@ -218,9 +218,15 @@
 	name = "neurotoxin"
 	icon_state = "energy2"
 	damage = 5
-	weaken = 10
 	damage_type = TOX
 	flag = "bio"
+
+/obj/item/projectile/neurotoxin/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.species.flags[IS_SYNTHETIC])
+			return
+		H.weakened = 10
 
 /obj/item/projectile/acid_special
 	name = "acid"
