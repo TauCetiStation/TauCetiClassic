@@ -97,7 +97,7 @@ Admin:
 		return
 
 	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
-	if(tgui_alert(message, "Report Issue", list("Yes", "No")) != "Yes")
+	if(tgui_alert(usr, message, "Report Issue", list("Yes", "No")) != "Yes")
 		return
 	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
 	var/servername = config.server_name

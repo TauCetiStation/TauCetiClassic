@@ -192,16 +192,16 @@ var/global/bridge_ooc_colour = "#7b804f"
 			return
 		chatOutput = new /datum/chatOutput(src)
 		chatOutput.start()
-		action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", list("Fixed", "Nope"))
+		action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
 		if (action == "Fixed")
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum")
 		else
 			chatOutput.load()
-			action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))", "", list("Yes", "No"))
+			action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum and forcing a load()")
 			else
-				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", list("Thanks anyways", "Switch to old chat"))
+				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 				if (action == "Switch to old chat")
 					winset(src, "output", "is-visible=true;is-disabled=false")
 					winset(src, "browseroutput", "is-visible=false")
@@ -213,16 +213,16 @@ var/global/bridge_ooc_colour = "#7b804f"
 			if ("Force Reload")
 				chatOutput.loaded = FALSE
 				chatOutput.start() //this is likely to fail since it asks , but we should try it anyways so we know.
-				action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", list("Fixed", "Nope"))
+				action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
 				if (action == "Fixed")
 					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a start()")
 				else
 					chatOutput.load()
-					action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))", "", list("Yes", "No"))
+					action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
-						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", list("Thanks anyways", "Switch to old chat"))
+						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 						if (action == "Switch to old chat")
 							winset(src, "output", "is-visible=true;is-disabled=false")
 							winset(src, "browseroutput", "is-visible=false")
@@ -230,17 +230,17 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 			if ("Refresh")
 				chatOutput.showChat()
-				action = tgui_alert(src, "Goon chat refreshing, wait a bit and tell me if it's fixed", "", list("Fixed", "Nope, force a reload"))
+				action = tgui_alert(src, "Goon chat refreshing, wait a bit and tell me if it's fixed",, list("Fixed", "Nope, force a reload"))
 				if (action == "Fixed")
 					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a show()")
 				else
 					chatOutput.loaded = FALSE
 					chatOutput.load()
-					action = tgui_alert(src, "How about now? (give it a moment)", "", list("Yes", "No"))
+					action = tgui_alert(src, "How about now? (give it a moment)",, list("Yes", "No"))
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
-						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", list("Thanks anyways", "Switch to old chat"))
+						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 						if (action == "Switch to old chat")
 							winset(src, "output", "is-visible=true;is-disabled=false")
 							winset(src, "browseroutput", "is-visible=false")
@@ -249,16 +249,16 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	else
 		chatOutput.start()
-		var/action = tgui_alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed", "", list("Fixed", "Nope"))
+		var/action = tgui_alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
 		if (action == "Fixed")
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start()")
 		else
 			chatOutput.load()
-			tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))", "", list("Yes", "No"))
+			tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start() and forcing a load()")
 			else
-				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", list("Thanks anyways", "Switch to old chat"))
+				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 				if (action == "Switch to old chat")
 					winset(src, "output", list2params(list("on-show" = "", "is-disabled" = "false", "is-visible" = "true")))
 					winset(src, "browseroutput", "is-disabled=true;is-visible=false")

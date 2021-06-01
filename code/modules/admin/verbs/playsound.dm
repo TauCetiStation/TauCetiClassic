@@ -27,7 +27,7 @@ var/global/list/sounds_cache_local = list()
 		to_chat(src, "<span class='notice'>Operation aborted. Reason: no input sound.</span>")
 		return
 
-	if(tgui_alert(usr, "Do you ready?\nSong: [S]\nDon't overuse this (knopka) play (or UNPEDALITY)! Suits for music and sound effects.", null, list("Play", "Cancel")) == "Cancel")
+	if(tgui_alert(usr, "Do you ready?\nSong: [S]\nDon't overuse this (knopka) play (or UNPEDALITY)! Suits for music and sound effects.",, list("Play", "Cancel")) == "Cancel")
 		return
 
 	log_admin("[key_name(src)] played sound [S].")
