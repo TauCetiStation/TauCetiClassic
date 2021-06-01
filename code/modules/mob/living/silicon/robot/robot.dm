@@ -167,8 +167,7 @@
 		var/list/modules = list(
 				"Standard" = "robot_old",
 				"Engineering" = "Engineering",
-				"Surgeon" = "medicalrobot",
-				"Crisis" = "Medbot",
+				"Medical" = "medicalrobot",
 				"Miner" = "Miner_old",
 				"Janitor" = "JanBot2",
 				"Service" = "Service",
@@ -237,8 +236,8 @@
 			module_sprites["Kodiak"] = "kodiak-miner"
 			give_hud(DATA_HUD_MINER)
 
-		if("Crisis")
-			module = new /obj/item/weapon/robot_module/crisis(src)
+		if("Medical")
+			module = new /obj/item/weapon/robot_module/medical(src)
 			module.channels = list("Medical" = 1)
 			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
@@ -246,19 +245,8 @@
 			module_sprites["Standard"] = "surgeon"
 			module_sprites["Advanced Droid"] = "droid-medical"
 			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-medical"
-			module_sprites["Acheron"] = "mechoid-Medical"
-
-		if("Surgeon")
-			module = new /obj/item/weapon/robot_module/surgeon(src)
-			module.channels = list("Medical" = 1)
-			if(camera && ("Robots" in camera.network))
-				camera.add_network("Medical")
-			module_sprites["Basic"] = "Medbot"
-			module_sprites["Standard"] = "surgeon"
-			module_sprites["Advanced Droid"] = "droid-medical"
-			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone"] = "drone-surgery"
+			module_sprites["Drone Red"] = "drone-surgery"
+			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
 
 		if("Security")
@@ -308,7 +296,7 @@
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Crisis" || modtype == "Surgeon" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
+	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
 	// Radial menu for choose icon_state
@@ -478,6 +466,9 @@
 			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
 				stat("Internal Atmosphere Info: [current_jetpack.name]")
 				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
+		if(locate(/obj/item/device/gps/cyborg))
+			var/turf/T = get_turf(src)
+			stat(null, "GPS: [COORD(T)]")
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 

@@ -363,7 +363,7 @@ var/list/ai_verbs_default = list(
 	if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
-	
+
 	if(!input)
 		return
 
@@ -538,11 +538,15 @@ var/list/ai_verbs_default = list(
 
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in living_list
-		if(target || html_decode(href_list["trackname"]) == target:get_visible_name())
+		if(target)
 			ai_actual_track(target)
-		else
-			to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
 			return
+		var/mob/living/carbon/human/H = locate(href_list["track"]) in living_list
+		if(html_decode(href_list["trackname"]) == H.get_visible_name())
+			ai_actual_track(H)
+			return
+		to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
+		return
 
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in living_list

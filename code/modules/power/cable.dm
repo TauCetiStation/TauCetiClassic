@@ -103,6 +103,17 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/attack_tk(mob/user)
 	return
 
+/obj/structure/cable/proc/remove_cable(turf/T, mob/user)
+	// 0-X cables are 1 unit, X-X cables are 2 units long
+	var/atom/newcable = new /obj/item/stack/cable_coil(T, (d1 ? 2 : 1), color)
+
+	if(user)
+		newcable.fingerprintslast = user.key
+		user.SetNextMove(CLICK_CD_RAPID)
+		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
+
+	qdel(src)
+
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
 //   - Cable coil : merge cables
@@ -119,17 +130,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if (shock(user, 50))
 			return
 
-		var/atom/newcable
-		if(src.d1)	// 0-X cables are 1 unit, X-X cables are 2 units long
-			newcable = new /obj/item/stack/cable_coil(T, 2, color)
-		else
-			newcable = new /obj/item/stack/cable_coil(T, 1, color)
-		newcable.fingerprintslast = user.key
-		user.SetNextMove(CLICK_CD_RAPID)
-
-		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
-
-		qdel(src)
+		remove_cable(T, user)
 
 		return	// not needed, but for clarity
 
