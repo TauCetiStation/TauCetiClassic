@@ -113,7 +113,8 @@
 
 	while(paperamount)
 		var/obj/item/weapon/shreddedp/SP = get_shredded_paper()
-		if(!SP) break
+		if(!SP)
+				break
 		if(empty_into)
 			empty_into.handle_item_insertion(SP)
 			if(empty_into.contents.len >= empty_into.storage_slots)
@@ -136,7 +137,7 @@
 
 /obj/machinery/papershredder/power_change()
 	..()
-	spawn(rand(0,15))
+	addtimer(CALLBACK(src, .proc/update_icon), rand(0,15))
 		update_icon()
 
 /obj/machinery/papershredder/update_icon()
