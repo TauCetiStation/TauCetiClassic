@@ -77,6 +77,9 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
+	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
+		MiddleShiftClickOn(A)
+		return
 	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
@@ -209,6 +212,21 @@
 */
 /mob/proc/RestrainedClickOn(atom/A) // for now it's overriding only in monkey.
 	return
+
+/*
+	Middle Shift click
+	For point to
+*/
+/mob/proc/MiddleShiftClickOn(atom/A)
+	var/obj/item/I = get_active_hand()
+	if(I && next_move <= world.time && !incapacitated() && (SEND_SIGNAL(I, COMSIG_ITEM_MIDDLESHIFTCLICKWITH, A, src) & COMSIG_ITEM_CANCEL_CLICKWITH))
+		return
+
+	A.MiddleShiftClick(src)
+
+/atom/proc/MiddleShiftClick(mob/user)
+	if(user.client && user.client.eye == user)
+		user.pointed(src)
 
 /*
 	Middle click

@@ -61,6 +61,7 @@
 	. = ..()
 
 	verbs += /mob/living/carbon/proc/crawl
+	chief_animal_list += src
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()

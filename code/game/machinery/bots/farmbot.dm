@@ -456,11 +456,9 @@
 		src.visible_message("<span class='warning'>[src] splashes [target] with a bucket of water!</span>")
 		playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 		if ( prob(50) )
-			tank.reagents.reaction(target, TOUCH) //splash the human!
+			tank.reagents.standard_splash(target, amount=splashAmount) //splash the human!
 		else
-			tank.reagents.reaction(target.loc, TOUCH) //splash the human's roots!
-		spawn(5)
-			tank.reagents.remove_any(splashAmount)
+			tank.reagents.standard_splash(target.loc, amount=splashAmount) //splash the human's roots!
 
 		mode = FARMBOT_MODE_WAITING
 		spawn(FARMBOT_EMAG_DELAY)

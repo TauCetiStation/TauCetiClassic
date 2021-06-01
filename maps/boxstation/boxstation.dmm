@@ -73712,6 +73712,7 @@
 	name = "Chemistry Cleaner"
 	},
 /obj/item/weapon/packageWrap,
+/obj/item/weapon/airlock_painter,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
