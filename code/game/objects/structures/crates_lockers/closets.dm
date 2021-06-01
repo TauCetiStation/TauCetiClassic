@@ -16,6 +16,8 @@
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
+	var/thermite = 0
+	var/seconds_to_melt = 5
 
 /obj/structure/closet/atom_init(mapload)
 	. = ..()
@@ -141,6 +143,25 @@
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 	return
 
+/obj/structure/closet/proc/thermitemelt(mob/user, seconds_to_melt)
+	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
+	O.name = "Thermite"
+	O.desc = "Looks hot."
+	O.icon = 'icons/effects/fire.dmi'
+	O.icon_state = "2"
+	O.anchored = 1
+	O.density = 1
+	O.layer = 5
+
+	visible_message("<span class='warning'>Thermite starts melting the [src]. </span>")
+	for(var/mob/living/M in src)
+		M.adjustFireLoss(rand(30, 60))
+		M.Stun(5)
+	dump_contents()
+	qdel(src)
+	sleep(seconds_to_melt * 10)
+	qdel(O)
+
 // this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
@@ -199,12 +220,23 @@
 		attack_hand(user)
 
 /obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/reagent_containers))
+		for(var/datum/reagent/R in W.reagents.reagent_list)
+			if(R.id == "thermite" && R.volume >= 15)
+				thermite = 1
+				user.visible_message("<span class='notice'>You pour some thermite on the [src].</span>")
+		W.reagents.reagent_list -= W.reagents.reagent_list
+
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())
 			return FALSE
 		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
+			if(thermite)
+				thermitemelt(user, seconds_to_melt)
+				user.visible_message("<span class='warning'>You ignite thermite on the [src].</span>")
+				return
 			if(opened)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
