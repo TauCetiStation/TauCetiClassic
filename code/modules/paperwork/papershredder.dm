@@ -59,31 +59,31 @@
 		return
 	if(default_deconstruction_crowbar(user, W))
 		return
-		var/paper_result
-		for(var/shred_type in shred_amounts)
-			if(istype(W, shred_type))
-				paper_result = shred_amounts[shred_type]
-				break
-		if(paper_result)
-			if(!is_operational())
-				return // Need powah!
-			if(paperamount == max_paper)
-				to_chat(user, "<span class='warning'>\The [src] is full; please empty it before you continue.</span>")
-				return
-			paperamount += paper_result
-			user.drop_from_inventory(W)
-			qdel(W)
-			playsound(src, 'sound/items/pshred.ogg', VOL_EFFECTS_MASTER)
-			flick(shred_anim, src)
-			if(paperamount > max_paper)
-				to_chat(user,"<span class='danger'>\The [src] was too full, and shredded paper goes everywhere!</span>")
-				for(var/i=(paperamount-max_paper);i>0;i--)
-					var/obj/item/weapon/shreddedp/SP = get_shredded_paper()
-					SP.forceMove(loc)
-					SP.throw_at(get_edge_target_turf(src, pick(alldirs)), 1, 5)
-				paperamount = max_paper
-			update_icon()
+	var/paper_result
+	for(var/shred_type in shred_amounts)
+		if(istype(W, shred_type))
+			paper_result = shred_amounts[shred_type]
+			break
+	if(paper_result)
+		if(!is_operational())
+			return // Need powah!
+		if(paperamount == max_paper)
+			to_chat(user, "<span class='warning'>\The [src] is full; please empty it before you continue.</span>")
 			return
+		paperamount += paper_result
+		user.drop_from_inventory(W)
+		qdel(W)
+		playsound(src, 'sound/items/pshred.ogg', VOL_EFFECTS_MASTER)
+		flick(shred_anim, src)
+		if(paperamount > max_paper)
+			to_chat(user,"<span class='danger'>\The [src] was too full, and shredded paper goes everywhere!</span>")
+			for(var/i=(paperamount-max_paper);i>0;i--)
+				var/obj/item/weapon/shreddedp/SP = get_shredded_paper()
+				SP.forceMove(loc)
+				SP.throw_at(get_edge_target_turf(src, pick(alldirs)), 1, 5)
+			paperamount = max_paper
+		update_icon()
+		return
 
 /obj/machinery/papershredder/verb/empty_contents()
 	set name = "Empty bin"
