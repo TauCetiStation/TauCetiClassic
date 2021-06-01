@@ -293,7 +293,7 @@
 			var/new_value
 
 			if(variable == "dynamic_lighting")
-				new_value = tgui_alert(usr, "dynamic_lighting", ,list(usr, "DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
+				new_value = tgui_alert(usr, "dynamic_lighting",, list("DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
 				switch(new_value)
 					if("DYNAMIC_LIGHTING_DISABLED")
 						new_value = DYNAMIC_LIGHTING_DISABLED

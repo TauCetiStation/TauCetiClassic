@@ -559,7 +559,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/list/params = admin_spawn_status_effect(usr)
 	if(params)
-		if(tgui_alert(usr,"Confirm applying the status effect to every mob?", , list("Yes", "No")) == "Yes")
+		if(tgui_alert(usr, "Confirm applying the status effect to every mob?",, list("Yes", "No")) == "Yes")
 			for(var/mob/living/L in global.living_list)
 				L.apply_status_effect(arglist(params))
 
@@ -765,7 +765,7 @@ var/list/admin_verbs_hideable = list(
 	if(!holder)
 		return
 
-	if(tgui_alert(usr,"Confirm self-deadmin for the round?",,list("Yes","No")) == "Yes")
+	if(tgui_alert(usr, "Confirm self-deadmin for the round?",, list("Yes","No")) == "Yes")
 		if(has_antag_hud())
 			toggle_combo_hud()
 
@@ -814,7 +814,7 @@ var/list/admin_verbs_hideable = list(
 	if(!istype(M, /mob/living/carbon/human))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
-	switch(tgui_alert(usr,"Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
+	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
 		if("No")
 			return
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
@@ -1026,9 +1026,9 @@ var/list/admin_verbs_hideable = list(
 	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
 	if(istype(winner, /mob/living))
-		achoice = tgui_alert(usr,"Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
+		achoice = tgui_alert(usr, "Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
 
-	var/glob = tgui_alert(usr,"Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
+	var/glob = tgui_alert(usr, "Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
 
 	if(achoice == "Confirm")
 		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))

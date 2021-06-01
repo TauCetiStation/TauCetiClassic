@@ -729,7 +729,7 @@ var/global/BSACooldown = 0
 	set desc="Restarts the world"
 	if (!usr.client.holder)
 		return
-	var/confirm = tgui_alert(usr,"Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", list("Yes", "Cancel"))
+	var/confirm = tgui_alert(usr, "Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -927,7 +927,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(R_SERVER))	return
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.timeLeft/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return tgui_alert(usr,"Too late... The game has already started!")
+		return tgui_alert(usr, "Too late... The game has already started!")
 	if(newtime)
 		SSticker.timeLeft = newtime * 10
 		if(newtime < 0)
@@ -964,7 +964,7 @@ var/global/BSACooldown = 0
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
-		return tgui_alert(usr,"The game has not started yet!")
+		return tgui_alert(usr, "The game has not started yet!")
 
 /datum/admins/proc/adjump()
 	set category = "Server"
@@ -995,7 +995,7 @@ var/global/BSACooldown = 0
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
 	if(!usr.client.holder)	return
-	if(tgui_alert(usr, "Reboot server?",,list("Yes","No")) == "No")
+	if(tgui_alert(usr, "Reboot server?",, list("Yes","No")) == "No")
 		return
 	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
@@ -1038,9 +1038,9 @@ var/global/BSACooldown = 0
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 		else
-			tgui_alert(usr,"Admin jumping disabled")
+			tgui_alert(usr, "Admin jumping disabled")
 	else
-		tgui_alert(usr,"[M.name] is not prisoned.")
+		tgui_alert(usr, "[M.name] is not prisoned.")
 	feedback_add_details("admin_verb","UP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS

@@ -491,7 +491,7 @@
 					if(!isarea(O) && !isturf(O))
 						to_chat(usr, "This can only be used on instances of type /area and /turf")
 						return
-					var/var_new = tgui_alert(usr, "dynamic_lighting", , list("DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
+					var/var_new = tgui_alert(usr, "dynamic_lighting",, list("DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
 					switch(var_new)
 						if("DYNAMIC_LIGHTING_DISABLED")
 							var_new = DYNAMIC_LIGHTING_DISABLED

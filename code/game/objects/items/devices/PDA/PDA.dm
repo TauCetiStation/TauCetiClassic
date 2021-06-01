@@ -1523,10 +1523,10 @@
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		tgui_alert(usr,"Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
+		tgui_alert(usr, "Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
 		return FALSE
 	if(!user.dna)	//just in case
-		tgui_alert(usr,"Eror! PDA can't read your fingerprints.")
+		tgui_alert(usr, "Eror! PDA can't read your fingerprints.")
 		return FALSE
 	var/fingerprints = md5(user.dna.uni_identity)
 	if(fingerprints in owner_fingerprints)
@@ -1538,7 +1538,7 @@
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else
-			tgui_alert(usr,"Invalid Password!")
+			tgui_alert(usr, "Invalid Password!")
 			return FALSE
 
 /obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)

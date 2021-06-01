@@ -575,7 +575,7 @@
 		popup.set_content(dat)
 		popup.open()
 	else
-		tgui_alert(usr,"The game hasn't started yet!")
+		tgui_alert(usr, "The game hasn't started yet!")
 
 /proc/check_role_table(name, list/members, admins, show_objectives = TRUE)
 	var/txt = "<br><table cellspacing=5><tr><td><b>[name]</b></td><td></td></tr>"

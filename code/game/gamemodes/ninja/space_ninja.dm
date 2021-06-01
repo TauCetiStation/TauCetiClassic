@@ -9,10 +9,10 @@
 	set name = "Make Space Ninja"
 
 	if(!SSticker)
-		tgui_alert(usr,"Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(!toggle_space_ninja)
-		tgui_alert(usr,"Space Ninjas spawning is disabled.")
+		tgui_alert(usr, "Space Ninjas spawning is disabled.")
 		return
 
 	var/confirm = tgui_alert(src, "You sure?", "Confirm", list("Yes", "No"))
@@ -30,7 +30,7 @@
 				spawn(0)
 					S.ninitialize(10, H)
 	else
-		tgui_alert(usr,"Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 // CURRENT GHOST VERB
 
@@ -44,12 +44,12 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(!SSticker.mode)
-		tgui_alert(usr,"The game hasn't started yet!")
+		tgui_alert(usr, "The game hasn't started yet!")
 		return
 	if(!toggle_space_ninja)
-		tgui_alert(usr,"Space Ninjas spawning is disabled.")
+		tgui_alert(usr, "Space Ninjas spawning is disabled.")
 		return
-	if(tgui_alert(usr,"Are you sure you want to send in a space ninja?",, list("Yes","No"))=="No")
+	if(tgui_alert(usr, "Are you sure you want to send in a space ninja?",, list("Yes","No"))=="No")
 		return
 
 	var/mission
@@ -61,7 +61,7 @@
 	while(!mission)
 		mission = sanitize(input(src, "Please specify which mission the space ninja shall undertake.", "Specify Mission", ""))
 		if(!mission)
-			if(tgui_alert(usr,"Error, no mission set. Do you want to exit the setup process?",, list("Yes","No"))=="Yes")
+			if(tgui_alert(usr, "Error, no mission set. Do you want to exit the setup process?",, list("Yes","No"))=="Yes")
 				return
 
 	log_admin("[key_name(usr)] used Spawn Space Ninja.")

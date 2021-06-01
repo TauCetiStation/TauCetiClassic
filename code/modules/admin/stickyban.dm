@@ -65,7 +65,7 @@
 	if (!is_stickyban_from_game(ban))
 		to_chat(usr, "<span class='adminnotice'>This user was stickybanned by the host, and can not be un-stickybanned from this panel</span>")
 		return
-	if (tgui_alert(usr,"Are you sure you want to remove the sticky ban on [ckey]?", "Are you sure", list("Yes", "No")) == "No")
+	if (tgui_alert(usr, "Are you sure you want to remove the sticky ban on [ckey]?", "Are you sure", list("Yes", "No")) == "No")
 		return
 	// check again after sleep
 	if (!stickyban_ban_exists_check(ckey, get_stickyban_from_ckey(ckey)))
@@ -89,10 +89,10 @@
 	if (!stickyban_ban_and_alt_exists_check(ban, ckey, alt))
 		return
 	if (!is_stickyban_from_game(ban))
-		tgui_alert(usr,"This user was stickybanned by the host, and can not be edited from this panel")
+		tgui_alert(usr, "This user was stickybanned by the host, and can not be edited from this panel")
 		return
 	// Confirm
-	if (tgui_alert(usr,"Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them","Are you sure", list("Yes","No")) == "No")
+	if (tgui_alert(usr, "Are you sure you want to disassociate [alt] from [ckey]'s sticky ban? \nNote: Nothing stops byond from re-linking them","Are you sure", list("Yes","No")) == "No")
 		return
 	// After sleep checking again
 	ban = get_stickyban_from_ckey(ckey)
@@ -142,7 +142,7 @@
 	var/ban = get_stickyban_from_ckey(ckey)
 	if (!stickyban_ban_and_alt_exists_check(ban, ckey, alt))
 		return
-	if (tgui_alert(usr,"Are you sure you want to exempt [alt] from [ckey]'s sticky ban?","Are you sure",list("Yes","No")) == "No")
+	if (tgui_alert(usr, "Are you sure you want to exempt [alt] from [ckey]'s sticky ban?","Are you sure",list("Yes","No")) == "No")
 		return
 	ban = get_stickyban_from_ckey(ckey)
 	if (!stickyban_ban_and_alt_exists_check(ban, ckey, alt))
@@ -168,7 +168,7 @@
 	var/ban = get_stickyban_from_ckey(ckey)
 	if (!stickyban_whitelist_alt_exists_check(ban, ckey, alt))
 		return
-	if (tgui_alert(usr,"Are you sure you want to unexempt [alt] from [ckey]'s sticky ban?","Are you sure", list("Yes","No")) == "No")
+	if (tgui_alert(usr, "Are you sure you want to unexempt [alt] from [ckey]'s sticky ban?","Are you sure", list("Yes","No")) == "No")
 		return
 	if (!stickyban_whitelist_alt_exists_check(ban, ckey, alt))
 		return

@@ -263,7 +263,7 @@
 			return
 
 		if( SSticker.mode.name == "blob" )
-			tgui_alert(usr,"You can't call the shuttle during blob!")
+			tgui_alert(usr, "You can't call the shuttle during blob!")
 			return
 
 		switch(href_list["call_shuttle"])
@@ -333,7 +333,7 @@
 			return
 
 		var/delmob = 0
-		switch(tgui_alert(usr,"Delete old mob?","Message", list("Yes","No","Cancel")))
+		switch(tgui_alert(usr, "Delete old mob?","Message", list("Yes","No","Cancel")))
 			if("Cancel")	return
 			if("Yes")		delmob = 1
 
@@ -788,7 +788,7 @@
 
 		if(M != usr)																//we can jobban ourselves
 			if(M.client && M.client.holder && (M.client.holder.rights & R_BAN))		//they can ban too. So we can't ban them
-				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
+				tgui_alert(usr, "You cannot perform this action. You must be of a higher administrative rank!")
 				return
 
 		if(!SSjob)
@@ -860,7 +860,7 @@
 
 		//Banning comes first
 		if(notbannedlist.len) //at least 1 unbanned job exists in joblist so we have stuff to ban.
-			switch(tgui_alert(usr,"Temporary Ban?",, list("Yes","No", "Cancel")))
+			switch(tgui_alert(usr, "Temporary Ban?",, list("Yes","No", "Cancel")))
 				if("Yes")
 					if(!check_rights(R_BAN))  return
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
@@ -922,7 +922,7 @@
 				var/reason = jobban_isbanned(M, job)
 				if(!reason)
 					continue //skip if it isn't jobbanned anyway
-				switch(tgui_alert(usr,"Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm", list("Yes","No")))
+				switch(tgui_alert(usr, "Job: '[job]' Reason: '[reason]' Un-jobban?","Please Confirm", list("Yes","No")))
 					if("Yes")
 						ban_unban_log_save("[key_name(usr)] unjobbanned [key_name(M)] from [job]")
 						log_admin("[key_name(usr)] unbanned [key_name(M)] from [job]")
@@ -1025,7 +1025,7 @@
 
 		if(M.client && M.client.holder)	return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
-		switch(tgui_alert(usr,"Temporary Ban?",, list("Yes","No", "Cancel")))
+		switch(tgui_alert(usr, "Temporary Ban?",, list("Yes","No", "Cancel")))
 			if("Yes")
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 				if(!mins)
@@ -1055,7 +1055,7 @@
 				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
 				if(!reason)
 					return
-				switch(tgui_alert(usr,"IP ban?",, list("Yes","No","Cancel")))
+				switch(tgui_alert(usr, "IP ban?",, list("Yes","No","Cancel")))
 					if("Cancel")	return
 					if("Yes")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
@@ -1676,7 +1676,7 @@
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P)
 
-		switch(tgui_alert(usr,"Should this be sended to all fax machines?",, list("Yes","No")))
+		switch(tgui_alert(usr, "Should this be sended to all fax machines?",, list("Yes","No")))
 			if("Yes")
 				send_fax(usr, P, "All")
 			if("No")
@@ -1735,7 +1735,7 @@
 			return
 
 		if(!SSticker || !SSticker.mode)
-			tgui_alert(usr,"The game hasn't started yet!")
+			tgui_alert(usr, "The game hasn't started yet!")
 			return
 
 		var/mob/M = locate(href_list["traitor"])
@@ -1804,13 +1804,13 @@
 			paths += path
 
 		if(!paths)
-			tgui_alert(usr,"The path list you sent is empty")
+			tgui_alert(usr, "The path list you sent is empty")
 			return
 		if(length(paths) > max_paths_length)
-			tgui_alert(usr,"Select fewer object types, (max [max_paths_length])")
+			tgui_alert(usr, "Select fewer object types, (max [max_paths_length])")
 			return
 		else if(length(removed_paths))
-			tgui_alert(usr,"Removed:\n" + jointext(removed_paths, "\n"))
+			tgui_alert(usr, "Removed:\n" + jointext(removed_paths, "\n"))
 
 		var/list/offset = splittext(href_list["offset"],",")
 		var/number = clamp(text2num(href_list["object_count"]), 1, 100)
@@ -1937,7 +1937,7 @@
 		if(src.admincaster_feed_channel.channel_name == "" || src.admincaster_feed_channel.channel_name == "\[REDACTED\]" || check )
 			src.admincaster_screen=7
 		else
-			var/choice = tgui_alert(usr,"Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
+			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
 				var/datum/feed_channel/newChannel = new /datum/feed_channel
 				newChannel.channel_name = src.admincaster_feed_channel.channel_name
@@ -2022,7 +2022,7 @@
 		if(src.admincaster_feed_message.author == "" || src.admincaster_feed_message.body == "")
 			src.admincaster_screen = 16
 		else
-			var/choice = tgui_alert(usr,"Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler", list("Confirm","Cancel"))
+			var/choice = tgui_alert(usr, "Please confirm Wanted Issue [(input_param==1) ? ("creation.") : ("edit.")]","Network Security Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
 				if(input_param==1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					var/datum/feed_message/WANTED = new /datum/feed_message
@@ -2044,7 +2044,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_cancel_wanted"])
-		var/choice = tgui_alert(usr,"Please confirm Wanted Issue removal","Network Security Handler", list("Confirm","Cancel"))
+		var/choice = tgui_alert(usr, "Please confirm Wanted Issue removal","Network Security Handler", list("Confirm","Cancel"))
 		if(choice=="Confirm")
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)

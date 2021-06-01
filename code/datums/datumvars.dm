@@ -648,7 +648,7 @@ body
 		if(action_type == "Cancel" || !action_type)
 			return
 
-		if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [O.type]?", list("Yes","No")) != "Yes")
+		if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [O.type]?",, list("Yes","No")) != "Yes")
 			return
 
 		if(tgui_alert(usr, "Second confirmation required. Delete?",, list("Yes","No")) != "Yes")

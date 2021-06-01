@@ -694,7 +694,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(news_network.wanted_issue.is_admin_message)
 			to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.")
 			return FALSE
-		var/choice = tgui_alert(usr,"Подтвердите удаление розыска.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
+		var/choice = tgui_alert(usr, "Подтвердите удаление розыска.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
 		if(choice=="Подтвердить")
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)

@@ -27,7 +27,7 @@ var/global/list/empty_playable_ai_cores = list()
 
 	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
 	if(tgui_alert(usr, "WARNING: This will immediately wipe your core and ghost you, removing your character from the round permanently (similar to cryo and robotic storage). Are you entirely sure you want to do this?",
-					"Wipe Core",, list("No", "Yes")) != "Yes")
+					"Wipe Core", list("No", "Yes")) != "Yes")
 		return
 	perform_wipe_core()
 
