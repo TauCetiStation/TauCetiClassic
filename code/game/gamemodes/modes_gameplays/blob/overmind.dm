@@ -19,8 +19,6 @@
 
 	var/datum/faction/blob_conglomerate/b_congl
 
-	var/datum/announcement/centcomm/blob/critical/announcement = new
-
 /mob/camera/blob/atom_init()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name

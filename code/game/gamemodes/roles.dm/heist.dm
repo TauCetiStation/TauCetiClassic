@@ -63,7 +63,7 @@
 	vox.languages = list() // Removing language from chargen.
 	vox.flavor_text = ""
 	vox.add_language("Vox-pidgin")
-	if(faction.members % 2 == 0 || prob(33)) // first vox always gets Sol, everyone else by random.
+	if(faction.members.len % 2 == 0 || prob(33)) // first vox always gets Sol, everyone else by random.
 		vox.add_language("Sol Common")
 	vox.h_style = "Short Vox Quills"
 	vox.f_style = "Shaved"

@@ -24,6 +24,7 @@
 	var/blobwincount = 0
 	var/prelude_announcement
 	var/outbreak_announcement
+	var/reached_crit_mass = FALSE
 
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
@@ -46,9 +47,9 @@
 				if(istype(B))
 					B.max_blob_points = INFINITY
 					B.blob_points = INFINITY
-			. = TRUE
-		else if(SSticker.station_was_nuked)
-			. = TRUE
+			return TRUE // force end
+		if(SSticker.station_was_nuked)
+			return TRUE // force end
 	else
 		stage(FS_DEFEATED)
 
@@ -67,14 +68,15 @@
 	if(outbreak_announcement && world.time >= outbreak_announcement && detect_overminds()) //Must be alive to advance.
 		outbreak_announcement = 0
 		stage(FS_ACTIVE)
-	if(declared && 0.7*blobwincount <= blobs.len && stage<FS_ENDGAME) // Blob almost won !
+	if(!reached_crit_mass && declared && 0.7 * blobwincount <= blobs.len && stage < FS_ENDGAME) // Blob almost won !
+		reached_crit_mass = TRUE
 		stage(FS_ENDGAME)
 
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
 	start.count()
-	prelude_announcement = world.time + rand(WAIT_TIME_PHASE1,2*WAIT_TIME_PHASE1)
-	outbreak_announcement = world.time + rand(WAIT_TIME_PHASE2,2*WAIT_TIME_PHASE2)
+	prelude_announcement = world.time + rand(WAIT_TIME_PHASE1, 2 * WAIT_TIME_PHASE1)
+	outbreak_announcement = world.time + rand(WAIT_TIME_PHASE2, 2 * WAIT_TIME_PHASE2)
 	return ..()
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
@@ -255,7 +257,7 @@ Message ends."}
 	var/door = 0
 	var/grille = 0
 	var/mach = 0
-	var/num_territories = 1//Number of total valid territories for gang mode
+	var/num_territories = 1 //Number of total valid territories for gang mode
 
 /datum/station_state/proc/count(count_territories)
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
@@ -299,20 +301,19 @@ Message ends."}
 					valid_territories |= A.type
 		if(valid_territories.len)
 			num_territories = valid_territories.len //Add them all up to make the total number of area types
-		else
-			to_chat(world, "ERROR: NO VALID TERRITORIES")
 
 /datum/station_state/proc/score(datum/station_state/result)
-	if(!result)	return 0
+	if(!result)
+		return 0
 	var/output = 0
-	output += (result.floor / max(floor,1))
-	output += (result.r_wall / max(r_wall,1))
-	output += (result.wall / max(wall,1))
-	output += (result.window / max(window,1))
-	output += (result.door / max(door,1))
-	output += (result.grille / max(grille,1))
-	output += (result.mach / max(mach,1))
-	return (output/7)
+	output += (result.floor / max(floor, 1))
+	output += (result.r_wall / max(r_wall, 1))
+	output += (result.wall / max(wall, 1))
+	output += (result.window / max(window, 1))
+	output += (result.door / max(door, 1))
+	output += (result.grille / max(grille, 1))
+	output += (result.mach / max(mach, 1))
+	return (output / 7)
 
 #undef WAIT_TIME_PHASE1
 #undef WAIT_TIME_PHASE2
