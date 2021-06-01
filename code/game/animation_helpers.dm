@@ -150,8 +150,8 @@
 
 	var/turf/old_turf = get_turf(old_loc)
 
-	I.pixel_x += old_loc.pixel_x + pixel_x
-	I.pixel_y += old_loc.pixel_y + pixel_y
+	I.pixel_x = old_loc.pixel_x + pixel_x
+	I.pixel_y = old_loc.pixel_y + pixel_y
 
 	I.loc = old_turf
 	I.plane = GAME_PLANE
@@ -207,8 +207,8 @@
 
 	var/turf/old_turf = get_turf(user)
 
-	I.pixel_x += user.pixel_x
-	I.pixel_y += user.pixel_y
+	I.pixel_x = user.pixel_x + pixel_x
+	I.pixel_y = user.pixel_y + pixel_y
 	I.loc = old_turf
 	I.plane = GAME_PLANE
 	I.layer = INFRONT_MOB_LAYER
@@ -267,8 +267,8 @@
 
 	var/turf/old_turf = get_turf(src)
 
-	I.pixel_x += pixel_x
-	I.pixel_y += pixel_y
+	I.pixel_x = pixel_x
+	I.pixel_y = pixel_y
 	I.loc = loc
 	I.plane = GAME_PLANE
 	I.layer = INFRONT_MOB_LAYER
