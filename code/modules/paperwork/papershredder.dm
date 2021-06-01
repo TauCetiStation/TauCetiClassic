@@ -175,7 +175,7 @@
 	else
 		..()
 
-/obj/item/weapon/shreddedp/burnpaper(/obj/item/weapon/lighter/P, mob/user)
+/obj/item/weapon/shreddedp/burnpaper(obj/item/weapon/lighter/P, mob/user)
 	if(user.restrained())
 		return
 	if(!P.lit)
