@@ -10,7 +10,7 @@ export const Wires = (props, context) => {
   return (
     <Window
       width={350}
-      height={45 + wires.length * 25 
+      height={45 + wires.length * 25
         + (statuses.length > 0 ? 35 : 0) + statuses.length * 12}>
       <Window.Content>
         <Section>
@@ -56,7 +56,7 @@ export const Wires = (props, context) => {
                 : (
                   <Button
                     content={status.label}
-                    onClick={() => act(status.act, 
+                    onClick={() => act(status.act,
                       status.act_params ? status.act_params : undefined)} />
                 )
             ))}

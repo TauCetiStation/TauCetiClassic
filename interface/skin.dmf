@@ -92,7 +92,7 @@ macro "macro"
 	elem "MACRO-CTRL+W+REP"
 		name = "CTRL+W+REP"
 		command = ".north"
-	elem 
+	elem
 		name = "CTRL+X"
 		command = ".northeast"
 	elem "MACRO-CTRL+Y"
@@ -343,31 +343,31 @@ macro "hotkeymode"
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Icons"
 		command = ""
 		saved-params = "is-checked"
@@ -414,7 +414,7 @@ menu "menu"
 		can-check = true
 		group = "size"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&Icons"
@@ -425,7 +425,7 @@ menu "menu"
 		category = "&Icons"
 		can-check = true
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Scaling Mode"
 		command = ""
 		saved-params = "is-checked"
@@ -451,25 +451,25 @@ menu "menu"
 		can-check = true
 		group = "scaling"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Options"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Audio"
 		command = ".showvolumecontrols"
 		category = "&Options"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin help\tF1"
 		command = "adminhelp"
 		category = "&Help"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Hotkeys"
 		command = "hotkeys-help"
 		category = "&Help"
