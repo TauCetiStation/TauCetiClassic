@@ -377,7 +377,7 @@
 			if(RemoveBan(banfolder))
 				unbanpanel()
 			else
-				tgui_alert(usr, "This ban has already been lifted / does not exist.", "Error", list("Ok"))
+				tgui_alert(usr, "This ban has already been lifted / does not exist.", "Error")
 				unbanpanel()
 
 	else if(href_list["warn"])
