@@ -30,7 +30,6 @@
 	return ..()
 
 /datum/faction/ninja/check_win()
-	. = ..()
 	if(config.continous_rounds)
 		return FALSE
 	var/ninjas_alive = 0
