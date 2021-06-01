@@ -278,5 +278,5 @@
 
 /obj/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_MERCHANT) || price > 0)
+	if(HAS_TRAIT(user, TRAIT_MERCHANT) && price > 0)
 		to_chat(user, "<span class='notice'>[src] costs about [price] supply points.</span>")
