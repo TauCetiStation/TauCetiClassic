@@ -9,9 +9,9 @@ args = opt.parse_args()
 if(not path.isdir(args.dir)):
     print('Not a directory')
     sys.exit(1)
-  
+
 bad_dmi_files = []
-  
+
 # This section parses all *.dmi files in the given directory, recursively.
 for root, subdirs, files in walk(args.dir):
     for filename in files:
