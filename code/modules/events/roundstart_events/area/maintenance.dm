@@ -20,7 +20,8 @@
 			if(!T.CanPass(null, T))
 				all_turfs -= T
 
-		spawn_atom(pick(possible_types), pick(all_turfs))
+		if(all_turfs.len)
+			spawn_atom(pick(possible_types), pick(all_turfs))
 
 /datum/event/roundstart/area/maintenance_spawn/invasion
 	possible_types = list(
