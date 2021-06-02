@@ -88,7 +88,7 @@
 		to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
-		var/choice = alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!","No!","Yes!")
+		var/choice = tgui_alert(M,"Asked by [src]: Do you want to join the revolution?","Align Thyself with the Revolution!",list("No!","Yes!"))
 		if(choice == "Yes!")
 			var/datum/faction/revolution/rev = lead.GetFaction()
 			add_faction_member(rev, M, TRUE)

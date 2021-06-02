@@ -258,7 +258,7 @@
 		if(!check_rights(R_ADMIN))
 			message_admins("[usr] tried to destroy a faction without permissions.")
 			return
-		if(alert(usr, "Are you sure you want to destroy [capitalize(name)]?",  "Destroy Faction" , "Yes" , "No") != "Yes")
+		if(tgui_alert(usr, "Are you sure you want to destroy [capitalize(name)]?",  "Destroy Faction" , list("Yes" , "No")) != "Yes")
 			return
 		message_admins("[key_name(usr)] destroyed faction [capitalize(name)].")
 		log_mode("[key_name(usr)] destroyed faction [capitalize(name)].")
