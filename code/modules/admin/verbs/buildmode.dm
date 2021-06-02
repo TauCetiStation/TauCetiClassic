@@ -157,7 +157,7 @@
 				objholder = text2path(input(usr,"Enter typepath:" ,"Typepath","[/obj/structure/closet]"))
 				if(!ispath(objholder))
 					objholder = /obj/structure/closet
-					alert("That path is not allowed.")
+					tgui_alert(usr, "That path is not allowed.")
 				else
 					if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
 						objholder = /obj/structure/closet

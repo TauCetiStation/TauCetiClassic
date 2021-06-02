@@ -13,16 +13,16 @@ var/global/sent_strike_team = FALSE
 		to_chat(usr, "<span class='red'>CentCom is already sending a team.</span>")
 		return FALSE
 
-	if (alert("Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No") != "Yes")
+	if (tgui_alert(usr, "Do you want to send in the CentCom death squad? Once enabled, this is irreversible.",,"Yes","No") != "Yes")
 		return FALSE
 
-	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned commandos have internals cameras which are viewable through a monitor inside the Spec. Ops. Office. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
+	tgui_alert(usr, "This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned commandos have internals cameras which are viewable through a monitor inside the Spec. Ops. Office. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
 
 	var/input = null
 	while (!input)
 		input = sanitize(input(src, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", ""))
 		if (!input)
-			if (alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No") == "Yes")
+			if (tgui_alert(usr, "Error, no mission set. Do you want to exit the setup process?",, list("Yes","No")) == "Yes")
 				return FALSE
 
 	// Generates a list of commandos from active client.
@@ -131,7 +131,7 @@ var/global/sent_strike_team = FALSE
 		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), SLOT_W_UNIFORM)
 	else
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), SLOT_W_UNIFORM)
-		
+
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(src), SLOT_SHOES)
 	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), SLOT_WEAR_SUIT)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)

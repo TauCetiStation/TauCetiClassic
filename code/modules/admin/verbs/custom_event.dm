@@ -26,7 +26,7 @@
 
 
 	if(config.chat_bridge && \
-		alert("Do you want to make an announcement to chat conference?", "Chat announcement", "Yes", "No, I don't want these people at my party") == "Yes")
+		tgui_alert(usr, "Do you want to make an announcement to chat conference?", "Chat announcement", list("Yes", "No, I don't want these people at my party")) == "Yes")
 		world.send2bridge(
 			type = list(BRIDGE_ANNOUNCE),
 			attachment_title = "Custom Event",

@@ -576,7 +576,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(src.channel_name == "" || src.channel_name == "\[██████\]" || src.scanned_user == "Unknown" || check || (src.scanned_user in existing_authors) )
 			src.screen = 7
 		else
-			var/choice = alert("Подтвердите создание Новостного Канала","Обработчик Сети Новостей","Подтвердить","Отменить")
+			var/choice = tgui_alert(usr,"Подтвердите создание Новостного Канала","Обработчик Сети Новостей", list("Подтвердить","Отменить"))
 			if(choice=="Подтвердить")
 				var/datum/feed_channel/newChannel = new /datum/feed_channel
 				newChannel.channel_name = src.channel_name
@@ -665,7 +665,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(src.msg == "" || src.channel_name == "" || src.scanned_user == "Unknown")
 			src.screen = 16
 		else
-			var/choice = alert("Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] объявления.","Сетевой Обработчик Безопасности","Подтвердить","Отменить")
+			var/choice = tgui_alert(usr,"Подтвердите [(input_param==1) ? ("создание") : ("редактирование")] объявления.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
 			if(choice == "Подтвердить")
 				if(input_param == 1)          //If input_param == 1 we're submitting a new wanted issue. At 2 we're just editing an existing one. See the else below
 					var/datum/feed_message/WANTED = new /datum/feed_message
@@ -694,7 +694,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(news_network.wanted_issue.is_admin_message)
 			to_chat(usr, "The wanted issue has been distributed by a Nanotrasen higherup. You cannot take it down.")
 			return FALSE
-		var/choice = alert("Подтвердите удаление розыска.","Сетевой Обработчик Безопасности","Подтвердить","Отменить")
+		var/choice = tgui_alert(usr, "Подтвердите удаление розыска.","Сетевой Обработчик Безопасности", list("Подтвердить","Отменить"))
 		if(choice=="Подтвердить")
 			news_network.wanted_issue = null
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
