@@ -1,11 +1,11 @@
 (function(window, navigator) {
- 
+
     var escaper = encodeURIComponent || escape;
- 
+
     var triggerError = function(msg, url, line, col, error) {
         window.onerror(msg, url, line, col, error);
     };
- 
+
     /**
      * Directs JS errors to a byond proc for logging
      *
@@ -16,7 +16,7 @@
     var attach = function(file, overrideDefault) {
         overrideDefault = typeof overrideDefault === 'undefined' ? false : overrideDefault;
         file = escaper(file);
- 
+
         window.onerror = function(msg, url, line, col, error) {
             var extra = !col ? '' : ' | column: ' + col;
             extra += !error ? '' : ' | error: ' + error;
@@ -25,10 +25,10 @@
             window.location = '?action=jsErrorCatcher&file=' + file + '&message=' + escaper(debugLine);
             return overrideDefault;
         };
- 
+
         return triggerError;
     };
- 
+
     window.attachErrorHandler = attach;
- 
+
 }(window, window.navigator));
