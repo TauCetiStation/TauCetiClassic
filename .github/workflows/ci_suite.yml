@@ -37,11 +37,11 @@ jobs:
       - name: Code and Map Linting
         env:
           TEST: LINTING
-          NODE_VERSION: 12
         run: |
+          bash tools/ci/install_node.sh
+          bash tgui/bin/tgui --lint
           chmod +x test/run-test.sh
           bash test/run-test.sh
-          bash scripts/build_tgui.sh
   unit_tests:
     name: Unit Tests
     runs-on: ubuntu-16.04
@@ -65,7 +65,7 @@ jobs:
           MAP_META: ${{ matrix.map_meta }}
           MAP_NAME: ${{ matrix.map_name }}
         run: |
-          bash scripts/install-byond.sh
+          bash tools/ci/install-byond.sh
           source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
           chmod +x -R scripts/
           chmod +x test/run-test.sh
@@ -84,8 +84,10 @@ jobs:
         env:
           TEST: COMPILE
         run: |
-          bash scripts/install-byond.sh
+          bash tools/ci/install-byond.sh
           source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          bash tools/ci/install_node.sh
+          bash tgui/bin/tgui --build
           chmod +x -R scripts/
           chmod +x test/run-test.sh
           bash test/run-test.sh

@@ -72,6 +72,7 @@ task-clean() {
   ## Build artifacts
   rm -rf public/.tmp
   rm -f public/*.map
+  rm -f public/*.bundle.*
   rm -f public/*.hot-update.*
   ## Yarn artifacts
   rm -rf .yarn/cache
@@ -84,70 +85,9 @@ task-clean() {
   rm -f **/package-lock.json
 }
 
-## Validates current build against the build stored in git
-task-validate-build() {
-  cd "${base_dir}"
-  local diff
-  diff="$(git diff public/tgui.bundle.*)"
-  if [[ -n ${diff} ]]; then
-    echo "Error: our build differs from the build committed into git."
-    echo "Please rebuild tgui."
-    exit 1
-  fi
-  echo "tgui: build is ok"
-}
-
-## Installs merge drivers and git hooks
-task-install-git-hooks() {
-  cd "${base_dir}"
-  local git_root
-  local git_base_dir
-  git_root="$(git rev-parse --show-toplevel)"
-  git_base_dir="${base_dir/${git_root}/.}"
-  git config --replace-all merge.tgui-merge-bundle.driver \
-    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L"
-  echo "tgui: Merge drivers have been successfully installed!"
-}
-
-## Bundle merge driver
-task-merge-bundle() {
-  local file_ancestor="${1}"
-  local file_current="${2}"
-  local file_other="${3}"
-  local conflict_marker_size="${4}"
-  echo "tgui: Discarding a local tgui build"
-  ## Do nothing (file_current will be merged and is what we want to keep).
-  exit 0
-}
-
 
 ## Main
 ## --------------------------------------------------------
-
-if [[ ${1} == "--merge"* ]]; then
-  if [[ ${1} == "--merge=bundle" ]]; then
-    shift 1
-    task-merge-bundle "${@}"
-  fi
-  echo "Unknown merge strategy: ${1}"
-  exit 1
-fi
-
-if [[ ${1} == "--install-git-hooks" ]]; then
-  shift 1
-  task-install-git-hooks
-  exit 0
-fi
-
-## Continuous integration scenario
-if [[ ${1} == "--ci" ]]; then
-  task-clean
-  task-install
-  task-eslint
-  task-webpack --mode=production
-  task-validate-build
-  exit 0
-fi
 
 if [[ ${1} == "--clean" ]]; then
   task-clean
@@ -190,6 +130,13 @@ if [[ ${1} == '--analyze' ]]; then
 fi
 
 ## Make a production webpack build
+if [[ ${1} == '--build' ]]; then
+  task-install
+  task-webpack --mode=production
+  exit 0
+fi
+
+## Make a production webpack build + Run eslint
 if [[ -z ${1} ]]; then
   task-install
   task-eslint
