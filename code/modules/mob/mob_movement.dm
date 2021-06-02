@@ -235,7 +235,8 @@
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2
 				return mob.buckled.relaymove(mob,direct)
-
+		if(locate(/obj/item/weapon/grab, mob))		
+			move_delay = max(move_delay, world.time + 7)
 		//We are now going to move
 		moving = 1
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
@@ -284,8 +285,6 @@
 	if (pinned.len)
 		return FALSE
 	if(locate(/obj/item/weapon/grab, src))
-		if(client)
-			client.move_delay = max(client.move_delay, world.time + 7)
 		var/list/L = GetGrabs()
 		if(L.len == 1)
 			for(var/obj/item/weapon/grab/G in GetGrabs())
