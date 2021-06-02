@@ -12,7 +12,6 @@ package-lock.json
 !/.yarn/versions
 
 ## Build artifacts
-/public/.tmp/**/*
 /public/**/*
 !/public/*.html
 

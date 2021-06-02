@@ -84,9 +84,6 @@ const taskTgui = new Task('tgui')
   .depends('tgui/packages/**/*.+(js|cjs|ts|tsx|scss)')
   .provides('tgui/public/tgui.bundle.css')
   .provides('tgui/public/tgui.bundle.js')
-  .provides('tgui/public/tgui-common.bundle.js')
-  .provides('tgui/public/tgui-panel.bundle.css')
-  .provides('tgui/public/tgui-panel.bundle.js')
   .build(async () => {
     await yarn(['run', 'webpack-cli', '--mode=production']);
   });
