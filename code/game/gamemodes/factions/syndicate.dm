@@ -251,7 +251,7 @@
 
 	var/foecount = members.len
 	var/crewcount = 0
-	var/diskdat = "Unknown"
+	var/diskdat = ""
 	var/bombdat = "Unknown"
 	for(var/mob/living/C in alive_mob_list)
 		if (!C.client || C.stat != DEAD)
