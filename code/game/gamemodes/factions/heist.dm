@@ -65,7 +65,6 @@
 
 	//Decrease success for failed objectives.
 	for(var/datum/objective/O in objectives)
-		O.calculate_completion()
 		if(!(O.check_completion()))
 			success--
 
