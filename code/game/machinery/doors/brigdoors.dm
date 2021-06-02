@@ -278,20 +278,20 @@
 					continue
 				available_targets += target_name
 		if(available_targets.len == 0)
-			alert(usr, "Рядом нет доступных целей. Введите имя вручную.")
+			tgui_alert(usr, "Рядом нет доступных целей. Введите имя вручную.")
 			return
 		prisoner_name = sanitize(input(usr, "Выберите имя заключенного.", "Таймер камеры", "") in available_targets)
 		var/record_id = find_record_by_name(usr, prisoner_name)
 		security_data = find_security_record("id", record_id)
 		if(!security_data)
-			alert(usr, "Человек с таким именем не найден в базе данных. Введите имя вручную.")
+			tgui_alert(usr, "Человек с таким именем не найден в базе данных. Введите имя вручную.")
 
 	if(href_list["set_manually_name"])
 		prisoner_name = sanitize(input(usr, "Введите имя", "Таймер камеры", input_default(prisoner_name)), MAX_LNAME_LEN)
 		var/record_id = find_record_by_name(usr, prisoner_name)
 		security_data = find_security_record("id", record_id)
 		if(!security_data)
-			alert(usr, "Человек с таким именем не найден в базе данных.")
+			tgui_alert(usr, "Человек с таким именем не найден в базе данных.")
 
 	if(href_list["set_prisoner_crimes"])
 		prisoner_crimes = sanitize(input(usr, "Введите статьи", "Таймер камеры", input_default(prisoner_crimes)), MAX_LNAME_LEN)

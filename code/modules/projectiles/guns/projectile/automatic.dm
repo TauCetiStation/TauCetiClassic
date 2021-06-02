@@ -57,7 +57,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/attack_self(mob/user)
 	if(silenced)
-		switch(alert("Would you like to unscrew silencer, or extract magazine?","Choose.","Silencer","Magazine"))
+		switch(tgui_alert(usr, "Would you like to unscrew silencer, or extract magazine?","Choose.", list("Silencer","Magazine")))
 			if("Silencer")
 				if(loc == user)
 					if(silenced)
@@ -126,7 +126,7 @@
 	unwield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
-	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
+	switch(tgui_alert(usr, "Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.", list("Toggle cover","Change grip")))
 		if("Toggle cover")
 			if(wielded || user.get_inactive_hand())
 				to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")

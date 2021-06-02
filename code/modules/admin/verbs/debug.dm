@@ -160,7 +160,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Make Robot"
 
 	if(!SSticker)
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has robotized [M.key].")
@@ -168,22 +168,22 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M:Robotize()
 
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_animalize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Simple Animal"
 
 	if(!SSticker)
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 
 	if(!M)
-		alert("That mob doesn't seem to exist, close the panel and try again.")
+		tgui_alert(usr, "That mob doesn't seem to exist, close the panel and try again.")
 		return
 
 	if(isnewplayer(M))
-		alert("The mob must not be a new_player.")
+		tgui_alert(usr, "The mob must not be a new_player.")
 		return
 
 	log_admin("[key_name(src)] has animalized [M.key].")
@@ -223,7 +223,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Make Alien"
 
 	if(!SSticker)
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has alienized [key_name(M)].")
@@ -233,14 +233,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(usr)] made [key_name(M)] into an alien.")
 		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into an alien.</span>")
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_slimeize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make slime"
 
 	if(!SSticker)
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(ishuman(M))
 		log_admin("[key_name(src)] has slimeized [key_name(M)].")
@@ -250,14 +250,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		log_admin("[key_name(usr)] made [key_name(M)] into a slime.")
 		message_admins("<span class='notice'>[key_name_admin(usr)] made [key_name(M)] into a slime.</span>")
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_blobize(mob/M in mob_list)
 	set category = "Fun"
 	set name = "Make Blob"
 
 	if(!SSticker)
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has blobized [key_name(M)].")
@@ -266,7 +266,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			H.Blobize()
 
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 //TODO: merge the vievars version into this or something maybe mayhaps
 /client/proc/cmd_debug_del_all()
@@ -342,7 +342,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Grant Full Access"
 
 	if (!SSticker)
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if (istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
@@ -363,7 +363,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			H.equip_to_slot_or_del(id, SLOT_WEAR_ID)
 			H.update_inv_wear_id()
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(src)] has granted [key_name(M)] full access.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] has granted [key_name_admin(M)] full access.</span>")
@@ -376,7 +376,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG|R_ADMIN))
 		return
 	if(M.ckey)
-		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
+		if(tgui_alert(usr, "This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",, list("Yes","No")) != "Yes")
 			return
 		else
 			var/mob/dead/observer/ghost = new/mob/dead/observer(M,1)
@@ -496,7 +496,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Fun"
 	set name = "Select equipment"
 	if(!ishuman(M))
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 		return
 	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
@@ -1785,7 +1785,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Start Singularity"
 	set desc = "Sets up the singularity and all machines to get power flowing through the station."
 
-	if(alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Yes","No") != "Yes")
+	if(tgui_alert(usr, "Are you sure? This will start up the engine. Should only be used during debug!",, list("Yes","No")) != "Yes")
 		return
 
 	for(var/obj/machinery/power/emitter/E in machines)
@@ -1838,7 +1838,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/response = alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Setup Completely","Setup except coolant","No")
+	var/response = tgui_alert(usr, "Are you sure? This will start up the engine. Should only be used during debug!",, list("Setup Completely","Setup except coolant","No"))
 
 	if(response == "No")
 		return
@@ -1932,7 +1932,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)
 	if(!SSticker)
-		alert("Wait until the game starts")
+		tgui_alert(usr, "Wait until the game starts")
 		return
 	if(istype(M, /mob/living/carbon))
 		var/saved_key = M.key
@@ -1949,7 +1949,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			message_admins("[key_name_admin(src)] has toggled [saved_key]'s HULK block on!")
 			log_admin("[key_name(src)] has toggled [saved_key]'s HULK block on!")
 	else
-		alert("Invalid mob")
+		tgui_alert(usr, "Invalid mob")
 
 /client/proc/reload_nanoui_resources()
 	set category = "Debug"

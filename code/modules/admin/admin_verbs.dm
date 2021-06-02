@@ -561,7 +561,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/list/params = admin_spawn_status_effect(usr)
 	if(params)
-		if(alert("Confirm applying the status effect to every mob?", , "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Confirm applying the status effect to every mob?",, list("Yes", "No")) == "Yes")
 			for(var/mob/living/L in global.living_list)
 				L.apply_status_effect(arglist(params))
 
@@ -724,7 +724,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(usr)] try change the title screen.")
 	feedback_add_details("admin_verb", "CTS")
 
-	switch(alert(usr, "How change Title Screen?", "Title Screen", "Change", "Reset", "Cancel"))
+	switch(tgui_alert(usr, "How change Title Screen?", "Title Screen", list("Change", "Reset", "Cancel")))
 		if("Change")
 			var/file = input(usr) as icon|null
 			if(!file)
@@ -767,7 +767,7 @@ var/list/admin_verbs_hideable = list(
 	if(!holder)
 		return
 
-	if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
+	if(tgui_alert(usr, "Confirm self-deadmin for the round?",, list("Yes","No")) == "Yes")
 		if(has_antag_hud())
 			toggle_combo_hud()
 
@@ -816,7 +816,7 @@ var/list/admin_verbs_hideable = list(
 	if(!istype(M, /mob/living/carbon/human))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
-	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
+	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
 		if("No")
 			return
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
@@ -849,7 +849,7 @@ var/list/admin_verbs_hideable = list(
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 		M.s_tone =  -M.s_tone + 35
 
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
@@ -1028,9 +1028,9 @@ var/list/admin_verbs_hideable = list(
 	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
 	if(istype(winner, /mob/living))
-		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
+		achoice = tgui_alert(usr, "Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
 
-	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", "No!","Yes!")
+	var/glob = tgui_alert(usr, "Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
 
 	if(achoice == "Confirm")
 		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))

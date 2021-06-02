@@ -123,7 +123,7 @@
 
 /datum/mind/proc/edit_memory()
 	if(!SSticker || !SSticker.mode)
-		alert("Not before round-start!", "Alert")
+		tgui_alert(usr, "Not before round-start!", "Alert")
 		return
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
@@ -214,7 +214,7 @@
 				available_roles[initial(R.id)] = R
 
 		if(!available_roles.len)
-			alert("This mob already has every available roles! Geez, calm down!", "Assigned role")
+			tgui_alert(usr, "This mob already has every available roles! Geez, calm down!", "Assigned role")
 			return
 
 		var/new_role = input("Select new role", "Assigned role", null) as null|anything in available_roles
@@ -223,7 +223,7 @@
 
 		var/joined_faction
 		var/list/all_factions = list()
-		if (alert("Do you want that role to be part of a faction?", "Assigned role", "Yes", "No") == "Yes")
+		if (tgui_alert(usr, "Do you want that role to be part of a faction?", "Assigned role", list("Yes", "No")) == "Yes")
 			all_factions = get_faction_list()
 			joined_faction = input("Select new faction", "Assigned faction", null) as null|anything in all_factions
 
@@ -237,7 +237,7 @@
 		var/chosen_greeting
 		var/custom_greeting
 		if (newRole.greets.len)
-			if (alert("Do you want to greet them as their new role?", "Assigned role", "Yes", "No") == "Yes")
+			if (tgui_alert(usr, "Do you want to greet them as their new role?", "Assigned role", list("Yes", "No")) == "Yes")
 				chosen_greeting = input("Choose a greeting", "Assigned role", null) as null|anything in newRole.greets
 				if (chosen_greeting == GREET_CUSTOM)
 					custom_greeting = input("Choose a custom greeting", "Assigned role", "") as null|text
@@ -313,7 +313,7 @@
 		else
 			new_objective = new obj_type()
 
-		if (alert("Add the objective to a fraction?", "Faction" ,"Yes", "No") == "Yes")
+		if (tgui_alert(usr, "Add the objective to a fraction?", "Faction" ,list("Yes", "No")) == "Yes")
 			var/datum/faction/fac = input("To which faction shall we give this?", "Faction-wide objective", null) as anything in SSticker.mode.factions
 			fac.handleNewObjective(new_objective)
 			message_admins("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
@@ -375,7 +375,7 @@
 			R.forgeObjectives()
 			var/list/unique_objectives_role = find_unique_objectives(R.objectives.objectives, prev_objectives)
 			if (!unique_objectives_role.len)
-				alert(usr, "No new objectives generated.", "Alert", "OK")
+				tgui_alert(usr, "No new objectives generated.", "Alert")
 			else
 				for (var/datum/objective/objective in unique_objectives_role)
 					log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [objective.explanation_text]")
@@ -386,7 +386,7 @@
 			F.forgeObjectives()
 			var/list/unique_objectives_faction = find_unique_objectives(F.GetObjectives(), prev_objectives)
 			if (!unique_objectives_faction.len)
-				alert(usr, "No new objectives generated.", "Alert", "OK")
+				tgui_alert(usr, "No new objectives generated.", "Alert")
 			else
 				for (var/datum/objective/objective in unique_objectives_faction)
 					message_admins("[usr.key]/([usr.name]) gave \the [F.ID] the objective: [objective.explanation_text]")

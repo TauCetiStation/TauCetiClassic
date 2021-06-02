@@ -37,7 +37,7 @@
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 	for(var/mob/dead/observer/G in player_list)
 		spawn(0)
-			switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
+			switch(tgui_alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!", list("Yes","No")))
 				if("Yes")
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 						return

@@ -27,7 +27,7 @@
 	if(!victim)
 		return
 
-	if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
+	if(tgui_alert(victim, consent_msg, "Rite", list("Yes", "No")) == "Yes")
 		consent = TRUE
 		to_chat(victim, "<span class='notice'>Вы согласились на ритуал.</span>")
 

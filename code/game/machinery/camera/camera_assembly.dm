@@ -99,7 +99,7 @@
 					if(direct != "LEAVE IT")
 						C.set_dir(text2dir(direct))
 					if(i != 0)
-						var/confirm = alert(user, "Is this what you want? Chances Remaining: [i]", "Confirmation", "Yes", "No")
+						var/confirm = tgui_alert(user, "Is this what you want? Chances Remaining: [i]", "Confirmation", list("Yes", "No"))
 						if(confirm == "Yes")
 							break
 				return

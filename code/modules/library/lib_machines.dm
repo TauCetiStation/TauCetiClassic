@@ -376,10 +376,10 @@
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(scanner.cache.unique)
-						alert("This book has been rejected from the database. Aborting!")
+						tgui_alert(usr, "This book has been rejected from the database. Aborting!")
 					else
 						if(!establish_db_connection("erro_library"))
-							alert("Connection to Archive has been severed. Aborting.")
+							tgui_alert(usr, "Connection to Archive has been severed. Aborting.")
 						else
 							/*
 							var/sqltitle = dbcon.Quote(scanner.cache.name)
@@ -397,7 +397,7 @@
 								to_chat(usr, "SQL ERROR")
 							else
 								log_game("[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
-								alert("Upload Complete.")
+								tgui_alert(usr, "Upload Complete.")
 
 	if(href_list["targetid"])
 		var/sqlid = text2num(href_list["targetid"])
@@ -405,7 +405,7 @@
 			return
 
 		if(!establish_db_connection("erro_library"))
-			alert("Connection to Archive has been severed. Aborting.")
+			tgui_alert(usr, "Connection to Archive has been severed. Aborting.")
 		if(next_print > world.time)
 			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
@@ -432,7 +432,7 @@
 			return
 
 		if(!establish_db_connection("erro_library"))
-			alert("Connection to Archive has been severed. Aborting.")
+			tgui_alert(usr, "Connection to Archive has been severed. Aborting.")
 			return
 
 		var/DBQuery/query = dbcon.NewQuery("SELECT title, deletereason FROM erro_library WHERE id='[sqlid]'")
@@ -448,7 +448,7 @@
 
 		var/reason = sanitize_sql(sanitize(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text))
 		if(length(reason) > 60)
-			alert("The reason is more than 60 characters long")
+			tgui_alert(usr, "The reason is more than 60 characters long")
 			return
 
 		if(!reason)
@@ -459,7 +459,7 @@
 
 		message_admins("[usr.name]/[usr.ckey] requested removal of [title] from the library database")
 
-		alert("Delete request sent.")
+		tgui_alert(usr, "Delete request sent.")
 
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null

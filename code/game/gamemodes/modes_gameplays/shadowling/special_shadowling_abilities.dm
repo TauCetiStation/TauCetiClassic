@@ -7,7 +7,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	if(usr.incapacitated())
 		return
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
-	switch(alert("Are you sure you want to hatch? You cannot undo this!",,"Yes","No"))
+	switch(tgui_alert(src,"Are you sure you want to hatch? You cannot undo this!",, list("Yes","No")))
 		if("No")
 			to_chat(usr, "<span class='warning'>You decide against hatching for now.</span>")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
@@ -88,7 +88,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	if(usr.incapacitated())
 		return
 	usr.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
-	switch(alert("It is time to ascend. Are you completely sure about this? You cannot undo this!",,"Yes","No"))
+	switch(tgui_alert(usr, "It is time to ascend. Are you completely sure about this? You cannot undo this!",, list("Yes","No")))
 		if("No")
 			to_chat(usr, "<span class='warning'>You decide against ascending for now.</span>")
 			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance

@@ -28,7 +28,7 @@
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
 		if(restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
@@ -100,7 +100,7 @@
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
 		suiciding = 1
@@ -124,7 +124,7 @@
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
 		if(restrained())
@@ -147,7 +147,7 @@
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
 		suiciding = 1
@@ -167,7 +167,7 @@
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
 		suiciding = 1
@@ -200,7 +200,7 @@
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
 		suiciding = 1
@@ -220,7 +220,7 @@
 		to_chat(src, "You're already committing suicide! Be patient!")
 		return
 
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 
 	if(confirm == "Yes")
 		suiciding = 1

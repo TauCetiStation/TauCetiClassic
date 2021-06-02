@@ -422,4 +422,4 @@
 		popup.set_content(dat)
 		popup.open()
 	else
-		alert("The game hasn't started yet!")
+		tgui_alert(usr, "The game hasn't started yet!")
