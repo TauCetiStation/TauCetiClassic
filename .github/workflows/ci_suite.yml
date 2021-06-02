@@ -67,6 +67,8 @@ jobs:
         run: |
           bash tools/ci/install-byond.sh
           source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+          bash tools/ci/install_node.sh
+          bash tgui/bin/tgui --build
           chmod +x -R scripts/
           chmod +x test/run-test.sh
           bash test/run-test.sh
