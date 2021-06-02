@@ -28,7 +28,7 @@ export const ChemDispenser = (_, context) => {
   const DISPENSE_AMOUNTS = [5, 10, 20, 30, 40];
 
   return (
-    <Window width={420} height={650} resizable>
+    <Window width={420} height={650}>
       <Window.Content>
         <Section title={"Status"}>
           <LabeledList>

@@ -93,7 +93,7 @@
 
 	if(!var_value) return
 
-	switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
+	switch(tgui_alert(usr, "Would you like to associate a var with the list entry?",, list("Yes","No")))
 		if("Yes")
 			L += var_value
 			L[var_value] = mod_list_add_ass() //haha
@@ -207,7 +207,7 @@
 
 		if("list")
 			if(!islist(L[L.Find(variable)]))
-				if(alert("This is not a list. Would you like to create new list?",,"Yes","No") == "No")
+				if(tgui_alert(usr, "This is not a list. Would you like to create new list?",, list("Yes","No")) == "No")
 					return
 				L[L.Find(variable)] = list()
 			mod_list(L[L.Find(variable)])
@@ -432,7 +432,7 @@
 
 		if("list")
 			if(!islist(O.vars[variable]))
-				if(alert("This is not a list. Would you like to create new list?",,"Yes","No") == "No")
+				if(tgui_alert(usr, "This is not a list. Would you like to create new list?",, list("Yes","No")) == "No")
 					return
 				O.vars[variable] = list()
 			mod_list(O.vars[variable])
@@ -491,9 +491,7 @@
 					if(!isarea(O) && !isturf(O))
 						to_chat(usr, "This can only be used on instances of type /area and /turf")
 						return
-					var/var_new = alert("dynamic_lighting", ,
-						"DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"
-						)
+					var/var_new = tgui_alert(usr, "dynamic_lighting",, list("DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
 					switch(var_new)
 						if("DYNAMIC_LIGHTING_DISABLED")
 							var_new = DYNAMIC_LIGHTING_DISABLED

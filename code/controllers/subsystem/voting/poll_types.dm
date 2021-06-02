@@ -225,19 +225,19 @@
 			choices.Add(C)
 	while(choice_text != "" && ch_num < 10)
 
-	if(alert("Should the voters be able to vote multiple options?", "Custom vote", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Should the voters be able to vote multiple options?", "Custom vote", list("Yes", "No")) == "Yes")
 		multiple_votes = TRUE
 
-	if(alert("Should the voters be able to change their choice?", "Custom vote", "Yes", "No") == "No")
+	if(tgui_alert(usr, "Should the voters be able to change their choice?", "Custom vote", list("Yes", "No")) == "No")
 		can_revote = FALSE
 
-	if(alert("Should the voters be able to remove their votes?", "Custom vote", "Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Should the voters be able to remove their votes?", "Custom vote", list("Yes", "No")) == "Yes")
 		can_unvote = TRUE
 
-	if(alert("Should the voters see another voters votes?", "Custom vote", "Yes", "No") == "No")
+	if(tgui_alert(usr, "Should the voters see another voters votes?", "Custom vote", list("Yes", "No")) == "No")
 		see_votes = FALSE
 
-	if(alert("Are you sure you want to continue?", "Custom vote", "Yes", "No") == "No")
+	if(tgui_alert(usr, "Are you sure you want to continue?", "Custom vote", list("Yes", "No")) == "No")
 		choices.Cut()
 
 /datum/vote_choice/custom

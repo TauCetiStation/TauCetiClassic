@@ -137,7 +137,7 @@
 
 /datum/mind/proc/edit_memory()
 	if(!SSticker || !SSticker.mode)
-		alert("Not before round-start!", "Alert")
+		tgui_alert(usr, "Not before round-start!", "Alert")
 		return
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
@@ -1013,7 +1013,7 @@
 				current.regenerate_icons()
 				log_admin("[key_name(usr)] turned [current] into abductor.")
 			if("equip")
-				var/gear = alert("Agent or Scientist Gear","Gear","Agent","Scientist")
+				var/gear = tgui_alert(usr,"Agent or Scientist Gear","Gear", list("Agent","Scientist"))
 				if(gear)
 					for (var/obj/item/I in current)
 						if (istype(I, /obj/item/weapon/implant))
@@ -1374,9 +1374,9 @@
 	return (duration <= world.time - brigged_since)
 
 /datum/mind/proc/make_Abductor()
-	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
+	var/role = tgui_alert(usr,"Abductor Role ?","Role", list("Agent","Scientist"))
 	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
-	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
+	var/teleport = tgui_alert(usr,"Teleport to ship ?","Teleport", list("Yes","No"))
 	if(!role || !team || !teleport)
 		return
 	if(!ishuman(current))

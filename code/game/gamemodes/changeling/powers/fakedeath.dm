@@ -71,7 +71,7 @@
 	if(user.fake_death)
 		return
 	if(user.stat != DEAD)
-		if(alert("Are we sure we wish to fake our death?",null,"Yes","No") == "No")
+		if(tgui_alert(usr, "Are we sure we wish to fake our death?",, list("Yes","No")) == "No")
 			return
 	if(user.mind.changeling.instatis) //In case if user clicked ability several times without making a choice.
 		return

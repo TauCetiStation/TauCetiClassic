@@ -203,7 +203,7 @@
 			to_chat(U, "<span class='notice'>Law Override: <b>SUCCESS</b>.</span>")
 
 		if("Purge AI")
-			var/confirm = alert("Are you sure you want to purge the AI? This cannot be undone once started.", "Confirm purge", "Yes", "No")
+			var/confirm = tgui_alert(usr, "Are you sure you want to purge the AI? This cannot be undone once started.", "Confirm purge", list("Yes", "No"))
 			if(U.stat||U.wear_suit!=src||!s_initialized)
 				U << browse(null, "window=spideros")
 				return
