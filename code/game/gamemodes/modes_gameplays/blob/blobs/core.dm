@@ -111,6 +111,8 @@ var/global/list/blob_nodes = list()
 	else //No faction? Make one and you're the overmind.
 		conglomerate = SSticker.mode.CreateFaction(/datum/faction/blob_conglomerate)
 		if(conglomerate)
+			conglomerate.OnPostSetup()
+			conglomerate.forgeObjectives()
 			add_faction_member(conglomerate, B, FALSE)
 
 	B.b_congl = conglomerate

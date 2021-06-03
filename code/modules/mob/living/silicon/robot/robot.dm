@@ -439,7 +439,7 @@
 /mob/living/silicon/robot/show_malf_ai()
 	..()
 	if(ismalf(connected_ai))
-		var/datum/faction/malf_silicons/malf = connected_ai.faction
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(malf.apcs >= 3)
 			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
 	else
