@@ -1159,30 +1159,6 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 
 //////////////////////////////
-// Noir event
-//////////////////////////////
-/*
-/client/proc/Noir_anomaly()
-	set category = "Event"
-	set name = "Noir event(in dev!)"
-	if(!check_rights(R_PERMISSIONS))	return
-
-	if(alert("Are you really sure?",,"Yes","No") != "Yes")
-		return
-
-	for(var/atom/O in not_world)
-		if(O.icon)
-			if(O.color)
-				O.color = null
-
-			var/icon/newIcon = icon(O.icon)
-			newIcon.GrayScale()
-			O.icon = newIcon
-
-	log_admin("[key_name(src)] started noir event!", 1)
-	message_admins("<span class='notice'>[key_name_admin(src)] started noir event!</span>", 1)
-*/
-//////////////////////////////
 // Gateway
 //////////////////////////////
 
