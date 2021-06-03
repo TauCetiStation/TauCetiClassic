@@ -128,7 +128,7 @@
 	if(in_range(src, user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
-	if(alert(user, "Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
+	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active || degutted)
 			if(degutted)
 				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")

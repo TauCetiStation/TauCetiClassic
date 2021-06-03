@@ -66,7 +66,7 @@
 	else
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(istype(I, /obj/item/stack/nanopaste))
-			var/choice = alert("What do you want to do with the nanopaste?","Radiometric Scanner","Scan nanopaste","Fix seal integrity")
+			var/choice = tgui_alert(usr, "What do you want to do with the nanopaste?","Radiometric Scanner", list("Scan nanopaste","Fix seal integrity"))
 			if(choice == "Fix seal integrity")
 				var/obj/item/stack/nanopaste/N = I
 				var/amount_used = min(N.get_amount(), 10 - scanner_seal_integrity / 10)
@@ -74,7 +74,7 @@
 				scanner_seal_integrity = round(scanner_seal_integrity + amount_used * 10)
 				return
 		if(istype(I, /obj/item/weapon/reagent_containers/glass))
-			var/choice = alert("What do you want to do with the container?","Radiometric Scanner","Add coolant","Empty coolant","Scan container")
+			var/choice = tgui_alert(usr, "What do you want to do with the container?","Radiometric Scanner", list("Add coolant","Empty coolant","Scan container"))
 			if(choice == "Add coolant")
 				var/obj/item/weapon/reagent_containers/glass/G = I
 				var/amount_transferred = min(src.reagents.maximum_volume - src.reagents.total_volume, G.reagents.total_volume)

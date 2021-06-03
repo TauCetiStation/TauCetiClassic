@@ -166,7 +166,7 @@
 		return
 
 	if(injecting)
-		switch(alert("Would you like to stop injecting, or change chemical?","Choose.","Stop injecting","Change chemical"))
+		switch(tgui_alert(usr, "Would you like to stop injecting, or change chemical?","Choose.", list("Stop injecting","Change chemical")))
 			if("Stop injecting")
 				injecting = null
 				return
@@ -222,7 +222,7 @@
 	set desc = "Grow to a more complex form."
 
 	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
-		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
+		to_chat(src, tgui_alert(usr, "You are currently not whitelisted to play as a full diona."))
 		return 0
 
 	if(gestalt)
