@@ -100,6 +100,18 @@ var/list/blacklisted_builds = list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
+	// Keypress passthrough
+	if(href_list["__keydown"])
+		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
+		if(keycode)
+			keyDown(keycode)
+		return
+	if(href_list["__keyup"])
+		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
+		if(keycode)
+			keyUp(keycode)
+		return
+
 	// Tgui Topic middleware
 	if(!tgui_Topic(href_list))
 		return
@@ -361,7 +373,7 @@ var/list/blacklisted_builds = list(
 			if(ckey in joined_player_list) // player already joined the game and just reconnects, so we pass him
 				blocked_by_bunker = FALSE
 
-			if((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap) // mentors immune too, but only before own cap 
+			if((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap) // mentors immune too, but only before own cap
 				blocked_by_bunker = FALSE
 
 			if(blocked_by_bunker)
