@@ -82,7 +82,7 @@
 		to_chat(usr, "<span class='alert'>Error: Topic 'editrights': No valid ckey</span>")
 		return
 	var/datum/admins/D = admin_datums[adm_ckey]
-	if(alert("Are you sure you want to remove [adm_ckey] from admins?","Message","Yes","Cancel") == "Yes")
+	if(tgui_alert(usr, "Are you sure you want to remove [adm_ckey] from admins?","Message", list("Yes","Cancel")) == "Yes")
 		if(!D)
 			return
 		admin_datums -= adm_ckey
@@ -267,7 +267,7 @@ var elements = document.getElementsByName('rights');
 	if(!ment_ckey)
 		to_chat(usr, "<span class='alert'>Error: Topic 'editmentorlist': [ment_ckey] is not a valid mentor.</span>")
 		return
-	if(alert("Are you sure you want to remove [ment_ckey] from mentors?","Message","Yes","Cancel") == "Yes")
+	if(tgui_alert(usr, "Are you sure you want to remove [ment_ckey] from mentors?","Message", list("Yes","Cancel")) == "Yes")
 		mentor_ckeys -= ment_ckey
 		mentors -= directory[ment_ckey]
 		message_admins("[key_name_admin(usr)] removed [ment_ckey] from the mentors list")

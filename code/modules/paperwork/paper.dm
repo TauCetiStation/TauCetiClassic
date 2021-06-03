@@ -391,7 +391,7 @@
 
 		var/t = ""
 		if(href_list["sign"])
-			if(alert("Are you sure you want to sign this paper?",,"Yes","No") == "No")
+			if(tgui_alert(usr, "Are you sure you want to sign this paper?",, list("Yes","No")) == "No")
 				return
 			t = "\[sign\] "
 		else

@@ -292,7 +292,7 @@ cause a ton of data to be lost, an admin can go send it back.
 				linked_imprinter = null
 	if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
-		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = tgui_alert(usr, "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "R&D Console Database Reset", list("Continue", "Cancel"))
 		if(choice == "Continue")
 			screen = "working"
 			qdel(files)
