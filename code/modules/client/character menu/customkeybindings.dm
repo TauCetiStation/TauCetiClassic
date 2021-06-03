@@ -17,7 +17,7 @@
 		. += "<table width='100%'>"
 		for (var/i in kb_categories[category])
 			var/datum/keybinding/kb = i
-			if(!length(user_binds[kb.name]) || user_binds[kb.name][1] == "None")
+			if(!length(user_binds[kb.name]) || (user_binds[kb.name][1] == "None" && length(user_binds[kb.name]) == 1))
 				. += "<tr><td width='40%'>[kb.full_name]</td><td width='15%'><a class='white fluid' href ='?_src_=prefs;preference=keybindings_capture;keybinding=[kb.name];old_key=["None"]'>None</a></td>"
 				var/list/default_keys = kb.hotkey_keys
 				var/class
@@ -106,7 +106,8 @@
 			if(clear_key)
 				if(key_bindings[old_key])
 					key_bindings[old_key] -= kb_name
-					LAZYADD(key_bindings["None"], kb_name)
+					if(!(kb_name in key_bindings["None"]))
+						LAZYADD(key_bindings["None"], kb_name)
 					if(!length(key_bindings[old_key]))
 						key_bindings -= old_key
 				user << browse(null, "window=capturekeypress")
