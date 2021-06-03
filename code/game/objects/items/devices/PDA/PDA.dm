@@ -577,7 +577,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
 	        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "pda.tmpl", title, 520, 400)
+		ui = new(user, src, ui_key, "pda.tmpl", title, 590, 430)
 		// when the ui is first opened this is the data it will use
 
 		ui.load_cached_data(ManifestJSON)
@@ -1523,10 +1523,10 @@
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		alert("Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
+		tgui_alert(usr, "Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
 		return FALSE
 	if(!user.dna)	//just in case
-		alert("Eror! PDA can't read your fingerprints.")
+		tgui_alert(usr, "Eror! PDA can't read your fingerprints.")
 		return FALSE
 	var/fingerprints = md5(user.dna.uni_identity)
 	if(fingerprints in owner_fingerprints)
@@ -1538,7 +1538,7 @@
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else
-			alert("Invalid Password!")
+			tgui_alert(usr, "Invalid Password!")
 			return FALSE
 
 /obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)

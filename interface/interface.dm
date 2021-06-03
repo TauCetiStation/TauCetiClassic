@@ -28,7 +28,7 @@
 		return
 
 	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
-	if(alert(message, "Report Issue", "Yes", "No") != "Yes")
+	if(tgui_alert(usr, message, "Report Issue", list("Yes", "No")) != "Yes")
 		return
 	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE.md")
 	var/servername = config.server_name
@@ -61,7 +61,7 @@
 
 /proc/link_with_alert(client/user, link_url)
 	if(link_url)
-		if(alert("This will open your browser. Are you sure?",, "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "This will open your browser. Are you sure?",, list("Yes", "No")) == "Yes")
 			user << link(link_url)
 	else
 		to_chat(user, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")

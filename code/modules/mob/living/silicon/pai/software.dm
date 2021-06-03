@@ -299,7 +299,7 @@
 					pda.message_silent = !pda.message_silent
 				else if(href_list["target"])
 					if(silence_time)
-						return alert("Communications circuits remain uninitialized.")
+						return tgui_alert(usr, "Communications circuits remain uninitialized.")
 
 					var/target = locate(href_list["target"])
 					pda.create_message(src, target)

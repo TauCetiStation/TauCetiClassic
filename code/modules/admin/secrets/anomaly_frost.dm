@@ -14,7 +14,7 @@
 	Speed = input(user, "Choose freeze speed. 1 - slow, 100 - fast", "Speed: ", 2) as num
 	Time = input(user, "Choose amount of frost ticks 1t = 1s.", "Ticks: ", 100) as num
 
-	switch(alert(user, "Show frost alert to crew?",,"Yes","No"))
+	switch(tgui_alert(user, "Show frost alert to crew?",, list("Yes","No")))
 		if("Yes")
 			announcement.play()
 

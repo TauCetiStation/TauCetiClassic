@@ -7,8 +7,7 @@ export const CustomAnnounce = (props, context) => {
   return (
     <Window
       width={600}
-      height={500}
-      resizable>
+      height={500}>
       <Flex
         height="100%"
         direction="column">

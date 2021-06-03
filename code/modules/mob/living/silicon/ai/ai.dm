@@ -363,7 +363,7 @@ var/list/ai_verbs_default = list(
 	if(message_cooldown)
 		to_chat(src, "Please allow one minute to pass between announcements.")
 		return
-	
+
 	if(!input)
 		return
 
@@ -382,7 +382,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+	var/confirm = tgui_alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
@@ -434,7 +434,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert("Are you sure you want to recall the shuttle?", "Confirm Shuttle Recall", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to recall the shuttle?", "Confirm Shuttle Recall", list("Yes", "No"))
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
@@ -538,11 +538,15 @@ var/list/ai_verbs_default = list(
 
 	if (href_list["track"])
 		var/mob/target = locate(href_list["track"]) in living_list
-		if(target || html_decode(href_list["trackname"]) == target:get_visible_name())
+		if(target)
 			ai_actual_track(target)
-		else
-			to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
 			return
+		var/mob/living/carbon/human/H = locate(href_list["track"]) in living_list
+		if(html_decode(href_list["trackname"]) == H.get_visible_name())
+			ai_actual_track(H)
+			return
+		to_chat(src, "<span class='rose'>System error. Cannot locate [html_decode(href_list["trackname"])].</span>")
+		return
 
 	else if (href_list["faketrack"])
 		var/mob/target = locate(href_list["track"]) in living_list
@@ -735,7 +739,7 @@ var/list/ai_verbs_default = list(
 					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 					holo_icon = chooses_ai_staff[state]
 			else
-				alert("No suitable records found. Aborting.")
+				tgui_alert(usr, "No suitable records found. Aborting.")
 
 		if("Unique Category")
 			gen_ai_uniq_holo()
