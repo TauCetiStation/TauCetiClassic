@@ -80,7 +80,7 @@ export const ChemDispenser = (_, context) => {
                 lineHeight={1.75}
                 content={chemical.title}
                 onClick={() => act("dispense", {
-                  chemical: chemical.title.toLowerCase(),
+                  chemical: chemical.id,
                 })}
               />
             ))
