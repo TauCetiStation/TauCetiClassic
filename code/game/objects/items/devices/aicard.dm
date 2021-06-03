@@ -95,7 +95,7 @@
 				to_chat(U, "You [A.aiRadio.disabledAi ? "Disable" : "Enable"] the AI's Subspace Transceiver")
 
 		if ("Wipe")
-			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", "Yes", "No")
+			var/confirm = tgui_alert(usr, "Are you sure you want to wipe this card's memory? This cannot be undone once started.", "Confirm Wipe", list("Yes", "No"))
 			if(confirm == "Yes")
 				if(isnull(src)||!in_range(src, U)||U.machine!=src)
 					U << browse(null, "window=aicard")

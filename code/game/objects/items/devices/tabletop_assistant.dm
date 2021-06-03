@@ -306,7 +306,7 @@
 						if(!choice_name)
 							return
 						if(choice_name in determined_layouts)
-							switch(alert("The name [choice_name] is already taken, override?","Tabletop Assistant.","Yes","No"))
+							switch(tgui_alert(usr, "The name [choice_name] is already taken, override?","Tabletop Assistant.", list("Yes","No")))
 								if("Yes")
 									determined_layouts[choice_name] = G.board_stat
 								else
