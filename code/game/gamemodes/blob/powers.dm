@@ -248,11 +248,11 @@
 		target.given_name = new_name
 
 /mob/camera/blob/proc/prompt_upgrade(obj/effect/blob/B)
-	var/static/list/blob_upgrade = list(
+	var/list/datum/callback/blob_upgrade = list(
 		"Cancel"   = null,
-		"Resource" = .proc/create_resource,
-		"Node"     = .proc/create_node,
-		"Factory"  = .proc/create_factory,
+		"Resource" = CALLBACK(src, .proc/create_resource),
+		"Node"     = CALLBACK(src, .proc/create_node),
+		"Factory"  = CALLBACK(src, .proc/create_factory),
 	)
 	// fsr tgui_alerts cannot handle associative lists...
 	var/list/buttons = list()
@@ -260,5 +260,5 @@
 		buttons.Add(btn)
 	var/choice = tgui_alert(src, "Choose new blob type", "Blob Evolution", buttons)
 	if(choice && blob_upgrade[choice])
-		var/action = blob_upgrade[choice]
-		call(src, action)(get_turf(B))
+		var/datum/callback/CB = blob_upgrade[choice]
+		CB.Invoke(get_turf(B))
