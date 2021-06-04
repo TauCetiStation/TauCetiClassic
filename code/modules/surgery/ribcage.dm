@@ -762,3 +762,10 @@
 	qdel(tool)
 	target.ear_damage = 0
 	target.ear_deaf = 0
+
+/datum/surgery_step/ipc_ribcage/wrenchshut_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	BP.fracture()
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
