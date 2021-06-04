@@ -33,7 +33,7 @@
 			"Factory"  = .proc/create_factory,
 		)
 		// fsr tgui_alerts cannot handle associative lists...
-		var/list/buttons = new
+		var/list/buttons = list()
 		for(var/btn in blob_upgrade)
 			buttons.Add(btn)
 		var/choice = tgui_alert(src, "Choose new blob type", "Blob Evolution", buttons)
