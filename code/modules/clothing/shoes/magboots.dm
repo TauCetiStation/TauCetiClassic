@@ -12,7 +12,6 @@
 //	flags = NOSLIP //disabled by default
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
-	var/mob/living/carbon/human/H = user
 	if(magpulse)
 		flags &= ~NOSLIP
 		slowdown = SHOES_SLOWDOWN
