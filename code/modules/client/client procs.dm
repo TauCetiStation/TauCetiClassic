@@ -716,8 +716,8 @@ var/list/blacklisted_builds = list(
 				if("South")
 					movement_keys[key] = SOUTH
 				if("Say")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=say")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say")
 				if("OOC")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.ooc")
 				if("Me")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.me")
