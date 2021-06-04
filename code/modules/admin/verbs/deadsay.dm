@@ -42,3 +42,9 @@
 			to_chat(M, rendered)
 
 	feedback_add_details("admin_verb","D") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/get_dead_say()
+	var/msg = input(src, null, "dsay \"text\"") as text|null
+	if(isnull(msg))
+		return
+	dsay(msg)

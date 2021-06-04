@@ -609,6 +609,12 @@
 	if(needs_update)
 		update_mutations()
 
+/mob/living/drop_item(atom/Target)
+	if(!get_active_hand() && !drop_combo_element())
+		to_chat(src, "<span class='warning'>You have nothing to drop in your hand!</span>")
+		return
+	return ..()
+
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
