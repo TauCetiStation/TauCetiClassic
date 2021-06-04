@@ -1,8 +1,3 @@
-// One iteration of process is 20 ticks
-// see in SSticker.wait
-#define TIME_MIN 300
-#define TIME_MAX 900
-
 /datum/role/blob_overmind
 	name = BLOBOVERMIND
 	id = BLOBOVERMIND
@@ -13,36 +8,42 @@
 	restricted_jobs = list("Cyborg", "AI")
 	restricted_species_flags = list(IS_SYNTHETIC)
 
-	var/countdown = 0
-
-	var/time_to_burst
-
 /datum/role/blob_overmind/cerebrate
 	name = BLOBCEREBRATE
 	id = BLOBCEREBRATE
 	logo_state = "cerebrate-logo"
 
-/datum/role/blob_overmind/New()
-	..()
-	time_to_burst = rand(TIME_MIN, TIME_MAX)
+/datum/role/blob_overmind/OnPostSetup(laterole)
+	. = ..()
+	var/wait_time = rand(INTERCEPT_TIME_LOW, INTERCEPT_TIME_HIGH)
+	var/time_to_stage1 = wait_time
+	var/time_to_stage2 = wait_time * 2
+	var/time_to_stage3 = wait_time * 2 + wait_time / 2
 
-/datum/role/blob_overmind/process()
-	..()
-	if(!antag || istype(antag.current, /mob/camera/blob) || !antag.current)
-		return
-	if(countdown > time_to_burst)
+	addtimer(CALLBACK(src, .proc/stage1), time_to_stage1)
+	addtimer(CALLBACK(src, .proc/stage2), time_to_stage2)
+	addtimer(CALLBACK(src, .proc/stage3), time_to_stage3)
+
+/datum/role/blob_overmind/proc/stage1()
+	if(!antag || !antag.current)
 		return
 
-	countdown++
-	if(countdown == round(time_to_burst / 4))
-		to_chat(antag.current, "<span class='alert'>You feel tired and bloated.</span>")
-	else if(countdown == round(time_to_burst / 2))
-		to_chat(antag.current, "<span class='alert'>You feel like you are about to burst.</span>")
-	else if(countdown == time_to_burst)
-		burst()
+	to_chat(antag.current, "<span class='alert'>You feel tired and bloated.</span>")
+
+/datum/role/blob_overmind/proc/stage2()
+	if(!antag || !antag.current)
+		return
+
+	to_chat(antag.current, "<span class='alert'>You feel like you are about to burst.</span>")
+
+/datum/role/blob_overmind/proc/stage3()
+	if(!antag || !antag.current)
+		return
+
+	burst()
 
 /datum/role/blob_overmind/proc/burst()
-	if(!antag || istype(antag.current,/mob/camera/blob))
+	if(!antag || isovermind(antag.current))
 		return
 
 	var/client/blob_client = null
@@ -69,7 +70,7 @@
 /datum/role/blob_overmind/Greet(greeting,custom)
 	if(!..())
 		return FALSE
-	if(!antag || istype(antag.current,/mob/camera/blob))
+	if(!antag || isovermind(antag.current))
 		return FALSE
 
 	to_chat(antag.current, "<span class='warning'>Your body is ready to give spawn to a new blob core which will eat this station.</span>")
@@ -78,6 +79,3 @@
 	to_chat(antag.current, "<span class='warning'>If you go outside of the station level, or in space, then you will die; make sure your location has lots of ground to cover.</span>")
 
 	return TRUE
-
-#undef TIME_MIN
-#undef TIME_MAX

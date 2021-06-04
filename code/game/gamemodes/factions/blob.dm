@@ -1,8 +1,3 @@
-//________________________________________________
-
-#define WAIT_TIME_PHASE1 60 SECONDS
-#define WAIT_TIME_PHASE2 200 SECONDS
-
 #define PLAYER_PER_BLOB_CORE 30
 
 /datum/faction/blob_conglomerate
@@ -75,8 +70,8 @@
 /datum/faction/blob_conglomerate/OnPostSetup()
 	start = new()
 	start.count()
-	prelude_announcement = world.time + rand(WAIT_TIME_PHASE1, 2 * WAIT_TIME_PHASE1)
-	outbreak_announcement = world.time + rand(WAIT_TIME_PHASE2, 2 * WAIT_TIME_PHASE2)
+	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	return ..()
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
@@ -98,11 +93,9 @@
 /datum/faction/blob_conglomerate/stage(new_stage)
 	switch(new_stage)
 		if(FS_DORMANT)
-			if(!declared)
-				declared = TRUE
-				var/datum/announcement/centcomm/blob/outbreak5/announcement = new
-				announcement.play()
-				return
+			var/datum/announcement/centcomm/blob/outbreak5/announcement = new
+			announcement.play()
+			return
 		if(FS_ACTIVE)
 			for(var/mob/M in player_list)
 				var/T = M.loc
@@ -223,7 +216,7 @@ Message ends."}
 
 /datum/faction/blob_conglomerate/proc/detect_overminds()
 	for(var/datum/role/R in members)
-		if(R.antag.current)
+		if(R.antag.current && isovermind(R.antag.current))
 			return TRUE
 	return FALSE
 
@@ -315,6 +308,4 @@ Message ends."}
 	output += (result.mach / max(mach, 1))
 	return (output / 7)
 
-#undef WAIT_TIME_PHASE1
-#undef WAIT_TIME_PHASE2
 #undef PLAYER_PER_BLOB_CORE
