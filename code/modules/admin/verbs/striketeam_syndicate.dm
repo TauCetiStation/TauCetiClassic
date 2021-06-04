@@ -13,9 +13,9 @@ var/global/sent_syndicate_strike_team = FALSE
 	if(sent_syndicate_strike_team == 1)
 		to_chat(usr, "<span class='warning'>The Syndicate are already sending a team, Mr. Dumbass.</span>")
 		return
-	if(alert("Do you want to send in the Syndicate Strike Team? Once enabled, this is irreversible.",,"Yes","No")=="No")
+	if(tgui_alert(usr, "Do you want to send in the Syndicate Strike Team? Once enabled, this is irreversible.",, list("Yes","No"))=="No")
 		return
-	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned syndicates have internals cameras which are viewable through a monitor inside the Syndicate Mothership Bridge. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
+	tgui_alert(usr, "This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned syndicates have internals cameras which are viewable through a monitor inside the Syndicate Mothership Bridge. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
 
 	if(sent_syndicate_strike_team)
 		to_chat(src, "Looks like someone beat you to it.")
@@ -24,7 +24,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	var/mission = null
 	mission = sanitize(input(src, "Please specify which mission the syndicate strike team shall undertake.", "Specify Mission", ""))
 	if(!mission)
-		if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
+		if(tgui_alert(usr, "Error, no mission set. Do you want to exit the setup process?",, list("Yes","No"))=="Yes")
 			return
 
 	var/paper_text = sanitize(input(usr, "Please, enter the text if you want to leave job details for an elite syndicate on paper.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)

@@ -25,7 +25,7 @@
 	set category = "Ninja Equip"
 
 	var/mob/U = loc//Can't toggle voice when you're not wearing the mask.
-	var/vchange = (alert("Would you like to synthesize a new name or turn off the voice synthesizer?",,"New Name","Turn Off"))
+	var/vchange = (tgui_alert(usr, "Would you like to synthesize a new name or turn off the voice synthesizer?",, list("New Name","Turn Off")))
 	if(vchange=="New Name")
 		var/chance = rand(1,100)
 		switch(chance)
