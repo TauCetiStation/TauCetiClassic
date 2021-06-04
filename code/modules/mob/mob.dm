@@ -923,6 +923,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 	resting = max(resting + amount, 0)
 	return
 
+//========== Shock Stage =========
+
+/mob/proc/AdjustShockStage(amount)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.species.flags[NO_PAIN])
+			return
+		H.shock_stage = max(H.shock_stage + amount, 0)
+		return
+
 // =============================
 
 /mob/proc/get_species()
@@ -1006,8 +1016,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		if(H.species.flags[!IS_SYNTHETIC])
-			H.shock_stage += 20
+		H.AdjustShockStage(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.

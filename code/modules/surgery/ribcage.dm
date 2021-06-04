@@ -511,8 +511,7 @@
 	target.stunned = 0
 	target.weakened = 0
 	target.paralysis = 0
-	target.ear_damage = 0
-	target.ear_deaf = 0
+
 	
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
@@ -740,3 +739,33 @@
 	
 	target.nutrition = C.charge
 
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration
+	allowed_tools = list(
+	/obj/item/robot_parts/robot_component/radio = 100,
+	)
+	min_duration = 30
+	max_duration = 70
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.ribcage == 2
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("[user] starts putting in \the [tool] into [target]'s hearing module slot.",
+	"You start putting in \the [tool] into [target]'s hearing module slot.")
+	..()
+
+/datum/surgery_step/ipc_ribcage/hearing_restoration/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='notice'>[user] has put in \the [tool] into [target]'s hearing module slot.</span>",
+	"<span class='notice'>You have put in \the [tool] into [target]'s hearing module slot.</span>")
+
+	qdel(tool)
+	target.ear_damage = 0
+	target.ear_deaf = 0
+
+/datum/surgery_step/ipc_ribcage/wrenchshut_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	BP.fracture()
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)

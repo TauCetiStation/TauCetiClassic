@@ -224,7 +224,7 @@
 /obj/item/projectile/neurotoxin/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(H.species.flags[IS_SYNTHETIC])
+		if(H.species.flags[NO_BLOOD])
 			return
 		H.weakened = 10
 
