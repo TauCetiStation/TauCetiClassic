@@ -89,7 +89,7 @@
 /mob/living/carbon/human/proc/holster_weapon(obj/item/clothing/accessory/holster/my_holster)
 	if(!my_holster)
 		my_holster = get_holster()
-	if(!my_holster.holstered)
+	if(!my_holster?.holstered)
 		var/obj/item/weapon/gun/W = get_active_hand()
 		if(!istype(W, /obj/item/weapon/gun))
 			to_chat(src, "<span class='notice'>You need your gun equiped to holster it.</span>")
