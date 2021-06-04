@@ -262,4 +262,3 @@
 	if(choice && blob_upgrade[choice])
 		var/action = blob_upgrade[choice]
 		call(src, action)(get_turf(B))
-	return
