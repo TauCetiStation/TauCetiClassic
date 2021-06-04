@@ -178,7 +178,7 @@
 
 // Click without any modifiers
 /mob/proc/RegularClickOn(atom/A, params)
-	return
+	return FALSE
 
 //	Translates into attack_hand, etc.
 
