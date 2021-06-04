@@ -1,3 +1,24 @@
+/obj/effect/landmark/abductor
+	var/team = 1
+
+/obj/effect/landmark/abductor/console/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/landmark/abductor/console/atom_init_late()
+	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
+	c.team = team
+	c.Initialize()
+	qdel(src)
+
+/obj/effect/landmark/abductor/agent
+/obj/effect/landmark/abductor/scientist
+
+var/global/list/obj/effect/landmark/abductor/agent_landmarks[MAX_ABDUCTOR_TEAMS]
+var/global/list/obj/effect/landmark/abductor/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
+
+var/global/abductor_landmarks_setuped = FALSE
+
 /datum/faction/abductors
 	name = F_ABDUCTORS
 	ID = F_ABDUCTORS
@@ -16,6 +37,19 @@
 	var/static/team_count = 1
 	var/static/finished = FALSE
 
+/datum/faction/abductors/New()
+	..()
+	if(!abductor_landmarks_setuped)
+		abductor_landmarks_setuped = TRUE
+		setup_landmarks()
+
+/datum/faction/abductors/proc/setup_landmarks()
+	for(var/obj/effect/landmark/abductor/A in landmarks_list)
+		if(istype(A,/obj/effect/landmark/abductor/agent))
+			agent_landmarks[text2num(A.team)] = A
+		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+			scientist_landmarks[text2num(A.team)] = A
+
 /datum/faction/abductors/get_initrole_type()
 	if(members.len == 0)
 		return /datum/role/abductor/agent
@@ -27,7 +61,7 @@
 			var/obj/effect/landmark/L = scientist_landmarks[team_number]
 			R.antag.current.forceMove(L.loc)
 
-		else if(istype(R, /datum/role/abductor/agent/))
+		else if(istype(R, /datum/role/abductor/agent))
 			var/obj/effect/landmark/L = agent_landmarks[team_number]
 			R.antag.current.forceMove(L.loc)
 

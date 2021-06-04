@@ -75,3 +75,6 @@
 
 #define INTERCEPT_TIME_LOW 1 MINUTE
 #define INTERCEPT_TIME_HIGH 3 MINUTE
+
+#define ABDUCTOR_SCALING_COEFF 15 //how many players per abductor team
+#define MAX_ABDUCTOR_TEAMS 4
