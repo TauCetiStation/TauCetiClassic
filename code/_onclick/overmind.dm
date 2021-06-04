@@ -26,20 +26,7 @@
 	if(!B)
 		return
 	if(isblobnormal(B))
-		var/static/list/blob_upgrade = list(
-			"Cancel"   = null,
-			"Resource" = .proc/create_resource,
-			"Node"     = .proc/create_node,
-			"Factory"  = .proc/create_factory,
-		)
-		// fsr tgui_alerts cannot handle associative lists...
-		var/list/buttons = list()
-		for(var/btn in blob_upgrade)
-			buttons.Add(btn)
-		var/choice = tgui_alert(src, "Choose new blob type", "Blob Evolution", buttons)
-		if(choice && blob_upgrade[choice])
-			var/action = blob_upgrade[choice]
-			call(src, action)(T)
+		prompt_upgrade(B)
 		return
 	if(isblobnode(B))
 		var/obj/effect/blob/node/N = B
