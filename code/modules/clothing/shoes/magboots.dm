@@ -25,8 +25,6 @@
 		magpulse = 1
 		icon_state = "[magboot_state]1"
 		to_chat(user, "You enable the mag-pulse traction system.")
-		if(H.species.flags[IS_SYNTHETIC])
-			slowdown = SHOES_SLOWDOWN
 	user.update_inv_shoes()	//so our mob-overlays update
 	user.update_gravity(user.mob_has_gravity())
 	
