@@ -1,5 +1,6 @@
 /atom
-	var/shaking_anim = FALSE
+	// To prevent the item from being forever invisible, check this flag. If it's TRUE, don't animate.
+	var/is_invis_anim = FALSE
 
 /atom/proc/before_shake_animation(intensity, time, intensity_dropoff)
 	return
@@ -10,9 +11,9 @@
 /atom/proc/do_shake_animation(intensity, time, intensity_dropoff = 0.9)
 	if(invisibility > 0)
 		return
-	if(shaking_anim)
+	if(is_invis_anim)
 		return
-	shaking_anim = TRUE
+	is_invis_anim = TRUE
 	var/prev_pixel_x = pixel_x
 	var/prev_pixel_y = pixel_y
 	var/matrix/prev_transform = transform
@@ -58,7 +59,7 @@
 	after_shake_animation(intensity, time, intensity_dropoff, viewers)
 
 	qdel(I)
-	shaking_anim = FALSE
+	is_invis_anim = FALSE
 
 /turf/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	var/image/me = image(icon, icon_state)
@@ -104,9 +105,9 @@
 		return
 	if(notransform)
 		return
-	if(shaking_anim)
+	if(is_invis_anim)
 		return
-	shaking_anim = TRUE
+	is_invis_anim = TRUE
 	var/prev_pixel_x = default_pixel_x
 	var/prev_pixel_y = default_pixel_y
 	var/matrix/prev_transform = matrix(default_transform)
@@ -138,7 +139,7 @@
 
 	after_shake_animation(intensity, time, intensity_dropoff, viewers)
 
-	shaking_anim = FALSE
+	is_invis_anim = FALSE
 
 /atom/movable/proc/pickup_animation(image/I, list/viewers, atom/target, atom/old_loc)
 	if (QDELETED(src))
@@ -193,9 +194,22 @@
 	if (!Adjacent(target))
 		return
 
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
+			return
+
+	if(is_invis_anim)
+		return
+	is_invis_anim = TRUE
+
 	var/list/imgs = get_perceived_images(viewers(target))
 	for(var/i in imgs)
 		INVOKE_ASYNC(src, .proc/pickup_animation, i, imgs[i], target, old_loc)
+	sleep(5)
+	if(QDELETED(src))
+		return
+	is_invis_anim = FALSE
 
 /atom/movable/proc/putdown_animation(image/I, list/viewers, atom/target, mob/user, additional_pixel_x = 0, additional_pixel_y = 0)
 	if (QDELETED(src))
@@ -244,6 +258,15 @@
 	if (!target.Adjacent(user))
 		return
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
+			return
+
+	if(is_invis_anim)
+		return
+	is_invis_anim = TRUE
+
 	var/old_invisibility = invisibility // I don't know, it may be used.
 	invisibility = 100
 
@@ -257,6 +280,7 @@
 	sleep(3)
 	if (QDELETED(src))
 		return
+	is_invis_anim = FALSE
 	invisibility = old_invisibility
 	pixel_x = old_x + additional_pixel_x
 	pixel_y = old_y + additional_pixel_y
@@ -294,6 +318,15 @@
 	if (QDELETED(target))
 		return
 
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(istype(H.gloves, /obj/item/clothing/gloves/black/strip))
+			return
+
+	if(is_invis_anim)
+		return
+	is_invis_anim = TRUE
+
 	var/old_invisibility = invisibility // I don't know, it may be used.
 	invisibility = 100
 
@@ -304,4 +337,5 @@
 	sleep(3)
 	if (QDELETED(src))
 		return
+	is_invis_anim = FALSE
 	invisibility = old_invisibility
