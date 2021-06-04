@@ -17,6 +17,75 @@
 	set hidden = TRUE
 	link_with_alert(src, config.server_rules_url)
 
+/client/verb/hotkeys_help()
+	set name = "hotkeys-help"
+	set category = "OOC"
+
+	var/hotkey_mode = {"<font color='purple'>
+Hotkey-Mode: (hotkey-mode must be on)
+\t TAB = toggle hotkey-mode
+\t a = left
+\t s = down
+\t d = right
+\t w = up
+\t q = drop
+\t e = equip
+\t r = throw
+\t t = say
+\t h = holder/unholder
+\t x = swap-hand
+\t z = click on held object (or y)
+\t b = click on self
+\t f = cycle-intents-left
+\t g = cycle-intents-right
+\t 1 = help-intent
+\t 2 = disarm-intent
+\t 3 = grab-intent
+\t 4 = harm-intent
+</font>"}
+
+	var/other = {"<font color='purple'>
+Any-Mode: (hotkey doesn't need to be on)
+\t Ctrl+a = left
+\t Ctrl+s = down
+\t Ctrl+d = right
+\t Ctrl+w = up
+\t Ctrl+q = drop
+\t Ctrl+e = equip
+\t Ctrl+r = throw
+\t Ctrl+h = holder/unholder
+\t Ctrl+x = swap-hand
+\t Ctrl+z = click on held object (or Ctrl+y)
+\t Ctrl+b = click on self
+\t Ctrl+f = cycle-intents-left
+\t Ctrl+g = cycle-intents-right
+\t Ctrl+1 = help-intent
+\t Ctrl+2 = disarm-intent
+\t Ctrl+3 = grab-intent
+\t Ctrl+4 = harm-intent
+\t DEL = pull
+\t INS = cycle-intents-right
+\t HOME = drop
+\t PGUP = swap-hand
+\t PGDN = click on held object
+\t END = throw
+</font>"}
+
+	var/admin = {"<font color='purple'>
+Admin:
+\t F5 = Asay
+\t F6 = player-panel-new
+\t F7 = admin-pm
+\t F8 = Invisimin
+\t F9 = Mentorhelp
+</font>"}
+
+	to_chat(src, hotkey_mode)
+	to_chat(src, other)
+	if(holder)
+		to_chat(src, admin)
+
+
 /client/verb/reportissue()
 	set name = "report-issue"
 	set desc = "Report an issue"
