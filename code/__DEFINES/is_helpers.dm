@@ -125,3 +125,19 @@
 // OBJECTS
 
 #define isitem(A) (istype(A, /obj/item))
+
+// BLOB
+
+#define isblob(A) istype(A, /obj/effect/blob)
+
+#define isblobnormal(A) istype(A, /obj/effect/blob/normal)
+
+#define isblobcore(A) istype(A, /obj/effect/blob/core)
+
+#define isblobnode(A) istype(A, /obj/effect/blob/node)
+
+#define isblobfactory(A) istype(A, /obj/effect/blob/factory)
+
+#define isblobshield(A) istype(A, /obj/effect/blob/resource)
+
+#define isblobresource(A) istype(A, /obj/effect/blob/resource)

@@ -58,7 +58,7 @@
 	to_chat(src, "<b>Resource Blob</b> is a blob which will collect more resources for you, try to build these earlier to get a strong income. It will benefit from being near your core or multiple nodes, by having an increased resource rate; put it alone and it won't create resources at all.")
 	to_chat(src, "<b>Node Blob</b> is a blob which will grow, like the core. Unlike the core it won't give you a small income but it can power resource and factory blobs to increase their rate.")
 	to_chat(src, "<b>Factory Blob</b> is a blob which will spawn blob spores which will attack nearby food. Putting this nearby nodes and your core will increase the spawn rate; put it alone and it will not spawn any spores.")
-	to_chat(src, "<b>Shortcuts:</b> CTRL Click = Expand Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield")
+	to_chat(src, "<b>Shortcuts:</b> Click = Expand Blob / CTRL Click = Remove Blob / Shift Click = Upgrade Blob / Middle Mouse Click = Rally Spores / Alt Click = Create Shield")
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
