@@ -263,6 +263,10 @@ var/list/blacklisted_builds = list(
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
 	. = ..()	//calls mob.Login()
+
+	if(SSinput.initialized)
+		set_macros()
+
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
@@ -595,6 +599,7 @@ var/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers[DRAG])
 		return
+	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
@@ -671,3 +676,36 @@ var/list/blacklisted_builds = list(
 	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
 
 	return byond_registration
+
+
+/**
+ * Updates the keybinds for special keys
+ *
+ * Handles adding macros for the keys that need it
+ * And adding movement keys to the clients movement_keys list
+ * At the time of writing this, communication(OOC, Say, IC) require macros
+ * Arguments:
+ * * direct_prefs - the preference we're going to get keybinds from
+ */
+/client/proc/update_special_keybinds(datum/preferences/direct_prefs)
+	var/datum/preferences/D = prefs || direct_prefs
+	if(!D?.key_bindings)
+		return
+	movement_keys = list()
+	for(var/key in D.key_bindings)
+		for(var/kb_name in D.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
+				if("Say")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=say")
+				if("OOC")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
+				if("Me")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
