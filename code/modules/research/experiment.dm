@@ -14,7 +14,7 @@
 	)
 
 
-	//Determines cap for repetiin the same method of gaining points. 
+	//Determines maximum amount of points that can be earned by certain methods. 
 	//Total points that can be earned equal highest score multiplied by this number
 	var/cap_coeff = 2 
 
@@ -272,7 +272,7 @@
 
 			var/softcap_coeff = max(repetition_cap / saved_earned_points - 1, 0)
 
-			calculated_research_points = added_score * new_score_coeff + round(already_earned_score * repeat_score_coeff * softcap_coeff)
+			calculated_research_points = added_score * new_score_coeff + min(already_earned_score * repeat_score_coeff * round(softcap_coeff), repetition_cap - saved_earned_points)
 
 			if(score > saved_interaction_score)
 				RD.files.experiments.saved_best_score[inter_type] = score
