@@ -243,7 +243,7 @@
 	if(!target)
 		return
 
-	var/new_name = input(src, "Enter new name for this node:", "Rename Node", target.given_name) as text|null
+	var/new_name = sanitize(input(src, "Enter new name for this node:", "Rename Node", target.given_name) as text|null)
 	if(new_name)
 		target.given_name = new_name
 
