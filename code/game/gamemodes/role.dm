@@ -263,9 +263,6 @@
 
 	var/mob/M = antag.current
 
-	if(!M)
-		win = FALSE
-
 	text = printplayerwithicon(antag)
 
 	if(objectives.objectives.len > 0)
