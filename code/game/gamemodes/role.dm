@@ -261,8 +261,6 @@
 		win = FALSE
 		return text
 
-	var/mob/M = antag.current
-
 	text = printplayerwithicon(antag)
 
 	if(objectives.objectives.len > 0)
