@@ -138,6 +138,6 @@
 
 #define isblobfactory(A) istype(A, /obj/effect/blob/factory)
 
-#define isblobshield(A) istype(A, /obj/effect/blob/resource)
+#define isblobshield(A) istype(A, /obj/effect/blob/shield)
 
 #define isblobresource(A) istype(A, /obj/effect/blob/resource)
