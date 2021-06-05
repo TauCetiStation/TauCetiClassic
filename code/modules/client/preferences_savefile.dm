@@ -231,7 +231,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// When loading from savefile key_binding can be null
 	// This happens when player had savefile created before new kb system, but hotkeys was not saved
-	if(!key_bindings || !key_bindings.len)
+	if(!length(key_bindings))
 		key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
 
 	var/list/user_binds = list()
