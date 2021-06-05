@@ -1171,6 +1171,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
 
+/mob/keybind_face_direction(direction)
+	facedir(direction)
+
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0

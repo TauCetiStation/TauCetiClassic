@@ -111,7 +111,7 @@
 	for (var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name))) // list in a list because Byond merges the first list...
+			chemicals.Add(list(list("title" = temp.name, "id" = temp.id))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
 	return data
 
@@ -120,6 +120,7 @@
 		return
 	switch(action)
 		if("change_amount")
+			. = TRUE
 			var/new_amount = clamp(round(text2num(params["new_amount"])), 0, 100)
 			if(amount == new_amount)
 				return
