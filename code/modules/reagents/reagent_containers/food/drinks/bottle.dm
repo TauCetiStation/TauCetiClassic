@@ -87,13 +87,11 @@
 	show_filler_on_icon(3, 24, 0)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
-
-	if(!target)
-		return
-
 	if(user.a_intent != INTENT_HARM || !is_glass)
 		return ..()
 
+	if(!target)
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
@@ -175,8 +173,7 @@
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
-		if(reagents && reagents.total_volume)
-			src.reagents.reaction(loc, TOUCH)
+		reagents.standard_splash(loc)
 		qdel(src)
 
 
@@ -256,10 +253,10 @@
 	list_reagents = list("champagne" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
-	name = "Flask of Holy Water"
-	desc = "A flask of the chaplain's holy water."
+	name = "Holy Flask"
+	desc = "A flask of the chaplain's water."
 	icon_state = "holyflask"
-	list_reagents = list("holywater" = 100)
+	list_reagents = list("water" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"

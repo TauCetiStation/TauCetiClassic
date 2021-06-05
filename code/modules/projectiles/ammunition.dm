@@ -18,9 +18,9 @@
 	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
-	pixel_x = rand(-10.0, 10)
-	pixel_y = rand(-10.0, 10)
-	set_dir(pick(alldirs))
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+	transform = turn(transform,rand(0,360))
 	update_icon()
 
 /obj/item/ammo_casing/update_icon()
@@ -99,6 +99,16 @@
 			rb.loc = src
 			return 1
 	return 0
+
+/obj/item/ammo_box/proc/make_empty(deleting = TRUE)
+	if(deleting)
+		stored_ammo = list()
+		update_icon()
+	else
+		var/turf/T = get_turf(src)
+		for(var/obj/ammo in stored_ammo)
+			stored_ammo -= ammo
+			ammo.forceMove(T)
 
 /obj/item/ammo_box/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = 0

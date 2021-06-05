@@ -43,7 +43,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
-	message_admins("[new_ninja] has spawned at [new_ninja.x],[new_ninja.y],[new_ninja.z] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
+	message_admins("[new_ninja] has spawned at [COORD(new_ninja)] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
 
 	if(assign_mission)
 		new_ninja.mind.store_memory("<B>Mission:</B> <span class='warning'>[assign_mission].</span><br>")
@@ -91,7 +91,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	var/list/possible_bad_dudes = list(
 		current_mode.traitors,current_mode.head_revolutionaries,
 		current_mode.head_revolutionaries,
-		current_mode.cult,current_mode.wizards,
+		global.cult_religion.members,current_mode.wizards,
 		current_mode.changelings,current_mode.syndicates
 		)
 	for(var/list in possible_bad_dudes)//For every possible antagonist type.

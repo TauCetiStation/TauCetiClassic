@@ -15,3 +15,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
+
+/mob/living/simple_animal/walle/atom_init()
+	. = ..()
+	chief_animal_list += src

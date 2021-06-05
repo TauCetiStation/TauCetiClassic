@@ -81,7 +81,7 @@ var/const/INGEST = 2
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
 
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	//safety checks on these so all chemicals are transferred
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, TRUE, current_reagent.religion)	//safety checks on these so all chemicals are transferred
 		src.remove_reagent(current_reagent.id, current_reagent_transfer, safety = 1)							// to the target container before handling reactions
 
 	src.update_total()
@@ -100,7 +100,8 @@ var/const/INGEST = 2
 	if(amount > 2000) return
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
-	B.volume = 1000
+	B.volume = maximum_volume
+	B.reagents.maximum_volume = maximum_volume
 
 	var/datum/reagents/BR = B.reagents
 	var/datum/reagents/R = target.reagents
@@ -137,7 +138,7 @@ var/const/INGEST = 2
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
 			trans_data = copy_data(current_reagent)
-		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, safety = 1)	//safety check so all chemicals are transferred before reacting
+		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, TRUE, current_reagent.religion)	//safety check so all chemicals are transferred before reacting
 
 	src.update_total()
 	R.update_total()
@@ -400,7 +401,7 @@ var/const/INGEST = 2
 						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 	return
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0, datum/religion/_religion)
 	if(!isnum(amount))
 		return 1
 	if(amount < 0)
@@ -460,6 +461,7 @@ var/const/INGEST = 2
 		reagent_list += R
 		R.holder = src
 		R.volume = amount
+		R.religion = _religion
 		SetViruses(R, data) // Includes setting data
 
 		//debug
@@ -470,7 +472,7 @@ var/const/INGEST = 2
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
 
-		R.on_new(data)
+		R.on_new()
 
 		update_total()
 		if(my_atom)
@@ -616,8 +618,33 @@ var/const/INGEST = 2
 	if(icon_from_reagents)
 		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 	return D
-///////////////////////////////////////////////////////////////////////////////////
 
+/datum/reagents/proc/standard_splash(atom/target, amount=null, mob/living/user=null)
+	if(total_volume <= 0)
+		return
+
+	if(isnull(amount))
+		amount = total_volume
+
+	var/datum/reagents/splash = new()
+	splash.maximum_volume = maximum_volume
+	trans_to(splash, amount=amount)
+
+	if(!isnull(user))
+		var/turf/T = get_turf(target)
+		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([COORD(T)]) [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([COORD(T)])")
+
+		if(ismob(target))
+			var/mob/living/L = target
+			var/contained = splash.get_reagents()
+
+			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
+
+	splash.reaction(target, TOUCH)
+	splash.clear_reagents()
+
+///////////////////////////////////////////////////////////////////////////////////
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder

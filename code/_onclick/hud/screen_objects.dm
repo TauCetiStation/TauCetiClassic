@@ -90,7 +90,7 @@
 			return 1
 		// Taking something out of the storage screen (including clicking on item border overlay)
 		var/list/PM = params2list(params)
-		var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+		var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
 		var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 		var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
 
@@ -111,7 +111,7 @@
 		return
 	// Taking something out of the storage screen (including clicking on item border overlay)
 	var/list/PM = params2list(params)
-	var/list/screen_loc_params = splittext(PM["screen-loc"], ",")
+	var/list/screen_loc_params = splittext(PM[SCREEN_LOC], ",")
 	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
 	var/click_x = text2num(screen_loc_X[1])*32+text2num(screen_loc_X[2]) - 144
 
@@ -173,8 +173,8 @@
 
 /obj/screen/zone_sel/Click(location, control,params)
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 	if(!choice)
 		return 1
@@ -186,8 +186,8 @@
 
 /obj/screen/zone_sel/MouseMove(location, control, params)
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 	var/choice = get_zone_at(icon_x, icon_y)
 
 	if(hovering == choice)
@@ -482,7 +482,6 @@
 				var/mob/living/silicon/robot/R = usr
 				if(R.module)
 					R.uneq_active()
-					R.hud_used.update_robot_modules_display()
 				else
 					to_chat(R, "You haven't selected a module yet.")
 
@@ -765,6 +764,33 @@
 /obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
+
+/obj/screen/temp
+	var/mob/user
+	var/delay = 0
+
+/obj/screen/temp/atom_init(mapload, mob/M)
+	. = ..()
+	user = M
+	if(user.client)
+		user.client.screen += src
+	QDEL_IN(src, delay)
+
+/obj/screen/temp/Destroy()
+	if(user.client)
+		user.client.screen -= src
+	user = null
+	return ..()
+
+/obj/screen/temp/cult_teleportation
+	name = "crafting menu"
+	icon = 'icons/effects/bloodTP.dmi'
+	icon_state = "cult_tp"
+	screen_loc = "1,1"
+	layer = ABOVE_HUD_LAYER + 1
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	delay = 8.5
 
 /obj/screen/cooldown_overlay
 	name = ""

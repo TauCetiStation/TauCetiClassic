@@ -36,12 +36,16 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
+	// Custom Keybindings
+	var/list/key_bindings = list()
+
 	var/tooltip = TRUE
 	var/tooltip_font = "Small Fonts"
 	var/tooltip_size = 8
 
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_BLUE_LIGHT
+	var/eorg_enabled = TRUE
 
 	//TGUI
 	var/tgui_fancy = TRUE
@@ -158,6 +162,8 @@ var/const/MAX_SAVE_SLOTS = 10
 					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender)
+	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key) // give them default keybinds too
+	C?.set_macros()
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
@@ -168,8 +174,10 @@ var/const/MAX_SAVE_SLOTS = 10
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
 	dat += "<style type='text/css'>a.white:hover{background: #dddddd}</style>"
-	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;}</style>"
-	dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
+	dat += "<style type='text/css'>a.disabled{background:#999999!important;text-decoration: none;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
+	dat += "<style type='text/css'>a.fluid{display:block;margin-left:0;margin-right:0;text-align:center;}</style>"
+	dat += "<style>body{background-image:url('dossier_empty.png');background-color: #F5ECDD;background-repeat:no-repeat;background-position:center top;background-attachment: fixed;}</style>"
+	dat += "<style>.main_menu{margin-left:150px;margin-top:135px;}</style>"
 
 	if(path)
 		dat += "<div class='main_menu'>"
@@ -183,7 +191,8 @@ var/const/MAX_SAVE_SLOTS = 10
 		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
 		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"] - "
 		dat += "[menu_type=="quirks"?"<b>Quirks</b>":"<a href=\"byond://?src=\ref[user];preference=quirks\">Quirks</a>"] - "
-		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"]"
+		dat += "[menu_type=="fluff"?"<b>Fluff</b>":"<a href=\"byond://?src=\ref[user];preference=fluff\">Fluff</a>"] - "
+		dat += "[menu_type=="custom_keybindings"?"<b>Custom Keybindings</b>":"<a href=\"byond://?src=\ref[user];preference=custom_keybindings\">Custom Keybindings</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -207,7 +216,8 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += ShowQuirks(user)
 		if("fluff")
 			dat += ShowFluffMenu(user)
-
+		if("custom_keybindings")
+			dat += ShowCustomKeybindings(user)
 	dat += "</body></html>"
 
 	winshow(user, "preferences_window", TRUE)
@@ -260,6 +270,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("fluff")
 			menu_type = "fluff"
 
+		if("custom_keybindings")
+			menu_type = "custom_keybindings"
+
 		if("load_slot")
 			if(!IsGuestKey(user.key))
 				menu_type = "load_slot"
@@ -290,6 +303,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("fluff")
 			process_link_fluff(user, href_list)
 			return 1
+
+		if("custom_keybindings")
+			process_link_custom_keybindings(user, href_list)
 
 	ShowChoices(user)
 	return 1

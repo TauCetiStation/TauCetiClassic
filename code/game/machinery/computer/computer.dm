@@ -225,18 +225,8 @@
 	if(istype(user, /mob/living/carbon/xenomorph/humanoid/queen))
 		attack_hand(user)
 		return
-	if(circuit)
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(prob(80))
-			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with \his claws.</span>",
-			"<span class='danger'>You smash the [src.name] with your claws.</span>",
-			"<span class='danger'>You hear a smashing sound.</span>")
-			set_broken()
-			return
-	user.visible_message("<span class='danger'>[user.name] smashes against the [src.name] with \his claws.</span>",
-	"<span class='danger'>You smash against the [src.name] with your claws.</span>",
-	"<span class='danger'>You hear a clicking sound.</span>")
+	else
+		to_chat(user, "You don't want to break these thing")
 
 /obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hulk))

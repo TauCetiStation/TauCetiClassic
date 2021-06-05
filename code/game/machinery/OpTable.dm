@@ -73,7 +73,9 @@
 
 
 /obj/machinery/optable/MouseDrop_T(atom/A, mob/user)
-	if (iscarbon(A) && (iscarbon(user) || isrobot(user)))
+	if(user.incapacitated())
+		return
+	if (iscarbon(A) && isturf(user.loc) && user.IsAdvancedToolUser())
 		var/mob/living/carbon/M = A
 		if (M.buckled)
 			M.buckled.user_unbuckle_mob(user)
@@ -97,9 +99,9 @@
 
 /obj/machinery/optable/proc/take_victim(mob/living/carbon/C, mob/living/carbon/user)
 	if (C == user)
-		user.visible_message("<span class='rose'>[user] climbs on the operating table.</span>","<span class='notice'>You climb on the operating table.</span>")
+		user.visible_message("<span class='rose'>[user] climbs on [src].</span>","<span class='notice'>You climb on [src].</span>")
 	else
-		visible_message("<span class='notice'>[C] has been laid on the operating table by [user].</span>")
+		visible_message("<span class='notice'>[C] has been laid on [src] by [user].</span>")
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src

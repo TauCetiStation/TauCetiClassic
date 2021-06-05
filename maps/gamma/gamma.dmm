@@ -2256,9 +2256,6 @@
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
 /area/station/civilian/gym)
 "adG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2368,11 +2365,6 @@
 	icon_state = "siding1"
 	},
 /area/station/civilian/chapel)
-"adO" = (
-/obj/structure/lattice,
-/turf/space,
-/turf/space,
-/area/space)
 "adP" = (
 /turf/simulated/floor/engine/vacuum,
 /turf/simulated/floor{
@@ -2424,16 +2416,6 @@
 	icon_state = "warningline"
 	},
 /area/station/rnd/test_area)
-"adV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
 "adW" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -2489,9 +2471,6 @@
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -23
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -2564,9 +2543,6 @@
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
 /area/station/civilian/gym)
 "aeh" = (
 /obj/machinery/light{
@@ -2588,17 +2564,6 @@
 /obj/decal/boxingrope{
 	density = 0;
 	dir = 8
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/turf/simulated/floor{
-	icon_state = "wooden-2"
-	},
-/area/station/civilian/gym)
-"aek" = (
-/turf/simulated/floor{
-	icon_state = "wooden-2"
 	},
 /turf/simulated/floor{
 	icon_state = "wooden-2"
@@ -59487,6 +59452,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/weapon/airlock_painter,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
@@ -70954,10 +70920,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "vqj" = (
@@ -72041,8 +72007,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "vER" = (
-/mob/living/simple_animal/mouse,
 /obj/effect/spawner/lootdrop/maintenance/two,
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "vFg" = (
@@ -74499,6 +74465,10 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
+"wov" = (
+/mob/living/carbon/monkey,
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "woF" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
@@ -76177,6 +76147,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/item/weapon/storage/lockbox/anti_singulo,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -105692,7 +105663,7 @@ cMb
 jsq
 uKj
 iis
-aek
+uwW
 uwW
 oVH
 oaj
@@ -105949,7 +105920,7 @@ wos
 eTe
 sPU
 cBS
-adV
+qUE
 qUE
 eAA
 oaj
@@ -106206,7 +106177,7 @@ baG
 bxt
 kSN
 iis
-aek
+uwW
 uwW
 ntv
 fKi
@@ -106467,7 +106438,7 @@ adF
 uwW
 uwW
 uwW
-aek
+uwW
 bbY
 jFz
 ogg
@@ -106721,9 +106692,9 @@ gQM
 qlD
 qcV
 uwW
-aek
-aek
-aek
+uwW
+uwW
+uwW
 uwW
 uwW
 uwW
@@ -123961,7 +123932,7 @@ afi
 vNi
 pkz
 pkz
-pkz
+wov
 vNi
 kHU
 plf
@@ -124216,9 +124187,9 @@ nKo
 afz
 xzl
 eTL
-pkz
-pkz
-pkz
+wov
+wov
+wov
 vNi
 kHU
 plf
@@ -124475,7 +124446,7 @@ jdG
 vNi
 ujB
 pkz
-pkz
+wov
 vNi
 kHU
 plf
@@ -134475,9 +134446,9 @@ qLb
 jWs
 tzH
 kHU
-adO
+kHU
 plf
-adO
+kHU
 kHU
 tzH
 vwn

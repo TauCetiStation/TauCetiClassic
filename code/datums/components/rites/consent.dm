@@ -16,10 +16,10 @@
 	consent = def_consent
 
 	RegisterSignal(parent, list(COMSIG_RITE_ON_CHOSEN), .proc/victim_ask)
-	RegisterSignal(parent, list(COMSIG_RITE_REQUIRED_CHECK), .proc/check_victim)
+	RegisterSignal(parent, list(COMSIG_RITE_CAN_START), .proc/check_victim)
 
 // Send ask to victim
-/datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/consent/proc/victim_ask(datum/source, mob/user, obj/AOG)
 	// revert consent to it's default
 	consent = def_consent
 
@@ -27,23 +27,22 @@
 	if(!victim)
 		return
 
-	if(!victim.IsAdvancedToolUser())
+	if(tgui_alert(victim, consent_msg, "Rite", list("Yes", "No")) == "Yes")
 		consent = TRUE
-	else
-		if(alert(victim, consent_msg, "Rite", "Yes", "No") == "Yes")
-			consent = TRUE
-			to_chat(victim, "<span class='notice'>You agreed to the rite.</span>")
+		to_chat(victim, "<span class='notice'>Вы согласились на ритуал.</span>")
 
 // Checks for a victim
-/datum/component/rite/consent/proc/check_victim(datum/source, mob/user, obj/structure/altar_of_gods/AOG)
+/datum/component/rite/consent/proc/check_victim(datum/source, mob/user, obj/AOG)
 	if(!AOG)
-		to_chat(user, "<span class='warning'>This rite requires an altar to be performed.</span>")
+		to_chat(user, "<span class='warning'>Требуется алтарь для проведения ритуала.</span>")
 		return COMPONENT_CHECK_FAILED
 	if(!AOG.buckled_mob)
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [AOG].</span>")
+		to_chat(user, "<span class='warning'>Требуется прикрепить жертву к алтарю.</span>")
+		return COMPONENT_CHECK_FAILED
+	if(AOG.buckled_mob.mind && !AOG.buckled_mob.client)
+		to_chat(user, "<span class='warning'>Требуется сознательная жертва на алтаре.</span>")
 		return COMPONENT_CHECK_FAILED
 	if(!consent)
-		var/mob/victim = AOG.buckled_mob
-		to_chat(user, "<span class='warning'>[victim] does not want to give themselves into this ritual!.</span>")
+		to_chat(user, "<span class='warning'>Жертва решила не давать согласие на проведение ритуала!</span>")
 		return COMPONENT_CHECK_FAILED
 	return NONE

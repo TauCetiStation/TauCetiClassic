@@ -76,7 +76,7 @@ var/const/HOLOPAD_MODE = 0
 	if(!ishuman(user) && !IsAdminGhost(user))
 		return 1
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
+	if(tgui_alert(user, "Would you like to request an AI's presence?",, list("Yes","No")) == "Yes")
 		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
 			last_request = world.time
 			to_chat(user, "<span class='notice'>You request an AI's presence.</span>")

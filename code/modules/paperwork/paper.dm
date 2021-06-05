@@ -48,8 +48,6 @@
 	updateinfolinks()
 
 /obj/item/weapon/paper/update_icon()
-	if(icon_state == "scrap_bloodied")
-		return
 	if(info)
 		icon_state = "paper_words"
 		return
@@ -393,7 +391,7 @@
 
 		var/t = ""
 		if(href_list["sign"])
-			if(alert("Are you sure you want to sign this paper?",,"Yes","No") == "No")
+			if(tgui_alert(usr, "Are you sure you want to sign this paper?",, list("Yes","No")) == "No")
 				return
 			t = "\[sign\] "
 		else

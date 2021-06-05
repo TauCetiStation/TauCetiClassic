@@ -7,7 +7,7 @@
 	if(IAN.stat)
 		return
 
-	switch(alert("Do you want to lick or sniff something?",,"Nothing","Tongue","Nose"))
+	switch(tgui_alert(usr, "Do you want to lick or sniff something?",, list("Nothing","Tongue","Nose")))
 		if("Nothing")
 			if(IAN.ian_action == IAN_STANDARD) // Do nothing, if we already using this mode.
 				return
@@ -41,8 +41,8 @@
 		return
 
 	var/list/PL = params2list(params)
-	var/icon_x = text2num(PL["icon-x"])
-	var/icon_y = text2num(PL["icon-y"])
+	var/icon_x = text2num(PL[ICON_X])
+	var/icon_y = text2num(PL[ICON_Y])
 
 	switch(icon_x)
 		if(4 to 29)
