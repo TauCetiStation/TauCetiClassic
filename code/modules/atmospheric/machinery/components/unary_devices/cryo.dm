@@ -149,7 +149,7 @@
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
-	set name = "Begin the release sequence inside the cryo tube."
+	set name = "Eject Cryo Cell."
 	set desc = "Начать процедуру открытия криогенной камеры."
 	set category = "Object"
 	set src in oview(1)
