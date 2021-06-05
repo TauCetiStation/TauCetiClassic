@@ -154,7 +154,7 @@
 	for(var/mob/dead/observer/G in player_list)
 		if(!jobban_isbanned(G, ROLE_WIZARD) && !jobban_isbanned(G, "Syndicate") && !role_available_in_minutes(G, ROLE_WIZARD))
 			spawn(0)
-				switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+				switch(tgui_alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!", list("Yes","No")))
 					if("Yes")
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
@@ -222,7 +222,7 @@
 	for(var/mob/dead/observer/G in player_list)
 		if(!jobban_isbanned(G, ROLE_OPERATIVE) && !jobban_isbanned(G, "Syndicate") && !role_available_in_minutes(G, ROLE_OPERATIVE))
 			spawn(0)
-				switch(alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!","Yes","No"))
+				switch(tgui_alert(G,"Do you wish to be considered for a nuke team being sent in?","Please answer in 30 seconds!", list("Yes","No")))
 					if("Yes")
 						if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 							return
@@ -299,7 +299,7 @@
 	//Generates a list of commandos from active ghosts. Then the user picks which characters to respawn as the commandos.
 	for(var/mob/dead/observer/G in player_list)
 		spawn(0)
-			switch(alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!","Yes","No"))
+			switch(tgui_alert(G,"Do you wish to be considered for an elite syndicate strike team being sent in?","Please answer in 30 seconds!", list("Yes","No")))
 				if("Yes")
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 						return
@@ -416,7 +416,7 @@
 	//Generates a list of candidates from active ghosts.
 	for(var/mob/dead/observer/G in player_list)
 		spawn(0)
-			switch(alert(G,"Do you wish to be considered for a vox raiding party arriving on the station?","Please answer in 30 seconds!","Yes","No"))
+			switch(tgui_alert(G,"Do you wish to be considered for a vox raiding party arriving on the station?","Please answer in 30 seconds!", list("Yes","No")))
 				if("Yes")
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 						return
@@ -520,7 +520,7 @@
 
 	for(var/mob/dead/observer/G in player_list)
 		spawn(0)
-			switch(alert(G,"Do you wish to be considered for Abductor Team?","Please answer in 30 seconds!","Yes","No"))
+			switch(tgui_alert(G,"Do you wish to be considered for Abductor Team?","Please answer in 30 seconds!", list("Yes","No")))
 				if("Yes")
 					if((world.time-time_passed)>300)//If more than 30 game seconds passed.
 						return

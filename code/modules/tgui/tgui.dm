@@ -49,7 +49,7 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
-	log_tgui(user, "new [interface] fancy [user.client.prefs.tgui_fancy]")
+	log_tgui(user, "new [interface] fancy [user.client?.prefs.tgui_fancy]")
 	src.user = user
 	src.src_object = src_object
 	src.window_key = "\ref[src_object]-main"

@@ -265,7 +265,7 @@ var/global/list/frozen_items = list()
 		user.SetNextMove(CLICK_CD_MELEE)
 
 		if(M.client)
-			if(alert(M,"Would you like to enter cryosleep?",,"Yes","No") == "Yes")
+			if(tgui_alert(M,"Would you like to enter cryosleep?",, list("Yes","No")) == "Yes")
 				if(!M || !grab || !grab.affecting)
 					return
 				willing = TRUE

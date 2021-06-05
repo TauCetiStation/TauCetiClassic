@@ -8,7 +8,7 @@
 	return attack_hand(user)
 
 /obj/structure/signpost/attack_hand(mob/user)
-	switch(alert("Travel back to ss13?",,"Yes","No"))
+	switch(tgui_alert(usr, "Travel back to ss13?",, list("Yes","No")))
 		if("Yes")
 			if(user.z != src.z)
 				return
