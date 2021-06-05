@@ -7,7 +7,7 @@
 	if(IAN.stat)
 		return
 
-	switch(alert("Do you want to lick or sniff something?",,"Nothing","Tongue","Nose"))
+	switch(tgui_alert(usr, "Do you want to lick or sniff something?",, list("Nothing","Tongue","Nose")))
 		if("Nothing")
 			if(IAN.ian_action == IAN_STANDARD) // Do nothing, if we already using this mode.
 				return

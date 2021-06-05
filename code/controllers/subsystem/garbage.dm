@@ -331,7 +331,7 @@ SUBSYSTEM_DEF(garbage)
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+		if(tgui_alert(usr, "Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", list("Yes", "No")) == "No")
 			running_find_references = null
 			return
 

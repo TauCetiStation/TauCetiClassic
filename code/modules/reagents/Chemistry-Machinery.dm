@@ -53,7 +53,6 @@
 		spawn(rand(0, 15))
 			stat |= NOPOWER
 			update_power_use()
-	nanomanager.update_uis(src) // update all UIs attached to src
 	update_power_use()
 
 /obj/machinery/chem_dispenser/process()
@@ -76,31 +75,26 @@
 /obj/machinery/chem_dispenser/blob_act()
 	if (prob(50))
 		qdel(src)
+		
+/obj/machinery/chem_dispenser/ui_interact(mob/user)
+	tgui_interact(user)
 
- /**
-  * The ui_interact proc is used to open and update Nano UIs
-  * If ui_interact is not used then the UI will not update correctly
-  * ui_interact is currently defined for /atom/movable
-  *
-  * @param user /mob The mob who is interacting with this ui
-  * @param ui_key string A string key to use for this ui. Allows for multiple unique uis on one obj/mob (defaut value "main")
-  *
-  * @return nothing
-  */
-/obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main",datum/nanoui/ui = null)
-	if(stat & (BROKEN|NOPOWER)) return
-	if((user.stat && !isobserver(user)) || user.restrained()) return
+/obj/machinery/chem_dispenser/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ChemDispenser", ui_title)
+		ui.open()
 
-	// this is the data which will be sent to the ui
-	var/data[0]
+/obj/machinery/chem_dispenser/tgui_data(mob/user)
+	var/list/data = list()
 	data["amount"] = amount
 	data["energy"] = energy
 	data["maxEnergy"] = max_energy
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	data["glass"] = accept_glass
-	var/beakerContents[0]
+	var/list/beakerContents = list()
 	var/beakerCurrentVolume = 0
-	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+	if(beaker?.reagents?.reagent_list.len)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 			beakerCurrentVolume += R.volume
@@ -113,40 +107,35 @@
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
 
-	var/chemicals[0]
+	var/list/chemicals = list()
 	for (var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
-			chemicals.Add(list(list("title" = temp.name, "id" = temp.id, "commands" = list("dispense" = temp.id)))) // list in a list because Byond merges the first list...
+			chemicals.Add(list(list("title" = temp.name, "id" = temp.id))) // list in a list because Byond merges the first list...
 	data["chemicals"] = chemicals
+	return data
 
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "chem_dispenser.tmpl", ui_title, 380, 650)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
-
-/obj/machinery/chem_dispenser/Topic(href, href_list)
-	. = ..()
-	if(!.)
+/obj/machinery/chem_dispenser/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	if(..())
 		return
+	switch(action)
+		if("change_amount")
+			. = TRUE
+			var/new_amount = clamp(round(text2num(params["new_amount"])), 0, 100)
+			if(amount == new_amount)
+				return
 
-	if(href_list["amount"])
-		amount = round(text2num(href_list["amount"]), 5) // round to nearest 5
-		amount = clamp(amount, 0, 100) // Since the user can actually type the commands himself, some sanity checking
+			amount = new_amount
 
-		if(iscarbon(usr))
-			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
-
-	if(href_list["dispense"])
-		if (dispensable_reagents.Find(href_list["dispense"]) && beaker != null)
-			var/obj/item/weapon/reagent_containers/B = src.beaker
-			var/datum/reagents/R = B.reagents
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+			
+		if("dispense")
+			. = TRUE
+			if (!beaker || !dispensable_reagents.Find(params["chemical"]))
+				return
+			
+			var/datum/reagents/R = beaker.reagents
 			var/space = R.maximum_volume - R.total_volume
 
 			if(iscarbon(usr))
@@ -155,20 +144,21 @@
 			if ((space > 0) && (energy * 10 >= min(amount, space)))
 				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
 
-			R.add_reagent(href_list["dispense"], min(amount, energy * 10, space))
+			R.add_reagent(params["chemical"], min(amount, energy * 10, space))
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
+		
+		if("eject_beaker")
+			. = TRUE
+			if(!beaker)
+				return
 
-	if(href_list["ejectBeaker"])
-		if(beaker)
-			var/obj/item/weapon/reagent_containers/B = beaker
-			B.loc = loc
+			beaker.forceMove(loc)
 			beaker = null
 
 			if(iscarbon(usr))
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
-
 
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
@@ -203,7 +193,6 @@
 		B.loc = src
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
-		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
 /obj/machinery/chem_dispenser/old/atom_init()

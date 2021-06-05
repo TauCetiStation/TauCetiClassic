@@ -50,7 +50,7 @@
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
 	else if(iswrench(I))
-		if(alert(user,"How do you want to use [I]?","You think...","Unfasten","Cook") == "Unfasten")
+		if(tgui_alert(user, "How do you want to use [I]?","You think...", list("Unfasten","Cook")) == "Unfasten")
 			default_unfasten_wrench(user, I)
 			return
 	if (ishuman(user) && !(I.flags & DROPDEL))
