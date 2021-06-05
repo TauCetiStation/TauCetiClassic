@@ -10,8 +10,10 @@ var/global/bridge_ooc_colour = "#7b804f"
 		to_chat(usr, "<span class='red'>Speech is currently admin-disabled.</span>")
 		return
 
-	if(!mob || !msg)
+	if(!mob)
 		return
+
+	msg = sanitize(msg)
 
 	if(!msg)	return
 
