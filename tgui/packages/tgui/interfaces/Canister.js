@@ -23,7 +23,9 @@ export const Canister = (props, context) => {
   return (
     <Window
       width={300}
-      height={232}>
+      height={232}
+      minWidth={300}
+      minHeight={210}>
       <Window.Content>
         <Section
           title={name}

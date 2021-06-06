@@ -7,11 +7,15 @@ export const Wires = (props, context) => {
   const { act, data } = useBackend(context);
   const wires = data.wires || [];
   const statuses = data.status || [];
+  const minHeight = 30 + wires.length * 25;
+  const height = minHeight
+  + (statuses.length > 0 ? 45 : 0) + statuses.length * 12;
   return (
     <Window
       width={350}
-      height={45 + wires.length * 25
-        + (statuses.length > 0 ? 35 : 0) + statuses.length * 12}>
+      height={height}
+      minWidth={270}
+      minHeight={minHeight}>
       <Window.Content>
         <Section>
           <LabeledList>

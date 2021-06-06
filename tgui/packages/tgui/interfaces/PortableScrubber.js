@@ -15,7 +15,9 @@ export const PortableScrubber = (props, context) => {
   return (
     <Window
       width={300}
-      height={405}>
+      height={405}
+      minWidth={190}
+      minHeight={405}>
       <Window.Content>
         <PortableBasicInfo />
         <Section title="Scrubber">

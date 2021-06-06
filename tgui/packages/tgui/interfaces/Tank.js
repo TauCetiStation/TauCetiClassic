@@ -6,8 +6,10 @@ export const Tank = (props, context) => {
   const { act, data } = useBackend(context);
   return (
     <Window
-      width={400}
-      height={120}>
+      width={317}
+      height={110}
+      minWidth={220}
+      minHeight={100}>
       <Window.Content>
         <Section>
           <LabeledList>

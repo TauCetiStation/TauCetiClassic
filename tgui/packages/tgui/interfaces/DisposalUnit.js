@@ -25,7 +25,9 @@ export const DisposalUnit = (props, context) => {
   return (
     <Window
       width={300}
-      height={180}>
+      height={180}
+      minWidth={210}
+      minHeight={205}>
       <Window.Content>
         <Section>
           <LabeledList>

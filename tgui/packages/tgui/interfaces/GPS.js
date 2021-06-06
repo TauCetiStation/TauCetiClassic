@@ -33,7 +33,8 @@ export const GPS = (properties, context) => {
     saved,
   } = data;
   return (
-    <Window>
+    <Window
+      minHeight={305}>
       <Window.Content>
         <Flex direction="column" height="100%">
           {emped ? (

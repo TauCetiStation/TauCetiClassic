@@ -8,8 +8,13 @@ export const Lootcrate = (props, context) => {
     code,
     buttons_pressed,
   } = data;
-  return (
-    <Window width={235} height={140} theme="ntos">
+  return ( // TODO: what the fuck is this mess
+    <Window
+      width={235}
+      height={140}
+      theme="ntos"
+      minWidth={235}
+      minHeight={140}>
       <Window.Content>
         <Section>
           <LabeledList>
