@@ -51,7 +51,7 @@ var/list/GPS_list = list()
 	addtimer(CALLBACK(src, .proc/reboot), EMP_DISABLE_TIME)
 
 /obj/item/device/gps/AltClick(mob/user)
-	if(tgui_status(user, global.inventory_state) != STATUS_INTERACTIVE)
+	if(tgui_status(user, global.tgui_default_state) != UI_INTERACTIVE)
 		return //user not valid to use gps
 	if(emped)
 		to_chat(user, "<span class='warning'>It's busted!</span>")
