@@ -107,7 +107,8 @@ export const recallWindowGeometry = async (options = {}) => {
     logger.log('recalled geometry:', geometry);
   }
   let pos = geometry?.pos || options.pos;
-  let size = options.size;
+  let size = geometry?.size || options.size;
+  let minSize = options.minSize;
   // Wait until screen offset gets resolved
   await screenOffsetPromise;
   const areaAvailable = [
@@ -118,8 +119,8 @@ export const recallWindowGeometry = async (options = {}) => {
   if (size) {
     // Constraint size to not exceed available screen area.
     size = [
-      Math.min(areaAvailable[0], size[0]),
-      Math.min(areaAvailable[1], size[1]),
+      Math.max(Math.min(areaAvailable[0], size[0]), minSize[0]),
+      Math.max(Math.min(areaAvailable[1], size[1]), minSize[1]),
     ];
     setWindowSize(size);
   }
@@ -210,7 +211,7 @@ const dragMoveHandler = event => {
     dragPointOffset));
 };
 
-export const resizeStartHandler = (x, y) => event => {
+export const resizeStartHandler = (x, y, minSize) => event => {
   resizeMatrix = [x, y];
   logger.log('resize start', resizeMatrix);
   resizing = true;
@@ -224,6 +225,8 @@ export const resizeStartHandler = (x, y) => event => {
   ];
   // Focus click target
   event.target?.focus();
+  document.minSize = minSize; // we can't pass arguments to handlers
+  event.target.minSize = minSize; // so we store them here
   document.addEventListener('mousemove', resizeMoveHandler);
   document.addEventListener('mouseup', resizeEndHandler);
   resizeMoveHandler(event);
@@ -249,7 +252,8 @@ const resizeMoveHandler = event => {
     dragPointOffset,
     [1, 1])));
   // Sane window size values
-  size[0] = Math.max(size[0], 150);
-  size[1] = Math.max(size[1], 50);
+  const minSize = event.currentTarget.minSize || event.target.minSize;
+  size[0] = Math.max(size[0], minSize[0]);
+  size[1] = Math.max(size[1], minSize[1]);
   setWindowSize(size);
 };

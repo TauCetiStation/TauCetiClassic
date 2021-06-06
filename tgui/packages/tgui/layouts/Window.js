@@ -14,11 +14,12 @@ import { toggleKitchenSink, useDebug } from '../debug';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { createLogger } from '../logging';
 import { useDispatch } from '../store';
-import { Layout, refocusLayout } from './Layout';
+import { Layout } from './Layout';
 
 const logger = createLogger('Window');
 
 const DEFAULT_SIZE = [400, 600];
+const DEFAULT_MIN_SIZE = [150, 50];
 
 export class Window extends Component {
   componentDidMount() {
@@ -44,10 +45,19 @@ export class Window extends Component {
     const { config } = useBackend(this.context);
     const options = {
       size: DEFAULT_SIZE,
+      minSize: DEFAULT_MIN_SIZE,
       ...config.window,
     };
     if (this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
+    }
+    if (this.props.minWidth) {
+      options.size[0] = Math.max(options.size[0], this.props.minWidth);
+      options.minSize[0] = this.props.minWidth;
+    }
+    if (this.props.minHeight) {
+      options.size[1] = Math.max(options.size[1], this.props.minHeight);
+      options.minSize[1] = this.props.minHeight;
     }
     if (config.window?.key) {
       setWindowKey(config.window.key);
@@ -72,6 +82,10 @@ export class Window extends Component {
     const showDimmer = config.user.observer
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE;
+    const minSize = [
+      this.props.minWidth || DEFAULT_MIN_SIZE[0], 
+      this.props.minHeight || DEFAULT_MIN_SIZE[1],
+    ];
     return (
       <Layout
         className="Window"
@@ -99,11 +113,11 @@ export class Window extends Component {
         {fancy && (
           <Fragment>
             <div className="Window__resizeHandle__e"
-              onMousedown={resizeStartHandler(1, 0)} />
+              onMousedown={resizeStartHandler(1, 0, minSize)} />
             <div className="Window__resizeHandle__s"
-              onMousedown={resizeStartHandler(0, 1)} />
+              onMousedown={resizeStartHandler(0, 1, minSize)} />
             <div className="Window__resizeHandle__se"
-              onMousedown={resizeStartHandler(1, 1)} />
+              onMousedown={resizeStartHandler(1, 1, minSize)} />
           </Fragment>
         )}
       </Layout>

@@ -981,8 +981,10 @@ Example:
 - `theme: string` - A name of the theme.
   - For a list of themes, see `packages/tgui/styles/themes`.
 - `title: string` - Window title.
-- `width: number` - Window width.
-- `height: number` - Window height.
+- `width: number` - Window width. Defaults to backend value or 400.
+- `height: number` - Window height. Defaults to backend value or 600.
+- `minWidth: number` - Minimal window width when resizing it. Defaults to 150. Note: on initial render the width value will still be max(width, minWidth).
+- `minHeight: number` - Minimal window height when resizing it. Defaults to 50. Note: on initial render the height value will still be max(height, minHeight).
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,
 they should be put as direct childs of a Window, otherwise you should be
