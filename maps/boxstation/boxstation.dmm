@@ -1398,10 +1398,12 @@
 	c_tag = "Security Substation";
 	network = list("SS13","Security")
 	},
-/obj/machinery/power/terminal,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/smes{
+	chargemode = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -3485,13 +3487,12 @@
 	},
 /area/station/security/brig)
 "afM" = (
-/obj/machinery/power/smes{
-	chargemode = 1;
-	dir = 1
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/power/terminal{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
