@@ -41,22 +41,19 @@
 	if(!isrobot(loc))
 		return
 
-	var/mob/living/silicon/robot/R = src.loc
+	var/mob/living/silicon/robot/R = loc
 	if(!(R && R.cell))
 		return
 
 	for(var/datum/reagents/charge_reagent in reagent_list)
 		var/datum/reagents/RG = reagent_list[reagent_to_recharge]
-		if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
-			R.cell.use(charge_cost) 					//Take power from borg...
-			RG.add_reagent(reagent_ids[reagent_to_recharge], 5)		//And fill hypo with reagent.
-			reagent_to_recharge++
-			if(reagent_to_recharge > reagent_list.len)
-				reagent_to_recharge = 1
-			break
 		reagent_to_recharge++
 		if(reagent_to_recharge > reagent_list.len)
 			reagent_to_recharge = 1
+		if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
+			R.cell.use(charge_cost) 					//Take power from borg...
+			RG.add_reagent(reagent_ids[reagent_to_recharge], 5)		//And fill hypo with reagent.
+			break
 	//update_icon()
 	return 1
 
