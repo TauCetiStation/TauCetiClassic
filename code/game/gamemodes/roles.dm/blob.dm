@@ -49,11 +49,6 @@
 	var/client/blob_client = null
 	var/turf/location = null
 
-	if (faction)
-		var/datum/faction/blob_conglomerate/the_bleb = faction
-		if(istype(the_bleb))
-			the_bleb.declared = TRUE
-
 	if(iscarbon(antag.current))
 		var/mob/living/carbon/C = antag.current
 		if(directory[ckey(antag.key)])

@@ -115,6 +115,8 @@ var/global/list/blob_nodes = list()
 			conglomerate.forgeObjectives()
 			add_faction_member(conglomerate, B, FALSE)
 
+	conglomerate.declared = TRUE
+
 	B.b_congl = conglomerate
 
 	if(icon_state == "cerebrate")
