@@ -931,7 +931,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(H.species.flags[NO_PAIN])
 			return
 		H.shock_stage = max(H.shock_stage + amount, 0)
-		return
 
 // =============================
 
