@@ -1176,7 +1176,7 @@ var/list/airlock_overlays = list()
 	for(var/i in 1 to severity)
 		if(!prob(50 / severity))
 			continue
-		var/wire = 1 << rand(0, wires.wire_count)
+		var/wire = 1 << rand(0, wires.wire_count - 1)
 		wires.pulse_index(wire)
 
 /obj/structure/door_scrap
