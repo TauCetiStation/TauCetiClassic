@@ -2,6 +2,8 @@
 	set category = "IC"
 	set name = "Give"
 
+	if(!M)
+		return
 
 	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
