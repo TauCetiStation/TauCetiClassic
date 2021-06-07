@@ -86,9 +86,11 @@
 			H = locate() in S.accessories
 	return H
 
-/mob/living/carbon/human/proc/holster_weapon(obj/item/clothing/accessory/holster/my_holster)
+/mob/living/carbon/human/proc/holster_weapon()
+	var/obj/item/clothing/accessory/holster/my_holster = get_holster()
 	if(!my_holster)
-		my_holster = get_holster()
+		return
+
 	if(!my_holster.holstered)
 		var/obj/item/weapon/gun/W = get_active_hand()
 		if(!istype(W, /obj/item/weapon/gun))
@@ -109,20 +111,8 @@
 	if(usr.incapacitated())
 		return
 
-	var/obj/item/clothing/accessory/holster/H
-	if(istype(src, /obj/item/clothing/accessory/holster))
-		H = src
-	else if(istype(src, /obj/item/clothing/under))
-		var/obj/item/clothing/under/S = src
-		if(S.accessories.len)
-			H = locate() in S.accessories
-
-	if(!H)
-		to_chat(usr, "<span class='warning'>Something is very wrong.</span>")
-		return
-
 	var/mob/living/carbon/human/human = usr
-	human.holster_weapon(H)
+	human.holster_weapon()
 
 /obj/item/clothing/accessory/holster/armpit
 	name = "shoulder holster"

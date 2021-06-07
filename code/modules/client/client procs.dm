@@ -724,7 +724,7 @@ var/list/blacklisted_builds = list(
 				if("South")
 					movement_keys[key] = SOUTH
 				if("Say")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=say")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
 				if("OOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
 				if("Me")
