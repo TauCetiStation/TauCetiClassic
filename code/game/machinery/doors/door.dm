@@ -194,15 +194,16 @@
 
 
 /obj/machinery/door/emp_act(severity)
-	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		open()
-	if(prob(40/severity))
-		if(secondsElectrified == 0)
-			secondsElectrified = -1
-			diag_hud_set_electrified()
-			spawn(300)
-				secondsElectrified = 0
+	if(istype(src,/obj/machinery/door/window))
+		if(prob(20/severity))
+			open()
+		if(prob(40/severity))
+			if(secondsElectrified == 0)
+				secondsElectrified = -1
 				diag_hud_set_electrified()
+				spawn(300)
+					secondsElectrified = 0
+					diag_hud_set_electrified()
 	..()
 
 
