@@ -226,7 +226,7 @@
 		var/mob/living/carbon/human/H = target
 		if(H.species.flags[NO_BLOOD])
 			return
-		H.weakened = 10
+		H.Weaken(10)
 
 /obj/item/projectile/acid_special
 	name = "acid"
