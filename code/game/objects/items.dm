@@ -435,7 +435,7 @@
 		. = callback.Invoke()
 
 /obj/item/proc/talk_into(mob/M, text)
-	return
+	return FALSE
 
 /obj/item/proc/moved(mob/user, old_loc)
 	return
