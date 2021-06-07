@@ -1174,7 +1174,7 @@ var/list/airlock_overlays = list()
 	if(!wires)
 		return
 	for(var/i in 1 to severity)
-		if(!prob(50/severity))
+		if(!prob(50 / severity))
 			continue
 		var/wire = 1 << rand(0, wires.wire_count)
 		wires.pulse_index(wire)
