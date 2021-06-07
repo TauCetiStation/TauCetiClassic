@@ -170,6 +170,7 @@ function run_code_tests {
     run_test_fail "no invalid spans" "grep -REnr --include='*.dm' \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" code/"
     run_test_fail "code contains path as string \"/path/\"" "grep -P '\"/(obj|datum|atom|turf|area|mob)/[^\[\s\(]*\"' code/**/*.dm"
     run_test_fail "changed files contains proc argument starting with 'var'" "grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm"
+    run_test_fail "code contains alert(). Use tgui_alert() instead" "grep -RPnr '[ =\t\(,\|&]alert\(' code/**/*.dm"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."

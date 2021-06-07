@@ -95,7 +95,7 @@
 					return
 				m_type = SHOWMSG_AUDIO
 			else
-				alert("Unable to use this emote, must be either hearable or visible.")
+				tgui_alert(usr, "Unable to use this emote, must be either hearable or visible.")
 				return
 			return custom_emote(m_type, message)
 		if ("me")

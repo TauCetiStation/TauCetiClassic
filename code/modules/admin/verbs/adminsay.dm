@@ -20,3 +20,7 @@
 			to_chat(C, msg)
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/get_admin_say()
+	var/msg = input(src, null, "asay \"text\"") as text|null
+	cmd_admin_say(msg)

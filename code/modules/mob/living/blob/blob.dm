@@ -229,7 +229,7 @@
 				break
 
 	if(!G_found)//If a ghost was not found.
-		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
+		tgui_alert(usr, "There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
 		return
 
 	if(G_found.client)

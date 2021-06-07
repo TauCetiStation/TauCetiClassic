@@ -23,7 +23,7 @@
 		title = query.item[2]
 		break
 
-	var/input = alert(src, "You want to remove [title], authored [author]", "Confirm", "Confirm", "Cancel")
+	var/input = tgui_alert(src, "You want to remove [title], authored [author]", "Confirm", list("Confirm", "Cancel"))
 	if(input != "Confirm")
 		return
 

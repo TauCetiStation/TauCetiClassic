@@ -158,7 +158,7 @@
 		if(!H.key && H.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == H.mind && ghost.can_reenter_corpse)
-					var/answer = alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!","Yes","No")
+					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"))
 					if(answer == "Yes")
 						ghost.reenter_corpse()
 
