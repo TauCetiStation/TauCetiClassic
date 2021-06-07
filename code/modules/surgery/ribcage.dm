@@ -508,9 +508,9 @@
 	target.stat = CONSCIOUS
 	var/obj/item/organ/internal/heart/IO  = target.organs_by_name[O_HEART]
 	IO.heart_normalize()
-	target.stunned = 0
-	target.weakened = 0
-	target.paralysis = 0
+	target.SetStunned(0)
+	target.SetWeakened(0)
+	target.SetParalysis(0)
 
 	
 //////////////////////////////////////////////////////////////////
