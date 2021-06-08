@@ -10,5 +10,5 @@
 	maxhealth = 300
 
 /obj/machinery/bot/pubag/atom_init()
-	. = ..()
-	color = list(rand(0, 255), rand(0, 255), rand(0, 255), 255)
+  . = ..()
+  color = list(rand(0, 255), rand(0, 255), rand(0, 255), 255)
