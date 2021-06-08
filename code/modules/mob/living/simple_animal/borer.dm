@@ -480,7 +480,6 @@
 	if(!candidate)
 		return
 
-	mind = candidate.mob.mind
 	ckey = candidate.ckey
 
 	var/datum/faction/borers/B = find_faction_by_type(/datum/faction/borers)
