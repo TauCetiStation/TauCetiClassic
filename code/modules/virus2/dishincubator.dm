@@ -1,6 +1,6 @@
 /obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"

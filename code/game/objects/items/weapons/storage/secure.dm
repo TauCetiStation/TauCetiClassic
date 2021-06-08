@@ -231,7 +231,7 @@
 	w_class = 8.0
 	max_w_class = 8
 	anchored = TRUE
-	density = 0
+	density = FALSE
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
 /obj/item/weapon/storage/secure/safe/atom_init()

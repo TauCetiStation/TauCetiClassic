@@ -7,7 +7,7 @@
 	icon_state = "ocean"
 	alpha = FLUID_MAX_ALPHA
 	simulated = 0
-	density = 0
+	density = FALSE
 	opacity = 0
 	anchored = TRUE
 

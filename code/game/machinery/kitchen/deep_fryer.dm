@@ -4,7 +4,7 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
 	layer = 2.9
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5

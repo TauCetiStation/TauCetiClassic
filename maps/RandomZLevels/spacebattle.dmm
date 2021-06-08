@@ -761,7 +761,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ck" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "spacebattlepod";
 	name = "Front Hull Door"
@@ -1052,7 +1052,7 @@
 /area/awaymission/spacebattle/cruiser)
 "dg" = (
 /obj/machinery/shieldgen{
-	anchored = TRUE
+	anchored = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
@@ -1115,7 +1115,7 @@
 /area/awaymission/spacebattle/cruiser)
 "dt" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "spacebattlepod2";
 	name = "Front Hull Door"

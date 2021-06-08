@@ -12,7 +12,7 @@
 	icon_state = "grinder-b0"
 	layer = MOB_LAYER+1 // Overhead
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 

@@ -52,7 +52,7 @@
 /obj/structure/table/holotable
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.
@@ -167,7 +167,7 @@
 	return
 
 /obj/machinery/door/window/holowindoor/shatter(display_message = 1)
-	src.density = 0
+	src.density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] fades away as it shatters!")
@@ -258,7 +258,7 @@
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	throwpass = 1
 
 /obj/structure/holohoop/attackby(obj/item/weapon/W, mob/user)

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "disposalbio"
 	var/list/accepts = list(/obj/item/clothing,/obj/item/weapon/virusdish,/obj/item/weapon/cureimplanter,/obj/item/weapon/diseasedisk,/obj/item/weapon/reagent_containers)
-	density = 1
+	density = TRUE
 	anchored = TRUE
 
 /obj/machinery/disease2/biodestroyer/attackby(obj/I, mob/user)

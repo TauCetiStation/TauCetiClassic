@@ -1,7 +1,7 @@
 /obj/structure/scrap_cube
 	name = "compressed scrap"
 	desc = "A cube made of scrap compressed with hydraulic clamp."
-	density = 1
+	density = TRUE
 	anchored = FALSE
 	icon_state = "trash_cube"
 	icon = 'icons/obj/structures/scrap/refine.dmi'

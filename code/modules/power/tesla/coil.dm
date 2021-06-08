@@ -4,7 +4,7 @@
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "coil"
 	anchored = FALSE
-	density = 1
+	density = TRUE
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 
@@ -55,7 +55,7 @@
 	icon = 'icons/obj/tesla_engine/tesla_coil.dmi'
 	icon_state = "grounding_rod"
 	anchored = FALSE
-	density = 1
+	density = TRUE
 
 /obj/machinery/power/grounding_rod/atom_init()
 	. = ..()

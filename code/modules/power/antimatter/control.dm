@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "control"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 1000

@@ -7,7 +7,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	name = "Spell"
 	desc = "A wizard spell."
 	panel = "Spells"//What panel the proc holder needs to go on.
-	density = 0
+	density = FALSE
 	opacity = 0
 	var/sound = null //The sound the spell makes when it is cast
 
@@ -179,7 +179,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.icon = overlay_icon
 			spell.icon_state = overlay_icon_state
 			spell.anchored = TRUE
-			spell.density = 0
+			spell.density = FALSE
 			QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)

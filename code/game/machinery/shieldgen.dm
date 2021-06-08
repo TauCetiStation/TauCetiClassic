@@ -3,7 +3,7 @@
 		desc = "An energy shield used to contain hull breaches."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shield-old"
-		density = 1
+		density = TRUE
 		opacity = 0
 		anchored = TRUE
 		unacidable = 1
@@ -17,7 +17,7 @@
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	return ..()
 
@@ -516,7 +516,7 @@
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "energyshield"
 		anchored = TRUE
-		density = 1
+		density = TRUE
 		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3

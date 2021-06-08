@@ -7,7 +7,7 @@
 	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
 

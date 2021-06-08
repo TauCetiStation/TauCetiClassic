@@ -40,7 +40,7 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 	power_channel = STATIC_ENVIRON
-	density = 0
+	density = FALSE
 
 	// Setup parameters only
 	var/id_tag

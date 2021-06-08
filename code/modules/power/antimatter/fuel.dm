@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcdammo"
 	opacity = 0
-	density = 0
+	density = FALSE
 	anchored = FALSE
 	var/fuel = 0
 	var/s_time = 1.0

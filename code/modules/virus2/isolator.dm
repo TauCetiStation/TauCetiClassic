@@ -5,7 +5,7 @@
 
 /obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "isolator"

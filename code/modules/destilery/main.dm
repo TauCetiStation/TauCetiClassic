@@ -19,7 +19,7 @@
 	name = "Mill"
 	desc = "It is a machine that grinds produce."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -91,7 +91,7 @@
 	name = "Fermenter"
 	desc = "It is a machine that ferments produce into alcoholic drinks."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -161,7 +161,7 @@
 	name = "Still"
 	desc = "It is a machine that produces hard liquor from alcoholic drinks."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -227,7 +227,7 @@
 	name = "Squeezer"
 	desc = "It is a machine that squeezes extracts from produce."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -251,7 +251,7 @@
 	name = "Centrifuge"
 	desc = "It is a machine that spins produce."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10

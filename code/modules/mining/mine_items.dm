@@ -305,7 +305,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "Mining car (not for rails)"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "miningcar"
-	density = 1
+	density = TRUE
 	icon_opened = "miningcaropen"
 	icon_closed = "miningcar"
 
@@ -783,7 +783,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "pod_computer"
 	icon = 'icons/obj/survival_pod_computer.dmi'
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
@@ -902,7 +902,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "environmental regulation system"
 	desc = "A large machine releasing a constant gust of air."
 	anchored = TRUE
-	density = 1
+	density = TRUE
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(iswrench(W) && !(flags&NODECONSTRUCT))
@@ -921,7 +921,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "tiny fan"
 	desc = "A tiny fan, releasing a thin gust of air."
 	layer = ABOVE_NORMAL_TURF_LAYER
-	density = 0
+	density = FALSE
 	icon_state = "fan_tiny"
 
 /obj/structure/fans/tiny/atom_init()
@@ -968,6 +968,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "tubes"
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	density = 0
+	density = FALSE
 
 #undef COUNTER_COOLDOWN

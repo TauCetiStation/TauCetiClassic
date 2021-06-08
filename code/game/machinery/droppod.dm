@@ -11,7 +11,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	opacity = 1
 	bound_height = 64
 	icon = 'icons/obj/structures/droppod.dmi'
@@ -730,7 +730,7 @@
 	desc = "Remains of some unfortunate Pod. Completely unrepairable."
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "crashed_droppod"
-	density = 1
+	density = TRUE
 	anchored = FALSE
 	opacity = 0
 

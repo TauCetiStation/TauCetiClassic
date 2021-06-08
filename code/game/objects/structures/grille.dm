@@ -3,7 +3,7 @@
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	flags = CONDUCT
 	layer = BELOW_MACHINERY_LAYER
@@ -213,7 +213,7 @@
 	if(health <= 0)
 		if(!destroyed)
 			icon_state = "brokengrille"
-			density = 0
+			density = FALSE
 			destroyed = 1
 			new /obj/item/stack/rods(get_turf(src))
 

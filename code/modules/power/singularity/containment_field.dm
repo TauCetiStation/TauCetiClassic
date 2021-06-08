@@ -4,7 +4,7 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	anchored = TRUE
-	density = 0
+	density = FALSE
 	unacidable = 1
 	use_power = NO_POWER_USE
 	light_range = 4

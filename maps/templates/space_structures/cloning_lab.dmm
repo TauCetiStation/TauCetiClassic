@@ -198,7 +198,7 @@
 /area/space_structures/cloning_lab)
 "I" = (
 /obj/structure/computerframe{
-	anchored = TRUE
+	anchored = 1
 	},
 /obj/machinery/light,
 /turf/simulated/floor{

@@ -14,7 +14,7 @@
 	icon_state = "syndbeacon"
 
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	use_power = NO_POWER_USE
 
 	var/chargesa = 1
@@ -106,7 +106,7 @@
 /obj/effect/meatgrinder
 	name = "Meat Grinder"
 	desc = "What is that thing?"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	layer = 3
 	icon = 'icons/mob/animal.dmi'

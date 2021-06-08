@@ -236,7 +236,7 @@
 /area/space_structures/ghostship)
 "aL" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "spacebattlepod";
 	name = "Front Hull Door"
@@ -927,7 +927,7 @@
 /area/space_structures/ghostship)
 "go" = (
 /obj/structure/computerframe{
-	anchored = TRUE
+	anchored = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

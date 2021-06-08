@@ -12,7 +12,7 @@
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
 	anchored = TRUE
-	density = 0
+	density = FALSE
 	allowed_checks = ALLOWED_CHECK_NONE // we use isLocked proc to open UI.
 
 	var/enabled = 0

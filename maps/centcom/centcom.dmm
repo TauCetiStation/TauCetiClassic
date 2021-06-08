@@ -160,7 +160,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier{
-	density = 0;
+	density = FALSE;
 	layer = 2;
 	pixel_x = 5
 	},
@@ -195,7 +195,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/photocopier{
-	density = 0;
+	density = FALSE;
 	layer = 2;
 	pixel_x = 5
 	},
@@ -636,7 +636,7 @@
 /area/shuttle/escape/centcom)
 "aby" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "1,5";
 	opacity = 0
 	},
@@ -736,7 +736,7 @@
 /area/shuttle/escape/centcom)
 "abN" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "15,5";
 	opacity = 0
 	},
@@ -799,7 +799,7 @@
 /area/shuttle/escape/centcom)
 "abY" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "2,3";
 	opacity = 0
 	},
@@ -807,7 +807,7 @@
 /area/shuttle/escape/centcom)
 "abZ" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "3,3";
 	opacity = 0
 	},
@@ -815,7 +815,7 @@
 /area/shuttle/escape/centcom)
 "aca" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "4,3";
 	opacity = 0
 	},
@@ -858,7 +858,7 @@
 /area/shuttle/arrival/velocity)
 "aci" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort06";
 	layer = 2.6;
@@ -871,7 +871,7 @@
 /area/centcom/evac)
 "acj" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort05";
 	layer = 2.6;
@@ -1040,7 +1040,7 @@
 /area/shuttle/arrival/velocity)
 "acL" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "12,3";
 	opacity = 0
 	},
@@ -1048,7 +1048,7 @@
 /area/shuttle/escape/centcom)
 "acM" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "13,3";
 	opacity = 0
 	},
@@ -1056,7 +1056,7 @@
 /area/shuttle/escape/centcom)
 "acN" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "14,3";
 	opacity = 0
 	},
@@ -1314,7 +1314,7 @@
 /area/custom/cult)
 "adA" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "5,0";
 	opacity = 0
 	},
@@ -1322,7 +1322,7 @@
 /area/shuttle/escape/centcom)
 "adB" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "6,0";
 	opacity = 0
 	},
@@ -1330,7 +1330,7 @@
 /area/shuttle/escape/centcom)
 "adC" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "7,0";
 	opacity = 0
 	},
@@ -1347,7 +1347,7 @@
 /area/centcom/evac)
 "adE" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "9,0";
 	opacity = 0
 	},
@@ -1355,7 +1355,7 @@
 /area/shuttle/escape/centcom)
 "adF" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "10,0";
 	opacity = 0
 	},
@@ -1363,7 +1363,7 @@
 /area/shuttle/escape/centcom)
 "adG" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "11,0";
 	opacity = 0
 	},
@@ -1398,7 +1398,7 @@
 /area/centcom/control)
 "adL" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "0,7";
 	opacity = 0
 	},
@@ -1558,7 +1558,7 @@
 /area/shuttle/escape/centcom)
 "aeh" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "8,0";
 	opacity = 0
 	},
@@ -3064,7 +3064,7 @@
 	req_access = list(150)
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "syndicate_elite";
 	name = "Side Hull Door";
@@ -3334,7 +3334,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
+	density = FALSE;
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
@@ -3349,7 +3349,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
+	density = FALSE;
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
@@ -3367,7 +3367,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = 0;
+	density = FALSE;
 	icon_state = "shutter0";
 	id = "syndieshutters";
 	name = "Blast Shutters";
@@ -4354,7 +4354,7 @@
 /area/shuttle/syndicate/start)
 "amE" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "smindicate";
 	name = "Outer Airlock";
@@ -4496,7 +4496,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_firedoor";
 	name = "Doors";
@@ -4982,7 +4982,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_firedoor";
 	name = "Doors";
@@ -5292,7 +5292,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_room01";
 	name = "Doors";
@@ -5397,7 +5397,7 @@
 "aqt" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_room01";
 	name = "Doors";
@@ -5603,7 +5603,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_room01";
 	name = "Doors";
@@ -5615,7 +5615,7 @@
 /area/velocity)
 "ark" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_room01";
 	name = "Doors";
@@ -5643,7 +5643,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_hall";
 	name = "Doors";
@@ -5762,7 +5762,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_room02";
 	name = "Doors";
@@ -5933,7 +5933,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_hall";
 	name = "Doors";
@@ -6271,7 +6271,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell01";
 	name = "Doors";
@@ -6483,7 +6483,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell02";
 	name = "Doors";
@@ -6638,7 +6638,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell03";
 	name = "Doors";
@@ -6863,7 +6863,7 @@
 /area/velocity)
 "avn" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "monorail_01";
 	name = "Doors";
@@ -6904,7 +6904,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell04";
 	name = "Doors";
@@ -7417,7 +7417,7 @@
 /area/custom/syndicate_mothership/armory)
 "axN" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "monorail_02";
 	name = "Doors";
@@ -8090,7 +8090,7 @@
 "azR" = (
 /obj/machinery/door/airlock/external,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "NTrasen";
 	name = "Outer Airlock";
@@ -8304,7 +8304,7 @@
 /area/space)
 "aAA" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "";
 	name = "Doors";
@@ -8683,7 +8683,7 @@
 /area/velocity)
 "aBA" = (
 /obj/structure/sign/velocity_overlay{
-	density = 1;
+	density = TRUE;
 	desc = "Big toolbox";
 	icon_state = "tool2";
 	name = "\improper big toolbox"
@@ -10611,7 +10611,7 @@
 /area/centcom/living)
 "aHM" = (
 /obj/machinery/cryopod{
-	density = 0;
+	density = FALSE;
 	storage = 0
 	},
 /turf/unsimulated/floor{
@@ -10620,7 +10620,7 @@
 /area/centcom/living)
 "aHN" = (
 /turf/unsimulated/wall{
-	density = 0
+	density = FALSE
 	},
 /area/centcom/living)
 "aHO" = (
@@ -11752,7 +11752,7 @@
 /area/centcom/evac)
 "aLL" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort04";
 	layer = 4.1;
@@ -11979,7 +11979,7 @@
 /area/centcom/evac)
 "aNo" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort06";
 	name = "Security Doors";
@@ -12005,7 +12005,7 @@
 /area/centcom/holding)
 "aNw" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort05";
 	name = "Security Doors";
@@ -12096,7 +12096,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort04";
 	layer = 4.1;
@@ -12135,7 +12135,7 @@
 "aNM" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort04";
 	layer = 2.6;
@@ -12867,7 +12867,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "ck_comf_blast";
 	name = "Conference Room Blast Doors";
@@ -12882,7 +12882,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "ck_comf_blast";
 	name = "Conference Room Blast Doors";
@@ -12900,7 +12900,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "ck_comf_blast";
 	name = "Conference Room Blast Doors";
@@ -13271,7 +13271,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "ck_office_blast";
 	name = "Office Blast Doors";
@@ -13291,7 +13291,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "ck_office_blast";
 	name = "Office Blast Doors";
@@ -13320,7 +13320,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "ck_office_blast";
 	name = "Office Blast Doors";
@@ -13340,7 +13340,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "ck_office_blast";
 	name = "Office Blast Doors";
@@ -14317,7 +14317,7 @@
 /area/centcom/living)
 "aVt" = (
 /turf/unsimulated/beach/sand{
-	density = 1;
+	density = TRUE;
 	opacity = 1
 	},
 /area/custom/beach)
@@ -15598,7 +15598,7 @@
 /area/centcom/tdome)
 "aZl" = (
 /turf/unsimulated/beach/coastline{
-	density = 1;
+	density = TRUE;
 	opacity = 1
 	},
 /area/custom/beach)
@@ -15669,7 +15669,7 @@
 /area/centcom/tdome)
 "aZy" = (
 /turf/unsimulated/beach/water{
-	density = 1;
+	density = TRUE;
 	opacity = 1
 	},
 /area/custom/beach)
@@ -17942,7 +17942,7 @@
 /area/velocity)
 "cDb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_hall";
 	name = "Doors";
@@ -18029,7 +18029,7 @@
 	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_hall";
 	name = "Doors";
@@ -18110,7 +18110,7 @@
 /area/velocity)
 "cRb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_room02";
 	name = "Doors";
@@ -18141,7 +18141,7 @@
 	icon_state = "pipe-j2"
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_hall";
 	name = "Doors";
@@ -18318,7 +18318,7 @@
 /area/velocity)
 "dhb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell01";
 	name = "Doors";
@@ -18449,7 +18449,7 @@
 /area/space)
 "drb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell02";
 	name = "Doors";
@@ -18565,7 +18565,7 @@
 /area/velocity)
 "dDb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell03";
 	name = "Doors";
@@ -18708,7 +18708,7 @@
 /area/velocity)
 "dQb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity_cell04";
 	name = "Doors";
@@ -18747,7 +18747,7 @@
 /area/velocity)
 "dSb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity06";
 	name = "Doors";
@@ -18777,7 +18777,7 @@
 /area/velocity)
 "dUb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity05";
 	name = "Doors";
@@ -18820,7 +18820,7 @@
 /area/velocity)
 "dYb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity06";
 	name = "Doors";
@@ -18834,7 +18834,7 @@
 /area/velocity)
 "dZb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity05";
 	name = "Doors";
@@ -19137,7 +19137,7 @@
 /area/velocity)
 "eHb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity04";
 	name = "Doors";
@@ -19151,7 +19151,7 @@
 /area/velocity)
 "eIb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "velocity03";
 	name = "Doors";
@@ -21743,7 +21743,7 @@
 "jOb" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort04";
 	layer = 2.6;
@@ -22436,7 +22436,7 @@
 "lsb" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort03";
 	layer = 2.6;
@@ -22451,7 +22451,7 @@
 "ltb" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort03";
 	layer = 2.6;
@@ -22615,7 +22615,7 @@
 /area/shuttle/escape/centcom)
 "lOb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort02";
 	name = "Security Doors";
@@ -22659,7 +22659,7 @@
 /area/centcom/control)
 "lRb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort";
 	name = "Security Doors";
@@ -22822,7 +22822,7 @@
 /area/centcom/evac)
 "meb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort02";
 	layer = 4.1;
@@ -22857,7 +22857,7 @@
 /area/centcom/control)
 "mhb" = (
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort";
 	layer = 4.1;
@@ -23630,7 +23630,7 @@
 	id = "CentComConv02"
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort03";
 	layer = 4.1;
@@ -23658,7 +23658,7 @@
 	id = "CentComConv01"
 	},
 /obj/machinery/door/poddoor{
-	density = 0;
+	density = FALSE;
 	icon_state = "pdoor0";
 	id = "CentComPort03";
 	layer = 4.1;
@@ -23728,7 +23728,7 @@
 /area/shuttle/escape/centcom)
 "olb" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "0,8";
 	opacity = 0
 	},
@@ -23769,7 +23769,7 @@
 /area/shuttle/escape/centcom)
 "osb" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "16,8";
 	opacity = 0
 	},
@@ -24318,7 +24318,7 @@
 /area/shuttle/escape/centcom)
 "pWb" = (
 /obj/structure/object_wall/evac{
-	density = 0;
+	density = FALSE;
 	icon_state = "16,7";
 	opacity = 0
 	},

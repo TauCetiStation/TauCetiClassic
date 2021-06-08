@@ -5,7 +5,7 @@
 	icon_state = "secbot0"
 	var/icon_state_arrest = "secbot-c"
 	layer = 5.0
-	density = 0
+	density = FALSE
 	anchored = FALSE
 	health = 25
 	maxhealth = 25

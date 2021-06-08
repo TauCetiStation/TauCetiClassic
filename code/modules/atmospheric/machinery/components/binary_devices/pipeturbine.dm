@@ -6,7 +6,7 @@
 	icon = 'icons/obj/pipeturbine.dmi'
 	icon_state = "turbine"
 	anchored = FALSE
-	density = 1
+	density = TRUE
 
 	var/efficiency = 0.4
 	var/kin_energy = 0
@@ -134,7 +134,7 @@
 	icon = 'icons/obj/pipeturbine.dmi'
 	icon_state = "motor"
 	anchored = FALSE
-	density = 1
+	density = TRUE
 
 	var/kin_to_el_ratio = 0.1	//How much kinetic energy will be taken from turbine and converted into electricity
 	var/obj/machinery/atmospherics/components/pipeturbine/turbine

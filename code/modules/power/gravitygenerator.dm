@@ -8,7 +8,7 @@
 	state_broken_preset = "atmosb"
 	state_nopower_preset = "atmos0"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	var/obj/machinery/gravity_generator = null
 
 
@@ -18,7 +18,7 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 1000

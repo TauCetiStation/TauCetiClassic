@@ -5,7 +5,7 @@
 	name = "Coin press"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null

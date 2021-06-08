@@ -4,7 +4,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	name = "Input area"
-	density = 0
+	density = FALSE
 	anchored = TRUE
 
 /obj/machinery/mineral/input/atom_init()
@@ -15,7 +15,7 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
 	name = "Output area"
-	density = 0
+	density = FALSE
 	anchored = TRUE
 
 /obj/machinery/mineral/output/atom_init()

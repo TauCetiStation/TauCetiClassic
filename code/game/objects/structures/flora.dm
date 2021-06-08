@@ -233,7 +233,7 @@
 /obj/structure/flora/tree
 	name = "tree"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	pixel_x = -16
 	layer = 9
 	health_flora = 150
@@ -502,7 +502,7 @@
 	name = "rocks"
 	icon_state = "rocks"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
-	density = 1
+	density = TRUE
 	pixel_x = -16
 	pixel_y = -16
 

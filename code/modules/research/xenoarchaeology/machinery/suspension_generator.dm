@@ -3,7 +3,7 @@
 	desc = "It has stubby legs bolted up against it's body for stabilising."
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "suspension_closed_panel"
-	density = 1
+	density = TRUE
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/locked = 1
 	var/open = 0
@@ -319,7 +319,7 @@
 	name = "energy field"
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	var/field_type = "chlorine"
 
 /obj/effect/suspension_field/Destroy()

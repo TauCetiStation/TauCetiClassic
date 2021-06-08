@@ -16,7 +16,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "book-0"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	opacity = 1
 
 /obj/structure/bookcase/atom_init()

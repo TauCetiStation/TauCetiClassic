@@ -5,7 +5,7 @@
 	name = "bluespace artillery control"
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
-	density = 1
+	density = TRUE
 	anchored = TRUE
 
 	var/datum/announcement/centcomm/bsa/announcement = new
@@ -18,10 +18,10 @@
 	name = "artillery"
 	icon = 'icons/obj/machines/artillery.dmi'
 	anchored = TRUE
-	density = 1
+	density = TRUE
 
 /obj/structure/artilleryplaceholder/decorative
-	density = 0
+	density = FALSE
 
 /obj/machinery/artillerycontrol/ui_interact(mob/user)
 	var/dat = ""

@@ -28,7 +28,7 @@
 /area/space_structures/ghostship)
 "af" = (
 /obj/structure/computerframe{
-	anchored = TRUE
+	anchored = 1
 	},
 /obj/structure/cellular_biomass/grass/meat,
 /obj/machinery/light/small{
@@ -51,7 +51,7 @@
 /area/space_structures/ghostship)
 "ai" = (
 /obj/structure/computerframe{
-	anchored = TRUE
+	anchored = 1
 	},
 /obj/machinery/light/small{
 	dir = 1

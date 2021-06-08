@@ -7,7 +7,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeperconsole"
 	anchored = TRUE //About time someone fixed this.
-	density = 0
+	density = FALSE
 	light_color = "#7bf9ff"
 
 /obj/machinery/sleeper
@@ -16,7 +16,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
 	layer = BELOW_CONTAINERS_LAYER
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	state_open = 1
 	light_color = "#7bf9ff"

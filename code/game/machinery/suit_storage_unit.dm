@@ -9,7 +9,7 @@
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "suitstorage000000100" //order is: [has helmet][has suit][has human][is open][is locked][is UV cycling][is powered][is dirty/broken] [is superUVcycling]
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	var/mob/living/carbon/human/OCCUPANT = null
 	var/obj/item/clothing/suit/space/SUIT = null
 	var/SUIT_TYPE = null

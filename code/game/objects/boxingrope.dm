@@ -1,7 +1,7 @@
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "ringrope"
@@ -20,7 +20,7 @@
 /obj/decal/boxingropeenter
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "ringrope"

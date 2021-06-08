@@ -5,7 +5,7 @@
 	desc = "A large man-sized tube sporting a complex array of surgical apparatus."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	state_open = 1
 	var/points = 0

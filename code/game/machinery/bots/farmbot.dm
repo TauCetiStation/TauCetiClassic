@@ -29,7 +29,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "farmbot0"
 	layer = 5.0
-	density = 1
+	density = TRUE
 	anchored = FALSE
 	health = 50
 	maxhealth = 50

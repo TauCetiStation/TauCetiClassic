@@ -19,7 +19,7 @@
 /area/awaymission/academy/headmaster)
 "ae" = (
 /obj/structure/computerframe{
-	anchored = TRUE
+	anchored = 1
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/academy/headmaster)

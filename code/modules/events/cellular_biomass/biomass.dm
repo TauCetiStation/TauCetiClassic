@@ -5,7 +5,7 @@
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "stage1"
 	anchored = TRUE
-	density = 0
+	density = FALSE
 	layer = 5
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
@@ -117,12 +117,12 @@
 		src.icon_state = "stage2"
 		energy = 1
 		src.opacity = 0
-		src.density = 0
+		src.density = FALSE
 		layer = 5
 	else
 		src.icon_state = "stage3"
 		src.opacity = 0
-		src.density = 1
+		src.density = TRUE
 		energy = 2
 
 /obj/effect/biomass/proc/spread()

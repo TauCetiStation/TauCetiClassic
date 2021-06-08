@@ -61,7 +61,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
 	anchored = FALSE
-	density = 1
+	density = TRUE
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = 0
 	var/reference = null
@@ -263,7 +263,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
 	anchored = FALSE
-	density = 1
+	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0

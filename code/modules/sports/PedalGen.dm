@@ -22,7 +22,7 @@
 	icon = 'code/modules/sports/pedalgen.dmi'
 	icon_state = "pedalgen"
 	anchored = FALSE
-	density = 0
+	density = FALSE
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
 	var/pedaled = 0

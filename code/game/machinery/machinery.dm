@@ -195,7 +195,7 @@ Class Procs:
 
 /obj/machinery/proc/open_machine()
 	state_open = 1
-	density = 0
+	density = FALSE
 	dropContents()
 	update_icon()
 	updateUsrDialog()
@@ -213,7 +213,7 @@ Class Procs:
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
-	density = 1
+	density = TRUE
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
 			if(C.buckled)

@@ -86,7 +86,7 @@
 /obj/effect/dummy/spell_jaunt
 	name = "water"
 	last_move = 0
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 5
 	icon = 'icons/mob/mob.dmi'

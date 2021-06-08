@@ -127,10 +127,10 @@
 						return
 					src.icon_state = "bees[B.strength]"
 					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
-					density = 1
+					density = TRUE
 					if(T.Enter(src, get_turf(src)))
 						src.loc = T
-					density = 0
+					density = FALSE
 				break
 
 		if(target_mob)

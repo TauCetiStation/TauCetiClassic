@@ -8,7 +8,7 @@
 	icon_state = "shieldsparkles"
 	anchored = TRUE
 	layer = 4.1		//just above mobs
-	density = 0
+	density = FALSE
 	invisibility = 101
 	var/strength = 0
 	var/ticks_recovering = 10
@@ -26,12 +26,12 @@
 	ticks_recovering = min(ticks_recovering + 2, 10)
 	if(strength < 1)
 		invisibility = 101
-		density = 0
+		density = FALSE
 		ticks_recovering = 10
 		strength = 0
 	else if(strength >= 1)
 		invisibility = 0
-		density = 1
+		density = TRUE
 
 /obj/effect/energy_field/proc/Strengthen(severity)
 	strength += severity
@@ -39,10 +39,10 @@
 	//if we take too much damage, drop out - the generator will bring us back up if we have enough power
 	if(strength >= 1)
 		invisibility = 0
-		density = 1
+		density = TRUE
 	else if(strength < 1)
 		invisibility = 101
-		density = 0
+		density = FALSE
 
 /obj/effect/energy_field/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
 	//Purpose: Determines if the object (or airflow) can pass this atom.

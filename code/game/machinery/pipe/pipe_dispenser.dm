@@ -213,13 +213,13 @@ Nah
 					C.ptype = 5
 				if(5)
 					C.ptype = 6
-					C.density = 1
+					C.density = TRUE
 				if(6)
 					C.ptype = 7
-					C.density = 1
+					C.density = TRUE
 				if(7)
 					C.ptype = 8
-					C.density = 1
+					C.density = TRUE
 				if(8)
 					C.ptype = 9
 			C.add_fingerprint(usr)

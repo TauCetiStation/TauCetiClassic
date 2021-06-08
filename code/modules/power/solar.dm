@@ -17,7 +17,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -168,7 +168,7 @@
 /obj/machinery/power/solar/blob_act()
 	if(prob(75))
 		broken()
-		src.density = 0
+		src.density = FALSE
 
 
 /obj/machinery/power/solar/fake/atom_init(mapload, obj/item/solar_assembly/S)
@@ -255,7 +255,7 @@
 	icon_state = "solar"
 	light_color = "#b88b2e"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 20
@@ -490,7 +490,7 @@
 /obj/machinery/power/solar_control/blob_act()
 	if (prob(75))
 		broken()
-		src.density = 0
+		src.density = FALSE
 
 
 //

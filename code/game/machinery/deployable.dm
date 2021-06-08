@@ -61,7 +61,7 @@ for reference:
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
 	anchored = TRUE
-	density = 1.0
+	density = TRUE
 	var/health = 100.0
 	var/maxhealth = 100.0
 
@@ -137,7 +137,7 @@ for reference:
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
 	icon = 'icons/obj/objects.dmi'
 	anchored = FALSE
-	density = 1.0
+	density = TRUE
 	icon_state = "barrier0"
 	var/health = 100.0
 	var/maxhealth = 100.0

@@ -672,7 +672,7 @@
 /area/space_structures/robostatoin)
 "cB" = (
 /obj/structure/computerframe{
-	anchored = TRUE
+	anchored = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)

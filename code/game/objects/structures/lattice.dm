@@ -3,7 +3,7 @@
 	name = "lattice"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "latticefull"
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2.3 //under pipes
 	plane = FLOOR_PLANE

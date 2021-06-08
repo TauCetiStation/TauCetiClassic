@@ -47,7 +47,7 @@
 					M.buckled.unbuckle_mob()
 			else
 				AM.anchored = TRUE
-				AM.density = 0
+				AM.density = FALSE
 			var/obj/effect/extraction_holder/holder_obj = new(AM.loc)
 			holder_obj.appearance = AM.appearance
 			AM.forceMove(holder_obj)

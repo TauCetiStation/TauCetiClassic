@@ -19,7 +19,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
 	layer = MOB_LAYER
-	density = 0
+	density = FALSE
 	anchored = FALSE
 	//weight = 1.0E7
 	health = 25

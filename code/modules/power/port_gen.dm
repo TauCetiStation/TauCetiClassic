@@ -8,7 +8,7 @@
 	icon = 'icons/obj/power.dmi'
 	var/icon_state_on = "portgen1"
 	icon_state = "portgen0"
-	density = 1
+	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
 

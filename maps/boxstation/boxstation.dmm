@@ -7084,7 +7084,7 @@
 /area/station/security/brig)
 "als" = (
 /obj/machinery/vending/weirdomat{
-	anchored = FALSE
+	anchored = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
@@ -9698,7 +9698,7 @@
 	dir = 8
 	},
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 8
 	},
 /obj/structure/cable,
@@ -9708,7 +9708,7 @@
 /area/station/security/prison)
 "apR" = (
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 4
 	},
 /obj/machinery/alarm{
@@ -17445,7 +17445,7 @@
 	dir = 4
 	},
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -19176,7 +19176,7 @@
 /area/station/maintenance/medbay)
 "aHJ" = (
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -23445,7 +23445,7 @@
 /area/station/maintenance/chapel)
 "aPq" = (
 /obj/machinery/vending/sovietsoda{
-	anchored = FALSE
+	anchored = 0
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -59954,7 +59954,7 @@
 /area/station/maintenance/engineering)
 "cpe" = (
 /obj/machinery/vending/boozeomat{
-	anchored = FALSE
+	anchored = 0
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
@@ -63689,7 +63689,7 @@
 /area/station/engineering/drone_fabrication)
 "cyz" = (
 /obj/machinery/vending/cigarette{
-	anchored = FALSE
+	anchored = 0
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -65488,7 +65488,7 @@
 /area/space)
 "cCA" = (
 /obj/machinery/power/emitter{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 4;
 	state = 2
 	},
@@ -65573,7 +65573,7 @@
 /area/space)
 "cCM" = (
 /obj/machinery/field_generator{
-	anchored = TRUE;
+	anchored = 1;
 	state = 2
 	},
 /turf/simulated/floor/plating/airless,
@@ -65682,7 +65682,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/emitter{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 4;
 	state = 2
 	},
@@ -65817,7 +65817,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/emitter{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 8;
 	state = 2
 	},
@@ -68570,7 +68570,7 @@
 /area/station/engineering/singularity)
 "cMf" = (
 /obj/machinery/power/rad_collector{
-	anchored = TRUE
+	anchored = 1
 	},
 /obj/structure/cable,
 /obj/machinery/camera/emp_proof{
@@ -69522,7 +69522,7 @@
 /area/station/rnd/hallway)
 "dSb" = (
 /obj/machinery/power/emitter{
-	anchored = TRUE;
+	anchored = 1;
 	dir = 8;
 	state = 2
 	},
@@ -76531,7 +76531,7 @@
 /area/station/maintenance/cargo)
 "oob" = (
 /obj/machinery/power/rad_collector{
-	anchored = TRUE
+	anchored = 1
 	},
 /obj/structure/cable/yellow,
 /turf/simulated/floor/plating{
@@ -76554,7 +76554,7 @@
 /area/station/cargo/storage)
 "opb" = (
 /obj/machinery/power/rad_collector{
-	anchored = TRUE
+	anchored = 1
 	},
 /obj/item/weapon/tank/phoron,
 /obj/structure/cable/yellow,

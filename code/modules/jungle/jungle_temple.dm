@@ -354,9 +354,9 @@
 			myloc.add_overlay(flicker)
 			var/turf/my_turf = get_turf(loc)
 			if(!my_turf.density)
-				my_turf.density = 1
+				my_turf.density = TRUE
 				spawn(8)
-					my_turf.density = 0
+					my_turf.density = FALSE
 			spawn(8)
 				myloc.cut_overlay(flicker)
 				qdel(flicker)

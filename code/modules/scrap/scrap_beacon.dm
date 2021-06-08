@@ -4,7 +4,7 @@
 	icon = 'icons/obj/structures/scrap/scrap_beacon.dmi'
 	icon_state = "beacon0"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	layer = MOB_LAYER+1
 	var/summon_cooldown = 1200
 	var/impact_speed = 3

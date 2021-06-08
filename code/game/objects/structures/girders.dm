@@ -2,7 +2,7 @@
 	icon = 'icons/obj/smooth_structures/girder.dmi'
 	icon_state = "box"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	layer = 2.9
 	var/state = 0
 	var/health = 200
@@ -231,7 +231,7 @@
 	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
 	icon_state= "box"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	layer = 2.9
 	health = 250
 	smooth = SMOOTH_TRUE

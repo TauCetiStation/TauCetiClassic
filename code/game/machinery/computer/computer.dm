@@ -1,7 +1,7 @@
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300

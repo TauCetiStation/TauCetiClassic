@@ -4,7 +4,7 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	layer = SINGULARITY_LAYER
 	appearance_flags = 0
 	//light_range = 6

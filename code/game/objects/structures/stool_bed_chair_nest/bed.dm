@@ -138,10 +138,10 @@
 			M.pass_flags &= ~PASSCRAWL
 			M.crawling = FALSE
 			M.layer = 4.0
-		density = 1
+		density = TRUE
 		icon_state = "up"
 	else
-		density = 0
+		density = FALSE
 		icon_state = "down"
 	return ..()
 

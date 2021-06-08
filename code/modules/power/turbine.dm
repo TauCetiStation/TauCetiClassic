@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "compressor"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/simulated/inturf
@@ -21,7 +21,7 @@
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "turbine"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	var/obj/machinery/compressor/compressor
 	var/turf/simulated/outturf
 	var/lastgen
@@ -34,7 +34,7 @@
 	icon_state = "airtunnel"
 	circuit = /obj/item/weapon/circuitboard/turbine_control
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/compressor/compressor
 	var/list/obj/machinery/door/poddoor/doors

@@ -1,6 +1,6 @@
 /obj/machinery/computer/operating
 	name = "Operating Computer"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	icon_state = "operating"
 	state_broken_preset = "crewb"

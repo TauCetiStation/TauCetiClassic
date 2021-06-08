@@ -3,7 +3,7 @@
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
-	density = 1
+	density = TRUE
 	anchored = FALSE
 	flags = OPENCONTAINER
 	var/modded = FALSE
@@ -234,7 +234,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "peppertank"
 	anchored = TRUE
-	density = 0
+	density = FALSE
 	amount_per_transfer_from_this = 45
 
 /obj/structure/reagent_dispensers/peppertank/atom_init()
@@ -311,7 +311,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cleanertank"
 	anchored = TRUE
-	density = 0
+	density = FALSE
 
 /obj/structure/reagent_dispensers/cleaner/atom_init()
 	. = ..()

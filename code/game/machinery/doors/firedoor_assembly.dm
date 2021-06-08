@@ -5,7 +5,7 @@
 	icon_state = "door_construction"
 	anchored = FALSE
 	opacity = 0
-	density = 1
+	density = TRUE
 	var/wired = 0
 
 /obj/structure/firedoor_assembly/update_icon()

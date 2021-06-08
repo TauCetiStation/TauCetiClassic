@@ -2,7 +2,7 @@
 	name = "clutter"
 	desc = "Someone should clean that up."
 	gender = PLURAL
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	icon = 'icons/obj/objects.dmi'
@@ -34,7 +34,7 @@
 	name = "dirt"
 	desc = "Someone should clean that up."
 	gender = PLURAL
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
@@ -45,7 +45,7 @@
 	name = "flour"
 	desc = "It's still good. Four second rule!"
 	gender = PLURAL
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/effects.dmi'
@@ -55,7 +55,7 @@
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
 	gender = PLURAL
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	light_range = 1
@@ -65,7 +65,7 @@
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
 	desc = "Somebody should remove that."
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	plane = GAME_PLANE
 	layer = 3
@@ -75,7 +75,7 @@
 /obj/effect/decal/cleanable/molten_item
 	name = "gooey grey mass"
 	desc = "It looks like a melted... something."
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 3
 	icon = 'icons/obj/chemical.dmi'
@@ -84,7 +84,7 @@
 /obj/effect/decal/cleanable/cobweb2
 	name = "cobweb"
 	desc = "Somebody should remove that."
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	plane = GAME_PLANE
 	layer = 3
@@ -96,7 +96,7 @@
 	name = "vomit"
 	desc = "Gosh, how unpleasant."
 	gender = PLURAL
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/blood.dmi'
@@ -118,7 +118,7 @@
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
 	desc = "It's red."
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
@@ -127,7 +127,7 @@
 /obj/effect/decal/cleanable/egg_smudge
 	name = "smashed egg"
 	desc = "Seems like this one won't hatch."
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'
@@ -136,7 +136,7 @@
 /obj/effect/decal/cleanable/pie_smudge //honk
 	name = "smashed pie"
 	desc = "It's pie cream from a cream pie."
-	density = 0
+	density = FALSE
 	anchored = TRUE
 	layer = 2
 	icon = 'icons/effects/tomatodecal.dmi'

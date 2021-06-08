@@ -3,7 +3,7 @@
 	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
 	icon_state = "artifact_13"
 	icon_num = 0
-	density = 1
+	density = TRUE
 	being_used = 0
 	need_inicial = 0
 	anchored = TRUE

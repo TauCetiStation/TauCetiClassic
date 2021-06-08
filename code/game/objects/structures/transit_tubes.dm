@@ -6,7 +6,7 @@
 /obj/structure/transit_tube
 	icon = 'icons/obj/pipes/transit_tube.dmi'
 	icon_state = "E-W"
-	density = 1
+	density = TRUE
 	layer = 3.1
 	anchored = TRUE
 	var/list/tube_dirs = null
@@ -322,7 +322,7 @@
 			current_tube.pod_stopped(src, dir)
 			break
 
-	density = 1
+	density = TRUE
 
 	moving = 0
 
@@ -405,7 +405,7 @@
 		tube_dirs = parse_dirs(icon_state)
 
 		if(copytext(icon_state, 1, 3) == "D-" || findtextEx(icon_state, "Pass"))
-			density = 0
+			density = FALSE
 
 
 

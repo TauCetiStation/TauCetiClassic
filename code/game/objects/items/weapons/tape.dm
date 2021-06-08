@@ -13,7 +13,7 @@
 	name = "tape"
 	icon = 'icons/obj/tape.dmi'
 	anchored = TRUE
-	density = 1
+	density = TRUE
 	var/icon_base
 
 /obj/item/taperoll/police
@@ -140,7 +140,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (user.a_intent == INTENT_HELP && allowed(user))
 		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
-		density = 0
+		density = FALSE
 		VARSET_IN(src, density, TRUE, 20 SECONDS)
 	else
 		breaktape(null, user, FALSE)

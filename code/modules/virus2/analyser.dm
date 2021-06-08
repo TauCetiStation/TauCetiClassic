@@ -3,7 +3,7 @@
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 
 	var/scanning = 0
 	var/pause = 0

@@ -86,7 +86,7 @@ steam.start() -- spawns the effect
 	name = "steam"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
-	density = 0
+	density = FALSE
 
 /datum/effect/effect/system/steam_spread/set_up(n = 3, c = 0, turf/loc)
 	if(n > 10)
@@ -469,7 +469,7 @@ steam.start() -- spawns the effect
 	icon_state = "foam"
 	opacity = 0
 	anchored = TRUE
-	density = 0
+	density = FALSE
 	layer = OBJ_LAYER + 0.9
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
@@ -621,7 +621,7 @@ steam.start() -- spawns the effect
 
 
 /obj/structure/foamedmetal/Destroy()
-	density = 0
+	density = FALSE
 	update_nearby_tiles(1)
 	return ..()
 

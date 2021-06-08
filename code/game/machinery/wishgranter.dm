@@ -6,7 +6,7 @@
 
 	use_power = NO_POWER_USE
 	anchored = TRUE
-	density = 1
+	density = TRUE
 
 	var/charges = 1
 	var/insisting = 0

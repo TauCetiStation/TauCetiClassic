@@ -1,5 +1,5 @@
 /obj/structure/computerframe
-	density = 1
+	density = TRUE
 	anchored = FALSE
 	name = "Computer-frame"
 	icon = 'icons/obj/stock_parts.dmi'
@@ -9,7 +9,7 @@
 //	weight = 1.0E8
 
 /obj/item/weapon/circuitboard
-	density = 0
+	density = FALSE
 	anchored = FALSE
 	w_class = ITEM_SIZE_SMALL
 	name = "Circuit board"

@@ -2,7 +2,7 @@
 	name = "window"
 	desc = "A window."
 	icon = 'icons/obj/window.dmi'
-	density = 1
+	density = TRUE
 	layer = 3.2//Just above doors
 	anchored = TRUE
 	flags = ON_BORDER
@@ -390,7 +390,7 @@
 
 
 /obj/structure/window/Destroy()
-	density = 0
+	density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	update_nearby_tiles()
 	update_nearby_icons()

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	light_color = "#ffcc33"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20

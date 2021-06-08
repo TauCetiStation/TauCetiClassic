@@ -2,7 +2,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "signpost"
 	anchored = TRUE
-	density = 1
+	density = TRUE
 
 /obj/structure/signpost/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)
@@ -66,7 +66,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
@@ -77,7 +77,7 @@
 	icon_state = "ball"
 	name = "beach ball"
 	item_state = "beachball"
-	density = 0
+	density = FALSE
 	anchored = FALSE
 	w_class = ITEM_SIZE_SMALL
 	force = 0.0
