@@ -24683,6 +24683,10 @@
 	},
 /area/station/cargo/office)
 "gJM" = (
+<<<<<<< HEAD
+=======
+/obj/structure/pbag,
+>>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -33573,6 +33577,10 @@
 	},
 /area/station/civilian/gym)
 "jFE" = (
+<<<<<<< HEAD
+=======
+/obj/structure/pbag,
+>>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -68935,12 +68943,12 @@
 /area/station/civilian/dormitories/dormfour)
 "uHH" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
-	dir = 8;
 	frequency = 1443;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor" = "Tank")
+	sensors = list("air_sensor" = "Tank");
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -79224,6 +79232,10 @@
 /turf/space,
 /area/shuttle/escape_pod2/station)
 "xWI" = (
+<<<<<<< HEAD
+=======
+/obj/structure/pbag,
+>>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/effect/decal/cleanable/dirt,
 /mob/living/pbag,
 /turf/simulated/floor{
