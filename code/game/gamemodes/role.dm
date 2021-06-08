@@ -94,6 +94,16 @@
 
 	qdel(src)
 
+/datum/role/proc/handleRemovedObjective(datum/objective/O)
+	SHOULD_CALL_PARENT(TRUE)
+	ASSERT(O)
+	if (!(O in objectives.objectives))
+		log_mode("Trying to remove an objective ([O]) to role ([src]) who never had it.")
+		return FALSE
+	objectives.objectives -= O
+	O.faction = null
+	qdel(O)
+
 // General sanity checks before assigning the person to the role, such as checking if they're part of the protected jobs or antags.
 /datum/role/proc/CanBeAssigned(datum/mind/M)
 	if(M.assigned_role in list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor"))

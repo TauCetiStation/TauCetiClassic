@@ -12,10 +12,10 @@
 		O.faction = F
 	if(O.PostAppend())
 		return TRUE
-	else
-		objectives.Remove(O)
-		qdel(O)
-		return FALSE
+
+	objectives.Remove(O)
+	qdel(O)
+	return FALSE
 
 /datum/objective_holder/proc/GetObjectives()
 	return objectives

@@ -172,10 +172,11 @@
 			score["opkilled"]++
 			continue
 		var/turf/T = lead.antag.current.loc
-		if (istype(T.loc, /area/station/security/brig))
-			score["arrested"] += 1
-		else if (lead.antag.current.stat == DEAD)
-			score["opkilled"]++
+		if(T)
+			if (istype(T.loc, /area/station/security/brig))
+				score["arrested"] += 1
+			else if (lead.antag.current.stat == DEAD)
+				score["opkilled"]++
 	if(foecount == score["arrested"])
 		score["allarrested"] = 1
 	for(var/mob/living/carbon/human/player in human_list)
