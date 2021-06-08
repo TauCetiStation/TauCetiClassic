@@ -9731,10 +9731,7 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
 "apU" = (
-<<<<<<< HEAD
-=======
 /obj/structure/pbag,
->>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -18370,10 +18367,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/lawoffice)
 "aGf" = (
-<<<<<<< HEAD
-=======
 /obj/structure/pbag,
->>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = -32
 	},

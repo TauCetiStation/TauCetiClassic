@@ -24683,10 +24683,7 @@
 	},
 /area/station/cargo/office)
 "gJM" = (
-<<<<<<< HEAD
-=======
 /obj/structure/pbag,
->>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -33576,10 +33573,7 @@
 	},
 /area/station/civilian/gym)
 "jFE" = (
-<<<<<<< HEAD
-=======
 /obj/structure/pbag,
->>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -79231,10 +79225,7 @@
 /turf/space,
 /area/shuttle/escape_pod2/station)
 "xWI" = (
-<<<<<<< HEAD
-=======
 /obj/structure/pbag,
->>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "white"
