@@ -9740,7 +9740,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -18378,7 +18377,6 @@
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = -32
 	},
-/mob/living/pbag,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aGg" = (

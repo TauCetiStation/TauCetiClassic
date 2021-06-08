@@ -24690,7 +24690,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -33590,7 +33589,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/mob/living/pbag,
+
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -79237,7 +79236,6 @@
 /obj/structure/pbag,
 >>>>>>> parent of cd2d804c7b (Combos: Punching Bag (#5333))
 /obj/effect/decal/cleanable/dirt,
-/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
