@@ -20,7 +20,7 @@
 	. = ..()
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(user.loc != src || !user.canmove || !(direction & initialize_directions)) //can't go in a way we aren't connecting to
+	if(user.loc != src || !user.canmove || !(direction in global.cardinal)) //can't go in a way we aren't connecting to
 		return
 	ventcrawl_to(user, findConnecting(direction), direction)
 

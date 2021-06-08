@@ -9024,7 +9024,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/mob/living/pbag,
+/obj/structure/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -9731,12 +9731,12 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/entry)
 "apU" = (
+/obj/structure/pbag,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -16920,7 +16920,7 @@
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aDt" = (
-/mob/living/pbag,
+/obj/structure/pbag,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aDu" = (
@@ -18367,10 +18367,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/lawoffice)
 "aGf" = (
+/obj/structure/pbag,
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = -32
 	},
-/mob/living/pbag,
 /turf/simulated/floor,
 /area/station/civilian/gym)
 "aGg" = (
