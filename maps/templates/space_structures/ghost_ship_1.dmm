@@ -927,7 +927,7 @@
 /area/space_structures/ghostship)
 "go" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

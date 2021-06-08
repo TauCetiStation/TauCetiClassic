@@ -53,7 +53,7 @@
 	name = "table"
 	desc = "A square piece of metal standing on four metal legs. It can not move."
 	density = 1
-	anchored = 1.0
+	anchored = TRUE
 	layer = 2.8
 	throwpass = 1	//You can throw objects over this, despite it's density.
 
@@ -73,7 +73,7 @@
 	desc = "Apply butt."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1.0
+	anchored = TRUE
 
 
 /obj/item/clothing/gloves/boxing/hologlove
@@ -121,7 +121,7 @@
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
 			if(health <= 7)
-				anchored = 0
+				anchored = FALSE
 				update_nearby_icons()
 				step(src, get_dir(user, src))
 		else
@@ -257,7 +257,7 @@
 	desc = "Boom, Shakalaka!"
 	icon = 'icons/obj/basketball.dmi'
 	icon_state = "hoop"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	throwpass = 1
 
@@ -298,7 +298,7 @@
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	anchored = 1.0
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6

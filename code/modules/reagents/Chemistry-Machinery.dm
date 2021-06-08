@@ -75,7 +75,7 @@
 /obj/machinery/chem_dispenser/blob_act()
 	if (prob(50))
 		qdel(src)
-		
+
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
 	tgui_interact(user)
 
@@ -129,12 +129,12 @@
 
 			if(iscarbon(usr))
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
-			
+
 		if("dispense")
 			. = TRUE
 			if (!beaker || !dispensable_reagents.Find(params["chemical"]))
 				return
-			
+
 			var/datum/reagents/R = beaker.reagents
 			var/space = R.maximum_volume - R.total_volume
 
@@ -146,7 +146,7 @@
 
 			R.add_reagent(params["chemical"], min(amount, energy * 10, space))
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
-		
+
 		if("eject_beaker")
 			. = TRUE
 			if(!beaker)
@@ -758,7 +758,7 @@
 /obj/machinery/computer/pandemic
 	name = "PanD.E.M.I.C 2200"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	circuit = /obj/item/weapon/circuitboard/pandemic
@@ -1005,7 +1005,7 @@
 	icon_state = "juicer1"
 	layer = 2.9
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100

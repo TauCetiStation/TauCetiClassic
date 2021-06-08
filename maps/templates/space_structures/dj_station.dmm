@@ -426,7 +426,7 @@
 /area/space_structures/djstation)
 "ba" = (
 /obj/structure/computerframe{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 4
 	},
 /turf/simulated/floor{

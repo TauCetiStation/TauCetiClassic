@@ -4,7 +4,7 @@
 	name = "Mining fabricator"
 	desc = "Nothing is being built."
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200
 	active_power_usage = 25000

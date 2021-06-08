@@ -1052,7 +1052,7 @@
 /area/awaymission/spacebattle/cruiser)
 "dg" = (
 /obj/machinery/shieldgen{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)

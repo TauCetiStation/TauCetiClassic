@@ -4,7 +4,7 @@
 	icon_state = "glassbox1"
 	desc = "A display case for prized possessions. It taunts you to kick it."
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	unacidable = 1//Dissolving the case would also delete the gun.
 	var/health = 30
 	var/occupied = 1

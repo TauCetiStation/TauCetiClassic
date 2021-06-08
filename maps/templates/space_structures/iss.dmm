@@ -40,7 +40,7 @@
 /area/space_structures/iss)
 "ah" = (
 /obj/structure/computerframe{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 2
 	},
 /obj/item/weapon/shard,

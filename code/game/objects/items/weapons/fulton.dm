@@ -46,7 +46,7 @@
 				if(M && M.buckled)
 					M.buckled.unbuckle_mob()
 			else
-				AM.anchored = 1
+				AM.anchored = TRUE
 				AM.density = 0
 			var/obj/effect/extraction_holder/holder_obj = new(AM.loc)
 			holder_obj.appearance = AM.appearance
@@ -102,7 +102,7 @@
 			holder_obj.cut_overlay(balloon)
 			if(!target)
 				return
-			AM.anchored = 0 // An item has to be unanchored to be extracted in the first place.
+			AM.anchored = FALSE // An item has to be unanchored to be extracted in the first place.
 			AM.density = initial(target.density)
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)

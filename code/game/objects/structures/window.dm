@@ -4,7 +4,7 @@
 	icon = 'icons/obj/window.dmi'
 	density = 1
 	layer = 3.2//Just above doors
-	anchored = 1.0
+	anchored = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
@@ -150,7 +150,7 @@
 	if(reinf)
 		tforce *= 0.25
 	if(health - tforce <= 7 && !reinf)
-		anchored = 0
+		anchored = FALSE
 		update_nearby_icons()
 		step(src, get_dir(AM, src))
 	take_damage(tforce)
@@ -290,7 +290,7 @@
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force, W.damtype)
 			if(health <= 7)
-				anchored = 0
+				anchored = FALSE
 				update_nearby_icons()
 				fastened_change()
 				step(src, get_dir(user, src))

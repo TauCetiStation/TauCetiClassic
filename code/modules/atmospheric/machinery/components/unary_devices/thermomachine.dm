@@ -6,7 +6,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "freezer"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
 	layer = OBJ_LAYER

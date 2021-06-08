@@ -2,7 +2,7 @@
 	name = "Disease Analyser"
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 
 	var/scanning = 0

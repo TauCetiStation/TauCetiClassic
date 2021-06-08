@@ -217,7 +217,7 @@
 			I.layer = initial(layer)
 			I.pixel_x = initial(pixel_x)
 			I.pixel_y = initial(pixel_y)
-			I.anchored = 0
+			I.anchored = FALSE
 			decals.Cut()
 
 		src.visible_message("Something dropped from \the [src].")

@@ -2052,7 +2052,7 @@
 /area/asteroid/research_outpost/hallway)
 "ev" = (
 /obj/machinery/power/port_gen/pacman{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -2098,7 +2098,7 @@
 /area/asteroid/research_outpost/anomaly)
 "eB" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 4;
 	state = 2
 	},
@@ -9024,13 +9024,13 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/power/port_gen/pacman{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tB" = (
 /obj/machinery/power/port_gen/pacman{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -11082,7 +11082,7 @@
 /area/asteroid/mine/production)
 "yT" = (
 /obj/machinery/power/port_gen/pacman{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -11738,7 +11738,7 @@
 "Aw" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -11753,7 +11753,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/port_gen/pacman{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
@@ -12812,7 +12812,7 @@
 /area/asteroid/research_outpost/iso2)
 "Nb" = (
 /obj/machinery/power/port_gen/pacman{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/structure/cable{
 	d2 = 8;

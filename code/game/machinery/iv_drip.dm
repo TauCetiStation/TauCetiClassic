@@ -2,7 +2,7 @@
 	name = "IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
-	anchored = 0
+	anchored = FALSE
 	density = 0
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null

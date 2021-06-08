@@ -52,7 +52,7 @@ var/list/ingredients_source = list(
 	icon = 'icons/obj/icecream.dmi'
 	icon_state = "icecream_vat"
 	density = 1
-	anchored = 0
+	anchored = FALSE
 	var/list/ingredients = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/obj/item/weapon/reagent_containers/glass/held_container

@@ -1229,7 +1229,7 @@
 /area/awaymission/BMPship3)
 "dJ" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -1559,7 +1559,7 @@
 /area/awaymission/BMPship3)
 "ex" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -2589,7 +2589,7 @@
 /area/awaymission/BMPship3)
 "gX" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
@@ -2597,7 +2597,7 @@
 /area/awaymission/BMPship3)
 "gY" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg1"

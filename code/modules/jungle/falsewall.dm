@@ -5,7 +5,7 @@
 
 /obj/structure/temple_falsewall
 	name = "wall"
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "phoron0"
 	opacity = 1

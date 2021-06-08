@@ -64,7 +64,7 @@ var/global/loopModeNames=list(
 	icon_state = "jukebox2-nopower"
 	density = 1
 
-	anchored = 1
+	anchored = TRUE
 	playing = 0
 
 	var/loop_mode = JUKEMODE_SHUFFLE

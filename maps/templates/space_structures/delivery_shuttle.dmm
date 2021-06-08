@@ -30,7 +30,7 @@
 /area/space_structures/delivery_shuttle)
 "f" = (
 /obj/structure/computerframe{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 2
 	},
 /obj/item/weapon/shard,

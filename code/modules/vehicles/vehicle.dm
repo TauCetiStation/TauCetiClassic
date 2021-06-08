@@ -9,7 +9,7 @@
 	icon = 'icons/obj/vehicles.dmi'
 	layer = MOB_LAYER + 0.1 //so it sits above objects including mobs
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	animate_movement = 1
 	light_range = 3
 
@@ -42,7 +42,7 @@
 		var/old_loc = get_turf(src)
 
 		var/init_anc = anchored
-		anchored = 0
+		anchored = FALSE
 		. = ..()
 		if(!.)
 			anchored = init_anc
@@ -211,7 +211,7 @@
 
 	C.forceMove(loc)
 	C.set_dir(dir)
-	C.anchored = 1
+	C.anchored = TRUE
 
 	load = C
 

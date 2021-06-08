@@ -2,7 +2,7 @@
 	name = "you should not see this"
 	desc = "no data"
 	invisibility = 101
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	var/falling_type = /obj/random/scrap/moderate_weighted
 

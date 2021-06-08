@@ -12,7 +12,7 @@
 /obj/item/tape
 	name = "tape"
 	icon = 'icons/obj/tape.dmi'
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	var/icon_base
 

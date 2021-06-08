@@ -99,7 +99,7 @@
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
 	density = 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/rock/atom_init()
 	. = ..()

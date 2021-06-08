@@ -8,7 +8,7 @@
 	icon = null
 	icon_state = "null"
 
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	opacity = 0
 	var/faction = "generic"
@@ -73,7 +73,7 @@
 ////////////////////////////
 
 /obj/structure/cellular_biomass/wall
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	opacity = 1
 	layer = 4

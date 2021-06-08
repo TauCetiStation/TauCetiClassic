@@ -4,7 +4,7 @@
 	desc = "Space barf from another dimension. It just keeps spreading!"
 	icon = 'icons/obj/biomass.dmi'
 	icon_state = "stage1"
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	layer = 5
 	pass_flags = PASSTABLE | PASSGRILLE

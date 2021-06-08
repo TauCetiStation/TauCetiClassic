@@ -87,7 +87,7 @@
 	name = "water"
 	last_move = 0
 	density = 0
-	anchored = 1
+	anchored = TRUE
 	layer = 5
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blank"

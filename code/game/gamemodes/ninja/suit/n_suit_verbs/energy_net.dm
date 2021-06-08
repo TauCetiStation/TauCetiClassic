@@ -12,7 +12,7 @@
 	density = 1//Can't pass through.
 	opacity = 0//Can see through.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
-	anchored = 1//Can't drag/grab the trapped mob.
+	anchored = TRUE//Can't drag/grab the trapped mob.
 
 	var/health = 100//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.

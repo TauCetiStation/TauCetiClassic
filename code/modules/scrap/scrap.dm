@@ -5,7 +5,7 @@ var/global/list/scrap_base_cache = list()
 	name = "scrap pile"
 	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "
 	appearance_flags = TILE_BOUND
-	anchored = 1
+	anchored = TRUE
 	opacity = 0
 	density = 0
 	var/loot_generated = 0
@@ -51,7 +51,7 @@ var/global/list/scrap_base_cache = list()
 	name = "This thins shoots scrap everywhere with a delay"
 	desc = "no data"
 	invisibility = 101
-	anchored = 1
+	anchored = TRUE
 	density = 0
 
 /obj/effect/scrapshot/atom_init(mapload, severity = 1)

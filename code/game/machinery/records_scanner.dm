@@ -5,7 +5,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "scanner_idle"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	var/lastuser = null
 
 /obj/machinery/scanner/atom_init()

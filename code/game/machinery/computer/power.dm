@@ -7,7 +7,7 @@
 	icon_state = "power"
 	light_color = "#ffcc33"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 80

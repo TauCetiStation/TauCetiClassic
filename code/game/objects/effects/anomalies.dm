@@ -7,7 +7,7 @@
 	icon_state = "vortex"
 	unacidable = 1
 	density = 0
-	anchored = 1
+	anchored = TRUE
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/atom_init()

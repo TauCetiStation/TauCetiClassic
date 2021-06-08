@@ -3,7 +3,7 @@
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light-emtter"
-	anchored = 1
+	anchored = TRUE
 	unacidable = 1
 	light_range = 8
 
@@ -782,7 +782,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/survival_pod_computer.dmi'
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	pixel_y = -32
 
@@ -901,7 +901,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "fans"
 	name = "environmental regulation system"
 	desc = "A large machine releasing a constant gust of air."
-	anchored = 1
+	anchored = TRUE
 	density = 1
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
@@ -966,7 +966,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "tubes"
 	icon = 'icons/obj/survival_pod.dmi'
 	name = "tubes"
-	anchored = 1
+	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	density = 0
 

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "fitnesslifter"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/stacklifter/attack_hand(mob/living/carbon/human/user)
 	if(!user.Adjacent(src))
@@ -62,7 +62,7 @@
 	icon = 'icons/obj/fitness.dmi'
 	icon_state = "fitnessweight"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/weightlifter/attack_hand(mob/living/carbon/human/user)
 	if(!user.Adjacent(src))

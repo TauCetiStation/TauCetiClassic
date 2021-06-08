@@ -20,7 +20,7 @@
 	desc = "It is a machine that grinds produce."
 	icon_state = "autolathe"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 1000
@@ -92,7 +92,7 @@
 	desc = "It is a machine that ferments produce into alcoholic drinks."
 	icon_state = "autolathe"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 500
@@ -162,7 +162,7 @@
 	desc = "It is a machine that produces hard liquor from alcoholic drinks."
 	icon_state = "autolathe"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 10000
@@ -228,7 +228,7 @@
 	desc = "It is a machine that squeezes extracts from produce."
 	icon_state = "autolathe"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 500
@@ -252,7 +252,7 @@
 	desc = "It is a machine that spins produce."
 	icon_state = "autolathe"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 10000

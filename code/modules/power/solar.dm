@@ -16,7 +16,7 @@
 	desc = "A solar electrical generator."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
@@ -51,7 +51,7 @@
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
-		S.anchored = 1
+		S.anchored = TRUE
 	S.loc = src
 	update_icon()
 
@@ -190,7 +190,7 @@
 	icon_state = "sp_base"
 	item_state = "electropack"
 	w_class = ITEM_SIZE_LARGE // Pretty big!
-	anchored = 0
+	anchored = FALSE
 	var/tracker = 0
 	var/glass_type = null
 
@@ -254,7 +254,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "solar"
 	light_color = "#b88b2e"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
@@ -320,7 +320,7 @@
 				A.circuit = M
 				A.state = 3
 				A.icon_state = "3"
-				A.anchored = 1
+				A.anchored = TRUE
 				qdel(src)
 			else
 				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
@@ -331,7 +331,7 @@
 				A.circuit = M
 				A.state = 4
 				A.icon_state = "4"
-				A.anchored = 1
+				A.anchored = TRUE
 				qdel(src)
 	else
 		src.attack_hand(user)

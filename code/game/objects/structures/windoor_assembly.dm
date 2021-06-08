@@ -14,7 +14,7 @@
 
 	name = "Windoor Assembly"
 	icon_state = "l_windoor_assembly01"
-	anchored = 0
+	anchored = FALSE
 	density = 0
 	dir = NORTH
 
@@ -84,7 +84,7 @@
 					if(src.anchored)
 						return
 					to_chat(user, "<span class='notice'>You've secured the windoor assembly!</span>")
-					src.anchored = 1
+					src.anchored = TRUE
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
 					else
@@ -97,7 +97,7 @@
 					if(!src.anchored)
 						return
 					to_chat(user, "<span class='notice'>You've unsecured the windoor assembly!</span>")
-					src.anchored = 0
+					src.anchored = FALSE
 					if(src.secure)
 						src.name = "Secure Windoor Assembly"
 					else

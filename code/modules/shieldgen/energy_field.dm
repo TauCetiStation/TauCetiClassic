@@ -6,7 +6,7 @@
 	desc = "Impenetrable field of energy, capable of blocking anything as long as it's active."
 	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "shieldsparkles"
-	anchored = 1
+	anchored = TRUE
 	layer = 4.1		//just above mobs
 	density = 0
 	invisibility = 101

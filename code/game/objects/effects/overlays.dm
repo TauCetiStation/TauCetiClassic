@@ -28,7 +28,7 @@
 	icon_state = "palm1"
 	density = 1
 	layer = 5
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/overlay/palmtree_l
 	name = "Palm tree"
@@ -36,7 +36,7 @@
 	icon_state = "palm2"
 	density = 1
 	layer = 5
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/overlay/coconut
 	name = "Coconuts"
@@ -62,12 +62,12 @@
 	icon_state = "Slice"
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/overlay/droppod_open
 	layer = 4
 	plane = 4
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "panel_opening"
 

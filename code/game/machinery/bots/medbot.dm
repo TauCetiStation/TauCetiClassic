@@ -10,7 +10,7 @@
 	icon_state = "medibot0"
 	layer = 5.0
 	density = 0
-	anchored = 0
+	anchored = FALSE
 	health = 20
 	maxhealth = 20
 	req_access =list(access_medical)
@@ -225,7 +225,7 @@
 			oldpatient = user
 		currently_healing = 0
 		last_found = world.time
-		anchored = 0
+		anchored = FALSE
 		emagged = 2
 		on = 1
 		icon_state = "medibot[on]"

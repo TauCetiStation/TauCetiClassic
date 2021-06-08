@@ -376,7 +376,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/ion_trails
 	name = "ion trails"
 	icon_state = "ion_trails"
-	anchored = 1
+	anchored = TRUE
 
 /datum/effect/effect/system/ion_trail_follow
 	var/turf/oldposition
@@ -468,7 +468,7 @@ steam.start() -- spawns the effect
 	name = "foam"
 	icon_state = "foam"
 	opacity = 0
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	layer = OBJ_LAYER + 0.9
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

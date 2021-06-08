@@ -1493,7 +1493,7 @@
 /area/awaymission/wildwest/refinery)
 "eK" = (
 /obj/effect/decal/mecha_wreckage/gygax{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
@@ -1569,7 +1569,7 @@
 /area/awaymission/wildwest/mines)
 "eT" = (
 /obj/effect/decal/mecha_wreckage/gygax{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
@@ -1644,7 +1644,7 @@
 /area/awaymission/wildwest/mines)
 "ff" = (
 /obj/effect/decal/mecha_wreckage/durand{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
@@ -1687,13 +1687,13 @@
 /area/awaymission/wildwest/refinery)
 "fk" = (
 /obj/effect/decal/mecha_wreckage/seraph{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
 "fl" = (
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
@@ -1737,7 +1737,7 @@
 /area/awaymission/wildwest/mines)
 "fr" = (
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
@@ -1826,7 +1826,7 @@
 /area/awaymission/wildwest/mines)
 "fD" = (
 /obj/effect/decal/mecha_wreckage/mauler{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
@@ -1908,7 +1908,7 @@
 /area/awaymission/wildwest/refinery)
 "fP" = (
 /obj/effect/decal/mecha_wreckage/ripley/deathripley{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating/ironsand,

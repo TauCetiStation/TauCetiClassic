@@ -834,7 +834,7 @@
 /area/station/civilian/bar)
 "abj" = (
 /obj/structure/flora/rock/jungle{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
@@ -888,7 +888,7 @@
 /area/station/hallway/primary/central)
 "abo" = (
 /obj/structure/flora/rock/jungle{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
@@ -970,7 +970,7 @@
 "abw" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/rock/jungle{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
@@ -1168,7 +1168,7 @@
 /area/station/hallway/primary/central)
 "abL" = (
 /obj/structure/flora/rock/jungle{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
@@ -1202,7 +1202,7 @@
 /area/station/hallway/primary/central)
 "abP" = (
 /obj/structure/flora/rock/jungle{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
@@ -1649,7 +1649,7 @@
 /area/station/hallway/primary/central)
 "acB" = (
 /obj/machinery/vending/cigarette{
-	anchored = 0
+	anchored = FALSE
 	},
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -1863,7 +1863,7 @@
 "acW" = (
 /obj/machinery/light/small,
 /obj/structure/flora/rock/jungle{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/grass,
 /turf/simulated/floor{
@@ -2268,7 +2268,7 @@
 /area/station/hallway/secondary/exit)
 "adH" = (
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 8
 	},
 /obj/structure/cable{
@@ -2316,7 +2316,7 @@
 /area/station/civilian/gym)
 "adK" = (
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 4
 	},
 /obj/structure/cable{
@@ -6472,7 +6472,7 @@
 /area/shuttle/vox/southeast_solars)
 "bbX" = (
 /obj/machinery/vending/boozeomat{
-	anchored = 0
+	anchored = FALSE
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/eva)
@@ -7662,7 +7662,7 @@
 /area/station/bridge/teleporter)
 "btG" = (
 /obj/machinery/power/rad_collector{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/machinery/camera/emp_proof{
 	c_tag = "Singularity Observation";
@@ -15913,7 +15913,7 @@
 	req_access = list(45)
 	},
 /obj/machinery/holosign/surgery{
-	anchored = 1;
+	anchored = TRUE;
 	id = "op1"
 	},
 /turf/simulated/floor{
@@ -16871,7 +16871,7 @@
 	req_access = list(45)
 	},
 /obj/machinery/holosign/surgery{
-	anchored = 1;
+	anchored = TRUE;
 	id = "op1"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -17246,7 +17246,7 @@
 /area/station/maintenance/brig)
 "esg" = (
 /obj/machinery/vending/weirdomat{
-	anchored = 0
+	anchored = FALSE
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
@@ -20389,7 +20389,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 4;
 	state = 2
 	},
@@ -23718,7 +23718,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 8;
 	state = 2
 	},
@@ -28332,7 +28332,7 @@
 /area/station/aisat/ai_chamber)
 "hUf" = (
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 4
 	},
 /obj/structure/cable,
@@ -28398,7 +28398,7 @@
 /area/station/bridge/nuke_storage)
 "hVo" = (
 /obj/machinery/field_generator{
-	anchored = 1;
+	anchored = TRUE;
 	state = 2
 	},
 /turf/simulated/floor/plating/airless,
@@ -29403,7 +29403,7 @@
 /area/station/engineering/engine)
 "inb" = (
 /obj/machinery/power/rad_collector{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/item/weapon/tank/phoron,
 /obj/structure/cable/yellow{
@@ -36174,7 +36174,7 @@
 /area/station/hallway/secondary/entry)
 "kuY" = (
 /obj/structure/stool/bed/chair/pedalgen{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 4
 	},
 /obj/structure/window/reinforced{
@@ -40041,7 +40041,7 @@
 /area/station/medical/psych)
 "lCn" = (
 /obj/structure/door_assembly/door_assembly_mai{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -45665,7 +45665,7 @@
 /area/station/medical/reception)
 "noA" = (
 /obj/structure/flora/rock/jungle{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor/grass,
 /area/station/hallway/primary/central)
@@ -47635,7 +47635,7 @@
 	req_access = list(45)
 	},
 /obj/machinery/holosign/surgery{
-	anchored = 1;
+	anchored = TRUE;
 	id = "op2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -51721,7 +51721,7 @@
 /area/station/maintenance/medbay)
 "poq" = (
 /obj/machinery/power/rad_collector{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/structure/cable/yellow{
 	d2 = 2;
@@ -51735,7 +51735,7 @@
 /area/station/engineering/engine)
 "por" = (
 /obj/structure/flora/rock/jungle{
-	anchored = 1;
+	anchored = TRUE;
 	icon_state = "grassb2"
 	},
 /turf/simulated/floor/grass,
@@ -53686,7 +53686,7 @@
 	dir = 4
 	},
 /obj/machinery/holosign/surgery{
-	anchored = 1;
+	anchored = TRUE;
 	id = "op2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -59801,7 +59801,7 @@
 /area/station/civilian/dormitories)
 "rRd" = (
 /obj/structure/flora/rock/jungle{
-	anchored = 1;
+	anchored = TRUE;
 	icon_state = "grassa4"
 	},
 /obj/machinery/firealarm{
@@ -62340,7 +62340,7 @@
 /area/station/security/main)
 "sEb" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 8;
 	state = 2
 	},
@@ -62531,7 +62531,7 @@
 /area/station/hallway/primary/bridgehall)
 "sIg" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 4;
 	state = 2
 	},

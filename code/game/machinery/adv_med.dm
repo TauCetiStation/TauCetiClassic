@@ -8,7 +8,7 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	light_color = "#00ff00"
 
 /obj/machinery/bodyscanner/power_change()
@@ -135,7 +135,7 @@
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
-	anchored = 1
+	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
 

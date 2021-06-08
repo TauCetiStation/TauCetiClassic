@@ -5,7 +5,7 @@
 	icon_state = "rcdammo"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = FALSE
 	var/fuel = 0
 	var/s_time = 1.0
 	var/content = null

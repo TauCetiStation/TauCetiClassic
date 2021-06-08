@@ -9,7 +9,7 @@
 	icon = 'icons/obj/structures/chalkboard.dmi'
 	icon_state = "board_clean"
 	density = 0
-	anchored = 1
+	anchored = TRUE
 	var/status = CB_CLEAN
 	var/content
 

@@ -4,7 +4,7 @@
 	icon_state = "labcage1"
 	desc = "A glass lab container for storing interesting creatures."
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	unacidable = 1//Dissolving the case would also delete Lamarr
 	var/health = 30
 	var/occupied = 1

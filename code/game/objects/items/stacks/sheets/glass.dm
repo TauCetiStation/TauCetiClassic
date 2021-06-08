@@ -129,7 +129,7 @@
 			W = new created_window(user.loc)
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Full Window")
 			if(QDELETED(src))
 				return 1
@@ -149,7 +149,7 @@
 			W = new created_window(step)
 			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Glass Table Parts")
 			if(QDELETED(src))
 				return 1
@@ -246,7 +246,7 @@
 			W.state = 0
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Full Window")
 			if(QDELETED(src))
@@ -267,7 +267,7 @@
 			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
 			W.state = 0
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Windoor")
 			if(QDELETED(src) || src.loc != user)
@@ -288,7 +288,7 @@
 			var/obj/structure/windoor_assembly/WD
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
-			WD.anchored = 0
+			WD.anchored = FALSE
 			switch(user.dir)
 				if(SOUTH)
 					WD.set_dir(SOUTH)

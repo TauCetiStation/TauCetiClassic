@@ -4,7 +4,7 @@
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "Light1"
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	layer = 5
 	pass_flags = PASSTABLE | PASSGRILLE

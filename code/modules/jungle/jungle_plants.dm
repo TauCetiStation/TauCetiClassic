@@ -8,7 +8,7 @@
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "bush1"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	layer = 3.2
 	var/indestructable = 0
 	var/stump = 0

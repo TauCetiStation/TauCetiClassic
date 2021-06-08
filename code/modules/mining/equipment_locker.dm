@@ -7,7 +7,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
 	density = 1
-	anchored = 1.0
+	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_one_access = list(access_mining_station, access_chemistry, access_bar, access_research, access_ce, access_virology)
@@ -238,7 +238,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = 1
-	anchored = 1.0
+	anchored = TRUE
 	var/static/list/selection_items
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(

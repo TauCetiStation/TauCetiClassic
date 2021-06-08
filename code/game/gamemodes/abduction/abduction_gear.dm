@@ -640,7 +640,7 @@
 		flick("belt_anim_on",animation)
 		sleep(7)
 		add_overlay(belt)
-		fastened.anchored = 1
+		fastened.anchored = TRUE
 		fastened.SetStunned(INFINITY)
 		qdel(animation)
 	else
@@ -651,7 +651,7 @@
 		flick("belt_anim_off",animation)
 		sleep(9)
 		fastened.SetStunned(0)
-		fastened.anchored = 0
+		fastened.anchored = FALSE
 		fastened = null
 		qdel(animation)
 

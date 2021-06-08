@@ -816,7 +816,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 						var/obj/corner = new()
 						corner.loc = X
 						corner.density = 1
-						corner.anchored = 1
+						corner.anchored = TRUE
 						corner.icon = X.icon
 						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
 						corner.tag = "delete me"

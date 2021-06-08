@@ -5,7 +5,7 @@
 	icon_state = "fryer_off"
 	layer = 2.9
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	interact_offline = TRUE

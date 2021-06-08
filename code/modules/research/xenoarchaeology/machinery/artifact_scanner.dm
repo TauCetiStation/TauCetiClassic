@@ -4,7 +4,7 @@
 	desc = "Place things here for scanning."
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "xenoarch_scanner"
-	anchored = 1
+	anchored = TRUE
 	layer = INFRONT_MOB_LAYER
 	density = 0
 

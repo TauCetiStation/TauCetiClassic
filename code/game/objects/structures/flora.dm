@@ -232,7 +232,7 @@
 // trees
 /obj/structure/flora/tree
 	name = "tree"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	pixel_x = -16
 	layer = 9
@@ -296,7 +296,7 @@
 /obj/structure/flora/grass
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 60
 
@@ -328,7 +328,7 @@
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 50
 
@@ -342,7 +342,7 @@
 	name = "bush"
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 50
 
@@ -477,7 +477,7 @@
 	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
-	anchored = 1
+	anchored = TRUE
 	can_be_cut = TRUE
 	health_flora = 40
 

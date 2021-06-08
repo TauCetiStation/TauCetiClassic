@@ -334,9 +334,9 @@
 		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		for(var/i=0, i<30, i++)
 			usr.canmove = 0
-			usr.anchored = 1
+			usr.anchored = TRUE
 			sleep(1)
-		usr.anchored = 0
+		usr.anchored = FALSE
 		usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		usr.visible_message("<span class='warning'><b>[usr.name] slams the ground with \his arms!</b></span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)

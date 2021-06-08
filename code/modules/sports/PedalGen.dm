@@ -21,7 +21,7 @@
 	desc = "Push it to the limit!"
 	icon = 'code/modules/sports/pedalgen.dmi'
 	icon_state = "pedalgen"
-	anchored = 0
+	anchored = FALSE
 	density = 0
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null

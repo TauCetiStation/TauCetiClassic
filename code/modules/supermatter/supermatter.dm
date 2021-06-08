@@ -20,7 +20,7 @@
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "darkmatter"
 	density = 1
-	anchored = 0
+	anchored = FALSE
 	light_range = 4
 
 	var/gasefficency = 0.25

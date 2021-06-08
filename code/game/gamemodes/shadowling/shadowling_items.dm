@@ -123,7 +123,7 @@
 	name = "vortex"
 	desc = "A swirling hole in the fabric of reality. Eye-watering chimes sound from its depths."
 	density = 0
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/effects/genetics.dmi'
 	icon_state = "shadow_portal"
 

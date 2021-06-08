@@ -9,7 +9,7 @@
 	simulated = 0
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/flood/ex_act()
 	return

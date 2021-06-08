@@ -8,7 +8,7 @@
 	desc = "A solar directional tracker."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	use_power = NO_POWER_USE
 
@@ -20,7 +20,7 @@
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass
 		S.tracker = 1
-		S.anchored = 1
+		S.anchored = TRUE
 	S.loc = src
 	connect_to_network()
 

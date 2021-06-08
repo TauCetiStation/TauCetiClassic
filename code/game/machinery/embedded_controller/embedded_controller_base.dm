@@ -2,7 +2,7 @@
 	var/datum/computer/file/embedded_program/program
 
 	name = "Embedded Controller"
-	anchored = 1
+	anchored = TRUE
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/on = 1

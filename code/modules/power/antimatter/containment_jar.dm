@@ -4,7 +4,7 @@
 	icon = 'icons/obj/machines/antimatter.dmi'
 	icon_state = "jar"
 	density = 0
-	anchored = 0
+	anchored = FALSE
 	force = 8
 	throwforce = 10
 	throw_speed = 1

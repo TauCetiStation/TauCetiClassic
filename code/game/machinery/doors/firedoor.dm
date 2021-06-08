@@ -205,7 +205,7 @@
 					new/obj/item/weapon/airalarm_electronics(src.loc)
 
 					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
-					FA.anchored = 1
+					FA.anchored = TRUE
 					FA.density = 1
 					FA.wired = 1
 					FA.update_icon()

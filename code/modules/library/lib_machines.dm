@@ -476,7 +476,7 @@
 	name = "scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
@@ -527,7 +527,7 @@
 	name = "Book Binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 
 /obj/machinery/bookbinder/attackby(obj/O, mob/user)

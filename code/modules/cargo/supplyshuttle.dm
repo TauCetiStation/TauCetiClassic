@@ -21,7 +21,7 @@ var/list/mechtoys = list(
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
 	density = 0
-	anchored = 1
+	anchored = TRUE
 	layer = 4
 	explosion_resistance = 5
 

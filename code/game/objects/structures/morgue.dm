@@ -17,7 +17,7 @@
 	icon_state = "morgue1"
 	dir = EAST
 	density = TRUE
-	anchored = 1.0
+	anchored = TRUE
 
 	var/obj/structure/m_tray/connected = null
 	var/check_delay = 0
@@ -199,7 +199,7 @@
 	density = 1
 	layer = 2.0
 	var/obj/structure/morgue/connected = null
-	anchored = 1
+	anchored = TRUE
 	throwpass = 1
 
 /obj/structure/m_tray/Destroy()
@@ -242,7 +242,7 @@
 	icon_state = "crema1"
 	density = 1
 	var/obj/structure/c_tray/connected = null
-	anchored = 1.0
+	anchored = TRUE
 	var/cremating = 0
 	var/id = 1
 	var/locked = 0
@@ -418,7 +418,7 @@
 	density = 1
 	layer = 2.0
 	var/obj/structure/crematorium/connected = null
-	anchored = 1
+	anchored = TRUE
 	throwpass = 1
 
 /obj/structure/c_tray/attack_paw(mob/user)

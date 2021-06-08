@@ -1,6 +1,6 @@
 /obj/structure/computerframe
 	density = 1
-	anchored = 0
+	anchored = FALSE
 	name = "Computer-frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
@@ -10,7 +10,7 @@
 
 /obj/item/weapon/circuitboard
 	density = 0
-	anchored = 0
+	anchored = FALSE
 	w_class = ITEM_SIZE_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
@@ -412,7 +412,7 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					src.anchored = 1
+					src.anchored = TRUE
 					src.state = 1
 			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
@@ -428,7 +428,7 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
-					src.anchored = 0
+					src.anchored = FALSE
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P

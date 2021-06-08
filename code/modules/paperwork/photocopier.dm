@@ -2,7 +2,7 @@
 	name = "photocopier"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30

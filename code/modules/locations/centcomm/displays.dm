@@ -37,7 +37,7 @@
 
 //надеюсь в скором времени переписать
 /obj/machinery/information_display
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 25

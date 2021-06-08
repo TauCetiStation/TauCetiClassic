@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	density = 1
-	anchored = 0
+	anchored = FALSE
 	flags = OPENCONTAINER
 	var/modded = FALSE
 	var/transfer_from = TRUE
@@ -233,7 +233,7 @@
 	desc = "Refill pepper spray canisters."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "peppertank"
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	amount_per_transfer_from_this = 45
 
@@ -250,7 +250,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/water_cooler/atom_init()
 	. = ..()
@@ -276,7 +276,7 @@
 	desc = "A dispenser of virus food."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "virusfoodtank"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/virusfood/atom_init()
 	. = ..()
@@ -287,7 +287,7 @@
 	desc = "A dispenser of acid for industrial processes."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "acidtank"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
@@ -310,7 +310,7 @@
 	desc = "A dispenser of cleaner."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cleanertank"
-	anchored = 1
+	anchored = TRUE
 	density = 0
 
 /obj/structure/reagent_dispensers/cleaner/atom_init()

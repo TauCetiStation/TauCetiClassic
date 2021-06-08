@@ -173,7 +173,7 @@
 /area/space_structures/abandoned_ship)
 "aC" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -639,7 +639,7 @@
 /area/space_structures/abandoned_ship)
 "bR" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor{
@@ -648,7 +648,7 @@
 /area/space_structures/abandoned_ship)
 "bS" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /obj/item/stack/cable_coil/cut/red,
 /turf/simulated/floor{

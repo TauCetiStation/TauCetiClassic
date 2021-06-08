@@ -309,7 +309,7 @@
 							if("rightsecure")
 								WA.icon_state = "r_secure_windoor_assembly02"
 								WA.secure = 1
-								WA.anchored = 1
+								WA.anchored = TRUE
 						WA.state= "02"
 						WA.set_dir(src.dir)
 						WA.ini_dir = src.dir

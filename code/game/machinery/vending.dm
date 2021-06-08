@@ -13,7 +13,7 @@
 	var/light_range_on = 3
 	var/light_power_on = 1
 	layer = 2.9
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??

@@ -46,9 +46,9 @@
 	else if (iswrench(W))
 		if(!suspension_field)
 			if(anchored)
-				anchored = 0
+				anchored = FALSE
 			else
-				anchored = 1
+				anchored = TRUE
 			icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 			to_chat(user, "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>")
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -318,7 +318,7 @@
 /obj/effect/suspension_field
 	name = "energy field"
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	var/field_type = "chlorine"
 

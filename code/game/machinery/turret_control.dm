@@ -11,7 +11,7 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = 1
+	anchored = TRUE
 	density = 0
 	allowed_checks = ALLOWED_CHECK_NONE // we use isLocked proc to open UI.
 

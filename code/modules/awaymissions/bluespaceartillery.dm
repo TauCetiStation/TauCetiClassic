@@ -6,7 +6,7 @@
 	icon_state = "control_boxp1"
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	density = 1
-	anchored = 1
+	anchored = TRUE
 
 	var/datum/announcement/centcomm/bsa/announcement = new
 
@@ -17,7 +17,7 @@
 /obj/structure/artilleryplaceholder
 	name = "artillery"
 	icon = 'icons/obj/machines/artillery.dmi'
-	anchored = 1
+	anchored = TRUE
 	density = 1
 
 /obj/structure/artilleryplaceholder/decorative

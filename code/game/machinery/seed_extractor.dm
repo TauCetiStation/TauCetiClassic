@@ -4,7 +4,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 

@@ -7,7 +7,7 @@
 	icon_state = "airtunnel"
 	state_broken_preset = "atmosb"
 	state_nopower_preset = "atmos0"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	var/obj/machinery/gravity_generator = null
 
@@ -17,7 +17,7 @@
 	desc = "A device which produces a gravaton field when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 200

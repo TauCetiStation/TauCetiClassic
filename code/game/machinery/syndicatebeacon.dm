@@ -10,7 +10,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	anchored = 1
+	anchored = TRUE
 	density = 1
 	use_power = NO_POWER_USE
 
@@ -179,7 +179,7 @@
 
 		if(stat & SCREWED)
 			stat &= ~SCREWED
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			attached = null
 			return
@@ -191,7 +191,7 @@
 				to_chat(user, "This device must be placed over an exposed cable.")
 				return
 			stat |= SCREWED
-			anchored = 1
+			anchored = TRUE
 			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	..()

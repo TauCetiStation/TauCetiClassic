@@ -96,7 +96,7 @@
 /area/awaymission/stationcollision/northblock)
 "au" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
@@ -713,7 +713,7 @@
 /area/awaymission/stationcollision/research)
 "ch" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	state = 2
 	},
 /turf/simulated/floor{
@@ -911,7 +911,7 @@
 /area/awaymission/stationcollision/research)
 "cG" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 1;
 	icon_state = "emitter";
 	state = 2
@@ -1179,7 +1179,7 @@
 /area/awaymission/stationcollision/research)
 "dm" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 8;
 	state = 2
 	},
@@ -1527,7 +1527,7 @@
 /area/awaymission/stationcollision/research)
 "dZ" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -1536,7 +1536,7 @@
 "ea" = (
 /obj/machinery/light,
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -1670,7 +1670,7 @@
 /area/awaymission/stationcollision/northblock)
 "es" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -1895,7 +1895,7 @@
 	dir = 1
 	},
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -1956,7 +1956,7 @@
 /area/awaymission/stationcollision/research)
 "eY" = (
 /obj/machinery/power/emitter{
-	anchored = 1;
+	anchored = TRUE;
 	dir = 1;
 	icon_state = "emitter";
 	state = 2
@@ -2049,7 +2049,7 @@
 "fj" = (
 /obj/machinery/light/small,
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -2065,7 +2065,7 @@
 /area/awaymission/stationcollision/northblock)
 "fl" = (
 /obj/structure/computerframe{
-	anchored = 1
+	anchored = TRUE
 	},
 /turf/simulated/floor{
 	dir = 1;

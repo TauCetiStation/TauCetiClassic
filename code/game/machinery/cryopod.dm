@@ -103,7 +103,7 @@ var/global/list/frozen_items = list()
 	desc = "A bewildering tangle of machinery and pipes."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryo_rear"
-	anchored = 1
+	anchored = TRUE
 	density = 1
 
 	var/orient_right = null //Flips the sprite.
@@ -127,7 +127,7 @@ var/global/list/frozen_items = list()
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "cryosleeper_left"
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	req_one_access = list(access_heads, access_security)
 	var/storage = 1	//tc, criopods on centcomm
 

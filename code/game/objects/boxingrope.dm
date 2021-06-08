@@ -2,7 +2,7 @@
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
 	density = 1
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
@@ -21,7 +21,7 @@
 	name = "Ring entrance"
 	desc = "Do not exit the ring."
 	density = 0
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER

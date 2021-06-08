@@ -10,7 +10,7 @@
 	desc = "Some blob creature thingy."
 	density = 0
 	opacity = TRUE
-	anchored = 1
+	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	var/health = 30
 	var/health_timestamp = 0
