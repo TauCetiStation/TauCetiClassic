@@ -16,7 +16,7 @@
 	icon_state = "t-ray[on]"
 
 	if(on)
-		START_PROCESSING(SSobj, src)
+		START_PROCESSING(SSfastprocess, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	if(ismob(loc))
@@ -33,13 +33,13 @@
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		STOP_PROCESSING(SSobj, src)
+		STOP_PROCESSING(SSfastprocess, src)
 		return null
 	scan()
 
 /obj/item/device/t_scanner/proc/scan()
 
-	for(var/turf/T in range(1, src.loc) )
+	for(var/turf/T in range(3, src.loc) )
 
 		if(!T.intact)
 			continue
