@@ -268,7 +268,8 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/engivend = "Engi-Vend",
 							/obj/machinery/vending/clothing = "ClothesMate",
 							/obj/machinery/vending/blood = "Blood'O'Matic",
-							/obj/machinery/vending/junkfood = "McNuffin's Fast Food")
+							/obj/machinery/vending/junkfood = "McNuffin's Fast Food",
+							/obj/machinery/vending/junkfood = "Monkin' Donuts")
 //							/obj/machinery/vending/autodrobe = "AutoDrobe")
 
 		build_path = pick(names)

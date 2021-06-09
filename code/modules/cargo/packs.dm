@@ -528,8 +528,11 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "Fast Food supply crate"
 	contains = list(/obj/item/weapon/vending_refill/junkfood,
 					/obj/item/weapon/vending_refill/junkfood,
-					/obj/item/weapon/vending_refill/junkfood)
-	cost = 10999
+					/obj/item/weapon/vending_refill/junkfood,
+					/obj/item/weapon/vending_refill/donut,
+					/obj/item/weapon/vending_refill/donut,
+					/obj/item/weapon/vending_refill/donut)
+	cost = 11999
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Fast Food supply crate"
 	group = "Hospitality"
