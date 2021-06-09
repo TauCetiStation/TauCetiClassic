@@ -63,9 +63,7 @@
 /datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
 	src.title = title
 	src.message = message
-	src.buttons = list()
-	for(var/btn in buttons)
-		src.buttons.Add(btn)
+	src.buttons = buttons
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -101,7 +99,7 @@
 	. = list(
 		"title" = title,
 		"message" = message,
-		"buttons" = buttons
+		"buttons" = copy_keys(buttons)
 	)
 	if(timeout)
 		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
@@ -114,7 +112,10 @@
 		if("choose")
 			if (!(params["choice"] in buttons))
 				return
-			choice = params["choice"]
+			if(is_associative_list(buttons))
+				choice = buttons[params["choice"]]
+			else
+				choice = params["choice"]
 			SStgui.close_uis(src)
 			return TRUE
 
@@ -143,7 +144,10 @@
 	. = ..()
 	if (!. || choice == null)
 		return
-	callback.InvokeAsync(choice)
+	if(is_associative_list(buttons))
+		callback.InvokeAsync(buttons[choice])
+	else
+		callback.InvokeAsync(choice)
 	qdel(src)
 
 /datum/tgui_modal/async/wait()

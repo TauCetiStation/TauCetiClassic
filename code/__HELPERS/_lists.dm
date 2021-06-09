@@ -790,6 +790,10 @@
 			return TRUE
 
 	return FALSE
+/proc/copy_keys(list/L)
+	. = list()
+	for(var/E in L)
+		. += E
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
