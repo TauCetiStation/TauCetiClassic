@@ -2,9 +2,6 @@
 
 name: 'Close stale issues and PRs'
 on:
-  pull_request:
-    branches:
-     - master
   issue_comment:
     types: [created]
   schedule:
@@ -14,7 +11,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: T6751/stale@remove-label-on-update
+      - uses: actions/stale@v3.0.19
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-pr-message: >

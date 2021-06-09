@@ -2,7 +2,7 @@
 
 name: 'Check for merge conflicts'
 on:
-  pull_request:
+  push:
     branches:
       - master
 jobs:
@@ -14,4 +14,4 @@ jobs:
           CONFLICT_LABEL_NAME: "Merge Conflict"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MAX_RETRIES: 5
-          WAIT_MS: 5000
+          WAIT_MS: 10000
