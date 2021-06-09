@@ -12,7 +12,6 @@
 
 /obj/structure/pbag/atom_init()
 	. = ..()
-	//color = pick("#aaffaa", "#aaaaff", "#ff3030", "#ff1010", "#ffffff")
 	color = random_color()
 
 /obj/structure/pbag/attack_hand(mob/user)
