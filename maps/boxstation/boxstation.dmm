@@ -3985,6 +3985,9 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 30
 	},
+/obj/item/weapon/twohanded/flora/pottedplant{
+	icon_state = "plant-6"
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -4256,9 +4259,7 @@
 	},
 /area/station/security/main)
 "ahh" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
-	icon_state = "plant-6"
-	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -4691,7 +4692,7 @@
 	},
 /area/station/security/warden)
 "ahR" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/donut,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -26740,25 +26741,15 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/civilian/playroom)
 "aVw" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
 	},
 /area/station/civilian/playroom)
 "aVx" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/disposal,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "neutral"
@@ -27667,7 +27658,9 @@
 	},
 /area/station/civilian/playroom)
 "aWU" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j2"
+	},
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -27695,6 +27688,10 @@
 /area/station/cargo/storage)
 "aWY" = (
 /obj/machinery/light,
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -76823,6 +76820,12 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"oHi" = (
+/obj/machinery/vending/donut,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/primary/central)
 "oHZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
@@ -77119,10 +77122,10 @@
 	},
 /area/station/civilian/bar)
 "oXR" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2"
+/obj/machinery/vending/donut,
+/turf/simulated/floor{
+	icon_state = "neutral"
 	},
-/turf/simulated/floor,
 /area/station/civilian/playroom)
 "oYb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -103609,7 +103612,7 @@ aPU
 aRb
 aSz
 aTT
-oXR
+aRb
 aWU
 aZh
 bbP
@@ -104124,7 +104127,7 @@ aRd
 aSG
 aTW
 aVw
-aWT
+oXR
 aZi
 bdv
 bdZ
@@ -107495,7 +107498,7 @@ bHu
 bIv
 bJr
 bFW
-aMS
+oHi
 aOe
 bCX
 rCb
