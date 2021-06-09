@@ -63,7 +63,7 @@
 /datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
 	src.title = title
 	src.message = message
-	src.buttons = buttons
+	src.buttons = buttons.Copy()
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
