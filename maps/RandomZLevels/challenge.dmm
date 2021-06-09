@@ -1155,7 +1155,7 @@
 /obj/structure/table,
 /obj/item/weapon/implanter/explosive,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "velocity_hall";
 	name = "Doors";

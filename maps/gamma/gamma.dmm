@@ -693,7 +693,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 8;
 	icon_state = "shutter0";
 	id = "bar";
@@ -764,7 +764,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/lighter/zippo,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 8;
 	icon_state = "shutter0";
 	id = "bar";
@@ -864,7 +864,7 @@
 /obj/structure/table/reinforced,
 /obj/item/ashtray/plastic,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 8;
 	icon_state = "shutter0";
 	id = "bar";
@@ -913,7 +913,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 8;
 	icon_state = "shutter0";
 	id = "bar";
@@ -1005,7 +1005,7 @@
 "abA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 8;
 	icon_state = "shutter0";
 	id = "bar";
@@ -1117,7 +1117,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "bar";
 	name = "Bar Shutters";
@@ -1134,7 +1134,7 @@
 	req_access = list(25)
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "bar";
 	name = "Bar Shutters";
@@ -2129,7 +2129,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -2495,7 +2495,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio2";
 	name = "Containment Blast Doors";
@@ -2562,7 +2562,7 @@
 	dir = 9
 	},
 /obj/decal/boxingrope{
-	density = FALSE;
+	density = 0;
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2571,7 +2571,7 @@
 /area/station/civilian/gym)
 "ael" = (
 /obj/decal/boxingrope{
-	density = FALSE;
+	density = 0;
 	dir = 8
 	},
 /obj/machinery/light{
@@ -2590,7 +2590,7 @@
 /area/station/civilian/gym)
 "aen" = (
 /obj/decal/boxingrope{
-	density = FALSE;
+	density = 0;
 	dir = 4
 	},
 /obj/structure/stool,
@@ -3466,7 +3466,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "eq_storage";
 	opacity = 0
@@ -4138,7 +4138,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -4394,7 +4394,7 @@
 "asi" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -4560,7 +4560,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio3";
 	name = "Containment Blast Doors";
@@ -5702,7 +5702,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
 	name = "Atmos Blast Door";
@@ -5730,7 +5730,7 @@
 "aOk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -5887,7 +5887,7 @@
 "aRb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -6729,7 +6729,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -7748,7 +7748,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -8323,7 +8323,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -8913,7 +8913,7 @@
 "bOn" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -9302,7 +9302,7 @@
 /area/station/bridge/captain_quarters)
 "bUN" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -9328,7 +9328,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -9599,14 +9599,14 @@
 	req_access = list(33)
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "chemshut";
 	name = "Privacy Shutters";
 	opacity = 0
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -10118,7 +10118,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio6";
 	name = "Containment Blast Doors";
@@ -11263,7 +11263,7 @@
 "cAt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -12154,7 +12154,7 @@
 /area/station/civilian/chapel/altar)
 "cOs" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -12311,7 +12311,7 @@
 "cPC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -12536,7 +12536,7 @@
 	req_access = list(55)
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio5";
 	name = "Containment Blast Doors";
@@ -12802,7 +12802,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -12919,7 +12919,7 @@
 /area/station/civilian/bar)
 "cYf" = (
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
@@ -13414,7 +13414,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -13553,7 +13553,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio6";
 	name = "Containment Blast Doors";
@@ -13585,7 +13585,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
 	name = "Atmos Blast Door";
@@ -14010,7 +14010,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio3";
 	name = "Containment Blast Doors";
@@ -14737,7 +14737,7 @@
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "chemshut";
 	name = "Privacy Shutters";
@@ -15056,7 +15056,7 @@
 /area/station/medical/genetics)
 "dKd" = (
 /obj/machinery/computer/cryopod{
-	density = FALSE;
+	density = 0;
 	pixel_x = 30
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -15459,7 +15459,7 @@
 /area/station/maintenance/medbay)
 "dPT" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Singularity";
 	layer = 2.8;
@@ -15613,7 +15613,7 @@
 /area/station/maintenance/eva)
 "dTg" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "teles_blast1";
 	name = "Test Chamber Blast Doors";
@@ -16244,7 +16244,7 @@
 /obj/item/weapon/pen,
 /obj/item/weapon/folder/white,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -16953,7 +16953,7 @@
 "eow" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -17708,7 +17708,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -17716,7 +17716,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "rndshut";
 	name = "Privacy Shutters";
@@ -17805,7 +17805,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "chapel";
 	name = "Privacy Shutters";
@@ -18126,7 +18126,7 @@
 	req_access = list(47)
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -18284,7 +18284,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Room1";
 	name = "Privacy Shutters";
@@ -18720,7 +18720,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -18838,7 +18838,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio4";
 	name = "Containment Blast Doors";
@@ -18852,7 +18852,7 @@
 /area/station/rnd/xenobiology)
 "eUi" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -19788,7 +19788,7 @@
 /area/station/maintenance/dormitory)
 "fjo" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -19963,7 +19963,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -20475,7 +20475,7 @@
 /area/station/medical/cmo)
 "ftt" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Singularity";
 	layer = 2.8;
@@ -20989,7 +20989,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -21480,7 +21480,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/sign/plaques/golden,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "hos_blast";
 	name = "Privacy Shutters";
@@ -21523,7 +21523,7 @@
 	dir = 5
 	},
 /obj/decal/boxingrope{
-	density = FALSE;
+	density = 0;
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -21953,7 +21953,7 @@
 /area/station/civilian/dormitories/dormtwo)
 "fPR" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -23243,7 +23243,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -23282,7 +23282,7 @@
 	opacity = 1
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -23845,7 +23845,7 @@
 /area/station/medical/surgery)
 "gww" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -24190,7 +24190,7 @@
 /area/station/aisat/teleport)
 "gBv" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "misclab";
 	name = "Test Chamber Blast Doors";
@@ -24318,7 +24318,7 @@
 /area/station/aisat/ai_chamber)
 "gED" = (
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
@@ -24996,7 +24996,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio4";
 	name = "Containment Blast Doors";
@@ -25743,7 +25743,7 @@
 "hbc" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -26068,7 +26068,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -26685,7 +26685,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -27385,7 +27385,7 @@
 /area/station/engineering/atmos)
 "hBy" = (
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "HoP_queue";
 	opacity = 0
@@ -27471,7 +27471,7 @@
 /area/station/security/brig)
 "hDk" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio4";
 	name = "Containment Blast Doors";
@@ -28288,7 +28288,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -28296,7 +28296,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "roboshut";
 	name = "Privacy Shutters";
@@ -28629,7 +28629,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -28951,7 +28951,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -29684,7 +29684,7 @@
 /area/station/civilian/chapel/altar)
 "isI" = (
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "HoP_queue";
 	opacity = 0
@@ -30331,7 +30331,7 @@
 /area/station/maintenance/eva)
 "iBK" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -30427,7 +30427,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 4;
 	icon_state = "shutter0";
 	id = "Medical_Surgery1";
@@ -30654,7 +30654,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -31155,7 +31155,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -31230,7 +31230,7 @@
 /area/station/aisat/ai_chamber)
 "iQO" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "fireaway";
 	name = "Containment Blast Doors";
@@ -31349,7 +31349,7 @@
 /area/station/security/lobby)
 "iTU" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -33507,7 +33507,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -33873,7 +33873,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -34825,7 +34825,7 @@
 /area/station/security/forensic_office)
 "jVU" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -35285,7 +35285,7 @@
 /area/station/maintenance/eva)
 "kdJ" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -35617,7 +35617,7 @@
 /area/station/security/vacantoffice)
 "kjS" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "teles_blast1";
 	name = "Test Chamber Blast Doors";
@@ -37086,7 +37086,7 @@
 /area/station/rnd/mixing)
 "kIR" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
 	name = "Atmos Blast Door";
@@ -37181,7 +37181,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -37192,7 +37192,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -37711,7 +37711,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -37960,7 +37960,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 4;
 	icon_state = "shutter0";
 	id = "Medical_Surgery1";
@@ -38207,7 +38207,7 @@
 /area/station/maintenance/eva)
 "kYK" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -38393,7 +38393,7 @@
 "lcd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -38652,7 +38652,7 @@
 /area/station/bridge)
 "leR" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -39254,7 +39254,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio1";
 	name = "Containment Blast Doors";
@@ -40148,7 +40148,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "eq_storage";
 	opacity = 0
@@ -40754,7 +40754,7 @@
 	pixel_x = 27
 	},
 /obj/structure/reagent_dispensers/acid{
-	density = FALSE;
+	density = 0;
 	pixel_y = -32
 	},
 /obj/structure/disposalpipe/segment,
@@ -41377,7 +41377,7 @@
 /area/station/storage/primary)
 "lYb" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -41500,7 +41500,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio3";
 	name = "Containment Blast Doors";
@@ -41874,7 +41874,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio2";
 	name = "Containment Blast Doors";
@@ -43141,7 +43141,7 @@
 /area/station/cargo/office)
 "myw" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Singularity";
 	layer = 2.8;
@@ -43477,7 +43477,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
 	name = "Atmos Blast Door";
@@ -43976,7 +43976,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -44641,7 +44641,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 4;
 	icon_state = "shutter0";
 	id = "Medical_Surgery1";
@@ -44782,7 +44782,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio5";
 	name = "Containment Blast Doors";
@@ -44849,7 +44849,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -45213,7 +45213,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Surgery2";
 	name = "Privacy Shutters";
@@ -46836,14 +46836,14 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "roboshut";
 	name = "Privacy Shutters";
@@ -47219,7 +47219,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -47581,7 +47581,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio2";
 	name = "Containment Blast Doors";
@@ -48112,7 +48112,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "chemshut";
 	name = "Privacy Shutters";
@@ -48440,7 +48440,7 @@
 	req_access = list(47)
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "misclab";
 	name = "Test Chamber Blast Doors";
@@ -48914,7 +48914,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -49094,7 +49094,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -49981,7 +49981,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -50179,7 +50179,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -51260,7 +51260,7 @@
 "pdh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -51443,7 +51443,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -52521,7 +52521,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "chemshut";
 	name = "Privacy Shutters";
@@ -53008,7 +53008,7 @@
 /area/station/rnd/mixing)
 "pJj" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -53203,7 +53203,7 @@
 /area/station/medical/virology)
 "pMe" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -53225,7 +53225,7 @@
 "pMr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -53503,7 +53503,7 @@
 	pixel_x = -32
 	},
 /obj/decal/boxingrope{
-	density = FALSE;
+	density = 0;
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -54282,7 +54282,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -54896,7 +54896,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -54912,14 +54912,14 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "rndshut";
 	name = "Privacy Shutters";
@@ -55421,7 +55421,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -56123,7 +56123,7 @@
 /area/station/maintenance/science)
 "qEC" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio4";
 	name = "Containment Blast Doors";
@@ -56653,7 +56653,7 @@
 	req_access = list(28)
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -56728,7 +56728,7 @@
 /area/space)
 "qPb" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "hos_blast";
 	name = "Privacy Shutters";
@@ -56916,7 +56916,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Surgery2";
 	name = "Privacy Shutters";
@@ -57178,7 +57178,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -57270,7 +57270,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -58408,7 +58408,7 @@
 "rtz" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
 	name = "Atmos Blast Door";
@@ -59770,7 +59770,7 @@
 /area/station/medical/genetics)
 "rQI" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -59876,7 +59876,7 @@
 "rSO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -59903,7 +59903,7 @@
 /area/station/rnd/mixing)
 "rSP" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "misclab";
 	name = "Test Chamber Blast Doors";
@@ -59967,7 +59967,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -60181,7 +60181,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio1";
 	name = "Containment Blast Doors";
@@ -60377,7 +60377,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -60445,7 +60445,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -60540,7 +60540,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "chemshut";
 	name = "Privacy Shutters";
@@ -60680,7 +60680,7 @@
 /area/station/hallway/secondary/entry)
 "sfA" = (
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
@@ -61155,7 +61155,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
 	name = "Atmos Blast Door";
@@ -61301,7 +61301,7 @@
 	pixel_y = 27
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "HoP_private";
 	opacity = 0
@@ -61347,7 +61347,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "AI Blast Door";
 	name = "AI Blast Door";
@@ -62166,7 +62166,7 @@
 /area/station/cargo/storage)
 "sCp" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Engineering";
 	name = "Engineering Security Doors";
@@ -62412,7 +62412,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Security Blast Door";
@@ -62553,7 +62553,7 @@
 /area/station/rnd/hallway)
 "sIq" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "atmos";
 	name = "Atmos Blast Door";
@@ -63148,7 +63148,7 @@
 /area/station/security/hos)
 "sUS" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -63832,7 +63832,7 @@
 /area/station/hallway/primary/bridgehall)
 "tfW" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -64011,7 +64011,7 @@
 	dir = 5
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -64197,7 +64197,7 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/acid{
-	density = FALSE;
+	density = 0;
 	pixel_y = 32
 	},
 /obj/effect/landmark/start{
@@ -64305,7 +64305,7 @@
 /area/station/ai_monitored/storage_secure)
 "tmO" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Singularity";
 	layer = 2.8;
@@ -64769,7 +64769,7 @@
 "ttK" = (
 /obj/structure/stool,
 /obj/decal/boxingrope{
-	density = FALSE;
+	density = 0;
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -65330,7 +65330,7 @@
 	req_access = list(47)
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "misclab";
 	name = "Test Chamber Blast Doors";
@@ -65375,7 +65375,7 @@
 /area/shuttle/syndicate_elite/station)
 "tDO" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -65769,7 +65769,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Surgery2";
 	name = "Privacy Shutters";
@@ -65792,14 +65792,14 @@
 	req_access = list(47)
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -67018,7 +67018,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -67433,7 +67433,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Room2";
 	name = "Privacy Shutters";
@@ -67625,7 +67625,7 @@
 /area/station/rnd/mixing)
 "uol" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Secure Gate";
 	name = "Security Blast Door";
@@ -68572,7 +68572,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -68588,7 +68588,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -69149,7 +69149,7 @@
 "uMj" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";
@@ -69352,7 +69352,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -69365,7 +69365,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "lawyer_blast";
 	name = "Privacy Shutters";
@@ -70599,7 +70599,7 @@
 /area/station/hallway/primary/bridgehall)
 "vkp" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
@@ -71321,7 +71321,7 @@
 /area/station/solar/auxstarboard)
 "vwV" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Singularity";
 	layer = 2.8;
@@ -71360,7 +71360,7 @@
 /area/station/medical/patient_a)
 "vxt" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -71462,7 +71462,7 @@
 /area/station/civilian/dormitories/dormfour)
 "vyC" = (
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
@@ -71564,7 +71564,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -73054,7 +73054,7 @@
 /area/station/cargo/office)
 "vSz" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -73264,7 +73264,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -73663,7 +73663,7 @@
 /area/station/maintenance/eva)
 "wbi" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio6";
 	name = "Containment Blast Doors";
@@ -73873,7 +73873,7 @@
 "weA" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 4;
 	icon_state = "shutter0";
 	id = "Patients";
@@ -74303,7 +74303,7 @@
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "hos_blast";
 	name = "Privacy Shutters";
@@ -74845,7 +74845,7 @@
 "wyE" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 4;
 	icon_state = "shutter0";
 	id = "Patients";
@@ -75182,7 +75182,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "kitchen";
 	name = "Kitchen Shutters";
@@ -78105,7 +78105,7 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "xenobio5";
 	name = "Containment Blast Doors";
@@ -78125,7 +78125,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard";
 	name = "Biohazard Shutter";
@@ -78396,7 +78396,7 @@
 /area/station/hallway/secondary/entry)
 "xIr" = (
 /obj/decal/boxingrope{
-	density = FALSE;
+	density = 0;
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -78828,7 +78828,7 @@
 "xPK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	dir = 4;
 	icon_state = "shutter0";
 	id = "Patients";
@@ -79163,7 +79163,7 @@
 /obj/item/weapon/reagent_containers/syringe/antiviral,
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/virusfood{
-	density = FALSE;
+	density = 0;
 	pixel_y = 32
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/synaptizine{
@@ -79435,7 +79435,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "Biohazard_Med";
 	name = "Biohazard Shutter";

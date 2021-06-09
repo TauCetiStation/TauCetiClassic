@@ -337,7 +337,7 @@
 	},
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "example";
 	name = "Privacy Shutters";
@@ -355,7 +355,7 @@
 	},
 /obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
-	density = FALSE;
+	density = 0;
 	icon_state = "shutter0";
 	id = "example";
 	name = "Privacy Shutters";
@@ -608,7 +608,7 @@
 /area/awaymission/example)
 "bF" = (
 /obj/machinery/vending/boozeomat{
-	density = FALSE;
+	density = 0;
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -617,7 +617,7 @@
 /area/awaymission/example)
 "bG" = (
 /obj/structure/bookcase{
-	density = FALSE;
+	density = 0;
 	pixel_y = 32
 	},
 /obj/item/weapon/book/manual/wiki/barman_recipes,
@@ -651,7 +651,7 @@
 /area/awaymission/example)
 "bK" = (
 /obj/structure/bookcase{
-	density = FALSE;
+	density = 0;
 	pixel_y = 32
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law,

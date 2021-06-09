@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/unsimulated/beach/sand{
-	density = TRUE;
+	density = 1;
 	opacity = 1
 	},
 /area/awaymission/beach)
@@ -226,7 +226,7 @@
 /area/awaymission/beach)
 "P" = (
 /turf/unsimulated/beach/coastline{
-	density = TRUE;
+	density = 1;
 	opacity = 1
 	},
 /area/awaymission/beach)
@@ -235,7 +235,7 @@
 /area/awaymission/beach)
 "R" = (
 /turf/unsimulated/beach/water{
-	density = TRUE;
+	density = 1;
 	opacity = 1
 	},
 /area/awaymission/beach)

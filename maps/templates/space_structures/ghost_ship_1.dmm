@@ -236,7 +236,7 @@
 /area/space_structures/ghostship)
 "aL" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "spacebattlepod";
 	name = "Front Hull Door"

@@ -761,7 +761,7 @@
 /area/awaymission/spacebattle/cruiser)
 "ck" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "spacebattlepod";
 	name = "Front Hull Door"
@@ -1115,7 +1115,7 @@
 /area/awaymission/spacebattle/cruiser)
 "dt" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "spacebattlepod2";
 	name = "Front Hull Door"

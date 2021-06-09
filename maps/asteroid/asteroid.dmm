@@ -4672,7 +4672,7 @@
 /area/asteroid/research_outpost/hallway)
 "jw" = (
 /obj/machinery/door/poddoor{
-	density = FALSE;
+	density = 0;
 	icon_state = "pdoor0";
 	id = "out_misclab";
 	name = "Test Chamber Blast Doors";
