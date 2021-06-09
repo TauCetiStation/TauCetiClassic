@@ -144,10 +144,7 @@
 	. = ..()
 	if (!. || choice == null)
 		return
-	if(is_associative_list(buttons))
-		callback.InvokeAsync(buttons[choice])
-	else
-		callback.InvokeAsync(choice)
+	callback.InvokeAsync(choice)
 	qdel(src)
 
 /datum/tgui_modal/async/wait()
