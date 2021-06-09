@@ -23830,6 +23830,9 @@
 	c_tag = "Playroom"
 	},
 /obj/structure/stool,
+/obj/machinery/light_switch{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "neutral"
@@ -25912,7 +25915,9 @@
 /turf/simulated/floor,
 /area/station/civilian/playroom)
 "aTT" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j2"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -25922,6 +25927,9 @@
 /obj/structure/stool,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/civilian/playroom)
@@ -25940,12 +25948,12 @@
 /area/station/maintenance/chapel)
 "aTW" = (
 /obj/structure/stool,
-/obj/machinery/light_switch{
-	pixel_x = 27
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "neutral"
+	icon_state = "neutralcorner"
 	},
 /area/station/civilian/playroom)
 "aTX" = (
@@ -26744,14 +26752,12 @@
 /turf/simulated/floor,
 /area/station/civilian/playroom)
 "aVw" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
+/turf/simulated/floor,
 /area/station/civilian/playroom)
 "aVx" = (
+/obj/machinery/vending/donut,
 /turf/simulated/floor{
-	dir = 5;
+	dir = 4;
 	icon_state = "neutral"
 	},
 /area/station/civilian/playroom)
@@ -27658,9 +27664,7 @@
 	},
 /area/station/civilian/playroom)
 "aWU" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2"
-	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -27688,10 +27692,6 @@
 /area/station/cargo/storage)
 "aWY" = (
 /obj/machinery/light,
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -77122,8 +77122,12 @@
 	},
 /area/station/civilian/bar)
 "oXR" = (
-/obj/machinery/vending/donut,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal,
 /turf/simulated/floor{
+	dir = 5;
 	icon_state = "neutral"
 	},
 /area/station/civilian/playroom)
@@ -104127,7 +104131,7 @@ aRd
 aSG
 aTW
 aVw
-oXR
+aWT
 aZi
 bdv
 bdZ
@@ -104382,7 +104386,7 @@ aOz
 aOz
 aOz
 aOz
-aOz
+oXR
 aVx
 aXc
 aZg

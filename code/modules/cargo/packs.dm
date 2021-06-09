@@ -528,13 +528,20 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	name = "Fast Food supply crate"
 	contains = list(/obj/item/weapon/vending_refill/junkfood,
 					/obj/item/weapon/vending_refill/junkfood,
-					/obj/item/weapon/vending_refill/junkfood,
-					/obj/item/weapon/vending_refill/donut,
-					/obj/item/weapon/vending_refill/donut,
-					/obj/item/weapon/vending_refill/donut)
+					/obj/item/weapon/vending_refill/junkfood)
 	cost = 11999
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Fast Food supply crate"
+	group = "Hospitality"
+
+/datum/supply_pack/vending_donut
+	name = "Monkin' Donuts supply crate"
+	contains = list(/obj/item/weapon/vending_refill/donut,
+					/obj/item/weapon/vending_refill/donut,
+					/obj/item/weapon/vending_refill/donut)
+	cost = 7599
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Monkin' Donuts supply crate"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_assist
