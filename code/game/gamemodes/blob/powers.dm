@@ -253,7 +253,7 @@
 		"Node"     = CALLBACK(src, .proc/create_node),
 		"Factory"  = CALLBACK(src, .proc/create_factory),
 	)
-	var/list/icon/upgrade_icon = list(
+	var/static/list/icon/upgrade_icon = list(
 		"Resource" = icon('icons/mob/blob.dmi', "radial_resource"),
 		"Node"     = icon('icons/mob/blob.dmi', "radial_node"),
 		"Factory"  = icon('icons/mob/blob.dmi', "radial_factory"),
