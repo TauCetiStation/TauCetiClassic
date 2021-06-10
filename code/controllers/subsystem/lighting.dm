@@ -70,8 +70,8 @@ SUBSYSTEM_DEF(lighting)
 	for (i in 1 to corners_queue.len)
 		var/datum/lighting_corner/C = corners_queue[i]
 
-		C.update_objects()
 		C.needs_update = FALSE
+		C.update_objects()
 		if(init_fire)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
