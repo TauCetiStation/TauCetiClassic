@@ -514,7 +514,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
 		return
 
-	var/response = tgui_alert(src, "Are you -sure- you want to find Bag Boss?","Are you sure you want to become II?", list("Soap Pain!","Nope!"))
+	var/response = tgui_alert(src, "You want to find Bag Boss?","Do you want to be Ian?", list("Soap Pain!","Nope!"))
 	if(response != "Soap Pain!")
 		return
 
