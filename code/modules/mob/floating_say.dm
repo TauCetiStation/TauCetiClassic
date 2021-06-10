@@ -60,8 +60,3 @@ var/global/list/floating_chat_colors = list()
 /proc/remove_floating_text(atom/movable/holder, image/I)
 	animate(I, 2, pixel_y = I.pixel_y + 10, alpha = 0)
 	LAZYREMOVE(holder.stored_chat_text, I)
-
-/proc/remove_images_from_clients(image/I, list/show_to)
-	for(var/client/C in show_to)
-		C.images -= I
-		qdel(I)
