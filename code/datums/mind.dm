@@ -529,73 +529,38 @@
 		var/datum/faction/FF = find_faction_by_type(fac_type)
 		if(!FF)
 			FF = SSticker.mode.CreateFaction(fac_type, FALSE, TRUE)
-			if(!FF)
-				return FALSE
-			for(var/mob/H in candidates)
-				candidates.Remove(H)
-				if(!H.mind)
-					continue
-				if(isobserver(H))
-					H = makeBody(H)
-				var/datum/mind/M = H.mind
-				if(FF.HandleNewMind(M))
-					var/datum/role/RR = FF.get_member_by_mind(M)
-					RR.OnPostSetup()
-					RR.Greet(GREET_LATEJOIN)
-					message_admins("[key_name(H)] has been recruited as leader of [FF.name] via create antagonist verb.")
-					recruit_count++
-					count--
+			FF.forgeObjectives()
+		if(!FF)
+			return FALSE
 
 		while(count > 0 && candidates.len)
-			var/mob/H = pick(candidates)
-			candidates.Remove(H)
-			if(!H.mind)
+			var/mob/M = pick(candidates)
+			candidates -= M
+			if(!M.mind)
 				continue
-			var/initial_role = initial(FF.initroletype.id)
-			if(initial_role in H.mind.antag_roles) // Ex: a head rev being made a revolutionary.
-				continue
-			if(isobserver(H))
-				H = makeBody(H)
-			var/datum/mind/M = H.mind
-			message_admins("polling if [key_name(H)] wants to become a member of [FF.name]")
-			if(FF.HandleRecruitedMind(M))
-				var/datum/role/RR = FF.get_member_by_mind(M)
-				RR.OnPostSetup()
-				RR.Greet(GREET_LATEJOIN)
-				message_admins("[key_name(H)] has been recruited as recruit of [FF.name] via create antagonist verb.")
+
+			if(isobserver(M))
+				M = makeBody(M)
+
+			if(add_faction_member(FF, M, FALSE, FALSE))
 				recruit_count++
-			count--
+				count--
 
 		FF.OnPostSetup()
-		FF.forgeObjectives()
-		FF.AnnounceObjectives()
 
-		return recruit_count
-
-	else if(role_type)
+	if(role_type)
 		while(count > 0 && candidates.len)
-			count--
-			var/mob/H = pick(candidates)
-			candidates.Remove(H)
-			if(isobserver(H))
-				H = makeBody(H)
-			var/datum/mind/M = H.mind
-			if(M.GetRole(initial(role_type.id)))
-				continue
-			var/datum/role/newRole = new role_type
-			message_admins("polling if [key_name(H)] wants to become a [newRole.name]")
-			if(!newRole)
+			var/mob/M = pick(candidates)
+			candidates -= M
+			if(!M.mind)
 				continue
 
-			if(!newRole.AssignToRole(M))
-				newRole.Drop()
-				continue
-			newRole.Greet(GREET_LATEJOIN)
-			newRole.OnPostSetup()
-			newRole.forgeObjectives()
-			newRole.AnnounceObjectives()
-			message_admins("[key_name(H)] has been made into a [newRole.name] via create antagonist verb.")
-			recruit_count++
+			if(isobserver(M))
+				M = makeBody(M)
+
+			if(create_and_setup_role(role_type, M, TRUE))
+				recruit_count++
+				count--
 
 	return recruit_count
 

@@ -61,16 +61,15 @@
 /proc/add_faction_member(datum/faction/faction, mob/M, recruit = TRUE, post_setup = FALSE)
 	ASSERT(faction)
 
-	var/datum/role/R
 	if(recruit)
-		R = faction.HandleRecruitedMind(M.mind)
+		. = faction.HandleRecruitedMind(M.mind)
 	else
-		R = faction.HandleNewMind(M.mind)
+		. = faction.HandleNewMind(M.mind)
 
-	if(R)
-		setup_role(R, M, post_setup)
+	if(.)
+		setup_role(., M, post_setup)
 
-/proc/create_and_setup_role(role_type, mob/P, post_setup = TRUE)
-	var/datum/role/R = SSticker.mode.CreateRole(role_type, P)
-	if(R)
-		setup_role(R, P, post_setup)
+/proc/create_and_setup_role(role_type, mob/M, post_setup = TRUE)
+	. = SSticker.mode.CreateRole(role_type, M)
+	if(.)
+		setup_role(., M, post_setup)
