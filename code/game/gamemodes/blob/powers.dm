@@ -249,16 +249,15 @@
 
 /mob/camera/blob/proc/prompt_upgrade(obj/effect/blob/B)
 	var/list/datum/callback/blob_upgrade = list(
-		"Cancel"   = null,
 		"Resource" = CALLBACK(src, .proc/create_resource),
 		"Node"     = CALLBACK(src, .proc/create_node),
 		"Factory"  = CALLBACK(src, .proc/create_factory),
 	)
-	// fsr tgui_alerts cannot handle associative lists...
-	var/list/buttons = list()
-	for(var/btn in blob_upgrade)
-		buttons.Add(btn)
-	var/choice = tgui_alert(src, "Choose new blob type", "Blob Evolution", buttons)
-	if(choice && blob_upgrade[choice])
-		var/datum/callback/CB = blob_upgrade[choice]
-		CB.Invoke(get_turf(B))
+	var/list/icon/upgrade_icon = list(
+		"Resource" = icon('icons/mob/blob.dmi', "radial_resource"),
+		"Node"     = icon('icons/mob/blob.dmi', "radial_node"),
+		"Factory"  = icon('icons/mob/blob.dmi', "radial_factory"),
+	)
+	var/choice = show_radial_menu(src, B, upgrade_icon)
+	var/datum/callback/CB = blob_upgrade[choice]
+	CB?.Invoke(get_turf(B))
