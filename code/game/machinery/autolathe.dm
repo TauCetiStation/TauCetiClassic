@@ -124,14 +124,12 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	var/list/stored_material  = list(MAT_METAL = 0, MAT_GLASS = 0)
 	var/list/storage_capacity = list(MAT_METAL = 0, MAT_GLASS = 0)
 
-	var/operating = 0.0
-
-	var/hacked = 0
-	var/disabled = 0
-	var/shocked = 0
+	var/hacked = FALSE
+	var/disabled = FALSE
+	var/shocked = FALSE
 	var/datum/wires/autolathe/wires = null
 
-	var/busy = 0
+	var/busy = FALSE
 	var/man_rating
 
 /obj/machinery/autolathe/atom_init()
@@ -301,14 +299,14 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	take_item(I, amount)
 	icon_state = "autolathe"
-	busy = 1
+	busy = TRUE
 	use_power(max(1000, (m_amt + g_amt) * amount / 10))
 	stored_material[MAT_METAL] += m_amt
 	stored_material[MAT_GLASS] += g_amt
 	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
 	if(I && I.loc == src)
 		qdel(I)
-	busy = 0
+	busy = FALSE
 	updateUsrDialog()
 
 /obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
@@ -371,7 +369,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 		var/power = max(2000, (recipe.metal_amount + recipe.glass_amount) * multiplier / 5)
 		if(stored_material[MAT_METAL] >= recipe.metal_amount * multiplier / coeff && stored_material[MAT_GLASS] >= recipe.glass_amount * multiplier / coeff)
-			busy = 1
+			busy = TRUE
 			use_power(power)
 			icon_state = "autolathe"
 			flick("autolathe_n",src)
@@ -392,5 +390,5 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 					stored_material[MAT_METAL] = 0
 				if(stored_material[MAT_GLASS] < 0)
 					stored_material[MAT_GLASS] = 0
-				busy = 0
+				busy = FALSE
 	src.updateUsrDialog()
