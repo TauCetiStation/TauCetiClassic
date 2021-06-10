@@ -72,7 +72,7 @@
 	if(!holder)
 		to_chat(src, "Only staff members may use this command.")
 
-	var/age = tgui_alert(src, "Age check", "Show accounts yonger then _____ days", list("7", "30" , "All"))
+	var/age = tgui_alert(src, "Age check", "Show accounts yonger then ? days.", list("7", "30" , "All"))
 
 	if(age == "All")
 		age = 9999999
