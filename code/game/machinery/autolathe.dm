@@ -111,7 +111,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden
 
 /obj/machinery/autolathe
-	name = "Autolathe"
+	name = "autolathe"
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
 	density = TRUE
@@ -121,11 +121,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	active_power_usage = 100
 	allowed_checks = ALLOWED_CHECK_TOPIC
 
-	var/m_amount = 0.0
-	var/max_m_amount = 150000.0
-
-	var/g_amount = 0.0
-	var/max_g_amount = 75000.0
+	var/list/stored_material  = list(MAT_METAL = 0, MAT_GLASS = 0)
+	var/list/storage_capacity = list(MAT_METAL = 0, MAT_GLASS = 0)
 
 	var/operating = 0.0
 
@@ -135,7 +132,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	var/datum/wires/autolathe/wires = null
 
 	var/busy = 0
-	var/prod_coeff
+	var/man_rating
 
 /obj/machinery/autolathe/atom_init()
 	. = ..()
@@ -156,24 +153,24 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 /obj/machinery/autolathe/RefreshParts()
 	..()
-	var/tot_rating = 0
-	prod_coeff = 0
+	var/mb_rating = 0
+	man_rating = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
-		tot_rating += MB.rating
-	tot_rating *= 25000
-	max_m_amount = tot_rating * 3
-	max_g_amount = tot_rating * 3
+		mb_rating += MB.rating
+	mb_rating *= 25000
+	storage_capacity[MAT_METAL] = mb_rating * 3
+	storage_capacity[MAT_GLASS] = mb_rating * 3
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		prod_coeff += M.rating - 1
+		man_rating += M.rating - 1
 
 /obj/machinery/autolathe/ui_interact(mob/user)
 	if(disabled)
 		return
 
-	var/coeff = 2 ** prod_coeff
+	var/coeff = 2 ** man_rating
 	var/dat
 
-	dat = "<B>Metal Amount:</B> [m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<span class='blue'><B>Glass Amount:</B></span> [g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>"
+	dat = "<B>Metal Amount:</B> [stored_material[MAT_METAL]] cm<sup>3</sup> (MAX: [storage_capacity[MAT_METAL]])<BR>\n<span class='blue'><B>Glass Amount:</B></span> [stored_material[MAT_GLASS]] cm<sup>3</sup> (MAX: [storage_capacity[MAT_GLASS]])<HR>"
 	dat += "<div class='Section'>"
 	dat += "<table>"
 	var/list/datum/autolathe_recipe/recipes
@@ -189,13 +186,13 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		dat += "<td>"
 		if(istype(r, /datum/autolathe_recipe/stack))
 			var/title = "[r.name] ([r.metal_amount] m /[r.glass_amount] g)"
-			if(m_amount < r.metal_amount || g_amount < r.glass_amount)
+			if(stored_material[MAT_METAL] < r.metal_amount || stored_material[MAT_GLASS] < r.glass_amount)
 				dat += title
 				continue
 			dat += "<A href='?src=\ref[src];make=\ref[r]'>[title]</A>"
 
 			var/datum/autolathe_recipe/stack/S = r
-			var/max_multiplier = min(S.max_res_amount, S.metal_amount ? round(m_amount / S.metal_amount) : INFINITY, S.glass_amount ? round(g_amount / S.glass_amount) : INFINITY)
+			var/max_multiplier = min(S.max_res_amount, S.metal_amount ? round(stored_material[MAT_METAL] / S.metal_amount) : INFINITY, S.glass_amount ? round(stored_material[MAT_GLASS] / S.glass_amount) : INFINITY)
 			if(max_multiplier > 1)
 				dat += " |"
 			if(max_multiplier > 10)
@@ -206,7 +203,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				dat += " <A href='?src=\ref[src];make=\ref[r];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
 		else
 			var/title = "[r.name] ([r.metal_amount / coeff] m /[r.glass_amount / coeff] g)"
-			if(m_amount < r.metal_amount / coeff || g_amount < r.glass_amount / coeff)
+			if(stored_material[MAT_METAL] < r.metal_amount / coeff || stored_material[MAT_GLASS] < r.glass_amount / coeff)
 				dat += title
 				continue
 			dat += "<A href='?src=\ref[src];make=\ref[r]'>[title]</A>"
@@ -258,10 +255,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	if(panel_open)
 		if(iscrowbar(I))
-			if(m_amount >= 3750)
-				new /obj/item/stack/sheet/metal(loc, round(m_amount / 3750))
-			if(g_amount >= 3750)
-				new /obj/item/stack/sheet/glass(loc, round(g_amount / 3750))
+			if(stored_material[MAT_METAL] >= 3750)
+				new /obj/item/stack/sheet/metal(loc, round(stored_material[MAT_METAL] / 3750))
+			if(stored_material[MAT_GLASS] >= 3750)
+				new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if(is_wire_tool(I))
@@ -279,10 +276,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		stack = I
 		amount = stack.get_amount()
 		if(m_amt)
-			amount = min(amount, round((max_m_amount - m_amount) / m_amt))
+			amount = min(amount, round((storage_capacity[MAT_METAL] - stored_material[MAT_METAL]) / m_amt))
 			flick("autolathe_o",src)//plays metal insertion animation
 		if(g_amt)
-			amount = min(amount, round((max_g_amount - g_amount) / g_amt))
+			amount = min(amount, round((storage_capacity[MAT_GLASS] - stored_material[MAT_GLASS]) / g_amt))
 			flick("autolathe_r",src)//plays glass insertion animation
 	else if(istype(I, /obj/item/ammo_box))
 		m_amt = 0
@@ -295,7 +292,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	m_amt *= amount
 	g_amt *= amount
 
-	if((m_amount + m_amt > max_m_amount) || (g_amount + g_amt > max_g_amount))
+	if((stored_material[MAT_METAL] + m_amt > storage_capacity[MAT_METAL]) || (stored_material[MAT_GLASS] + g_amt > storage_capacity[MAT_GLASS]))
 		to_chat(user, "<span class='warning'>The autolathe is full. Please remove metal from the autolathe in order to insert more.</span>")
 		return 1
 	if(m_amt == 0 && g_amt == 0)
@@ -306,8 +303,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	icon_state = "autolathe"
 	busy = 1
 	use_power(max(1000, (m_amt + g_amt) * amount / 10))
-	m_amount += m_amt
-	g_amount += g_amt
+	stored_material[MAT_METAL] += m_amt
+	stored_material[MAT_GLASS] += g_amt
 	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
 	if(I && I.loc == src)
 		qdel(I)
@@ -336,7 +333,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		return FALSE
 
 	if(href_list["make"])
-		var/coeff = 2 ** prod_coeff
+		var/coeff = 2 ** man_rating
 		var/turf/T = get_turf(src)
 		// critical exploit fix start -walter0o
 		var/datum/autolathe_recipe/recipe = locate(href_list["make"])
@@ -363,7 +360,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 		if(istype(recipe, /datum/autolathe_recipe/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
 			var/datum/autolathe_recipe/stack/S = recipe
-			max_multiplier = min(S.max_res_amount, S.metal_amount ? round(m_amount / S.metal_amount) : INFINITY, S.glass_amount ? round(g_amount / S.glass_amount) : INFINITY)
+			max_multiplier = min(S.max_res_amount, S.metal_amount ? round(stored_material[MAT_METAL] / S.metal_amount) : INFINITY, S.glass_amount ? round(stored_material[MAT_GLASS] / S.glass_amount) : INFINITY)
 
 		if((multiplier > max_multiplier) || (multiplier <= 0)) // somebody is trying to exploit, alert admins-walter0o
 
@@ -373,27 +370,27 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 			return FALSE
 
 		var/power = max(2000, (recipe.metal_amount + recipe.glass_amount) * multiplier / 5)
-		if(m_amount >= recipe.metal_amount * multiplier / coeff && g_amount >= recipe.glass_amount * multiplier / coeff)
+		if(stored_material[MAT_METAL] >= recipe.metal_amount * multiplier / coeff && stored_material[MAT_GLASS] >= recipe.glass_amount * multiplier / coeff)
 			busy = 1
 			use_power(power)
 			icon_state = "autolathe"
 			flick("autolathe_n",src)
 			spawn(32/coeff)
 				if(istype(recipe, /datum/autolathe_recipe/stack))
-					m_amount -= recipe.metal_amount * multiplier
-					g_amount -= recipe.glass_amount * multiplier
+					stored_material[MAT_METAL] -= recipe.metal_amount * multiplier
+					stored_material[MAT_GLASS] -= recipe.glass_amount * multiplier
 					var/obj/new_item = new recipe.result_type(T)
 					var/obj/item/stack/S = new_item
 					S.set_amount(multiplier)
 				else
-					m_amount -= recipe.metal_amount / coeff
-					g_amount -= recipe.glass_amount / coeff
+					stored_material[MAT_METAL] -= recipe.metal_amount / coeff
+					stored_material[MAT_GLASS] -= recipe.glass_amount / coeff
 					var/obj/new_item = new recipe.result_type(T)
 					new_item.m_amt /= coeff
 					new_item.g_amt /= coeff
-				if(m_amount < 0)
-					m_amount = 0
-				if(g_amount < 0)
-					g_amount = 0
+				if(stored_material[MAT_METAL] < 0)
+					stored_material[MAT_METAL] = 0
+				if(stored_material[MAT_GLASS] < 0)
+					stored_material[MAT_GLASS] = 0
 				busy = 0
 	src.updateUsrDialog()
