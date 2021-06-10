@@ -143,7 +143,7 @@
 	if(src.seconds_electrified > 0)
 		src.seconds_electrified--
 	if(src.shoot_inventory && prob(2))
-		src.throw_item()
+		throw_item()
 
 /obj/machinery/smartfridge/power_change()
 	if( powered() )
@@ -348,7 +348,7 @@
 	if(!throw_item)
 		return 0
 	throw_item.throw_at(target,16,3,src)
-	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+	visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /obj/machinery/smartfridge/proc/shock(mob/user, prb)

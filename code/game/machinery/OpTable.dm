@@ -109,7 +109,7 @@
 	C.loc = src.loc
 	for(var/obj/O in src)
 		O.loc = src.loc
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		src.victim = H

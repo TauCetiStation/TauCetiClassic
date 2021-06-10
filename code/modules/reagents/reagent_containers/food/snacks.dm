@@ -673,7 +673,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
@@ -713,7 +713,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
+	visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis

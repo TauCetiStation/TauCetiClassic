@@ -200,7 +200,7 @@
 		else
 			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
@@ -339,7 +339,7 @@
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher))

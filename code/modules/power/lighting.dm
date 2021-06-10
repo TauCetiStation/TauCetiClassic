@@ -102,7 +102,7 @@
 				to_chat(user, "The casing is closed.")
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	if (iswrench(W))
 		if (src.stage == 1)
@@ -175,7 +175,7 @@
 					newlight = new /obj/machinery/light/small/built(src.loc)
 
 			newlight.set_dir(src.dir)
-			src.transfer_fingerprints_to(newlight)
+			transfer_fingerprints_to(newlight)
 			qdel(src)
 			return
 	..()
@@ -398,7 +398,7 @@
 			to_chat(user, "There is a [fitting] already inserted.")
 			return
 		else
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
 			if(istype(L, light_type))
 				status = L.status
@@ -807,7 +807,7 @@
 
 /obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("<span class='warning'>[name] shatters.</span>","<span class='warning'>You hear a small glass object shatter.</span>")
+		visible_message("<span class='warning'>[name] shatters.</span>","<span class='warning'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		sharp = 1

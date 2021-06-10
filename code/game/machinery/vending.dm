@@ -91,7 +91,7 @@
 		if(3.0)
 			if (prob(25))
 				spawn(0)
-					src.malfunction()
+					malfunction()
 					return
 				return
 		else
@@ -100,7 +100,7 @@
 /obj/machinery/vending/blob_act()
 	if (prob(50))
 		spawn(0)
-			src.malfunction()
+			malfunction()
 			qdel(src)
 		return
 
@@ -170,10 +170,10 @@
 	if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-		src.cut_overlays()
+		cut_overlays()
 		if(src.panel_open)
-			src.add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
-		src.updateUsrDialog()
+			add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
+		updateUsrDialog()
 
 		return
 	else if(is_wire_tool(W) && panel_open && wires.interact(user))
@@ -321,7 +321,7 @@
 							vendor_account.transaction_log.Add(T)
 
 							// Vend the item
-							src.vend(src.currently_vending, usr)
+							vend(src.currently_vending, usr)
 							currently_vending = null
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
@@ -333,7 +333,7 @@
 				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
 		else
 			//Just Vend it.
-			src.vend(src.currently_vending, usr)
+			vend(src.currently_vending, usr)
 			currently_vending = null
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
@@ -449,27 +449,27 @@
 			return FALSE
 
 		if(R.price == null || isobserver(usr)) //Centcomm buys somethin at himself? Nope, because they can just take this
-			src.vend(R, usr)
+			vend(R, usr)
 		else
 			if (ewallet)
 				if (R.price <= ewallet.worth)
 					ewallet.worth -= R.price
-					src.vend(R, usr)
+					vend(R, usr)
 				else
 					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
 					src.currently_vending = R
-					src.updateUsrDialog()
+					updateUsrDialog()
 			else
 				src.currently_vending = R
-				src.updateUsrDialog()
+				updateUsrDialog()
 		return
 
 	else if (href_list["cancel_buying"])
 		src.currently_vending = null
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if (!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
@@ -495,7 +495,7 @@
 
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 		spawn(0)
-			src.speak(src.vend_reply)
+			speak(src.vend_reply)
 			src.last_reply = world.time
 
 	use_power(5)
@@ -507,14 +507,14 @@
 		src.vend_ready = 1
 		return
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)
 		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
 		R.amount++
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))

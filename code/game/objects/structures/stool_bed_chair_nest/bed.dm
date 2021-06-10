@@ -28,7 +28,7 @@
 	icon_state = "abed"
 
 /obj/structure/stool/bed/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))

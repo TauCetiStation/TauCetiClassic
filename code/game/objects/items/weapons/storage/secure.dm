@@ -44,7 +44,7 @@
 		if(istype(I, /obj/item/weapon/melee/energy/blade) && !emagged)
 			emagged = TRUE
 			user.SetNextMove(CLICK_CD_MELEE)
-			src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
+			add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 			sleep(6)
 			cut_overlays()
 			add_overlay(image('icons/obj/storage.dmi', icon_locking))
@@ -89,7 +89,7 @@
 		return FALSE
 	emagged = 1
 	user.SetNextMove(CLICK_CD_MELEE)
-	src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
+	add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 	sleep(6)
 	cut_overlays()
 	add_overlay(image('icons/obj/storage.dmi', icon_locking))
@@ -99,7 +99,7 @@
 
 /obj/item/weapon/storage/secure/MouseDrop(over_object, src_location, over_location)
 	if (locked)
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 		return
 	..()
 
@@ -144,15 +144,15 @@
 				src.locked = 1
 				cut_overlays()
 				src.code = null
-				src.close(usr)
+				close(usr)
 			else
 				src.code += text("[]", href_list["type"])
 				if (length(src.code) > 5)
 					src.code = "ERROR"
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 		for(var/mob/M in viewers(1, src.loc))
 			if ((M.client && M.machine == src))
-				src.attack_self(M)
+				attack_self(M)
 			return
 	return
 
@@ -179,13 +179,13 @@
 	if ((src.loc == user) && (src.locked == 1))
 		to_chat(usr, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 	else if ((src.loc == user) && (!src.locked))
-		src.open(usr)
+		open(usr)
 	else
 		..()
 		for(var/mob/M in range(1))
 			if (M.s_active == src)
-				src.close(M)
-	src.add_fingerprint(user)
+				close(M)
+	add_fingerprint(user)
 
 /obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
 	. = ..()

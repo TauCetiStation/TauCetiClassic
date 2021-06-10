@@ -380,8 +380,8 @@
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
 	if(issilicon(user) && get_dist(src,user) > 1)
-		return src.attack_hand(user)
-	src.add_fingerprint(user)
+		return attack_hand(user)
+	add_fingerprint(user)
 	if(iscrowbar(W) && opened)
 		if(has_electronics == 1)
 			if(terminal)
@@ -491,7 +491,7 @@
 		else if(stat & (BROKEN|MAINT))
 			to_chat(user, "Nothing happens.")
 		else
-			if(src.allowed(usr) && !wires.is_index_cut(APC_WIRE_IDSCAN))
+			if(allowed(usr) && !wires.is_index_cut(APC_WIRE_IDSCAN))
 				locked = !locked
 				to_chat(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				update_icon()
@@ -696,7 +696,7 @@
 			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
 			//user << "You remove the power cell."
 			charging = 0
-			src.update_icon()
+			update_icon()
 		return
 	// do APC interaction
 	..()
@@ -865,7 +865,7 @@
 					var/datum/game_mode/malfunction/gm_malf = SSticker.mode
 					operating ? gm_malf.apcs++ : gm_malf.apcs--
 
-		src.update()
+		update()
 		update_icon()
 
 	else if(href_list["cmode"])
@@ -902,7 +902,7 @@
 
 	else if(href_list["overload"])
 		if( (issilicon(usr) && !src.aidisabled) || isobserver(usr) )
-			src.overload_lighting()
+			overload_lighting()
 
 	else if(href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
@@ -937,7 +937,7 @@
 		malfvacate()*/
 
 	if(usingUI)
-		src.updateDialog()
+		updateDialog()
 
 /*/obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
@@ -1042,7 +1042,7 @@
 
 	var/excess = surplus()
 
-	if(!src.avail())
+	if(!avail())
 		main_status = 0
 	else if(excess < 0)
 		main_status = 1

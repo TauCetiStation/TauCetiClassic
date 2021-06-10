@@ -115,7 +115,7 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.set_dir(turn(src.dir, -90))
+	set_dir(turn(src.dir, -90))
 
 
 /obj/machinery/atmospherics/components/pipeturbine/verb/rotate_anticlockwise()
@@ -126,7 +126,7 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 
 /obj/machinery/power/turbinemotor
 	name = "motor"

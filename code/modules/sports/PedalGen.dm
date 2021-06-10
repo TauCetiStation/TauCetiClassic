@@ -68,7 +68,7 @@
 				"You were unbuckled from [src] by [user.name].",\
 				"You hear metal clanking")
 			unbuckle_mob()
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 		else
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(buckled_mob.nutrition > 10)

@@ -11,7 +11,7 @@
 	var/mob/living/silicon/ai/ai = list()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
@@ -20,7 +20,7 @@
 
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)

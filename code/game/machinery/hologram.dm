@@ -111,7 +111,7 @@ var/const/HOLOPAD_MODE = 0
 			if(user.holohack)
 				change_holo_to_carp(user)
 
-			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
+			visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
 			to_chat(user, "<span class='warning'>ERROR:</span> Image feed in progress.")
 	else

@@ -34,7 +34,7 @@
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/zero_point_emitter/update_icon()
@@ -176,7 +176,7 @@
 		if(emagged)
 			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
-		if(src.allowed(user))
+		if(allowed(user))
 			if(active)
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")

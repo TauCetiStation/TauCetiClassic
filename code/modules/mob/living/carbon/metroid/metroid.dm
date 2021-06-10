@@ -819,9 +819,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
+	visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
+		visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 
@@ -830,7 +830,7 @@
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
-		src.Hatch()
+		Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/crayon))

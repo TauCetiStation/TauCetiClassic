@@ -123,7 +123,7 @@
 
 	growth_queue = growth_queue + queue_end
 	//sleep(5)
-	//src.process()
+	//process()
 
 /obj/effect/spacevine/proc/grow()
 	if(!energy)
@@ -186,7 +186,7 @@
 		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
 		src.density = 1
 	spawn(src.waittime)
-		if (src.growth < 20) src.Life()
+		if (src.growth < 20) Life()
 
 */
 

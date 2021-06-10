@@ -45,7 +45,7 @@
 		target.reagents.trans_to(src, 10)
 		to_chat(user, "<span class='notice'>You fill the balloon with the contents of [target].</span>")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
-		src.update_icon()
+		update_icon()
 	return
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
@@ -69,7 +69,7 @@
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(src.reagents.total_volume >= 1)
-		src.visible_message("<span class='warning'>The [src] bursts!</span>","You hear a pop and a splash.")
+		visible_message("<span class='warning'>The [src] bursts!</span>","You hear a pop and a splash.")
 		src.reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
 			src.reagents.reaction(A)
@@ -170,7 +170,7 @@
 	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
 		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click* *click*</span>", SHOWMSG_AUDIO)
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
@@ -275,7 +275,7 @@
 		visible_message("<span class='warning'>[user] realized they were out of ammo and starting scrounging for some!</span>")
 
 /obj/item/toy/crossbow/attack(mob/M, mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 // ******* Check
 
@@ -342,7 +342,7 @@
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/item/toy/katana
@@ -374,7 +374,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 	new /obj/effect/decal/cleanable/ash(src.loc)
-	src.visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
+	visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 	qdel(src)
 
@@ -389,7 +389,7 @@
 			s.set_up(2, 0, src)
 			s.start()
 			new /obj/effect/decal/cleanable/ash(src.loc)
-			src.visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
+			visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
 			playsound(src, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
 			qdel(src)
 

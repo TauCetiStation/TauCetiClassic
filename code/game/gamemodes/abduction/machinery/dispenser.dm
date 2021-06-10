@@ -60,7 +60,7 @@
 		return
 	if(href_list["dispense"])
 		Dispense(text2num(href_list["dispense"]))
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)

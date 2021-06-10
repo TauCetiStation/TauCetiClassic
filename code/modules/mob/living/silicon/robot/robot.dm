@@ -603,7 +603,7 @@
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.update_icon()
 				new/obj/item/robot_parts/chest(loc)
-				src.Destroy()
+				Destroy()
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
@@ -1063,7 +1063,7 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if (src.connected_ai)
-		src.set_ai_link(null)
+		set_ai_link(null)
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1

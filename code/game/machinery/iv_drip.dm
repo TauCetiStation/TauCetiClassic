@@ -56,13 +56,13 @@
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null
-		src.update_icon()
+		update_icon()
 		return
 
 	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
-		src.update_icon()
+		update_icon()
 
 
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user)
@@ -75,7 +75,7 @@
 		W.loc = src
 		src.beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
-		src.update_icon()
+		update_icon()
 		return
 	else
 		return ..()
@@ -88,9 +88,9 @@
 
 		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
 			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
-			src.attached:apply_damage(3, BRUTE, pick(BP_R_ARM , BP_L_ARM))
+			attached:apply_damage(3, BRUTE, pick(BP_R_ARM , BP_L_ARM))
 			src.attached = null
-			src.update_icon()
+			update_icon()
 			return
 
 	if(src.attached && src.beaker)

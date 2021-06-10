@@ -138,7 +138,7 @@
 	if(href_list["show_values"])
 		show_value_list = !show_value_list
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/mineral/processing_unit_console/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"

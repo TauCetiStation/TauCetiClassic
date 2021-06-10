@@ -91,11 +91,11 @@
 				for(var/mob/living/carbon/human/H in global.human_list)
 					if(H.real_name == prisoner_name)
 						H.sec_hud_set_security_status()
-			src.timer_end() // open doors, reset timer, clear status screen
+			timer_end() // open doors, reset timer, clear status screen
 			cell_open()
 
-		src.updateUsrDialog()
-		src.update_icon()
+		updateUsrDialog()
+		update_icon()
 
 	return
 
@@ -299,7 +299,7 @@
 	if(href_list["set_prisoner_details"])
 		prisoner_details = sanitize(input(usr, "Введите подробности", "Таймер камеры", input_default(prisoner_details)), MAX_LNAME_LEN)
 
-	if(!src.allowed(usr))
+	if(!allowed(usr))
 		return
 
 	if(href_list["timing"])
@@ -309,7 +309,7 @@
 			src.timing = text2num(href_list["timing"])
 
 			if(src.timing)
-				src.timer_start(usr.name)
+				timer_start(usr.name)
 				var/prison_minute = round(timetoset / 600)
 				var/data = ""
 				if(security_data)
@@ -330,7 +330,7 @@
 					for(var/mob/living/carbon/human/H in global.human_list)
 						if(H.real_name == prisoner_name)
 							H.sec_hud_set_security_status()
-				src.timer_end()
+				timer_end()
 				cell_open()
 	else
 		if(href_list["tp"])  //adjust timer, close door if not already closed
@@ -346,14 +346,14 @@
 				F.flash()
 
 		if(href_list["change"])
-			src.timer_start(usr.name)
+			timer_start(usr.name)
 			cell_close()
 
 	if(href_list["setScreen"])
 		src.screen = text2num(href_list["setScreen"])
 
-	src.updateUsrDialog()
-	src.update_icon()
+	updateUsrDialog()
+	update_icon()
 
 //icon update function
 // if NOPOWER, display blank

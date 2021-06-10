@@ -177,15 +177,15 @@
 	switch(severity)
 		if(1.0)
 			src.health -= 75
-			src.checkhp()
+			checkhp()
 		if(2.0)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
-			src.checkhp()
+			checkhp()
 		if(3.0)
 			src.health -= 10
-			src.checkhp()
+			checkhp()
 	return
 
 /obj/machinery/shieldgen/emp_act(severity)
@@ -215,13 +215,13 @@
 		user.visible_message("<span class='notice'>[bicon(src)] [user] deactivated the shield generator.</span>", \
 			"<span class='notice'>[bicon(src)] You deactivate the shield generator.</span>", \
 			"You hear heavy droning fade out.")
-		src.shields_down()
+		shields_down()
 	else
 		if(anchored)
 			user.visible_message("<span class='notice'>[bicon(src)] [user] activated the shield generator.</span>", \
 				"<span class='notice'>[bicon(src)] You activate the shield generator.</span>", \
 				"You hear heavy droning.")
-			src.shields_up()
+			shields_up()
 		else
 			to_chat(user, "The device must first be secured to the floor.")
 
@@ -254,7 +254,7 @@
 			to_chat(user, "<span class='notice'>You unsecure the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>The [src] shuts off!</span>")
-				src.shields_down()
+				shields_down()
 			anchored = 0
 		else
 			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
@@ -263,7 +263,7 @@
 
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
-		if(src.allowed(user))
+		if(allowed(user))
 			src.locked = !src.locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
@@ -360,7 +360,7 @@
 		user.visible_message("[user] turned the shield generator off.", \
 			"You turn off the shield generator.", \
 			"You hear heavy droning fade out.")
-		for(var/dir in list(1,2,4,8)) src.cleanup(dir)
+		for(var/dir in list(1,2,4,8)) cleanup(dir)
 	else
 		src.active = 1
 		icon_state = "Shield_Gen +a"
@@ -395,11 +395,11 @@
 		src.active = 2
 	if(src.active >= 1)
 		if(src.power == 0)
-			src.visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
+			visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
 			src.active = 0
-			for(var/dir in list(1,2,4,8)) src.cleanup(dir)
+			for(var/dir in list(1,2,4,8)) cleanup(dir)
 
 /obj/machinery/shieldwallgen/proc/setup_field(NSEW = 0)
 	var/turf/T = src.loc
@@ -466,14 +466,14 @@
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (allowed(user))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 	else
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		visible_message("<span class='warning'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
 		user.SetNextMove(CLICK_CD_MELEE)
 
@@ -496,10 +496,10 @@
 				break
 
 /obj/machinery/shieldwallgen/Destroy()
-	src.cleanup(1)
-	src.cleanup(2)
-	src.cleanup(4)
-	src.cleanup(8)
+	cleanup(1)
+	cleanup(2)
+	cleanup(4)
+	cleanup(8)
 	attached = null
 	return ..()
 
