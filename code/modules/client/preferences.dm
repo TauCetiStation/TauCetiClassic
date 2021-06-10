@@ -143,6 +143,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
+	var/auto_fit_viewport = TRUE
 	var/parallax_theme = PARALLAX_THEME_CLASSIC
 
   //custom loadout
