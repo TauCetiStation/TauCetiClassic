@@ -2,11 +2,6 @@
 var/global/normal_ooc_colour = "#002eb8"
 var/global/bridge_ooc_colour = "#7b804f"
 
-/client/verb/ooc_wrapper()
-	set hidden = TRUE
-	var/message = input("", "OOC") as text
-	ooc(message)
-
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
@@ -15,8 +10,10 @@ var/global/bridge_ooc_colour = "#7b804f"
 		to_chat(usr, "<span class='red'>Speech is currently admin-disabled.</span>")
 		return
 
-	if(!mob || !msg)
+	if(!mob)
 		return
+
+	msg = sanitize(msg)
 
 	if(!msg)	return
 
@@ -65,11 +62,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 	)
 
 /proc/send2ooc(msg, name, colour, client/sender)
-	msg = sanitize(msg)
-
-	if(!msg)
-		return
-
 	if(sender)
 		log_ooc("[key_name(sender)] : [msg]")
 	else
