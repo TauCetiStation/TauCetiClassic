@@ -1021,7 +1021,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(O == selection)
 			pinned -= O
 		if(!pinned.len)
-			anchored = 0
+			anchored = FALSE
 	return 1
 
 ///Get the ghost of this mob (from the mind)
@@ -1112,7 +1112,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)

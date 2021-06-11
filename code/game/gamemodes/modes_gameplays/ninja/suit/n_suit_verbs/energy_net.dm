@@ -9,10 +9,10 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "energynet"
 
-	density = 1//Can't pass through.
+	density = TRUE//Can't pass through.
 	opacity = 0//Can see through.
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
-	anchored = 1//Can't drag/grab the trapped mob.
+	anchored = TRUE//Can't drag/grab the trapped mob.
 
 	var/health = 100//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
@@ -25,7 +25,7 @@
 
 /obj/effect/energy_net/proc/healthcheck()
 	if(health <=0)
-		density = 0
+		density = FALSE
 		if(affecting)
 			var/mob/living/carbon/M = affecting
 			M.captured = 0 //Important.

@@ -24,7 +24,7 @@
 	color = color_windows()
 
 /obj/machinery/door/window/Destroy()
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	electronics = null
 	return ..()
@@ -68,7 +68,7 @@
 			ae.icon_state = "door_electronics_smoked"
 			ae.broken = TRUE
 			operating = 0
-	src.density = 0
+	src.density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] shatters!")
@@ -309,7 +309,7 @@
 							if("rightsecure")
 								WA.icon_state = "r_secure_windoor_assembly02"
 								WA.secure = 1
-								WA.anchored = 1
+								WA.anchored = TRUE
 						WA.state= "02"
 						WA.set_dir(src.dir)
 						WA.ini_dir = src.dir

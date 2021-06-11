@@ -1222,8 +1222,8 @@ var/centcom_barriers_stat = 1
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	invisibility = 101
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x3"

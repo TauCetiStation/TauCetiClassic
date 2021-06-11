@@ -3,8 +3,8 @@
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	flags = CONDUCT
 	layer = BELOW_MACHINERY_LAYER
 	explosion_resistance = 5
@@ -182,7 +182,7 @@
 				WD = new/obj/structure/window/basic(loc) //normal window
 			WD.set_dir(dir_to_set)
 			WD.ini_dir = dir_to_set
-			WD.anchored = 0
+			WD.anchored = FALSE
 			WD.state = 0
 			to_chat(user, "<span class='notice'>You place the [WD] on [src].</span>")
 			WD.update_icon()
@@ -213,7 +213,7 @@
 	if(health <= 0)
 		if(!destroyed)
 			icon_state = "brokengrille"
-			density = 0
+			density = FALSE
 			destroyed = 1
 			new /obj/item/stack/rods(get_turf(src))
 

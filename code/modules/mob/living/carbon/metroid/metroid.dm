@@ -663,7 +663,7 @@
 	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "A strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'

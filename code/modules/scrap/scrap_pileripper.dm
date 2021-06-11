@@ -11,8 +11,8 @@
 	icon = 'icons/obj/structures/scrap/recycling.dmi'
 	icon_state = "grinder-b0"
 	layer = MOB_LAYER+1 // Overhead
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 

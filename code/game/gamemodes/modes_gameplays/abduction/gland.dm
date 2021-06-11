@@ -264,7 +264,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cocoon_large3"
 	color = rgb(10,120,10)
-	density = 1
+	density = TRUE
 	var/hatch_time = 0
 
 /obj/effect/cocoon/abductor/proc/Start()

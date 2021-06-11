@@ -5,8 +5,8 @@
 	icon_state = "darts-5"
 	item_state = "rcdammo"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	origin_tech = "materials=2"
 	var/darts = 5
 

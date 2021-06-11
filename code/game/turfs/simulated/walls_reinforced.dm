@@ -3,7 +3,7 @@
 	desc = "A huge chunk of reinforced metal used to seperate rooms."
 	icon = 'icons/turf/walls/has_false_walls/reinforced_wall.dmi'
 	opacity = 1
-	density = 1
+	density = TRUE
 
 	damage_cap = 200
 	max_temperature = 20000
