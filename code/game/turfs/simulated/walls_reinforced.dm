@@ -49,6 +49,24 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
+	if(istype(W, /obj/item/weapon/reagent_containers))
+		if(W.is_open_container())
+			for(var/datum/reagent/R in W.reagents.reagent_list)
+				if(R.id == "thermite" && R.volume >= 30)
+					has_thermite = TRUE
+					user.visible_message("<span class='notice'>You pour some thermite on the [src].</span>")
+
+				else if(R.id == "cleaner" && R.volume >= 15)
+					has_thermite = FALSE
+					user.visible_message("<span class='notice'>You clean the [src] with space cleaner.</span>")
+
+				else if(R.id == "water" && R.volume >= 60)
+					has_thermite = FALSE
+					user.visible_message("<span class='notice'>You clean the [src] with water.</span>")
+
+			W.reagents.reagent_list -= W.reagents.reagent_list
+			return
+
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
@@ -71,7 +89,7 @@
 			return
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
-	if(thermite)
+	if(has_thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))

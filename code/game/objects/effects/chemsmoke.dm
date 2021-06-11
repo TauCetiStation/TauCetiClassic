@@ -1,3 +1,4 @@
+//chemsmoke.dm
 /////////////////////////////////////////////
 // Chem smoke
 /////////////////////////////////////////////
@@ -114,9 +115,24 @@
 			chemholder.reagents.update_total()
 
 			//apply wall affecting reagents to walls
-			if(R.id in list("thermite", "plantbgone"))
+			if(R.id == "plantbgone")
 				for(var/turf/T in wallList)
 					R.reaction_turf(T, R.volume)
+			else if(R.id == "thermite")
+				for(var/turf/T in wallList)
+					if(R.volume >= 30)
+						var/turf/simulated/wall/W = T
+						W.has_thermite = TRUE
+			else if(R.id == "cleaner")
+				for(var/turf/T in wallList)
+					if(R.volume >= 15)
+						var/turf/simulated/wall/W = T
+						W.has_thermite = FALSE
+			else if(R.id == "water")
+				for(var/turf/T in wallList)
+					if(R.volume >= 60)
+						var/turf/simulated/wall/W = T
+						W.has_thermite = FALSE
 
 			//reagents that should be applied to turfs in a random pattern
 			if(R.id == "carbon")

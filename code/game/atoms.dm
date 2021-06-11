@@ -1,3 +1,4 @@
+//atoms.dm
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
@@ -702,3 +703,34 @@
 				continue
 			return AA.alternate_obj.name
 	return name
+
+/atom/proc/thermitemelt(mob/user, seconds_to_melt)
+	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
+	O.name = "Thermite"
+	O.desc = "Looks hot."
+	O.icon = 'icons/effects/fire.dmi'
+	O.icon_state = "2"
+	O.anchored = 1
+	O.density = 1
+	O.layer = 5
+
+	if(istype(src, /obj/structure/closet))
+		var/obj/structure/closet/C = src
+		for(var/mob/living/M in src)
+			M.adjustFireLoss(rand(30, 60))
+			M.Stun(5)
+		C.dump_contents()
+
+	else if(istype(src, /turf/simulated/wall))
+		var/turf/simulated/wall/W = src
+		if(W.mineral == "diamond")
+			qdel(O)
+			visible_message("<span class='warning'>Thermite isn't strong enough to melt [src]. </span>")
+			return
+
+		W.ChangeTurf(/turf/simulated/floor/plating)
+
+	visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
+	qdel(src)
+	sleep(seconds_to_melt * 10)
+	qdel(O)

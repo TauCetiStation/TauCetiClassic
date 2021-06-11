@@ -84,6 +84,24 @@
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
+	if(istype(W, /obj/item/weapon/reagent_containers) && !src.opened)
+		if(W.is_open_container())
+			for(var/datum/reagent/R in W.reagents.reagent_list)
+				if(R.id == "thermite" && R.volume >= 30)
+					has_thermite = TRUE
+					user.visible_message("<span class='notice'>You pour some thermite on [src].</span>")
+
+				else if(R.id == "cleaner" && R.volume >= 15)
+					has_thermite = FALSE
+					user.visible_message("<span class='notice'>You clean [src] with space cleaner.</span>")
+
+				else if(R.id == "water" && R.volume >= 60)
+					has_thermite = FALSE
+					user.visible_message("<span class='notice'>You clean [src] with water.</span>")
+
+			W.reagents.reagent_list -= W.reagents.reagent_list
+			return
+
 	else if(istype(W,/obj/item/weapon/packageWrap) || iswelder(W))
 		return ..(W,user)
 	else

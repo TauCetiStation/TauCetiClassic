@@ -16,7 +16,8 @@
 
 	var/max_temperature = 2200 //K, walls will take damage if they're next to a fire hotter than this
 
-	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
+	var/seconds_to_melt = 15 //It takes 10 seconds for thermite to melt this wall through
+	var/has_thermite = FALSE
 
 	opacity = 1
 	density = 1
@@ -212,31 +213,6 @@
 		for(var/i=0, i<number_rots, i++)
 			new /obj/effect/overlay/wall_rot(src)
 
-/turf/simulated/wall/proc/thermitemelt(mob/user, seconds_to_melt)
-	if(mineral == "diamond")
-		return
-	var/obj/effect/overlay/O = new/obj/effect/overlay(src)
-	O.name = "Thermite"
-	O.desc = "Looks hot."
-	O.icon = 'icons/effects/fire.dmi'
-	O.icon_state = "2"
-	O.anchored = 1
-	O.density = 1
-	O.layer = 5
-
-	src.ChangeTurf(/turf/simulated/floor/plating)
-
-	var/turf/simulated/floor/F = src
-	F.burn_tile()
-	F.icon_state = "wall_thermite"
-	to_chat(user, "<span class='warning'>The thermite starts melting through the wall.</span>")
-
-	spawn(seconds_to_melt * 10)
-		if(O)	qdel(O)
-//	F.sd_LumReset()		//TODO: ~Carn
-	return
-
-
 //Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)
@@ -308,6 +284,24 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
+	if(istype(W, /obj/item/weapon/reagent_containers))
+		if(W.is_open_container())
+			for(var/datum/reagent/R in W.reagents.reagent_list)
+				if(R.id == "thermite" && R.volume >= 30)
+					has_thermite = TRUE
+					user.visible_message("<span class='notice'>You pour some thermite on [src].</span>")
+
+				else if(R.id == "cleaner" && R.volume >= 15)
+					has_thermite = FALSE
+					user.visible_message("<span class='notice'>You clean [src] with space cleaner.</span>")
+
+				else if(R.id == "water" && R.volume >= 60)
+					has_thermite = FALSE
+					user.visible_message("<span class='notice'>You clean [src] with water.</span>")
+
+			W.reagents.reagent_list -= W.reagents.reagent_list
+			return
+
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
@@ -329,7 +323,7 @@
 			return
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
-	if(thermite)
+	if(has_thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))

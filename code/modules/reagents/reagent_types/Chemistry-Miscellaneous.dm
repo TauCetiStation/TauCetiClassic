@@ -162,14 +162,6 @@
 	reagent_state = SOLID
 	color = "#673910" // rgb: 103, 57, 16
 
-/datum/reagent/thermite/reaction_turf(turf/T, volume)
-	. = ..()
-	if(volume >= 30)
-		if(istype(T, /turf/simulated/wall))
-			var/turf/simulated/wall/W = T
-			W.thermite = 1
-			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
-
 /datum/reagent/thermite/on_general_digest(mob/living/M)
 	..()
 	M.adjustFireLoss(1)
