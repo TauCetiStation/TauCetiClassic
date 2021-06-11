@@ -3,8 +3,8 @@
 	layer = 2
 	name = "shuttle wall"
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	opacity = 1
 	icon = 'code/modules/locations/shuttles/shuttle.dmi'
 

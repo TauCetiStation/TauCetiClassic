@@ -29,8 +29,8 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "farmbot0"
 	layer = 5.0
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	health = 50
 	maxhealth = 50
 	req_access =list(access_hydroponics)

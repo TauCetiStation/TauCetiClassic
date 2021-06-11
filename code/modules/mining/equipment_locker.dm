@@ -6,8 +6,8 @@
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment locker."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_one_access = list(access_mining_station, access_chemistry, access_bar, access_research, access_ce, access_virology)
@@ -237,8 +237,8 @@
 	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	var/static/list/selection_items
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
