@@ -55,6 +55,9 @@
 /atom/movable/Crossed(atom/movable/AM)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
+
+#define VERTICAL NORTH | SOUTH
+#define HORIZONTAL EAST | WEST 
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
@@ -68,29 +71,21 @@
 	if(loc != NewLoc)
 		if (!(Dir & (Dir - 1))) //Cardinal move
 			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			if (Dir & NORTH)
-				if (Dir & EAST)
-					if (step(src, NORTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, NORTH)
-				else if (Dir & WEST)
-					if (step(src, NORTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, NORTH)
-			else if (Dir & SOUTH)
-				if (Dir & EAST)
-					if (step(src, SOUTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, SOUTH)
-				else if (Dir & WEST)
-					if (step(src, SOUTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, SOUTH)
+		else //Diagonal move, split it into cardinal 
+			var/v = VERTICAL
+			var/h = HORIZONTAL
+			v &= Dir
+			h &= Dir
+
+			. = step(src, v)
+			if(.)
+				if(!step(src, h))
+					set_dir(v)
+			else
+				. = step(src, h)
+				if(.)
+					if(!step(src, v))
+						set_dir(h)
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
@@ -109,6 +104,8 @@
 
 	if(.)
 		Moved(oldloc, Dir)
+#undef VERTICAL
+#undef HORIZONTAL
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
