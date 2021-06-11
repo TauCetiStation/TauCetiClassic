@@ -408,7 +408,7 @@ steam.start() -- spawns the effect
 		spawn(2)
 			if(src.on)
 				src.processing = 1
-				src.start()
+				start()
 
 /datum/effect/effect/system/ion_trail_follow/proc/stop()
 	src.processing = 0
@@ -447,12 +447,12 @@ steam.start() -- spawns the effect
 				spawn(2)
 					if(src.on)
 						src.processing = 1
-						src.start()
+						start()
 			else
 				spawn(2)
 					if(src.on)
 						src.processing = 1
-						src.start()
+						start()
 
 /datum/effect/effect/system/steam_trail_follow/proc/stop()
 	src.processing = 0

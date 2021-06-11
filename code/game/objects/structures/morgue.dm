@@ -209,7 +209,7 @@
 	return ..()
 
 /obj/structure/m_tray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/m_tray/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -296,7 +296,7 @@
 	return src.loc
 
 /obj/structure/crematorium/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
@@ -331,7 +331,7 @@
 		else
 			qdel(src.connected)
 			src.connected = null
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	update()
 
 /obj/structure/crematorium/attackby(P, mob/user)
@@ -379,7 +379,7 @@
 		return
 
 	else
-		if(!isemptylist(src.search_contents_for(/obj/item/weapon/disk/nuclear)))
+		if(!isemptylist(search_contents_for(/obj/item/weapon/disk/nuclear)))
 			to_chat(usr, "<span class='notice'>You get the feeling that you shouldn't cremate one of the items in the cremator.</span>")
 			return
 
@@ -422,7 +422,7 @@
 	throwpass = 1
 
 /obj/structure/c_tray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/c_tray/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_RAPID)

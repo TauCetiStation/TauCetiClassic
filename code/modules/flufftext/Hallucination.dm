@@ -269,13 +269,13 @@ Gunshots/explosions/opening doors/less rare audio (done)
         // FAKE DEATH
 
 			if(74 to 75)
-				src.SetSleeping(40 SECONDS)
+				SetSleeping(40 SECONDS)
 				hal_crit = 1
 				hal_screwyhud = 1
 				to_chat(src, "<span class='userdanger'>[pick("FUCK!", "FOR FUCKS SAKE, END THIS!", "", "WHY-Y-Y?!", "NOT AGAIN")] I LOST! [pick("NNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHH!", "DAMN THIS GAME IS SO HARD!", "I CAN'T PLAY THIS GAME ANY MORE!")]</span>")
 				playsound_local(null, 'sound/hallucinations/fake_death.ogg', VOL_EFFECTS_MASTER)
 				spawn(rand(50,100))
-					src.SetSleeping(0)
+					SetSleeping(0)
 					hal_crit = 0
 					hal_screwyhud = 0
 
@@ -366,12 +366,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
-			src.set_dir(get_dir(src,my_target))
+			set_dir(get_dir(src,my_target))
 			step_towards(src,my_target)
 			updateimage()
 		else
 			if(prob(15))
-				src.do_attack_animation(my_target)
+				do_attack_animation(my_target)
 				if(weapon_name)
 					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", SHOWMSG_VISUAL)

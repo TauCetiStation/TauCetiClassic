@@ -625,7 +625,7 @@ var/list/ai_verbs_default = list(
 	set name = "Cancel Camera View"
 
 	//src.cameraFollow = null
-	src.view_core()
+	view_core()
 
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm

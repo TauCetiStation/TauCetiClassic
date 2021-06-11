@@ -433,7 +433,7 @@
 
 //Girders!!!!!
 /obj/structure/girder/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return attack_hand(user) //#Z2
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)

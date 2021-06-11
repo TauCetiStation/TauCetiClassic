@@ -7,7 +7,7 @@
 
 	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
-	var/obj/item/I = src.get_active_hand()
+	var/obj/item/I = get_active_hand()
 	if(!I)
 		to_chat(src, "<span class='red'>You don't have anything in your hand to give to [M]</span>")
 		return

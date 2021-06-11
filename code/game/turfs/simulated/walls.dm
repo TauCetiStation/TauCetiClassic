@@ -189,7 +189,7 @@
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1)
-			src.ChangeTurf(basetype)
+			ChangeTurf(basetype)
 		if(2)
 			if(prob(75))
 				take_damage(rand(150, 250))
@@ -224,7 +224,7 @@
 	O.density = TRUE
 	O.layer = 5
 
-	src.ChangeTurf(/turf/simulated/floor/plating)
+	ChangeTurf(/turf/simulated/floor/plating)
 
 	var/turf/simulated/floor/F = src
 	F.burn_tile()
@@ -240,7 +240,7 @@
 //Interactions
 
 /turf/simulated/wall/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return attack_hand(user) //#Z2
 
 /*
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
@@ -299,7 +299,7 @@
 
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
@@ -320,10 +320,10 @@
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
-			src.dismantle_wall(1)
+			dismantle_wall(1)
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W

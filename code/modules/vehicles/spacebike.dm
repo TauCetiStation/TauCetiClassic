@@ -196,10 +196,10 @@
 
 	if(!on)
 		turn_on()
-		src.visible_message("\The [src] rumbles to life.", "You hear something rumble deeply.")
+		visible_message("\The [src] rumbles to life.", "You hear something rumble deeply.")
 	else
 		turn_off()
-		src.visible_message("\The [src] putters before turning off.", "You hear something putter slowly.")
+		visible_message("\The [src] putters before turning off.", "You hear something putter slowly.")
 
 /obj/vehicle/space/spacebike/verb/remove_key()
 	set name = "Remove key"
@@ -236,12 +236,12 @@
 		return
 
 	if(kickstand)
-		src.visible_message("[usr.name] puts up \the [src]'s kickstand.", "<span class='notice'>You put up \the [src]'s kickstand.</span>")
+		visible_message("[usr.name] puts up \the [src]'s kickstand.", "<span class='notice'>You put up \the [src]'s kickstand.</span>")
 	else
 		if(istype(src.loc,/turf/space))
 			to_chat(usr, "<span class='warning'>You don't think kickstands work in space...</span>")
 			return
-		src.visible_message("[usr.name] puts down \the [src]'s kickstand.", "<span class='notice'>You put down \the [src]'s kickstand.</span>")
+		visible_message("[usr.name] puts down \the [src]'s kickstand.", "<span class='notice'>You put down \the [src]'s kickstand.</span>")
 		if(pulledby)
 			pulledby.stop_pulling()
 

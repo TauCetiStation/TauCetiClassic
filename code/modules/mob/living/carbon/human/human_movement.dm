@@ -1,6 +1,6 @@
 /mob/living/carbon/human/movement_delay()
 	if(iszombie(src))
-		return src.zombie_movement_delay()
+		return zombie_movement_delay()
 	if(ischangeling(src))
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 		if(C.strained_muscles)

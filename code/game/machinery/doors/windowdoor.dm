@@ -31,7 +31,7 @@
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
-	if(src.check_access(null))
+	if(check_access(null))
 		sleep(50)
 	else //secure doors close faster
 		sleep(20)
@@ -54,7 +54,7 @@
 		if(!electronics)
 			ae = new/obj/item/weapon/airlock_electronics( src.loc )
 			if(!src.req_access)
-				src.check_access()
+				check_access()
 			if(src.req_access.len)
 				ae.conf_access = src.req_access
 			else if (src.req_one_access.len)
@@ -99,13 +99,13 @@
 	if (!( ismob(AM) ))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
-			if(src.check_access(bot.botcard))
+			if(check_access(bot.botcard))
 				open_and_close()
 			else
 				do_animate("deny")
 		else if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
-			if(mecha.occupant && src.allowed(mecha.occupant))
+			if(mecha.occupant && allowed(mecha.occupant))
 				open_and_close()
 			else
 				do_animate("deny")
@@ -120,8 +120,8 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
+	add_fingerprint(user)
+	if(!requiresID())
 		user = null
 
 	if(allowed(user))

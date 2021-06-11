@@ -151,11 +151,11 @@
 			take_damage(aforce)
 		return
 
-	src.add_fingerprint(user)
-	if (!src.requiresID())
+	add_fingerprint(user)
+	if (!requiresID())
 		user = null
 
-	if (src.allowed(user))
+	if (allowed(user))
 		if (src.density)
 			open()
 		else

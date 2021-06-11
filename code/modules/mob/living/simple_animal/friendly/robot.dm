@@ -142,7 +142,7 @@
 			if(emagged == 1)
 				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
 				sleep(500)
-				src.explode()
+				explode()
 				commandtrigger = 0
 		if("Explode (using motion sensor)")
 			if(emagged == 1)

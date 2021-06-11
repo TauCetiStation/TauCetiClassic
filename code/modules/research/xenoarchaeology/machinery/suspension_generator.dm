@@ -255,7 +255,7 @@
 
 	suspension_field = new(T)
 	suspension_field.field_type = field_type
-	src.visible_message("<span class='notice'>[bicon(src)] [src] activates with a low hum.</span>")
+	visible_message("<span class='notice'>[bicon(src)] [src] activates with a low hum.</span>")
 	icon_state = "suspension_working"
 
 	for(var/obj/item/I in T)
@@ -265,7 +265,7 @@
 	if(collected)
 		suspension_field.icon_state = "energynet"
 		suspension_field.add_overlay("shield2")
-		src.visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
+		visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
 	else
 		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))
 			suspension_field.icon_state = "shieldsparkles"
@@ -281,7 +281,7 @@
 			to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
 			M.weakened = min(M.weakened, 3)
 
-		src.visible_message("<span class='notice'>[bicon(src)] [src] deactivates with a gentle shudder.</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] deactivates with a gentle shudder.</span>")
 		qdel(suspension_field)
 		suspension_field = null
 		icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"

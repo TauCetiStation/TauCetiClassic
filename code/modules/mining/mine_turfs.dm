@@ -563,7 +563,7 @@
 					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
 					ChangeTurf(src.type, arguments)
 				else
-					new src.type(tunnel, rand(10, 15), 0, dir)
+					new type(tunnel, rand(10, 15), 0, dir)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
@@ -679,7 +679,7 @@
 					lattice = 1
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
-				src.add_overlay(I)
+				add_overlay(I)
 
 /turf/proc/update_overlays_full()
 	var/turf/A

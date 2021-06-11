@@ -43,7 +43,7 @@
 		set_light(0)
 
 /turf/space/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/space/attackby(obj/item/C, mob/user)
 
@@ -179,7 +179,7 @@
 			qdel(A)
 			return
 
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]
@@ -204,7 +204,7 @@
 			qdel(A)
 			return
 
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]
@@ -228,7 +228,7 @@
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]
@@ -253,7 +253,7 @@
 		if(istype(A, /obj/effect/meteor))
 			qdel(A)
 			return
-		var/list/cur_pos = src.get_global_map_pos()
+		var/list/cur_pos = get_global_map_pos()
 		if(!cur_pos) return
 		cur_x = cur_pos["x"]
 		cur_y = cur_pos["y"]

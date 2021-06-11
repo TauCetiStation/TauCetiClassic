@@ -421,7 +421,7 @@
 			if (prob(10) && get_infection_chance(src))
 //					log_debug("[src] : Exhaling some viruses")
 				for(var/mob/living/carbon/M in view(1,src))
-					src.spread_disease_to(M)
+					spread_disease_to(M)
 
 /mob/living/carbon/human/proc/get_breath_from_internal(volume_needed)
 	if(internal)
@@ -1258,7 +1258,7 @@
 			clear_fullscreen("oxy")
 
 		//Fire and Brute damage overlay (BSSR)
-		var/hurtdamage = src.getBruteLoss() + src.getFireLoss() + damageoverlaytemp
+		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
 		damageoverlaytemp = 0 // We do this so we can detect if someone hits us or not.
 		if(hurtdamage)
 			var/severity = 0

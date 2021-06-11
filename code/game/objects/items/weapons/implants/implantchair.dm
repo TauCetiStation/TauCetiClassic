@@ -60,8 +60,8 @@
 				add_implants()
 				ready = 1
 
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
+		updateUsrDialog()
+		add_fingerprint(usr)
 		return
 
 
@@ -77,7 +77,7 @@
 	var/mob/M = G.affecting
 	if(put_mob(M))
 		qdel(G)
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/implantchair/proc/go_out(mob/M)
@@ -110,7 +110,7 @@
 	M.stop_pulling()
 	M.loc = src
 	src.occupant = M
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	icon_state = "implantchair_on"
 	return 1
 
@@ -138,7 +138,7 @@
 	set src in oview(1)
 	if(usr.incapacitated())
 		return
-	src.go_out(usr)
+	go_out(usr)
 	add_fingerprint(usr)
 	return
 

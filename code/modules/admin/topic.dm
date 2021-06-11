@@ -1929,15 +1929,15 @@
 
 	else if(href_list["ac_view_wanted"])            //Admin newscaster Topic() stuff be here
 		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_channel_name"])
 		src.admincaster_feed_channel.channel_name = sanitize(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(admincaster_feed_channel.channel_name)))
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
 		src.admincaster_feed_channel.locked = !src.admincaster_feed_channel.locked
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_submit_new_channel"])
 		var/check = 0
@@ -1959,18 +1959,18 @@
 				news_network.network_channels += newChannel                        //Adding channel to the global network
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_channel_receiving"])
 		var/list/available_channels = list()
 		for(var/datum/feed_channel/F in news_network.network_channels)
 			available_channels += F.channel_name
 		src.admincaster_feed_channel.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_new_message"])
 		src.admincaster_feed_message.body = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(admincaster_feed_message.body)), extra = FALSE)
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
 		if(src.admincaster_feed_message.body =="" || src.admincaster_feed_message.body =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
@@ -1991,23 +1991,23 @@
 			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
 
 		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_create_channel"])
 		src.admincaster_screen=2
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_create_feed_story"])
 		src.admincaster_screen=3
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_menu_censor_story"])
 		src.admincaster_screen=10
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_menu_censor_channel"])
 		src.admincaster_screen=11
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_menu_wanted"])
 		var/already_wanted = 0
@@ -2018,15 +2018,15 @@
 			src.admincaster_feed_message.author = news_network.wanted_issue.author
 			src.admincaster_feed_message.body = news_network.wanted_issue.body
 		src.admincaster_screen = 14
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
 		src.admincaster_feed_message.author = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(admincaster_feed_message.author)))
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
 		src.admincaster_feed_message.body = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
 		var/input_param = text2num(href_list["ac_submit_wanted"])
@@ -2052,7 +2052,7 @@
 					news_network.wanted_issue.backup_author = src.admincaster_feed_message.backup_author
 					src.admincaster_screen = 19
 				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_feed_message.author]!")
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_cancel_wanted"])
 		var/choice = tgui_alert(usr, "Please confirm Wanted Issue removal","Network Security Handler", list("Confirm","Cancel"))
@@ -2061,7 +2061,7 @@
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 				NEWSCASTER.update_icon()
 			src.admincaster_screen=17
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_censor_channel_author"])
 		var/datum/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
@@ -2070,7 +2070,7 @@
 			FC.author = "<B>\[REDACTED\]</B>"
 		else
 			FC.author = FC.backup_author
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_censor_channel_story_author"])
 		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
@@ -2079,7 +2079,7 @@
 			MSG.author = "<B>\[REDACTED\]</B>"
 		else
 			MSG.author = MSG.backup_author
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_censor_channel_story_body"])
 		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
@@ -2088,22 +2088,22 @@
 			MSG.body = "<B>\[REDACTED\]</B>"
 		else
 			MSG.body = MSG.backup_body
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_pick_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen=13
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_toggle_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
 		FC.censored = !FC.censored
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_view"])
 		src.admincaster_screen=1
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_setScreen"]) //Brings us to the main menu and resets all fields~
 		src.admincaster_screen = text2num(href_list["ac_setScreen"])
@@ -2112,26 +2112,26 @@
 				src.admincaster_feed_channel = new /datum/feed_channel
 			if(src.admincaster_feed_message)
 				src.admincaster_feed_message = new /datum/feed_message
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_show_channel"])
 		var/datum/feed_channel/FC = locate(href_list["ac_show_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 9
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_pick_censor_channel"])
 		var/datum/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 12
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_refresh"])
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_signature"])
 		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
-		src.access_news_network()
+		access_news_network()
 
 	if(href_list["secretsmenu"])
 		switch(href_list["secretsmenu"])
