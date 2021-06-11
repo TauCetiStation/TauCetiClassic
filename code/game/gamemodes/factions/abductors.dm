@@ -91,7 +91,7 @@ var/global/abductor_landmarks_setuped = FALSE
 			SSshuttle.incall(0.5)
 			SSshuttle.announce_emer_called.play()
 			finished = TRUE
-			return TRUE
+			return FALSE
 
 	return FALSE
 
