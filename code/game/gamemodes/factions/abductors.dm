@@ -70,7 +70,9 @@ var/global/abductor_landmarks_setuped = FALSE
 /datum/faction/abductors/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/experiment)
+	var/datum/objective/experiment/E = AppendObjective(/datum/objective/experiment)
+	if(E)
+		E.team = team_number
 	return TRUE
 
 /datum/faction/abductors/can_setup()
