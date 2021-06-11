@@ -732,5 +732,4 @@
 
 	visible_message("<span class='warning'>Thermite starts melting [src]. </span>")
 	qdel(src)
-	sleep(seconds_to_melt * 10)
-	qdel(O)
+	QDEL_IN(O, seconds_to_melt SECONDS)
