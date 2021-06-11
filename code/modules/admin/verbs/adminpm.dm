@@ -106,7 +106,7 @@
 				current_ticket.MessageNoRecipient(msg)
 			return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if (handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	if(recipient.holder)

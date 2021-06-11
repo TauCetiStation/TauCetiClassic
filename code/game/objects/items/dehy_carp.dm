@@ -11,7 +11,7 @@
 
 // Attack self
 /obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
-	src.add_fingerprint(user)	// Anyone can add their fingerprints to it with this
+	add_fingerprint(user)	// Anyone can add their fingerprints to it with this
 	if(owned)
 		to_chat(user, "<span class='notice'>[src] stares up at you with friendly eyes.</span>")
 		owner = user

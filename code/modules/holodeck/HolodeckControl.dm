@@ -109,7 +109,7 @@
 	else if(href_list["gravity"])
 		toggleGravity(linkedholodeck)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/HolodeckControl/emag_act(mob/user)
 	playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
@@ -121,7 +121,7 @@
 		to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
 		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return TRUE
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
