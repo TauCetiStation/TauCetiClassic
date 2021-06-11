@@ -110,7 +110,7 @@ log transactions
 			authenticated_account.transaction_log.Add(T)
 
 			to_chat(user, "<span class='info'>You insert [I] into [src].</span>")
-			src.attack_hand(user)
+			attack_hand(user)
 			qdel(I)
 	else
 		..()

@@ -52,14 +52,14 @@
 			can_hang = 1
 
 	if (can_hang && !coat && !istype(mover, /obj/item/clothing/head/det_hat))
-		src.visible_message("[mover] lands on \the [src].")
+		visible_message("[mover] lands on \the [src].")
 		coat = mover
 		coat.loc = src
 		update_icon()
 		return 0
 	else
 		if (can_hang && !hat && istype(mover, /obj/item/clothing/head/det_hat))
-			src.visible_message("[mover] lands on \the [src].")
+			visible_message("[mover] lands on \the [src].")
 			hat = mover
 			hat.loc = src
 			update_icon()

@@ -134,7 +134,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/dexplosive/trigger(emote, source)
 	if(emote == "deathgasp")
-		src.activate("death")
+		activate("death")
 	return
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
@@ -360,7 +360,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/chem/trigger(emote, source)
 	if(emote == "deathgasp")
-		src.activate(src.reagents.total_volume)
+		activate(src.reagents.total_volume)
 	return
 
 

@@ -275,7 +275,7 @@
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1) //Compel updates before
 
-	src.set_dir(turn(src.dir, 270))
+	set_dir(turn(src.dir, 270))
 
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1)

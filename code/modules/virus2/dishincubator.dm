@@ -36,7 +36,7 @@
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
 
-		src.attack_hand(user)
+		attack_hand(user)
 		return
 
 	else if(istype(O, /obj/item/weapon/virusdish))
@@ -52,7 +52,7 @@
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
 
-		src.attack_hand(user)
+		attack_hand(user)
 	else
 		return ..()
 

@@ -21,17 +21,17 @@
 		if (2)
 			if (prob(50))
 				src.health -= 15
-				src.healthcheck()
+				healthcheck()
 		if (3)
 			if (prob(50))
 				src.health -= 5
-				src.healthcheck()
+				healthcheck()
 
 
 /obj/structure/displaycase/bullet_act(obj/item/projectile/Proj)
 	health -= Proj.damage
 	..()
-	src.healthcheck()
+	healthcheck()
 	return
 
 
@@ -72,14 +72,14 @@
 	healthcheck()
 
 /obj/structure/displaycase/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/displaycase/attack_hand(mob/user)
 	if (src.destroyed && src.occupied)
 		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 		to_chat(user, "<b>You deactivate the hover field built into the case.</b>")
 		src.occupied = 0
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		update_icon()
 		return
 	else

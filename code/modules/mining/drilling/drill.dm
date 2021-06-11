@@ -131,7 +131,7 @@
 /obj/machinery/mining/drill/proc/system_error(error)
 
 	if(error)
-		src.visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
+		visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
 	need_player_check = 1
 	active = 0
 	update_icon()

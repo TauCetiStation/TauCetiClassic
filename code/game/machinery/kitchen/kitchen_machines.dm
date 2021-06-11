@@ -123,7 +123,7 @@
 			src.broken = 0 // just to be sure
 			src.icon_state = off_icon
 			src.flags = OPENCONTAINER
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
@@ -180,7 +180,7 @@
 	else
 		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
 		return 1
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -337,10 +337,10 @@
 	return 0
 
 /obj/machinery/kitchen_machine/proc/start()
-	src.visible_message("<span class='notice'>[src] turns on.</span>", "<span class='notice'>You hear a [src].</span>")
+	visible_message("<span class='notice'>[src] turns on.</span>", "<span class='notice'>You hear a [src].</span>")
 	src.operating = 1
 	src.icon_state = on_icon
-	src.updateUsrDialog()
+	updateUsrDialog()
 	if(on_icon == "mw1")
 		playsound(src, 'sound/machines/microwave.ogg', VOL_EFFECTS_MASTER)
 	if(on_icon == "oven_on")
@@ -354,13 +354,13 @@
 /obj/machinery/kitchen_machine/proc/abort()
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = off_icon
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/stop()
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	src.operating = 0 // Turn it off again aferwards
 	src.icon_state = off_icon
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/dispose()
 	for (var/obj/O in contents)
@@ -369,7 +369,7 @@
 		src.dirty++
 	src.reagents.clear_reagents()
 	to_chat(usr, "<span class='notice'>You dispose of [src] contents.</span>")
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/muck_start()
 	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER) // Play a splat sound
@@ -377,23 +377,23 @@
 
 /obj/machinery/kitchen_machine/proc/muck_finish()
 	playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
-	src.visible_message("<span class='warning'>[src] gets covered in muck!</span>")
+	visible_message("<span class='warning'>[src] gets covered in muck!</span>")
 	src.dirty = 100 // Make it dirty so it can't be used util cleaned
 	src.flags = null //So you can't add condiments
 	src.icon_state = dirty_icon // Make it look dirty too
 	src.operating = 0 // Turn it off again aferwards
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/broke()
 	var/datum/effect/effect/system/spark_spread/s = new
 	s.set_up(2, 1, src)
 	s.start()
 	src.icon_state = broken_icon // Make it look all busted up and shit
-	src.visible_message("<span class='warning'>[src] breaks!</span>") //Let them know they're stupid
+	visible_message("<span class='warning'>[src] breaks!</span>") //Let them know they're stupid
 	src.broken = 2 // Make it broken so it can't be used util fixed
 	src.flags = null //So you can't add condiments
 	src.operating = 0 // Turn it off again aferwards
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/kitchen_machine/proc/fail()
 	var/obj/item/weapon/reagent_containers/food/snacks/badrecipe/ffuu = new(src)

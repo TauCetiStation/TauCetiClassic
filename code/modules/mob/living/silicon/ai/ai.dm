@@ -230,7 +230,7 @@ var/list/ai_verbs_default = list(
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
 	if (!(SSticker && SSticker.mode && (src.mind in SSticker.mode.malf_ai)))
-		src.show_laws()
+		show_laws()
 		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 /mob/living/silicon/ai/Destroy()
@@ -626,7 +626,7 @@ var/list/ai_verbs_default = list(
 	set name = "Cancel Camera View"
 
 	//src.cameraFollow = null
-	src.view_core()
+	view_core()
 
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm

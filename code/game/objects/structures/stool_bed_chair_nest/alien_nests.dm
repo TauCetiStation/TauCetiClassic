@@ -31,7 +31,7 @@
 					if(user && buckled_mob && user.buckled == src)
 						buckled_mob.pixel_y = 0
 						unbuckle_mob()
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 	return
 
 /obj/structure/stool/bed/nest/user_buckle_mob(mob/M, mob/user)

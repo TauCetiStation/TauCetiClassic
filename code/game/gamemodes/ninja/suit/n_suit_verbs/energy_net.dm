@@ -85,7 +85,7 @@
 
 /obj/effect/energy_net/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	..()
-	src.visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
+	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
 	var/tforce = 0
 	if(ismob(AM))
 		tforce = 10

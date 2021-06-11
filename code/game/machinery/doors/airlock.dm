@@ -74,7 +74,7 @@ var/list/airlock_overlays = list()
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD

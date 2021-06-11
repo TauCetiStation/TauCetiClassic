@@ -179,7 +179,7 @@
 /*
 /obj/machinery/conveyor/verb/destroy()
 	set src in view()
-	src.broken()
+	broken()
 */
 
 /obj/machinery/conveyor/power_change()

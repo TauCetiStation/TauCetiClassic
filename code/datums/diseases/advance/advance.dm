@@ -98,7 +98,7 @@ var/list/advance_cures = 	list(
 	if(!(istype(D, /datum/disease/advance)))
 		return 0
 
-	if(src.GetDiseaseID() != D.GetDiseaseID())
+	if(GetDiseaseID() != D.GetDiseaseID())
 		return 0
 	return 1
 
@@ -124,7 +124,7 @@ var/list/advance_cures = 	list(
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
-	if(!(src.IsSame(D)))
+	if(!(IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
 			AddSymptom(new S.type)

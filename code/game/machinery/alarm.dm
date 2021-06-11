@@ -95,7 +95,7 @@
 			src.loc = loc
 
 		if(dir)
-			src.set_dir(dir)
+			set_dir(dir)
 
 		buildstage = 0
 		wiresexposed = 1
@@ -1183,7 +1183,7 @@ FIRE ALARM
 		src.loc = loc
 
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 
 	if(building)
 		buildstage = 0

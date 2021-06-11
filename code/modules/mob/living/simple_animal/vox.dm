@@ -30,7 +30,7 @@
 	stat = DEAD
 	visible_message("<span class='warning'><B>[src] shudders violently and explodes!</B></span>","<span class='warning'><B>You feel your body rupture!</B></span>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
-	src.gib()
+	gib()
 	return
 
 /mob/living/simple_animal/vox/armalis/attackby(obj/item/O, mob/user)

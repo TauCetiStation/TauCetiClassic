@@ -626,12 +626,12 @@
 				if(fastened.pixel_x != 2)
 					fastened.pixel_x = 2
 				animation.set_dir(2)
-				src.set_dir(2)
+				set_dir(2)
 			else
 				if(fastened.pixel_x != -2)
 					fastened.pixel_x = -2
 				animation.set_dir(1)
-				src.set_dir(1)
+				set_dir(1)
 		if(fastened.pixel_y != -4)
 			fastened.pixel_y = -4
 		if(fastened.dir & (EAST|WEST|NORTH))

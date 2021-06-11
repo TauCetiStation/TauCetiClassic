@@ -34,7 +34,7 @@
 	if(active && HasFuel() && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
 		UseFuel()
-		src.updateDialog()
+		updateDialog()
 
 	else
 		active = 0
@@ -150,7 +150,7 @@
 
 	if (heat > 0)
 		heat = max(heat - 2, 0)
-		src.updateDialog()
+		updateDialog()
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
@@ -252,7 +252,7 @@
 			if (power_output < 4 || emagged)
 				power_output++
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/power/port_gen/pacman/super

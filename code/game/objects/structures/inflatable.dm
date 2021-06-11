@@ -138,14 +138,14 @@
 	if(violent)
 		visible_message("[src] rapidly deflates!")
 		var/obj/item/inflatable/torn/R = new /obj/item/inflatable/torn(loc)
-		src.transfer_fingerprints_to(R)
+		transfer_fingerprints_to(R)
 		qdel(src)
 	else
 		//user << "<span class='notice'>You slowly deflate the inflatable wall.</span>"
 		visible_message("[src] slowly deflates.")
 		spawn(50)
 			var/obj/item/inflatable/R = new /obj/item/inflatable(loc)
-			src.transfer_fingerprints_to(R)
+			transfer_fingerprints_to(R)
 			qdel(src)
 
 /obj/structure/inflatable/verb/hand_deflate()
@@ -261,14 +261,14 @@
 	if(violent)
 		visible_message("[src] rapidly deflates!")
 		var/obj/item/inflatable/door/torn/R = new /obj/item/inflatable/door/torn(loc)
-		src.transfer_fingerprints_to(R)
+		transfer_fingerprints_to(R)
 		qdel(src)
 	else
 		//user << "<span class='notice'>You slowly deflate the inflatable wall.</span>"
 		visible_message("[src] slowly deflates.")
 		spawn(50)
 			var/obj/item/inflatable/door/R = new /obj/item/inflatable/door(loc)
-			src.transfer_fingerprints_to(R)
+			transfer_fingerprints_to(R)
 			qdel(src)
 
 

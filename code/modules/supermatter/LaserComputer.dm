@@ -67,4 +67,4 @@
 			new_freq = min(new_freq,20000)	//highest possible value
 			laser.frequency = new_freq
 
-	src.updateDialog()
+	updateDialog()
