@@ -165,7 +165,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
-	anchored = 1
+	anchored = TRUE
 	var/comment_msg = "" //stores a comment that has not yet been posted
 	var/datum/comment_pages/current_page = null
 	var/datum/feed_message/viewing_message = null

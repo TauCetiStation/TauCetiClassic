@@ -11,7 +11,7 @@
 	oxygen = 0
 	nitrogen = 0
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 	temperature = TCMB
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)

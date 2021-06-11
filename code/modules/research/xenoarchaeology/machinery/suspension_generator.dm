@@ -3,7 +3,7 @@
 	desc = "It has stubby legs bolted up against it's body for stabilising."
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "suspension_closed_panel"
-	density = 1
+	density = TRUE
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/locked = 1
 	var/open = 0
@@ -46,9 +46,9 @@
 	else if (iswrench(W))
 		if(!suspension_field)
 			if(anchored)
-				anchored = 0
+				anchored = FALSE
 			else
-				anchored = 1
+				anchored = TRUE
 			icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 			to_chat(user, "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>")
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -318,8 +318,8 @@
 /obj/effect/suspension_field
 	name = "energy field"
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/field_type = "chlorine"
 
 /obj/effect/suspension_field/Destroy()

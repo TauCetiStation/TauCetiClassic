@@ -8,9 +8,9 @@
 	icon = 'icons/mob/blob.dmi'
 	light_range = 3
 	desc = "Some blob creature thingy."
-	density = 0
+	density = FALSE
 	opacity = TRUE
-	anchored = 1
+	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	var/health = 30
 	var/health_timestamp = 0
@@ -120,7 +120,7 @@
 
 	if(!T)	return 0
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
-	B.density = 1
+	B.density = TRUE
 	if(T.Enter(B,src))//Attempt to move into the tile
 		B.density = initial(B.density)
 		B.loc = T
