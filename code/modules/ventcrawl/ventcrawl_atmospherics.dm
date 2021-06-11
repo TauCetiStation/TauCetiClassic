@@ -20,7 +20,7 @@
 	. = ..()
 
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(user.loc != src || !user.canmove || !(direction & initialize_directions)) //can't go in a way we aren't connecting to
+	if(user.loc != src || !user.canmove || !(direction in global.cardinal)) //can't go in a way we aren't connecting to
 		return
 	ventcrawl_to(user, findConnecting(direction), direction)
 
@@ -44,7 +44,7 @@
 				user.next_play_vent = world.time + 30
 				playsound(src, 'sound/machines/ventcrawl.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 	else
-		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && src.can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
+		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 			to_chat(user, "You start to climb out the ventilation system.")
 			if(user.is_busy() || !do_after(user, 20, null, loc))
 				return

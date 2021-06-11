@@ -60,7 +60,7 @@
 			m_type = SHOWMSG_VISUAL
 
 		if ("clap")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> claps."
 				m_type = SHOWMSG_AUDIO
 

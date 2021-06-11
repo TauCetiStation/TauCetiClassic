@@ -71,7 +71,7 @@
 		if(J.type == src.type)
 			P = J
 		else
-			P = new src.type(J)
+			P = new type(J)
 
 		if(P && prob(probability))
 			P.Spread(probability - prob_loss)
@@ -90,7 +90,7 @@
 /turf/unsimulated/jungle/rock
 	bushes_spawn = 0
 	plants_spawn = 0
-	density = 1
+	density = TRUE
 	name = "rock wall"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "rock"
@@ -173,14 +173,14 @@
 
 /turf/unsimulated/jungle/water/deep
 	plants_spawn = 0
-	density = 1
+	density = TRUE
 	icon_state = "water2"
 	icon_spawn_state = "water2"
 
 /turf/unsimulated/jungle/temple_wall
 	name = "temple wall"
 	desc = ""
-	density = 1
+	density = TRUE
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "phoron0"
 	var/mineral = "phoron"

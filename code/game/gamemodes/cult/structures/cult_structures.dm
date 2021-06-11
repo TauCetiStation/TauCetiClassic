@@ -267,9 +267,9 @@
 	desc = "You feel a billion different looks when you gaze into emptiness."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
-	density = 1
+	density = TRUE
 	unacidable = 1
-	anchored = 1
+	anchored = TRUE
 	light_color = "#550314"
 	light_power = 30
 	light_range = 3

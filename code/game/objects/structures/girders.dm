@@ -1,8 +1,8 @@
 /obj/structure/girder
 	icon = 'icons/obj/smooth_structures/girder.dmi'
 	icon_state = "box"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	layer = 2.9
 	var/state = 0
 	var/health = 200
@@ -217,7 +217,7 @@
 /obj/structure/girder/displaced
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "displaced"
-	anchored = 0
+	anchored = FALSE
 	health = 50
 	smooth = SMOOTH_FALSE
 
@@ -230,8 +230,8 @@
 /obj/structure/girder/cult
 	icon= 'icons/obj/smooth_structures/cult_girder.dmi'
 	icon_state= "box"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	layer = 2.9
 	health = 250
 	smooth = SMOOTH_TRUE

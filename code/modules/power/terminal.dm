@@ -10,7 +10,7 @@
 	level = 1
 	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
-	anchored = 1
+	anchored = TRUE
 	layer = 2.6 // a bit above wires
 
 

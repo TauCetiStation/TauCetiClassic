@@ -13,7 +13,7 @@
 	var/active = 0
 	var/field_radius = 3
 	var/list/field
-	density = 1
+	density = TRUE
 	var/locked = 0
 	var/average_field_strength = 0
 	var/strengthen_rate = 0.2
@@ -59,7 +59,7 @@
 
 	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 
 		if(active)
 			toggle()

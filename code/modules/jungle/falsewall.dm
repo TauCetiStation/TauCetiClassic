@@ -5,7 +5,7 @@
 
 /obj/structure/temple_falsewall
 	name = "wall"
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "phoron0"
 	opacity = 1
@@ -29,7 +29,7 @@
 			junction |= get_dir(src,W)
 
 	closed_wall_dir = junction
-	density = 1
+	density = TRUE
 	icon_state = "[mineral][closed_wall_dir]"
 
 /obj/structure/temple_falsewall/attack_hand(mob/user)
@@ -45,7 +45,7 @@
 			icon_state = "[mineral]fwall_open"
 			flick("[mineral]fwall_opening", src)
 		sleep(15)
-		src.density = 0
+		src.density = FALSE
 		set_opacity(0)
 		opening = 0
 	else
@@ -55,7 +55,7 @@
 			flick("metalfwall_closing", src)
 		else
 			flick("[mineral]fwall_closing", src)
-		density = 1
+		density = TRUE
 		sleep(15)
 		set_opacity(1)
 		opening = 0

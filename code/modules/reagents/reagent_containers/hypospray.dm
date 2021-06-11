@@ -19,7 +19,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)

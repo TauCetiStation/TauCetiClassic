@@ -81,7 +81,7 @@ var/global/list/rad_collectors = list()
 		else
 			disconnect_from_network()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (allowed(user))
 			if(active)
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")

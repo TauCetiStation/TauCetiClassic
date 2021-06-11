@@ -105,7 +105,7 @@
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
-			src.Emag()
+			Emag()
 			to_chat(usr, "You shortcircuit the [src].")
 			return
 	*/
@@ -189,7 +189,7 @@
 //Can you use it?
 
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1

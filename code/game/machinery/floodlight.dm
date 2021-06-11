@@ -29,7 +29,7 @@
 			on = 0
 			updateicon()
 			set_light(0)
-			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
+			visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
 

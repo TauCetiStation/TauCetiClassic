@@ -509,23 +509,26 @@ var/list/admin_verbs_hideable = list(
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(holder)
-		if(holder.fakekey)
-			holder.fakekey = null
-			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = 127//initial(mob.alpha)
-			mob.name = initial(mob.name)
-		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
-			if(!new_key)	return
-			if(length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
-			holder.fakekey = new_key
-			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
-			mob.name = " "
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+
+	if(!holder || !(holder.rights & R_STEALTH))
+		return
+
+	if(holder.fakekey)
+		holder.fakekey = null
+		mob.invisibility = initial(mob.invisibility)
+		mob.alpha = 127//initial(mob.alpha)
+		mob.name = initial(mob.name)
+	else
+		var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+		if(!new_key)	return
+		if(length(new_key) >= 26)
+			new_key = copytext(new_key, 1, 26)
+		holder.fakekey = new_key
+		mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+		mob.alpha = 0 //JUUUUST IN CASE
+		mob.name = " "
+	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/warn(warned_ckey)
@@ -707,8 +710,10 @@ var/list/admin_verbs_hideable = list(
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-	if(src.mob)
-		togglebuildmode(src.mob)
+	if(!mob || !(holder.rights & R_BUILDMODE))
+		return
+
+	togglebuildmode(mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/change_title_screen()
@@ -1211,8 +1216,8 @@ var/centcom_barriers_stat = 1
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	invisibility = 101
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x3"

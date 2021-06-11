@@ -175,7 +175,7 @@
 			to_chat(usr, "<span class='notice'>Building [R.title] ...</span>")
 			if (!do_after(usr, R.time, target = usr))
 				return
-		if(!src.use(R.req_amount*multiplier))
+		if(!use(R.req_amount*multiplier))
 			return
 		var/atom/O = new R.result_type( usr.loc )
 		O.set_dir(usr.dir)

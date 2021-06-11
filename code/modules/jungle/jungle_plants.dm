@@ -7,8 +7,8 @@
 	desc = "Pretty thick scrub, it'll take something sharp and a lot of determination to clear away."
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "bush1"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	layer = 3.2
 	var/indestructable = 0
 	var/stump = 0
@@ -43,7 +43,7 @@
 						icon_state = "stump[rand(1,2)]"
 						name = "cleared foliage"
 						desc = "There used to be dense undergrowth here."
-						density = 0
+						density = FALSE
 						stump = 1
 						pixel_x = rand(-6,6)
 						pixel_y = rand(-6,6)

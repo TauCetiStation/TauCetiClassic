@@ -4,7 +4,7 @@
 	icon_state = "box"
 	plane = GAME_PLANE
 	opacity = 1
-	density = 1
+	density = TRUE
 	smooth = SMOOTH_TRUE
 
 /turf/unsimulated/wall/iron
