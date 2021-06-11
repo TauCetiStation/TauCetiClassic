@@ -662,11 +662,7 @@
 			return
 
 		if (!restrained())
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
+			if ((get_dist(src, pulling) > 1))
 				if (isliving(pulling))
 					var/mob/living/M = pulling
 					var/ok = 1
