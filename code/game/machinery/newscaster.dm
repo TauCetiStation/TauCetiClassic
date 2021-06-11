@@ -834,11 +834,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			COMMENT.body = src.comment_msg
 			COMMENT.time = worldtime2text()
 
-			var/lenght = FM.pages.len //find the last page
-			var/size = FM.pages[lenght].comments.len
+			var/length = FM.pages.len //find the last page
+			var/size = FM.pages[length].comments.len
 
 			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal
-				FM.pages[lenght].comments += COMMENT
+				FM.pages[length].comments += COMMENT
 			else
 				var/datum/comment_pages/CP = new /datum/comment_pages
 				FM.pages += CP
