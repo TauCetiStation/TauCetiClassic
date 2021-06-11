@@ -168,7 +168,7 @@
 
 /obj/vehicle/space/spacebike/turn_on()
 	ion.start()
-	anchored = 1
+	anchored = TRUE
 	update_icon()
 
 	if(pulledby)

@@ -620,7 +620,7 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/door_rupture(mob/user)
 	var/obj/structure/door_assembly/da = new assembly_type(loc)
-	da.anchored = 0
+	da.anchored = FALSE
 	var/target = da.loc
 	if(user)
 		for(var/i in 1 to 4)
@@ -961,7 +961,7 @@ var/list/airlock_overlays = list()
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
-				da.anchored = 1
+				da.anchored = TRUE
 				if(mineral)
 					da.change_mineral_airlock_type(mineral)
 				if(glass && da.can_insert_glass)

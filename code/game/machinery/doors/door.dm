@@ -3,9 +3,9 @@
 	desc = "It opens and closes."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
-	anchored = 1
+	anchored = TRUE
 	opacity = 1
-	density = 1
+	density = TRUE
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
 	hud_possible = list(DIAG_AIRLOCK_HUD)
@@ -49,7 +49,7 @@
 
 
 /obj/machinery/door/Destroy()
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	var/datum/atom_hud/data/diagnostic/diag_hud = global.huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.remove_from_hud(src)

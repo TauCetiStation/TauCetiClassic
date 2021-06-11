@@ -78,6 +78,10 @@
 	. += 					"<td><a href='?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Fit Viewport:</td>"
+	. += 					"<td><a href='?_src_=prefs;preference=auto_fit_viewport'><b>[auto_fit_viewport ? "Auto" : "Manual"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Melee Animations:</td>"
 	. += 					"<td><a href='?_src_=prefs;preference=see_animations'><b>[(toggles & SHOW_ANIMATIONS) ? "Yes" : "No"]</b></a></td>"
 	. += 				"</tr>"
@@ -175,6 +179,11 @@
 			if(parent && parent.screen && parent.screen.len)
 				var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in parent.screen
 				PM.backdrop(parent.mob)
+
+		if("auto_fit_viewport")
+			auto_fit_viewport = !auto_fit_viewport
+			if(auto_fit_viewport && parent)
+				parent.fit_viewport()
 
 		if("parallax_theme")
 			switch(parallax_theme)

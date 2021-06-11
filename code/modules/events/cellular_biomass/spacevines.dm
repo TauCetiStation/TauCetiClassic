@@ -4,8 +4,8 @@
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "Light1"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	layer = 5
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
@@ -184,7 +184,7 @@
 	if (src.growth == 20)
 		src.name = "Dense Space Kudzu"
 		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
-		src.density = 1
+		src.density = TRUE
 	spawn(src.waittime)
 		if (src.growth < 20) Life()
 

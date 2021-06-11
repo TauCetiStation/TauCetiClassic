@@ -51,8 +51,8 @@ var/list/ingredients_source = list(
 	desc = "Ding-aling ding dong. Get your Nanotrasen-approved ice cream!"
 	icon = 'icons/obj/icecream.dmi'
 	icon_state = "icecream_vat"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	var/list/ingredients = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/obj/item/weapon/reagent_containers/glass/held_container

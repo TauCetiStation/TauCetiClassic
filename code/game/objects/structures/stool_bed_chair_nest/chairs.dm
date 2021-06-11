@@ -176,7 +176,7 @@
 			offset_y = -4
 			offset_x = -2
 		flipped = 1
-		anchored = 0		// can be pulled
+		anchored = FALSE		// can be pulled
 		buckle_movable = 0
 		playsound(src, 'sound/items/chair_fall.ogg', VOL_EFFECTS_MASTER, 25)
 	else
@@ -504,7 +504,7 @@
 	color = rgb(255,251,0)
 
 /obj/structure/stool/bed/chair/office
-	anchored = 0
+	anchored = FALSE
 	buckle_movable = 1
 	can_flipped = 1
 

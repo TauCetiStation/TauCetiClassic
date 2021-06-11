@@ -54,7 +54,7 @@
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
-	anchored = 1
+	anchored = TRUE
 
 /obj/machinery/sparker/power_change()
 	if ( powered() && disable == 0 )

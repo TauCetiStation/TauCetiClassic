@@ -177,7 +177,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	name = "shadow wight"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
-	density = 1
+	density = TRUE
 
 /obj/effect/shadow_wight/atom_init()
 	. = ..()

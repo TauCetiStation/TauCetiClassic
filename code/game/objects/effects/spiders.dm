@@ -3,8 +3,8 @@
 	name = "web"
 	desc = "It's stringy and sticky."
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	var/health = 15
 
 //similar to weeds, but only barfed out by nurses manually
@@ -97,7 +97,7 @@
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
-	anchored = 0
+	anchored = FALSE
 	layer = 2.7
 	health = 3
 	var/amount_grown = -1

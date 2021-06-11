@@ -3,7 +3,7 @@
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
-	density = 1
+	density = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
@@ -114,7 +114,7 @@
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 0
+	density = FALSE
 	SSdemo.mark_dirty(src)
 	return 1
 
@@ -132,7 +132,7 @@
 		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
 	else
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 1
+	density = TRUE
 	SSdemo.mark_dirty(src)
 	return 1
 

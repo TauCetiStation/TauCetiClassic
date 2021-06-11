@@ -55,7 +55,7 @@
 				if(!use(1))
 					continue
 				G.health = 10
-				G.density = 1
+				G.density = TRUE
 				G.destroyed = 0
 				G.icon_state = "grille"
 			else

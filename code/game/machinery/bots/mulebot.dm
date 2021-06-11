@@ -11,8 +11,8 @@
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
 	layer = MOB_LAYER
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	animate_movement=1
 	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
 	maxhealth = 150
@@ -415,9 +415,9 @@
 		return 0
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
-		density = 1
+		density = TRUE
 		if(!can_step)
 			return 0
 	return ..()

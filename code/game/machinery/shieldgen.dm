@@ -3,9 +3,9 @@
 		desc = "An energy shield used to contain hull breaches."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "shield-old"
-		density = 1
+		density = TRUE
 		opacity = 0
-		anchored = 1
+		anchored = TRUE
 		unacidable = 1
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
@@ -17,7 +17,7 @@
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	return ..()
 
@@ -255,11 +255,11 @@
 			if(active)
 				to_chat(user, "<span class='notice'>The [src] shuts off!</span>")
 				shields_down()
-			anchored = 0
+			anchored = FALSE
 		else
 			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
 			to_chat(user, "<span class='notice'>You secure the [src] to the floor!</span>")
-			anchored = 1
+			anchored = TRUE
 
 
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
@@ -455,14 +455,14 @@
 			state = 1
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
-			src.anchored = 1
+			src.anchored = TRUE
 			return
 
 		else if(state == 1)
 			state = 0
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You undo the external reinforcing bolts.")
-			src.anchored = 0
+			src.anchored = FALSE
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
@@ -515,8 +515,8 @@
 		desc = "An energy shield."
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "energyshield"
-		anchored = 1
-		density = 1
+		anchored = TRUE
+		density = TRUE
 		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3

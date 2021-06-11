@@ -3,8 +3,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "labcage1"
 	desc = "A glass lab container for storing interesting creatures."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	unacidable = 1//Dissolving the case would also delete Lamarr
 	var/health = 30
 	var/occupied = 1
@@ -43,7 +43,7 @@
 /obj/structure/lamarr/proc/healthcheck()
 	if (src.health <= 0)
 		if (!( src.destroyed ))
-			src.density = 0
+			src.density = FALSE
 			src.destroyed = 1
 			new /obj/item/weapon/shard( src.loc )
 			playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)

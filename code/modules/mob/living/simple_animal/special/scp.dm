@@ -9,7 +9,7 @@
 	maxHealth = INFINITY
 	health = INFINITY
 	immune_to_ssd = 1
-	density = 1
+	density = TRUE
 
 	speak_emote = list("")
 	emote_hear = list("")

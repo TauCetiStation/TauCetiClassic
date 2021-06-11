@@ -88,8 +88,8 @@
 					var/obj/structure/disposalconstruct/C = new (src.loc)
 					transfer_fingerprints_to(C)
 					C.ptype = 6 // 6 = disposal unit
-					C.anchored = 1
-					C.density = 1
+					C.anchored = TRUE
+					C.density = TRUE
 					C.update()
 					qdel(src)
 				return
@@ -676,8 +676,8 @@
 	icon = 'icons/obj/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
@@ -932,8 +932,8 @@
 			C.ptype = 12
 	transfer_fingerprints_to(C)
 	C.set_dir(dir)
-	C.density = 0
-	C.anchored = 1
+	C.density = FALSE
+	C.anchored = TRUE
 	C.update()
 
 	qdel(src)
@@ -1296,8 +1296,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
@@ -1360,8 +1360,8 @@
 				transfer_fingerprints_to(C)
 				C.ptype = 7 // 7 =  outlet
 				C.update()
-				C.anchored = 1
-				C.density = 1
+				C.anchored = TRUE
+				C.density = TRUE
 				C.set_dir(dir)
 				qdel(src)
 			return

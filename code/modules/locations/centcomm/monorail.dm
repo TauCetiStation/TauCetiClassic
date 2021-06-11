@@ -2,8 +2,8 @@
 	name = "monorail"
 	desc = "A monorail is a rail-based transportation system based on a single rail."
 	icon = 'code/modules/locations/centcomm/centcomm.dmi'
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 2.7
 
 /obj/structure/stool/bed/chair/schair/monorail_chair

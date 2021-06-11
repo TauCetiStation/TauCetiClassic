@@ -4,7 +4,7 @@
 	desc = "It's some kind of pod with strange wires and gadgets all over it."
 	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
 	icon_state = "replicator"
-	density = 1
+	density = TRUE
 
 	idle_power_usage = 100
 	active_power_usage = 1000

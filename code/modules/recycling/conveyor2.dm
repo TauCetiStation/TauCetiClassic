@@ -6,7 +6,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
-	anchored = 1
+	anchored = TRUE
 	interact_offline = TRUE
 	layer = BELOW_CONTAINERS_LAYER
 	speed_process = TRUE

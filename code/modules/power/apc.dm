@@ -43,7 +43,7 @@
 	desc = "A control terminal for the area electrical systems."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
-	anchored = 1
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	req_access = list(access_engine_equip)
 	allowed_checks = ALLOWED_CHECK_NONE

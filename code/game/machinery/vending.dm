@@ -13,8 +13,8 @@
 	var/light_range_on = 3
 	var/light_power_on = 1
 	layer = 2.9
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
@@ -57,6 +57,7 @@
 /obj/machinery/vending/atom_init()
 	. = ..()
 	wires = new(src)
+	src.anchored = TRUE
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 
@@ -866,7 +867,7 @@
 	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
-	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
+	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/stack/medical/bruise_pack = 2,/obj/item/stack/medical/ointment = 2,/obj/item/weapon/reagent_containers/hypospray/autoinjector = 4,/obj/item/device/healthanalyzer = 1,
 				/obj/item/stack/medical/suture = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/pill/tox = 1)
@@ -879,7 +880,7 @@
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
 	req_access = list(5)
-	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
+	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector = 5,/obj/item/weapon/reagent_containers/syringe/antitoxin = 3,/obj/item/stack/medical/bruise_pack = 3,
 					/obj/item/stack/medical/ointment =3,/obj/item/device/healthanalyzer = 3, /obj/item/stack/medical/suture = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3)

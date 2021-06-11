@@ -4,7 +4,7 @@
 	icon_state = "motion3"
 	layer = 3
 	plane = FLOOR_PLANE
-	anchored = 1.0
+	anchored = TRUE
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0

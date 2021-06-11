@@ -19,7 +19,7 @@
 	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
 
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -220,8 +220,8 @@
 	O.desc = "Looks hot."
 	O.icon = 'icons/effects/fire.dmi'
 	O.icon_state = "2"
-	O.anchored = 1
-	O.density = 1
+	O.anchored = TRUE
+	O.density = TRUE
 	O.layer = 5
 
 	ChangeTurf(/turf/simulated/floor/plating)
