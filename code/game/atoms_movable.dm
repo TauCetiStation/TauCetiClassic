@@ -77,14 +77,15 @@
 			v &= Dir
 			h &= Dir
 
-			. = step(src, v)
+			// we doesn't use step_x and step_y in code, so skip it
+			. = ..(get_step(src, v), v)
 			if(.)
-				if(!step(src, h))
+				if(!..(NewLoc, v))
 					set_dir(v)
 			else
-				. = step(src, h)
+				. = ..(get_step(src, h), h)
 				if(.)
-					if(!step(src, v))
+					if(!..(NewLoc, v))
 						set_dir(h)
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
