@@ -662,7 +662,7 @@
 			return
 
 		if (!restrained())
-			if ((get_dist(src, pulling) > 1))
+			if(get_dist(src, pulling) > 1)
 				if (isliving(pulling))
 					var/mob/living/M = pulling
 					var/ok = 1
