@@ -529,7 +529,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	contains = list(/obj/item/weapon/vending_refill/junkfood,
 					/obj/item/weapon/vending_refill/junkfood,
 					/obj/item/weapon/vending_refill/junkfood)
-	cost = 11999
+	cost = 10999
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Fast Food supply crate"
 	group = "Hospitality"
