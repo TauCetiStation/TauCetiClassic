@@ -322,7 +322,7 @@
 		move_result	= mechstep(direction)
 	if(move_result)
 		can_move = 0
-		if(do_after(step_in))
+		if(do_after(step_in*move_result))
 			can_move = 1
 		return 1
 	return 0
@@ -334,6 +334,7 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
+	var/old_loc = loc
 	var/current_dir = dir
 	var/result = step(src, direction)
 	if(strafe)
@@ -341,6 +342,9 @@
 	if(result)
 		playsound(src, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 40)
 		use_power(step_energy_drain)
+		direction = get_dir(src, old_loc)
+		if(ISDIAGONALDIR(direction))
+			return 2
 	return result
 
 /obj/mecha/proc/mechsteprand()

@@ -77,7 +77,6 @@
 			v &= Dir
 			h &= Dir
 
-			// we doesn't use step_x and step_y in code, so skip it
 			. = ..(get_step(src, v), v)
 			if(.)
 				if(!..(NewLoc, v))
