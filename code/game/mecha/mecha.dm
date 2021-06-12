@@ -311,12 +311,12 @@
 		return 0
 	if(!has_charge(step_energy_drain))
 		return 0
-	if(ISDIAGONALDIR(direction))
-		return FALSE
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
 	else if(src.dir != direction && !strafe)
+		if(ISDIAGONALDIR(direction))
+			return FALSE
 		move_result = mechturn(direction)
 	else
 		move_result	= mechstep(direction)
