@@ -22,6 +22,10 @@
 	dat += "<tr><td>Процент победы:</td><td>[data[ALIEN_PERCENT]]/[WIN_PERCENT]</td></tr></table>"
 	return dat
 
+// Without spam members
+/datum/faction/infestation/AdminPanelEntryMembers(datum/admins/A)
+	return
+
 /datum/faction/infestation/can_setup(num_players)
 	if(!..())
 		return FALSE

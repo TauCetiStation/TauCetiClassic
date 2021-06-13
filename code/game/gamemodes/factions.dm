@@ -301,13 +301,20 @@
 		dat += fac_objects
 		dat += "</ul>"
 
+	dat += AdminPanelEntryMembers(M, fac_objects)
+
+	return dat
+
+/datum/faction/proc/AdminPanelEntryMembers(datum/mind/M, fac_objects)
+	var/dat = ""
 	dat += "[fac_objects ? "" : "<br>"] - <b>Members</b> - "
-	if(!members.len)
-		dat += "<br><i>Unpopulated</i><br>"
-	else
+	if(members.len)
 		for(var/datum/role/R in members)
 			dat += "<br>"
 			dat += R.AdminPanelEntry(TRUE)
+	else
+		dat += "<br><i>Unpopulated</i><br>"
+
 	return dat
 
 /datum/faction/process()

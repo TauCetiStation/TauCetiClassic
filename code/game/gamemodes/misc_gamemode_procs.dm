@@ -39,7 +39,8 @@
 				for(var/role in man.mind.antag_roles)
 					var/datum/role/R = man.mind.antag_roles[role]
 					var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
-					S.total_TC += extra
+					if(S)
+						S.total_TC += extra
 				to_chat(man, "<span class='warning'>We have received notice that enemy intelligence suspects you to be linked with us. We have thus invested significant resources to increase your uplink's capacity.</span>")
 			else
 				// Give them a warning!
