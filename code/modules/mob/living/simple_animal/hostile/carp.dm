@@ -35,7 +35,7 @@
 
 	environment_smash = 1
 
-	faction = "neutral"
+	faction = "carp"
 
 	has_head = TRUE
 
