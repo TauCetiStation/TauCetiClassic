@@ -1,5 +1,5 @@
 // Blob Overmind Controls
-/mob/camera/blob/RegularClickOn(atom/A, params) // Expand blob
+/mob/camera/blob/RegularClickOn(atom/A) // Expand blob
 	var/turf/T = get_turf(A)
 	if(T)
 		expand_blob(T)
