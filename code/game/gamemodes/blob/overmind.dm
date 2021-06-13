@@ -10,7 +10,7 @@
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 
 	pass_flags = PASSBLOB
-	faction = "neutral"
+	faction = "blob"
 
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/blob_points = 0

@@ -8,7 +8,7 @@
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	var/ghost_name = "Unknown"
 	var/creating_blob = 0
-	faction = "neutral"
+	faction = "blob"
 	me_verb_allowed = FALSE //Blobs can't emote
 
 

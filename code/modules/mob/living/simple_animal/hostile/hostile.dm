@@ -127,6 +127,8 @@
 			return FALSE
 		if(L.faction == src.faction && !attack_same || L.faction != src.faction && attack_same == 2 || L.faction != attack_faction && attack_faction)
 			return FALSE
+		if(L.faction == "neutral" && !attack_same || L.faction != src.faction && attack_same ==2 || L.faction != attack_faction && attack_faction)
+			return FALSE
 		if(L in friends)
 			return FALSE
 		if(animalistic && HAS_TRAIT(L, TRAIT_NATURECHILD) && L.naturechild_check())
