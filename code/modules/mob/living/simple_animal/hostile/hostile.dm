@@ -143,7 +143,7 @@
 				if(CanAttack(M.occupant))
 					return TRUE
 		return FALSE
-		
+
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
 	if(target != null)
