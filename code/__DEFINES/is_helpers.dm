@@ -173,3 +173,19 @@
 #define isrolezombie(H) (H?.mind ? H.mind.GetRole(ZOMBIE) : FALSE)
 
 #define isalien(H) (H?.mind ? H.mind.GetRole(XENOMORPH) : FALSE)
+
+// BLOB
+
+#define isblob(A) istype(A, /obj/effect/blob)
+
+#define isblobnormal(A) istype(A, /obj/effect/blob/normal)
+
+#define isblobcore(A) istype(A, /obj/effect/blob/core)
+
+#define isblobnode(A) istype(A, /obj/effect/blob/node)
+
+#define isblobfactory(A) istype(A, /obj/effect/blob/factory)
+
+#define isblobshield(A) istype(A, /obj/effect/blob/shield)
+
+#define isblobresource(A) istype(A, /obj/effect/blob/resource)

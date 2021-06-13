@@ -1170,6 +1170,15 @@ var/list/airlock_overlays = list()
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
 
+/obj/machinery/door/airlock/emp_act(severity)
+	if(!wires)
+		return
+	for(var/i in 1 to severity)
+		if(!prob(50 / severity))
+			continue
+		var/wire = 1 << rand(0, wires.wire_count - 1)
+		wires.pulse_index(wire)
+
 /obj/structure/door_scrap
 	name = "Door Scrap"
 	desc = "Just a bunch of garbage."

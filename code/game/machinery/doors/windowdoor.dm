@@ -378,6 +378,18 @@
 		return TRUE
 	return FALSE
 
+/obj/machinery/door/window/emp_act(severity)
+	if(prob(20/severity))
+		open()
+	if(prob(40/severity))
+		if(secondsElectrified == 0)
+			secondsElectrified = -1
+			diag_hud_set_electrified()
+			spawn(300)
+				secondsElectrified = 0
+				diag_hud_set_electrified()
+	..()
+
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"
 	icon = 'icons/obj/doors/windoor.dmi'
