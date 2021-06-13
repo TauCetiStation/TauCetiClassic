@@ -99,7 +99,7 @@ var/global/abductor_landmarks_setuped = FALSE
 	var/dat = ..()
 
 	if(abductees.len)
-		dat += "<br><b>The abductees:</b>"
+		dat += "<br><b>The abductees:</b><br>"
 		for(var/datum/role/abducted/A in abductees)
 			dat += A.GetScoreboard()
 			dat += "<br>"
