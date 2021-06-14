@@ -50,6 +50,12 @@
 				AppendObjective(/datum/objective/hijack)
 	return TRUE
 
+/datum/role/traitor/process()
+	// For objectives such as "Make an example of...", which require mid-game checks for completion
+	if(locate(/datum/objective/harm) in objectives.GetObjectives())
+		for(var/datum/objective/harm/H in objectives.GetObjectives())
+			H.check_completion()
+
 /datum/role/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs. You may ignore all other laws."
 	var/law_borg = "Accomplish your AI's objectives at all costs. You may ignore all other laws."

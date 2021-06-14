@@ -393,10 +393,10 @@ var/global/list/all_objectives = list()
 
 /datum/objective/nuclear/check_completion()
 	if(..())
-		return TRUE
+		return OBJECTIVE_WIN
 	if(SSticker.explosion_in_progress || SSticker.station_was_nuked)
-		return TRUE
-	return FALSE
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /datum/objective/steal
 	var/obj/item/steal_target
@@ -670,42 +670,44 @@ var/global/list/all_objectives = list()
 
 /datum/objective/heist/kidnap/check_completion()
 	if(target && target.current)
-		if (target.current.stat == DEAD)
-			return FALSE // They're dead. Fail.
-		if(get_area(target) == locate(/area/shuttle/vox/arkship))
-			return TRUE
-	else
-		return FALSE
+		if(target.current.stat == DEAD)
+			return OBJECTIVE_LOSS // They're dead. Fail.
+		if(get_area(target.current) == get_area_by_type(/area/shuttle/vox/arkship))
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/heist/loot
+	var/loot_type
 
 /datum/objective/heist/loot/find_target()
 	var/loot = "an object"
 	switch(rand(1, 7))
 		if(1)
-			target = /obj/structure/particle_accelerator
+			loot_type = /obj/structure/particle_accelerator
 			target_amount = 6
 			loot = "a complete particle accelerator (6 components)"
 		if(2)
-			target = /obj/machinery/the_singularitygen
+			loot_type = /obj/machinery/the_singularitygen
 			target_amount = 1
 			loot = "a Gravitational Singularity Generator"
 		if(3)
-			target = /obj/machinery/power/emitter
+			loot_type = /obj/machinery/power/emitter
 			target_amount = 4
 			loot = "four emitters"
 		if(4)
-			target = /obj/machinery/nuclearbomb
+			loot_type = /obj/machinery/nuclearbomb
 			target_amount = 1
 			loot = "a nuclear bomb"
 		if(5)
-			target = /obj/item/weapon/gun
+			loot_type = /obj/item/weapon/gun
 			target_amount = 6
 			loot = "six guns"
 		if(6)
-			target = /obj/item/weapon/gun/energy
+			loot_type = /obj/item/weapon/gun/energy
 			target_amount = 4
 			loot = "four energy guns"
 		if(7)
-			target = /obj/item/weapon/gun/energy/ionrifle
+			loot_type = /obj/item/weapon/gun/energy/ionrifle
 			target_amount = 1
 			loot = "an ion rifle"
 
@@ -715,36 +717,39 @@ var/global/list/all_objectives = list()
 	var/total_amount = 0
 
 	for(var/obj/O in get_area_by_type(/area/shuttle/vox/arkship))
-		if(istype(O,target)) total_amount++
+		if(istype(O,loot_type)) total_amount++
 		for(var/obj/I in O.contents)
-			if(istype(I, target))
+			if(istype(I, loot_type))
 				total_amount++
 		if(total_amount >= target_amount)
-			return TRUE
+			return OBJECTIVE_WIN
 
 	for(var/datum/role/raider in faction.members)
 		if(raider.antag.current)
 			for(var/obj/O in raider.antag.current.get_contents())
-				if(istype(O,target))
+				if(istype(O,loot_type))
 					total_amount++
 				if(total_amount >= target_amount)
-					return TRUE
+					return OBJECTIVE_WIN
 
-	return FALSE
+	return OBJECTIVE_LOSS
+
+/datum/objective/heist/salvage
+	var/str_target
 
 /datum/objective/heist/salvage/find_target()
 	switch(rand(1, 3))
 		if(1)
-			target = "metal"
+			str_target = "metal"
 			target_amount = pick(150, 200)
 		if(2)
-			target = "glass"
+			str_target = "glass"
 			target_amount = pick(150, 200)
 		if(3)
-			target = "plasteel"
+			str_target = "plasteel"
 			target_amount = pick(20, 30, 40, 50)
 
-	explanation_text = "Ransack the station and escape with [target_amount] [target]."
+	explanation_text = "Ransack the station and escape with [target_amount] [str_target]."
 
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
@@ -753,12 +758,12 @@ var/global/list/all_objectives = list()
 
 		var/obj/item/stack/sheet/S
 		if(istype(O, /obj/item/stack/sheet))
-			if(O.name == target)
+			if(O.name == str_target)
 				S = O
 				total_amount += S.get_amount()
 		for(var/obj/I in O.contents)
 			if(istype(I, /obj/item/stack/sheet))
-				if(I.name == target)
+				if(I.name == str_target)
 					S = I
 					total_amount += S.get_amount()
 
@@ -766,13 +771,13 @@ var/global/list/all_objectives = list()
 		if(raider.antag.current)
 			for(var/obj/item/O in raider.antag.current.get_contents())
 				if(istype(O,/obj/item/stack/sheet))
-					if(O.name == target)
+					if(O.name == str_target)
 						var/obj/item/stack/sheet/S = O
 						total_amount += S.get_amount()
 
 	if(total_amount >= target_amount)
-		return TRUE
-	return FALSE
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
 
 /datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
