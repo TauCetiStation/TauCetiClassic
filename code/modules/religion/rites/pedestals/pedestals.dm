@@ -18,7 +18,7 @@
 
 	var/need_members = 4
 
-/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -32,6 +32,16 @@
 			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
 		return FALSE
 
+	var/cultists_around = 0
+	for(var/mob/M in AOG.mobs_around)
+		if(religion.is_member(M))
+			cultists_around++
+
+	if(cultists_around < need_members)
+		if(user)
+			to_chat(user, "<span class='warning'>Слишком мало последователей вокруг алтаря.</span>")
+		return FALSE
+
 	var/datum/religion/cult/C = religion
 	var/datum/game_mode/cult/cur_mode = C.mode
 
@@ -42,7 +52,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	var/datum/religion/cult/C = religion
 	var/datum/game_mode/cult/cur_mode = C.mode
@@ -72,7 +82,7 @@
 		ASPECT_DEATH = 1
 	)
 
-/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -84,7 +94,7 @@
 		to_chat(user, "<span class='warning'>Сначало разместите руну-маяк.</span>")
 	return FALSE
 
-/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	var/spawned = FALSE
 	for(var/obj/effect/rune/R in religion.runes)
@@ -115,7 +125,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -126,7 +136,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob
