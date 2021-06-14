@@ -696,7 +696,7 @@
 						H.vessel.remove_reagent("blood",1)
 	
 	if(moving_diagonally)
-		return
+		return .
 
 	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
@@ -705,7 +705,7 @@
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
 
-/mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, var/old_dir)
+/mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	var/blood_exists = 0
 	var/trail_type = getTrail()
 	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in old_loc) //checks for blood splatter already on the floor
