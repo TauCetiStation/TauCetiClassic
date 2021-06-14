@@ -6,7 +6,7 @@
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
-	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
+	var/summon_ignore_density = FALSE //if set to 1, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
 	var/deleting_previous = 0 //if set to 1, a new cast delete previous objects
 	var/list/previous_objects = list() // Containts object references, which was spawned last time.
@@ -81,9 +81,9 @@
 	name = "FORCEWALL"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "m_shield"
-	anchored = 1.0
+	anchored = TRUE
 	opacity = 0
-	density = 1
+	density = TRUE
 	unacidable = 1
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)

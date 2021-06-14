@@ -50125,13 +50125,9 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bOy" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -80940,6 +80936,19 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
+"vWv" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "vWx" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -92833,7 +92842,7 @@ gKX
 csh
 lUd
 bOy
-gKX
+vWv
 csh
 baI
 kYI

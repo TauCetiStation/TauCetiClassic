@@ -10,8 +10,8 @@
 	desc = "We are coming. Look to the skies for your salvation."
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 1
 	bound_height = 64
 	icon = 'icons/obj/structures/droppod.dmi'
@@ -730,8 +730,8 @@
 	desc = "Remains of some unfortunate Pod. Completely unrepairable."
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "crashed_droppod"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	opacity = 0
 
 /obj/effect/decal/droppod_wreckage/atom_init(mapload, icon_modifier)

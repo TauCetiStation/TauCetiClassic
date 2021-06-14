@@ -57,7 +57,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
 
 	if (isscrewdriver(O))
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		if (removal_stage == 5)
 			if (src.opened == 0)
 				src.opened = 1
@@ -97,7 +97,7 @@ var/bomb_set
 			usr.drop_item()
 			O.loc = src
 			src.auth = O
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			return
 
 	if (src.anchored)
@@ -164,7 +164,7 @@ var/bomb_set
 
 					if(O.use_tool(src, user, 75, volume = 50))
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
-						//anchored = 0
+						//anchored = FALSE
 						removal_stage = 5
 				return
 	..()
@@ -319,7 +319,7 @@ var/bomb_set
 		if (href_list["anchor"])
 
 			//if(removal_stage == 5)
-			//	src.anchored = 0
+			//	src.anchored = FALSE
 			//	visible_message("<span class='warning'>\The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 			//	return
 

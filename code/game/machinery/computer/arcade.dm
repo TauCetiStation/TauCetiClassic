@@ -173,13 +173,13 @@
 			var/attackamt = rand(2,6)
 			playsound(src, pick('sound/machines/arcade/attack1.ogg', 'sound/machines/arcade/attack2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 			src.temp = "You attack for [attackamt] damage!"
-			src.updateUsrDialog()
+			updateUsrDialog()
 			if(turtle > 0)
 				turtle--
 
 			sleep(10)
 			src.enemy_hp -= attackamt
-			src.arcade_action()
+			arcade_action()
 
 		else if (href_list["heal"])
 			src.blocked = 1
@@ -187,15 +187,15 @@
 			var/healamt = rand(6,8)
 			playsound(src, pick('sound/machines/arcade/heal1.ogg', 'sound/machines/arcade/heal2.ogg'), VOL_EFFECTS_MASTER, 80 , null, -6)
 			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			src.updateUsrDialog()
+			updateUsrDialog()
 			turtle++
 
 			sleep(10)
 			src.player_mp -= pointamt
 			src.player_hp += healamt
 			src.blocked = 1
-			src.updateUsrDialog()
-			src.arcade_action()
+			updateUsrDialog()
+			arcade_action()
 
 		else if (href_list["charge"])
 			src.blocked = 1
@@ -206,9 +206,9 @@
 			if(turtle > 0)
 				turtle--
 
-			src.updateUsrDialog()
+			updateUsrDialog()
 			sleep(10)
-			src.arcade_action()
+			arcade_action()
 
 	else if (href_list["newgame"]) //Reset everything
 		temp = "New Round"
@@ -220,10 +220,10 @@
 		turtle = 0
 
 		if(emagged)
-			src.New()
+			New()
 			emagged = 0
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/arcade/proc/arcade_action()
 	if ((src.enemy_mp <= 0) || (src.enemy_hp <= 0))
@@ -238,7 +238,7 @@
 				new /obj/item/clothing/head/collectable/petehat(src.loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb. [ADMIN_JMP(usr)]")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
-				src.New()
+				New()
 				emagged = 0
 			else if(!contents.len)
 				feedback_inc("arcade_win_normal")
@@ -267,7 +267,7 @@
 		playsound(src, pick('sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80, null, -6)
 		src.temp = "[src.enemy_name] steals [stealamt] of your power!"
 		src.player_mp -= stealamt
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 		if (src.player_mp <= 0)
 			src.gameover = 1
@@ -318,7 +318,7 @@
 	emagged = 1
 	enemy_name = "Cuban Pete"
 	name = "Outbomb Cuban Pete"
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN))
