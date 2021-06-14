@@ -97,6 +97,8 @@
 		return
 	if(HardsuitClickOn(A))
 		return
+	if(RegularClickOn(A))
+		return
 
 	if(stat || paralysis || stunned || weakened)
 		return
@@ -174,6 +176,9 @@
 /mob/proc/DblClickOn(atom/A, params)
 	return
 
+// Click without any modifiers
+/mob/proc/RegularClickOn(atom/A)
+	return FALSE
 
 //	Translates into attack_hand, etc.
 
