@@ -82,7 +82,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user,"window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
 
@@ -174,6 +174,7 @@
 			to_chat(M, "<span class='notice'>You can't read anything until it crumpled.</span>")
 			return
 		show_content(M)
+
 	else if(def_zone == O_MOUTH) // lipstick wiping
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
