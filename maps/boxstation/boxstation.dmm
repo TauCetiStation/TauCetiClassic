@@ -16445,6 +16445,13 @@
 	icon_state = "dark"
 	},
 /area/station/ai_monitored/eva)
+"aCw" = (
+/obj/machinery/atmospherics/pipe/manifold/visible,
+/obj/machinery/meter,
+/turf/simulated/floor{
+	icon_state = "warnwhite"
+	},
+/area/station/rnd/mixing)
 "aCx" = (
 /turf/simulated/floor{
 	dir = 9;
@@ -16684,6 +16691,15 @@
 	icon_state = "browncorner"
 	},
 /area/station/hallway/secondary/arrival)
+"aCY" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "warnwhite"
+	},
+/area/station/rnd/mixing)
 "aCZ" = (
 /obj/structure/sink{
 	dir = 8;
@@ -17378,6 +17394,14 @@
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
+"aEt" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "botwarningwhite"
+	},
+/area/station/rnd/mixing)
 "aEu" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -21186,6 +21210,9 @@
 "aLo" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/belt/utility{
+	pixel_y = 9
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -21316,7 +21343,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "bot"
+	icon_state = "botwhite"
 	},
 /area/station/rnd/mixing)
 "aLA" = (
@@ -24531,6 +24558,7 @@
 	dir = 4;
 	network = list("SS13","Research")
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -25321,8 +25349,8 @@
 	},
 /area/station/hallway/primary/central)
 "aSZ" = (
-/obj/machinery/atmospherics/pipe/manifold4w/visible,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/visible,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -25470,7 +25498,6 @@
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
 "aTj" = (
-/obj/machinery/portable_atmospherics/powered/pump,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/light{
 	dir = 1
@@ -25513,13 +25540,12 @@
 	},
 /area/station/rnd/mixing)
 "aTn" = (
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8
 	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "white"
 	},
 /area/station/rnd/mixing)
 "aTo" = (
@@ -49992,11 +50018,13 @@
 	},
 /area/station/medical/hallway)
 "bOf" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
 	},
+/obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
-	icon_state = "warnwhite"
+	dir = 4;
+	icon_state = "warning"
 	},
 /area/station/rnd/mixing)
 "bOg" = (
@@ -53594,9 +53622,10 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bXH" = (
-/turf/simulated/floor{
-	icon_state = "warnwhite"
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 1
 	},
+/turf/simulated/floor/engine,
 /area/station/rnd/mixing)
 "bXI" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
@@ -57509,9 +57538,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "cje" = (
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
+	},
+/obj/machinery/meter,
 /turf/simulated/floor{
-	icon_state = "warnwhite"
+	icon_state = "white"
 	},
 /area/station/rnd/mixing)
 "cjf" = (
@@ -121863,8 +121895,8 @@ aNO
 aPe
 aQw
 aRv
-aTn
 aXB
+bOf
 bHx
 bPD
 bSz
@@ -122120,10 +122152,10 @@ aLz
 bUU
 aQy
 aSZ
+cje
 aUv
 aQy
-aSZ
-bOf
+aCw
 aIe
 bco
 bfr
@@ -122377,10 +122409,10 @@ cgi
 cgo
 cgi
 aUA
+aTn
 cgi
 cgi
-aUA
-cje
+aCY
 bOv
 bde
 bfF
@@ -122634,10 +122666,10 @@ bUU
 aOg
 aQz
 aTb
-bUU
-bUU
 aLz
-bXH
+bUU
+bUU
+aEt
 aIe
 bcr
 bfG
@@ -123920,7 +123952,7 @@ bTM
 bUP
 cgD
 cjC
-aUz
+bXH
 aWc
 aXx
 bWa
