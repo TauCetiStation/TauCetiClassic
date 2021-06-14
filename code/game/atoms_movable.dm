@@ -14,6 +14,8 @@
 	var/mob/pulledby = null
 	var/can_be_pulled = TRUE
 
+	var/moving_diagonally = 0
+
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0
@@ -56,8 +58,6 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_CROSSED, AM)
 
 
-#define VERTICAL NORTH | SOUTH
-#define HORIZONTAL EAST | WEST 
 /atom/movable/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(!loc || !NewLoc || freeze_movement)
 		return FALSE
@@ -65,34 +65,42 @@
 	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return
 
+	var/is_diagonal = ISDIAGONALDIR(Dir)
 	var/atom/oldloc = loc
 	var/old_dir = dir
 
 	if(loc != NewLoc)
-		if (!(Dir & (Dir - 1))) //Cardinal move
+		if (!is_diagonal) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal 
-			var/v = VERTICAL
-			var/h = HORIZONTAL
-			v &= Dir
-			h &= Dir
+			var/v = Dir & NORTH_SOUTH
+			var/h = Dir & EAST_WEST
 
-			. = ..(get_step(src, v), v)
+			moving_diagonally = FIRST_DIAG_STEP
+			. = step(src, v)
 			if(.)
-				if(!..(NewLoc, v))
+				moving_diagonally = SECOND_DIAG_STEP
+				if(!step(src, h))
 					set_dir(v)
 			else
-				. = ..(get_step(src, h), h)
+				dir = old_dir // blood trails uses dir
+				. = step(src, h)
 				if(.)
-					if(!..(NewLoc, v))
+					moving_diagonally = SECOND_DIAG_STEP
+					if(!step(src, v))
 						set_dir(h)
+
+			moving_diagonally = 0
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
 
-	src.move_speed = world.time - src.l_move_time
-	src.l_move_time = world.time
+	if(is_diagonal)
+		return .
+
+	move_speed = world.time - l_move_time
+	l_move_time = world.time
 
 	last_move = Dir
 
@@ -104,8 +112,6 @@
 
 	if(.)
 		Moved(oldloc, Dir)
-#undef VERTICAL
-#undef HORIZONTAL
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
