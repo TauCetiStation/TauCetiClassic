@@ -5,8 +5,8 @@
 	name = "apiary tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/nutrilevel = 0
 	var/yieldmod = 1
 	var/mut = 1

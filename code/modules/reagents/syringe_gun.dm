@@ -121,8 +121,8 @@
 	desc = ""
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "null"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 /obj/effect/syringe_gun_dummy/atom_init()
 	. = ..()

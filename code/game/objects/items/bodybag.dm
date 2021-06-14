@@ -20,7 +20,7 @@
 	icon_closed = "bodybag_closed"
 	icon_opened = "bodybag_open"
 	var/item_path = /obj/item/bodybag
-	density = 0
+	density = FALSE
 
 
 /obj/structure/closet/body_bag/attackby(W, mob/user)
@@ -33,7 +33,7 @@
 		if (t)
 			src.name = "body bag - "
 			src.name += t
-			src.add_overlay(image(src.icon, "bodybag_label"))
+			add_overlay(image(src.icon, "bodybag_label"))
 		else
 			src.name = "body bag"
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
@@ -42,13 +42,13 @@
 	else if(iswirecutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
-		src.cut_overlays()
+		cut_overlays()
 		return
 
 
 /obj/structure/closet/body_bag/close()
 	if(..())
-		density = 0
+		density = FALSE
 		return 1
 	return 0
 

@@ -58,7 +58,7 @@
 
 	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(mode<=0) // It's off
 		if(isscrewdriver(I))
 			if(contents.len > 0)
@@ -86,10 +86,10 @@
 				if(W.use_tool(src, user, 20, volume = 100))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					var/obj/structure/disposalconstruct/C = new (src.loc)
-					src.transfer_fingerprints_to(C)
+					transfer_fingerprints_to(C)
 					C.ptype = 6 // 6 = disposal unit
-					C.anchored = 1
-					C.density = 1
+					C.anchored = TRUE
+					C.density = TRUE
 					C.update()
 					qdel(src)
 				return
@@ -154,7 +154,7 @@
 	if(isessence(user))
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	var/target_loc = target.loc
 	var/msg
 	var/self_msg
@@ -201,7 +201,7 @@
 		if(isanimal(user)) return
 		if(isessence(user))
 			return
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		var/target_loc = target.loc
 		var/msg
 		var/self_msg
@@ -676,8 +676,8 @@
 	icon = 'icons/obj/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
@@ -888,7 +888,7 @@
 	var/turf/T = src.loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(user.is_busy()) return
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
@@ -930,10 +930,10 @@
 			C.ptype = 11
 		if("pipe-tagger-partial")
 			C.ptype = 12
-	src.transfer_fingerprints_to(C)
+	transfer_fingerprints_to(C)
 	C.set_dir(dir)
-	C.density = 0
-	C.anchored = 1
+	C.density = FALSE
+	C.anchored = TRUE
 	C.update()
 
 	qdel(src)
@@ -1225,7 +1225,7 @@
 	var/turf/T = src.loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
@@ -1259,7 +1259,7 @@
 				D.expel(H)	// expel at disposal
 	else
 		if(H)
-			src.expel(H, src.loc, 0)	// expel at turf
+			expel(H, src.loc, 0)	// expel at turf
 	return null
 
 	// nextdir
@@ -1296,8 +1296,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
@@ -1305,7 +1305,7 @@
 /obj/structure/disposaloutlet/atom_init(mapload, dir)
 	..()
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/disposaloutlet/atom_init_late()
@@ -1338,7 +1338,7 @@
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user)
 	if(!I || !user)
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(isscrewdriver(I))
 		if(mode==0)
 			mode=1
@@ -1357,11 +1357,11 @@
 			if(W.use_tool(src, user, 20, volume = 100))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
-				src.transfer_fingerprints_to(C)
+				transfer_fingerprints_to(C)
 				C.ptype = 7 // 7 =  outlet
 				C.update()
-				C.anchored = 1
-				C.density = 1
+				C.anchored = TRUE
+				C.density = TRUE
 				C.set_dir(dir)
 				qdel(src)
 			return
@@ -1389,7 +1389,7 @@
 	else
 		dirs = alldirs.Copy()
 
-	src.streak(dirs)
+	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/robot/pipe_eject(direction)
 	var/list/dirs
@@ -1398,7 +1398,7 @@
 	else
 		dirs = alldirs.Copy()
 
-	src.streak(dirs)
+	streak(dirs)
 
 // hostile mob escape from disposals
 /obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
