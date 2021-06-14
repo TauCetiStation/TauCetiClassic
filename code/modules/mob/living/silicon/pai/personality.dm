@@ -14,7 +14,7 @@
 	if(IsGuestKey(user.key))
 		return 0
 
-	var/savefile/F = new /savefile(src.savefile_path(user))
+	var/savefile/F = new /savefile(savefile_path(user))
 
 
 	F["name"] << src.name

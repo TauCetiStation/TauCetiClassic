@@ -36,7 +36,7 @@
 		src.name = text("data disk- '[]'", t)
 	else
 		src.name = "data disk"
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return
 
 /obj/item/weapon/card/data/clown
@@ -121,7 +121,7 @@
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/item/weapon/card/id/examine(mob/user)
@@ -366,7 +366,7 @@
 					src.icon = 'icons/obj/card.dmi'
 					src.icon_state = newc.icon_state
 					src.desc = newc.desc
-				src.update_icon()
+				update_icon()
 				to_chat(user, "<span class='notice'>You successfully change the look of the ID card!</span>")
 				return
 

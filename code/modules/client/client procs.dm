@@ -327,6 +327,9 @@ var/list/blacklisted_builds = list(
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
+	
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
 
 	if(!cob)
 		cob = new()

@@ -26,3 +26,4 @@
 #define QUIRK_MUTE "Mute"
 #define QUIRK_LIGHT_DRINKER "Light Drinker"
 #define QUIRK_NYCTOPHOBIA "Nyctophobia"
+#define QUIRK_GENETIC_DEGRADATION "Genetic Degradation"

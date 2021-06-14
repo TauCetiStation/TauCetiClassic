@@ -290,7 +290,7 @@
 		message = "Reel is full."
 	else
 		message = "[result] meters of cable successfully loaded."
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	occupant_message(message)
 	return
 
