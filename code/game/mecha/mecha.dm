@@ -278,6 +278,10 @@
 
 /obj/mecha/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
 
