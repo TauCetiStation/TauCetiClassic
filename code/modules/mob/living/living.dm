@@ -682,7 +682,7 @@
 	else
 		. = ..()
 
-	if(lying && !ISDIAGONALDIR(Dir) && . && !grabbed_by.len && mob_has_gravity())
+	if(lying && !buckled && !ISDIAGONALDIR(Dir) && . && !grabbed_by.len && mob_has_gravity())
 		if(prob(getBruteLoss() / 2))
 			makeTrail(NewLoc, old_loc, old_dir)
 		if(pull_damage() && prob(25))
