@@ -194,12 +194,12 @@
 	desc = "Взрывает людей на столах пыток, но возрождает человека на алтаре."
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Восстань из мертвых!!!"
-	favor_cost = 300
+	favor_cost = 100
 	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_OBSCURE = 2,
-		ASPECT_RESCUE = 2,
+		ASPECT_RESCUE = 1,
 	)
 
 /datum/religion_rites/instant/cult/raise_torture/can_start(mob/living/user, obj/AOG)
@@ -333,7 +333,7 @@
 
 /datum/religion_rites/instant/cult/freedom
 	name = "Свобода"
-	desc = "Освобождает выбранного аколита из рабства."
+	desc = "Освобождает выбранного аколита от оков."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Освободись же!!!"
 	favor_cost = 100
@@ -355,7 +355,7 @@
 		to_chat(user, "<span class='warning'>В вашей религии нет членов, даже вы не член её...</span>")
 		return FALSE
 
-	var/mob/living/carbon/cultist = input("Выберите кого хотите освободить.", religion.name) as null|anything in cultists - user
+	var/mob/living/carbon/cultist = input("Выберите, кого хотите освободить.", religion.name) as null|anything in cultists - user
 	var/is_processed = FALSE
 	if(!cultist)
 		return FALSE
@@ -399,10 +399,10 @@
 
 /datum/religion_rites/instant/cult/summon_acolyt
 	name = "Призыв Аколита"
-	desc = "Телепортирует свободного от оков и живого аколита."
+	desc = "Телепортирует на алтарь тело аколита."
 	ritual_length = (20 SECONDS)
 	invoke_msg = "Появись же!!!"
-	favor_cost = 200
+	favor_cost = 300
 
 	needed_aspects = list(
 		ASPECT_CHAOS = 1,
@@ -422,12 +422,8 @@
 		to_chat(user, "<span class='warning'>В вашей религии нет членов, даже вы не член её...</span>")
 		return FALSE
 
-	var/mob/living/carbon/cultist = input("Выберите кого хотите призвать.", religion.name) as null|anything in cultists - user
+	var/mob/living/carbon/cultist = input("Выберите, кого хотите призвать.", religion.name) as null|anything in cultists - user
 	if(!cultist)
-		return FALSE
-
-	if(cultist.incapacitated() || !isturf(cultist.loc))
-		to_chat(user, "<span class='userdanger'>Вы не можете призвать [cultist].</span>")
 		return FALSE
 
 	cultist.visible_message("<span class='userdanger'>[cultist] внезапно исчезает!</span>")
