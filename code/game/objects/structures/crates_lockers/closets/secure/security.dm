@@ -300,7 +300,7 @@
 /obj/structure/closet/secure_closet/brig
 	name = "Brig Locker"
 	req_access = list(access_brig)
-	anchored = 1
+	anchored = TRUE
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
@@ -324,7 +324,7 @@
 	name = "wall locker"
 	req_access = list(access_brig)
 	icon_state = "wall-locker1"
-	density = 1
+	density = TRUE
 	icon_closed = "wall-locker"
 	icon_locked = "wall-locker1"
 	icon_opened = "wall-lockeropen"

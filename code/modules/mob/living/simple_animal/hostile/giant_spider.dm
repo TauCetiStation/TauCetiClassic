@@ -125,7 +125,7 @@
 				var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 				if(!W)
 					busy = SPINNING_WEB
-					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+					visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 					stop_automated_movement = TRUE
 					spawn(40)
 						if(busy == SPINNING_WEB)
@@ -137,7 +137,7 @@
 					var/obj/effect/spider/eggcluster/E = locate() in get_turf(src)
 					if(!E && fed > 0)
 						busy = LAYING_EGGS
-						src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
+						visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 						stop_automated_movement = TRUE
 						spawn(50)
 							if(busy == LAYING_EGGS)
@@ -165,7 +165,7 @@
 			else if(busy == MOVING_TO_TARGET && cocoon_target)
 				if(get_dist(src, cocoon_target) <= 1)
 					busy = SPINNING_COCOON
-					src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
+					visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 					stop_automated_movement = TRUE
 					walk(src,0)
 					spawn(50)
@@ -180,7 +180,7 @@
 										continue
 									large_cocoon = 1
 									fed++
-									src.visible_message("<span class='warning'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
+									visible_message("<span class='warning'>\the [src] sticks a proboscis into \the [cocoon_target] and sucks a viscous substance out.</span>")
 									M.loc = C
 									C.pixel_x = M.pixel_x
 									C.pixel_y = M.pixel_y

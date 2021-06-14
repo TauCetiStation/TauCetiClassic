@@ -34,7 +34,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
-	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 
 	// Custom Keybindings
 	var/list/key_bindings = list()
@@ -143,6 +143,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
+	var/auto_fit_viewport = TRUE
 	var/parallax_theme = PARALLAX_THEME_CLASSIC
 
   //custom loadout

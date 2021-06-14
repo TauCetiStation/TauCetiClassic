@@ -937,6 +937,7 @@
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
 	,NO_MUTATION = TRUE
+	,NO_FAT = TRUE
 	)
 
 	has_bodypart = list(
@@ -1107,7 +1108,8 @@
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
 		NO_EMOTION = TRUE,
-		NO_MUTATION = TRUE
+		NO_MUTATION = TRUE,
+		NO_FAT = TRUE,
 		)
 
 	has_organ = list(

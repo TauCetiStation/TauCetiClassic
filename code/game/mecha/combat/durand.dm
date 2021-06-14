@@ -60,7 +60,7 @@
 		if(animated)
 			icon_state = reset_icon()
 		occupant_message("<font color='red'>You disable [src] defence mode.</font>")
-	src.log_message("Toggled defence mode.")
+	log_message("Toggled defence mode.")
 	return
 
 
@@ -83,7 +83,7 @@
 /obj/mecha/combat/durand/Topic(href, href_list)
 	..()
 	if (href_list["toggle_defence_mode"])
-		src.defence_mode()
+		defence_mode()
 	return
 
 /obj/mecha/combat/durand/vindicator

@@ -65,7 +65,7 @@
 		for(var/O in a_left.attached_overlays)
 			add_overlay("[O]_l")
 	if(a_right)
-		src.add_overlay("[a_right.icon_state]_right")
+		add_overlay("[a_right.icon_state]_right")
 		for(var/O in a_right.attached_overlays)
 			add_overlay("[O]_r")
 	if(master)
@@ -152,7 +152,7 @@
 		return ..()
 
 /obj/item/device/assembly_holder/attack_self(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>Assembly part missing!</span>")

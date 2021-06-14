@@ -86,7 +86,7 @@
 		if(C.get_species() == DIONA)
 			choices += C
 	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
-	if(!M || !src || !(src.Adjacent(M)))
+	if(!M || !src || !(Adjacent(M)))
 		return
 	if(is_busy() || !do_after(src, 40, target = M))
 		return
@@ -194,7 +194,7 @@
 
 	src.nutrition -= ((10-target.nutrilevel)*5)
 	target.nutrilevel = 10
-	src.visible_message("<span class='warning'>[src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.</span>","<span class='warning'>You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.</span>")
+	visible_message("<span class='warning'>[src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.</span>","<span class='warning'>You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.</span>")
 
 /mob/living/carbon/monkey/diona/verb/eat_weeds()
 
@@ -213,7 +213,7 @@
 
 	src.reagents.add_reagent("nutriment", target.weedlevel)
 	target.weedlevel = 0
-	src.visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
+	visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
 
 /mob/living/carbon/monkey/diona/verb/evolve()
 
@@ -237,8 +237,8 @@
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
-	src.split()
-	src.visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>","<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>")
+	split()
+	visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>","<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>")
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
 	adult.set_species(DIONA)
@@ -257,7 +257,7 @@
 	adult.ckey = src.ckey
 
 	for (var/obj/item/W in src.contents)
-		src.drop_from_inventory(W)
+		drop_from_inventory(W)
 	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
@@ -281,7 +281,7 @@
 		to_chat(src, "<span class='warning'>That donor offers you nothing new.</span>")
 		return
 
-	src.visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
+	visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
 		languages |= L
