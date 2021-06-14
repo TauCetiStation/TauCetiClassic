@@ -90,114 +90,12 @@
 	if(amount_grown >= 100)
 		var/num = rand(6,24)
 		for(var/i=0, i<num, i++)
-			new /obj/effect/spider/spiderling(src.loc)
+			new /mob/living/simple_animal/friendly/spiderling(src.loc)
 		qdel(src)
 
-/obj/effect/spider/spiderling
-	name = "spiderling"
-	desc = "It never stays still for long."
-	icon_state = "spiderling"
-	anchored = FALSE
-	layer = 2.7
-	health = 3
-	var/amount_grown = -1
-	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
-	var/travelling_in_vent = 0
-
-/obj/effect/spider/spiderling/atom_init()
-	. = ..()
-	pixel_x = rand(6,-6)
-	pixel_y = rand(6,-6)
-	START_PROCESSING(SSobj, src)
-	//50% chance to grow up
-	if(prob(50))
-		amount_grown = 1
-
-/obj/effect/spider/spiderling/Bump(atom/user)
-	if(istype(user, /obj/structure/table))
-		src.loc = user.loc
-	else
-		..()
-
-/obj/effect/spider/spiderling/proc/die()
-	visible_message("<span class='alert'>[src] dies!</span>")
-	new /obj/effect/decal/cleanable/spiderling_remains(src.loc)
-	qdel(src)
-
-/obj/effect/spider/spiderling/healthcheck()
-	if(health <= 0)
-		die()
-
-/obj/effect/spider/spiderling/process()
-	if(travelling_in_vent)
-		if(istype(src.loc, /turf))
-			travelling_in_vent = 0
-			entry_vent = null
-	else if(entry_vent)
-		if(get_dist(src, entry_vent) <= 1)
-			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
-			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
-				vents.Add(temp_vent)
-			if(!vents.len)
-				entry_vent = null
-				return
-			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			/*if(prob(50))
-				visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
-
-			spawn(rand(20,60))
-				loc = exit_vent
-				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-				spawn(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-
-					if(prob(50))
-						visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
-					sleep(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-					loc = exit_vent.loc
-					entry_vent = null
-					var/area/new_area = get_area(loc)
-					if(new_area)
-						new_area.Entered(src)
-	//=================
-
-	else if(prob(25))
-		var/list/nearby = oview(5, src)
-		if(nearby.len)
-			var/target_atom = pick(nearby)
-			walk_to(src, target_atom, 5)
-			if(prob(25))
-				visible_message("<span class='notice'>\the [src] skitters[pick(" away"," around","")].</span>")
-	else if(prob(5))
-		//ventcrawl!
-		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
-			if(!v.welded)
-				entry_vent = v
-				walk_to(src, entry_vent, 5)
-				break
-
-	if(prob(1))
-		visible_message("<span class='notice'>\the [src] chitters.</span>")
-	if(isturf(loc) && amount_grown > 0)
-		amount_grown += rand(0,2)
-		if(amount_grown >= 100)
-			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
-			new spawn_type(src.loc)
-			qdel(src)
-
 /obj/effect/decal/cleanable/spiderling_remains
-	name = "spiderling remains"
-	desc = "Green squishy mess."
+	name = "Spiderling remains"
+	desc = "Awful"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenshatter"
 

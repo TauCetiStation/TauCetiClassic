@@ -16,6 +16,6 @@
 
 	while(spawncount >= 1)
 		var/obj/vent = pick(vents)
-		new /obj/effect/spider/spiderling(vent.loc)
+		new /mob/living/simple_animal/friendly/spiderling(vent.loc)
 		vents -= vent
 		spawncount--
