@@ -234,6 +234,7 @@
 	
 	req_species_flags = list(
 		NO_DNA = FALSE,
+		NO_SCAN = FALSE,
 		IS_PLANT = FALSE,
 		IS_SYNTHETIC = FALSE,
 	)
