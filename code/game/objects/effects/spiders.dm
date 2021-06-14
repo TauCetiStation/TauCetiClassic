@@ -95,7 +95,7 @@
 
 /obj/effect/decal/cleanable/spiderling_remains
 	name = "Spiderling remains"
-	desc = "Awful"
+	desc = "Green squishy mess."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenshatter"
 
