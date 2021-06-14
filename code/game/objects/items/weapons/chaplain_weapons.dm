@@ -210,9 +210,9 @@
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/I, mob/user, params)
 	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
-		if(istype(I, /obj/item/device/soulstone)) //mb, the only way to pull out god
+		if(istype(I, /obj/item/device/soulstone))
 			var/obj/item/device/soulstone/S = I
-			if(S.imprinted == "empty")
+			if(!S.imprinted)
 				S.imprinted = brainmob.name
 				S.transfer_soul(SOULSTONE_SHADE, brainmob, user)
 
