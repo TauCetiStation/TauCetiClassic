@@ -182,7 +182,7 @@
 		user.SetNextMove(CLICK_CD_INTERACT) // say no-no to spamming
 		var/obj/item/weapon/paper/P = W
 		if(P.crumpled)
-			to_chat(usr, "Paper to crumpled for anything.")
+			to_chat(usr, "Paper too crumpled for anything.")
 			return
 		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!","No!")) != "Yes!")
 			return	
