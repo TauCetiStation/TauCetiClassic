@@ -126,13 +126,13 @@
 				insert_sheet_at(usr, page+1, in_hand)
 			else if(page != pages.len)
 				page++
-				playsound(src, "pageturn", 50, 1)
+				playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 		if(href_list["prev_page"])
 			if(in_hand && (istype(in_hand, /obj/item/weapon/paper) || istype(in_hand, /obj/item/weapon/photo)))
 				insert_sheet_at(usr, page, in_hand)
 			else if(page > 1)
 				page--
-				playsound(src, "pageturn", 50, 1)
+				playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 		if(href_list["remove"])
 			var/obj/item/weapon/W = pages[page]
 			usr.put_in_hands(W)
