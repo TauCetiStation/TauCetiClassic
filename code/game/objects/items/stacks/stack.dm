@@ -72,9 +72,51 @@
 		return ""
 
 /obj/item/stack/attack_self(mob/user)
-	list_recipes(user)
+	tgui_interact(user)
 
-/obj/item/stack/proc/list_recipes(mob/user, recipes_sublist)
+/obj/item/stack/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Stack", name)
+		ui.open()
+
+/obj/item/stack/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
+	var/list/data = ..()
+
+	data["amount"] = get_amount()
+
+	return data
+
+/obj/item/stack/tgui_static_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
+	var/list/data = ..()
+
+	data["recipes"] = recursively_build_recipes(recipes)
+
+	return data
+
+/obj/item/stack/tgui_state(mob/user)
+	return global.hands_state
+
+/obj/item/stack/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	if(..())
+		return TRUE
+
+	switch(action)
+		if("make")
+			if(get_amount() < 1)
+				qdel(src)
+				return
+
+			var/datum/stack_recipe/R = locate(params["ref"])
+			if(!is_valid_recipe(R, recipes)) //href exploit protection
+				return FALSE
+			var/multiplier = text2num(params["multiplier"])
+			if(!multiplier || (multiplier <= 0)) //href exploit protection
+				return
+			produce_recipe(R, multiplier, usr)
+			return TRUE
+
+/* /obj/item/stack/proc/list_recipes(mob/user, recipes_sublist)
 	if (!recipes)
 		return
 	if (!src || amount<=0)
@@ -191,7 +233,7 @@
 	if (src && usr.machine==src) //do not reopen closed window
 		INVOKE_ASYNC(src, .proc/interact, usr)
 		return
-	return
+	return */
 
 /obj/item/stack/proc/get_amount()
 	. = (amount)
