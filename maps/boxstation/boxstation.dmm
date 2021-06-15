@@ -20010,7 +20010,9 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Toxins Lab APC";
-	pixel_y = 25
+	pixel_y = 25;
+	req_access = list();
+	req_one_access = list(11,8)
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -37483,7 +37485,9 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Telescience Research APC";
-	pixel_x = -25
+	pixel_x = -25;
+	req_access = list();
+	req_one_access = list(11,7)
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -38338,7 +38342,9 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Research Lab APC";
-	pixel_y = 24
+	pixel_y = 24;
+	req_access = list();
+	req_one_access = list(11,7)
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -48063,7 +48069,9 @@
 /obj/structure/closet/wardrobe/robotics_black,
 /obj/machinery/power/apc{
 	name = "Robotics Lab APC";
-	pixel_y = -26
+	pixel_y = -26;
+	req_access = list();
+	req_one_access = list(11,29)
 	},
 /obj/structure/cable,
 /turf/simulated/floor{
