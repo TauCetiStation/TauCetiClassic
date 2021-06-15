@@ -1,8 +1,8 @@
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
@@ -124,7 +124,7 @@
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			transfer_fingerprints_to(A)
 			A.circuit = circuit
-			A.anchored = 1
+			A.anchored = TRUE
 			A.set_dir(dir)
 			circuit = null
 			for (var/obj/C in src)

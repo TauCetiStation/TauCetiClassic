@@ -136,7 +136,7 @@
 
 /obj/item/fluff/victor_kaminsky_1/attack_self(mob/user)
 	user.visible_message("[user] shows you: [bicon(src)] [src.name].")
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 /obj/item/fluff/ana_issek_2 //suethecake: Ana Issek
 	name = "Faded Badge"

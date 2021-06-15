@@ -114,7 +114,7 @@
 		playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 		M.Stun(5)
 		M.Weaken(5)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 		user.visible_message("<span class='warning'><B>[M] has been stunned with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)])")
@@ -297,7 +297,7 @@
 		src.force = 40
 		src.icon_state = "axe0"
 		src.w_class = ITEM_SIZE_HUGE
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 

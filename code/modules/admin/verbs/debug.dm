@@ -1755,7 +1755,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if(istype(M,/obj/machinery/power/rad_collector))
 			var/obj/machinery/power/rad_collector/Rad = M
-			Rad.anchored = 1
+			Rad.anchored = TRUE
 			Rad.connect_to_network()
 
 			var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)

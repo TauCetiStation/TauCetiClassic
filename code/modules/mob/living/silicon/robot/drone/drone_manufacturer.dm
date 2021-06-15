@@ -2,8 +2,8 @@
 	name = "drone fabricator"
 	desc = "A large automated factory for producing maintenance drones."
 
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
