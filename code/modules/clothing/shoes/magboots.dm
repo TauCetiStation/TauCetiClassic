@@ -26,6 +26,7 @@
 		to_chat(user, "You enable the mag-pulse traction system.")
 	user.update_inv_shoes()	//so our mob-overlays update
 	user.update_gravity(user.mob_has_gravity())
+
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()
 	var/state = "disabled"
