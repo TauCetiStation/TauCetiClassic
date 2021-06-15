@@ -1,7 +1,7 @@
 /obj/machinery/computer/operating
 	name = "Operating Computer"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	icon_state = "operating"
 	state_broken_preset = "crewb"
 	state_nopower_preset = "crew0"
@@ -57,4 +57,4 @@
 
 /obj/machinery/computer/operating/process()
 	if(..())
-		src.updateDialog()
+		updateDialog()

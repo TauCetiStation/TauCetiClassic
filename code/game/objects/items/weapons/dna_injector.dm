@@ -84,7 +84,7 @@
 					M.dna.unique_enzymes = buf.dna.unique_enzymes // bullshit
 				uses--
 			else
-				M.dna.SetUIValue(block,src.GetValue())
+				M.dna.SetUIValue(block,GetValue())
 				M.UpdateAppearance()
 				uses--
 		if (buf.types & DNA2_BUF_SE)
@@ -92,7 +92,7 @@
 				M.dna.SE = buf.dna.SE.Copy()
 				M.dna.UpdateSE()
 			else
-				M.dna.SetSEValue(block,src.GetValue())
+				M.dna.SetSEValue(block,GetValue())
 			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
 			uses--
 

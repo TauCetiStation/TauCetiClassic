@@ -172,7 +172,7 @@
 	if(!.)
 		return
 
-	if(!src.allowed(usr) && !emagged)
+	if(!allowed(usr) && !emagged)
 		to_chat(usr, "<span class='warning'>You do not have the required access level</span>")
 		return FALSE
 
@@ -294,7 +294,7 @@
 
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user)
 	..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(!emagged)
