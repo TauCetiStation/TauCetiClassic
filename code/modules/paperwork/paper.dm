@@ -507,7 +507,8 @@
 		to_chat(user, "<span class='notice'>You clip the [I.name] to [(src.name == "paper") ? "the paper" : name].</span>")
 		forceMove(B)
 		I.forceMove(B)
-		B.amount++
+		B.pages.Add(src)
+		B.pages.Add(I)
 		B.update_icon()
 		if (istype(old_loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/s = old_loc
