@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/friendly/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
-		src.loc = user.loc
+		loc = user.loc
 	else
 		..()
 
