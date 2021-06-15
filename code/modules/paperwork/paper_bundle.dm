@@ -51,7 +51,7 @@
 	add_fingerprint(usr)
 	return
 
-/obj/item/weapon/paper_bundle/proc/insert_sheet_at(mob/user, var/index, obj/item/weapon/sheet)
+/obj/item/weapon/paper_bundle/proc/insert_sheet_at(mob/user, index, obj/item/weapon/sheet)
 	if(istype(sheet, /obj/item/weapon/paper))
 		to_chat(user, "<span class='notice'>You add [(sheet.name == "paper") ? "the paper" : sheet.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
 	else if(istype(sheet, /obj/item/weapon/photo))
@@ -70,7 +70,7 @@
 
 	to_chat(usr, desc)
 	if(in_range(usr, src))
-		src.attack_self(usr)
+		attack_self(usr)
 	else
 		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 	return
@@ -153,7 +153,7 @@
 
 			update_icon()
 
-		src.attack_self(usr)
+		attack_self(usr)
 		updateUsrDialog()
 	else
 		to_chat(usr, "<span class='notice'>You need to hold it in hands!</span>")

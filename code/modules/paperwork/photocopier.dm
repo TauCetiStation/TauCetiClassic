@@ -82,7 +82,7 @@
 				toner -= 5
 			. = TRUE
 
-/obj/machinery/photocopier/proc/copy_operation(var/mob/user)
+/obj/machinery/photocopier/proc/copy_operation(mob/user)
 	if(copying)
 		return FALSE
 	copying = TRUE
@@ -249,7 +249,6 @@
 			copyitem = O
 			O.loc = src
 			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
-			playsound(src, "sound/machines/click.ogg", 100, 1)
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/device/toner))
