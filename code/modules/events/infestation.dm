@@ -121,7 +121,7 @@
 	if(health <= 0)
 		die()
 
-/mob/living/simple_animal/friendly/spiderling/process()
+/mob/living/simple_animal/friendly/spiderling/Life()
 	if(travelling_in_vent)
 		if(istype(src.loc, /turf))
 			travelling_in_vent = 0
