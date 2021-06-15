@@ -178,43 +178,26 @@
 			to_chat(user, "[msg2]")
 
 	// OTHER
-	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+	else if((istype(W, /obj/item/weapon/paper) && isliving(user)))
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
-		var/obj/item/device/pda/P = null
 
-		var/itemname = ""
-		var/info = ""
 		if(istype(W, /obj/item/weapon/paper))
 			X = W
 			if(X.crumpled)
 				to_chat(usr, "Paper to crumpled for anything.")
 				return
-			itemname = X.name
-			info = X.info
-		else
-			P = W
-			itemname = P.name
-			info = P.notehtml
-		to_chat(U, "You hold \the [itemname] up to the camera...")
+			to_chat(user, "<span class='notice'>You slowly holding up paper to the camera.</span>")
+			sleep(9) //no spam
+			if(tgui_alert(user, "Would you like to hold up paper to the camera?","Let AI see your text!", list("Yes!","No!")) != "Yes!")
+				return	
+			to_chat(U, "You hold paper up to the camera...")
+			sleep(9) //no spam
 		for(var/mob/living/silicon/ai/O in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras...")
-
-			var/dat = "<TT>[info]</TT>"
-			var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
-			popup.set_content(dat)
-			popup.open()
-
-		for(var/mob/O in player_list)
-			if(O.client && O.client.eye == src)
-				to_chat(O, "[U] holds \a [itemname] up to one of the cameras...")
-
-				var/dat = "<TT>[info]</TT>"
-				var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
-				popup.set_content(dat)
-				popup.open()
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds paper up to one of your cameras...")
+			X.show_content(O) //shows content of paper to AI
 
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
