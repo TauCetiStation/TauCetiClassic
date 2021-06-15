@@ -157,6 +157,9 @@
 		updateUsrDialog()
 	else
 		to_chat(usr, "<span class='notice'>You need to hold it in hands!</span>")
+	if (istype(src.loc, /mob))
+		attack_self(src.loc)
+		updateUsrDialog()
 
 /obj/item/weapon/paper_bundle/verb/rename()
 	set name = "Rename bundle"
