@@ -132,6 +132,7 @@
 #define CLICK_CD_AI 9
 #define CLICK_CD_GRAB 40
 #define CLICK_CD_ACTION 20 // used in grab actions
+#define CLICK_CD_PAPER 20
 
 #define NO_SLIP_WHEN_WALKING (1<<0)
 #define SLIDE                (1<<1)
