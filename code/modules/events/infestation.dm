@@ -136,8 +136,6 @@
 				entry_vent = null
 				return
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-			/*if(prob(50))
-				visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
 
 			spawn(rand(20,60))
 				loc = exit_vent
