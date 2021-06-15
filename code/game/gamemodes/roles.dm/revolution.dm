@@ -2,7 +2,6 @@
 	name = REV
 	id = REV
 	required_pref = ROLE_REV
-	restricted_jobs = list("Security Cadet", "Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	logo_state = "rev-logo"
 
 	antag_hud_type = ANTAG_HUD_REV
@@ -13,7 +12,7 @@
 		return FALSE
 	if(ismindshielded(M.current) || isloyal(M.current))
 		return FALSE
-	if(jobban_isbanned(M.current, ROLE_REV) || jobban_isbanned(M.current, "Syndicate") || role_available_in_minutes(M.current, ROLE_REV))
+	if(jobban_isbanned(M.current, ROLE_REV) || jobban_isbanned(M.current, "Syndicate"))
 		return FALSE
 	return TRUE
 
@@ -78,7 +77,7 @@
 		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 	else if(ismindshielded(M))
 		to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
-	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate") || role_available_in_minutes(M, ROLE_REV))
+	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
 	else
 		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
@@ -91,9 +90,11 @@
 		var/choice = tgui_alert(M,"Asked by [src]: Do you want to join the revolution?","Join the Revolution!",list("No!","Yes!"))
 		if(choice == "Yes!")
 			var/datum/faction/revolution/rev = lead.GetFaction()
-			add_faction_member(rev, M, TRUE)
-			to_chat(M, "<span class='notice'>You join the revolution!</span>")
-			to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
+			if(add_faction_member(rev, M, TRUE))
+				to_chat(M, "<span class='notice'>You join the revolution!</span>")
+				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
+			else
+				to_chat(src, "<span class='warning'><b>[M] cannot be converted.</b></span>")
 		else if(choice == "No!")
 			to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
 			to_chat(src, "<span class='warning'><b>[M] does not support the revolution!</b></span>")

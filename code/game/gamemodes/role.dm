@@ -377,6 +377,9 @@
 			O.ShuttleDocked(state)
 
 /datum/role/proc/AnnounceObjectives()
+	if(!antag || !antag.current)
+		return
+
 	var/text = ""
 	if(faction)
 		text += "[faction.GetFactionHeader()]<br>"
