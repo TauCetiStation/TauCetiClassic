@@ -885,7 +885,6 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/turf/space,
 /area/space_structures/robostatoin)
 "dm" = (
 /turf/simulated/floor/plating,
