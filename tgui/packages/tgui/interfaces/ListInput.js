@@ -64,15 +64,15 @@ export const ListInput = (props, context) => {
                 if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN)
                 {
                   let direction = 1;
-                  if (e.keyCode === KEY_UP) direction = -1;
+                  if (e.keyCode === KEY_UP) { direction = -1; } {}
 
                   let index = 0;
                   for (index; index < buttons.length; index++) {
-                    if (buttons[index] === selectedButton) break;
+                    if (buttons[index] === selectedButton) { break; }
                   }
-                  index += direction;
-                  if (index < 0) index = buttons.length-1;
-                  else if (index >= buttons.length) index = 0;
+                  { index += direction; }
+                  if (index < 0) { index = buttons.length-1; }
+                  else if (index >= buttons.length) { index = 0; }
                   setSelectedButton(buttons[index]);
                   setLastCharCode(null);
                   document.getElementById(buttons[index]).focus();
@@ -85,7 +85,7 @@ export const ListInput = (props, context) => {
                 }
 
                 const charCode = String.fromCharCode(e.keyCode).toLowerCase();
-                if (!charCode) return;
+                if (!charCode) { return; }
 
                 let foundValue;
                 if (charCode === lastCharCode && searchArray.length > 0) {
