@@ -326,7 +326,7 @@
 		move_result	= mechstep(direction)
 	if(move_result)
 		can_move = 0
-		if(do_after(step_in*move_result))
+		if(do_after(step_in * move_result))
 			can_move = 1
 		return 1
 	return 0

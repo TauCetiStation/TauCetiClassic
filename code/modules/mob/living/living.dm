@@ -688,13 +688,12 @@
 		if(pull_damage() && prob(25))
 			adjustBruteLoss(2)
 			visible_message("<span class='warning'>[src]'s wounds worsen terribly from being dragged!</span>")
-			if (istype(loc, /turf/simulated))
+			if (isturf(loc)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
 					if(blood_volume > 0)
-						H.vessel.remove_reagent("blood",1)
-	
+						H.vessel.remove_reagent("blood", 1)
 	if(moving_diagonally)
 		return .
 
@@ -718,7 +717,7 @@
 				newdir = NORTH
 			else if(newdir == EAST_WEST) //E + W
 				newdir = EAST
-		if((newdir in cardinal) && (prob(50)))
+		if((newdir in global.cardinal) && (prob(50)))
 			newdir = turn(newdir, 180)
 		var/datum/dirt_cover/new_cover
 		if(ishuman(src))
