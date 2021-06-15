@@ -179,7 +179,7 @@
 
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
-		user.SetNextMove(CLICK_CD_INTERACT) // say no-no to spamming
+		user.SetNextMove(3 SECONDS) // say no-no to spamming
 		var/obj/item/weapon/paper/P = W
 		if(P.crumpled)
 			to_chat(usr, "Paper too crumpled for anything.")
