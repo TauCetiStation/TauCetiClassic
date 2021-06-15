@@ -188,7 +188,7 @@
 				to_chat(usr, "Paper to crumpled for anything.")
 				return
 			user.SetNextMove(CLICK_CD_PAPER) //no spam
-			if(tgui_alert(user, "Would you like to hold up paper to the camera?","Let AI see your text!", list("Yes!","No!")) != "Yes!")
+			if(tgui_alert(user, "Would you like to hold up paper to the camera?", "Let AI see your text!", list("Yes!","No!")) != "Yes!")
 				return	
 			to_chat(U, "You hold paper up to the camera...")
 			sleep(9) //no spam
