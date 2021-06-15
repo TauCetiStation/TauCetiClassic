@@ -94,7 +94,7 @@
 		qdel(src)
 
 /obj/effect/decal/cleanable/spiderling_remains
-	name = "Spiderling remains"
+	name = "spiderling remains"
 	desc = "Green squishy mess."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "greenshatter"
