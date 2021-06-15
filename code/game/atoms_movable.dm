@@ -94,12 +94,10 @@
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
-
-	if(is_diagonal)
-		return .
-
-	move_speed = world.time - l_move_time
-	l_move_time = world.time
+	
+	if(!is_diagonal && moving_diagonally != SECOND_DIAG_STEP)
+		move_speed = world.time - l_move_time
+		l_move_time = world.time
 
 	last_move = Dir
 
