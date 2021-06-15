@@ -85,8 +85,9 @@
 	pass_flags = PASSTABLE | PASSMOB
 	anchored = FALSE
 	small = TRUE
-	layer = 2.7
+	layer = BELOW_CONTAINERS_LAYER
 	health = 2
+	maxHealth = 2
 	turns_per_move = 3
 	speed = 5
 	melee_damage = 1
