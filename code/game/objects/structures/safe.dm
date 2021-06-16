@@ -59,7 +59,7 @@
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
 		if(I.w_class + space <= maxspace)
-			if(!user.drop_item(I, src))
+			if(!user.drop_from_inventory(I, src))
 				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
 				return
 			space += I.w_class
