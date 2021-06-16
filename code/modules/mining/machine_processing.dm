@@ -21,7 +21,7 @@
 
 /obj/machinery/mineral/processing_unit_console/atom_init()
 	. = ..()
-	src.machine = locate(/obj/machinery/mineral/processing_unit) in range(5, src)
+	machine = locate(/obj/machinery/mineral/processing_unit) in range(5, src)
 	if (machine)
 		machine.console = src
 		if(!ore_values.len)
@@ -29,7 +29,7 @@
 				var/datum/ore/O = oretype
 				ore_values[initial(O.oretag)] = initial(O.points)
 	else
-		log_debug("Ore processing machine console at [src.x], [src.y], [src.z] could not find its machine!")
+		log_debug("Ore processing machine console at [x], [y], [z] could not find its machine!")
 		qdel(src)
 
 /obj/machinery/mineral/processing_unit_console/Destroy()

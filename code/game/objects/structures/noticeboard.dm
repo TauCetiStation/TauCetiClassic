@@ -5,7 +5,7 @@
 	icon_state = "nboard00"
 	density = FALSE
 	anchored = TRUE
-	var/notices = 0
+	var/list/notices
 	var/base_icon_state = "nboard0"
 	var/const/max_notices = 5
 

@@ -32,7 +32,7 @@
 	data["has_item"] = copyitem || has_buckled_mobs() // VOREStation Edit: Ass copying
 	data["isAI"] = issilicon(user)
 	data["can_AI_print"] = (toner >= 5)
-	data["has_toner"] =	!!toner
+	data["has_toner"] = !!toner
 	data["current_toner"] = toner
 	data["max_toner"] = 40
 	data["num_copies"] = copies
@@ -106,7 +106,7 @@
 		use_power(active_power_usage)
 	copying = FALSE
 
-/obj/machinery/photocopier/proc/bundlecopy(obj/item/weapon/paper_bundle/bundle, need_toner=1)
+/obj/machinery/photocopier/proc/bundlecopy(obj/item/weapon/paper_bundle/bundle, need_toner = TRUE)
 	var/obj/item/weapon/paper_bundle/p = new /obj/item/weapon/paper_bundle (src)
 	for(var/obj/item/weapon/W in bundle.pages)
 		if(toner <= 0 && need_toner)

@@ -81,14 +81,14 @@
 		ui.open()
 
 /obj/item/stack/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
-	var/list/data = ..()
+	var/list/data = list()
 
 	data["amount"] = get_amount()
 
 	return data
 
 /obj/item/stack/tgui_static_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
-	var/list/data = ..()
+	var/list/data = list()
 
 	data["recipes"] = recursively_build_recipes(recipes)
 

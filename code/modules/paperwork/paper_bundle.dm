@@ -10,7 +10,6 @@
 	throw_speed = 1
 	layer = 4
 	attack_verb = list("bapped")
-//	var/amount = 0 //Amount of items clipped to the paper
 	var/page = 1 // Current page
 	var/screen = 0
 	var/list/pages = list() //Amount of items clipped to the paper
