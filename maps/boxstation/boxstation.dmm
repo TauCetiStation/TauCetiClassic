@@ -30691,9 +30691,6 @@
 	},
 /area/station/civilian/garden)
 "bcr" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 4;
 	name = "Toxins Research";
@@ -31090,6 +31087,9 @@
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurplecorner"
