@@ -1,3 +1,6 @@
+
+#define MAX_NOTICES	5
+
 /obj/structure/noticeboard
 	name = "notice board"
 	desc = "A board for pinning important notices upon."
@@ -7,7 +10,6 @@
 	anchored = TRUE
 	var/list/notices
 	var/base_icon_state = "nboard0"
-	var/const/max_notices = 5
 
 /obj/structure/noticeboard/atom_init()
 	. = ..()
@@ -17,7 +19,7 @@
 	for(var/obj/item/weapon/paper/note in get_turf(src))
 		note.forceMove(src)
 		LAZYADD(notices, note)
-		if(length(notices) >= max_notices)
+		if(length(notices) >= MAX_NOTICES)
 			break
 
 	update_icon()
@@ -49,7 +51,7 @@
 		if(jobban_isbanned(user, "Graffiti"))
 			to_chat(user, "<span class='warning'>You are banned from leaving persistent information across rounds.</span>")
 		else
-			if(length(notices) < max_notices && user.unEquip(O, src))
+			if(length(notices) < MAX_NOTICES && user.unEquip(O, src))
 				add_fingerprint(user)
 				add_paper(O)
 				to_chat(user, "<span class='notice'>You pin [O] to [src].</span>")
