@@ -85,7 +85,7 @@
 	pass_flags = PASSTABLE | PASSMOB
 	anchored = FALSE
 	small = TRUE
-	layer = BELOW_CONTAINERS_LAYER
+	layer = MOB_LAYER
 	health = 2
 	maxHealth = 2
 	turns_per_move = 3
