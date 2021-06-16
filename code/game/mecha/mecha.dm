@@ -670,7 +670,7 @@
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				user.drop_item()
+				user.drop_from_inventory(E, src)
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
 			else
@@ -736,8 +736,7 @@
 		if(state==4)
 			if(!src.cell)
 				to_chat(user, "You install the powercell")
-				user.drop_item()
-				W.forceMove(src)
+				user.drop_from_inventory(W, src)
 				src.cell = W
 				log_message("Powercell installed")
 			else
@@ -792,7 +791,6 @@
 		src.initial_icon = P.new_icon
 		reset_icon()
 
-		user.drop_item()
 		qdel(P)
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/Ham = W

@@ -317,7 +317,7 @@
 		if(flash1 && flash2)
 			to_chat(user, "<span class='info'>You have already inserted the eyes!</span>")
 			return
-		if(!user.drop_item(src))
+		if(!user.drop_from_inventory(I, src))
 			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
 			return
 		else

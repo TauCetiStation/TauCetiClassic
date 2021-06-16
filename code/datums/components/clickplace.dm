@@ -76,19 +76,18 @@
 		return COMPONENT_NO_AFTERATTACK
 	if(!can_place(source, I, user))
 		return NONE
-	if(!user.drop_from_inventory(I))
-		return FALSE
 
-	var/atom/A = parent
-
-	I.forceMove(A.loc)
 	var/list/click_params = params2list(params)
 	//Center the icon where the user clicked.
 	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
 		return
-	//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-	I.pixel_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
-	I.pixel_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+
+	var/p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+	var/p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+
+	var/atom/A = parent
+	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x - I.pixel_x, additional_pixel_y=p_y - I.pixel_y))
+		return FALSE
 
 	if(on_place)
 		on_place.Invoke(A, I, user)
@@ -106,7 +105,7 @@
 		S.remove_from_storage(I, target)
 	else if(ismob(I.loc))
 		var/mob/M = I.loc
-		M.drop_from_inventory(I, target)
+		M.remove_from_mob(I, target)
 	else
 		I.forceMove(target)
 
@@ -152,6 +151,8 @@
 	if(spare_slots <= 0)
 		return
 
+	var/atom/old_loc = I.loc
+
 	jump_out(I, user.loc)
 
 	// Bounding component took over or something.
@@ -164,7 +165,10 @@
 	if(I.loc != A.loc)
 		step_towards(I, A)
 
-		if(I.loc == A.loc && on_place)
+	if(I.loc == A.loc)
+		if(!isturf(old_loc))
+			INVOKE_ASYNC(I, /atom/movable.proc/do_putdown_animation, A.loc, user)
+		if(on_place)
 			on_place.Invoke(A, I, user)
 
 // Return TRUE to prevent default qdel logic.
@@ -205,6 +209,7 @@
 
 	assailant.SetNextMove(CLICK_CD_MELEE)
 	if(G.state >= GRAB_AGGRESSIVE)
+		INVOKE_ASYNC(victim, /atom/movable.proc/do_simple_move_animation, A.loc)
 		victim.forceMove(A.loc)
 		victim.Weaken(5)
 

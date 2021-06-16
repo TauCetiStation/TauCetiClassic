@@ -137,7 +137,6 @@
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
 					H.take_bodypart_damage(0, 20)
-					H.drop_item()
 					qdel(src)
 					return
 
