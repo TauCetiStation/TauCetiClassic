@@ -445,7 +445,7 @@
 		return
 
 	var/next_in_line
-	switch(mob.zone_sel.selecting)
+	switch(mob.get_targetzone())
 		if(BP_HEAD)
 			next_in_line = O_EYES
 		if(O_EYES)
