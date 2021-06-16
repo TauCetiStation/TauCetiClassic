@@ -682,20 +682,10 @@
 	else
 		. = ..()
 
-	if(lying && !buckled && !ISDIAGONALDIR(Dir) && . && !grabbed_by.len && mob_has_gravity())
-		if(prob(getBruteLoss() / 2))
-			makeTrail(NewLoc, old_loc, old_dir)
-		if(pull_damage() && prob(25))
-			adjustBruteLoss(2)
-			visible_message("<span class='warning'>[src]'s wounds worsen terribly from being dragged!</span>")
-			if (isturf(loc)
-				if(ishuman(src))
-					var/mob/living/carbon/human/H = src
-					var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-					if(blood_volume > 0)
-						H.vessel.remove_reagent("blood", 1)
-	if(moving_diagonally)
-		return .
+	if(!ISDIAGONALDIR(Dir))
+		pull_trail_damage(NewLoc, old_loc, old_dir)
+		if(moving_diagonally)
+			return .
 
 	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
@@ -704,49 +694,75 @@
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
 
+/mob/living/proc/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
+	if(!isturf(old_loc) || old_loc == loc)
+		return FALSE
+	if(!lying || buckled || grabbed_by.len || !mob_has_gravity())
+		return FALSE
+	if(prob(getBruteLoss() / 2))
+		makeTrail(new_loc, old_loc, old_dir)
+	if(pull_damage() && prob(25))
+		adjustBruteLoss(2)
+		visible_message("<span class='warning'>[src]'s wounds worsen terribly from being dragged!</span>")
+		return TRUE
+	return FALSE
+
+/mob/living/carbon/human/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
+	if(..())
+		var/blood_volume = round(vessel.get_reagent_amount("blood"))
+		if(blood_volume > 0)
+			vessel.remove_reagent("blood", 1)
+
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
-	var/blood_exists = 0
+	if(!isturf(old_loc))
+		return
+		
 	var/trail_type = getTrail()
+	if(!trail_type)
+		return
+
+	var/blood_exists = 0
 	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in old_loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (isturf(old_loc) && trail_type != null)
-		var/newdir = turn(dir, 180)
-		if(newdir != old_dir)
-			newdir = newdir | old_dir
-			if(newdir == NORTH_SOUTH) //N + S
-				newdir = NORTH
-			else if(newdir == EAST_WEST) //E + W
-				newdir = EAST
-		if((newdir in global.cardinal) && (prob(50)))
-			newdir = turn(newdir, 180)
-		var/datum/dirt_cover/new_cover
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			if(H.species)
-				new_cover = new(H.species.blood_datum)
-		if(!new_cover)
-			new_cover = new/datum/dirt_cover/red_blood
-		if(!blood_exists)
-			var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(old_loc)
-			BL.basedatum = new_cover
-			BL.update_icon()
-		else
-			for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
-				TH.basedatum.add_dirt(new_cover)
-				TH.update_icon()
+
+	var/newdir = turn(dir, 180)
+	if(newdir != old_dir)
+		newdir = newdir | old_dir
+		if(newdir == NORTH_SOUTH) //N + S
+			newdir = NORTH
+		else if(newdir == EAST_WEST) //E + W
+			newdir = EAST
+	if((newdir in global.cardinal) && (prob(50)))
+		newdir = turn(newdir, 180)
+	
+	var/datum/dirt_cover/new_cover
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.species)
+			new_cover = new(H.species.blood_datum)
+	if(!new_cover)
+		new_cover = new/datum/dirt_cover/red_blood
+	if(!blood_exists)
+		var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(old_loc)
+		BL.basedatum = new_cover
+		BL.update_icon()
+	else
 		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
-			if(!TH.amount)
-				STOP_PROCESSING(SSobj, TH)
-				TH.name = initial(TH.name)
-				TH.desc = initial(TH.desc)
-				TH.amount = initial(TH.amount)
-				TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
-				START_PROCESSING(SSobj, TH)
-			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-				TH.existing_dirs += newdir
-				TH.add_overlay(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-			if(dna)
-				TH.blood_DNA[dna.unique_enzymes] = dna.b_type
+			TH.basedatum.add_dirt(new_cover)
+			TH.update_icon()
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
+		if(!TH.amount)
+			STOP_PROCESSING(SSobj, TH)
+			TH.name = initial(TH.name)
+			TH.desc = initial(TH.desc)
+			TH.amount = initial(TH.amount)
+			TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
+			START_PROCESSING(SSobj, TH)
+		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			TH.existing_dirs += newdir
+			TH.add_overlay(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+		if(dna)
+			TH.blood_DNA[dna.unique_enzymes] = dna.b_type
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
 	return null
