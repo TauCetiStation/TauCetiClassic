@@ -318,12 +318,14 @@
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
-	else if(src.dir != direction && !strafe)
-		if(ISDIAGONALDIR(direction))
-			return FALSE
-		move_result = mechturn(direction)
-	else
+	else if(strafe)
 		move_result	= mechstep(direction)
+	else if(direction & dir)
+		move_result = mechstep(dir)
+	else if(ISDIAGONALDIR(direction))
+		move_result = mechturn(direction & EAST_WEST)
+	else
+		move_result = mechturn(direction)
 	if(move_result)
 		can_move = 0
 		if(do_after(step_in * move_result))
