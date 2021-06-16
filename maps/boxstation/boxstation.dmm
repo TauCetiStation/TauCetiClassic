@@ -16448,6 +16448,10 @@
 /area/station/ai_monitored/eva)
 "aCw" = (
 /obj/machinery/light/small,
+/obj/machinery/light_switch{
+	pixel_x = 9;
+	pixel_y = -24
+	},
 /turf/simulated/floor{
 	icon_state = "warnwhite"
 	},
@@ -16692,9 +16696,6 @@
 	},
 /area/station/hallway/secondary/arrival)
 "aCY" = (
-/obj/machinery/light_switch{
-	pixel_y = -28
-	},
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
 	},
