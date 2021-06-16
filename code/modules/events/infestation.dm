@@ -115,12 +115,6 @@
 	else
 		..()
 
-/mob/living/simple_animal/friendly/spiderling/proc/die()
-	visible_message("<span class='alert'>[src] dies!</span>")
-	qdel(src)
-	if(health <= 0)
-		die()
-
 /mob/living/simple_animal/friendly/spiderling/Life()
 	if(travelling_in_vent)
 		if(istype(src.loc, /turf))
