@@ -78,8 +78,7 @@ log transactions
 
 		var/obj/item/weapon/card/id/idcard = I
 		if(!held_card)
-			usr.drop_item()
-			idcard.loc = src
+			usr.drop_from_inventory(idcard, src)
 			held_card = idcard
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
@@ -419,8 +418,7 @@ log transactions
 					else
 						var/obj/item/I = usr.get_active_hand()
 						if (istype(I, /obj/item/weapon/card/id))
-							usr.drop_item()
-							I.loc = src
+							usr.drop_from_inventory(I, src)
 							held_card = I
 							if(ishuman(usr))
 								var/mob/living/carbon/human/H = usr
@@ -464,7 +462,6 @@ log transactions
 	if(!held_card)
 		return
 
-	held_card.loc = src.loc
 	authenticated_account = null
 
 	if(ishuman(human_user) && !human_user.get_active_hand())
