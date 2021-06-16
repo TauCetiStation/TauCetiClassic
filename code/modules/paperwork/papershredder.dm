@@ -76,8 +76,8 @@
 		playsound(src, 'sound/items/pshred.ogg', VOL_EFFECTS_MASTER)
 		flick(shred_anim, src)
 		if(paperamount > max_paper)
-			to_chat(user,"<span class='danger'>\The [src] was too full, and shredded paper goes everywhere!</span>")
-			for(var/i=(paperamount-max_paper);i>0;i--)
+			to_chat(user, "<span class='danger'>\The [src] was too full, and shredded paper goes everywhere!</span>")
+			for(var/i = paperamount - max_paper ; i > 0 ; i--)
 				var/obj/item/weapon/shreddedp/SP = get_shredded_paper()
 				SP.forceMove(loc)
 				SP.throw_at(get_edge_target_turf(src, pick(alldirs)), 1, 5)
@@ -135,7 +135,7 @@
 
 /obj/machinery/papershredder/power_change()
 	..()
-	addtimer(CALLBACK(src, .proc/update_icon), rand(0,15))
+	addtimer(CALLBACK(src, .proc/update_icon), rand(0, 15))
 	update_icon()
 
 /obj/machinery/papershredder/update_icon()
@@ -145,7 +145,7 @@
 	else
 		icon_state = "shredder-off"
 	// Fullness overlay
-	overlays += "shredder-[clamp(0, 5, FLOOR(paperamount/max_paper*5, 1))]"
+	overlays += "shredder-[clamp(0, 5, FLOOR(paperamount / max_paper * 5, 1))]"
 	if (panel_open)
 		overlays += "panel_open"
 
@@ -183,7 +183,7 @@
 		return
 	user.visible_message("<span class='warning'>\The [user] holds \the [P] up to \the [src]. It looks like try to burn it!</span>", \
 		"<span class='warning'>You hold \the [P] up to \the [src], burning it slowly.</span>")
-	if(!do_after(user,20))
+	if(!do_after(user, 20))
 		to_chat(user, "<span class='warning'>You must hold \the [P] steady to burn \the [src].</span>")
 		return
 	user.visible_message("<span class='danger'>\The [user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.</span>", \
