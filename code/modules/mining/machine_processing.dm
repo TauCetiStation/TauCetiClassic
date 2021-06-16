@@ -142,8 +142,7 @@
 		if("insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				usr.drop_item()
-				I.forceMove(src)
+				usr.drop_from_inventory(I, src)
 				inserted_id = I
 			else
 				to_chat(usr, "<span class='warning'>No valid ID.</span>")
