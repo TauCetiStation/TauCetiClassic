@@ -77,7 +77,7 @@
 		flick(shred_anim, src)
 		if(paperamount > max_paper)
 			to_chat(user, "<span class='danger'>\The [src] was too full, and shredded paper goes everywhere!</span>")
-			for(var/i = paperamount - max_paper ; i > 0 ; i--)
+			for(var/i in 1 to paperamount - max_paper)
 				var/obj/item/weapon/shreddedp/SP = get_shredded_paper()
 				SP.forceMove(loc)
 				SP.throw_at(get_edge_target_turf(src, pick(alldirs)), 1, 5)
