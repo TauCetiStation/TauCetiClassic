@@ -110,6 +110,7 @@ const MiningVendorSearch = (props, context) => {
           <Input
             placeholder="Search by item name.."
             width="100%"
+            autoFocus
             onInput={(_e, value) => setSearchText(value)}
           />
         </Flex.Item>
