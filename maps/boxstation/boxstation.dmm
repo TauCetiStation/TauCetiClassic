@@ -30044,28 +30044,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bbi" = (
-/obj/item/stack/sheet/mineral/phoron{
-	layer = 2.9
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline,
-/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/pill_bottle/inaprovaline{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/pill_bottle/inaprovaline{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/structure/table/glass,
 /obj/machinery/door_control{
 	desc = "A remote control-switch for a shutters.";
 	id = "Chem";
@@ -30074,11 +30052,21 @@
 	pixel_y = 27;
 	req_access = list(33)
 	},
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
+	name = "Chemistry Cleaner";
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/item/weapon/book/manual/wiki/medical_chemistry{
+	pixel_x = 4
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteyellow"
 	},
-/area/station/medical/chemistry)
+/area)
 "bbj" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass,
@@ -33243,6 +33231,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/table/glass,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bgU" = (
@@ -35079,14 +35068,19 @@
 	},
 /area/station/medical/surgeryobs)
 "bkD" = (
-/obj/item/weapon/reagent_containers/dropper/precision,
+/obj/item/weapon/reagent_containers/dropper/precision{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/dropper{
+	pixel_x = 10;
 	pixel_y = -4
 	},
 /obj/structure/table/glass,
 /obj/item/clothing/glasses/science{
-	pixel_y = 1
+	pixel_x = -8;
+	pixel_y = -6
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -36045,10 +36039,6 @@
 /area/station/medical/chemistry)
 "bmg" = (
 /obj/machinery/chem_dispenser,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27;
-	pixel_y = 1
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -36304,6 +36294,28 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
+	pixel_x = -2
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/antitoxin{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/glass/bottle/inaprovaline{
+	pixel_x = -10
+	},
+/obj/item/weapon/storage/pill_bottle/inaprovaline{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/pill_bottle/inaprovaline{
+	pixel_x = 8
+	},
 /turf/simulated/floor,
 /area/station/medical/chemistry)
 "bmH" = (
@@ -36338,8 +36350,8 @@
 /area/station/maintenance/engineering)
 "bmN" = (
 /obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/syringes,
@@ -62619,6 +62631,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/table/glass,
+/obj/machinery/reagentgrinder,
+/obj/item/stack/sheet/mineral/phoron,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warning"
@@ -62666,8 +62681,10 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cvj" = (
-/obj/machinery/reagentgrinder,
 /obj/structure/table/glass,
+/obj/item/weapon/airlock_painter,
+/obj/item/weapon/hand_labeler,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteyellow"
@@ -69931,14 +69948,14 @@
 	name = "Chemistry Shutters";
 	opacity = 0
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
 /obj/machinery/door/window/eastright{
 	dir = 8;
 	icon_state = "left";
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "eBb" = (
@@ -73427,14 +73444,19 @@
 	},
 /area/station/medical/reception)
 "jDb" = (
-/obj/item/weapon/reagent_containers/dropper/precision,
+/obj/item/weapon/reagent_containers/dropper/precision{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/reagent_containers/dropper{
+	pixel_x = 10;
 	pixel_y = -4
 	},
 /obj/structure/table/glass,
 /obj/item/clothing/glasses/science{
-	pixel_y = 1
+	pixel_x = -8;
+	pixel_y = -6
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -73688,8 +73710,6 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "keb" = (
-/obj/item/weapon/hand_labeler,
-/obj/structure/table/glass,
 /obj/machinery/power/apc{
 	dir = 8;
 	level = 4;
@@ -73700,12 +73720,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
-	name = "Chemistry Cleaner"
-	},
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/airlock_painter,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
@@ -77909,6 +77923,9 @@
 	pixel_y = 2
 	},
 /obj/structure/table/glass,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warning"
