@@ -40,7 +40,6 @@
 @include meta.load-css('./components/Tooltip.scss');
 
 // Interfaces
-// austation -- adds tgui lists
 @include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
