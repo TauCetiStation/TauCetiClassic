@@ -72,11 +72,10 @@
 
 		to_chat(user, "<span class='notice'>You install [O] in [src]!</span>")
 
-		user.drop_item()
+		user.drop_from_inventory(O, src)
 		src.mmi = O
 		transfer_personality(O)
 
-		O.loc = src
 		update_icon()
 		return 1
 

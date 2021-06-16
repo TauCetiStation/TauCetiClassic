@@ -123,14 +123,12 @@
 		if(src && recipient && sender && present && get_dist(src, user) <= 1)
 			present.recipient = recipient
 			present.sender = sender
-			user.drop_item()
-			present.forceMove(src)
+			user.drop_from_inventory(present, src)
 			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
 		return
 	if(!(I.flags & ABSTRACT))
-		if(user.drop_item())
+		if(user.drop_from_inventory(I, loc))
 			user.visible_message("[user] attaches [I] to \the [src] .", "<span class='notice'>You attach [I] to \the [src].</span>")
-			I.forceMove(loc)
 			I.layer = 5.1 // Item should be on the tree, not under
 			I.anchored = TRUE // Make item a part of the tree
 			decals += I
@@ -238,7 +236,6 @@
 	. = ..()
 	if(istype(W, /obj/item/clothing/head/that))
 		if(icon_state == "snowman_s")
-			user.drop_item()
 			qdel(W)
 			icon_state = "snowman_hat"
 			visible_message("<span class='notice'>[user] puts a hat on the snowman. He looks happy!</span>",

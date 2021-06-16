@@ -68,12 +68,11 @@
 		if(!SK.status)
 			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
 			return
-		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
+		user.drop_from_inventory(SK, E)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		E.set_dir(dir)
 		E.part = SK
-		SK.loc = E
 		SK.master = E
 		qdel(src)
 
