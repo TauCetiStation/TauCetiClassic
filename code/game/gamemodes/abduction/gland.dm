@@ -264,7 +264,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cocoon_large3"
 	color = rgb(10,120,10)
-	density = 1
+	density = TRUE
 	var/hatch_time = 0
 
 /obj/effect/cocoon/abductor/proc/Start()
@@ -275,6 +275,6 @@
 	if(world.time > hatch_time)
 		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
-			src.visible_message("<span class='warning'>[src] hatches!</span>")
+			visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc
 		qdel(src)

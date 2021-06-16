@@ -101,7 +101,7 @@
 					if (B)
 						src.reagents.reagent_list += B
 						src.reagents.update_total()
-						src.on_reagent_change()
+						on_reagent_change()
 						src.reagents.handle_reactions()
 					infect_limb(user, target)
 					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)

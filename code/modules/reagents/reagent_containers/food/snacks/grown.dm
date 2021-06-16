@@ -297,13 +297,13 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/living/user)
-	src.set_light(0)
+	set_light(0)
 	user.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
 	..()
 	user.set_light(0)
-	src.set_light(2,1)
+	set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed_type = /obj/item/seeds/cocoapodseed

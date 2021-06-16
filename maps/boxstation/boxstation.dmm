@@ -3985,6 +3985,9 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 30
 	},
+/obj/item/weapon/twohanded/flora/pottedplant{
+	icon_state = "plant-6"
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -4256,9 +4259,7 @@
 	},
 /area/station/security/main)
 "ahh" = (
-/obj/item/weapon/twohanded/flora/pottedplant{
-	icon_state = "plant-6"
-	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -4691,7 +4692,7 @@
 	},
 /area/station/security/warden)
 "ahR" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/donut,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -23829,6 +23830,9 @@
 	c_tag = "Playroom"
 	},
 /obj/structure/stool,
+/obj/machinery/light_switch{
+	pixel_x = 27
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "neutral"
@@ -25911,7 +25915,9 @@
 /turf/simulated/floor,
 /area/station/civilian/playroom)
 "aTT" = (
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction{
+	icon_state = "pipe-j2"
+	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -25921,6 +25927,9 @@
 /obj/structure/stool,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/civilian/playroom)
@@ -25939,12 +25948,12 @@
 /area/station/maintenance/chapel)
 "aTW" = (
 /obj/structure/stool,
-/obj/machinery/light_switch{
-	pixel_x = 27
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "neutral"
+	icon_state = "neutralcorner"
 	},
 /area/station/civilian/playroom)
 "aTX" = (
@@ -26740,27 +26749,15 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/civilian/playroom)
 "aVw" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
+/turf/simulated/floor,
 /area/station/civilian/playroom)
 "aVx" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/machinery/disposal,
+/obj/machinery/vending/donut,
 /turf/simulated/floor{
-	dir = 5;
+	dir = 4;
 	icon_state = "neutral"
 	},
 /area/station/civilian/playroom)
@@ -50116,13 +50113,9 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bOy" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutralcorner"
@@ -76823,6 +76816,12 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"oHi" = (
+/obj/machinery/vending/donut,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/primary/central)
 "oHZ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
@@ -77119,10 +77118,14 @@
 	},
 /area/station/civilian/bar)
 "oXR" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2"
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
-/turf/simulated/floor,
+/obj/machinery/disposal,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "neutral"
+	},
 /area/station/civilian/playroom)
 "oYb" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -80939,6 +80942,19 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
+"vWv" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "vWx" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -92832,7 +92848,7 @@ gKX
 csh
 lUd
 bOy
-gKX
+vWv
 csh
 baI
 kYI
@@ -103609,7 +103625,7 @@ aPU
 aRb
 aSz
 aTT
-oXR
+aRb
 aWU
 aZh
 bbP
@@ -104379,7 +104395,7 @@ aOz
 aOz
 aOz
 aOz
-aOz
+oXR
 aVx
 aXc
 aZg
@@ -104633,9 +104649,9 @@ clo
 aLR
 aLR
 aOC
+awE
 azj
-agO
-aSH
+aOz
 aOz
 aOz
 aOz
@@ -104890,11 +104906,11 @@ aHz
 aJd
 agO
 aOF
+alZ
 azj
 agO
+aSH
 alZ
-alZ
-awE
 aqd
 agO
 bbQ
@@ -107495,7 +107511,7 @@ bHu
 bIv
 bJr
 bFW
-aMS
+oHi
 aOe
 bCX
 rCb

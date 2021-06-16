@@ -1,7 +1,7 @@
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"
 	set name = "Show Laws"
-	src.show_laws()
+	show_laws()
 
 /mob/living/silicon/ai/show_laws(everyone = 0)
 	var/who
@@ -12,7 +12,7 @@
 		who = src
 		to_chat(who, "<b>Obey these laws:</b>")
 
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.show_laws(who)
 
 /mob/living/silicon/ai/proc/laws_sanity_check()
@@ -21,23 +21,23 @@
 
 /mob/living/silicon/ai/proc/set_zeroth_law(law, law_borg)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.set_zeroth_law(law, law_borg)
 	add_antag_hud(ANTAG_HUD_MALF, "hudmalai", src)
 
 /mob/living/silicon/ai/proc/add_inherent_law(law)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.add_inherent_law(law)
 
 /mob/living/silicon/ai/proc/clear_inherent_laws()
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.clear_inherent_laws()
 
 /mob/living/silicon/ai/proc/add_ion_law(law)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.add_ion_law(law)
 	for(var/mob/living/silicon/robot/R in silicon_list)
 		if(R.lawupdate && (R.connected_ai == src))
@@ -46,17 +46,17 @@
 
 /mob/living/silicon/ai/proc/clear_ion_laws()
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.clear_ion_laws()
 
 /mob/living/silicon/ai/proc/add_supplied_law(number, law)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.add_supplied_law(number, law)
 
 /mob/living/silicon/ai/proc/clear_supplied_laws()
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
+	laws_sanity_check()
 	src.laws.clear_supplied_laws()
 
 
@@ -76,17 +76,17 @@
 		if("Holopad") prefix = ":h "
 		else prefix = ""
 
-	if(src.say("[prefix]Current Active Laws:") != 1)
+	if(say("[prefix]Current Active Laws:") != 1)
 		return
 
-	//src.laws_sanity_check()
+	//laws_sanity_check()
 	//src.laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 
 	if (src.laws.zeroth)
 		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
-			src.say("[prefix]0. [src.laws.zeroth]")
+			say("[prefix]0. [src.laws.zeroth]")
 			sleep(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
@@ -94,7 +94,7 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (src.ioncheck[index] == "Yes")
-				src.say("[prefix][num]. [law]")
+				say("[prefix][num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
@@ -102,7 +102,7 @@
 
 		if (length(law) > 0)
 			if (src.lawcheck[index+1] == "Yes")
-				src.say("[prefix][number]. [law]")
+				say("[prefix][number]. [law]")
 				sleep(10)
 			number++
 
@@ -112,7 +112,7 @@
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
 				if (src.lawcheck[number+1] == "Yes")
-					src.say("[prefix][number]. [law]")
+					say("[prefix][number]. [law]")
 					sleep(10)
 				number++
 

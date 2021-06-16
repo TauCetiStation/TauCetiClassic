@@ -371,7 +371,8 @@
 	if(prob(13))
 		if(global.chicken_count < MAX_CHICKENS)
 			new /mob/living/simple_animal/chick(loc)
-	reagents.reaction(hit_atom, TOUCH)
+	// Yeah, eggs splash too it turns out.
+	reagents.standard_splash(hit_atom, user=throwingdatum.thrower)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
 
@@ -672,7 +673,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
@@ -712,7 +713,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
+	visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis

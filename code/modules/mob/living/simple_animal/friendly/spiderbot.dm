@@ -74,10 +74,10 @@
 
 		user.drop_item()
 		src.mmi = O
-		src.transfer_personality(O)
+		transfer_personality(O)
 
 		O.loc = src
-		src.update_icon()
+		update_icon()
 		return 1
 
 	if (iswelder(O))
@@ -152,7 +152,7 @@
 		spawn(200)
 			to_chat(src, "<span class='warning'>Internal heat sensors are spiking! Something is badly wrong with your cell!</span>")
 		spawn(300)
-			src.explode()
+			explode()
 		return FALSE
 
 /mob/living/simple_animal/spiderbot/proc/explode() //When emagged.

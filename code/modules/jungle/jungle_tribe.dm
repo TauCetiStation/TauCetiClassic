@@ -10,7 +10,7 @@
 	desc = "Looks cosy, in an alien sort of way."
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "campfire"
-	anchored = 1
+	anchored = TRUE
 	var/list/tribesmen = list()
 	var/list/enemy_players = list()
 	var/tribe_type = 1

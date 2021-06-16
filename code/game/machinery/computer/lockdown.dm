@@ -138,4 +138,4 @@
 				spawn(0)
 					D.close()
 
-	src.updateDialog()
+	updateDialog()

@@ -41,8 +41,8 @@
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "scanner"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 300
@@ -108,7 +108,7 @@
 			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
 			return 0
 		open = 0
-		density = 1
+		density = TRUE
 		for(var/mob/living/carbon/C in loc)
 			if(C.buckled)	continue
 			if(C.client)
@@ -135,7 +135,7 @@
 							if(ghost.mind == occupant.mind)
 								if(ghost.can_reenter_corpse)
 									ghost.playsound_local(null, 'sound/machines/chime.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)	//probably not the best sound but I think it's reasonable
-									var/answer = alert(ghost,"Do you want to return to corpse for cloning?","Cloning","Yes","No")
+									var/answer = tgui_alert(ghost, "Do you want to return to corpse for cloning?", "Cloning", list("Yes","No"))
 									if(answer == "Yes")
 										ghost.reenter_corpse()
 
@@ -153,7 +153,7 @@
 		var/turf/T = get_turf(src)
 		if(T)
 			open = 1
-			density = 0
+			density = FALSE
 			T.contents += (contents - beaker)
 			if(occupant)
 				if(occupant.client)
@@ -258,7 +258,7 @@
 	state_broken_preset = "crewb"
 	state_nopower_preset = "crew0"
 	light_color = "#315ab4"
-	density = 1
+	density = TRUE
 	circuit = /obj/item/weapon/circuitboard/scan_consolenew
 	var/selected_ui_block = 1.0
 	var/selected_ui_subblock = 1.0
@@ -274,7 +274,7 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/disk = null
 	var/selected_menu_key = null
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400

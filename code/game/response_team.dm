@@ -24,10 +24,10 @@ var/can_call_ert
 	if(send_emergency_team)
 		to_chat(usr, "<span class='warning'>Central Command has already dispatched an emergency response team!</span>")
 		return
-	if(alert("Do you want to dispatch an Emergency Response Team?",,"Yes","No") != "Yes")
+	if(tgui_alert(usr, "Do you want to dispatch an Emergency Response Team?",, list("Yes","No")) != "Yes")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
-		switch(alert("The station is not in red alert. Do you still want to dispatch a response team?",,"Yes","No"))
+		switch(tgui_alert(usr, "The station is not in red alert. Do you still want to dispatch a response team?",, list("Yes","No")))
 			if("No")
 				return
 	if(send_emergency_team)
@@ -197,7 +197,7 @@ var/can_call_ert
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE

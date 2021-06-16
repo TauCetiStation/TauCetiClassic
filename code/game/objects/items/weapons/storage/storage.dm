@@ -102,7 +102,7 @@
 	if(!over_object)
 		return
 	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-		src.open(usr)
+		open(usr)
 		return
 	if (!( istype(over_object, /obj/screen) ))
 		return ..()
@@ -126,7 +126,7 @@
 				if(!M.unEquip(src))
 					return
 				M.put_in_active_hand(src)
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -351,12 +351,12 @@
 
 /obj/item/weapon/storage/attack_hand(mob/user)
 	if (src.loc == user)
-		src.open(user)
+		open(user)
 	else
 		..()
 		if(storage_ui)
 			storage_ui.on_hand_attack(user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
@@ -418,7 +418,7 @@
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
 		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
-			src.quick_empty()
+			quick_empty()
 			return
 
 	//Otherwise we'll try to fold it.
@@ -431,14 +431,14 @@
 	// Close any open UI windows first
 	for(var/mob/M in range(1))
 		if (M.s_active == src)
-			src.close(M)
+			close(M)
 		if ( M == user )
 			found = 1
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	new src.foldable(get_turf(src))
+	new foldable(get_turf(src))
 	qdel(src)
 //BubbleWrap END
 

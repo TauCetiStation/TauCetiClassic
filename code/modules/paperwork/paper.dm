@@ -82,7 +82,7 @@
 		data = "[infolinks ? info_links : info][stamp_text]"
 
 	if(view)
-		var/datum/browser/popup = new(usr, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
+		var/datum/browser/popup = new(user, "window=[name]", "[name]", 300, 480, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(data)
 		popup.open()
 
@@ -391,7 +391,7 @@
 
 		var/t = ""
 		if(href_list["sign"])
-			if(alert("Are you sure you want to sign this paper?",,"Yes","No") == "No")
+			if(tgui_alert(usr, "Are you sure you want to sign this paper?",, list("Yes","No")) == "No")
 				return
 			t = "\[sign\] "
 		else
@@ -564,7 +564,7 @@
 /obj/item/weapon/paper/flag
 	icon_state = "flag_neutral"
 	item_state = "paper"
-	anchored = 1.0
+	anchored = TRUE
 
 /obj/item/weapon/paper/jobs
 	name = "Job Information"

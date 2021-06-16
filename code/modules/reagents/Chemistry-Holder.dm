@@ -26,11 +26,11 @@ var/const/INGEST = 2
 		if(current_list_element > reagent_list.len) current_list_element = 1
 		var/datum/reagent/current_reagent = reagent_list[current_list_element]
 
-		src.remove_reagent(current_reagent.id, 1)
+		remove_reagent(current_reagent.id, 1)
 
 		current_list_element++
 		total_transfered++
-		src.update_total()
+		update_total()
 
 	handle_reactions()
 	return total_transfered
@@ -82,12 +82,12 @@ var/const/INGEST = 2
 			trans_data = copy_data(current_reagent)
 
 		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, TRUE, current_reagent.religion)	//safety checks on these so all chemicals are transferred
-		src.remove_reagent(current_reagent.id, current_reagent_transfer, safety = 1)							// to the target container before handling reactions
+		remove_reagent(current_reagent.id, current_reagent_transfer, safety = 1)							// to the target container before handling reactions
 
-	src.update_total()
+	update_total()
 	R.update_total()
 	R.handle_reactions()
-	src.handle_reactions()
+	handle_reactions()
 	return amount
 
 /datum/reagents/proc/trans_to_ingest(obj/target, amount=1, multiplier=1, preserve_data=1)//For items ingested. A delay is added between ingestion and addition of the reagents
@@ -100,14 +100,15 @@ var/const/INGEST = 2
 	if(amount > 2000) return
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
-	B.volume = 1000
+	B.volume = maximum_volume
+	B.reagents.maximum_volume = maximum_volume
 
 	var/datum/reagents/BR = B.reagents
 	var/datum/reagents/R = target.reagents
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 
-	src.trans_to(B, amount)
+	trans_to(B, amount)
 
 	digest_with_delay(BR, target, B)
 
@@ -139,17 +140,17 @@ var/const/INGEST = 2
 			trans_data = copy_data(current_reagent)
 		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data, TRUE, current_reagent.religion)	//safety check so all chemicals are transferred before reacting
 
-	src.update_total()
+	update_total()
 	R.update_total()
 	if(!safety)
 		R.handle_reactions()
-		src.handle_reactions()
+		handle_reactions()
 	return amount
 
 /datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, multiplier=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
 	if (!target)
 		return
-	if(src.total_volume<=0 || !src.get_reagent_amount(reagent))
+	if(src.total_volume<=0 || !get_reagent_amount(reagent))
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
@@ -162,8 +163,8 @@ var/const/INGEST = 2
 			return
 		R = target.reagents
 
-	if(src.get_reagent_amount(reagent)<amount)
-		amount = src.get_reagent_amount(reagent)
+	if(get_reagent_amount(reagent)<amount)
+		amount = get_reagent_amount(reagent)
 	amount = min(amount, R.maximum_volume-R.total_volume)
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)
@@ -171,13 +172,13 @@ var/const/INGEST = 2
 			if(preserve_data)
 				trans_data = copy_data(current_reagent)
 			R.add_reagent(current_reagent.id, amount * multiplier, trans_data, safety = TRUE)
-			src.remove_reagent(current_reagent.id, amount, 1, safety = TRUE)
+			remove_reagent(current_reagent.id, amount, 1, safety = TRUE)
 			break
 
-	src.update_total()
+	update_total()
 	R.update_total()
 	R.handle_reactions()
-	//src.handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
+	//handle_reactions() Don't need to handle reactions on the source since you're (presumably isolating and) transferring a specific reagent.
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M)
@@ -617,8 +618,33 @@ var/const/INGEST = 2
 	if(icon_from_reagents)
 		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 	return D
-///////////////////////////////////////////////////////////////////////////////////
 
+/datum/reagents/proc/standard_splash(atom/target, amount=null, mob/living/user=null)
+	if(total_volume <= 0)
+		return
+
+	if(isnull(amount))
+		amount = total_volume
+
+	var/datum/reagents/splash = new()
+	splash.maximum_volume = maximum_volume
+	trans_to(splash, amount=amount)
+
+	if(!isnull(user))
+		var/turf/T = get_turf(target)
+		message_admins("[key_name_admin(user)] splashed [get_reagents()] on [target], location ([COORD(T)]) [ADMIN_JMP(user)]")
+		log_game("[key_name(user)] splashed [get_reagents()] on [target], location ([COORD(T)])")
+
+		if(ismob(target))
+			var/mob/living/L = target
+			var/contained = splash.get_reagents()
+
+			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
+
+	splash.reaction(target, TOUCH)
+	splash.clear_reagents()
+
+///////////////////////////////////////////////////////////////////////////////////
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder

@@ -8,8 +8,8 @@ RCD
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
@@ -210,8 +210,8 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000

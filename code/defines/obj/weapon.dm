@@ -18,8 +18,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	var/matter = 0
 	var/mode = 1
 	w_class = ITEM_SIZE_NORMAL
