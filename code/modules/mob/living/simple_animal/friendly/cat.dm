@@ -121,8 +121,7 @@
 		if(!item_to_add || inventory_mouth)
 			return
 		else if(item_to_add.type == /obj/item/clothing/mask/cigarette)
-			usr.drop_item()
-			item_to_add.loc = src
+			usr.drop_from_inventory(item_to_add, src)
 			src.inventory_mouth = item_to_add
 			regenerate_icons()
 			show_inv(usr)
