@@ -371,7 +371,7 @@
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(A)
 	firer = user
-	def_zone = check_zone(user.zone_sel.selecting)
+	def_zone = check_zone(user.get_targetzone())
 	starting = T
 	original = A
 	current = T

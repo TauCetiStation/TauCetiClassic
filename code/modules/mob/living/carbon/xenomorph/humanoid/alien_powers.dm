@@ -220,7 +220,7 @@ Doesn't work on other aliens/AI.*/
 	//prepare "bullet"
 	BB.original = target
 	BB.firer = src
-	BB.def_zone = src.zone_sel.selecting
+	BB.def_zone = get_targetzone()
 	//shoot
 	BB.loc = T
 	BB.starting = T

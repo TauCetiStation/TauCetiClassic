@@ -252,7 +252,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	next_hit = world.time + COUNTER_COOLDOWN
 	asshole_counter += 1
 
-	var/target_zone = user.zone_sel.selecting
+	var/target_zone = user.get_targetzone()
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
