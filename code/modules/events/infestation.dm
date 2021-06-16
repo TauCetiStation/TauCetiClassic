@@ -117,7 +117,7 @@
 
 /mob/living/simple_animal/friendly/spiderling/Life()
 	if(travelling_in_vent)
-		if(istype(src.loc, /turf))
+		if(istype(loc, /turf))
 			travelling_in_vent = 0
 			entry_vent = null
 	else if(entry_vent)
@@ -179,7 +179,11 @@
 			var/spawn_type = pick(typesof(/mob/living/simple_animal/hostile/giant_spider))
 			new spawn_type(src.loc)
 			qdel(src)
+
+/mob/living/simple_animal/friendly/spiderling/death()
+	. = ..()
 	if(health <= 0) 
+		visible_message("<span class='alert'>[src] dies!</span>")
 		var/spawn_type = /obj/effect/decal/cleanable/spiderling_remains //changing body of animal to cleanable object
 		new spawn_type(src.loc)
 		qdel(src)
