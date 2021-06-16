@@ -134,7 +134,7 @@ const MOPCOres = (props, context) => {
       </LabeledList>
       <Section>
         <LabeledList>
-          <Collapsible open title="Mineral Value List" >
+          <Collapsible title="Mineral Value List" >
             {ore_values.length && ore_values.sort().map(item => (
               <LabeledList.Item key={item.name} label={toTitleCase(item.name)} >
                 {item.amount} points
