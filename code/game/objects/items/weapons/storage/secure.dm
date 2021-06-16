@@ -151,8 +151,7 @@
 					if (length(src.code) > 5)
 						src.code = "ERROR"
 	add_fingerprint(usr)
-	. = TRUE
-	return
+	return TRUE
 
 
 // -----------------------------
@@ -185,7 +184,6 @@
 			if (M.s_active == src)
 				close(M)
 	add_fingerprint(user)
-	return
 
 /obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
 	. = ..()

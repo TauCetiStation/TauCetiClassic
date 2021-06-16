@@ -52,14 +52,12 @@
 	..()
 	if(open)
 		to_chat(user, "The inside of the the door has numbers written on it: <b>[get_combination()]</b>")
-	return
 
 /obj/structure/safe/proc/get_combination()
 	return jointext(tumblers, ", ")
 
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
-		. = TRUE //no afterattack
 		if(I.w_class + space <= maxspace)
 			if(!user.drop_item(I, src))
 				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
@@ -122,10 +120,10 @@
 /obj/structure/safe/tgui_act(action, params)
 	. = ..()
 	if(.)
-		return
+		return FALSE
 
 	if(!ishuman(usr))
-		return
+		return FALSE
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = FALSE
@@ -136,7 +134,7 @@
 		if("open")
 			if(!check_unlocked() && !open)
 				to_chat(user, "<span class='warning'>You cannot open [src], as its lock is engaged!</span>")
-				return
+				return FALSE
 			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
 			open = !open
 			update_icon()
@@ -229,4 +227,3 @@
 	invisibility = intact ? 101 : 0
 
 #undef SOUND_CHANCE
-
