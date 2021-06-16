@@ -199,7 +199,7 @@
 			for(var/M in S.concurrent_users)
 				var/mob/living/L = locate(M) // M is a \ref. weird
 				to_chat(L, "You can see [user] holding \the [P] to the camera you're watching...")
-				P.show_content(L, TRUE) // humans are not silicons, so we need to forceshow it
+				P.show_content(L)
 
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
