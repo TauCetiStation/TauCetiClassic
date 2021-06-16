@@ -131,7 +131,7 @@
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))
 		if(!copyitem)
 			user.drop_from_inventory(O, src)
-			copy = O
+			copyitem = O
 			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
