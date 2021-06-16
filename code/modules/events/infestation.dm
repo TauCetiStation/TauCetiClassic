@@ -91,15 +91,17 @@
 	turns_per_move = 3
 	speed = 5
 	melee_damage = 1
-	turns_per_move = 8
+	attacktext = "bites"
+	turns_per_move = 4
 	see_in_dark = 6
 	density = FALSE
 
 	var/amount_grown = -1
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
-	min_oxy = 2 //spider requires atleast 1kPA oxygen to live
-	minbodytemp = 223		//no life below -50 Degrees Celcius
+	min_oxy = 16 //spiderling requires atleast 16kPA oxygen to live
+	max_oxy = 30 
+	minbodytemp = 270		//no life below -50 Degrees Celcius
 	maxbodytemp = 323	//no life above 50 Degrees Celcius
 
 /mob/living/simple_animal/friendly/spiderling/atom_init()
@@ -130,30 +132,26 @@
 				entry_vent = null
 				return
 			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
-
-			spawn(rand(20,60))
-				loc = exit_vent
-				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-				spawn(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-
-					if(prob(50))
-						visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
-					sleep(travel_time)
-
-					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
-						entry_vent = null
-						return
-					loc = exit_vent.loc
-					entry_vent = null
-					var/area/new_area = get_area(loc)
-					if(new_area)
-						new_area.Entered(src)
+			addtimer(exit_vent, rand(15,80))
+			var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+			addtimer(travel_time)
+			loc = exit_vent
+			if(!exit_vent || exit_vent.welded)
+				loc = entry_vent
+				entry_vent = null
+				return
+			if(prob(50))
+				visible_message("<span class='notice'>You hear something squeezing through the ventilation ducts.</span>",2)
+			sleep(travel_time)
+			if(!exit_vent || exit_vent.welded)
+				loc = entry_vent
+				entry_vent = null
+				return
+			loc = exit_vent.loc
+			entry_vent = null
+			var/area/new_area = get_area(loc)
+			if(new_area)
+				new_area.Entered(src)
 	//=================
 
 	else if(prob(25))
