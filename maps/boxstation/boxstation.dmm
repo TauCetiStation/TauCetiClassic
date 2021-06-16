@@ -50034,11 +50034,12 @@
 "bOi" = (
 /obj/structure/table/reinforced,
 /obj/item/device/assembly/signaler{
-	pixel_x = -8;
-	pixel_y = 5
+	pixel_x = -5;
+	pixel_y = 8
 	},
 /obj/item/device/assembly/signaler{
-	pixel_y = 8
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /obj/item/device/assembly/timer{
 	pixel_x = 5;
