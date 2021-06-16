@@ -543,68 +543,6 @@
 		return B
 	return null
 
-//Brain slug proc for voluntary removal of control.
-/mob/living/carbon/proc/release_control()
-	set category = "Borer"
-	set name = "Release Control"
-	set desc = "Release control of your host's body."
-
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-	if(!B)
-		return
-
-	if(B.controlling)
-		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain].</span>")
-		to_chat(B.host_brain, "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>")
-		B.ckey = ckey
-		B.controlling = FALSE
-
-	if(B.host_brain.ckey)
-		ckey = B.host_brain.ckey
-		B.host_brain.ckey = null
-		B.host_brain.name = "host brain"
-		B.host_brain.real_name = "host brain"
-
-	verbs -= /mob/living/carbon/proc/release_control
-	verbs -= /mob/living/carbon/proc/punish_host
-	verbs -= /mob/living/carbon/proc/spawn_larvae
-
-	med_hud_set_status()
-
-//Brain slug proc for tormenting the host.
-/mob/living/carbon/proc/punish_host()
-	set category = "Borer"
-	set name = "Torment host"
-	set desc = "Punish your host with agony."
-
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-	if(!B)
-		return
-
-	if(B.host_brain.ckey)
-		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
-		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
-
-/mob/living/carbon/proc/spawn_larvae()
-	set category = "Borer"
-	set name = "Reproduce(100)"
-	set desc = "Spawn several young."
-
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-	if(!B)
-		return
-
-	if(B.chemicals < 100)
-		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
-		return
-
-	to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-	B.chemicals -= 100
-	B.has_reproduced = TRUE
-
-	vomit()
-	new /mob/living/simple_animal/borer(loc, TRUE, B.generation + 1)
-
 /mob/living/carbon/proc/uncuff()
 	if(handcuffed)
 		var/obj/item/weapon/W = handcuffed

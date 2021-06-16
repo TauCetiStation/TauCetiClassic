@@ -39,6 +39,8 @@
 	var/has_reproduced = FALSE                 // Whether or not the borer has reproduced, for objective purposes.
 	var/upgrade_points = 0                     // Upgrade points left to spend
 
+	var/list/obj/effect/proc_holder/upgrades = list()
+
 /mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1)
 	. = ..()
 	generation = gen
@@ -49,6 +51,12 @@
 	if(request_ghosts)
 		for(var/mob/dead/observer/O in observer_list)
 			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
+
+/mob/living/simple_animal/borer/proc/hasChemicals(amt)
+	return amt >= chemicals
+
+/mob/living/simple_animal/borer/proc/adjustChemicals(amt)
+	chemicals = clamp(chemicals + amt, 0, max_chemicals)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
@@ -125,10 +133,14 @@
 			to_chat(M, "[FOLLOW_LINK(M, src)] [truename] whispers to [host], \"[message]\"")
 
 
-/mob/living/simple_animal/borer/Stat()
-	..()
-	if(statpanel("Status"))
+/mob/living/simple_animal/borer/proc/statAbilities(mob/user)
+	if(statpanel("Borer"))
 		stat(null, "Chemicals: [chemicals]/[max_chemicals]")
+		for(var/obj/effect/proc_holder/borer/U in upgrades)
+			if(!U.can_use(user))
+				continue
+			stat(U.get_stat_entry(), U)
+			
 
 /mob/living/simple_animal/borer/proc/borer_speak(message)
 	if(!message)
@@ -215,3 +227,12 @@ var/global/list/datum/mind/borers = list()
 		text = "<div class='Section'>[text]</div>"
 
 	return text
+
+/mob/proc/get_borer()
+	return null
+
+/mob/living/simple_animal/borer/get_borer()
+	return src
+
+/mob/get_borer()
+	return has_brain_worms()
