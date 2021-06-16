@@ -24,7 +24,7 @@
 
 		H.visible_message("<span class='warning'><B>[attacker] has punched [H]!</B></span>")
 
-		var/obj/item/organ/external/BP = H.get_bodypart(ran_zone(attacker.zone_sel.selecting))
+		var/obj/item/organ/external/BP = H.get_bodypart(ran_zone(attacker.get_targetzone()))
 		var/armor_block = H.run_armor_check(BP, "melee")
 
 		H.apply_damage(damage, HALLOSS, BP, armor_block)

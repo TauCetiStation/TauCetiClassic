@@ -77,8 +77,8 @@
 				return 1
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
-		var/result = H.check_thickmaterial(BP) || H.isSynthetic(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+		var/result = H.check_thickmaterial(BP) || H.isSynthetic(user.get_targetzone())
 		if(result)
 			if(result == NOLIMB)
 				to_chat(user, "<span class='warning'>We missed! [target.name] has no [BP.name]!</span>")
