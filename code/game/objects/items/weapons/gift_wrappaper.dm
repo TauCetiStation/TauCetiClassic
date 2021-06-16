@@ -160,7 +160,7 @@
 				G.icon_state = text("gift[]", G.size)
 				G.add_fingerprint(user)
 				I.add_fingerprint(user)
-				src.add_fingerprint(user)
+				add_fingerprint(user)
 				#ifdef NEWYEARCONTENT
 				to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
 				#endif

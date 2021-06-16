@@ -108,7 +108,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	else if(href_list["eject"])
 		ejectuplink()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /////////////////////////////////////////

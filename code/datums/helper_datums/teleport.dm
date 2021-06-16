@@ -1,5 +1,5 @@
 //wrapper
-/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity = 1, arespect_entrydir=null, aentrydir=null, checkspace=null)
+/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null, adest_checkdensity = TRUE, arespect_entrydir=null, aentrydir=null, checkspace=null)
 	var/datum/teleport/instant/science/D = new
 	if(D.start(arglist(args)))
 		return 1

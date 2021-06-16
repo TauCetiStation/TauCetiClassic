@@ -18,8 +18,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	var/matter = 0
 	var/mode = 1
 	w_class = ITEM_SIZE_NORMAL
@@ -881,7 +881,7 @@
 		to_chat(user, "<span class='userdanger'>[M] Must be lie down first!</span>")
 		return
 
-	var/zone = check_zone(user.zone_sel.selecting)
+	var/zone = check_zone(user.get_targetzone())
 	var/obj/item/organ/external/BP = M.get_bodypart(zone)
 	for(var/obj/item/clothing/C in M.get_equipped_items())
 		if(C.body_parts_covered & BP.body_part)

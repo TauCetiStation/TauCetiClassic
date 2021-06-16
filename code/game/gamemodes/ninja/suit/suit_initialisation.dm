@@ -69,7 +69,7 @@
 		if(!s_initialized)
 			to_chat(U, "<span class='warning'>The suit is not initialized.</span> <b>Please report this bug.</b>")
 			return
-		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
+		if(tgui_alert(usr, "Are you certain you wish to remove the suit? This will take time and remove all abilities.",, list("Yes","No"))=="No")
 			return
 		if(s_busy||flush)
 			to_chat(U, "<span class='warning'><B>ERROR</B>:</span> You cannot use this function at this time.")

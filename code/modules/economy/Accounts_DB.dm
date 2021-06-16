@@ -3,7 +3,7 @@
 	desc = "Access transaction logs, account data and all kinds of other financial records."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "aiupload"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	req_one_access = list(access_hop, access_captain, access_cent_captain)
 	allowed_checks = ALLOWED_CHECK_NONE

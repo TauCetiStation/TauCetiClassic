@@ -76,7 +76,7 @@ var/const/HOLOPAD_MODE = 0
 	if(!ishuman(user) && !IsAdminGhost(user))
 		return 1
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
+	if(tgui_alert(user, "Would you like to request an AI's presence?",, list("Yes","No")) == "Yes")
 		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
 			last_request = world.time
 			to_chat(user, "<span class='notice'>You request an AI's presence.</span>")
@@ -111,7 +111,7 @@ var/const/HOLOPAD_MODE = 0
 			if(user.holohack)
 				change_holo_to_carp(user)
 
-			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
+			visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
 			to_chat(user, "<span class='warning'>ERROR:</span> Image feed in progress.")
 	else
@@ -142,7 +142,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.icon = A.holo_icon
 	hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	hologram.anchored = 1//So space wind cannot drag it.
+	hologram.anchored = TRUE//So space wind cannot drag it.
 	hologram.name = "[A.name]"//If someone decides to right click.
 	hologram.desc = "Hologram of [A.name]"
 	hologram.set_light(2)	//hologram lighting
@@ -197,7 +197,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
  */
 
 /obj/machinery/hologram
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100

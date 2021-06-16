@@ -37,7 +37,7 @@
 	name = "guest pass terminal"
 	icon_state = "guest"
 	desc = "It's a wall-mounted console that allows you to issue temporary access. Be careful when issuing guest passes. Maximum guest pass card time - one hour."
-	density = 0
+	density = FALSE
 
 
 	var/obj/item/weapon/card/id/scan

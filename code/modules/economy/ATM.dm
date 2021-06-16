@@ -19,7 +19,7 @@ log transactions
 	desc = "For all your monetary needs!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/datum/money_account/authenticated_account
@@ -88,7 +88,7 @@ log transactions
 			//consume the money
 			if(!istype(SC, /obj/item/weapon/spacecash/ewallet))
 				if((money_stock + SC.worth) > money_stock_max)
-					alert("Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
+					tgui_alert(usr, "Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
 					return
 				else
 					money_stock += SC.worth
@@ -109,7 +109,7 @@ log transactions
 			authenticated_account.transaction_log.Add(T)
 
 			to_chat(user, "<span class='info'>You insert [I] into [src].</span>")
-			src.attack_hand(user)
+			attack_hand(user)
 			qdel(I)
 	else
 		..()
@@ -243,7 +243,7 @@ log transactions
 				if(authenticated_account)
 					var/transfer_amount = text2num(href_list["funds_amount"])
 					if(transfer_amount <= 0)
-						alert("That is not a valid amount.")
+						tgui_alert(usr, "That is not a valid amount.")
 					else if(transfer_amount <= authenticated_account.money)
 						var/target_account_number = text2num(href_list["target_acc_number"])
 						var/transfer_purpose = href_list["purpose"]
@@ -328,9 +328,9 @@ log transactions
 			if("withdrawal")
 				var/amount = max(text2num(href_list["funds_amount"]),0)
 				if(amount <= 0)
-					alert("That is not a valid amount.")
+					tgui_alert(usr, "That is not a valid amount.")
 				else if(authenticated_account && amount > 0)
-					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
+					var/response = tgui_alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", list("Chip", "Cash"))
 					if(amount <= authenticated_account.money)
 						authenticated_account.adjust_money(-amount)
 						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
@@ -479,10 +479,10 @@ log transactions
 		if(money_stock)
 			sum = money_stock
 			money_stock = 0
-			alert("ATM doesn't have enough funds to give the full amount of money!")
+			tgui_alert(usr, "ATM doesn't have enough funds to give the full amount of money!")
 			spawn_money(sum, src.loc)
 		else
-			alert("ATM doesn't have enough funds to do that!")
+			tgui_alert(usr, "ATM doesn't have enough funds to do that!")
 			return
 	else
 		money_stock -= sum

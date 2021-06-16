@@ -106,7 +106,7 @@ var/list/bad_messages = list("Never take me off, please!",
 
 	if(charges >= 0.1)
 		if(prob(5))
-			src.visible_message("<span class='warning'>[bicon(src)] [src]'s eyes glow ruby red for a moment!</span>")
+			visible_message("<span class='warning'>[bicon(src)] [src]'s eyes glow ruby red for a moment!</span>")
 			charges -= 0.1
 
 	// check on our shadow wights
@@ -177,7 +177,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	name = "shadow wight"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
-	density = 1
+	density = TRUE
 
 /obj/effect/shadow_wight/atom_init()
 	. = ..()

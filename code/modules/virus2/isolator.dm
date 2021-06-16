@@ -5,8 +5,8 @@
 
 /obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "isolator"
 	var/isolating = 0
@@ -44,7 +44,7 @@
 	nanomanager.update_uis(src)
 	update_icon()
 
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/disease2/isolator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]

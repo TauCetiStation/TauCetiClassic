@@ -25,7 +25,7 @@
 		nanomanager.update_uis(src)
 		return
 
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/computer/centrifuge/update_icon()
 	..()

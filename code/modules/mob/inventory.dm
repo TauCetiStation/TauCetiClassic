@@ -331,7 +331,7 @@ var/list/slot_equipment_priority = list(
 // Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
 	if(!O) return
-	src.u_equip(O)
+	u_equip(O)
 	if (src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)
