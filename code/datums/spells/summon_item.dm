@@ -73,7 +73,7 @@
 			to_chat(user, "<span class='userdanger'>[item_to_retrieve] prevents summoning [marked_item]. It's located in [get_area(item_to_retrieve)]!</span>")
 			item_to_retrieve.SpinAnimation(5, 1)
 			playsound(item_to_retrieve, 'sound/magic/SummonItems_generic.ogg', VOL_EFFECTS_MASTER)
-			if(alert("Do you want to unlink the [marked_item]?",,"Yes","No") == "Yes")
+			if(tgui_alert(usr,"Do you want to unlink the [marked_item]?",, list("Yes","No")) == "Yes")
 				name = initial(name)
 				marked_item = null
 		else

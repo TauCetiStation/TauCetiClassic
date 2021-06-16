@@ -4,7 +4,7 @@
 	icon_state = "motion3"
 	layer = 3
 	plane = FLOOR_PLANE
-	anchored = 1.0
+	anchored = TRUE
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0
@@ -28,15 +28,15 @@
 /obj/machinery/ai_slipper/proc/setState(enabled, uses)
 	src.disabled = disabled
 	src.uses = uses
-	src.power_change()
+	power_change()
 
 /obj/machinery/ai_slipper/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (istype(user, /mob/living/silicon))
-		return src.attack_hand(user)
+		return attack_hand(user)
 	else // trying to unlock the interface
-		if (src.allowed(usr))
+		if (allowed(usr))
 			locked = !locked
 			to_chat(user, "You [ locked ? "lock" : "unlock"] the device.")
 			if (locked)
@@ -45,7 +45,7 @@
 					user << browse(null, "window=ai_slipper")
 			else
 				if (user.machine==src)
-					src.attack_hand(usr)
+					attack_hand(usr)
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
@@ -104,5 +104,5 @@
 		return
 	if (uses >= 0)
 		cooldown_on = 0
-	src.power_change()
+	power_change()
 	return

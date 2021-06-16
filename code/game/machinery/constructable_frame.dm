@@ -2,8 +2,8 @@
 	name = "machine frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/list/components = null
@@ -268,7 +268,9 @@ to destroy them and players will be able to make replacements.
 							/obj/machinery/vending/engivend = "Engi-Vend",
 							/obj/machinery/vending/clothing = "ClothesMate",
 							/obj/machinery/vending/blood = "Blood'O'Matic",
-							/obj/machinery/vending/junkfood = "McNuffin's Fast Food")
+							/obj/machinery/vending/junkfood = "McNuffin's Fast Food",
+							/obj/machinery/vending/donut = "Monkin' Donuts",
+			)
 //							/obj/machinery/vending/autodrobe = "AutoDrobe")
 
 		build_path = pick(names)

@@ -18,7 +18,7 @@
 /obj/structure/closet/crate/open()
 	if(src.opened)
 		return 0
-	if(!src.can_open())
+	if(!can_open())
 		return 0
 
 	if(rigged && locate(/obj/item/device/radio/electropack) in src)
@@ -44,7 +44,7 @@
 /obj/structure/closet/crate/close()
 	if(!src.opened)
 		return 0
-	if(!src.can_close())
+	if(!can_close())
 		return 0
 
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
@@ -142,7 +142,7 @@
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
 	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
-		src.togglelock(user)
+		togglelock(user)
 	..()
 
 /obj/structure/closet/crate/secure/proc/togglelock(mob/user)
@@ -152,7 +152,7 @@
 	if(src.broken)
 		to_chat(user, "<span class='warning'>The crate appears to be broken.</span>")
 		return
-	if(src.allowed(user))
+	if(allowed(user))
 		src.locked = !src.locked
 		for(var/mob/O in viewers(user, 3))
 			if((O.client && !( O.blinded )))
@@ -171,18 +171,18 @@
 		return
 
 	if(ishuman(usr))
-		src.add_fingerprint(usr)
-		src.togglelock(usr)
+		add_fingerprint(usr)
+		togglelock(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	if(locked)
-		src.togglelock(user)
+		togglelock(user)
 	else
-		src.toggle(user)
+		toggle(user)
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user)
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
@@ -191,7 +191,7 @@
 		emag_act(user)
 		return
 	if(!opened)
-		src.togglelock(user)
+		togglelock(user)
 		return
 	return ..()
 

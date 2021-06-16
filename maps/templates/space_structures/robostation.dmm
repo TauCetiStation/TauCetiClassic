@@ -594,11 +594,6 @@
 	icon_state = "swall_s6"
 	},
 /area/space_structures/robostatoin)
-"cm" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "swall3"
-	},
-/area/space_structures/robostatoin)
 "cn" = (
 /obj/structure/closet/critter/pig,
 /turf/simulated/floor{
@@ -885,7 +880,6 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
 	},
-/turf/space,
 /area/space_structures/robostatoin)
 "dm" = (
 /turf/simulated/floor/plating,
@@ -2041,10 +2035,10 @@ aa
 aa
 at
 cC
-cm
+dk
 au
-cm
-cm
+dk
+dk
 ci
 aa
 aa
@@ -2353,10 +2347,10 @@ aa
 aa
 bf
 cf
-cm
+dk
 au
 dk
-cm
+dk
 cs
 aa
 aa

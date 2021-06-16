@@ -1,6 +1,6 @@
 /client/proc/only_one()
 	if(!SSticker)
-		alert("The game hasn't started yet!")
+		tgui_alert(usr, "The game hasn't started yet!")
 		return
 
 	for(var/mob/living/carbon/human/H in player_list)

@@ -377,7 +377,7 @@
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 
 	for(var/obj/B in L)
 		if(B.type == A)
@@ -389,7 +389,7 @@
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 	for(var/obj/O in L)
 		O.emplode(severity)
 	..()
@@ -449,27 +449,27 @@
 /mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
-	src.updatehealth()
+	updatehealth()
 
 // damage ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute, burn)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
-	src.updatehealth()
+	updatehealth()
 
 // heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
-	src.updatehealth()
+	updatehealth()
 
 // damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
-	src.updatehealth()
+	updatehealth()
 
 /mob/living/proc/restore_all_bodyparts()
 	return
@@ -608,6 +608,12 @@
 	// Might need to update appearance for hulk etc.
 	if(needs_update)
 		update_mutations()
+
+/mob/living/drop_item(atom/Target)
+	if(!get_active_hand() && !drop_combo_element())
+		to_chat(src, "<span class='warning'>You have nothing to drop in your hand!</span>")
+		return
+	return ..()
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"

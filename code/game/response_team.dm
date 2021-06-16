@@ -24,12 +24,14 @@ var/can_call_ert
 	if(send_emergency_team)
 		to_chat(usr, "<span class='warning'>Центральное командование уже отправило отряд быстрого реагирования!</span>")
 		return
-	if(alert("Вы хотите отправить отряд быстрого реагирования?",,"Да","Нет") != "Да")
+
+	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
-		switch(alert("На станции не введен красный код. Вы все еще хотите отправить отряд быстрого реагирования?",,"Да","Нет"))
+		switch(tgui_alert(usr, "На станции не введен красный код. Вы все еще хотите отправить отряд быстрого реагирования?",, list("Да","Нет")))
 			if("Нет")
 				return
+        
 	if(send_emergency_team)
 		to_chat(usr, "<span class='warning'>Похоже, кто-то уже опередил вас!</span>")
 		return
@@ -198,7 +200,8 @@ var/can_call_ert
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-	var/new_gender = alert(usr, "Выберите пол.", "Создание персонажа", "Мужской", "Женский")
+	var/new_gender = tgui_alert(usr, "Выберите пол.", "Создание персонажа", list("Мужской", "Женский"))
+
 	if (new_gender)
 		if(new_gender == "Мужской")
 			M.gender = MALE

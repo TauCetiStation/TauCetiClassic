@@ -99,7 +99,7 @@
 /turf/simulated/wall/mineral/phoron/proc/PhoronBurn(temperature)
 	spawn(2)
 	new /obj/structure/girder(src)
-	src.ChangeTurf(/turf/simulated/floor)
+	ChangeTurf(/turf/simulated/floor)
 	for(var/turf/simulated/floor/target_tile in range(0,src))
 		/*if(target_tile.parent && target_tile.parent.group_processing)
 			target_tile.parent.suspend_group_processing()*/

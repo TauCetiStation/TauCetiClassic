@@ -6,8 +6,8 @@
 	name = "Sleeper Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeperconsole"
-	anchored = 1 //About time someone fixed this.
-	density = 0
+	anchored = TRUE //About time someone fixed this.
+	density = FALSE
 	light_color = "#7bf9ff"
 
 /obj/machinery/sleeper
@@ -16,8 +16,8 @@
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
 	layer = BELOW_CONTAINERS_LAYER
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	state_open = 1
 	light_color = "#7bf9ff"
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -112,7 +112,7 @@
 			user.drop_item()
 			I.loc = src
 			user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 		else
 			to_chat(user, "<span class='warning'>The sleeper has a beaker already.</span>")

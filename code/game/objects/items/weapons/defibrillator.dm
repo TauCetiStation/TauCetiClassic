@@ -78,7 +78,7 @@
 		var/mob/M = loc
 		if(!M.unEquip(src))
 			return
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 		M.put_in_hands(src)
 
 
