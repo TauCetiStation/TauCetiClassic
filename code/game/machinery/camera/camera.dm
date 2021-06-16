@@ -184,7 +184,7 @@
 		if(P.crumpled)
 			to_chat(usr, "Paper too crumpled for anything.")
 			return
-		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!","No!")) != "Yes!")
+		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
 			return	
 		to_chat(user, "You hold \the [P] up to the camera...")
 		for(var/mob/living/silicon/ai/O in ai_list)
