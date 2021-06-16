@@ -48,7 +48,7 @@
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
 			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! [ADMIN_JMP(src)]</span>")
 			log_game("<span class='notice'>[key_name(src)] triggers their deadman's switch!</span>")
-			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
+			visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Armor
@@ -213,7 +213,7 @@
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
-		src.visible_message("<span class='warning'>[src] catches fire!</span>",
+		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		update_fire()

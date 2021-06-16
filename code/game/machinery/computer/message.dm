@@ -415,11 +415,11 @@
 
 					if(isnull(customrecepient))
 						message = "<div class='NoticeBox'>NOTICE: No recepient selected!</div>"
-						return src.attack_hand(usr)
+						return attack_hand(usr)
 
 					if(isnull(custommessage) || custommessage == "")
 						message = "<div class='NoticeBox'>NOTICE: No message entered!</div>"
-						return src.attack_hand(usr)
+						return attack_hand(usr)
 
 					var/obj/item/device/pda/PDARec = null
 					for (var/obj/item/device/pda/P in PDAs)

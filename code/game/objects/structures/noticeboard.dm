@@ -3,8 +3,8 @@
 	desc = "A board for pinning important notices upon."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nboard00"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/notices = 0
 
 /obj/structure/noticeboard/atom_init()

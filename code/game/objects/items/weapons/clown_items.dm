@@ -211,7 +211,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
 		honk(user)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 /obj/item/weapon/bikehorn/Crossed(atom/movable/AM)
 	. = ..()
