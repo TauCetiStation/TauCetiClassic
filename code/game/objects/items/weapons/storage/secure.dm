@@ -130,26 +130,26 @@
 		if("type")
 			var/digit = params["digit"]
 			if(digit == "E")
-				if ((src.l_set == 0) && (length(src.code) == 5) && (!src.l_setshort) && (src.code != "ERROR"))
-					src.l_code = src.code
-					src.l_set = 1
-				else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
-					src.locked = 0
-					src.overlays = null
+				if ((l_set == 0) && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
+					l_code = code
+					l_set = 1
+				else if ((code == l_code) && (emagged == 0) && (l_set == 1))
+					locked = 0
+					overlays = null
 					overlays += image('icons/obj/storage.dmi', icon_opened)
-					src.code = null
+					code = null
 				else
-					src.code = "ERROR"
+					code = "ERROR"
 			else
 				if ((digit == "R") && (src.emagged == 0) && (!src.l_setshort))
-					src.locked = 1
-					src.overlays = null
-					src.code = null
+					locked = 1
+					overlays = null
+					code = null
 					close(usr)
 				else
-					src.code += text("[]", digit)
-					if (length(src.code) > 5)
-						src.code = "ERROR"
+					code += text("[]", digit)
+					if (length(code) > 5)
+						code = "ERROR"
 	add_fingerprint(usr)
 	return TRUE
 
