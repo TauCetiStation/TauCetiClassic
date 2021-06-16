@@ -1,7 +1,6 @@
 import { createSearch } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Collapsible, Dropdown, Flex, Input, NoticeBox, Section } from '../components';
+import { Box, Button, Collapsible, Dropdown, Flex, Input, Table, Section } from '../components';
 import { Window } from "../layouts";
 import { refocusLayout } from '../layouts';
 import { MiningUser } from './common/Mining';
@@ -147,14 +146,8 @@ const MiningVendorItemsCategory = (properties, context) => {
   return (
     <Collapsible open title={title} {...rest}>
       {items.map(item => (
-        <Box key={item.name}>
-          <Box
-            display="inline-block"
-            verticalAlign="middle"
-            lineHeight="20px"
-            style={{
-              float: 'left',
-            }}>
+        <Table key={item.name}>
+          <Table.Cell collapsing>
             <span
               className={classes([
                 'equipment_locker32x32',
@@ -164,27 +157,23 @@ const MiningVendorItemsCategory = (properties, context) => {
                 'vertical-align': 'middle',
                 'horizontal-align': 'middle',
               }} />
+          </Table.Cell>
+          <Table.Cell>
             {item.name}
-          </Box>
-          <Button
-            disabled={!data.has_id || data.id.points < item.price}
-            content={item.price.toLocaleString('en-US')}
-            width="15%"
-            textAlign="center"
-            style={{
-              float: 'right',
-            }}
-            onClick={() => act('purchase', {
-              cat: title,
-              name: item.name,
-            })}
-          />
-          <Box
-            style={{
-              clear: "both",
-            }}
-          />
-        </Box>
+          </Table.Cell>
+          <Table.Cell collapsing textAlign="center">
+            <Button
+              fluid
+              icon="certificate"
+              disabled={!data.has_id || data.id.points < item.price}
+              content={item.price.toLocaleString('en-US')}
+              onClick={() => act('purchase', {
+                cat: title,
+                name: item.name,
+              })}
+            />
+          </Table.Cell>
+        </Table>
       ))}
     </Collapsible>
   );
