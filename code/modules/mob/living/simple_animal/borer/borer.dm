@@ -53,7 +53,7 @@
 			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
 
 /mob/living/simple_animal/borer/proc/hasChemicals(amt)
-	return amt >= chemicals
+	return amt <= chemicals
 
 /mob/living/simple_animal/borer/proc/adjustChemicals(amt)
 	chemicals = clamp(chemicals + amt, 0, max_chemicals)
@@ -228,11 +228,5 @@ var/global/list/datum/mind/borers = list()
 
 	return text
 
-/mob/proc/get_borer()
-	return null
-
-/mob/living/simple_animal/borer/get_borer()
+/mob/living/simple_animal/borer/has_brain_worms()
 	return src
-
-/mob/get_borer()
-	return has_brain_worms()

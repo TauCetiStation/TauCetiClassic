@@ -721,7 +721,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
-	var/mob/living/simple_animal/borer/B = get_borer()
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	B?.statAbilities(src)
 
 // facing verbs
