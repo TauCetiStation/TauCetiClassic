@@ -145,12 +145,12 @@
 					src.locked = 1
 					src.overlays = null
 					src.code = null
-					src.close(usr)
+					close(usr)
 				else
 					src.code += text("[]", digit)
 					if (length(src.code) > 5)
 						src.code = "ERROR"
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	. = TRUE
 	return
 
