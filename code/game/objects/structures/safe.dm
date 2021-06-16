@@ -182,7 +182,7 @@
 			if(!index)
 				return
 			var/obj/item/I = contents[index]
-			if(!I || !in_range(src, user))
+			if(!I || !Adjacent(user))
 				return
 			user.put_in_hands(I)
 			space -= I.w_class
