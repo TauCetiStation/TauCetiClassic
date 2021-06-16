@@ -42,7 +42,7 @@
 				to_chat(user, "<span class='notice'>We stab [target] with the proboscis.</span>")
 				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>")
 				to_chat(target, "<span class='danger'>You feel a sharp stabbing pain!</span>")
-				var/obj/item/organ/external/BP = target.get_bodypart(user.zone_sel.selecting)
+				var/obj/item/organ/external/BP = target.get_bodypart(user.get_targetzone())
 				if(BP.take_damage(39, null, DAM_SHARP, "large organic needle"))
 					continue
 

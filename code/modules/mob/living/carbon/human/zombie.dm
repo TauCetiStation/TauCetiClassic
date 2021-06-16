@@ -105,7 +105,7 @@
 	if(. && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!iszombie(H))
-			var/target_zone = user.zone_sel.selecting
+			var/target_zone = user.get_targetzone()
 
 			if((target_zone == BP_HEAD || target_zone == BP_CHEST) && prob(40))
 				target_zone = pick(BP_L_ARM, BP_R_ARM)
