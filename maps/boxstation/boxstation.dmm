@@ -21755,7 +21755,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "aMn" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
@@ -21863,7 +21862,8 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -21994,10 +21994,6 @@
 "aMK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -22740,6 +22736,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aOg" = (
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warning"
@@ -24047,6 +24044,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -25382,6 +25380,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -30641,7 +30640,6 @@
 	},
 /area/station/hallway/primary/port)
 "bcl" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -30670,13 +30668,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bco" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitepurplecorner"
+	icon_state = "white"
 	},
 /area/station/rnd/hallway)
 "bcp" = (
@@ -30697,12 +30694,14 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 4;
+	name = "Toxins Research";
+	sortType = "Toxins Research"
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "whitepurplecorner"
+	icon_state = "whitepurple"
 	},
 /area/station/rnd/hallway)
 "bcs" = (
@@ -30762,6 +30761,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -31083,14 +31083,16 @@
 	},
 /area/station/rnd/xenobiology)
 "bde" = (
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 4;
-	name = "Toxins Research";
-	sortType = "Toxins Research"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/structure/sign/warning/biohazard{
+	pixel_y = 30
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "whitepurple"
+	dir = 4;
+	icon_state = "whitepurplecorner"
 	},
 /area/station/rnd/hallway)
 "bdf" = (
@@ -32373,7 +32375,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bfo" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -32431,7 +32432,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -32549,12 +32553,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -32585,7 +32587,6 @@
 	},
 /area/station/cargo/miningoffice)
 "bfI" = (
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -32597,6 +32598,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -50124,16 +50126,17 @@
 	},
 /area/station/hallway/secondary/mine_sci_shuttle)
 "bOv" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/research{
-	name = "Toxins Research";
-	req_access = list(8)
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/sign/warning/biohazard{
+	pixel_y = 30
+	},
 /turf/simulated/floor{
-	icon_state = "whitepurplefull"
+	dir = 1;
+	icon_state = "whitepurplecorner"
 	},
-/area/station/rnd/mixing)
+/area/station/rnd/hallway)
 "bOw" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -56430,7 +56433,6 @@
 /area/station/engineering/engine)
 "cgo" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -58800,14 +58802,16 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cml" = (
+/obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/door/airlock/research{
+	name = "Toxins Research";
+	req_access = list(8)
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitepurplefull"
 	},
-/area/station/rnd/hallway)
+/area/station/rnd/mixing)
 "cmn" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -122174,7 +122178,7 @@ aUv
 bUU
 bKS
 aCw
-aIe
+bSz
 bco
 bfr
 bmI
@@ -122423,15 +122427,15 @@ aIe
 aJm
 aLl
 aMK
-cgi
+bUU
 cgo
-cgi
-aUA
-cgi
+bUU
+aUH
+bUU
 aMn
 aMn
-cje
-bOv
+bXH
+bSz
 bde
 bfF
 bEb
@@ -122680,15 +122684,15 @@ aeH
 aJn
 aLm
 aMz
-bUU
+cgi
 aOg
 aQz
 aTb
-bUU
-aUH
-aUH
-bXH
-aIe
+cgi
+aUA
+aUA
+cje
+cml
 bcr
 bfG
 bEb
@@ -122946,8 +122950,8 @@ aWb
 bPD
 aCY
 bSz
-cml
-bfI
+bOv
+bfG
 bEb
 bxy
 bGD
@@ -123204,7 +123208,7 @@ bOf
 aEt
 bSz
 bcx
-bfG
+bfI
 bEb
 cxx
 byz
