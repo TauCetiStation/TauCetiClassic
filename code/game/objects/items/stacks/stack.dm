@@ -152,7 +152,6 @@
 		return
 	if (R.on_floor)
 		usr.client.cob.turn_on_build_overlay(usr.client, R, src)
-		usr << browse(null, "window=stack")
 		return
 	if (R.time)
 		if(usr.is_busy())
