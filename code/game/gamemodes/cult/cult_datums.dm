@@ -246,7 +246,7 @@
 	flick_overlay(I, viewing, 30)
 	animate(I, alpha = 0, time = 30)
 
-	statue.shake_animation(0.5, per_obj_cd)
+	statue.do_shake_animation(0.5, per_obj_cd)
 #undef REQ_TURFS_TO_CAPTURE
 
 /datum/rune/cult/portal_beacon

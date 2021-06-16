@@ -591,7 +591,7 @@ BLIND     // can't see anything
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))
-			user.drop_item()
+			user.drop_from_inventory(A, src)
 			accessories += A
 			A.on_attached(src, user)
 
