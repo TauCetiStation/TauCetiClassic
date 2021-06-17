@@ -110,11 +110,6 @@
 	if(prob(50))
 		amount_grown = 1
 
-/mob/living/simple_animal/friendly/spiderling/Bump(atom/user)
-	if(istype(user, /obj/structure/table))
-		loc = user.loc
-	else
-		..()
 
 /mob/living/simple_animal/friendly/spiderling/Life()
 	if(travelling_in_vent)
