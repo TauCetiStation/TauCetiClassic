@@ -115,8 +115,7 @@ var/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You must remove [held_container] from [src] first.</span>")
 			else
 				to_chat(user, "<span class='info'>You insert [O] into [src].</span>")
-				user.drop_item()
-				O.loc = src
+				user.drop_from_inventory(O, src)
 				held_container = O
 		else
 			var/obj/item/weapon/reagent_containers/R = O

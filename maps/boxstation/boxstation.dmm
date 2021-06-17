@@ -1945,6 +1945,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible{
 	dir = 1
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/aisat)
 "adl" = (
@@ -2117,6 +2118,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "adz" = (
@@ -3205,6 +3207,7 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "afr" = (
@@ -9965,6 +9968,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aqq" = (
@@ -10066,6 +10070,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "aqx" = (
@@ -11558,6 +11563,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "atk" = (
@@ -11724,6 +11730,7 @@
 	req_access = list(13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
 "atB" = (
@@ -11857,6 +11864,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "atP" = (
@@ -12712,6 +12720,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "avB" = (
@@ -12759,6 +12768,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "avD" = (
@@ -12991,6 +13001,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "awa" = (
@@ -13016,6 +13027,7 @@
 	name = "Containment Blast Doors";
 	opacity = 0
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "awb" = (
@@ -23502,6 +23514,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aPx" = (
@@ -41654,6 +41667,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "bwA" = (
@@ -56760,6 +56774,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "chk" = (
@@ -60318,6 +60333,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/portsolar)
 "cpL" = (
@@ -62945,6 +62961,7 @@
 	req_access = list(13)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "cwz" = (
@@ -63971,6 +63988,7 @@
 	id = "Secure Storage";
 	name = "Secure Storage"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "czn" = (
@@ -64718,6 +64736,7 @@
 	name = "Mixing Room Interior Airlock";
 	req_access = list(12)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "cAX" = (
@@ -66642,6 +66661,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cFP" = (
@@ -75881,6 +75901,7 @@
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nub" = (
@@ -79965,6 +79986,7 @@
 	req_one_access = list(11,24)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "sZb" = (

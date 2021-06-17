@@ -93,10 +93,9 @@
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/tank))
 		if(!(stat & BROKEN))
-			if (holding || !user.drop_item())
+			if (holding || !user.drop_from_inventory(W, src))
 				return
 			var/obj/item/weapon/tank/T = W
-			T.forceMove(src)
 			holding = T
 			update_icon()
 	else if (iswrench(W))
@@ -152,14 +151,13 @@
 			to_chat(user, "There is already a power cell installed.")
 			return
 
-		if(!user.drop_item())
+		if(!user.drop_from_inventory(I, src))
 			return
 
 		var/obj/item/weapon/stock_parts/cell/C = I
 
 		C.add_fingerprint(user)
 		cell = C
-		C.forceMove(src)
 		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
 		power_change()
 	else if(isscrewdriver(I))
