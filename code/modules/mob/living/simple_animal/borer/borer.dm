@@ -29,7 +29,7 @@
 
 	var/assuming = FALSE
 	var/chemicals = 50                         // Chemicals used for reproduction and spitting neurotoxin.
-	var/const/max_chemicals = 250              // Maximum chemicals
+	var/max_chemicals = 250              // Maximum chemicals
 	var/mob/living/carbon/host                 // Carbon host for the brain worm.
 	var/mob/living/captive_brain/host_brain    // Used for swapping control of the body back and forth.
 	var/controlling = FALSE                    // Used in human death check.
@@ -46,6 +46,9 @@
 
 	var/last_client_poll = 0
 	var/client_poll_cd = 1 MINUTE
+
+	var/chemical_regeneration = 1
+	var/nutrition_consumption = 0
 
 /mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1, list/parent_upgrades)
 	. = ..()
@@ -106,7 +109,7 @@
 				last_client_poll = world.time
 	if(stat != CONSCIOUS && host.stat != CONSCIOUS)
 		return
-	if(host.reagents.has_reagent("sugar") && !docile)
+	if(host.reagents.has_reagent("sugar") && !host.reagents.has_reagent("sucrase") && !docile)
 		docile = TRUE
 		var/mob/msg_to = controlling ? host : src
 		to_chat(msg_to, "<span class='notice'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
@@ -116,7 +119,12 @@
 		to_chat(msg_to, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 
 	if(chemicals < max_chemicals)
-		chemicals++
+		if(host.nutrition)
+			chemicals += chemical_regeneration
+			host.nutrition = max(host.nutrition - nutrition_consumption, 0)
+		else
+			chemicals += 1
+		
 
 	if(controlling)
 		if(docile)

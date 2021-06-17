@@ -27,7 +27,7 @@
 	user.visible_message("<span class='warning'>[user] leans over [target] shoulder and hugs them tightly.</span>")
 
 	user.release_control()
-	user.Stun(duration / 2)
+	user.Stun(duration)
 	..()
 	to_chat(target, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(B, "You slither up [target] and begin probing at their ear canal...")
