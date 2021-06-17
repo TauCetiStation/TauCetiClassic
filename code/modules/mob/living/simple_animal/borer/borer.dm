@@ -27,7 +27,6 @@
 		"Septenary", "Octonary", "Novenary", "Decenary", "Undenary", "Duodenary",
 		)
 
-	var/dominate_cd = 0                        // Calldown for dominate victim
 	var/assuming = FALSE
 	var/chemicals = 10                         // Chemicals used for reproduction and spitting neurotoxin.
 	var/const/max_chemicals = 250              // Maximum chemicals
@@ -36,8 +35,8 @@
 	var/controlling = FALSE                    // Used in human death check.
 	var/docile = FALSE                         // Sugar can stop borers from acting.
 	var/leaving = FALSE
-	var/has_reproduced = FALSE                 // Whether or not the borer has reproduced, for objective purposes.
-	var/upgrade_points = 0                     // Upgrade points left to spend
+	var/reproduced = 0                         // Times the borer has reproduced.
+	var/upgrade_points = 2                     // Upgrade points left to spend
 
 	var/list/obj/effect/proc_holder/upgrades = list()
 
@@ -51,12 +50,19 @@
 	if(request_ghosts)
 		for(var/mob/dead/observer/O in observer_list)
 			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
+	upgrades = init_named_subtypes(/obj/effect/proc_holder/borer)
 
 /mob/living/simple_animal/borer/proc/hasChemicals(amt)
 	return amt <= chemicals
 
 /mob/living/simple_animal/borer/proc/adjustChemicals(amt)
 	chemicals = clamp(chemicals + amt, 0, max_chemicals)
+
+/mob/living/simple_animal/borer/proc/useChemicals(amt)
+	if(hasChemicals(amt))
+		adjustChemicals(-amt)
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
@@ -117,7 +123,7 @@
 		return emote(copytext(message, 2))
 
 	if (message[1] == ";") //Brain borer hivemind.
-		return borer_speak(message)
+		return borer_speak(copytext(message, 2))
 
 	if(!host)
 		to_chat(src, "You have no host to speak to.")
@@ -133,7 +139,7 @@
 			to_chat(M, "[FOLLOW_LINK(M, src)] [truename] whispers to [host], \"[message]\"")
 
 
-/mob/living/simple_animal/borer/proc/statAbilities(mob/user)
+/mob/living/simple_animal/borer/proc/stat_abilities(mob/user)
 	if(statpanel("Borer"))
 		stat(null, "Chemicals: [chemicals]/[max_chemicals]")
 		for(var/obj/effect/proc_holder/borer/U in upgrades)
@@ -147,8 +153,9 @@
 		return
 
 	for(var/mob/M in mob_list)
-		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
-			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
+		var/mob/living/simple_animal/borer/B = M.has_brain_worms()
+		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M) || B.controlling))
+			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [message]</i>")
 
 // Borers will not be blind in ventilation
 /mob/living/simple_animal/borer/is_vision_obstructed()
@@ -230,3 +237,15 @@ var/global/list/datum/mind/borers = list()
 
 /mob/living/simple_animal/borer/has_brain_worms()
 	return src
+
+/mob/living/simple_animal/borer/verb/hide()
+	set name = "Hide"
+	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
+	set category = "IC"
+
+	if (layer != TURF_LAYER+0.2)
+		layer = TURF_LAYER+0.2
+		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
+	else
+		layer = MOB_LAYER
+		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))

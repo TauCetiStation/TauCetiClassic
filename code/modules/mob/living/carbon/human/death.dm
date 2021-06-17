@@ -94,9 +94,6 @@
 			B.host_brain.name = "host brain"
 			B.host_brain.real_name = "host brain"
 
-		verbs -= /mob/living/carbon/proc/release_control
-
-
 	organ_head_list += BP
 
 	var/obj/item/organ/internal/IO = organs_by_name[O_BRAIN]

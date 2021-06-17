@@ -265,7 +265,7 @@
 	. = list()
 	for(var/path in subtypesof(prototype))
 		var/atom/N = new path()
-		if(!N?.name.length)
+		if(!length(N?.name))
 			qdel(N)
 			continue
 		. += N

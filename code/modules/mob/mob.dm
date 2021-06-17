@@ -722,7 +722,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
-	B?.statAbilities(src)
+	B?.stat_abilities(src)
 
 // facing verbs
 /mob/proc/canface()

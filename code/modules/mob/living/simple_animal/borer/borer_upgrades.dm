@@ -2,7 +2,8 @@
 
 /obj/effect/proc_holder/borer
     panel = "Borer"
-    desc = ""
+    name = ""
+    desc = null
 
     var/cost = COST_INITIAL
 
@@ -33,9 +34,12 @@
     var/cooldown = 0
     var/last_used = 0
     var/chemicals = 0
+ 
+/obj/effect/proc_holder/borer/active/can_use(mob/user)
+    return TRUE
 
 /obj/effect/proc_holder/borer/active/get_stat_entry()
-    var/cooldown_str = cooldown ? "([get_recharge() / 10]/[cooldown]) " : null
+    var/cooldown_str = cooldown ? "([round(get_recharge() / 10)]/[cooldown / 10]) " : null
     var/chemical_str = chemicals ? "([chemicals] c.)" : null
     return "[cooldown_str][chemical_str]"
 
@@ -51,10 +55,16 @@
 /obj/effect/proc_holder/borer/active/activate(mob/user)
     last_used = world.time
     var/mob/living/simple_animal/borer/B = user?.has_brain_worms()
-    B?.adjustChemicals(-chemicals)
+    return B?.useChemicals(chemicals)
 
 /obj/effect/proc_holder/borer/active/noncontrol/can_use(mob/user)
-    return user && user == user.has_brain_worms()
+    var/mob/living/simple_animal/borer/B = user
+    return istype(B) && B.host
 
 /obj/effect/proc_holder/borer/active/control/can_use(mob/user)
-    return user && user != user.has_brain_worms()
+    var/mob/living/simple_animal/borer/B = user.has_brain_worms()
+    return istype(B) && B.controlling
+
+/obj/effect/proc_holder/borer/active/hostless/can_use(mob/user)
+    var/mob/living/simple_animal/borer/B = user
+    return istype(B) && !B.host
