@@ -34,7 +34,7 @@
 		var/t = sanitize_safe(input(user, "Enter the name for the door.", name, input_default(created_name)), MAX_LNAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && src.loc != usr)
+		if(!Adjacent(usr))
 			return
 		created_name = t
 		return

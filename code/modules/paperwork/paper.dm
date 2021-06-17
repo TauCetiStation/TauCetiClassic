@@ -407,8 +407,8 @@
 				return
 			iscrayon = 1
 
-
-		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
+		// If the paper is near usr. If the paper is in clipboard it is checked inside of Adjacent()
+		if(!Adjacent(usr)) // Some check to see if he's allowed to write
 			return
 
 		var/last_fields_value = fields
@@ -518,7 +518,7 @@
 		//openhelp(user)
 
 	else if(istype(I, /obj/item/weapon/stamp))
-		if(!in_range(src, user))
+		if(!Adjacent(user))
 			return
 
 		if(istype(I, /obj/item/weapon/stamp/clown))

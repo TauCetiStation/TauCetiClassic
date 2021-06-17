@@ -187,7 +187,7 @@ var/global/list/tophats_list = list()
 
 /obj/effect/overlay/tophat_portal/examine(mob/user)
 	..()
-	if(user.client && global.tophats_list.len && isliving(user) && in_range(user, src))
+	if(user.client && global.tophats_list.len && isliving(user) && Adjacent(user))
 		var/mob/living/L = user
 		L.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
 		var/obj/item/clothing/head/wizard/tophat/TP = pick(global.tophats_list)
