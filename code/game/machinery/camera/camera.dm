@@ -27,6 +27,8 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
+	
+	var/show_paper_cooldown = 0
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -178,43 +180,31 @@
 			to_chat(user, "[msg2]")
 
 	// OTHER
-	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
-		var/mob/living/U = user
-		var/obj/item/weapon/paper/X = null
-		var/obj/item/device/pda/P = null
-
-		var/itemname = ""
-		var/info = ""
-		if(istype(W, /obj/item/weapon/paper))
-			X = W
-			if(X.crumpled)
-				to_chat(usr, "Paper to crumpled for anything.")
-				return
-			itemname = X.name
-			info = X.info
-		else
-			P = W
-			itemname = P.name
-			info = P.notehtml
-		to_chat(U, "You hold \the [itemname] up to the camera...")
+	else if(istype(W, /obj/item/weapon/paper))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(show_paper_cooldown > world.time)
+			return
+		show_paper_cooldown = world.time + 5 SECONDS
+		var/obj/item/weapon/paper/P = W
+		if(P.crumpled)
+			to_chat(usr, "Paper too crumpled for anything.")
+			return
+		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
+			return
+		to_chat(user, "You hold \the [P] up to the camera...")
 		for(var/mob/living/silicon/ai/O in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras...")
-
-			var/dat = "<TT>[info]</TT>"
-			var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
-			popup.set_content(dat)
-			popup.open()
-
-		for(var/mob/O in player_list)
-			if(O.client && O.client.eye == src)
-				to_chat(O, "[U] holds \a [itemname] up to one of the cameras...")
-
-				var/dat = "<TT>[info]</TT>"
-				var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
-				popup.set_content(dat)
-				popup.open()
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
+			P.show_content(O)
+	
+		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
+			if(S.active_camera != src)
+				continue
+			for(var/M in S.concurrent_users)
+				var/mob/living/L = locate(M) // M is a \ref. weird
+				to_chat(L, "You can see [user] holding \the [P] to the camera you're watching...")
+				P.show_content(L)
 
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
