@@ -4,6 +4,9 @@
 	required_pref = ROLE_ALIEN
 	disallow_job = TRUE
 
+	antag_hud_type = ANTAG_HUD_ALIEN
+	antag_hud_name = "hudalien"
+
 	logo_state = "xeno-logo"
 
 /datum/role/alien/Greet(greeting, custom)
