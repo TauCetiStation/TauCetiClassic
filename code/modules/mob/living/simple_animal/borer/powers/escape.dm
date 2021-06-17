@@ -20,7 +20,7 @@
 		to_chat(B, "<span class='userdanger'>You decide against leaving your host.</span>")
 		return
 
-	to_chat(B, "You begin disconnecting from [host]'s synapses and prodding at their internal ear canal.")
+	to_chat(B, "You begin disconnecting from [B.host]'s synapses and prodding at their internal ear canal.")
 
 	B.leaving = TRUE
 

@@ -28,7 +28,7 @@
 		)
 
 	var/assuming = FALSE
-	var/chemicals = 10                         // Chemicals used for reproduction and spitting neurotoxin.
+	var/chemicals = 50                         // Chemicals used for reproduction and spitting neurotoxin.
 	var/const/max_chemicals = 250              // Maximum chemicals
 	var/mob/living/carbon/host                 // Carbon host for the brain worm.
 	var/mob/living/captive_brain/host_brain    // Used for swapping control of the body back and forth.
@@ -36,11 +36,18 @@
 	var/docile = FALSE                         // Sugar can stop borers from acting.
 	var/leaving = FALSE
 	var/reproduced = 0                         // Times the borer has reproduced.
-	var/upgrade_points = 2                     // Upgrade points left to spend
+	var/upgrade_points = 2                    // Upgrade points left to spend
 
 	var/list/obj/effect/proc_holder/upgrades = list()
+	var/list/obj/effect/proc_holder/all_upgrades = list()
 
-/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1)
+	var/list/synthable_chems = list()
+	var/infest_delay = 5 SECONDS
+
+	var/last_client_poll = 0
+	var/client_poll_cd = 1 MINUTE
+
+/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1, list/parent_upgrades)
 	. = ..()
 	generation = gen
 	truename = "[borer_names[min(generation, borer_names.len)]] [rand(1000, 9999)]"
@@ -50,7 +57,21 @@
 	if(request_ghosts)
 		for(var/mob/dead/observer/O in observer_list)
 			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
-	upgrades = init_named_subtypes(/obj/effect/proc_holder/borer)
+	all_upgrades = sortAtom(init_named_subtypes(/obj/effect/proc_holder/borer))
+	for(var/obj/effect/proc_holder/borer/U in all_upgrades)
+		if(U.cost == 0)
+			upgrades += U
+			U.on_gain(src)
+
+	if(!parent_upgrades)
+		return
+
+	upgrade_points = 1 // we give less points if parent provided us with upgrades
+
+	for(var/obj/effect/proc_holder/borer/U in parent_upgrades)
+		var/obj/effect/proc_holder/borer/myU = locate(U.type) in all_upgrades
+		upgrades |= myU
+		myU.on_gain(src)
 
 /mob/living/simple_animal/borer/proc/hasChemicals(amt)
 	return amt <= chemicals
@@ -70,12 +91,21 @@
 /mob/living/simple_animal/borer/Life()
 	..()
 
+	if(invisibility)
+		chemicals -= 1
+		if(chemicals <= 1)
+			deactivate_invisibility()
+
 	if(!host)
 		return
-
+	// We look only for candidates for hosted borers because hostless ones can be possessed by ghosts normally.
+	if(!ckey)
+		if(world.time - last_client_poll > client_poll_cd)
+			for(var/mob/dead/observer/O in observer_list)
+				try_request_n_transfer(O, "A mindless Cortical Borer was found. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
+				last_client_poll = world.time
 	if(stat != CONSCIOUS && host.stat != CONSCIOUS)
 		return
-
 	if(host.reagents.has_reagent("sugar") && !docile)
 		docile = TRUE
 		var/mob/msg_to = controlling ? host : src
@@ -154,7 +184,7 @@
 
 	for(var/mob/M in mob_list)
 		var/mob/living/simple_animal/borer/B = M.has_brain_worms()
-		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M) || B.controlling))
+		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M) || B?.controlling))
 			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [message]</i>")
 
 // Borers will not be blind in ventilation
@@ -196,9 +226,10 @@ var/global/list/datum/mind/borers = list()
 		obj_count++
 
 /mob/living/simple_animal/borer/update_sight()
-	sight = 0
 	if(is_ventcrawling)
 		sight |= SEE_TURFS | SEE_OBJS | BLIND
+	else
+		sight &= ~(SEE_TURFS | SEE_OBJS | BLIND)
 
 /datum/game_mode/proc/auto_declare_completion_borer()
 	var/text = ""

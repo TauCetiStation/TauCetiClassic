@@ -1,11 +1,14 @@
-#define COST_INITIAL 0
+#define COST_INNATE 0
 
 /obj/effect/proc_holder/borer
     panel = "Borer"
     name = ""
     desc = null
 
-    var/cost = COST_INITIAL
+    var/cost = COST_INNATE
+
+    // list of paths that need to be bought before this
+    var/list/requires_t = list()
 
 /obj/effect/proc_holder/borer/proc/on_gain(mob/user)
     return
