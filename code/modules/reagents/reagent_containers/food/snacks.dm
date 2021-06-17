@@ -2059,7 +2059,7 @@
 	filling_color = "#baa14c"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice
 	filling_color = "#baa14c"
 	bitesize = 2
 
