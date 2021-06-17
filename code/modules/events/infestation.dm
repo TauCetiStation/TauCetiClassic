@@ -83,7 +83,6 @@
 	ventcrawler = 2
 	faction = "spiders" //another spiders will ignore spiderlings
 	pass_flags = PASSTABLE | PASSMOB
-	anchored = FALSE
 	small = TRUE
 	layer = MOB_LAYER
 	health = 2
