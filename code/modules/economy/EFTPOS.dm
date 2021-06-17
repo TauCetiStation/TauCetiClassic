@@ -117,7 +117,7 @@
 				if(transaction_locked && !transaction_paid)
 					if(transaction_amount <= E.worth)
 						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-						src.visible_message("[bicon(src)] The [src] chimes.")
+						visible_message("[bicon(src)] The [src] chimes.")
 						transaction_paid = 1
 
 						//transfer the money
@@ -212,7 +212,7 @@
 					access_code = 0
 					to_chat(usr, "[bicon(src)]<span class='info'>Access code reset to 0.</span>")
 
-	src.attack_self(usr)
+	attack_self(usr)
 
 /obj/item/device/eftpos/proc/scan_card(obj/item/weapon/card/I)
 	if (istype(I, /obj/item/weapon/card/id))
@@ -227,7 +227,7 @@
 						if(!D.suspended)
 							if(transaction_amount <= D.money)
 								playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-								src.visible_message("[bicon(src)] The [src] chimes.")
+								visible_message("[bicon(src)] The [src] chimes.")
 								transaction_paid = 1
 
 								//transfer the money
@@ -274,7 +274,7 @@
 			else
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				src.visible_message("[bicon(src)] The [src] chimes.")
+				visible_message("[bicon(src)] The [src] chimes.")
 				transaction_paid = 1
 
 	//emag?

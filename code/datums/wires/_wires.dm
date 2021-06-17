@@ -198,7 +198,7 @@ var/global/list/wire_daltonism_colors = list()
 
 		else if(H.sightglassesmod)
 			see_effect = H.sightglassesmod
-	
+
 	var/list/colors_by_num
 	if(see_effect != SEE_BLIND && see_effect != null)
 		colors_by_num = list()
@@ -285,7 +285,7 @@ var/global/list/wire_daltonism_colors = list()
 					. = TRUE
 			else
 				if(issignaler(I))
-					L.drop_item()
+					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else
 					to_chat(L, "<span class='warning'>You need a remote signaller!</span>")

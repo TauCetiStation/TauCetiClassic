@@ -64,7 +64,7 @@
 
 /obj/machinery/computer/aifixer/process()
 	if(..())
-		src.updateDialog()
+		updateDialog()
 		return
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
@@ -86,15 +86,15 @@
 				src.occupier.lying = 0
 				dead_mob_list -= src.occupier
 				alive_mob_list += src.occupier
-				src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
+				cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 				add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
 				src.occupier.add_ai_verbs()
-			src.updateUsrDialog()
+			updateUsrDialog()
 			sleep(10)
 		src.active = 0
-		src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
+		cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/computer/aifixer/update_icon()

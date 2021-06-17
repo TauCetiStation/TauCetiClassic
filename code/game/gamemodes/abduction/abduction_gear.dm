@@ -626,12 +626,12 @@
 				if(fastened.pixel_x != 2)
 					fastened.pixel_x = 2
 				animation.set_dir(2)
-				src.set_dir(2)
+				set_dir(2)
 			else
 				if(fastened.pixel_x != -2)
 					fastened.pixel_x = -2
 				animation.set_dir(1)
-				src.set_dir(1)
+				set_dir(1)
 		if(fastened.pixel_y != -4)
 			fastened.pixel_y = -4
 		if(fastened.dir & (EAST|WEST|NORTH))
@@ -640,7 +640,7 @@
 		flick("belt_anim_on",animation)
 		sleep(7)
 		add_overlay(belt)
-		fastened.anchored = 1
+		fastened.anchored = TRUE
 		fastened.SetStunned(INFINITY)
 		qdel(animation)
 	else
@@ -651,7 +651,7 @@
 		flick("belt_anim_off",animation)
 		sleep(9)
 		fastened.SetStunned(0)
-		fastened.anchored = 0
+		fastened.anchored = FALSE
 		fastened = null
 		qdel(animation)
 

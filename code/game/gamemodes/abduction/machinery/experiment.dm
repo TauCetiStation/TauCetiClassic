@@ -5,8 +5,8 @@
 	desc = "A large man-sized tube sporting a complex array of surgical apparatus."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	state_open = 1
 	var/points = 0
 	var/list/history = new
@@ -156,15 +156,15 @@
 	if(H in history)
 		return "<span class='bad'>Specimen already in database.</span>"
 	if(H.stat == DEAD)
-		src.visible_message("Specimen deceased - please provide fresh sample.")
+		visible_message("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen deceased.</span>"
 	var/obj/item/gland/GlandTest = locate() in H
 	if(!GlandTest)
-		src.visible_message("Experimental dissection not detected!")
+		visible_message("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
 	if(H.mind != null && H.ckey != null)
 		history += H
-		src.visible_message("Processing specimen...")
+		visible_message("Processing specimen...")
 		sleep(5)
 		switch(text2num(type))
 			if(1)
@@ -198,7 +198,7 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
-		src.visible_message("Brain activity nonexistant - disposing Sample...")
+		visible_message("Brain activity nonexistant - disposing Sample...")
 		open_machine()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed</span>"

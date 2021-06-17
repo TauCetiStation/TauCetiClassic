@@ -44,7 +44,7 @@
 			can_move = 0
 			flick("phazon-phase", src)
 			src.loc = get_step(src,src.dir)
-			src.use_power(phasing_energy_drain)
+			use_power(phasing_energy_drain)
 			sleep(step_in*3)
 			can_move = 1
 	else
@@ -97,7 +97,7 @@
 /obj/mecha/combat/phazon/Topic(href, href_list)
 	..()
 	if (href_list["switch_damtype"])
-		src.switch_damtype()
+		switch_damtype()
 	if (href_list["phasing"])
-		src.switch_phasing()
+		switch_phasing()
 	return

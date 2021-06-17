@@ -26,7 +26,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
-	if (!src.is_open_container())
+	if (!is_open_container())
 		return 0
 
 	if(reagents.total_volume <= 0)

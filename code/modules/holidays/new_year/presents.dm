@@ -47,7 +47,7 @@
 	for(var/datum/job/job in SSjob.occupations)
 		if(jobban_isbanned(user, job.title))
 			bad_chance += 5
-	user.drop_item()
+
 	user.visible_message("<span class='notice'>[user] carefully open [src].</span>","<span class='notice'>You carefully open [src].</span>")
 	playsound(src, 'sound/items/crumple.ogg', VOL_EFFECTS_MASTER)
 

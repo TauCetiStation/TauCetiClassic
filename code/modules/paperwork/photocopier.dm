@@ -2,8 +2,8 @@
 	name = "photocopier"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 200
@@ -132,9 +132,8 @@
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
 		if(!copy && !photocopy && !bundle)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			copy = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -142,9 +141,8 @@
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/photo))
 		if(!copy && !photocopy && !bundle)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			photocopy = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the photo into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
@@ -152,15 +150,13 @@
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
 	else if(istype(O, /obj/item/weapon/paper_bundle))
 		if(!copy && !photocopy && !bundle)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			bundle = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the bundle into \the [src].</span>")
 			flick("bigscanner1", src)
 			updateUsrDialog()
 	else if(istype(O, /obj/item/device/toner))
 		if(toner == 0)
-			user.drop_item()
 			qdel(O)
 			toner = 30
 			to_chat(user, "<span class='notice'>You insert the toner cartridge into \the [src].</span>")

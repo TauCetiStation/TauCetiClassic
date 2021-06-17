@@ -2,8 +2,8 @@
 	name = "fuel compressor"
 	icon = 'icons/obj/machines/power/fusion.dmi'
 	icon_state = "fuel_compressor1"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	layer = 4
 
 /obj/machinery/fusion_fuel_compressor/MouseDrop_T(atom/movable/target, mob/user)

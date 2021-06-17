@@ -61,7 +61,7 @@
 	if(isbrain(chassis.occupant))
 		P.def_zone = ran_zone()
 	else
-		P.def_zone = check_zone(chassis.occupant.zone_sel.selecting)
+		P.def_zone = check_zone(chassis.occupant.get_targetzone())
 	P.yo = aimloc.y - P.loc.y
 	P.xo = aimloc.x - P.loc.x
 	P.process()
@@ -194,14 +194,14 @@
 			projectiles++
 			projectiles_to_add--
 			chassis.use_power(projectile_energy_cost)
-	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+	send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	log_message("Rearmed [src.name].")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/Topic(href, href_list)
 	..()
 	if (href_list["rearm"])
-		src.rearm()
+		rearm()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine

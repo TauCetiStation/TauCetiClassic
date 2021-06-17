@@ -3,7 +3,7 @@
 	desc = "Apply butt."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1.0
+	anchored = TRUE
 
 /obj/structure/stool/bar
 	name = "bar stool"

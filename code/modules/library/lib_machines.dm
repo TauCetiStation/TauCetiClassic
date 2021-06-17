@@ -136,7 +136,7 @@
 	if(href_list["pagenext"] == "2")
 		page = min(page + (LIBRETURNLIMIT * 5), 10000)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /*
  * Library Computer
@@ -423,7 +423,7 @@
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,10)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 
 	if(href_list["deleteid"])
@@ -466,8 +466,8 @@
 		if(orderid)
 			if(isnum(orderid))
 				var/nhref = "src=\ref[src];targetid=[orderid]"
-				spawn() src.Topic(nhref, params2list(nhref), src)
-	src.updateUsrDialog()
+				spawn() Topic(nhref, params2list(nhref), src)
+	updateUsrDialog()
 
 /*
  * Library Scanner
@@ -476,14 +476,13 @@
 	name = "scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/obj/item/weapon/book/cache		// Last scanned book
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 /obj/machinery/libraryscanner/ui_interact(mob/user)
 	var/dat = ""
@@ -518,7 +517,7 @@
 	if(href_list["eject"])
 		for(var/obj/item/weapon/book/B in contents)
 			B.loc = src.loc
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /*
  * Book binder
@@ -527,18 +526,17 @@
 	name = "Book Binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/machinery/bookbinder/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
-		src.visible_message("[src] begins to hum as it warms up its printing drums.")
+		visible_message("[src] begins to hum as it warms up its printing drums.")
 		sleep(rand(200,400))
-		src.visible_message("[src] whirs as it prints and binds a new book.")
+		visible_message("[src] whirs as it prints and binds a new book.")
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"
