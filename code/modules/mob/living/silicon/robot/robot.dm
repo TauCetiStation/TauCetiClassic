@@ -645,8 +645,7 @@
 		else if(cell)
 			to_chat(user, "There is a power cell already installed.")
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			cell = W
 			to_chat(user, "You insert the power cell.")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
@@ -707,8 +706,7 @@
 		else
 			if(U.action(src))
 				to_chat(usr, "You apply the upgrade to [src]!")
-				usr.drop_item()
-				U.loc = src
+				usr.drop_from_inventory(U, src)
 			else
 				to_chat(usr, "Upgrade error!")
 

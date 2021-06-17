@@ -25,7 +25,7 @@
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item()
+		usr.drop_from_inventory(O, src)
 		O.loc = src
 		scan = O
 		to_chat(user, "You insert [O].")
@@ -241,8 +241,7 @@ What a mess.*/
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					scan = I
 					if(ishuman(usr))
 						var/mob/living/carbon/human/H = usr

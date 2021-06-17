@@ -172,6 +172,7 @@ function run_code_tests {
     run_test_fail "changed files contains proc argument starting with 'var'" "grep -RPnr '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm"
     run_test_fail "code contains alert(). Use tgui_alert() instead" "grep -RPnr '[ =\t\(,\|&]alert\(' code/**/*.dm"
     run_test_fail "changed files contains \"src.proc()\"" "grep -RPnr --include='*.dm' '[\s\(\[!,\/=]src\.[\w\d_]*\(' code/"
+    run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."

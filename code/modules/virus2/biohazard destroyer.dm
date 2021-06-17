@@ -9,7 +9,6 @@
 /obj/machinery/disease2/biodestroyer/attackby(obj/I, mob/user)
 	for(var/path in accepts)
 		if(I.type in typesof(path))
-			user.drop_item()
 			qdel(I)
 			add_overlay(image('icons/obj/pipes/disposal.dmi', "dispover-handle"))
 			return

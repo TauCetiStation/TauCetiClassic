@@ -220,7 +220,6 @@
 /obj/item/toy/crossbow/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
 		if(bullets <= 4)
-			user.drop_item()
 			qdel(I)
 			bullets++
 			to_chat(user, "<span class='notice'>You load the foam dart into the crossbow.</span>")
@@ -432,7 +431,7 @@
 		src.empty = 0
 
 
-		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
+		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "water"
 		D.icon = 'icons/obj/chemical.dmi'
 		D.icon_state = "chempuff"

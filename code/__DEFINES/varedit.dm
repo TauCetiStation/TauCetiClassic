@@ -11,7 +11,7 @@
 		/datum/craft_or_build,\
 		/datum/stack_recipe,\
 		/datum/events,\
-		/obj/effect/bmode/,\
+		/obj/effect/bmode,\
 	)
 
 /* protected variables */

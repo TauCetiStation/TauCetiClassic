@@ -92,9 +92,8 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
-			if(!user.drop_item())
+			if(!user.drop_from_inventory(I, src))
 				return
-			I.loc = src
 			inserted_id = I
 			updateUsrDialog()
 		return
@@ -178,9 +177,8 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				if(!usr.drop_item())
+				if(!usr.drop_from_inventory(I, src))
 					return
-				I.loc = src
 				inserted_id = I
 			else
 				to_chat(usr, "<span class='warning'>No valid ID.</span>")
@@ -323,9 +321,8 @@
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
-				if(!usr.drop_item())
+				if(!usr.drop_from_inventory(I, src))
 					return
-				I.loc = src
 				inserted_id = I
 			else
 				to_chat(usr, "<span class='danger'>No valid ID.</span>")
@@ -348,8 +345,7 @@
 	if(istype(I,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_hand()
 		if(istype(C) && !istype(inserted_id))
-			usr.drop_item()
-			C.loc = src
+			usr.drop_from_inventory(C, src)
 			inserted_id = C
 			updateUsrDialog()
 		return

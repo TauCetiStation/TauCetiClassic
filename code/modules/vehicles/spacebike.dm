@@ -99,8 +99,7 @@
 			if(K.id != src.id)
 				to_chat(user, "<span class='notice'>You can't put the key into the slot.</span>")
 				return
-			user.drop_item()
-			K.loc = src
+			user.drop_from_inventory(K, src)
 			key = K
 			user.SetNextMove(CLICK_CD_INTERACT)
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)

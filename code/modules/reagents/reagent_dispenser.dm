@@ -142,7 +142,7 @@
 				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
 			rig = W
-			user.drop_item()
+			user.drop_from_inventory(W, src)
 			W.loc = src
 
 			var/icon/test = getFlatIcon(W)
