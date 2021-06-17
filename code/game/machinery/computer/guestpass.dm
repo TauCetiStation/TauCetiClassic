@@ -54,11 +54,11 @@
 	. = ..()
 	uid = "[rand(100,999)]-G[rand(10,99)]"
 
+
 /obj/machinery/computer/guestpass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(!scan)
-			if(user.drop_item())
-				I.forceMove(src)
+			if(user.drop_from_inventory(I, src))
 				scan = I
 				updateUsrDialog()
 		else
@@ -134,8 +134,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if(istype(I, /obj/item/weapon/card/id))
-					if(usr.drop_item())
-						I.forceMove(src)
+					if(usr.drop_from_inventory(I, src))
 						scan = I
 		if("mode")
 			mode = !mode

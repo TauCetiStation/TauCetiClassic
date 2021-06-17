@@ -325,7 +325,6 @@
 	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
 		to_chat(user, "<span class='notice'>\The [src] processes \the [W].</span>")
 		biomass += 50
-		user.drop_item()
 		qdel(W)
 		return
 	else
