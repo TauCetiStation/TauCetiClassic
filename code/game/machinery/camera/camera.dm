@@ -27,6 +27,8 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
+	
+	var/show_paper_cooldown = 0
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -179,20 +181,23 @@
 
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
-		user.SetNextMove(3 SECONDS) // say no-no to spamming
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(show_paper_cooldown > world.time)
+			return
+		show_paper_cooldown = world.time + 5 SECONDS
 		var/obj/item/weapon/paper/P = W
 		if(P.crumpled)
 			to_chat(usr, "Paper too crumpled for anything.")
 			return
 		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
-			return	
+			return
 		to_chat(user, "You hold \the [P] up to the camera...")
 		for(var/mob/living/silicon/ai/O in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
 			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
 			P.show_content(O)
-		
+	
 		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
 			if(S.active_camera != src)
 				continue
