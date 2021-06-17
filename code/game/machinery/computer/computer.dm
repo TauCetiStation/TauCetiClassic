@@ -166,7 +166,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!Adjacent(src) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())
