@@ -195,4 +195,4 @@ var/list/nonhuman_positions = list(
 			var/datum/money_account/account = person["acc_datum"]
 			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = account.owner_salary, "acc_datum" = person["acc_datum"], "acc_number" = person["account"])
 
-	return data	// --> list(real_name, assignment, salary, /datum/money_account/, account_number)
+	return data	// --> list(real_name, assignment, salary, /datum/money_account, account_number)
