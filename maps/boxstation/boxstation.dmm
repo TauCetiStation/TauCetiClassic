@@ -25514,7 +25514,6 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -27219,7 +27218,7 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "aWg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
