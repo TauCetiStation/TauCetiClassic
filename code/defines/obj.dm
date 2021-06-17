@@ -1,14 +1,14 @@
 /obj/structure/signpost
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "signpost"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/signpost/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)
 
 /obj/structure/signpost/attack_hand(mob/user)
-	switch(alert("Travel back to ss13?",,"Yes","No"))
+	switch(tgui_alert(usr, "Travel back to ss13?",, list("Yes","No")))
 		if("Yes")
 			if(user.z != src.z)
 				return
@@ -22,7 +22,7 @@
 	var/mark = ""
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "blank"
-	anchored = 1
+	anchored = TRUE
 	layer = 99
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	unacidable = 1//Just to be sure.
@@ -38,7 +38,7 @@
 	name = "begin"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "begin"
-	anchored = 1.0
+	anchored = TRUE
 	unacidable = 1
 
 /obj/effect/list_container
@@ -53,7 +53,7 @@
 /obj/effect/projection
 	name = "Projection"
 	desc = "This looks like a projection of something."
-	anchored = 1.0
+	anchored = TRUE
 
 
 /obj/effect/shut_controller
@@ -66,8 +66,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showcase_1"
 	desc = "A stand with the empty body of a cyborg bolted to it."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	unacidable = 1//temporary until I decide whether the borg can be removed. -veyveyr
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -77,8 +77,8 @@
 	icon_state = "ball"
 	name = "beach ball"
 	item_state = "beachball"
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	w_class = ITEM_SIZE_SMALL
 	force = 0.0
 	throwforce = 0.0
@@ -87,8 +87,7 @@
 	flags = CONDUCT
 
 /obj/item/weapon/beach_ball/afterattack(atom/target, mob/user, proximity, params)
-	user.drop_item()
-	src.throw_at(target, throw_range, throw_speed, user)
+	throw_at(target, throw_range, throw_speed, user)
 
 /obj/effect/spawner
 	name = "object spawner"

@@ -127,7 +127,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 	if(airflow_dest == loc)
 		step_away(src, loc)
-	if(!src.AirflowCanMove(n))
+	if(!AirflowCanMove(n))
 		return
 	if(ismob(src))
 		to_chat(src, "<span class='danger'>You are sucked away by airflow!</span>")
@@ -190,7 +190,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return
 	if(airflow_dest == loc)
 		step_away(src, loc)
-	if(!src.AirflowCanMove(n))
+	if(!AirflowCanMove(n))
 		return
 	if(ismob(src))
 		to_chat(src, "<span clas='danger'>You are pushed away by airflow!</span>")

@@ -92,7 +92,7 @@
 		if(animated)
 			flick("ultra-gofasta-on",src)
 			icon_state = "ultra-gofasta"
-	src.log_message("Toggled leg actuators overload.")
+	log_message("Toggled leg actuators overload.")
 	return
 
 /obj/mecha/combat/gygax/dyndomove(direction)
@@ -129,5 +129,5 @@
 /obj/mecha/combat/gygax/Topic(href, href_list)
 	..()
 	if (href_list["toggle_leg_overload"])
-		src.overload()
+		overload()
 	return

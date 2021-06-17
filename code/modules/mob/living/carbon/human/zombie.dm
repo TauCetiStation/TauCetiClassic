@@ -105,7 +105,7 @@
 	if(. && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!iszombie(H))
-			var/target_zone = user.zone_sel.selecting
+			var/target_zone = user.get_targetzone()
 
 			if((target_zone == BP_HEAD || target_zone == BP_CHEST) && prob(40))
 				target_zone = pick(BP_L_ARM, BP_R_ARM)
@@ -158,7 +158,7 @@
 		if(!H.key && H.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == H.mind && ghost.can_reenter_corpse)
-					var/answer = alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!","Yes","No")
+					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"))
 					if(answer == "Yes")
 						ghost.reenter_corpse()
 

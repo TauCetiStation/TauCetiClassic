@@ -1,13 +1,13 @@
 /mob/living/silicon/robot/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>[custom_name ? ", [modtype] [braintype]" : ""]!\n"
 	msg += "<span class='warning'>"
-	if (src.getBruteLoss())
-		if (src.getBruteLoss() < 75)
+	if (getBruteLoss())
+		if (getBruteLoss() < 75)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
-	if (src.getFireLoss())
-		if (src.getFireLoss() < 75)
+	if (getFireLoss())
+		if (getFireLoss() < 75)
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"

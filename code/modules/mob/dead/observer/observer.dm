@@ -9,10 +9,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	layer = MOB_LAYER // on tg it is FLOAT LAYER
 	plane = FLOAT_PLANE
 	stat = DEAD
-	density = 0
+	density = FALSE
 	canmove = 0
 	blinded = 0
-	anchored = 1	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	hud_type = /datum/hud/ghost
@@ -34,6 +34,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/datum/orbit_menu/orbit_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
@@ -103,6 +104,9 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	if(orbit_menu)
+		SStgui.close_uis(orbit_menu)
+		QDEL_NULL(orbit_menu)
 	if(mind && mind.current && isliving(mind.current))
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
@@ -153,7 +157,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 			var/mob/M = mousize()
 			if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
-				var/response = alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
+				var/response = tgui_alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
 				if(response == "Beep!")
 					M.dronize()
 					qdel(M)
@@ -182,7 +186,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(stat == DEAD)
 		if(fake_death)
-			var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
+			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
 			var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)
@@ -190,7 +194,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			ghostize(can_reenter_corpse = TRUE)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
+		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 
@@ -290,7 +294,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='danger'>You have been banned from using this feature.</span>")
 		return
 	if(config.antag_hud_restricted && !M.has_enabled_antagHUD && !client.holder)
-		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
+		var/response = tgui_alert(src, "If you turn this on, you will not be able to take any part in the round.","Do you want to on this feature?", list("Yes","No"))
 		if(response == "No")
 			return
 		M.can_reenter_corpse = FALSE
@@ -340,12 +344,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set desc = "Follow and orbit a mob."
 
-	var/list/mobs = getpois(TRUE, TRUE)
-	var/input = input("Please, select a object!", "Haunt", null, null) as null|anything in mobs
-	var/mob/target = mobs[input]
-	if(!target)
-		return
-	ManualFollow(target)
+	if(!orbit_menu)
+		orbit_menu = new(src)
+
+	orbit_menu.tgui_interact(src)
+
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -410,24 +413,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
-/mob/dead/observer/verb/jumptoobj()
-	set name = "Points of interest"
-	set desc = "Teleport to a obj."
-	set category = "Ghost"
-
-	if(!istype(usr, /mob/dead/observer))
-		return
-
-	var/list/pois = getpois(FALSE, TRUE)
-	var/input = input("Please, select a object!", "Teleport", null, null) as null|anything in pois
-	var/atom/target = pois[input]
-	if(!target)
-		return
-	var/turf/T = get_turf(target)
-	if(T)
-		forceMove(T)
-		update_parallax_contents()
-
 /*
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
@@ -486,7 +471,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>")
 		return
 
-	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
+	var/response = tgui_alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?", list("Squeek!","Nope!"))
 	if(response != "Squeek!")
 		return  //Hit the wrong key...again.
 
@@ -529,7 +514,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
 		return
 
-	var/response = alert(src, "Are you -sure- you want to find Bag Boss?","Are you sure you want to become II?","Soap Pain!","Nope!")
+	var/response = tgui_alert(src, "You want to find Bag Boss?","Do you want to be Ian?", list("Soap Pain!","Nope!"))
 	if(response != "Soap Pain!")
 		return
 

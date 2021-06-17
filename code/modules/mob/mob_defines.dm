@@ -1,5 +1,5 @@
 /mob
-	density = 1
+	density = TRUE
 	layer = 4.0
 	animate_movement = 2
 //	flags = NOREACT
@@ -142,6 +142,8 @@
 
 	var/coughedtime = null
 
+	var/next_point_to = 0
+
 	var/music_lastplayed = "null"
 
 	var/job = null//Living
@@ -149,7 +151,6 @@
 	var/const/blindness = 1//Carbon
 	var/const/deafness = 2//Carbon
 	var/const/muteness = 4//Carbon
-
 
 	var/datum/dna/dna = null//Carbon
 	var/radiation = 0.0//Carbon

@@ -10,8 +10,8 @@
 
 	var/turf/T = get_turf(usr)
 
-	message_admins("<span class='notice'>[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z] [ADMIN_JMP(T)]</span>")
-	log_admin("[key_name(usr)] creates the [side_x]x[side_y] asteroid on [T.x],[T.y],[T.z]")
+	message_admins("<span class='notice'>[key_name_admin(usr)] creates the [side_x]x[side_y] asteroid on [COORD(T)] [ADMIN_JMP(T)]</span>")
+	log_admin("[key_name(usr)] creates the [side_x]x[side_y] asteroid on [COORD(T)]")
 
 	var/datum/map_template/asteroid = new(map = generate_asteroid_mapfile(side_x, side_y))
 

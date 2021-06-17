@@ -9,8 +9,8 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
 	layer = 5.0
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	health = 20
 	maxhealth = 20
 	req_access =list(access_medical)
@@ -193,8 +193,7 @@
 			to_chat(user, "<span class='notice'>There is already a beaker loaded.</span>")
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		updateUsrDialog()
@@ -225,7 +224,7 @@
 			oldpatient = user
 		currently_healing = 0
 		last_found = world.time
-		anchored = 0
+		anchored = FALSE
 		emagged = 2
 		on = 1
 		icon_state = "medibot[on]"

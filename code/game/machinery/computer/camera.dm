@@ -107,7 +107,7 @@
 		var/c_tag = params["name"]
 		var/list/cameras = get_cached_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
-		
+
 		switch_to_camera(selected_camera)
 
 		return TRUE
@@ -222,7 +222,7 @@
 /obj/machinery/computer/security/proc/get_cached_cameras()
 	if (isnull(camera_cache))
 		camera_cache = get_available_cameras()
-	
+
 	return camera_cache
 
 /obj/machinery/computer/security/tgui_data()
@@ -255,10 +255,10 @@
 
 /obj/machinery/computer/security/attack_hand(mob/user)
 	if (!network)
-		world.log << "A computer lacks a network at [x],[y],[z]."
+		world.log << "A computer lacks a network at [COORD(src)]."
 		return
 	if (!istype(network, /list))
-		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
+		world.log << "The computer at [COORD(src)] has a network that is not a list!"
 		return
 
 	..()
@@ -279,7 +279,7 @@
 	state_nopower_preset = null
 	light_color = "#ffffbb"
 	network = list("thunder")
-	density = 0
+	density = FALSE
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)

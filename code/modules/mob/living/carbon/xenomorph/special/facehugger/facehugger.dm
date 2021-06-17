@@ -7,7 +7,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	density = 1
+	density = TRUE
 	layer = MOB_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
 	body_parts_covered = FACE|EYES

@@ -321,7 +321,7 @@
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
-	..()
+	return ..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))
@@ -401,7 +401,7 @@
 /obj/item/weapon/storage/lockbox/vials/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
-	src.cut_overlays()
+	cut_overlays()
 	if (!broken)
 		add_overlay(image(icon, src, "led[locked]"))
 		if(locked)

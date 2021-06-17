@@ -29,9 +29,9 @@
 		if(spawncount <= 0 || !vents.len)
 			break
 		var/obj/vent = pick_n_take(vents)
-		var/mob/living/simple_animal/borer/B = new(vent.loc)
+		var/mob/living/simple_animal/borer/B = new(vent.loc, FALSE, 1)
 		B.transfer_personality(M.client)
-		message_admins("[B] has spawned at [B.x],[B.y],[B.z] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
+		message_admins("[B] has spawned at [COORD(B)] [ADMIN_JMP(B)] [ADMIN_FLW(B)].")
 		successSpawn = TRUE
 		spawncount--
 

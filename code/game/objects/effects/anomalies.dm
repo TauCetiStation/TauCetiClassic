@@ -6,8 +6,8 @@
 	desc = "A mysterious anomaly, seen commonly only in the region of space that the station orbits..."
 	icon_state = "vortex"
 	unacidable = 1
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
 /obj/effect/anomaly/atom_init()
@@ -49,7 +49,7 @@
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
 	icon_state = "grav"
-	density = 1
+	density = TRUE
 	var/boing = 0
 
 /obj/effect/anomaly/grav/atom_init()
@@ -98,7 +98,7 @@
 /obj/effect/anomaly/bluespace
 	name = "bluespace anomaly"
 	icon_state = "bluespace"
-	density = 1
+	density = TRUE
 	light_color = "#009eff"
 
 /obj/effect/anomaly/bluespace/atom_init()
@@ -305,7 +305,7 @@
 		disable()
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
-	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_GHOSTLY, IGNORE_NARSIE_SLAVE, 10 SECONDS)
+	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
 	if(!candidates.len)
 		return
 

@@ -67,7 +67,8 @@
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
-					user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
+					M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 				else
 					user.visible_message("<span class='rose'>[user] cannot force anymore of [src] down [M]'s throat.</span>")
 					return
@@ -76,7 +77,8 @@
 
 				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-				user.visible_message("<span class='rose'>[user] feeds [M] [src].</span>")
+				M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 			else
 				to_chat(user, "This creature does not seem to have a mouth!</span>")
@@ -369,7 +371,8 @@
 	if(prob(13))
 		if(global.chicken_count < MAX_CHICKENS)
 			new /mob/living/simple_animal/chick(loc)
-	reagents.reaction(hit_atom, TOUCH)
+	// Yeah, eggs splash too it turns out.
+	reagents.standard_splash(hit_atom, user=throwingdatum.thrower)
 	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
 	qdel(src)
 
@@ -670,7 +673,7 @@
 	if(cooldown <= world.time)
 		cooldown = world.time + 8
 		playsound(src, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/mimeburger
@@ -710,7 +713,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	new/obj/effect/decal/cleanable/pie_smudge(src.loc)
-	src.visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
+	visible_message("<span class='rose'>[src.name] splats.</span>","<span class='rose'>You hear a splat.</span>")
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/berryclafoutis
@@ -1270,8 +1273,7 @@
 	if(!proximity) return
 	if(istype(target,/obj/structure/sink) && !wrapped)
 		to_chat(user, "<span class='notice'>You place \the [name] under a stream of water...</span>")
-		user.drop_item()
-		loc = get_turf(target)
+		user.drop_from_inventory(src, get_turf(target))
 		return Expand()
 	..()
 
@@ -2223,9 +2225,8 @@
 				boxestoadd += i
 
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
-				user.drop_item()
+				user.drop_from_inventory(box, src)
 
-				box.loc = src
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
 				src.boxes.Add( boxestoadd )
 
@@ -2243,8 +2244,7 @@
 	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza) ) // Long ass fucking object name
 
 		if( src.open )
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			src.pizza = I
 
 			update_icon()

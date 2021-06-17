@@ -125,7 +125,7 @@
 						to_chat(user, "<span class='warning'>Access Denied.</span>")
 						return
 				else
-					return src.attack_hand(user)
+					return attack_hand(user)
 			else
 				if(isscrewdriver(W))
 					wiresexposed = FALSE
@@ -480,7 +480,7 @@
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user)
 	if(..() || active)

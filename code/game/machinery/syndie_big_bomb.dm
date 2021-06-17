@@ -60,13 +60,13 @@
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
-				anchored = 1
+				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
-				anchored = 0
+				anchored = FALSE
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
@@ -99,7 +99,6 @@
 		if(degutted)
 			to_chat(user, "<span class='notice'>You place the payload into the shell.</span>")
 			degutted = 0
-			user.drop_item()
 			qdel(I)
 		else
 			to_chat(user, "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>")
@@ -128,7 +127,7 @@
 	if(in_range(src, user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
-	if(alert(user, "Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
+	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active || degutted)
 			if(degutted)
 				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
@@ -147,8 +146,8 @@
 
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at ([bombturf.x], [bombturf.y], [bombturf.z] - [A.name]) [ADMIN_JMP(bombturf)].")
-			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at ([COORD(bombturf)] - [A.name]) [ADMIN_JMP(bombturf)].")
+			log_game("[key_name(user)] has primed a [name] for detonation at [A.name][COORD(bombturf)]")
 			START_PROCESSING(SSobj, src) //Ticking down
 
 /obj/machinery/syndicatebomb/proc/isWireCut(index)
@@ -195,7 +194,7 @@
 			var/log_str = "[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>."
 			bombers += log_str
 			message_admins(log_str)
-			log_game("[key_name(usr)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name]([T.x],[T.y],[T.z])")
+			log_game("[key_name(usr)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name][COORD(T)]")
 		detonated =	0
 		existant =	0
 		cooldown = 1
