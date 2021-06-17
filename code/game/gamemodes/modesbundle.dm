@@ -83,7 +83,7 @@
 
 /datum/modesbundle/all/secret_plus
 	name = "Secret Plus"
-	votable = FALSE
+	votable = TRUE
 
 	black_types = list(/datum/game_mode/extended)
 
