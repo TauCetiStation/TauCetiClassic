@@ -32,7 +32,8 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
-
+	faction = "neutral"
+	
 	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE

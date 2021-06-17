@@ -288,7 +288,7 @@
 	icon_state = icon_dead
 	stat = DEAD
 	health = 0
-	density = 0
+	density = FALSE
 	med_hud_set_health()
 	med_hud_set_status()
 	return ..()

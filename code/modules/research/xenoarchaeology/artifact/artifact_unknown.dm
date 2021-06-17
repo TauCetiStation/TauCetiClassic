@@ -5,7 +5,7 @@
 	icon_state = "artifact_1"
 	interact_offline = TRUE
 	var/icon_num = 0
-	density = 1
+	density = TRUE
 	var/datum/artifact_effect/my_effect
 	var/datum/artifact_effect/secondary_effect
 	var/being_used = 0

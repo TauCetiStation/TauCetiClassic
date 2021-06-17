@@ -154,7 +154,7 @@
 							if(prob(80) && !slime.client)
 								slime.Discipline++
 						slime.Victim = null
-						slime.anchored = 0
+						slime.anchored = FALSE
 
 						spawn()
 							if(slime)
@@ -191,7 +191,7 @@
 											slime.SStun = 0
 
 							slime.Victim = null
-							slime.anchored = 0
+							slime.anchored = FALSE
 
 
 						spawn(0)

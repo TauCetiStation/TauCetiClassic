@@ -2,7 +2,7 @@
 	layer = 3
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/last_move = null
-	var/anchored = 0
+	var/anchored = FALSE
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
@@ -322,7 +322,7 @@
 //Overlays
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = TRUE
 
 /atom/movable/overlay/atom_init()
 	. = ..()

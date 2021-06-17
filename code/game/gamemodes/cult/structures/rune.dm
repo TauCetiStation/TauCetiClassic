@@ -1,7 +1,7 @@
 /obj/effect/rune
 	name = "blood"
 	desc = ""
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "1"
 	unacidable = 1

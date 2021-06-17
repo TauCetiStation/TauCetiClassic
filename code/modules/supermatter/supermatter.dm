@@ -19,8 +19,8 @@
 	desc = "A strangely translucent and iridescent crystal. <span class='warning'>You get headaches just from looking at it.</span>"
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "darkmatter"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	light_range = 4
 
 	var/gasefficency = 0.25

@@ -603,7 +603,7 @@
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
 				C.update_icon()
 				new/obj/item/robot_parts/chest(loc)
-				src.Destroy()
+				Destroy()
 			else
 				// Okay we're not removing the cell or an MMI, but maybe something else?
 				var/list/removable_components = list()
@@ -645,8 +645,7 @@
 		else if(cell)
 			to_chat(user, "There is a power cell already installed.")
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			cell = W
 			to_chat(user, "You insert the power cell.")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
@@ -707,8 +706,7 @@
 		else
 			if(U.action(src))
 				to_chat(usr, "You apply the upgrade to [src]!")
-				usr.drop_item()
-				U.loc = src
+				usr.drop_from_inventory(U, src)
 			else
 				to_chat(usr, "Upgrade error!")
 
@@ -1063,7 +1061,7 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if (src.connected_ai)
-		src.set_ai_link(null)
+		set_ai_link(null)
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
