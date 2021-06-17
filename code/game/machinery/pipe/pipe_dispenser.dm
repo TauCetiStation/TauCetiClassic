@@ -104,7 +104,6 @@
 	add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		to_chat(usr, "<span class='notice'>You put \the [W] back into \the [src].</span>")
-		user.drop_item()
 		qdel(W)
 		return
 	else if (iswrench(W) && !user.is_busy(src))

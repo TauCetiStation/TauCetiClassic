@@ -189,8 +189,7 @@
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
 		src.beaker =  B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		return
@@ -387,8 +386,7 @@
 			to_chat(user, "<span class='alert'>A beaker is already loaded into the machine.</span>")
 			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the beaker to the machine!")
 		updateUsrDialog()
 		icon_state = "mixer1"
@@ -399,8 +397,7 @@
 			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		updateUsrDialog()
 
@@ -734,8 +731,7 @@
 			to_chat(user, "<span class='alert'>A beaker is already loaded into the machine.</span>")
 			return
 		src.beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the beaker to the machine!")
 		updateUsrDialog()
 		icon_state = "mixer1"
@@ -745,8 +741,7 @@
 			to_chat(user, "<span class='alert'>A pill bottle is already loaded into the machine.</span>")
 			return
 		src.loaded_pill_bottle = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		updateUsrDialog()
 
@@ -981,8 +976,7 @@
 			return
 
 		src.beaker =  I
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		to_chat(user, "You add the beaker to the machine!")
 		updateUsrDialog()
 		icon_state = "mixer1"
@@ -1088,8 +1082,7 @@
 			return 1
 		else
 			src.beaker =  O
-			user.drop_item()
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			update_icon()
 			updateUsrDialog()
 			return 0
