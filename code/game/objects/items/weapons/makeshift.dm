@@ -269,7 +269,7 @@
 	throwforce = 5
 //	flags = NOSHIELD
 		//var/protest_text
- 		//	var/protest_text_lenght = 100
+ 		//	var/protest_text_length = 100
  	//var/image/inhand_blood_overlay
 	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 

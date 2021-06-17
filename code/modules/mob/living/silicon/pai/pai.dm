@@ -113,8 +113,8 @@
 
 /mob/living/silicon/pai/blob_act()
 	if (src.stat != DEAD)
-		src.adjustBruteLoss(60)
-		src.updatehealth()
+		adjustBruteLoss(60)
+		updatehealth()
 		return 1
 	return 0
 
@@ -132,7 +132,7 @@
 	to_chat(src, "<font color=green><b>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</b></font>")
 	if(prob(20))
 		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", blind_message = "<span class='warning'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>")
-		return src.death(0)
+		return death(0)
 
 	switch(pick(1,2,3))
 		if(1)
@@ -167,7 +167,7 @@
 			if (src.stat != DEAD)
 				adjustBruteLoss(30)
 
-	src.updatehealth()
+	updatehealth()
 
 
 // See software.dm for Topic()
@@ -194,8 +194,8 @@
 /mob/living/silicon/pai/cancel_camera()
 	set category = "pAI Commands"
 	set name = "Cancel Camera View"
-	src.reset_view(null)
-	src.unset_machine()
+	reset_view(null)
+	unset_machine()
 	src.cameraFollow = null
 
 //Addition by Mord_Sith to define AI's network change ability
@@ -203,8 +203,8 @@
 /mob/living/silicon/pai/proc/pai_network_change()
 	set category = "pAI Commands"
 	set name = "Change Camera Network"
-	src.reset_view(null)
-	src.unset_machine()
+	reset_view(null)
+	unset_machine()
 	src.cameraFollow = null
 	var/cameralist[0]
 

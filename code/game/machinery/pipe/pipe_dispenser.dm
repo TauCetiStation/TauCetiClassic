@@ -101,10 +101,9 @@
 				wait = 0
 
 /obj/machinery/pipedispenser/attackby(obj/item/W, mob/user)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		to_chat(usr, "<span class='notice'>You put \the [W] back into \the [src].</span>")
-		user.drop_item()
 		qdel(W)
 		return
 	else if (iswrench(W) && !user.is_busy(src))
@@ -115,7 +114,7 @@
 					"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
 					"You hear ratchet.")
-				src.anchored = 0
+				src.anchored = FALSE
 				src.stat |= MAINT
 				src.unwrenched = 1
 				if (usr.machine==src)
@@ -127,7 +126,7 @@
 					"<span class='notice'>\The [user] fastens \the [src].</span>", \
 					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \
 					"You hear ratchet.")
-				src.anchored = 1
+				src.anchored = TRUE
 				src.stat &= ~MAINT
 				src.unwrenched = 0
 				power_change()
@@ -213,13 +212,13 @@ Nah
 					C.ptype = 5
 				if(5)
 					C.ptype = 6
-					C.density = 1
+					C.density = TRUE
 				if(6)
 					C.ptype = 7
-					C.density = 1
+					C.density = TRUE
 				if(7)
 					C.ptype = 8
-					C.density = 1
+					C.density = TRUE
 				if(8)
 					C.ptype = 9
 			C.add_fingerprint(usr)
@@ -230,9 +229,9 @@ Nah
 
 // adding a pipe dispensers that spawn unhooked from the ground
 /obj/machinery/pipedispenser/orderable
-	anchored = 0
+	anchored = FALSE
 	unwrenched = 1
 
 /obj/machinery/pipedispenser/disposal/orderable
-	anchored = 0
+	anchored = FALSE
 	unwrenched = 1

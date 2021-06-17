@@ -13,8 +13,8 @@
 	var/light_range_on = 3
 	var/light_power_on = 1
 	layer = 2.9
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
@@ -57,6 +57,7 @@
 /obj/machinery/vending/atom_init()
 	. = ..()
 	wires = new(src)
+	src.anchored = TRUE
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 
@@ -91,7 +92,7 @@
 		if(3.0)
 			if (prob(25))
 				spawn(0)
-					src.malfunction()
+					malfunction()
 					return
 				return
 		else
@@ -100,7 +101,7 @@
 /obj/machinery/vending/blob_act()
 	if (prob(50))
 		spawn(0)
-			src.malfunction()
+			malfunction()
 			qdel(src)
 		return
 
@@ -170,18 +171,17 @@
 	if(isscrewdriver(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
-		src.cut_overlays()
+		cut_overlays()
 		if(src.panel_open)
-			src.add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
-		src.updateUsrDialog()
+			add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
+		updateUsrDialog()
 
 		return
 	else if(is_wire_tool(W) && panel_open && wires.interact(user))
 		return
 
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		coin = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
@@ -234,8 +234,7 @@
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
 	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
@@ -321,7 +320,7 @@
 							vendor_account.transaction_log.Add(T)
 
 							// Vend the item
-							src.vend(src.currently_vending, usr)
+							vend(src.currently_vending, usr)
 							currently_vending = null
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
@@ -333,7 +332,7 @@
 				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
 		else
 			//Just Vend it.
-			src.vend(src.currently_vending, usr)
+			vend(src.currently_vending, usr)
 			currently_vending = null
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
@@ -449,27 +448,27 @@
 			return FALSE
 
 		if(R.price == null || isobserver(usr)) //Centcomm buys somethin at himself? Nope, because they can just take this
-			src.vend(R, usr)
+			vend(R, usr)
 		else
 			if (ewallet)
 				if (R.price <= ewallet.worth)
 					ewallet.worth -= R.price
-					src.vend(R, usr)
+					vend(R, usr)
 				else
 					to_chat(usr, "<span class='warning'>The ewallet doesn't have enough money to pay for that.</span>")
 					src.currently_vending = R
-					src.updateUsrDialog()
+					updateUsrDialog()
 			else
 				src.currently_vending = R
-				src.updateUsrDialog()
+				updateUsrDialog()
 		return
 
 	else if (href_list["cancel_buying"])
 		src.currently_vending = null
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if (!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
@@ -495,7 +494,7 @@
 
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 		spawn(0)
-			src.speak(src.vend_reply)
+			speak(src.vend_reply)
 			src.last_reply = world.time
 
 	use_power(5)
@@ -507,14 +506,14 @@
 		src.vend_ready = 1
 		return
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)
 		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
 		R.amount++
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/vending/proc/say_slogan()
 	if(stat & (BROKEN|NOPOWER))
@@ -866,7 +865,7 @@
 	light_power_on = 1
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
-	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
+	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/stack/medical/bruise_pack = 2,/obj/item/stack/medical/ointment = 2,/obj/item/weapon/reagent_containers/hypospray/autoinjector = 4,/obj/item/device/healthanalyzer = 1,
 				/obj/item/stack/medical/suture = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,/obj/item/weapon/reagent_containers/syringe/antiviral = 4,/obj/item/weapon/reagent_containers/pill/tox = 1)
@@ -879,7 +878,7 @@
 	light_color = "#e6fff2"
 	icon_deny = "wallmed-deny"
 	req_access = list(5)
-	density = 0 //It is wall-mounted, and thus, not dense. --Superxpdude
+	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
 	products = list(/obj/item/weapon/reagent_containers/hypospray/autoinjector = 5,/obj/item/weapon/reagent_containers/syringe/antitoxin = 3,/obj/item/stack/medical/bruise_pack = 3,
 					/obj/item/stack/medical/ointment =3,/obj/item/device/healthanalyzer = 3, /obj/item/stack/medical/suture = 2)
 	contraband = list(/obj/item/weapon/reagent_containers/pill/tox = 3)
@@ -893,8 +892,8 @@
 	icon_deny = "sec-deny"
 	req_access = list(1)
 	products = list(/obj/item/weapon/handcuffs = 8,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6)
-	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2,/obj/item/device/flashlight/seclite = 4)
+					/obj/item/weapon/storage/box/evidence = 6)
+	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/device/flashlight/seclite = 4)
 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
@@ -1335,6 +1334,28 @@
 				  /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2)
 	refill_canister = /obj/item/weapon/vending_refill/junkfood
+
+/obj/machinery/vending/donut
+	name = "Monkin' Donuts"
+	desc = "A donut vendor provided by Robust Industries, LLC."
+	product_slogans = "Test your robustness!;Replenish your robustness!"
+	product_ads = "Homer Simpson approves!;Each of us is a little cop!;Hope you're hunger!;Over 1 million donuts sold!;Try our new Robust Coffee!"
+	icon_state = "donuts"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/classic = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/choco = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly = 5)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/classic = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/choco = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly = 3)
+	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/donut/syndie = 5)
+	premium = list(/obj/item/weapon/storage/fancy/donut_box = 3)
+	refill_canister = /obj/item/weapon/vending_refill/donut
 
 /obj/machinery/vending/noiromat
 	name = "Noir-O-Mat"

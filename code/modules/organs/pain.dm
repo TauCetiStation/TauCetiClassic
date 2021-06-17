@@ -23,7 +23,7 @@
 		if(src:paralysis)
 			src:paralysis = max(0, src:paralysis-round(amount/10))
 	if(amount > 50 && prob(amount / 5))
-		src:drop_item()
+		drop_item()
 	var/msg
 	if(burning)
 		switch(amount)
@@ -108,7 +108,7 @@
 	for(var/obj/item/organ/internal/IO in organs)
 		if(IO.damage > 2 && prob(2))
 			var/obj/item/organ/external/BP = bodyparts_by_name[IO.parent_bodypart]
-			src.custom_pain("You feel a sharp pain in your [BP.name]", 1)
+			custom_pain("You feel a sharp pain in your [BP.name]", 1)
 
 	var/toxDamageMessage = null
 	var/toxMessageProb = 1
@@ -130,4 +130,4 @@
 			toxDamageMessage = "Your body aches all over, it's driving you mad."
 
 	if(toxDamageMessage && prob(toxMessageProb))
-		src.custom_pain(toxDamageMessage, getToxLoss() >= 15)
+		custom_pain(toxDamageMessage, getToxLoss() >= 15)

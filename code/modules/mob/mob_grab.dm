@@ -207,7 +207,7 @@
 		affecting.drop_l_hand()
 		affecting.drop_r_hand()
 
-		var/hit_zone = assailant.zone_sel.selecting
+		var/hit_zone = assailant.get_targetzone()
 		var/announce = 0
 		if(hit_zone != last_hit_zone)
 			announce = 1
@@ -413,7 +413,7 @@
 	if(M == affecting)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/hit_zone = assailant.zone_sel.selecting
+			var/hit_zone = assailant.get_targetzone()
 			flick(hud.icon_state, hud)
 			switch(assailant.a_intent)
 				if(INTENT_HELP)

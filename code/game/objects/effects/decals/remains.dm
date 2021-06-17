@@ -4,7 +4,7 @@
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	anchored = 0
+	anchored = FALSE
 
 /obj/effect/decal/remains/human/burned
 	name = "burned remains"
@@ -17,7 +17,7 @@
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remainsxeno"
-	anchored = 0
+	anchored = FALSE
 
 /obj/effect/decal/remains/xeno/burned
 	name = "burned remains"
@@ -30,4 +30,4 @@
 	gender = PLURAL
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "remainsrobot"
-	anchored = 0
+	anchored = FALSE

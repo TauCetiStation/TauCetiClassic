@@ -15,12 +15,12 @@
 		ui.close()
 		return 0
 	if(href_list["update"])
-		src.updateDialog()
+		updateDialog()
 		return 1
 
 /obj/nano_module/crew_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	user.set_machine(src)
-	src.scan()
+	scan()
 
 	var/data[0]
 	var/turf/T = get_turf(src)

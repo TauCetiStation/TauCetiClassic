@@ -5,8 +5,8 @@
 	name = "Coin press"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "coinpress0"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/amt_silver = 0 //amount of silver
@@ -172,7 +172,7 @@
 						amt_iron -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("gold")
 					while(amt_gold > 0 && coinsToProduce > 0)
@@ -184,7 +184,7 @@
 						amt_gold -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("silver")
 					while(amt_silver > 0 && coinsToProduce > 0)
@@ -196,7 +196,7 @@
 						amt_silver -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("diamond")
 					while(amt_diamond > 0 && coinsToProduce > 0)
@@ -208,7 +208,7 @@
 						amt_diamond -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("phoron")
 					while(amt_phoron > 0 && coinsToProduce > 0)
@@ -220,7 +220,7 @@
 						amt_phoron -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("uranium")
 					while(amt_uranium > 0 && coinsToProduce > 0)
@@ -232,7 +232,7 @@
 						amt_uranium -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("clown")
 					while(amt_clown > 0 && coinsToProduce > 0)
@@ -244,7 +244,7 @@
 						amt_clown -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("platinum")
 					while(amt_platinum > 0 && coinsToProduce > 0)
@@ -256,7 +256,7 @@
 						amt_platinum -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 				if("hydrogen")
 					while(amt_hydrogen > 0 && coinsToProduce > 0)
@@ -268,10 +268,10 @@
 						amt_hydrogen -= 20
 						coinsToProduce--
 						newCoins++
-						src.updateUsrDialog()
+						updateUsrDialog()
 						sleep(5)
 			icon_state = "coinpress0"
 			processing = 0
 			coinsToProduce = temp_coins
 
-	src.updateUsrDialog()
+	updateUsrDialog()
