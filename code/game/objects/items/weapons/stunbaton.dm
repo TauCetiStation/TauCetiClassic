@@ -121,7 +121,7 @@
 				//H.apply_effect(10, STUN, 0)
 				//H.apply_effect(10, WEAKEN, 0)
 				//H.apply_effect(10, STUTTER, 0)
-				H.apply_effect(60,AGONY,0)
+				H.apply_effect(agony,AGONY,0)
 				charges--
 
 				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
