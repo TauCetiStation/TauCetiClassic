@@ -14,10 +14,6 @@
 		to_chat(B, "You cannot secrete chemicals in your current state.")
 		return
 
-	if(B.docile)
-		to_chat(B, "<span class='notice'>You are feeling far too docile to do that.</span>")
-		return
-
 	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in B.synthable_chems
 	if(!chem)
 		return

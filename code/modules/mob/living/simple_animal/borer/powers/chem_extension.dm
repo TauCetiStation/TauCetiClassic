@@ -22,7 +22,7 @@
 	cost = 3
 	requires_t = list(/obj/effect/proc_holder/borer/chem_extension/advanced)
 
-/obj/effect/proc_holder/borer/chem_extension/improved
+/obj/effect/proc_holder/borer/chem_extension/sucrase
 	name = "Sucrase Synthesis"
 	desc = "Unlocks synthesis of sucrase, enzyme, that breaks down sugar."
 	chems = list("sucrase" = 15)
