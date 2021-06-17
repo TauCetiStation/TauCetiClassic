@@ -129,16 +129,15 @@
 	if(href_list["insert"])
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I))
-			if(!usr.drop_item())
+			if(!usr.drop_from_inventory(I, src))
 				return FALSE
-			I.loc = src
 			inserted_id = I
 		else
 			to_chat(usr, "<span class='warning'>No valid ID.</span>")
 	if(href_list["show_values"])
 		show_value_list = !show_value_list
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/mineral/processing_unit_console/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"
@@ -152,9 +151,8 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
-			if(!user.drop_item())
+			if(!user.drop_from_inventory(I, src))
 				return
-			I.loc = src
 			inserted_id = I
 			updateUsrDialog()
 	else

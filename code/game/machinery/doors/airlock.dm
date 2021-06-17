@@ -74,7 +74,7 @@ var/list/airlock_overlays = list()
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
@@ -1169,6 +1169,15 @@ var/list/airlock_overlays = list()
 			icon          = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
+
+/obj/machinery/door/airlock/emp_act(severity)
+	if(!wires)
+		return
+	for(var/i in 1 to severity)
+		if(!prob(50 / severity))
+			continue
+		var/wire = 1 << rand(0, wires.wire_count - 1)
+		wires.pulse_index(wire)
 
 /obj/structure/door_scrap
 	name = "Door Scrap"

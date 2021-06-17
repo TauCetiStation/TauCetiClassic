@@ -106,7 +106,7 @@
 					var/obj/machinery/artifact/A = O
 					if(A.my_effect)
 						A.my_effect.artifact_id = artifact_find.artifact_id
-				src.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
+				visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
 			else
 				user.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>",\
 				"<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>")

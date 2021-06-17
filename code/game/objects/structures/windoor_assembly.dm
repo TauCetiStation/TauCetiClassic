@@ -159,8 +159,7 @@
 				var/obj/item/weapon/airlock_electronics/AE = W
 				if(!AE.broken)
 					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
-					user.drop_item()
-					AE.loc = src
+					user.drop_from_inventory(AE, src)
 					if(W.use_tool(src, user, 40, volume = 100))
 						if(src.electronics)
 							AE.loc = src.loc
@@ -275,7 +274,7 @@
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1) //Compel updates before
 
-	src.set_dir(turn(src.dir, 270))
+	set_dir(turn(src.dir, 270))
 
 	if(src.state != "01")
 		update_nearby_tiles(need_rebuild=1)

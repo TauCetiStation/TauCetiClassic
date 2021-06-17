@@ -488,20 +488,20 @@
 					return
 				locked = target
 				occupant_message("Locked on [target]")
-				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+				send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 				return
 			else if(target!=locked)
 				if(locked in view(chassis))
 					locked.throw_at(target, 14, 1.5, chassis)
 					locked = null
-					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 					set_ready_state(0)
 					chassis.use_power(energy_drain)
 					do_after_cooldown()
 				else
 					locked = null
 					occupant_message("Lock on [locked] disengaged.")
-					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+					send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		if(2)
 			if(!action_checks(target)) return
 			var/list/atoms = list()
@@ -528,7 +528,7 @@
 	..()
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	return
 
 
@@ -710,7 +710,7 @@
 			log_message("Deactivated.")
 			set_ready_state(1)
 		chassis.add_overlay(droid_overlay)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	return
 
 /datum/global_iterator/mecha_repair_droid/process(obj/item/mecha_parts/mecha_equipment/repair_droid/RD)
@@ -904,7 +904,7 @@
 			message = "Unit is full."
 		else
 			message = "[result] unit\s of [fuel] successfully loaded."
-			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+			send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 		occupant_message(message)
 	return
 

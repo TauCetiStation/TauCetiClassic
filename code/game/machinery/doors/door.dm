@@ -70,7 +70,7 @@
 
 	if(istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = AM
-		if(src.check_access(bot.botcard) || emergency)
+		if(check_access(bot.botcard) || emergency)
 			if(density)
 				open()
 		return
@@ -78,7 +78,7 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)) || emergency)
+			if(mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)) || emergency)
 				open()
 			else
 				do_animate("deny")
@@ -87,7 +87,7 @@
 	if(istype(AM, /obj/structure/stool/bed/chair/wheelchair))
 		var/obj/structure/stool/bed/chair/wheelchair/wheel = AM
 		if(density)
-			if((wheel.pulling && src.allowed(wheel.pulling)) || emergency)
+			if((wheel.pulling && allowed(wheel.pulling)) || emergency)
 				open()
 			else
 				do_animate("deny")
@@ -191,20 +191,6 @@
 	if(prob(40))
 		qdel(src)
 	return
-
-
-/obj/machinery/door/emp_act(severity)
-	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		open()
-	if(prob(40/severity))
-		if(secondsElectrified == 0)
-			secondsElectrified = -1
-			diag_hud_set_electrified()
-			spawn(300)
-				secondsElectrified = 0
-				diag_hud_set_electrified()
-	..()
-
 
 /obj/machinery/door/ex_act(severity)
 	switch(severity)

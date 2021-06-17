@@ -47,14 +47,14 @@
 			beaker = O
 			src.verbs += /obj/machinery/juicer/verb/detach
 			update_icon()
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return 0
 	if (!is_type_in_list(O, allowed_items))
 		to_chat(user, "It looks as not containing any juice.")
 		return 1
 	user.remove_from_mob(O)
 	O.loc = src
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return 0
 
 /obj/machinery/juicer/attack_ai(mob/user)
@@ -114,7 +114,7 @@
 		if ("detach")
 			detach()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/juicer/verb/detach()
 	set category = "Object"

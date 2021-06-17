@@ -45,7 +45,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
 
 		if(anchored)
 			spawn(0)
@@ -162,5 +162,5 @@
 	if (src.anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return
-	src.set_dir(turn(src.dir, 270))
+	set_dir(turn(src.dir, 270))
 	return

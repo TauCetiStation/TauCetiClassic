@@ -141,7 +141,7 @@
 				P.icon_state = "deliverycrate[i]"
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 			src.amount -= 1
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
@@ -215,7 +215,7 @@
 	return
 
 /obj/item/device/destTagger/Topic(href, href_list)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
 	openwindow(usr)
@@ -266,7 +266,7 @@
 	else if(istype(AM, /mob))
 		var/mob/M = AM
 		M.loc = src
-	src.flush()
+	flush()
 
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1

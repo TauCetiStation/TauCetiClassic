@@ -91,7 +91,7 @@
 
 /obj/machinery/computer/general_air_control/process()
 	..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/general_air_control/Destroy()
 	radio_controller.remove_object(src, frequency)

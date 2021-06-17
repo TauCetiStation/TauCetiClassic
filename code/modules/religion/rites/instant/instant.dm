@@ -292,7 +292,7 @@
 		UnregisterSignal(slave, COMSIG_ENTER_AREA)
 		slave.dust()
 
-/datum/religion_rites/instant/cult/proc/remove_curse(datum/species, mob/M, new_species)
+/datum/religion_rites/instant/cult/proc/remove_curse(mob/M, datum/species, new_species)
 	if(new_species == SKELETON)
 		UnregisterSignal(M, COMSIG_ENTER_AREA)
 

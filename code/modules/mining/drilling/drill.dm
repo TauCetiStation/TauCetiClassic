@@ -131,7 +131,7 @@
 /obj/machinery/mining/drill/proc/system_error(error)
 
 	if(error)
-		src.visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
+		visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
 	need_player_check = 1
 	active = 0
 	update_icon()
@@ -301,8 +301,7 @@
 		if(cell)
 			to_chat(user, "The drill already has a cell installed.")
 		else
-			user.drop_item()
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			cell = O
 			component_parts += O
 			to_chat(user, "You install \the [O].")

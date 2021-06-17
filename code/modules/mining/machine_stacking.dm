@@ -50,7 +50,7 @@
 			new stacktype (get_turf(machine.output), machine.stack_storage[href_list["release_stack"]])
 			machine.stack_storage[href_list["release_stack"]] = 0
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /**********************Mineral stacking unit**************************/

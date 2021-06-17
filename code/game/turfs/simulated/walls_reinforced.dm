@@ -38,7 +38,7 @@
 
 	/*user << "<span class='notice'>You push the wall but nothing happens!</span>"
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
-	src.add_fingerprint(user)*/ //this code is in standard wall attack_hand proc
+	add_fingerprint(user)*/ //this code is in standard wall attack_hand proc
 	..()
 	return
 
@@ -67,10 +67,10 @@
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
-			src.dismantle_wall()
+			dismantle_wall()
 			return
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W

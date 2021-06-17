@@ -26,7 +26,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
-	if (!src.is_open_container())
+	if (!is_open_container())
 		return 0
 
 	if(reagents.total_volume <= 0)
@@ -166,13 +166,7 @@
 		return
 
 	if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
-		if(!Adjacent(usr))
-			usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
-		reagents.standard_splash(loc, user=usr)
-		return
-
-	if(!Adjacent(usr))
-		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
+		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
 		reagents.standard_splash(loc, user=usr)
 		return
 

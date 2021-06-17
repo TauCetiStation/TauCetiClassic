@@ -16,9 +16,8 @@
 		if(held_container)
 			to_chat(user, "<span class='warning'>You must remove the [held_container] first.</span>")
 		else
-			user.drop_item(src)
+			user.drop_from_inventory(W, src)
 			held_container = W
-			held_container.loc = src
 			to_chat(user, "<span class='notice'>You put \the [held_container] onto \the [src].</span>")
 			var/image/I = image("icon" = W, "layer" = FLOAT_LAYER, "pixel_y" = 13 * PIXEL_MULTIPLIER)
 			var/image/I2 = image("icon" = src.icon, icon_state ="bunsen_prong", "layer" = FLOAT_LAYER)
@@ -50,11 +49,11 @@
 	held_container = null
 
 /obj/machinery/bunsen_burner/proc/try_heating()
-	src.visible_message("<span class='notice'>[bicon(src)] [src] hisses.</span>")
+	visible_message("<span class='notice'>[bicon(src)] [src] hisses.</span>")
 	if(held_container && heating)
 		heated = TRUE
 		if(istype(held_container, /obj/item/weapon/reagent_containers/food/snacks/meat))
-			src.visible_message("<span class='notice'> [bicon(held_container)] [held_container] was successfully fried on the [src].</span>")
+			visible_message("<span class='notice'> [bicon(held_container)] [held_container] was successfully fried on the [src].</span>")
 			new /obj/item/weapon/reagent_containers/food/snacks/meatsteak(get_turf(src))
 			held_container = 0
 			cut_overlays()
