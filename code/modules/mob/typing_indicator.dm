@@ -18,7 +18,7 @@
 	set hidden = TRUE
 
 	set_typing_indicator(TRUE)
-	var/message = input("","say (text)") as text|null
+	var/message = input(src, "", "Say \"text\"") as text|null //verb_like input
 	if(message)
 		say_verb(message)
 	set_typing_indicator(FALSE)
