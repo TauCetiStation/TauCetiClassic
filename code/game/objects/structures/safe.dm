@@ -141,7 +141,7 @@
 			return TRUE
 		if("turnright")
 			if(open)
-				return
+				return FALSE
 			var/ticks = text2num(params["num"])
 			for(var/i = 1 to ticks)
 				dial = WRAP(dial - 1, 0, 100)
@@ -159,7 +159,7 @@
 			return TRUE
 		if("turnleft")
 			if(open)
-				return
+				return FALSE
 			var/ticks = text2num(params["num"])
 			for(var/i = 1 to ticks)
 				dial = WRAP(dial + 1, 0, 100)
@@ -177,13 +177,13 @@
 			return TRUE
 		if("retrieve")
 			if(!open)
-				return
+				return FALSE
 			var/index = text2num(params["index"])
 			if(!index)
-				return
+				return FALSE
 			var/obj/item/I = contents[index]
 			if(!I || !Adjacent(user))
-				return
+				return FALSE
 			user.put_in_hands(I)
 			space -= I.w_class
 			return TRUE
