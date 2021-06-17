@@ -89,8 +89,7 @@
 		if(w_items + I.w_class > ITEM_SIZE_HUGE)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		w_items += I.w_class
 		user.SetNextMove(CLICK_CD_INTERACT)
 		add_fingerprint(user)
