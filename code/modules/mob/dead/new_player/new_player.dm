@@ -90,7 +90,7 @@
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
 			return
-		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
+		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return
 			var/mob/dead/observer/observer = new()
@@ -130,7 +130,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 
 		LateChoices()
@@ -147,7 +147,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return

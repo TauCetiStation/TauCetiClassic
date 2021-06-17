@@ -4,10 +4,12 @@
 	icon_state = "blob_node"
 	health = 100
 	fire_resist = 2
+	var/given_name = null
 
 
 /obj/effect/blob/node/atom_init(mapload, h = 100)
 	blob_nodes += src
+	given_name = "[get_area(loc)] ([rand(100, 999)])"
 	START_PROCESSING(SSobj, src)
 	. = ..()
 

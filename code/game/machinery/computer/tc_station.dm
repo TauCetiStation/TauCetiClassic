@@ -37,9 +37,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 		if(O.hidden_uplink)
 			var/obj/item/P = user.get_active_hand()
-			user.drop_item()
+			user.drop_from_inventory(P, src)
 			uplinkholder = P
-			P.loc = src
 			P.add_fingerprint(user)
 			update_icon()
 			updateUsrDialog()
@@ -109,7 +108,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	else if(href_list["eject"])
 		ejectuplink()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /////////////////////////////////////////

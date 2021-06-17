@@ -29,7 +29,7 @@
 			on = 0
 			updateicon()
 			set_light(0)
-			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
+			visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
 
@@ -103,8 +103,7 @@
 			if(cell)
 				to_chat(user, "There is a power cell already installed.")
 			else
-				user.drop_item()
-				W.loc = src
+				user.drop_from_inventory(W, src)
 				cell = W
 				to_chat(user, "You insert the power cell.")
 	updateicon()

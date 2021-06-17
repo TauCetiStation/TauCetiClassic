@@ -106,7 +106,7 @@
 /proc/check_human_covering(mob/living/carbon/human/T, mob/living/user, covered)
 	if(!covered)
 		covered = get_human_covering(T)
-	switch(user.zone_sel.selecting)
+	switch(user.get_targetzone())
 		if(BP_CHEST)
 			if(covered & UPPER_TORSO)
 				return FALSE
@@ -138,7 +138,7 @@
 
 /proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
 	checks_for_surgery(M, user, FALSE)
-	var/target_zone = user.zone_sel.selecting
+	var/target_zone = user.get_targetzone()
 	var/covered
 	if(ishuman(M))
 		covered = get_human_covering(M)
@@ -154,7 +154,7 @@
 
 			S.begin_step(user, M, target_zone, tool)		//...start on it
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
-			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.zone_sel.selecting && target_zone == user.zone_sel.selecting)
+			if(prob(S.tool_quality(tool)) && tool.use_tool(M,user, rand(S.min_duration, S.max_duration), volume=100) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if((tool in user.contents) && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~

@@ -140,7 +140,7 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."
 
 
@@ -152,5 +152,5 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.set_dir(turn(src.dir, -90))
+	set_dir(turn(src.dir, -90))
 	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."

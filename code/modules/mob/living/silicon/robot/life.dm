@@ -147,7 +147,7 @@
 		src.blinded = 1
 
 	if(!is_component_functioning("actuator"))
-		src.Paralyse(3)
+		Paralyse(3)
 
 
 	return 1
@@ -226,7 +226,7 @@
 	if (src.syndicate && src.client)
 		if(src.connected_ai)
 			src.connected_ai.connected_robots -= src
-			src.set_ai_link(null)
+			set_ai_link(null)
 		if(src.mind)
 			if(!src.mind.special_role)
 				src.mind.special_role = "traitor"

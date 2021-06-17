@@ -59,9 +59,8 @@ var/global/list/rad_collectors = list()
 		if(src.P)
 			to_chat(user, "<span class='warning'>There's already a phoron tank loaded.</span>")
 			return 1
-		user.drop_item()
+		user.drop_from_inventory(W, src)
 		src.P = W
-		W.loc = src
 		update_icons()
 	else if(iscrowbar(W))
 		if(P && !src.locked)
@@ -81,7 +80,7 @@ var/global/list/rad_collectors = list()
 		else
 			disconnect_from_network()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (allowed(user))
 			if(active)
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")

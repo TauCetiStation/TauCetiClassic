@@ -777,15 +777,15 @@
 		if("Message")
 
 			var/obj/item/device/pda/P = locate(href_list["target"])
-			src.create_message(U, P, !href_list["notap"])
+			create_message(U, P, !href_list["notap"])
 			if(mode == 2)
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
 					mode = 21
 
 		if("DM")		// Choice for sending messages from Crew Manifest
-			var/obj/item/device/pda/P = src.dm_find_pda(href_list["reciever"])
-			src.create_message(U, P, !href_list["notap"])
+			var/obj/item/device/pda/P = dm_find_pda(href_list["reciever"])
+			create_message(U, P, !href_list["notap"])
 
 		if("Select Conversation")
 			var/P = href_list["convo"]
@@ -866,7 +866,7 @@
 						useMS = TRUE
 						break
 
-			var/datum/signal/signal = src.telecomms_process()
+			var/datum/signal/signal = telecomms_process()
 
 			if(signal && signal.data["done"])
 				useTC = TRUE
@@ -928,7 +928,7 @@
 						useMS = MS
 						break
 
-			var/datum/signal/signal = src.telecomms_process()
+			var/datum/signal/signal = telecomms_process()
 
 			var/useTC = 0
 			if(signal)
@@ -1157,7 +1157,7 @@
 				useMS = MS
 				break
 
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 
 	var/useTC = 0
 	if(signal)
@@ -1297,15 +1297,13 @@
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item()
-				I.loc = src
+				user.drop_from_inventory(I, src)
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			var/obj/old_id = id
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			id = I
 			user.put_in_hands(old_id)
 	update_icon()
@@ -1523,10 +1521,10 @@
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		alert("Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
+		tgui_alert(usr, "Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
 		return FALSE
 	if(!user.dna)	//just in case
-		alert("Eror! PDA can't read your fingerprints.")
+		tgui_alert(usr, "Eror! PDA can't read your fingerprints.")
 		return FALSE
 	var/fingerprints = md5(user.dna.uni_identity)
 	if(fingerprints in owner_fingerprints)
@@ -1538,7 +1536,7 @@
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else
-			alert("Invalid Password!")
+			tgui_alert(usr, "Invalid Password!")
 			return FALSE
 
 /obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)

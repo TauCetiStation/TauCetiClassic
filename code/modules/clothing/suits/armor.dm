@@ -195,7 +195,7 @@
 		to_chat(user, "<span class='notice'>The reactive armor is now inactive.</span>")
 		src.icon_state = "reactiveoff"
 		src.item_state = "reactiveoff"
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 	return
 
 /obj/item/clothing/suit/armor/reactive/emp_act(severity)
@@ -277,8 +277,7 @@
 			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
-		usr.drop_item()
-		holstered.loc = src
+		usr.drop_from_inventory(holstered, src)
 		usr.visible_message("<span class='notice'>\The [usr] holsters \the [holstered].</span>", "You holster \the [holstered].")
 	else
 		if(istype(usr.get_active_hand(),/obj) && istype(usr.get_inactive_hand(),/obj))

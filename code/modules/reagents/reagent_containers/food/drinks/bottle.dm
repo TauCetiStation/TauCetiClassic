@@ -75,7 +75,7 @@
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
-	src.transfer_fingerprints_to(B)
+	transfer_fingerprints_to(B)
 
 	qdel(src)
 
@@ -158,7 +158,7 @@
 		src.reagents.reaction(target, TOUCH)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
-	src.smash(target, user)
+	smash(target, user)
 
 	// We're smashing the bottle into mob's face. There's no need for an afterattack.
 	return TRUE

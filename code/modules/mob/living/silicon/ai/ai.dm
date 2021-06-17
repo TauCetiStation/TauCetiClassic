@@ -230,7 +230,7 @@ var/list/ai_verbs_default = list(
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
 	if (!(SSticker && SSticker.mode && (src.mind in SSticker.mode.malf_ai)))
-		src.show_laws()
+		show_laws()
 		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 /mob/living/silicon/ai/Destroy()
@@ -382,7 +382,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", "Yes", "No")
+	var/confirm = tgui_alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
@@ -434,7 +434,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = alert("Are you sure you want to recall the shuttle?", "Confirm Shuttle Recall", "Yes", "No")
+	var/confirm = tgui_alert(usr, "Are you sure you want to recall the shuttle?", "Confirm Shuttle Recall", list("Yes", "No"))
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
@@ -626,7 +626,7 @@ var/list/ai_verbs_default = list(
 	set name = "Cancel Camera View"
 
 	//src.cameraFollow = null
-	src.view_core()
+	view_core()
 
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
@@ -739,7 +739,7 @@ var/list/ai_verbs_default = list(
 					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 					holo_icon = chooses_ai_staff[state]
 			else
-				alert("No suitable records found. Aborting.")
+				tgui_alert(usr, "No suitable records found. Aborting.")
 
 		if("Unique Category")
 			gen_ai_uniq_holo()
@@ -829,7 +829,7 @@ var/list/ai_verbs_default = list(
 				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
-			anchored = 0
+			anchored = FALSE
 			return
 		else
 			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
@@ -837,7 +837,7 @@ var/list/ai_verbs_default = list(
 				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")
-			anchored = 1
+			anchored = TRUE
 			return
 	else
 		return ..()

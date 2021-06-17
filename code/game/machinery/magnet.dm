@@ -11,7 +11,7 @@
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
 	layer = 2.5
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 
@@ -189,8 +189,8 @@
 	name = "Magnetic Control Console"
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 45
 	frequency = 1449

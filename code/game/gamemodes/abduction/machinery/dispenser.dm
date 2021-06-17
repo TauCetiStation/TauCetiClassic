@@ -5,8 +5,8 @@
 	desc = "A tank filled with replacement organs."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/list/gland_types
 	var/list/gland_colors
 	var/list/amounts
@@ -46,8 +46,7 @@
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/gland))
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
@@ -60,7 +59,7 @@
 		return
 	if(href_list["dispense"])
 		Dispense(text2num(href_list["dispense"]))
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)
