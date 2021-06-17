@@ -525,7 +525,7 @@ var/list/slot_equipment_priority = list(
 		return TRUE
 
 //Create delay for equipping
-/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing/
+/mob/proc/delay_clothing_u_equip(obj/item/clothing/C) // Bone White - delays unequipping by parameter.  Requires W to be /obj/item/clothing
 
 	if(!istype(C))
 		return 0
