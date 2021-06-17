@@ -11,7 +11,6 @@
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
-
 	sweep_step = 2
 
 	origin_tech = "combat=2"
@@ -87,7 +86,13 @@
 		//H.apply_effect(10, STUN, 0)
 		//H.apply_effect(10, WEAKEN, 0)
 		//H.apply_effect(10, STUTTER, 0)
-		H.apply_effect(agony,AGONY,0)
+		var/calc_power = 0
+		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+
+		calc_power = agony*H.get_siemens_coefficient_organ(BP)
+
+		H.apply_effect(calc_power, AGONY, 0)
+		visible_message("Applied [agony] agony")
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
@@ -117,7 +122,7 @@
 				//H.apply_effect(10, STUN, 0)
 				//H.apply_effect(10, WEAKEN, 0)
 				//H.apply_effect(10, STUTTER, 0)
-				H.apply_effect(agony,AGONY,0)
+				H.apply_effect(60,AGONY,0)
 				charges--
 
 				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
