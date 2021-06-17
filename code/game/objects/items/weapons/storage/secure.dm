@@ -141,7 +141,7 @@
 				else
 					code = "ERROR"
 			else
-				if ((digit == "R") && (src.emagged == 0) && (!src.l_setshort))
+				if ((digit == "R") && (emagged == 0) && (!l_setshort))
 					locked = 1
 					overlays = null
 					code = null
