@@ -94,11 +94,11 @@
 /datum/game_mode/proc/CreateFactions(list/factions_to_process, populate_factions = TRUE)
 	if(factions_to_process == null)
 		factions_to_process = factions_allowed
-	var/pc = get_player_count()
+	var/pc = get_player_count(FALSE)
 	for(var/Fac in factions_to_process)
 		if(islist(Fac))
 			var/list/L = Fac
-			CreateFactions(L, FALSE)
+			CreateFactions(L, pc, FALSE)
 		else if(isnum(factions_allowed[Fac]))
 			for(var/i in 1 to factions_allowed[Fac])
 				CreateFaction(Fac, pc)
