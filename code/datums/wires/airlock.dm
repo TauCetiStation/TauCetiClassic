@@ -162,6 +162,8 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 				if(ismob(usr)) // EMP can do this
 					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
+				else
+					A.shockedby += "\[[time_stamp()]\]EMP or smth else"
 				A.secondsElectrified = 30
 				A.diag_hud_set_electrified()
 				START_PROCESSING(SSmachines, A)
