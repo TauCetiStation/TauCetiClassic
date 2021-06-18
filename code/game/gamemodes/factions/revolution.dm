@@ -92,12 +92,12 @@
 
 /datum/faction/revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
-		log_debug("Adding head kill/capture/convert objective for [M.name]")
+		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 
 		var/datum/objective/rp_rev/rev_obj = AppendObjective(/datum/objective/rp_rev, TRUE)
 		if(rev_obj)
 			rev_obj.target = M.mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [M.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
+			rev_obj.explanation_text = "Capture, convert or exile from station [M.mind.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
 			AnnounceObjectives()
 
 /datum/faction/revolution/process()
