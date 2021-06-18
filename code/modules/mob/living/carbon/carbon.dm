@@ -8,6 +8,9 @@
 	return ..()
 
 /mob/living/carbon/Life()
+	if(!loc)
+		return
+
 	..()
 
 	// Increase germ_level regularly
