@@ -1,4 +1,10 @@
 /datum/preferences/proc/ShowCustomKeybindings(mob/user)
+	if(!key_bindings.len)
+		. += "Этот текст вы можете видеть только при ошибке со стороны кода.<br>"
+		. += "Попробуйте нажать сверху кнопку Reload Slot. Если это не помогло, то подождите рестрат."
+		. += "Можете так же сообщить о проблеме в гитхаб репозитория."
+		return
+
 	// Create an inverted list of keybindings -> key
 	var/list/user_binds = list()
 	for (var/key in key_bindings)

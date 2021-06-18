@@ -304,10 +304,9 @@
 		if(beaker)
 			to_chat(user, "<span class='warning'>Сосуд уже загружен в криогенную камеру!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.drop_from_inventory(I, src))
 			return
 		beaker = I
-		I.forceMove(src)
 		user.visible_message(
 			"[user] помещает [I] в криокамеру.",
 			"<span class='notice'>Вы помещаете сосуд в криогенную камеру.</span>")

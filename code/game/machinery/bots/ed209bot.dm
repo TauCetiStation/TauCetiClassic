@@ -177,7 +177,7 @@
 	if(!on)
 		return
 
-	anchored = 0
+	anchored = FALSE
 	threatlevel = 0
 	for(var/mob/living/L in view(12, src)) //Let's find us a criminal
 		if(L.stat || (lasertag_color && L.lying && !L.crawling))
@@ -245,7 +245,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(!lasertag_color)
-		var/obj/item/weapon/gun/energy/taser/stunrevolver/G = new /obj/item/weapon/gun/energy/taser/stunrevolver(Tsec)
+		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "blue")
 		var/obj/item/weapon/gun/energy/laser/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(Tsec)
@@ -330,7 +330,7 @@
 		pulse2.icon = 'icons/effects/effects.dmi'
 		pulse2.icon_state = "empdisable"
 		pulse2.name = "emp sparks"
-		pulse2.anchored = 1
+		pulse2.anchored = TRUE
 		pulse2.set_dir(pick(cardinal))
 		QDEL_IN(pulse2, 10)
 		var/list/mob/living/carbon/targets = new
@@ -450,7 +450,7 @@
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if(!istype(I, /obj/item/weapon/gun/energy/taser/stunrevolver))
+					if(!istype(I, /obj/item/weapon/gun/energy/taser))
 						return
 					name = "taser ED-209 assembly"
 				else

@@ -63,8 +63,8 @@
 			return
 
 	if (speaking && (speaking.flags & SIGNLANG))
-		var/obj/item/organ/external/LH = src.get_bodypart(BP_L_ARM)
-		var/obj/item/organ/external/RH = src.get_bodypart(BP_R_ARM)
+		var/obj/item/organ/external/LH = get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/RH = get_bodypart(BP_R_ARM)
 		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
@@ -206,11 +206,9 @@
 		else
 			if(message_mode)
 				if(message_mode in (radiochannels | "department"))
-					if(l_ear && istype(l_ear,/obj/item/device/radio))
-						l_ear.talk_into(src,message, message_mode, verb, speaking)
+					if(l_ear && istype(l_ear,/obj/item/device/radio) && l_ear.talk_into(src,message, message_mode, verb, speaking))
 						used_radios += l_ear
-					else if(r_ear && istype(r_ear,/obj/item/device/radio))
-						r_ear.talk_into(src,message, message_mode, verb, speaking)
+					else if(r_ear && istype(r_ear,/obj/item/device/radio) && r_ear.talk_into(src,message, message_mode, verb, speaking))
 						used_radios += r_ear
 
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))

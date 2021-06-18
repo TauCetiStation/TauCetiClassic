@@ -3,7 +3,7 @@
 	icon_state = "gsensor1"
 	name = "Gas Sensor"
 
-	anchored = 1
+	anchored = TRUE
 	var/state = 0
 
 	var/id_tag
@@ -91,7 +91,7 @@
 
 /obj/machinery/computer/general_air_control/process()
 	..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/general_air_control/Destroy()
 	radio_controller.remove_object(src, frequency)

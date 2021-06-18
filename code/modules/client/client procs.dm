@@ -327,6 +327,9 @@ var/list/blacklisted_builds = list(
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
+	
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
 
 	if(!cob)
 		cob = new()
@@ -716,7 +719,7 @@ var/list/blacklisted_builds = list(
 				if("South")
 					movement_keys[key] = SOUTH
 				if("Say")
-					winset(src, "default-\ref[key]", "parent=default;name=[key];command=say")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
 				if("OOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
 				if("Me")
