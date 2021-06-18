@@ -86,6 +86,8 @@
 	//Action var
 	var/strafe = FALSE
 
+	var/prev_move_dir = 0
+
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
 
@@ -320,12 +322,16 @@
 		move_result = mechsteprand()
 	else if(strafe)
 		move_result	= mechstep(direction)
-	else if(direction & dir)
+	else if(direction == dir || direction == prev_move_dir)
 		move_result = mechstep(dir)
 	else if(ISDIAGONALDIR(direction))
-		move_result = mechturn(direction & EAST_WEST)
+		if(dir & NORTH_SOUTH)
+			move_result = mechturn(direction & EAST_WEST)
+		else
+			move_result = mechturn(direction & NORTH_SOUTH)
 	else
 		move_result = mechturn(direction)
+	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
 		if(do_after(step_in * move_result))
