@@ -89,7 +89,7 @@
 		var/calc_power = 0
 		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
-		calc_power = agony*H.get_siemens_coefficient_organ(BP)
+		calc_power = agony * H.get_siemens_coefficient_organ(BP)
 
 		H.apply_effect(calc_power, AGONY, 0)
 		user.lastattacked = M
