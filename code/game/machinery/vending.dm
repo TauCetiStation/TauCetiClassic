@@ -181,8 +181,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		coin = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
@@ -235,8 +234,7 @@
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
 	else if (istype(W, /obj/item/weapon/spacecash/ewallet))
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		ewallet = W
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 
@@ -894,8 +892,8 @@
 	icon_deny = "sec-deny"
 	req_access = list(1)
 	products = list(/obj/item/weapon/handcuffs = 8,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6)
-	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2,/obj/item/device/flashlight/seclite = 4)
+					/obj/item/weapon/storage/box/evidence = 6)
+	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/device/flashlight/seclite = 4)
 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
@@ -1336,6 +1334,28 @@
 				  /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 3)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2)
 	refill_canister = /obj/item/weapon/vending_refill/junkfood
+
+/obj/machinery/vending/donut
+	name = "Monkin' Donuts"
+	desc = "A donut vendor provided by Robust Industries, LLC."
+	product_slogans = "Test your robustness!;Replenish your robustness!"
+	product_ads = "Homer Simpson approves!;Each of us is a little cop!;Hope you're hunger!;Over 1 million donuts sold!;Try our new Robust Coffee!"
+	icon_state = "donuts"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/classic = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/choco = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 5,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly = 5)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/classic = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/choco = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 3,
+					/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly = 3)
+	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/donut/syndie = 5)
+	premium = list(/obj/item/weapon/storage/fancy/donut_box = 3)
+	refill_canister = /obj/item/weapon/vending_refill/donut
 
 /obj/machinery/vending/noiromat
 	name = "Noir-O-Mat"

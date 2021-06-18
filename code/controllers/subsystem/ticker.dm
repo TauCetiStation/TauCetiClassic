@@ -536,6 +536,7 @@ SUBSYSTEM_DEF(ticker)
 			continue
 		var/mob/living/carbon/human/L = new(pick(eorgwarp))
 		M.mind.transfer_to(L)
+		L.playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, vary = FALSE, ignore_environment = TRUE)
 		L.equipOutfit(/datum/outfit/arena)
 		L.name = "Gladiator ([rand(1, 1000)])"
 		L.real_name = L.name

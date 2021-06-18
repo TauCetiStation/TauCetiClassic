@@ -23,8 +23,7 @@
 	if(!proximity) return
 	if(istype(target,/obj/structure/sink))
 		to_chat(user, "<span class='notice'>You place [src] under a stream of water...</span>")
-		user.drop_item()
-		loc = get_turf(target)
+		user.drop_from_inventory(src, get_turf(target))
 		return Swell()
 	..()
 

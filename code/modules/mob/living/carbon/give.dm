@@ -35,7 +35,7 @@
 				to_chat(M, "<span class='red'>[src] seem to have given up on giving \the [I] to you.</span>")
 				return
 			else
-				drop_from_inventory(I)
+				drop_from_inventory(I, M)
 				M.put_in_hands(I)
 			I.add_fingerprint(M)
 			M.visible_message("<span class='notice'>[src] handed \the [I] to [M].</span>")
