@@ -430,7 +430,7 @@
 	mymob.zone_sel.color = ui_color
 	mymob.zone_sel.alpha = ui_alpha
 	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
 
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon

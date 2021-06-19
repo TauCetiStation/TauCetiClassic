@@ -187,7 +187,7 @@
 	add_overlay(img)
 	return
 
-//This is the proc used to update all the action buttons. Properly defined in /mob/living/
+//This is the proc used to update all the action buttons. Properly defined in /mob/living
 /mob/proc/update_action_buttons()
 	return
 

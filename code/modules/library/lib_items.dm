@@ -15,8 +15,8 @@
 	name = "bookcase"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "book-0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	opacity = 1
 
 /obj/structure/bookcase/atom_init()
@@ -28,8 +28,7 @@
 
 /obj/structure/bookcase/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))

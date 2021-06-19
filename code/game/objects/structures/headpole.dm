@@ -3,8 +3,8 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "metal_pike"
 	desc = "How did this get here?"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/obj/item/weapon/twohanded/spear/spear = null
 	var/obj/item/organ/external/head/head = null
 	var/image/display_head = null
@@ -49,7 +49,7 @@
 			spear.forceMove(get_turf(src))
 			spear = null
 		else
-			new /obj/item/weapon/twohanded/spear/(get_turf(src))
+			new /obj/item/weapon/twohanded/spear(get_turf(src))
 		qdel(src)
 
 /obj/structure/headpole/Destroy()

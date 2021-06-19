@@ -715,7 +715,7 @@ var/list/turret_icons
 	shot_synth = TC.shot_synth
 	ailock = TC.ailock
 
-	src.power_change()
+	power_change()
 
 /*
 		Portable turret constructions

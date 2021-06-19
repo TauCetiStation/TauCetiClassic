@@ -147,7 +147,7 @@
 	if(contents.len > 0) //TODO: several items at once? several different items?
 		to_chat(user, "<span class='warning'>Something is already in the processing chamber.</span>")
 		return 1
-	var/what = O
+	var/obj/item/what = O
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		what = G.affecting
@@ -158,9 +158,7 @@
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
-	user.drop_item()
-	what:loc = src
-	return
+	user.drop_from_inventory(what, src)
 
 /obj/machinery/processor/attack_hand(mob/user)
 	. = ..()

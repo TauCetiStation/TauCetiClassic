@@ -545,7 +545,7 @@
 		source = "hit"
 
 	if(wearer)
-		var/obj/item/rig_module/simple_ai/ai = find_module(/obj/item/rig_module/simple_ai/)
+		var/obj/item/rig_module/simple_ai/ai = find_module(/obj/item/rig_module/simple_ai)
 		if(ai && ai.active)
 			ai.handle_module_damage(source, dam_module)
 		else
