@@ -71,8 +71,11 @@ SUBSYSTEM_DEF(throwing)
 	thrownthing = null
 	target = null
 	thrower = null
+	target_turf = null
 	if(callback)
 		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
+	if(early_callback)
+		QDEL_NULL(early_callback)
 	return ..()
 
 ///Defines the datum behavior on the thrownthing's qdeletion event.
