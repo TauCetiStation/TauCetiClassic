@@ -244,7 +244,7 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 		foundrecord.fields["rank"] = assignment
 		foundrecord.fields["real_rank"] = real_title
 
-/obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H)
+/obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 
 	set waitfor = FALSE
 	if(PDA_Manifest.len)
