@@ -173,7 +173,7 @@
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
-		reagents?.standard_splash(loc)
+		reagents.standard_splash(loc)
 		qdel(src)
 
 
