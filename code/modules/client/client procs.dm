@@ -736,6 +736,6 @@ var/list/blacklisted_builds = list(
 
 	// winget() does not work for F1 and F2
 	for(var/key in communication_hotkeys)
-		if(!(key in list("F1","F2") && !winget(src, "default-\ref[key]", "command"))
+		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
