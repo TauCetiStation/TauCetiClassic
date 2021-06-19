@@ -7,7 +7,7 @@
 	force = 10
 	throwforce = 7
 	w_class = ITEM_SIZE_NORMAL
-	var/charges = 10
+	var/charges = 15
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
