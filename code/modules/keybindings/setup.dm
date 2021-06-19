@@ -26,6 +26,16 @@
 
 	update_special_keybinds()
 
+/client/verb/reset_macros()
+	set category = "OOC"
+	set name = "Fix keybindings"
+
+	var/ans = tgui_alert(src, "Change your keyboard language to ENG and press Ok", "Reset macros")
+
+	if(ans == "Ok")
+		set_macros()
+		to_chat(src, "<span class='notice'>Keybindings was fixed</span>") // not yet but set_macros works fast enough
+
 /**
  * Manually clears any held keys, in case due to lag or other undefined behavior a key gets stuck.
  *
