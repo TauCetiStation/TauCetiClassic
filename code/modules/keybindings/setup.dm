@@ -34,7 +34,7 @@
 
 	if(ans == "Ok")
 		set_macros()
-		to_chat(src, "<span class='notice'>Keybindings was fixed</span>") // not yet but set_macros works fast enough
+		to_chat(src, "<span class='notice'>Keybindings were fixed</span>") // not yet but set_macros works fast enough
 
 /**
  * Manually clears any held keys, in case due to lag or other undefined behavior a key gets stuck.
