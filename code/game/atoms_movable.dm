@@ -111,7 +111,12 @@
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	if(!ISDIAGONALDIR(Dir))
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+
+		if(moving_diagonally)
+			return
+
 	for(var/atom/movable/AM in contents)
 		AM.locMoved(OldLoc, Dir)
 
@@ -128,7 +133,7 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return 1
+	return
 
 /atom/movable/proc/locMoved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
