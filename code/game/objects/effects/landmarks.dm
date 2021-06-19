@@ -266,7 +266,7 @@
 	..()
 	new /obj/item/clothing/suit/wizrobe/fake(loc)
 	new /obj/item/clothing/head/wizard/fake(loc)
-	new /obj/item/weapon/staff/(loc)
+	new /obj/item/weapon/staff(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/sexyclown/atom_init()

@@ -396,4 +396,4 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				if(g_amount < 0)
 					g_amount = 0
 				busy = 0
-	src.updateUsrDialog()
+	updateUsrDialog()

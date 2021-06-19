@@ -49,7 +49,7 @@
 		listclearnulls(chassis.equipment)
 		if(chassis.selected == src)
 			chassis.selected = null
-		src.update_chassis_page()
+		update_chassis_page()
 		chassis.occupant_message("<font color='red'>The [src] is destroyed!</font>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
 		if(chassis.occupant)
@@ -104,12 +104,12 @@
 	M.log_message("[src] initialized.")
 	if(!M.selected)
 		M.selected = src
-	src.update_chassis_page()
+	update_chassis_page()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
 	moveto = moveto || get_turf(chassis)
-	if(src.Move(moveto))
+	if(Move(moveto))
 		chassis.equipment -= src
 		if(chassis.selected == src)
 			chassis.selected = null
@@ -123,14 +123,14 @@
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
 	if(href_list["detach"])
-		src.detach()
+		detach()
 	return
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
 	if(chassis)
-		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",src.get_equip_info())
+		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/occupant_message(message)

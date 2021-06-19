@@ -212,8 +212,7 @@
 
 	if(O.type in can_be_placed)
 		if(contents.len < max_items_inside)
-			user.drop_item()
-			O.forceMove(src)
+			user.drop_from_inventory(O, src)
 			update_icon()
 		else
 			to_chat(user, "<span class='rose'>\The [src] is full!</span>")

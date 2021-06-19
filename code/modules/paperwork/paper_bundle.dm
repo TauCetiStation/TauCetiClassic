@@ -73,7 +73,7 @@
 
 	to_chat(usr, desc)
 	if(in_range(usr, src))
-		src.attack_self(usr)
+		attack_self(usr)
 	else
 		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 	return
@@ -161,7 +161,7 @@
 	else
 		to_chat(usr, "<span class='notice'>You need to hold it in hands!</span>")
 	if (istype(src.loc, /mob))
-		src.attack_self(src.loc)
+		attack_self(src.loc)
 		updateUsrDialog()
 
 

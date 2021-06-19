@@ -82,6 +82,7 @@
 #define TRAIT_DALTONISM           "daltonism"
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
+#define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_MERCHANT            "merchant"
 #define TRAIT_MULE                "mule"
 
