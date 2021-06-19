@@ -64,6 +64,23 @@ SUBSYSTEM_DEF(throwing)
 	var/datum/callback/callback
 	var/datum/callback/early_callback // used when you want to call something before throw_impact().
 
+/datum/thrownthing/Destroy()
+	SSthrowing.processing -= thrownthing
+	SSthrowing.currentrun -= thrownthing
+	thrownthing.throwing = null
+	thrownthing = null
+	target = null
+	thrower = null
+	if(callback)
+		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
+	return ..()
+
+///Defines the datum behavior on the thrownthing's qdeletion event.
+/datum/thrownthing/proc/on_thrownthing_qdel(atom/movable/source, force)
+	SIGNAL_HANDLER
+
+	qdel(src)
+
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
 	if (!isturf(AM.loc) || !AM.throwing)
@@ -111,7 +128,6 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/proc/finialize(hit = FALSE, atom/movable/AM)
 	set waitfor = 0
-	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
 	if (QDELETED(thrownthing) || !thrownthing.throwing)
 		return
@@ -146,6 +162,8 @@ SUBSYSTEM_DEF(throwing)
 	thrownthing.fly_speed = 0
 	if (callback)
 		callback.Invoke()
+
+	qdel(src)
 
 /datum/thrownthing/proc/hit_check()
 	for (var/thing in get_turf(thrownthing))
