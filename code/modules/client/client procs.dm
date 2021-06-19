@@ -735,6 +735,6 @@ var/list/blacklisted_builds = list(
 					communication_hotkeys += key
 
 	for(var/key in communication_hotkeys)
-		if(length(key) == 1 && !winget(src, "default-\ref[key]", "command"))
+		if(key != "F2" && !winget(src, "default-\ref[key]", "command"))
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
