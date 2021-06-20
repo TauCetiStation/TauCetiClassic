@@ -1093,6 +1093,7 @@
 		Move(src.loc)
 		src.icon_state = reset_icon()
 		set_dir(dir_in)
+		GrantActions(brainmob)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
