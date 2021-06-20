@@ -660,7 +660,8 @@
 		. = ..()
 
 		if(pulling && !restrained())
-			if(get_dist(src, pulling) > 1)
+			var/diag = get_dir(src, pulling)
+			if(get_dist(src, pulling) > 1 || ISDIAGONALDIR(diag))
 				if(isliving(pulling))
 					var/mob/living/M = pulling
 					if(M.grabbed_by.len)
