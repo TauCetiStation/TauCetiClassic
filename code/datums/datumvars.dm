@@ -262,8 +262,6 @@
 		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
 		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
 
-		body += "<option value='?_src_=vars;fix_nano=\ref[D]'>Fix NanoUI</option>"
-
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
