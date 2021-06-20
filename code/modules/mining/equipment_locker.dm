@@ -243,7 +243,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
 	density = TRUE
-	anchored = 1.0
+	anchored = TRUE
 	var/static/list/selection_items
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list
