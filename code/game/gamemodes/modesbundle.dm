@@ -54,6 +54,16 @@
 		/datum/game_mode/shadowling,
 	)
 
+/datum/modesbundle/mix
+	name = "Mix"
+	votable = TRUE
+
+/datum/modesbundle/mix/New()
+	for(var/type in subtypesof(/datum/game_mode/mix) + /datum/game_mode/extended)
+		var/datum/game_mode/M = type
+		if(initial(M.name))
+			possible_gamemodes += type
+
 /datum/modesbundle/extended
 	name = "Extended"
 	hidden = FALSE
@@ -78,14 +88,8 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + /datum/game_mode/extended
+	black_types = subtypesof(/datum/game_mode/mix)
 	..()
-
-/datum/modesbundle/all/secret_plus
-	name = "Secret Plus"
-	votable = TRUE
-
-	black_types = list(/datum/game_mode/extended)
 
 /datum/modesbundle/run_anyway
 	name = "Modes that will ALWAYS start"
