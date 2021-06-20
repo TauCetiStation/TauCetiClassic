@@ -476,6 +476,7 @@
 
 /obj/mecha/proc/toggle_strafe()
 	strafe = !strafe
+	prev_move_dir = 0
 
 	occupant_message("<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")
 	log_message("Toggled strafing mode [strafe?"on":"off"].")
