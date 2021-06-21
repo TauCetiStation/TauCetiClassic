@@ -15,7 +15,7 @@
 
 ### ВНЕСТИ ВКЛАД (CONTRIBUTING)
 
-- Обязательно прочитайте **[CONTRIBUTING](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/CONTRIBUTING.md)**
+- Обязательно прочитайте **[CONTRIBUTING](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/CONTRIBUTING.md)**
 
 - Проекту остро необходимы мейнтейнеры для поддержания развития. Если у вас есть время и желание, опыт - пишите в ``#rnd`` канал в Дискорде с меншоном на ``@Build Maintainer``
 
