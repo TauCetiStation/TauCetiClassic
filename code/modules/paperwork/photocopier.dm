@@ -15,7 +15,7 @@
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 	var/copying = FALSE
 
-/obj/machinery/photocopier/attack_hand(mob/user as mob)
+/obj/machinery/photocopier/attack_hand(mob/user)
 	user.set_machine(src)
 
 	tgui_interact(user)
