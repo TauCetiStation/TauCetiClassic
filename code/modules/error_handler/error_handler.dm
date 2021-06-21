@@ -60,6 +60,18 @@ var/global/total_runtimes_skipped = 0
 		locinfo = atom_loc_line(usr)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
+			// Create a Dusty at the runtime location
+		if(prob(10) && (world.time - cat_teleport > cat_cooldown) && (cat_number < cat_max_number)) // Avoid runtime spam spawning lots of Dusty
+			var/list/runtime_info = list(
+				"time" = time_stamp(),
+				"usr" = usr,
+				"loc" = locinfo,
+				"line" = E.line,
+				"file" = E.file,
+				"name" = E.name,
+			)
+			new /mob/living/simple_animal/cat/real_runtime(get_turf(usr), runtime_info)
+			cat_teleport = world.time
 	// The proceeding mess will almost definitely break if error messages are ever changed
 	var/list/splitlines = splittext(E.desc, "\n")
 	var/list/desclines = list()

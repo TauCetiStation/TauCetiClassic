@@ -157,3 +157,124 @@
 	faction = list("syndicate")
 	//var/turns_since_scan = 0
 	//var/mob/living/simple_animal/mouse/movement_target
+
+
+// Real runtime cat
+
+var/global/cat_cooldown = 20 SECONDS
+var/global/cat_max_number = 10
+var/global/cat_teleport = 0.0
+var/global/cat_number = 0
+
+/mob/living/simple_animal/cat/real_runtime
+	name = "Dusty"
+	desc = "Мурлыкающий обитатель блюспейса. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
+	icon_state = "runtimecat"
+	density = FALSE
+	universal_speak = TRUE
+	can_be_pulled = FALSE
+
+	a_intent = INTENT_HARM
+
+	status_flags = GODMODE // Bluespace cat
+	min_oxy = 0
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+
+	harm_intent_damage = 10
+	melee_damage = 10
+	attacktext = "slashed"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+
+	var/const/cat_life_duration = 1 MINUTES
+	var/lore_runtime = ""
+
+/mob/living/simple_animal/cat/real_runtime/atom_init(mapload, list/runtime)
+	. = ..()
+	cat_number += 1
+	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
+	new /obj/effect/temp_visual/pulse(loc)
+	new /obj/effect/temp_visual/sparkles(loc)
+
+	addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
+	addtimer(CALLBACK(src, .proc/say_runtime, runtime), 5 SECONDS)
+
+/mob/living/simple_animal/cat/real_runtime/Destroy()
+	cat_number -= 1
+
+	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
+	new /obj/effect/temp_visual/pulse(loc)
+	new /obj/effect/temp_visual/sparkles(loc)
+	return ..()
+
+/mob/living/simple_animal/cat/real_runtime/attackby(obj/item/O, mob/living/user)
+	. = ..()
+	if(.)
+		visible_message("<span class='danger'>[user]'s [O.name] harmlessly passes through \the [src].</span>")
+		strike_back(user)
+
+// It's easier to do this than to climb into a combos
+/mob/living/simple_animal/cat/real_runtime/attack_hand(mob/living/carbon/human/M)
+	switch(M.a_intent)
+
+		if(INTENT_HELP)
+			M.visible_message("<span class='notice'>[M] pets \the [src].</span>")
+
+		if(INTENT_PUSH)
+			M.visible_message("<span class='notice'>[M]'s hand passes through \the [src].</span>")
+			M.do_attack_animation(src)
+
+		if(INTENT_GRAB)
+			if(M == src)
+				return
+			if(!(status_flags & CANPUSH))
+				return
+
+			M.visible_message("<span class='notice'>[M]'s hand passes through \the [src].</span>")
+			M.do_attack_animation(src)
+
+		if(INTENT_HARM)
+			M.visible_message("<span class='warning'>[M] tries to kick \the [src] but [M.gender == FEMALE ? "her" : "his"] foot passes through.</span>")
+			M.do_attack_animation(src)
+			visible_message("<span class='warning'>\The [src] hisses.</span>")
+			strike_back(M)
+
+/mob/living/simple_animal/cat/real_runtime/examine(mob/user, distance)
+	. = ..()
+	if(lore_runtime)
+		to_chat(user, "\n<span class='notice'>Мистический кот транслирует вам в мозг фразу:</span>")
+		to_chat(user, "<span class='warning'>[lore_runtime]</span>")
+
+/mob/living/simple_animal/cat/real_runtime/proc/say_runtime(list/runtime)
+	if(!runtime)
+		return
+	var/sanity_name = replace_characters(runtime["name"], list("\n" = ""))
+	var/text1 = "Зафиксирована аномалия '[runtime["line"]]' в отделе матрицы '[runtime["file"]]' под кодовым названием: '[sanity_name]'"
+	say(text1)
+	sleep(2 SECONDS)
+	var/text2 = "Время парадокса: [runtime["time"]]"
+	say(text2)
+	sleep(2 SECONDS)
+	var/text3 = "Создатель: [runtime["usr"]]. Местоположение: [runtime["loc"]]"
+	say(text3)
+	lore_runtime = "[text1]\n[text2]\n[text3]"
+
+/mob/living/simple_animal/cat/real_runtime/proc/back_to_bluespace()
+	qdel(src)
+
+/mob/living/simple_animal/cat/real_runtime/proc/strike_back(mob/living/target_mob)
+	if(!Adjacent(target_mob))
+		return
+	target_mob.attack_unarmed(src)
+
+/mob/living/simple_animal/cat/real_runtime/bullet_act(obj/item/projectile/proj)
+	return PROJECTILE_FORCE_MISS
+
+/mob/living/simple_animal/cat/real_runtime/ex_act(severity)
+	return
+
+/mob/living/simple_animal/cat/real_runtime/singularity_act()
+	return
+
+/mob/living/simple_animal/cat/real_runtime/MouseDrop(atom/over_object)
+	return
