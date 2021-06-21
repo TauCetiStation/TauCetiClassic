@@ -48,8 +48,7 @@
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil))
-		user.drop_item()
-		W.loc = src.loc
+		user.drop_from_inventory(W, loc)
 		switch(scan_fossil(W))
 			if(1)
 				visible_message("<span class='red'> [bicon(src)] [src] scans the fossil and rejects it.</span>")

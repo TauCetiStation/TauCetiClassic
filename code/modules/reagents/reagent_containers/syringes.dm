@@ -187,7 +187,7 @@
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, target))
+			var/target_zone = ran_zone(check_zone(user.get_targetzone(), target))
 			var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
 			if (!BP)
@@ -246,7 +246,7 @@
 /obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/user, mob/living/carbon/target)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/target_zone = user.zone_sel.selecting
+		var/target_zone = user.get_targetzone()
 		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
 		if (!BP)

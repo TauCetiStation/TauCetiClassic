@@ -86,7 +86,7 @@
 		var/zone
 		var/mob/living/L = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
 		if(L)
-			zone = check_zone(L.zone_sel.selecting)
+			zone = check_zone(L.get_targetzone())
 		else
 			zone = ran_zone(BP_CHEST, 75) // Hits a random part of the body, geared towards the chest
 
