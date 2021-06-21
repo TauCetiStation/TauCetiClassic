@@ -15,28 +15,37 @@ export const BorerPowerShop = (props, context) => {
           {
             upgrades.map(params => (
               <Collapsible 
-	              title={`${ params.name }`} 
+                key={params.name}
+                title={params.name} 
                 color={params.bought ? "good" : null}
-		            buttons={(
+                buttons={(
                   <Button 
                     content={`Buy (${ params.cost })`}
                     disabled={params.bought || !params.has_requirements}
-		                onClick={() => act("buy", {name: params.name})}
+                    onClick={() => act("buy", { name: params.name })}
                   />
-              )}>
-		            {(params.chemicals || params.cooldown) ? (
+                )}>
+                {(params.chemicals || params.cooldown) ? (
                   <Box>
                     {
-		                  (params.chemicals ? "Chemicals: " + params.chemicals + " units." : "") + 
-		                  (params.cooldown ? "Cooldown: " + (params.cooldown / 10) + " seconds." : "")
+                      (params.chemicals ? "Chemicals: "
+                      + params.chemicals + " units. " : "") 
+                      + (params.cooldown ? "Cooldown: " 
+                      + (params.cooldown / 10) + " seconds." : "")
                     }
                   </Box>
-		            ) : null}
+                ) : null}
                 <Box>{params.desc}</Box>
                 {params.requirements.length ? (
-                  <Box>{`This upgrade requires ${ params.requirements.join(", ") }.`}</Box>
+                  <Box>
+                    {
+                      "This upgrade requires "
+                      + params.requirements.join(", ") 
+                      + "."
+                    }
+                  </Box>
                 ) : null}
-	      </Collapsible>
+              </Collapsible>
             ))
           }
         </Section>
