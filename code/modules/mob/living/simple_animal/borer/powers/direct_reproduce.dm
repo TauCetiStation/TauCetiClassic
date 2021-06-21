@@ -27,7 +27,7 @@
 		return
 	var/mob/living/simple_animal/borer/B = user.has_brain_worms()
 	// check if we can infest it. if we can, probably, our children can too
-	if(!B?.infest_check(target, user))	
+	if(!B?.infest_check(target))	
 		return
 	user.visible_message("<span class='warning'>[user] leans over [target] shoulder and hugs them tightly.</span>")
 	if(!do_after(B, duration, target = target))

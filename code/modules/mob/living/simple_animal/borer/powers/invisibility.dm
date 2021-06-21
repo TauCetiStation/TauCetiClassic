@@ -16,9 +16,11 @@
 		alpha = 100 // so it's still visible to observers
 		invisibility = 26
 		to_chat(src, "<span class='notice'>You are invisible now.</span>")
+		passive_chemical_regeneration -= 1 // it's 1u per life tick, which is sometimes equals to 0.5u per second
 
 /mob/living/simple_animal/borer/proc/deactivate_invisibility()
 	if(invisibility)
 		alpha = 255
 		invisibility = 0
 		to_chat(src, "<span class='notice'>You are visible now.</span>")
+		passive_chemical_regeneration += 1

@@ -22,18 +22,22 @@
 		to_chat(user, "You cannot infest someone who is already infested!")
 		return
 	var/mob/living/simple_animal/borer/B = user.has_brain_worms()
-	if(!B?.infest_check(target, user))	
+	if(!B?.infest_check(target))	
 		return
 	user.visible_message("<span class='warning'>[user] leans over [target] shoulder and hugs them tightly.</span>")
 
 	user.release_control()
-	user.Stun(duration)
+	user.Stun(duration / 10)
 	..()
 	to_chat(target, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(B, "You slither up [target] and begin probing at their ear canal...")
 	if(!do_after(B, duration, target = target))
 		return
-	if(!B.infest_check(target, user, FALSE))
+	if(!B.infest_check(target, FALSE))
 		return
 	B.let_go()
 	B.infest(target)
+
+	for(var/obj/item/weapon/grab/G in user.GetGrabs())
+		if(G.affecting == target)
+			user.drop_from_inventory(G)

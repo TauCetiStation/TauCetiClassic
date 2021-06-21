@@ -28,7 +28,7 @@
 		)
 
 	var/assuming = FALSE
-	var/chemicals = 50                         // Chemicals used for reproduction and spitting neurotoxin.
+	var/chemicals = 350                         // Chemicals used for reproduction and spitting neurotoxin.
 	var/max_chemicals = 250              // Maximum chemicals
 	var/mob/living/carbon/host                 // Carbon host for the brain worm.
 	var/mob/living/captive_brain/host_brain    // Used for swapping control of the body back and forth.
@@ -36,7 +36,7 @@
 	var/docile = FALSE                         // Sugar can stop borers from acting.
 	var/leaving = FALSE
 	var/reproduced = 0                         // Times the borer has reproduced.
-	var/upgrade_points = 2                    // Upgrade points left to spend
+	var/upgrade_points = 1e6//2                    // Upgrade points left to spend
 
 	var/list/obj/effect/proc_holder/upgrades = list()
 	var/list/obj/effect/proc_holder/all_upgrades = list()
@@ -48,9 +48,13 @@
 	var/client_poll_cd = 1 MINUTE
 
 	var/chemical_regeneration = 1
+	var/passive_chemical_regeneration = 0
 	var/nutrition_consumption = 0
 
-/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1, list/parent_upgrades)
+	var/stealthy = FALSE
+	var/recombinate = FALSE
+
+/mob/living/simple_animal/borer/atom_init(mapload, request_ghosts = FALSE, gen = 1, points = 2, list/parent_upgrades)
 	. = ..()
 	generation = gen
 	truename = "[borer_names[min(generation, borer_names.len)]] [rand(1000, 9999)]"
@@ -66,10 +70,12 @@
 			upgrades += U
 			U.on_gain(src)
 
+	upgrade_points = points
+
+	last_client_poll = world.time // prevent newborn borer from looking for client second time
+
 	if(!parent_upgrades)
 		return
-
-	upgrade_points = 1 // we give less points if parent provided us with upgrades
 
 	for(var/obj/effect/proc_holder/borer/U in parent_upgrades)
 		var/obj/effect/proc_holder/borer/myU = locate(U.type) in all_upgrades
@@ -88,14 +94,17 @@
 		return TRUE
 	return FALSE
 
+/mob/living/simple_animal/borer/proc/getControlling()
+	return controlling ? host : src
+
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
 	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
 
 /mob/living/simple_animal/borer/Life()
 	..()
 
+	adjustChemicals(passive_chemical_regeneration)
 	if(invisibility)
-		chemicals -= 1
 		if(chemicals <= 1)
 			deactivate_invisibility()
 
@@ -118,13 +127,13 @@
 		var/mob/msg_to = controlling ? host : src
 		to_chat(msg_to, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 
-	if(chemicals < max_chemicals)
+	if(host.stat == CONSCIOUS && chemicals < max_chemicals)
 		if(host.nutrition)
-			chemicals += chemical_regeneration
+			adjustChemicals(chemical_regeneration)
 			host.nutrition = max(host.nutrition - nutrition_consumption, 0)
 		else
-			chemicals += 1
-		
+			// if host has no resources we won't regenerate more than 1 unit per tick
+			adjustChemicals(min(chemical_regeneration, 1))
 
 	if(controlling)
 		if(docile)
@@ -176,7 +185,6 @@
 		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			to_chat(M, "[FOLLOW_LINK(M, src)] [truename] whispers to [host], \"[message]\"")
 
-
 /mob/living/simple_animal/borer/proc/stat_abilities(mob/user)
 	if(statpanel("Borer"))
 		stat(null, "Chemicals: [chemicals]/[max_chemicals]")
@@ -184,7 +192,6 @@
 			if(!U.can_use(user))
 				continue
 			stat(U.get_stat_entry(), U)
-			
 
 /mob/living/simple_animal/borer/proc/borer_speak(message)
 	if(!message)

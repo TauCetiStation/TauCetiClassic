@@ -35,40 +35,34 @@ var/global/list/borer_banned_species = list(IPC, GOLEM, SLIME, DIONA)
 		to_chat(B, "As [C] moves away, you are dislodged and fall to the ground.")
 		return
 
-	if(!(C in view(1, B)))
-		to_chat(B, "They are no longer in range!")
-		return
-
 	if(B.is_busy())
 		return
 	if(B.infest_check(C))
 		B.infest(C)
 		return
 
-/mob/living/simple_animal/borer/proc/infest_check(mob/living/carbon/target, mob/user, show_warnings = TRUE)
+/mob/living/simple_animal/borer/proc/infest_check(mob/living/carbon/target, show_warnings = TRUE)
 	. = FALSE
-	if(!user)
-		user = src
+	var/mob/controller = getControlling()
 
 	if(incapacitated())
 		if(show_warnings)
-			to_chat(user, "You cannot infest a target in your current state.")
+			to_chat(controller, "You cannot infest a target in your current state.")
 		return
-
-	if(!user.Adjacent(target)) // we check adjacency for user because the borer might be inside user while infesting (direct transfer power)
+	if(!controller.Adjacent(target))
 		return
 
 	if(!target.infestable())
 		return
 	if(target.has_brain_worms())
 		if(show_warnings)
-			to_chat(user, "You cannot infest someone who is already infested!")
+			to_chat(controller, "You cannot infest someone who is already infested!")
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(H.check_head_coverage())
 			if(show_warnings)
-				to_chat(user, "You cannot get through that host's protective gear.")
+				to_chat(controller, "You cannot get through that host's protective gear.")
 			return
 	return TRUE
 

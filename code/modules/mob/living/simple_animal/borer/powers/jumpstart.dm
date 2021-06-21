@@ -11,19 +11,19 @@
 	)
 
 /obj/effect/proc_holder/borer/active/noncontrol/jumpstart/activate(mob/living/simple_animal/borer/B)
-	if(B.host.stat == DEAD)
+	if(B.host.stat != DEAD)
 		to_chat(B, "Your host is already alive!")
 		return
 	
 	var/all_damage = B.host.getBruteLoss() + B.host.getFireLoss() + B.host.getOxyLoss() + B.host.getToxLoss() + B.host.getCloneLoss()
-	if(all_damage - healing > 190)
+	if(all_damage - healing > 150)
 		to_chat(B, "Host body is too wounded to reanimate.")
 		return
 	
 	if(!..())
 		return
 	to_chat(B, "<span class='notice'>You prepare the host body for reanimation.</span>")
-	var/dam_diff = all_damage - 190
+	var/dam_diff = all_damage - 150
 	if(dam_diff > 0)
 		B.host.apply_damages(
 			brute = -dam_diff * B.host.getBruteLoss() / all_damage,
@@ -50,9 +50,9 @@
 		H.return_to_body_dialog()
 
 		var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
-		if(!IO)
-			return
-		IO.heart_normalize()
+		if(IO)
+			IO.heart_normalize()
+		H.ChangeToHusk()
 
 	addtimer(CALLBACK(src, .proc/reanimate_msg, B.host), 5 SECONDS)
 

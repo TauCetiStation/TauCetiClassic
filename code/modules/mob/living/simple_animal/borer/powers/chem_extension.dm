@@ -27,3 +27,10 @@
 	desc = "Unlocks synthesis of sucrase, enzyme, that breaks down sugar."
 	chems = list("sucrase" = 15)
 	cost = 4
+
+/obj/effect/proc_holder/borer/chem_extension/sensory
+	name = "Sensory Restoration Synthesis"
+	desc = "Unlocks synthesis of imidazoline and aurisine."
+	chems = list("imidazoline" = 15, "aurisine" = 15)
+	cost = 1
+	requires_t = list(/obj/effect/proc_holder/borer/chem_extension/advanced)
