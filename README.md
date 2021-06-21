@@ -19,6 +19,8 @@
 
 - Проекту остро необходимы мейнтейнеры для поддержания развития. Если у вас есть время и желание, опыт - пишите в ``#rnd`` канал в Дискорде с меншоном на ``@Build Maintainer``
 
+- **[Полезные Ссылки](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/WIKI_LINKS.md)**
+
 ---
 
 [Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:
