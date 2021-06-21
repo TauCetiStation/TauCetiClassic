@@ -1,10 +1,10 @@
 ### Содержание:
 1) [Введение](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#Введение)
-1) [Что такое ПР?](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#Что-такое-ПР?)
+1) [Что такое ПР?](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#что-такое-пр)
 1) [Название](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#Название)
 1) [Описание](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#Описание)
 1) [Чейнджлог](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#Changelog)
-1) [Важно](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#Важно)
+1) [Важно](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md#важно-2)
 
 <hr>
 
