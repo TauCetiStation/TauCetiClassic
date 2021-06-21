@@ -216,10 +216,7 @@
 	if(H.species && H.species.flags[NO_BREATHE])
 		to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
 		return
-
-	for(var/cycle = 1 to 5)
-		if(H.health > config.health_threshold_crit)
-			break
+	while(H.health < config.health_threshold_crit)
 
 		if(!do_mob(user, H, 2 SECONDS))
 			break
