@@ -404,8 +404,7 @@
 	if(istype(I,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_hand()
 		if(istype(C) && !istype(inserted_id))
-			usr.drop_item()
-			C.loc = src
+			usr.drop_from_inventory(C, src)
 			inserted_id = C
 			tgui_interact(user)
 		return
