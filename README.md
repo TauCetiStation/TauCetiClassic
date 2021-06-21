@@ -1,4 +1,4 @@
-# Tau Ceti Classic
+# TauCeti Classic
 
 [![Build Status](https://github.com/TauCetiStation/TauCetiClassic/workflows/CI%20Suite/badge.svg)](https://github.com/TauCetiStation/TauCetiClassic/actions?query=workflow%3A%22CI+Suite%22)
 [![taucetistation.org](https://img.shields.io/badge/site-taucetistation.org-blue.svg)](http://taucetistation.org/)
