@@ -211,7 +211,8 @@
 	can_unwrench = FALSE
 
 /obj/structure/cult/portal_to_station/Bumped(atom/A)
-	var/turf/target = findEventArea()
+	var/area/area = findEventArea()
+	var/turf/target = get_turf(pick(area.contents))
 	if(ismob(A))
 		var/mob/user = A
 		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
