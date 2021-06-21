@@ -1035,7 +1035,7 @@
 		src.icon_state = reset_icon()
 		set_dir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', VOL_EFFECTS_MASTER)
-		GrantActions(H, human_occupant = 1)
+		GrantActions(H, human_occupant = TRUE)
 		if(!hasInternalDamage())
 			occupant.playsound_local(null, 'sound/mecha/nominal.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		return 1
@@ -1093,6 +1093,7 @@
 		Move(src.loc)
 		src.icon_state = reset_icon()
 		set_dir(dir_in)
+		GrantActions(mmi_as_oc.brainmob, human_occupant = FALSE)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
@@ -1133,7 +1134,7 @@
 	var/atom/movable/mob_container
 	if(ishuman(occupant))
 		mob_container = src.occupant
-		RemoveActions(occupant, human_occupant = 1)
+		RemoveActions(occupant, human_occupant = TRUE)
 	else if(istype(occupant, /mob/living/carbon/brain))
 		var/mob/living/carbon/brain/brain = occupant
 		RemoveActions(brain)

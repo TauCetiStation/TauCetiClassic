@@ -1,6 +1,6 @@
 //////////////////////////////////////// Action Buttons ///////////////////////////////////////////////
 
-/obj/mecha/proc/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/proc/GrantActions(mob/living/user, human_occupant = FALSE)
 	if(human_occupant)
 		eject_action.Grant(user, src)
 	internals_action.Grant(user, src)
@@ -10,7 +10,7 @@
 	strafing_action.Grant(user, src)
 
 
-/obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = FALSE)
 	if(human_occupant)
 		eject_action.Remove(user)
 	internals_action.Remove(user)

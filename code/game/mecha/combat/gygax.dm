@@ -18,11 +18,11 @@
 
 	var/datum/action/innate/mecha/mech_overload_mode/overload_action = new
 
-/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = FALSE)
 	..()
 	overload_action.Grant(user, src)
 
-/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = FALSE)
 	..()
 	overload_action.Remove(user)
 

@@ -17,11 +17,11 @@
 
 	var/datum/action/innate/mecha/mech_defence_mode/defence_action = new
 
-/obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = FALSE)
 	..()
 	defence_action.Grant(user, src)
 
-/obj/mecha/combat/durand/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/durand/RemoveActions(mob/living/user, human_occupant = FALSE)
 	..()
 	defence_action.Remove(user)
 

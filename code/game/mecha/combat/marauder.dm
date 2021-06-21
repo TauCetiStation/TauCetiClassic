@@ -34,13 +34,13 @@
 	if(thrusters_active && movement_dir && use_power(ENERGY_USE_WITH_THRUSTERS))
 		return 1
 
-/obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/marauder/GrantActions(mob/living/user, human_occupant = FALSE)
 	..()
 	smoke_action.Grant(user, src)
 	zoom_action.Grant(user, src)
 	thrusters_action.Grant(user, src)
 
-/obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/marauder/RemoveActions(mob/living/user, human_occupant = FALSE)
 	..()
 	smoke_action.Remove(user)
 	zoom_action.Remove(user)

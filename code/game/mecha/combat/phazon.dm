@@ -22,12 +22,12 @@
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
 	max_equip = 4
 
-/obj/mecha/combat/phazon/GrantActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/phazon/GrantActions(mob/living/user, human_occupant = FALSE)
 	..()
 	switch_damtype_action.Grant(user, src)
 	phasing_action.Grant(user, src)
 
-/obj/mecha/combat/phazon/RemoveActions(mob/living/user, human_occupant = 0)
+/obj/mecha/combat/phazon/RemoveActions(mob/living/user, human_occupant = FALSE)
 	..()
 	switch_damtype_action.Remove(user)
 	phasing_action.Remove(user)
