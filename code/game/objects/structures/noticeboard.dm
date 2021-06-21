@@ -74,7 +74,7 @@
 	examine(user)
 
 /obj/structure/noticeboard/tgui_data(mob/user)
-	var/list/data = ..()
+	var/list/data = list()
 	var/list/tgui_notices = list()
 
 	for(var/obj/item/I in notices)
