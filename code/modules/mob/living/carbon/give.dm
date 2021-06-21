@@ -7,7 +7,7 @@
 
 	if(!M.can_accept_gives(src, show_warnings = TRUE) || !can_give(M, show_warnings = TRUE) || M.client == null)
 		return
-	var/obj/item/I = src.get_active_hand()
+	var/obj/item/I = get_active_hand()
 	if(!I)
 		to_chat(src, "<span class='red'>You don't have anything in your hand to give to [M]</span>")
 		return
@@ -35,7 +35,7 @@
 				to_chat(M, "<span class='red'>[src] seem to have given up on giving \the [I] to you.</span>")
 				return
 			else
-				drop_from_inventory(I)
+				drop_from_inventory(I, M)
 				M.put_in_hands(I)
 			I.add_fingerprint(M)
 			M.visible_message("<span class='notice'>[src] handed \the [I] to [M].</span>")

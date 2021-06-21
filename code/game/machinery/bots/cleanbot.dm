@@ -19,8 +19,8 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
 	layer = MOB_LAYER
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	//weight = 1.0E7
 	health = 25
 	maxhealth = 25
@@ -322,7 +322,7 @@
 		target_types += /obj/effect/decal/cleanable/blood/trail_holder
 
 /obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
-	anchored = 1
+	anchored = TRUE
 	icon_state = "cleanbot-c"
 	visible_message("<span class='warning'>[src] begins to clean up the [target]</span>")
 	cleaning = 1
@@ -336,7 +336,7 @@
 		cleaning = 0
 		qdel(target)
 		icon_state = "cleanbot[on]"
-		anchored = 0
+		anchored = FALSE
 		target = null
 
 /obj/machinery/bot/cleanbot/explode()

@@ -9,10 +9,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	layer = MOB_LAYER // on tg it is FLOAT LAYER
 	plane = FLOAT_PLANE
 	stat = DEAD
-	density = 0
+	density = FALSE
 	canmove = 0
 	blinded = 0
-	anchored = 1	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	hud_type = /datum/hud/ghost
@@ -294,7 +294,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='danger'>You have been banned from using this feature.</span>")
 		return
 	if(config.antag_hud_restricted && !M.has_enabled_antagHUD && !client.holder)
-		var/response = tgui_alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?", list("Yes","No"))
+		var/response = tgui_alert(src, "If you turn this on, you will not be able to take any part in the round.","Do you want to on this feature?", list("Yes","No"))
 		if(response == "No")
 			return
 		M.can_reenter_corpse = FALSE
@@ -514,7 +514,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
 		return
 
-	var/response = tgui_alert(src, "Are you -sure- you want to find Bag Boss?","Are you sure you want to become II?", list("Soap Pain!","Nope!"))
+	var/response = tgui_alert(src, "You want to find Bag Boss?","Do you want to be Ian?", list("Soap Pain!","Nope!"))
 	if(response != "Soap Pain!")
 		return
 

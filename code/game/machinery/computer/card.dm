@@ -68,12 +68,10 @@
 		return ..()
 
 	if(!scan && (access_change_ids in id_card.access))
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		scan = id_card
 	else if(!modify)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		modify = id_card
 		if(id_card.associated_account_number)
 			datum_account = get_account(id_card.associated_account_number)
@@ -164,8 +162,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					modify = I
 					var/obj/item/weapon/card/id/id_card = I
 					if(id_card.associated_account_number)
@@ -191,8 +188,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					scan = I
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(ishuman(usr))
@@ -250,7 +246,7 @@
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
-						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+						visible_message("<span class='notice'>[src] buzzes rudely.</span>")
 			nanomanager.update_uis(src)
 
 		if ("account")

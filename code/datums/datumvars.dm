@@ -494,7 +494,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_spell(M)
+		give_spell(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_disease"])
@@ -506,7 +506,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_disease(M)
+		give_disease(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_religion"])
@@ -530,7 +530,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_disease2(M)
+		give_disease2(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_status_effect"])
@@ -557,7 +557,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_ninjafy(M)
+		cmd_admin_ninjafy(M)
 		href_list["datumrefresh"] = href_list["ninja"]
 
 	else if(href_list["godmode"])
@@ -569,7 +569,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_godmode(M)
+		cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["gib"])
@@ -581,7 +581,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_gib(M)
+		cmd_admin_gib(M)
 
 	else if(href_list["dust"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -592,7 +592,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_dust(M)
+		cmd_admin_dust(M)
 
 	else if(href_list["build_mode"])
 		if(!check_rights(R_BUILDMODE))
@@ -690,7 +690,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
-		src.cmd_admin_explosion(A)
+		cmd_admin_explosion(A)
 		href_list["datumrefresh"] = href_list["explode"]
 
 	else if(href_list["emp"])
@@ -702,7 +702,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
-		src.cmd_admin_emp(A)
+		cmd_admin_emp(A)
 		href_list["datumrefresh"] = href_list["emp"]
 
 	else if(href_list["mark_object"])
@@ -1066,6 +1066,6 @@ body
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!istype(DAT, /datum))
 			return
-		src.debug_variables(DAT)
+		debug_variables(DAT)
 
 	return

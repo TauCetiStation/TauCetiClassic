@@ -91,17 +91,15 @@
 
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
-	M.drop_item()			//Remove the assembly from your hands
-	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
+	M.drop_from_inventory(S, R)			//Remove the assembly from your hands
+	M.drop_from_inventory(src, R)	//Remove the tank from your character,in case you were holding it
 	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
 
 	R.bombassembly = S	//Tell the bomb about its assembly part
 	S.master = R		//Tell the assembly about its new owner
-	S.loc = R			//Move the assembly out of the fucking way
 
 	R.bombtank = src	//Same for tank
 	master = R
-	loc = R
 	R.update_icon()
 	return
 

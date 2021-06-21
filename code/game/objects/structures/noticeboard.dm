@@ -3,8 +3,8 @@
 	desc = "A board for pinning important notices upon."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "nboard00"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/notices = 0
 
 /obj/structure/noticeboard/atom_init()
@@ -23,8 +23,7 @@
 		if(notices < 5)
 			O.add_fingerprint(user)
 			add_fingerprint(user)
-			user.drop_item()
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			notices++
 			icon_state = "nboard0[notices]"	//update sprite
 			to_chat(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")

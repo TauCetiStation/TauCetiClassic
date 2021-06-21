@@ -377,7 +377,7 @@
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 
 	for(var/obj/B in L)
 		if(B.type == A)
@@ -389,7 +389,7 @@
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 	for(var/obj/O in L)
 		O.emplode(severity)
 	..()
@@ -449,27 +449,27 @@
 /mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
-	src.updatehealth()
+	updatehealth()
 
 // damage ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/take_bodypart_damage(brute, burn)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
-	src.updatehealth()
+	updatehealth()
 
 // heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
-	src.updatehealth()
+	updatehealth()
 
 // damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
-	src.updatehealth()
+	updatehealth()
 
 /mob/living/proc/restore_all_bodyparts()
 	return

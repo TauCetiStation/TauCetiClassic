@@ -303,6 +303,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["parallax_theme"]		>> parallax_theme
 	S["ambientocclusion"]	>> ambientocclusion
+	S["auto_fit_viewport"]	>> auto_fit_viewport
 	S["tooltip"]			>> tooltip
 	S["tooltip_size"]		>> tooltip_size
 	S["tooltip_font"]		>> tooltip_font
@@ -340,7 +341,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
-	toggles		= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
@@ -352,24 +353,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
-	ambientocclusion = sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
-	tooltip_size = sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
+	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
-	outline_color = normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
-	eorg_enabled = sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
+	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
+	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
 	if(!cid_list)
 		cid_list = list()
-	ignore_cid_warning = sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
+	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
 
-	snd_music_vol = sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
+	snd_music_vol	= sanitize_integer(snd_music_vol, 0, 100, initial(snd_music_vol))
 	snd_ambient_vol = sanitize_integer(snd_ambient_vol, 0, 100, initial(snd_ambient_vol))
-	snd_effects_master_vol = sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
-	snd_effects_voice_announcement_vol = sanitize_integer(snd_effects_voice_announcement_vol, 0, 100, initial(snd_effects_voice_announcement_vol))
-	snd_effects_misc_vol = sanitize_integer(snd_effects_misc_vol, 0, 100, initial(snd_effects_misc_vol))
-	snd_effects_instrument_vol = sanitize_integer(snd_effects_instrument_vol, 0, 100, initial(snd_effects_instrument_vol))
-	snd_notifications_vol = sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
-	snd_admin_vol = sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
+	snd_effects_master_vol	= sanitize_integer(snd_effects_master_vol, 0, 100, initial(snd_effects_master_vol))
+	snd_effects_voice_announcement_vol	= sanitize_integer(snd_effects_voice_announcement_vol, 0, 100, initial(snd_effects_voice_announcement_vol))
+	snd_effects_misc_vol	= sanitize_integer(snd_effects_misc_vol, 0, 100, initial(snd_effects_misc_vol))
+	snd_effects_instrument_vol	= sanitize_integer(snd_effects_instrument_vol, 0, 100, initial(snd_effects_instrument_vol))
+	snd_notifications_vol	= sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
+	snd_admin_vol	= sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
 	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
 
 	if(needs_update >= 0) //save the updated version
@@ -419,6 +421,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			<< parallax
 	S["parallax_theme"]		<< parallax_theme
 	S["ambientocclusion"]	<< ambientocclusion
+	S["auto_fit_viewport"]	<< auto_fit_viewport
 	S["tooltip"]			<< tooltip
 	S["tooltip_size"]		<< tooltip_size
 	S["tooltip_font"]		<< tooltip_font

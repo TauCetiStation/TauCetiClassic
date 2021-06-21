@@ -35,8 +35,8 @@
 			H.cl = M.client
 
 /obj/effect/bmode//Cleaning up the tree a bit
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	dir = NORTH
@@ -115,8 +115,8 @@
 	return 1
 
 /obj/effect/bmode/buildholder
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/client/cl = null
 	var/obj/effect/bmode/builddir/builddir = null
 	var/obj/effect/bmode/buildhelp/buildhelp = null
