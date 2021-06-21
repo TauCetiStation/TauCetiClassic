@@ -171,16 +171,13 @@
 /obj/item/weapon/AVtool/robot
 	name = "AV tool"
 	desc = "An AV tool powered by a robot's internal power cell, able to work with masked patients."
-	icon = 'icons/obj/defibrillator.dmi'
-	icon_state = "defibunit"
-	item_state = "defibunit"
+	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "avtool_idle"
+	item_state = "avtool_idle"
 	var/charge_cost = 50
 	var/busy = FALSE
 
 /obj/item/weapon/AVtool/robot/proc/check_charge(charge_amt)
-	return TRUE
-
-/obj/item/weapon/AVtool/robot/proc/checked_use(charge_amt)
 	return TRUE
 
 /obj/item/weapon/AVtool/robot/check_charge(charge_amt)
@@ -188,16 +185,14 @@
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.charge >= charge_amt)
 
-/obj/item/weapon/AVtool/robot/checked_use(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.use(charge_amt))
-
 /obj/item/weapon/AVtool/robot/proc/can_use(mob/user, mob/M)
 	if(busy)
 		return FALSE
 	if(!check_charge(charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
+		return FALSE
+	var/target_zone = user.get_targetzone()
+	if(target_zone != O_MOUTH)
 		return FALSE
 	return TRUE
 
@@ -207,19 +202,15 @@
 		return
 
 	busy = TRUE
-	update_icon()
+	icon_state = "avtool_ventilating"
 
 	perform_av(M, user)
 
 	busy = FALSE
-	update_icon()
+	icon_state = "avtool_idle"
 
 /obj/item/weapon/AVtool/robot/proc/perform_av(mob/living/carbon/human/H, mob/user)
 	if(user.is_busy(H))
-		return
-
-	var/target_zone = user.get_targetzone()
-	if(!target_zone == O_MOUTH)
 		return
 
 	if(H.species && H.species.flags[NO_BREATHE])
@@ -227,16 +218,14 @@
 		return
 
 	for(var/cycle = 1 to 5)
+		if(H.health > config.health_threshold_crit)
+			break
+
 		if(!do_mob(user, H, 2 SECONDS))
 			break
 
-		if(health <= (config.health_threshold_dead + 5))
-			var/suff = min(H.getOxyLoss(), 2) //Pre-merge level, less healing, more prevention of dieing.
-			H.adjustOxyLoss(-suff)
-
-		if (health > config.health_threshold_dead && health < config.health_threshold_crit)
-			var/suff = min(H.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
-			H.adjustOxyLoss(-suff)
-			visible_message("<span class='warning'>[user] performs AV on [H]!</span>")
-			to_chat(H, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+		var/suff = min(H.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+		H.adjustOxyLoss(-suff)
+		visible_message("<span class='warning'>[user] performs AV on [H]!</span>")
+		to_chat(H, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
 		H.updatehealth()
