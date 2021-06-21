@@ -56,8 +56,7 @@
 	else if(istype(sheet, /obj/item/weapon/photo))
 		to_chat(user, "<span class='notice'>You add [(sheet.name == "photo") ? "the photo" : sheet.name] to [(src.name == "paper bundle") ? "the paper bundle" : src.name].</span>")
 
-	user.drop_from_inventory(sheet)
-	sheet.loc = src
+	user.drop_from_inventory(sheet, src)
 
 	pages.Insert(index, sheet)
 
