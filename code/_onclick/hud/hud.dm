@@ -209,10 +209,8 @@ var/global/list/available_ui_styles = list(
 				mymob.client.screen += other
 			if(hotkeybuttons && !hotkey_ui_hidden)
 				mymob.client.screen += hotkeybuttons
-			
-			if(action_intent)
-				action_intent.screen_loc = ui_acti //Restore intent selection to the original position
-			
+
+			action_intent.screen_loc = ui_acti //Restore intent selection to the original position
 			mymob.client.screen += mymob.zone_sel				//This one is a special snowflake
 			mymob.client.screen += mymob.healths				//As are the rest of these.
 			mymob.client.screen += mymob.healthdoll
@@ -243,9 +241,7 @@ var/global/list/available_ui_styles = list(
 			mymob.client.screen += l_hand_hud_object	//we want the hands to be visible
 			mymob.client.screen += r_hand_hud_object	//we want the hands to be visible
 			mymob.client.screen += action_intent		//we want the intent swticher visible
-
-			if(action_intent)
-				action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
+			action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 
 			hidden_inventory_update()
 			persistant_inventory_update()
