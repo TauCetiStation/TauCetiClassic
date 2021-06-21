@@ -4,6 +4,8 @@
 
 	if (notransform)
 		return
+	if(!loc)
+		return
 
 	..()
 
