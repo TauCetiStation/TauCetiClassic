@@ -93,7 +93,7 @@
 	return data
 
 /obj/machinery/mineral/processing_unit_console/tgui_static_data(mob/user)
-	var/list/static_data[0]
+	var/list/static_data = list()
 	static_data["ore_values"] = list()
 	for(var/orename in ore_values)
 		static_data["ore_values"] += list(list("name" = orename, "amount" = ore_values[orename]))
