@@ -26,6 +26,22 @@
 
 	update_special_keybinds()
 
+// byond bug ID:2694120
+/client/verb/reset_macros_wrapper()
+	set category = "OOC"
+	set name = "Fix keybindings"
+
+	reset_macros()
+
+/client/proc/reset_macros(skip_alert = FALSE)
+	var/ans
+	if(!skip_alert)
+		ans = tgui_alert(src, "Change your keyboard language to ENG and press Ok", "Reset macros")
+
+	if(skip_alert || ans == "Ok")
+		set_macros()
+		to_chat(src, "<span class='notice'>Keybindings were fixed</span>") // not yet but set_macros works fast enough
+
 /**
  * Manually clears any held keys, in case due to lag or other undefined behavior a key gets stuck.
  *

@@ -100,6 +100,11 @@ var/list/blacklisted_builds = list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
+	//byond bug ID:2694120
+	if(href_list["reset_macros"])
+		reset_macros(skip_alert = TRUE)
+		return
+
 	// Keypress passthrough
 	if(href_list["__keydown"])
 		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
@@ -327,7 +332,7 @@ var/list/blacklisted_builds = list(
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
-	
+
 	if(prefs.auto_fit_viewport)
 		fit_viewport()
 
@@ -707,6 +712,7 @@ var/list/blacklisted_builds = list(
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
+	var/list/communication_hotkeys = list()
 	for(var/key in D.key_bindings)
 		for(var/kb_name in D.key_bindings[key])
 			switch(kb_name)
@@ -720,7 +726,16 @@ var/list/blacklisted_builds = list(
 					movement_keys[key] = SOUTH
 				if("Say")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
+					communication_hotkeys += key
 				if("OOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
+					communication_hotkeys += key
 				if("Me")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					communication_hotkeys += key
+
+	// winget() does not work for F1 and F2
+	for(var/key in communication_hotkeys)
+		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
+			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
+			break

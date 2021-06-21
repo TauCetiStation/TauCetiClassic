@@ -243,6 +243,7 @@
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src
+	RegisterSignal(TT, COMSIG_PARENT_QDELETED, /datum/thrownthing.proc/on_thrownthing_qdel)
 	TT.target = target
 	TT.target_turf = get_turf(target)
 	TT.init_dir = get_dir(src, target)
