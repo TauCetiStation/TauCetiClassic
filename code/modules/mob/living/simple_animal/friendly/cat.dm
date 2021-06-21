@@ -199,6 +199,9 @@ var/global/cat_number = 0
 	addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
 	addtimer(CALLBACK(src, .proc/say_runtime, runtime), 5 SECONDS)
 
+	for(var/i in rand(1, 3))
+		step(src, global.alldirs)
+
 /mob/living/simple_animal/cat/real_runtime/Destroy()
 	cat_number -= 1
 
