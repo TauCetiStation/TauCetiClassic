@@ -147,7 +147,6 @@
 			else
 				to_chat(usr, "<span class='warning'>No valid ID.</span>")
 			. = TRUE
-			return FALSE
 
 /**********************Mineral processing unit**************************/
 

@@ -29,7 +29,7 @@
 /obj/machinery/photocopier/tgui_data(mob/user, datum/tgui/ui, datum/tgui_state/state)
 	var/list/data = ..()
 
-	data["has_item"] = copyitem || has_buckled_mobs() // VOREStation Edit: Ass copying
+	data["has_item"] = copyitem
 	data["isAI"] = issilicon(user)
 	data["can_AI_print"] = (toner >= 5)
 	data["has_toner"] = !!toner

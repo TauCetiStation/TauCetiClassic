@@ -957,3 +957,6 @@
 	desc = "A sign that warns would be travellers of hostile alien life in the vicinity."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "xeno_warning"
+
+#undef EQUIPMENT
+#undef MAX_NOTICES
