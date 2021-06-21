@@ -178,6 +178,7 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
+	new /obj/item/weapon/storage/box/mines/shock(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
@@ -193,6 +194,10 @@
 	icon_opened = "secopen"
 	icon_broken = "secbroken"
 	icon_off = "secoff"
+
+/obj/structure/closet/secure_closet/security/atom_init(mapload)
+	. = ..()
+	sec_closets_list += src
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))
@@ -295,7 +300,7 @@
 /obj/structure/closet/secure_closet/brig
 	name = "Brig Locker"
 	req_access = list(access_brig)
-	anchored = 1
+	anchored = TRUE
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
@@ -319,7 +324,7 @@
 	name = "wall locker"
 	req_access = list(access_brig)
 	icon_state = "wall-locker1"
-	density = 1
+	density = TRUE
 	icon_closed = "wall-locker"
 	icon_locked = "wall-locker1"
 	icon_opened = "wall-lockeropen"

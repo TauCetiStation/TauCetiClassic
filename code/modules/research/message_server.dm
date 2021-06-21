@@ -198,8 +198,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -300,8 +300,9 @@ var/obj/machinery/blackbox_recorder/blackbox
 	if(!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
-	establish_db_connection()
-	if(!dbcon.IsConnected()) return
+
+	if(!establish_db_connection("erro_feedback"))
+		return
 
 	for(var/datum/feedback_variable/FV in feedback)
 		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [global.round_id], \"[sanitize_sql(FV.get_variable())]\", [sanitize_sql(FV.get_value())], \"[sanitize_sql(FV.get_details())]\")"

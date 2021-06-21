@@ -101,7 +101,7 @@ Frequency:
 									direct = "weak"
 							src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				src.temp += "<B>You are at \[[COORD(sr)]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
 			else
 				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
@@ -116,7 +116,7 @@ Frequency:
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					attack_self(M)
 	return
 
 
@@ -176,7 +176,7 @@ Frequency:
 	var/obj/effect/portal/P = new /obj/effect/portal( get_turf(src) )
 	P.target = T
 	P.creator = src
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 

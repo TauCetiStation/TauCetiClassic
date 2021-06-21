@@ -21,7 +21,7 @@ Buildable meters
 /obj/item/pipe/atom_init(mapload, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	. = ..()
 	if (make_from)
-		src.set_dir(make_from.dir)
+		set_dir(make_from.dir)
 		src.pipename = make_from.name
 		color = make_from.pipe_color
 
@@ -136,7 +136,7 @@ Buildable meters
 			src.pipe_type = PIPE_OMNI_FILTER
 	else
 		src.pipe_type = pipe_type
-		src.set_dir(dir)
+		set_dir(dir)
 		if (pipe_type == PIPE_SUPPLY_STRAIGHT || pipe_type == PIPE_SUPPLY_BENT || pipe_type == PIPE_SUPPLY_MANIFOLD || pipe_type == PIPE_SUPPLY_MANIFOLD4W || pipe_type == PIPE_SUPPLY_CAP)
 			connect_types = CONNECT_TYPE_SUPPLY
 			src.color = PIPE_COLOR_BLUE
@@ -564,8 +564,8 @@ Buildable meters
 		if(PIPE_JUNCTION)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new (loc)
 			P.set_dir(src.dir)
-			P.initialize_directions = src.get_pdir()
-			P.initialize_directions_he = src.get_hdir()
+			P.initialize_directions = get_pdir()
+			P.initialize_directions_he = get_hdir()
 			P.construction()
 
 		if(PIPE_UVENT)		//unary vent

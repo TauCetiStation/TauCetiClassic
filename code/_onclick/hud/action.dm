@@ -125,7 +125,7 @@
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		moved = 0
 		return 1
 	if(usr.next_move >= world.time) // Is this needed ?
@@ -187,7 +187,7 @@
 	add_overlay(img)
 	return
 
-//This is the proc used to update all the action buttons. Properly defined in /mob/living/
+//This is the proc used to update all the action buttons. Properly defined in /mob/living
 /mob/proc/update_action_buttons()
 	return
 

@@ -313,7 +313,7 @@
 		if(hsrc)
 			//world << "[src] Topic [href] [hsrc]"
 			usr = src.mob
-			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
+			Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
 
 	// no atomref specified (or not found)

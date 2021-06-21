@@ -141,7 +141,7 @@
 
 
 /mob/living/carbon/proc/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
+	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
 			if(item_in_hand:wielded)
@@ -190,7 +190,7 @@
 	if (src.health >= config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
-			src.visible_message( \
+			visible_message( \
 				text("<span class='notice'>[src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
@@ -422,18 +422,18 @@
 			var/turf/end_T = get_turf(target)
 			if(start_T && end_T)
 				var/mob/living/M = item
-				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
-				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
+				var/start_T_descriptor = "<font color='#6b5d00'>tile at [COORD(start_T)] in area [get_area(start_T)]</font>"
+				var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
 
 				M.log_combat(usr, "thrown from [start_T_descriptor] with the target [end_T_descriptor]")
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	src.remove_from_mob(item)
+	remove_from_mob(item)
 
 	//actually throw it!
 	if (item)
-		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
+		visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
 		newtonian_move(get_dir(target, src))
 
@@ -534,18 +534,22 @@
 	if(IsSleeping())
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+	if(tgui_alert(src, "You sure you want to sleep for a while?","Sleep", list("Yes","No")) == "Yes")
 		SetSleeping(40 SECONDS) //Short nap
+
+//Check for brain worms in head.
+/mob/proc/has_brain_worms()
+	for(var/mob/living/simple_animal/borer/B in contents)
+		return B
+	return null
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
-
 	set category = "Borer"
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
 	if(!B)
 		return
 
@@ -553,7 +557,8 @@
 		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain].</span>")
 		to_chat(B.host_brain, "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>")
 		B.ckey = ckey
-		B.controlling = 0
+		B.controlling = FALSE
+
 	if(B.host_brain.ckey)
 		ckey = B.host_brain.ckey
 		B.host_brain.ckey = null
@@ -564,6 +569,8 @@
 	verbs -= /mob/living/carbon/proc/punish_host
 	verbs -= /mob/living/carbon/proc/spawn_larvae
 
+	med_hud_set_status()
+
 //Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
 	set category = "Borer"
@@ -571,7 +578,6 @@
 	set desc = "Punish your host with agony."
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
 	if(!B)
 		return
 
@@ -579,35 +585,25 @@
 		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
 		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
-//Check for brain worms in head.
-/mob/proc/has_brain_worms()
-
-	for(var/I in contents)
-		if(istype(I,/mob/living/simple_animal/borer))
-			return I
-
-	return 0
-
 /mob/living/carbon/proc/spawn_larvae()
 	set category = "Borer"
-	set name = "Reproduce"
+	set name = "Reproduce(100)"
 	set desc = "Spawn several young."
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
 	if(!B)
 		return
 
-	if(B.chemicals >= 100)
-		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-		B.chemicals -= 100
-		B.has_reproduced = 1
-
-		vomit()
-		new/mob/living/simple_animal/borer(get_turf(src), TRUE)
-	else
+	if(B.chemicals < 100)
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
+
+	to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
+	B.chemicals -= 100
+	B.has_reproduced = TRUE
+
+	vomit()
+	new /mob/living/simple_animal/borer(loc, TRUE, B.generation + 1)
 
 /mob/living/carbon/proc/uncuff()
 	if(handcuffed)

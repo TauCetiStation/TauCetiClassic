@@ -1,9 +1,10 @@
 //костыль, в будущем что-то сделать с этим
 /obj/structure/object_wall
+	layer = 2
 	name = "shuttle wall"
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	opacity = 1
 	icon = 'code/modules/locations/shuttles/shuttle.dmi'
 
@@ -26,7 +27,8 @@
 	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'
 
 /obj/structure/object_wall/standart
-	icon = 'code/modules/locations/shuttles/shuttle.dmi'
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall1"
 
 /obj/structure/object_wall/pod
 	icon = 'code/modules/locations/shuttles/pod.dmi'

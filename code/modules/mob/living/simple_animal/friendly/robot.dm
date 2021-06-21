@@ -32,6 +32,10 @@
 	var/act_emag
 	var/obj/machinery/computer/rdconsole/rdconsole = null
 
+/mob/living/simple_animal/det5/atom_init()
+	. = ..()
+	chief_animal_list += src
+
 /mob/living/simple_animal/det5/Life()
 	..()
 	if(health <= 0)
@@ -138,7 +142,7 @@
 			if(emagged == 1)
 				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
 				sleep(500)
-				src.explode()
+				explode()
 				commandtrigger = 0
 		if("Explode (using motion sensor)")
 			if(emagged == 1)

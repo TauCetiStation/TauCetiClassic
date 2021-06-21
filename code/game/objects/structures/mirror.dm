@@ -4,8 +4,8 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/shattered = 0
 
 
@@ -182,14 +182,14 @@
 				return
 
 			if(H.gender == "male")
-				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "female"
 					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
-				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "male"
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
@@ -199,7 +199,7 @@
 			H.check_dna(H)
 
 		if("hair")
-			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
+			var/hairchoice = tgui_alert(H, "Hair style or hair color?", "Change Hair", list("Style", "Color"))
 
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				var/userloc = H.loc

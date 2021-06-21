@@ -52,13 +52,14 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /* Initializers */
 
-/datum/ai_laws/asimov/New()
+
+/datum/ai_laws/asimov/New(datum/religion/R = global.chaplain_religion)
 	..()
 	add_inherent_law("Ты не должен причинить вред человеку или своим бездействием допустить, чтобы человеку был нанесен вред.")
 	add_inherent_law("Ты должен выполнять приказы человека, пока они не противоречат первому закону.")
 	add_inherent_law("Ты должен заботиться о своей безопасности, пока это не противоречит первому или второму закону.")
 
-/datum/ai_laws/nanotrasen/New() //BS12 EDIT
+/datum/ai_laws/nanotrasen/New(datum/religion/R = global.chaplain_religion) //BS12 EDIT
 	..()
 	add_inherent_law("Охранять: Защищай данную космическую станцию в меру своих возможностей. Это не то, что мы можем легко заменить.")
 	add_inherent_law("Служить: Служи экипажу назначенной вам космической станции и должностным лицам НаноТрейзен в меру своих возможностей, в соответствии с их рангом и ролью.")

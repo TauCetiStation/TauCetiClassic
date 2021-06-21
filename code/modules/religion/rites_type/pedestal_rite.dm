@@ -9,6 +9,8 @@
 	// The number of all items on pedestals must be longer than the length of ritual_invocations
 	// otherwise there will be no phrases
 	ritual_invocations = null
+	can_talismaned = FALSE
+
 	// One element must contain the type and number of items for one pedestal. types_by_count
 	var/list/rules = list()
 

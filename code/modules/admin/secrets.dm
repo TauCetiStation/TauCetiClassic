@@ -73,6 +73,8 @@
 					<A href='?src=\ref[src];secretsfun=securitylevel1'>Security Level - Blue</A><BR>
 					<A href='?src=\ref[src];secretsfun=securitylevel2'>Security Level - Red</A><br>
 					<A href='?src=\ref[src];secretsfun=securitylevel3'>Security Level - Delta</A><BR>
+					<h4>Do something stupid</h4>
+					<A href='?src=\ref[src];secretsfun=spawncompletesandwich'>Create a Complete Sandwich</A><BR>
 					"}
 
 		if(2) // OOC Events
@@ -232,7 +234,7 @@
 		// Warp all Players to Prison
 		if("prisonwarp")
 			if(!SSticker)
-				alert("The game hasn't started yet!", null, null, null, null, null)
+				tgui_alert(usr, "The game hasn't started yet!")
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","PW")
@@ -267,7 +269,7 @@
 		// Everyone is the traitor
 		if("traitor_all")
 			if(!SSticker)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr, "The game hasn't started yet!")
 				return
 			var/objective = sanitize(input("Enter an objective"))
 			if(!objective)
@@ -433,7 +435,7 @@
 		if("virus")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","V")
-			var/answer = alert("Do you want this to be a greater disease or a lesser one?",,"Greater","Lesser")
+			var/answer = tgui_alert(usr, "Do you want this to be a greater disease or a lesser one?",, list("Greater","Lesser"))
 			if(answer=="Lesser")
 				virus2_lesser_infection()
 				message_admins("[key_name_admin(usr)] has triggered a lesser virus outbreak.")
@@ -513,6 +515,16 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","ASTEROID")
 			usr.client.drop_asteroid()
+		if("spawncompletesandwich")
+			if(!check_rights(R_EVENT|R_FUN))
+				to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
+				return
+			var/turf/T = get_turf(usr)
+			message_admins("[key_name_admin(usr)] has created a complete sandwich at location [COORD(T)] [ADMIN_JMP(usr)]")
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","DASANDWICH")
+			var/obj/item/weapon/reagent_containers/food/snacks/csandwich/CS = new(get_turf(usr))
+			CS.complete()
 		else
 			to_chat(world, "oof, this is ["secretsfun"] not worked")
 	if(usr)
@@ -566,7 +578,7 @@
 				GM.temperature = 293
 				GM.update_values()
 
-				message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
+				message_admins("[key_name_admin(usr)] has restored air in [COORD(T)] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 			else
 				to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
 		// Bombing List
@@ -620,10 +632,10 @@
 		// Show Game Mode
 		if("showgm")
 			if(!SSticker)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr, "The game hasn't started yet!")
 			else if (SSticker.mode)
-				alert("The game mode is [SSticker.mode.name]")
-			else alert("For some reason there's a ticker, but not a game mode")
+				tgui_alert(usr, "The game mode is [SSticker.mode.name]")
+			else tgui_alert(usr, "For some reason there's a ticker, but not a game mode")
 		// Show Crew Manifest
 		if("manifest")
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
@@ -673,7 +685,7 @@
 
 		// Set Night Shift Mode
 		if("night_shift_set")
-			var/val = alert(usr, "What do you want to set night shift to?", "Night Shift", "On", "Off", "Automatic")
+			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic"))
 			switch(val)
 				if("Automatic")
 					SSnightshift.can_fire = TRUE
@@ -738,7 +750,7 @@
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		if("topicspam")
 			var/count = config.minutetopiclimit * 2
-			if(alert("Are you sure? You will be deadminned and [count] Topic() calls will be generated.",,"Yes","No") == "Yes")
+			if(tgui_alert(usr, "Are you sure? You will be deadminned and [count] Topic() calls will be generated.",, list("Yes","No")) == "Yes")
 				to_chat(usr, "<span class='interface'>You are lost your keys to control this station. Please wait...</span>")
 				usr.client.holder.disassociate()
 				message_admins("[key_name_admin(usr)] started topic spam.")

@@ -388,7 +388,9 @@
 		if(istype(H))
 			if(helmet && H.head == helmet)
 				helmet.canremove = 1
+				var/dropped_helmet = helmet
 				H.drop_from_inventory(helmet)
+				helmet = dropped_helmet		//attach the helmet back to the suit
 				helmet.loc = src
 
 	if(boots)
@@ -427,7 +429,9 @@
 
 	if(H.head == helmet)
 		helmet.canremove = 1
+		var/dropped_helmet = helmet
 		H.drop_from_inventory(helmet)
+		helmet = dropped_helmet		//attach the helmet back to the suit
 		helmet.loc = src
 		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
 
@@ -541,7 +545,7 @@
 		source = "hit"
 
 	if(wearer)
-		var/obj/item/rig_module/simple_ai/ai = find_module(/obj/item/rig_module/simple_ai/)
+		var/obj/item/rig_module/simple_ai/ai = find_module(/obj/item/rig_module/simple_ai)
 		if(ai && ai.active)
 			ai.handle_module_damage(source, dam_module)
 		else

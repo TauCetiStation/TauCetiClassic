@@ -9,7 +9,7 @@
 
 	log_game("[key_name(usr)] used station map L[z] in [get_turf(src)]")
 
-	src.drawmap(usr)
+	drawmap(usr)
 
 /obj/machinery/computer/security/proc/drawmap(mob/user)
 
@@ -316,7 +316,7 @@
 
 	user.client.screen += user.mapobjs
 
-	src.close(user)
+	close(user)
 
 /*			if(seccomp == src)
 				drawmap(user)
@@ -348,5 +348,5 @@
 		qdel(O)
 
 	mapobjs = null
-	src.unset_machine()
+	unset_machine()
 

@@ -34,8 +34,6 @@
 		if(M.buckled)
 			M.buckled.user_unbuckle_mob(M)
 
-		M.apply_effect(2, STUN, 0)
-		M.apply_effect(2, WEAKEN, 0)
 		M.apply_effect(4, STUTTER, 0)
 		shake_camera(M, 1, 1)
 
@@ -65,8 +63,6 @@
 				if(M.buckled)
 					M.buckled.user_unbuckle_mob(M)
 
-				M.apply_effect(2, STUN, 0)
-				M.apply_effect(2, WEAKEN, 0)
 				M.apply_effect(6, STUTTER, 0)
 				shake_camera(M, 1, 1)
 
@@ -312,7 +308,7 @@
 	else
 		to_chat(user, "<span class='notice'>The cloaking device is now inactive.</span>")
 		src.icon_state = "shield0"
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/item/weapon/cloaking_device/emp_act(severity)

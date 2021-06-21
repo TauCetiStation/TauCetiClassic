@@ -56,7 +56,7 @@
 			tile.break_tile()
 		var/o=3
 		for(var/i=0, i<14, i++)
-			usr.density = 0
+			usr.density = FALSE
 			usr.canmove = 0
 			o++
 			if(o == 4)
@@ -105,7 +105,7 @@
 			usr.weakened += 10
 			usr.stunned += 5
 
-		usr.density = 1
+		usr.density = TRUE
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
@@ -230,7 +230,7 @@
 							H.Weaken(5)
 			if(i > 20)
 				usr.canmove = 0
-				usr.density = 0
+				usr.density = FALSE
 				for(var/mob/living/M in T.contents)
 					if(!M.lying)
 						M.log_combat(usr, "hulk_dashed")
@@ -285,7 +285,7 @@
 			usr.weakened += 10
 			usr.stunned += 5
 
-		usr.density = 1
+		usr.density = TRUE
 		usr.canmove = 1
 		usr.layer = prevLayer
 	else
@@ -334,9 +334,9 @@
 		usr.visible_message("<font size='4' color='red'><b>[usr.name] prepares a heavy attack!</b></font>")
 		for(var/i=0, i<30, i++)
 			usr.canmove = 0
-			usr.anchored = 1
+			usr.anchored = TRUE
 			sleep(1)
-		usr.anchored = 0
+		usr.anchored = FALSE
 		usr.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		usr.visible_message("<span class='warning'><b>[usr.name] slams the ground with \his arms!</b></span>")
 		playsound(src, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER)
@@ -433,7 +433,7 @@
 
 //Girders!!!!!
 /obj/structure/girder/attack_paw(mob/user)
-	return src.attack_hand(user) //#Z2
+	return attack_hand(user) //#Z2
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)
