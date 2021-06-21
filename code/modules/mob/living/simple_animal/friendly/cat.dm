@@ -258,7 +258,7 @@ var/global/cat_number = 0
 	var/text2 = "Время парадокса: [runtime["time"]]"
 	say(text2)
 	sleep(2 SECONDS)
-	var/text3 = "Создатель: [runtime["usr"]]. Местоположение: [runtime["loc"]]"
+	var/text3 = "Создатель: [runtime["usr"]]."
 	say(text3)
 	lore_runtime = "[text1]\n[text2]\n[text3]"
 

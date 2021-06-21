@@ -65,7 +65,6 @@ var/global/total_runtimes_skipped = 0
 			var/list/runtime_info = list(
 				"time" = time_stamp(),
 				"usr" = usr,
-				"loc" = locinfo,
 				"line" = E.line,
 				"file" = E.file,
 				"name" = E.name,
