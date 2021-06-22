@@ -416,23 +416,8 @@ var/list/net_announcer_secret = list()
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist = 1
-/*
-				if ("probability")
-					var/prob_pos = findtext(value, " ")
-					var/prob_name = null
-					var/prob_value = null
 
-					if (prob_pos)
-						prob_name = lowertext(copytext(value, 1, prob_pos))
-						prob_value = copytext(value, prob_pos + 1)
-						if (prob_name in config.config_name_by_real)
-							config.probabilities[prob_name] = text2num(prob_value)
-						else
-							log_misc("Unknown game mode probability configuration definition: [prob_name].")
-					else
-						log_misc("Incorrect probability configuration definition: [prob_name]  [prob_value].")
-*/
-				if ("tm_probability")
+				if ("probability")
 					var/prob_pos = findtext(value, " ")
 					var/prob_name = null
 					var/prob_value = null
