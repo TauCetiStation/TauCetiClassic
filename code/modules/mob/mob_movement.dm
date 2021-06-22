@@ -171,46 +171,14 @@
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2
 				return mob.buckled.relaymove(mob,direct)
-
+		if(locate(/obj/item/weapon/grab, mob))		
+			move_delay = max(move_delay, world.time + 7)
 		//We are now going to move
 		moving = 1
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			moving = FALSE
 			return
-		//Something with pulling things
-		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.time + 7)
-			var/list/L = mob.ret_grab()
-			if(istype(L, /list))
-				if(L.len == 2)
-					L -= mob
-					var/mob/M = L[1]
-					if(M)
-						if ((get_dist(mob, M) <= 1 || M.loc == mob.loc))
-							var/turf/T = mob.loc
-							. = ..()
-							if (isturf(M.loc))
-								var/diag = get_dir(mob, M)
-								if ((diag - 1) & diag)
-								else
-									diag = null
-								if ((get_dist(mob, M) > 1 || diag))
-									step(M, get_dir(M.loc, T))
-				else
-					for(var/mob/M in L)
-						M.other_mobs = 1
-						if(mob != M)
-							M.animate_movement = 3
-					for(var/mob/M in L)
-						spawn( 0 )
-							step(M, direct)
-							return
-						spawn( 1 )
-							M.other_mobs = null
-							M.animate_movement = 2
-							return
-
-		else if(mob.confused)
+		if(mob.confused)
 			var/newdir = direct
 			if(mob.confused > 40)
 				newdir = pick(alldirs)
@@ -234,7 +202,10 @@
 		moving = FALSE
 		if(mob && .)
 			mob.throwing = FALSE
-
+		for(var/obj/item/weapon/grab/G in mob.GetGrabs())
+			G.adjust_position()
+		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
+			G.adjust_position()
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/SelfMove(turf/n, direct)
@@ -254,14 +225,57 @@
 		for(var/i;i<10;i++)
 			T = get_step(T, Dir)
 		console.jump_on_click(src, T)
-		return TRUE
-	return FALSE
+		return FALSE
 
 /mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (pinned.len)
 		return FALSE
-
+	if(locate(/obj/item/weapon/grab, src))
+		var/list/L = GetGrabs()
+		if(L.len == 1)
+			for(var/obj/item/weapon/grab/G in GetGrabs())
+				var/mob/M = G.affecting
+				if(is_moving)
+					continue
+				G.affecting.is_moving = TRUE
+				if(M)
+					if(G.state == GRAB_NECK)
+						Dir = turn(Dir, 180)
+					if(get_dist(src, M) <= 1 || M.loc == src.loc)
+						var/turf/T = src.loc
+						. = ..()
+						if(isturf(M.loc))
+							if(get_dist(src, M) > 0)
+								step(M, get_dir(M.loc, T))
+								if(G.affecting.is_moving)
+									G.affecting.is_moving = FALSE
+		else
+			move_grabs(Dir)
 	return ..()
+
+/mob/proc/move_grabs(Dir)
+	if(is_moving)
+		return
+	is_moving = TRUE
+	var/list/L = ret_grab()
+	if(islist(L) && L.len > 2)
+		if(locate(/obj/item/weapon/grab, src))
+			for(var/mob/M in L)
+				M.other_mobs = 1
+				if(src != M)
+					M.animate_movement = 3
+			for(var/mob/M in L)
+				spawn( 0 )
+					if(M != src && is_moving)
+						step(M, Dir)
+						M.is_moving = FALSE
+					return
+			for(var/mob/M in L)
+				spawn( 1 )
+					M.other_mobs = null
+					M.animate_movement = 2
+					is_moving = FALSE
+					return
 
 ///Process_Incorpmove
 ///Called by client/Move()

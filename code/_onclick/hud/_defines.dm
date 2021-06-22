@@ -89,10 +89,12 @@
 
 
 //Middle right (status indicators)
+#define ui_stamina "EAST-1:28,CENTER-3:11"
 #define ui_nutrition "EAST-1:28,CENTER-2:13"
 #define ui_healthdoll "EAST-1:28,CENTER-1:15"
 #define ui_health "EAST-1:28,CENTER:17"
 #define ui_internal "EAST-1:28,CENTER+1:19"
+
 
 //aliens
 #define ui_alien_nightvision "EAST-1:28,CENTER:17"
@@ -145,5 +147,5 @@
 #define ui_ian_back    "CENTER-1:18,SOUTH:5"
 #define ui_ian_neck    "CENTER-2:16,SOUTH:5"
 #define ui_ian_head    "CENTER-3:14,SOUTH:5"
-#define ui_stamina     "EAST-1:28,CENTER:5"
 #define ui_ian_pselect "EAST-4:22,SOUTH:5"
+#define ui_stamina_ian "EAST-1:28,CENTER-1:5"

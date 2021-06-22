@@ -1201,6 +1201,7 @@ var/global/list/common_tools = list(
 		return TRUE
 	return FALSE
 
+
 /*
 Checks if that loc and dir has a item on the wall
 */

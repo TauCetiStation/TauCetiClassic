@@ -367,6 +367,28 @@
 		return 1
 	return ..()
 
+// Get a turf in which to place target after a push by center.
+/proc/get_force_push(atom/center, atom/target)
+	var/atom/oldLoc = target.loc
+	var/atom/A = get_step(target, center.dir)
+
+	if(A != oldLoc)
+		return A
+	return get_step_away(target, center)
+
+// Push target either in dir center is looking, or if unavailable just somewhere away from center. Return TRUE if a push occured in center's dir. Return FALSE otherwise.
+/proc/force_push(atom/center, atom/target)
+	var/atom/oldLoc = target.loc
+	var/obj/item/weapon/grab/G = locate() in target
+	if(G && G.state == GRAB_NECK)
+		step(target, turn(center.dir, 180))
+	else
+		step(target, center.dir)
+	if(target.loc != oldLoc)
+		return TRUE
+	step_away(target, center)
+	return FALSE
+
 /**
 * A wrapper for setDir that should only be able to fail by living mobs.
 *

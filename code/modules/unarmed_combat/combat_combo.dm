@@ -61,6 +61,8 @@ var/global/list/combat_combos_by_name = list()
 	var/heavy_animation = FALSE
 	// Should admins be PM-ed about this combo?
 	var/needs_logging = TRUE
+	// Mob must have possibility to move
+	var/require_canmove = FALSE
 
 /datum/combat_combo/New()
 	gen_description()
@@ -144,6 +146,10 @@ var/global/list/combat_combos_by_name = list()
 			if(show_warning)
 				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
 			return FALSE
+	else if(require_canmove && !CS.attacker.canmove)
+		if(show_warning)
+			to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
+		return FALSE
 
 	if(CS.attacker.incapacitated())
 		if(show_warning)

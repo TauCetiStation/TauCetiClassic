@@ -196,7 +196,7 @@
 			var/combo_value = 2
 			if(!anchored && !is_bigger_than(attacker) && src != attacker)
 				var/turf/to_move = get_step(src, get_dir(attacker, src))
-				var/atom/A = get_step_away(src, get_turf(attacker))
+				var/atom/A = get_force_push(attacker, src)
 				if(A != to_move)
 					combo_value *= 2
 
@@ -220,24 +220,37 @@
 	return TRUE
 
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.do_attack_animation(src)
-
-	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
-		var/turf/to_move = get_step(src, get_dir(attacker, src))
-		step_away(src, get_turf(attacker))
-		if(loc != to_move)
-			adjustHalLoss(4)
-
 	if(pulling)
 		visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [pulling]!</B></span>")
 		stop_pulling()
 	else
 		//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 		for(var/obj/item/weapon/grab/G in GetGrabs())
-			if(G.affecting)
-				visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</B></span>")
+			if(!G.affecting)
+				continue
+			if(G.affecting != attacker && G.assailant == attacker)
+				continue
+			G.adjust_position()
+			var/diff = G.affecting.getStamina() - G.assailant.getStamina()
+			if(G.state < GRAB_AGGRESSIVE)
+				continue //For fun, so that you can make a mini-train of two people, while not breaking the grab 
+			else if(diff >= 0)
+				G.affecting.setStamina(diff - (G.state-2) * 100)
+				to_chat(G.affecting, "<span class='warning'><b>You broke up the grab on yourself.</b></span>")
+				qdel(G)
+			else
+				to_chat(G.affecting, "<span class='notice'>You don't have enough stamina to break up the grab.</span>")
+			continue
+			visible_message("<span class='warning'><b>[attacker] has broken [src]'s grip on [G.affecting]!</b></span>")
 			qdel(G)
 		//End BubbleWrap
+
+	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
+		if(!attacker.grabbed_by.len)
+			attacker.do_attack_animation(src)
+		if(!force_push(attacker, src))
+			adjustHalLoss(4)
+	
 
 	playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	if(show_message)

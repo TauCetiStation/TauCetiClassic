@@ -1,5 +1,6 @@
 #define MASSAGE_RHYTM_RIGHT   11
 #define MASSAGE_ALLOWED_ERROR 2
+#define STAMINA_REGEN_RATE 0.05
 
 /mob/living/carbon/human
 	name = "unknown"
@@ -64,6 +65,7 @@
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
+	stamina_regen *= maxStamina * STAMINA_REGEN_RATE
 
 /mob/living/carbon/human/Destroy()
 	human_list -= src
@@ -2139,3 +2141,4 @@
 
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
+#undef STAMINA_REGEN_RATE

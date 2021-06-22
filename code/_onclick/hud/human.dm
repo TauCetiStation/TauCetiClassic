@@ -73,7 +73,11 @@
 	harm_intent = using
 
 //end intent small hud objects
-
+	using = new /obj/screen/stamina_bar()
+	using.screen_loc = ui_stamina
+	src.adding += using
+	staminadisplay = using
+	
 	using = new /obj/screen()
 	using.name = "mov_intent"
 	using.icon = ui_style

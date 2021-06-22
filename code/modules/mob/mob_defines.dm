@@ -236,6 +236,7 @@
 	var/list/weather_immunities = list()
 
 	var/list/progressbars = null //for stacking do_after bars
+	var/is_moving = FALSE
 
 	// This is a ref to the religion that the mob is involved in.
 	// Mobs without mind can be member of a religion

@@ -374,6 +374,21 @@
 		add_combo_value_all(amount - halloss)
 	halloss = clamp(amount, 0, maxHealth * 2)
 
+// ========== STAMINA ==========
+/mob/living/proc/getStamina()
+	return stamina
+
+/mob/living/proc/adjustStamina(amount)
+	if(status_flags & GODMODE)
+		return
+	stamina = clamp(stamina + amount, minStamina, maxStamina)
+	update_stamina_bar()
+
+/mob/living/proc/setStamina(amount)
+	if(status_flags & GODMODE)
+		return
+	stamina = clamp(amount, minStamina, maxStamina)
+	update_stamina_bar()
 // ============================================================
 
 /mob/living/proc/check_contents_for(A)
@@ -505,6 +520,7 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
+	setStamina(maxStamina)
 
 	// shut down ongoing problems
 	radiation = 0
@@ -783,7 +799,7 @@
 		return FALSE
 
 	. = TRUE
-	usr.SetNextMove(20)
+	usr.SetNextMove(CLICK_CD_ACTION)
 
 	var/mob/living/L = usr
 
@@ -835,31 +851,31 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if (!L.incapacitated())
-		var/resisting = 0
+		var/size_ratio_resisting
+		var/size_ratio_grabbing
+		var/g_resist_cost
+		var/r_resist_cost
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
 			qdel(O)
-			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
-			resisting++
-			switch(G.state)
-				if(GRAB_PASSIVE)
-					if(ishuman(G.assailant))
-						var/mob/living/carbon/human/H = G.assailant
-						if(H.shoving_fingers && !istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
-							H.adjustBruteLoss(5) // We bit them.
-							H.shoving_fingers = FALSE
-					qdel(G)
-				if(GRAB_AGGRESSIVE)
-					if(prob(50 - (L.lying ? 35 : 0)))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
-						qdel(G)
-				if(GRAB_NECK)
-					if(prob(5 - L.stunned * 2))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
-						qdel(G)
-		if(resisting)
-			L.visible_message("<span class='danger'>[L] resists!</span>")
+			if(G.state == GRAB_PASSIVE)
+				if(ishuman(G.assailant))
+					var/mob/living/carbon/human/H = G.assailant
+					if(H.shoving_fingers && !istype(H.wear_mask, /obj/item/clothing/mask/muzzle))
+						H.adjustBruteLoss(5) // We bit them.
+						H.shoving_fingers = FALSE
+				qdel(G)
+				break
+			size_ratio_resisting = get_size_ratio(G.assailant, L)
+			if(size_ratio_resisting)
+				size_ratio_grabbing = 1 / size_ratio_resisting
+				g_resist_cost = L.resist_cost * size_ratio_grabbing
+				r_resist_cost = L.resist_cost * size_ratio_resisting
+				if(L.getStamina() >= g_resist_cost)
+					G.assailant.adjustStamina(-g_resist_cost)
+					L.adjustStamina(-r_resist_cost)
+					L.visible_message("<span class='danger'>[L] resists!</span>")
 	//Digging yourself out of a grave
 	if(istype(src.loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc

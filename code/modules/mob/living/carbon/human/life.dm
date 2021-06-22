@@ -88,7 +88,6 @@
 			handle_shock()
 
 			handle_pain()
-
 			handle_medical_side_effects()
 
 			handle_heart_beat()
@@ -122,6 +121,7 @@
 	//Updates the number of stored chemicals for powers and essentials
 	handle_changeling()
 
+	handle_stamina()
 	//Species-specific update.
 	if(species)
 		species.on_life(src)

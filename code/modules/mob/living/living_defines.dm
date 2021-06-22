@@ -3,7 +3,12 @@
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
-
+	var/maxStamina = 100	//For grabs only right now
+	var/minStamina = -100
+	var/stamina = 100
+	var/resist_cost = 15 //Cost of grabs resisting
+	var/stamina_damage = 10 //When twisting, headlocking and so on
+	var/stamina_regen = 1 //How much stamina to regenerate
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
 	var/bruteloss = 0.0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
@@ -13,7 +18,6 @@
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/halloss = 0		//Hallucination damage. 'Fake' damage obtained through hallucinating or the holodeck. Sleeping should cause it to wear off.
-
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 	var/list/atom/hallucinations = list() //A list of hallucinated people that try to attack the mob. See /obj/effect/fake_attacker in hallucinations.dm

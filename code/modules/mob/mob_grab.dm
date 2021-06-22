@@ -11,12 +11,13 @@
 	name = "grab"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "reinforce"
-	flags = DROPDEL|NOBLUDGEON
+	canremove = FALSE
+	flags = DROPDEL|NOBLUDGEON|ABSTRACT
 	var/obj/screen/grab/hud = null
 	var/mob/living/affecting = null
 	var/mob/living/assailant = null
 	var/state = GRAB_NONE
-
+	var/grab_name
 	var/allow_upgrade = 1
 	var/last_hit_zone = 0
 	var/force_down //determines if the affecting mob will be pinned to the ground
@@ -25,7 +26,7 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = ITEM_SIZE_NO_CONTAINER
 
 /mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))
@@ -38,6 +39,10 @@
 		return FALSE
 	if(target.anchored)
 		return FALSE
+	if(isliving(src))
+		var/mob/living/L = src 
+		if(L.getStamina() <= 0)
+			return FALSE
 	return TRUE
 
 /mob/proc/tryGrab(atom/movable/target, force_state, show_warnings = TRUE)
@@ -70,10 +75,9 @@
 	. = ..()
 	assailant = loc
 	affecting = victim
-
 	hud = new /obj/screen/grab(src)
 	hud.master = src
-
+	ADD_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, GRAB_TRAIT)
 	victim.grabbed_by += src
 	victim.LAssailant = assailant
 
@@ -82,7 +86,7 @@
 
 	//check if assailant is grabbed by victim as well
 	if(assailant.grabbed_by)
-		for (var/obj/item/weapon/grab/G in assailant.grabbed_by)
+		for(var/obj/item/weapon/grab/G in assailant.grabbed_by)
 			if(G.assailant == affecting && G.affecting == assailant)
 				G.dancing = 1
 				G.adjust_position()
@@ -176,7 +180,20 @@
 
 	if(assailant.pulling == affecting)
 		assailant.stop_pulling()
-
+	if(assailant.getStamina() <= 0)
+		visible_message("<span class='danger'>[affecting] broken free of [assailant]'s [grab_name]!</span>")
+		qdel(src)
+		return
+	if(state <= GRAB_PASSIVE)
+		if(dancing)
+			var/list/grabs_as = assailant.GetGrabs()
+			var/list/grabs_af = affecting.GetGrabs()
+			if(grabs_as.len > 1 || grabs_af.len > 1)
+				for(var/obj/item/weapon/grab/G in assailant.grabbed_by)
+					if(G.assailant == affecting && G.affecting == assailant)
+						G.dancing = 0
+						G.adjust_position()
+						dancing = 0
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
 		//disallow upgrading if we're grabbing more than one person
@@ -228,7 +245,9 @@
 							AH.eye_blind = 3
 		if(force_down)
 			if(affecting.loc != assailant.loc)
+				flick(hud.icon_state, hud)
 				force_down = 0
+				assailant.SetNextMove(CLICK_CD_ACTION)
 			else
 				affecting.Weaken(2)
 
@@ -240,7 +259,6 @@
 				qdel(src)
 				return PROCESS_KILL
 			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
-		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
 			L.adjustOxyLoss(1)
@@ -250,6 +268,10 @@
 		affecting.stuttering = max(affecting.stuttering, 5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
 		affecting.losebreath = max(affecting.losebreath + 2, 3)
+
+	if(assailant.lying)
+		set_state(GRAB_PASSIVE)
+		allow_upgrade = 0
 
 	adjust_position()
 
@@ -348,6 +370,7 @@
 			assailant.set_dir(EAST) //face the victim
 			affecting.set_dir(SOUTH) //face up
 		set_state(GRAB_AGGRESSIVE)
+		grab_name = "grip"
 
 	else if(state < GRAB_NECK)
 		if(isslime(affecting))
@@ -359,13 +382,15 @@
 			if(!BP || BP.is_stump)
 				to_chat(assailant, "<span class='warning'>You can't take a headless man by the neck!</span>")
 				return
+		if(force_down && affecting.getStamina() > 0)
+			to_chat(assailant, "<span class='notice'>You can't properly grab [affecting]</span>")
+			return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
 		assailant.set_dir(get_dir(assailant, affecting))
 
 		affecting.log_combat(assailant, "neck-grabbed")
-
-		affecting.Stun(10) //10 ticks of ensured grab
 		set_state(GRAB_NECK)
+		grab_name = "headlock"
 
 	else if(state < GRAB_KILL)
 		if(ishuman(affecting))
@@ -373,7 +398,9 @@
 			if(AH.is_in_space_suit())
 				to_chat(assailant, "<span class='notice'>You can't strangle him, because space helmet covers [affecting]'s neck.</span>")
 				return
-
+		if(affecting.getStamina() > 0 && !affecting.incapacitated())
+			to_chat(assailant, "<span class='notice'>You can't strangle him, [affecting] is too endured right now.</span>")
+			return
 		assailant.visible_message("<span class='danger'>[assailant] has tightened \his grip on [affecting]'s neck!</span>")
 
 		affecting.log_combat(assailant, "strangled")
@@ -382,6 +409,7 @@
 		affecting.set_dir(WEST)
 
 		set_state(GRAB_KILL)
+		grab_name = "asphyxiation"
 
 //This is used to make sure the victim hasn't managed to yackety sax away before using the grab.
 /obj/item/weapon/grab/proc/confirm()
@@ -393,6 +421,9 @@
 		if(!isturf(assailant.loc) || ( !isturf(affecting.loc) || assailant.loc != affecting.loc && get_dist(assailant, affecting) > 1) )
 			qdel(src)
 			return 0
+	if(assailant.incapacitated())
+		qdel(src)
+		return 0
 
 	return 1
 
@@ -448,10 +479,13 @@
 					if(!BP)
 						return
 					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
+					assailant.adjustStamina(-2)
 					var/armor = H.run_armor_check(H, "melee")
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
-						H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
+						var/list/attack_obj = assailant.get_unarmed_attack()
+						H.adjustStamina(-assailant.stamina_damage * attack_obj["damage"])
+						H.adjustHalLoss(clamp(0, 10 - H.halloss, 10)) //up to 10 halloss
 					return
 				if(INTENT_HARM)
 					if(hit_zone == O_EYES)
@@ -541,24 +575,32 @@
 						assailant.set_dir(EAST) //face the victim
 						affecting.set_dir(SOUTH) //face up
 						affecting.layer = 3.9
+						assailant.adjustStamina(-affecting.resist_cost * get_size_ratio(affecting, assailant))
 						return
 					else
 						to_chat(assailant, "<span class='warning'>You are already pinning [affecting] to the ground.</span>")
 						return
 
 /obj/item/weapon/grab/Destroy()
+	. = ..()
 	if(affecting)
 		animate(affecting, pixel_x = 0, pixel_y = 0, 4, 1, LINEAR_EASING)
 		affecting.layer = 4
-		if(affecting)
-			affecting.grabbed_by -= src
-			affecting = null
+		affecting.grabbed_by -= src
+		affecting.other_mobs = null
+		affecting = null
 	if(assailant)
 		if(assailant.client)
 			assailant.client.screen -= hud
+		on_last_grab_del()
+		assailant.other_mobs = null
 		assailant = null
 	QDEL_NULL(hud)
-	return ..()
+
+/obj/item/weapon/grab/proc/on_last_grab_del()
+	var/list/grabs = assailant.GetGrabs()
+	if(grabs.len == 0)
+		REMOVE_TRAIT(assailant, TRAIT_NOSTAMINAREGEN, GRAB_TRAIT)
 
 /obj/item/weapon/grab/proc/inspect_organ(mob/living/carbon/human/H, mob/user, target_zone)
 

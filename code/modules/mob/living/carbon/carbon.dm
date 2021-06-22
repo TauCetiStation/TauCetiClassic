@@ -411,12 +411,7 @@
 	if(!item)
 		return
 
-	if(istype(item, /obj/item))
-		var/obj/item/W = item
-		if(!W.canremove || W.flags & NODROP)
-			return
-
-	if (istype(item, /obj/item/weapon/grab))
+	if(istype(item, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = item
 		item = G.throw_held() //throw the person instead of the grab
 		qdel(G)
@@ -432,7 +427,15 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
+
+	if(istype(item, /obj/item))
+		var/obj/item/W = item
+		if(!W.canremove || W.flags & NODROP)
+			return
+
+
 	remove_from_mob(item)
+
 
 	//actually throw it!
 	if (item)

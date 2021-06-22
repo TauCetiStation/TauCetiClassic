@@ -47,7 +47,7 @@
 	if(human_owner && !human_owner.client)
 		duration = max(duration, world.time + 1 SECOND)
 
-	owner.adjustHalLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
+	owner.adjustHalLoss(-0.5) //reduce hal loss by 0.5 per tick, 10 per 2 seconds
 
 	if(human_owner)
 		human_owner.drowsyness = max(0, human_owner.drowsyness * 0.997)
