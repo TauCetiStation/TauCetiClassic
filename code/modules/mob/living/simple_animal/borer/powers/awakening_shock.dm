@@ -14,6 +14,7 @@
 	B.host.SetParalysis(0)
 	B.host.SetStunned(0)
 	B.host.SetWeakened(0)
+	B.host.SetSleeping(0)
 	B.host.lying = 0
 	B.host.update_canmove()
 	B.host.adjustBrainLoss(rand(10, 15))

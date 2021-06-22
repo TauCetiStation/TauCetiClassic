@@ -6,7 +6,7 @@
 	chemicals = 350
 	var/healing = 100
 	requires_t = list(
-		/obj/effect/proc_holder/borer/active/noncontrol/electric_shock,
+		/obj/effect/proc_holder/borer/active/noncontrol/awakening_shock,
 		/obj/effect/proc_holder/borer/enlarged_glands,
 	)
 
@@ -33,6 +33,12 @@
 			clone = -dam_diff * B.host.getCloneLoss() / all_damage
 		)
 
+	var/mob/living/carbon/human/H = B.host
+	if(istype(H))
+		H.return_to_body_dialog()
+		var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
+		IO?.heart_fibrillate()
+
 	if(!do_after(B, 5 SECONDS, target = B.host))
 		return
 	
@@ -44,14 +50,10 @@
 	)
 	B.host.make_jittery(30)
 
-	if(ishuman(B.host))
-		var/mob/living/carbon/human/H = B.host
+	if(istype(H))
 		H.reanimate_body()
-		H.return_to_body_dialog()
-
 		var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
-		if(IO)
-			IO.heart_normalize()
+		IO?.heart_normalize()
 		H.ChangeToHusk()
 
 	addtimer(CALLBACK(src, .proc/reanimate_msg, B.host), 5 SECONDS)
