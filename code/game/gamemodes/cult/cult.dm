@@ -237,7 +237,7 @@
 	else
 		for(var/name in global.cult_religion.ritename_by_count)
 			var/count = global.cult_religion.ritename_by_count[name]
-			text += "<br><i>[name]</i> - использован [count] [russian_plural(count, "раз", "раза", "раз")]"
+			text += "<br><i>[name]</i> - использован [count] [pluralize_russian(count, "раз", "раза", "раз")]"
 
 	completion_text += text
 	..()
