@@ -187,9 +187,8 @@ var/global/cat_number = 0
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
 	var/const/cat_life_duration = 1 MINUTES
-	var/lore_runtime = ""
 
-/mob/living/simple_animal/cat/real_runtime/atom_init(mapload, list/runtime)
+/mob/living/simple_animal/cat/real_runtime/atom_init(mapload, runtime_line)
 	. = ..()
 	cat_number += 1
 	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
@@ -197,7 +196,7 @@ var/global/cat_number = 0
 	new /obj/effect/temp_visual/sparkles(loc)
 
 	addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
-	addtimer(CALLBACK(src, .proc/say_runtime, runtime), 5 SECONDS)
+	addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
 
 	for(var/i in rand(1, 3))
 		step(src, global.alldirs)
@@ -242,25 +241,11 @@ var/global/cat_number = 0
 			visible_message("<span class='warning'>\The [src] hisses.</span>")
 			strike_back(M)
 
-/mob/living/simple_animal/cat/real_runtime/examine(mob/user, distance)
-	. = ..()
-	if(lore_runtime)
-		to_chat(user, "\n<span class='notice'>Мистический кот транслирует вам в мозг фразу:</span>")
-		to_chat(user, "<span class='warning'>[lore_runtime]</span>")
-
-/mob/living/simple_animal/cat/real_runtime/proc/say_runtime(list/runtime)
-	if(!runtime)
+/mob/living/simple_animal/cat/real_runtime/proc/say_runtime(runtime_line)
+	if(!runtime_line)
 		return
-	var/sanity_name = replace_characters(runtime["name"], list("\n" = ""))
-	var/text1 = "Зафиксирована аномалия '[runtime["line"]]' в отделе матрицы '[runtime["file"]]' под кодовым названием: '[sanity_name]'"
-	say(text1)
-	sleep(2 SECONDS)
-	var/text2 = "Время парадокса: [runtime["time"]]"
-	say(text2)
-	sleep(2 SECONDS)
-	var/text3 = "Создатель: [runtime["usr"]]."
-	say(text3)
-	lore_runtime = "[text1]\n[text2]\n[text3]"
+	var/text = "Зафиксирована аномалия #'[runtime_line]'. Пожалуйста, отойдите подальше."
+	say(text)
 
 /mob/living/simple_animal/cat/real_runtime/proc/back_to_bluespace()
 	qdel(src)
