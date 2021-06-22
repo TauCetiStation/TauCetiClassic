@@ -69,15 +69,15 @@
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
 	if (dirty)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
+		add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
+		add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	else if (operating)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
+		add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
 	else
-		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
+		add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
 
 /obj/machinery/gibber/container_resist()
 	go_out()
@@ -146,7 +146,7 @@
 		return
 	if(user.is_busy(src)) return
 	user.visible_message("<span class='warning'>[user] starts to put [victim] into the gibber!</span>")
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	var/checks_to_check = CALLBACK(src, .proc/do_after_checks, user, victim)
 	if(istype(victim.loc, /obj/item/weapon/holder))
 		checks_to_check = null
@@ -170,7 +170,7 @@
 
 	if (usr.incapacitated())
 		return
-	src.go_out()
+	go_out()
 	add_fingerprint(usr)
 	return
 

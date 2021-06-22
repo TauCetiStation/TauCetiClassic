@@ -675,7 +675,7 @@
 
 /atom/proc/shake_act(severity, recursive = TRUE)
 	if(isturf(loc))
-		INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+		INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
 /atom/movable/lighting_object/shake_act(severity, recursive = TRUE)
 	return
@@ -683,7 +683,7 @@
 /turf/shake_act(severity, recursive = TRUE)
 	for(var/atom/A in contents)
 		A.shake_act(severity - 1)
-	INVOKE_ASYNC(src, /atom.proc/shake_animation, severity, 1 SECOND)
+	INVOKE_ASYNC(src, /atom.proc/do_shake_animation, severity, 1 SECOND)
 
 	if(severity >= 3)
 		for(var/dir_ in cardinal)
@@ -702,3 +702,36 @@
 				continue
 			return AA.alternate_obj.name
 	return name
+
+/*
+ * Returns:
+ * An assoc list of kind image = list(viewers)
+ */
+/atom/proc/get_perceived_images(list/viewers)
+	var/list/imgs = list()
+
+	for(var/key in alternate_appearances)
+		var/datum/atom_hud/alternate_appearance/basic/AA = alternate_appearances[key]
+
+		var/image/I = image(AA.theImage.icon, AA.theImage.icon_state)
+		I.appearance = AA.theImage
+		I.dir = AA.theImage.dir
+
+		var/list/img_viewers = list()
+		for(var/v in viewers)
+			if(v in AA.hudusers)
+				img_viewers += v
+
+		imgs[I] = img_viewers
+
+		if(AA.theImage.override)
+			for(var/v in img_viewers)
+				viewers -= v
+
+	var/image/I = image(icon, icon_state)
+	I.appearance = src
+	I.dir = dir
+
+	imgs[I] = viewers
+
+	return imgs

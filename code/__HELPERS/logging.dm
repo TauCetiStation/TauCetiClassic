@@ -22,8 +22,8 @@
 	world.log << "## INFO: [msg][log_end]"
 
 /proc/round_log(msg)
-	world.log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
-	game_log << "\[[time_stamp()]][round_id ? "Round #[round_id]:" : ""] [msg][log_end]"
+	world.log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
+	game_log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
 
 /proc/log_href(text, say_type)
 	if (config && config.log_hrefs)
@@ -147,21 +147,21 @@
 	if(!message || !subject)
 		return
 	var/F = file("[global.log_investigate_directory]/[subject].html")
-	F << "[time_stamp()] \ref[src] ([x],[y],[z]) || [src] [strip_html_properly(message)]<br>[log_end]"
+	F << "[time_stamp()] \ref[src] [COORD(src)] || [src] [strip_html_properly(message)]<br>[log_end]"
 
 // Helper procs for building detailed log lines
 /datum/proc/get_log_info_line()
 	return "[src] ([type]) (\ref[src])"
 
 /area/get_log_info_line()
-	return "[..()] ([isnum(z) ? "[x],[y],[z]" : "0,0,0"])"
+	return "[..()] ([isnum(z) ? "[COORD(src)]" : "0,0,0"])"
 
 /turf/get_log_info_line()
-	return "[..()] ([x],[y],[z]) ([loc ? loc.type : "NULL"])"
+	return "[..()] [COORD(src)] ([loc ? loc.type : "NULL"])"
 
 /atom/movable/get_log_info_line()
 	var/turf/t = get_turf(src)
-	return "[..()] ([t ? t : "NULL"]) ([t ? "[t.x],[t.y],[t.z]" : "0,0,0"]) ([t ? t.type : "NULL"])"
+	return "[..()] ([t ? t : "NULL"]) ([t ? "[COORD(t)]" : "0,0,0"]) ([t ? t.type : "NULL"])"
 
 /mob/get_log_info_line()
 	return ckey ? "[..()] ([ckey])" : ..()
@@ -249,7 +249,7 @@
 /proc/drop_round_stats()
 	var/list/stats = list()
 
-	stats["round_id"] = round_id
+	stats["round_id"] = global.round_id
 	stats["start_time"] = time2text(round_start_realtime, "hh:mm:ss")
 	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
 	stats["duration"] = roundduration2text()

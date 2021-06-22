@@ -16,10 +16,6 @@
 	. = ..()
 	init_subtypes(/datum/building_agent/tool/cult, available_items)
 
-/obj/structure/cult/forge/Destroy()
-	QDEL_LIST(available_items)
-	return ..()
-
 /obj/structure/cult/forge/examine(mob/user, distance)
 	. = ..()
 	if(!religion)

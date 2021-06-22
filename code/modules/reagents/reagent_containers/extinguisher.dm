@@ -2,7 +2,7 @@
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "fire_extinguisher0"
+	icon_state = "fire_extinguisher"
 	item_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
@@ -41,13 +41,18 @@
 		cut_overlays()
 		var/image/I = new(icon, "FE_overlay_[pick(1, 2, 3, 4)]")
 		add_overlay(I)
-	icon_state = "fire_extinguisher[!safety]"
+	if(!safety)
+		icon_state = "[initial(icon_state)]_open"
+	else
+		icon_state = "[initial(icon_state)]"
 	reagents.add_reagent(reagent_inside, volume)
+
+	extinguisher_list += src
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -66,7 +71,10 @@
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attack_self(mob/user)
 	safety = !safety
-	icon_state = "fire_extinguisher[!safety]"
+	if(!safety)
+		icon_state = "[initial(icon_state)]_open"
+	else
+		icon_state = "[initial(icon_state)]"
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini
@@ -88,7 +96,7 @@
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()
 	reagents.clear_reagents()
-	reagents.add_reagent("aqueous_foam", rand(volume * 0.5, volume))
+	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/golden
 	name = "golden fire extinguisher"

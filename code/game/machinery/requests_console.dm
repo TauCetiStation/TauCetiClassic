@@ -16,8 +16,9 @@ var/list/departments_genitive = list()
 
 /obj/machinery/requests_console
 	name = "Requests Console"
+
 	desc = "Консоль предназначенна для отправки запросов в разные отделы станции."
-	anchored = 1
+	anchored = TRUE
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
 	var/department = "Неизвестный"

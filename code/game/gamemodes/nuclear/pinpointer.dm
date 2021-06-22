@@ -75,7 +75,7 @@
 	icon_state = "pinoff"
 	target = null
 
-	switch(alert("Please select the mode you want to put the pinpointer in.", "Pinpointer Mode Select", "Location", "Disk Recovery", "Other Signature"))
+	switch(tgui_alert(usr, "Please select the mode you want to put the pinpointer in.", "Pinpointer Mode Select", list("Location", "Disk Recovery", "Other Signature")))
 
 		if("Disk Recovery")
 			mode = SEARCH_FOR_DISK
@@ -97,7 +97,7 @@
 
 		if("Other Signature")
 			mode = SEARCH_FOR_OBJECT
-			switch(alert("Search for item signature or DNA fragment?" , "Signature Mode Select" , "Item" , "DNA", "AI System"))
+			switch(tgui_alert(usr, "Search for item signature or DNA fragment?" , "Signature Mode Select" , list("Item" , "DNA", "AI System")))
 				if("Item")
 					var/datum/objective/steal/itemlist
 					itemlist = itemlist // To supress a 'variable defined but not used' error.

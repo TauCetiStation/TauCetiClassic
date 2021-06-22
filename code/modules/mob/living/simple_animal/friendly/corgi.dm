@@ -114,12 +114,16 @@
 	butcher_results = list()
 	var/emagged = 0
 
+/mob/living/simple_animal/corgi/borgi/atom_init()
+	. = ..()
+	chief_animal_list += src
+
 /mob/living/simple_animal/corgi/borgi/emag_act(mob/user)
 	if(!emagged && emagged < 2)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
 		spawn (1000)
-			src.explode()
+			explode()
 		return TRUE
 	return FALSE
 

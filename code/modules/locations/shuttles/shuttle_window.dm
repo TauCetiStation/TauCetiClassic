@@ -37,7 +37,7 @@
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
 			if(health <= 7)
-				anchored = 0
+				anchored = FALSE
 				update_nearby_icons()
 				step(src, get_dir(user, src))
 		else

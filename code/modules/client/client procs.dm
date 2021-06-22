@@ -100,6 +100,23 @@ var/list/blacklisted_builds = list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
+	//byond bug ID:2694120
+	if(href_list["reset_macros"])
+		reset_macros(skip_alert = TRUE)
+		return
+
+	// Keypress passthrough
+	if(href_list["__keydown"])
+		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
+		if(keycode)
+			keyDown(keycode)
+		return
+	if(href_list["__keyup"])
+		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
+		if(keycode)
+			keyUp(keycode)
+		return
+
 	// Tgui Topic middleware
 	if(!tgui_Topic(href_list))
 		return
@@ -220,9 +237,13 @@ var/list/blacklisted_builds = list(
 	//Admin Authorisation
 	holder = admin_datums[ckey]
 
-	if(config.sandbox && !holder)
-		new /datum/admins("Sandbox Admin", (R_HOST & ~(R_PERMISSIONS | R_BAN | R_LOG)), ckey)
-		holder = admin_datums[ckey]
+	if(config.sandbox)
+		var/sandbox_permissions = (R_HOST & ~(R_PERMISSIONS | R_DEBUG | R_BAN | R_LOG))
+		if(!holder)
+			new /datum/admins("Sandbox Admin", sandbox_permissions, ckey)
+			holder = admin_datums[ckey]
+		else
+			holder.rights = (holder.rights | sandbox_permissions)
 
 	if(holder)
 		holder.owner = src
@@ -259,6 +280,10 @@ var/list/blacklisted_builds = list(
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
 	. = ..()	//calls mob.Login()
+
+	if(SSinput.initialized)
+		set_macros()
+
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
@@ -308,6 +333,9 @@ var/list/blacklisted_builds = list(
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
+
 	if(!cob)
 		cob = new()
 
@@ -344,16 +372,32 @@ var/list/blacklisted_builds = list(
 
 /client/proc/handle_autokick_reasons()
 	if(config.client_limit_panic_bunker_count != null)
-		if(!(ckey in admin_datums) && !supporter && (clients.len > config.client_limit_panic_bunker_count) && !(ckey in joined_player_list))
-			if (config.client_limit_panic_bunker_link)
-				to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
-				SEND_LINK(src, config.client_limit_panic_bunker_link)
-				log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
-			else
-				to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
-				log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
-				QDEL_IN(src, 2 SECONDS)
-			return
+
+		if(clients.len > config.client_limit_panic_bunker_count)
+			var/blocked_by_bunker = TRUE
+
+			if(ckey in admin_datums) // admins immune to bunker
+				blocked_by_bunker = FALSE
+
+			if(supporter) // and patrons
+				blocked_by_bunker = FALSE
+
+			if(ckey in joined_player_list) // player already joined the game and just reconnects, so we pass him
+				blocked_by_bunker = FALSE
+
+			if((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap) // mentors immune too, but only before own cap
+				blocked_by_bunker = FALSE
+
+			if(blocked_by_bunker)
+				if (config.client_limit_panic_bunker_link)
+					to_chat(src, "<span class='notice'>Player limit is enabled. You are redirected to [config.client_limit_panic_bunker_link].</span>")
+					SEND_LINK(src, config.client_limit_panic_bunker_link)
+					log_access("Failed Login: [key] [computer_id] [address] - redirected by limit bunker to [config.client_limit_panic_bunker_link]")
+				else
+					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
+					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
+					QDEL_IN(src, 2 SECONDS)
+				return
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
@@ -388,11 +432,10 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
-	var/sql_ckey = sanitize_sql(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age, ingameage FROM erro_player WHERE ckey = '[sql_ckey]'")
 
@@ -408,7 +451,7 @@ var/list/blacklisted_builds = list(
 		sql_player_ingame_age = text2num(query.item[3])
 		break
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[address]'")
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ip = '[sanitize_sql(address)]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
@@ -419,7 +462,7 @@ var/list/blacklisted_builds = list(
 		related_accounts_ip += "[query_ip.item[1]]"
 		break
 
-	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[computer_id]'")
+	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE computerid = '[sanitize_sql(computer_id)]'")
 	query_cid.Execute()
 	related_accounts_cid = ""
 	while(query_cid.NextRow())
@@ -452,7 +495,7 @@ var/list/blacklisted_builds = list(
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
 		query_update.Execute()
-	else if(!config.serverwhitelist)
+	else if(!config.bunker_ban_mode)
 		//New player!! Need to insert all the stuff
 		guard.first_entry = TRUE
 		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO erro_player (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank, ingameage) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]', '[sql_player_ingame_age]')")
@@ -462,9 +505,10 @@ var/list/blacklisted_builds = list(
 	player_ingame_age = sql_player_ingame_age
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
+	if(establish_db_connection("erro_connection_log"))
+		var/serverip = sanitize_sql("[world.internet_address]:[world.port]")
+		var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+		query_accesslog.Execute()
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
@@ -527,7 +571,7 @@ var/list/blacklisted_builds = list(
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
 	else
-		var/sql_ckey = sanitize_sql(ckey)
+		var/sql_ckey = ckey(ckey)
 		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
 		query_cidcheck.Execute()
 
@@ -556,8 +600,7 @@ var/list/blacklisted_builds = list(
 	if ( IsGuestKey(src.key) )
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_player"))
 		return
 
 	if(!isnum(player_ingame_age))
@@ -566,7 +609,7 @@ var/list/blacklisted_builds = list(
 	if(player_ingame_age <= 0)
 		return
 
-	var/sql_ckey = sanitize_sql(src.ckey)
+	var/sql_ckey = ckey(src.ckey)
 	var/DBQuery/query_update = dbcon.NewQuery("UPDATE erro_player SET ingameage = '[player_ingame_age]' WHERE ckey = '[sql_ckey]' AND cast(ingameage as unsigned integer) < [player_ingame_age]")
 	query_update.Execute()
 
@@ -574,8 +617,9 @@ var/list/blacklisted_builds = list(
 
 /client/Click(atom/object, atom/location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["drag"])
+	if(modifiers[DRAG])
 		return
+	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
@@ -637,33 +681,6 @@ var/list/blacklisted_builds = list(
 		qdel(S)
 	char_render_holders = null
 
-/client/proc/is_blocked_by_regisration_panic_bunker()
-	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
-
-	var/list/byond_date = get_byond_registration()
-
-	if (!length(byond_date))
-		return
-
-	bunker_date_regex.Find(config.registration_panic_bunker_age)
-
-	var/user_year = byond_date[1]
-	var/user_month = byond_date[2]
-	var/user_day = byond_date[3]
-
-	var/bunker_year = text2num(bunker_date_regex.group[1])
-	var/bunker_month = text2num(bunker_date_regex.group[2])
-	var/bunker_day = text2num(bunker_date_regex.group[3])
-
-	var/is_invalid_year = user_year > bunker_year
-	var/is_invalid_month = user_year == bunker_year && user_month > bunker_month
-	var/is_invalid_day = user_year == bunker_year && user_month == bunker_month && user_day > bunker_day
-
-	var/is_invalid_date = is_invalid_year || is_invalid_month || is_invalid_day
-	var/is_invalid_ingame_age = isnum(player_ingame_age) && player_ingame_age < config.allowed_by_bunker_player_age
-
-	return is_invalid_date && is_invalid_ingame_age
-
 /client/proc/get_byond_registration()
 	if(byond_registration)
 		return byond_registration
@@ -679,3 +696,46 @@ var/list/blacklisted_builds = list(
 	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
 
 	return byond_registration
+
+
+/**
+ * Updates the keybinds for special keys
+ *
+ * Handles adding macros for the keys that need it
+ * And adding movement keys to the clients movement_keys list
+ * At the time of writing this, communication(OOC, Say, IC) require macros
+ * Arguments:
+ * * direct_prefs - the preference we're going to get keybinds from
+ */
+/client/proc/update_special_keybinds(datum/preferences/direct_prefs)
+	var/datum/preferences/D = prefs || direct_prefs
+	if(!D?.key_bindings)
+		return
+	movement_keys = list()
+	var/list/communication_hotkeys = list()
+	for(var/key in D.key_bindings)
+		for(var/kb_name in D.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
+				if("Say")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
+					communication_hotkeys += key
+				if("OOC")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
+					communication_hotkeys += key
+				if("Me")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					communication_hotkeys += key
+
+	// winget() does not work for F1 and F2
+	for(var/key in communication_hotkeys)
+		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
+			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
+			break

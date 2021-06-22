@@ -3,8 +3,8 @@
 	desc = "A simple yet bulky storage device for gas tanks. Has room for up to ten oxygen tanks, and ten phoron tanks."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	var/oxygentanks = 10
 	var/phorontanks = 10
 	var/list/oxytanks = list()	//sorry for the similar var names
@@ -21,6 +21,8 @@
 /obj/structure/dispenser/atom_init()
 	. = ..()
 	update_icon()
+
+	tank_dispenser_list += src
 
 
 /obj/structure/dispenser/update_icon()
@@ -47,8 +49,7 @@
 /obj/structure/dispenser/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/tank/oxygen) || istype(I, /obj/item/weapon/tank/air) || istype(I, /obj/item/weapon/tank/anesthetic))
 		if(oxygentanks < 10)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			oxytanks.Add(I)
 			oxygentanks++
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
@@ -58,8 +59,7 @@
 		return
 	if(istype(I, /obj/item/weapon/tank/phoron))
 		if(phorontanks < 10)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			platanks.Add(I)
 			phorontanks++
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
@@ -70,10 +70,10 @@
 	if(iswrench(I))
 		if(anchored)
 			to_chat(user, "<span class='notice'>You lean down and unwrench [src].</span>")
-			anchored = 0
+			anchored = FALSE
 		else
 			to_chat(user, "<span class='notice'>You wrench [src] into place.</span>")
-			anchored = 1
+			anchored = TRUE
 		return
 
 /obj/structure/dispenser/Topic(href, href_list)

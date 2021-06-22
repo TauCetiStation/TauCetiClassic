@@ -3,8 +3,8 @@
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	flags = OPENCONTAINER
 	var/modded = FALSE
 	var/transfer_from = TRUE
@@ -120,7 +120,7 @@
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [COORD(src)] [ADMIN_JMP(src)]")
 		modded = !modded
 		if (modded)
 			START_PROCESSING(SSobj, src)
@@ -138,11 +138,11 @@
 
 			var/obj/item/device/assembly_holder/H = W
 			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion.")
+				message_admins("[key_name_admin(user)] rigged [src] at [COORD(loc)] for explosion. [ADMIN_JMP(user)]")
+				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
 			rig = W
-			user.drop_item()
+			user.drop_from_inventory(W, src)
 			W.loc = src
 
 			var/icon/test = getFlatIcon(W)
@@ -189,7 +189,7 @@
 
 /obj/structure/reagent_dispensers/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if (. && modded)
+	if (. && modded && !ISDIAGONALDIR(Dir))
 		leak(amount_per_transfer_from_this * 0.1)
 
 
@@ -203,6 +203,8 @@
 /obj/structure/reagent_dispensers/watertank/atom_init()
 	. = ..()
 	reagents.add_reagent("water", 1000)
+
+	watertank_list += src
 
 /obj/structure/reagent_dispensers/aqueous_foam_tank
 	name = "AFFF tank"
@@ -224,13 +226,15 @@
 	. = ..()
 	reagents.add_reagent("fuel",300)
 
+	fueltank_list += src
+
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
 	desc = "Refill pepper spray canisters."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "peppertank"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	amount_per_transfer_from_this = 45
 
 /obj/structure/reagent_dispensers/peppertank/atom_init()
@@ -246,7 +250,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/water_cooler/atom_init()
 	. = ..()
@@ -272,7 +276,7 @@
 	desc = "A dispenser of virus food."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "virusfoodtank"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/virusfood/atom_init()
 	. = ..()
@@ -283,7 +287,7 @@
 	desc = "A dispenser of acid for industrial processes."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "acidtank"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
@@ -306,8 +310,8 @@
 	desc = "A dispenser of cleaner."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cleanertank"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 /obj/structure/reagent_dispensers/cleaner/atom_init()
 	. = ..()

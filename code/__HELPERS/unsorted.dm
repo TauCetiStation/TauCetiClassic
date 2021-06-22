@@ -3,7 +3,7 @@
 // ===================================
 
 // A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B, throwingdatum)
-#define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(null, B);}}
+#define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(TRUE, B);}}
 
 // ===================================
 
@@ -37,7 +37,7 @@
 		.+=360
 
 //Returns location. Returns null if no location was found.
-/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = 0, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
+/proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
 Location where the teleport begins, target that will teleport, distance to go, density checking 0/1(yes/no).
 Random error in tile placement x, error in tile placement y, and block offset.
@@ -202,7 +202,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					break
 
 		//update our pda and id if we have them on our person
-		var/list/searching = GetAllContents(searchDepth = 3)
+		var/list/searching = GetAllContents()
 		var/search_id = 1
 		var/search_pda = 1
 
@@ -569,16 +569,43 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	sleep(max(sleeptime, 15))
 	qdel(animation)
 
-//Will return the contents of an atom recursivly to a depth of 'searchDepth'
-/atom/proc/GetAllContents(searchDepth = 5)
-	var/list/toReturn = list()
+///Returns the src and all recursive contents as a list.
+/atom/proc/GetAllContents()
+	. = list(src)
+	var/i = 0
+	while(i < length(.))
+		var/atom/A = .[++i]
+		. += A.contents
 
-	for(var/atom/part in contents)
-		toReturn += part
-		if(part.contents.len && searchDepth)
-			toReturn += part.GetAllContents(searchDepth - 1)
+/atom/proc/GetAreaAllContents()
+	. = list(src)
+	var/i = 0
+	while(i < length(.))    // They will collect all content of area that include *items on the turf*
+		var/atom/A = .[++i] // then all content on the turf will be collected, and this is again *items on the turf*.
+		. |= A.contents     // |= ensures that there are no duplicates
 
-	return toReturn
+///identical to getallcontents but returns a list of atoms of the type passed in the argument.
+/atom/proc/get_all_contents_type(type)
+	var/list/processing_list = list(src)
+	. = list()
+	while(length(processing_list))
+		var/atom/A = processing_list[1]
+		processing_list.Cut(1, 2)
+		processing_list += A.contents
+		if(istype(A, type))
+			. += A
+
+/atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
+	if(!length(ignore_typecache))
+		return GetAllContents()
+	var/list/processing = list(src)
+	. = list()
+	var/i = 0
+	while(i < length(processing))
+		var/atom/A = processing[++i]
+		if(!ignore_typecache[A.type])
+			processing += A.contents
+			. += A
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -659,7 +686,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0)
+/proc/get_area_turfs(areatype, subtypes=TRUE, target_z = 0, list/black_list)
 	if(istext(areatype))
 		areatype = text2path(areatype)
 	else if(isarea(areatype))
@@ -676,6 +703,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(!cache[A.type])
 				continue
 			for(var/turf/T in A)
+				if(black_list && (T.type in black_list))
+					continue
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	else
@@ -684,6 +713,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(A.type != areatype)
 				continue
 			for(var/turf/T in A)
+				if(black_list && (T.type in black_list))
+					continue
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	return turfs
@@ -784,8 +815,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 						// Spawn a new shuttle corner object
 						var/obj/corner = new()
 						corner.loc = X
-						corner.density = 1
-						corner.anchored = 1
+						corner.density = TRUE
+						corner.anchored = TRUE
 						corner.icon = X.icon
 						corner.icon_state = replacetext(X.icon_state, "_s", "_f")
 						corner.tag = "delete me"
@@ -1532,6 +1563,8 @@ var/list/WALLITEMS = typecacheof(list(
 
 	return contains(location.loc)
 
+#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
 //Inverts the colour of an HTML string
 /proc/invertHTMLcolor(HTMLstring)
 	if(!istext(HTMLstring))
@@ -1559,3 +1592,47 @@ var/list/WALLITEMS = typecacheof(list(
 
 	for(var/mob/dead/new_player/N in new_player_list)
 		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
+
+// Converts browser keycodes to BYOND keycodes.
+/proc/browser_keycode_to_byond(keycode)
+	keycode = text2num(keycode)
+	switch(keycode)
+		// letters and numbers
+		if(65 to 90, 48 to 57)
+			return ascii2text(keycode)
+		if(17)
+			return "Ctrl"
+		if(18)
+			return "Alt"
+		if(16)
+			return "Shift"
+		if(37)
+			return "West"
+		if(38)
+			return "North"
+		if(39)
+			return "East"
+		if(40)
+			return "South"
+		if(45)
+			return "Insert"
+		if(46)
+			return "Delete"
+		if(36)
+			return "Northwest"
+		if(35)
+			return "Southwest"
+		if(33)
+			return "Northeast"
+		if(34)
+			return "Southeast"
+		if(112 to 123)
+			return "F[keycode-111]"
+		if(96 to 105)
+			return "Numpad[keycode-96]"
+		if(188)
+			return ","
+		if(190)
+			return "."
+		if(189)
+			return "-"

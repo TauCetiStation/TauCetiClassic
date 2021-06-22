@@ -97,11 +97,11 @@
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
-		if(src.check_access(S))
+		if(check_access(S))
 			return TRUE
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
@@ -109,16 +109,16 @@
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
+		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return TRUE
 	else if(isIAN(M))
 		var/mob/living/carbon/ian/IAN = M
-		if(src.check_access(IAN.mouth) || src.check_access(IAN.neck))
+		if(check_access(IAN.mouth) || check_access(IAN.neck))
 			return TRUE
 	else if(ismonkey(M) || isxenoadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
-		if(src.check_access(george.get_active_hand()))
+		if(check_access(george.get_active_hand()))
 			return TRUE
 	return FALSE
 
@@ -198,7 +198,7 @@
 	            access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers,
 	            access_tech_storage, access_chapel_office, access_atmospherics, access_kitchen,
 	            access_bar, access_janitor, access_crematorium, access_robotics, access_cargo, access_construction,
-	            access_hydroponics, access_library, access_lawyer, access_virology, access_psychiatrist, access_cmo, access_qm, access_clown, access_mime, access_surgery,
+	            access_hydroponics, access_library, access_virology, access_psychiatrist, access_cmo, access_qm, access_lawyer, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
 	            access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_minisat, access_recycler, access_detective, access_barber, access_paramedic, access_medbay_storage, access_engineering_lobby)
@@ -224,7 +224,7 @@
 		if(5) //command
 			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_tcomsat, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 		if(6) //station general
-			return list(access_kitchen,access_bar, access_hydroponics, access_barber, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_clown, access_mime)
+			return list(access_kitchen,access_bar, access_hydroponics, access_barber, access_janitor, access_chapel_office, access_crematorium, access_library, access_lawyer, access_theatre)
 		if(7) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_cargo, access_recycler, access_qm)
 
@@ -546,3 +546,26 @@
 	if(jobName in get_all_velocity_jobs())
 		return jobName
 	return "Unknown" //Return unknown if none of the above apply
+
+/proc/get_accesslist_static_data(num_min_region = REGION_GENERAL, num_max_region = REGION_COMMAND)
+	var/list/retval
+	for(var/i in num_min_region to num_max_region)
+		var/list/accesses = list()
+		var/list/available_accesses
+		if(i == REGION_CENTCOMM) // Override necessary, because get_region_accesses(REGION_CENTCOM) returns BOTH CC and crew accesses.
+			available_accesses = get_all_centcom_access()
+		else
+			available_accesses = get_region_accesses(i)
+		for(var/access in available_accesses)
+			var/access_desc = (i == REGION_CENTCOMM) ? get_centcom_access_desc(access) : get_access_desc(access)
+			if (access_desc)
+				accesses += list(list(
+					"desc" = replacetext(access_desc, "&nbsp", " "),
+					"ref" = access,
+				))
+		retval += list(list(
+			"name" = get_region_accesses_name(i),
+			"regid" = i,
+			"accesses" = accesses
+		))
+	return retval

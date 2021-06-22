@@ -104,7 +104,7 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 			if(!mended)
 				if(A.secondsElectrified != -1)
 					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
+					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
 					A.secondsElectrified = -1
 			else
 				if(A.secondsElectrified == -1)
@@ -159,8 +159,11 @@ var/const/AIRLOCK_WIRE_LIGHT         = 2048
 
 		if(AIRLOCK_WIRE_ELECTRIFY)
 			if(A.secondsElectrified == 0)
-				A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [A.x] [A.y] [A.z]</font>"
+				if(ismob(usr)) // EMP can do this
+					A.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+					usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [A.name] at [COORD(A)]</font>"
+				else
+					A.shockedby += "\[[time_stamp()]\]EMP or smth else"
 				A.secondsElectrified = 30
 				A.diag_hud_set_electrified()
 				START_PROCESSING(SSmachines, A)

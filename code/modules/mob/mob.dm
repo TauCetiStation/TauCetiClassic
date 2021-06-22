@@ -47,7 +47,7 @@
 
 	var/datum/gas_mixture/env = T.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	var/t = "<span class='notice'>Coordinates: [COORD(T)]</span>\n"
 	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
 	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
 	for(var/g in env.gas)
@@ -313,7 +313,8 @@
 /mob/verb/pointed(atom/A as mob|obj|turf in oview())
 	set name = "Point To"
 	set category = "Object"
-
+	if(next_point_to > world.time)
+		return
 	if(!usr || !isturf(usr.loc))
 		return
 	if(usr.incapacitated())
@@ -342,6 +343,8 @@
 		for(var/mob/living/carbon/slime/S in oview())
 			if(usr in S.Friends)
 				S.last_pointed = A
+
+	next_point_to = world.time + 1.5 SECONDS
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -650,8 +653,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Status"))
-		if(round_id)
-			stat(null, "Round ID: #[round_id]")
+		if(global.round_id)
+			stat(null, "Round ID: #[global.round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
 			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
@@ -676,7 +679,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")
 				if(client.holder.rights & R_DEBUG)
-					stat("Location:", "([x], [y], [z])")
+					stat("Location:", "[COORD(src)]")
 					stat("Instances:", "[world.contents.len]")
 					config.stat_entry()
 					stat(null)
@@ -766,7 +769,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
 			canmove = FALSE
-			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+			if(G.state == GRAB_NECK && G.assailant.get_targetzone() == BP_CHEST)
 				lying = FALSE
 				density = TRUE
 			break
@@ -1019,7 +1022,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(O == selection)
 			pinned -= O
 		if(!pinned.len)
-			anchored = 0
+			anchored = FALSE
 	return 1
 
 ///Get the ghost of this mob (from the mind)
@@ -1110,7 +1113,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
@@ -1167,6 +1170,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				var/image/I = image('icons/mob/hud.dmi', src, "")
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
+
+/mob/keybind_face_direction(direction)
+	facedir(direction)
 
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)

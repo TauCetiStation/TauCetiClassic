@@ -92,7 +92,7 @@
 		return ..()
 
 /obj/item/device/biocan/attack_self(mob/user)
-	if(alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",,"Cancel","Continue") != "Continue")
+	if(tgui_alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",, list("Cancel","Continue")) != "Continue")
 		return
 	user.visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
 	extract_head(brain_destroyed = TRUE)

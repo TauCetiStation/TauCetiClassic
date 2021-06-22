@@ -1,8 +1,8 @@
 /mob/living/carbon/xenomorph/humanoid/queen
 	name = "alien queen"
 	caste = "q"
-	maxHealth = 300
-	health = 300
+	maxHealth = 400
+	health = 400
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s"
 	pixel_x = -16

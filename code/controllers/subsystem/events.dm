@@ -10,15 +10,23 @@ SUBSYSTEM_DEF(events)
 	var/list/finished_events = list()
 	var/list/allEvents = list()
 	var/list/event_containers = list(
-			EVENT_LEVEL_MUNDANE  = new/datum/event_container/mundane,
-			EVENT_LEVEL_MODERATE = new/datum/event_container/moderate,
-			EVENT_LEVEL_MAJOR    = new/datum/event_container/major
+			EVENT_LEVEL_ROUNDSTART = new/datum/event_container/roundstart,
+			EVENT_LEVEL_MUNDANE    = new/datum/event_container/mundane,
+			EVENT_LEVEL_MODERATE   = new/datum/event_container/moderate,
+			EVENT_LEVEL_MAJOR      = new/datum/event_container/major,
 		)
 
 	var/datum/event_meta/new_event = new
 
 /datum/controller/subsystem/events/Initialize()
-	allEvents = subtypesof(/datum/event) - /datum/event/anomaly
+	var/list/black_types = list(
+			/datum/event/anomaly,
+			/datum/event/roundstart,
+			/datum/event/roundstart/area,
+			/datum/event/roundstart/area/replace,
+			/datum/event/roundstart/area/maintenance_spawn,
+	)
+	allEvents = subtypesof(/datum/event) - black_types
 	return ..()
 
 /datum/controller/subsystem/events/fire()
@@ -28,6 +36,11 @@ SUBSYSTEM_DEF(events)
 	for(var/i in EVENT_LEVEL_MUNDANE to EVENT_LEVEL_MAJOR)
 		var/datum/event_container/EC = event_containers[i]
 		EC.process()
+
+/datum/controller/subsystem/events/proc/start_roundstart_event()
+	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
+	for(var/i in 1 to rand(1, 3))
+		EC.start_event()
 
 /datum/controller/subsystem/events/proc/event_complete(datum/event/E)
 	if(!E.event_meta)	// datum/event is used here and there for random reasons, maintaining "backwards compatibility"
@@ -41,7 +54,7 @@ SUBSYSTEM_DEF(events)
 	if(!E.severity)
 		theseverity = EVENT_LEVEL_MODERATE
 
-	if(!E.severity == EVENT_LEVEL_MUNDANE && !E.severity == EVENT_LEVEL_MODERATE && !E.severity == EVENT_LEVEL_MAJOR)
+	if(E.severity != EVENT_LEVEL_ROUNDSTART && E.severity != EVENT_LEVEL_MUNDANE && E.severity != EVENT_LEVEL_MODERATE && E.severity != EVENT_LEVEL_MAJOR)
 		theseverity = EVENT_LEVEL_MODERATE //just to be careful
 
 	if(E.severity)
@@ -252,7 +265,7 @@ SUBSYSTEM_DEF(events)
 			EC.delay_modifier = delay
 			admin_log_and_message_admins("has set the interval modifier for [severity_to_string[EC.severity]] events to [EC.delay_modifier].")
 	else if(href_list["stop"])
-		if(alert("Stopping an event may have unintended side-effects. Continue?","Stopping Event!","Yes","No") != "Yes")
+		if(tgui_alert(usr, "Stopping an event may have unintended side-effects. Continue?", "Stopping Event!", list("Yes","No")) != "Yes")
 			return
 		var/datum/event/E = locate(href_list["stop"])
 		var/datum/event_meta/EM = E.event_meta
@@ -289,7 +302,7 @@ SUBSYSTEM_DEF(events)
 		EM.enabled = !EM.enabled
 		admin_log_and_message_admins("has [EM.enabled ? "enabled" : "disabled"] the [severity_to_string[EM.severity]] event '[EM.name]'.")
 	else if(href_list["remove"])
-		if(alert("This will remove the event from rotation. Continue?","Removing Event!","Yes","No") != "Yes")
+		if(tgui_alert(usr, "This will remove the event from rotation. Continue?", "Removing Event!", list("Yes","No")) != "Yes")
 			return
 		var/datum/event_meta/EM = locate(href_list["remove"])
 		var/datum/event_container/EC = locate(href_list["EC"])
@@ -298,7 +311,7 @@ SUBSYSTEM_DEF(events)
 	else if(href_list["add"])
 		if(!new_event.name || !new_event.event_type)
 			return
-		if(alert("This will add a new event to the rotation. Continue?","Add Event!","Yes","No") != "Yes")
+		if(tgui_alert(usr, "This will add a new event to the rotation. Continue?", "Add Event!", list("Yes","No")) != "Yes")
 			return
 		new_event.severity = selected_event_container.severity
 		selected_event_container.available_events += new_event

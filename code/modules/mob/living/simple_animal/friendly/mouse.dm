@@ -32,7 +32,8 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
-
+	faction = "neutral"
+	
 	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE
@@ -195,3 +196,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+
+/mob/living/simple_animal/mouse/brown/Tom/atom_init()
+	. = ..()
+	chief_animal_list += src
