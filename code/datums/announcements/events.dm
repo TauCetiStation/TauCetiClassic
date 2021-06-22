@@ -181,7 +181,7 @@
 	subtitle = "Системы Питания в Норме"
 	sound = "poweron"
 /datum/announcement/centcomm/grid_on/play()
-	message = "Питание будет восстановлено на [station_name_ru()]. Приносим свои извинения за неудобство."
+	message = "Электропитание было восстановлено ​​на [station_name_ru()]. Приносим извинения за доставленные неудобства."
 	..()
 
 /datum/announcement/centcomm/grid_quick
