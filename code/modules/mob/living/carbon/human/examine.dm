@@ -72,7 +72,7 @@
 			var/obj/item/clothing/under/U = w_uniform
 			for(var/accessory in U.accessories)
 				ties += "[bicon(accessory)] \a [accessory]"
-		var/tie_msg = ties.len ? ". Attached to it is [english_list(ties)]" : ""
+		var/tie_msg = ties.len ? ". Attached to it is [get_english_list(ties)]" : ""
 
 		if(w_uniform.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][tie_msg]!</span>\n"
