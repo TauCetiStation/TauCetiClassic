@@ -221,41 +221,6 @@
 	else
 		sight &= ~(SEE_TURFS | SEE_OBJS | BLIND)
 
-/datum/game_mode/proc/auto_declare_completion_borer()
-	var/text = ""
-	if(borers.len)
-		text += "<b>The borers were:</b>"
-		for(var/datum/mind/borer in borers)
-			text += printplayerwithicon(borer)
-
-			var/count = 1
-			var/borerwin = 1
-			if(!config.objectives_disabled)
-				for(var/datum/objective/objective in borer.objectives)
-					if(objective.check_completion())
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: green; font-weight: bold;'>Success!</span>"
-						feedback_add_details("borer_objective","[objective.type]|SUCCESS")
-					else
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span style='color: red; font-weight: bold;'>Fail.</span>"
-						feedback_add_details("borer_objective","[objective.type]|FAIL")
-						borerwin = 0
-					count++
-
-				if(borer.current && borer.current.stat!=2 && borerwin)
-					text += "<br><FONT color='green'><b>The borer was successful!</b></FONT>"
-					feedback_add_details("borer_success","SUCCESS")
-					score["roleswon"]++
-				else
-					text += "<br><FONT color='red'><b>The borer has failed!</b></FONT>"
-					feedback_add_details("borer_success","FAIL")
-				text += "<br>"
-
-	if(text)
-		antagonists_completion += list(list("mode" = "borer", "html" = text))
-		text = "<div class='Section'>[text]</div>"
-
-	return text
-
 /mob/living/simple_animal/borer/has_brain_worms()
 	return src
 
