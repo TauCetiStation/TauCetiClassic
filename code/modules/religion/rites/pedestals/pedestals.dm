@@ -43,7 +43,6 @@
 		return FALSE
 
 	var/datum/religion/cult/C = religion
-	var/datum/game_mode/cult/cur_mode = C.mode
 
 	if(SSticker.nar_sie_has_risen)
 		if(user)
