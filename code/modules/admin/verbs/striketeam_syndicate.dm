@@ -78,10 +78,12 @@ var/global/sent_syndicate_strike_team = FALSE
 		if(L.name == "Syndicate-Commando-Paper")
 			SCP = L
 
+	var/datum/faction/strike_team/syndiesquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/syndiesquad)
+	S.forgeObjectives(mission)
 	for(var/i = 1; i <= commandos.len; i++)
 		var/mob/living/carbon/human/new_syndicate_commando = new(get_turf(landmarkpos[i]))
 		new_syndicate_commando.key = commandos[i]
-		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader, mission)
+		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader)
 		new_syndicate_commando.internal = new_syndicate_commando.s_store
 		new_syndicate_commando.internals.icon_state = "internal1"
 
@@ -125,7 +127,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/initial_syndicate_commando(syndicate_commando, syndicate_leader_selected = FALSE, objectiv = null)
+/client/proc/initial_syndicate_commando(syndicate_commando, syndicate_leader_selected = FALSE)
 	var/mob/living/carbon/human/new_syndicate_commando = syndicate_commando
 	var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
@@ -143,19 +145,14 @@ var/global/sent_syndicate_strike_team = FALSE
 
 	//Creates mind stuff.
 	new_syndicate_commando.mind_initialize()
-	new_syndicate_commando.mind.assigned_role = "MODE"
-	new_syndicate_commando.mind.special_role = "Syndicate Elite Commando"
 	new_syndicate_commando.mind.current.faction = "syndicate"
-	SSticker.mode.syndicates += new_syndicate_commando.mind
-	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
-	if(objectiv)
-		var/datum/objective/syndi_elit_obj = new
-		new_syndicate_commando.mind.objectives += syndi_elit_obj
-		syndi_elit_obj.owner = new_syndicate_commando
-		syndi_elit_obj.explanation_text = objectiv
 
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+	var/datum/faction/strike_team/syndiesquad/S = find_faction_by_type(/datum/faction/strike_team/syndiesquad)
+	if(S)
+		add_faction_member(S, new_syndicate_commando, FALSE)
 
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader = FALSE)
 

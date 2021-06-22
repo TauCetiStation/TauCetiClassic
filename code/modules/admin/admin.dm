@@ -669,7 +669,7 @@ var/global/BSACooldown = 0
 	var/dat = {"
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
-	if(master_mode == "secret")
+	if(master_mode == "Secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>Force Secret Mode</A><br>"
 
 	dat += {"
@@ -1046,46 +1046,19 @@ var/global/BSACooldown = 0
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
 /proc/is_special_character(mob/M) // returns 1 for specail characters and 2 for heroes of gamemode
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker || !SSticker.mode || !istype(M))
 		return 0
-	if (!istype(M))
-		return 0
-	if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
-		if (SSticker.mode.config_tag == "rp-revolution")
-			return 2
-		return 1
-	if(global.cult_religion?.is_member(M))
-		if (SSticker.mode.config_tag == "cult")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.malf_ai)
-		if (SSticker.mode.config_tag == "malfunction")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.syndicates)
-		if (SSticker.mode.config_tag == "nuclear")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.wizards)
-		if (SSticker.mode.config_tag == "wizard")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.changelings)
-		if (SSticker.mode.config_tag == "changeling")
-			return 2
+	if(isanyantag(M) || M.mind?.special_role)
+		for(var/id in M.mind.antag_roles)
+			var/datum/role/role = M.mind.antag_roles[id]
+			if(role.is_roundstart_role)
+				return 2
 		return 1
 
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			if (SSticker.mode.config_tag == "monkey")
-				return 2
-			return 1
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
 			return 1
-	if(M.mind&&M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		return 1
 
 	return 0
 
