@@ -401,4 +401,4 @@
 		P.activate(time_to_stop, religion)
 		pylons++
 
-	holder.visible_message("<span class='warning'>[russian_plural(pylons, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")
+	holder.visible_message("<span class='warning'>[pluralize_russian(pylons, "Пилон", "Пилоны")] начинают зловеще светиться.</span>")
