@@ -69,6 +69,7 @@
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
+					src.code = ""
 					user.show_message("<span class='warning'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", SHOWMSG_ALWAYS)
 					sleep(80)
 					src.l_setshort = 0
@@ -105,56 +106,53 @@
 
 
 /obj/item/weapon/storage/secure/attack_self(mob/user)
-	user.set_machine(src)
-	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (src.locked ? "LOCKED" : "UNLOCKED"))
-	var/message = "Code"
-	if ((src.l_set == 0) && (!src.emagged) && (!src.l_setshort))
-		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
-	if (src.emagged)
-		dat += text("<p>\n<font color=red><b>LOCKING SYSTEM ERROR - 1701</b></font>")
-	if (src.l_setshort)
-		dat += text("<p>\n<font color=red><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
-	message = text("[]", src.code)
-	if (!src.locked)
-		message = "*****"
-	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
+	tgui_interact(user)
 
-	var/datum/browser/popup = new(user, "caselock", null, 300, 280)
-	popup.set_content(dat)
-	popup.open()
+/obj/item/weapon/storage/secure/tgui_interact(mob/user, datum/tgui/ui = null)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SecureSafe", name)
+		ui.open()
 
-/obj/item/weapon/storage/secure/Topic(href, href_list)
-	..()
-	if (usr.incapacitated() || get_dist(src, usr) > 1)
-		return
-	if (href_list["type"])
-		if (href_list["type"] == "E")
-			if ((src.l_set == 0) && (length(src.code) == 5) && (!src.l_setshort) && (src.code != "ERROR"))
-				src.l_code = src.code
-				src.l_set = 1
-			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
-				src.locked = 0
-				cut_overlays()
-				add_overlay(image('icons/obj/storage.dmi', icon_opened))
-				src.code = null
+/obj/item/weapon/storage/secure/tgui_data(mob/user)
+	var/list/data = list()
+	data["locked"] = locked
+	data["code"] = code
+	data["emagged"] = emagged
+	data["l_setshort"] = l_setshort
+	data["l_set"] = l_set
+	return data
+
+/obj/item/weapon/storage/secure/tgui_act(action, params)
+	if(..())
+		return TRUE
+	switch (action)
+		if("type")
+			var/digit = params["digit"]
+			if(digit == "E")
+				if ((l_set == 0) && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
+					l_code = code
+					l_set = 1
+				else if ((code == l_code) && (emagged == 0) && (l_set == 1))
+					locked = 0
+					overlays = null
+					overlays += image('icons/obj/storage.dmi', icon_opened)
+					code = null
+				else
+					code = "ERROR"
 			else
-				src.code = "ERROR"
-		else
-			if ((href_list["type"] == "R") && (src.emagged == 0) && (!src.l_setshort))
-				src.locked = 1
-				cut_overlays()
-				src.code = null
-				close(usr)
-			else
-				src.code += text("[]", href_list["type"])
-				if (length(src.code) > 5)
-					src.code = "ERROR"
-		add_fingerprint(usr)
-		for(var/mob/M in viewers(1, src.loc))
-			if ((M.client && M.machine == src))
-				attack_self(M)
-			return
-	return
+				if ((digit == "R") && (emagged == 0) && (!l_setshort))
+					locked = 1
+					overlays = null
+					code = null
+					close(usr)
+				else
+					code += text("[]", digit)
+					if (length(code) > 5)
+						code = "ERROR"
+	add_fingerprint(usr)
+	return TRUE
+
 
 // -----------------------------
 //        Secure Briefcase
@@ -189,10 +187,6 @@
 
 /obj/item/weapon/storage/secure/briefcase/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	update_icon()
-
-/obj/item/weapon/storage/secure/briefcase/Topic(href, href_list)
-	..()
 	update_icon()
 
 /obj/item/weapon/storage/secure/briefcase/update_icon()
@@ -240,7 +234,7 @@
 	new /obj/item/weapon/pen(src)
 
 /obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
-	return attack_self(user)
+	tgui_interact(user)
 
 //obj/item/weapon/storage/secure/safe/HoS/atom_init()
 //	. = ..()

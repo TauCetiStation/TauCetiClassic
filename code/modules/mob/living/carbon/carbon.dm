@@ -8,6 +8,9 @@
 	return ..()
 
 /mob/living/carbon/Life()
+	if(!loc)
+		return
+
 	..()
 
 	// Increase germ_level regularly
@@ -16,7 +19,7 @@
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(.)
+	if(. && !ISDIAGONALDIR(Dir))
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()

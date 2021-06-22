@@ -196,7 +196,7 @@
 			var/datum/role/R = mind.antag_roles[role]
 			stat(R.StatPanel())
 
-	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig))
 		var/obj/item/clothing/suit/space/rig/rig = wear_suit
 		rig_setup_stat(rig)
 

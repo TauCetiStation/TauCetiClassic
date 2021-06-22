@@ -171,6 +171,11 @@
 /datum/asset/spritesheet/cargo
 	name = "cargo"
 
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)
+
 /datum/asset/spritesheet/cargo/register()
 	var/all_objects = list()
 	for(var/supply_name in SSshuttle.supply_packs)

@@ -1018,7 +1018,7 @@
 
 	. = ..()
 
-	if(module)
+	if(module && !ISDIAGONALDIR(Dir))
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))

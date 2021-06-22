@@ -954,7 +954,7 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 16, "Dylovene")
 	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 17, "Dexalin Plus")
 	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 18, "Tricordrazine")
-	new /obj/item/weapon/reagent_containers/syringe/(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle

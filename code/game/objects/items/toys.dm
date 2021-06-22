@@ -428,7 +428,7 @@
 		src.empty = 0
 
 
-		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
+		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "water"
 		D.icon = 'icons/obj/chemical.dmi'
 		D.icon_state = "chempuff"
