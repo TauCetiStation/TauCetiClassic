@@ -42,8 +42,6 @@
 			to_chat(user, "<span class='warning'>Слишком мало последователей вокруг алтаря.</span>")
 		return FALSE
 
-	var/datum/religion/cult/C = religion
-
 	if(SSticker.nar_sie_has_risen)
 		if(user)
 			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
