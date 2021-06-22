@@ -622,7 +622,5 @@
 	tod = worldtime2text()
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	if(SSticker.mode)
-		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

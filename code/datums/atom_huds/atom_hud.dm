@@ -4,7 +4,7 @@ var/global/list/all_huds = list()
 
 //global HUD LIST
 //if you add new defines, then change number of assoc list
-var/global/list/huds[24]
+var/global/list/huds[23]
 
 /proc/init_hud_list() // proc used in global_list.dm
 	// Crooked port from TG, but he needed

@@ -27,7 +27,6 @@
 	if(useMS)
 		last_spam_time = world.time
 		if(prob(2))
-			// /obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
 			var/obj/item/device/pda/P
 			var/list/viables = list()
 			for(var/obj/item/device/pda/check_pda in sortAtom(PDAs))
