@@ -217,12 +217,17 @@
 		to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
 		return
 	while(H.health < config.health_threshold_crit)
+		var/heal_check = H.health
 
 		if(!do_mob(user, H, 2 SECONDS))
 			break
 
-		var/suff = min(H.getOxyLoss(), 5) //Pre-merge level, less healing, more prevention of dieing.
+		var/suff = min(H.getOxyLoss(), 5)
 		H.adjustOxyLoss(-suff)
 		visible_message("<span class='warning'>[user] performs AV on [H]!</span>")
 		to_chat(H, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
 		H.updatehealth()
+
+		if(heal_check == H.health)
+			to_chat(user, "<span class='warning'>Further AV is pointless.</span>")
+			break
