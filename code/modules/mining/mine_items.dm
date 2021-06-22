@@ -234,7 +234,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=3"
 	desc = "This thing breaks skulls pretty well, right?"
 	hitsound = 'sound/items/sledgehammer_hit.ogg'
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	slot_flags = SLOT_FLAGS_BACK
 	force_unwielded = 15
 	force_wielded = 35

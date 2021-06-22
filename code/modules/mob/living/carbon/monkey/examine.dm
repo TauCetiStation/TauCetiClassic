@@ -39,8 +39,8 @@
 	if (src.digitalcamo)
 		msg += "<span class='warning'>It is moving its body in an unnatural and blatantly unsimian manner.</span>\n"
 
-	if(w_class && w_class != SIZE_NO_CONTAINER)
-		msg += "This [get_size_flavor()] creature.\n"
+	if(w_class)
+		msg += "It is a [get_size_flavor()] sized creature.\n"
 
 	msg += "*---------*</span>"
 

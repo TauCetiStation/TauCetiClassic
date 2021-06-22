@@ -108,7 +108,7 @@
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	icon_state = "offhand"
 	name = "offhand"
 	flags = ABSTRACT
@@ -336,7 +336,7 @@
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
 	hitsound = list('sound/weapons/blade1.ogg')
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	return ..()
 
 #undef DUALSABER_BLOCK_CHANCE_MODIFIER

@@ -41,7 +41,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "crossbow"
 	item_state = "crossbow-solid"
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 

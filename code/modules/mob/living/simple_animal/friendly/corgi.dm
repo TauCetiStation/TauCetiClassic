@@ -17,7 +17,7 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 
 	has_head = TRUE
 	has_leg = TRUE

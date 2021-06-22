@@ -68,8 +68,8 @@
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
 
-	if(w_class && w_class != SIZE_NO_CONTAINER)
-		msg += "This [get_size_flavor()] creature.\n"
+	if(w_class)
+		msg += "It is a [get_size_flavor()] sized creature.\n"
 
 	msg += "*---------*</span>"
 	to_chat(user, msg)
@@ -96,7 +96,7 @@
 	melee_damage = 20
 	attacktext = "smash"
 	speed = 3
-	w_class = SIZE_GAINT
+	w_class = SIZE_MASSIVE
 	environment_smash = 2
 	attack_sound = list('sound/weapons/punch3.ogg')
 	status_flags = 0
@@ -199,7 +199,7 @@
 	attacktext = "brutally crush"
 	speed = 5
 	environment_smash = 2
-	w_class = SIZE_GAINT
+	w_class = SIZE_MASSIVE
 	attack_sound = list('sound/weapons/punch4.ogg')
 	resize = 1.2
 

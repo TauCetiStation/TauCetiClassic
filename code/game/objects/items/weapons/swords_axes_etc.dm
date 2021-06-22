@@ -291,12 +291,12 @@
 		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
-		src.w_class = SIZE_LARGE
+		src.w_class = SIZE_BIG
 	else
 		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
-		src.w_class = SIZE_LARGE
+		src.w_class = SIZE_BIG
 	add_fingerprint(user)
 
 	return

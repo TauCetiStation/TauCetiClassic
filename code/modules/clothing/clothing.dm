@@ -248,7 +248,7 @@ var/global/list/icon_state_allowed_cache = list()
 
 /obj/item/clothing/ears/offear
 	name = "Other ear"
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	icon = 'icons/mob/screen1_Midnight.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS

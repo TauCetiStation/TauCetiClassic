@@ -48,7 +48,7 @@
 		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge/massive
 		)
 
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	fire_delay = 15
 	number_of_shots = 7 // It can be more than that (but no more than 1 extra), if there is a bit of charge left after 7th shot.
 	max_projectile_per_fire = 5

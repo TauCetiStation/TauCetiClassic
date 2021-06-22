@@ -7,7 +7,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "pneumatic"
 	item_state = "pneumatic"
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	max_w_class = SIZE_SMALL

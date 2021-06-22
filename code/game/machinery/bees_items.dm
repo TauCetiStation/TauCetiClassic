@@ -59,7 +59,7 @@
 	icon = 'icons/obj/apiary_bees_etc.dmi'
 	icon_state = "apiary_item"
 	item_state = "giftbag"
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 
 /obj/item/beezeez
 	name = "bottle of BeezEez"

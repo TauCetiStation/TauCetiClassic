@@ -373,7 +373,7 @@
 
 // This proc guarantees no mouse vs queen tomfuckery.
 /mob/living/proc/is_bigger_than(mob/living/target)
-	if(target.w_class < SIZE_SMALL && w_class >= SIZE_SMALL)
+	if(target.w_class < SIZE_SMALL && w_class >= SIZE_SMALL) // todo: direct size comparison 
 		return TRUE
 	if(maxHealth > target.maxHealth)
 		return TRUE

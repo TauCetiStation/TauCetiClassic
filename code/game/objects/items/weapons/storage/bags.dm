@@ -82,7 +82,7 @@
 	while(base_storage_capacity(w_class) < cur_storage_space)
 		w_class++
 
-	w_class = min(SIZE_LARGE, w_class)
+	w_class = min(SIZE_BIG, w_class)
 
 	update_icon()
 
@@ -293,6 +293,6 @@
 	name = "Cash bag"
 	desc = "A bag for carrying lots of cash. It's got a big dollar sign printed on the front."
 	max_storage_space = 100
-	max_w_class = SIZE_LARGE
+	max_w_class = SIZE_BIG
 	w_class = SIZE_TINY
 	can_hold = list(/obj/item/weapon/coin,/obj/item/weapon/spacecash)

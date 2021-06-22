@@ -96,7 +96,7 @@
 	maxHealth = 65
 	health = 65
 	pixel_x = -16
-	w_class = SIZE_GAINT
+	w_class = SIZE_MASSIVE
 
 	randomify = FALSE
 

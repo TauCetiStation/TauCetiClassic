@@ -25,8 +25,8 @@
 
 /mob/examine(mob/user)
 	. = ..()
-	if(w_class && w_class != SIZE_NO_CONTAINER)
-		to_chat(user, "This [get_size_flavor()] creature.")
+	if(w_class)
+		to_chat(user, "It is a [get_size_flavor()] sized creature.")
 
 /mob/atom_init()
 	spawn()

@@ -7,7 +7,7 @@
 //	designation = "Syndicate"
 	braintype = "Robot"
 	req_access = list(access_syndicate)
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 
 	typing_indicator_type = "syndibot"
 

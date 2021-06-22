@@ -66,7 +66,7 @@
 	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
@@ -182,7 +182,7 @@
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/repeater
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
@@ -212,7 +212,7 @@
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/a3006_clip
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)

@@ -267,11 +267,15 @@
 
 /obj/item/examine(mob/user)
 	. = ..()
-	var/open_span  = "[src.wet ? "<span class='wet'>" : ""]"
-	var/close_span = "[src.wet ? "</span>" : ""]"
-	var/wet_status = "[src.wet ? " wet" : ""]"
 
-	to_chat(user, "[open_span]It's a[wet_status] [get_size_flavor()] item.[close_span]")
+	if(w_class || wet)
+
+		var/stat_flavor = "It is a[wet ? "wet" : ""] [w_class ? "[get_size_flavor()] sized" : ""] item."
+
+		if(wet)
+			stat_flavor = "<span class='wet'>[stat_flavor]</span>"
+
+		to_chat(user, stat_flavor)
 
 /obj/item/attack_hand(mob/user)
 	if (!user || anchored)

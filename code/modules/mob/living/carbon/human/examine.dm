@@ -517,8 +517,8 @@
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
 
-	if(w_class && w_class != SIZE_NO_CONTAINER)
-		msg += "This [get_size_flavor()] creature.\n"
+	if(w_class)
+		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
 
 	if(!skipface && print_flavor_text())
 		msg += "[print_flavor_text()]\n"

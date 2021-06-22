@@ -89,7 +89,7 @@
 	desc = "A heavily modified light machine gun with a tactical plasteel frame resting on a rather traditionally-made ballistic weapon. Has 'Aussec Armoury - 2531' engraved on the reciever, as well as '7.62x51mm'."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/m762
@@ -202,7 +202,7 @@
 	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
 	item_state = "shotgun"
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
@@ -278,7 +278,7 @@
 	desc = "Browning Automatic Rifle."
 	icon_state = "bar"
 	item_state = "bar"
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'

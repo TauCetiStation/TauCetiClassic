@@ -31,7 +31,7 @@
 	maxHealth = 25
 	health = 25
 	speed = 1
-	w_class = SIZE_LARGE
+	w_class = SIZE_BIG
 	melee_damage = 5
 	attacktext = "goug"
 	cold_damage_per_tick = 0

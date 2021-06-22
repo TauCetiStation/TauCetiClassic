@@ -666,7 +666,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
-	w_class = SIZE_LARGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
+	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
 
 /obj/item/organ/external/groin

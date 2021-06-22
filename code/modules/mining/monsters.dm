@@ -143,7 +143,7 @@
 	health = 60
 	harm_intent_damage = 5
 	melee_damage = 0
-	w_class = SIZE_GAINT
+	w_class = SIZE_MASSIVE
 	attacktext = "barrell"
 	a_intent = INTENT_HELP
 	throw_message = "sinks in slowly, before being pushed out of "
@@ -256,7 +256,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	w_class = SIZE_HUGE
+	w_class = SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood(src.loc)
@@ -393,7 +393,7 @@
 	health = 300
 	harm_intent_damage = 0
 	melee_damage = 25
-	w_class = SIZE_GAINT
+	w_class = SIZE_MASSIVE
 	attacktext = "pulveriz"
 	throw_message = "does nothing to the rocky hide of the"
 	aggro_vision_range = 9

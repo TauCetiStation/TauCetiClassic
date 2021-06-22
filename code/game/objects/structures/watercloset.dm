@@ -86,7 +86,7 @@
 		if(I.w_class > SIZE_SMALL)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
-		if(w_items + I.w_class > SIZE_LARGE)
+		if(w_items + I.w_class > SIZE_BIG)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
 		user.drop_from_inventory(I, src)

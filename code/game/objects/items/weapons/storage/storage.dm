@@ -231,7 +231,7 @@
 			return FALSE //To prevent the stacking of same sized storage items.
 
 	var/total_storage_space = W.get_storage_cost()
-	if(total_storage_space == SIZE_NO_CONTAINER)
+	if(total_storage_space >= SIZE_LARGE)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>\The [W] cannot be placed in [src].</span>")
 		return FALSE
