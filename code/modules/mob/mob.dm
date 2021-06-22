@@ -22,6 +22,12 @@
 
 	return ..()
 
+
+/mob/examine(mob/user)
+	. = ..()
+	if(w_class && w_class != SIZE_NO_CONTAINER)
+		to_chat(user, "This [get_size_flavor()] creature.")
+
 /mob/atom_init()
 	spawn()
 		if(client)

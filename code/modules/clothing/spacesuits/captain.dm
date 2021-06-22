@@ -17,7 +17,7 @@
 	desc = "A bulky, heavy-duty piece of exclusive Nanotrasen armor. YOU are in charge!"
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags_pressure = STOPS_LOWPRESSUREDMAGE

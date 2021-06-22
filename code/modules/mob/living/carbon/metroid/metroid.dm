@@ -73,6 +73,7 @@
 
 	update_icon = 0
 	nutrition = 800 // 1200 = max
+	w_class = SIZE_HUMAN
 
 
 /mob/living/carbon/slime/atom_init()
@@ -334,7 +335,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6
@@ -643,7 +644,7 @@
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = ITEM_SIZE_LARGE//bulky item
+	w_class = SIZE_NORMAL//bulky item
 	allowed = null
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -763,7 +764,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "slime extract"
 	force = 1.0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 6

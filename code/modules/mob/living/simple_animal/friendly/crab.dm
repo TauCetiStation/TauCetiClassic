@@ -6,7 +6,7 @@
 	icon_living = "crab"
 	icon_dead = "crab_dead"
 	icon_move = "crab_move"
-	small = 1
+	w_class = SIZE_TINY
 	speak_emote = list("clicks")
 	emote_hear = list("clicks")
 	emote_see = list("clacks")

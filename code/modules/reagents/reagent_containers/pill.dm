@@ -8,7 +8,7 @@
 	icon_state = null
 	item_state = "pill"
 	possible_transfer_amounts = null
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	volume = 50
 	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
 

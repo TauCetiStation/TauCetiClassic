@@ -5,7 +5,7 @@
 	item_color = "webbing"
 	slot = "utility"
 	var/slots = 3
-	var/max_w_class = ITEM_SIZE_SMALL //pocket sized
+	var/max_w_class = SIZE_TINY //pocket sized
 	var/obj/item/weapon/storage/internal/hold
 
 /obj/item/clothing/accessory/storage/atom_init()
@@ -81,7 +81,7 @@
 	icon_state = "unathiharness2"
 	item_color = "unathiharness2"
 	slots = 2
-	max_w_class = ITEM_SIZE_NORMAL //for knives
+	max_w_class = SIZE_SMALL //for knives
 
 /obj/item/clothing/accessory/storage/knifeharness/atom_init()
 	. = ..()

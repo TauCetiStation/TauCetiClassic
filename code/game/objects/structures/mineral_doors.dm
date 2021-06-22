@@ -56,7 +56,7 @@
 	return (!isSwitchingStates && anchored)
 
 /obj/structure/mineral_door/proc/MobChecks(mob/user)
-	if(!user.small)
+	if(user.w_class >= SIZE_SMALL)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			if(!C.handcuffed)

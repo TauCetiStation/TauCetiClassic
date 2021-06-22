@@ -129,7 +129,7 @@
 	desc = "Its a small wooden shelf for spices and seasonings. All you need is to place it onto the wall. Buon appetito!"
 	icon = 'icons/obj/cond_shelf.dmi'
 	icon_state = "cond_shelf_item"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	force = 8
 	throwforce = 10
 	throw_speed = 2

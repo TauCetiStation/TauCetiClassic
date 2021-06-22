@@ -24,7 +24,7 @@
 			to_give = null
 		else if(!to_give.canremove)
 			to_give = null
-		else if(to_give.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
+		else if(to_give.w_class < SIZE_NORMAL && (HULK in victim.mutations))
 			to_give = null
 
 	if(!to_give && istype(C.back, /obj/item/weapon/storage) && C.back.contents.len > 0)
@@ -35,7 +35,7 @@
 			return
 		if(!I.canremove)
 			return
-		if(I.w_class < ITEM_SIZE_LARGE && (HULK in victim.mutations))
+		if(I.w_class < SIZE_NORMAL && (HULK in victim.mutations))
 			return
 
 		if(!S.remove_from_storage(I, C))

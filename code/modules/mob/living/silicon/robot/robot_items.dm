@@ -126,7 +126,7 @@
 	excavation_amount = 15
 	usesound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)
 	var/ampr = input(user,"Excavation depth?","Set excavation depth","") as num

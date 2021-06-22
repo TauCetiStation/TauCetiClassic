@@ -79,7 +79,7 @@
 	item_state = "beachball"
 	density = FALSE
 	anchored = FALSE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 0.0
 	throwforce = 0.0
 	throw_speed = 1

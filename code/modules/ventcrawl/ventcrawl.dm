@@ -90,7 +90,7 @@ var/list/ventcrawl_machinery = list(
 		return
 	to_chat(src, "You begin climbing into the ventilation system...")
 	var/time = 40
-	if(small)
+	if(w_class <= SIZE_TINY)
 		time = 5
 	if(!do_after(src, time, null, vent_found))
 		return

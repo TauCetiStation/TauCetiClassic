@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	hitsound = list('sound/items/misc/folder-slap.ogg')
 	icon_state = "folder"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."

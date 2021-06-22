@@ -38,7 +38,7 @@
 	var/obj/item/held_item = null //Storage for single item they can hold.
 	speed = -1                    //Spiderbots gotta go fast.
 	//pass_flags = PASSTABLE      //Maybe griefy?
-	small = 1
+	w_class = SIZE_MINUSCULE
 	speak_emote = list("beeps","clicks","chirps")
 
 /mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
@@ -266,7 +266,7 @@
 
 	var/list/items = list()
 	for(var/obj/item/I in view(1,src))
-		if(I.loc != src && I.w_class <= ITEM_SIZE_SMALL)
+		if(I.loc != src && I.w_class <= SIZE_TINY)
 			items.Add(I)
 
 	var/obj/selection = input("Select an item.", "Pickup") in items

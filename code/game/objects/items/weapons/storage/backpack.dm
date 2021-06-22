@@ -8,10 +8,10 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK	//ERROOOOO
 	action_button_name = "Storage"
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	var/opened = 0
 
@@ -41,7 +41,7 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=4"
 	icon_state = "holdingpack"
-	max_w_class = ITEM_SIZE_LARGE
+	max_w_class = SIZE_NORMAL
 	max_storage_space = 56
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
@@ -78,8 +78,8 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = ITEM_SIZE_LARGE
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	max_storage_space = 80 // can store a ton of shit!
 
 /obj/item/weapon/storage/backpack/chaplain
@@ -311,7 +311,7 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
-	w_class = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
+	w_class = SIZE_SMALL //Can fit in backpacks itself.
 	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks

@@ -5,7 +5,7 @@
 	icon_state = "toyhammer"
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 7
 	throw_range = 15
 	attack_verb = list("banned")
@@ -29,7 +29,7 @@
 	throwforce = 10
 	sharp = 1
 	edge = 1
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/claymore/Get_shield_chance()
@@ -58,7 +58,7 @@
 	throwforce = 10
 	sharp = 1
 	edge = 1
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/katana/suicide_act(mob/user)
@@ -81,7 +81,7 @@
 	item_state = "harpoon"
 	force = 20
 	throwforce = 15
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("jabbed","stabbed","ripped")
 
 /obj/item/weapon/switchblade
@@ -90,7 +90,7 @@
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags = CONDUCT
 	force = 1
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 5
 	edge = FALSE
 	throw_speed = 3
@@ -109,7 +109,7 @@
 	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 	if(extended)
 		force = 20
-		w_class = ITEM_SIZE_NORMAL
+		w_class = SIZE_SMALL
 		throwforce = 15
 		edge = TRUE
 		icon_state = "switchblade_ext"
@@ -117,7 +117,7 @@
 		hitsound = list('sound/weapons/bladeslice.ogg')
 	else
 		force = 1
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		throwforce = 5
 		edge = FALSE
 		icon_state = "switchblade"

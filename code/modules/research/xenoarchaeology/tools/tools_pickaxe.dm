@@ -12,7 +12,7 @@
 	excavation_amount = 0.5
 	usesound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "brushing"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/pickaxe/one_pick
 	name = "1/6 pick"
@@ -24,7 +24,7 @@
 	excavation_amount = 1
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/pickaxe/two_pick
 	name = "1/3 pick"
@@ -36,7 +36,7 @@
 	excavation_amount = 2
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/pickaxe/three_pick
 	name = "1/2 pick"
@@ -48,7 +48,7 @@
 	excavation_amount = 3
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/pickaxe/four_pick
 	name = "2/3 pick"
@@ -60,7 +60,7 @@
 	excavation_amount = 4
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/pickaxe/five_pick
 	name = "5/6 pick"
@@ -72,7 +72,7 @@
 	excavation_amount = 5
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/pickaxe/six_pick
 	name = "1/1 pick"
@@ -84,7 +84,7 @@
 	excavation_amount = 6
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 /obj/item/weapon/pickaxe/hand
 	name = "hand pickaxe"
@@ -96,7 +96,7 @@
 	excavation_amount = 15
 	usesound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Pack for holding pickaxes
@@ -109,7 +109,7 @@
 	item_state = "excavation"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 7
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	can_hold = list(/obj/item/weapon/pickaxe/brush,
 	/obj/item/weapon/pickaxe/one_pick,
 	/obj/item/weapon/pickaxe/two_pick,
@@ -117,7 +117,7 @@
 	/obj/item/weapon/pickaxe/four_pick,
 	/obj/item/weapon/pickaxe/five_pick,
 	/obj/item/weapon/pickaxe/six_pick)
-	max_w_class = ITEM_SIZE_LARGE
+	max_w_class = SIZE_NORMAL
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 
 /obj/item/weapon/storage/box/excavation/atom_init()

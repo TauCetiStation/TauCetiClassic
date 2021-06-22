@@ -8,7 +8,7 @@
 	force = 10
 	hitsound = list('sound/weapons/captainwhip.ogg')
 	throwforce = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "combat=4"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 
@@ -23,5 +23,5 @@
 	item_state = "ice_pick"
 	force = 15
 	throwforce = 10
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	attack_verb = list("stabbed", "jabbed", "iced,")

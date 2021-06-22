@@ -444,7 +444,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	storage_slots = 10
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	slot_flags = SLOT_FLAGS_BELT
 	can_hold = list(/obj/item/weapon/match)
 
