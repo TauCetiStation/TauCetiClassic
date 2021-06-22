@@ -23,6 +23,10 @@
 
 /obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
 		if(occupant && (src.loc != occupant.loc))
