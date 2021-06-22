@@ -199,7 +199,7 @@ var/global/cat_number = 0
 	addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
 
 	for(var/i in rand(1, 3))
-		step(src, global.alldirs)
+		step(src, pick(global.alldirs))
 
 /mob/living/simple_animal/cat/real_runtime/Destroy()
 	cat_number -= 1
