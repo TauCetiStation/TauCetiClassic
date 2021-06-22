@@ -9,7 +9,7 @@
 	sound = "outbreak5"
 /datum/announcement/centcomm/blob/outbreak5/play()
 	message = "Подтвержден 5 уровень биологической угрозы на борту [station_name_ru()]. " + \
-			"Всему персоналу предотвратить распространение заражения. " + \
+			"Персонал должен предотвратить распространение заражения. " + \
 			"Активирован протокол изоляции экипажа станции."
 	..()
 
@@ -22,7 +22,7 @@
 /datum/announcement/centcomm/nuclear/war
 	name = "Nuclear: Declaration of War"
 	subtitle = "Объявление Войны"
-	message = "Синдикат объявил о намерении полностью уничтожить станцию с помощю ядерного устройства и весь экипаж, что будет пытаться их остановить."
+	message = "Синдикат объявил о намерении полностью уничтожить станцию с помощью ядерного устройства. И всех, кто попытается их остановить."
 /datum/announcement/centcomm/nuclear/war/play(message)
 	if(message)
 		src.message = message
@@ -33,14 +33,14 @@
 	name = "Vox: Shuttle Arrives"
 /datum/announcement/centcomm/vox/arrival/play()
 	message = "Внимание, [station_name_ru()], неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. " + \
-			"По последним данным этот корабль принадлежит Торговой Конфедерации."
+			"По последним данным, этот корабль принадлежит Торговой Конфедерации."
 
 /datum/announcement/centcomm/vox/returns
 	name = "Vox: Shuttle Returns"
 	subtitle = "ВКН Икар"
 /datum/announcement/centcomm/vox/returns/play()
-	message = "Ваши гости улетают, [station_name_ru()] - двигаются слишком быстро, мы не можем навестись на них. " + \
-			"Похоже они покидают систему [system_name_ru()] без оглядки."
+	message = "Ваши гости улетают, [station_name_ru()]. Движутся слишком быстро, что бы мы могли навестись на них. " + \
+			"Похоже, они покидают систему [system_name_ru()] без оглядки."
 
 /* Malfunction */
 /datum/announcement/centcomm/malf/declared
