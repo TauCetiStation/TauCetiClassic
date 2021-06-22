@@ -32,10 +32,7 @@
 			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
 		return FALSE
 
-	var/datum/religion/cult/C = religion
-	var/datum/game_mode/cult/cur_mode = C.mode
-
-	if(cur_mode.eldergod)
+	if(SSticker.nar_sie_has_risen)
 		if(user)
 			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
 		return FALSE
@@ -44,9 +41,7 @@
 
 /datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/AOG)
 	..()
-	var/datum/religion/cult/C = religion
-	var/datum/game_mode/cult/cur_mode = C.mode
-	cur_mode.eldergod = TRUE
+	SSticker.nar_sie_has_risen = TRUE
 
 	new /obj/singularity/narsie/large(get_turf(AOG))
 	return TRUE
@@ -146,8 +141,7 @@
 	H.revive()
 	H.visible_message("<span class='warning'>После того, как дым развеялся, на алтаре виден скелет человека.</span>",
 					"<span class='cult'>Вы чувствуете, как с вас буквально содрали всю кожу, хотя у тебя теперь нет и нервов.</span>")
-	var/datum/religion/cult/C = religion
-	C.mode.add_cultist(H.mind)
+	religion.add_member(H, CULT_ROLE_HIGHPRIEST)
 	H.regenerate_icons()
 
 	return TRUE
