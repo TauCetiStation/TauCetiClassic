@@ -158,7 +158,7 @@
 				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
-			user.drop_item(src)
+			user.drop_from_inventory(O, src)
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")

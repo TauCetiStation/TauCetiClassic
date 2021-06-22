@@ -86,6 +86,8 @@
 	//Action var
 	var/strafe = FALSE
 
+	var/prev_move_dir = 0
+
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
 
@@ -278,6 +280,10 @@
 
 /obj/mecha/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
 
@@ -311,18 +317,24 @@
 		return 0
 	if(!has_charge(step_energy_drain))
 		return 0
-	if(ISDIAGONALDIR(direction))
-		return FALSE
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
-	else if(src.dir != direction && !strafe)
-		move_result = mechturn(direction)
-	else
+	else if(strafe)
 		move_result	= mechstep(direction)
+	else if(direction == dir || direction == prev_move_dir)
+		move_result = mechstep(dir)
+	else if(ISDIAGONALDIR(direction))
+		if(dir & NORTH_SOUTH)
+			move_result = mechturn(direction & EAST_WEST)
+		else
+			move_result = mechturn(direction & NORTH_SOUTH)
+	else
+		move_result = mechturn(direction)
+	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		if(do_after(step_in))
+		if(do_after(step_in * move_result))
 			can_move = 1
 		return 1
 	return 0
@@ -334,6 +346,7 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
+	var/old_loc = loc
 	var/current_dir = dir
 	var/result = step(src, direction)
 	if(strafe)
@@ -341,6 +354,9 @@
 	if(result)
 		playsound(src, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 40)
 		use_power(step_energy_drain)
+		direction = get_dir(src, old_loc)
+		if(ISDIAGONALDIR(direction))
+			return 2
 	return result
 
 /obj/mecha/proc/mechsteprand()
@@ -460,6 +476,7 @@
 
 /obj/mecha/proc/toggle_strafe()
 	strafe = !strafe
+	prev_move_dir = 0
 
 	occupant_message("<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")
 	log_message("Toggled strafing mode [strafe?"on":"off"].")
@@ -670,7 +687,7 @@
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				user.drop_item()
+				user.drop_from_inventory(E, src)
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
 			else
@@ -736,8 +753,7 @@
 		if(state==4)
 			if(!src.cell)
 				to_chat(user, "You install the powercell")
-				user.drop_item()
-				W.forceMove(src)
+				user.drop_from_inventory(W, src)
 				src.cell = W
 				log_message("Powercell installed")
 			else
@@ -792,7 +808,6 @@
 		src.initial_icon = P.new_icon
 		reset_icon()
 
-		user.drop_item()
 		qdel(P)
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/Ham = W
@@ -1095,6 +1110,7 @@
 		Move(src.loc)
 		src.icon_state = reset_icon()
 		set_dir(dir_in)
+		GrantActions(brainmob)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
@@ -1174,10 +1190,10 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud)
+		if(src.occupant.hud_used && src.last_user_hud && !istype(mob_container, /obj/item/device/mmi))
 			src.occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
-		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/mmi/posibrain))
+		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi

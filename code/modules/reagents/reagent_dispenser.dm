@@ -142,7 +142,7 @@
 				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
 			rig = W
-			user.drop_item()
+			user.drop_from_inventory(W, src)
 			W.loc = src
 
 			var/icon/test = getFlatIcon(W)
@@ -189,7 +189,7 @@
 
 /obj/structure/reagent_dispensers/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if (. && modded)
+	if (. && modded && !ISDIAGONALDIR(Dir))
 		leak(amount_per_transfer_from_this * 0.1)
 
 

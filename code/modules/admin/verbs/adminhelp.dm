@@ -412,9 +412,9 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
-	dat += "</b>[global.TAB][TicketHref("Refresh", ref_src)][global.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
+	dat += "</b>[TAB][TicketHref("Refresh", ref_src)][TAB][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
-		dat += "[global.TAB][TicketHref("Reopen", ref_src, "reopen")]"
+		dat += "[TAB][TicketHref("Reopen", ref_src, "reopen")]"
 	dat += "<br><br>Opened at: [time_stamp(wtime = opened_at_server)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
 	if(closed_at && closed_at_server)
 		dat += "<br>Closed at: [time_stamp(wtime = closed_at_server)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
@@ -422,7 +422,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>[global.TAB][ClosureLinks(ref_src)]<br>"
+		dat += "<b>DISCONNECTED</b>[TAB][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in _interactions)
 		dat += "[I]<br>"
@@ -589,7 +589,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		if(!afkmins.len && !stealthmins.len && !powerlessmins.len)
 			final = "No admins online"
 		else
-			final = "All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
+			final = "All admins stealthed\[[get_english_list(stealthmins)]\], AFK\[[get_english_list(afkmins)]\], or lacks +BAN\[[get_english_list(powerlessmins)]\]! Total: [allmins.len] "
 
 		world.send2bridge(
 			type = type,

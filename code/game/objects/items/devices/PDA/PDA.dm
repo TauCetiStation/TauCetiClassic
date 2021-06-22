@@ -577,7 +577,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
 	        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "pda.tmpl", title, 590, 430)
+		ui = new(user, src, ui_key, "pda.tmpl", title, 640, 420)
 		// when the ui is first opened this is the data it will use
 
 		ui.load_cached_data(ManifestJSON)
@@ -1297,15 +1297,13 @@
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item()
-				I.loc = src
+				user.drop_from_inventory(I, src)
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			var/obj/old_id = id
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			id = I
 			user.put_in_hands(old_id)
 	update_icon()

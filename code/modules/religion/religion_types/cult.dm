@@ -49,8 +49,7 @@
 	/*
 		Only cult
 	*/
-	// Just gamemode of cult
-	var/datum/game_mode/cult/mode
+	var/datum/faction/cult/mode
 	// Is the area captured by /datum/rune/cult/capture_area
 	var/capturing_area = FALSE
 
@@ -104,8 +103,6 @@
 
 /datum/religion/cult/setup_religions()
 	global.cult_religion = src
-	if(istype(SSticker.mode, /datum/game_mode/cult))
-		mode = SSticker.mode
 
 /datum/religion/cult/process()
 	adjust_favor(passive_favor_gain)
@@ -231,7 +228,8 @@
 /datum/religion/cult/add_member(mob/M, holy_role)
 	if(!..())
 		return FALSE
-	add_antag_hud(ANTAG_HUD_CULT, "hudcultist", M)
+	if(!M.mind?.GetRole(CULTIST))
+		add_faction_member(mode, M, TRUE)
 	return TRUE
 
 /datum/religion/cult/on_exit(mob/M)

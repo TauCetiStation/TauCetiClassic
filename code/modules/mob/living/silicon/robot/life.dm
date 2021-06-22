@@ -223,16 +223,6 @@
 		else
 			src.healths.icon_state = "health7"
 
-	if (src.syndicate && src.client)
-		if(src.connected_ai)
-			src.connected_ai.connected_robots -= src
-			set_ai_link(null)
-		if(src.mind)
-			if(!src.mind.special_role)
-				src.mind.special_role = "traitor"
-				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", src)
-				SSticker.mode.traitors += src.mind
-
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
 		switch(cellcharge)

@@ -20,6 +20,11 @@
 	subtitle = "Biohazard Alert"
 	message = "Biohazard has reached critical mass. Station loss is imminent."
 
+/datum/announcement/centcomm/blob/biohazard_station_unlock
+	name = "Biohazard Level Updated - Lock Down Lifted"
+	subtitle = "Biohazard Alert"
+	message = "Biohazard outbreak contained successfully. Quarantine lifted. Please clean up biohazardous material and proceed with standard station duties."
+
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
 	name = "Nuclear: Declaration of War"
