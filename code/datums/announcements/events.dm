@@ -140,11 +140,16 @@
 
 /datum/announcement/centcomm/comms_blackout
 	name = "Event: Communication Blackout"
-	message = "Ионносфе:%дз˝ МКаaдж^ж<.3-БЗЗЗЗТ"
-/datum/announcement/centcomm/comms_blackout/play(message)
-	if(message)
-		src.message = message
-	..()
+	message = "Ионносфе:%дз˝ МКаaдж^ж<.3-БЗЗЗЗЗЗТ"
+/datum/announcement/centcomm/comms_blackout/randomize_message()
+	message = pick( \
+		"Ионносферная аномалия обнаружена. Временный сбой связи неизбежен. Пожалуйста, свяжитесь с ваши*%фж00)`5вц-БЗЗТ", \
+		"Ионносферная аномалия обнаружена. Временный сбой связи неизбе*3маг;б4;'1вдз˝-БЗЗЗЕ", \
+		"Ионносферная аномалия обнаружена. Временный сбо#МЦi46:5.;@63-БЗЗЗЗТ", \
+		"Ионносферная аномалия обнар'фЗ\\кг5_0-БЗЗЗЗЗТ", \
+		"Ионносфе:%дз˝ МКаaдж^ж<.3-БЗЗЗЗЗЗТ", \
+		"#4нд%;ф4у6,>ďż˝%-БЗЗЗЗЗЗЗТ" \
+	)
 
 /datum/announcement/centcomm/dust
 	name = "Event: Sand Storm"
@@ -235,6 +240,7 @@
 	sound = "outbreak7"
 /datum/announcement/centcomm/organ_failure/play()
 	message = "Подтвержден 7 уровень биологической угрозы на борту [station_name_ru()]. Персонал должен предотвратить распространение заражения."
+	..()
 
 /datum/announcement/centcomm/greytide
 	name = "Event: Grey Tide"
@@ -242,22 +248,29 @@
 	sound = "greytide"
 /datum/announcement/centcomm/greytide/play()
 	message = "В системах тюремного заключения [station_name_ru()] обнаружен [pick("Gr3y.T1d3","вредоностный троян")]. Рекомендуется привлечь ИИ."
+	..()
 
 /datum/announcement/centcomm/icarus_lost
 	name = "Event: Icarus Lost"
 	subtitle = "Тревога. Сбойные дроны"
-	message = "На ВКН Икар был потерян контакт с боевым крылом дронов. При обнаружении в пространстве станции, приближаться с осторожностью."
 	sound = "icaruslost"
-/datum/announcement/centcomm/icarus_lost/play(message)
-	if(message)
-		src.message = message
+/datum/announcement/centcomm/icarus_lost/randomize_message()
+	if(prob(33))
+		message = "Боевое крыло дронов не смогло вернуться с зачистки данного сектора, при обнаружении приближаться с осторожностью."
+	else if(prob(50))
+		message = "На ВКН Икар был потерян контакт с боевым крылом дронов. При обнаружении их в этой области, приближаться с осторожностью."
+	else
+		message = "Неизвестные хакеры атаковали боевое крыло дронов, запущенное с ВКН Икар. Если обнаружите их в данной области, приближаться с осторожностью."
+/datum/announcement/centcomm/icarus_lost/play()
+	randomize_message()
 	..()
 
 /datum/announcement/centcomm/icarus_recovered
 	name = "Event: Icarus Recovered"
 	subtitle = "Тревога. Сбойные дроны"
 	message = "Контроль дронов на ВКН Икар докладывает о восстановлении контроля над сбойным боевым крылом дронов."
-/datum/announcement/centcomm/icarus_recovered/play(message)
-	if(message)
-		src.message = message
-	..()
+
+/datum/announcement/centcomm/icarus_destroyed
+	name = "Event: Icarus Recovered"
+	subtitle = "Тревога. Сбойные дроны"
+	message = "Контроль дронов ВКН Икар разочарован в потере боевого крыла. Выжившие дроны будут восстановлены."

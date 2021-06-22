@@ -2,7 +2,8 @@
 	startWhen = 10
 	endWhen = 1000
 	announcement = new /datum/announcement/centcomm/icarus_lost
-	announcement_end = new /datum/announcement/centcomm/icarus_recovered
+	var/datum/announcement/announcement_recoverd = new /datum/announcement/centcomm/icarus_recovered
+	var/datum/announcement/announcement_destroyed = new /datum/announcement/centcomm/icarus_destroyed
 	var/list/drones_list = list()
 
 /datum/event/rogue_drone/start()
@@ -25,14 +26,7 @@
 			D.disabled = rand(15, 60)
 
 /datum/event/rogue_drone/announce()
-	var/msg
-	if(prob(33))
-		msg = "Боевое крыло дронов не смогло вернуться с зачистки данного сектора, при обнаружении приближаться с осторожностью."
-	else if(prob(50))
-		msg = "На ВКН Икар был потерян контакт с боевым крылом дронов. При обнаружении их в этой области, приближаться с осторожностью."
-	else
-		msg = "Неизвестные хакеры атаковали боевое крыло дронов, запущенное с ВКН Икар. Если обнаружите их в данной области, приближаться с осторожностью."
-	announcement.play(msg)
+	announcement.play()
 
 /datum/event/rogue_drone/tick()
 	return
@@ -49,9 +43,7 @@
 		qdel(D)
 		num_recovered++
 
-	var/msg
 	if(num_recovered > drones_list.len * 0.75)
-		msg = "Контроль дронов на ВКН Икар докладывает о восстановлении контроля над сбойным боевым крылом."
+		announcement_recoverd.play()
 	else
-		msg = "Контроль дронов ВКН Икар разочарован в потере боевого крыла. Выжившие дроны будут восстановлены."
-	announcement_end.play(msg)
+		announcement_destroyed.play()
