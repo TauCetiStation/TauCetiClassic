@@ -215,38 +215,6 @@
 		return FALSE
 	return ..()
 
-var/global/list/datum/mind/borers = list()
-
-/mob/living/simple_animal/borer/transfer_personality(client/candidate)
-
-	if(!candidate)
-		return
-
-	mind = candidate.mob.mind
-	ckey = candidate.ckey
-	if(mind)
-		mind.assigned_role = "Cortical Borer"
-		mind.special_role = "Cortical Borer"
-	borers |= mind
-
-	to_chat(src, "Use your Infest power to crawl into the ear of a host and fuse with their brain.")
-	to_chat(src, "You can only take control temporarily, and at risk of hurting your host, so be clever and careful; your host is encouraged to help you however they can.")
-	to_chat(src, "Talk to your fellow borers with ;")
-	var/list/datum/objective/objectives = list(
-		new /datum/objective/borer_survive(),
-		new /datum/objective/borer_reproduce(),
-		new /datum/objective/escape()
-		)
-	for(var/datum/objective/O in objectives)
-		O.owner = mind
-	mind.objectives = objectives
-
-	var/obj_count = 1
-	to_chat(src, "<span class = 'notice'><B>Your current objectives:</B></span>")
-	for(var/datum/objective/objective in mind.objectives)
-		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
-
 /mob/living/simple_animal/borer/update_sight()
 	if(is_ventcrawling)
 		sight |= SEE_TURFS | SEE_OBJS | BLIND
@@ -302,3 +270,14 @@ var/global/list/datum/mind/borers = list()
 	else
 		layer = MOB_LAYER
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
+
+/mob/living/simple_animal/borer/transfer_personality(client/candidate)
+
+	if(!candidate)
+		return
+
+	ckey = candidate.ckey
+
+	var/datum/faction/borers/B = find_faction_by_type(/datum/faction/borers)
+	if(B)
+		add_faction_member(B, src)
