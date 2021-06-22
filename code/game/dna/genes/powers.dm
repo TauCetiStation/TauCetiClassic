@@ -188,7 +188,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
-		H.w_class = SIZE_BIG
+		H.update_size()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
 
 	var/matrix/Mx = matrix()
@@ -203,7 +203,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
-		H.w_class = SIZE_HUMAN
+		H.update_size()
 
 	var/matrix/Mx = matrix()
 	M.transform = Mx

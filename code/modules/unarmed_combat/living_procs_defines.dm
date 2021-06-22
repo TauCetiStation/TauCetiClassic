@@ -222,7 +222,7 @@
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
 	attacker.do_attack_animation(src)
 
-	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
+	if(!anchored && !is_bigger_than(attacker) && src != attacker)
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
 		step_away(src, get_turf(attacker))
 		if(loc != to_move)

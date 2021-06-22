@@ -2138,5 +2138,15 @@
 
 	return TRUE
 
+/mob/living/carbon/human/update_size()
+	var/new_w_class = SIZE_HUMAN
+
+	if(SMALLSIZE in mutations)
+		new_w_class -= 1
+
+	w_class = new_w_class
+
+	return w_class
+
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR

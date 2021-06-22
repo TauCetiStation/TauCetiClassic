@@ -749,3 +749,6 @@
 			return "huge"
 		if(SIZE_GYGANT to SIZE_GARGANTUAN)
 			return "gygant"
+
+/atom/proc/update_size()
+	return w_class
