@@ -269,4 +269,3 @@
 			qdel(N)
 			continue
 		. += N
-	return

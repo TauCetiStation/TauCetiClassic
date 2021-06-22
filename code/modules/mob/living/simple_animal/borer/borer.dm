@@ -28,15 +28,15 @@
 		)
 
 	var/assuming = FALSE
-	var/chemicals = 350                         // Chemicals used for reproduction and spitting neurotoxin.
-	var/max_chemicals = 250              // Maximum chemicals
+	var/chemicals = 350                        // Chemicals used for reproduction and spitting neurotoxin.
+	var/max_chemicals = 250                    // Maximum chemicals
 	var/mob/living/carbon/host                 // Carbon host for the brain worm.
 	var/mob/living/captive_brain/host_brain    // Used for swapping control of the body back and forth.
 	var/controlling = FALSE                    // Used in human death check.
 	var/docile = FALSE                         // Sugar can stop borers from acting.
 	var/leaving = FALSE
 	var/reproduced = 0                         // Times the borer has reproduced.
-	var/upgrade_points = 1e6//2                    // Upgrade points left to spend
+	var/upgrade_points = 1e6//2                // Upgrade points left to spend
 
 	var/list/obj/effect/proc_holder/upgrades = list()
 	var/list/obj/effect/proc_holder/all_upgrades = list()
@@ -104,9 +104,8 @@
 	..()
 
 	adjustChemicals(passive_chemical_regeneration)
-	if(invisibility)
-		if(chemicals <= 1)
-			deactivate_invisibility()
+	if(invisibility && chemicals <= 1)
+		deactivate_invisibility()
 
 	if(!host)
 		return
@@ -156,7 +155,7 @@
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if (stat)
+	if (stat == UNCONSCIOUS)
 		return
 
 	if (client)
