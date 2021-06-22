@@ -1,6 +1,7 @@
 /datum/game_mode/traitorchan
 	name = "TraitorChan"
 	config_name = "traitorchan"
+	probability = 50
 	factions_allowed = list(
 		/datum/faction/changeling/traitorchan,
 		/datum/faction/traitor,
