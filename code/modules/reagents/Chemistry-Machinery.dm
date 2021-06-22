@@ -936,7 +936,7 @@
 								var/english_symptoms = list()
 								for(var/datum/symptom/S in A.symptoms)
 									english_symptoms += S.name
-								dat += english_list(english_symptoms)
+								dat += get_english_list(english_symptoms)
 
 
 			dat += "<BR><b>Contains antibodies to:</b> "

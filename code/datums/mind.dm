@@ -82,13 +82,13 @@
 	if(current)					//remove ourself from our old body's mind variable
 		SStgui.on_transfer(current, new_character)
 		current.mind = null
+		if(current.my_religion)
+			current.my_religion.add_member(new_character, holy_role)
+
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
-
-	if(current.my_religion)
-		current.my_religion.add_member(new_character, holy_role)
 
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
