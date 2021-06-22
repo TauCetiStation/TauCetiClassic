@@ -69,7 +69,7 @@
 
 /obj/machinery/portable_atmospherics/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(.)
+	if(. && !moving_diagonally)
 		disconnect()
 
 /obj/machinery/portable_atmospherics/proc/disconnect()

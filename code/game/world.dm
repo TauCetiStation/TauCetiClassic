@@ -12,7 +12,6 @@ var/base_commit_sha = 0
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	timezoneOffset = text2num(time2text(0, "hh")) HOURS
-
 	load_configuration()
 
 	if(!setup_database_connection())

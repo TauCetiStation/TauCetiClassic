@@ -70,7 +70,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(!stat)
+	if(!stat && !ISDIAGONALDIR(Dir))
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc
 			qdel(SV)
@@ -153,7 +153,7 @@
 
 /mob/living/simple_animal/cow/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(. && prob(55))
+	if(. && prob(55) && !ISDIAGONALDIR(Dir))
 		playsound(src, 'sound/misc/cowbell.ogg', VOL_EFFECTS_MASTER, null, null, -3)
 
 /mob/living/simple_animal/chick
