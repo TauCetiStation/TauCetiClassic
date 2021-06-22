@@ -118,7 +118,6 @@
 /datum/announcement/centcomm/brand
 	name = "Event: Brand Intelligence"
 	subtitle = "Тревога. Машинное обучение"
-	message = "На борту КСН Исход обнаружен неконтролируемый брендовый интеллект, готовьтесь."
 	sound = "rampbrand"
 /datum/announcement/centcomm/brand/play()
 	message = "На борту [station_name_ru()] обнаружен неконтролируемый брендовый интеллект, готовьтесь."
@@ -127,7 +126,6 @@
 /datum/announcement/centcomm/carp
 	name = "Event: Carp Migration"
 	subtitle = "Тревога. Формы жизни"
-	message = "Неизвестная форма жизни обнаружена вблизи КСН Исход, готовьтесь."
 	sound = "carps"
 /datum/announcement/centcomm/carp/play()
 	message = "Неизвестная форма жизни обнаружена вблизи [station_name_ru()], готовьтесь."
@@ -136,7 +134,6 @@
 /datum/announcement/centcomm/carp_major
 	name = "Event: Major Carp Migration"
 	subtitle = "Тревога. Формы жизни"
-	message = "Массовая миграция неизвестной формы жизни вблизи КСН Исход, готовьтесь."
 	sound = "carps"
 /datum/announcement/centcomm/carp_major/play()
 	message = "Массовая миграция неизвестной формы жизни вблизи [station_name_ru()], готовьтесь."
@@ -152,20 +149,16 @@
 
 /datum/announcement/centcomm/dust
 	name = "Event: Sand Storm"
-	subtitle = "Сенсоры станции"
-	message = "КСН Исход сейчас проходит сквозь кольцо космической пыли."
 /datum/announcement/centcomm/dust/play()
 	subtitle = "Сенсоры [station_name_ru()]"
-	message = "[station_name_ru()] сейчас проходит сквозь кольцо космической пыли."
+	message = "[station_name_ru()] сейчас проходит сквозь облако космической пыли."
 	..()
 
 /datum/announcement/centcomm/dust_passed
 	name = "Event: Sand Storm Passed"
-	subtitle = "Сенсоры станции"
-	message = "КСН Исход прошел сквозь кольцо космической пыли."
 /datum/announcement/centcomm/dust_passed/play()
 	subtitle = "Сенсоры [station_name_ru()]"
-	message = "[station_name_ru()] прошел сквозь кольцо космической пыли."
+	message = "[station_name_ru()] прошел сквозь облако космической пыли."
 	..()
 
 /datum/announcement/centcomm/estorm
@@ -177,8 +170,6 @@
 /datum/announcement/centcomm/grid_off
 	name = "Event: Power Failure"
 	subtitle = "Критический Сбой Питания"
-	message = "Обнаружена необычная активность в сети питания КСН Исход. " + \
-			 "В предохранительных мерах питание станции будет отключено на неопределенный срок."
 	sound = "poweroff"
 /datum/announcement/centcomm/grid_off/play()
 	message = "Обнаружена необычная активность в сети питания [station_name_ru()]." + \
@@ -188,7 +179,6 @@
 /datum/announcement/centcomm/grid_on
 	name = "Event: Power Restored"
 	subtitle = "Системы Питания в Норме"
-	message = "Питание будет восстановлено на КСН Исход. Приносим свои извинения за неудобство."
 	sound = "poweron"
 /datum/announcement/centcomm/grid_on/play()
 	message = "Питание будет восстановлено на [station_name_ru()]. Приносим свои извинения за неудобство."
@@ -197,7 +187,6 @@
 /datum/announcement/centcomm/grid_quick
 	name = "Secret: SMES Restored"
 	subtitle = "Системы Питания в Норме"
-	message = "Все СМЭХи на КСН Исход будут перезаряжены. Приносим свои извинения за неудобство."
 	sound = "poweron"
 /datum/announcement/centcomm/grid_quick/play()
 	message = "Все СМЭХи на [station_name_ru()] будут перезаряжены. Приносим свои извинения за неудобство."
@@ -244,7 +233,6 @@
 /datum/announcement/centcomm/organ_failure
 	name = "Event: Organ Failure"
 	subtitle = "Тревога. Биоугроза"
-	message = "Подтвержден 7 уровень биологической угрозы на борту станции. Всему персоналу предотвратить распространение заражения."
 	sound = "outbreak7"
 /datum/announcement/centcomm/organ_failure/play()
 	message = "Подтвержден 7 уровень биологической угрозы на борту [station_name_ru()]. Всему персоналу предотвратить распространение заражения."
@@ -252,7 +240,6 @@
 /datum/announcement/centcomm/greytide
 	name = "Event: Grey Tide"
 	subtitle = "Тревога Безопастности"
-	message = "В подпрограммах заключения КСН Исход обнаружен вирус. Рекомендуется привлечь ИИ."
 	sound = "greytide"
 /datum/announcement/centcomm/greytide/play()
 	message = "В подпрограммах заключения [station_name_ru()] обнаружен [pick("Gr3y.T1d3","вредоностный троян")]. Рекомендуется привлечь ИИ."

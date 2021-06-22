@@ -6,9 +6,6 @@
 /datum/announcement/centcomm/blob/outbreak5
 	name = "Blob: Level 5 Outbreak"
 	subtitle = "Тревога. Биоугроза"
-	message = "Подтвержден 5 уровень биологической угрозы на борту КСН Исход. " + \
-			"Всему персоналу предотвратить распространение заражения. " + \
-			"Активирован протокол изоляции экипажа станции."
 	sound = "outbreak5"
 /datum/announcement/centcomm/blob/outbreak5/play()
 	message = "Подтвержден 5 уровень биологической угрозы на борту [station_name_ru()]. " + \
@@ -34,8 +31,6 @@
 /* Vox */
 /datum/announcement/centcomm/vox/arrival
 	name = "Vox: Shuttle Arrives"
-	message = "Внимание, Космическая Станция 13, неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. " + \
-			"По последним данным этот корабль принадлежит Торговой Конфедерации."
 /datum/announcement/centcomm/vox/arrival/play()
 	message = "Внимание, [station_name_ru()], неподалёку от вашей станции проходит корабль не отвечающий на наши запросы. " + \
 			"По последним данным этот корабль принадлежит Торговой Конфедерации."
@@ -43,8 +38,6 @@
 /datum/announcement/centcomm/vox/returns
 	name = "Vox: Shuttle Returns"
 	subtitle = "ВКН Икар"
-	message = "Ваши гости улетают, Станция 13 - двигаются слишком быстро, мы не можем навестись на них. " + \
-			"Похоже они покидают систему без оглядки."
 /datum/announcement/centcomm/vox/returns/play()
 	message = "Ваши гости улетают, [station_name_ru()] - двигаются слишком быстро, мы не можем навестись на них. " + \
 			"Похоже они покидают систему [system_name_ru()] без оглядки."
@@ -60,8 +53,6 @@
 
 /datum/announcement/centcomm/malf/first
 	name = "Malf: Announce №1"
-	message = "Осторожно, КСН Исход. Мы фиксируем необычные показатели в вашей сети. " + \
-			"Вероятно кто-то пытается взломать ваши системы. Сообщим вам позже, когда получим больше информации."
 	sound = "malf1"
 /datum/announcement/centcomm/malf/first/play()
 	message = "Осторожно, [station_name_ru()]. Мы фиксируем необычные показатели в вашей сети. " + \

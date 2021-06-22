@@ -54,7 +54,6 @@
 
 /datum/announcement/station/gravity_on
 	name = "Secret: Gravity On"
-	subtitle = "Система Предотвращения Аварий"
 	message = "Генераторы гравитации снова функционируют с нормальными показателями. Приносим извинения за неудобства."
 	sound = "gravon"
 /datum/announcement/station/gravity_on/play()
@@ -63,7 +62,6 @@
 
 /datum/announcement/station/gravity_off
 	name = "Secret: Gravity Off"
-	subtitle = "Система Предотвращения Аварий"
 	message = "Всплеск ошибок обнаружен в системе распределения массы. Искусственная гравитация будет выключена для перезагрузки системы. " + \
 			"Дальнейшие ошибки могут привести к гравитационному коллапсу и формированию черной дыры. Хорошего дня."
 	sound = "gravoff"
@@ -74,7 +72,6 @@
 /* Shuttles */
 /datum/announcement/station/shuttle/crew_called
 	name = "Shuttle: Crew Called"
-	message = "Смена экипажа начата. Шаттл вызван. Он прибудет в течении нескольких минут."
 	sound = "crew_shut_called"
 /datum/announcement/station/shuttle/crew_called/play()
 	message = "Смена экипажа начата. Шаттл вызван. Он прибудет через [shuttleminutes2text()]."
@@ -87,7 +84,6 @@
 
 /datum/announcement/station/shuttle/crew_docked
 	name = "Shuttle: Crew Docked"
-	message = "Запланированный Шаттл Транспортировки Экипажа пристыковался к станции. Отправление будет через несколько минут."
 	sound = "crew_shut_docked"
 /datum/announcement/station/shuttle/crew_docked/play()
 	message = "Запланированный Шаттл Транспортировки Экипажа пристыковался к станции. Отправление примерно через [shuttleminutes2text()]."
@@ -104,7 +100,6 @@
 
 /datum/announcement/station/shuttle/emer_called
 	name = "Shuttle: Emergency Called"
-	message = "Эвакуационный Шаттл был вызван. Он прибудет как можно скорее."
 	sound = "emer_shut_called"
 /datum/announcement/station/shuttle/emer_called/play()
 	message = "Эвакуационный Шаттл был вызван. Он прибудет через [shuttleminutes2text()]."
@@ -117,7 +112,6 @@
 
 /datum/announcement/station/shuttle/emer_docked
 	name = "Shuttle: Emergency Docked"
-	message = "Эвакуационный Шаттл пристыковался к станции. У вас есть несколько минут для посадки на Эвакуационный Шаттл."
 	sound = "emer_shut_docked"
 /datum/announcement/station/shuttle/emer_docked/play()
 	message = "Эвакуационный Шаттл пристыковался к станции. У вас есть [shuttleminutes2text()] для посадки на Эвакуационный Шаттл."
