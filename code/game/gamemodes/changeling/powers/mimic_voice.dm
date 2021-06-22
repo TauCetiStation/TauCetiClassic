@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/mimicvoice
-	name = "Mimic Voice"
-	desc = "We shape our vocal glands to sound like a desired voice."
-	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this."
+	name = "Фальшивый Голос"
+	desc = "Формирует наши голосовые связки так, что мы будем полностью копировать голос совершенно другого человека."
+	helptext = "Позволяет вам говорить голосом того, кого вы захотите, достаточно просто ввести имя. Требует постоянного расхода химикатов, пока включено."
 	chemical_cost = 0 //constant chemical drain hardcoded
 	genomecost = 1
 	req_human = 1

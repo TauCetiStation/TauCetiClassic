@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/glands
-	name = "Engorged Chemical Glands"
-	desc = "Our chemical glands swell, permitting us to store more chemicals inside of them."
-	helptext = "Allows us to store an extra 25 units of chemicals."
+	name = "Увеличение Химических Желез"
+	desc = "Наши химические железы набухают, что позволяет нам накапливать в них больше химикатов."
+	helptext = "Увеличивает максимальный объем химикатов на 25 юнитов."
 	genomecost = 2
 	chemical_cost = -1
 

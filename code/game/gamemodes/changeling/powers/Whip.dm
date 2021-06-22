@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/weapon/whip
-	name = "Organic Whip"
-	desc = "We reform one of our arms into whip."
-	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
+	name = "Био-Хлыст"
+	desc = "Мы превращаем одну из наших рук в хлыст."
+	helptext = "Может хватать, сбивать с ног, наносить урон, в зависимости от интента, требует химикаты за каждый удар. Нельзя использовать в форме обезьяны."
 	chemical_cost = 20
 	genomecost = 4
 	genetic_damage = 12
@@ -11,7 +11,7 @@
 	weapon_name_simple = "whip"
 
 /obj/item/weapon/changeling_whip
-	name = "Organic Whip"
+	name = "organic whip"
 	desc = "A mass of tough tissue that can be elastic"
 	canremove = 0
 	flags = ABSTRACT | DROPDEL

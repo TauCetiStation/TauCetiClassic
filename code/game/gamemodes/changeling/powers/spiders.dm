@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/spiders
-	name = "Spread Infestation"
-	desc = "Our form divides, creating arachnids which will grow into deadly beasts."
-	helptext = "The spiders are thoughtless creatures, and may attack their creators when fully grown. Requires at least 4 DNA absorptions."
+	name = "Паучье Заражение"
+	desc = "Наши железы вырабатывают паучие личинки, со временем превращающиеся в огромных монстров."
+	helptext = "Пауки - существа забывчивые и могут атаковать своих создателей, когда вырастут. Требуется поглотить минимум 4 ДНК."
 	chemical_cost = 30
 	genomecost = 3
 	req_dna = 4

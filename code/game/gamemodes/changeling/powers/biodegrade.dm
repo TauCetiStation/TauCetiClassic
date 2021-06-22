@@ -1,8 +1,7 @@
 /obj/effect/proc_holder/changeling/biodegrade
-	name = "Biodegrade"
-	desc = "Dissolves restraints or other objects preventing free movement."
-	helptext = "This is obvious to nearby people, and can destroy \
-		standard restraints and closets."
+	name = "Биоразложение"
+	desc = "Извергает кислоту, разъедающую предметы, препядствующие движению."
+	helptext = "Может уничтожать наручники, закрытые шкафчики и смирительные рубашки. Люди неподалеку определенно это заметят."
 	chemical_cost = 30 //High cost to prevent spam
 	genomecost = 2
 	req_human = 1

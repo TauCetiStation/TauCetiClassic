@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/revive
-	name = "Regenerate"
-	desc = "We regenerate, healing all damage from our form."
+	name = "Регенерация"
+	desc = "Мы регенерируем, заживляя все раны."
 	req_stat = DEAD
 
 //Revive from regenerative stasis

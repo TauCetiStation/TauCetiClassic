@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/chemicalsynth
-	name = "Rapid Chemical-Synthesis"
-	desc = "We evolve new pathways for producing our necessary chemicals, permitting us to naturally create them faster."
-	helptext = "Doubles the rate at which we naturally recharge chemicals."
+	name = "Ускоренный Синтез Химикатов."
+	desc = "Мы разрабатываем новые способы производства необходимых нам химикатов, что позволяет нам естественным образом создавать их быстрее."
+	helptext = "Удваивает скорость восстановления химикатов."
 	genomecost = 2
 	chemical_cost = -1
 

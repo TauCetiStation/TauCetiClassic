@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/boost_range
-	name = "Boost Range"
-	desc = "We evolve the ability to shoot our stingers at humans."
-	helptext = "Stings abilities can be used against targets 2 squares away."
+	name = "Повышенный Диапазон"
+	desc = "Мы развиваем способность стрелять жалом в людей."
+	helptext = "Способности жала можно будет использовать на расстоянии 2 тайлов."
 	genomecost = 2
 	chemical_cost = -1
 

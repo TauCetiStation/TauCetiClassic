@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/lesserform
-	name = "Lesser form"
-	desc = "We debase ourselves and become lesser. We become a monkey."
+	name = "Меньшая форма"
+	desc = "Мы уменьшаем себя в меньшую форму. Мы становимся обезьяной."
 	chemical_cost = 5
 	genomecost = 2
 	genetic_damage = 30

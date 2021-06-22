@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/changeling/strained_muscles
-	name = "Strained Muscles"
-	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
-	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
+	name = "Напряженные Мышцы"
+	desc = "Мы развиваем способность уменьшать скорость накопления кислоты в наших мышцах, что позволяет нам двигаться намного быстрее."
+	helptext = "Позволяет бежать в разы быстрее, если долго бежать, вы выдохнитесь."
 	genomecost = 3
 	req_human = 1
 	max_genetic_damage = 5
