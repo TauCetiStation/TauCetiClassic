@@ -292,7 +292,7 @@ var/list/departments_genitive = list()
 			screen = 6
 			pass = 1
 			messages += "[worldtime2text()] <B>Отправлено для [recipient_from_field]:</B><BR><DIV class='Section'>[message]</DIV>[auth]"
-			MS.send_rc_message(href_list["department"], department, log_msg, msgStamped, msgVerified, priority, department_genitive)
+			MS.send_rc_message(sanitize(href_list["department"]), department, log_msg, msgStamped, msgVerified, priority, department_genitive)
 			break
 		if(!pass)
 			audible_message("[bicon(src)] *Консоль Запроса пищит: 'ЗАМЕЧАНИЕ: Сервер не обнаружен!'")
