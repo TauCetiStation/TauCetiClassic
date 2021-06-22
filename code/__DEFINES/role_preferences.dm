@@ -23,6 +23,9 @@
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
 
+//sub role types
+#define TRAITOR_SUPPLIER 	   "Syndicate supplier"
+#define TRAITOR_DOUBLE_AGENT   "Double agent"
 
 var/global/list/special_roles = list(
 	ROLE_TRAITOR,

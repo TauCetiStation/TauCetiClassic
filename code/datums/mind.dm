@@ -37,6 +37,7 @@
 
 	var/assigned_role
 	var/special_role
+	var/sub_role
 
 	var/holy_role = NONE
 
