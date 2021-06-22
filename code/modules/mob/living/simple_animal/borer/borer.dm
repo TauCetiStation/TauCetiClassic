@@ -67,8 +67,7 @@
 	all_upgrades = sortAtom(init_named_subtypes(/obj/effect/proc_holder/borer))
 	for(var/obj/effect/proc_holder/borer/U in all_upgrades)
 		if(U.cost == 0)
-			upgrades += U
-			U.on_gain(src)
+			gain_upgrade(U)
 
 	upgrade_points = points
 
@@ -79,8 +78,15 @@
 
 	for(var/obj/effect/proc_holder/borer/U in parent_upgrades)
 		var/obj/effect/proc_holder/borer/myU = locate(U.type) in all_upgrades
-		upgrades |= myU
-		myU.on_gain(src)
+		gain_upgrade(U)
+
+/mob/living/simple_animal/borer/proc/gain_upgrade(obj/effect/proc_holder/borer/U)
+	if(!(U in all_upgrades))
+		return
+	if(U in upgrades)
+		return
+	upgrades |= U
+	U.on_gain(src)
 
 /mob/living/simple_animal/borer/proc/hasChemicals(amt)
 	return amt <= chemicals
@@ -187,6 +193,8 @@
 /mob/living/simple_animal/borer/proc/stat_abilities(mob/user)
 	if(statpanel("Borer"))
 		stat(null, "Chemicals: [chemicals]/[max_chemicals]")
+		if(host)
+			stat(null, "Host Brain Damage: [host.getBrainLoss()]%")
 		for(var/obj/effect/proc_holder/borer/U in upgrades)
 			if(!U.can_use(user))
 				continue

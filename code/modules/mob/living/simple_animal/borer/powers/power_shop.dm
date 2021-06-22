@@ -70,6 +70,5 @@
 		if(!locate(req_path) in holder.upgrades)
 			return FALSE
 	holder.upgrade_points -= U.cost
-	holder.upgrades |= U
-	U.on_gain(holder)
+	holder.gain_upgrade(U)
 	return TRUE
