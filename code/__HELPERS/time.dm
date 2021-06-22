@@ -22,7 +22,7 @@
 
 /proc/shuttleminutes2text()
 	var/m = round(SSshuttle.timeleft()/60)
-	return russian_plural(m, "[m] минута", "[m] минуты", "[m] минут")
+	return pluralize_russian(m, "[m] минута", "[m] минуты", "[m] минут")
 
 var/next_duration_update = 0
 var/last_round_duration = 0
