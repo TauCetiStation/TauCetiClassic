@@ -697,6 +697,14 @@ var/list/blacklisted_builds = list(
 
 	return byond_registration
 
+/client/proc/GetRolePrefs()
+	var/list/roleprefs = list()
+	for(var/role_id in antag_roles)
+		if(role_id in prefs.be_role)
+			roleprefs += role_id
+	if(!roleprefs.len)
+		return "none"
+	return get_english_list(roleprefs)
 
 /**
  * Updates the keybinds for special keys
