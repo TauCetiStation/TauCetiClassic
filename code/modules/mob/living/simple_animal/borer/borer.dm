@@ -78,7 +78,7 @@
 
 	for(var/obj/effect/proc_holder/borer/U in parent_upgrades)
 		var/obj/effect/proc_holder/borer/myU = locate(U.type) in all_upgrades
-		gain_upgrade(U)
+		gain_upgrade(myU)
 
 /mob/living/simple_animal/borer/proc/gain_upgrade(obj/effect/proc_holder/borer/U)
 	if(!(U in all_upgrades))
