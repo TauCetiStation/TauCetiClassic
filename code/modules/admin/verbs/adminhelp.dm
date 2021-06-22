@@ -589,7 +589,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		if(!afkmins.len && !stealthmins.len && !powerlessmins.len)
 			final = "No admins online"
 		else
-			final = "All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
+			final = "All admins stealthed\[[get_english_list(stealthmins)]\], AFK\[[get_english_list(afkmins)]\], or lacks +BAN\[[get_english_list(powerlessmins)]\]! Total: [allmins.len] "
 
 		world.send2bridge(
 			type = type,

@@ -433,7 +433,7 @@
 
 	return new_text
 
-/proc/russian_plural(n, one, two, five)
+/proc/pluralize_russian(n, one, two, five)
 	if(!five)
 		five = two
 	n = abs(n) % 100

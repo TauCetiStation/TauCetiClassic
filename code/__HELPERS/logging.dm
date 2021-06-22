@@ -194,7 +194,7 @@
 	if(dir & UP) comps += "UP"
 	if(dir & DOWN) comps += "DOWN"
 
-	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")
+	return get_english_list(comps, nothing_text="0", and_text="|", comma_text="|")
 
 /proc/log_fax(text)
 	if (config.log_fax)
