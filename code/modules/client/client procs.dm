@@ -704,7 +704,7 @@ var/list/blacklisted_builds = list(
 			roleprefs += role_id
 	if(!roleprefs.len)
 		return "none"
-	return english_list(roleprefs)
+	return get_english_list(roleprefs)
 
 /**
  * Updates the keybinds for special keys

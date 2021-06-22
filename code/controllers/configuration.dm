@@ -802,7 +802,7 @@ var/list/net_announcer_secret = list()
 			runnable_modes[M] = mod_prob
 			runnable_modes_names += M.name
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")
-	log_mode(english_list(runnable_modes_names))
+	log_mode(get_english_list(runnable_modes_names))
 	if(!runnable_modes.len) // if no mode can start, then the modes that will always start
 		return get_always_runnable_modes()
 	return runnable_modes
@@ -816,7 +816,7 @@ var/list/net_announcer_secret = list()
 		exactly_runnable_modes[M] = 1
 		runnable_modes_names += M.name
 	log_mode("Current pool of always runnable gamemodes([exactly_runnable_modes.len]):")
-	log_mode(english_list(runnable_modes_names))
+	log_mode(get_english_list(runnable_modes_names))
 	return exactly_runnable_modes
 
 /datum/configuration/proc/stat_entry()

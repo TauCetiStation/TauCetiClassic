@@ -50,7 +50,7 @@
 		for(var/area/A in global.cult_religion.captured_areas)
 			zones_name += "[A.name]"
 
-		. += "<br>Подконтрольные зоны культа([zones_name.len]): [english_list(zones_name)]"
+		. += "<br>Подконтрольные зоны культа([zones_name.len]): [get_english_list(zones_name)]"
 
 #define CHECK_LEADER_CD 50
 /datum/faction/cult/process()
@@ -100,7 +100,7 @@
 	else
 		for(var/name in religion.ritename_by_count)
 			var/count = religion.ritename_by_count[name]
-			text += "<br><i>[name]</i> - использован [count] [russian_plural(count, "раз", "раза", "раз")]"
+			text += "<br><i>[name]</i> - использован [count] [pluralize_russian(count, "раз", "раза", "раз")]"
 
 	dat += text
 

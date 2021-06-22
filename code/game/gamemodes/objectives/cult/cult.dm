@@ -21,7 +21,7 @@
 
 /datum/objective/cult/recruit/New()
 	acolytes_needed = max(4, round(player_list.len * 0.1))
-	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [russian_plural(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы продолжить исследования на других станциях."
+	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [pluralize_russian(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы продолжить исследования на других станциях."
 	..()
 
 /datum/objective/cult/recruit/find_target()
