@@ -149,20 +149,21 @@
 		return
 
 /datum/poll/gamemode/init_choices()
-	for(var/M in config.votable_modes)
+	for(var/type in subtypesof(/datum/modesbundle))
+		var/datum/modesbundle/M = type
+		if(!initial(M.votable))
+			continue
+		var/datum/modesbundle/bundle = new type()
 		var/datum/vote_choice/gamemode/vc = new
-		vc.text = M
-		vc.new_gamemode = M
+		vc.text = bundle.name
+		vc.new_gamemode = bundle.name
 		choices.Add(vc)
-		// Gamemodes preview in gamemodesets
-		if(config.is_modeset(M))
-			var/list/submodes = list()
-			for(var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
-				submodes.Add(D.name)
-			if(length(submodes) > 0)
-				description += "<b>[M]</b>: "
-				description += submodes.Join(", ")
-				description += "<br>"
+		var/list/submodes = bundle.get_gamemodes_name()
+		if(length(submodes) > 0)
+			description += "<b>[bundle]</b>: "
+			description += submodes.Join(", ")
+			description += "<br>"
+		qdel(bundle)
 
 /datum/poll/gamemode/process()
 	if(pregame && SSticker.current_state > GAME_STATE_PREGAME)

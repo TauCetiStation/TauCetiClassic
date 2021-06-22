@@ -18,6 +18,11 @@
 	subtitle = "Тревога. Биоугроза"
 	message = "Биологическая опасность достигла критической массы. Потеря станции неминуема."
 
+/datum/announcement/centcomm/blob/biohazard_station_unlock
+	name = "Biohazard Level Updated - Lock Down Lifted"
+	subtitle = "Biohazard Alert"
+	message = "Biohazard outbreak contained successfully. Quarantine lifted. Please clean up biohazardous material and proceed with standard station duties."
+
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
 	name = "Nuclear: Declaration of War"
