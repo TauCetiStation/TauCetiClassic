@@ -168,7 +168,7 @@ var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/real_runtime
 	name = "Dusty"
-	desc = "Мурлыкающий обитатель блюспейса. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
+	desc = "Мурлыкающая жертва экспериментов. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
 	icon_state = "runtimecat"
 	density = FALSE
 	universal_speak = TRUE
