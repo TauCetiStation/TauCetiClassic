@@ -9,7 +9,7 @@
  * Misc
  */
 
-/proc/russian_list(list/input, nothing_text = "ничего", and_text = " и ", comma_text = ", ", final_comma_text = "")
+/proc/get_russian_list(list/input, nothing_text = "ничего", and_text = " и ", comma_text = ", ", final_comma_text = "")
 	return english_list(input, nothing_text, and_text, comma_text, final_comma_text)
 
 //Returns a list in plain english as a string
