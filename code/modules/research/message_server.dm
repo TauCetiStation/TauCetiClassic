@@ -111,7 +111,7 @@
 						Console.icon_state = "req_comp2"
 					if(!Console.silent)
 						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-						Console.audible_message("[bicon(Console)] **Консоль Запроса пикнула: 'ПРИОРИТЕТНОЕ сообщение от [from_desc]'")
+						Console.audible_message("[bicon(Console)] **Консоль Запроса пищит: 'ПРИОРИТЕТНОЕ сообщение от [from_desc]'")
 					Console.messages += "[worldtime2text()] <B><FONT color='red'>Приоритетное сообщение от </FONT></B>[content]"
 				else		// Normal priority
 					if(Console.newmessagepriority < 1)
@@ -119,7 +119,7 @@
 						Console.icon_state = "req_comp1"
 					if(!Console.silent)
 						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-						Console.audible_message("[bicon(Console)] **Консоль Запроса пикнула: 'Сообщение от [from_desc]'")
+						Console.audible_message("[bicon(Console)] **Консоль Запроса пищит: 'Сообщение от [from_desc]'")
 					Console.messages += "[worldtime2text()] <B>Получено от </B>[content]"
 			Console.set_light(2)
 

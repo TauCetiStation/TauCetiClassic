@@ -182,7 +182,7 @@ var/list/departments_genitive = list()
 			if(9)	//authentication before sending
 				dat += text("<B>Авторизация Сообщения</B><BR><BR>")
 				dat += text("<b>Сообщение для [to_dpt]: </b>[message]<BR><BR>")
-				dat += text("Вы сейчас можите авторизировать ваше сообщение приложив ID или печать.<BR><BR>")
+				dat += text("Теперь вы можете авторизовать ваше сообщение, приложив ID или печать.<BR><BR>")
 				dat += text("Подтверждено: [msgVerified]<br>");
 				dat += text("Печать: [msgStamped]<br>");
 				dat += text("<A href='?src=\ref[src];department=[url_encode(to_dpt)]'>Отравить</A><BR>");
@@ -228,7 +228,7 @@ var/list/departments_genitive = list()
 		return
 
 	if(href_list["write"])
-		to_dpt = href_list["write"]  //write contains the string of the receiving department's name
+		to_dpt = sanitize(href_list["write"])  //write contains the string of the receiving department's name
 
 		if(!to_dpt)
 			return
@@ -277,7 +277,7 @@ var/list/departments_genitive = list()
 		var/log_msg = message
 		var/pass = 0
 		var/list/auth_data = list()
-		var/recipient_from_field = href_list["department"]
+		var/recipient_from_field = sanitize(href_list["department"])
 		if(recipient_from_field in departments_genitive)
 			recipient_from_field = departments_genitive[recipient_from_field]
 		if(msgVerified)
@@ -295,7 +295,7 @@ var/list/departments_genitive = list()
 			MS.send_rc_message(href_list["department"], department, log_msg, msgStamped, msgVerified, priority, department_genitive)
 			break
 		if(!pass)
-			audible_message("[bicon(src)] *Консоль Запроса пикнула: 'ЗАМЕЧАНИЕ: Сервер не обнаружен!'")
+			audible_message("[bicon(src)] *Консоль Запроса пищит: 'ЗАМЕЧАНИЕ: Сервер не обнаружен!'")
 
 	//Handle screen switching
 	switch(text2num(href_list["setScreen"]))
