@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 watermelon914 (https://github.com/watermelon914)
+ * @license MIT
+ */
+
 import { createSearch } from 'common/string';
 import { clamp01 } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
