@@ -2,6 +2,7 @@
 #define HEX_VAL_GREEN(col) hex2num(copytext(col, 4, 6))
 #define HEX_VAL_BLUE(col)  hex2num(copytext(col, 6, 8))
 #define HEX_VAL_ALPHA(col) hex2num(copytext(col, 8, 10))
+#define HEX_VAL_ALPHA(col) hex2num(copytext(col, 8, 10))
 
 /proc/random_short_color()
 	return "#" + random_string(3, global.hex_characters)
@@ -50,7 +51,7 @@
 	return rgb(RGB[1],RGB[2],RGB[3])
 
 /proc/get_random_color(lower = 0, upper = 255)
-	var color
+	var/color
 	for(var/i in 1 to 3)
 		var/temp_col = "[num2hex(rand(lower, upper))]"
 		if(length(temp_col) < 2)
