@@ -57,10 +57,10 @@
 		if("release_stack")
 			var/stack = params["stack"]
 			if(machine.stack_storage[stack] > 0)
-				var/stacktype = machine.stack_paths[params["release_stack"]]
-				var/obj/item/stack/sheet/S = new stacktype (get_turf(machine.output))
-				S.amount = machine.stack_storage[params["release_stack"]]
-				machine.stack_storage[params["release_stack"]] = 0
+				var/stacktype = machine.stack_paths[stack]
+				var/obj/item/stack/sheet/S = new stacktype(get_turf(machine.output))
+				S.amount = machine.stack_storage[stack]
+				machine.stack_storage[stack] = 0
 			. = TRUE
 
 	add_fingerprint(usr)
