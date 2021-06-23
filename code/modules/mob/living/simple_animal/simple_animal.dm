@@ -262,7 +262,7 @@
 /mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
 	if(act)
 		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
-		..(act, m_type)
+		..(act, m_type, message)
 
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
 	if(attacker.a_intent == INTENT_HARM && stat != DEAD)
@@ -288,7 +288,7 @@
 	icon_state = icon_dead
 	stat = DEAD
 	health = 0
-	density = 0
+	density = FALSE
 	med_hud_set_health()
 	med_hud_set_status()
 	return ..()
@@ -394,7 +394,7 @@
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(icon_move && !stat)
+	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
 		flick(icon_move, src)
 
 /mob/living/simple_animal/update_stat()

@@ -100,6 +100,23 @@ var/list/blacklisted_builds = list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
+	//byond bug ID:2694120
+	if(href_list["reset_macros"])
+		reset_macros(skip_alert = TRUE)
+		return
+
+	// Keypress passthrough
+	if(href_list["__keydown"])
+		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
+		if(keycode)
+			keyDown(keycode)
+		return
+	if(href_list["__keyup"])
+		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
+		if(keycode)
+			keyUp(keycode)
+		return
+
 	// Tgui Topic middleware
 	if(!tgui_Topic(href_list))
 		return
@@ -263,6 +280,10 @@ var/list/blacklisted_builds = list(
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
 
 	. = ..()	//calls mob.Login()
+
+	if(SSinput.initialized)
+		set_macros()
+
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
 
@@ -287,7 +308,7 @@ var/list/blacklisted_builds = list(
 			var/list/fluff_list = custom_item_premoderation_list()
 			var/fluff_count = fluff_list.len
 			if(fluff_count)
-				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [russian_plural(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
+				to_chat(src, "<span class='alert bold'>В рассмотрении [pluralize_russian(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [pluralize_russian(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
@@ -311,6 +332,9 @@ var/list/blacklisted_builds = list(
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
+
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
 
 	if(!cob)
 		cob = new()
@@ -361,7 +385,7 @@ var/list/blacklisted_builds = list(
 			if(ckey in joined_player_list) // player already joined the game and just reconnects, so we pass him
 				blocked_by_bunker = FALSE
 
-			if((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap) // mentors immune too, but only before own cap 
+			if((ckey in mentor_ckeys) && length(mentors) <= config.client_limit_panic_bunker_mentor_pass_cap) // mentors immune too, but only before own cap
 				blocked_by_bunker = FALSE
 
 			if(blocked_by_bunker)
@@ -595,6 +619,7 @@ var/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers[DRAG])
 		return
+	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
@@ -671,3 +696,54 @@ var/list/blacklisted_builds = list(
 	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
 
 	return byond_registration
+
+/client/proc/GetRolePrefs()
+	var/list/roleprefs = list()
+	for(var/role_id in antag_roles)
+		if(role_id in prefs.be_role)
+			roleprefs += role_id
+	if(!roleprefs.len)
+		return "none"
+	return get_english_list(roleprefs)
+
+/**
+ * Updates the keybinds for special keys
+ *
+ * Handles adding macros for the keys that need it
+ * And adding movement keys to the clients movement_keys list
+ * At the time of writing this, communication(OOC, Say, IC) require macros
+ * Arguments:
+ * * direct_prefs - the preference we're going to get keybinds from
+ */
+/client/proc/update_special_keybinds(datum/preferences/direct_prefs)
+	var/datum/preferences/D = prefs || direct_prefs
+	if(!D?.key_bindings)
+		return
+	movement_keys = list()
+	var/list/communication_hotkeys = list()
+	for(var/key in D.key_bindings)
+		for(var/kb_name in D.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
+				if("Say")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
+					communication_hotkeys += key
+				if("OOC")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
+					communication_hotkeys += key
+				if("Me")
+					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					communication_hotkeys += key
+
+	// winget() does not work for F1 and F2
+	for(var/key in communication_hotkeys)
+		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
+			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
+			break

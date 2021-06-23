@@ -70,9 +70,9 @@
 			Connected_Flamethrower.unequip(user)
 			//explosion(get_turf(src),-1,0,2)
 			//NAPALM GRENADE CODE HERE
-		src.reagents.reaction(get_turf(src), TOUCH)
-		spawn(5)
-		src.reagents.clear_reagents()
+
+		reagents.standard_splash(get_turf(src), user=user)
+
 		if(src)
 			qdel(src)
 		return
@@ -81,7 +81,7 @@
 		if(src.loc == user)
 			if(!Connected_Flamethrower)
 				to_chat(user, "You connected your M2 flamethrower to fuel backpack.")
-				src.equip(user, I)
+				equip(user, I)
 			else
 				to_chat(user, "Flamethrower allready connected.")
 		else

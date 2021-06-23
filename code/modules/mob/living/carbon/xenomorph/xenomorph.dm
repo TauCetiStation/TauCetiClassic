@@ -273,8 +273,11 @@ Hit Procs
 /mob/living/carbon/xenomorph/getTrail()
 	return "xltrails"
 
+/mob/living/carbon/xenomorph/crawl()
+	return
+
 /mob/living/carbon/xenomorph/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
+	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)

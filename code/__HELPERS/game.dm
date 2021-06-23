@@ -632,7 +632,7 @@
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
 	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
-	var/ans = alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", "No", "Yes", "Not This Round")
+	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("No", "Yes", "Not This Round"))
 	switch(ans)
 		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
@@ -652,7 +652,7 @@
 
 // first answer "Yes" > transfer
 /mob/proc/try_request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
-	if(key || mind || stat != CONSCIOUS)
+	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
 	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
@@ -680,9 +680,9 @@
 /mob/proc/request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
 	var/ans
 	if(Ignore_Role)
-		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes", "Not This Round")
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("No", "Yes", "Not This Round"))
 	else
-		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes")
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("No", "Yes"))
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")

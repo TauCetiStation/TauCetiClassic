@@ -113,4 +113,4 @@
 		dronefab.produce_drones = !dronefab.produce_drones
 		to_chat(usr, "<span class='notice'>You [dronefab.produce_drones ? "enable" : "disable"] drone production in the nearby fabricator.</span>")
 
-	src.updateUsrDialog()
+	updateUsrDialog()

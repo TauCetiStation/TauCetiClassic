@@ -3,7 +3,7 @@
 //this item is intended to give the effect of entering the mine, so that light gradually fades
 /obj/effect/light_emitter
 	name = "Light-emtter"
-	anchored = 1
+	anchored = TRUE
 	unacidable = 1
 	light_range = 8
 
@@ -137,10 +137,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	if(href_list["move"])
-		//if(SSticker.mode.name == "blob")
-		//	if(SSticker.mode:declared)
-		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		//		return
 
 		if (!mining_shuttle_moving)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
@@ -252,7 +248,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	next_hit = world.time + COUNTER_COOLDOWN
 	asshole_counter += 1
 
-	var/target_zone = user.zone_sel.selecting
+	var/target_zone = user.get_targetzone()
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
@@ -305,7 +301,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "Mining car (not for rails)"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "miningcar"
-	density = 1
+	density = TRUE
 	icon_opened = "miningcaropen"
 	icon_closed = "miningcar"
 
@@ -782,8 +778,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/survival_pod_computer.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
@@ -901,8 +897,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "fans"
 	name = "environmental regulation system"
 	desc = "A large machine releasing a constant gust of air."
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(iswrench(W) && !(flags&NODECONSTRUCT))
@@ -921,7 +917,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "tiny fan"
 	desc = "A tiny fan, releasing a thin gust of air."
 	layer = ABOVE_NORMAL_TURF_LAYER
-	density = 0
+	density = FALSE
 	icon_state = "fan_tiny"
 
 /obj/structure/fans/tiny/atom_init()
@@ -966,8 +962,8 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "tubes"
 	icon = 'icons/obj/survival_pod.dmi'
 	name = "tubes"
-	anchored = 1
+	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	density = 0
+	density = FALSE
 
 #undef COUNTER_COOLDOWN

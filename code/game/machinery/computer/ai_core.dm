@@ -1,6 +1,6 @@
 /obj/structure/AIcore
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	name = "AI core"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "0"
@@ -18,7 +18,7 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					anchored = 1
+					anchored = TRUE
 					state = 1
 			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
@@ -36,15 +36,14 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
-					anchored = 0
+					anchored = FALSE
 					state = 0
 			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
 				playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
 				circuit = P
-				user.drop_item()
-				P.loc = src
+				user.drop_from_inventory(P, src)
 			if(isscrewdriver(P) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
@@ -133,11 +132,12 @@
 					return
 
 				if(M.brainmob.mind)
-					SSticker.mode.remove_cultist(M.brainmob.mind, 1)
-					SSticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+					for(var/role in list(CULTIST, REV, HEADREV))
+						var/datum/role/R = M.brainmob.mind.GetRole(role)
+						if(R)
+							R.RemoveFromRole(M.brainmob.mind)
 
-				user.drop_item()
-				M.loc = src
+				user.drop_from_inventory(M, src)
 				brain = M
 				to_chat(usr, "Added [M].")
 				icon_state = "3b"
@@ -165,7 +165,7 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				if(!brain)
-					var/open_for_latejoin = alert(user, "Would you like this core to be open for latejoining AIs?", "Latejoin", "Yes", "Yes", "No") == "Yes"
+					var/open_for_latejoin = tgui_alert(user, "Would you like this core to be open for latejoining AIs?", "Latejoin", list("Yes", "No")) == "Yes"
 					var/obj/structure/AIcore/deactivated/D = new(loc)
 					if(open_for_latejoin)
 						empty_playable_ai_cores += D
@@ -180,7 +180,7 @@
 	name = "Inactive AI"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai-empty"
-	anchored = 1
+	anchored = TRUE
 	state = 20//So it doesn't interact based on the above. Not really necessary.
 
 /obj/structure/AIcore/deactivated/atom_init()
@@ -217,10 +217,10 @@ That prevents a few funky behaviors.
 						if(C.contents.len)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
-								var/datum/game_mode/malfunction/malf = SSticker.mode
-								for (var/datum/mind/malfai in malf.malf_ai)
-									if (T.mind == malfai)
+							var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+							if(malf)
+								for (var/datum/role/malfAI/malfai in malf.members)
+									if (T.mind == malfai.antag)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
@@ -240,10 +240,10 @@ That prevents a few funky behaviors.
 						if(C.AI)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
-								var/datum/game_mode/malfunction/malf = SSticker.mode
-								for (var/datum/mind/malfai in malf.malf_ai)
-									if (T.mind == malfai)
+							var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+							if(malf)
+								for (var/datum/role/malfAI/malfai in malf.members)
+									if (T.mind == malfai.antag)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
 										return
 							if(T.stat)//If the ai is dead/dying.

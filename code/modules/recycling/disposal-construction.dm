@@ -7,8 +7,8 @@
 	desc = "A huge pipe segment used for constructing disposal systems."
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "conpipe-s"
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	m_amt = 1850
 	level = 2
 	var/ptype = 0
@@ -163,7 +163,7 @@
 /obj/structure/disposalconstruct/attackby(obj/item/I, mob/user)
 	var/nicetype = "pipe"
 	var/ispipe = 0 // Indicates if we should change the level of this pipe
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	switch(ptype)
 		if(6)
 			nicetype = "disposal bin"
@@ -212,20 +212,20 @@
 
 	if(iswrench(I))
 		if(anchored)
-			anchored = 0
+			anchored = FALSE
 			if(ispipe)
 				level = 2
-				density = 0
+				density = FALSE
 			else
-				density = 1
+				density = TRUE
 			to_chat(user, "You detach the [nicetype] from the underfloor.")
 		else
-			anchored = 1
+			anchored = TRUE
 			if(ispipe)
 				level = 1 // We don't want disposal bins to disappear under the floors
-				density = 0
+				density = FALSE
 			else
-				density = 1 // We don't want disposal bins or outlets to go density 0
+				density = TRUE // We don't want disposal bins or outlets to go density 0
 			to_chat(user, "You attach the [nicetype] to the underfloor.")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		update()
@@ -243,7 +243,7 @@
 
 						var/pipetype = dpipetype()
 						var/obj/structure/disposalpipe/P = new pipetype(src.loc)
-						src.transfer_fingerprints_to(P)
+						transfer_fingerprints_to(P)
 						P.base_icon_state = base_state
 						P.set_dir(dir)
 						P.dpdir = dpdir
@@ -256,20 +256,20 @@
 
 					else if(ptype==6) // Disposal bin
 						var/obj/machinery/disposal/P = new /obj/machinery/disposal(src.loc)
-						src.transfer_fingerprints_to(P)
+						transfer_fingerprints_to(P)
 						P.mode = 0 // start with pump off
 
 					else if(ptype==7) // Disposal outlet
 
 						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(src.loc, dir)
-						src.transfer_fingerprints_to(P)
+						transfer_fingerprints_to(P)
 						var/obj/structure/disposalpipe/trunk/Trunk = CP
 						Trunk.linked = P
 
 					else if(ptype==8) // Disposal outlet
 
 						var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(src.loc)
-						src.transfer_fingerprints_to(P)
+						transfer_fingerprints_to(P)
 						P.set_dir(dir)
 
 					qdel(src)

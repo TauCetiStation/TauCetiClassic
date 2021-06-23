@@ -101,7 +101,7 @@
 					if (B)
 						src.reagents.reagent_list += B
 						src.reagents.update_total()
-						src.on_reagent_change()
+						on_reagent_change()
 						src.reagents.handle_reactions()
 					infect_limb(user, target)
 					user.visible_message("<span class='warning'>[user] takes a blood sample from [target].</span>", self_message = "<span class='notice'>You take a blood sample from [target]</span>", viewing_distance = 4)
@@ -141,7 +141,7 @@
 				var/list/injected = list()
 				for(var/datum/reagent/R in src.reagents.reagent_list)
 					injected += R.name
-				var/contained = english_list(injected)
+				var/contained = get_english_list(injected)
 				if(target != user)
 
 					if(!L.try_inject(user, TRUE))
@@ -187,7 +187,7 @@
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/target_zone = ran_zone(check_zone(user.zone_sel.selecting, target))
+			var/target_zone = ran_zone(check_zone(user.get_targetzone(), target))
 			var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
 			if (!BP)
@@ -246,7 +246,7 @@
 /obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/user, mob/living/carbon/target)
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/target_zone = user.zone_sel.selecting
+		var/target_zone = user.get_targetzone()
 		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
 
 		if (!BP)

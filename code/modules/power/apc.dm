@@ -43,7 +43,7 @@
 	desc = "A control terminal for the area electrical systems."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "apc0"
-	anchored = 1
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	req_access = list(access_engine_equip)
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -130,10 +130,9 @@
 /obj/machinery/power/apc/Destroy()
 	apc_list -= src
 	if(malfai && operating)
-		if(SSticker.mode.config_tag == "malfunction")
-			if(is_station_level(z))
-				var/datum/game_mode/malfunction/gm_malf = SSticker.mode
-				gm_malf.apcs--
+		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+		if(GM && is_station_level(z))
+			GM.apcs--
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
@@ -380,8 +379,8 @@
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
 	if(issilicon(user) && get_dist(src,user) > 1)
-		return src.attack_hand(user)
-	src.add_fingerprint(user)
+		return attack_hand(user)
+	add_fingerprint(user)
 	if(iscrowbar(W) && opened)
 		if(has_electronics == 1)
 			if(terminal)
@@ -444,8 +443,7 @@
 			if(stat & MAINT)
 				to_chat(user, "<span class='warning'>There is no connector for your power cell.</span>")
 				return
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			cell = W
 			user.visible_message(\
 				"<span class='warning'>[user.name] has inserted the power cell to [src.name]!</span>",\
@@ -491,7 +489,7 @@
 		else if(stat & (BROKEN|MAINT))
 			to_chat(user, "Nothing happens.")
 		else
-			if(src.allowed(usr) && !wires.is_index_cut(APC_WIRE_IDSCAN))
+			if(allowed(usr) && !wires.is_index_cut(APC_WIRE_IDSCAN))
 				locked = !locked
 				to_chat(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				update_icon()
@@ -696,7 +694,7 @@
 			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
 			//user << "You remove the power cell."
 			charging = 0
-			src.update_icon()
+			update_icon()
 		return
 	// do APC interaction
 	..()
@@ -706,7 +704,7 @@
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
-	if(SSticker && SSticker.mode && (malf.mind in SSticker.mode.malf_ai) && istype(malf))
+	if(ismalf(malf) && istype(malf))
 		if(src.malfai == (malf.parent || malf))
 			if(src.occupier == malf)
 				return 3 // 3 = User is shunted in this APC
@@ -860,12 +858,11 @@
 	else if(href_list["breaker"])
 		operating = !operating
 		if(malfai)
-			if(SSticker.mode.config_tag == "malfunction")
-				if(is_station_level(z))
-					var/datum/game_mode/malfunction/gm_malf = SSticker.mode
-					operating ? gm_malf.apcs++ : gm_malf.apcs--
+			var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+			if(GM && is_station_level(z))
+				operating ? GM.apcs++ : GM.apcs--
 
-		src.update()
+		update()
 		update_icon()
 
 	else if(href_list["cmode"])
@@ -902,7 +899,7 @@
 
 	else if(href_list["overload"])
 		if( (issilicon(usr) && !src.aidisabled) || isobserver(usr) )
-			src.overload_lighting()
+			overload_lighting()
 
 	else if(href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
@@ -918,10 +915,9 @@
 				if(!src.aidisabled)
 					malfai.malfhack = null
 					malfai.malfhacking = 0
-					if(SSticker.mode.config_tag == "malfunction")
-						if(is_station_level(z))
-							var/datum/game_mode/malfunction/gm_malf = SSticker.mode
-							gm_malf.apcs++
+					var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+					if(GM && is_station_level(z))
+						GM.apcs++
 					if(malfai.parent)
 						src.malfai = malfai.parent
 					else
@@ -937,7 +933,7 @@
 		malfvacate()*/
 
 	if(usingUI)
-		src.updateDialog()
+		updateDialog()
 
 /*/obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
@@ -1042,7 +1038,7 @@
 
 	var/excess = surplus()
 
-	if(!src.avail())
+	if(!avail())
 		main_status = 0
 	else if(excess < 0)
 		main_status = 1
@@ -1250,10 +1246,9 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		if(SSticker.mode.config_tag == "malfunction")
-			if(is_station_level(z))
-				var/datum/game_mode/malfunction/gm_malf = SSticker.mode
-				gm_malf.apcs--
+		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+		if(GM && is_station_level(z))
+			GM.apcs--
 	stat |= BROKEN
 	operating = 0
 	/*if(occupier)

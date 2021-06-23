@@ -7,7 +7,7 @@
 	if(IAN.stat)
 		return
 
-	switch(alert("Do you want to lick or sniff something?",,"Nothing","Tongue","Nose"))
+	switch(tgui_alert(usr, "Do you want to lick or sniff something?",, list("Nothing","Tongue","Nose")))
 		if("Nothing")
 			if(IAN.ian_action == IAN_STANDARD) // Do nothing, if we already using this mode.
 				return
@@ -225,7 +225,7 @@
 	mymob.zone_sel = new
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
 
 	mymob.client.screen = list(mymob.zone_sel, mymob.healths, mymob.pullin)
 	mymob.client.screen += adding + other + hotkeybuttons

@@ -669,7 +669,7 @@ var/global/BSACooldown = 0
 	var/dat = {"
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
-	if(master_mode == "secret")
+	if(master_mode == "Secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>Force Secret Mode</A><br>"
 
 	dat += {"
@@ -729,7 +729,7 @@ var/global/BSACooldown = 0
 	set desc="Restarts the world"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", "Yes", "Cancel")
+	var/confirm = tgui_alert(usr, "Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -927,7 +927,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(R_SERVER))	return
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.timeLeft/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!")
+		return tgui_alert(usr, "Too late... The game has already started!")
 	if(newtime)
 		SSticker.timeLeft = newtime * 10
 		if(newtime < 0)
@@ -964,7 +964,7 @@ var/global/BSACooldown = 0
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
-		return alert("The game has not started yet!")
+		return tgui_alert(usr, "The game has not started yet!")
 
 /datum/admins/proc/adjump()
 	set category = "Server"
@@ -995,7 +995,7 @@ var/global/BSACooldown = 0
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
 	if(!usr.client.holder)	return
-	if( alert("Reboot server?",,"Yes","No") == "No")
+	if(tgui_alert(usr, "Reboot server?",, list("Yes","No")) == "No")
 		return
 	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
@@ -1038,54 +1038,27 @@ var/global/BSACooldown = 0
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 		else
-			alert("Admin jumping disabled")
+			tgui_alert(usr, "Admin jumping disabled")
 	else
-		alert("[M.name] is not prisoned.")
+		tgui_alert(usr, "[M.name] is not prisoned.")
 	feedback_add_details("admin_verb","UP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
 /proc/is_special_character(mob/M) // returns 1 for specail characters and 2 for heroes of gamemode
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker || !SSticker.mode || !istype(M))
 		return 0
-	if (!istype(M))
-		return 0
-	if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
-		if (SSticker.mode.config_tag == "rp-revolution")
-			return 2
-		return 1
-	if(global.cult_religion?.is_member(M))
-		if (SSticker.mode.config_tag == "cult")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.malf_ai)
-		if (SSticker.mode.config_tag == "malfunction")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.syndicates)
-		if (SSticker.mode.config_tag == "nuclear")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.wizards)
-		if (SSticker.mode.config_tag == "wizard")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.changelings)
-		if (SSticker.mode.config_tag == "changeling")
-			return 2
+	if(isanyantag(M) || M.mind?.special_role)
+		for(var/id in M.mind.antag_roles)
+			var/datum/role/role = M.mind.antag_roles[id]
+			if(role.is_roundstart_role)
+				return 2
 		return 1
 
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			if (SSticker.mode.config_tag == "monkey")
-				return 2
-			return 1
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
 			return 1
-	if(M.mind&&M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		return 1
 
 	return 0
 
@@ -1265,7 +1238,7 @@ var/global/BSACooldown = 0
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	var/ask = tgui_alert(usr, question, "Place ghost in control of mob?", list("Yes", "No"))
 	if (ask != "Yes")
 		return 1
 

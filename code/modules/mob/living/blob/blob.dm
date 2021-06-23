@@ -33,7 +33,7 @@
 	clamp_values()
 	UpdateDamage()
 	if(health < 0)
-		src.dust()
+		dust()
 
 
 /mob/living/blob/proc/clamp_values()
@@ -101,7 +101,7 @@
 		to_chat(usr, "There is a porus blob nearby, move more than 2 tiles away from it!")
 		creating_blob = 0
 	B.change_to("Node")
-	src.dust()
+	dust()
 	return
 
 
@@ -138,7 +138,7 @@
 			creating_blob = 0
 			return
 	B.change_to("Factory")
-	src.dust()
+	dust()
 	return
 
 
@@ -162,7 +162,7 @@
 		creating_blob = 0
 		return
 	B.change_to("Normal")
-	src.dust()
+	dust()
 	return
 
 
@@ -182,7 +182,7 @@
 		creating_blob = 0
 		return
 	new/obj/effect/blob(src.loc)
-	src.dust()
+	dust()
 	return
 
 
@@ -229,7 +229,7 @@
 				break
 
 	if(!G_found)//If a ghost was not found.
-		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
+		tgui_alert(usr, "There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
 		return
 
 	if(G_found.client)
