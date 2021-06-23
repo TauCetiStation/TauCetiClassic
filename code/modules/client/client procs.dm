@@ -308,7 +308,7 @@ var/list/blacklisted_builds = list(
 			var/list/fluff_list = custom_item_premoderation_list()
 			var/fluff_count = fluff_list.len
 			if(fluff_count)
-				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [russian_plural(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
+				to_chat(src, "<span class='alert bold'>В рассмотрении [pluralize_russian(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [pluralize_russian(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
@@ -687,6 +687,14 @@ var/list/blacklisted_builds = list(
 
 	return byond_registration
 
+/client/proc/GetRolePrefs()
+	var/list/roleprefs = list()
+	for(var/role_id in antag_roles)
+		if(role_id in prefs.be_role)
+			roleprefs += role_id
+	if(!roleprefs.len)
+		return "none"
+	return get_english_list(roleprefs)
 
 /**
  * Updates the keybinds for special keys
