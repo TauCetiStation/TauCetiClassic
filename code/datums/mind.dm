@@ -75,8 +75,6 @@
 	if(current)					//remove ourself from our old body's mind variable
 		SStgui.on_transfer(current, new_character)
 		current.mind = null
-		if(current.my_religion)
-			current.my_religion.add_member(new_character, holy_role)
 
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
@@ -86,6 +84,9 @@
 	var/mob/old_character = current
 	current = new_character		//link ourself to our new body
 	new_character.mind = src	//and link our new body to ourself
+
+	if(current?.my_religion)
+		current.my_religion.add_member(new_character, holy_role)
 
 	transfer_actions(new_character)
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud
