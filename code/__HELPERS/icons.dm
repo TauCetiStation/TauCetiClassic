@@ -875,9 +875,11 @@ var/global/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key, prefs?.species)
 
+		var/datum/species/S
 		if(prefs)
 			prefs.copy_to(body)
-		var/datum/species/S = all_species[prefs.species]
+			S = all_species[prefs.species]
+
 		if(S)
 			S.before_job_equip(body, J, TRUE)
 		if(J)

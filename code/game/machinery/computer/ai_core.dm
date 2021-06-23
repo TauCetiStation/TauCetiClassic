@@ -132,8 +132,10 @@
 					return
 
 				if(M.brainmob.mind)
-					SSticker.mode.remove_cultist(M.brainmob.mind, 1)
-					SSticker.mode.remove_revolutionary(M.brainmob.mind, 1)
+					for(var/role in list(CULTIST, REV, HEADREV))
+						var/datum/role/R = M.brainmob.mind.GetRole(role)
+						if(R)
+							R.RemoveFromRole(M.brainmob.mind)
 
 				user.drop_from_inventory(M, src)
 				brain = M
@@ -215,10 +217,10 @@ That prevents a few funky behaviors.
 						if(C.contents.len)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
-								var/datum/game_mode/malfunction/malf = SSticker.mode
-								for (var/datum/mind/malfai in malf.malf_ai)
-									if (T.mind == malfai)
+							var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+							if(malf)
+								for (var/datum/role/malfAI/malfai in malf.members)
+									if (T.mind == malfai.antag)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")//Do ho ho ho~
 										return
 							new /obj/structure/AIcore/deactivated(T.loc)//Spawns a deactivated terminal at AI location.
@@ -238,10 +240,10 @@ That prevents a few funky behaviors.
 						if(C.AI)//If there is an AI on card.
 							to_chat(U, "<span class='warning'><b>Transfer failed</b>:</span> Existing AI found on this terminal. Remove existing AI to install a new one.")
 						else
-							if (SSticker.mode.name == "AI malfunction")
-								var/datum/game_mode/malfunction/malf = SSticker.mode
-								for (var/datum/mind/malfai in malf.malf_ai)
-									if (T.mind == malfai)
+							var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+							if(malf)
+								for (var/datum/role/malfAI/malfai in malf.members)
+									if (T.mind == malfai.antag)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
 										return
 							if(T.stat)//If the ai is dead/dying.

@@ -400,6 +400,10 @@
 /obj/structure/window/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	set_dir(ini_dir)
 	update_nearby_tiles(need_rebuild=1)
 

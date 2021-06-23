@@ -268,7 +268,6 @@
 	if(name in reactants)
 		reactants[name] += quantity
 	else if(name != "proton" && name != "electron" && name != "neutron")
-		reactants.Add(name)
 		reactants[name] = quantity
 
 /obj/effect/fusion_em_field/proc/RadiateAll(ratio_lost = 1)
