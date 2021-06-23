@@ -104,7 +104,7 @@
 	real_name = name
 	status_flags ^= CANPUSH
 	for(var/spell in hulk_powers)
-		spell_list += new spell(src)
+		AddSpell(new spell(src))
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()

@@ -83,7 +83,12 @@
 	last_process = world.time
 	var/turf/turf = get_turf(loc)
 	for(var/A in range(6, turf))
-		if(iscultist(A) || is_type_in_typecache(A, scum))
+		if(ismob(A))
+			var/mob/M = A
+			if(iscultist(M))
+				set_light(3)
+				addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+		if(is_type_in_typecache(A, scum))
 			set_light(3)
 			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
 
@@ -147,7 +152,14 @@
 				user.Paralyse(20)
 				return
 			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
-			SSticker.mode.remove_cultist(M.mind)
+
+			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
+			C.RemoveFromRole(M.mind)
+			M.Paralyse(5)
+			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
+			M.mind.memory = ""
+			M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
+
 			new /obj/effect/temp_visual/religion/pulse(M.loc)
 			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
 		else

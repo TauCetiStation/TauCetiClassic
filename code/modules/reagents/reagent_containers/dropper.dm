@@ -71,7 +71,7 @@
 			var/list/injected = list()
 			for(var/datum/reagent/R in src.reagents.reagent_list)
 				injected += R.name
-			var/contained = english_list(injected)
+			var/contained = get_english_list(injected)
 			M.log_combat(user, "squirted with [name], reagents: [contained]")
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)

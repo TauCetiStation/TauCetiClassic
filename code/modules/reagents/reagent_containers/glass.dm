@@ -80,7 +80,7 @@
 		var/list/injected = list()
 		for(var/datum/reagent/R in src.reagents.reagent_list)
 			injected += R.name
-		var/contained = english_list(injected)
+		var/contained = get_english_list(injected)
 
 		M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
