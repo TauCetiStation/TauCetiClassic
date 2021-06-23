@@ -1,0 +1,129 @@
+/datum/objective/steal
+	var/obj/item/steal_target
+	var/target_name
+
+	var/static/possible_items[] = list(
+		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
+		"a hand teleporter" = /obj/item/weapon/hand_tele,
+		"an RCD" = /obj/item/weapon/rcd,
+		"a jetpack" = /obj/item/weapon/tank/jetpack,
+		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
+		"a functional AI" = /obj/item/device/aicard,
+		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
+		"the station blueprints" = /obj/item/blueprints,
+		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
+		"28 moles of phoron (full tank)" = /obj/item/weapon/tank,
+		"a sample of slime extract" = /obj/item/slime_extract,
+		"a piece of corgi meat" = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		"a research director's jumpsuit" = /obj/item/clothing/under/rank/research_director,
+		"a chief engineer's jumpsuit" = /obj/item/clothing/under/rank/chief_engineer,
+		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
+		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
+		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
+		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
+		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
+		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
+		"the golden fire extinguisher" = /obj/item/weapon/reagent_containers/spray/extinguisher/golden,
+	)
+
+	var/static/possible_items_special[] = list(
+		/*"nuclear authentication disk" = /obj/item/weapon/disk/nuclear,*///Broken with the change to nuke disk making it respawn on z level change.
+		"nuclear gun" = /obj/item/weapon/gun/energy/gun/nuclear,
+		"diamond drill" = /obj/item/weapon/pickaxe/drill/diamond_drill,
+		"bag of holding" = /obj/item/weapon/storage/backpack/holding,
+		"hyper-capacity cell" = /obj/item/weapon/stock_parts/cell/hyper,
+		"10 diamonds" = /obj/item/stack/sheet/mineral/diamond,
+		"50 gold bars" = /obj/item/stack/sheet/mineral/gold,
+		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
+	)
+
+/datum/objective/steal/PostAppend()
+	find_target()
+	return TRUE
+
+/datum/objective/steal/proc/set_target(item_name)
+	target_name = item_name
+	steal_target = possible_items[target_name]
+	if (!steal_target )
+		steal_target = possible_items_special[target_name]
+	explanation_text = "Steal [target_name]."
+	return steal_target
+
+
+/datum/objective/steal/find_target()
+	return set_target(pick(possible_items))
+
+
+/datum/objective/steal/proc/select_target()
+	var/list/possible_items_all = possible_items+possible_items_special+"custom"
+	var/new_target = input("Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+	if (!new_target) return
+	if (new_target == "custom")
+		var/obj/item/custom_target = input("Select type:","Type") as null|anything in typesof(/obj/item)
+		if (!custom_target) return
+		var/tmp_obj = new custom_target
+		var/custom_name = tmp_obj:name
+		qdel(tmp_obj)
+		custom_name = sanitize_safe(input("Enter target name:", "Objective target", input_default(custom_name)) as text|null)
+		if (!custom_name) return
+		target_name = custom_name
+		steal_target = custom_target
+		explanation_text = "Steal [target_name]."
+	else
+		set_target(new_target)
+	return steal_target
+
+/datum/objective/steal/check_completion()
+	if(!steal_target || !owner.current)	return OBJECTIVE_LOSS
+	if(!isliving(owner.current))	return OBJECTIVE_LOSS
+	var/list/all_items = owner.current.get_contents()
+	switch (target_name)
+		if("28 moles of phoron (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
+			var/target_amount = text2num(target_name)//Non-numbers are ignored.
+			var/found_amount = 0.0//Always starts as zero.
+
+			for(var/obj/item/I in all_items) //Check for phoron tanks
+				if(istype(I, steal_target))
+					found_amount += (target_name == "28 moles of phoron (full tank)" ? (I:air_contents:gas["phoron"]) : (I:amount))
+			return found_amount>=target_amount
+
+		if("50 coins (in bag)")
+			var/obj/item/weapon/moneybag/B = locate() in all_items
+
+			if(B)
+				var/target = text2num(target_name)
+				var/found_amount = 0.0
+				for(var/obj/item/weapon/coin/C in B)
+					found_amount++
+				return found_amount>=target
+
+		if("a functional AI")
+			for(var/obj/item/device/aicard/C in all_items) //Check for ai card
+				for(var/mob/living/silicon/ai/M in C)
+					if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD) //See if any AI's are alive inside that card.
+						return OBJECTIVE_WIN
+
+			for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
+				if(S.AI && S.AI.stat != DEAD)
+					return OBJECTIVE_WIN
+			for(var/mob/living/silicon/ai/ai in ai_list)
+				if(ai.stat == DEAD)
+					continue
+				if(istype(ai.loc, /turf))
+					var/area/check_area = get_area(ai)
+					if(istype(check_area, /area/shuttle/escape/centcom))
+						return OBJECTIVE_WIN
+					if(istype(check_area, /area/shuttle/escape_pod1/centcom))
+						return OBJECTIVE_WIN
+					if(istype(check_area, /area/shuttle/escape_pod2/centcom))
+						return OBJECTIVE_WIN
+					if(istype(check_area, /area/shuttle/escape_pod3/centcom))
+						return OBJECTIVE_WIN
+					if(istype(check_area, /area/shuttle/escape_pod4/centcom))
+						return OBJECTIVE_WIN
+		else
+
+			for(var/obj/I in all_items) //Check for items
+				if(istype(I, steal_target))
+					return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS

@@ -24,9 +24,6 @@
 	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [pluralize_russian(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы продолжить исследования на других станциях."
 	..()
 
-/datum/objective/cult/recruit/find_target()
-	return
-
 /datum/objective/cult/recruit/check_completion()
 	var/datum/faction/cult/C = faction
 	if(istype(C) && C.get_cultists_out() >= acolytes_needed)
@@ -35,9 +32,6 @@
 
 /datum/objective/cult/summon_narsie
 	explanation_text = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции."
-
-/datum/objective/cult/summon_narsie/find_target()
-	return
 
 /datum/objective/cult/summon_narsie/check_completion()
 	if(SSticker.nar_sie_has_risen)
@@ -52,9 +46,6 @@
 	need_capture = max(4, round(player_list.len * 0.1) + 1)
 	explanation_text = "Захватите не менее [need_capture] отсеков станции с помощью руны захвата зон."
 	..()
-
-/datum/objective/cult/capture_areas/find_target()
-	return
 
 /datum/objective/cult/capture_areas/check_completion()
 	var/datum/faction/cult/C = faction

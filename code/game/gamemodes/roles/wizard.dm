@@ -76,7 +76,7 @@
 		return FALSE
 	switch(rand(1,100))
 		if(1 to 30)
-			AppendObjective(/datum/objective/assassinate)
+			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/survive)
 
 		if(31 to 60)
@@ -84,7 +84,7 @@
 			AppendObjective(/datum/objective/survive)
 
 		if(61 to 99)
-			AppendObjective(/datum/objective/assassinate)
+			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/survive)
 
