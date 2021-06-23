@@ -717,7 +717,7 @@
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
 		return
-		
+
 	var/trail_type = getTrail()
 	if(!trail_type)
 		return
@@ -735,7 +735,7 @@
 			newdir = EAST
 	if((newdir in global.cardinal) && (prob(50)))
 		newdir = turn(newdir, 180)
-	
+
 	var/datum/dirt_cover/new_cover
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -1038,7 +1038,7 @@
 	return initial(pixel_y)
 
 //Attack animation port below
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
+/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/final_pixel_y = initial(pixel_y)
@@ -1071,10 +1071,15 @@
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = default_pixel_y
-	..(A, final_pixel_y)
+/mob/living/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE)
+	end_pixel_y = default_pixel_y
+	..()
 
+	if(has_effect)
+		do_item_attack_animation(A)
+
+
+/mob/living/proc/do_item_attack_animation(atom/A)
 	var/list/viewing = list()
 	for(var/mob/M in viewers(A))
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
