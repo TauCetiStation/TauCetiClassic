@@ -50,7 +50,7 @@
 	return rgb(RGB[1],RGB[2],RGB[3])
 
 /proc/get_random_color(lower = 0, upper = 255)
-	var/color
+	var color
 	for(var/i in 1 to 3)
 		var/temp_col = "[num2hex(rand(lower, upper))]"
 		if(length(temp_col) < 2)
