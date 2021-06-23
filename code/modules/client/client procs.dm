@@ -650,34 +650,6 @@ var/list/blacklisted_builds = list(
 		void = new()
 		screen += void
 
-//This may help with UI's that were stuck and don't want to open anymore.
-/client/verb/resend_ui_resources()
-	set name = "Reload TGUI/NanoUI Resources (Close All)"
-	set desc = "Close and Reload your TGUI/NanoUI assets if they are not working"
-	set category = "OOC"
-
-	if(last_ui_resource_send > world.time)
-		to_chat(usr, "<span class='warning'>You requested your TGUI/NanoUI resource files too quickly. This will reload your NanoUI and TGUI/NanoUI resources. If you have any open UIs this may break them. Please try again in [(last_ui_resource_send - world.time)/10] seconds.</span>")
-		return
-	// 600 deciseconds = 1 minute
-	last_ui_resource_send = world.time + 60 SECONDS
-	// Close their open UIs
-	nanomanager.close_user_uis(usr)
-	SStgui.force_close_all_windows(usr)
-
-	// Resend the resources
-	var/datum/asset/nano_assets = get_asset_datum(/datum/asset/nanoui)
-	nano_assets.register()
-
-	var/datum/asset/tgui_assets = get_asset_datum(/datum/asset/simple/tgui)
-	tgui_assets.register()
-
-	// Clear the user's cache so they get resent.
-	// This is not fully clearing their BYOND cache, just their assets sent from the server this round
-	sent_assets = list()
-
-	to_chat(usr, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache. <b>This can be achieved by opening your BYOND launcher, pressing the cog in the top right, selecting preferences, going to the Games tab, and pressing 'Clear Cache'.</b></span>")
-
 /client/proc/show_character_previews(mutable_appearance/MA)
 	var/pos = 0
 	for(var/D in cardinal)

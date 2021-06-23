@@ -261,29 +261,27 @@ var/global/bridge_ooc_colour = "#7b804f"
 					winset(src, "browseroutput", "is-disabled=true;is-visible=false")
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after manually calling start() and forcing a load()")
 
-/client/verb/resend_ui_resources()
-	set name = "Reload TGUI/NanoUI Resources"
-	set desc = "Reload your TGUI/NanoUI assets if they are not working"
+/client/verb/fix_ui()
+	set name = "Fix UI"
+	set desc = "Closes all opened NanoUI/TGUI and Reload your TGUI/NanoUI assets if they are not working"
 	set category = "OOC"
 
 	if(last_ui_resource_send > world.time)
 		to_chat(usr, "<span class='warning'>You requested your TGUI/NanoUI resource files too quickly. This will reload your NanoUI and TGUI/NanoUI resources. If you have any open UIs this may break them. Please try again in [(last_ui_resource_send - world.time)/10] seconds.</span>")
 		return
-	// 600 deciseconds = 1 minute
 	last_ui_resource_send = world.time + 60 SECONDS
-	// Close their open UIs
+
+	// Close all NanoUI/TGUI windows
 	nanomanager.close_user_uis(usr)
-	SStgui.close_user_uis(usr)
-
-	// Resend the resources
-	var/datum/asset/nano_assets = get_asset_datum(/datum/asset/nanoui)
-	nano_assets.register()
-
-	var/datum/asset/tgui_assets = get_asset_datum(/datum/asset/simple/tgui)
-	tgui_assets.register()
+	SStgui.force_close_all_windows(usr)
 
 	// Clear the user's cache so they get resent.
 	// This is not fully clearing their BYOND cache, just their assets sent from the server this round
 	sent_assets = list()
 
-	to_chat(usr, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache. <b>This can be achieved by opening your BYOND launcher, pressing the cog in the top right, selecting preferences, going to the Games tab, and pressing 'Clear Cache'.</b></span>")
+	// Resend the resources
+	get_asset_datum(/datum/asset/nanoui)
+	get_asset_datum(/datum/asset/simple/tgui)
+
+	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
+
