@@ -23,9 +23,6 @@
 					var/obj/location_as_object = loc
 					location_as_object.handle_internal_lifeform(src, 0)
 
-
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
@@ -597,14 +594,6 @@
 		spawn(0)
 			emote("scratch")
 			return
-
-
-/mob/living/carbon/monkey/proc/handle_changeling()
-	if(mind && mind.changeling)
-		mind.changeling.regenerate()
-		hud_used.lingchemdisplay.invisibility = 0
-		hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
-	return
 
 ///FIRE CODE
 /mob/living/carbon/monkey/handle_fire()

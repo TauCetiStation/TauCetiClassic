@@ -303,11 +303,6 @@
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user)|| SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
