@@ -26,6 +26,9 @@
 	var/leaping = 0
 	ventcrawler = 2
 
+	attack_push_vis_effect = ATTACK_EFFECT_CLAW
+	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")
@@ -295,7 +298,3 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)
-
-/mob/living/carbon/xenomorph/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
-	visual_effect_icon = ATTACK_EFFECT_CLAW
-	. = ..()
