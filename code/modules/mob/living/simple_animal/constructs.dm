@@ -145,6 +145,7 @@
 	speed = -1
 	see_in_dark = 7
 	attack_sound = list('sound/weapons/bladeslice.ogg')
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
 		)
@@ -220,6 +221,7 @@
 	see_in_dark = 7
 	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
 		)

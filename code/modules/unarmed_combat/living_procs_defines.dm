@@ -220,7 +220,7 @@
 	return TRUE
 
 /mob/living/proc/disarmReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.do_attack_animation(src)
+	attacker.do_attack_animation(src, visual_effect_icon = ATTACK_EFFECT_DISARM)
 
 	if(!anchored && !is_bigger_than(attacker) && src != attacker) // maxHealth is the current best size estimate.
 		var/turf/to_move = get_step(src, get_dir(attacker, src))
@@ -248,7 +248,7 @@
 	return attacker.tryGrab(src)
 
 /mob/living/proc/hurtReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	attacker.do_attack_animation(src)
+	attacker.do_attack_animation(src, visual_effect_icon = ATTACK_EFFECT_PUNCH)
 
 	// terrible. deprecate in favour of a data-class handling all of this. ~Luduk
 	var/attack_obj = attacker.get_unarmed_attack()

@@ -473,3 +473,6 @@
 	if(!speak.len)
 		return null
 	return pick(speak)
+
+/mob/living/carbon/ian/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon = ATTACK_EFFECT_BITE, visual_effect_color)
+	. = ..()

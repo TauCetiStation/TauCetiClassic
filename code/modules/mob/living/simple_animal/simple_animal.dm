@@ -50,6 +50,8 @@
 	var/melee_damtype = BRUTE
 	var/attacktext = "attacks"
 	var/list/attack_sound = list()
+	/// Override for the visual attack effect shown on 'do_attack_animation()'.
+	var/attack_vis_effect
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
 	var/environment_smash = 0 // Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
@@ -418,3 +420,13 @@
 
 /mob/living/simple_animal/is_usable_leg(targetzone = null)
 	return has_leg
+
+/mob/living/simple_animal/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	if(has_effect && !visual_effect_icon && melee_damage)
+		if(attack_vis_effect && !istype(A, /turf/simulated/wall)) // override the standard visual effect.
+			visual_effect_icon = attack_vis_effect
+		else if(melee_damage < 10)
+			visual_effect_icon = ATTACK_EFFECT_PUNCH
+		else
+			visual_effect_icon = ATTACK_EFFECT_SMASH
+	..()
