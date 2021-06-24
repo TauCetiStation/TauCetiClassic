@@ -1091,7 +1091,7 @@
 	if(used_item)
 		if(used_item.alternate_appearances)
 			viewing = alternate_attack_animation(used_item, A, viewing)
-		I = image(used_item.icon, A,used_item.icon_state, A.layer + 1)
+		I = image(used_item.icon, A, used_item.icon_state, A.layer + 1)
 	else if(visual_effect_icon)
 		I = image('icons/effects/attack_overlays.dmi', A, visual_effect_icon, A.layer + 0.1)
 		I.color = visual_effect_color
