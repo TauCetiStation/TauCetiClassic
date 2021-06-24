@@ -62,7 +62,7 @@
 /mob/living/silicon/robot/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/oldLoc = src.loc
 	. = ..()
-	if(.)
+	if(. && !moving_diagonally)
 		if(src.camera && src.camera.network.len)
 			if(!updating)
 				updating = 1
