@@ -222,6 +222,8 @@
 	see_in_dark = 7
 	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
+	attack_push_vis_effect = ATTACK_EFFECT_SLASH
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
 		)
@@ -264,8 +266,6 @@
 	speed = -2
 	response_harm = "pinch"
 	attack_sound = 'sound/weapons/punch2.ogg'
-	attack_push_vis_effect = ATTACK_EFFECT_SLASH
-	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
 
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
 /mob/living/simple_animal/hostile/pylon
