@@ -28,7 +28,7 @@
 
 	user.release_control()
 	user.Stun(duration / 10)
-	..()
+	put_on_cd()
 	to_chat(target, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(B, "You slither up [target] and begin probing at their ear canal...")
 	if(!do_after(B, duration, target = target))

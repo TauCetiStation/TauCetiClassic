@@ -32,7 +32,7 @@
 	user.visible_message("<span class='warning'>[user] leans over [target] shoulder and hugs them tightly.</span>")
 	if(!do_after(B, duration, target = target))
 		return
-	if(!..())
+	if(!cd_and_chemicals(B))
 		return
 	var/mob/living/simple_animal/borer/baby = B.reproduce()
 	to_chat(target, "Something slimy begins probing at the opening of your ear canal...")

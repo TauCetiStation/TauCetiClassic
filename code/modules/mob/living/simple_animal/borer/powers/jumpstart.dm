@@ -20,7 +20,7 @@
 		to_chat(B, "Host body is too wounded to reanimate.")
 		return
 	
-	if(!..())
+	if(!cd_and_chemicals(B))
 		return
 	to_chat(B, "<span class='notice'>You prepare the host body for reanimation.</span>")
 	var/dam_diff = all_damage - 150

@@ -9,7 +9,7 @@
 		B.deactivate_invisibility()
 	else
 		B.activate_invisibility()
-	..()
+	put_on_cd()
 
 /mob/living/simple_animal/borer/proc/activate_invisibility()
 	if(!invisibility)

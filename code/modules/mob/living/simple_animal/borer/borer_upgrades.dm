@@ -50,15 +50,25 @@
     return clamp(world.time - last_used, 0, cooldown)
 
 /obj/effect/proc_holder/borer/active/can_activate(mob/user)
-    var/mob/living/simple_animal/borer/B = user?.has_brain_worms()
+    var/mob/living/simple_animal/borer/B = user.has_brain_worms()
     if(!B)
         return FALSE
     return can_use(user) && (get_recharge() >= cooldown) && B.hasChemicals(chemicals)
 
-/obj/effect/proc_holder/borer/active/activate(mob/user)
+/obj/effect/proc_holder/borer/active/proc/put_on_cd()
     last_used = world.time
-    var/mob/living/simple_animal/borer/B = user?.has_brain_worms()
-    return B?.useChemicals(chemicals)
+
+/obj/effect/proc_holder/borer/active/proc/use_chemicals(mob/living/simple_animal/borer/B)
+    return B.useChemicals(chemicals)
+
+/obj/effect/proc_holder/borer/active/proc/cd_and_chemicals(mob/living/simple_animal/borer/B)
+    if(use_chemicals(B))
+        put_on_cd()
+        return TRUE
+    return FALSE
+
+/obj/effect/proc_holder/borer/active/activate(mob/user)
+    return cd_and_chemicals(user.has_brain_worms())
 
 /obj/effect/proc_holder/borer/active/noncontrol/can_use(mob/user)
     var/mob/living/simple_animal/borer/B = user

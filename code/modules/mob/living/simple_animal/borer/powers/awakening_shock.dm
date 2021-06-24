@@ -8,7 +8,7 @@
 	if(B.docile)
 		to_chat(B, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
-	if(!..())
+	if(!use_chemicals(B))
 		return
 	B.host.setHalLoss(0)
 	B.host.SetParalysis(0)

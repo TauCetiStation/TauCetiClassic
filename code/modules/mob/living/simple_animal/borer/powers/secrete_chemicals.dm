@@ -21,7 +21,7 @@
 	if(!B.host || B.controlling || B.docile || B.incapacitated()) //Sanity check.
 		return
 
-	if(!..())
+	if(!use_chemicals(B))
 		return
 	to_chat(B, "<span class='warning'><B>You squirt a measure of [chem] from your reservoirs into [B.host]'s bloodstream.</B></span>")
 	B.host.reagents.add_reagent(chem, B.synthable_chems[chem])

@@ -5,7 +5,7 @@
 
 /obj/effect/proc_holder/borer/active/control/reproduce/activate(mob/living/carbon/user)
 	var/mob/living/simple_animal/borer/B = user.has_brain_worms()
-	if(!B || !..())
+	if(!B || !use_chemicals(B))
 		return
 	B.reproduce()
 

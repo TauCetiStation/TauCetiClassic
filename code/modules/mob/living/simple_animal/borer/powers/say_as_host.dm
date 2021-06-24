@@ -16,6 +16,6 @@
 		return
 	// say proc sanitizes any way
 	var/text_to_say = input(B, "Say as host") as text|null
-	if(text_to_say && ..())
+	if(text_to_say && use_chemicals(B))
 		B.host.say(text_to_say)
 		B.host.adjustBrainLoss(1)

@@ -12,7 +12,7 @@
 	if(B.host.stat != CONSCIOUS)
 		to_chat(B, "<span class='notice'>The host won't feel that, they're unconscious.</span>")
 		return
-	..()
+	put_on_cd()
 	B.host.adjustBrainLoss(rand(5, 10))
 	to_chat(B, "<span class='notice'>You temporarily disable your host's vocal chords.</span>")
 	to_chat(B, "<span class='warning'>Your throat feels numb.</span>")

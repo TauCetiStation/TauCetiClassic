@@ -12,7 +12,7 @@
 	if(B.host.stat != CONSCIOUS)
 		to_chat(B, "<span class='notice'>The host won't feel that, they're unconscious.</span>")
 		return
-	if(!..())
+	if(!cd_and_chemicals(B))
 		return
 	if(ishuman(B.host))
 		var/mob/living/carbon/human/H = B.host
