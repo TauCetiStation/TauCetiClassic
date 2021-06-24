@@ -28,7 +28,7 @@
 		)
 
 	var/assuming = FALSE
-	var/chemicals = 350                        // Chemicals used for reproduction and spitting neurotoxin.
+	var/chemicals = 50                         // Chemicals used for reproduction and spitting neurotoxin.
 	var/max_chemicals = 250                    // Maximum chemicals
 	var/mob/living/carbon/host                 // Carbon host for the brain worm.
 	var/mob/living/captive_brain/host_brain    // Used for swapping control of the body back and forth.
@@ -36,7 +36,7 @@
 	var/docile = FALSE                         // Sugar can stop borers from acting.
 	var/leaving = FALSE
 	var/reproduced = 0                         // Times the borer has reproduced.
-	var/upgrade_points = 1e6//2                // Upgrade points left to spend
+	var/upgrade_points = 2                    // Upgrade points left to spend
 
 	var/list/obj/effect/proc_holder/upgrades = list()
 	var/list/obj/effect/proc_holder/all_upgrades = list()
