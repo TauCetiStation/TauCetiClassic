@@ -7,7 +7,8 @@
 	chemicals = 100
 	requires_t = list(/obj/effect/proc_holder/borer/active/control/direct_transfer)
 
-/obj/effect/proc_holder/borer/active/control/direct_reproduce/activate(mob/living/carbon/user)
+/obj/effect/proc_holder/borer/active/control/direct_reproduce/activate()
+	var/mob/living/carbon/user = holder.host
 	if(user.is_busy())
 		return
 	if(user.incapacitated())
@@ -25,16 +26,15 @@
 	if(target.has_brain_worms())
 		to_chat(user, "You cannot infest someone who is already infested!")
 		return
-	var/mob/living/simple_animal/borer/B = user.has_brain_worms()
 	// check if we can infest it. if we can, probably, our children can too
-	if(!B?.infest_check(target))	
+	if(!holder.infest_check(target))	
 		return
 	user.visible_message("<span class='warning'>[user] leans over [target] shoulder and hugs them tightly.</span>")
-	if(!do_after(B, duration, target = target))
+	if(!do_after(holder, duration, target = target))
 		return
-	if(!cd_and_chemicals(B))
+	if(!cd_and_chemicals(holder))
 		return
-	var/mob/living/simple_animal/borer/baby = B.reproduce()
+	var/mob/living/simple_animal/borer/baby = holder.reproduce()
 	to_chat(target, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(baby, "You slither up [target] and begin probing at their ear canal...")
 	if(!baby.infest_check(target))

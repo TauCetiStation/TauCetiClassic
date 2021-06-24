@@ -4,6 +4,7 @@
 	cost = 3
 
 /obj/effect/proc_holder/borer/enlarged_glands/on_gain(mob/living/simple_animal/borer/B)
+	..()
 	B.max_chemicals += 100
 
 /obj/effect/proc_holder/borer/enlarged_glands/on_lose(mob/living/simple_animal/borer/B)

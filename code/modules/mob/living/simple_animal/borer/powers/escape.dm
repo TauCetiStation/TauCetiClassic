@@ -2,32 +2,32 @@
 	name = "Release Host"
 	desc = "Slither out of your host."
 
-/obj/effect/proc_holder/borer/active/noncontrol/escape/activate(mob/living/simple_animal/borer/B)
-	if(!B.host)
-		to_chat(B, "You are not inside a host body.")
+/obj/effect/proc_holder/borer/active/noncontrol/escape/activate()
+	if(!holder.host)
+		to_chat(holder, "You are not inside a host body.")
 		return
 
-	if(B.incapacitated())
-		to_chat(B, "You cannot leave your host in your current state.")
+	if(holder.incapacitated())
+		to_chat(holder, "You cannot leave your host in your current state.")
 		return
 
-	if(B.docile)
-		to_chat(B, "<span class='notice'>You are feeling far too docile to do that.</span>")
+	if(holder.docile)
+		to_chat(holder, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
-	if(B.leaving)
-		B.leaving = FALSE
-		to_chat(B, "<span class='userdanger'>You decide against leaving your host.</span>")
+	if(holder.leaving)
+		holder.leaving = FALSE
+		to_chat(holder, "<span class='userdanger'>You decide against leaving your host.</span>")
 		return
 
-	to_chat(B, "You begin disconnecting from [B.host]'s synapses and prodding at their internal ear canal.")
+	to_chat(holder, "You begin disconnecting from [holder.host]'s synapses and prodding at their internal ear canal.")
 
-	B.leaving = TRUE
+	holder.leaving = TRUE
 
-	if(B.host.stat == CONSCIOUS)
+	if(holder.host.stat == CONSCIOUS)
 		to_chat(host, "An odd, uncomfortable pressure begins to build inside your skull, behind your ear...")
 
-	addtimer(CALLBACK(B, /mob/living/simple_animal/borer/proc/let_go), 200)
+	addtimer(CALLBACK(holder, /mob/living/simple_animal/borer/proc/let_go), 200)
 
 /mob/living/simple_animal/borer/proc/let_go()
 	if(!host || !src || QDELETED(host) || QDELETED(src))

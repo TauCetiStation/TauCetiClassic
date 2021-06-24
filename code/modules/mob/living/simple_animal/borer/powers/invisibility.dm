@@ -4,11 +4,11 @@
 	cost = 2
 	cooldown = 150
 
-/obj/effect/proc_holder/borer/active/hostless/invis/activate(mob/living/simple_animal/borer/B)
-	if(B.invisibility)
-		B.deactivate_invisibility()
+/obj/effect/proc_holder/borer/active/hostless/invis/activate()
+	if(holder.invisibility)
+		holder.deactivate_invisibility()
 	else
-		B.activate_invisibility()
+		holder.activate_invisibility()
 	put_on_cd()
 
 /mob/living/simple_animal/borer/proc/activate_invisibility()

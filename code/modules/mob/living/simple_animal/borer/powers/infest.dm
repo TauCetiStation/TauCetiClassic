@@ -10,35 +10,35 @@ var/global/list/borer_banned_species = list(IPC, GOLEM, SLIME, DIONA)
 	name = "Infest"
 	desc = "Infest a suitable humanoid host."
 
-/obj/effect/proc_holder/borer/active/hostless/infest/activate(mob/living/simple_animal/borer/B)
-	if(B.incapacitated())
-		to_chat(B, "You cannot infest a target in your current state.")
+/obj/effect/proc_holder/borer/active/hostless/infest/activate()
+	if(holder.incapacitated())
+		to_chat(holder, "You cannot infest a target in your current state.")
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/C in view(1, B))
-		if(B.Adjacent(C) && C.infestable())
+	for(var/mob/living/carbon/C in view(1, holder))
+		if(holder.Adjacent(C) && C.infestable())
 			choices[C] = C
 
 	if(!choices.len)
 		return
 
-	var/mob/living/carbon/C = show_radial_menu(B, B, choices)
+	var/mob/living/carbon/C = show_radial_menu(holder, holder, choices)
 	 
-	if(!C || B.incapacitated() || B.host)
+	if(!C || holder.incapacitated() || holder.host)
 		return
 	
 	to_chat(C, "Something slimy begins probing at the opening of your ear canal...")
-	to_chat(B, "You slither up [C] and begin probing at their ear canal...")
+	to_chat(holder, "You slither up [C] and begin probing at their ear canal...")
 
-	if(!do_after(B, B.infest_delay, target = C))
-		to_chat(B, "As [C] moves away, you are dislodged and fall to the ground.")
+	if(!do_after(holder, holder.infest_delay, target = C))
+		to_chat(holder, "As [C] moves away, you are dislodged and fall to the ground.")
 		return
 
-	if(B.is_busy())
+	if(holder.is_busy())
 		return
-	if(B.infest_check(C))
-		B.infest(C)
+	if(holder.infest_check(C))
+		holder.infest(C)
 		return
 
 /mob/living/simple_animal/borer/proc/infest_check(mob/living/carbon/target, show_warnings = TRUE)

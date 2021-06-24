@@ -2,8 +2,8 @@
 	name = "Release Control"
 	desc = "Release control of your host's body."
 
-/obj/effect/proc_holder/borer/active/control/release/activate(mob/living/carbon/user)
-	user.release_control()
+/obj/effect/proc_holder/borer/active/control/release/activate()
+	holder.host.release_control()
 	
 /mob/living/carbon/proc/release_control()
 	var/mob/living/simple_animal/borer/B = has_brain_worms()

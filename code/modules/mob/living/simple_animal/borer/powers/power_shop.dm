@@ -1,7 +1,6 @@
 /obj/effect/proc_holder/borer/active/power_shop
 	name = "- Borer Evolution -"
 	desc = "Buy some upgrades."
-	var/mob/living/simple_animal/borer/holder
 
 /obj/effect/proc_holder/borer/active/power_shop/on_gain(mob/user)
 	holder = user
@@ -60,8 +59,8 @@
 				buy_upgrade(U)
 		return TRUE
 	
-/obj/effect/proc_holder/borer/active/power_shop/activate(mob/user)
-	tgui_interact(user)
+/obj/effect/proc_holder/borer/active/power_shop/activate()
+	tgui_interact(holder.getControlling())
 
 /obj/effect/proc_holder/borer/active/power_shop/proc/buy_upgrade(obj/effect/proc_holder/borer/U)
 	if(holder.upgrade_points < U.cost)

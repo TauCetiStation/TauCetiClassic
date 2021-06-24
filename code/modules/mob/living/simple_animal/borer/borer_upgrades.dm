@@ -9,8 +9,10 @@
 
     // list of paths that need to be bought before this
     var/list/requires_t = list()
+    var/mob/living/simple_animal/borer/holder
 
 /obj/effect/proc_holder/borer/proc/on_gain(mob/user)
+    holder = user
     return
 
 /obj/effect/proc_holder/borer/proc/on_lose(mob/user)
@@ -22,7 +24,7 @@
 /obj/effect/proc_holder/borer/proc/can_activate(mob/user)
     return can_use(user)
 
-/obj/effect/proc_holder/borer/proc/activate(mob/user)
+/obj/effect/proc_holder/borer/proc/activate()
     return 
 
 /obj/effect/proc_holder/borer/proc/get_stat_entry()
@@ -31,7 +33,7 @@
 /obj/effect/proc_holder/borer/Click()
     if(!can_activate(usr))
         return
-    activate(usr)
+    activate()
 
 /obj/effect/proc_holder/borer/active
     var/cooldown = 0
@@ -51,33 +53,36 @@
 
 /obj/effect/proc_holder/borer/active/can_activate(mob/user)
     var/mob/living/simple_animal/borer/B = user.has_brain_worms()
-    if(!B)
+    if(!B || B != holder)
         return FALSE
-    return can_use(user) && (get_recharge() >= cooldown) && B.hasChemicals(chemicals)
+    if(get_recharge() < cooldown)
+        to_chat(user, "[src] is not ready yet! Wait [(cooldown - get_recharge()) / 10] seconds.")
+        return FALSE
+    if(!B.hasChemicals(chemicals))
+        to_chat(user, "You don't have enough chemicals to use [src]. You need [chemicals - B.chemicals] units more.")
+        return FALSE
+    return can_use(user)
 
 /obj/effect/proc_holder/borer/active/proc/put_on_cd()
     last_used = world.time
 
-/obj/effect/proc_holder/borer/active/proc/use_chemicals(mob/living/simple_animal/borer/B)
-    return B.useChemicals(chemicals)
+/obj/effect/proc_holder/borer/active/proc/use_chemicals()
+    return holder.useChemicals(chemicals)
 
-/obj/effect/proc_holder/borer/active/proc/cd_and_chemicals(mob/living/simple_animal/borer/B)
-    if(use_chemicals(B))
+/obj/effect/proc_holder/borer/active/proc/cd_and_chemicals()
+    if(use_chemicals())
         put_on_cd()
         return TRUE
     return FALSE
 
 /obj/effect/proc_holder/borer/active/activate(mob/user)
-    return cd_and_chemicals(user.has_brain_worms())
+    return cd_and_chemicals()
 
 /obj/effect/proc_holder/borer/active/noncontrol/can_use(mob/user)
-    var/mob/living/simple_animal/borer/B = user
-    return istype(B) && B.host
+    return holder.host && user == holder
 
 /obj/effect/proc_holder/borer/active/control/can_use(mob/user)
-    var/mob/living/simple_animal/borer/B = user.has_brain_worms()
-    return istype(B) && B.controlling
+    return holder.controlling && user.has_brain_worms() == holder
 
 /obj/effect/proc_holder/borer/active/hostless/can_use(mob/user)
-    var/mob/living/simple_animal/borer/B = user
-    return istype(B) && !B.host
+    return !holder.host && user == holder

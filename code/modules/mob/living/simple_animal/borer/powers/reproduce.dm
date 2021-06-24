@@ -3,11 +3,10 @@
 	desc = "Spawn several young."
 	chemicals = 100
 
-/obj/effect/proc_holder/borer/active/control/reproduce/activate(mob/living/carbon/user)
-	var/mob/living/simple_animal/borer/B = user.has_brain_worms()
-	if(!B || !use_chemicals(B))
+/obj/effect/proc_holder/borer/active/control/reproduce/activate()
+	if(!use_chemicals())
 		return
-	B.reproduce()
+	holder.reproduce()
 
 /mob/living/simple_animal/borer/proc/reproduce()
 	reproduced++

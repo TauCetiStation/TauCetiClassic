@@ -4,6 +4,7 @@
 	chemicals = 50
 
 /obj/effect/proc_holder/borer/active/noncontrol/secrete_chemicals/on_gain(mob/living/simple_animal/borer/B)
+	..()
 	B.synthable_chems += list("bicaridine" = 15, "alkysine" = 15, "tramadol" = 15, "hyperzine" = 10)
 
 /obj/effect/proc_holder/borer/active/noncontrol/secrete_chemicals/on_lose(mob/living/simple_animal/borer/B)

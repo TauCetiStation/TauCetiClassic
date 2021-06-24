@@ -3,11 +3,11 @@
 	desc = "Make you see living beings through walls."
 	cost = 2
 
-/obj/effect/proc_holder/borer/active/hostless/biograde_vision/activate(mob/living/simple_animal/borer/B)
-	if(B.sight & SEE_MOBS)
-		B.deactivate_biograde_vision()
+/obj/effect/proc_holder/borer/active/hostless/biograde_vision/activate()
+	if(holder.sight & SEE_MOBS)
+		holder.deactivate_biograde_vision()
 	else
-		B.activate_biograde_vision()
+		holder.activate_biograde_vision()
 
 /mob/living/simple_animal/borer/proc/activate_biograde_vision()
 	if(!(sight & SEE_MOBS))
