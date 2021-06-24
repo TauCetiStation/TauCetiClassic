@@ -203,11 +203,14 @@
 /mob/living/simple_animal/borer/proc/borer_speak(message)
 	if(!message)
 		return
-
-	for(var/mob/M in mob_list)
-		var/mob/living/simple_animal/borer/B = M.has_brain_worms()
-		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M) || B?.controlling))
-			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [message]</i>")
+	var/datum/faction/F = find_faction_by_type(/datum/faction/borers)
+	var/list/mob/witnessers = observer_list.Copy()
+	for(var/datum/role/R in F.members)
+		var/mob/living/simple_animal/borer/B = R.antag.original
+		if(B && istype(B))
+			witnessers |= B.getControlling()
+	for(var/mob/M in witnessers)
+		to_chat(M, "<i>Cortical link, <b>[truename]:</b> [message]</i>")
 
 // Borers will not be blind in ventilation
 /mob/living/simple_animal/borer/is_vision_obstructed()
