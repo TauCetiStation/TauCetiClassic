@@ -131,7 +131,7 @@
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
-	modules += new /obj/item/weapon/AVtool/robot(src)
+	modules += new /obj/item/weapon/AVtool(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 

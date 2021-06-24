@@ -168,7 +168,7 @@
 			to_chat(user, "<span class='warning'>It seems [H]'s [IO] is too squishy... It doesn't beat at all!</span>")
 	..()
 
-/obj/item/weapon/AVtool/robot
+/obj/item/weapon/AVtool
 	name = "AV tool"
 	desc = "An AV tool powered by a robot's internal power cell, able to work with masked patients."
 	icon = 'icons/obj/iv_drip.dmi'
@@ -177,26 +177,36 @@
 	var/charge_cost = 50
 	var/busy = FALSE
 
-/obj/item/weapon/AVtool/robot/proc/check_charge(charge_amt)
-	return TRUE
-
-/obj/item/weapon/AVtool/robot/check_charge(charge_amt)
+/obj/item/weapon/AVtool/proc/check_charge(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.charge >= charge_amt)
 
-/obj/item/weapon/AVtool/robot/proc/can_use(mob/user, mob/M)
-	if(busy)
+/obj/item/weapon/AVtool/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+	var/target_zone = user.get_targetzone()
+	if(busy || user.is_busy(M))
+		to_chat(user, "<span class='warning'>You are too busy.</span>")
 		return FALSE
+
+	if(M.health > config.health_threshold_crit)
+		to_chat(user, "<span class='warning'>Patient's condition is not critical.</span>")
+		return FALSE
+
+	if(target_zone != O_MOUTH)
+		to_chat(user, "<span class='warning'>AV tool works only through the mouth.</span>")
+		return FALSE
+
 	if(!check_charge(charge_cost))
 		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
 		return FALSE
-	var/target_zone = user.get_targetzone()
-	if(target_zone != O_MOUTH)
-		return FALSE
+
+	if(M.species && M.species.flags[NO_BREATHE])
+		to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
+		return
+
 	return TRUE
 
-/obj/item/weapon/AVtool/robot/attack(mob/M, mob/living/user, def_zone)
+/obj/item/weapon/AVtool/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, M))
 		return
@@ -209,13 +219,8 @@
 	busy = FALSE
 	icon_state = "avtool_idle"
 
-/obj/item/weapon/AVtool/robot/proc/perform_av(mob/living/carbon/human/H, mob/user)
-	if(user.is_busy(H))
-		return
+/obj/item/weapon/AVtool/proc/perform_av(mob/living/carbon/human/H, mob/living/silicon/robot/user)
 
-	if(H.species && H.species.flags[NO_BREATHE])
-		to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
-		return
 	while(H.health < config.health_threshold_crit)
 		var/heal_check = H.health
 
@@ -231,3 +236,5 @@
 		if(heal_check == H.health)
 			to_chat(user, "<span class='warning'>Further AV is pointless.</span>")
 			break
+
+		user.cell.use(charge_cost)
