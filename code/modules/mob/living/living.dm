@@ -1087,16 +1087,11 @@
 
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
-	if(hand)
-		if(l_hand)
-			if(l_hand.alternate_appearances)
-				viewing = alternate_attack_animation(l_hand, A, viewing)
-			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
-	else
-		if(r_hand)
-			if(r_hand.alternate_appearances)
-				viewing = alternate_attack_animation(r_hand, A, viewing)
-			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	var/obj/item/used_item = get_active_hand()
+	if(used_item)
+		if(used_item.alternate_appearances)
+			viewing = alternate_attack_animation(used_item, A, viewing)
+		I = image(used_item.icon, A,used_item.icon_state, A.layer + 1)
 
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
