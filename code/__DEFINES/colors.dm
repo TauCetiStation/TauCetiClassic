@@ -9,7 +9,7 @@
 #define COLOR_DARK_GRAY        "#404040"
 #define COLOR_MAROON           "#800000"
 #define COLOR_PURPLE           "#800080"
-#define COLOR_DARK_PURPLE      "#6B2B63"
+#define COLOR_DARK_PURPLE      "#6b2b63"
 #define COLOR_VIOLET           "#9933ff"
 #define COLOR_OLIVE            "#808000"
 #define COLOR_BROWN_ORANGE     "#824b28"
