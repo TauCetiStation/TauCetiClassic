@@ -11,10 +11,6 @@
 	var/mob/living/carbon/user = holder.host
 	if(user.is_busy())
 		return
-	if(user.incapacitated())
-		to_chat(user, "You cannot perform direct transfer in your current state.")
-		return
-
 	var/mob/living/carbon/target
 	for(var/obj/item/weapon/grab/G in user.GetGrabs())
 		if(G.state >= GRAB_NECK)

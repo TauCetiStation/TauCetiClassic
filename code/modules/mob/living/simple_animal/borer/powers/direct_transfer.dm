@@ -7,10 +7,6 @@
 
 /obj/effect/proc_holder/borer/active/control/direct_transfer/activate()
 	var/mob/living/carbon/user = holder.host
-	if(user.incapacitated())
-		to_chat(user, "You cannot perform direct transfer in your current state.")
-		return
-
 	var/mob/living/carbon/target
 	for(var/obj/item/weapon/grab/G in user.GetGrabs())
 		if(G.state >= GRAB_NECK)

@@ -110,7 +110,7 @@
 	..()
 
 	adjustChemicals(passive_chemical_regeneration)
-	if(invisibility && chemicals <= 1)
+	if(invisibility && !hasChemicals(1))
 		deactivate_invisibility()
 
 	if(!host)
@@ -121,8 +121,6 @@
 			for(var/mob/dead/observer/O in observer_list)
 				try_request_n_transfer(O, "A mindless Cortical Borer was found. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
 				last_client_poll = world.time
-	if(stat != CONSCIOUS && host.stat != CONSCIOUS)
-		return
 	if(host.reagents.has_reagent("sugar") && !host.reagents.has_reagent("sucrase") && !docile)
 		docile = TRUE
 		var/mob/msg_to = controlling ? host : src
@@ -131,6 +129,9 @@
 		docile = FALSE
 		var/mob/msg_to = controlling ? host : src
 		to_chat(msg_to, "<span class='notice'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
+
+	if(stat != CONSCIOUS && host.stat != CONSCIOUS)
+		return
 
 	if(host.stat == CONSCIOUS && chemicals < max_chemicals)
 		if(host.nutrition)

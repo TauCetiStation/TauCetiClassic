@@ -4,10 +4,6 @@
 	cooldown = 30 SECONDS
 
 /obj/effect/proc_holder/borer/active/hostless/dominate/activate()
-	if(holder.incapacitated())
-		to_chat(src, "You cannot do that in your current state.")
-		return
-
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(3, holder))
 		if(C.stat != DEAD && C.infestable())

@@ -7,14 +7,6 @@
 		to_chat(holder, "You are not inside a host body.")
 		return
 
-	if(holder.incapacitated())
-		to_chat(holder, "You cannot leave your host in your current state.")
-		return
-
-	if(holder.docile)
-		to_chat(holder, "<span class='notice'>You are feeling far too docile to do that.</span>")
-		return
-
 	if(holder.leaving)
 		holder.leaving = FALSE
 		to_chat(holder, "<span class='userdanger'>You decide against leaving your host.</span>")

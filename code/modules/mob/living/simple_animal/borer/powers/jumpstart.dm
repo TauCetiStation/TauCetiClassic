@@ -9,6 +9,8 @@
 		/obj/effect/proc_holder/borer/active/noncontrol/awakening_shock,
 		/obj/effect/proc_holder/borer/enlarged_glands,
 	)
+	check_capability = FALSE
+	check_docility = FALSE
 
 /obj/effect/proc_holder/borer/active/noncontrol/jumpstart/activate()
 	if(holder.host.stat != DEAD)

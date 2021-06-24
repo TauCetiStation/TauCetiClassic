@@ -2,6 +2,7 @@
 	name = "Cheer host"
 	desc = "Cheer up host by making them feel good."
 	cooldown = 150
+	check_capability = FALSE
 
 /obj/effect/proc_holder/borer/active/control/cheer_host/activate()
 	if(holder.host_brain.ckey)

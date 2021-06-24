@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/borer/active/control/release
 	name = "Release Control"
 	desc = "Release control of your host's body."
+	check_capability = FALSE
 
 /obj/effect/proc_holder/borer/active/control/release/activate()
 	holder.host.release_control()

@@ -11,19 +11,11 @@
 		to_chat(holder, "You are not inside a host body.")
 		return
 
-	if(holder.incapacitated())
-		to_chat(holder, "You cannot do that in your current state.")
-		return
-
 	if(ishuman(holder.host))
 		var/mob/living/carbon/human/H = holder.host
 		if(!H.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
 			to_chat(holder, "<span class='warning'>There is no brain here for us to command!</span>")
 			return
-
-	if(holder.docile)
-		to_chat(holder, "<span class='notice'>You are feeling far too docile to do that.</span>")
-		return
 
 	to_chat(holder, "You begin delicately adjusting your connection to the host brain...")
 	holder.assuming = TRUE

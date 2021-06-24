@@ -2,6 +2,7 @@
 	name = "Torment host"
 	desc = "Punish your host with agony."
 	cooldown = 150
+	check_capability = FALSE
 
 /obj/effect/proc_holder/borer/active/control/punish_host/activate()
 	if(holder.host_brain.ckey)

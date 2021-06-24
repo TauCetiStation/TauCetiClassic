@@ -5,9 +5,6 @@
 	chemicals = 5
 
 /obj/effect/proc_holder/borer/active/noncontrol/say_as_host/activate()
-	if(holder.docile)
-		to_chat(holder, "<span class='notice'>You are feeling far too docile to do that.</span>")
-		return
 	if(holder.host.stat != CONSCIOUS)
 		to_chat(holder, "<span class='notice'>The host are unconscious, they won't speak for you.</span>")
 		return
@@ -16,6 +13,8 @@
 		return
 	// say proc sanitizes any way
 	var/text_to_say = input(holder, "Say as host") as text|null
+	if(!can_activate()) //Sanity check.
+		return
 	if(text_to_say && use_chemicals())
 		holder.host.say(text_to_say)
 		holder.host.adjustBrainLoss(1)

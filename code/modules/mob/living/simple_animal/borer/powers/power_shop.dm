@@ -1,6 +1,8 @@
 /obj/effect/proc_holder/borer/active/power_shop
 	name = "- Borer Evolution -"
 	desc = "Buy some upgrades."
+	check_docility = FALSE
+	check_capability = FALSE
 
 /obj/effect/proc_holder/borer/active/power_shop/on_gain(mob/user)
 	holder = user

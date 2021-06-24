@@ -5,9 +5,6 @@
 	chemicals = 40
 
 /obj/effect/proc_holder/borer/active/noncontrol/awakening_shock/activate()
-	if(holder.docile)
-		to_chat(holder, "<span class='notice'>You are feeling far too docile to do that.</span>")
-		return
 	if(!use_chemicals(holder))
 		return
 	holder.host.setHalLoss(0)
