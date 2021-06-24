@@ -1071,15 +1071,15 @@
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 
-/mob/living/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE)
+/mob/living/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
 	end_pixel_y = default_pixel_y
 	..()
 
 	if(has_effect)
-		do_item_attack_animation(A)
+		do_item_attack_animation(A, visual_effect_icon, visual_effect_color)
 
 
-/mob/living/proc/do_item_attack_animation(atom/A)
+/mob/living/proc/do_item_attack_animation(atom/A, visual_effect_icon, visual_effect_color)
 	var/list/viewing = list()
 	for(var/mob/M in viewers(A))
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
@@ -1092,6 +1092,9 @@
 		if(used_item.alternate_appearances)
 			viewing = alternate_attack_animation(used_item, A, viewing)
 		I = image(used_item.icon, A,used_item.icon_state, A.layer + 1)
+	else if(visual_effect_icon)
+		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
+		I.color = visual_effect_color
 
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
