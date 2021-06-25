@@ -39,7 +39,7 @@
 
 	if(cultists_around < need_members)
 		if(user)
-			to_chat(user, "<span class='warning'>Слишком мало последователей вокруг алтаря.</span>")
+			to_chat(user, "<span class='warning'>Недостаточно последователей вокруг алтаря.</span>")
 		return FALSE
 
 	if(SSticker.nar_sie_has_risen)
