@@ -19,10 +19,9 @@
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return
-
-	..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(length(W.hitsound))
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)

@@ -1,6 +1,7 @@
 /datum/game_mode/blob
 	name = "Blob"
 	config_name = "blob"
+	probability = 50
 	factions_allowed = list(/datum/faction/blob_conglomerate)
 
 	minimum_player_count = 30

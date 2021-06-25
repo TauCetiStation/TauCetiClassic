@@ -64,10 +64,10 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
-	if(user.a_intent != INTENT_HARM)
-		return
-
 	. = ..()
+	if(!.)
+		return FALSE
+
 	health -= W.force
 	healthcheck()
 

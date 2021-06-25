@@ -17,20 +17,20 @@
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
 		if(1 to 20)
-			AppendObjective(/datum/objective/assassinate, TRUE)
+			AppendObjective(/datum/objective/target/assassinate, TRUE)
 		if(21 to 50)
-			AppendObjective(/datum/objective/harm, TRUE)
+			AppendObjective(/datum/objective/target/harm, TRUE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
-			AppendObjective(/datum/objective/dehead, TRUE)
+			AppendObjective(/datum/objective/target/dehead, TRUE)
 
 /datum/role/traitor/forgeObjectives()
 	if(!..())
 		return FALSE
 	if(istype(antag.current, /mob/living/silicon))
-		AppendObjective(/datum/objective/assassinate, TRUE)
-		AppendObjective(/datum/objective/assassinate, TRUE)
+		AppendObjective(/datum/objective/target/assassinate, TRUE)
+		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/survive)
 		if(prob(10))
 			AppendObjective(/datum/objective/block)
@@ -52,8 +52,8 @@
 
 /datum/role/traitor/process()
 	// For objectives such as "Make an example of...", which require mid-game checks for completion
-	if(locate(/datum/objective/harm) in objectives.GetObjectives())
-		for(var/datum/objective/harm/H in objectives.GetObjectives())
+	if(locate(/datum/objective/target/harm) in objectives.GetObjectives())
+		for(var/datum/objective/target/harm/H in objectives.GetObjectives())
 			H.check_completion()
 
 /datum/role/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
