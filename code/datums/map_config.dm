@@ -10,7 +10,9 @@
 	var/map_path = "boxstation"
 	var/map_file = "boxstation.dmm"
 	var/station_name = "NSS Exodus"
+	var/station_name_ru = "КСН Исход"
 	var/system_name = "Tau Ceti"
+	var/system_name_ru = "Тау Кита"
 	var/station_image = "exodus"
 
 	// Config from maps.txt
@@ -122,8 +124,14 @@
 	if ("station_name" in json)
 		station_name = json["station_name"]
 
+	if ("station_name_ru" in json)
+		station_name_ru = json["station_name_ru"]
+
 	if ("system_name" in json)
 		system_name = json["system_name"]
+
+	if ("system_name_ru" in json)
+		system_name_ru = json["system_name_ru"]
 
 	if("station_image" in json)
 		station_image = json["station_image"]
