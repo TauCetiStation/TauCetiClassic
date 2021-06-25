@@ -46,11 +46,11 @@
 
 /datum/announcement/station/maint_revoke
 	name = "Alert: Maintenance Access Revoked"
-	message = "Был аннулирован обслуживающий доступ на все шлюзы."
+	message = "Был аннулирован доступ на все технические туннели."
 
 /datum/announcement/station/maint_readd
 	name = "Alert: Maintenance Access Readded"
-	message = "Был установлен обслуживающий доступ на все шлюзы."
+	message = "Требование доступа вернулось на все технические туннели."
 
 /datum/announcement/station/gravity_on
 	name = "Secret: Gravity On"
@@ -74,7 +74,7 @@
 	name = "Shuttle: Crew Called"
 	sound = "crew_shut_called"
 /datum/announcement/station/shuttle/crew_called/play()
-	message = "Смена экипажа начата. Шаттл вызван. Он прибудет через [shuttleminutes2text()]."
+	message = "Процедура смены экипажа начата. Шаттл вызван. Он прибудет через [shuttleminutes2text()]."
 	..()
 
 /datum/announcement/station/shuttle/crew_recalled
@@ -86,7 +86,7 @@
 	name = "Shuttle: Crew Docked"
 	sound = "crew_shut_docked"
 /datum/announcement/station/shuttle/crew_docked/play()
-	message = "Запланированный Шаттл Транспортировки Экипажа пристыковался к станции. Отправление примерно через [shuttleminutes2text()]."
+	message = "Шаттл Транспортировки Экипажа пристыковался к станции в соответствии с расписанием. Отправление примерно через [shuttleminutes2text()]."
 	..()
 
 /datum/announcement/station/shuttle/crew_left
