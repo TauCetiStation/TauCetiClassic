@@ -329,7 +329,7 @@ SUBSYSTEM_DEF(garbage)
 			running_find_references = null
 			//restart the garbage collector
 			SSgarbage.can_fire = 1
-			SSgarbage.next_fire = world.time + world.tick_lag
+			SSgarbage.update_nextfire(reset_time = TRUE)
 			return
 
 		if(tgui_alert(usr, "Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", list("Yes", "No")) == "No")
@@ -365,7 +365,7 @@ SUBSYSTEM_DEF(garbage)
 
 	//restart the garbage collector
 	SSgarbage.can_fire = 1
-	SSgarbage.next_fire = world.time + world.tick_lag
+	SSgarbage.update_nextfire(reset_time = TRUE)
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"

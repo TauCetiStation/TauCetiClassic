@@ -33,6 +33,7 @@
 	var/datum/controller/subsystem/queue_prev
 
 	var/runlevels = RUNLEVELS_DEFAULT	//points of the game at which the SS can fire
+	var/postponed_fires = 0 /// How many fires have we been requested to postpone
 
 	var/static/list/failure_strikes //How many times we suspect a subsystem type has crashed the MC, 3 strikes and you're out!
 
@@ -71,6 +72,31 @@
 	flags |= SS_NO_FIRE
 	Master.subsystems -= src
 	return ..()
+
+
+/** Update next_fire for the next run.
+ *  reset_time (bool) - Ignore things that would normally alter the next fire, like tick_overrun, and last_fire. (also resets postpone)
+ */
+/datum/controller/subsystem/proc/update_nextfire(reset_time = FALSE)
+	var/queue_node_flags = flags
+
+	if (reset_time)
+		postponed_fires = 0
+		if (queue_node_flags & SS_TICKER)
+			next_fire = world.time + (world.tick_lag * wait)
+		else
+			next_fire = world.time + wait
+		return
+
+	if (queue_node_flags & SS_TICKER)
+		next_fire = world.time + (world.tick_lag * wait)
+	else if (queue_node_flags & SS_POST_FIRE_TIMING)
+		next_fire = world.time + wait + (world.tick_lag * (tick_overrun/100))
+	else if (queue_node_flags & SS_KEEP_TIMING)
+		next_fire += wait
+	else
+		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
+
 
 //Queue it to run.
 //  (we loop thru a linked list until we get to the end or find the right point)
@@ -194,11 +220,10 @@
 		if (SS_IDLE)
 			. = "  "
 
-//could be used to postpone a costly subsystem for (default one) var/cycles, cycles
-//for instance, during cpu intensive operations like explosions
+/// Causes the next "cycle" fires to be missed. Effect is accumulative but can reset by calling update_nextfire(reset_time = TRUE)
 /datum/controller/subsystem/proc/postpone(cycles = 1)
-	if(next_fire - world.time < wait)
-		next_fire += (wait*cycles)
+	if (can_fire && cycles >= 1)
+		postponed_fires += cycles
 
 //usually called via datum/controller/subsystem/New() when replacing a subsystem (i.e. due to a recurring crash)
 //should attempt to salvage what it can from the old instance of subsystem
@@ -207,7 +232,7 @@
 //this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
 /datum/controller/subsystem/on_varedit(edited_var)
 	if (edited_var == "can_fire" && can_fire)
-		next_fire = world.time + wait
+		update_nextfire(reset_time = TRUE)
 
 /datum/controller/subsystem/StartLoadingMap()
 
