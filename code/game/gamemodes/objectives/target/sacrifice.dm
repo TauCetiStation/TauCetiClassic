@@ -13,6 +13,9 @@
 		explanation_text = format_explanation()
 	return TRUE
 
+/datum/objective/target/sacrifice/select_target()
+	return FALSE
+
 /datum/objective/target/sacrifice/check_completion()
 	var/datum/faction/cult/C = faction
 	if(istype(C))

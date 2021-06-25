@@ -2,22 +2,15 @@ var/global/list/target_objectives = list()
 
 /datum/objective/target
 	var/datum/mind/target = null		//If they are focused on a particular person.
-	var/auto_target = TRUE //Whether we pick a target automatically on PostAppend()
 	var/list/protected_jobs = list("Velocity Officer", "Velocity Chief", "Velocity Medical Doctor") // They can't be targets of any objective.
 
 /datum/objective/target/New(text, _auto_target = TRUE)
 	..()
 	target_objectives |= src
-	auto_target = _auto_target
 
 /datum/objective/target/Destroy()
 	target_objectives -= src
 	return ..()
-
-/datum/objective/target/PostAppend()
-	if(auto_target)
-		return find_target()
-	return TRUE
 
 /datum/objective/target/proc/can_be_target(datum/mind/possible_target)
 	if(possible_target == owner)
@@ -55,10 +48,11 @@ var/global/list/target_objectives = list()
 			targets += possible_target
 	return targets
 
-/datum/objective/target/proc/select_target()
+/datum/objective/target/select_target()
 	var/new_target = input("Select target:", "Objective target", null) as null|anything in get_targets()
 	if(!new_target)
 		return FALSE
+	auto_target = FALSE
 	target = new_target
 	explanation_text = format_explanation()
 	return TRUE
