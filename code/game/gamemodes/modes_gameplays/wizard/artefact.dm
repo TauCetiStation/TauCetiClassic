@@ -188,11 +188,11 @@
 	if(wizard && wizard.current)
 		var/datum/role/wiz_app = M.mind.GetRole(WIZ_APPRENTICE)
 		if(istraitor(M))  //Because traitors gonna trait. Besides, mage with dualsaber and revolver is a bit too OP for this station
-			var/datum/objective/assassinate/new_objective = wiz_app.AppendObjective(/datum/objective/assassinate)
+			var/datum/objective/target/assassinate/new_objective = wiz_app.AppendObjective(/datum/objective/target/assassinate)
 			new_objective.explanation_text = "Assassinate [wizard.current.real_name], the wizard."
 			new_objective.target = wizard
 		else
-			var/datum/objective/protect/new_objective = wiz_app.AppendObjective(/datum/objective/protect)
+			var/datum/objective/target/protect/new_objective = wiz_app.AppendObjective(/datum/objective/target/protect)
 			new_objective.explanation_text = "Protect [wizard.current.real_name], the wizard."
 			new_objective.target = wizard
 	uses--

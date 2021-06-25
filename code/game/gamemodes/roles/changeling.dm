@@ -72,7 +72,7 @@
 	if(!..())
 		return FALSE
 	AppendObjective(/datum/objective/absorb)
-	AppendObjective(/datum/objective/assassinate)
+	AppendObjective(/datum/objective/target/assassinate)
 	AppendObjective(/datum/objective/steal)
 	if(prob(80))
 		AppendObjective(/datum/objective/survive)
