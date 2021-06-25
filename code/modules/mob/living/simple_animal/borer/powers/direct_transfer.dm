@@ -6,6 +6,7 @@
 	cooldown = 60 SECONDS
 
 /obj/effect/proc_holder/borer/active/control/direct_transfer/activate()
+	. = FALSE
 	var/mob/living/carbon/user = holder.host
 	var/mob/living/carbon/target
 	for(var/obj/item/weapon/grab/G in user.GetGrabs())
@@ -24,7 +25,7 @@
 
 	user.release_control()
 	user.Stun(duration / 10)
-	put_on_cd()
+	. = TRUE
 	to_chat(target, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(holder, "You slither up [target] and begin probing at their ear canal...")
 	if(!do_after(holder, duration, target = target))

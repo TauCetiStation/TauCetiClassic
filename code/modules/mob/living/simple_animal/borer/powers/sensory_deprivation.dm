@@ -6,10 +6,10 @@
 	check_docility = TRUE
 
 /obj/effect/proc_holder/borer/active/noncontrol/sensory_deprivation/activate()
+	. = ..()
 	if(holder.host.stat != CONSCIOUS)
 		to_chat(holder, "<span class='notice'>The host won't feel that, they're unconscious.</span>")
-		return
-	put_on_cd()
+		return FALSE
 	holder.host.adjustBrainLoss(rand(5, 10))
 	holder.host.eye_blind = max(holder.host.eye_blind, 15)
 	holder.host.ear_deaf = max(holder.host.ear_deaf, 15)

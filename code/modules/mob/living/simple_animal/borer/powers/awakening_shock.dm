@@ -5,8 +5,7 @@
 	chemicals = 40
 
 /obj/effect/proc_holder/borer/active/noncontrol/awakening_shock/activate()
-	if(!use_chemicals(holder))
-		return
+	. = ..()
 	holder.host.setHalLoss(0)
 	holder.host.SetParalysis(0)
 	holder.host.SetStunned(0)

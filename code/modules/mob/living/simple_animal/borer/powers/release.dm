@@ -4,12 +4,13 @@
 	check_capability = FALSE
 
 /obj/effect/proc_holder/borer/active/control/release/activate()
-	holder.host.release_control()
+	return holder.host.release_control()
 	
 /mob/living/carbon/proc/release_control()
+	. = TRUE
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	if(!B)
-		return
+		return FALSE
 
 	if(B.controlling)
 		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain].</span>")

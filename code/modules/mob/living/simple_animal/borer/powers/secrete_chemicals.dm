@@ -8,6 +8,7 @@
 	holder.synthable_chems += list("bicaridine" = 15, "alkysine" = 15, "tramadol" = 15, "hyperzine" = 10)
 
 /obj/effect/proc_holder/borer/active/noncontrol/secrete_chemicals/activate()
+	. = FALSE
 	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in holder.synthable_chems
 	if(!chem)
 		return
@@ -19,3 +20,4 @@
 		return
 	to_chat(holder, "<span class='warning'><b>You squirt a measure of [chem] from your reservoirs into [holder.host]'s bloodstream.</b></span>")
 	holder.host.reagents.add_reagent(chem, holder.synthable_chems[chem])
+	return TRUE

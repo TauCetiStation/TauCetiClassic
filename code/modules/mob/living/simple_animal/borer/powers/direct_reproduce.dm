@@ -8,6 +8,7 @@
 	requires_t = list(/obj/effect/proc_holder/borer/active/control/direct_transfer)
 
 /obj/effect/proc_holder/borer/active/control/direct_reproduce/activate()
+	. = FALSE
 	var/mob/living/carbon/user = holder.host
 	if(user.is_busy())
 		return
@@ -28,8 +29,9 @@
 	user.visible_message("<span class='warning'>[user] leans over [target] shoulder and hugs them tightly.</span>")
 	if(!do_after(holder, duration, target = target))
 		return
-	if(!cd_and_chemicals(holder))
+	if(!can_activate())
 		return
+	. = TRUE
 	var/mob/living/simple_animal/borer/baby = holder.reproduce()
 	to_chat(target, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(baby, "You slither up [target] and begin probing at their ear canal...")

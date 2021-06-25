@@ -4,6 +4,7 @@
 	cost = 2
 
 /obj/effect/proc_holder/borer/active/hostless/biograde_vision/activate()
+	. = ..()
 	if(holder.sight & SEE_MOBS)
 		holder.deactivate_biograde_vision()
 	else

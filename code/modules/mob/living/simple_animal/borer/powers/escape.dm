@@ -3,14 +3,15 @@
 	desc = "Slither out of your host."
 
 /obj/effect/proc_holder/borer/active/noncontrol/escape/activate()
+	. = ..()
 	if(!holder.host)
 		to_chat(holder, "You are not inside a host body.")
-		return
+		return FALSE
 
 	if(holder.leaving)
 		holder.leaving = FALSE
 		to_chat(holder, "<span class='userdanger'>You decide against leaving your host.</span>")
-		return
+		return FALSE
 
 	to_chat(holder, "You begin disconnecting from [holder.host]'s synapses and prodding at their internal ear canal.")
 

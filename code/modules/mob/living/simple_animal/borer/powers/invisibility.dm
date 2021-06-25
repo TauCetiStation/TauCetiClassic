@@ -5,11 +5,11 @@
 	cooldown = 150
 
 /obj/effect/proc_holder/borer/active/hostless/invis/activate()
+	. = ..()
 	if(holder.invisibility)
 		holder.deactivate_invisibility()
 	else
 		holder.activate_invisibility()
-	put_on_cd()
 
 /mob/living/simple_animal/borer/proc/activate_invisibility()
 	if(!invisibility)

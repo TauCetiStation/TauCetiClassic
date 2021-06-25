@@ -6,11 +6,10 @@
 	cost = 2
 
 /obj/effect/proc_holder/borer/active/noncontrol/electric_shock/activate()
+	. = ..()
 	if(holder.host.stat != CONSCIOUS)
 		to_chat(holder, "<span class='notice'>The host won't feel that, they're unconscious.</span>")
-		return
-	if(!cd_and_chemicals(holder))
-		return
+		return FALSE
 	if(ishuman(holder.host))
 		var/mob/living/carbon/human/H = holder.host
 		H.custom_pain("You feel electric shock going through your spinal cord!", 1)

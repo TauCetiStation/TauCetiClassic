@@ -11,6 +11,7 @@ var/global/list/borer_banned_species = list(IPC, GOLEM, SLIME, DIONA)
 	desc = "Infest a suitable humanoid host."
 
 /obj/effect/proc_holder/borer/active/hostless/infest/activate()
+	. = FALSE
 	if(holder.incapacitated())
 		to_chat(holder, "You cannot infest a target in your current state.")
 		return
@@ -34,12 +35,13 @@ var/global/list/borer_banned_species = list(IPC, GOLEM, SLIME, DIONA)
 	if(!do_after(holder, holder.infest_delay, target = C))
 		to_chat(holder, "As [C] moves away, you are dislodged and fall to the ground.")
 		return
-
+	if(!can_activate())
+		return
 	if(holder.is_busy())
 		return
 	if(holder.infest_check(C))
 		holder.infest(C)
-		return
+		return TRUE
 
 /mob/living/simple_animal/borer/proc/infest_check(mob/living/carbon/target, show_warnings = TRUE)
 	. = FALSE

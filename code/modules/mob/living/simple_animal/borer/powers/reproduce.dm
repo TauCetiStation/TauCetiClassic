@@ -5,8 +5,7 @@
 	check_capability = FALSE
 
 /obj/effect/proc_holder/borer/active/control/reproduce/activate()
-	if(!use_chemicals())
-		return
+	. = ..()
 	holder.reproduce()
 
 /mob/living/simple_animal/borer/proc/reproduce()

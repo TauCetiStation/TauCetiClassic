@@ -3,19 +3,20 @@
 	desc = "Fully connect to the brain of your host."
 
 /obj/effect/proc_holder/borer/active/noncontrol/assume_control/activate()
+	. = ..()
 	if(holder.assuming)
 		to_chat(holder, "You are already assuming a host body!")
-		return
+		return FALSE
 
 	if(!holder.host)
 		to_chat(holder, "You are not inside a host body.")
-		return
+		return FALSE
 
 	if(ishuman(holder.host))
 		var/mob/living/carbon/human/H = holder.host
 		if(!H.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
 			to_chat(holder, "<span class='warning'>There is no brain here for us to command!</span>")
-			return
+			return FALSE
 
 	to_chat(holder, "You begin delicately adjusting your connection to the host brain...")
 	holder.assuming = TRUE

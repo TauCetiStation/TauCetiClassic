@@ -59,6 +59,7 @@
 		return TRUE
 	
 /obj/effect/proc_holder/borer/active/power_shop/activate()
+	. = ..()
 	tgui_interact(holder.getControlling())
 
 /obj/effect/proc_holder/borer/active/power_shop/proc/buy_upgrade(obj/effect/proc_holder/borer/U)

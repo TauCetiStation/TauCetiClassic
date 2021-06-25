@@ -9,4 +9,5 @@
 		to_chat(holder.getControlling(), "<span class='notice'>You drop relaxing and satisfying thoughts into host's brain.</span>")
 		to_chat(holder.host_brain, "<span class='notice'><FONT size=3>You feel relaxed and happy.</FONT></span>")
 	
-		put_on_cd()
+		return TRUE
+	return FALSE

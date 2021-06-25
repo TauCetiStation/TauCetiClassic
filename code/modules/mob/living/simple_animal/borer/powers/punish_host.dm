@@ -9,4 +9,4 @@
 		to_chat(holder.getControlling(), "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
 		to_chat(holder.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 	
-		put_on_cd()
+		return TRUE

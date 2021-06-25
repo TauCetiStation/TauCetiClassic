@@ -13,17 +13,16 @@
 	check_docility = FALSE
 
 /obj/effect/proc_holder/borer/active/noncontrol/jumpstart/activate()
+	. = ..()
 	if(holder.host.stat != DEAD)
 		to_chat(holder, "Your host is already alive!")
-		return
+		return FALSE
 	
 	var/all_damage = holder.host.getBruteLoss() + holder.host.getFireLoss() + holder.host.getOxyLoss() + holder.host.getToxLoss() + holder.host.getCloneLoss()
 	if(all_damage - healing > 150)
 		to_chat(holder, "Host body is too wounded to reanimate.")
-		return
+		return FALSE
 	
-	if(!cd_and_chemicals(holder))
-		return
 	to_chat(holder, "<span class='notice'>You prepare the host body for reanimation.</span>")
 	var/dam_diff = all_damage - 150
 	if(dam_diff > 0)

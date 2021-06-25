@@ -29,21 +29,28 @@
     return can_use(user)
 
 /obj/effect/proc_holder/borer/proc/activate()
-    return 
+    return TRUE
 
 /obj/effect/proc_holder/borer/proc/get_stat_entry()
     return null
 
 /obj/effect/proc_holder/borer/Click()
-    if(!can_activate(usr))
-        return
-    activate()
+    return
 
 /obj/effect/proc_holder/borer/active
     var/cooldown = 0
     var/last_used = 0
     var/chemicals = 0
  
+/obj/effect/proc_holder/borer/active/Click()
+    if(!can_use(usr))
+        return
+    if(!can_activate(usr))
+        return
+    if(activate())
+        put_on_cd()
+        use_chemicals()
+
 // i think it would be cool if buttons would disappear when abilities are unusable
 /obj/effect/proc_holder/borer/active/can_use(mob/user)
     return (holder.stat != DEAD) && (!check_docility || !holder.docile) && (!check_capability || !user.incapacitated())
@@ -78,22 +85,16 @@
     last_used = world.time
 
 /obj/effect/proc_holder/borer/active/proc/use_chemicals()
-    return holder.useChemicals(chemicals)
-
-/obj/effect/proc_holder/borer/active/proc/cd_and_chemicals()
-    if(use_chemicals())
-        put_on_cd()
-        return TRUE
-    return FALSE
+    holder.useChemicals(chemicals)
 
 /obj/effect/proc_holder/borer/active/activate(mob/user)
-    return cd_and_chemicals()
+    return TRUE
 
 /obj/effect/proc_holder/borer/active/noncontrol/can_use(mob/user)
-    return ..() && holder.host && user == holder
+    return holder.host && user == holder
 
 /obj/effect/proc_holder/borer/active/control/can_use(mob/user)
-    return ..() && holder.controlling && user.has_brain_worms() == holder
+    return holder.controlling && user.has_brain_worms() == holder
 
 /obj/effect/proc_holder/borer/active/hostless/can_use(mob/user)
-    return ..() && !holder.host && user == holder
+    return !holder.host && user == holder
