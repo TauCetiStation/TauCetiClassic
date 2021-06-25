@@ -11,7 +11,7 @@
 	w_class = ITEM_SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "bluespace=4;materials=4"
-	var/imprinted = "empty"
+	var/imprinted
 
 	var/static/class_images
 	var/list/classes = list(
@@ -96,7 +96,7 @@
 	var/mob/living/carbon/human/H = target
 	var/obj/item/device/soulstone/C = src
 	if(target != user)
-		if(C.imprinted != "empty")
+		if(C.imprinted)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [C.imprinted]!")
 			return
 		if(H.stat == CONSCIOUS)
