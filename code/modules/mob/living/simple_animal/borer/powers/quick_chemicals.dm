@@ -4,11 +4,6 @@
 	cost = 1
 	requires_t = list(/obj/effect/proc_holder/borer/enlarged_glands)
 
-/obj/effect/proc_holder/borer/quick_chemicals/on_gain(mob/living/simple_animal/borer/B)
-	..()
-	B.chemical_regeneration += 1
-	B.nutrition_consumption += 1
-
-/obj/effect/proc_holder/borer/quick_chemicals/on_lose(mob/living/simple_animal/borer/B)
-	B.chemical_regeneration -= 1
-	B.nutrition_consumption -= 1
+/obj/effect/proc_holder/borer/quick_chemicals/on_gain()
+	holder.chemical_regeneration += 1
+	holder.nutrition_consumption += 1

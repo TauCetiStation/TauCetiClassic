@@ -1,13 +1,8 @@
 /obj/effect/proc_holder/borer/chem_extension
 	var/chems = list()
 
-/obj/effect/proc_holder/borer/chem_extension/on_gain(mob/living/simple_animal/borer/B)
-	..()
-	B.synthable_chems |= chems
-
-/obj/effect/proc_holder/borer/chem_extension/on_lose(mob/living/simple_animal/borer/B)
-	..()
-	B.synthable_chems -= chems
+/obj/effect/proc_holder/borer/chem_extension/on_gain()
+	holder.synthable_chems |= chems
 
 /obj/effect/proc_holder/borer/chem_extension/advanced
 	name = "Advanced Chemical Synthesis"

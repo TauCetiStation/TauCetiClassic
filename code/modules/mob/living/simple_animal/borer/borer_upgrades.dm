@@ -15,11 +15,11 @@
     var/check_docility = TRUE
     var/check_capability = TRUE
 
-/obj/effect/proc_holder/borer/proc/on_gain(mob/user)
+/obj/effect/proc_holder/borer/atom_init(mapload, mob/user)
     holder = user
-    return
+    return ..()
 
-/obj/effect/proc_holder/borer/proc/on_lose(mob/user)
+/obj/effect/proc_holder/borer/proc/on_gain()
     return
 
 /obj/effect/proc_holder/borer/proc/can_use(mob/user)

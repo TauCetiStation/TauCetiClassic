@@ -261,10 +261,10 @@
 	for(var/color in color_by_hex)
 		hex_by_color[color_by_hex[color]] = color
 
-/proc/init_named_subtypes(prototype)
+/proc/init_named_subtypes(prototype, additional_args)
 	. = list()
 	for(var/path in subtypesof(prototype))
-		var/atom/N = new path()
+		var/atom/N = new path(arglist(additional_args))
 		if(!length(N?.name))
 			qdel(N)
 			continue

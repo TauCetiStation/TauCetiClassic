@@ -4,9 +4,6 @@
 	check_docility = FALSE
 	check_capability = FALSE
 
-/obj/effect/proc_holder/borer/active/power_shop/on_gain(mob/user)
-	holder = user
-	
 /obj/effect/proc_holder/borer/active/power_shop/tgui_status(mob/user)
 	return UI_INTERACTIVE
 

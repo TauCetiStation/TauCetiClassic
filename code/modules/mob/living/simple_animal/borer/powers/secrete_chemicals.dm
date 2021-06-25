@@ -4,12 +4,8 @@
 	chemicals = 50
 	check_docility = FALSE // cause we want to inject sucrase to wake up from docility and also why not
 
-/obj/effect/proc_holder/borer/active/noncontrol/secrete_chemicals/on_gain(mob/living/simple_animal/borer/B)
-	..()
-	B.synthable_chems += list("bicaridine" = 15, "alkysine" = 15, "tramadol" = 15, "hyperzine" = 10)
-
-/obj/effect/proc_holder/borer/active/noncontrol/secrete_chemicals/on_lose(mob/living/simple_animal/borer/B)
-	B.synthable_chems -= list("bicaridine" = 15, "alkysine" = 15, "tramadol" = 15, "hyperzine" = 10)
+/obj/effect/proc_holder/borer/active/noncontrol/secrete_chemicals/on_gain()
+	holder.synthable_chems += list("bicaridine" = 15, "alkysine" = 15, "tramadol" = 15, "hyperzine" = 10)
 
 /obj/effect/proc_holder/borer/active/noncontrol/secrete_chemicals/activate()
 	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in holder.synthable_chems

@@ -64,7 +64,7 @@
 	if(request_ghosts)
 		for(var/mob/dead/observer/O in observer_list)
 			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
-	all_upgrades = sortAtom(init_named_subtypes(/obj/effect/proc_holder/borer))
+	all_upgrades = sortAtom(init_named_subtypes(/obj/effect/proc_holder/borer, list(null, src)))
 	for(var/obj/effect/proc_holder/borer/U in all_upgrades)
 		if(U.cost == 0)
 			gain_upgrade(U)
@@ -86,7 +86,7 @@
 	if(U in upgrades)
 		return
 	upgrades |= U
-	U.on_gain(src)
+	U.on_gain()
 
 /mob/living/simple_animal/borer/proc/hasChemicals(amt)
 	return amt <= chemicals

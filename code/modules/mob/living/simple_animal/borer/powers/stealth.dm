@@ -4,9 +4,5 @@
 	cost = 1
 	requires_t = list(/obj/effect/proc_holder/borer/active/hostless/invis)
 
-/obj/effect/proc_holder/borer/stealth/on_gain(mob/living/simple_animal/borer/B)
-	..()
-	B.stealthy = TRUE
-
-/obj/effect/proc_holder/borer/stealth/on_lose(mob/living/simple_animal/borer/B)
-	B.stealthy = FALSE
+/obj/effect/proc_holder/borer/stealth/on_gain()
+	holder.stealthy = TRUE
