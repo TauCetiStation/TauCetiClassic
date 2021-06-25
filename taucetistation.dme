@@ -582,6 +582,7 @@
 #include "code\game\gamemodes\objectives\target\harm.dm"
 #include "code\game\gamemodes\objectives\target\protect.dm"
 #include "code\game\gamemodes\objectives\target\rp_rev.dm"
+#include "code\game\gamemodes\objectives\target\sacrifice.dm"
 #include "code\game\gamemodes\objectives\target\target.dm"
 #include "code\game\gamemodes\roles\abductor.dm"
 #include "code\game\gamemodes\roles\alien.dm"

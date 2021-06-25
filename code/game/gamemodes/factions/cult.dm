@@ -152,7 +152,7 @@
 /datum/faction/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(!religion?.can_convert(player))
+		if(!religion?.can_convert(player) && !religion?.is_member(player))
 			ucs += player.mind
 	return ucs
 

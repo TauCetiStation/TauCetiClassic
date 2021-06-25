@@ -37,10 +37,6 @@
 		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
 	)
 
-/datum/objective/steal/PostAppend()
-	find_target()
-	return TRUE
-
 /datum/objective/steal/proc/set_target(item_name)
 	target_name = item_name
 	steal_target = possible_items[target_name]
@@ -51,7 +47,8 @@
 
 
 /datum/objective/steal/find_target()
-	return set_target(pick(possible_items))
+	set_target(pick(possible_items))
+	return TRUE
 
 
 /datum/objective/steal/proc/select_target()

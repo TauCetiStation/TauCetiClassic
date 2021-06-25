@@ -1,21 +1,5 @@
 /datum/objective/cult
 
-/datum/objective/cult/sacrifice/find_target()
-	var/datum/faction/cult/C = faction
-	if(istype(C))
-		C.find_sacrifice_target()
-		if(C.sacrifice_target)
-			explanation_text = "Принесите в жертву [C.sacrifice_target.name], [C.sacrifice_target.assigned_role]."
-		else
-			explanation_text = "Свободная задача."
-
-/datum/objective/cult/sacrifice/check_completion()
-	var/datum/faction/cult/C = faction
-	if(istype(C))
-		if(C.sacrifice_target in C.sacrificed)
-			return OBJECTIVE_WIN
-	return OBJECTIVE_LOSS
-
 /datum/objective/cult/recruit
 	var/acolytes_needed
 
