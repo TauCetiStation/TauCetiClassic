@@ -15,7 +15,7 @@
 	desc = "Unlocks synthesis of peridaxon, dexalin+ and dermaline."
 	chems = list("peridaxon" = 10, "dexalinp" = 15, "dermaline" = 15)
 	cost = 3
-	requires_t = list(/obj/effect/proc_holder/borer/chem_extension/advanced)
+	requires_upgrades = list(/obj/effect/proc_holder/borer/chem_extension/advanced)
 
 /obj/effect/proc_holder/borer/chem_extension/sucrase
 	name = "Sucrase Synthesis"
@@ -28,4 +28,4 @@
 	desc = "Unlocks synthesis of imidazoline and aurisine."
 	chems = list("imidazoline" = 15, "aurisine" = 15)
 	cost = 1
-	requires_t = list(/obj/effect/proc_holder/borer/chem_extension/advanced)
+	requires_upgrades = list(/obj/effect/proc_holder/borer/chem_extension/advanced)

@@ -5,7 +5,7 @@
 	var/duration = 10 SECONDS
 	cooldown = 60 SECONDS
 	chemicals = 100
-	requires_t = list(/obj/effect/proc_holder/borer/active/control/direct_transfer)
+	requires_upgrades = list(/obj/effect/proc_holder/borer/active/control/direct_transfer)
 
 /obj/effect/proc_holder/borer/active/control/direct_reproduce/activate()
 	. = FALSE

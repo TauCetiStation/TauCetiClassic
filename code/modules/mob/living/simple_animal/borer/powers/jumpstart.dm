@@ -5,7 +5,7 @@
 	cooldown = 60 SECONDS
 	chemicals = 350
 	var/healing = 100
-	requires_t = list(
+	requires_upgrades = list(
 		/obj/effect/proc_holder/borer/active/noncontrol/awakening_shock,
 		/obj/effect/proc_holder/borer/enlarged_glands,
 	)

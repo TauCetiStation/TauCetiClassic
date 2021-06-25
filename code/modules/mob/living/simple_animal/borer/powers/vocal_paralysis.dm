@@ -2,7 +2,7 @@
 	name = "Vocal Cord Paralysis"
 	desc = "Temporarily disable host's ability to speak."
 	cost = 3
-	requires_t = list(/obj/effect/proc_holder/borer/active/noncontrol/sensory_deprivation)
+	requires_upgrades = list(/obj/effect/proc_holder/borer/active/noncontrol/sensory_deprivation)
 	cooldown = 120 SECONDS
 	check_docility = TRUE
 

@@ -8,10 +8,9 @@
     var/cost = COST_INNATE
 
     // list of paths that need to be bought before this
-    var/list/requires_t = list()
+    var/list/requires_upgrades = list()
     var/mob/living/simple_animal/borer/holder
 
-    // TODO: docility and incapacitated optional checks
     var/check_docility = TRUE
     var/check_capability = TRUE
 

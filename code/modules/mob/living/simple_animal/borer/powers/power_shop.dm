@@ -23,7 +23,7 @@
 			continue
 		var/list/requirements = list()
 		var/has_requirements = TRUE
-		for(var/req_path in U.requires_t)
+		for(var/req_path in U.requires_upgrades)
 			var/obj/effect/proc_holder/borer/R = locate(req_path) in holder.all_upgrades
 			if(!R)
 				continue
@@ -65,7 +65,7 @@
 /obj/effect/proc_holder/borer/active/power_shop/proc/buy_upgrade(obj/effect/proc_holder/borer/U)
 	if(holder.upgrade_points < U.cost)
 		return FALSE
-	for(var/req_path in U.requires_t)
+	for(var/req_path in U.requires_upgrades)
 		if(!locate(req_path) in holder.upgrades)
 			return FALSE
 	holder.upgrade_points -= U.cost
