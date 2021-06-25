@@ -1,6 +1,7 @@
 /datum/game_mode/cult
 	name = "Cult Of Blood"
 	config_name = "cult"
+	probability = 100
 
 	factions_allowed = list(/datum/faction/cult)
 

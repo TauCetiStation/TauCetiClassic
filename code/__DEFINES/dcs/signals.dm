@@ -40,7 +40,7 @@
 
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
-#define COMSIG_REL_ADD_MEMBER "rite_on_chosen"
+#define COMSIG_REL_ADD_MEMBER "rel_add_member"
 
 // /datum/role signals
 /// from base of role/GetScoreboard(): ()
