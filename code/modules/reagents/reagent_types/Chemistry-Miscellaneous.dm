@@ -975,3 +975,19 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	..()
 	M.adjustToxLoss(REM)
 	return FALSE
+
+/datum/reagent/sucrase
+	name = "Sucrase"
+	id = "sucrase"
+	description = "Ferment that breaks down sugar."
+	reagent_state = LIQUID
+	color = "#c2ca7d"
+	taste_message = null
+	restrict_species = list(IPC, DIONA)
+	custom_metabolism = 0.5
+
+/datum/reagent/sucrase/on_general_digest(mob/living/M)
+	. = ..()
+	var/amt = clamp(M.reagents.get_reagent_amount("sugar"), 0, 1)
+	M.reagents.remove_reagent("sugar", amt)
+	M.reagents.add_reagent("water", amt)
