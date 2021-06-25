@@ -161,9 +161,6 @@
 
 // Real runtime cat
 
-var/global/cat_cooldown = 20 SECONDS
-var/global/cat_max_number = 10
-var/global/cat_teleport = 0.0
 var/global/cat_number = 0
 
 /mob/living/simple_animal/cat/real_runtime

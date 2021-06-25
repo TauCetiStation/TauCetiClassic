@@ -2,6 +2,10 @@ var/global/total_runtimes = 0
 var/global/total_runtimes_skipped = 0
 
 #ifdef DEBUG
+
+	#define CAT_COOLDOWN 20 SECONDS
+	#define CAT_MAX_NUMBER 10
+
 /world/Error(exception/E, datum/e_src)
 	total_runtimes++
 
@@ -61,7 +65,8 @@ var/global/total_runtimes_skipped = 0
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
 			// Create a Dusty at the runtime location
-			if(usr.loc && prob(10) && (world.time - cat_teleport > cat_cooldown) && (cat_number < cat_max_number)) // Avoid runtime spam spawning lots of Dusty
+			var/static/cat_teleport = 0.0
+			if(usr.loc && prob(10) && (world.time - cat_teleport > CAT_COOLDOWN) && (cat_number < CAT_MAX_NUMBER)) // Avoid runtime spam spawning lots of Dusty
 				new /mob/living/simple_animal/cat/real_runtime(get_turf(usr), E.line)
 				cat_teleport = world.time
 
@@ -94,5 +99,8 @@ var/global/total_runtimes_skipped = 0
 		world.log << line
 
 	log_runtime("[E.name] in [E.file]:[E.line] :[log_end]\n[E.desc]")
+
+	#undef CAT_COOLDOWN
+	#undef CAT_MAX_NUMBER
 
 #endif
