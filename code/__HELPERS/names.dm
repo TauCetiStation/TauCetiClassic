@@ -49,6 +49,11 @@ var/religion_name = null
 
 	return "Tau Ceti" //Screw Nyx
 
+/proc/system_name_ru()
+	if(system_name_ru)
+		return system_name_ru
+	return system_name()
+
 /proc/station_name()
 	if (station_name)
 		return station_name
@@ -61,6 +66,11 @@ var/religion_name = null
 		world.name = station_name
 
 	return station_name
+
+/proc/station_name_ru()
+	if (station_name_ru)
+		return station_name_ru
+	return station_name()
 
 /proc/new_station_name()
 	var/random = rand(1,5)
