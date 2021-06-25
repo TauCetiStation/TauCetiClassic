@@ -30158,12 +30158,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bbh" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
+	dir = 9
+	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Telecoms Server Access";
 	req_access = list(61)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -30307,12 +30307,17 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "bbs" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
+	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Telecoms Server Access";
 	req_access = list(61)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -34650,14 +34655,15 @@
 /turf/simulated/wall/r_wall,
 /area/station/rnd/robotics)
 "bju" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/toolbox/electrical,
-/obj/item/device/multitool,
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers{
 	dir = 6
 	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/ai_monitored/storage_secure)
 "bjv" = (
@@ -40266,6 +40272,11 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41043,10 +41054,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "buU" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Telecoms Server Access";
-	req_access = list(61)
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -41057,6 +41064,10 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Telecoms Server Access";
+	req_access = list(61)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -58782,6 +58793,13 @@
 	pixel_y = 25
 	},
 /obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/folder/blue,
+/obj/item/weapon/pen,
+/obj/item/weapon/reagent_containers/food/drinks/tea{
+	pixel_x = -8;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61349,16 +61367,12 @@
 	pixel_y = -25
 	},
 /obj/structure/cable,
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/pen,
-/obj/item/weapon/reagent_containers/food/drinks/tea{
-	pixel_x = 7;
-	pixel_y = 10
+/obj/machinery/porta_turret/station_default{
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/aisat/ai_chamber)
 "cqD" = (
@@ -61458,12 +61472,10 @@
 /area/station/hallway/primary/starboard)
 "cqL" = (
 /obj/structure/rack,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
+/obj/item/weapon/tank/oxygen,
+/obj/item/weapon/tank/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62218,18 +62230,17 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "csB" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/oxygen,
-/obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/porta_turret/station_default{
+	dir = 4
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/aisat/antechamber)
 "csC" = (
@@ -62269,7 +62280,6 @@
 	},
 /area/station/tcommsat/chamber)
 "csG" = (
-/obj/structure/dispenser,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
@@ -62279,6 +62289,16 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/rack,
+/obj/item/stack/rods{
+	amount = 10
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/sheet/plasteel{
+	amount = 10
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -62293,6 +62313,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -66753,8 +66774,14 @@
 /area/station/maintenance/engineering)
 "cDN" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp,
-/obj/item/weapon/folder/yellow,
+/obj/item/weapon/paper_bin,
+/obj/item/device/flashlight/lamp{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/weapon/folder/yellow{
+	pixel_x = 4
+	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "cDO" = (
@@ -67435,13 +67462,7 @@
 	},
 /area/station/tcommsat/computer)
 "cFT" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 10
-	},
+/obj/structure/dispenser,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -122273,7 +122294,7 @@ cqy
 csY
 cue
 cEY
-aaa
+cIe
 cIe
 cIe
 cIe
@@ -126385,7 +126406,7 @@ csP
 ctp
 aWZ
 cEW
-aaa
+cIe
 cIe
 cIe
 cIe
