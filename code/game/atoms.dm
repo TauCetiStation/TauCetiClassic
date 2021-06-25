@@ -15,7 +15,6 @@
 	var/pass_flags = NONE
 	var/throwpass = 0
 	var/germ_level = GERM_LEVEL_AMBIENT // The higher the germ level, the more germ on the atom.
-	var/w_class = SIZE_ABSTRACT
 	var/simulated = 1 //filter for actions - used by lighting overlays
 
 	var/resize = 1		//don't abuse this shit
@@ -736,19 +735,3 @@
 	imgs[I] = viewers
 
 	return imgs
-
-/atom/proc/get_size_flavor()
-	switch(w_class)
-		if(SIZE_MINUSCULE to SIZE_SMALL)
-			return "small"
-		if(SIZE_NORMAL to SIZE_LARGE)
-			return "medium"
-		if(SIZE_HUMAN)
-			return "human"
-		if(SIZE_MASSIVE)
-			return "huge"
-		if(SIZE_GYGANT to SIZE_GARGANTUAN)
-			return "gygant"
-
-/atom/proc/update_size()
-	return w_class

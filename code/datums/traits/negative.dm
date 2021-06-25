@@ -77,7 +77,7 @@
 	H.update_mutations()
 	H.update_inv_w_uniform()
 	H.update_inv_wear_suit()
-
+	H.update_size_class()
 
 
 /datum/quirk/tourette

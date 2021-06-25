@@ -370,21 +370,3 @@
 			return has_bodypart(targetzone)
 		else
 			return TRUE
-
-// This proc guarantees no mouse vs queen tomfuckery.
-/mob/living/proc/is_bigger_than(mob/living/target)
-	// todo: direct size comparison 
-	// if(target.w_class && w_class && abs(target.w_class - w_class) <= 3)
-	if(target.w_class < SIZE_SMALL && w_class >= SIZE_SMALL)
-		return TRUE
-	if(maxHealth > target.maxHealth)
-		return TRUE
-	return FALSE
-
-/proc/get_size_ratio(mob/living/dividend, mob/living/divisor)
-	var/ratio = dividend.maxHealth / divisor.maxHealth
-	if(dividend.w_class < SIZE_SMALL && divisor.w_class >= SIZE_SMALL)
-		ratio *= 0.5
-	else if(dividend.w_class >= SIZE_SMALL && divisor.w_class < SIZE_SMALL)
-		ratio *= 2.0
-	return ratio

@@ -2136,11 +2136,19 @@
 
 	return TRUE
 
-/mob/living/carbon/human/update_size()
-	var/new_w_class = SIZE_HUMAN
+/mob/living/carbon/human/update_size_class()
+	
+	var/new_w_class = initial(w_class)
+	
+	var/datum/species/S = all_species[get_species()]
+	if(S)
+		new_w_class = S.w_class
 
 	if(SMALLSIZE in mutations)
 		new_w_class -= 1
+
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+		new_w_class += 1
 
 	w_class = new_w_class
 

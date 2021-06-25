@@ -1,0 +1,2 @@
+/obj/effect
+	flags = ABSTRACT
