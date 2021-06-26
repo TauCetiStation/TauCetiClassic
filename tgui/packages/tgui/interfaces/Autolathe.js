@@ -51,7 +51,7 @@ export const Autolathe = (props, context) => {
             onSelected={val => setCategory(categories.indexOf(val))} />
         }>
           <Input
-            autofocus
+            autoFocus
             fluid
             placeholder="Search for..."
             onInput={(e, v) => setSearchText(v)}
