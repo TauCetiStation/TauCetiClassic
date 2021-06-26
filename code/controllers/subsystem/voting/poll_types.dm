@@ -112,11 +112,18 @@
 
 /datum/vote_choice/crew_transfer/on_win()
 	if(!SSshuttle.online && SSshuttle.location == 0)
+		message_admins("A crew transfer vote has passed, calling the shuttle.")
+		log_admin("A crew transfer vote has passed, calling the shuttle.")
+
+		if(SSshuttle.fake_recall || SSshuttle.time_for_fake_recall)
+			message_admins("The shuttle fake recall was supressed because of crew transfer vote.")
+			log_admin("The shuttle fake recall was supressed because of crew transfer vote.")
+			SSshuttle.fake_recall = FALSE
+			SSshuttle.time_for_fake_recall = 0
+
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
-		message_admins("A crew transfer vote has passed, calling the shuttle.")
-		log_admin("A crew transfer vote has passed, calling the shuttle.")
 
 
 /*********************
