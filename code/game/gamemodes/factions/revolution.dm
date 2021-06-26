@@ -30,7 +30,7 @@
 
 /datum/faction/revolution/OnPostSetup()
 	if(SSshuttle)
-		SSshuttle.always_fake_recall = TRUE
+		SSshuttle.fake_recall = TRUE
 
 	return ..()
 
@@ -59,7 +59,7 @@
 	var/win = IsSuccessful()
 	if(config.continous_rounds)
 		if(win && SSshuttle)
-			SSshuttle.always_fake_recall = FALSE
+			SSshuttle.fake_recall = FALSE
 		return FALSE
 
 	if(win)

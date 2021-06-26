@@ -880,7 +880,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
-	if(SSshuttle.always_fake_recall)
+	if(SSshuttle.fake_recall)
 		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
 					"Cancel shuttle call",
 					"Call it anyway",
@@ -889,8 +889,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if("Cancel shuttle call")
 				return
 			if("Call and allow it to fly to station")
-				SSshuttle.always_fake_recall = FALSE
-				SSshuttle.fake_recall = 0
+				SSshuttle.fake_recall = FALSE
+				SSshuttle.time_for_fake_recall = 0
 				log_admin("[key_name(usr)] disabled shuttle fake recall.")
 				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
 
