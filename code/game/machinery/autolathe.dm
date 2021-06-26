@@ -1,6 +1,6 @@
 #define PATH2CSS(path) replacetext(replacetext("[path]", "[/obj/item]/", ""), "/", "-")
 
-/proc/get_material_by_name(name)
+/proc/get_material_type_by_name(name)
 	var/static/list/name2mat
 	if(!name2mat)
 		name2mat = list()
@@ -13,13 +13,22 @@
 
 /datum/autolathe_recipe
 	var/name
+	var/category
 	var/result_type
 	var/list/resources
 
 /datum/autolathe_recipe/stack
 	var/max_res_amount = 50
 
-/proc/path_to_ar(obj/path)
+#define CATEGORY_GENERAL     "General"
+#define CATEGORY_TOOLS       "Tools"
+#define CATEGORY_MEDICAL     "Medical"
+#define CATEGORY_ENGINEERING "Engineering"
+#define CATEGORY_AMMO        "Ammo"
+#define CATEGORY_DEVICES     "Devices"
+#define CATEGORY_MATERIALS   "Materials"
+
+/proc/path_to_ar(obj/path, category_name = CATEGORY_GENERAL)
 	var/obj/P = path
 	var/amount = 1
 	var/datum/autolathe_recipe/recipe
@@ -35,6 +44,7 @@
 			amount = initial(ammobox.max_ammo)
 			P = initial(ammobox.ammo_type)
 	recipe.name = initial(path.name)
+	recipe.category = category_name
 	recipe.result_type = path
 	recipe.resources = list(
 		MAT_METAL = initial(P.m_amt) * amount,
@@ -42,109 +52,87 @@
 	)
 	return recipe
 
-#define R(path) path_to_ar(path)
+#define R(path, category_name) path_to_ar(path, category_name)
 var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
-	"Tools" = list(
-		R(/obj/item/weapon/crowbar),
-		R(/obj/item/device/multitool),
-		R(/obj/item/device/t_scanner),
-		R(/obj/item/weapon/weldingtool),
-		R(/obj/item/weapon/screwdriver),
-		R(/obj/item/weapon/wirecutters),
-		R(/obj/item/weapon/wrench),
-		R(/obj/item/weapon/shovel),
-		R(/obj/item/weapon/minihoe),
-	),
-	"Medical" = list(
-		R(/obj/item/weapon/scalpel),
-		R(/obj/item/weapon/circular_saw),
-		R(/obj/item/weapon/surgicaldrill),
-		R(/obj/item/weapon/retractor),
-		R(/obj/item/weapon/cautery),
-		R(/obj/item/weapon/hemostat),
-		R(/obj/item/weapon/reagent_containers/glass/beaker),
-		R(/obj/item/weapon/reagent_containers/glass/beaker/large),
-		R(/obj/item/weapon/reagent_containers/glass/beaker/vial),
-		R(/obj/item/weapon/reagent_containers/syringe),
-	),
-	"Engineering" = list(
-		R(/obj/item/weapon/stock_parts/console_screen),
-		R(/obj/item/weapon/module/power_control),
-		R(/obj/item/weapon/airlock_electronics),
-		R(/obj/item/weapon/airalarm_electronics),
-		R(/obj/item/weapon/firealarm_electronics),
-		R(/obj/item/weapon/rcd_ammo),
-		R(/obj/item/weapon/camera_assembly),
-	),
-	"Ammo" = list(
-		R(/obj/item/ammo_box/eight_shells/beanbag),
-		R(/obj/item/ammo_box/magazine/c45r),
-		R(/obj/item/ammo_box/magazine/m9mm_2/rubber),
-	),
-	"Devices" = list(
-		R(/obj/item/device/taperecorder),
-		R(/obj/item/device/assembly/igniter),
-		R(/obj/item/device/assembly/signaler),
-		R(/obj/item/device/radio/headset),
-		R(/obj/item/device/assembly/voice),
-		R(/obj/item/device/radio/off),
-		R(/obj/item/device/assembly/infra),
-		R(/obj/item/device/assembly/timer),
-		R(/obj/item/device/assembly/prox_sensor),
-		R(/obj/item/device/flashlight),
-		R(/obj/item/device/destTagger),
-		R(/obj/item/device/analyzer),
-		R(/obj/item/device/plant_analyzer),
-		R(/obj/item/device/healthanalyzer),
-	),
-	"Materials" = list(
-		R(/obj/item/stack/sheet/metal),
-		R(/obj/item/stack/sheet/glass),
-		R(/obj/item/stack/sheet/rglass),
-		R(/obj/item/stack/rods),
-	),
-	"General" = list(
-		R(/obj/item/weapon/reagent_containers/glass/bucket),
-		R(/obj/item/weapon/reagent_containers/spray/extinguisher),
-		R(/obj/item/clothing/head/welding),
-		R(/obj/item/weapon/kitchenknife),
-		R(/obj/item/weapon/light/tube),
-		R(/obj/item/weapon/light/bulb),
-		R(/obj/item/ashtray/glass),
-		R(/obj/item/weapon/hand_labeler),
-		R(/obj/item/toy/gun),
-		R(/obj/item/toy/ammo/gun),
-		R(/obj/item/weapon/game_kit/random),
-		R(/obj/item/newscaster_frame),
-		R(/obj/item/device/tabletop_assistant),
-	)
+	R(/obj/item/weapon/crowbar,     CATEGORY_TOOLS),
+	R(/obj/item/device/multitool,   CATEGORY_TOOLS),
+	R(/obj/item/device/t_scanner,   CATEGORY_TOOLS),
+	R(/obj/item/weapon/weldingtool, CATEGORY_TOOLS),
+	R(/obj/item/weapon/screwdriver, CATEGORY_TOOLS),
+	R(/obj/item/weapon/wirecutters, CATEGORY_TOOLS),
+	R(/obj/item/weapon/wrench,      CATEGORY_TOOLS),
+	R(/obj/item/weapon/shovel,      CATEGORY_TOOLS),
+	R(/obj/item/weapon/minihoe,     CATEGORY_TOOLS),
+	R(/obj/item/weapon/scalpel,       CATEGORY_MEDICAL),
+	R(/obj/item/weapon/circular_saw,  CATEGORY_MEDICAL),
+	R(/obj/item/weapon/surgicaldrill, CATEGORY_MEDICAL),
+	R(/obj/item/weapon/retractor,     CATEGORY_MEDICAL),
+	R(/obj/item/weapon/cautery,       CATEGORY_MEDICAL),
+	R(/obj/item/weapon/hemostat,      CATEGORY_MEDICAL),
+	R(/obj/item/weapon/reagent_containers/glass/beaker,       CATEGORY_MEDICAL),
+	R(/obj/item/weapon/reagent_containers/glass/beaker/large, CATEGORY_MEDICAL),
+	R(/obj/item/weapon/reagent_containers/glass/beaker/vial,  CATEGORY_MEDICAL),
+	R(/obj/item/weapon/reagent_containers/syringe,            CATEGORY_MEDICAL),
+	R(/obj/item/weapon/stock_parts/console_screen, CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/module/power_control,       CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/airlock_electronics,        CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/airalarm_electronics,       CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/firealarm_electronics,      CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/rcd_ammo,                   CATEGORY_ENGINEERING),
+	R(/obj/item/weapon/camera_assembly,            CATEGORY_ENGINEERING),
+	R(/obj/item/ammo_box/eight_shells/beanbag,   CATEGORY_AMMO),
+	R(/obj/item/ammo_box/magazine/c45r,          CATEGORY_AMMO),
+	R(/obj/item/ammo_box/magazine/m9mm_2/rubber, CATEGORY_AMMO),
+	R(/obj/item/device/taperecorder,         CATEGORY_DEVICES),
+	R(/obj/item/device/assembly/igniter,     CATEGORY_DEVICES),
+	R(/obj/item/device/assembly/signaler,    CATEGORY_DEVICES),
+	R(/obj/item/device/radio/headset,        CATEGORY_DEVICES),
+	R(/obj/item/device/assembly/voice,       CATEGORY_DEVICES),
+	R(/obj/item/device/radio/off,            CATEGORY_DEVICES),
+	R(/obj/item/device/assembly/infra,       CATEGORY_DEVICES),
+	R(/obj/item/device/assembly/timer,       CATEGORY_DEVICES),
+	R(/obj/item/device/assembly/prox_sensor, CATEGORY_DEVICES),
+	R(/obj/item/device/flashlight,           CATEGORY_DEVICES),
+	R(/obj/item/device/destTagger,           CATEGORY_DEVICES),
+	R(/obj/item/device/analyzer,             CATEGORY_DEVICES),
+	R(/obj/item/device/plant_analyzer,       CATEGORY_DEVICES),
+	R(/obj/item/device/healthanalyzer,       CATEGORY_DEVICES),
+	R(/obj/item/stack/sheet/metal,  CATEGORY_MATERIALS),
+	R(/obj/item/stack/sheet/glass,  CATEGORY_MATERIALS),
+	R(/obj/item/stack/sheet/rglass, CATEGORY_MATERIALS),
+	R(/obj/item/stack/rods,         CATEGORY_MATERIALS),
+	R(/obj/item/weapon/reagent_containers/glass/bucket, CATEGORY_GENERAL),
+	R(/obj/item/weapon/reagent_containers/spray/extinguisher, CATEGORY_GENERAL),
+	R(/obj/item/clothing/head/welding, CATEGORY_GENERAL),
+	R(/obj/item/weapon/kitchenknife, CATEGORY_GENERAL),
+	R(/obj/item/weapon/light/tube, CATEGORY_GENERAL),
+	R(/obj/item/weapon/light/bulb, CATEGORY_GENERAL),
+	R(/obj/item/ashtray/glass, CATEGORY_GENERAL),
+	R(/obj/item/weapon/hand_labeler, CATEGORY_GENERAL),
+	R(/obj/item/toy/gun, CATEGORY_GENERAL),
+	R(/obj/item/toy/ammo/gun, CATEGORY_GENERAL),
+	R(/obj/item/weapon/game_kit/random, CATEGORY_GENERAL),
+	R(/obj/item/newscaster_frame, CATEGORY_GENERAL),
+	R(/obj/item/device/tabletop_assistant, CATEGORY_GENERAL),
 )
 
 var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
-	"Devices" = list(
-		R(/obj/item/device/radio/electropack),
-		R(/obj/item/device/harmonica),
-	),
-	"General" = list(
-		R(/obj/item/weapon/handcuffs),
-		R(/obj/item/weapon/bell),
-	),
-	"Tools" = list(
-		R(/obj/item/weapon/flamethrower/full),
-		R(/obj/item/weapon/rcd),
-		R(/obj/item/weapon/weldingtool/largetank),
-	),
-	"Ammo" = list(
-		R(/obj/item/ammo_box/a357),
-		R(/obj/item/ammo_box/magazine/c45m),
-		R(/obj/item/ammo_box/magazine/m9mm_2),
-		R(/obj/item/ammo_box/eight_shells),
-		R(/obj/item/ammo_box/eight_shells/dart),
-		R(/obj/item/ammo_box/eight_shells/buckshot)
-	)
+	R(/obj/item/device/radio/electropack, CATEGORY_DEVICES),
+	R(/obj/item/device/harmonica, CATEGORY_DEVICES),
+	R(/obj/item/weapon/handcuffs, CATEGORY_GENERAL),
+	R(/obj/item/weapon/bell, CATEGORY_GENERAL),
+	R(/obj/item/weapon/flamethrower/full, CATEGORY_TOOLS),
+	R(/obj/item/weapon/rcd, CATEGORY_TOOLS),
+	R(/obj/item/weapon/weldingtool/largetank, CATEGORY_TOOLS),
+	R(/obj/item/ammo_box/a357, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/magazine/c45m, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/magazine/m9mm_2, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/eight_shells, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/eight_shells/dart, CATEGORY_AMMO),
+	R(/obj/item/ammo_box/eight_shells/buckshot, CATEGORY_AMMO)
 )
 #undef R
-var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes | autolathe_recipes_hidden
+var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden
 
 /obj/machinery/autolathe
 	name = "autolathe"
@@ -220,7 +208,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		var/list/material_info = list(
 			"name" = mat_id,
 			"amount" = amount,
-			"path" = PATH2CSS(get_material_by_name(mat_id))
+			"path" = PATH2CSS(get_material_type_by_name(mat_id))
 		)
 		material_data += list(material_info)
 	data["busy"] = busy
@@ -233,19 +221,17 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	var/list/recipes = list()
 	var/list/ARecipes = hacked ? autolathe_recipes_all : autolathe_recipes
 	var/list/categories = list("All")
-	for(var/category in ARecipes)
-		categories += category
-		for(var/AR in ARecipes[category])
-			var/datum/autolathe_recipe/M = AR
-			recipes.Add(list(list(
-				"category" = category,
-				"name" = M.name,
-				"ref" = "\ref[M]",
-				"requirements" = M.resources,
-				"hidden" = !!(autolathe_recipes_hidden[category] ? autolathe_recipes_hidden[category][AR] : null),
-				"path" = PATH2CSS(M.result_type),
-				"is_stack" = istype(M, /datum/autolathe_recipe/stack)
-			)))
+	for(var/datum/autolathe_recipe/AR in ARecipes)
+		categories |= AR.category
+		recipes.Add(list(list(
+			"category" = AR.category,
+			"name" = AR.name,
+			"ref" = "\ref[AR]",
+			"requirements" = AR.resources,
+			"hidden" = (AR in autolathe_recipes_hidden),
+			"path" = PATH2CSS(AR.result_type),
+			"is_stack" = istype(AR, /datum/autolathe_recipe/stack)
+		)))
 	data["recipes"] = recipes
 	data["categories"] = categories
 	data["coeff"] = 2 ** man_rating
