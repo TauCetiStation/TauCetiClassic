@@ -3,6 +3,7 @@
 	var/question = "Voting, voting, candidates are faggots!"
 	var/color = "white" // span color of question and name
 	var/description = ""
+	var/warning_message = ""
 	var/list/choice_types = list(/datum/vote_choice) //Choices will be initialized from this list
 	var/list/choices = list() // contents initiated /datum/vote_choice
 	var/initiator = null
@@ -50,6 +51,9 @@
 		return
 	if(world.time < next_vote)
 		return "Vote Cooldown: [round((next_vote - world.time) / 600)] Minutes"
+
+/datum/poll/proc/get_warning_or_blocking_message()
+	return get_blocking_reason() || warning_message
 
 /datum/poll/proc/on_start()
 	return
