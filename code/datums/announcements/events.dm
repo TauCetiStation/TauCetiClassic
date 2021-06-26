@@ -244,10 +244,10 @@
 
 /datum/announcement/centcomm/greytide
 	name = "Event: Grey Tide"
-	subtitle = "Тревога Безопастности"
+	subtitle = "Тревога Безопасности"
 	sound = "greytide"
 /datum/announcement/centcomm/greytide/play()
-	message = "В системах тюремного заключения [station_name_ru()] обнаружен [pick("Gr3y.T1d3","вредоностный троян")]. Рекомендуется привлечь ИИ."
+	message = "В системах тюремного заключения [station_name_ru()] обнаружен [pick("Gr3y.T1d3","вредоносный троян")]. Рекомендуется привлечь ИИ."
 	..()
 
 /datum/announcement/centcomm/icarus_lost
