@@ -419,5 +419,5 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				if(stored_material[MAT_GLASS] < 0)
 					stored_material[MAT_GLASS] = 0
 				busy = FALSE
-	src.updateUsrDialog()
+	updateUsrDialog()
 #undef PATH2CSS
