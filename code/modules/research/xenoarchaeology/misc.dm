@@ -2,7 +2,6 @@
 //---- Noticeboard
 
 /obj/structure/noticeboard/anomaly
-	notices = 5
 	icon_state = "nboard05"
 
 /obj/structure/noticeboard/anomaly/atom_init()
@@ -15,7 +14,7 @@
 	P.info = "<br>We keep test dummies in pens here for a reason, so standard procedure should be to activate newfound alien artifacts and place the two in close proximity. Promising items I might even approve monkey testing on."
 	P.update_icon()
 	S.stamp_paper(P)
-	contents += P
+	add_paper(P)
 
 	P = new
 	P.name = "Memo RE: materials gathering"
@@ -23,6 +22,7 @@
 	P.update_icon()
 	S.stamp_paper(P)
 	contents += P
+	add_paper(P)
 
 	P = new
 	P.name = "Memo RE: ethical quandaries"
@@ -30,6 +30,7 @@
 	P.update_icon()
 	S.stamp_paper(P)
 	contents += P
+	add_paper(P)
 
 	P = new
 	P.name = "READ ME! Before you people destroy any more samples"
@@ -37,6 +38,7 @@
 	P.update_icon()
 	S.stamp_paper(P)
 	contents += P
+	add_paper(P)
 
 	P = new
 	P.name = "Reminder regarding the anomalous material suits"
@@ -44,6 +46,7 @@
 	P.update_icon()
 	S.stamp_paper(P)
 	contents += P
+	add_paper(P)
 
 //---- Bookcase
 
