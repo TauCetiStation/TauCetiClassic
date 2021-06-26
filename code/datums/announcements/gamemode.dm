@@ -44,7 +44,7 @@
 	name = "Vox: Shuttle Returns"
 	subtitle = "ВКН Икар"
 /datum/announcement/centcomm/vox/returns/play()
-	message = "Ваши гости улетают, [station_name_ru()]. Движутся слишком быстро, что бы мы могли навестись на них. " + \
+	message = "Ваши гости улетают, [station_name_ru()]. Они движутся слишком быстро, что бы мы могли навестись на них. " + \
 			"Похоже, они покидают систему [system_name_ru()] без оглядки."
 
 /* Malfunction */

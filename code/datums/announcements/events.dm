@@ -204,10 +204,10 @@
 /datum/announcement/centcomm/infestation
 	name = "Event: Vermin infestation"
 	subtitle = "Заражение Паразитами"
-	message = "Биосканеры зафиксировали, что что-то размножается где-то на станции. Избавтесь от этого, пока оно не повлияло на производительность."
+	message = "Биосканеры зафиксировали, что что-то размножается где-то на станции. Избавьтесь от них, пока они не начали влиять на эффективность станции."
 /datum/announcement/centcomm/infestation/play(vermstring, locstring)
 	if(vermstring && locstring)
-		message = "Биосканеры зафиксировали, что [vermstring] размножается в [locstring]. Вычистите это, пока не начало влиять на производительность."
+		message = "Биосканеры зафиксировали, что [vermstring] размножаются в [locstring]. Избавьтесь от них, пока они не начали влиять на эффективность станции."
 	..()
 
 /datum/announcement/centcomm/meteor_wave
@@ -244,10 +244,10 @@
 
 /datum/announcement/centcomm/greytide
 	name = "Event: Grey Tide"
-	subtitle = "Тревога Безопастности"
+	subtitle = "Тревога Безопасности"
 	sound = "greytide"
 /datum/announcement/centcomm/greytide/play()
-	message = "В системах тюремного заключения [station_name_ru()] обнаружен [pick("Gr3y.T1d3","вредоностный троян")]. Рекомендуется привлечь ИИ."
+	message = "В системах тюремного заключения [station_name_ru()] обнаружен [pick("Gr3y.T1d3","вредоносный троян")]. Рекомендуется привлечь ИИ."
 	..()
 
 /datum/announcement/centcomm/icarus_lost

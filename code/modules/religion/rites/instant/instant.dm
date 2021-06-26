@@ -134,7 +134,7 @@
 
 /datum/religion_rites/instant/cult/drain_torture
 	name = "Высасывание Жизни"
-	desc = "Высасывет жизнь из людей на заряженных столах пыток!"
+	desc = "Высасывает жизнь из людей на заряженных столах пыток!"
 	ritual_length = (1 SECONDS)
 	invoke_msg = "Дай мне сил!!!"
 	favor_cost = 100
@@ -174,7 +174,7 @@
 		return FALSE
 
 	user.visible_message("<span class='userdanger'>Кровь течет из пустоты в [user]!</span>", \
-		"<span class='[religion.style_text]'>Кровь начинает течь из дыры в пространстве в твое слабое смертное тело. Ты чувствуешь... переполненость.</span>", \
+		"<span class='[religion.style_text]'>Кровь начинает течь из дыры в пространстве в твое слабое смертное тело. Ты чувствуешь... переполненность.</span>", \
 		"<span class='userdanger'>Вы слышите течение жидкости.</span>")
 
 	if(ishuman(user))
@@ -274,7 +274,7 @@
 	name = "Создание Гомункула"
 	desc = "Создаёт гомункула, который может существовать только внутри территории религии."
 	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
-	invoke_msg = "Прийди же!!!"
+	invoke_msg = "Приди же!!!"
 	favor_cost = 325
 
 	needed_aspects = list(
@@ -298,7 +298,7 @@
 	..()
 	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 15 SECONDS)
 	if(!candidates.len)
-		to_chat(user, "<span class='warning'>Ниодна душа не захотела вселяться в гомункула.</span>")
+		to_chat(user, "<span class='warning'>Ни одна душа не захотела вселяться в гомункула.</span>")
 		return FALSE
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	for(var/i in 1 to divine_power)
