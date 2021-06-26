@@ -78,7 +78,7 @@ export const Autolathe = (props, context) => {
                   onClick={() => act("make", { make: recipe.ref })}>
                   {toTitleCase(recipe.name)}
                 </Button>
-                {recipe.is_stack && (
+                {recipe.is_stack === 1 && (
                   <Box as="span">
                     <Button
                       color={recipe.hidden && "red" || null}

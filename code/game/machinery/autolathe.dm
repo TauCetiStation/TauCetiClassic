@@ -363,11 +363,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	if (.)
 		return
 
-	if(!istype(usr, /mob/living/silicon/pai))
-		. = ..()
-		if(!.)
-			return
-	else
+	if(istype(usr, /mob/living/silicon/pai))
 		var/mob/living/silicon/pai/TempUsr = usr
 		if(TempUsr.hackobj != src)
 			return
