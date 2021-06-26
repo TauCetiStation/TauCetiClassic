@@ -34,7 +34,7 @@
 			return
 		var/client/client = user
 		user = client.mob
-			
+
 	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
 	alert.tgui_interact(user)
 
@@ -358,7 +358,7 @@
 //changeling
 /obj/screen/alert/regen_stasis
 	name = "Regenerative Stasis"
-	desc = "You has entered in statis. Just wait a little bit."
+	desc = "You has entered in stasis. Just wait a little bit."
 	icon_state = "regen_stasis"
 
 //IANS

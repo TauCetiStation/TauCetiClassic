@@ -86,7 +86,7 @@
 			return TRUE
 
 	if(user)
-		to_chat(user, "<span class='warning'>Сначало разместите руну-маяк.</span>")
+		to_chat(user, "<span class='warning'>Сначала разместите руну-маяк.</span>")
 	return FALSE
 
 /datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)

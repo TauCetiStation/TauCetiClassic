@@ -88,7 +88,7 @@
 
 	text += "<br><b>Аспекты([religion.aspects.len]):</b>"
 	if(!religion.aspects.len)
-		text += "<br>Ниодного аспекта не было выбрано"
+		text += "<br>Ни одного аспекта не было выбрано"
 	else
 		for(var/name in religion.aspects)
 			var/datum/aspect/A = religion.aspects[name]
@@ -96,7 +96,7 @@
 
 	text += "<br><br><b>Ритуалы:</b>"
 	if(!religion.ritename_by_count.len)
-		text += "<br>Ниодного ритуала не было выбрано"
+		text += "<br>Ни одного ритуала не было выбрано"
 	else
 		for(var/name in religion.ritename_by_count)
 			var/count = religion.ritename_by_count[name]
