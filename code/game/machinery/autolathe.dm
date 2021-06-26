@@ -1,8 +1,20 @@
+#define PATH2CSS(path) replacetext(replacetext("[path]", "[/obj/item]/", ""), "/", "-")
+
+/proc/get_material_by_name(name)
+	var/static/list/name2mat
+	if(!name2mat)
+		name2mat = list()
+		for(var/type in subtypesof(/obj/item/stack/sheet))
+			var/obj/item/stack/sheet/mat = type
+			if(!initial(mat.name))
+				continue
+			name2mat[lowertext(initial(mat.name))] = mat
+	return name2mat[name]
+
 /datum/autolathe_recipe
 	var/name
 	var/result_type
-	var/metal_amount = 0
-	var/glass_amount = 0
+	var/list/resources
 
 /datum/autolathe_recipe/stack
 	var/max_res_amount = 50
@@ -24,91 +36,115 @@
 			P = initial(ammobox.ammo_type)
 	recipe.name = initial(path.name)
 	recipe.result_type = path
-	recipe.metal_amount = initial(P.m_amt) * amount
-	recipe.glass_amount = initial(P.g_amt) * amount
+	recipe.resources = list(
+		MAT_METAL = initial(P.m_amt) * amount,
+		MAT_GLASS = initial(P.g_amt) * amount,
+	)
 	return recipe
 
 #define R(path) path_to_ar(path)
 var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
-	R(/obj/item/weapon/reagent_containers/glass/bucket),
-	R(/obj/item/weapon/crowbar),
-	R(/obj/item/device/flashlight),
-	R(/obj/item/weapon/reagent_containers/spray/extinguisher),
-	R(/obj/item/device/multitool),
-	R(/obj/item/device/t_scanner),
-	R(/obj/item/device/analyzer),
-	R(/obj/item/device/plant_analyzer),
-	R(/obj/item/device/healthanalyzer),
-	R(/obj/item/weapon/weldingtool),
-	R(/obj/item/weapon/screwdriver),
-	R(/obj/item/weapon/wirecutters),
-	R(/obj/item/weapon/wrench),
-	R(/obj/item/clothing/head/welding),
-	R(/obj/item/weapon/stock_parts/console_screen),
-	R(/obj/item/weapon/airlock_electronics),
-	R(/obj/item/weapon/airalarm_electronics),
-	R(/obj/item/weapon/firealarm_electronics),
-	R(/obj/item/weapon/module/power_control),
-	R(/obj/item/stack/sheet/metal),
-	R(/obj/item/stack/sheet/glass),
-	R(/obj/item/stack/sheet/rglass),
-	R(/obj/item/stack/rods),
-	R(/obj/item/weapon/rcd_ammo),
-	R(/obj/item/weapon/kitchenknife),
-	R(/obj/item/weapon/scalpel),
-	R(/obj/item/weapon/circular_saw),
-	R(/obj/item/weapon/surgicaldrill),
-	R(/obj/item/weapon/retractor),
-	R(/obj/item/weapon/cautery),
-	R(/obj/item/weapon/hemostat),
-	R(/obj/item/weapon/reagent_containers/glass/beaker),
-	R(/obj/item/weapon/reagent_containers/glass/beaker/large),
-	R(/obj/item/weapon/reagent_containers/glass/beaker/vial),
-	R(/obj/item/weapon/reagent_containers/syringe),
-	R(/obj/item/ammo_box/eight_shells/beanbag),
-	R(/obj/item/ammo_box/magazine/c45r),
-	R(/obj/item/ammo_box/magazine/m9mm_2/rubber),
-	R(/obj/item/device/taperecorder),
-	R(/obj/item/device/assembly/igniter),
-	R(/obj/item/device/assembly/signaler),
-	R(/obj/item/device/radio/headset),
-	R(/obj/item/device/assembly/voice),
-	R(/obj/item/device/radio/off),
-	R(/obj/item/device/assembly/infra),
-	R(/obj/item/device/assembly/timer),
-	R(/obj/item/device/assembly/prox_sensor),
-	R(/obj/item/weapon/light/tube),
-	R(/obj/item/weapon/light/bulb),
-	R(/obj/item/ashtray/glass),
-	R(/obj/item/weapon/camera_assembly),
-	R(/obj/item/weapon/shovel),
-	R(/obj/item/weapon/minihoe),
-	R(/obj/item/weapon/hand_labeler),
-	R(/obj/item/device/destTagger),
-	R(/obj/item/toy/gun),
-	R(/obj/item/toy/ammo/gun),
-	R(/obj/item/weapon/game_kit/random),
-	R(/obj/item/newscaster_frame),
-	R(/obj/item/device/tabletop_assistant),
+	"Tools" = list(
+		R(/obj/item/weapon/crowbar),
+		R(/obj/item/device/multitool),
+		R(/obj/item/device/t_scanner),
+		R(/obj/item/weapon/weldingtool),
+		R(/obj/item/weapon/screwdriver),
+		R(/obj/item/weapon/wirecutters),
+		R(/obj/item/weapon/wrench),
+		R(/obj/item/weapon/shovel),
+		R(/obj/item/weapon/minihoe),
+	),
+	"Medical" = list(
+		R(/obj/item/weapon/scalpel),
+		R(/obj/item/weapon/circular_saw),
+		R(/obj/item/weapon/surgicaldrill),
+		R(/obj/item/weapon/retractor),
+		R(/obj/item/weapon/cautery),
+		R(/obj/item/weapon/hemostat),
+		R(/obj/item/weapon/reagent_containers/glass/beaker),
+		R(/obj/item/weapon/reagent_containers/glass/beaker/large),
+		R(/obj/item/weapon/reagent_containers/glass/beaker/vial),
+		R(/obj/item/weapon/reagent_containers/syringe),
+	),
+	"Engineering" = list(
+		R(/obj/item/weapon/stock_parts/console_screen),
+		R(/obj/item/weapon/module/power_control),
+		R(/obj/item/weapon/airlock_electronics),
+		R(/obj/item/weapon/airalarm_electronics),
+		R(/obj/item/weapon/firealarm_electronics),
+		R(/obj/item/weapon/rcd_ammo),
+		R(/obj/item/weapon/camera_assembly),
+	),
+	"Ammo" = list(
+		R(/obj/item/ammo_box/eight_shells/beanbag),
+		R(/obj/item/ammo_box/magazine/c45r),
+		R(/obj/item/ammo_box/magazine/m9mm_2/rubber),
+	),
+	"Devices" = list(
+		R(/obj/item/device/taperecorder),
+		R(/obj/item/device/assembly/igniter),
+		R(/obj/item/device/assembly/signaler),
+		R(/obj/item/device/radio/headset),
+		R(/obj/item/device/assembly/voice),
+		R(/obj/item/device/radio/off),
+		R(/obj/item/device/assembly/infra),
+		R(/obj/item/device/assembly/timer),
+		R(/obj/item/device/assembly/prox_sensor),
+		R(/obj/item/device/flashlight),
+		R(/obj/item/device/destTagger),
+		R(/obj/item/device/analyzer),
+		R(/obj/item/device/plant_analyzer),
+		R(/obj/item/device/healthanalyzer),
+	),
+	"Materials" = list(
+		R(/obj/item/stack/sheet/metal),
+		R(/obj/item/stack/sheet/glass),
+		R(/obj/item/stack/sheet/rglass),
+		R(/obj/item/stack/rods),
+	),
+	"General" = list(
+		R(/obj/item/weapon/reagent_containers/glass/bucket),
+		R(/obj/item/weapon/reagent_containers/spray/extinguisher),
+		R(/obj/item/clothing/head/welding),
+		R(/obj/item/weapon/kitchenknife),
+		R(/obj/item/weapon/light/tube),
+		R(/obj/item/weapon/light/bulb),
+		R(/obj/item/ashtray/glass),
+		R(/obj/item/weapon/hand_labeler),
+		R(/obj/item/toy/gun),
+		R(/obj/item/toy/ammo/gun),
+		R(/obj/item/weapon/game_kit/random),
+		R(/obj/item/newscaster_frame),
+		R(/obj/item/device/tabletop_assistant),
+	)
 )
 
 var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
-	R(/obj/item/weapon/flamethrower/full),
-	R(/obj/item/weapon/rcd),
-	R(/obj/item/device/radio/electropack),
-	R(/obj/item/weapon/weldingtool/largetank),
-	R(/obj/item/weapon/handcuffs),
-	R(/obj/item/ammo_box/a357),
-	R(/obj/item/ammo_box/magazine/c45m),
-	R(/obj/item/ammo_box/magazine/m9mm_2),
-	R(/obj/item/ammo_box/eight_shells),
-	R(/obj/item/ammo_box/eight_shells/dart),
-	R(/obj/item/ammo_box/eight_shells/buckshot),
-	R(/obj/item/device/harmonica),
-	R(/obj/item/weapon/bell),
+	"Devices" = list(
+		R(/obj/item/device/radio/electropack),
+		R(/obj/item/device/harmonica),
+	),
+	"General" = list(
+		R(/obj/item/weapon/handcuffs),
+		R(/obj/item/weapon/bell),
+	),
+	"Tools" = list(
+		R(/obj/item/weapon/flamethrower/full),
+		R(/obj/item/weapon/rcd),
+		R(/obj/item/weapon/weldingtool/largetank),
+	),
+	"Ammo" = list(
+		R(/obj/item/ammo_box/a357),
+		R(/obj/item/ammo_box/magazine/c45m),
+		R(/obj/item/ammo_box/magazine/m9mm_2),
+		R(/obj/item/ammo_box/eight_shells),
+		R(/obj/item/ammo_box/eight_shells/dart),
+		R(/obj/item/ammo_box/eight_shells/buckshot)
+	)
 )
 #undef R
-var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes + autolathe_recipes_hidden
+var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes | autolathe_recipes_hidden
 
 /obj/machinery/autolathe
 	name = "autolathe"
@@ -162,59 +198,64 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		man_rating += M.rating - 1
 
 /obj/machinery/autolathe/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/autolathe/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Autolathe", "Autolathe")
+		ui.open()
+
+/obj/machinery/autolathe/tgui_status(mob/user)
 	if(disabled)
-		return
+		return STATUS_CLOSE
+	return ..()
 
-	var/coeff = 2 ** man_rating
-	var/dat
+/obj/machinery/autolathe/tgui_data(mob/user, datum/tgui/ui)
+	var/list/data = list()
 
-	dat = "<B>Metal Amount:</B> [stored_material[MAT_METAL]] cm<sup>3</sup> (MAX: [storage_capacity[MAT_METAL]])<BR>\n<span class='blue'><B>Glass Amount:</B></span> [stored_material[MAT_GLASS]] cm<sup>3</sup> (MAX: [storage_capacity[MAT_GLASS]])<HR>"
-	dat += "<div class='Section'>"
-	dat += "<table>"
-	var/list/datum/autolathe_recipe/recipes
+	var/list/material_data = list()
+	for(var/mat_id in stored_material)
+		var/amount = stored_material[mat_id]
+		var/list/material_info = list(
+			"name" = mat_id,
+			"amount" = amount,
+			"path" = PATH2CSS(get_material_by_name(mat_id))
+		)
+		material_data += list(material_info)
+	data["busy"] = busy
+	data["materials"] = material_data
+	return data
 
-	if(hacked)
-		recipes = autolathe_recipes_all
-	else
-		recipes = autolathe_recipes
+/obj/machinery/autolathe/tgui_static_data(mob/user)
+	var/list/data = list()
 
-	for(var/datum/autolathe_recipe/r in recipes)
-		dat += "<tr>"
-		dat += {"<td><span class="autolathe32x32 [replacetext(replacetext("[r.result_type]", "[/obj/item]/", ""), "/", "-")]"></span></td>"}
-		dat += "<td>"
-		if(istype(r, /datum/autolathe_recipe/stack))
-			var/title = "[r.name] ([r.metal_amount] m /[r.glass_amount] g)"
-			if(stored_material[MAT_METAL] < r.metal_amount || stored_material[MAT_GLASS] < r.glass_amount)
-				dat += title
-				continue
-			dat += "<A href='?src=\ref[src];make=\ref[r]'>[title]</A>"
+	var/list/recipes = list()
+	var/list/ARecipes = hacked ? autolathe_recipes_all : autolathe_recipes
+	var/list/categories = list("All")
+	for(var/category in ARecipes)
+		categories += category
+		for(var/AR in ARecipes[category])
+			var/datum/autolathe_recipe/M = AR
+			recipes.Add(list(list(
+				"category" = category,
+				"name" = M.name,
+				"ref" = "\ref[M]",
+				"requirements" = M.resources,
+				"hidden" = !!(autolathe_recipes_hidden[category] ? autolathe_recipes_hidden[category][AR] : null),
+				"path" = PATH2CSS(M.result_type),
+				"is_stack" = istype(M, /datum/autolathe_recipe/stack)
+			)))
+	data["recipes"] = recipes
+	data["categories"] = categories
+	data["coeff"] = 2 ** man_rating
+	return data
 
-			var/datum/autolathe_recipe/stack/S = r
-			var/max_multiplier = min(S.max_res_amount, S.metal_amount ? round(stored_material[MAT_METAL] / S.metal_amount) : INFINITY, S.glass_amount ? round(stored_material[MAT_GLASS] / S.glass_amount) : INFINITY)
-			if(max_multiplier > 1)
-				dat += " |"
-			if(max_multiplier > 10)
-				dat += " <A href='?src=\ref[src];make=\ref[r];multiplier=[10]'>x[10]</A>"
-			if(max_multiplier > 25)
-				dat += " <A href='?src=\ref[src];make=\ref[r];multiplier=[25]'>x[25]</A>"
-			if(max_multiplier > 1)
-				dat += " <A href='?src=\ref[src];make=\ref[r];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
-		else
-			var/title = "[r.name] ([r.metal_amount / coeff] m /[r.glass_amount / coeff] g)"
-			if(stored_material[MAT_METAL] < r.metal_amount / coeff || stored_material[MAT_GLASS] < r.glass_amount / coeff)
-				dat += title
-				continue
-			dat += "<A href='?src=\ref[src];make=\ref[r]'>[title]</A>"
-		dat += "</td>"
-		dat += "</tr>"
-	dat += "</table>"
-	dat += "</div>"
-
-	var/datum/browser/popup = new(user, "window=autolathe_regular", "Autolathe")
-	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/autolathe))
-	popup.set_content(dat)
-	popup.open()
-
+/obj/machinery/autolathe/tgui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/autolathe),
+		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+	)
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -317,7 +358,11 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		usr.remove_from_mob(I)
 		I.loc = src
 
-/obj/machinery/autolathe/Topic(href, href_list)
+/obj/machinery/autolathe/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if (.)
+		return
+
 	if(!istype(usr, /mob/living/silicon/pai))
 		. = ..()
 		if(!.)
@@ -330,11 +375,11 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		to_chat(usr, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return FALSE
 
-	if(href_list["make"])
+	if(action == "make")
 		var/coeff = 2 ** man_rating
 		var/turf/T = get_turf(src)
 		// critical exploit fix start -walter0o
-		var/datum/autolathe_recipe/recipe = locate(href_list["make"])
+		var/datum/autolathe_recipe/recipe = locate(params["make"])
 
 		if(!istype(recipe))
 			return FALSE
@@ -351,14 +396,15 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 		// now check for legit multiplier, also only stacks should pass with one to prevent raw-materials-manipulation -walter0o
 
-		var/multiplier = text2num(href_list["multiplier"])
+		var/multiplier = text2num(params["multiplier"])
 
-		if(!multiplier) multiplier = 1
+		if(!multiplier)
+			multiplier = 1
 		var/max_multiplier = 1
 
 		if(istype(recipe, /datum/autolathe_recipe/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
 			var/datum/autolathe_recipe/stack/S = recipe
-			max_multiplier = min(S.max_res_amount, S.metal_amount ? round(stored_material[MAT_METAL] / S.metal_amount) : INFINITY, S.glass_amount ? round(stored_material[MAT_GLASS] / S.glass_amount) : INFINITY)
+			max_multiplier = min(S.max_res_amount, S.resources[MAT_METAL] ? round(stored_material[MAT_METAL] / S.resources[MAT_METAL]) : INFINITY, S.resources[MAT_GLASS] ? round(stored_material[MAT_GLASS] / S.resources[MAT_GLASS]) : INFINITY)
 
 		if((multiplier > max_multiplier) || (multiplier <= 0)) // somebody is trying to exploit, alert admins-walter0o
 
@@ -367,22 +413,22 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 			log_admin("EXPLOIT : [key_name(usr)] tried to exploit an autolathe with multiplier set to [multiplier] on [recipe]  !")
 			return FALSE
 
-		var/power = max(2000, (recipe.metal_amount + recipe.glass_amount) * multiplier / 5)
-		if(stored_material[MAT_METAL] >= recipe.metal_amount * multiplier / coeff && stored_material[MAT_GLASS] >= recipe.glass_amount * multiplier / coeff)
+		var/power = max(2000, (recipe.resources[MAT_METAL] + recipe.resources[MAT_GLASS]) * multiplier / 5)
+		if(stored_material[MAT_METAL] >= recipe.resources[MAT_METAL] * multiplier / coeff && stored_material[MAT_GLASS] >= recipe.resources[MAT_GLASS] * multiplier / coeff)
 			busy = TRUE
 			use_power(power)
 			icon_state = "autolathe"
 			flick("autolathe_n",src)
 			spawn(32/coeff)
 				if(istype(recipe, /datum/autolathe_recipe/stack))
-					stored_material[MAT_METAL] -= recipe.metal_amount * multiplier
-					stored_material[MAT_GLASS] -= recipe.glass_amount * multiplier
+					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] * multiplier
+					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] * multiplier
 					var/obj/new_item = new recipe.result_type(T)
 					var/obj/item/stack/S = new_item
 					S.set_amount(multiplier)
 				else
-					stored_material[MAT_METAL] -= recipe.metal_amount / coeff
-					stored_material[MAT_GLASS] -= recipe.glass_amount / coeff
+					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] / coeff
+					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] / coeff
 					var/obj/new_item = new recipe.result_type(T)
 					new_item.m_amt /= coeff
 					new_item.g_amt /= coeff
@@ -392,3 +438,4 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 					stored_material[MAT_GLASS] = 0
 				busy = FALSE
 	src.updateUsrDialog()
+#undef PATH2CSS

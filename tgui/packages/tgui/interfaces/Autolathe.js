@@ -1,12 +1,186 @@
-import { round } from 'common/math';
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from "../backend";
-import { Box, Button, Flex, Icon, Input, LabeledList, ProgressBar, Section, Dropdown } from "../components";
+import { Box, Button, Flex, Input, Tooltip, Section, Dropdown, Icon } from "../components";
 import { Window } from "../layouts";
-import { Materials } from "./ExosuitFabricator";
 import { createSearch, toTitleCase } from 'common/string';
+import { classes } from 'common/react';
+import { formatSiUnit, formatMoney } from '../format';
+import { toFixed } from 'common/math';
+
+export const Autolathe = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    recipes,
+    busy,
+    materials,
+    categories,
+    coeff,
+  } = data;
+
+  const [category, setCategory] = useSharedState(context, "category", 0);
+
+  const [searchText, setSearchText] = useSharedState(context, "searchText", "");
+
+  const testSearch = createSearch(searchText, recipe => recipe.name);
+
+  const recipesToShow = flow([
+    filter(recipe => recipe.category === categories[category]
+      || categories[category] === "All"),
+    searchText && filter(testSearch),
+    sortBy(recipe => recipe.name.toLowerCase()),
+  ])(recipes);
+
+  const categorieToShow = flow([
+    sortBy(category => category.toLowerCase()),
+  ])(categories);
+
+  return (
+    <Window width={550} height={700}>
+      <Window.Content scrollable>
+        <Section title="Materials">
+          <Flex wrap="wrap">
+            <Materials />
+          </Flex>
+        </Section>
+        <Section title="Recipes" buttons={
+          <Dropdown
+            width="190px"
+            options={categorieToShow}
+            selected={categories[category]}
+            onSelected={val => setCategory(categories.indexOf(val))} />
+        }>
+          <Input
+            autofocus
+            fluid
+            placeholder="Search for..."
+            onInput={(e, v) => setSearchText(v)}
+            mb={1} />
+          {recipesToShow.map(recipe => (
+            <Flex justify="space-between" align="center" key={recipe.ref}>
+              <Flex.Item mr={1}>
+                <span
+                  className={classes([
+                    'autolathe32x32',
+                    recipe.path,
+                  ])}
+                  style={{
+                    'vertical-align': 'middle',
+                    'horizontal-align': 'middle',
+                  }} />
+              </Flex.Item>
+              <Flex.Item grow={1}>
+                <Button
+                  color={recipe.hidden && "red" || null}
+                  icon="hammer"
+                  iconSpin={busy === recipe.name}
+                  disabled={!canBeMade(recipe, materials)}
+                  onClick={() => act("make", { make: recipe.ref })}>
+                  {toTitleCase(recipe.name)}
+                </Button>
+                {recipe.is_stack && (
+                  <Box as="span">
+                    <Button
+                      color={recipe.hidden && "red" || null}
+                      disabled={!canBeMade(recipe, materials, 5)}
+                      onClick={() => act("make", { make: recipe.ref,
+                        multiplier: 5 })}>
+                      x5
+                    </Button>
+                    <Button
+                      color={recipe.hidden && "red" || null}
+                      disabled={!canBeMade(recipe, materials, 10)}
+                      onClick={() => act("make", { make: recipe.ref,
+                        multiplier: 10 })}>
+                      x10
+                    </Button>
+                  </Box>
+                )}
+              </Flex.Item>
+              <Flex.Item width="30%">
+                <Flex direction="row" visibility="collapse">
+                  {recipe.requirements && (
+                    Object
+                      .keys(recipe.requirements)
+                      .map(mat => (
+                        <Flex width="100%" key={mat}>
+                          {recipe.requirements[mat] > 0 && (
+                            <MaterialAmount
+                              name={mat}
+                              amount={recipe.requirements[mat] / coeff}
+                              formatsi
+                              csspath={materials.find(val =>
+                                val.name === mat).path}
+                              width="50%"
+                            />) || (<Flex width="50%" />)}
+                        </Flex>
+                      ))
+                  ) || (
+                    <Box>
+                      No resources required.
+                    </Box>
+                  )}
+                </Flex>
+              </Flex.Item>
+            </Flex>
+          ))}
+        </Section>
+      </Window.Content>
+    </Window>
+  );
+};
+
+const MaterialAmount = (props, context) => {
+  const {
+    name,
+    csspath,
+    amount,
+    color,
+    style,
+    direction,
+    width,
+    formatsi,
+    formatmoney,
+  } = props;
+
+  let amountDisplay = "0";
+  if (amount < 1 && amount > 0) {
+    amountDisplay = toFixed(amount, 2);
+  } else if (formatsi) {
+    amountDisplay = formatSiUnit(amount, 0).replace(" ", "");
+  } else if (formatmoney) {
+    amountDisplay = formatMoney(amount);
+  } else {
+    amountDisplay = amount;
+  }
+  return (
+    <Flex
+      direction={direction}
+      align="center"
+      width={width}>
+      <Flex.Item>
+        <Box
+          className={classes([
+            'sheetmaterials32x32',
+            csspath,
+          ])}
+          position="relative"
+          style={style}>
+          <Tooltip
+            position="bottom"
+            content={toTitleCase(name)} />
+        </Box>
+      </Flex.Item>
+      <Flex.Item>
+        <Box
+          textColor={color}
+          style={{ "text-align": "center" }}>
+          {amountDisplay}
+        </Box>
+      </Flex.Item>
+    </Flex>
+  );
+};
 
 const canBeMade = (recipe, materials) => {
   if (recipe.requirements === null) {
@@ -28,76 +202,44 @@ const canBeMade = (recipe, materials) => {
   return true;
 };
 
-export const Autolathe = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Materials = (props, context) => {
+  const { data } = useBackend(context);
+
   const {
-    recipes,
-    busy,
-    materials,
-    categories,
-  } = data;
-  
-  const [category, setCategory] = useSharedState(context, "category", 0);
+    displayAllMat,
+  } = props;
+  const materials = data.materials || [];
+  let display_materials = materials.filter(mat => displayAllMat
+    || mat.amount > 0);
 
-  const [
-    searchText,
-    setSearchText,
-  ] = useSharedState(context, "search_text", "");
-
-  const testSearch = createSearch(searchText, recipe => recipe.name);
-
-  const recipesToShow = flow([
-    filter(recipe => recipe.category === categories[category]),
-    searchText && filter(testSearch),
-    sortBy(recipe => recipe.name.toLowerCase()),
-  ])(recipes);
+  if (display_materials.length === 0) {
+    return (
+      <Box width="100%" textAlign="center">
+        <Icon textAlign="center" size={5} name="inbox" />
+        <br />
+        <b>No Materials Loaded.</b>
+      </Box>
+    );
+  }
 
   return (
-    <Window width={550} height={700}>
-      <Window.Content scrollable>
-        <Section title="Materials">
-          <Materials disableEject />
-        </Section>
-        <Section title="Recipes" buttons={
-          <Dropdown
-            width="190px"
-            options={categories}
-            selected={categories[category]}
-            onSelected={val => setCategory(categories.indexOf(val))} />
-        }>
-          <Input
-            fluid
-            placeholder="Search for..."
-            onInput={(e, v) => setSearchText(v)}
-            mb={1} />
-          {recipesToShow.map(recipe => (
-            <Flex justify="space-between" align="center" key={recipe.ref}>
-              <Flex.Item>
-                <Button
-                  color={recipe.hidden && "red" || null}
-                  icon="hammer"
-                  iconSpin={busy === recipe.name}
-                  disabled={!canBeMade(recipe, materials)}
-                  onClick={() => act("make", { make: recipe.ref })}>
-                  {toTitleCase(recipe.name)}
-                </Button>
-              </Flex.Item>
-              <Flex.Item>
-                {recipe.requirements && (
-                  Object
-                    .keys(recipe.requirements)
-                    .map(mat => toTitleCase(mat) + ": " + recipe.requirements[mat])
-                    .join(", ")
-                ) || (
-                  <Box>
-                    No resources required.
-                  </Box>
-                )}
-              </Flex.Item>
-            </Flex>
-          ))}
-        </Section>
-      </Window.Content>
-    </Window>
+    <Flex
+      wrap="wrap">
+      {display_materials.map(material => (
+        <Flex.Item
+          width="80px"
+          key={material.name}>
+          <MaterialAmount
+            name={material.name}
+            amount={material.amount}
+            csspath={material.path}
+            formatsi
+            direction="column" />
+          <Box
+            mt={1}
+            style={{ "text-align": "center" }} />
+        </Flex.Item>
+      ) || null)}
+    </Flex>
   );
 };
