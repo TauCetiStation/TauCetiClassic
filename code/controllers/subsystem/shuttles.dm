@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/timelimit				//important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
 	var/time_for_fake_recall = 0 // used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
-	var/fake_recall = 0 // flag if we need to make face recall, gamemode fractions set it. Does nothing for crew transfer vote
+	var/fake_recall = 0 // flag if we need to make fake recall, gamemode fractions set it. Does nothing for crew transfer vote
 	var/deny_shuttle = 0		//for admins not allowing it to be called.
 	var/departed = 0
 

@@ -52,7 +52,7 @@
 	if(world.time < next_vote)
 		return "Vote Cooldown: [round((next_vote - world.time) / 600)] Minutes"
 
-/datum/poll/proc/get_warning_or_blocking_message()
+/datum/poll/proc/get_blocking_or_warning_message()
 	return get_blocking_reason() || warning_message
 
 /datum/poll/proc/on_start()

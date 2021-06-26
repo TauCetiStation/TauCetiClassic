@@ -20,7 +20,7 @@
 	minimum_win_percentage = 0.75
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
-	warning_message = "Рестрат не подводит итоги раунда и не сохраняет статистику, используйте как экстренное средство в случае технических проблем. Для корректного завершения раунда используйте голосование за Crew Transfer!"
+	warning_message = "Рестарт не подводит итоги раунда и не сохраняет статистику, поэтому используйте его как экстренное средство в случае технических проблем. Для корректного завершения раунда используйте голосование за Crew Transfer!"
 
 /datum/poll/restart/get_force_blocking_reason()
 	. = ..()
