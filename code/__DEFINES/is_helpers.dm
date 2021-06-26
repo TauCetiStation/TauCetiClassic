@@ -125,3 +125,67 @@
 // OBJECTS
 
 #define isitem(A) (istype(A, /obj/item))
+
+// ROLES / ANTAG
+
+#define isfaction(A) (istype(A, /datum/faction))
+
+#define isrole(type, H) (H?.mind ? H.mind.GetRole(type) : FALSE)
+
+#define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
+
+#define isabductorsci(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_SCI) : FALSE)
+
+#define isabductoragent(H) (H?.mind ? H.mind.GetRole(ABDUCTOR_AGENT) : FALSE)
+
+#define isshadowling(H) (H?.mind ? H.mind.GetRole(SHADOW) : FALSE)
+
+#define isshadowthrall(H) (H?.mind ? H.mind.GetRole(SHADOW_THRALL) : FALSE)
+
+#define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+#define isvoxraider(H) (H?.mind ? H.mind.GetRole(VOXRAIDER) : FALSE)
+
+#define ischangeling(H) (H?.mind ? H.mind.GetRoleByType(/datum/role/changeling) : FALSE)
+
+#define isanyrev(H) (isrevnothead(H) || isrevhead(H))
+
+#define isrev(H) (H?.mind ? H.mind.GetRole(REV) : FALSE)
+
+#define isrevhead(H) (H?.mind ? H.mind.GetRole(HEADREV) : FALSE)
+
+#define istraitor(H) (H?.mind ? H.mind.GetRole(TRAITOR) : FALSE)
+
+#define iselitesyndie(H) (H?.mind ? H.mind.GetRole(SYNDIESQUADIE) : FALSE)
+
+#define ismalf(H) (H?.mind ? H.mind.GetRole(MALF) : FALSE)
+
+#define isnukeop(H) (H?.mind ? H.mind.GetRole(NUKE_OP) : FALSE)
+
+#define iswizard(H) (H?.mind ? H.mind.GetRole(WIZARD) : FALSE)
+
+#define isdeathsquad(H) (H?.mind ? H.mind.GetRole(DEATHSQUADIE) : FALSE)
+
+#define isninja(H) (H?.mind ? H.mind.GetRole(NINJA) : FALSE)
+
+#define isERT(H) (H?.mind ? H.mind.GetRole(RESPONDER) : FALSE)
+
+#define isrolezombie(H) (H?.mind ? H.mind.GetRole(ZOMBIE) : FALSE)
+
+#define isalien(H) (H?.mind ? H.mind.GetRole(XENOMORPH) : FALSE)
+
+// BLOB
+
+#define isblob(A) istype(A, /obj/effect/blob)
+
+#define isblobnormal(A) istype(A, /obj/effect/blob/normal)
+
+#define isblobcore(A) istype(A, /obj/effect/blob/core)
+
+#define isblobnode(A) istype(A, /obj/effect/blob/node)
+
+#define isblobfactory(A) istype(A, /obj/effect/blob/factory)
+
+#define isblobshield(A) istype(A, /obj/effect/blob/shield)
+
+#define isblobresource(A) istype(A, /obj/effect/blob/resource)

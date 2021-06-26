@@ -103,9 +103,6 @@
 		if(!output_to_chat)
 			message += "</BODY></HTML>"
 		return message
-	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return ""
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
 
 	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
@@ -318,11 +315,8 @@
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
-	if(istype(src.loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = src.loc
-		S.remove_from_storage(src)
-
 	src.throwing = 0
+
 	if(src.loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
@@ -340,12 +334,7 @@
 				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
 					if(!user.delay_clothing_u_equip(src))
 						return 0
-				else
-					user.remove_from_mob(src)
-			else
-				user.remove_from_mob(src)
-		else
-			user.remove_from_mob(src)
+
 	else
 		if(isliving(src.loc))
 			return
@@ -364,11 +353,18 @@
 		return
 
 	remove_outline()
-	src.pickup(user)
+	pickup(user)
 	add_fingerprint(user)
-	user.put_in_active_hand(src)
-	return
 
+	if(istype(src.loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = src.loc
+		if(!S.remove_from_storage(src, user) || !user.put_in_active_hand(src))
+			forceMove(get_turf(src))
+	else if(loc == user)
+		if(!user.remove_from_mob(src, user) || !user.put_in_active_hand(src))
+			forceMove(get_turf(src))
+	else
+		user.put_in_active_hand(src)
 
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
@@ -399,7 +395,7 @@
 		return
 
 	remove_outline()
-	src.pickup(user)
+	pickup(user)
 	user.put_in_active_hand(src)
 	return
 
@@ -444,7 +440,7 @@
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	if(DROPDEL & flags)
+	if(flags & DROPDEL)
 		qdel(src)
 	set_alt_apperances_layers()
 
@@ -875,7 +871,7 @@
 
 	M.log_combat(user, "eyestabbed with [name]")
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	//if((CLUMSY in user.mutations) && prob(50))
 	//	M = user
 		/*

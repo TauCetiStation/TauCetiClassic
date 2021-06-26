@@ -7,8 +7,8 @@
 	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	light_color = "#00ff00"
 
 /obj/machinery/bodyscanner/power_change()
@@ -135,7 +135,7 @@
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
-	anchored = 1
+	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
 
@@ -171,8 +171,7 @@
 			else
 				dat += text("<font color='[]'>\tHealth %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
 
-				//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
-				if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
+				if(ischangeling(occupant) && occupant.fake_death)
 					dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
 				if(occupant.virus2.len)

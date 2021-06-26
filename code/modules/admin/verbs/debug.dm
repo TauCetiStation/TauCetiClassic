@@ -21,8 +21,8 @@ Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
 Call proc /mob/proc/make_dizzy() for some player
 Because if you select a player mob as owner it tries to do the proc for
-/mob/living/carbon/human/ instead. And that gives a run-time error.
-But you can call procs that are of type /mob/living/carbon/human/proc/ for that player.
+/mob/living/carbon/human instead. And that gives a run-time error.
+But you can call procs that are of type /mob/living/carbon/human/proc for that player.
 */
 
 /client/proc/callproc()
@@ -390,7 +390,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/areatype in areas_without_camera)
 		to_chat(world, "* [areatype]")
 
-//todo: this proc should use /datum/outfit/
+//todo: this proc should use /datum/outfit
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
 	set name = "Select equipment"
@@ -1248,7 +1248,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(M), SLOT_L_EAR)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/atmospheric_technician(M), SLOT_W_UNIFORM)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/work(M), SLOT_SHOES)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech/(M), SLOT_BELT)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/atmostech(M), SLOT_BELT)
 
 			var/obj/item/device/pda/atmos/pda = new(M)
 			pda.owner = M.real_name
@@ -1755,7 +1755,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 		if(istype(M,/obj/machinery/power/rad_collector))
 			var/obj/machinery/power/rad_collector/Rad = M
-			Rad.anchored = 1
+			Rad.anchored = TRUE
 			Rad.connect_to_network()
 
 			var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
@@ -1849,22 +1849,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			log_admin("[key_name(src)] has toggled [saved_key]'s HULK block on!")
 	else
 		tgui_alert(usr, "Invalid mob")
-
-/client/proc/reload_nanoui_resources()
-	set category = "Debug"
-	set name = "Reload NanoUI Resources"
-	set desc = "Force the client to redownload NanoUI Resources"
-
-	// Close open NanoUIs.
-	nanomanager.close_user_uis(usr)
-
-	// Re-load the assets.
-	get_asset_datum(/datum/asset/nanoui)
-
-	// Clear the user's sent_assets so they get resent.
-	usr.client.sent_assets = list()
-
-	to_chat(usr, "Your NanoUI Resource files have been refreshed")
 
 // from Goonstation
 /client/proc/edit_color_matrix()

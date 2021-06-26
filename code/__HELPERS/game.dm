@@ -652,7 +652,7 @@
 
 // first answer "Yes" > transfer
 /mob/proc/try_request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
-	if(key || mind || stat != CONSCIOUS)
+	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
 	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))

@@ -5,8 +5,8 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "smartfridge"
 	layer = 2.9
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
@@ -86,7 +86,7 @@
 /obj/machinery/smartfridge/secure/extract
 	name = "Slime Extract Storage"
 	desc = "A refrigerated storage unit for slime extracts."
-	req_access = list(47)
+	req_access = list(access_xenobiology)
 
 /obj/machinery/smartfridge/secure/extract/accept_check(obj/item/O)
 	if(istype(O,/obj/item/slime_extract))
@@ -98,7 +98,7 @@
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
 	icon_state = "smartfridge" //To fix the icon in the map editor.
 	icon_on = "smartfridge_chem"
-	req_one_access = list(5, 33)
+	req_one_access = list(access_medical, access_chemistry)
 
 /obj/machinery/smartfridge/secure/medbay/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/reagent_containers/glass))
@@ -112,7 +112,7 @@
 /obj/machinery/smartfridge/secure/virology
 	name = "Refrigerated Virus Storage"
 	desc = "A refrigerated storage unit for storing viral material."
-	req_access = list(39)
+	req_access = list(access_virology)
 	icon_state = "smartfridge_virology"
 	icon_on = "smartfridge_virology"
 	icon_off = "smartfridge_virology-off"
@@ -143,7 +143,7 @@
 	if(src.seconds_electrified > 0)
 		src.seconds_electrified--
 	if(src.shoot_inventory && prob(2))
-		src.throw_item()
+		throw_item()
 
 /obj/machinery/smartfridge/power_change()
 	if( powered() )
@@ -348,7 +348,7 @@
 	if(!throw_item)
 		return 0
 	throw_item.throw_at(target,16,3,src)
-	src.visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+	visible_message("<span class='warning'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 	return 1
 
 /obj/machinery/smartfridge/proc/shock(mob/user, prb)

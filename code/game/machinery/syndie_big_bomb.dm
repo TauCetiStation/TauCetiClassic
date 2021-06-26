@@ -60,13 +60,13 @@
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
-				anchored = 1
+				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
-				anchored = 0
+				anchored = FALSE
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
@@ -99,7 +99,6 @@
 		if(degutted)
 			to_chat(user, "<span class='notice'>You place the payload into the shell.</span>")
 			degutted = 0
-			user.drop_item()
 			qdel(I)
 		else
 			to_chat(user, "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>")

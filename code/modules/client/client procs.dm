@@ -100,6 +100,11 @@ var/list/blacklisted_builds = list(
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
 		return
 
+	//byond bug ID:2694120
+	if(href_list["reset_macros"])
+		reset_macros(skip_alert = TRUE)
+		return
+
 	// Keypress passthrough
 	if(href_list["__keydown"])
 		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
@@ -303,7 +308,7 @@ var/list/blacklisted_builds = list(
 			var/list/fluff_list = custom_item_premoderation_list()
 			var/fluff_count = fluff_list.len
 			if(fluff_count)
-				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [russian_plural(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
+				to_chat(src, "<span class='alert bold'>В рассмотрении [pluralize_russian(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [pluralize_russian(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
@@ -327,6 +332,9 @@ var/list/blacklisted_builds = list(
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
+
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
 
 	if(!cob)
 		cob = new()
@@ -642,16 +650,6 @@ var/list/blacklisted_builds = list(
 		void = new()
 		screen += void
 
-//This may help with UI's that were stuck and don't want to open anymore.
-/client/verb/close_nanouis()
-	set name = "Fix UI (Close All)"
-	set category = "OOC"
-	set desc = "Closes all opened NanoUI/TGUI."
-
-	nanomanager.close_user_uis(usr)
-	SStgui.force_close_all_windows(usr)
-	to_chat(src, "<span class='notice'>You forcibly close any opened TGUI/NanoUI interfaces.</span>")
-
 /client/proc/show_character_previews(mutable_appearance/MA)
 	var/pos = 0
 	for(var/D in cardinal)
@@ -689,6 +687,14 @@ var/list/blacklisted_builds = list(
 
 	return byond_registration
 
+/client/proc/GetRolePrefs()
+	var/list/roleprefs = list()
+	for(var/role_id in antag_roles)
+		if(role_id in prefs.be_role)
+			roleprefs += role_id
+	if(!roleprefs.len)
+		return "none"
+	return get_english_list(roleprefs)
 
 /**
  * Updates the keybinds for special keys
@@ -704,6 +710,7 @@ var/list/blacklisted_builds = list(
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
+	var/list/communication_hotkeys = list()
 	for(var/key in D.key_bindings)
 		for(var/kb_name in D.key_bindings[key])
 			switch(kb_name)
@@ -717,7 +724,16 @@ var/list/blacklisted_builds = list(
 					movement_keys[key] = SOUTH
 				if("Say")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
+					communication_hotkeys += key
 				if("OOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
+					communication_hotkeys += key
 				if("Me")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					communication_hotkeys += key
+
+	// winget() does not work for F1 and F2
+	for(var/key in communication_hotkeys)
+		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
+			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
+			break

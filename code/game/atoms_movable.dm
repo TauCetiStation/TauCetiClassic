@@ -2,7 +2,7 @@
 	layer = 3
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/last_move = null
-	var/anchored = 0
+	var/anchored = FALSE
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
@@ -13,6 +13,8 @@
 	var/moved_recently = 0
 	var/mob/pulledby = null
 	var/can_be_pulled = TRUE
+
+	var/moving_diagonally = 0
 
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -62,42 +64,40 @@
 	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return
 
+	var/is_diagonal = ISDIAGONALDIR(Dir)
 	var/atom/oldloc = loc
 	var/old_dir = dir
 
 	if(loc != NewLoc)
-		if (!(Dir & (Dir - 1))) //Cardinal move
+		if (!is_diagonal) //Cardinal move
 			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			if (Dir & NORTH)
-				if (Dir & EAST)
-					if (step(src, NORTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, NORTH)
-				else if (Dir & WEST)
-					if (step(src, NORTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, NORTH)
-			else if (Dir & SOUTH)
-				if (Dir & EAST)
-					if (step(src, SOUTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, SOUTH)
-				else if (Dir & WEST)
-					if (step(src, SOUTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, SOUTH)
+		else //Diagonal move, split it into cardinal 
+			var/v = Dir & NORTH_SOUTH
+			var/h = Dir & EAST_WEST
+
+			moving_diagonally = FIRST_DIAG_STEP
+			. = step(src, v)
+			if(.)
+				moving_diagonally = SECOND_DIAG_STEP
+				if(!step(src, h))
+					set_dir(v)
+			else
+				dir = old_dir // blood trails uses dir
+				. = step(src, h)
+				if(.)
+					moving_diagonally = SECOND_DIAG_STEP
+					if(!step(src, v))
+						set_dir(h)
+
+			moving_diagonally = 0
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
-
-	src.move_speed = world.time - src.l_move_time
-	src.l_move_time = world.time
+	
+	if(!is_diagonal && moving_diagonally != SECOND_DIAG_STEP)
+		move_speed = world.time - l_move_time
+		l_move_time = world.time
 
 	last_move = Dir
 
@@ -111,7 +111,12 @@
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	if(!ISDIAGONALDIR(Dir))
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+
+		if(moving_diagonally)
+			return
+
 	for(var/atom/movable/AM in contents)
 		AM.locMoved(OldLoc, Dir)
 
@@ -128,7 +133,7 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return 1
+	return
 
 /atom/movable/proc/locMoved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
@@ -238,6 +243,7 @@
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src
+	RegisterSignal(TT, COMSIG_PARENT_QDELETED, /datum/thrownthing.proc/on_thrownthing_qdel)
 	TT.target = target
 	TT.target_turf = get_turf(target)
 	TT.init_dir = get_dir(src, target)
@@ -322,7 +328,7 @@
 //Overlays
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = TRUE
 
 /atom/movable/overlay/atom_init()
 	. = ..()

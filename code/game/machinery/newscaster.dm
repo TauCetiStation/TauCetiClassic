@@ -165,7 +165,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/hitstaken = 0      //Death at 3 hits from an item with force>=15
 	var/datum/feed_channel/viewing_channel = null
 	light_range = 0
-	anchored = 1
+	anchored = TRUE
 	var/comment_msg = "" //stores a comment that has not yet been posted
 	var/datum/comment_pages/current_page = null
 	var/datum/feed_message/viewing_message = null
@@ -190,21 +190,21 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	if(!ispowered || isbroken)
 		icon_state = "newscaster_off"
 		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
-			src.cut_overlays()
-			src.add_overlay(image(src.icon, "crack3"))
+			cut_overlays()
+			add_overlay(image(src.icon, "crack3"))
 		return
 
-	src.cut_overlays() //reset overlays
+	cut_overlays() //reset overlays
 
 	if(news_network.wanted_issue) //wanted icon state, there can be no overlays on it as it's a priority message
 		icon_state = "newscaster_wanted"
 		return
 
 	if(alert) //new message alert overlay
-		src.add_overlay("newscaster_alert")
+		add_overlay("newscaster_alert")
 
 	if(hitstaken > 0) //Cosmetic damage overlay
-		src.add_overlay(image(src.icon, "crack[hitstaken]"))
+		add_overlay(image(src.icon, "crack[hitstaken]"))
 
 	icon_state = "newscaster_normal"
 	return
@@ -212,15 +212,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/machinery/newscaster/power_change()
 	if(isbroken) //Broken shit can't be powered.
 		return
-	if( src.powered() )
+	if( powered() )
 		src.ispowered = 1
 		stat &= ~NOPOWER
-		src.update_icon()
+		update_icon()
 	else
 		spawn(rand(0, 15))
 			src.ispowered = 0
 			stat |= NOPOWER
-			src.update_icon()
+			update_icon()
 	update_power_use()
 
 /obj/machinery/newscaster/ex_act(severity)
@@ -233,12 +233,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			if(prob(50))
 				qdel(src)
 			else
-				src.update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
+				update_icon() //can't place it above the return and outside the if-else. or we might get runtimes of null.update_icon() if(prob(50)) goes in.
 			return
 		else
 			if(prob(50))
 				src.isbroken=1
-			src.update_icon()
+			update_icon()
 			return
 
 /obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
@@ -254,7 +254,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		var/dat
 		dat = ""
 
-		src.scan_user(human_or_robot_user) //Newscaster scans you
+		scan_user(human_or_robot_user) //Newscaster scans you
 
 		switch(screen)
 			if(0)
@@ -303,7 +303,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B><A href='?src=\ref[src];set_attachment=1'>Прикрепить снимок</A>:</B>  [(src.photo ? "Снимок прикреплен" : "Нет снимка")]<BR><HR>"
 				dat+="<BR><A href='?src=\ref[src];submit_new_message=1'>Опубликовать</A><BR><A href='?src=\ref[src];setScreen=[0]'>Отменить</A><BR>"
 			if(4)
-				dat+="История успешно опубликованна в [src.channel_name].<BR><BR>"
+				dat+="История успешно опубликована в [src.channel_name].<BR><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(5)
 				dat+="Канал \"[src.channel_name]\" успешно создан.<BR><BR>"
@@ -313,7 +313,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.channel_name=="")
 					dat+="<FONT COLOR='maroon'>Недопустимое имя Канала.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимый текст.</FONT><BR>"
 
@@ -340,7 +340,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(check)
 					dat+="<FONT COLOR='maroon'>Имя Канала уже используется.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[2]'>Вернуться</A><BR>"
 			if(8)
 				var/total_num=length(news_network.network_channels)
@@ -459,7 +459,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.channel_name=="" || src.channel_name == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимое имя разыскиваемого.</FONT><BR>"
 				if(src.scanned_user=="Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				if(src.msg == "" || src.msg == "\[██████\]")
 					dat+="<FONT COLOR='maroon'>Недопустимое описание.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
@@ -467,9 +467,9 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="<B>Розыск успешно удален.</B><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[0]'>Вернуться</A><BR>"
 			if(18)
-				dat+="<B><FONT COLOR ='maroon'>-- ОСОБО ОПАСНЫ --</B></FONT><BR><FONT SIZE=2>\[Опубликованно: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
+				dat+="<B><FONT COLOR ='maroon'>-- ОСОБО ОПАСНЫ --</B></FONT><BR><FONT SIZE=2>\[Опубликовано: <FONT COLOR='green'>[news_network.wanted_issue.backup_author]</FONT>\]</FONT><HR>"
 				dat+="<B>Имя</B>: [news_network.wanted_issue.author]<BR>"
-				dat+="<B>Описани</B>: [news_network.wanted_issue.body]<BR>"
+				dat+="<B>Описание</B>: [news_network.wanted_issue.body]<BR>"
 				dat+="<B>Снимок</B>: "
 				if(news_network.wanted_issue.img)
 					usr << browse_rsc(news_network.wanted_issue.img, "tmp_photow.png")
@@ -491,7 +491,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				if(src.comment_msg == "" || src.comment_msg == null)
 					dat+="<FONT COLOR='maroon'>Недопустимая длина комментария.</FONT><BR>"
 				if(src.scanned_user == "Unknown")
-					dat+="<FONT COLOR='maroon'>Автор канала неподтвержден.</FONT><BR>"
+					dat+="<FONT COLOR='maroon'>Автор канала не подтвержден.</FONT><BR>"
 				dat+="<BR><A href='?src=\ref[src];setScreen=[1]'>Вернуться</A><BR>"
 			if(23)
 				var/datum/feed_message/MESSAGE = src.viewing_message
@@ -543,7 +543,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	src.hitstaken++
 	if(src.hitstaken==3)
 		src.isbroken = 1
-	src.update_icon()*/
+	update_icon()*/
 
 
 /obj/machinery/newscaster/Topic(href, href_list)
@@ -553,11 +553,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 
 	if(href_list["set_channel_name"])
 		src.channel_name = sanitize_safe(input(usr, "Название Новостного Канала", "Обработчик Сети Новостей", input_default(channel_name)), MAX_LNAME_LEN)
-		//src.update_icon()
+		//update_icon()
 
 	else if(href_list["set_channel_lock"])
 		src.c_locked = !src.c_locked
-		//src.update_icon()
+		//update_icon()
 
 	else if(href_list["submit_new_channel"])
 		//var/list/existing_channels = list() //OBSOLETE
@@ -587,7 +587,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					NEWSCASTER.channel_list += newChannel*/                     //Now that it is sane, get it into the list. -OBSOLETE
 				news_network.network_channels += newChannel                        //Adding channel to the global network
 				src.screen = 5
-		//src.update_icon()
+		//update_icon()
 
 	else if(href_list["set_channel_receiving"])
 		//var/list/datum/feed_channel/available_channels = list()
@@ -635,7 +635,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(!src.paper_remaining)
 			src.screen = 21
 		else
-			src.print_paper()
+			print_paper()
 			src.screen = 20
 
 	else if(href_list["menu_censor_story"])
@@ -834,11 +834,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			COMMENT.body = src.comment_msg
 			COMMENT.time = worldtime2text()
 
-			var/lenght = FM.pages.len //find the last page
-			var/size = FM.pages[lenght].comments.len
+			var/length = FM.pages.len //find the last page
+			var/size = FM.pages[length].comments.len
 
 			if(size - COMMENTS_ON_PAGE != 0) //Create new page, if comments on the page are equal
-				FM.pages[lenght].comments += COMMENT
+				FM.pages[length].comments += COMMENT
 			else
 				var/datum/comment_pages/CP = new /datum/comment_pages
 				FM.pages += CP
@@ -854,7 +854,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else
 			src.viewing_channel.lock_comments = TRUE
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
 	if(iswrench(I))
@@ -889,7 +889,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='info'>This does nothing.</span>")
-	src.update_icon()
+	update_icon()
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The newscaster controls are far too complicated for your tiny brain!</span>")
@@ -903,8 +903,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		photo = null
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		photo = user.get_active_hand()
-		user.drop_item()
-		photo.loc = src
+		user.drop_from_inventory(photo, src)
 	else if(istype(user,/mob/living/silicon))
 		var/mob/living/silicon/tempAI = user
 		var/obj/item/device/camera/siliconcam/camera = tempAI.aiCamera
@@ -938,7 +937,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		"Моисей — это мопс. Рассказываем, что нужно знать",
 		"В Фрелпасу начали сбор подписей на памятник эчпочмаку",
 		"Лепрастейнские гей-парады оказались неуязвимыми",
-		"Только на майские праздники в Плаериэле построят мемориал жертвам космческих наркотиков",
+		"Только на майские праздники в Плаериэле построят мемориал жертвам космических наркотиков",
 		"Геофизики предрекли слияние борща и баклажанов",
 		"Хескостен, город в Северном Ваезе, напомнил журналистам о своем гомосексуализме",
 		"Баррингтон попросит вернуть у Кемалова три тысячи детей",
@@ -1090,7 +1089,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
 		if (istype(src.loc, /mob))
-			src.attack_self(src.loc)
+			attack_self(src.loc)
 
 
 /obj/item/weapon/newspaper/attackby(obj/item/I, mob/user, params)
@@ -1105,7 +1104,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				return
 			src.scribble_page = src.curr_page
 			src.scribble = s
-			src.attack_self(user)
+			attack_self(user)
 		return
 	return ..()
 

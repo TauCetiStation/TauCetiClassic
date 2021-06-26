@@ -19,14 +19,13 @@
 			return
 
 		sample = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
 		return
 
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/computer/centrifuge/update_icon()
 	..()

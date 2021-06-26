@@ -229,8 +229,8 @@ var/list/ai_verbs_default = list(
 	to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
 	to_chat(src, "To use something, simply click on it.")
 	to_chat(src, "Use say \":b to speak to your cyborgs through binary.")
-	if (!(SSticker && SSticker.mode && (src.mind in SSticker.mode.malf_ai)))
-		src.show_laws()
+	if(!ismalf(src))
+		show_laws()
 		to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 /mob/living/silicon/ai/Destroy()
@@ -299,12 +299,11 @@ var/list/ai_verbs_default = list(
 
 // displays the malf_ai information if the AI is the malf
 /mob/living/silicon/ai/show_malf_ai()
-	if(SSticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = SSticker.mode
-		for (var/datum/mind/malfai in malf.malf_ai)
-			if (mind == malfai) // are we the evil one?
-				if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
-					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
+	var/datum/role/malfAI/M = ismalf(src)
+	if(M)
+		var/datum/faction/malf_silicons/malf = M.GetFaction()
+		if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/show_alerts()
@@ -626,7 +625,7 @@ var/list/ai_verbs_default = list(
 	set name = "Cancel Camera View"
 
 	//src.cameraFollow = null
-	src.view_core()
+	view_core()
 
 
 //Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
@@ -829,7 +828,7 @@ var/list/ai_verbs_default = list(
 				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
-			anchored = 0
+			anchored = FALSE
 			return
 		else
 			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
@@ -837,7 +836,7 @@ var/list/ai_verbs_default = list(
 				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")
-			anchored = 1
+			anchored = TRUE
 			return
 	else
 		return ..()

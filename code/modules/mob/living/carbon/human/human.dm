@@ -6,6 +6,7 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
+	faction = "station"
 	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
 	//icon_state = "body_m_s"
 
@@ -13,9 +14,6 @@
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
-	var/agent = 0
-	var/team = 0
 	var/metadata
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
@@ -124,14 +122,14 @@
 	update_mutantrace()
 	regenerate_icons()
 
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-	spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
-	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/glare)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow_walk)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
@@ -173,8 +171,6 @@
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
 
-		CHANGELING_STATPANEL_STATS(null)
-
 		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
@@ -195,9 +191,12 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
-	CHANGELING_STATPANEL_POWERS(null)
+	if(mind)
+		for(var/role in mind.antag_roles)
+			var/datum/role/R = mind.antag_roles[role]
+			stat(R.StatPanel())
 
-	if(istype(wear_suit, /obj/item/clothing/suit/space/rig/))
+	if(istype(wear_suit, /obj/item/clothing/suit/space/rig))
 		var/obj/item/clothing/suit/space/rig/rig = wear_suit
 		rig_setup_stat(rig)
 
@@ -1214,10 +1213,10 @@
 		reset_view(0)
 		return
 
-	if(src.getBrainLoss() >= 100) //#Z2
+	if(getBrainLoss() >= 100) //#Z2
 		to_chat(src, "Too hard to concentrate... Better stop trying!")
-		src.adjustBrainLoss(7)
-		if(src.getBrainLoss() >= 125) return
+		adjustBrainLoss(7)
+		if(getBrainLoss() >= 125) return
 
 	var/list/names = list()
 	var/list/creatures = list()
@@ -1246,11 +1245,11 @@
 
 	if (!target)//Make sure we actually have a target
 		return
-	if(src.getBrainLoss() >= 100)
+	if(getBrainLoss() >= 100)
 		to_chat(src, "Too hard to concentrate...")
 		return
 	if (target && (creatures[target] != src))
-		src.adjustBrainLoss(4)
+		adjustBrainLoss(4)
 		remoteview_target = creatures[target]
 		reset_view(creatures[target])
 	else
@@ -1276,7 +1275,7 @@
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 
 	if(!IO.is_bruised())
-		src.custom_pain("You feel a stabbing pain in your chest!", 1)
+		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
 
 /mob/living/carbon/human/can_pickup(obj/O)
@@ -1332,7 +1331,7 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	hand_dirt_datum = new(dirt_overlay)
 
-	src.update_inv_gloves()	//handles bloody hands overlays and updating
+	update_inv_gloves()	//handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
 
@@ -1368,7 +1367,7 @@
 				BP.take_damage(rand(1,3), 0, 0)
 				if(!BP.is_robotic()) //There is no blood in protheses.
 					BP.status |= ORGAN_BLEEDING
-					src.adjustToxLoss(rand(1,3))
+					adjustToxLoss(rand(1,3))
 
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
@@ -1401,7 +1400,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		to_chat(usr, "You moved while counting. Try again.")
 	else
-		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].</span>")
+		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse(GETPULSE_HAND)].</span>")
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
 
@@ -1552,7 +1551,7 @@
 
 		var/hunt_injection_port = FALSE
 
-		switch(check_thickmaterial(target_zone = user.zone_sel.selecting))
+		switch(check_thickmaterial(target_zone = user.get_targetzone()))
 			if(NOLIMB)
 				if(error_msg)
 					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
@@ -1560,17 +1559,17 @@
 			if(THICKMATERIAL)
 				if(!pierce_armor)
 					if(error_msg)
-						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 					return FALSE
 			if(PHORONGUARD)
 				if(!pierce_armor)
 					if(user.a_intent == INTENT_HARM)
 						if(error_msg)
-							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 						return FALSE
 					hunt_injection_port = TRUE
 
-		if(isSynthetic(user.zone_sel.selecting))
+		if(isSynthetic(user.get_targetzone()))
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
@@ -2126,12 +2125,12 @@
 	if(!penetrate_thick)
 		if(check_thickmaterial(target_zone = def_zone))
 			if(show_message)
-				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+				to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 			return FALSE
 
 	if(isSynthetic(def_zone))
 		if(show_message)
-			to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+			to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.get_targetzone() == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 		return FALSE
 
 	return TRUE

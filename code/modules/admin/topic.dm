@@ -6,10 +6,6 @@
 		message_admins("[key_name_admin(usr)] has attempted to override the admin panel!")
 		return
 
-	if(SSticker.mode && SSticker.mode.check_antagonists_topic(href, href_list))
-		check_antagonists()
-		return
-
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
@@ -32,49 +28,58 @@
 			stickyban("show", null)
 
 	if(href_list["makeAntag"])
+		if(!SSticker.mode)
+			to_chat(usr, "The round has not started yet,")
+			return
+		var/count = input("How many antags would you like to create?", "Create Antagonists") as num|null
+		if(!count)
+			return
+
+		var/stealth = FALSE
+		if(tgui_alert(usr, "Do you want to ask a pool of players about wanting to be a role?", "Stealth Antags", list("Yes", "No")) == "No")
+			stealth = TRUE
+			message_admins("[key_name(usr)] has attempted to spawn secretly.")
 		switch(href_list["makeAntag"])
 			if("1")
-				log_admin("[key_name(usr)] has spawned a traitor.")
-				if(!src.makeTraitors())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] traitors.")
+				var/success = makeAntag(null, /datum/faction/traitor, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of traitors made.")
+				to_chat(usr, "<span class='notice'>[success] number of traitors made.</span>")
 			if("2")
-				log_admin("[key_name(usr)] has spawned a changeling.")
-				if(!src.makeChanglings())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] changelings.")
+				var/success = makeAntag(null, /datum/faction/changeling, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of changelings made.")
+				to_chat(usr, "<span class='notice'>[success] number of changelings made.</span>")
 			if("3")
-				log_admin("[key_name(usr)] has spawned revolutionaries.")
-				if(!src.makeRevs())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] revolutionaries.")
+				var/success = makeAntag(null, /datum/faction/revolution, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of revolutionaries made.")
+				to_chat(usr, "<span class='notice'>[success] number of revolutionaries made.</span>")
 			if("4")
-				log_admin("[key_name(usr)] has spawned a cultists.")
-				if(!src.makeCult())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] cultists.")
+				var/success = makeAntag(null, /datum/faction/cult, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of cultists made.")
+				to_chat(usr, "<span class='notice'>[success] number of cultists made.</span>")
 			if("5")
-				log_admin("[key_name(usr)] has spawned a malf AI.")
-				if(!src.makeMalfAImode())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] malfunctioning AI.")
+				var/success = makeAntag(null, /datum/faction/malf_silicons, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of angry computer screens made.")
+				to_chat(usr, "<span class='notice'>[success] number of malf AIs made.</span>")
 			if("6")
-				log_admin("[key_name(usr)] has spawned a wizard.")
-				if(!src.makeWizard())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] wizards.")
+				var/success = makeAntag(null, /datum/faction/wizards, count, FROM_GHOSTS, stealth)
+				message_admins("[success] number of wizards made.")
+				to_chat(usr, "<span class='notice'>[success] number of wizards made.</span>")
 			if("7")
-				log_admin("[key_name(usr)] has spawned a nuke team.")
-				if(!src.makeNukeTeam())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
-			/*
+				message_admins("[key_name(usr)] has spawned aliens.")
+				var/success = makeAntag(null, /datum/faction/infestation, count, FROM_GHOSTS, stealth)
+				message_admins("[success] number of aliens made.")
+				to_chat(usr, "<span class='notice'>[success] number of aliens made.</span>")
 			if("8")
-				log_admin("[key_name(usr)] has spawned a ninja.")
-				src.makeSpaceNinja()
-			if("9")
-				log_admin("[key_name(usr)] has spawned aliens.")
-				src.makeAliens()
-			*/
-			if("10")
-				log_admin("[key_name(usr)] has spawned a death squad.")
-			if("11")
-				log_admin("[key_name(usr)] has spawned vox raiders.")
-				if(!src.makeVoxRaiders())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has spawned voxs.")
+				var/success = makeAntag(null, /datum/faction/heist, count, FROM_GHOSTS, stealth)
+				message_admins("[success] number of voxs made.")
+				to_chat(usr, "<span class='notice'>[success] number of voxs made.</span>")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"] || href_list["dbsearchbantype"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -262,15 +267,12 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if( SSticker.mode.name == "blob" )
-			tgui_alert(usr, "You can't call the shuttle during blob!")
-			return
-
 		switch(href_list["call_shuttle"])
 			if("1")
 				if ((!( SSticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
+				SSshuttle.shuttlealert(1)
 				SSshuttle.announce_emer_called.play()
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='notice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
@@ -719,6 +721,8 @@
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
 		//Ninja
 		if(jobban_isbanned(M, ROLE_NINJA) || isbanned_dept)
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_NINJA];jobban4=\ref[M]'>[ROLE_NINJA]</a></td>"
@@ -1102,10 +1106,13 @@
 		if(SSticker && SSticker.mode)
 			return tgui_alert(usr, "The game has already started.")
 		var/dat = ""
-		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
+		for(var/mode in config.mode_names)
+			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[mode]</A><br>"}
+		dat += "<HR>"
+		for(var/type in subtypesof(/datum/modesbundle))
+			var/datum/modesbundle/bound_type = type
+			var/bname = initial(bound_type.name)
+			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}
 
 		var/datum/browser/popup = new(usr, "c_mode", "What mode do you wish to play?", 400, 535)
@@ -1118,12 +1125,16 @@
 
 		if(SSticker && SSticker.mode)
 			return tgui_alert(usr, "The game has already started.")
-		if(master_mode != "secret")
+		if(master_mode != "Secret")
 			return tgui_alert(usr, "The game mode has to be secret!")
 		var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
-		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
+		for(var/mode in config.mode_names)
+			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[mode]</A><br>"}
+		dat += "<HR>"
+		for(var/type in subtypesof(/datum/modesbundle))
+			var/datum/modesbundle/bound_type = type
+			var/bname = initial(bound_type.name)
+			dat += {"<A href='?src=\ref[src];f_secret2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [secret_force_mode]"}
 
 		var/datum/browser/popup = new(usr, "f_secret")
@@ -1150,7 +1161,7 @@
 
 		if(SSticker && SSticker.mode)
 			return tgui_alert(usr, "The game has already started.")
-		if(master_mode != "secret")
+		if(master_mode != "Secret")
 			return tgui_alert(usr, "The game mode has to be secret!")
 		secret_force_mode = href_list["f_secret2"]
 		log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
@@ -1509,7 +1520,7 @@
 
 		//Job + antagonist
 		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <span class='red'><b>[M.mind.special_role]</b></span>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <span class='red'><b>[M.mind.special_role]</b></span>"
 		else
 			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
 
@@ -1894,16 +1905,16 @@
 					break
 
 		if (number == 1)
-			log_admin("[key_name(usr)] created a [english_list(paths)]")
+			log_admin("[key_name(usr)] created a [get_english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created a [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created a [get_english_list(paths)]")
 					break
 		else
-			log_admin("[key_name(usr)] created [number]ea [english_list(paths)]")
+			log_admin("[key_name(usr)] created [number]ea [get_english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created [number]ea [get_english_list(paths)]")
 					break
 		return
 
@@ -1918,15 +1929,15 @@
 
 	else if(href_list["ac_view_wanted"])            //Admin newscaster Topic() stuff be here
 		src.admincaster_screen = 18                 //The ac_ prefix before the hrefs stands for AdminCaster.
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_channel_name"])
 		src.admincaster_feed_channel.channel_name = sanitize(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(admincaster_feed_channel.channel_name)))
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
 		src.admincaster_feed_channel.locked = !src.admincaster_feed_channel.locked
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_submit_new_channel"])
 		var/check = 0
@@ -1948,18 +1959,18 @@
 				news_network.network_channels += newChannel                        //Adding channel to the global network
 				log_admin("[key_name(usr)] created command feed channel: [src.admincaster_feed_channel.channel_name]!")
 				src.admincaster_screen=5
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_channel_receiving"])
 		var/list/available_channels = list()
 		for(var/datum/feed_channel/F in news_network.network_channels)
 			available_channels += F.channel_name
 		src.admincaster_feed_channel.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_new_message"])
 		src.admincaster_feed_message.body = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(admincaster_feed_message.body)), extra = FALSE)
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
 		if(src.admincaster_feed_message.body =="" || src.admincaster_feed_message.body =="\[REDACTED\]" || src.admincaster_feed_channel.channel_name == "" )
@@ -1980,23 +1991,23 @@
 			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
 
 		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_create_channel"])
 		src.admincaster_screen=2
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_create_feed_story"])
 		src.admincaster_screen=3
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_menu_censor_story"])
 		src.admincaster_screen=10
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_menu_censor_channel"])
 		src.admincaster_screen=11
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_menu_wanted"])
 		var/already_wanted = 0
@@ -2007,15 +2018,15 @@
 			src.admincaster_feed_message.author = news_network.wanted_issue.author
 			src.admincaster_feed_message.body = news_network.wanted_issue.body
 		src.admincaster_screen = 14
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
 		src.admincaster_feed_message.author = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(admincaster_feed_message.author)))
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
 		src.admincaster_feed_message.body = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
 		var/input_param = text2num(href_list["ac_submit_wanted"])
@@ -2041,7 +2052,7 @@
 					news_network.wanted_issue.backup_author = src.admincaster_feed_message.backup_author
 					src.admincaster_screen = 19
 				log_admin("[key_name(usr)] issued a Station-wide Wanted Notification for [src.admincaster_feed_message.author]!")
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_cancel_wanted"])
 		var/choice = tgui_alert(usr, "Please confirm Wanted Issue removal","Network Security Handler", list("Confirm","Cancel"))
@@ -2050,7 +2061,7 @@
 			for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)
 				NEWSCASTER.update_icon()
 			src.admincaster_screen=17
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_censor_channel_author"])
 		var/datum/feed_channel/FC = locate(href_list["ac_censor_channel_author"])
@@ -2059,7 +2070,7 @@
 			FC.author = "<B>\[REDACTED\]</B>"
 		else
 			FC.author = FC.backup_author
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_censor_channel_story_author"])
 		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_author"])
@@ -2068,7 +2079,7 @@
 			MSG.author = "<B>\[REDACTED\]</B>"
 		else
 			MSG.author = MSG.backup_author
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_censor_channel_story_body"])
 		var/datum/feed_message/MSG = locate(href_list["ac_censor_channel_story_body"])
@@ -2077,22 +2088,22 @@
 			MSG.body = "<B>\[REDACTED\]</B>"
 		else
 			MSG.body = MSG.backup_body
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_pick_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["ac_pick_d_notice"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen=13
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_toggle_d_notice"])
 		var/datum/feed_channel/FC = locate(href_list["ac_toggle_d_notice"])
 		FC.censored = !FC.censored
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_view"])
 		src.admincaster_screen=1
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_setScreen"]) //Brings us to the main menu and resets all fields~
 		src.admincaster_screen = text2num(href_list["ac_setScreen"])
@@ -2101,26 +2112,26 @@
 				src.admincaster_feed_channel = new /datum/feed_channel
 			if(src.admincaster_feed_message)
 				src.admincaster_feed_message = new /datum/feed_message
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_show_channel"])
 		var/datum/feed_channel/FC = locate(href_list["ac_show_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 9
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_pick_censor_channel"])
 		var/datum/feed_channel/FC = locate(href_list["ac_pick_censor_channel"])
 		src.admincaster_feed_channel = FC
 		src.admincaster_screen = 12
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_refresh"])
-		src.access_news_network()
+		access_news_network()
 
 	else if(href_list["ac_set_signature"])
 		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
-		src.access_news_network()
+		access_news_network()
 
 	if(href_list["secretsmenu"])
 		switch(href_list["secretsmenu"])

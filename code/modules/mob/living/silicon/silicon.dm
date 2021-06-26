@@ -7,7 +7,6 @@
 
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/list/def_sensor_huds
-	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
 
@@ -60,10 +59,10 @@
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
 		if(1)
-			src.take_bodypart_damage(20)
+			take_bodypart_damage(20)
 			Stun(rand(5,10))
 		if(2)
-			src.take_bodypart_damage(10)
+			take_bodypart_damage(10)
 			Stun(rand(1,5))
 	flash_eyes(affect_silicon = 1)
 	to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")

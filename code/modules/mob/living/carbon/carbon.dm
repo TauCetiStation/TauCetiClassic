@@ -8,6 +8,9 @@
 	return ..()
 
 /mob/living/carbon/Life()
+	if(!loc)
+		return
+
 	..()
 
 	// Increase germ_level regularly
@@ -16,7 +19,7 @@
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(.)
+	if(. && !ISDIAGONALDIR(Dir))
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
@@ -67,18 +70,22 @@
 	. = ..()
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
 	if(istype(attacker))
@@ -141,7 +148,7 @@
 
 
 /mob/living/carbon/proc/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
+	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
 			if(item_in_hand:wielded)
@@ -190,7 +197,7 @@
 	if (src.health >= config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
-			src.visible_message( \
+			visible_message( \
 				text("<span class='notice'>[src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
@@ -429,11 +436,11 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	src.remove_from_mob(item)
+	remove_from_mob(item)
 
 	//actually throw it!
 	if (item)
-		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
+		visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
 		newtonian_move(get_dir(target, src))
 
@@ -713,10 +720,13 @@
 	return is_nude(maximum_coverage = 20) && !istype(head, /obj/item/clothing/head/bearpelt) && !istype(head, /obj/item/weapon/holder)
 
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
-	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
+	if(!ischangeling(src))
+		return
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+	if(length(C.essences) < 1)
 		return
 	if(loc == NewLoc)
-		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
+		for(var/mob/living/parasite/essence/essence in C.essences)
 			if(essence.phantom.showed)
 				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
 
