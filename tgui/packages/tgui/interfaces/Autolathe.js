@@ -182,7 +182,7 @@ const MaterialAmount = (props, context) => {
   );
 };
 
-const canBeMade = (recipe, materials) => {
+const canBeMade = (recipe, materials, mult = 1) => {
   if (recipe.requirements === null) {
     return true;
   }
@@ -194,7 +194,7 @@ const canBeMade = (recipe, materials) => {
     if (!material) {
       continue; // yes, if we cannot find the material, we just ignore it :V
     }
-    if (material.amount < recipe.requirements[mat_id]) {
+    if (material.amount < (recipe.requirements[mat_id] * mult)) {
       return false;
     }
   }
