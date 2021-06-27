@@ -408,7 +408,10 @@
 			iscrayon = 1
 
 
-		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
+		if(istype(loc, /obj/item/weapon/clipboard) || istype(loc, /obj/structure/noticeboard) || istype(loc, /obj/item/weapon/folder))
+			if(loc.loc != usr && !in_range(loc, usr))
+				return
+		else if(loc != usr && !Adjacent(usr)) // Some check to see if he's allowed to write
 			return
 
 		var/last_fields_value = fields
@@ -504,7 +507,8 @@
 		to_chat(user, "<span class='notice'>You clip the [I.name] to [(src.name == "paper") ? "the paper" : name].</span>")
 		forceMove(B)
 		I.forceMove(B)
-		B.amount++
+		B.pages.Add(src)
+		B.pages.Add(I)
 		B.update_icon()
 		if (istype(old_loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/s = old_loc
