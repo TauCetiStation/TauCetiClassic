@@ -30,11 +30,9 @@
 		apply_damage(Proj.damage)
 
 /obj/structure/alien/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(user.a_intent != INTENT_HARM)
+	. = ..()
+	if(!.)
 		return FALSE
-	if(!(W.flags & NOATTACKANIMATION))
-		user.do_attack_animation(src)
 	if(length(W.hitsound))
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
 	else

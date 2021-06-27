@@ -18,7 +18,7 @@
 
 	var/need_members = 4
 
-/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -32,6 +32,16 @@
 			to_chat(user, "<span class='warning'>Слишком мало последователей.</span>")
 		return FALSE
 
+	var/cultists_around = 0
+	for(var/mob/M in AOG.mobs_around)
+		if(religion.is_member(M))
+			cultists_around++
+
+	if(cultists_around < need_members)
+		if(user)
+			to_chat(user, "<span class='warning'>Недостаточно последователей вокруг алтаря.</span>")
+		return FALSE
+
 	if(SSticker.nar_sie_has_risen)
 		if(user)
 			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
@@ -39,7 +49,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	SSticker.nar_sie_has_risen = TRUE
 
@@ -67,7 +77,7 @@
 		ASPECT_DEATH = 1
 	)
 
-/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -76,10 +86,10 @@
 			return TRUE
 
 	if(user)
-		to_chat(user, "<span class='warning'>Сначало разместите руну-маяк.</span>")
+		to_chat(user, "<span class='warning'>Сначала разместите руну-маяк.</span>")
 	return FALSE
 
-/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	var/spawned = FALSE
 	for(var/obj/effect/rune/R in religion.runes)
@@ -110,7 +120,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -121,7 +131,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob

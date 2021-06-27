@@ -640,8 +640,9 @@
 		qdel(src)
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return ..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	var/can_cut = FALSE
 	if(istype(W, /obj/item/weapon/melee/energy))

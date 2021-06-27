@@ -147,7 +147,7 @@ SUBSYSTEM_DEF(vote)
 					. += "<td class='collapsing'></td>"
 			if(admin)
 				. += "<td class='collapsing'><a href='?src=\ref[src];toggle_admin=\ref[poll]'>[poll.only_admin ? "Only admin" : "Allowed"]</a></td>"
-			. += "<td><i>[poll.get_blocking_reason()]</i></td>"
+			. += "<td><i>[poll.get_blocking_or_warning_message()]</i></td>"
 			. += "</tr>"
 
 		if(!any_votes)

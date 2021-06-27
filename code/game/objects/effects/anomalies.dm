@@ -305,7 +305,7 @@
 		disable()
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
-	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
+	var/list/candidates = pollGhostCandidates("Хотите стать рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
 	if(!candidates.len)
 		return
 
