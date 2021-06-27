@@ -189,10 +189,10 @@
 		return
 //window placing end
 
-	if(user.a_intent != INTENT_HARM)
-		return
-
 	. = ..()
+	if(!.)
+		return FALSE
+
 	if((W.flags & CONDUCT) && shock(user, 70))
 		return
 

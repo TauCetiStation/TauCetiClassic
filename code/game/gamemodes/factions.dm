@@ -326,7 +326,7 @@
 	switch(value)
 		if(FS_DEFEATED) //Faction was close to victory, but then lost. Send shuttle and end theme.
 			sleep(5 SECONDS)
-			SSshuttle.always_fake_recall = FALSE
+			SSshuttle.fake_recall = FALSE
 			SSshuttle.online = TRUE
 			OnPostDefeat()
 			set_security_level("blue")

@@ -27,8 +27,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/endtime					// timeofday that shuttle arrives
 	var/timelimit				//important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
-	var/fake_recall = 0			//Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
-	var/always_fake_recall = 0
+	var/time_for_fake_recall = 0 // used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
+	var/fake_recall = 0 // flag if we need to make fake recall, gamemode fractions set it. Does nothing for crew transfer vote
 	var/deny_shuttle = 0		//for admins not allowing it to be called.
 	var/departed = 0
 
@@ -182,11 +182,11 @@ SUBSYSTEM_DEF(shuttle)
 				endtime = null
 				return 0
 
-			else if((fake_recall != 0) && (timeleft <= fake_recall))
+			else if((time_for_fake_recall != 0) && (timeleft <= time_for_fake_recall))
 				log_admin("Gamemode fake-recalled the shuttle.")
 				message_admins("<span class='notice'>Gamemode fake-recalled the shuttle.</span>")
 				recall()
-				fake_recall = 0
+				time_for_fake_recall = 0
 				return 0
 
 			else if(timeleft == 22)
@@ -590,8 +590,8 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		settimeleft(get_shuttle_arrive_time()*coeff)
 		online = 1
-		if(always_fake_recall)
-			fake_recall = rand(300,500)		//turning on the red lights in hallways
+		if(fake_recall)
+			time_for_fake_recall = rand(300,500)		//turning on the red lights in hallways
 
 
 /datum/controller/subsystem/shuttle/proc/get_shuttle_arrive_time()

@@ -317,7 +317,17 @@
 		else
 			new_objective = new obj_type()
 
-		if (tgui_alert(usr, "Add the objective to a fraction?", "Faction" ,list("Yes", "No")) == "Yes")
+		var/setup = TRUE
+		if (istype(new_objective, /datum/objective/target) || istype(new_objective, /datum/objective/steal))
+			var/datum/objective/target/new_O = new_objective // the /datum/objective/steal has same proc names
+			if (tgui_alert(usr, "Do you want to specify a target?", "New Objective", list("Yes", "No")) == "Yes")
+				setup = new_O.select_target()
+
+		if(!setup)
+			tgui_alert(usr, "Couldn't set-up a proper target.", "New Objective")
+			return
+
+		if (tgui_alert(usr, "Add the objective to a faction?", "Faction", list("Yes", "No")) == "Yes")
 			var/datum/faction/fac = input("To which faction shall we give this?", "Faction-wide objective", null) as anything in SSticker.mode.factions
 			fac.handleNewObjective(new_objective)
 			message_admins("[usr.key]/([usr.name]) gave \the [new_objective.faction.ID] the objective: [new_objective.explanation_text]")
