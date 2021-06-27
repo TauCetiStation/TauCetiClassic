@@ -33662,8 +33662,7 @@
 /area/station/maintenance/bridge)
 "jGI" = (
 /obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
+	charge = 100000
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -35952,8 +35951,7 @@
 /area/station/rnd/xenobiology)
 "krj" = (
 /obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
+	charge = 100000
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -60358,8 +60356,7 @@
 /area/station/hallway/secondary/entry)
 "sck" = (
 /obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
+	charge = 100000
 	},
 /obj/structure/cable{
 	d1 = 4;

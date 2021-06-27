@@ -7792,7 +7792,8 @@
 /area/station/security/prison)
 "amD" = (
 /obj/machinery/power/smes{
-	chargemode = 1
+	input_attempt = 1;
+	input_level = 40000
 	},
 /obj/machinery/camera{
 	c_tag = "Security Substation";
