@@ -31,6 +31,7 @@
 	var/output_used = 0 // Amount of power actually outputted. May be less than output_level if the powernet returns excess power
 
 	var/obj/machinery/power/terminal/terminal = null
+	var/power_failure = FALSE
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()
@@ -257,7 +258,7 @@
 	var/last_out = outputting
 
 	// Inputting, charging:
-	if(terminal && input_attempt) // Input is On
+	if(terminal && input_attempt && !power_failure) // Input is On
 		input_available = terminal.surplus()
 
 		if(inputting) // Was charging - check if still do
@@ -281,7 +282,7 @@
 		inputting = FALSE
 
 	// Outputting, discharging:
-	if(output_attempt) // Output is Off
+	if(output_attempt && !power_failure) // Output is Off
 
 		if(outputting) // Was discharging - check if still do
 			output_used = min(charge / SMESRATE, output_level) // Limit output to that stored
@@ -295,7 +296,7 @@
 				outputting = FALSE
 				//log_investigate("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
 
-		else if((charge / SMESRATE) > output_level && output_level > 0)
+		else if((charge / SMESRATE) >= output_level && output_level > 0)
 			// Was not discharging - check if can start. First check is to prevent outputting flickering every tick
 			outputting = TRUE
 
@@ -343,13 +344,12 @@
 
 	// this is the data which will be sent to the ui
 	var/data[0]
-	data["nameTag"] = name_tag
 	data["storedCapacity"] = round(100.0 * charge / capacity, 0.1)
 	data["charging"] = inputting
 	data["chargeMode"] = input_attempt
 	data["chargeLevel"] = input_level
 	data["chargeMax"] = input_level_max
-	data["outputoutput_attempt"] = output_attempt
+	data["outputOnline"] = output_attempt
 	data["outputLevel"] = output_level
 	data["outputMax"] = output_level_max
 	data["outputLoad"] = round(output_used)
@@ -382,7 +382,7 @@
 		input_attempt = !input_attempt
 		update_icon()
 
-	else if( href_list["output_attempt"] )
+	else if( href_list["online"] )
 		output_attempt = !output_attempt
 		update_icon()
 
@@ -446,8 +446,8 @@
 			log_game("SMES smoke in [src.loc.loc]")
 
 /obj/machinery/power/smes/proc/after_emp()
-	input_attempt = rand(0, 1)
-	output_attempt = rand(0, 1)
+	input_attempt = prob(50) ? TRUE : FALSE
+	output_attempt = prob(50) ? TRUE : FALSE
 	input_level = rand(0, input_level_max)
 	output_level = rand(0, output_level_max)
 
