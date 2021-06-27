@@ -34,7 +34,7 @@
 
 /datum/faction/malf_silicons/OnPostSetup()
 	if(SSshuttle)
-		SSshuttle.always_fake_recall = TRUE
+		SSshuttle.fake_recall = TRUE
 	return ..()
 
 /datum/faction/malf_silicons/proc/takeover()
@@ -99,7 +99,7 @@
 	if (is_malf_ai_dead())
 		if(config.continous_rounds)
 			if(SSshuttle)
-				SSshuttle.always_fake_recall = FALSE
+				SSshuttle.fake_recall = FALSE
 			malf_mode_declared = FALSE
 		else
 			return TRUE

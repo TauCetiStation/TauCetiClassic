@@ -30,7 +30,7 @@
 
 /datum/faction/revolution/OnPostSetup()
 	if(SSshuttle)
-		SSshuttle.always_fake_recall = TRUE
+		SSshuttle.fake_recall = TRUE
 
 	return ..()
 
@@ -40,7 +40,7 @@
 	var/list/heads = get_living_heads()
 
 	for(var/datum/mind/head_mind in heads)
-		var/datum/objective/rp_rev/rev_obj = AppendObjective(/datum/objective/rp_rev, TRUE)
+		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
 		if(rev_obj)
 			rev_obj.target = head_mind
 			rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
@@ -59,7 +59,7 @@
 	var/win = IsSuccessful()
 	if(config.continous_rounds)
 		if(win && SSshuttle)
-			SSshuttle.always_fake_recall = FALSE
+			SSshuttle.fake_recall = FALSE
 		return FALSE
 
 	if(win)
@@ -94,7 +94,7 @@
 	if(M.mind.assigned_role in command_positions)
 		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 
-		var/datum/objective/rp_rev/rev_obj = AppendObjective(/datum/objective/rp_rev, TRUE)
+		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
 		if(rev_obj)
 			rev_obj.target = M.mind
 			rev_obj.explanation_text = "Capture, convert or exile from station [M.mind.name], the [M.mind.assigned_role]. Assassinate if you have no choice."

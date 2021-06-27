@@ -1,6 +1,7 @@
 /datum/game_mode/nuclear
 	name = "Nuclear Emergency"
 	config_name = "nuke"
+	probability = 100
 
 	factions_allowed = list(/datum/faction/nuclear)
 

@@ -221,10 +221,14 @@
 		hide_god(user)
 
 /obj/item/weapon/nullrod/staff/attackby(obj/item/I, mob/user, params)
-	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST)
-		if(istype(I, /obj/item/device/soulstone)) //mb, the only way to pull out god
+	if(user.mind && user.mind.holy_role >= HOLY_ROLE_HIGHPRIEST && brainmob)
+		if(istype(I, /obj/item/device/soulstone))
+			if(iscultist(user))
+				to_chat(user, "<span class ='warning'>You can't use weapon of [brainmob.name] against him!</span>")
+				return
+
 			var/obj/item/device/soulstone/S = I
-			if(S.imprinted == "empty")
+			if(!S.imprinted)
 				S.imprinted = brainmob.name
 				S.transfer_soul(SOULSTONE_SHADE, brainmob, user)
 

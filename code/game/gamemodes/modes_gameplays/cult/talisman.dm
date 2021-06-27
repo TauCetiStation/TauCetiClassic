@@ -51,4 +51,4 @@
 
 /obj/item/weapon/paper/talisman/cult
 	icon_state = "scrap_bloodied"
-	text_befor_riteinfo = "Кровью наскрябано"
+	text_befor_riteinfo = "Кровью наскребено"
