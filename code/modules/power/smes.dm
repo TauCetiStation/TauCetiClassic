@@ -301,6 +301,7 @@
 
 	else // Output is Off
 		outputting = FALSE
+		output_used = 0
 
 	// Only update icon if state changed
 	if(last_disp != chargedisplay() || last_in != inputting || last_out != outputting)
