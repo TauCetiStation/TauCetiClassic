@@ -106,7 +106,7 @@
 						return
 					var/turf/Z = get_turf(src)
 					var/obj/item/item_path = itemlist.possible_items[targetitem]
-					for(var/obj/item/I in world)
+					for(var/obj/item/I in global.possible_items_for_steal)
 						if(I.z != Z.z)
 							continue
 						if(!istype(I, item_path))
