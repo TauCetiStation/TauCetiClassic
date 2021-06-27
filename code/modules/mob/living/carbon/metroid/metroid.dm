@@ -17,6 +17,9 @@
 	see_in_dark = 8
 	update_slimes = 0
 
+	attack_push_vis_effect = ATTACK_EFFECT_SLIME
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLIME
+
 	ventcrawler = 2
 
 	moveset_type = /datum/combat_moveset/slime
@@ -268,6 +271,17 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
+/mob/living/carbon/slime/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[colour]
+	. = ..()
+
+/mob/living/carbon/slime/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
+
+/mob/living/carbon/slime/adult/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
 
 /mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(Victim)
@@ -663,7 +677,7 @@
 	armor = list(melee = 80, bullet = 70, laser = 80, energy = 66, bomb = 80, bio = 100, rad = 100)
 
 /obj/effect/golemrune
-	anchored = 1
+	anchored = TRUE
 	desc = "A strange rune used to create golems. It glows when spirits are nearby."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
@@ -819,9 +833,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
 	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
-	src.visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
+	visible_message("<span class='notice'>The [name] pulsates and quivers!</span>")
 	spawn(rand(50,100))
-		src.visible_message("<span class='notice'>The [name] bursts open!</span>")
+		visible_message("<span class='notice'>The [name] bursts open!</span>")
 		new/mob/living/carbon/slime(T)
 		qdel(src)
 
@@ -830,7 +844,7 @@
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
 	if (environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
-		src.Hatch()
+		Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/crayon))

@@ -147,7 +147,7 @@
 		src.blinded = 1
 
 	if(!is_component_functioning("actuator"))
-		src.Paralyse(3)
+		Paralyse(3)
 
 
 	return 1
@@ -222,16 +222,6 @@
 						src.healths.icon_state = "health6"
 		else
 			src.healths.icon_state = "health7"
-
-	if (src.syndicate && src.client)
-		if(src.connected_ai)
-			src.connected_ai.connected_robots -= src
-			src.set_ai_link(null)
-		if(src.mind)
-			if(!src.mind.special_role)
-				src.mind.special_role = "traitor"
-				add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", src)
-				SSticker.mode.traitors += src.mind
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge

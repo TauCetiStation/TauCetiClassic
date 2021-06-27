@@ -3,7 +3,7 @@
 	desc = "Access transaction logs, account data and all kinds of other financial records."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "aiupload"
-	density = 1
+	density = TRUE
 	anchored = TRUE
 	req_one_access = list(access_hop, access_captain, access_cent_captain)
 	allowed_checks = ALLOWED_CHECK_NONE
@@ -48,8 +48,7 @@
 		return ..()
 
 	if(!held_card)
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		held_card = O
 
 		nanomanager.update_uis(src)
@@ -160,8 +159,7 @@
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
 						var/obj/item/weapon/card/id/C = I
-						usr.drop_item()
-						C.loc = src
+						usr.drop_from_inventory(C, src)
 						held_card = C
 
 			if("view_account_detail")

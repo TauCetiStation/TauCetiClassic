@@ -56,7 +56,7 @@
 	icon_state = "core"
 
 /obj/structure/cellular_biomass/lair/necro/atom_init()
-	new /mob/living/simple_animal/hostile/cellular/necro/(loc)
+	new /mob/living/simple_animal/hostile/cellular/necro(loc)
 	..()
 	return INITIALIZE_HINT_QDEL //glitches are self-replicating, no need for lair
 

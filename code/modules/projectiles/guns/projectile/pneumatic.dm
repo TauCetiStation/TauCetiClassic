@@ -131,7 +131,7 @@
 	playsound(src, 'sound/weapons/guns/gunshot_pneumaticgun.ogg', VOL_EFFECTS_MASTER, null, null, -2)
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
-	src.remove_from_storage(object,user.loc)
+	remove_from_storage(object,user.loc)
 	object.throw_at(target, speed + 1, speed, user)
 
 	var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)

@@ -262,8 +262,6 @@
 		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
 		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
 
-		body += "<option value='?_src_=vars;fix_nano=\ref[D]'>Fix NanoUI</option>"
-
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
@@ -494,7 +492,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_spell(M)
+		give_spell(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_disease"])
@@ -506,7 +504,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_disease(M)
+		give_disease(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_religion"])
@@ -530,7 +528,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_disease2(M)
+		give_disease2(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_status_effect"])
@@ -557,7 +555,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_ninjafy(M)
+		cmd_admin_ninjafy(M)
 		href_list["datumrefresh"] = href_list["ninja"]
 
 	else if(href_list["godmode"])
@@ -569,7 +567,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_godmode(M)
+		cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["gib"])
@@ -581,7 +579,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_gib(M)
+		cmd_admin_gib(M)
 
 	else if(href_list["dust"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -592,7 +590,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_dust(M)
+		cmd_admin_dust(M)
 
 	else if(href_list["build_mode"])
 		if(!check_rights(R_BUILDMODE))
@@ -690,7 +688,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
-		src.cmd_admin_explosion(A)
+		cmd_admin_explosion(A)
 		href_list["datumrefresh"] = href_list["explode"]
 
 	else if(href_list["emp"])
@@ -702,7 +700,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
-		src.cmd_admin_emp(A)
+		cmd_admin_emp(A)
 		href_list["datumrefresh"] = href_list["emp"]
 
 	else if(href_list["mark_object"])
@@ -985,23 +983,6 @@ body
 		else
 			H.verbs -= verb
 
-
-	else if(href_list["fix_nano"])
-		if(!check_rights(R_DEBUG))
-			return
-
-		var/mob/H = locate(href_list["fix_nano"])
-
-		if(!istype(H) || !H.client)
-			to_chat(usr, "This can only be done on mobs with clients")
-			return
-
-		H.client.reload_nanoui_resources()
-
-		to_chat(usr, "Resource files sent")
-		log_admin("[key_name(usr)] resent the NanoUI resource files to [key_name(H)] ")
-
-
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))
 			return
@@ -1066,6 +1047,6 @@ body
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!istype(DAT, /datum))
 			return
-		src.debug_variables(DAT)
+		debug_variables(DAT)
 
 	return

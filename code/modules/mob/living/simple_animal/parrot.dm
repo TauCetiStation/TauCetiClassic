@@ -150,9 +150,9 @@
 				if("ears")
 					if(ears)
 						if(available_channels.len)
-							src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+							say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 						else
-							src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+							say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
 						ears.loc = src.loc
 						ears = null
 						for(var/possible_phrase in speak)
@@ -184,8 +184,7 @@
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
 
-						usr.drop_item()
-						headset_to_add.loc = src
+						usr.drop_from_inventory(headset_to_add, src)
 						src.ears = headset_to_add
 						to_chat(usr, "You fit the headset onto [src].")
 
@@ -627,7 +626,7 @@
 	if(incapacitated())
 		return
 
-	src.drop_held_item()
+	drop_held_item()
 
 	return
 

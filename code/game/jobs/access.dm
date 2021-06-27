@@ -97,11 +97,11 @@
 //returns 1 if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
-		if(src.check_access(S))
+		if(check_access(S))
 			return TRUE
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
@@ -109,16 +109,16 @@
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
+		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return TRUE
 	else if(isIAN(M))
 		var/mob/living/carbon/ian/IAN = M
-		if(src.check_access(IAN.mouth) || src.check_access(IAN.neck))
+		if(check_access(IAN.mouth) || check_access(IAN.neck))
 			return TRUE
 	else if(ismonkey(M) || isxenoadult(M))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
-		if(src.check_access(george.get_active_hand()))
+		if(check_access(george.get_active_hand()))
 			return TRUE
 	return FALSE
 

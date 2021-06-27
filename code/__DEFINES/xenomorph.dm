@@ -10,7 +10,7 @@
 #define ALIEN_SENTINEL		"Стражи"
 #define ALIEN_HUNTER		"Охотники"
 #define ALIEN_LARVA			"Грудоломы"
-#define ALIEN_FACEHAGGER	"Лицехваты"
+#define ALIEN_FACEHUGGER	"Лицехваты"
 
 //alien embryo
 #define MAX_EMBRYO_GROWTH 40

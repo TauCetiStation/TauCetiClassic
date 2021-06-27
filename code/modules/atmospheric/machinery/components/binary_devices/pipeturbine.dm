@@ -5,8 +5,8 @@
 	desc = "A gas turbine. Converting pressure into energy since 1884."
 	icon = 'icons/obj/pipeturbine.dmi'
 	icon_state = "turbine"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 
 	var/efficiency = 0.4
 	var/kin_energy = 0
@@ -115,7 +115,7 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.set_dir(turn(src.dir, -90))
+	set_dir(turn(src.dir, -90))
 
 
 /obj/machinery/atmospherics/components/pipeturbine/verb/rotate_anticlockwise()
@@ -126,15 +126,15 @@
 	if (usr.incapacitated() || anchored)
 		return
 
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 
 /obj/machinery/power/turbinemotor
 	name = "motor"
 	desc = "Electrogenerator. Converts rotation into power."
 	icon = 'icons/obj/pipeturbine.dmi'
 	icon_state = "motor"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 
 	var/kin_to_el_ratio = 0.1	//How much kinetic energy will be taken from turbine and converted into electricity
 	var/obj/machinery/atmospherics/components/pipeturbine/turbine

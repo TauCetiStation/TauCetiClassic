@@ -49,6 +49,11 @@ var/religion_name = null
 
 	return "Tau Ceti" //Screw Nyx
 
+/proc/system_name_ru()
+	if(system_name_ru)
+		return system_name_ru
+	return system_name()
+
 /proc/station_name()
 	if (station_name)
 		return station_name
@@ -61,6 +66,11 @@ var/religion_name = null
 		world.name = station_name
 
 	return station_name
+
+/proc/station_name_ru()
+	if (station_name_ru)
+		return station_name_ru
+	return station_name()
 
 /proc/new_station_name()
 	var/random = rand(1,5)
@@ -153,24 +163,6 @@ var/syndicate_name = null
 	syndicate_name = name
 	return name
 
-var/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron")
-var/gang_A_name = null
-var/gang_B_name = null
-/proc/gang_name(gang)
-	if(!gang_A_name || !gang_B_name)
-		gang_A_name = pick(gang_name_pool)
-		gang_name_pool -= gang_A_name
-		gang_B_name = pick(gang_name_pool)
-		gang_name_pool -= gang_B_name
-
-	if(gang == "A")
-		if(gang_A_name)
-			return gang_A_name
-	if(gang == "B")
-		if(gang_B_name)
-			return gang_B_name
-
-
 //Traitors and traitor silicons will get these. Revs will not.
 var/global/list/syndicate_code_phrase = list() //Code phrase for traitors.
 var/global/list/syndicate_code_response = list() //Code response for traitors.
@@ -247,10 +239,22 @@ var/global/regex/code_response_highlight_rule
 	return
 
 /proc/highlight_traitor_codewords(message, datum/mind/traitor_mind)
-	if(!traitor_mind || !traitor_mind.syndicate_awareness)
+	if(!traitor_mind)
 		return message
 
-	switch(traitor_mind.syndicate_awareness)
+	var/awareness = 0
+	for(var/role in traitor_mind.antag_roles)
+		var/datum/role/R = traitor_mind.antag_roles[role]
+		var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+		if(!S)
+			continue
+		if(S.syndicate_awareness > awareness)
+			awareness = S.syndicate_awareness
+
+	if(!awareness)
+		return message
+
+	switch(awareness)
 		if(SYNDICATE_AWARE)
 			message = highlight_codewords(message, global.code_phrase_highlight_rule) // Same can be done with code_response or any other list of words, using regex created by generate_code_regex(). You can also add the name of CSS class as argument to change highlight style.
 			message = highlight_codewords(message, global.code_response_highlight_rule, "deptradio")

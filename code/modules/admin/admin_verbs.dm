@@ -156,6 +156,7 @@ var/list/admin_verbs_server = list(
 var/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -172,7 +173,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
 	/client/proc/reload_config,
-	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
@@ -271,6 +271,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -509,23 +510,26 @@ var/list/admin_verbs_hideable = list(
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(holder)
-		if(holder.fakekey)
-			holder.fakekey = null
-			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = 127//initial(mob.alpha)
-			mob.name = initial(mob.name)
-		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
-			if(!new_key)	return
-			if(length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
-			holder.fakekey = new_key
-			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
-			mob.name = " "
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+
+	if(!holder || !(holder.rights & R_STEALTH))
+		return
+
+	if(holder.fakekey)
+		holder.fakekey = null
+		mob.invisibility = initial(mob.invisibility)
+		mob.alpha = 127//initial(mob.alpha)
+		mob.name = initial(mob.name)
+	else
+		var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+		if(!new_key)	return
+		if(length(new_key) >= 26)
+			new_key = copytext(new_key, 1, 26)
+		holder.fakekey = new_key
+		mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+		mob.alpha = 0 //JUUUUST IN CASE
+		mob.name = " "
+	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/warn(warned_ckey)
@@ -707,8 +711,10 @@ var/list/admin_verbs_hideable = list(
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-	if(src.mob)
-		togglebuildmode(src.mob)
+	if(!mob || !(holder.rights & R_BUILDMODE))
+		return
+
+	togglebuildmode(mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/change_title_screen()
@@ -1067,7 +1073,7 @@ var/list/admin_verbs_hideable = list(
 		display_name = holder.fakekey
 
 	for(var/mob/M in player_list)
-		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
+		if((isanyantag(M)) || (M.client && M.client.holder))
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
 	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
@@ -1094,11 +1100,15 @@ var/list/admin_verbs_hideable = list(
 	set name = "Change Blobs to Win"
 	set category = "Event"
 	if(holder)
-		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
+		if(!conglomerate)
+			return
+
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", conglomerate.blobwincount) as num|null
 		if(new_count)
-			blobwincount = new_count
-			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			conglomerate.blobwincount = new_count
+			log_admin("[key_name(usr)] changed blobwincount to [conglomerate.blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [conglomerate.blobwincount]")
 			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -1211,8 +1221,8 @@ var/centcom_barriers_stat = 1
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	invisibility = 101
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x3"

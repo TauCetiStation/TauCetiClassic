@@ -23,6 +23,10 @@
 
 /obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
 		if(occupant && (src.loc != occupant.loc))
@@ -68,12 +72,11 @@
 		if(!SK.status)
 			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
 			return
-		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
+		user.drop_from_inventory(SK, E)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		E.set_dir(dir)
 		E.part = SK
-		SK.loc = E
 		SK.master = E
 		qdel(src)
 
@@ -140,7 +143,7 @@
 	if(usr.incapacitated())
 		return
 
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 	handle_rotation()
 	return
 
@@ -176,7 +179,7 @@
 			offset_y = -4
 			offset_x = -2
 		flipped = 1
-		anchored = 0		// can be pulled
+		anchored = FALSE		// can be pulled
 		buckle_movable = 0
 		playsound(src, 'sound/items/chair_fall.ogg', VOL_EFFECTS_MASTER, 25)
 	else
@@ -504,7 +507,7 @@
 	color = rgb(255,251,0)
 
 /obj/structure/stool/bed/chair/office
-	anchored = 0
+	anchored = FALSE
 	buckle_movable = 1
 	can_flipped = 1
 

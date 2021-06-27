@@ -15,7 +15,7 @@
 				lawsync()
 				photosync()
 				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
-				if(mind && mind.special_role == "traitor" && mind.original == src)
+				if(istraitor(src) && mind.original == src)
 					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.</b>")
 		else
 			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
@@ -23,7 +23,7 @@
 
 	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)
-	if (mind && (mind.special_role == "traitor" && mind.original == src) && connected_ai)
+	if (mind && (istraitor(src) && mind.original == src) && connected_ai)
 		to_chat(who, "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>")
 	else if (connected_ai)
 		to_chat(who, "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>")
@@ -45,7 +45,7 @@
 				laws.ion[index] = temp
 
 		if (!is_special_character(src) || mind.original != src)
-			if(master.zeroth_borg) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
+			if(!isnull(master.zeroth_borg)) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
 				temp = master.zeroth_borg
 			else
 				temp = master.zeroth
@@ -114,15 +114,15 @@
 /mob/living/silicon/robot/proc/statelaws() // -- TLE
 //	set category = "AI Commands"
 //	set name = "State Laws"
-	src.say("Current Active Laws:")
-	//src.laws_sanity_check()
+	say("Current Active Laws:")
+	//laws_sanity_check()
 	//src.laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 
 	if (src.laws.zeroth)
 		if (src.lawcheck[1] == "Yes") //This line and the similar lines below make sure you don't state a law unless you want to. --NeoFite
-			src.say("0. [src.laws.zeroth]")
+			say("0. [src.laws.zeroth]")
 			sleep(10)
 
 	for (var/index = 1, index <= src.laws.ion.len, index++)
@@ -130,14 +130,14 @@
 		var/num = ionnum()
 		if (length(law) > 0)
 			if (src.ioncheck[index] == "Yes")
-				src.say("[num]. [law]")
+				say("[num]. [law]")
 				sleep(10)
 
 	for (var/index = 1, index <= src.laws.inherent.len, index++)
 		var/law = src.laws.inherent[index]
 		if (length(law) > 0)
 			if (src.lawcheck[index+1] == "Yes")
-				src.say("[number]. [law]")
+				say("[number]. [law]")
 				sleep(10)
 			number++
 
@@ -147,7 +147,7 @@
 		if (length(law) > 0)
 			if(src.lawcheck.len >= number+1)
 				if (src.lawcheck[number+1] == "Yes")
-					src.say("[number]. [law]")
+					say("[number]. [law]")
 					sleep(10)
 				number++
 

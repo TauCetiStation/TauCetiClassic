@@ -20,6 +20,7 @@
 	minimum_win_percentage = 0.75
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
+	warning_message = "Рестарт не подводит итоги раунда и не сохраняет статистику, поэтому используйте его как экстренное средство в случае технических проблем. Для корректного завершения раунда используйте голосование за Crew Transfer!"
 
 /datum/poll/restart/get_force_blocking_reason()
 	. = ..()
@@ -112,11 +113,18 @@
 
 /datum/vote_choice/crew_transfer/on_win()
 	if(!SSshuttle.online && SSshuttle.location == 0)
+		message_admins("A crew transfer vote has passed, calling the shuttle.")
+		log_admin("A crew transfer vote has passed, calling the shuttle.")
+
+		if(SSshuttle.fake_recall || SSshuttle.time_for_fake_recall)
+			message_admins("The shuttle fake recall was supressed because of crew transfer vote.")
+			log_admin("The shuttle fake recall was supressed because of crew transfer vote.")
+			SSshuttle.fake_recall = FALSE
+			SSshuttle.time_for_fake_recall = 0
+
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
-		message_admins("A crew transfer vote has passed, calling the shuttle.")
-		log_admin("A crew transfer vote has passed, calling the shuttle.")
 
 
 /*********************
@@ -149,20 +157,21 @@
 		return
 
 /datum/poll/gamemode/init_choices()
-	for(var/M in config.votable_modes)
+	for(var/type in subtypesof(/datum/modesbundle))
+		var/datum/modesbundle/M = type
+		if(!initial(M.votable))
+			continue
+		var/datum/modesbundle/bundle = new type()
 		var/datum/vote_choice/gamemode/vc = new
-		vc.text = M
-		vc.new_gamemode = M
+		vc.text = bundle.name
+		vc.new_gamemode = bundle.name
 		choices.Add(vc)
-		// Gamemodes preview in gamemodesets
-		if(config.is_modeset(M))
-			var/list/submodes = list()
-			for(var/datum/game_mode/D in config.get_runnable_modes(M, FALSE))
-				submodes.Add(D.name)
-			if(length(submodes) > 0)
-				description += "<b>[M]</b>: "
-				description += submodes.Join(", ")
-				description += "<br>"
+		var/list/submodes = bundle.get_gamemodes_name()
+		if(length(submodes) > 0)
+			description += "<b>[bundle]</b>: "
+			description += submodes.Join(", ")
+			description += "<br>"
+		qdel(bundle)
 
 /datum/poll/gamemode/process()
 	if(pregame && SSticker.current_state > GAME_STATE_PREGAME)

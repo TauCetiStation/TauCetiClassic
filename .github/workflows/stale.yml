@@ -2,9 +2,6 @@
 
 name: 'Close stale issues and PRs'
 on:
-  pull_request:
-    branches:
-     - master
   issue_comment:
     types: [created]
   schedule:
@@ -14,7 +11,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: T6751/stale@remove-label-on-update
+      - uses: actions/stale@v3.0.19
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-pr-message: >
@@ -25,7 +22,7 @@ jobs:
           close-pr-message: >
             ПР закрыт из-за длительного отсуствия активности. Для переоткрытия ПРа, пожалуйста, обратитесь к
             кому-либо из мейнтейнеров. Вы можете призвать их в комментарии слапнув ``@TauCetiStation/maintainers``.
-          exempt-pr-labels: 'Pinned'
+          exempt-pr-labels: 'Pinned, Awaiting Review [Translation Dep], Awaiting Review [Sprite Dep]'
           stale-pr-label: 'Stalled PR'
           days-before-pr-stale: 7
           days-before-pr-close: 7
