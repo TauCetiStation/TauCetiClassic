@@ -46,7 +46,7 @@
 	return 0
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
-	if(M.mind && M.mind.special_role == "Wizard")
+	if(iswizard(M))
 		return FALSE
 	return TRUE
 

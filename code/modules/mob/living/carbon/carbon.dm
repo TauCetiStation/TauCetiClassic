@@ -8,6 +8,9 @@
 	return ..()
 
 /mob/living/carbon/Life()
+	if(!loc)
+		return
+
 	..()
 
 	// Increase germ_level regularly
@@ -16,7 +19,7 @@
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(.)
+	if(. && !ISDIAGONALDIR(Dir))
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
@@ -67,18 +70,22 @@
 	. = ..()
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
 	if(istype(attacker))
@@ -435,6 +442,13 @@
 	if (item)
 		visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
+		if(isitem(item))
+			var/obj/item/O = item
+			if(O.w_class >= ITEM_SIZE_NORMAL)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+
+		do_attack_animation(target, has_effect = FALSE)
+
 		newtonian_move(get_dir(target, src))
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
@@ -713,10 +727,13 @@
 	return is_nude(maximum_coverage = 20) && !istype(head, /obj/item/clothing/head/bearpelt) && !istype(head, /obj/item/weapon/holder)
 
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
-	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
+	if(!ischangeling(src))
+		return
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+	if(length(C.essences) < 1)
 		return
 	if(loc == NewLoc)
-		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
+		for(var/mob/living/parasite/essence/essence in C.essences)
 			if(essence.phantom.showed)
 				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
 
