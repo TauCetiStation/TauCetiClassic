@@ -367,9 +367,8 @@
 	if (source_area)
 		source_area.use_power(drained_energy/CELLRATE)
 	else if (istype(power_source,/datum/powernet))
-		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
-		drained_power = min(drained_power, PN.delayed_surplus())
-		PN.add_delayedload(drained_power)
+		var/drained_power = drained_energy/CELLRATE // Convert from "joules" to "watts"
+		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy

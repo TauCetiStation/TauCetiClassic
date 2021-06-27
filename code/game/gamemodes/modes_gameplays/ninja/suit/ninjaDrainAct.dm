@@ -130,8 +130,8 @@
 			drain = round(rand(G.mindrain, G.maxdrain) / 2)
 			var/drained = 0
 			if(PN && do_after(U, 10, target = A))
-				drained = min(drain, PN.delayed_surplus())
-				PN.add_delayedload(drained)
+				drained = min(drain, A.delayed_surplus())
+				A.add_delayedload(drained)
 				if (drained < drain)//if no power on net, drain apcs
 					for (var/obj/machinery/power/terminal/T in PN.nodes)
 						if (istype(T.master, /obj/machinery/power/apc))
@@ -237,8 +237,8 @@
 			var/drained = 0
 
 			if(PN && do_after(U, 10, target = A))
-				drained = min(drain, PN.delayed_surplus())
-				PN.add_delayedload(drained)
+				drained = min(drain, B.terminal.delayed_surplus())
+				B.terminal.add_delayedload(drained)
 				if(drained < drain)//if no power on net, drain apcs
 					for(var/obj/machinery/power/terminal/T in PN.nodes)
 						if(istype(T.master, /obj/machinery/power/apc))
