@@ -53,6 +53,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/stack/sheet/glass),
 	R(/obj/item/stack/sheet/rglass),
 	R(/obj/item/stack/rods),
+	R(/obj/item/stack/cable_coil/red),
 	R(/obj/item/weapon/rcd_ammo),
 	R(/obj/item/weapon/kitchenknife),
 	R(/obj/item/weapon/scalpel),
