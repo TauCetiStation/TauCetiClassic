@@ -69,13 +69,6 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		"25 refined uranium bars" = /obj/item/stack/sheet/mineral/uranium,
 	)
 
-/datum/objective/steal/New()
-    ..()
-    for(var/name in possible_items)
-        ADD_TO_GLOBAL_LIST(possible_items[name])
-    for(var/name in possible_items_special)
-        ADD_TO_GLOBAL_LIST(possible_items_special[name])
-
 /datum/objective/steal/proc/set_target(item_name)
 	target_name = item_name
 	steal_target = possible_items[target_name]
