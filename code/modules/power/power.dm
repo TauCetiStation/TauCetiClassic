@@ -23,7 +23,11 @@
 // General procedures
 //////////////////////////////
 
-// common helper procs for all power machines
+// Common helper procs for all power machines:
+// All power generation handled in add_avail()
+// Machines should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
 /obj/machinery/power/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
@@ -33,19 +37,35 @@
 
 /obj/machinery/power/proc/add_load(amount)
 	if(powernet)
-		powernet.newload += amount
+		powernet.load += amount
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
-	else
-		return 0
+		return powernet.avail - powernet.load
+
+	return 0
 
 /obj/machinery/power/proc/avail()
 	if(powernet)
 		return powernet.avail
-	else
-		return 0
+
+	return 0
+
+/obj/machinery/power/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/machinery/power/proc/delayed_surplus()
+	if(powernet)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+
+	return 0
+
+/obj/machinery/power/proc/newavail()
+	if(powernet)
+		return powernet.newavail
+
+	return 0
 
 /obj/machinery/power/proc/disconnect_terminal() // machines without a terminal will just return, no harm no fowl.
 	return
@@ -348,7 +368,8 @@
 		source_area.use_power(drained_energy/CELLRATE)
 	else if (istype(power_source,/datum/powernet))
 		var/drained_power = drained_energy/CELLRATE //convert from "joules" to "watts"
-		PN.newload+=drained_power
+		drained_power = min(drained_power, PN.delayed_surplus())
+		PN.add_delayedload(drained_power)
 	else if (istype(power_source, /obj/item/weapon/stock_parts/cell))
 		cell.use(drained_energy)
 	return drained_energy

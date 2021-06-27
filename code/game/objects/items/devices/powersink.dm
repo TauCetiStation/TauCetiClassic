@@ -97,8 +97,8 @@
 
 			// found a powernet, so drain up to max power from it
 
-			var/drained = min ( drain_rate, PN.avail )
-			PN.newload += drained
+			var/drained = min(drain_rate, PN.newavail())
+			PN.add_delayedload(drained)
 			power_drained += drained
 
 			// if tried to drain more than available on powernet

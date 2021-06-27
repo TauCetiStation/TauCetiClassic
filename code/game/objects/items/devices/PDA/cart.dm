@@ -283,8 +283,8 @@
 	if(mode==433)
 		if(powmonitor)
 			values["powermonitor_detected"] = TRUE
-			values["poweravail"] = powmonitor.powernet.avail
-			values["powerload"] = num2text(powmonitor.powernet.viewload,10)
+			values["poweravail"] = num2text(powmonitor.powernet.viewavail, 10)
+			values["powerload"] = num2text(powmonitor.powernet.viewload, 10)
 
 			var/list/L = list()
 			for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)

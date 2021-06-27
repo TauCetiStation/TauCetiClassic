@@ -220,10 +220,6 @@
 		terminal.master = null
 		terminal = null
 
-/obj/machinery/power/smes/add_load(amount)
-	if(terminal && terminal.powernet)
-		terminal.powernet.newload += amount
-
 /obj/machinery/power/smes/update_icon()
 	cut_overlays()
 	if(stat & BROKEN)
@@ -269,7 +265,7 @@
 
 				charge += load * SMESRATE // Increase the charge
 
-				add_load(load) // Add the load to the terminal side network
+				terminal.add_load(load) // Add the load to the terminal side network
 
 			else // If not enough capcity, stop
 				inputting = FALSE

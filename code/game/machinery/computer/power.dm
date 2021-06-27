@@ -58,7 +58,7 @@
 				var/obj/machinery/power/apc/A = term.master
 				L += A
 
-		t += "<PRE>Total power: [powernet.avail] W<BR>Total load:  [num2text(powernet.viewload,10)] W<BR>"
+		t += "<PRE>Total power: [num2text(powernet.viewavail, 10)] W<BR>Total load:  [num2text(powernet.viewload, 10)] W<BR>"
 
 		t += "<FONT SIZE=-1>"
 
