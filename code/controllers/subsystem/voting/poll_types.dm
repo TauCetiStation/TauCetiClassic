@@ -131,8 +131,8 @@
 	GameMode
 **********************/
 /datum/poll/gamemode
-	name = "Выбор гейммода"
-	question = "Выбрать гейммод"
+	name = "Выбор режима игры"
+	question = "Выбрать режим игры"
 	choice_types = list()
 	minimum_voters = 0
 	only_admin = FALSE
@@ -192,7 +192,7 @@
 	pregame = FALSE
 
 /datum/vote_choice/gamemode
-	text = "Название гейммода"
+	text = "Название режима игры"
 	var/new_gamemode = "extended"
 
 /datum/vote_choice/gamemode/on_win()
