@@ -117,11 +117,6 @@
 		H.set_m_intent(MOVE_INTENT_WALK)
 	if(original_name == "Help Others")
 		H.a_intent_change(INTENT_HELP)
-	if(original_name == "Punch Shit")
-		H.a_intent_change(INTENT_HARM)
-		for(var/mob/M in range(1, H))
-			var/mob/A = pick(M)
-			H.ClickOn(A)
 
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
