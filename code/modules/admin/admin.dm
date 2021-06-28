@@ -824,18 +824,28 @@ var/global/BSACooldown = 0
 	set name="Start Now"
 
 	if(SSticker.current_state < GAME_STATE_PREGAME)
-		to_chat(usr, "<span class='warning'>Error: Start Now: Game is in startup, please wait until it has finished.</span>")
-		return 0
+		to_chat(usr, "<span class='danger large'>Unable to start the game as it is not yet set up.</span>")
+		SSticker.start_ASAP = !SSticker.start_ASAP
+		if(SSticker.start_ASAP)
+			to_chat(usr, "<span class='warning large'>The game will begin as soon as possible.</span>")
+			log_admin("[key_name(usr)] will begin the game as soon as possible.")
+			message_admins("<font color='blue'>[key_name_admin(usr)] will begin the game as soon as possible.</font>")
+		else
+			to_chat(usr, "<span class='warning large'>The game will begin as normal.</span>")
+			log_admin("[key_name(usr)] will begin the game as normal.")
+			message_admins("<font color='blue'>[key_name_admin(usr)] will begin the game as normal.</font>")
+		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		return FALSE
 
 	if(SSticker.start_now())
 		log_admin("[key_name(usr)] has started the game.")
 		message_admins("<font color='blue'>[key_name_admin(usr)] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		return 1
+		return TRUE
 	else
 		to_chat(usr, "<span class='warning'>Error: Start Now: Game has already started.</span>")
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"

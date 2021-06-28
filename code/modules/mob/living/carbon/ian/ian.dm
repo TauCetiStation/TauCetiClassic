@@ -29,6 +29,9 @@
 	var/wander = TRUE
 	var/obj/movement_target
 
+	attack_push_vis_effect = ATTACK_EFFECT_BITE
+	attack_disarm_vis_effect = ATTACK_EFFECT_BITE
+
 	universal_speak = FALSE
 	universal_understand = FALSE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 5)

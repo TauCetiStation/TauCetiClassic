@@ -36,21 +36,21 @@
 		for(var/i = rand(2,3), i > 0, i--)
 			switch(pick(objective_list))
 				if(1)
-					AppendObjective(/datum/objective/assassinate)
+					AppendObjective(/datum/objective/target/assassinate)
 					objective_list -= 1
 				if(2)
 					AppendObjective(/datum/objective/steal)
 				if(3)
-					AppendObjective(/datum/objective/harm)
+					AppendObjective(/datum/objective/target/harm)
 	else
 		if(!second_ninja.antag.protector_role)
-			for(var/datum/objective/objective_p in second_ninja.objectives.GetObjectives())
-				if(istype(objective_p, /datum/objective/assassinate))
+			for(var/datum/objective/target/objective_p in second_ninja.objectives.GetObjectives())
+				if(istype(objective_p, /datum/objective/target/assassinate))
 					if(objective_p.target.current == antag.current)
 						continue
 					if(objective_p.target.current == second_ninja.antag.current)
 						continue
-					var/datum/objective/protect/ninja_objective = AppendObjective(/datum/objective/protect)
+					var/datum/objective/target/protect/ninja_objective = AppendObjective(/datum/objective/target/protect)
 					if(ninja_objective)
 						ninja_objective.target = objective_p.target
 						ninja_objective.explanation_text = "Protect [objective_p.target.current.real_name], the [objective_p.target.assigned_role]."
@@ -59,21 +59,20 @@
 					var/datum/objective/steal/ninja_objective = AppendObjective(/datum/objective/steal)
 
 					if(ninja_objective)
-						ninja_objective.target = objective_p.target
 						ninja_objective.steal_target = objective_p.target
 						ninja_objective.explanation_text = objective_p.explanation_text
 
-				if(istype(objective_p, /datum/objective/harm))
+				if(istype(objective_p, /datum/objective/target/harm))
 					if(objective_p.target.current == antag.current)
 						continue
 					if(objective_p.target.current == second_ninja.antag.current)
 						continue
-					var/datum/objective/protect/ninja_objective = AppendObjective(/datum/objective/protect)
+					var/datum/objective/target/protect/ninja_objective = AppendObjective(/datum/objective/target/protect)
 					if(ninja_objective)
 						ninja_objective.target = objective_p.target
 						ninja_objective.explanation_text = objective_p.explanation_text
 
-			var/datum/objective/assassinate/ninja_objective = AppendObjective(/datum/objective/assassinate)
+			var/datum/objective/target/assassinate/ninja_objective = AppendObjective(/datum/objective/target/assassinate)
 			if(ninja_objective)
 				ninja_objective.target = second_ninja.antag
 				ninja_objective.explanation_text = "Assassinate [second_ninja.antag.current.real_name], the [second_ninja.antag.special_role]."

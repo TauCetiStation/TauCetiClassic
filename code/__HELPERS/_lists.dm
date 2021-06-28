@@ -804,3 +804,12 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+// Helper macros to aid in optimizing lazy instantiation of lists.
+// All of these are null-safe, you can use them without knowing if the list var is initialized yet
+
+//Picks from the list, with some safeties, and returns the "default" arg if it fails
+#define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
+
+// Adds I to L, initalizing L if necessary, if I is not already in L
+#define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;

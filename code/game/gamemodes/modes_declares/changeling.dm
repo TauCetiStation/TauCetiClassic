@@ -1,6 +1,7 @@
 /datum/game_mode/changeling
 	name = "Changeling"
 	config_name = "changeling"
+	probability = 100
 	factions_allowed = list(/datum/faction/changeling)
 
 	minimum_player_count = 2

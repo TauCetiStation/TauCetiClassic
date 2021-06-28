@@ -1,6 +1,7 @@
 /datum/game_mode/infestation
 	name = "Infestation"
 	config_name = "infestation"
+	probability = 100
 
 	factions_allowed = list(/datum/faction/infestation)
 

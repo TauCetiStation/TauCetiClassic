@@ -105,7 +105,7 @@
 			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
 				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
 				aiPlayer.set_zeroth_law(law)
-			SSshuttle.always_fake_recall = TRUE //Quarantine
+			SSshuttle.fake_recall = TRUE //Quarantine
 		if(FS_ENDGAME)
 			var/datum/announcement/centcomm/blob/critical/announcement = new
 			announcement.play()
@@ -125,7 +125,7 @@
 			announcement.play()
 
 			send_intercept(FS_DEFEATED)
-			SSshuttle.always_fake_recall = FALSE
+			SSshuttle.fake_recall = FALSE
 			declared = FALSE
 			for(var/mob/living/silicon/ai/aiPlayer in ai_list)
 				aiPlayer.set_zeroth_law("")

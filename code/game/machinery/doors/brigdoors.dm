@@ -206,7 +206,7 @@
 	switch(screen)
 		if(MAIN_SCREEN)
 			dat += "<HR>Таймер камеры:</hr>"
-			dat += " <b>Контроллирует двери камеры [id]</b><br/>"
+			dat += " <b>Контролирует двери камеры [id]</b><br/>"
 			dat +={"
 				<HR><B>Все поля должны быть заполнены правильно.</B>
 				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Имя</A>:</B> [prisoner_name] <B><A href='?src=\ref[src];set_manually_name=TRUE'>Ввести вручную</A></B>
