@@ -1946,10 +1946,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
+/obj/machinery/requests_console/science{
 	pixel_x = -30
 	},
 /turf/simulated/floor,

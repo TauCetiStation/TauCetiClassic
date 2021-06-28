@@ -292,6 +292,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["UI_style"]			>> UI_style
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
+	S["clientfps"]			>> clientfps
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
@@ -340,6 +341,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	aooccolor		= normalize_color(sanitize_hexcolor(aooccolor, initial(aooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
+	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
@@ -411,6 +413,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["UI_style"]			<< UI_style
 	S["UI_style_color"]		<< UI_style_color
 	S["UI_style_alpha"]		<< UI_style_alpha
+	S["clientfps"]			<< clientfps
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles

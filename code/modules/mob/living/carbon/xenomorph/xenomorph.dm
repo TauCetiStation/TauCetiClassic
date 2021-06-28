@@ -26,6 +26,9 @@
 	var/leaping = 0
 	ventcrawler = 2
 
+	attack_push_vis_effect = ATTACK_EFFECT_CLAW
+	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")

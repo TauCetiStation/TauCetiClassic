@@ -20,6 +20,7 @@
 	minimum_win_percentage = 0.75
 
 	description = "You will have more voting power if you are head of staff or antag, less if you are observing or dead."
+	warning_message = "Рестарт не подводит итоги раунда и не сохраняет статистику, поэтому используйте его как экстренное средство в случае технических проблем. Для корректного завершения раунда используйте голосование за Crew Transfer!"
 
 /datum/poll/restart/get_force_blocking_reason()
 	. = ..()
@@ -112,11 +113,18 @@
 
 /datum/vote_choice/crew_transfer/on_win()
 	if(!SSshuttle.online && SSshuttle.location == 0)
+		message_admins("A crew transfer vote has passed, calling the shuttle.")
+		log_admin("A crew transfer vote has passed, calling the shuttle.")
+
+		if(SSshuttle.fake_recall || SSshuttle.time_for_fake_recall)
+			message_admins("The shuttle fake recall was supressed because of crew transfer vote.")
+			log_admin("The shuttle fake recall was supressed because of crew transfer vote.")
+			SSshuttle.fake_recall = FALSE
+			SSshuttle.time_for_fake_recall = 0
+
 		SSshuttle.shuttlealert(1)
 		SSshuttle.incall()
 		SSshuttle.announce_crew_called.play()
-		message_admins("A crew transfer vote has passed, calling the shuttle.")
-		log_admin("A crew transfer vote has passed, calling the shuttle.")
 
 
 /*********************

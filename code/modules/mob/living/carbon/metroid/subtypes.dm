@@ -1,4 +1,23 @@
-
+var/global/list/slime_colors = list(
+	"grey" = COLOR_GRAY,
+	"purple" = COLOR_PURPLE,
+	"metal" = COLOR_GRAY40,
+	"orange" = COLOR_ORANGE,
+	"blue" = COLOR_BLUE,
+	"dark blue" = COLOR_DEEP_SKY_BLUE,
+	"dark purple" = COLOR_DARK_PURPLE,
+	"yellow" = COLOR_YELLOW,
+	"silver" = COLOR_GRAY,
+	"pink" = COLOR_PINK,
+	"red" = COLOR_RED,
+	"gold" = COLOR_YELLOW,
+	"green" = COLOR_GREEN,
+	"light pink" = COLOR_LIGHT_PINK,
+	"oil" = COLOR_BLACK,
+	"black" = COLOR_BLACK,
+	"adamantine" = COLOR_ADAMANTINE,
+	"bluespace" = COLOR_WHITE
+)
 ////////////////Tier 2
 
 /mob/living/carbon/slime/purple
