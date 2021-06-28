@@ -930,7 +930,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(blood_overlay)
+	if(blood_overlay && blood_overlay.color == dirt_overlay.color)
 		return
 	generate_blood_overlay()
 	cut_overlay(blood_overlay)
