@@ -410,19 +410,19 @@
 	switch(adjusted_pressure)
 		if(hazard_high_pressure to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 		if(warning_high_pressure to hazard_high_pressure)
-			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 		if(warning_low_pressure to warning_high_pressure)
 			clear_alert("pressure")
 		if(hazard_low_pressure to warning_low_pressure)
-			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 
 	return
 

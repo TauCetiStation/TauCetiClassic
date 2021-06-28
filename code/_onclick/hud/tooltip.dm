@@ -1,7 +1,7 @@
 /client
-	var/obj/screen/tooltip/tooltip
+	var/atom/movable/screen/tooltip/tooltip
 
-/obj/screen/tooltip
+/atom/movable/screen/tooltip
 	icon = 'icons/misc/tooltip.dmi'
 	icon_state = "transparent"
 	screen_loc = TOOLTIP_NORTH
@@ -13,17 +13,17 @@
 	var/state = TRUE
 	var/font_size = 8
 
-/obj/screen/tooltip/proc/SetMapText(newValue, font, forcedFontColor = "#ffffff")
+/atom/movable/screen/tooltip/proc/SetMapText(newValue, font, forcedFontColor = "#ffffff")
 	var/style = "font-family:'[font]'; color:[forcedFontColor]; -dm-text-outline: 1px [invertHTMLcolor(forcedFontColor)]; font-weight: bold; font-size: [font_size]px;"
 	maptext = "<center><span style=\"[style]\">[uppertext(newValue)]</span></center>"
 
-/obj/screen/tooltip/proc/set_state(_state)
+/atom/movable/screen/tooltip/proc/set_state(_state)
 	state = _state
 	invisibility = state ? initial(invisibility) : INVISIBILITY_ABSTRACT
 
 /client/New(TopicData)
 	. = ..()
-	tooltip = new /obj/screen/tooltip()
+	tooltip = new /atom/movable/screen/tooltip()
 	if(prefs.tooltip)
 		tooltip.set_state(TRUE)
 

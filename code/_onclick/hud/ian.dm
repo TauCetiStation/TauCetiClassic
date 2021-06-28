@@ -1,8 +1,8 @@
-/obj/screen/corgi/ability
+/atom/movable/screen/corgi/ability
 	name = "toggle licking or sniffing"
 	icon_state = "ability0"
 
-/obj/screen/corgi/ability/Click()
+/atom/movable/screen/corgi/ability/Click()
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
 		return
@@ -26,16 +26,16 @@
 			IAN.ian_action = IAN_SNIFF
 	icon_state = "ability[IAN.ian_action]"
 
-/obj/screen/corgi/stamina_bar
+/atom/movable/screen/corgi/stamina_bar
 	name = "stamina"
 	icon = 'icons/effects/staminabar.dmi'
 	icon_state = "stam_bar_100"
 
-/obj/screen/corgi/sit_lie
+/atom/movable/screen/corgi/sit_lie
 	name = "pose selector"
 	icon_state = "sit_lie"
 
-/obj/screen/corgi/sit_lie/Click(location, control,params)
+/atom/movable/screen/corgi/sit_lie/Click(location, control,params)
 	var/mob/living/carbon/ian/IAN = usr //shouldn't be in anywhere else, so no type check.
 	if(IAN.stat)
 		return
@@ -61,8 +61,8 @@
 	src.adding = list()
 	src.other = list()
 
-	var/obj/screen/using
-	var/obj/screen/inventory/inv_box
+	var/atom/movable/screen/using
+	var/atom/movable/screen/inventory/inv_box
 
 	var/mob/living/carbon/ian/IAN = mymob //shouldn't be in anywhere else, so no type check.
 
@@ -80,7 +80,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -92,7 +92,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -104,7 +104,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -116,7 +116,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -142,13 +142,13 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /obj/screen/corgi/stamina_bar()
+	using = new /atom/movable/screen/corgi/stamina_bar()
 	using.icon_state = "stam_bar_[round(((IAN.stamina / 100) * 100), 5)]"
 	using.screen_loc = ui_stamina
 	src.adding += using
 	staminadisplay = using
 
-	using = new /obj/screen/corgi/sit_lie()
+	using = new /atom/movable/screen/corgi/sit_lie()
 	using.icon = ui_style
 	using.screen_loc = ui_ian_pselect
 	src.adding += using
@@ -172,7 +172,7 @@
 	inv_box.plane = HUD_PLANE
 	src.other += inv_box
 
-	using = new /obj/screen/corgi/ability()
+	using = new /atom/movable/screen/corgi/ability()
 	using.icon = ui_style
 	using.icon_state = "ability[IAN.ian_action]"
 	using.screen_loc = ui_ian_ability
@@ -217,7 +217,7 @@
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
 
-	mymob.pullin = new /obj/screen/pull()
+	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
