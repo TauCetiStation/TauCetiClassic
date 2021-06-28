@@ -13,14 +13,15 @@
 		message = param_message
 
 /datum/data_rc_msg
-	var/rec_dpt = "Unspecified" //name of the person
-	var/send_dpt = "Unspecified" //name of the sender
-	var/message = "Blank" //transferred message
-	var/stamp = "Unstamped"
-	var/id_auth = "Unauthenticated"
-	var/priority = "Normal"
+	var/rec_dpt = "Неопределенные" //name of the person
+	var/send_dpt = "Неопределенные" //name of the sender
+	var/message = "Пусто" //transferred message
+	var/stamp = "Без штампа"
+	var/id_auth = "Неаутентифицированный"
+	var/priority = "Обычный"
+	var/from = "Неопределенный"
 
-/datum/data_rc_msg/New(param_rec = "",param_sender = "",param_message = "",param_stamp = "",param_id_auth = "",param_priority)
+/datum/data_rc_msg/New(param_rec = "",param_sender = "",param_message = "",param_stamp = "",param_id_auth = "", param_priority = 1, param_from="")
 	if(param_rec)
 		rec_dpt = param_rec
 	if(param_sender)
@@ -34,13 +35,15 @@
 	if(param_priority)
 		switch(param_priority)
 			if(1)
-				priority = "Normal"
+				priority = "Обычный"
 			if(2)
-				priority = "High"
+				priority = "Высокий"
 			if(3)
-				priority = "Extreme"
+				priority = "Экстренный"
 			else
-				priority = "Undetermined"
+				priority = "Неопределенный"
+	if(param_from)
+		from = param_from
 
 /obj/machinery/message_server
 	icon = 'icons/obj/machines/research.dmi'
@@ -87,15 +90,20 @@
 /obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "")
 	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
 
-/obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
-	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
-	var/authmsg = "[message]<br>"
+/obj/machinery/message_server/proc/send_rc_message(recipient = "", sender = "", message = "", stamp = "", id_auth = "", priority = 1, from="")
+	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth,priority,from)
+	var/list/auth_data = list()
 	if(id_auth)
-		authmsg += "[id_auth]<br>"
+		auth_data.Add(id_auth)
 	if(stamp)
-		authmsg += "[stamp]<br>"
+		auth_data.Add(stamp)
+	var/auth = jointext(auth_data, "<BR>")
 	for(var/obj/machinery/requests_console/Console in requests_console_list)
-		if(ckey(Console.department) == ckey(recipient))
+		if(Console.department == recipient)
+			var/from_desc = sender
+			if(length(from))
+				from_desc = from
+			var/content = "<A href='?src=\ref[Console];write=[url_encode(sender)]'><B>[from_desc]</B></A>:<BR><DIV class='Section'>[message]</DIV>[auth]"
 			switch(priority)
 				if(2)		//High priority
 					if(Console.newmessagepriority < 2)
@@ -103,16 +111,16 @@
 						Console.icon_state = "req_comp2"
 					if(!Console.silent)
 						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'PRIORITY Alert in [sender]'")
-					Console.messages += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></FONT></B><BR>[authmsg]"
+						Console.audible_message("[bicon(Console)] **Консоль Запроса пищит: 'ПРИОРИТЕТНОЕ сообщение от [from_desc]'")
+					Console.messages += "[worldtime2text()] <B><FONT color='red'>Приоритетное сообщение от </FONT></B>[content]"
 				else		// Normal priority
 					if(Console.newmessagepriority < 1)
 						Console.newmessagepriority = 1
 						Console.icon_state = "req_comp1"
 					if(!Console.silent)
 						playsound(Console, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-						Console.audible_message("[bicon(Console)] *The Requests Console beeps: 'Message from [sender]'")
-					Console.messages += "<B>Message from <A href='?src=\ref[Console];write=[ckey(sender)]'>[sender]</A></B><BR>[message]"
+						Console.audible_message("[bicon(Console)] **Консоль Запроса пищит: 'Сообщение от [from_desc]'")
+					Console.messages += "[worldtime2text()] <B>Получено от </B>[content]"
 			Console.set_light(2)
 
 /obj/machinery/message_server/attack_hand(user)

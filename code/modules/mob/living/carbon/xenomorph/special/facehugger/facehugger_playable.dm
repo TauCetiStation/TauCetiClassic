@@ -39,10 +39,10 @@
 	regenerate_icons()
 	a_intent = INTENT_GRAB
 	verbs += /mob/living/carbon/xenomorph/proc/hide
-	alien_list[ALIEN_FACEHAGGER] += src
+	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()
-	alien_list[ALIEN_FACEHAGGER] -= src
+	alien_list[ALIEN_FACEHUGGER] -= src
 	return ..()
 
 /mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)

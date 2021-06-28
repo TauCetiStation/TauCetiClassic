@@ -1,7 +1,6 @@
 /datum/event/blob
 	announceWhen	= 12
 	endWhen			= 120
-	announcement = new /datum/announcement/centcomm/blob/outbreak5
 
 /datum/event/blob/start()
 	var/turf/T = pick(blobstart)

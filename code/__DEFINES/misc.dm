@@ -137,6 +137,14 @@
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
+//Movement dir masks
+#define NORTH_SOUTH 3 // NORTH | SOUTH
+#define EAST_WEST 12 // EAST | WEST
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
+
 // Bluespace shelter deploy checks
 #define SHELTER_DEPLOY_ALLOWED "allowed"
 #define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
@@ -263,3 +271,10 @@
 #define REGION_SUPPLY		6
 #define REGION_COMMAND		7
 #define REGION_CENTCOMM		8
+
+#define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
+	. = ..();\
+	global.##list += src;}\
+##type/Destroy(){\
+	global.##list -= src;\
+	return ..()}
