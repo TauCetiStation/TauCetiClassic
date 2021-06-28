@@ -110,5 +110,5 @@
 	dispenser = 1
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(!C.handcuffed)
+	if(istype(C) && !C.handcuffed)
 		place_handcuffs(C, user)
