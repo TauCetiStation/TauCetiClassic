@@ -30,6 +30,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/diamond)
 ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/gold)
 ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 #undef ADD_TO_POIFS_LIST
+
 /datum/objective/steal
 	var/obj/item/steal_target
 	var/target_name
