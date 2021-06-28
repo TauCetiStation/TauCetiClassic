@@ -86,10 +86,11 @@
 		//H.apply_effect(10, STUN, 0)
 		//H.apply_effect(10, WEAKEN, 0)
 		//H.apply_effect(10, STUTTER, 0)
-		var/calc_power = 0
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/calc_power = 100
+		if(ishuman(M))
+			var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
 
-		calc_power = agony * H.get_siemens_coefficient_organ(BP)
+			calc_power = agony * H.get_siemens_coefficient_organ(BP)
 
 		H.apply_effect(calc_power, AGONY, 0)
 		user.lastattacked = M
@@ -111,6 +112,26 @@
 			update_icon()
 
 	add_fingerprint(user)
+
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(prob(50))
+		if(ishuman(hit_atom))
+			var/mob/living/carbon/human/H = hit_atom
+			if(status)
+				var/calc_power = 0
+				calc_power = agony * H.get_siemens_coefficient_organ(H.bodyparts_by_name[BP_CHEST])
+				H.apply_effect(calc_power, AGONY, 0)
+				charges--
+
+				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
+					foundmob = M
+					break
+
+				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
+
+				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+				msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/baton/emp_act(severity)
 	switch(severity)
