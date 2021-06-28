@@ -88,7 +88,7 @@
 		//H.apply_effect(10, STUTTER, 0)
 		var/calc_power = 100
 		if(ishuman(M))
-			var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+			var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 
 			calc_power = agony * H.get_siemens_coefficient_organ(BP)
 
