@@ -181,7 +181,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_CYAN
 
-	god_desc = "Принимаются электрическая энергия и качаственные технические детали."
+	god_desc = "Принимаются электрическая энергия и качественные технические детали."
 
 /datum/aspect/technology/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
@@ -321,7 +321,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_AMBER
 
-	god_desc = "Вам нужнен свет на святой земле."
+	god_desc = "Вам нужен свет на святой земле."
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
 	return (F.get_lumcount() - 0.4) * power * 0.03
@@ -335,7 +335,7 @@ var/global/list/aspect_name_by_type = list()
 
 	color = COLOR_BOTTLE_GREEN
 
-	god_desc = "Не всё то золото, что блестит, иногда купюры могут этому следовать. Вам нужно богаств."
+	god_desc = "Не всё то золото, что блестит, иногда купюры могут этому следовать. Вам нужно богатств."
 
 /datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	return I.get_price() * 0.05

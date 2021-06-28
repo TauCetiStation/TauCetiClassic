@@ -19,6 +19,10 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define LIGHT_DAM_THRESHOLD 3
+#define LIGHT_HEAL_THRESHOLD 3
+#define LIGHT_DAMAGE_TAKEN 10
+
 /mob/living/carbon/human
 	var/prev_gender = null // Debug for plural genders
 
@@ -118,9 +122,6 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
-
-	//Updates the number of stored chemicals for powers and essentials
-	handle_changeling()
 
 	//Species-specific update.
 	if(species)
@@ -1484,13 +1485,6 @@
 				remoteview_target = null
 				reset_view(null)
 
-
-		if(mind && mind.changeling)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
-		else
-			hud_used.lingchemdisplay.invisibility = 101
-
 	..()
 
 	return 1
@@ -1576,10 +1570,6 @@
 				V.dead = 1
 
 	return
-
-/mob/living/carbon/human/proc/handle_changeling()
-	if(mind && mind.changeling)
-		mind.changeling.regenerate()
 
 /mob/living/carbon/human/handle_shock()
 	..()
@@ -1699,3 +1689,7 @@
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
+
+#undef LIGHT_DAM_THRESHOLD
+#undef LIGHT_HEAL_THRESHOLD
+#undef LIGHT_DAMAGE_TAKEN

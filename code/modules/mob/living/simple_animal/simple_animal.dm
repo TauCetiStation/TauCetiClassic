@@ -394,7 +394,7 @@
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(icon_move && !stat)
+	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
 		flick(icon_move, src)
 
 /mob/living/simple_animal/update_stat()
@@ -418,3 +418,13 @@
 
 /mob/living/simple_animal/is_usable_leg(targetzone = null)
 	return has_leg
+
+/mob/living/simple_animal/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	if(has_effect && !visual_effect_icon && melee_damage)
+		if(attack_push_vis_effect && !istype(A, /turf/simulated/wall)) // override the standard visual effect.
+			visual_effect_icon = attack_push_vis_effect
+		else if(melee_damage < 10)
+			visual_effect_icon = ATTACK_EFFECT_PUNCH
+		else
+			visual_effect_icon = ATTACK_EFFECT_SMASH
+	..()

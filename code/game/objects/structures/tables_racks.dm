@@ -119,6 +119,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
@@ -639,8 +640,9 @@
 		qdel(src)
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return ..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	var/can_cut = FALSE
 	if(istype(W, /obj/item/weapon/melee/energy))

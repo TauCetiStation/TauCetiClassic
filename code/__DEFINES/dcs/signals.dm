@@ -40,7 +40,17 @@
 
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
-#define COMSIG_REL_ADD_MEMBER "rite_on_chosen"
+#define COMSIG_REL_ADD_MEMBER "rel_add_member"
+
+// /datum/role signals
+/// from base of role/GetScoreboard(): ()
+#define COMSIG_ROLE_GETSCOREBOARD "role_getscoreboard"
+/// from base of role/extraPanelButtons(): ()
+#define COMSIG_ROLE_PANELBUTTONS "role_panelbuttons"
+/// from base of role/RoleTopic(): (href, href_list, datum/mind/M, admin_auth)
+#define COMSIG_ROLE_ROLETOPIC "role_roletopic"
+/// from base of role/OnPostSetup(): (laterole)
+#define COMSIG_ROLE_POSTSETUP "role_postsetup"
 
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)
