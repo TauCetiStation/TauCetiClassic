@@ -30,6 +30,11 @@
 	var/output_level_max = 0 // Cap on output level
 	var/output_used = 0 // Amount of power actually outputted. May be less than output_level if the powernet returns excess power
 
+	var/output_used_real = 0
+	var/d_charge = 0
+	var/d_charge_ret = 0
+	var/debug_v = 0
+
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
 
@@ -76,8 +81,7 @@
 		return
 	terminal.master = src
 
-	if(!powernet)
-		connect_to_network()
+	connect_to_network()
 	update_icon()
 
 /obj/machinery/power/smes/Destroy()
@@ -245,6 +249,9 @@
 	return round(5.5 * charge / (capacity ? capacity : 5e6))
 
 /obj/machinery/power/smes/process()
+	if(debug_v)
+		message_admins("[debug_v]: smes/process, out = [outputting]")
+
 	if(stat & BROKEN)
 		return
 
@@ -252,6 +259,8 @@
 	var/last_disp = chargedisplay()
 	var/last_in = inputting
 	var/last_out = outputting
+
+	var/last_charge = charge
 
 	// Inputting, charging:
 	if(terminal && input_attempt && !power_failure) // Input is On
@@ -298,112 +307,152 @@
 
 		else // Nothing to discharge
 			output_used = 0
+			output_used_real = 0
 
 	else // Output is Off
 		outputting = FALSE
 		output_used = 0
+		output_used_real = 0
 
 	// Only update icon if state changed
 	if(last_disp != chargedisplay() || last_in != inputting || last_out != outputting)
 		update_icon()
 
+	d_charge = charge - last_charge
+
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
-/obj/machinery/power/smes/proc/restore()
+// returns excess power removed from powernet
+/obj/machinery/power/smes/proc/restore(netexcess)
+	if(debug_v)
+		message_admins("[debug_v]: smes/restore, out = [outputting]")
+
 	if(stat & BROKEN)
-		return
+		return 0
 
 	if(!outputting)
 		output_used = 0
-		return
+		output_used_real = 0
+		return 0
 
-	var/excess = powernet.netexcess // this was how much wasn't used on the network last ptick, minus any removed by other SMESes
+	if(netexcess < 100)
+		output_used_real = output_used
+		return 0
 
-	excess = min(output_used, excess) // clamp it to how much was actually output by this SMES last ptick
+	var/excess = netexcess // this was how much wasn't used on the network last ptick, minus any removed by other SMESes
 
-	excess = min((capacity - charge) / SMESRATE, excess) // for safety, also limit recharge by space capacity of SMES (shouldn't happen)
+	var/excess_unlim = min(output_used, excess) // clamp it to how much was actually output by this SMES last ptick
+
+	excess = min((capacity - charge) / SMESRATE, excess_unlim) // for safety, also limit recharge by space capacity of SMES (shouldn't happen)
 
 	// now recharge this amount:
 
 	var/clev = chargedisplay()
 
 	charge += excess * SMESRATE // restore unused power
-	powernet.netexcess -= excess // remove the excess from the powernet, so later SMESes don't try to use it
+	d_charge_ret = excess * SMESRATE
 
-	output_used -= excess
+	output_used -= excess_unlim
+	output_used_real = output_used
 
 	if(clev != chargedisplay())
 		update_icon()
 
-/obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(stat & BROKEN)
-		return
+	return excess
 
-	// this is the data which will be sent to the ui
-	var/data[0]
-	data["storedCapacity"] = round(100.0 * charge / capacity, 0.1)
-	data["charging"] = inputting
-	data["chargeMode"] = input_attempt
-	data["chargeLevel"] = input_level
-	data["chargeMax"] = input_level_max
-	data["outputOnline"] = output_attempt
-	data["outputLevel"] = output_level
-	data["outputMax"] = output_level_max
-	data["outputLoad"] = round(output_used)
+/obj/machinery/power/smes/tgui_state(mob/user)
+	return global.machinery_state
 
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "smes.tmpl", "SMES Power Storage Unit", 540, 380)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
+/obj/machinery/power/smes/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/power/smes/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Smes", name)
 		ui.open()
-		// auto update every Master Controller tick
-		ui.set_auto_update(1)
+
+/obj/machinery/power/smes/tgui_data(mob/user)
+	var/list/data = list(
+		"capacity" = capacity,
+		"capacityPercent" = round(100 * charge / capacity, 0.1),
+		"charge" = charge,
+		"inputAttempt" = input_attempt,
+		"inputting" = inputting,
+		"inputLevel" = input_level,
+		"inputLevel_text" = DisplayPower(input_level),
+		"inputLevelMax" = input_level_max,
+		"inputAvailable" = max(input_available, 0),
+		"outputAttempt" = output_attempt,
+		"outputting" = outputting,
+		"outputLevel" = output_level,
+		"outputLevel_text" = DisplayPower(output_level),
+		"outputLevelMax" = output_level_max,
+		"outputUsed" = output_used_real,
+	)
+	return data
 
 /obj/machinery/power/smes/is_operational_topic()
-	return !(stat & (BROKEN | EMPED))
+	return !(stat & (BROKEN | EMPED)) && !power_failure
 
-/obj/machinery/power/smes/Topic(href, href_list)
+/obj/machinery/power/smes/proc/log_smes(mob/user)
+	log_investigate("input/output: [input_level > output_level ? "<font color='green'>[input_level]/[output_level]</font>" : "<font color='red'>[input_level]/[output_level]</font>"] | Output-mode: [output_attempt ? "<font color='green'>on</font>" : "<font color='red'>off</font>"] | Input-mode: [input_attempt ? "<font color='green'>auto</font>" : "<font color='red'>off</font>"] by [key_name(user)]", INVESTIGATE_SINGULO)
+
+/obj/machinery/power/smes/tgui_act(action, params)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	for(var/area/A in all_areas)
 		A.powerupdate = 3
 
-	if( href_list["cmode"] )
-		input_attempt = !input_attempt
-		update_icon()
-
-	else if( href_list["online"] )
-		output_attempt = !output_attempt
-		update_icon()
-
-	else if( href_list["input"] )
-		switch( href_list["input"] )
-			if("min")
-				input_level = 0
-			if("max")
-				input_level = input_level_max
-			if("set")
-				input_level = input(usr, "Enter new input level (0-[input_level_max])", "SMES Input Power Control", input_level) as num
-		input_level = clamp(input_level, 0, input_level_max)
-
-	else if( href_list["output"] )
-		switch( href_list["output"] )
-			if("min")
-				output_level = 0
-			if("max")
-				output_level = output_level_max
-			if("set")
-				output_level = input(usr, "Enter new output level (0-[output_level_max])", "SMES Output Power Control", output_level) as num
-		output_level = clamp(output_level, 0, output_level_max)
-
-	log_investigate("input/output: [input_level > output_level ? "<font color='green'>[input_level]/[output_level]</font>" : "<font color='red'>[input_level]/[output_level]</font>"] | Output-mode: [output_attempt ? "<font color='green'>on</font>" : "<font color='red'>off</font>"] | Input-mode: [input_attempt ? "<font color='green'>auto</font>" : "<font color='red'>off</font>"] by [key_name(usr)]", INVESTIGATE_SINGULO)
+	switch(action)
+		if("tryinput")
+			input_attempt = !input_attempt
+			log_smes(usr)
+			update_icon()
+			. = TRUE
+		if("tryoutput")
+			output_attempt = !output_attempt
+			log_smes(usr)
+			update_icon()
+			. = TRUE
+		if("input")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = input_level_max
+				. = TRUE
+			else if(adjust)
+				target = input_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				input_level = clamp(target, 0, input_level_max)
+				log_smes(usr)
+		if("output")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "min")
+				target = 0
+				. = TRUE
+			else if(target == "max")
+				target = output_level_max
+				. = TRUE
+			else if(adjust)
+				target = output_level + adjust
+				. = TRUE
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				output_level = clamp(target, 0, output_level_max)
+				log_smes(usr)
 
 /obj/machinery/power/smes/proc/explode()
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
