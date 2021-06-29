@@ -3,10 +3,13 @@
 /turf/unsimulated/wall,
 /area/mafia)
 "b" = (
-/turf/closed/wall/mineral/iron,
+/turf/unsimulated/wall/iron,
 /area/mafia)
 "c" = (
-/turf/closed/wall/rust,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
 /area/mafia)
 "d" = (
 /turf/simulated/floor/plating,
@@ -14,11 +17,6 @@
 "e" = (
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
-	},
-/area/mafia)
-"f" = (
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
 	},
 /area/mafia)
 "g" = (
@@ -37,31 +35,31 @@
 	},
 /area/mafia)
 "j" = (
-/turf/closed/indestructible/fakedoor,
+/obj/machinery/door/airlock/vault{
+	locked = 1;
+	req_access = list(53)
+	},
+/turf/unsimulated/wall/iron,
 /area/mafia)
 "k" = (
 /obj/mafia_game_board,
 /turf/simulated/floor/plating,
 /area/mafia)
 "l" = (
-/obj/structure/closet/crate/coffin,
-/turf/open/floor/carpet/red,
+/obj/structure/closet/coffin,
+/turf/simulated/floor/carpet,
 /area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/mafia)
 "n" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/iron/chapel{
-	dir = 1
-	},
+/turf/simulated/floor/carpet/blue2,
 /area/mafia)
 "o" = (
-/obj/structure/closet/crate/coffin,
-/turf/open/floor/iron/chapel{
-	dir = 4
-	},
+/obj/structure/closet/coffin,
+/turf/simulated/floor/carpet/blue2,
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/mafia{
@@ -70,23 +68,20 @@
 	max_integrity = 99999;
 	name = "Station Night Shutters"
 	},
-/turf/closed/indestructible/opsglass,
+/turf/unsimulated/wall/fakeglass,
 /area/mafia)
 "q" = (
-/turf/open/floor/carpet/red,
+/turf/simulated/floor/carpet,
 /area/mafia)
 "r" = (
-/turf/open/floor/iron/chapel{
-	dir = 8
-	},
+/turf/simulated/floor/carpet/blue2,
 /area/mafia)
 "t" = (
-/turf/open/floor/carpet/royalblack,
+/turf/simulated/floor/carpet/blue,
 /area/mafia)
 "u" = (
-/obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
-/turf/open/floor/carpet/royalblack,
+/turf/simulated/floor/carpet/blue,
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,
@@ -96,54 +91,36 @@
 /area/mafia)
 "D" = (
 /obj/effect/landmark/mafia,
-/turf/open/floor/iron/chapel{
-	dir = 4
-	},
+/turf/simulated/floor/carpet/green,
 /area/mafia)
 "E" = (
-/turf/open/floor/iron/chapel{
-	dir = 4
-	},
+/obj/effect/landmark/mafia,
+/turf/simulated/floor/carpet/black,
 /area/mafia)
 "H" = (
-/obj/structure/closet/cabinet{
-	anchored = 1
-	},
-/turf/open/floor/carpet/red,
+/obj/structure/closet/coffin,
+/turf/simulated/floor/carpet/black,
 /area/mafia)
 "J" = (
-/obj/structure/closet/crate/coffin,
-/turf/open/floor/iron/chapel{
-	dir = 1
-	},
+/obj/structure/closet/coffin,
+/turf/simulated/floor/carpet/green,
 /area/mafia)
 "M" = (
-/obj/effect/landmark/mafia,
-/turf/open/floor/iron/chapel{
-	dir = 8
-	},
+/turf/simulated/floor/carpet/green,
 /area/mafia)
 "N" = (
-/obj/effect/landmark/mafia,
-/turf/open/floor/iron/chapel,
+/turf/simulated/floor/carpet/black,
 /area/mafia)
 "O" = (
-/turf/open/floor/iron/chapel,
+/obj/effect/landmark/mafia,
+/turf/simulated/floor/carpet/purple,
 /area/mafia)
 "P" = (
-/obj/structure/closet/crate/coffin,
-/turf/open/floor/iron/chapel,
-/area/mafia)
-"Q" = (
-/obj/structure/closet/crate/coffin,
-/turf/open/floor/iron/chapel{
-	dir = 8
-	},
+/obj/structure/closet/coffin,
+/turf/simulated/floor/carpet/purple,
 /area/mafia)
 "X" = (
-/turf/open/floor/iron/chapel{
-	dir = 1
-	},
+/turf/simulated/floor/carpet/purple,
 /area/mafia)
 
 (1,1,1) = {"
@@ -281,11 +258,11 @@ b
 b
 j
 b
-l
-q
+H
+N
 b
 X
-Q
+P
 b
 j
 b
@@ -299,21 +276,21 @@ a
 (7,1,1) = {"
 a
 b
-c
+b
 c
 d
 b
 J
-r
-p
-m
-q
+M
 p
 E
 N
 p
-q
-l
+X
+O
+p
+N
+H
 b
 d
 c
@@ -329,16 +306,16 @@ d
 d
 b
 D
-O
+M
 b
 b
-q
+N
 b
-r
+X
 b
 b
-q
-m
+N
+E
 b
 d
 d
@@ -354,15 +331,15 @@ d
 b
 b
 p
+M
+M
+p
+N
+p
 X
-r
 p
-q
-p
-O
-p
-q
-q
+N
+N
 p
 b
 b
@@ -389,7 +366,7 @@ p
 p
 b
 p
-Q
+o
 b
 d
 c
@@ -411,10 +388,10 @@ t
 t
 t
 p
-X
 r
-E
-N
+r
+r
+n
 j
 e
 c
@@ -425,7 +402,7 @@ a
 a
 b
 c
-e
+d
 b
 b
 p
@@ -454,8 +431,8 @@ d
 j
 n
 r
-E
-O
+r
+r
 p
 t
 t
@@ -504,15 +481,15 @@ d
 b
 b
 p
-q
-q
+N
+N
 p
 X
 p
-q
+N
 p
-E
-O
+M
+M
 p
 b
 b
@@ -525,20 +502,20 @@ a
 a
 b
 c
-f
+d
 d
 b
-m
-q
-b
-b
 E
-b
-q
+N
 b
 b
 X
+b
+N
+b
+b
 M
+D
 b
 d
 d
@@ -550,20 +527,20 @@ a
 a
 b
 c
-c
+d
 d
 b
-l
-q
+H
+N
 p
-n
-r
+O
+X
 p
-q
-m
-p
+N
 E
-P
+p
+M
+J
 b
 d
 c
@@ -581,10 +558,10 @@ b
 b
 j
 b
-o
-O
+P
+X
 b
-q
+N
 H
 b
 j

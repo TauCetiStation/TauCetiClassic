@@ -45,25 +45,15 @@
 	description = "Yes, it's a very confusing day at the Megastation. Will the syndicate conflict resolution operatives succeed?"
 	mappath = "maps/mafia/mafia_syndie.dmm"
 
-/datum/map_template/mafia/lavaland
-	name = "Lavaland Excursion"
-	description = "The station has no idea what's going down on lavaland right now, we got changelings... traitors, and worst of all... lawyers roleblocking you every night."
-	mappath = "maps/mafia/mafia_lavaland.dmm"
+/datum/map_template/mafia/cult_heaven
+	name = "Initiation Ritual"
+	description = "Cult Heaven and his turfs"
+	mappath = "maps/mafia/mafia_heaven.dmm"
 
 /datum/map_template/mafia/ufo
 	name = "Alien Mothership"
 	description = "The haunted ghost UFO tour has gone south and now it's up to our fine townies and scare seekers to kill the actual real alien changelings..."
 	mappath = "maps/mafia/mafia_ayylmao.dmm"
-
-/datum/map_template/mafia/spider_clan
-	name = "Spider Clan Kidnapping"
-	description = "New and improved spider clan kidnappings are a lot less boring and have a lot more lynching. Damn westaboos!"
-	mappath = "maps/mafia/mafia_spiderclan.dmm"
-
-/datum/map_template/mafia/snowy
-	name = "Snowdin"
-	description = "Based off of the icey moon map of the same name, the guy who reworked it pretty much did it for nothing since away missions are disabled but at least he'll get this...?"
-	mappath = "maps/mafia/mafia_snow.dmm"
 
 /datum/map_template/mafia/gothic
 	name = "Vampire's Castle"

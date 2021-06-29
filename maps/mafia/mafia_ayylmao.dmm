@@ -7,6 +7,10 @@
 	icon_state = "alien0"
 	},
 /area/mafia)
+"c" = (
+/obj/machinery/door/poddoor/mafia,
+/turf/unsimulated/floor/abductor,
+/area/mafia)
 "g" = (
 /obj/mafia_game_board,
 /turf/simulated/floor/plating{
@@ -27,12 +31,8 @@
 /turf/simulated/floor/plating,
 /area/mafia)
 "l" = (
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
-	},
 /obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/floor/abductor,
+/turf/unsimulated/wall/fakeglass,
 /area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
@@ -458,7 +458,7 @@ t
 u
 t
 l
-l
+c
 b
 l
 b
@@ -500,7 +500,7 @@ H
 H
 U
 y
-l
+q
 b
 l
 l
@@ -525,7 +525,7 @@ H
 H
 I
 J
-l
+q
 q
 q
 l
