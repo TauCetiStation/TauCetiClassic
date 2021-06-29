@@ -339,6 +339,22 @@ SUBSYSTEM_DEF(timer)
 		return TRUE
 	return FALSE
 
+/**
+ * Get the remaining deciseconds on a timer
+ *
+ * Arguments:
+ * * id a timerid or a /datum/timedevent
+ */
+/proc/timeleft(id, datum/controller/subsystem/timer/timer_subsystem)
+	if (!id)
+		return null
+	if (istype(id, /datum/timedevent))
+		var/datum/timedevent/timer = id
+		return timer.timeToRun - world.time
+	timer_subsystem = timer_subsystem || SStimer
+	//id is string
+	var/datum/timedevent/timer = timer_subsystem.timer_id_dict["timerid[id]"]
+	return (timer && !timer.spent) ? timer.timeToRun - world.time : null
 
 #undef BUCKET_LEN
 #undef BUCKET_POS

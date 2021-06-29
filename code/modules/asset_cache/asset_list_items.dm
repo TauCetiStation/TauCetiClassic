@@ -142,6 +142,13 @@
 		var/datum/asset/A = get_asset_datum(type)
 		A.send(client)
 
+/datum/asset/spritesheet/mafia
+	name = "mafia"
+
+/datum/asset/spritesheet/mafia/register()
+	InsertAll("", 'icons/obj/mafia.dmi')
+	..()
+
 /datum/asset/spritesheet/vending
 	name = "vending"
 

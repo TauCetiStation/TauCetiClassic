@@ -312,6 +312,11 @@ h4 {font-size: 12px;}
 	margin: 4px;
 }
 
+.boldnotice {
+	color: #000099;
+	font-weight: bold;
+  }
+
 .notice.icon {
 	padding: 2px 4px 0 20px;
 }
@@ -326,6 +331,11 @@ h4 {font-size: 12px;}
 
 div.notice {
 	clear: both;
+}
+
+.greentext {
+	color: #90ee90;
+	font-weight: bold;
 }
 
 .Section {

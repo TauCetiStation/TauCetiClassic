@@ -21,3 +21,8 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "alien1"
 	smooth = FALSE
+
+/turf/unsimulated/floor/fakespace
+	icon = 'icons/turf/space.dmi'
+	name = "space"
+	icon_state = "0"
