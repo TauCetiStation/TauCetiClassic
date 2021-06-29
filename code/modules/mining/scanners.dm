@@ -48,6 +48,15 @@
 	item_state = "mininghud"
 	hud_types = list(DATA_HUD_MINER)
 
+/obj/item/clothing/glasses/hud/mining/meson
+	name = "Geological Meson Optical Scanner"
+	desc = "Used for seeing walls, floors, and stuff through anything."
+	icon_state = "mesonmininghud"
+	action_button_name = "Toggle Goggles"
+	toggleable = 1
+	sightglassesmod = "meson"
+	vision_flags = SEE_TURFS
+
 /obj/item/clothing/glasses/hud/mining/ancient
 	name = "Ancient Mining Hud MK II"
 	desc = "This hud for mine work in hostile territory, with builded bioscanner inside."
