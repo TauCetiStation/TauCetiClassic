@@ -70,7 +70,7 @@ var/global/list/department_radio_keys = list(
 	  ":Е" = "Syndicate",	"#Е" = "Syndicate",		".Е" = "Syndicate",
 	  ":Г" = "Supply",		"#Г" = "Supply",		".Г" = "Supply",
 	  ":П" = "changeling",	"#П" = "changeling",	".П" = "changeling",
-	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat"
+	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat",
 	  ":О" = "mafia",		"#О" = "mafia",			".О" = "mafia",
 )
 
