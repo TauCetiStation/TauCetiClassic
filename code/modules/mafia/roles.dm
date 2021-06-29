@@ -765,7 +765,7 @@
 	body.icon_state = "shadowling_ascended"
 	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", "layer" = LIGHTING_LAYER + 1)
 	ascend.plane = LIGHTING_PLANE + 1
-	add_overlay(ascend)
+	body.add_overlay(ascend)
 
 /datum/mafia_role/nightmare/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
