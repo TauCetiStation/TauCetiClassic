@@ -759,11 +759,13 @@
 	return TRUE //while alive, town AND mafia cannot win (though since mafia know who is who it's pretty easy to win from that point)
 
 /datum/mafia_role/nightmare/special_reveal_equip()
-	body.underwear = "Nude"
-	body.undershirt = "Nude"
-	body.socks = "Nude"
 	body.set_species(SHADOWLING)
-	body.update_body()
+	body.remove_overlay()
+	body.icon = 'icons/mob/shadowling.dmi'
+	body.icon_state = "shadowling_ascended"
+	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", "layer" = LIGHTING_LAYER + 1)
+	ascend.plane = LIGHTING_PLANE + 1
+	add_overlay(ascend)
 
 /datum/mafia_role/nightmare/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
