@@ -116,11 +116,14 @@
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(prob(50))
-		if(ishuman(hit_atom))
+		if(iscarbon(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			if(status)
-				var/calc_power = 0
-				calc_power = agony * H.get_siemens_coefficient_organ(H.bodyparts_by_name[BP_CHEST])
+				var/calc_power = 100
+				if(ishuman(H))
+					var/obj/item/organ/external/BP = H.get_bodypart(throwingdatum.thrower.get_targetzone())
+					calc_power = agony * H.get_siemens_coefficient_organ(BP)
+
 				H.apply_effect(calc_power, AGONY, 0)
 				charges--
 
