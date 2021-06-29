@@ -32,7 +32,7 @@
 	///mafia talk at night and pick someone to kill, some town roles use their actions, etc etc.
 	var/night_phase_period = 45 SECONDS
 	///like the lynch period, players need to see what the other players in the game's roles were
-	var/victory_lap_period = 20 SECONDS
+	var/victory_lap_period = 20 MINUTES
 
 	///template picked when the game starts. used for the name and desc reading
 	var/datum/map_template/mafia/current_map
@@ -95,7 +95,7 @@
 	var/list/possible_maps = subtypesof(/datum/map_template/mafia)
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in global.landmarks_list)
 
-	current_map = pick(possible_maps)
+	current_map = /datum/map_template/mafia/ufo
 	current_map = new current_map
 
 	if(!spawn_area)
@@ -354,7 +354,7 @@
 	for(var/datum/mafia_role/R in all_roles)
 		R.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
-	next_phase_timer = addtimer(CALLBACK(src,.proc/end_game),victory_lap_period,TIMER_STOPPABLE)
+	next_phase_timer = addtimer(CALLBACK(src, .proc/end_game), victory_lap_period, TIMER_STOPPABLE)
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
@@ -529,7 +529,7 @@
 		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
 		H.equipOutfit(player_outfit)
 		H.status_flags |= GODMODE
-		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
+		var/datum/action/innate/mafia_panel/mafia_panel = new(null, src)
 		mafia_panel.Grant(H)
 		var/client/player_client = global.directory[role.player_key]
 		if(player_client)
@@ -622,7 +622,7 @@
 				end_game()
 				qdel(src)
 			if("next_phase")
-				var/datum/timedevent/timer = SStimer.timer_id_dict[next_phase_timer]
+				var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[next_phase_timer]"]
 				if(!timer.spent)
 					var/datum/callback/tc = timer.callBack
 					deltimer(next_phase_timer)
@@ -918,11 +918,11 @@
 
 /datum/action/innate/mafia_panel
 	name = "Mafia Panel"
-	button_icon = 'icons/obj/mafia.dmi'
 	button_icon_state = "board"
+	action_type = AB_INNATE
 	var/datum/mafia_controller/parent
 
-/datum/action/innate/mafia_panel/New(Target,mf)
+/datum/action/innate/mafia_panel/New(Target, mf)
 	. = ..()
 	parent = mf
 

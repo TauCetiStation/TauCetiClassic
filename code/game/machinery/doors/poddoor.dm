@@ -117,3 +117,5 @@
 	name = "Station Night Shutters"
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream."
 	id = "mafia"
+	icon_state = "pdoor0"
+	opacity = FALSE
