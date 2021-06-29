@@ -241,7 +241,7 @@ var/global/cat_number = 0
 /mob/living/simple_animal/cat/real_runtime/proc/say_runtime(runtime_line)
 	if(!runtime_line)
 		return
-	var/text = "Зафиксирована аномалия #'[runtime_line]'. Пожалуйста, отойдите подальше."
+	var/text = "Зафиксирована аномалия #[runtime_line]. Пожалуйста, отойдите подальше."
 	say(text)
 
 /mob/living/simple_animal/cat/real_runtime/proc/back_to_bluespace()
