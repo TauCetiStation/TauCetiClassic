@@ -49,12 +49,7 @@
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "TX" = (
-/obj/machinery/door/poddoor/mafia{
-	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
-	id = "mafia";
-	max_integrity = 99999;
-	name = "Station Night Shutters"
-	},
+/obj/machinery/door/poddoor/mafia,
 /turf/unsimulated/wall/fakeglass,
 /area/mafia)
 "Zo" = (
