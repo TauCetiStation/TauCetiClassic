@@ -46,13 +46,13 @@
  */
 /datum/mafia_role/proc/can_action(datum/mafia_controller/game, datum/mafia_role/visitor, action)
 	if(role_flags & ROLE_ROLEBLOCKED)
-		to_chat(visitor,"<span class='danger'>Your [action] was blocked!</span>")
+		to_chat(visitor,"<span class='danger'>Ваше [action] было заблокировано!</span>")
 		return FALSE
 	if(game_status != MAFIA_ALIVE) //They're already dead
-		to_chat(visitor,"<span class='danger'>[body.real_name] perished before you could visit!</span>")
+		to_chat(visitor,"<span class='danger'>[body.real_name] погиб до того, как вы смогли прийти!</span>")
 		return FALSE
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_VISIT,game,visitor) & MAFIA_VISIT_INTERRUPTED) //visited a warden. something that prevents you by visiting that person
-		to_chat(visitor,"<span class='danger'>Your [action] was interrupted!</span>")
+		to_chat(visitor,"<span class='danger'>Ваше [action] было прервано!</span>")
 		return FALSE
 	return TRUE
 
@@ -177,7 +177,7 @@
 
 	var/datum/mafia_role/target = current_investigation
 	current_investigation = null
-	if(!target.can_action(game, src, "investigation"))
+	if(!target.can_action(game, src, "расследование"))
 		return
 	if((target.role_flags & ROLE_UNDETECTABLE))
 		to_chat(body,"<span class='warning'>Ваше расследование показало что [target.body.real_name] является истинным членом экипажа.</span>")
@@ -232,7 +232,7 @@
 		return
 	var/datum/mafia_role/target = current_target
 	current_target = null
-	if(!target.can_action(game, src, "role reveal"))
+	if(!target.can_action(game, src, "раскрытие роли"))
 		return
 	add_note("N[game.turn] - [target.body.real_name] - Раскрыл истинную роль")
 	to_chat(body,"<span class='warning'>Вы раскрыли истинную роль [current_target]!</span>")
@@ -271,7 +271,7 @@
 		return
 	var/datum/mafia_role/target = current_target
 	current_target = null
-	if(!target.can_action(game, src, "communion"))
+	if(!target.can_action(game, src, "общение"))
 		return
 	if(target)
 		to_chat(body,"<span class='warning'>Вы призываете дух [target.body.real_name] и узнаете что его роль - <b>[target.name]</b>.</span>")
@@ -315,7 +315,7 @@
 		return
 	var/datum/mafia_role/target = current_protected
 	//current protected is unset at the end, as this action ends at a different phase
-	if(!target.can_action(game, src, "medical assistance"))
+	if(!target.can_action(game, src, "медецинское содействие"))
 		return
 
 	RegisterSignal(target,COMSIG_MAFIA_ON_KILL,.proc/prevent_kill)
@@ -377,7 +377,7 @@
 		return
 	var/datum/mafia_role/target = current_defended
 	//current defended is unset at the end, as this action ends at a different phase
-	if(!target.can_action(game, src, "security patrol"))
+	if(!target.can_action(game, src, "патрулирование"))
 		return
 	if(target)
 		RegisterSignal(target,COMSIG_MAFIA_ON_KILL,.proc/retaliate)
@@ -426,7 +426,7 @@
 		return
 
 	var/datum/mafia_role/target = current_target
-	if(!target.can_action(game, src, "roleblock")) //roleblocking a warden moment
+	if(!target.can_action(game, src, "блокирование роли")) //roleblocking a warden moment
 		current_target = null
 		return
 
@@ -520,7 +520,7 @@
 		return
 	var/datum/mafia_role/target = execute_target
 	execute_target = null
-	if(!target.can_action(game, src, "execution")) //roleblocking a warden moment
+	if(!target.can_action(game, src, "убийство"))
 		return
 	if(!target.kill(game,src,FALSE))//protection
 		to_chat(body,"<span class='danger'>Ваша попытка казнить [target.body.real_name] была предотвращена или [target.body.real_name] обладает иммунитетом!</span>")
@@ -658,7 +658,7 @@
 
 	var/datum/mafia_role/target = current_investigation
 	current_investigation = null
-	if(!target.can_action(game, src, "thought feeding"))
+	if(!target.can_action(game, src, "пожирание разума"))
 		add_note("N[game.turn] - [target.body.real_name] - Не может быть расследован")
 		return
 	if((target.role_flags & ROLE_UNDETECTABLE))
@@ -722,7 +722,7 @@
 		return
 	var/datum/mafia_role/target = current_victim
 	current_victim = null
-	if(!target.can_action(game, src, "flickering")) //flickering a warden
+	if(!target.can_action(game, src, "мерцание")) //flickering a warden
 		return
 	if(game_status == MAFIA_ALIVE)
 		if(!target.kill(game,src,FALSE))
@@ -801,7 +801,7 @@
 		return
 	var/datum/mafia_role/target = flicker_target
 	flicker_target = null
-	if(!target.can_action(game, src, "flickering")) //flickering a warden
+	if(!target.can_action(game, src, "мерцание")) //flickering a warden
 		return
 
 	if(target != src) //flicker instead of hunt

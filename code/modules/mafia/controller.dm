@@ -434,7 +434,7 @@
 	var/datum/mafia_role/victim = get_vote_winner("Mafia")
 	if(victim)
 		var/datum/mafia_role/killer = get_random_voter("Mafia")
-		if(!victim.can_action(src, killer, "changeling murder"))
+		if(!victim.can_action(src, killer, "генокрадское убийство"))
 			send_message("<span class='danger'>[killer.body.real_name] не смог атаковать [victim.body.real_name] в эту ночь!</span>",MAFIA_TEAM_MAFIA)
 		else
 			send_message("<span class='danger'>[killer.body.real_name] атаковал [victim.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
