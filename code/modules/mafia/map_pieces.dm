@@ -33,7 +33,7 @@
 	requires_power = FALSE
 
 /datum/map_template/mafia
-	var/description = "Some description"
+	var/description
 
 /datum/map_template/mafia/summerball
 	name = "Summerball 2020"
