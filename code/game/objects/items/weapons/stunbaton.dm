@@ -89,10 +89,9 @@
 		var/calc_power = 100
 		if(ishuman(M))
 			var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-
 			calc_power = agony * H.get_siemens_coefficient_organ(BP)
 
-		H.apply_effect(calc_power, AGONY, 0)
+		H.apply_effect(calc_power, AGONY)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
