@@ -33,9 +33,11 @@
 	data_core.security += R
 	return R
 
-/proc/get_id_photo(mob/living/carbon/human/H, show_directions = list(SOUTH))
+/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-	var/datum/preferences/P = H.client.prefs
+	if(!C)
+		C = H.client
+	var/datum/preferences/P = C?.prefs
 	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
 
 /proc/find_general_record(field, value)

@@ -193,8 +193,7 @@
 			to_chat(user, "<span class='notice'>There is already a beaker loaded.</span>")
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		reagent_glass = W
 		to_chat(user, "<span class='notice'>You insert [W].</span>")
 		updateUsrDialog()

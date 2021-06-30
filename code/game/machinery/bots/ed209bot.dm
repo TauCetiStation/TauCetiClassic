@@ -245,7 +245,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(!lasertag_color)
-		var/obj/item/weapon/gun/energy/taser/stunrevolver/G = new /obj/item/weapon/gun/energy/taser/stunrevolver(Tsec)
+		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "blue")
 		var/obj/item/weapon/gun/energy/laser/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(Tsec)
@@ -450,7 +450,7 @@
 						return
 					name = "redtag ED-209 assembly"
 				if("")
-					if(!istype(I, /obj/item/weapon/gun/energy/taser/stunrevolver))
+					if(!istype(I, /obj/item/weapon/gun/energy/taser))
 						return
 					name = "taser ED-209 assembly"
 				else

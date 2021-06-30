@@ -462,7 +462,7 @@ var/global/list/tophats_list = list()
 			return
 		drop_into(I, user)
 		return TRUE
-	if(user.mind && user.mind.special_role == "Wizard")
+	if(iswizard(user))
 		drop_into(I, user)
 		return TRUE
 	return ..()
@@ -473,7 +473,7 @@ var/global/list/tophats_list = list()
 			to_chat(user, "<span class='notice'>There's nothing in the hat.</span>")
 			return
 		next_trick = world.time + trick_delay
-		if(user.mind && user.mind.special_role == "Wizard")
+		if(iswizard(user))
 			if(try_get_monkey(user))
 				user.visible_message("<span class='notice'>[user] takes something big out of [src]!</span>",
 									 "<span class='notice'>You take something unproportionally big out of [src].</span>")

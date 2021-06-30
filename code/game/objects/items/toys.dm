@@ -167,9 +167,6 @@
 /obj/item/toy/gun/afterattack(atom/target, mob/user, proximity, params)
 	if (proximity)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
 	add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click* *click*</span>", SHOWMSG_AUDIO)
@@ -220,7 +217,6 @@
 /obj/item/toy/crossbow/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/toy/ammo/crossbow))
 		if(bullets <= 4)
-			user.drop_item()
 			qdel(I)
 			bullets++
 			to_chat(user, "<span class='notice'>You load the foam dart into the crossbow.</span>")
@@ -432,7 +428,7 @@
 		src.empty = 0
 
 
-		var/obj/effect/decal/D = new/obj/effect/decal/(get_turf(src))
+		var/obj/effect/decal/D = new/obj/effect/decal(get_turf(src))
 		D.name = "water"
 		D.icon = 'icons/obj/chemical.dmi'
 		D.icon_state = "chempuff"

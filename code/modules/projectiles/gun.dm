@@ -46,7 +46,7 @@
 	return 0
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
-	if(M.mind && M.mind.special_role == "Wizard")
+	if(iswizard(M))
 		return FALSE
 	return TRUE
 
@@ -137,7 +137,6 @@
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
 					H.take_bodypart_damage(0, 20)
-					H.drop_item()
 					qdel(src)
 					return
 

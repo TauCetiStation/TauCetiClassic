@@ -268,7 +268,8 @@ A proc that does all the animations before mix()-ing.
 
 /obj/machinery/color_mixer/attackby(obj/item/O, mob/user)
 	if(processing)
-		if(user.a_intent != INTENT_HARM)
+		. = ..()
+		if(!.)
 			to_chat(user, "<span class='warning'>Doing this while [src] is working would be mighty dangerous!</span>")
 			if(prob(10))
 				to_chat(user, "<span class='warning'>You feel determined to harm this machine!</span>")
