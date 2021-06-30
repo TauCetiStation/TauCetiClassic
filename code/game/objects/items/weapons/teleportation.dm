@@ -52,7 +52,7 @@ Frequency:
 	if(!current_location || !SSmapping.has_level(current_location.z) || is_centcom_level(current_location.z) || is_junkyard_level(current_location.z))//If turf was not found or they're on centcom z level.
 		to_chat(usr, "The [src] is malfunctioning.")
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+	if (Adjacent(usr))
 		usr.set_machine(src)
 		if (href_list["refresh"])
 			src.temp = "<B>Persistent Signal Locator</B><HR>"

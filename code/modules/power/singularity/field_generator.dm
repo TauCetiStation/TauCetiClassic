@@ -85,7 +85,7 @@ field_generator power level display
 	if(.)
 		return
 	if(state == FG_WELDED)
-		if(in_range(src, user) || isobserver(user))//Need to actually touch the thing to turn it on
+		if(Adjacent(user) || isobserver(user))//Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return 1
