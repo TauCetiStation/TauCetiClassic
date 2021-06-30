@@ -326,7 +326,7 @@
 	//solo victories!
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
-		send_message("<span class='big comradio'>!! [uppertext(winner.name)] ПОБЕДИЛ !!</span>")
+		send_message("<span class='comradio'>!! [uppertext(winner.name)] ПОБЕДИЛ !!</span>")
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
