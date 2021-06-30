@@ -59431,7 +59431,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cmA" = (
@@ -59654,10 +59653,6 @@
 	icon_state = "dark"
 	},
 /area/station/aisat)
-"cnc" = (
-/obj/structure/window/reinforced,
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
 "cng" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -60306,7 +60301,6 @@
 	id = "AI";
 	pixel_y = -24
 	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "coB" = (
@@ -60340,9 +60334,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -60656,9 +60647,6 @@
 	id = "AI";
 	pixel_y = 24
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpr" = (
@@ -60787,9 +60775,6 @@
 "cpC" = (
 /obj/machinery/ai_slipper{
 	icon_state = "motion0"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -60987,9 +60972,6 @@
 "cpQ" = (
 /obj/machinery/ai_slipper{
 	icon_state = "motion0"
-	},
-/obj/structure/window/reinforced{
-	dir = 8
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -67197,12 +67179,6 @@
 "cEY" = (
 /turf/simulated/wall/r_wall,
 /area/station/aisat/antechamber)
-"cEZ" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
 "cFb" = (
 /obj/machinery/camera/motion{
 	c_tag = "AI Chamber North";
@@ -67256,12 +67232,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan,
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
-"cFm" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
 "cFr" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor{
@@ -67644,7 +67614,6 @@
 	id = "AI";
 	pixel_y = -24
 	},
-/obj/structure/window/reinforced,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cGy" = (
@@ -123054,9 +123023,9 @@ cCW
 cFP
 cFP
 cGa
-cFm
+cGa
 cpC
-cFm
+cGa
 cpr
 cFP
 cFP
@@ -123567,11 +123536,11 @@ cFP
 cFP
 cmi
 cGa
-cnc
+cGa
 cFP
 cpG
 cFP
-cEZ
+cGa
 cGa
 cFP
 cFP
@@ -124852,7 +124821,7 @@ cFP
 cFP
 cmj
 cDj
-coL
+cGa
 cpA
 cmf
 cqE
@@ -125109,11 +125078,11 @@ cFP
 cFP
 cDU
 cGa
-cnc
+cGa
 cFP
 coq
 cFP
-cEZ
+cGa
 cGa
 cFP
 cqp
@@ -125624,9 +125593,9 @@ cFJ
 cFP
 cFP
 cGa
-coL
+cGa
 cpQ
-coL
+cGa
 cqI
 cFP
 cFP
