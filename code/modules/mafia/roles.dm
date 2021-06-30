@@ -407,7 +407,6 @@
 /datum/mafia_role/lawyer
 	name = "Адвокат"
 	desc = "Днем вы можете выбрать человека, которому вы будете давать ночью подробную юридическую консультацию, предотвращая ночные действия."
-	desc = "You can choose a person during the day to provide extensive legal advice to during the night, preventing night actions."
 	revealed_outfit = /datum/outfit/mafia/lawyer
 	role_type = TOWN_SUPPORT
 	hud_icon = "hudlawyer"
