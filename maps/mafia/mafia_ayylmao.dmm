@@ -39,14 +39,6 @@
 /obj/structure/stool/bed/abductor,
 /turf/unsimulated/floor/abductor,
 /area/mafia)
-"n" = (
-/obj/structure/bedsheetbin,
-/turf/unsimulated/floor/abductor,
-/area/mafia)
-"o" = (
-/obj/item/fluff/maurice_bedford_1,
-/turf/unsimulated/floor/abductor,
-/area/mafia)
 "q" = (
 /turf/unsimulated/floor/abductor,
 /area/mafia)
@@ -376,8 +368,8 @@ H
 W
 G
 l
-n
-o
+q
+q
 l
 q
 l
@@ -500,7 +492,7 @@ H
 H
 U
 y
-q
+l
 b
 l
 l
@@ -525,7 +517,7 @@ H
 H
 I
 J
-q
+l
 q
 q
 l

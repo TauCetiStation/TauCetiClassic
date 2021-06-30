@@ -48,8 +48,8 @@
 /area/mafia)
 "l" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Telecoms Server Access";
-	req_access = list(61)
+	locked = 1;
+	req_access = list(101)
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -78,14 +78,6 @@
 /turf/unsimulated/wall/fakeglass,
 /area/mafia)
 "q" = (
-/turf/simulated/floor{
-	icon_state = "floorgrime"
-	},
-/area/mafia)
-"r" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance"
-	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -224,7 +216,7 @@ j
 j
 l
 j
-r
+l
 j
 j
 d
@@ -252,7 +244,7 @@ j
 q
 m
 j
-r
+l
 j
 j
 d

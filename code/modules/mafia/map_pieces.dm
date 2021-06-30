@@ -33,7 +33,7 @@
 	requires_power = FALSE
 
 /datum/map_template/mafia
-	var/description = ""
+	var/description = "Some description"
 
 /datum/map_template/mafia/summerball
 	name = "Summerball 2020"
@@ -59,3 +59,15 @@
 	name = "Vampire's Castle"
 	description = "Vampires and changelings clash to find out who's the superior bloodsucking monster in this creepy castle map."
 	mappath = "maps/mafia/mafia_gothic.dmm"
+
+/datum/map_template/mafia/alien
+	name = "Alien Base"
+	mappath = "maps/mafiamafia_infestation.dmm"
+
+/datum/map_template/mafia/park
+	name = "Peaceful Place"
+	mappath = "maps/mafia/mafia_park.dmm"
+
+/datum/map_template/mafia/winter
+	name = "Snow on the Earth"
+	mappath = "maps/mafia/mafia_snow.dmm"
