@@ -50,6 +50,7 @@
 	wander = FALSE
 	pass_flags = PASSTABLE
 	ventcrawler = 2
+	w_class = SIZE_MINUSCULE
 
 	var/truename // Name used for brainworm-speak.
 	var/generation = 1

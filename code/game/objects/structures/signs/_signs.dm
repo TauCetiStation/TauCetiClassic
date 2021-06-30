@@ -99,7 +99,7 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	item_state = "sheet-metal"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity, params)

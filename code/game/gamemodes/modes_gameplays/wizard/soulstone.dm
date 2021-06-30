@@ -8,7 +8,7 @@
 	icon_state = "soulstone"
 	item_state = "electronic"
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefacts power."
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "bluespace=4;materials=4"
 	var/imprinted

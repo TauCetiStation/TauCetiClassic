@@ -36,6 +36,7 @@
 //Mob anal probe
 
 /obj/lair_life_monitor
+	flags = ABSTRACT
 	var/obj/structure/cellular_biomass/lair/lair_to_report
 
 /obj/lair_life_monitor/atom_init(mapload, obj/structure/cellular_biomass/lair/lair , mob/living/my_mob)

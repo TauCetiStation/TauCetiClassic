@@ -5,7 +5,7 @@
 	icon_state = "stamp-qm"
 	item_state = "stamp"
 	throwforce = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60

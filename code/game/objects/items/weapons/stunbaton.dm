@@ -6,7 +6,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	force = 10
 	throwforce = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/charges = 10
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.

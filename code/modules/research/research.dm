@@ -284,7 +284,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/datum/tech/stored

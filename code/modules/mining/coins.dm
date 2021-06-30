@@ -5,7 +5,7 @@
 	flags = CONDUCT
 	force = 0
 	throwforce = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/cmineral = null
 	var/reagent = null
 	var/string_attached

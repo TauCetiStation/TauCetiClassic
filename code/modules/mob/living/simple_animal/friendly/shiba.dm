@@ -12,6 +12,7 @@
 	emote_see = list("shakes its head", "shivers", "looks cute")
 	speak_chance = 20
 	turns_per_move = 3
+	w_class = SIZE_BIG
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/shiba = 2)
 	response_help  = "pets the"
 	response_disarm = "bops the"

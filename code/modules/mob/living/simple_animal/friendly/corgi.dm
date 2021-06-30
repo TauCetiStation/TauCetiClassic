@@ -17,6 +17,7 @@
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
 	see_in_dark = 5
+	w_class = SIZE_BIG
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -54,6 +55,7 @@
 	icon_state = "puppy"
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
+	w_class = SIZE_SMALL
 
 //LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Lisa

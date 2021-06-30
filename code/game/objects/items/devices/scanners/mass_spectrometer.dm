@@ -3,7 +3,7 @@
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5

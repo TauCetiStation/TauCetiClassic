@@ -25,7 +25,7 @@
 	layer = 21
 	abstract = 1
 	item_state = "nothing"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 /mob/proc/canGrab(atom/movable/target, show_warnings = TRUE)
 	if(QDELETED(src) || QDELETED(target))

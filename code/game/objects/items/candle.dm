@@ -11,7 +11,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	item_state = "white_candle"
 
 	var/candle_color
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 	var/wax = 0
 	var/lit = FALSE

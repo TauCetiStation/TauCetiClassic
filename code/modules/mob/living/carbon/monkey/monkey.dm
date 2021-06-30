@@ -23,6 +23,7 @@
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 	pull_size_ratio = 1.5
+	w_class = SIZE_BIG
 
 	moveset_type = /datum/combat_moveset/human
 

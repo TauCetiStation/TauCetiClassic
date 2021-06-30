@@ -67,6 +67,7 @@
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
 	icon_state = "uskel"
 	desc = "Incomplete skeleton."
+	w_class = SIZE_LARGE
 	var/bnum = 1
 	var/breq
 	var/bstate = 0

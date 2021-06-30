@@ -3,7 +3,7 @@
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=1;engineering=1"

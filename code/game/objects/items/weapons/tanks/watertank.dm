@@ -7,7 +7,7 @@
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
 	flags = OPENCONTAINER
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	action_button_name = "Toggle Mister"
 
 	var/obj/item/weapon/reagent_containers/spray/mister/noz
@@ -105,7 +105,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	throwforce = 0 //we shall not abuse
 	amount_per_transfer_from_this = 25
 	possible_transfer_amounts = list(25,50,100)

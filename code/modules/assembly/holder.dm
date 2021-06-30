@@ -5,7 +5,7 @@
 	item_state = "assembly"
 	flags = CONDUCT
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 10
 

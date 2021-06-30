@@ -12,6 +12,7 @@
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	unacidable = 1
+	flags = ABSTRACT
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 	var/internal_switch = 0 // Cooldown for internal switching

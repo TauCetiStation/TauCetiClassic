@@ -64,7 +64,7 @@
 		var/mob/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
-		if(!M.restrained() && !M.small)
+		if(!M.restrained() && M.w_class >= SIZE_SMALL)
 			bumpopen(M)
 		return
 

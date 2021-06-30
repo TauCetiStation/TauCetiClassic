@@ -27,7 +27,7 @@
 	desc = "A keyring with a small steel key."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "keys_bike"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/id = 0
 
 /obj/item/weapon/key/spacebike/examine(mob/user)

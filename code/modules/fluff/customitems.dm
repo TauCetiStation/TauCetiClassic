@@ -257,7 +257,7 @@
 		item.item_state = custom_item_info.icon_state
 		item.item_color = custom_item_info.icon_state
 		if(custom_item_info.item_type == "small")
-			item.w_class = ITEM_SIZE_SMALL
+			item.w_class = SIZE_TINY
 
 
 		var/atom/placed_in = H.equip_or_collect(item)

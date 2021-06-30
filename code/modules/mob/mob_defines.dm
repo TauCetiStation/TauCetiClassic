@@ -2,6 +2,7 @@
 	density = TRUE
 	layer = 4.0
 	animate_movement = 2
+	w_class = SIZE_LARGE
 //	flags = NOREACT
 	var/datum/mind/mind
 
@@ -87,7 +88,6 @@
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
-	var/small = 0
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.
 	var/list/languages = list()         // For speaking/listening.

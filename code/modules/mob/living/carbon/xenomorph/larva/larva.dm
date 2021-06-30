@@ -10,7 +10,7 @@
 	max_plasma = 50
 
 	density = FALSE
-	small = 1
+	w_class = SIZE_TINY
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth

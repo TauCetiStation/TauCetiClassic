@@ -1029,6 +1029,7 @@
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
+			update_size_class()
 	else
 		if((has_quirk(/datum/quirk/fatness) || overeatduration >= 500) && isturf(loc))
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
@@ -1038,6 +1039,7 @@
 				update_mutations()
 				update_inv_w_uniform()
 				update_inv_wear_suit()
+				update_size_class()
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "m79"
 	item_state = "m79"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=5;materials=3"

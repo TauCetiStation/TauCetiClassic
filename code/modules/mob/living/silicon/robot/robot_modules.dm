@@ -2,7 +2,7 @@
 	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = ITEM_SIZE_NO_CONTAINER
+	w_class = SIZE_LARGE
 	item_state = "electronic"
 	flags = CONDUCT
 	var/channels = list()

@@ -9,6 +9,7 @@
 
 	can_be_pulled = FALSE
 	density = FALSE
+	w_class = SIZE_HUMAN
 
 	maxHealth = 100
 

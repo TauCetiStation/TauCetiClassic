@@ -17,6 +17,8 @@
 	buckle_movable = 1
 	buckle_lying = 0
 
+	w_class = SIZE_MASSIVE
+
 	var/attack_log = null
 	var/on = 0
 	var/open = 0

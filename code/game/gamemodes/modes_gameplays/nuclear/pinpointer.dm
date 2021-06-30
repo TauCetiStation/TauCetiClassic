@@ -6,7 +6,7 @@
 	icon_state = "pinoff"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20

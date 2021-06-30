@@ -12,6 +12,7 @@
 	var/phasing = 0
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	w_class = SIZE_MASSIVE
 
 	response_help   = "stares at"
 	response_disarm = "flails at"

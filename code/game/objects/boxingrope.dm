@@ -1,3 +1,6 @@
+/obj/decal
+	flags = ABSTRACT
+	
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
 	desc = "Do not exit the ring."
@@ -25,6 +28,3 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-
-
-

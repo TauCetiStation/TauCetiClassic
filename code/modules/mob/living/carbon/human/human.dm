@@ -8,6 +8,7 @@
 	icon = 'icons/mob/human.dmi'
 	faction = "station"
 	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
+	w_class = SIZE_HUMAN
 	//icon_state = "body_m_s"
 
 	var/datum/species/species //Contains icon generation and language information, set during New().
@@ -2135,6 +2136,24 @@
 		return FALSE
 
 	return TRUE
+
+/mob/living/carbon/human/update_size_class()
+	
+	var/new_w_class = initial(w_class)
+	
+	var/datum/species/S = all_species[get_species()]
+	if(S)
+		new_w_class = S.w_class
+
+	if(SMALLSIZE in mutations)
+		new_w_class -= 1
+
+	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+		new_w_class += 1
+
+	w_class = new_w_class
+
+	return w_class
 
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR

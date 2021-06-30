@@ -3,7 +3,7 @@
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5

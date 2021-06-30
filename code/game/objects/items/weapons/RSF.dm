@@ -13,7 +13,7 @@ RSF
 	anchored = FALSE
 	var/matter = 0
 	var/mode = 1
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/rsf/atom_init()
 	. = ..()

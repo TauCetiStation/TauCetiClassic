@@ -12,7 +12,7 @@
 	flags = CONDUCT
 	usesound = 'sound/items/timer.ogg'
 	force = 1.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3

@@ -29,7 +29,7 @@
 			if(SLOT_L_STORE)
 				if(l_store)
 					return
-				if(W.w_class > ITEM_SIZE_NORMAL)
+				if(W.w_class > SIZE_SMALL)
 					return
 				u_equip(W)
 				l_store = W
@@ -37,7 +37,7 @@
 			if(SLOT_R_STORE)
 				if(r_store)
 					return
-				if(W.w_class > ITEM_SIZE_NORMAL)
+				if(W.w_class > SIZE_SMALL)
 					return
 				u_equip(W)
 				r_store = W

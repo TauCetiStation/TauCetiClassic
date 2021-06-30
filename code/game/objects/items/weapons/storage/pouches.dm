@@ -5,11 +5,11 @@
 	icon_state = "pouch"
 	item_state = "pouch"
 
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_POCKET|SLOT_FLAGS_BELT //Pouches can be worn on belt
 	storage_slots = 1
-	max_w_class = ITEM_SIZE_SMALL
-	max_storage_space = base_storage_capacity(ITEM_SIZE_NORMAL)
+	max_w_class = SIZE_TINY
+	max_storage_space = base_storage_capacity(SIZE_SMALL)
 	attack_verb = list("pouched")
 
 	var/sliding_behavior = FALSE
@@ -40,8 +40,8 @@
 	icon_state = "small_generic"
 	item_state = "small_generic"
 	storage_slots = null //Uses generic capacity
-	max_storage_space = ITEM_SIZE_TINY * 3
-	max_w_class = ITEM_SIZE_SMALL
+	max_storage_space = SIZE_MINUSCULE * 3
+	max_w_class = SIZE_TINY
 
 /obj/item/weapon/storage/pouch/medium_generic
 	name = "medium generic pouch"
@@ -49,19 +49,19 @@
 	icon_state = "medium_generic"
 	item_state = "medium_generic"
 	storage_slots = null //Uses generic capacity
-	max_storage_space = ITEM_SIZE_TINY * 5
-	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = SIZE_MINUSCULE * 5
+	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/pouch/large_generic
 	name = "large generic pouch"
 	desc = "A mini satchel. Can hold a fair bit, but it won't fit in your pocket"
 	icon_state = "large_generic"
 	item_state = "large_generic"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT|SLOT_FLAGS_DENYPOCKET
 	storage_slots = null //Uses generic capacity
-	max_storage_space = ITEM_SIZE_TINY * 10
-	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = SIZE_MINUSCULE * 10
+	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/pouch/medical_supply
 	name = "medical supply pouch"
@@ -70,7 +70,7 @@
 	item_state = "medical_supply"
 
 	storage_slots = 3
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 
 	can_hold = list(
 		/obj/item/device/healthanalyzer,
@@ -103,7 +103,7 @@
 	item_state = "engineering_tool"
 
 	storage_slots = 3
-	max_w_class = ITEM_SIZE_SMALL
+	max_w_class = SIZE_TINY
 
 	can_hold = list(
 		/obj/item/weapon/crowbar,
@@ -137,8 +137,8 @@
 	item_state = "engineering_supply"
 
 	storage_slots = 2
-	w_class = ITEM_SIZE_NORMAL
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_SMALL
 
 	can_hold = list(
 		/obj/item/weapon/circuitboard,
@@ -159,8 +159,8 @@
 	item_state = "ammo"
 
 	storage_slots = 3
-	w_class = ITEM_SIZE_NORMAL
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_SMALL
 
 	can_hold = list(
 		/obj/item/ammo_box,
@@ -175,8 +175,8 @@
 	item_state = "flare"
 
 	storage_slots = 5
-	w_class = ITEM_SIZE_NORMAL
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_SMALL
 
 	can_hold = list(
 		/obj/item/device/flashlight/flare,
@@ -205,8 +205,8 @@
 	item_state = "pistol_holster"
 
 	storage_slots = 1
-	w_class = ITEM_SIZE_NORMAL
-	max_w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_SMALL
 
 	sliding_behavior = TRUE
 
@@ -228,7 +228,7 @@
 	item_state = "baton_holster"
 
 	storage_slots = 1
-	max_w_class = ITEM_SIZE_LARGE
+	max_w_class = SIZE_NORMAL
 
 	can_hold = list(
 		/obj/item/weapon/melee,

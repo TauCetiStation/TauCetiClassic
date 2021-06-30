@@ -792,4 +792,4 @@
 	desc = "Simple Aim system, can be installed in poor Drop pods"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "aim_system"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY

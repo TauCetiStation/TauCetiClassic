@@ -36,6 +36,7 @@
 	universal_understand = FALSE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 5)
 
+	w_class = SIZE_BIG
 	var/obj/item/weapon/card/id/wear_id = null
 
 	var/dodged = FALSE

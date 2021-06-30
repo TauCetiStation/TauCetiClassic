@@ -43,7 +43,7 @@
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[item_color]"
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
@@ -54,7 +54,7 @@
 			icon_state = "cutlass0"
 		else
 			icon_state = "sword0"
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
@@ -127,7 +127,7 @@
 	icon_state = "telebaton_0"
 	item_state = null
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 3
 	var/on = 0
 
@@ -171,7 +171,7 @@
 		"You hear an ominous click.")
 		icon_state = "telebaton_1"
 		item_state = "telebaton"
-		w_class = ITEM_SIZE_NORMAL
+		w_class = SIZE_SMALL
 		force = 15//quite robust
 		attack_verb = list("smacked", "struck", "slapped")
 	else
@@ -180,7 +180,7 @@
 		"You hear a click.")
 		icon_state = "telebaton_0"
 		item_state = null
-		w_class = ITEM_SIZE_SMALL
+		w_class = SIZE_TINY
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
@@ -291,13 +291,14 @@
 		to_chat(user, "<span class='notice'>The axe is now energised.</span>")
 		src.force = 150
 		src.icon_state = "axe1"
-		src.w_class = ITEM_SIZE_HUGE
+		src.w_class = SIZE_BIG
 	else
 		to_chat(user, "<span class='notice'>The axe can now be concealed.</span>")
 		src.force = 40
 		src.icon_state = "axe0"
-		src.w_class = ITEM_SIZE_HUGE
+		src.w_class = SIZE_BIG
 	add_fingerprint(user)
+
 	return
 
 
@@ -326,7 +327,7 @@
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
 	icon_state = "eshield[active]"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
@@ -334,7 +335,7 @@
 /obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
 	force = 3
 	icon_state = "eshield[active]"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 	if(user)

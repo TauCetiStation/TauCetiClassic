@@ -159,7 +159,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bombcore"
 	item_state = "eshield0"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
@@ -172,7 +172,7 @@
 	icon = 'icons/obj/syndie_bomb_big.dmi'
 	icon_state = "bigred"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	origin_tech = "syndicate=2"
 	var/cooldown = 0
 	var/detonated =	0

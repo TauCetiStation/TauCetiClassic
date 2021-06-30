@@ -11,7 +11,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	level = 2
 
 	var/pipe_type = 0
@@ -805,7 +805,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 /obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
 	if (!iswrench(I))

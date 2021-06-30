@@ -8,7 +8,7 @@
 	var/s_time = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/uses = 1
 	var/nofail
 	var/is_bullet = 0

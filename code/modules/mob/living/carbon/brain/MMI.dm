@@ -3,7 +3,7 @@
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "biotech=3"
 
 	req_access = list(access_robotics)

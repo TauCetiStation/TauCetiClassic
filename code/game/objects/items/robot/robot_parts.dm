@@ -64,7 +64,7 @@
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/robot_parts/robot_suit/atom_init()
 	. = ..()
@@ -139,7 +139,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		l_leg = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/r_leg))
@@ -147,7 +147,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		r_leg = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/l_arm))
@@ -155,7 +155,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		l_arm = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/r_arm))
@@ -163,7 +163,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		r_arm = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/chest))
@@ -173,7 +173,7 @@
 		if(C.can_attach())
 			user.drop_from_inventory(C, src)
 			chest = C
-			w_class = ITEM_SIZE_LARGE
+			w_class = SIZE_NORMAL
 			update_icon()
 		else if(!C.wires)
 			to_chat(user, "<span class='info'>You need to attach wires to [C] first!</span>")
@@ -187,7 +187,7 @@
 		if(H.can_attach())
 			user.drop_from_inventory(H, src)
 			head = H
-			w_class = ITEM_SIZE_LARGE
+			w_class = SIZE_NORMAL
 			update_icon()
 		else
 			to_chat(user, "<span class='info'>You need to attach a flash to [H] first!</span>")

@@ -95,7 +95,7 @@
 	if(device_type)
 		device = new device_type(src)
 		device.canremove = FALSE // so we can't place mounted devices on tables/racks
-		device.w_class = ITEM_SIZE_NO_CONTAINER // so we can't put mounted devices into backpacks
+		device.flags |= ABSTRACT // so we can't put mounted devices into backpacks
 		device.origin_tech = null // so we can't put them into destructive analyzer
 		device.m_amt = 0 // so we can't put them into autolathe
 		device.g_amt = 0

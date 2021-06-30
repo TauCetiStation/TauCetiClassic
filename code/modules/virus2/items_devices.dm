@@ -4,7 +4,7 @@
 	name = "Antibody Scanner"
 	desc = "Scans living beings for antibodies in their blood."
 	icon_state = "health"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 

@@ -76,7 +76,7 @@
 			else
 				name += ", [O.name]"
 
-	w_class = clamp(contents.len, ITEM_SIZE_SMALL, ITEM_SIZE_GARGANTUAN)
+	w_class = clamp(contents.len, SIZE_TINY, SIZE_GARGANTUAN)
 
 	if(contents.len >= MAX_SANDWICH_LIMIT)
 		name = "finished sandwich"

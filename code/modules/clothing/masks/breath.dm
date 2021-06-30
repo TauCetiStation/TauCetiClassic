@@ -5,7 +5,7 @@
 	item_state = "breath"
 	flags = MASKCOVERSMOUTH | MASKINTERNALS
 	body_parts_covered = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	action_button_name = "Adjust mask"
