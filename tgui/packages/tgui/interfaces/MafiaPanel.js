@@ -315,16 +315,13 @@ export const MafiaPanel = (props, context) => {
                   </Flex>
                 </Section>
                 {!!roleinfo && (
-                  <Flex.Item height={0} grow={1}>
+                  <Flex.Item grow={1}>
                     <Section scrollable
                       fill
                       overflowY="scroll">
-                      {roleinfo !== undefined && !!roleinfo.action_log
-                        && roleinfo.action_log.map(log_line => (
-                          <Box key={log_line}>
-                            {log_line}
-                          </Box>
-                        ))}
+                      {roleinfo?.action_log?.map(line => (
+                        <Box key={line}>{line}</Box>
+                      ))}
                     </Section>
                   </Flex.Item>
                 )}

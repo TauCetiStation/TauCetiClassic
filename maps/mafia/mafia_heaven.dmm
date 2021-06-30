@@ -75,7 +75,6 @@
 /area/mafia)
 "ei" = (
 /obj/effect/landmark/mafia,
-/obj/machinery/optable/torture_table,
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "gN" = (
@@ -108,7 +107,7 @@
 /turf/unsimulated/wall/cult/runed,
 /area/mafia)
 "ER" = (
-/obj/structure/closet/coffin,
+/obj/machinery/optable/torture_table,
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "Fc" = (
