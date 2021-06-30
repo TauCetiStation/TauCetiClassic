@@ -25,7 +25,7 @@
 
 // Common helper procs for all power machines:
 // All power generation handled in add_avail()
-// Machines should use add_load(), surplus(), avail()
+// Machines (in proc/process()) should use add_load(), surplus(), avail()
 // Non-machines should use add_delayedload(), delayed_surplus(), newavail()
 
 /obj/machinery/power/proc/add_avail(amount)
@@ -249,7 +249,6 @@
 
 //remove the old powernet and replace it with a new one throughout the network.
 /proc/propagate_network(obj/O, datum/powernet/PN)
-	//world.log << "propagating new network"
 	var/list/worklist = list()
 	var/list/found_machines = list()
 	var/index = 1
@@ -281,7 +280,6 @@
 
 
 //Merge two powernets, the bigger (in cable length term) absorbing the other
-//TODO: rewrite so the larger net absorbs the smaller net
 /proc/merge_powernets(datum/powernet/net1, datum/powernet/net2)
 	if(!net1 || !net2) //if one of the powernet doesn't exist, return
 		return
@@ -290,7 +288,7 @@
 		return
 
 	//We assume net1 is larger. If net2 is in fact larger we are just going to make them switch places to reduce on code.
-	if(net1.cables.len < net2.cables.len)	//net2 is larger than net1. Let's switch them around
+	if(net1.cables.len < net2.cables.len) //net2 is larger than net1. Let's switch them around
 		var/temp = net1
 		net1 = net2
 		net2 = temp

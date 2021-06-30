@@ -12,6 +12,8 @@
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)
 	var/perapc = 0				// per-apc avilability
 
+	var/debug_v = 0
+
 /datum/powernet/New()
 	SSmachines.powernets += src
 
@@ -43,12 +45,10 @@
 //Warning : this proc DON'T check if the cable exists
 /datum/powernet/proc/add_cable(obj/structure/cable/C)
 	if(C.powernet) // If C already has a powernet
-		if(C.powernet == src)
-			return
-		else
+		if(C.powernet != src)
 			C.powernet.remove_cable(C) // Remove it
 	C.powernet = src
-	cables +=C
+	cables[C] = C
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
@@ -63,9 +63,7 @@
 //Warning : this proc DON'T check if the machine exists
 /datum/powernet/proc/add_machine(obj/machinery/power/M)
 	if(M.powernet) // If M already has a powernet
-		if(M.powernet == src)
-			return
-		else
+		if(M.powernet != src)
 			M.powernet.remove_machine(M) // Remove it
 	M.powernet = src
 	nodes[M] = M
@@ -73,8 +71,22 @@
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
 /datum/powernet/proc/reset()
+	// Generated power:
+	avail = newavail
+	newavail = 0
+
 	// See if there's a surplus of power remaining in the powernet and stores unused power in the SMES:
 	netexcess = avail - load
+
+	// Return excess power to Smeses:
+	//if(netexcess > 100) // If there was excess power last cycle
+	if(nodes && nodes.len)
+		for(var/obj/machinery/power/smes/S in nodes) // Find the SMESes in the network
+			if(S.powernet == src)
+				netexcess -= S.restore(netexcess) // And restore some of the power that was used
+			else
+				error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).") // This line is a faggot and using the normal ERROR proc breaks it
+				nodes.Remove(S)
 
 	// Count available power per APC:
 	var/num_apc = 0
@@ -87,15 +99,6 @@
 	if(num_apc)
 		perapc = avail / num_apc
 
-	if(netexcess > 100) // If there was excess power last cycle
-		if(nodes && nodes.len)
-			for(var/obj/machinery/power/smes/S in nodes) // Find the SMESes in the network
-				if(S.powernet == src)
-					S.restore() // And restore some of the power that was used
-				else
-					error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).") // This line is a faggot and using the normal ERROR proc breaks it
-					nodes.Remove(S)
-
 	// Update power consoles:
 	viewavail = round(0.8 * viewavail + 0.2 * avail)
 	viewload = round(0.8 * viewload + 0.2 * load)
@@ -103,8 +106,6 @@
 	// Reset the powernet:
 	load = delayedload
 	delayedload = 0
-	avail = newavail
-	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
 	if(avail >= 1000)

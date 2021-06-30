@@ -114,6 +114,12 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	qdel(src)
 
+/obj/structure/cable/proc/get_power_info()
+	if(powernet?.avail > 0)
+		return "<span class='alert'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>"
+
+	return "<span class='warning'>The cable is not powered.</span>"
+
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
 //   - Cable coil : merge cables
@@ -140,13 +146,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		coil.cable_join(src, user)
 
 	else if(ismultitool(W))
-
-		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")
-
-		else
-			to_chat(user, "<span class='warning'>The cable is not powered.</span>")
-
+		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	else
@@ -189,7 +189,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////////////
 
 // All power generation handled in add_avail()
-// Machines should use add_load(), surplus(), avail()
+// Machines (in proc/process()) should use add_load(), surplus(), avail()
 // Non-machines should use add_delayedload(), delayed_surplus(), newavail()
 
 /obj/structure/cable/proc/add_avail(amount)

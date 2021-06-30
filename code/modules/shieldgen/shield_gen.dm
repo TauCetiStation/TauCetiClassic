@@ -241,7 +241,7 @@
 	if(!PN)
 		powered = 0
 		return 0
-	var/surplus = max(PN.surplus(), 0)
+	var/surplus = max(PN.avail - PN.load, 0)
 	var/shieldload = min(rand(50,200), surplus)
 	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
 		powered = 0

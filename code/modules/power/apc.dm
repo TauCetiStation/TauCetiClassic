@@ -1030,7 +1030,7 @@
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
 
-	//store states to update icon if any change
+	// store states to update icon if any change:
 	var/last_lt = lighting
 	var/last_eq = equipment
 	var/last_en = environ
@@ -1039,11 +1039,11 @@
 	var/excess = surplus()
 
 	if(!avail())
-		main_status = 0
+		main_status = 0 // None
 	else if(excess < 0)
-		main_status = 1
+		main_status = 1 // Low
 	else
-		main_status = 2
+		main_status = 2 // Good
 
 	var/perapc = 0
 	if(terminal && terminal.powernet)
@@ -1053,29 +1053,26 @@
 		log_debug( "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light]")
 
 	if(cell && !shorted)
-		//var/cell_charge = cell.charge
 		var/cell_maxcharge = cell.maxcharge
 
-		// draw power from cell as before
+		// draw power from cell as before:
 
-		var/cellused = min(cell.charge, CELLRATE * lastused_total)	// clamp deduction to a max, amount left in cell
+		var/cellused = min(cell.charge, CELLRATE * lastused_total) // clamp deduction to a max, amount left in cell
 		cell.use(cellused)
 
-		if(excess > 0 || perapc > lastused_total)		// if power excess, or enough anyway, recharge the cell
-														// by the same amount just used
+		if(excess > 0 || perapc > lastused_total) // if power excess, or enough anyway, recharge the cell
+												  // by the same amount just used
 			cell.give(cellused)
-			add_load(cellused/CELLRATE)		// add the load used to recharge the cell
+			add_load(cellused/CELLRATE) // add the load used to recharge the cell
 
 
-		else		// no excess, and not enough per-apc
-
-			if( (cell.charge/CELLRATE+perapc) >= lastused_total)		// can we draw enough from cell+grid to cover last usage?
-
-				cell.give(CELLRATE * perapc)	//recharge with what we can
-				add_load(perapc)		// so draw what we can from the grid
+		else // no excess, and not enough per-apc
+			if((cell.charge/CELLRATE + perapc) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
+				cell.give(CELLRATE * perapc) // recharge with what we can
+				add_load(perapc) // so draw what we can from the grid
 				charging = 0
 
-			else if(autoflag != 0)	// not enough power available to run the last tick!
+			else if(autoflag != 0) // not enough power available to run the last tick!
 				charging = 0
 				chargecount = 0
 				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
@@ -1093,8 +1090,7 @@
 		else if(longtermpower > -10)
 			longtermpower -= 2
 
-
-		if(cell.charge >= 1250 || longtermpower > 0)              // Put most likely at the top so we don't check it last, effeciency 101
+		if(cell.charge >= 1250 || longtermpower > 0) // Put most likely at the top so we don't check it last, effeciency 101
 			if(autoflag != 3)
 				equipment = autoset(equipment, 1)
 				lighting = autoset(lighting, 1)
@@ -1103,21 +1099,21 @@
 				area.poweralert(1, src)
 				if(cell.charge >= 4000)
 					area.poweralert(1, src)
-		else if(cell.charge < 1250 && cell.charge > 750 && longtermpower < 0)                       // <30%, turn off equipment
+		else if(cell.charge < 1250 && cell.charge > 750 && longtermpower < 0) // <30%, turn off equipment
 			if(autoflag != 2)
 				equipment = autoset(equipment, 2)
 				lighting = autoset(lighting, 1)
 				environ = autoset(environ, 1)
 				area.poweralert(0, src)
 				autoflag = 2
-		else if(cell.charge < 750 && cell.charge > 10 && longtermpower < 0)        // <15%, turn off lighting & equipment
+		else if(cell.charge < 750 && cell.charge > 10 && longtermpower < 0) // <15%, turn off lighting & equipment
 			if(autoflag != 1)
 				equipment = autoset(equipment, 2)
 				lighting = autoset(lighting, 2)
 				environ = autoset(environ, 1)
 				area.poweralert(0, src)
 				autoflag = 1
-		else if(cell.charge <= 0)                                   // zero charge, turn all off
+		else if(cell.charge <= 0) // zero charge, turn all off
 			if(autoflag != 0)
 				equipment = autoset(equipment, 0)
 				lighting = autoset(lighting, 0)
@@ -1125,22 +1121,21 @@
 				area.poweralert(0, src)
 				autoflag = 0
 
-		// now trickle-charge the cell
-
+		// now trickle-charge the cell:
 		if(chargemode && charging == 1 && operating)
-			if(excess > 0)		// check to make sure we have enough to charge
+			if(excess > 0) // check to make sure we have enough to charge
 				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
 				var/ch = min(perapc*CELLRATE, (cell_maxcharge - cell.charge), (cell_maxcharge*CHARGELEVEL))
 				add_load(ch/CELLRATE) // Removes the power we're taking from the grid
 				cell.give(ch) // actually recharge the cell
 
 			else
-				charging = 0		// stop charging
+				charging = 0 // stop charging
 				chargecount = 0
 
-		// show cell as fully charged if so
-
+		// show cell as fully charged if so:
 		if(cell.charge >= cell_maxcharge)
+			cell.charge = cell_maxcharge
 			charging = 2
 
 		if(chargemode)
@@ -1168,7 +1163,6 @@
 		environ = autoset(environ, 0)
 		area.poweralert(0, src)
 		autoflag = 0
-
 
 	// update icon & area power if anything changed
 

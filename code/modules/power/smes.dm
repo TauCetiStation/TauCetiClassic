@@ -29,11 +29,7 @@
 	var/output_level = 50000 // Amount of power the SMES attempts to output
 	var/output_level_max = 0 // Cap on output level
 	var/output_used = 0 // Amount of power actually outputted. May be less than output_level if the powernet returns excess power
-
-	var/output_used_real = 0
-	var/d_charge = 0
-	var/d_charge_ret = 0
-	var/debug_v = 0
+	var/output_load = 0 // Powernet load change after returning excess power
 
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
@@ -68,6 +64,8 @@
 	if(map_max_output)
 		output_level_max = map_max_output
 
+	update_icon()
+
 	dir_loop:
 		for(var/d in cardinal)
 			var/turf/T = get_step(src, d)
@@ -80,9 +78,7 @@
 		stat |= BROKEN
 		return
 	terminal.master = src
-
 	connect_to_network()
-	update_icon()
 
 /obj/machinery/power/smes/Destroy()
 	smes_list -= src
@@ -135,13 +131,15 @@
 		for(var/obj/machinery/power/terminal/term in T)
 			if(term && term.dir == turn(dir, 180))
 				terminal = term
-				terminal.master = src
 				to_chat(user, "<span class='notice'>Terminal found.</span>")
 				break
 		if(!terminal)
+			stat |= BROKEN
 			to_chat(user, "<span class='alert'>No power source found.</span>")
 			return
+		terminal.master = src
 		stat &= ~BROKEN
+		connect_to_network()
 		update_icon()
 		return
 
@@ -249,9 +247,6 @@
 	return round(5.5 * charge / (capacity ? capacity : 5e6))
 
 /obj/machinery/power/smes/process()
-	if(debug_v)
-		message_admins("[debug_v]: smes/process, out = [outputting]")
-
 	if(stat & BROKEN)
 		return
 
@@ -259,8 +254,6 @@
 	var/last_disp = chargedisplay()
 	var/last_in = inputting
 	var/last_out = outputting
-
-	var/last_charge = charge
 
 	// Inputting, charging:
 	if(terminal && input_attempt && !power_failure) // Input is On
@@ -270,7 +263,7 @@
 			if(input_available > 0) // If there's power available, try to charge
 
 				// Charge at set rate, limited to spare capacity:
-				var/load = min(min((capacity - charge) / SMESRATE, input_level), input_available)
+				var/load = min((capacity - charge) / SMESRATE, input_level, input_available)
 
 				charge += load * SMESRATE // Increase the charge
 
@@ -307,36 +300,31 @@
 
 		else // Nothing to discharge
 			output_used = 0
-			output_used_real = 0
+			output_load = 0
 
 	else // Output is Off
 		outputting = FALSE
 		output_used = 0
-		output_used_real = 0
+		output_load = 0
 
 	// Only update icon if state changed
 	if(last_disp != chargedisplay() || last_in != inputting || last_out != outputting)
 		update_icon()
 
-	d_charge = charge - last_charge
-
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
 // returns excess power removed from powernet
 /obj/machinery/power/smes/proc/restore(netexcess)
-	if(debug_v)
-		message_admins("[debug_v]: smes/restore, out = [outputting]")
-
 	if(stat & BROKEN)
 		return 0
 
 	if(!outputting)
 		output_used = 0
-		output_used_real = 0
+		output_load = 0
 		return 0
 
 	if(netexcess < 100)
-		output_used_real = output_used
+		output_load = output_used
 		return 0
 
 	var/excess = netexcess // this was how much wasn't used on the network last ptick, minus any removed by other SMESes
@@ -350,10 +338,9 @@
 	var/clev = chargedisplay()
 
 	charge += excess * SMESRATE // restore unused power
-	d_charge_ret = excess * SMESRATE
 
 	output_used -= excess_unlim
-	output_used_real = output_used
+	output_load = output_used
 
 	if(clev != chargedisplay())
 		update_icon()
@@ -388,7 +375,7 @@
 		"outputLevel" = output_level,
 		"outputLevel_text" = DisplayPower(output_level),
 		"outputLevelMax" = output_level_max,
-		"outputUsed" = output_used_real,
+		"outputUsed" = output_load,
 	)
 	return data
 

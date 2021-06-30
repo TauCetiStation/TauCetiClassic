@@ -225,7 +225,7 @@
 		var/area/current_area = get_area(A)
 		var/obj/machinery/power/apc/B = current_area.get_apc()
 
-		if (!B)
+		if (!B || !B.terminal)
 			to_chat(U, "<span class='warning'>Power network could not be found. Aborting.</span>")
 			return
 
