@@ -684,7 +684,7 @@
 					return
 				if(global.mafia_signup[C.ckey])
 					global.mafia_signup -= C.ckey
-					to_chat(usr, "<span class='notice'>Вы больше не учавствуете в этом сеансе Мафии.</span>")
+					to_chat(usr, "<span class='notice'>Вы больше не участвуете в этом сеансе Мафии.</span>")
 					return TRUE
 				else
 					global.mafia_signup[C.ckey] = C

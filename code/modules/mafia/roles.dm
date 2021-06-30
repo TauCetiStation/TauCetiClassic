@@ -200,7 +200,7 @@
 
 /datum/mafia_role/psychologist
 	name = "Психолог"
-	desc = "ОДИН РАЗ ЗА ИГРУ вы можете посетить кого-то и расркыть их истинную роль поутру."
+	desc = "ОДИН РАЗ ЗА ИГРУ вы можете посетить кого-то и раскрыть их истинную роль поутру."
 	revealed_outfit = /datum/outfit/mafia/psychologist
 	role_type = TOWN_INVEST
 
@@ -280,7 +280,6 @@
 /datum/mafia_role/md
 	name = "Врач"
 	desc = "Каждую ночь вы можете защитить одного человека от смерти."
-	desc = "You can protect a single person each night from killing."
 	revealed_outfit = /datum/outfit/mafia/md
 	role_type = TOWN_PROTECT
 	hud_icon = "hudmedicaldoctor"
@@ -466,7 +465,6 @@
 /datum/mafia_role/hop
 	name = "Начальник Персонала"
 	desc = "Один раз за игру вы можете раскрыть себя, утраивая силу своего голоса, но потеряв возможность быть защищенным."
-	desc = "You can reveal yourself once per game, tripling your vote power but becoming unable to be protected!"
 	role_type = TOWN_SUPPORT
 	role_flags = ROLE_UNIQUE
 	hud_icon = "hudheadofpersonnel"
@@ -490,7 +488,6 @@
 /datum/mafia_role/hos
 	name = "Начальник Охраны"
 	desc = "Вы можете решить казнить кого-то ночью, раскрывая их роль. Если ваша цель будет мирным членом экипажа, вы умрете в начале следующей ночи."
-	desc = "You can decide to execute during the night, visiting someone killing, and revealing them. If they are innocent, you will die at the start of the next night."
 	role_type = TOWN_KILLING
 	role_flags = ROLE_CAN_KILL | ROLE_UNIQUE
 	revealed_outfit = /datum/outfit/mafia/hos
