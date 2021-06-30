@@ -131,12 +131,12 @@
 		if(team && R.team != team)
 			continue
 		to_chat(R.body,msg)
-	var/team_suffix = team ? "([uppertext(team)] CHAT)" : ""
+	var/team_suffix = team ? "([uppertext(team)] ЧАТ)" : ""
 	for(var/M in global.dead_mob_list)
 		var/mob/spectator = M
 		if(spectator.ckey in spectators) //was in current game, or spectatin' (won't send to living)
 			var/link = FOLLOW_LINK(M, town_center_landmark)
-			to_chat(M, "[link] MAFIA: [msg] [team_suffix]")
+			to_chat(M, "[link] МАФИЯ: [msg] [team_suffix]")
 
 /**
  * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
@@ -168,18 +168,21 @@
 					living_players += 1
 			if(living_players < all_roles.len / 2)
 				speed_up = TRUE
-				send_message("<span class='boldnotice'>With only [living_players] living players left, the game timers have been sped up.</span>")
+				var/single = "остался только [living_players] живой игрок"
+				var/double = "осталось только [living_players] живых игрока"
+				var/more = "осталось только [living_players] живых игроков"
+				send_message("<span class='boldnotice'>Поскольку [pluralize_russian(living_players, single, double, more)], игра была ускорена.</span>")
 				day_phase_period /= 2
 				voting_phase_period /= 2
 				judgement_phase_period /= 2
 				judgement_lynch_period /= 2
 				night_phase_period /= 2
 		if(turn == 1)
-			send_message("<span class='notice'><b>The selected map is [current_map.name]!</b></br>[current_map.description]</span>")
-			send_message("<b>Day [turn] started! There is no voting on the first day. Say hello to everybody!</b>")
+			send_message("<span class='notice'><b>Выбранная карта: [current_map.name]!</b></br>[current_map.description]</span>")
+			send_message("<b>День [turn] начался! В первый день голосования нет. Скажите всем привет!</b>")
 			next_phase_timer = addtimer(CALLBACK(src,.proc/check_trial, FALSE),first_day_phase_period,TIMER_STOPPABLE) //no voting period = no votes = instant night
 		else
-			send_message("<b>Day [turn] started! Voting will start in 1 minute.</b>")
+			send_message("<b>День [turn] начался! Голосование начнется через одну минуту.</b>")
 			next_phase_timer = addtimer(CALLBACK(src,.proc/start_voting_phase),day_phase_period,TIMER_STOPPABLE)
 
 	SStgui.update_uis(src)
@@ -194,7 +197,7 @@
 /datum/mafia_controller/proc/start_voting_phase()
 	phase = MAFIA_PHASE_VOTING
 	next_phase_timer = addtimer(CALLBACK(src, .proc/check_trial, TRUE),voting_phase_period,TIMER_STOPPABLE) //be verbose!
-	send_message("<b>Voting started! Vote for who you want to see on trial today.</b>")
+	send_message("<b>Голосование началось! Проголосуйте, кого вы хотите увидеть на суде сегодня.</b>")
 	SStgui.update_uis(src)
 
 /**
@@ -210,7 +213,7 @@
 /datum/mafia_controller/proc/check_trial(verbose = TRUE)
 	var/datum/mafia_role/loser = get_vote_winner("Day")//, majority_of_town = TRUE)
 	if(loser)
-		send_message("<b>[loser.body.real_name] wins the day vote, Listen to their defense and vote \"INNOCENT\" or \"GUILTY\"!</b>")
+		send_message("<b>[loser.body.real_name] набрал больше голосов в дневном голосовании, выслушайте его защитную речь и проголосуйте \"ВИНОВЕН\" или \"НЕВИНОВЕН\"!</b>")
 		//refresh the lists
 		judgement_abstain_votes = list()
 		judgement_innocent_votes = list()
@@ -226,7 +229,7 @@
 		reset_votes("Day")
 	else
 		if(verbose)
-			send_message("<b>Not enough people have voted to put someone on trial, nobody will be lynched today.</b>")
+			send_message("<b>Собрано недостаточно голосов для того чтобы представить кого-либо перед судом, никто не будет казнен сегодня.</b>")
 		if(!check_victory())
 			lockdown()
 	SStgui.update_uis(src)
@@ -241,19 +244,19 @@
 /datum/mafia_controller/proc/lynch()
 	for(var/i in judgement_innocent_votes)
 		var/datum/mafia_role/role = i
-		send_message("<span class='green'>[role.body.real_name] voted innocent.</span>")
+		send_message("<span class='green'>[role.body.real_name] выбрал НЕВИНОВЕН.</span>")
 	for(var/ii in judgement_abstain_votes)
 		var/datum/mafia_role/role = ii
-		send_message("<span class='comradio'>[role.body.real_name] abstained.</span>")
+		send_message("<span class='comradio'>[role.body.real_name] воздержался.</span>")
 	for(var/iii in judgement_guilty_votes)
 		var/datum/mafia_role/role = iii
-		send_message("<span class='red'>[role.body.real_name] voted guilty.</span>")
+		send_message("<span class='red'>[role.body.real_name] выбрал ВИНОВЕН.</span>")
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
-		send_message("<span class='red'><b>Guilty wins majority, [on_trial.body.real_name] has been lynched.</b></span>")
+		send_message("<span class='red'><b>Большинство считает что подсудимый виновен, [on_trial.body.real_name] был казнен.</b></span>")
 		on_trial.kill(src,lynch = TRUE)
 		addtimer(CALLBACK(src, .proc/send_home, on_trial),judgement_lynch_period)
 	else
-		send_message("<span class='green'><b>Innocent wins majority, [on_trial.body.real_name] has been spared.</b></span>" )
+		send_message("<span class='green'><b>Большинство считает что подсудимый невиновен, [on_trial.body.real_name] был пощажен.</b></span>" )
 		on_trial.body.forceMove(get_turf(on_trial.assigned_landmark))
 	on_trial = null
 	//day votes are already cleared, so this will skip the trial and check victory/lockdown/whatever else
@@ -323,7 +326,7 @@
 	//solo victories!
 	var/solo_end = FALSE
 	for(var/datum/mafia_role/winner in total_victors)
-		send_message("<span class='big comradio'>!! [uppertext(winner.name)] VICTORY !!</span>")
+		send_message("<span class='big comradio'>!! [uppertext(winner.name)] ПОБЕДИЛ !!</span>")
 		solo_end = TRUE
 	if(solo_end)
 		start_the_end()
@@ -331,10 +334,10 @@
 	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
-		start_the_end("<span class='big green'>!! TOWN VICTORY !!</span>")
+		start_the_end("<span class='big green'>!! ПОБЕДА ГОРОДА !!</span>")
 		return TRUE
 	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
-		start_the_end("<span class='big red'>!! MAFIA VICTORY !!</span>")
+		start_the_end("<span class='big red'>!! ПОБЕДА МАФИИ !!</span>")
 		return TRUE
 
 /**
@@ -408,7 +411,7 @@
  */
 /datum/mafia_controller/proc/start_night()
 	phase = MAFIA_PHASE_NIGHT
-	send_message("<b>Night [turn] started! Lockdown will end in 45 seconds.</b>")
+	send_message("<b>Ночь [turn] началась! Блокировка закончится через 45 секунд.</b>")
 	SEND_SIGNAL(src,COMSIG_MAFIA_SUNDOWN)
 	next_phase_timer = addtimer(CALLBACK(src, .proc/resolve_night),night_phase_period,TIMER_STOPPABLE)
 	SStgui.update_uis(src)
@@ -432,11 +435,11 @@
 	if(victim)
 		var/datum/mafia_role/killer = get_random_voter("Mafia")
 		if(!victim.can_action(src, killer, "changeling murder"))
-			send_message("<span class='danger'>[killer.body.real_name] was unable to attack [victim.body.real_name] tonight!</span>",MAFIA_TEAM_MAFIA)
+			send_message("<span class='danger'>[killer.body.real_name] не смог атаковать [victim.body.real_name] в эту ночь!</span>",MAFIA_TEAM_MAFIA)
 		else
-			send_message("<span class='danger'>[killer.body.real_name] has attacked [victim.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
+			send_message("<span class='danger'>[killer.body.real_name] атаковал [victim.body.real_name]!</span>",MAFIA_TEAM_MAFIA)
 			if(victim.kill(src,killer,lynch=FALSE))
-				to_chat(victim.body, "<span class='userdanger'>You have been killed by a Changeling!</span>")
+				to_chat(victim.body, "<span class='userdanger'>Вас убил Мутант!</span>")
 	reset_votes("Mafia")
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_KILL_PHASE)
 	SEND_SIGNAL(src,COMSIG_MAFIA_NIGHT_END)
@@ -463,9 +466,9 @@
 	else
 		votes[vote_type][voter] = target
 	if(old_vote && old_vote == target)
-		send_message("<span class='notice'>[voter.body.real_name] retracts their vote for [target.body.real_name]!</span>", team = teams)
+		send_message("<span class='notice'>[voter.body.real_name] отменяет свой голос за [target.body.real_name]!</span>", team = teams)
 	else
-		send_message("<span class='notice'>[voter.body.real_name] voted for [target.body.real_name]!</span>",team = teams)
+		send_message("<span class='notice'>[voter.body.real_name] голосует за [target.body.real_name]!</span>",team = teams)
 
 /**
  * Clears out the votes of a certain type (day votes, mafia kill votes) while leaving others untouched
@@ -677,25 +680,25 @@
 		switch(action)
 			if("mf_signup")
 				if(SSticker.current_state != GAME_STATE_PLAYING)
-					to_chat(usr, "<span class='warning'>Wait for the round to start.</span>")
+					to_chat(usr, "<span class='warning'>Дождитесь начала раунда.</span>")
 					return
 				if(global.mafia_signup[C.ckey])
 					global.mafia_signup -= C.ckey
-					to_chat(usr, "<span class='notice'>You unregister from Mafia.</span>")
+					to_chat(usr, "<span class='notice'>Вы больше не учавствуете в этом сеансе Мафии.</span>")
 					return TRUE
 				else
 					global.mafia_signup[C.ckey] = C
-					to_chat(usr, "<span class='notice'>You sign up for Mafia.</span>")
+					to_chat(usr, "<span class='notice'>Вы записались на сеанс Мафии.</span>")
 				if(phase == MAFIA_PHASE_SETUP)
 					check_signups()
 					try_autostart()
 				return TRUE
 			if("mf_spectate")
 				if(C.ckey in spectators)
-					to_chat(usr, "<span class='notice'>You will no longer get messages from the game.</span>")
+					to_chat(usr, "<span class='notice'>Вы больше не будете получать сообщения из игры.</span>")
 					spectators -= C.ckey
 				else
-					to_chat(usr, "<span class='notice'>You will now get messages from the game.</span>")
+					to_chat(usr, "<span class='notice'>Теперь вы будете получать сообщения из игры.</span>")
 					spectators += C.ckey
 				return TRUE
 	if(user_role && user_role.game_status == MAFIA_DEAD)
@@ -720,7 +723,7 @@
 					if(phase != MAFIA_PHASE_NIGHT || user_role.team != MAFIA_TEAM_MAFIA)
 						return
 					vote_for(user_role,target,"Mafia", MAFIA_TEAM_MAFIA)
-					to_chat(user_role.body,"You will vote for [target.body.real_name] for tonights killing.")
+					to_chat(user_role.body,"Вы голосуете за убийство [target.body.real_name] этой ночью.")
 				else
 					if(!user_role.targeted_actions.Find(params["atype"]))
 						return
@@ -733,21 +736,21 @@
 			if("vote_abstain")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_abstain_votes))
 					return
-				to_chat(user_role.body,"You have decided to abstain.")
+				to_chat(user_role.body,"Вы решили воздержаться от голосования.")
 				judgement_innocent_votes -= user_role
 				judgement_guilty_votes -= user_role
 				judgement_abstain_votes += user_role
 			if("vote_innocent")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_innocent_votes))
 					return
-				to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
+				to_chat(user_role.body,"Вы считаете что [on_trial.body.real_name] НЕВИНОВЕН!")
 				judgement_abstain_votes -= user_role//no fakers, and...
 				judgement_guilty_votes -= user_role//no radical centrism
 				judgement_innocent_votes += user_role
 			if("vote_guilty")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_guilty_votes))
 					return
-				to_chat(user_role.body,"Your vote on [on_trial.body.real_name] submitted as GUILTY!")
+				to_chat(user_role.body,"Вы считаете что [on_trial.body.real_name] ВИНОВЕН!")
 				judgement_abstain_votes -= user_role//no fakers, and...
 				judgement_innocent_votes -= user_role//no radical centrism
 				judgement_guilty_votes += user_role
@@ -878,8 +881,8 @@
 	//small message about not getting into this game for clarity on why they didn't get in
 	for(var/unpicked in possible_keys)
 		var/client/unpicked_client = global.directory[unpicked]
-		to_chat(unpicked_client, "<span class='danger'>Sorry, the starting mafia game has too many players and you were not picked.</span>")
-		to_chat(unpicked_client, "<span class='warning'>You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes.</span>")
+		to_chat(unpicked_client, "<span class='danger'>Простите, в текущей игре Мафии было слишком много игроков и вы не были выбраны.</span>")
+		to_chat(unpicked_client, "<span class='warning'>Вы зарегистрированы на следующий сеанс и видите сообщения из текущей игры..</span>")
 
 	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
 		setup = generate_random_setup()
