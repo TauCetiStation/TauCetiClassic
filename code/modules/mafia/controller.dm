@@ -543,11 +543,11 @@
 	. = ..()
 	switch(phase)
 		if(MAFIA_PHASE_DAY,MAFIA_PHASE_VOTING,MAFIA_PHASE_JUDGEMENT)
-			.["phase"] = "Day [turn]"
+			.["phase"] = "День [turn]"
 		if(MAFIA_PHASE_NIGHT)
-			.["phase"] = "Night [turn]"
+			.["phase"] = "Ночь [turn]"
 		else
-			.["phase"] = "No Game"
+			.["phase"] = "Нет Игры"
 	if(user.client?.holder)
 		.["admin_controls"] = TRUE //show admin buttons to start/setup/stop
 	if(phase == MAFIA_PHASE_JUDGEMENT)
@@ -568,12 +568,12 @@
 		for(var/key in global.mafia_signup + global.mafia_bad_signup)
 			var/list/lobby_member = list()
 			lobby_member["name"] = key
-			lobby_member["status"] = "Ready"
+			lobby_member["status"] = "Готов"
 			if(key in global.mafia_bad_signup)
-				lobby_member["status"] = "Disconnected"
-			lobby_member["spectating"] = "Ghost"
+				lobby_member["status"] = "Отключен"
+			lobby_member["spectating"] = "Игрок"
 			if(key in spectators)
-				lobby_member["spectating"] = "Spectator"
+				lobby_member["spectating"] = "Наблюдатель"
 			lobby_data += list(lobby_member)
 		.["lobbydata"] = lobby_data
 	var/list/player_data = list()
@@ -623,7 +623,7 @@
 				qdel(src)
 			if("next_phase")
 				var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[next_phase_timer]"]
-				if(!timer.spent)
+				if(!timer?.spent)
 					var/datum/callback/tc = timer.callBack
 					deltimer(next_phase_timer)
 					tc.InvokeAsync()

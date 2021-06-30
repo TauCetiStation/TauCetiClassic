@@ -21,13 +21,13 @@ export const MafiaPanel = (props, context) => {
   } = data;
   const playerAddedHeight = roleinfo ? players.length * 30 : 7;
   const readyGhosts = lobbydata ? lobbydata.filter(
-    player => player.status === "Ready") : null;
+    player => player.status === "Готов") : null;
   return (
     <Window
       title="Mafia"
       theme={role_theme}
       width={650} // 414 or 415 / 444 or 445
-      height={293 + playerAddedHeight}>
+      height={300 + playerAddedHeight}>
       <Window.Content scrollable={admin_controls}>
         {!roleinfo && (
           <Flex scrollable
@@ -36,7 +36,7 @@ export const MafiaPanel = (props, context) => {
             height="100%"
             grow={1}>
             <Section
-              title="Lobby"
+              title="Лобби"
               mb={1}
               buttons={
                 <LobbyDisplay
@@ -64,16 +64,16 @@ export const MafiaPanel = (props, context) => {
                           {lobbyist.name}
                         </Flex.Item>
                         <Flex.Item>
-                          STATUS:
+                          СТАТУС:
                         </Flex.Item>
                         <Flex.Item width="30%">
                           <Section>
                             <Box
                               color={
-                                lobbyist.status === "Ready" ? "green" : "red"
+                                lobbyist.status === "Готов" ? "green" : "red"
                               }
                               textAlign="center">
-                              {lobbyist.status} {lobbyist.spectating}
+                              {lobbyist.spectating} {lobbyist.status}
                             </Box>
                           </Section>
                         </Flex.Item>
@@ -98,9 +98,9 @@ export const MafiaPanel = (props, context) => {
                     icon="gavel"
                     tooltipPosition="bottom-left"
                     tooltip={multiline`
-                    Hello admin! If it is the admin controls you seek,
-                    please notice the extra scrollbar you have that players
-                    do not!`}
+                    Привет админ! Если ты ищешь админскую панель управления, пожалуйста,
+                    обрати внимание на дополнительный скроллбар, которого нет у
+                    обычных пользователей!`}
                   />
                 )} <TimeDisplay auto="down" value={timeleft} />
               </Box>
@@ -149,39 +149,39 @@ export const MafiaPanel = (props, context) => {
         </Flex>
         {!!roleinfo && (
           <Section
-            title="Judgement"
+            title="Суд"
             buttons={
               <Button
                 color="transparent"
                 icon="info"
                 tooltipPosition="left"
                 tooltip={multiline`
-                When someone is on trial, you are in charge of their fate.
-                Innocent winning means the person on trial can live to see
-                another day... and in losing they do not. You can go back
-                to abstaining with the middle button if you reconsider.`}
+                Когда кого-то судят, вы решаете его судьбу.
+                Невиновен означает, что вы против убийства человека.
+                Виновен означает, что вы за убийство человека(или нет).
+                Вы можете не голосовать, нажав на среднюю кнопку.`}
               />
             }>
             <Flex justify="space-around">
               <Button
                 icon="smile-beam"
-                content="INNOCENT!"
+                content="НЕВИНОВЕН!"
                 color="good"
                 disabled={!judgement_phase}
                 onClick={() => act("vote_innocent")} />
               {!judgement_phase && (
                 <Box>
-                  There is nobody on trial at the moment.
+                  В данный момент никто не судится.
                 </Box>
               )}
               {!!judgement_phase && (
                 <Box>
-                  It is now time to vote, vote the accused innocent or guilty!
+                  Время голосования. Проголосуй или воздержись.
                 </Box>
               )}
               <Button
                 icon="angry"
-                content="GUILTY!"
+                content="ВИНОВЕН!"
                 color="bad"
                 disabled={!judgement_phase}
                 onClick={() => act("vote_guilty")} />
@@ -189,26 +189,25 @@ export const MafiaPanel = (props, context) => {
             <Flex justify="center">
               <Button
                 icon="meh"
-                content="Abstain"
+                content="Воздержаться"
                 color="white"
                 disabled={!judgement_phase}
                 onClick={() => act("vote_abstain")} />
             </Flex>
           </Section>
         )}
-        {phase !== "No Game" && (
+        {phase !== "Нет Игры" && (
           <Flex spacing={1}>
             <Flex.Item grow={2}>
-              <Section title="Players"
+              <Section title="Игроки"
                 buttons={
                   <Button
                     color="transparent"
                     icon="info"
                     tooltip={multiline`
-                    This is the list of all the players in
-                    the game, during the day phase you may vote on them and,
-                    depending on your role, select players
-                    at certain phases to use your ability.`}
+                    Это список всех игроков.
+                    В течение игры вы сможете за них голосовать или выбирать,
+                    в зависимости от своей роли.`}
                   />
                 }>
                 <Flex
@@ -228,11 +227,11 @@ export const MafiaPanel = (props, context) => {
                             <Box color="red">{player.name}</Box>)}
                         </Flex.Item>
                         <Flex.Item>
-                          {!player.alive && (<Box color="red">DEAD</Box>)}
+                          {!player.alive && (<Box color="red">МЁРТВ</Box>)}
                         </Flex.Item>
                         <Flex.Item>
                           {player.votes !== undefined && !!player.alive
-                            && (<Fragment>Votes : {player.votes} </Fragment>)}
+                            && (<Fragment>Голоса : {player.votes} </Fragment>)}
                         </Flex.Item>
                         <Flex.Item grow={1} />
                         <Flex.Item>
@@ -261,7 +260,7 @@ export const MafiaPanel = (props, context) => {
                 direction="column"
                 height="100%">
                 <Section
-                  title="Roles and Notes"
+                  title="Роли и Заметки"
                   buttons={
                     <Fragment>
                       <Button
@@ -269,19 +268,16 @@ export const MafiaPanel = (props, context) => {
                         icon="address-book"
                         tooltipPosition="bottom-left"
                         tooltip={multiline`
-                        The top section is the roles in the game. You can
-                        press the question mark to get a quick blurb
-                        about the role itself.`}
+                        Верхний раздел - это роли в игре. Вы можете нажать на знак вопроса,
+                        чтобы узнать информацию о роли.`}
                       />
                       <Button
                         color="transparent"
                         icon="edit"
                         tooltipPosition="bottom-left"
                         tooltip={multiline`
-                        The bottom section are your notes. on some roles this
-                        will just be an empty box, but on others it records the
-                        actions of your abilities (so for example, your
-                        detective work revealing a changeling).`}
+                        Нижний раздел - ваши текущие заметки. На некоторых ролях он будет пустой,
+                        но на других туда будут записываться ваши действия(детективные расследования)`}
                       />
                     </Fragment>
                   }>
@@ -334,60 +330,56 @@ export const MafiaPanel = (props, context) => {
             {!!admin_controls && (
               <Section textAlign="center">
                 <Collapsible
-                  title="ADMIN CONTROLS"
+                  title="АДМИНСКАЯ ПАНЕЛЬ УПРАВЛЕНИЯ"
                   color="red">
                   <Button
                     icon="exclamation-triangle"
                     color="black"
                     tooltipPosition="top"
                     tooltip={multiline`
-                    Almost all of these are all built to help me debug
-                    the game (ow, debugging a 12 player game!) So they are
-                    rudamentary and prone to breaking at the drop of a hat.
-                    Make sure you know what you're doing when you press one.
-                    Also because an admin did it: do not gib/delete/dust
-                    anyone! It will runtime the game to death!`}
-                    content="A Kind, Coder Warning"
+                    Почти все это создано для того, чтобы помочь мне отладить
+                    игру (ой, отладка игры на 12 игроков!). Так что, оно все
+                    грубоватое и склонно ломаться по малейшему поводу.
+                    Убедитесь, что Вы знаете действие кнопки, когда жмёте на неё.
+                    Так же(один из администраторов это сделал), никого не гибайте и не удаляйте любыми способами!
+                    Это приведёт к рантайму, который сломает всю игру, которая сломает сервер!`}
+                    content="Предупреждение от Кодеров!"
                     onClick={() => act("next_phase")} /><br />
                   <Button
                     icon="arrow-right"
                     tooltipPosition="top"
                     tooltip={multiline`
-                    This will advance the game to the next phase
-                    (day talk > day voting, day voting > night/trial)
-                    pretty fun to just spam this and freak people out,
-                    try that roundend!`}
-                    content="Next Phase"
+                    Это продвинет игру на следующую стадию
+                    (дневное обсуждение > дневное голосование, дневное голосование > ночь)
+                    довольно забавно это нажимать и Выводить людей из себя,
+                    попробуй это в конце раунда!`}
+                    content="Следующая Стадия"
                     onClick={() => act("next_phase")} />
                   <Button
                     icon="home"
                     tooltipPosition="top"
                     tooltip={multiline`
-                    Hopefully you won't use this button
-                    often, it's a safety net just in case
-                    mafia players somehow escape (nullspace
-                    redirects to the error room then station)
-                    Either way, VERY BAD IF THAT HAPPENS as
-                    godmoded assistants will run free. Use
-                    this to recollect them then make a bug report.`}
-                    content="Send All Players Home"
+                    Надеюсь, Вы не будете нажимать эту кнопку очень часто,
+                    это нужно на тот случай, если какой-то игрок
+                    каким-то образом сбегает (nullspace, телепортации, открытая дверь).
+                    В любом случае, ОЧЕНЬ ПЛОХО ЕСЛИ ЭТО ПРОИЗОЙДЕТ.
+                    Используй это, чтобы игроков вернуть, а затем сообщи на гитхаб.`}
+                    content="Отправить Всех Домой"
                     onClick={() => act("players_home")} />
                   <Button
                     icon="sync-alt"
                     tooltipPosition="top"
                     tooltip={multiline`
-                    This immediately ends the game, and attempts to start
-                    another. Nothing will happen if another
-                    game fails to start!`}
-                    content="New Game"
+                    Это незамедлительно завершает текущую игру и попытается начать новую`}
+                    content="Новая Игра"
                     onClick={() => act("new_game")} />
                   <Button
                     icon="skull"
                     tooltipPosition="top"
                     tooltip={multiline`
-                    Deletes the datum, clears all landmarks, makes mafia
-                    as it was roundstart: nonexistant. Use this if you
-                    really mess things up. You did mess things up, didn't you.`}
+                    Удаляет датумы, очищает все landmarks, убивает всех жителей и мафию,
+                    стирает место игры. Нажми это, если действительно всё поломано.
+                    Ты ведь уже всё сломал, не так ли?`}
                     content="Nuke"
                     onClick={() => act("nuke")} />
                   <br />
@@ -395,21 +387,18 @@ export const MafiaPanel = (props, context) => {
                     icon="paint-brush"
                     tooltipPosition="top"
                     tooltip={multiline`
-                    This is the custom game creator, it is... simple.
-                    You put in roles and until you press CANCEL or FINISH
-                    it will keep letting you add more roles. Assitants
-                    on the bottom because of pathing stuff. Resets after
-                    the round finishes back to 12 player random setups.`}
-                    content="Create Custom Setup"
+                    Это позволит создать свою настройку для игры, это так... просто.
+                    Вы добавляете роль до тех пор, пока не нажмёте CANCEL или FINISH.
+                    Сбрасывается после завершения раунда, возвращая случайные настройки.`}
+                    content="Создать Свою Настройку"
                     onClick={() => act("debug_setup")} />
                   <Button
                     icon="paint-roller"
                     tooltipPosition="top"
                     tooltip={multiline`
-                    If you messed up and accidently didn't make it how
-                    you wanted, simply just press this to reset it. The game
-                    will auto reset after each game as well.`}
-                    content="Reset Custom Setup"
+                    Если вы что-то напутали, то можете сюда нажать, чтобы сбросить свою настройку.
+                    Игра автоматически сбрасывает её после каждой игры.`}
+                    content="Сбросить Свою Настройку"
                     onClick={() => act("cancel_setup")} />
                 </Collapsible>
               </Section>
@@ -435,21 +424,18 @@ const LobbyDisplay = (props, context) => {
         icon="clipboard-check"
         tooltipPosition="bottom-left"
         tooltip={multiline`
-        Signs you up for the next game. If there
-        is an ongoing one, you will be signed up
-        for the next.`}
-        content="Sign Up"
+        Регистрация в игру. Если она уже идёт, то
+        Вы войдёте в следующую.`}
+        content="Войти"
         onClick={() => act("mf_signup")} />
       <Button
         icon="eye"
         tooltipPosition="bottom-left"
         tooltip={multiline`
-        Spectates games until you turn it off.
-        Automatically enabled when you die in game,
-        because I assumed you would want to see the
-        conclusion. You won't get messages if you
-        rejoin SS13.`}
-        content="Spectate"
+        Вы будете наблюдателем, пока не Выключите это.
+        Автоматически включается, когда Вы умираете, чтобы увидеть результат игры.
+        Сообщения не будут приходить, если Вы войдёте в раунд.`}
+        content="Наблюдать"
         onClick={() => act("mf_spectate")} />
       {!!admin_controls && (
         <Button
@@ -457,9 +443,9 @@ const LobbyDisplay = (props, context) => {
           icon="gavel"
           tooltipPosition="bottom-left"
           tooltip={multiline`
-          Hello admin! If it is the admin controls you seek,
-          please notice the scrollbar you have that players
-          do not!`}
+          Привет админ! Если ты ищешь админскую панель управления, пожалуйста,
+          обрати внимание на дополнительный скроллбар, которого нет у
+          обычных пользователей!`}
         />
       )}
     </Box>
