@@ -118,7 +118,7 @@
 	belt = image(belt_icon, belt_icon_state, layer = FLY_LAYER)
 
 /obj/machinery/optable/torture_table/Destroy()
-	religion.torture_tables -= src
+	religion?.torture_tables -= src
 	return ..()
 
 /obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)

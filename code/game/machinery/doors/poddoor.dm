@@ -119,3 +119,4 @@
 	id = "mafia"
 	icon_state = "pdoor0"
 	opacity = FALSE
+	density = FALSE

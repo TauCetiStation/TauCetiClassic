@@ -87,7 +87,6 @@
 			to_chat(body,"<span class='danger'>You are a crewmember. Find out and lynch the changelings!</span>")
 		if(MAFIA_TEAM_SOLO)
 			to_chat(body,"<span class='danger'>You are not aligned to town or mafia. Accomplish your own objectives!</span>")
-	to_chat(body, "<span class='warningplain'><b>Be sure to read <a href=\"https://tgstation13.org/wiki/Mafia\">the wiki page</a> to learn more, if you have no idea what's going on.</b></span>")
 
 /datum/mafia_role/proc/reveal_role(datum/mafia_controller/game, verbose = FALSE)
 	if((role_flags & ROLE_REVEALED))
@@ -237,7 +236,7 @@
 	current_target = null
 	if(!target.can_action(game, src, "role reveal"))
 		return
-	add_note("N[game.turn] - [current_target.body.real_name] - Revealed true identity")
+	add_note("N[game.turn] - [target.body.real_name] - Revealed true identity")
 	to_chat(body,"<span class='warning'>You have revealed the true nature of the [current_target]!</span>")
 	target.reveal_role(game, verbose = TRUE)
 	can_use = FALSE
@@ -656,6 +655,8 @@
 
 /datum/mafia_role/mafia/thoughtfeeder/proc/investigate(datum/mafia_controller/game)
 	SIGNAL_HANDLER
+	if(!current_investigation)
+		return
 
 	var/datum/mafia_role/target = current_investigation
 	current_investigation = null

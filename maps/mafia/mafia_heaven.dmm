@@ -1,4 +1,78 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/structure/cult/anomaly/spacewhole,
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
+"ac" = (
+/obj/structure/cult/anomaly/timewhole,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
+"ad" = (
+/obj/structure/cult/anomaly/spacewhole,
+/obj/structure/cult/anomaly/timewhole,
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
+"ae" = (
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult/lava,
+/area/mafia)
+"af" = (
+/obj/structure/cult/anomaly/spacewhole,
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult/lava,
+/area/mafia)
+"ag" = (
+/obj/structure/cult/anomaly/spacewhole,
+/turf/simulated/floor/engine/cult/lava,
+/area/mafia)
+"ah" = (
+/obj/structure/cult/anomaly/timewhole,
+/turf/simulated/floor/engine/cult/lava,
+/area/mafia)
+"ai" = (
+/obj/structure/cult/anomaly/timewhole,
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult/lava,
+/area/mafia)
+"aj" = (
+/obj/structure/cult/anomaly/timewhole,
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
+"ak" = (
+/obj/structure/cult/anomaly/shell,
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
+"al" = (
+/obj/structure/cult/anomaly/spacewhole,
+/obj/structure/cult/anomaly/timewhole,
+/turf/simulated/floor/engine/cult/lava,
+/area/mafia)
+"am" = (
+/obj/structure/cult/anomaly/spacewhole,
+/obj/structure/cult/anomaly/timewhole,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
+"an" = (
+/obj/structure/cult/anomaly/spacewhole,
+/obj/structure/cult/anomaly/timewhole,
+/obj/structure/cult/anomaly/shell,
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
+"ao" = (
+/obj/structure/cult/anomaly/spacewhole,
+/turf/unsimulated/wall/cult/runed,
+/area/mafia)
+"ap" = (
+/obj/structure/cult/anomaly/spacewhole,
+/obj/structure/cult/anomaly/timewhole,
+/obj/structure/cult/anomaly/timewhole,
+/turf/simulated/floor/engine/cult,
+/area/mafia)
 "ei" = (
 /obj/effect/landmark/mafia,
 /obj/machinery/optable/torture_table,
@@ -16,7 +90,7 @@
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "rp" = (
-/obj/structure/cult/pylon,
+/obj/structure/cult/anomaly/spacewhole,
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "xg" = (
@@ -30,15 +104,15 @@
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "CT" = (
-/obj/structure/cult/statue,
-/turf/simulated/floor/engine/cult,
+/obj/structure/cult/anomaly/shell,
+/turf/unsimulated/wall/cult/runed,
 /area/mafia)
 "ER" = (
 /obj/structure/closet/coffin,
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "Fc" = (
-/obj/effect/anomaly/bluespace/cult_portal,
+/obj/structure/cult/anomaly/shell,
 /turf/simulated/floor/engine/cult,
 /area/mafia)
 "HU" = (
@@ -110,23 +184,23 @@ HU
 HU
 xg
 xg
-rp
 yl
+Fc
+ac
 yl
+aj
+Fc
+ak
+aj
+aj
+ac
+Fc
+ac
+ac
+am
 yl
+ab
 yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-rp
 xg
 xg
 HU
@@ -137,19 +211,19 @@ xg
 xg
 yl
 gN
-CT
+yl
+ae
+Zo
+ah
 Zo
 Zo
 Zo
+ae
 Zo
 Zo
-Zo
-Zo
-Zo
-Zo
-Zo
-Zo
-CT
+ah
+ah
+Fc
 gN
 yl
 xg
@@ -161,9 +235,9 @@ HU
 xg
 xg
 yl
-CT
+Fc
 Zo
-Zo
+ae
 xM
 xg
 xg
@@ -171,11 +245,11 @@ ks
 xg
 ks
 xg
-xg
+ao
 xM
 Zo
 Zo
-CT
+ad
 yl
 xg
 xg
@@ -185,7 +259,7 @@ HU
 HU
 xg
 xg
-yl
+Fc
 Zo
 xg
 xg
@@ -201,7 +275,7 @@ ks
 xg
 xg
 Zo
-yl
+Fc
 xg
 xg
 HU
@@ -226,16 +300,16 @@ yl
 ER
 xg
 Zo
+am
 yl
-Fc
 xg
 HU
 "}
 (8,1,1) = {"
 HU
 xg
-Fc
-Zo
+yl
+ae
 xM
 xg
 ei
@@ -259,8 +333,8 @@ HU
 (9,1,1) = {"
 HU
 xg
-yl
-Zo
+Fc
+af
 xg
 xg
 TX
@@ -276,16 +350,16 @@ yl
 TX
 xg
 xg
-Zo
-yl
+ah
+ap
 xg
 HU
 "}
 (10,1,1) = {"
 HU
 xg
-yl
-Zo
+Fc
+ag
 xg
 ER
 TX
@@ -302,15 +376,15 @@ TX
 ER
 xg
 Zo
-yl
+ac
 xg
 HU
 "}
 (11,1,1) = {"
 HU
 xg
-yl
-Zo
+rp
+ae
 ks
 ei
 yl
@@ -334,7 +408,7 @@ HU
 (12,1,1) = {"
 HU
 xg
-Fc
+ab
 Zo
 xg
 xg
@@ -351,15 +425,15 @@ hS
 TX
 xg
 xg
-Zo
-Fc
+ag
+ac
 xg
 HU
 "}
 (13,1,1) = {"
 HU
-xg
-yl
+CT
+rp
 Zo
 ks
 ei
@@ -377,14 +451,14 @@ yl
 ei
 ks
 Zo
-yl
+ac
 xg
 HU
 "}
 (14,1,1) = {"
 HU
 xg
-yl
+ac
 Zo
 xg
 ER
@@ -401,15 +475,15 @@ hS
 TX
 ER
 xg
-Zo
-yl
+ah
+am
 xg
 HU
 "}
 (15,1,1) = {"
 HU
 xg
-yl
+ad
 Zo
 xg
 xg
@@ -427,15 +501,15 @@ TX
 xg
 xg
 Zo
-yl
+ac
 xg
 HU
 "}
 (16,1,1) = {"
 HU
 xg
-yl
-Zo
+rp
+af
 xM
 xg
 ei
@@ -451,17 +525,17 @@ yl
 ei
 xg
 xM
-Zo
-yl
+al
+ac
 xg
 HU
 "}
 (17,1,1) = {"
 HU
 xg
-Fc
+yl
 Zo
-Zo
+ah
 xg
 ER
 yl
@@ -476,8 +550,8 @@ yl
 ER
 xg
 Zo
+am
 yl
-Fc
 xg
 HU
 "}
@@ -485,8 +559,8 @@ HU
 HU
 xg
 xg
-yl
-Zo
+rp
+ah
 xg
 xg
 ks
@@ -501,7 +575,7 @@ ks
 xg
 xg
 Zo
-yl
+ac
 xg
 xg
 HU
@@ -511,7 +585,7 @@ HU
 xg
 xg
 yl
-CT
+ac
 Zo
 Zo
 xM
@@ -525,7 +599,7 @@ xg
 xM
 Zo
 Zo
-CT
+yl
 yl
 xg
 xg
@@ -537,21 +611,21 @@ xg
 xg
 yl
 gN
-CT
+ab
+ai
+ah
+ah
+al
+af
+ae
 Zo
+ag
+af
+ae
 Zo
-Zo
-Zo
-Zo
-Zo
-Zo
-Zo
-Zo
-Zo
-Zo
-CT
-gN
 yl
+gN
+rp
 xg
 xg
 HU
@@ -560,23 +634,23 @@ HU
 HU
 xg
 xg
-rp
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
-yl
 yl
 yl
 yl
 rp
+rp
+ab
+yl
+am
+ac
+an
+ac
+aj
+am
+rp
+rp
+yl
+yl
 xg
 xg
 HU

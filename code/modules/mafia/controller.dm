@@ -382,7 +382,7 @@
  * After the voting and judgement phases, the game goes to night shutting the windows and beginning night with a proc.
  */
 /datum/mafia_controller/proc/lockdown()
-	toggle_night_curtains(close=TRUE)
+	toggle_night_curtains(TRUE)
 	start_night()
 
 /**
