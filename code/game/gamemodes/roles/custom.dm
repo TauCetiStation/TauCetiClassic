@@ -43,7 +43,7 @@
 		if(!new_logo)
 			return
 		if(!(new_logo in icon_states('icons/misc/logos.dmi')))
-			tgui_alert(usr, "Вы ввели некорректно название логотипа. Попробуйте снова", "Ошибка")
+			tgui_alert(usr, "Вы ввели некорректное название логотипа. Попробуйте снова", "Ошибка")
 			return
 		logo_state = new_logo
 

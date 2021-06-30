@@ -160,10 +160,10 @@
 
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
-	if(user.a_intent != INTENT_HARM)
-		return
-
 	. = ..()
+	if(!.)
+		return FALSE
+
 	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
 	var/damage = 0
 	switch(W.damtype)

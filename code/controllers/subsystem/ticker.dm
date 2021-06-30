@@ -25,6 +25,7 @@ SUBSYSTEM_DEF(ticker)
 	var/triai = 0							//Global holder for Triumvirate
 
 	var/timeLeft = 1800						//pregame timer
+	var/start_ASAP = FALSE					//the game will start as soon as possible, bypassing all pre-game nonsense
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
@@ -79,6 +80,8 @@ SUBSYSTEM_DEF(ticker)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
+			if(start_ASAP)
+				start_now()
 
 			//countdown
 			if(timeLeft < 0)

@@ -2015,9 +2015,7 @@
 	},
 /area/station/security/main)
 "adr" = (
-/obj/machinery/requests_console{
-	department = "Security";
-	departmentType = 5;
+/obj/machinery/requests_console/security{
 	pixel_x = 30
 	},
 /obj/structure/disposalpipe/segment,
@@ -4455,11 +4453,7 @@
 /area/station/maintenance/dormitory)
 "ahz" = (
 /obj/machinery/disposal,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Head of Security's Desk";
-	departmentType = 5;
-	name = "Head of Security RC";
+/obj/machinery/requests_console/hos{
 	pixel_y = 30
 	},
 /obj/structure/disposalpipe/trunk{
@@ -12959,9 +12953,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "avW" = (
-/obj/machinery/requests_console{
-	department = "Internal Affairs";
-	name = "Internal Affairs RC";
+/obj/machinery/requests_console/internal_affairs{
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -14693,10 +14685,7 @@
 	},
 /area/station/hallway/secondary/arrival)
 "azt" = (
-/obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
+/obj/machinery/requests_console/science{
 	pixel_y = -32
 	},
 /obj/machinery/light,
@@ -16115,8 +16104,7 @@
 	},
 /area/station/civilian/toilet)
 "aBQ" = (
-/obj/machinery/requests_console{
-	department = "EVA";
+/obj/machinery/requests_console/eva{
 	pixel_x = -32
 	},
 /obj/structure/table/reinforced,
@@ -16343,9 +16331,7 @@
 	},
 /area/station/civilian/holodeck/alphadeck)
 "aCg" = (
-/obj/machinery/requests_console{
-	department = "Cargo Bay";
-	departmentType = 2;
+/obj/machinery/requests_console/cargo_bay{
 	pixel_x = -30
 	},
 /obj/machinery/light{
@@ -16944,8 +16930,7 @@
 /area/station/civilian/dormitories)
 "aDr" = (
 /obj/machinery/cryopod,
-/obj/machinery/requests_console{
-	department = "Crew Quarters";
+/obj/machinery/requests_console/crew_quarters{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -24026,11 +24011,7 @@
 /area/station/rnd/hor)
 "aQv" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Research Director's Desk";
-	departmentType = 5;
-	name = "Research Director RC";
+/obj/machinery/requests_console/rd{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -24974,8 +24955,7 @@
 /area/station/hallway/secondary/exit)
 "aSg" = (
 /obj/machinery/vending/assist,
-/obj/machinery/requests_console{
-	department = "Tool Storage";
+/obj/machinery/requests_console/tool_storage{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -26406,9 +26386,7 @@
 	},
 /area/station/civilian/chapel/office)
 "aUK" = (
-/obj/machinery/requests_console{
-	department = "Chapel";
-	departmentType = 2;
+/obj/machinery/requests_console/chapel{
 	pixel_x = 30
 	},
 /obj/structure/table/woodentable,
@@ -27231,10 +27209,7 @@
 /turf/simulated/floor,
 /area/station/gateway)
 "aWe" = (
-/obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
+/obj/machinery/requests_console/science{
 	pixel_x = 30
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
@@ -27532,9 +27507,7 @@
 /area/station/security/checkpoint)
 "aWB" = (
 /obj/structure/rack,
-/obj/machinery/requests_console{
-	department = "Private Office";
-	name = "Private Office RC";
+/obj/machinery/requests_console/private_office{
 	pixel_x = -30
 	},
 /obj/item/weapon/storage/briefcase/centcomm{
@@ -33653,9 +33626,7 @@
 	},
 /area/station/hallway/primary/central)
 "bhu" = (
-/obj/machinery/requests_console{
-	department = "Virology";
-	name = "Virology Requests Console";
+/obj/machinery/requests_console/virology{
 	pixel_x = 32
 	},
 /obj/machinery/light{
@@ -34421,11 +34392,7 @@
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "biO" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge RC";
+/obj/machinery/requests_console/bridge{
 	pixel_y = -30
 	},
 /turf/simulated/floor/wood,
@@ -35182,11 +35149,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bkv" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Captain's Desk";
-	departmentType = 5;
-	name = "Captain RC";
+/obj/machinery/requests_console/captain{
 	pixel_x = -30
 	},
 /obj/structure/filingcabinet,
@@ -35960,10 +35923,7 @@
 	pixel_x = 5;
 	pixel_y = -5
 	},
-/obj/machinery/requests_console{
-	department = "Robotics";
-	departmentType = 2;
-	name = "Robotics RC";
+/obj/machinery/requests_console/robotics{
 	pixel_y = 30
 	},
 /obj/machinery/camera{
@@ -37315,9 +37275,7 @@
 /area/station/rnd/lab)
 "bol" = (
 /obj/machinery/computer/scan_consolenew,
-/obj/machinery/requests_console{
-	department = "Genetics";
-	name = "Genetics Requests Console";
+/obj/machinery/requests_console/genetics{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -40655,9 +40613,7 @@
 	},
 /area/station/medical/genetics_cloning)
 "buk" = (
-/obj/machinery/requests_console{
-	department = "Security";
-	departmentType = 5;
+/obj/machinery/requests_console/security{
 	pixel_x = 32
 	},
 /obj/machinery/computer/security{
@@ -40695,10 +40651,7 @@
 /area/station/rnd/lab)
 "buo" = (
 /obj/machinery/autolathe,
-/obj/machinery/requests_console{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
+/obj/machinery/requests_console/science{
 	pixel_x = 30
 	},
 /turf/simulated/floor{
@@ -44188,11 +44141,7 @@
 	c_tag = "Bridge Center";
 	dir = 1
 	},
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge RC";
+/obj/machinery/requests_console/bridge{
 	pixel_y = -30
 	},
 /obj/structure/disposalpipe/segment{
@@ -45312,9 +45261,7 @@
 /obj/item/weapon/grenade/chem_grenade/cleaner,
 /obj/item/weapon/grenade/chem_grenade/cleaner,
 /obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/machinery/requests_console{
-	department = "Janitorial";
-	departmentType = 1;
+/obj/machinery/requests_console/janitorial{
 	pixel_y = -29
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,
@@ -46921,8 +46868,7 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
 "bFV" = (
-/obj/machinery/requests_console{
-	department = "Tech storage";
+/obj/machinery/requests_console/tech_storage{
 	pixel_y = -32
 	},
 /turf/simulated/floor/plating,
@@ -53832,10 +53778,7 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "bWJ" = (
-/obj/machinery/requests_console{
-	department = "Atmospherics";
-	departmentType = 4;
-	name = "Atmos RC";
+/obj/machinery/requests_console/atmos{
 	pixel_x = 30
 	},
 /obj/machinery/computer/general_air_control{
@@ -54838,10 +54781,7 @@
 	},
 /area/station/medical/medbreak)
 "bZJ" = (
-/obj/machinery/requests_console{
-	department = "Engineering";
-	departmentType = 4;
-	name = "Engineering RC";
+/obj/machinery/requests_console/engineering{
 	pixel_y = 30
 	},
 /obj/structure/table,
@@ -63431,11 +63371,7 @@
 	pixel_y = 5;
 	req_access = list(57)
 	},
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Head of Personnel's Desk";
-	departmentType = 5;
-	name = "Head of Personnel RC";
+/obj/machinery/requests_console/hop{
 	pixel_y = -30
 	},
 /obj/item/weapon/book/manual/wiki/possible_threats,
@@ -65488,10 +65424,7 @@
 	},
 /area/station/medical/cmo)
 "cAY" = (
-/obj/machinery/requests_console{
-	department = "Engineering";
-	departmentType = 4;
-	name = "Engineering RC";
+/obj/machinery/requests_console/engineering{
 	pixel_x = 30
 	},
 /obj/machinery/light{
@@ -69654,10 +69587,7 @@
 /area/station/civilian/chapel/mass_driver)
 "cQb" = (
 /obj/machinery/computer/secure_data,
-/obj/machinery/requests_console{
-	department = "Forensic's Desk";
-	departmentType = 5;
-	name = "Forensic RC";
+/obj/machinery/requests_console/forensic{
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -71925,11 +71855,7 @@
 	},
 /area/station/hallway/primary/central)
 "gmb" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Chief Engineer's Desk";
-	departmentType = 3;
-	name = "Chief Engineer RC";
+/obj/machinery/requests_console/ce{
 	pixel_y = 32
 	},
 /obj/structure/cable{
@@ -77897,9 +77823,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/requests_console{
-	department = "Hydroponics";
-	name = "Hydroponics RC";
+/obj/machinery/requests_console/hydroponics{
 	pixel_x = -30
 	},
 /turf/simulated/floor{
@@ -78149,10 +78073,7 @@
 	},
 /area/station/civilian/chapel)
 "pob" = (
-/obj/machinery/requests_console{
-	department = "Detective's Desk";
-	departmentType = 5;
-	name = "Detective RC";
+/obj/machinery/requests_console/detective{
 	pixel_y = -31
 	},
 /obj/structure/cable{
@@ -78344,11 +78265,7 @@
 /obj/item/clothing/suit/space/rig/medical/cmo,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/rig/medical/cmo,
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Chief Medical Officer's Desk";
-	departmentType = 5;
-	name = "Chief Medical Officer RC";
+/obj/machinery/requests_console/cmo{
 	pixel_x = 32
 	},
 /obj/machinery/alarm{

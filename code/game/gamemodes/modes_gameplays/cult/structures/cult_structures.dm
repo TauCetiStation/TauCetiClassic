@@ -19,10 +19,9 @@
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return
-
-	..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if(length(W.hitsound))
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
@@ -211,7 +210,8 @@
 	can_unwrench = FALSE
 
 /obj/structure/cult/portal_to_station/Bumped(atom/A)
-	var/turf/target = findEventArea()
+	var/area/area = findEventArea()
+	var/turf/target = get_turf(pick(get_area_turfs(area.type, FALSE)))
 	if(ismob(A))
 		var/mob/user = A
 		playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
