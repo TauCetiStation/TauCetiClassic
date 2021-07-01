@@ -370,7 +370,7 @@ What a mess.*/
 				return
 			var/a2 = active2
 			var/t1 = sanitize(input("Add Comment:", "Secure. records", null, null)  as message)
-			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
+			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
 			if(scan)
 				add_record(scan, active2, t1)
@@ -539,7 +539,7 @@ What a mess.*/
 	updateUsrDialog()
 
 /obj/machinery/computer/secure_data/proc/is_not_allowed(mob/user)
-	return !src.authenticated || user.incapacitated()|| (!in_range(src, user) && !issilicon(usr) && !isobserver(usr))
+	return !src.authenticated || user.incapacitated()|| (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr))
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/icon/I = null
