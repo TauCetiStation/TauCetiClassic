@@ -29,7 +29,7 @@
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
 
 /obj/machinery/artifact_analyser/ui_interact(mob/user)
-	if(stat & (NOPOWER|BROKEN) || !in_range(src, user) && !issilicon(user) && !isobserver(user))
+	if(stat & (NOPOWER|BROKEN) || !Adjacent(user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
 

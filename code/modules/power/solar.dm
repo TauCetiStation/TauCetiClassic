@@ -370,7 +370,7 @@
 /obj/machinery/power/solar_control/ui_interact(mob/user)
 	if(stat & (BROKEN | NOPOWER))
 		return
-	if (!in_range(src, user) && !issilicon(user) && !isobserver(user))
+	if (!Adjacent(user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=solcon")
 		return
