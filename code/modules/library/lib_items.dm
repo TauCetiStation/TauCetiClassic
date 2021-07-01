@@ -43,7 +43,7 @@
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
 		if(choice)
-			if(usr.incapacitated() || !in_range(loc, usr))
+			if(usr.incapacitated() || !Adjacent(usr))
 				return
 			if(ishuman(user))
 				if(!user.get_active_hand())

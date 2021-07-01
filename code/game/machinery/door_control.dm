@@ -175,7 +175,7 @@
 				return
 			else if(istype(W, /obj/item/weapon/pen))
 				var/t = sanitize_safe(input(user, "Enter the name for the Door Control.", name, name), MAX_LNAME_LEN)
-				if(!in_range(src, user))
+				if(!Adjacent(user))
 					return
 				name = t
 				return
