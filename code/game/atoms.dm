@@ -737,3 +737,6 @@
 	imgs[I] = viewers
 
 	return imgs
+
+/atom/proc/update_icon()
+	return
