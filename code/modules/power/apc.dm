@@ -62,6 +62,14 @@
 /// The APCs external powernet has enough power to charge the APC.
 #define APC_HAS_POWER 2
 
+// APC cover status:
+/// The APCs cover is closed.
+#define APC_COVER_CLOSED 0
+/// The APCs cover is open.
+#define APC_COVER_OPENED 1
+/// The APCs cover is missing.
+#define APC_COVER_REMOVED 2
+
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network
@@ -88,7 +96,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/start_charge = 90 // initial cell charge %
 	var/cell_type = 5000 // 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
-	var/opened = 0 // 0=closed, 1=opened, 2=cover removed
+	var/opened = APC_COVER_CLOSED
 	var/shorted = FALSE
 	var/lighting = APC_CHANNEL_AUTO_ON
 	var/equipment = APC_CHANNEL_AUTO_ON
@@ -157,7 +165,7 @@
 	else
 		area = get_area(src)
 		area.apc = src
-		opened = 1
+		opened = APC_COVER_OPENED
 		operating = 0
 		name = "[area.name] APC"
 		stat |= MAINT
@@ -226,9 +234,9 @@
 		if(stat & BROKEN)
 			to_chat(user, "Looks broken.")
 			return
-		if(opened)
+		if(opened != APC_COVER_CLOSED)
 			if(has_electronics && terminal)
-				to_chat(user, "The cover is [opened == 2 ? "removed" : "open"] and the power cell is [ cell ? "installed" : "missing"].")
+				to_chat(user, "The cover is [opened == APC_COVER_REMOVED ? "removed" : "open"] and the power cell is [ cell ? "installed" : "missing"].")
 			else if(!has_electronics && terminal)
 				to_chat(user, "There are some wires but no any electronics.")
 			else if(has_electronics && !terminal)
@@ -341,8 +349,8 @@
 		update_state |= UPSTATE_BROKE
 	if(stat & MAINT)
 		update_state |= UPSTATE_MAINT
-	if(opened)
-		if(opened == 1)
+	if(opened != APC_COVER_CLOSED)
+		if(opened == APC_COVER_OPENED)
 			update_state |= UPSTATE_OPENED1
 	else if(emagged || malfai)
 		update_state |= UPSTATE_BLUESCREEN
@@ -404,22 +412,20 @@
 		update_icon()
 		updating_icon = 0
 
-
 //attack with an item - open/close cover, insert cell, or (un)lock interface
-
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 	add_fingerprint(user)
-	if(iscrowbar(W) && opened)
+	if(iscrowbar(W) && opened != APC_COVER_CLOSED)
 		if(has_electronics == 1)
 			if(terminal)
 				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
 				return
 			if(user.is_busy(src))
 				return
-			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
+			to_chat(user, "You are trying to remove the power control board...") // lpeters - fixed grammar issues
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
 				if((stat & BROKEN) || malfhack)
@@ -433,15 +439,15 @@
 						"<span class='warning'>[user.name] has removed the power control board from [src.name]!</span>",\
 						"You remove the power control board.")
 					new /obj/item/weapon/module/power_control(loc)
-		else if(opened != 2) //cover isn't removed
-			opened = 0
+		else if(opened != APC_COVER_REMOVED) // cover isn't removed
+			opened = APC_COVER_CLOSED
 			update_icon()
 
-	else if(iscrowbar(W) && !opened)
+	else if(iscrowbar(W) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
 			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
-				opened = TRUE
+				opened = APC_COVER_OPENED
 				locked = FALSE
 				if(cell)
 					to_chat(user, "<span class='notice'>Power cell from [src.name] is dropped</span>")
@@ -454,10 +460,10 @@
 				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened.</span>")
 				return
 			else
-				opened = TRUE
+				opened = APC_COVER_OPENED
 				update_icon()
 
-	else if(iswrench(W) && opened && (stat & BROKEN))
+	else if(iswrench(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
 		if(coverlocked)
 			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
@@ -466,7 +472,7 @@
 		else
 			to_chat(user, "<span class='warning'>APC bolts alredy removed.</span>")
 
-	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
+	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened != APC_COVER_CLOSED) // trying to put a cell inside
 		if(cell)
 			to_chat(user, "There is a power cell already installed.")
 			return
@@ -483,9 +489,9 @@
 			update_icon()
 
 	else if	(isscrewdriver(W))	// haxing
-		if(opened)
+		if(opened != APC_COVER_CLOSED)
 			if(cell)
-				to_chat(user, "<span class='warning'>Close the APC first.</span>")//Less hints more mystery!
+				to_chat(user, "<span class='warning'>Close the APC first.</span>") // Less hints more mystery!
 				return
 			else
 				if(has_electronics == 1 && terminal)
@@ -510,10 +516,10 @@
 			to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda)) // trying to unlock the interface with an ID card
 		if(emagged)
 			to_chat(user, "The interface is broken.")
-		else if(opened)
+		else if(opened != APC_COVER_CLOSED)
 			to_chat(user, "You must close the cover to swipe an ID card.")
 		else if(wiresexposed)
 			to_chat(user, "You must close the panel")
@@ -527,8 +533,8 @@
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 
-	else if(istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack))		// trying to unlock with an emag card
-		if(opened)
+	else if(istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack)) // trying to unlock with an emag card
+		if(opened != APC_COVER_CLOSED)
 			to_chat(user, "You must close the cover to swipe an ID card.")
 		else if(wiresexposed)
 			to_chat(user, "You must close the panel first")
@@ -547,7 +553,7 @@
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
 
-	else if(iscoil(W) && !terminal && opened && has_electronics != 2)
+	else if(iscoil(W) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
 		var/turf/TT = get_turf(src)
 		if(TT.intact)
 			to_chat(user, "<span class='warning'>You must remove the floor plating in front of the APC first.</span>")
@@ -572,19 +578,19 @@
 				"You add cables to the APC frame.")
 			make_terminal()
 			terminal.connect_to_network()
-	else if(iswirecutter(W) && terminal && opened && has_electronics!=2)
+	else if(iswirecutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
 		terminal.dismantle(user)
-	else if(istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics == 0 && !((stat & BROKEN) || malfhack))
+	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
 		to_chat(user, "You trying to insert the power control board into the frame...")
 		if(W.use_tool(src, user, 10, volume = 50))
 			has_electronics = 1
 			to_chat(user, "You place the power control board inside the frame.")
 			qdel(W)
-	else if(istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics == 0 && ((stat & BROKEN) || malfhack))
+	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && ((stat & BROKEN) || malfhack))
 		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
 		return
-	else if(iswelder(W) && opened && has_electronics == 0 && !terminal)
+	else if(iswelder(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.get_fuel() < 3)
@@ -592,7 +598,7 @@
 			return
 		to_chat(user, "You start welding the APC frame...")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
-			if(emagged || malfhack || (stat & BROKEN) || opened == 2)
+			if(emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
 					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
@@ -606,16 +612,16 @@
 					"<span class='warning'>You hear welding.</span>")
 			qdel(src)
 			return
-	else if(istype(W, /obj/item/apc_frame) && opened && emagged)
+	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
 		emagged = 0
-		if(opened == 2)
-			opened = 1
+		if(opened == APC_COVER_REMOVED)
+			opened = APC_COVER_OPENED
 		user.visible_message(\
 			"<span class='warning'>[user.name] has replaced the damaged APC frontal panel with a new one.</span>",\
 			"You replace the damaged APC frontal panel with a new one.")
 		qdel(W)
 		update_icon()
-	else if(istype(W, /obj/item/apc_frame) && opened && ((stat & BROKEN) || malfhack))
+	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && ((stat & BROKEN) || malfhack))
 		if(has_electronics)
 			to_chat(user, "You cannot repair this APC until you remove the electronics still inside.")
 			return
@@ -629,11 +635,11 @@
 			stat &= ~BROKEN
 			malfai = null
 			malfhack = 0
-			if(opened == 2)
-				opened = 1
+			if(opened == APC_COVER_REMOVED)
+				opened = APC_COVER_OPENED
 			update_icon()
 
-	else if(!opened && wiresexposed && is_wire_tool(W))
+	else if(opened == APC_COVER_CLOSED && wiresexposed && is_wire_tool(W))
 		if(istype(user, /mob/living/silicon))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
@@ -715,7 +721,7 @@
 				to_chat(user, "There is no charge to draw from that APC.")
 			return
 
-	if(usr == user && opened && !issilicon(user) && !isobserver(user))
+	if(usr == user && opened != APC_COVER_CLOSED && !issilicon(user) && !isobserver(user))
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
@@ -1333,6 +1339,10 @@
 #undef APC_WAIT_FOR_CHARGE
 
 #undef APC_UPDATE_ICON_COOLDOWN
+
+#undef APC_COVER_CLOSED
+#undef APC_COVER_OPENED
+#undef APC_COVER_REMOVED
 
 #undef APC_NO_POWER
 #undef APC_LOW_POWER
