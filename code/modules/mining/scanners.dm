@@ -53,8 +53,8 @@
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "mesonmininghud"
 	action_button_name = "Toggle Goggles"
-	toggleable = 1
-	sightglassesmod = "meson"
+	toggleable = TRUE
+	sightglassesmod = "sepia"
 	vision_flags = SEE_TURFS
 
 /obj/item/clothing/glasses/hud/mining/ancient
