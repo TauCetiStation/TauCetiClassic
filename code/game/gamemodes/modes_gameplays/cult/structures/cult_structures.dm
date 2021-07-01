@@ -224,7 +224,7 @@
 		user.eject_from_wall(TRUE, companions = companions)
 		for(var/mob/M in companions + user)
 			if(M.client)
-				new /obj/screen/temp/cult_teleportation(M, M)
+				new /atom/movable/screen/temp/cult_teleportation(M, M)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = user
 				H.Paralyse(5)

@@ -374,7 +374,7 @@
 			playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
 			message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
 			for(var/alert in M.alerts)
-				var/obj/screen/alert/A = M.alerts[alert]
+				var/atom/movable/screen/alert/A = M.alerts[alert]
 				if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
 					A.cut_overlays()
 					A.add_overlay(image(icon, "noose"))

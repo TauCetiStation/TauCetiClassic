@@ -974,7 +974,7 @@ Owl & Griffin toys
 			M.put_in_hands(src)
 			to_chat(usr, "<span class='notice'>You pick up the deck.</span>")
 
-		else if(istype(over_object, /obj/screen))
+		else if(istype(over_object, /atom/movable/screen))
 			switch(over_object.name)
 				if("r_hand")
 					if(!M.unEquip(src))
