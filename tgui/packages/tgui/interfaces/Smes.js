@@ -40,6 +40,7 @@ export const Smes = (props, context) => {
       <Window.Content>
         <Section title="Stored Energy">
           <ProgressBar
+            fractionDigits={1}
             value={capacityPercent * 0.01}
             ranges={{
               good: [0.5, Infinity],

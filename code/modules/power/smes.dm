@@ -347,6 +347,9 @@
 
 	return excess
 
+
+// UI stuff ////////////////////
+
 /obj/machinery/power/smes/is_operational_topic()
 	return !(stat & (BROKEN | EMPED)) && !power_failure
 
@@ -390,6 +393,8 @@
 /obj/machinery/power/smes/tgui_act(action, params)
 	. = ..()
 	if(.)
+		return
+	if (!is_operational_topic())
 		return
 
 	for(var/area/A in all_areas)
@@ -442,6 +447,9 @@
 			if(.)
 				output_level = clamp(target, 0, output_level_max)
 				log_smes(usr)
+
+////////////////////////////////
+
 
 /obj/machinery/power/smes/proc/explode()
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()

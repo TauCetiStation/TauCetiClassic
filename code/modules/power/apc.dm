@@ -141,11 +141,6 @@
 	var/static/list/status_overlays_environ
 
 
-/obj/machinery/power/apc/updateDialog()
-	if(stat & (BROKEN|MAINT))
-		return
-	..()
-
 /obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)
 	. = ..()
 	apc_list += src
@@ -412,7 +407,9 @@
 		update_icon()
 		updating_icon = 0
 
+
 //attack with an item - open/close cover, insert cell, or (un)lock interface
+
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
 	if(issilicon(user) && get_dist(src,user) > 1)
@@ -578,8 +575,10 @@
 				"You add cables to the APC frame.")
 			make_terminal()
 			terminal.connect_to_network()
+
 	else if(iswirecutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
 		terminal.dismantle(user)
+
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
 		to_chat(user, "You trying to insert the power control board into the frame...")
@@ -587,9 +586,11 @@
 			has_electronics = 1
 			to_chat(user, "You place the power control board inside the frame.")
 			qdel(W)
+
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && ((stat & BROKEN) || malfhack))
 		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
 		return
+
 	else if(iswelder(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
@@ -612,6 +613,7 @@
 					"<span class='warning'>You hear welding.</span>")
 			qdel(src)
 			return
+
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
 		emagged = 0
 		if(opened == APC_COVER_REMOVED)
@@ -621,6 +623,7 @@
 			"You replace the damaged APC frontal panel with a new one.")
 		qdel(W)
 		update_icon()
+
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && ((stat & BROKEN) || malfhack))
 		if(has_electronics)
 			to_chat(user, "You cannot repair this APC until you remove the electronics still inside.")
@@ -647,6 +650,7 @@
 			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 			"You hear bang")
 		return wires.interact(user)
+
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -729,7 +733,6 @@
 
 			src.cell = null
 			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
-			//user << "You remove the power cell."
 			charging = APC_NOT_CHARGING
 			update_icon()
 		return
@@ -754,74 +757,6 @@
 	else
 		return 0 // 0 = User is not a Malf AI
 
-/obj/machinery/power/apc/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	if(!user)
-		return
-
-	var/list/data = list(
-		"locked" = locked,
-		"isOperating" = operating,
-		"externalPower" = main_status,
-		"powerCellStatus" = cell ? cell.percent() : null,
-		"chargeMode" = chargemode,
-		"chargingStatus" = charging,
-		"totalLoad" = round(lastused_equip) + lastused_light + round(lastused_environ),
-		"coverLocked" = coverlocked,
-		"siliconUser" = issilicon(user) || isobserver(user),
-		"malfStatus" = get_malf_status(user),
-		"nightshift_lights" = nightshift_lights,
-		"nightshift_preset" = nightshift_preset,
-
-		"powerChannels" = list(
-			list(
-				"title" = "Equipment",
-				"powerLoad" = round(lastused_equip),
-				"status" = equipment,
-				"topicParams" = list(
-					"auto" = list("eqp" = 3),
-					"on"   = list("eqp" = 2),
-					"off"  = list("eqp" = 1)
-				)
-			),
-			list(
-				"title" = "Lighting",
-				"powerLoad" = lastused_light,
-				"status" = lighting,
-				"topicParams" = list(
-					"auto" = list("lgt" = 3),
-					"on"   = list("lgt" = 2),
-					"off"  = list("lgt" = 1)
-				)
-			),
-			list(
-				"title" = "Environment",
-				"powerLoad" = round(lastused_environ),
-				"status" = environ,
-				"topicParams" = list(
-					"auto" = list("env" = 3),
-					"on"   = list("env" = 2),
-					"off"  = list("env" = 1)
-				)
-			)
-		)
-	)
-
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
-	if(!ui)
-		// the ui does not exist, so we'll create a new() one
-        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "apc.tmpl", "[area.name] - APC", 520, data["siliconUser"] ? 505 : 460)
-		// when the ui is first opened this is the data it will use
-		ui.set_initial_data(data)
-		// open the new ui window
-		ui.open()
-		// auto update every Master Controller tick
-		ui.set_auto_update(1)
-
-/obj/machinery/power/apc/proc/report()
-	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell ? cell.percent() : "N/C"] ([charging])"
-
 /obj/machinery/power/apc/proc/update()
 	if(operating && !shorted)
 		area.power_light = (lighting >= APC_CHANNEL_ON)
@@ -838,139 +773,211 @@
 //			world << "[area.power_equip]"
 	area.power_change()
 
-/obj/machinery/power/apc/proc/can_use(mob/user, loud = 0) //used by attack_hand() and Topic()
-	if(IsAdminGhost(user))
-		return 1
-	if(!user.client)
-		return 0
-	autoflag = 5
-	if(issilicon(user))
-		var/mob/living/silicon/ai/AI = user
-		var/mob/living/silicon/robot/robot = user
-		if(                                                              \
-		    src.aidisabled ||                                            \
-		    malfhack && istype(malfai) &&                                \
-		    (                                                            \
-		        (istype(AI) && (malfai!=AI && malfai != AI.parent)) ||   \
-		        (istype(robot) && (robot in malfai.connected_robots))    \
-		    )                                                            \
-		)
-			if(!loud)
-				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
-				nanomanager.close_user_uis(user, src)
 
-			return 0
-	else
-		if(locked)
-			return FALSE
-		if((!in_range(src, user) || !istype(src.loc, /turf)))
-			nanomanager.close_user_uis(user, src)
-
-			return 0
-
-	return 1
+// UI stuff ////////////////////
 
 /obj/machinery/power/apc/is_operational_topic()
 	return !(stat & (BROKEN|MAINT|EMPED))
 
-/obj/machinery/power/apc/Topic(href, href_list, usingUI = TRUE)
-	. = ..(href, href_list)
-	if(!.)
+/obj/machinery/power/apc/tgui_state(mob/user)
+	return global.machinery_state
+
+/obj/machinery/power/apc/ui_interact(mob/user)
+	if (!is_operational_topic())
 		return
+	tgui_interact(user)
 
-	if(!can_use(usr, 1))
-		return
+/obj/machinery/power/apc/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Apc", name)
+		ui.open()
 
-	else if(href_list["lock"])
-		coverlocked = !coverlocked
+/obj/machinery/power/apc/tgui_data(mob/user)
+	var/list/data = list(
+		"locked" = locked,
+		"isOperating" = operating,
+		"externalPower" = main_status,
+		"powerCellStatus" = cell ? cell.percent() : null,
+		"chargeMode" = chargemode,
+		"chargingStatus" = charging,
+		"totalLoad" = DisplayPower(lastused_total),
+		"coverLocked" = coverlocked,
+		"siliconUser" = issilicon(user) || isobserver(user),
+		"malfStatus" = get_malf_status(user),
+		"nightshiftLights" = nightshift_lights,
+		"nightshiftPreset" = nightshift_preset,
 
-	else if(href_list["toggle_nightshift"])
-		toggle_nightshift_lights()
+		"powerChannels" = list(
+			list(
+				"title" = "Equipment",
+				"powerLoad" = DisplayPower(lastused_equip),
+				"status" = equipment,
+				"topicParams" = list(
+					"auto" = list("eqp" = 3),
+					"on"   = list("eqp" = 2),
+					"off"  = list("eqp" = 1)
+				)
+			),
+			list(
+				"title" = "Lighting",
+				"powerLoad" = DisplayPower(lastused_light),
+				"status" = lighting,
+				"topicParams" = list(
+					"auto" = list("lgt" = 3),
+					"on"   = list("lgt" = 2),
+					"off"  = list("lgt" = 1)
+				)
+			),
+			list(
+				"title" = "Environment",
+				"powerLoad" = DisplayPower(lastused_environ),
+				"status" = environ,
+				"topicParams" = list(
+					"auto" = list("env" = 3),
+					"on"   = list("env" = 2),
+					"off"  = list("env" = 1)
+				)
+			)
+		)
+	)
+	return data
 
-	else if(href_list["change_nightshift"])
-		var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
-		if(new_preset && lighting_presets[new_preset])
-			set_nightshift_preset(new_preset)
+/obj/machinery/power/apc/proc/report()
+	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell ? cell.percent() : "N/C"] ([charging])"
 
-	else if(href_list["breaker"])
-		operating = !operating
-		if(malfai)
-			var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
-			if(GM && is_station_level(z))
-				operating ? GM.apcs++ : GM.apcs--
-
-		update()
-		update_icon()
-
-	else if(href_list["cmode"])
-		chargemode = !chargemode
-		if(!chargemode)
-			charging = APC_NOT_CHARGING
-			update_icon()
-
-	else if(href_list["eqp"])
-		var/val = text2num(href_list["eqp"])
-
-		equipment = setsubsystem(val)
-
-		update_icon()
-		update()
-
-	else if(href_list["lgt"])
-		var/val = text2num(href_list["lgt"])
-
-		lighting = setsubsystem(val)
-
-		update_icon()
-		update()
-	else if(href_list["env"])
-		var/val = text2num(href_list["env"])
-
-		environ = setsubsystem(val)
-
-		update_icon()
-		update()
-	else if( href_list["close"] )
-		nanomanager.close_user_uis(usr, src)
+/obj/machinery/power/apc/proc/can_use(mob/user, loud = FALSE, act = "")
+	if(IsAdminGhost(user))
+		return TRUE
+	if(!user.client)
 		return FALSE
 
-	else if(href_list["overload"])
-		if( (issilicon(usr) && !src.aidisabled) || isobserver(usr) )
-			overload_lighting()
+	autoflag = 5
 
-	else if(href_list["malfhack"])
-		var/mob/living/silicon/ai/malfai = usr
-		if( issilicon(usr) && !src.aidisabled )
-			if(malfai.malfhacking)
-				to_chat(malfai, "You are already hacking an APC.")
-				return FALSE
-			to_chat(malfai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
-			malfai.malfhack = src
-			malfai.malfhacking = 1
-			sleep(600)
-			if(src)
-				if(!src.aidisabled)
-					malfai.malfhack = null
-					malfai.malfhacking = 0
-					var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
-					if(GM && is_station_level(z))
-						GM.apcs++
-					if(malfai.parent)
-						src.malfai = malfai.parent
-					else
-						src.malfai = usr
-					to_chat(malfai, "Hack complete. The APC is now under your exclusive control.")
+	if(issilicon(user))
+		var/mob/living/silicon/ai/AI = user
+		var/mob/living/silicon/robot/robot = user
+		if(                                                                \
+		    src.aidisabled ||                                              \
+		    malfhack && istype(malfai) &&                                  \
+		    (                                                              \
+		        (istype(AI) && (malfai != AI && malfai != AI.parent)) ||   \
+		        (istype(robot) && (robot in malfai.connected_robots))      \
+		    )                                                              \
+		) // No AI control or hacked by other MalfAI
+			if(!loud)
+				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
+			return FALSE
+
+	else // Human
+		if(locked && act != "toggle_nightshift" && act != "change_nightshift")
+			return FALSE
+
+	return TRUE
+
+/obj/machinery/power/apc/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if (!is_operational_topic())
+		return
+	if(!can_use(user = usr, loud = TRUE, act = action))
+		return
+
+	switch(action)
+		if("lock")
+			if(issilicon(usr) && !src.aidisabled)
+				if(!is_operational_topic())
+					to_chat(usr, "<span class='warning'>The APC does not respond to the command!</span>")
+				else
+					locked = !locked
 					update_icon()
+					. = TRUE
+		if("cover")
+			coverlocked = !coverlocked
+			. = TRUE
+		if("breaker")
+			toggle_breaker(usr)
+			. = TRUE
+		if("toggle_nightshift")
+			toggle_nightshift_lights()
+			. = TRUE
+		if("change_nightshift")
+			var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
+			if(new_preset && lighting_presets[new_preset])
+				set_nightshift_preset(new_preset)
+			. = TRUE
+		if("charge")
+			chargemode = !chargemode
+			if(!chargemode)
+				charging = APC_NOT_CHARGING
+				update_icon()
+			. = TRUE
+		if("channel")
+			if(params["eqp"])
+				equipment = setsubsystem(text2num(params["eqp"]))
+				update_icon()
+				update()
+			else if(params["lgt"])
+				lighting = setsubsystem(text2num(params["lgt"]))
+				update_icon()
+				update()
+			else if(params["env"])
+				environ = setsubsystem(text2num(params["env"]))
+				update_icon()
+				update()
+			. = TRUE
+		if("overload")
+			if((issilicon(usr) && !src.aidisabled) || isobserver(usr))
+				overload_lighting()
+				. = TRUE
+		if("hack")
+			if(issilicon(usr) && !src.aidisabled)
+				malfhack(usr)
+				. = TRUE
+		/*
+		if("occupy")
+			if(issilicon(usr) && !src.aidisabled)
+				malfoccupy(usr)
+				. = TRUE
+		if("deoccupy")
+			if(issilicon(usr) && !src.aidisabled)
+				malfvacate()
+				. = TRUE
+		*/
 
-	/*else if(href_list["occupyapc"])
-		malfoccupy(usr)
+/obj/machinery/power/apc/proc/toggle_breaker(mob/user)
+	operating = !operating
+	add_hiddenprint(user)
+	if(malfai)
+		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+		if(GM && is_station_level(z))
+			operating ? GM.apcs++ : GM.apcs--
+	update()
+	update_icon()
 
-
-	else if(href_list["deoccupyapc"])
-		malfvacate()*/
-
-	if(usingUI)
-		updateDialog()
+/obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malfai)
+	if(malfai.malfhacking)
+		to_chat(malfai, "<span class='warning'>You are already hacking an APC.</span>")
+		return FALSE
+	to_chat(malfai, "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process.")
+	malfai.malfhack = src
+	malfai.malfhacking = 1
+	//TODO: Change to addtimer()
+	sleep(600)
+	if(src)
+		if(!src.aidisabled)
+			malfai.malfhack = null
+			malfai.malfhacking = 0
+			var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+			if(GM && is_station_level(z))
+				GM.apcs++
+			if(malfai.parent)
+				src.malfai = malfai.parent
+			else
+				src.malfai = usr
+			to_chat(malfai, "Hack complete. The APC is now under your exclusive control.")
+			update_icon()
 
 /*/obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
@@ -978,11 +985,11 @@
 	if(istype(malf.loc, /obj/machinery/power/apc)) // Already in an APC
 		to_chat(malf, "<span class='warning'>You must evacuate your current apc first.</span>")
 		return
-	if(src.z != ZLEVEL_STATION)
+	if(is_station_level(z))
 		return
-	src.occupier = new /mob/living/silicon/ai(src,malf.laws,null,1)
+	src.occupier = new /mob/living/silicon/ai(src, malf.laws, null, 1)
 	src.occupier.adjustOxyLoss(malf.getOxyLoss())
-	if(!findtext(src.occupier.name,"APC Copy"))
+	if(!findtext(src.occupier.name, "APC Copy"))
 		src.occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
 		src.occupier.parent = malf.parent
@@ -1012,14 +1019,15 @@
 			src.occupier.death()
 			src.occupier.gib()*/
 
+////////////////////////////////
+
 
 /obj/machinery/power/apc/proc/ion_act()
-	//intended to be exactly the same as an AI malf attack
+	// intended to be exactly the same as an AI malf attack
 	if(!src.malfhack && is_station_level(z))
 		if(prob(3))
 			src.locked = 1
 			if(src.cell.charge > 0)
-//				world << "<span class='warning'>blew APC in [src.loc.loc]</span>"
 				src.cell.charge = 0
 				cell.corrupt()
 				src.malfhack = 1
@@ -1073,17 +1081,15 @@
 	var/last_en = environ
 	var/last_ch = charging
 
-	var/excess = surplus()
+	var/p_avail = terminal ? terminal.avail() : 0
+	var/excess = terminal ? terminal.surplus() : 0
 
-	if(!avail())
+	if(!p_avail)
 		main_status = APC_NO_POWER
 	else if(excess < 0)
 		main_status = APC_LOW_POWER
 	else
 		main_status = APC_HAS_POWER
-
-	if(debug)
-		log_debug( "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light]")
 
 	if(cell && !shorted)
 		var/cell_maxcharge = cell.maxcharge
@@ -1095,12 +1101,13 @@
 
 		if(excess > 0) // If power excess, recharge the cell by the same amount just used
 			cell_returned = cell.give(min(CELLRATE * excess, cell_used))
-			add_load(cell_returned / CELLRATE)
-			excess = surplus()
+			terminal?.add_load(cell_returned / CELLRATE)
 
 		if(round(cell_returned) < round(cell_used)) // Returned less power than used from cell
 			charging = APC_NOT_CHARGING
 			chargecount = 0
+			if(p_avail)
+				main_status = APC_LOW_POWER
 
 		// Allow the APC to operate as normal if the cell can charge:
 		if(charging != APC_NOT_CHARGING)
@@ -1153,7 +1160,7 @@
 						charging = APC_FULLY_CHARGED
 					else if(excess > 0) // Trying to charge with available power
 						var/cell_ch = cell.give(min(excess * CELLRATE, cell_maxcharge * CHARGELEVEL))
-						add_load(cell_ch / CELLRATE)
+						terminal?.add_load(cell_ch / CELLRATE)
 					else // No power to charge
 						charging = APC_NOT_CHARGING
 						chargecount = 0
@@ -1180,6 +1187,9 @@
 		environ = autoset(environ, AUTOSET_FORCE_OFF)
 		area.poweralert(TRUE, src)
 		autoflag = 0
+
+	if(debug)
+		log_debug( "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light]")
 
 	// Update icon & area power if anything changed:
 	if(last_lt != lighting || last_eq != equipment || last_en != environ)
@@ -1271,7 +1281,7 @@
 /obj/machinery/power/apc/proc/overload_lighting(skip_sound_and_sparks = 0)
 	if(/* !get_connection() || */ !operating || shorted)
 		return
-	if( cell && cell.charge>=20)
+	if(cell && cell.charge >= 20)
 		cell.use(20);
 		break_lights(skip_sound_and_sparks)
 
