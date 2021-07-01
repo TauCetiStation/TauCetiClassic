@@ -7,11 +7,10 @@
 	force = 10
 	throwforce = 7
 	w_class = ITEM_SIZE_NORMAL
-	var/charges = 10
+	var/charges = 15
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
-
 	sweep_step = 2
 
 	origin_tech = "combat=2"
@@ -87,7 +86,12 @@
 		//H.apply_effect(10, STUN, 0)
 		//H.apply_effect(10, WEAKEN, 0)
 		//H.apply_effect(10, STUTTER, 0)
-		H.apply_effect(agony,AGONY,0)
+		var/calc_power = 100
+		if(ishuman(M))
+			var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+			calc_power = agony * H.get_siemens_coefficient_organ(BP)
+
+		H.apply_effect(calc_power, AGONY)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
@@ -110,14 +114,16 @@
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
-	if (prob(50))
-		if(istype(hit_atom, /mob/living))
+	if(prob(50))
+		if(iscarbon(hit_atom))
 			var/mob/living/carbon/human/H = hit_atom
 			if(status)
-				//H.apply_effect(10, STUN, 0)
-				//H.apply_effect(10, WEAKEN, 0)
-				//H.apply_effect(10, STUTTER, 0)
-				H.apply_effect(agony,AGONY,0)
+				var/calc_power = 100
+				if(ishuman(H))
+					var/obj/item/organ/external/BP = H.get_bodypart(throwingdatum.thrower.get_targetzone())
+					calc_power = agony * H.get_siemens_coefficient_organ(BP)
+
+				H.apply_effect(calc_power, AGONY, 0)
 				charges--
 
 				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)

@@ -467,7 +467,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = target
 		loc = null

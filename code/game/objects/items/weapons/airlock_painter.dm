@@ -96,7 +96,7 @@
 	if(!istype(target, /obj/machinery/atmospherics/pipe) || \
 		istype(target, /obj/machinery/atmospherics/components/unary/tank) || \
 		istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
-		!in_range(user, target))
+		!user.Adjacent(target))
 	{
 		return
 	}
