@@ -463,7 +463,7 @@
 
 /mob/Topic(href, href_list)
 	if (href_list["refresh"])
-		if(machine && in_range(src, usr))
+		if(machine && in_range(src, usr)) // ? i'm sure changing this to Adjacent() will bug something
 			show_inv(machine)
 
 	if(href_list["flavor_more"])

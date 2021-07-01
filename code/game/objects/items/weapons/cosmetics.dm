@@ -387,7 +387,7 @@
 
 	if(!barber || !barbertarget || !selectedhairstyle)
 		return
-	if(!in_range(barbertarget, barber) || barber.get_active_hand() != src)
+	if(!barbertarget.Adjacent(barber) || barber.get_active_hand() != src)
 		return
 
 	if(isfacehair)

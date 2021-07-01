@@ -1600,7 +1600,8 @@
 		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
 	if (shock_stage >= 60)
-		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
+		if(shock_stage == 60)
+			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)

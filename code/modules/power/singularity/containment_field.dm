@@ -28,7 +28,7 @@
 	FG.turn_off()
 
 /obj/machinery/containment_field/attack_hand(mob/user)
-	if(in_range(src, user) && !isobserver(user))
+	if(Adjacent(user) && !isobserver(user))
 		shock(user)
 
 /obj/machinery/containment_field/blob_act()
