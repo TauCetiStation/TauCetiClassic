@@ -32,13 +32,14 @@ var/power_fail_event = FALSE
 		var/area/current_area = get_area(S)
 		if(current_area.type in skipped_areas || !is_station_level(S.z))
 			continue
-		S.charge = 0
+		S.charge = rand(S.charge / 100, S.charge)
 		S.power_failure = TRUE
 		S.power_change()
 
 	for(var/obj/machinery/power/apc/C in apc_list)
 		if(C.cell && is_station_level(C.z))
-			C.cell.charge = 0
+			C.cell.charge = rand(C.cell.charge / 100, C.cell.charge)
+			C.shorted = TRUE
 
 /proc/play_ambience()
 	for(var/mob/M in player_list)
@@ -51,10 +52,11 @@ var/power_fail_event = FALSE
 	var/datum/announcement/centcomm/grid_on/announcement = new
 	announcement.play()
 
-	if(badminery)
-		for(var/obj/machinery/power/apc/C in apc_list)
-			if(C.cell && is_station_level(C.z))
+	for(var/obj/machinery/power/apc/C in apc_list)
+		if(C.cell && is_station_level(C.z))
+			if(badminery)
 				C.cell.charge = C.cell.maxcharge
+			C.shorted = FALSE
 
 	for(var/obj/machinery/power/smes/S in smes_list)
 		var/area/current_area = get_area(S)
@@ -70,6 +72,11 @@ var/power_fail_event = FALSE
 	if(announce)
 		var/datum/announcement/centcomm/grid_on/announcement = new
 		announcement.play()
+
+	for(var/obj/machinery/power/apc/C in apc_list)
+		if(C.cell && is_station_level(C.z))
+			C.cell.charge = C.cell.maxcharge
+			C.shorted = FALSE
 
 	for(var/obj/machinery/power/smes/S in smes_list)
 		if(!is_station_level(S.z))

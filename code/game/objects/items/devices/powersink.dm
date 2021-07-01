@@ -1,5 +1,13 @@
 // Powersink - used to drain station power
 
+// Drain acceleration, +15 kW per power tick:
+#define POWERSINK_RATE 15000
+// Max drain acceleration, 10 MW per power tick:
+#define POWERSINK_RATE_MAX 10000000 
+// Drain form APC's cells, ~25 kW per power tick:
+#define POWERSINK_APC_DRAIN 50
+
+
 /obj/item/device/powersink
 	desc = "A nulling power sink which drains energy from electrical systems."
 	name = "power sink"
@@ -12,10 +20,10 @@
 	throw_range = 2
 	m_amt = 750
 	origin_tech = "powerstorage=3;syndicate=5"
-	var/drain_rate = 600000		// amount of power to drain per tick
-	var/power_drained = 0 		// has drained this much power
-	var/max_power = 1e8		// maximum power that can be drained before exploding
-	var/mode = 0		// 0 = off, 1=clamped (off), 2=operating
+	var/drain_rate = 0 // amount of power to drain per tick
+	var/power_drained = 0 // has drained this much power
+	var/max_power = 4e8 // maximum power that can be drained before exploding
+	var/mode = 0 // 0 = off, 1 = clamped (off), 2 = operating
 
 
 	var/obj/structure/cable/attached		// the attached cable
@@ -76,6 +84,7 @@
 				if(M == user) continue
 				to_chat(M, "[user] activates the power sink!")
 			mode = 2
+			drain_rate = 0
 			icon_state = "powersink1"
 			START_PROCESSING(SSobj, src)
 
@@ -93,24 +102,23 @@
 	if(attached)
 		var/datum/powernet/PN = attached.get_powernet()
 		if(PN)
-			set_light(12)
+			set_light(7 + round(10 * power_drained / max_power))
 
-			// found a powernet, so drain up to max power from it
-
-			var/drained = min(drain_rate, attached.newavail())
+			// Found a powernet, so drain up to max power from it:
+			drain_rate = min(drain_rate + POWERSINK_RATE, POWERSINK_RATE_MAX)
+			var/available = attached.newavail()
+			var/drained = min(drain_rate, available)
 			attached.add_delayedload(drained)
 			power_drained += drained
 
-			// if tried to drain more than available on powernet
-			// now look for APCs and drain their cells
-			if(drained < drain_rate)
+			// If tried to drain more than available on powernet
+			// now look for APCs and drain their cells:
+			if(drained >= available)
 				for(var/obj/machinery/power/terminal/T in PN.nodes)
 					if(istype(T.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/A = T.master
 						if(A.operating && A.cell)
-							A.cell.charge = max(0, A.cell.charge - 50)
-							power_drained += 50
-
+							power_drained += A.cell.use(POWERSINK_APC_DRAIN) / CELLRATE
 
 		if(power_drained > max_power * 0.95)
 			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
@@ -118,3 +126,8 @@
 			STOP_PROCESSING(SSobj, src)
 			explosion(src.loc, 3,6,9,12)
 			qdel(src)
+
+
+#undef POWERSINK_APC_DRAIN
+#undef POWERSINK_RATE_MAX
+#undef POWERSINK_RATE

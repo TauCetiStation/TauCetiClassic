@@ -26,6 +26,42 @@
 
 #define APC_UPDATE_ICON_COOLDOWN 100 // 10 seconds
 
+#define APC_WAIT_FOR_CHARGE 10 // power ticks
+
+// APC charging status:
+/// The APC is not charging.
+#define APC_NOT_CHARGING 0
+/// The APC is charging.
+#define APC_CHARGING 1
+/// The APC is fully charged.
+#define APC_FULLY_CHARGED 2
+
+// APC autoset enums:
+/// The APC turns automated and manual power channels off.
+#define AUTOSET_FORCE_OFF 0
+/// The APC turns automated power channels off.
+#define AUTOSET_OFF 2
+/// The APC turns automated power channels on.
+#define AUTOSET_ON 1
+
+// APC channel status:
+/// The APCs power channel is manually set off.
+#define APC_CHANNEL_OFF 0
+/// The APCs power channel is automatically off.
+#define APC_CHANNEL_AUTO_OFF 1
+/// The APCs power channel is manually set on.
+#define APC_CHANNEL_ON 2
+/// The APCs power channel is automatically on.
+#define APC_CHANNEL_AUTO_ON 3
+
+// External power status:
+/// The APC either isn't attached to a powernet or there is no power on the external powernet.
+#define APC_NO_POWER 0
+/// The APCs external powernet does not have enough power to charge the APC.
+#define APC_LOW_POWER 1
+/// The APCs external powernet has enough power to charge the APC.
+#define APC_HAS_POWER 2
+
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
 // one per area, needs wire conection to power network
@@ -50,15 +86,15 @@
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/start_charge = 90				// initial cell charge %
-	var/cell_type = 5000				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
-	var/opened = 0 //0=closed, 1=opened, 2=cover removed
-	var/shorted = 0
-	var/lighting = 3
-	var/equipment = 3
-	var/environ = 3
+	var/start_charge = 90 // initial cell charge %
+	var/cell_type = 5000 // 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
+	var/opened = 0 // 0=closed, 1=opened, 2=cover removed
+	var/shorted = FALSE
+	var/lighting = APC_CHANNEL_AUTO_ON
+	var/equipment = APC_CHANNEL_AUTO_ON
+	var/environ = APC_CHANNEL_AUTO_ON
 	var/operating = 1
-	var/charging = 0
+	var/charging = APC_NOT_CHARGING
 	var/chargemode = 1
 	var/chargecount = 0
 	var/locked = 1
@@ -72,13 +108,13 @@
 	var/lastused_total = 0
 	var/main_status = 0
 	var/wiresexposed = 0
-	powernet = 0		// set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
-	var/malfhack = 0 //New var for my changes to AI malf. --NeoFite
-	var/mob/living/silicon/ai/malfai = null //See above --NeoFite
-	var/debug= 0
-	var/autoflag= 0		// 0 = off, 1= eqp and lights off, 2 = eqp off, 3 = all on.
+	powernet = 0 //HACK: set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
+	var/malfhack = 0 // New var for my changes to AI malf. --NeoFite
+	var/mob/living/silicon/ai/malfai = null // See above --NeoFite
+	var/debug = 0
+	var/autoflag = 0 // For optimization. 0 = off, 1 = eqp and lights off, 2 = eqp off, 3 = all on, 4 = all on + no alarm, other = re-autoset
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
-	var/overload = 1 //used for the Blackout malf module
+	var/overload = 1 // used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
 	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
@@ -95,6 +131,7 @@
 	var/static/list/status_overlays_equipment
 	var/static/list/status_overlays_lighting
 	var/static/list/status_overlays_environ
+
 
 /obj/machinery/power/apc/updateDialog()
 	if(stat & (BROKEN|MAINT))
@@ -224,7 +261,7 @@
 		status_overlays_lighting.len = 4
 		status_overlays_environ.len = 4
 
-		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
+		status_overlays_lock[1] = image(icon, "apcox-0") // 0=blue 1=red
 		status_overlays_lock[2] = image(icon, "apcox-1")
 
 		status_overlays_charging[1] = image(icon, "apco3-0")
@@ -247,10 +284,9 @@
 		status_overlays_environ[4] = image(icon, "apco2-3")
 
 
-
-	var/update = check_updates() 		//returns 0 if no need to update icons.
-						// 1 if we need to update the icon_state
-						// 2 if we need to update the overlays
+	var/update = check_updates() //returns 0 if no need to update icons.
+	                             // 1 if we need to update the icon_state
+	                             // 2 if we need to update the overlays
 	if(!update)
 		return
 
@@ -274,14 +310,10 @@
 		else if(update_state & UPSTATE_WIREEXP)
 			icon_state = "apcewires"
 
-
-
 	if(!(update_state & UPSTATE_ALLGOOD))
 		if(overlays.len)
 			cut_overlays()
 			return
-
-
 
 	if(update & 2)
 
@@ -298,7 +330,6 @@
 
 
 /obj/machinery/power/apc/proc/check_updates()
-
 	var/last_update_state = update_state
 	var/last_update_overlay = update_overlay
 	update_state = 0
@@ -327,32 +358,32 @@
 		if(locked)
 			update_overlay |= APC_UPOVERLAY_LOCKED
 
-		if(!charging)
+		if(charging == APC_NOT_CHARGING)
 			update_overlay |= APC_UPOVERLAY_CHARGEING0
-		else if(charging == 1)
+		else if(charging == APC_CHARGING)
 			update_overlay |= APC_UPOVERLAY_CHARGEING1
-		else if(charging == 2)
+		else if(charging == APC_FULLY_CHARGED)
 			update_overlay |= APC_UPOVERLAY_CHARGEING2
 
-		if(!equipment)
+		if(equipment == APC_CHANNEL_OFF)
 			update_overlay |= APC_UPOVERLAY_EQUIPMENT0
-		else if(equipment == 1)
+		else if(equipment == APC_CHANNEL_AUTO_OFF)
 			update_overlay |= APC_UPOVERLAY_EQUIPMENT1
-		else if(equipment == 2)
+		else if(equipment == APC_CHANNEL_AUTO_ON)
 			update_overlay |= APC_UPOVERLAY_EQUIPMENT2
 
-		if(!lighting)
+		if(lighting == APC_CHANNEL_OFF)
 			update_overlay |= APC_UPOVERLAY_LIGHTING0
-		else if(lighting == 1)
+		else if(lighting == APC_CHANNEL_AUTO_OFF)
 			update_overlay |= APC_UPOVERLAY_LIGHTING1
-		else if(lighting == 2)
+		else if(lighting == APC_CHANNEL_AUTO_ON)
 			update_overlay |= APC_UPOVERLAY_LIGHTING2
 
-		if(!environ)
+		if(environ == APC_CHANNEL_OFF)
 			update_overlay |= APC_UPOVERLAY_ENVIRON0
-		else if(environ == 1)
+		else if(environ == APC_CHANNEL_AUTO_OFF)
 			update_overlay |= APC_UPOVERLAY_ENVIRON1
-		else if(environ == 2)
+		else if(environ == APC_CHANNEL_AUTO_ON)
 			update_overlay |= APC_UPOVERLAY_ENVIRON2
 
 	var/results = 0
@@ -660,7 +691,7 @@
 						src.cell.charge = 0
 
 					if(!src.cell)
-						src.charging = 0
+						src.charging = APC_NOT_CHARGING
 						return
 
 					if(emagged || malfhack || (stat & (BROKEN|EMPED)) || shorted)
@@ -676,7 +707,7 @@
 					if(H.nutrition > C.maxcharge)
 						H.nutrition = C.maxcharge
 
-					src.charging = 1
+					src.charging = APC_CHARGING
 
 				else
 					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
@@ -693,7 +724,7 @@
 			src.cell = null
 			user.visible_message("<span class='warning'>[user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
 			//user << "You remove the power cell."
-			charging = 0
+			charging = APC_NOT_CHARGING
 			update_icon()
 		return
 	// do APC interaction
@@ -787,9 +818,9 @@
 
 /obj/machinery/power/apc/proc/update()
 	if(operating && !shorted)
-		area.power_light = (lighting > 1)
-		area.power_equip = (equipment > 1)
-		area.power_environ = (environ > 1)
+		area.power_light = (lighting >= APC_CHANNEL_ON)
+		area.power_equip = (equipment >= APC_CHANNEL_ON)
+		area.power_environ = (environ >= APC_CHANNEL_ON)
 //		if(area.name == "AI Chamber")
 //			spawn(10)
 //				world << " [area.name] [area.power_equip]"
@@ -810,13 +841,13 @@
 	if(issilicon(user))
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
-		if(                                                             \
-			src.aidisabled ||                                            \
-			malfhack && istype(malfai) &&                                \
-			(                                                            \
-				(istype(AI) && (malfai!=AI && malfai != AI.parent)) ||   \
-				(istype(robot) && (robot in malfai.connected_robots))    \
-			)                                                            \
+		if(                                                              \
+		    src.aidisabled ||                                            \
+		    malfhack && istype(malfai) &&                                \
+		    (                                                            \
+		        (istype(AI) && (malfai!=AI && malfai != AI.parent)) ||   \
+		        (istype(robot) && (robot in malfai.connected_robots))    \
+		    )                                                            \
 		)
 			if(!loud)
 				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
@@ -868,7 +899,7 @@
 	else if(href_list["cmode"])
 		chargemode = !chargemode
 		if(!chargemode)
-			charging = 0
+			charging = APC_NOT_CHARGING
 			update_icon()
 
 	else if(href_list["eqp"])
@@ -1014,18 +1045,18 @@
 		return 0
 
 /obj/machinery/power/apc/process()
-
-	if(stat & (BROKEN|MAINT))
+	if(stat & (BROKEN | MAINT))
 		return
 	if(!area.requires_power)
 		return
 
-
 	lastused_light = area.usage(STATIC_LIGHT)
 	lastused_equip = area.usage(STATIC_EQUIP)
 	lastused_environ = area.usage(STATIC_ENVIRON)
+
 	if(area.powerupdate)
-		if(debug) log_debug("power update in [area.name] / [name]")
+		if(debug)
+			log_debug("power update in [area.name] / [name]")
 		area.clear_usage()
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ
@@ -1039,133 +1070,112 @@
 	var/excess = surplus()
 
 	if(!avail())
-		main_status = 0 // None
+		main_status = APC_NO_POWER
 	else if(excess < 0)
-		main_status = 1 // Low
+		main_status = APC_LOW_POWER
 	else
-		main_status = 2 // Good
-
-	var/perapc = 0
-	if(terminal && terminal.powernet)
-		perapc = terminal.powernet.perapc
+		main_status = APC_HAS_POWER
 
 	if(debug)
 		log_debug( "Status: [main_status] - Excess: [excess] - Last Equip: [lastused_equip] - Last Light: [lastused_light]")
 
 	if(cell && !shorted)
 		var/cell_maxcharge = cell.maxcharge
+		var/cell_percent = cell.percent()
 
-		// draw power from cell as before:
+		// Draw power from cell:
+		var/cell_used = cell.use(CELLRATE * lastused_total)
+		var/cell_returned = 0
 
-		var/cellused = min(cell.charge, CELLRATE * lastused_total) // clamp deduction to a max, amount left in cell
-		cell.use(cellused)
+		if(excess > 0) // If power excess, recharge the cell by the same amount just used
+			cell_returned = cell.give(min(CELLRATE * excess, cell_used))
+			add_load(cell_returned / CELLRATE)
+			excess = surplus()
 
-		if(excess > 0 || perapc > lastused_total) // if power excess, or enough anyway, recharge the cell
-												  // by the same amount just used
-			cell.give(cellused)
-			add_load(cellused/CELLRATE) // add the load used to recharge the cell
-
-
-		else // no excess, and not enough per-apc
-			if((cell.charge/CELLRATE + perapc) >= lastused_total) // can we draw enough from cell+grid to cover last usage?
-				cell.give(CELLRATE * perapc) // recharge with what we can
-				add_load(perapc) // so draw what we can from the grid
-				charging = 0
-
-			else if(autoflag != 0) // not enough power available to run the last tick!
-				charging = 0
-				chargecount = 0
-				// This turns everything off in the case that there is still a charge left on the battery, just not enough to run the room.
-				equipment = autoset(equipment, 0)
-				lighting = autoset(lighting, 0)
-				environ = autoset(environ, 0)
-				autoflag = 0
-
-
-		// set channels depending on how much charge we have left
-
-		// Allow the APC to operate as normal if the cell can charge
-		if(charging && longtermpower < 10)
-			longtermpower += 1
-		else if(longtermpower > -10)
-			longtermpower -= 2
-
-		if(cell.charge >= 1250 || longtermpower > 0) // Put most likely at the top so we don't check it last, effeciency 101
-			if(autoflag != 3)
-				equipment = autoset(equipment, 1)
-				lighting = autoset(lighting, 1)
-				environ = autoset(environ, 1)
-				autoflag = 3
-				area.poweralert(1, src)
-				if(cell.charge >= 4000)
-					area.poweralert(1, src)
-		else if(cell.charge < 1250 && cell.charge > 750 && longtermpower < 0) // <30%, turn off equipment
-			if(autoflag != 2)
-				equipment = autoset(equipment, 2)
-				lighting = autoset(lighting, 1)
-				environ = autoset(environ, 1)
-				area.poweralert(0, src)
-				autoflag = 2
-		else if(cell.charge < 750 && cell.charge > 10 && longtermpower < 0) // <15%, turn off lighting & equipment
-			if(autoflag != 1)
-				equipment = autoset(equipment, 2)
-				lighting = autoset(lighting, 2)
-				environ = autoset(environ, 1)
-				area.poweralert(0, src)
-				autoflag = 1
-		else if(cell.charge <= 0) // zero charge, turn all off
-			if(autoflag != 0)
-				equipment = autoset(equipment, 0)
-				lighting = autoset(lighting, 0)
-				environ = autoset(environ, 0)
-				area.poweralert(0, src)
-				autoflag = 0
-
-		// now trickle-charge the cell:
-		if(chargemode && charging == 1 && operating)
-			if(excess > 0) // check to make sure we have enough to charge
-				// Max charge is perapc share, capped to cell capacity, or % per second constant (Whichever is smallest)
-				var/ch = min(perapc*CELLRATE, (cell_maxcharge - cell.charge), (cell_maxcharge*CHARGELEVEL))
-				add_load(ch/CELLRATE) // Removes the power we're taking from the grid
-				cell.give(ch) // actually recharge the cell
-
-			else
-				charging = 0 // stop charging
-				chargecount = 0
-
-		// show cell as fully charged if so:
-		if(cell.charge >= cell_maxcharge)
-			cell.charge = cell_maxcharge
-			charging = 2
-
-		if(chargemode)
-			if(!charging)
-				if(excess > cell_maxcharge*CHARGELEVEL)
-					chargecount++
-				else
-					chargecount = 0
-
-				if(chargecount == 10)
-
-					chargecount = 0
-					charging = 1
-
-		else // chargemode off
-			charging = 0
+		if(round(cell_returned) < round(cell_used)) // Returned less power than used from cell
+			charging = APC_NOT_CHARGING
 			chargecount = 0
 
-	else // no cell, switch everything off
+		// Allow the APC to operate as normal if the cell can charge:
+		if(charging != APC_NOT_CHARGING)
+			if(longtermpower < 10)
+				longtermpower += 1
+		else
+			if(longtermpower > -10)
+				longtermpower -= 2
 
-		charging = 0
+		// Set channels depending on how much charge we have left:
+		if(cell_percent >= 30 || longtermpower > 0) // Put most likely at the top so we don't check it last, effeciency 101
+			if(autoflag != 3 && autoflag != 4)
+				equipment = autoset(equipment, AUTOSET_ON)
+				lighting = autoset(lighting, AUTOSET_ON)
+				environ = autoset(environ, AUTOSET_ON)
+				autoflag = 3
+			else if(autoflag == 3 && cell_percent > 35)
+				area.poweralert(FALSE, src)
+				autoflag = 4
+		else if(cell_percent >= 15) // < 30%, turn off equipment
+			if(autoflag != 2)
+				equipment = autoset(equipment, AUTOSET_OFF)
+				lighting = autoset(lighting, AUTOSET_ON)
+				environ = autoset(environ, AUTOSET_ON)
+				area.poweralert(TRUE, src)
+				autoflag = 2
+		else if(cell_percent >= 1) // < 15%, turn off lighting & equipment
+			if(autoflag != 1)
+				equipment = autoset(equipment, AUTOSET_OFF)
+				lighting = autoset(lighting, AUTOSET_OFF)
+				environ = autoset(environ, AUTOSET_ON)
+				area.poweralert(TRUE, src)
+				autoflag = 1
+		else // Zero charge, turn everything off
+			if(autoflag != 0)
+				equipment = autoset(equipment, AUTOSET_FORCE_OFF)
+				lighting = autoset(lighting, AUTOSET_FORCE_OFF)
+				environ = autoset(environ, AUTOSET_FORCE_OFF)
+				area.poweralert(TRUE, src)
+				autoflag = 0
+
+		if(chargemode && operating) // Charging the cell
+			switch(charging)
+				if(APC_FULLY_CHARGED)
+					if(cell_percent < 99.5) // Lost some charge
+						charging = APC_CHARGING
+
+				if(APC_CHARGING)
+					if(cell.charge >= cell_maxcharge) // Charged.
+						charging = APC_FULLY_CHARGED
+					else if(excess > 0) // Trying to charge with available power
+						var/cell_ch = cell.give(min(excess * CELLRATE, cell_maxcharge * CHARGELEVEL))
+						add_load(cell_ch / CELLRATE)
+					else // No power to charge
+						charging = APC_NOT_CHARGING
+						chargecount = 0
+
+				if(APC_NOT_CHARGING)
+					if(excess >= cell_maxcharge * CHARGELEVEL) // APC has power to charge
+						chargecount++
+					else
+						chargecount = 0
+
+					if(chargecount > APC_WAIT_FOR_CHARGE) // APC has power to charge long enough
+						chargecount = 0
+						charging = APC_CHARGING
+
+		else // Chargemode is Off
+			charging = APC_NOT_CHARGING
+			chargecount = 0
+
+	else // No cell, switch everything off
+		charging = APC_NOT_CHARGING
 		chargecount = 0
-		equipment = autoset(equipment, 0)
-		lighting = autoset(lighting, 0)
-		environ = autoset(environ, 0)
-		area.poweralert(0, src)
+		equipment = autoset(equipment, AUTOSET_FORCE_OFF)
+		lighting = autoset(lighting, AUTOSET_FORCE_OFF)
+		environ = autoset(environ, AUTOSET_FORCE_OFF)
+		area.poweralert(TRUE, src)
 		autoflag = 0
 
-	// update icon & area power if anything changed
-
+	// Update icon & area power if anything changed:
 	if(last_lt != lighting || last_eq != equipment || last_en != environ)
 		queue_icon_update()
 		update()
@@ -1176,22 +1186,28 @@
 // on 0=off, 1=on, 2=autooff
 
 /proc/autoset(val, on)
+	switch(on)
+		if(AUTOSET_FORCE_OFF)
+			if(val == APC_CHANNEL_ON)           // if on, return off
+				return APC_CHANNEL_OFF
+			else if(val == APC_CHANNEL_AUTO_ON) // if auto-on, return auto-off
+				return APC_CHANNEL_AUTO_OFF
 
-	if(on == 0)
-		if(val == 2)			// if on, return off
-			return 0
-		else if(val == 3)		// if auto-on, return auto-off
-			return 1
+		if(AUTOSET_ON)
+			if(val == APC_CHANNEL_AUTO_OFF)     // if auto-off, return auto-on
+				return APC_CHANNEL_AUTO_ON
 
-	else if(on == 1)
-		if(val == 1)			// if auto-off, return auto-on
-			return 3
-
-	else if(on == 2)
-		if(val == 3)			// if auto-on, return auto-off
-			return 1
+		if(AUTOSET_OFF)
+			if(val == APC_CHANNEL_AUTO_ON)      // if auto-on, return auto-off
+				return APC_CHANNEL_AUTO_OFF
 
 	return val
+
+/obj/machinery/power/apc/proc/after_emp()
+	lighting = APC_CHANNEL_AUTO_ON
+	equipment = APC_CHANNEL_AUTO_ON
+	environ = APC_CHANNEL_AUTO_ON
+	update()
 
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)
@@ -1200,19 +1216,14 @@
 		cell.emplode(severity)
 	if(occupier)
 		occupier.emplode(severity)
-	lighting = 0
-	equipment = 0
-	environ = 0
+	lighting = APC_CHANNEL_OFF
+	equipment = APC_CHANNEL_OFF
+	environ = APC_CHANNEL_OFF
 	update()
-	spawn(600/severity)
-		lighting = 3
-		equipment = 3
-		environ = 3
-		update()
+	addtimer(CALLBACK(src, .proc/after_emp), 600 / severity)
 	..()
 
 /obj/machinery/power/apc/ex_act(severity)
-
 	switch(severity)
 		if(1.0)
 			//set_broken() //now Destroy() do what we need
@@ -1230,7 +1241,6 @@
 				set_broken()
 				if(cell && prob(25))
 					cell.ex_act(3.0)
-	return
 
 /obj/machinery/power/apc/blob_act()
 	if(prob(75))
@@ -1279,11 +1289,13 @@
 		return 1
 	else
 		return 0
+
 /obj/machinery/power/apc/proc/setsubsystem(val)
 	if(cell && cell.charge > 0)
-		return (val == 1) ? 0 : val
-	else
-		return (val == 3)
+		return (val == APC_CHANNEL_AUTO_OFF) ? APC_CHANNEL_OFF : val
+	if(val == APC_CHANNEL_AUTO_ON) // No charge left
+		return APC_CHANNEL_AUTO_OFF
+	return APC_CHANNEL_OFF
 
 /obj/machinery/power/apc/proc/set_nightshift(on, preset = null)
 	set waitfor = FALSE
@@ -1317,4 +1329,24 @@
 	last_nightshift_switch = world.time
 	set_nightshift(nightshift_lights, preset)
 
+
+#undef APC_WAIT_FOR_CHARGE
+
 #undef APC_UPDATE_ICON_COOLDOWN
+
+#undef APC_NO_POWER
+#undef APC_LOW_POWER
+#undef APC_HAS_POWER
+
+#undef APC_CHANNEL_OFF
+#undef APC_CHANNEL_AUTO_OFF
+#undef APC_CHANNEL_ON
+#undef APC_CHANNEL_AUTO_ON
+
+#undef AUTOSET_FORCE_OFF
+#undef AUTOSET_OFF
+#undef AUTOSET_ON
+
+#undef APC_NOT_CHARGING
+#undef APC_CHARGING
+#undef APC_FULLY_CHARGED

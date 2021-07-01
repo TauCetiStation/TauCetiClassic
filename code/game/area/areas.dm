@@ -19,7 +19,7 @@
 	var/fire = null
 	var/atmos = 1
 	var/atmosalm = 0
-	var/poweralm = 1
+	var/poweralm = FALSE
 	var/party = null
 	var/lightswitch = 1
 	var/valid_territory = 1 //If it's a valid territory for gangs to claim or religion capture
@@ -139,29 +139,29 @@ var/list/ghostteleportlocs = list()
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
 		poweralm = state
-		if(istype(source))	//Only report power alarms on the z-level where the source is located.
+		// Only report power alarms on the z-level where the source is located.
+		if(istype(source))
 			var/list/cameras = list()
 			for (var/obj/machinery/camera/C in src)
 				cameras += C
-				if(state == 1)
-					C.remove_network("Power Alarms")
-				else
+				if(state)
 					C.add_network("Power Alarms")
+				else
+					C.remove_network("Power Alarms")
 			for (var/mob/living/silicon/aiPlayer in silicon_list)
 				if(!aiPlayer.client)
 					continue
 				if(aiPlayer.z == source.z)
-					if (state == 1)
-						aiPlayer.cancelAlarm("Power", src, source)
-					else
+					if(state)
 						aiPlayer.triggerAlarm("Power", src, cameras, source)
+					else
+						aiPlayer.cancelAlarm("Power", src, source)
 			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
 				if(a.z == source.z)
-					if(state == 1)
-						a.cancelAlarm("Power", src, source)
-					else
+					if(state)
 						a.triggerAlarm("Power", src, cameras, source)
-	return
+					else
+						a.cancelAlarm("Power", src, source)
 
 /area/proc/atmosalert(danger_level)
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.

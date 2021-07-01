@@ -347,10 +347,15 @@
 
 	return excess
 
+/obj/machinery/power/smes/is_operational_topic()
+	return !(stat & (BROKEN | EMPED)) && !power_failure
+
 /obj/machinery/power/smes/tgui_state(mob/user)
 	return global.machinery_state
 
 /obj/machinery/power/smes/ui_interact(mob/user)
+	if (!is_operational_topic())
+		return
 	tgui_interact(user)
 
 /obj/machinery/power/smes/tgui_interact(mob/user, datum/tgui/ui)
@@ -378,9 +383,6 @@
 		"outputUsed" = output_load,
 	)
 	return data
-
-/obj/machinery/power/smes/is_operational_topic()
-	return !(stat & (BROKEN | EMPED)) && !power_failure
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)
 	log_investigate("input/output: [input_level > output_level ? "<font color='green'>[input_level]/[output_level]</font>" : "<font color='red'>[input_level]/[output_level]</font>"] | Output-mode: [output_attempt ? "<font color='green'>on</font>" : "<font color='red'>off</font>"] | Input-mode: [input_attempt ? "<font color='green'>auto</font>" : "<font color='red'>off</font>"] by [key_name(user)]", INVESTIGATE_SINGULO)

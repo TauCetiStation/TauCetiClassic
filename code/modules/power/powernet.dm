@@ -10,9 +10,6 @@
 	var/viewavail = 0			// the available power as it appears on the power console (gradually updated)
 	var/viewload = 0			// the load as it appears on the power console (gradually updated)
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)
-	var/perapc = 0				// per-apc avilability
-
-	var/debug_v = 0
 
 /datum/powernet/New()
 	SSmachines.powernets += src
@@ -79,7 +76,6 @@
 	netexcess = avail - load
 
 	// Return excess power to Smeses:
-	//if(netexcess > 100) // If there was excess power last cycle
 	if(nodes && nodes.len)
 		for(var/obj/machinery/power/smes/S in nodes) // Find the SMESes in the network
 			if(S.powernet == src)
@@ -87,17 +83,6 @@
 			else
 				error("[S.name] (\ref[S]) had a [S.powernet ? "different (\ref[S.powernet])" : "null"] powernet to our powernet (\ref[src]).") // This line is a faggot and using the normal ERROR proc breaks it
 				nodes.Remove(S)
-
-	// Count available power per APC:
-	var/num_apc = 0
-
-	if(nodes && nodes.len)
-		for(var/obj/machinery/power/terminal/term in nodes)
-			if( istype( term.master, /obj/machinery/power/apc ) )
-				num_apc++
-
-	if(num_apc)
-		perapc = avail / num_apc
 
 	// Update power consoles:
 	viewavail = round(0.8 * viewavail + 0.2 * avail)
