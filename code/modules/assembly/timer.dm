@@ -96,7 +96,7 @@
 
 /obj/item/device/assembly/timer/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !Adjacent(usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=timer")
 		onclose(usr, "timer")
 		return

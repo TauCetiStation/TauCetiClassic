@@ -137,7 +137,7 @@
 					M.put_in_l_hand(src)
 			add_fingerprint(usr)
 			return
-		if(over_object == usr && usr.Adjacent(src))
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
 			show_to(usr)

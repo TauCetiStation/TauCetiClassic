@@ -128,7 +128,7 @@
 
 /obj/item/device/assembly/prox_sensor/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !Adjacent(usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=prox")
 		onclose(usr, "prox")
 		return

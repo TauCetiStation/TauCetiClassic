@@ -370,7 +370,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!user.Adjacent(src))
+		if (!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
 

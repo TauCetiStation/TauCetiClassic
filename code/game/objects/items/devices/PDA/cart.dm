@@ -532,7 +532,7 @@
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (usr.incapacitated() || !Adjacent(usr))
+	if (usr.incapacitated() || !in_range(loc, usr))
 		usr.unset_machine()
 		usr << browse(null, "window=pda")
 		return

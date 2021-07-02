@@ -140,7 +140,7 @@
 	return !locked
 
 /obj/structure/closet/crate/secure/AltClick(mob/user)
-	if(!user.incapacitated() && Adjacent(user) && user.IsAdvancedToolUser())
+	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
 		togglelock(user)
 	..()
 

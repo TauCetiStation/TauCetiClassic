@@ -58,11 +58,8 @@
 		src.attached = null
 		update_icon()
 		return
-		
-	if(!(Adjacent(usr) || Adjacent(over_object) || usr.Adjacent(over_object)))
-		return
-		
-	if(ishuman(over_object))
+
+	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
 		update_icon()

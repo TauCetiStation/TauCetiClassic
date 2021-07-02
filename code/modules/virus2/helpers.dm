@@ -145,7 +145,7 @@
 //					log_debug("Could not reach target")
 
 			if (vector == "Contact")
-				if (Adjacent(victim))
+				if (in_range(src, victim))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
 

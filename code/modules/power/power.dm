@@ -131,7 +131,7 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(!Adjacent(user))
+		if(!in_range(src, user))
 			return
 
 		coil.turf_place(T, user)

@@ -699,7 +699,7 @@
 			// Display a warning if the user mocks up
 			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-		if(usr.machine == src && Adjacent(usr))
+		if(usr.machine == src && in_range(src, usr))
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))

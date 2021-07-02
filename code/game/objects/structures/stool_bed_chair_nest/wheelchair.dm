@@ -143,7 +143,7 @@
 
 /obj/structure/stool/bed/chair/wheelchair/MouseDrop(over_object, src_location, over_location)
 	..()
-	if(over_object == usr && Adjacent(usr))
+	if(over_object == usr && in_range(src, usr))
 		if(!ishuman(usr))	return
 		if(usr == buckled_mob)
 			to_chat(usr, "<span class='red'>You realize you are unable to push the wheelchair you sit in.</span>")

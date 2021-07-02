@@ -134,11 +134,10 @@
 		if(H.mind == mind)
 			to_chat(H, "<span class='notice'>Not so fast, self-confident fulmar</span>")
 			return
-
 	if(H.incapacitated())
 		return
 
-	if(Adjacent(H))
+	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
 		if(href_list["school"])
 			if(!uses)

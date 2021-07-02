@@ -95,7 +95,7 @@
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
-	else if(isrobot(user) && Adjacent(user))
+	else if(isrobot(user) && in_range(user, src))
 		if(ismultitool(user.get_active_hand()))
 			P = user.get_active_hand()
 	else if(isobserver(user))
@@ -278,6 +278,6 @@
 	updateUsrDialog()
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || isobserver(user) || Adjacent(user))
+	if(issilicon(user) || isobserver(user) || in_range(user, src))
 		return TRUE
 	return FALSE

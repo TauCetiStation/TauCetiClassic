@@ -10,7 +10,7 @@
 	var/sound_path = "sound/musical_instruments/piano"
 
 /obj/structure/device/piano/unable_to_play(mob/living/user)
-	return ..() || !Adjacent(user) || !anchored
+	return ..() || !in_range(src, user) || !anchored
 
 /obj/structure/device/piano/atom_init()
 	. = ..()

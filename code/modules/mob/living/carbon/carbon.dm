@@ -818,7 +818,7 @@
 
 		stripPanelUnEquip(usr, slot, item_to_add)
 
-		if(usr.machine == src && Adjacent(usr))
+		if(usr.machine == src && in_range(src, usr))
 			show_inv(usr)
 		else
 			usr << browse(null, "window=mob\ref[src]")

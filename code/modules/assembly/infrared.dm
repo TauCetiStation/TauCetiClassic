@@ -127,7 +127,7 @@
 
 /obj/item/device/assembly/infra/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !Adjacent(usr))
+	if(usr.incapacitated() || !in_range(loc, usr))
 		usr << browse(null, "window=infra")
 		onclose(usr, "infra")
 		return

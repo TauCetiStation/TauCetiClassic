@@ -71,7 +71,7 @@
 	..()
 	if (usr.incapacitated())
 		return
-	if (Adjacent(usr))
+	if ((usr.contents.Find(src)) || ((in_range(src, usr) && istype(src.loc, /turf))))
 		usr.set_machine(src)
 		if (href_list["tracking_id"])
 			var/obj/item/weapon/implant/tracking/T = src.case.imp

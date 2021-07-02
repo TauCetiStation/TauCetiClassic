@@ -97,12 +97,12 @@
 			if("rune")
 				sub = "a"
 
-		if(!Adjacent(target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
+		if(!in_range(src, target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
 		else
 			to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 
-		if(!user.Adjacent(target))
+		if(!in_range(user, target))
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
 			return
 		if(instant)

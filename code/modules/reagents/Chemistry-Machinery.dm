@@ -865,7 +865,7 @@
 			return
 		if(usr.incapacitated())
 			return
-		if(!Adjacent(usr))
+		if(!in_range(src, usr))
 			return
 		var/id = href_list["name_disease"]
 		if(archive_diseases[id])

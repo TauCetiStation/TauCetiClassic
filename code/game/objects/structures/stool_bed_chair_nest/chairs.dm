@@ -344,7 +344,7 @@
 	add_fingerprint(user)
 
 /obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
-	if(!Adjacent(user) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
+	if(!in_range(user, src) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
 		return FALSE
 
 	var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
