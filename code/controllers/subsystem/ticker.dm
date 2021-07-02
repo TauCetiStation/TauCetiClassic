@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(ticker)
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
-	var/obj/screen/cinematic = null
+	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
 
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(ticker)
 	var/summary = "summary_selfdes"
 	if(mode && !override)
 		override = mode.name
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
+	cinematic = new /atom/movable/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
 	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
@@ -326,7 +326,7 @@ SUBSYSTEM_DEF(ticker)
 		flick(screen, cinematic)
 	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
 
-/datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /obj/screen/cinematic)
+/datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
 	for(var/mob/M in mob_list) //search any goodest
 		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	if(explosion)
