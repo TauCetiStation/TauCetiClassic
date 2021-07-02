@@ -594,7 +594,7 @@
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity, params)
-	if(target in user.contents)
+	if(target.loc == user)
 		return
 	if(proximity)
 		CreateResonance(target, user)
