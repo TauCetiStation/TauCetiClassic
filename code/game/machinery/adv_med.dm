@@ -80,7 +80,7 @@
 	close_machine(target)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-/obj/machinery/bodyscanner/AltClick(mob/target, mob/user)
+/obj/machinery/bodyscanner/AltClick(mob/user)
 	if(user.incapacitated() || !Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
@@ -88,8 +88,14 @@
 		return
 	if(occupant)
 		open_machine()
-		add_fingerprint(usr)
+		add_fingerprint(user)
 		return
+	var/target = null
+	for(var/mob/living/carbon/C in loc)
+		if(C.buckled)
+			continue
+		else
+			target = C
 	if(!move_inside_checks(target, user))
 		return
 	add_fingerprint(user)

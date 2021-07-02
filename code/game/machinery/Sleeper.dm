@@ -79,17 +79,21 @@
 		return
 	close_machine(target)
 
-/obj/machinery/sleeper/AltClick(mob/target, mob/user)
+/obj/machinery/sleeper/AltClick(mob/user)
 	if(user.incapacitated() || !Adjacent(user))
-		return
-	if(!is_operational())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
-	if(occupant)
+	if(occupant && is_operational())
 		open_machine()
 		return
+	var/target = null
+	for(var/mob/living/carbon/C in loc)
+		if(C.buckled)
+			continue
+		else
+			target = C
 	close_machine(target)
 
 /obj/machinery/sleeper/process()
