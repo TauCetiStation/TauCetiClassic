@@ -163,6 +163,6 @@
 	if(R.emagged == 1)
 		return 0
 
-	R.throw_alert("hacked", /obj/screen/alert/hacked)
+	R.throw_alert("hacked", /atom/movable/screen/alert/hacked)
 	R.emagged = 1
 	return 1

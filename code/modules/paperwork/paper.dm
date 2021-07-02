@@ -407,8 +407,8 @@
 				return
 			iscrayon = 1
 
-
-		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
+		// If the paper is near usr. If the paper is in clipboard it is checked inside of Adjacent()
+		if(!Adjacent(usr)) // Some check to see if he's allowed to write
 			return
 
 		var/last_fields_value = fields
@@ -504,7 +504,8 @@
 		to_chat(user, "<span class='notice'>You clip the [I.name] to [(src.name == "paper") ? "the paper" : name].</span>")
 		forceMove(B)
 		I.forceMove(B)
-		B.amount++
+		B.pages.Add(src)
+		B.pages.Add(I)
 		B.update_icon()
 		if (istype(old_loc, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/s = old_loc
@@ -518,7 +519,7 @@
 		//openhelp(user)
 
 	else if(istype(I, /obj/item/weapon/stamp))
-		if(!in_range(src, user))
+		if(!Adjacent(user))
 			return
 
 		if(istype(I, /obj/item/weapon/stamp/clown))
