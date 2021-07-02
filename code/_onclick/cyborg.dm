@@ -79,8 +79,8 @@
 	if(W == A)
 		return W.attack_self(src)
 
-	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc == src)
-	if(A == loc || A.loc == src)
+	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
+	if(A == loc || (A in loc) || (A in contents))
 		// No adjacency checks
 		var/resolved = A.attackby(W, src, params)
 		if(!resolved && A && W)
