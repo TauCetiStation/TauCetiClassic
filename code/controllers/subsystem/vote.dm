@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(vote)
 
 	var/text = "[poll.initiator] начал голосование \"[poll.name]\"."
 	log_vote(text)
-	to_chat(world, "<span class='vote'><b>[text]</b><br>Введите <b>vote</b> или нажмите <a href='?src=\ref[src]'>здесь</a>, чтобы проголосовать. <br>У вас есть [get_vote_time()] секунд, чтобы проголосовать.</span>")
+	to_chat(world, "<span class='vote'><b>[text]</b><br>Введите <b>vote</b> или нажмите <a href='?src=\ref[src]'>здесь</a>, чтобы проголосовать. <br>У вас есть [get_vote_time()] [pluralize_russian(get_vote_time(), "секунда", "секунды", "секунд")], чтобы проголосовать.</span>")
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
