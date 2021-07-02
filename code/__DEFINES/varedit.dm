@@ -12,6 +12,7 @@
 		/datum/stack_recipe,\
 		/datum/events,\
 		/obj/effect/bmode,\
+		/datum/tgui_list_input,\
 	)
 
 /* protected variables */
