@@ -155,7 +155,7 @@ export const ListInput = (props, context) => {
                           setSelectedButton(button);
                           let index = 0;
                           for (index; index < buttons.length; index++) {
-                            if (buttons[index] === selectedButton) { break; }
+                            if (buttons[index] === button) { break; }
                           }
                           if (index < 0) { index = buttons.length-1; }
                           else if (index >= buttons.length) { index = 0; }
