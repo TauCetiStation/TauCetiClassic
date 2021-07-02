@@ -46,8 +46,7 @@ export const MafiaPanel = (props, context) => {
               }>
               <Box textAlign="center">
                 <NoticeBox info>
-                  The lobby currently has {readyGhosts.length}
-                  /12 valid players signed up.
+                  В лобби {readyGhosts.length}/12 валидных игроков.
                 </NoticeBox>
                 <Flex
                   direction="column">
@@ -62,9 +61,6 @@ export const MafiaPanel = (props, context) => {
                         justify="space-between">
                         <Flex.Item basis={0}>
                           {lobbyist.name}
-                        </Flex.Item>
-                        <Flex.Item>
-                          СТАТУС:
                         </Flex.Item>
                         <Flex.Item width="30%">
                           <Section>
@@ -89,7 +85,6 @@ export const MafiaPanel = (props, context) => {
           <Section
             title={phase}
             minHeight="100px"
-            maxHeight="50px"
             buttons={
               <Box>
                 {!!admin_controls && (
@@ -111,7 +106,7 @@ export const MafiaPanel = (props, context) => {
                 align="center"
                 textAlign="center"
                 maxWidth="500px">
-                <b>You are the {roleinfo.role}</b><br />
+                <b>Вы - {roleinfo.role}</b><br />
                 <b>{roleinfo.desc}</b>
               </Flex.Item>
               <Flex.Item>
@@ -419,7 +414,7 @@ const LobbyDisplay = (props, context) => {
   } = data;
   return (
     <Box>
-      [Phase = {phase} | <TimeDisplay auto="down" value={timeleft} />]{' '}
+      [Стадия = {phase} | <TimeDisplay auto="down" value={timeleft} />]{' '}
       <Button
         icon="clipboard-check"
         tooltipPosition="bottom-left"

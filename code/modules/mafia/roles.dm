@@ -757,10 +757,10 @@
 
 /datum/mafia_role/nightmare/special_reveal_equip()
 	body.set_species(SHADOWLING)
-	body.remove_overlay()
-	body.icon = 'icons/mob/shadowling.dmi'
-	body.icon_state = "shadowling_ascended"
-	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", "layer" = LIGHTING_LAYER + 1)
+	body.cut_overlays()
+	var/image/I = image('icons/mob/shadowling.dmi', body, "shadowling_ascended")
+	body.add_overlay(I)
+	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", layer = LIGHTING_LAYER + 1)
 	ascend.plane = LIGHTING_PLANE + 1
 	body.add_overlay(ascend)
 
