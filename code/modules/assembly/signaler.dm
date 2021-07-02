@@ -78,7 +78,7 @@ Code:
 /obj/item/device/assembly/signaler/Topic(href, href_list)
 	..()
 
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		usr << browse(null, "window=radio")
 		onclose(usr, "radio")
 		return

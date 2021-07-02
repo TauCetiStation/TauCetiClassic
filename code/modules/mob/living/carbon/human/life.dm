@@ -453,7 +453,7 @@
 		if(suiciding)
 			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
 			failed_last_breath = 1
-			throw_alert("oxy", /obj/screen/alert/oxy)
+			throw_alert("oxy", /atom/movable/screen/alert/oxy)
 			return 0
 		if(health > config.health_threshold_crit)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
@@ -462,7 +462,7 @@
 			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
 		return 0
 
@@ -500,7 +500,7 @@
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			failed_last_breath = 1
 
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("oxy", /atom/movable/screen/alert/oxy)
 
 	else
 		// We're in safe limits
@@ -546,7 +546,7 @@
 		if(reagents)
 			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
 		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
-		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		throw_alert("tox_in_air", /atom/movable/screen/alert/tox_in_air)
 	else
 		clear_alert("tox_in_air")
 
@@ -670,28 +670,28 @@
 	if(bodytemperature > species.heat_level_1)
 		//Body temperature is too hot.
 		if(bodytemperature > species.heat_level_3)
-			throw_alert("temp", /obj/screen/alert/hot, 3)
+			throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 		else if(bodytemperature > species.heat_level_2)
 			if(on_fire)
-				throw_alert("temp", /obj/screen/alert/hot, 3)
+				throw_alert("temp", /atom/movable/screen/alert/hot, 3)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_3, used_weapon = "High Body Temperature")
 			else
-				throw_alert("temp", /obj/screen/alert/hot, 2)
+				throw_alert("temp", /atom/movable/screen/alert/hot, 2)
 				take_overall_damage(burn=HEAT_DAMAGE_LEVEL_2, used_weapon = "High Body Temperature")
 		else
-			throw_alert("temp", /obj/screen/alert/hot, 1)
+			throw_alert("temp", /atom/movable/screen/alert/hot, 1)
 			take_overall_damage(burn=HEAT_DAMAGE_LEVEL_1, used_weapon = "High Body Temperature")
 	else if(bodytemperature < species.cold_level_1)
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			if(bodytemperature < species.cold_level_3)
-				throw_alert("temp", /obj/screen/alert/cold, 3)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 3)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_3, used_weapon = "Low Body Temperature")
 			else if(bodytemperature < species.cold_level_2)
-				throw_alert("temp", /obj/screen/alert/cold, 2)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 2)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_2, used_weapon = "Low Body Temperature")
 			else
-				throw_alert("temp", /obj/screen/alert/cold, 1)
+				throw_alert("temp", /atom/movable/screen/alert/cold, 1)
 				take_overall_damage(burn=COLD_DAMAGE_LEVEL_1, used_weapon = "Low Body Temperature")
 		else
 			clear_alert("temp")
@@ -712,15 +712,15 @@
 	if(adjusted_pressure >= species.hazard_high_pressure)
 		var/pressure_damage = min( ( (adjusted_pressure / species.hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE)
 		take_overall_damage(brute=pressure_damage, used_weapon = "High Pressure")
-		throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 	else if(adjusted_pressure >= species.warning_high_pressure)
-		throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 	else if(adjusted_pressure >= species.warning_low_pressure)
 		clear_alert("pressure")
 	else if(adjusted_pressure >= species.hazard_low_pressure)
-		throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 	else
-		throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
@@ -1239,7 +1239,7 @@
 			if(-90 to -80)			severity = 8
 			if(-95 to -90)			severity = 9
 			if(-INFINITY to -95)	severity = 10
-		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
+		overlay_fullscreen("crit", /atom/movable/screen/fullscreen/crit, severity)
 	else
 		clear_fullscreen("crit")
 		//Oxygen damage overlay
@@ -1253,7 +1253,7 @@
 				if(35 to 40)		severity = 5
 				if(40 to 45)		severity = 6
 				if(45 to INFINITY)	severity = 7
-			overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+			overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 		else
 			clear_fullscreen("oxy")
 
@@ -1269,7 +1269,7 @@
 				if(55 to 70)		severity = 4
 				if(70 to 85)		severity = 5
 				if(85 to INFINITY)	severity = 6
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+			overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 		else
 			clear_fullscreen("brute")
 
@@ -1447,21 +1447,21 @@
 				impaired = max(impaired, 2)
 
 		if(eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+			overlay_fullscreen("blurry", /atom/movable/screen/fullscreen/blurry)
 		else
 			clear_fullscreen("blurry")
 
 		if(druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		else
 			clear_fullscreen("high")
 		if(nearsighted)
-			overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		else
 			clear_fullscreen("nearsighted")
 
 		if(impaired)
-			overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, impaired)
+			overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
 		else
 			clear_fullscreen("impaired")
 
@@ -1600,7 +1600,8 @@
 		to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 
 	if (shock_stage >= 60)
-		if(shock_stage == 60) emote("me",1,"'s body becomes limp.")
+		if(shock_stage == 60)
+			visible_message("<span class='name'>[src]'s</span> body becomes limp.")
 		if (prob(2))
 			to_chat(src, "<span class='danger'>[pick("The pain is excrutiating!", "Please, just end the pain!", "Your whole body is going numb!")]</span>")
 			Weaken(20)
