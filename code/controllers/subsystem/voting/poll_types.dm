@@ -205,7 +205,7 @@
 	Custom
 **********************/
 /datum/poll/custom
-	name = "Custom"
+	name = "Пользовательское"
 	question = "Почему здесь нет текста?"
 	choice_types = list()
 
@@ -221,12 +221,12 @@
 	can_unvote = FALSE
 	see_votes = TRUE
 
-	question = input("Какой вопрос для голосования?", "Custom vote", "Custom vote question")
+	question = sanitize(input("Какой вопрос голосования?", "Пользовательское голосование", "Вопрос пользовательского голосования"))
 
 	var/choice_text = ""
 	var/ch_num = 1
 	do
-		choice_text = input("Вариант ответа [ch_num]. Оставьте пустым, чтобы закончить ввод.", "Custom vote", "")
+		choice_text = input("Вариант ответа [ch_num]. Оставьте пустым, чтобы закончить ввод вариантов ответа и перейти дальше.", "Пользовательское голосование", "")
 		ch_num += 1
 		if(choice_text != "")
 			var/datum/vote_choice/custom/C = new
@@ -234,20 +234,20 @@
 			choices.Add(C)
 	while(choice_text != "" && ch_num < 10)
 
-	if(tgui_alert(usr, "Можно ли проголосовать за несколько вариантов ответа?", "Custom vote", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr, "Можно ли проголосовать за несколько вариантов ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Да")
 		multiple_votes = TRUE
 
-	if(tgui_alert(usr, "Можно ли изменять вариант ответа?", "Custom vote", list("Yes", "No")) == "No")
+	if(tgui_alert(usr, "Можно ли изменять вариант ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		can_revote = FALSE
 
-	if(tgui_alert(usr, "Можно ли отменить выбранный вариант ответа?", "Custom vote", list("Yes", "No")) == "Yes")
+	if(tgui_alert(usr, "Можно ли отменить выбранный вариант ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Да")
 		can_unvote = TRUE
 
-	if(tgui_alert(usr, "Можно ли видеть, сколько проголосовало за варианты ответа?", "Custom vote", list("Yes", "No")) == "No")
+	if(tgui_alert(usr, "Можно ли видеть, сколько проголосовало за варианты ответа?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		see_votes = FALSE
 
-	if(tgui_alert(usr, "Завершить создание голосования?", "Custom vote", list("Yes", "No")) == "No")
+	if(tgui_alert(usr, "Завершить создание голосования?", "Пользовательское голосование", list("Да", "Нет")) == "Нет")
 		choices.Cut()
 
 /datum/vote_choice/custom
-	text = "Vote choice"
+	text = "Вариант ответа"
