@@ -35,7 +35,7 @@
 		return
 	for(var/client/C in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
-			return "Администрация сейчас онлайн"
+			return "Администрация сейчас в сети"
 
 /datum/poll/restart/get_vote_power(client/C)
 	return get_vote_power_by_role(C)
