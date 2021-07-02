@@ -1,6 +1,6 @@
 /datum/poll
-	var/name = "ГОЛОСОВАНИЕ!"
-	var/question = "Выборы, выборы, Кандидаты - п*****!"
+	var/name = "Голосование"
+	var/question = ""
 	var/color = "white" // span color of question and name
 	var/description = ""
 	var/warning_message = ""
