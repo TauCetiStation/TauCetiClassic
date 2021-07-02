@@ -33,8 +33,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	. = list()
 	var/list/lists = list(active_tickets, closed_tickets, resolved_tickets)
 	for(var/I in lists)
-		for(var/J in I)
-			var/datum/admin_help/AH = J
+		for(var/datum/admin_help/AH in I)
 			if(AH.initiator_ckey == ckey)
 				. += AH
 
