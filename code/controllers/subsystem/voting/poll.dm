@@ -50,7 +50,7 @@
 	if(.)
 		return
 	if(world.time < next_vote)
-		return "Голосование снова станет доступно через [pluralize_russian(round((next_vote - world.time) / 600), "минуту", "минуты", "минут")]"
+		return "Голосование снова станет доступно через [round((next_vote - world.time) / 600)] [pluralize_russian(round((next_vote - world.time) / 600), "минуту", "минуты", "минут")]"
 
 /datum/poll/proc/get_blocking_or_warning_message()
 	return get_blocking_reason() || warning_message
