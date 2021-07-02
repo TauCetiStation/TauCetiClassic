@@ -79,6 +79,19 @@
 		return
 	close_machine(target)
 
+/obj/machinery/sleeper/AltClick(mob/target, mob/user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!is_operational())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(occupant)
+		open_machine()
+		return
+	close_machine(target)
+
 /obj/machinery/sleeper/process()
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/H = occupant
