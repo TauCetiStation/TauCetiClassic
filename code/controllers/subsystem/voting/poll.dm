@@ -131,7 +131,7 @@
 
 	//Need to pass the minimum threshold of voters
 	if(total_voters() < minimum_voters)
-		text += "<b>Голосование отменено: Недостаточно голосов.</b><br>"
+		text += "<b>Голосование отменено: Недостаточно игроков проголосовало.</b><br>"
 		text += "[total_voters()]/[minimum_voters] игроков проголосовало.<br><br>"
 		invalid = TRUE
 
