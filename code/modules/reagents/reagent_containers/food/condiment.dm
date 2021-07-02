@@ -223,7 +223,7 @@
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents
 		if(choice)
-			if(!in_range(loc, usr) || usr.incapacitated())
+			if(!Adjacent(usr) || usr.incapacitated())
 				return
 			if(ishuman(user))
 				user.put_in_hands(choice)

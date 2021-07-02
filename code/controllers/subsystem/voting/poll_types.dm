@@ -137,7 +137,7 @@
 	minimum_voters = 0
 	only_admin = FALSE
 
-	multiple_votes = FALSE
+	multiple_votes = TRUE
 	can_revote = TRUE
 	can_unvote = TRUE
 	see_votes = FALSE
@@ -178,7 +178,6 @@
 		pregame = FALSE
 		SSvote.stop_vote()
 		to_chat(world, "<b>Голосование прервано из-за начала игры.</b>")
-	return
 
 /datum/poll/gamemode/on_start()
 	if(SSticker.current_state == GAME_STATE_PREGAME)

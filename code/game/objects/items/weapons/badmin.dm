@@ -108,7 +108,7 @@
 			continue
 		if(entity.flags & (NODROP | ABSTRACT) || !entity.simulated) // not real things
 			continue
-		if(istype(entity, /obj/effect) || istype(entity, /obj/screen)) // service things (eh)
+		if(istype(entity, /obj/effect) || istype(entity, /atom/movable/screen)) // service things (eh)
 			continue
 		if(istype(entity, /mob/living/carbon/human/dummy)) // also service things
 			continue

@@ -227,7 +227,7 @@
 	if(.)
 		return
 
-	if(!in_range(src, user) && !IsAdminGhost(user))
+	if(!Adjacent(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='warning'> You can't reach [src] from here.</span>")
 		return 1
 	if(ishuman(user))

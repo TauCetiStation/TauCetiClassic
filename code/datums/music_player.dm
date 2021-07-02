@@ -75,7 +75,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	return ..()
 
 /datum/music_player/proc/interact(mob/living/user)
-	if(!istype(user) || !in_range(instrument, user) || issilicon(user) || user.incapacitated())
+	if(!istype(user) || !instrument.Adjacent(user) || issilicon(user) || user.incapacitated())
 		return
 
 	var/html = ""

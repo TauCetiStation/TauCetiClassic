@@ -104,7 +104,7 @@
 	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
 		open(usr)
 		return
-	if (!( istype(over_object, /obj/screen) ))
+	if (!( istype(over_object, /atom/movable/screen) ))
 		return ..()
 
 	//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
@@ -501,7 +501,7 @@
 	return depth
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
-	if(A in contents)
+	if(A.loc == src)
 		usr = null
 		remove_from_storage(A, loc)
 

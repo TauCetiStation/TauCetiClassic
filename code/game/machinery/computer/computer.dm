@@ -166,7 +166,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())
@@ -231,6 +231,7 @@
 /obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/Hulk = M
+		Hulk.do_attack_animation(src)
 		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
 		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
 		Hulk.health -= rand(2,4)
