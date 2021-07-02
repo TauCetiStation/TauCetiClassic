@@ -86,7 +86,7 @@
 	if (prob(src.reliability)) return 1 //No failure
 	if (prob(src.reliability))
 		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
-			if (src in M.contents)
+			if (loc == M)
 				to_chat(M, "<span class='warning'>Your gun feels pleasantly warm for a moment.</span>")
 			else
 				to_chat(M, "<span class='warning'>You feel a warm sensation.</span>")
@@ -94,7 +94,7 @@
 		lightfail = 1
 	else
 		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
-			if (src in M.contents)
+			if (loc == M)
 				to_chat(M, "<span class='warning'>Your gun's reactor overloads!</span>")
 			to_chat(M, "<span class='warning'>You feel a wave of heat wash over you.</span>")
 			M.apply_effect(300, IRRADIATE)

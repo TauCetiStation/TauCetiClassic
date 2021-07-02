@@ -42,7 +42,7 @@
 	//The person can still try and attack the net when inside.
 	while(!isnull(M)&&!isnull(src)&&check>0)//While M and net exist, and 60 seconds have not passed.
 		var/turf/T = get_turf(src)
-		if(M in T.contents)
+		if(M.loc == T)
 			check--
 			sleep(10)
 		else
