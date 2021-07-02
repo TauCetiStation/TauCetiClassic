@@ -233,7 +233,7 @@
 	name = "Geological Meson Optical Scanner"
 	id = "meson_geo_glasses"
 	build_type = MINEFAB
-	build_path = /obj/item/clothing/glasses/hud/mining/meson
+	build_path = /obj/item/clothing/glasses/hud/geomeson
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50,MAT_SILVER=20, MAT_GOLD=20)
 	construction_time = 100
 	category = list("Tools")

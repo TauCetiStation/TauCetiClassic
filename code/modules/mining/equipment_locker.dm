@@ -423,7 +423,7 @@
 	"Kinetic Accelerator" = image(icon = 'icons/obj/mining/hand_tools.dmi', icon_state = "kineticgun100"),
 	"Mining Drone" = image(icon = 'icons/obj/aibots.dmi', icon_state = "mining_drone"),
 	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining"),
-	"Mining Meson HUD" = image(icon = 'icons/obj/mining/geoscanner.dmi', icon_state = "mesonmininghud")
+	"Mining Meson HUD" = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "mesonmininghud")
 	)
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/voucher, redeemer)
@@ -446,7 +446,7 @@
 		if("Special Mining Rig")
 			new /obj/item/mining_rig_pack(src.loc)
 		if("Mining Meson HUD")
-			new /obj/item/clothing/glasses/hud/mining/meson(src.loc)
+			new /obj/item/clothing/glasses/hud/geomeson(src.loc)
 		if("Cancel")
 			voucher.in_use = 0
 			return
