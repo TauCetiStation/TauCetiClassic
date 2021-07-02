@@ -153,9 +153,6 @@
 /obj/proc/container_resist()
 	return
 
-/obj/proc/update_icon()
-	return
-
 /mob/proc/unset_machine()
 	if(machine)
 		machine.on_unset_machine(src)

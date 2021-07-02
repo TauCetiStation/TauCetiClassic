@@ -132,7 +132,7 @@
 	var/ui_style = ui_style2icon(UI_style_new)
 	var/list/icon_states = icon_states(ui_style) // so it wont break hud with dmi that has no specific icon_state.
 
-	for(var/obj/screen/I in icons)
+	for(var/atom/movable/screen/I in icons)
 		if(I.alpha && (I.icon_state in icon_states)) // I.color can AND will be null if player doesn't use it, don't check it.
 			I.icon = ui_style
 			I.color = UI_style_color_new
@@ -197,7 +197,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
 	if(screen && screen.len)
-		var/obj/screen/plane_master/game_world/PM = locate() in screen
+		var/atom/movable/screen/plane_master/game_world/PM = locate() in screen
 		PM.backdrop(mob)
 	feedback_add_details("admin_verb","TAC")
 

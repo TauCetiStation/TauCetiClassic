@@ -475,7 +475,7 @@
 		return
 	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
-	if(do_after(usr, 100, 1, src) && in_range(usr, src) && Stored_Nuclear)
+	if(do_after(usr, 100, 1, src) && Stored_Nuclear)
 		EjectNuclear()
 
 /obj/structure/droppod/proc/EjectNuclear()

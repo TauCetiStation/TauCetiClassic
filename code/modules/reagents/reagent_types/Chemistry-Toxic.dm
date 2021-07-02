@@ -158,10 +158,10 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 5)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 		if(6 to INFINITY)
 			M.SetSleeping(20 SECONDS)
-			M.throw_alert("oxy", /obj/screen/alert/oxy)
+			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 	if(data["ticks"] % 3 == 0)
 		M.emote("gasp")
 

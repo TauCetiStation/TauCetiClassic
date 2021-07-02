@@ -3,7 +3,7 @@
 #define FONT_ACOLOR "#3f0"
 #define FONT_ASTYLE "Arial Black"
 
-/obj/screen/zone_sel/alien/update_icon()
+/atom/movable/screen/zone_sel/alien/update_icon()
 	cut_overlays()
 	add_overlay(selecting)
 

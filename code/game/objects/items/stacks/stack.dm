@@ -283,7 +283,7 @@
 	if(!istype(user) || !CanUseTopic(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
-	if(!in_range(src, user))
+	if(!Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
