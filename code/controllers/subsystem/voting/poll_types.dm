@@ -131,7 +131,7 @@
 	GameMode
 **********************/
 /datum/poll/gamemode
-	name = "Выбор режима игры"
+	name = "Режим Игры"
 	question = "Выбрать режим игры"
 	choice_types = list()
 	minimum_voters = 0
