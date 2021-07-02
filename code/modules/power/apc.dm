@@ -1096,14 +1096,17 @@
 		var/cell_percent = cell.percent()
 
 		// Draw power from cell:
-		var/cell_used = cell.use(CELLRATE * lastused_total)
+		var/cell_used = cell.use(lastused_total * CELLRATE)
 		var/cell_returned = 0
 
 		if(excess > 0) // If power excess, recharge the cell by the same amount just used
-			cell_returned = cell.give(min(CELLRATE * excess, cell_used))
-			terminal?.add_load(cell_returned / CELLRATE)
+			cell_returned = cell.give(min(excess * CELLRATE, cell_used))
 
-		if(round(cell_returned) < round(cell_used)) // Returned less power than used from cell
+		if(terminal)
+			terminal.add_load(cell_used / CELLRATE) // If excess is not enough, then there is no power left for the rest of APCs anyway - may make net excess negative to help engineers
+			excess = terminal.surplus() // Update for charging conditions
+
+		if(round(cell_returned) < round(cell_used)) // Returned power is less than used from the cell
 			charging = APC_NOT_CHARGING
 			chargecount = 0
 			if(p_avail)
@@ -1159,19 +1162,19 @@
 					if(cell.charge >= cell_maxcharge) // Charged.
 						charging = APC_FULLY_CHARGED
 					else if(excess > 0) // Trying to charge with available power
-						var/cell_ch = cell.give(min(excess * CELLRATE, cell_maxcharge * CHARGELEVEL))
-						terminal?.add_load(cell_ch / CELLRATE)
+						cell.give(min(excess * CELLRATE, cell_maxcharge * CHARGELEVEL))
+						terminal?.add_load(cell_maxcharge * CHARGELEVEL / CELLRATE) // Same reason as pervious add_load
 					else // No power to charge
 						charging = APC_NOT_CHARGING
 						chargecount = 0
 
 				if(APC_NOT_CHARGING)
-					if(excess >= cell_maxcharge * CHARGELEVEL) // APC has power to charge
+					if(excess * CELLRATE >= cell_maxcharge * CHARGELEVEL) // Has enough power to start APC charging
 						chargecount++
 					else
 						chargecount = 0
 
-					if(chargecount > APC_WAIT_FOR_CHARGE) // APC has power to charge long enough
+					if(chargecount > APC_WAIT_FOR_CHARGE) // APC has needed power long enough
 						chargecount = 0
 						charging = APC_CHARGING
 
