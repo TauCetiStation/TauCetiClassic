@@ -462,7 +462,7 @@
  * * teams: see mafia team defines for what to put in, makes the messages only send to a specific team (so mafia night votes only sending messages to mafia at night)
  */
 /datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vote_type, teams)
-	if(vote.next_vote > world.time)
+	if(voter.next_vote > world.time)
 		return
 
 	if(!votes[vote_type])
@@ -477,7 +477,7 @@
 	else
 		send_message("<span class='notice'>[voter.body.real_name] голосует за [target.body.real_name]!</span>",team = teams)
 
-	vote.next_vote = world.time + 1 SECONDS
+	voter.next_vote = world.time + 1 SECONDS
 
 /**
  * Clears out the votes of a certain type (day votes, mafia kill votes) while leaving others untouched
