@@ -802,20 +802,20 @@ var/list/ai_verbs_default = list(
 		if(src.camera)
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && src.camera != camera)
-				src.camera.set_light(0)
+				camera.set_light(0)
 				if(!camera.light_disabled)
 					src.camera = camera
-					src.camera.set_light(AI_CAMERA_LUMINOSITY)
+					camera.set_light(AI_CAMERA_LUMINOSITY)
 				else
 					src.camera = null
 			else if(isnull(camera))
-				src.camera.set_light(0)
+				camera.set_light(0)
 				src.camera = null
 		else
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && !camera.light_disabled)
 				src.camera = camera
-				src.camera.set_light(AI_CAMERA_LUMINOSITY)
+				camera.set_light(AI_CAMERA_LUMINOSITY)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
@@ -848,7 +848,7 @@ var/list/ai_verbs_default = list(
 
 	to_chat(src, "Accessing Subspace Transceiver control...")
 	if (src.aiRadio)
-		src.aiRadio.interact(src)
+		aiRadio.interact(src)
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)

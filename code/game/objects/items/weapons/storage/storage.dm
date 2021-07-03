@@ -417,7 +417,7 @@
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
+		if(verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
 			quick_empty()
 			return
 
@@ -501,7 +501,7 @@
 	return depth
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
-	if(A in contents)
+	if(A.loc == src)
 		usr = null
 		remove_from_storage(A, loc)
 

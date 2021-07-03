@@ -163,13 +163,13 @@ var/list/bad_messages = list("Never take me off, please!",
 		// leave some drips behind
 		if(prob(50))
 			var/obj/effect/decal/cleanable/blood/drip/D = new(src.loc)
-			D.blood_DNA = src.blood_DNA.Copy()
+			D.blood_DNA = blood_DNA.Copy()
 			if(prob(50))
 				D = new(src.loc)
-				D.blood_DNA = src.blood_DNA.Copy()
+				D.blood_DNA = blood_DNA.Copy()
 				if(prob(50))
 					D = new(src.loc)
-					D.blood_DNA = src.blood_DNA.Copy()
+					D.blood_DNA = blood_DNA.Copy()
 	else
 		..()
 

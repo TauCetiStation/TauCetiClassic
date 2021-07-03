@@ -180,7 +180,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	src.inherent.Cut()
+	inherent.Cut()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)
 	while (src.supplied.len < number + 1)
