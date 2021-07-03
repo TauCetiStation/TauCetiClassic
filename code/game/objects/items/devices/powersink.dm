@@ -1,7 +1,7 @@
 // Powersink - used to drain station power
 
-// Drain acceleration, +15 kW per power tick:
-#define POWERSINK_RATE 15000
+// Drain acceleration, +10 kW per power tick:
+#define POWERSINK_RATE 10000
 // Max drain acceleration, 10 MW per power tick:
 #define POWERSINK_RATE_MAX 10000000 
 // Drain form APC's cells, ~25 kW per power tick:
@@ -120,7 +120,7 @@
 						if(A.operating && A.cell)
 							power_drained += A.cell.use(POWERSINK_APC_DRAIN) / CELLRATE
 
-		if(power_drained > max_power * 0.95)
+		if(power_drained > max_power * 0.9)
 			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 		if(power_drained >= max_power)
 			STOP_PROCESSING(SSobj, src)
