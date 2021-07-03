@@ -47,7 +47,7 @@
 					to_chat(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 					SSshuttle.online = 1
 					SSshuttle.settimeleft(10)
-					src.authorized.Cut()
+					authorized.Cut()
 
 			if("Repeal")
 				src.authorized -= W:registered_name
@@ -55,7 +55,7 @@
 
 			if("Abort")
 				to_chat(world, "<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>")
-				src.authorized.Cut()
+				authorized.Cut()
 	return
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
