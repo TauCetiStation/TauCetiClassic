@@ -1338,3 +1338,6 @@
 			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
 
 	return TRUE
+
+/mob/living/proc/swap_hand()
+	return
