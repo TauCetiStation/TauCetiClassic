@@ -126,16 +126,16 @@
 	newtime = clamp(newtime, 60, 60000)
 	if(Adjacent(user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
-		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
+		loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
 	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && Adjacent(user) && isliving(user))
 		if(defused || active || degutted)
 			if(degutted)
-				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
 			else if(defused)
-				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
 			return
 		else
-			src.loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
+			loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 30)
 			if(!open_panel)
 				icon_state = "syndicate-bomb-active"

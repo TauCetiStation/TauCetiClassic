@@ -253,7 +253,7 @@
 					P.buffer.links.Add(src)
 
 				if(!(P.buffer in src.links))
-					src.links.Add(P.buffer)
+					links.Add(P.buffer)
 
 				temp = "<font color='#666633'>-% Successfully linked with \ref[P.buffer] [P.buffer.name] %-</font>"
 

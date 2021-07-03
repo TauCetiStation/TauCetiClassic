@@ -52,7 +52,7 @@
 		emag = 1
 		screen = 2
 		spark_system.set_up(5, 0, src)
-		src.spark_system.start()
+		spark_system.start()
 		var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey(loc)
 		// Will help make emagging the console not so easy to get away with.
 		MK.info += "<br><br><span class='red'>ďż˝%@%(*$%&(ďż˝&?*(%&ďż˝/{}</span>"
@@ -428,7 +428,7 @@
 							PDARec = P
 					//Sender isn't faking as someone who exists
 					if(isnull(PDARec))
-						src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
+						linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
 						if (!customrecepient.message_silent)
 							playsound(customrecepient, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 							audible_message("[bicon(customrecepient)] *[customrecepient.ttone]*", hearing_distance = 3)
@@ -441,7 +441,7 @@
 					//Sender is faking as someone who exists
 					else
 
-						src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
+						linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
 						customrecepient.tnote.Add(list(list("sent" = 0, "owner" = "[PDARec.owner]", "job" = "[customjob]", "message" = "[custommessage]", "target" ="\ref[PDARec]")))
 
 						if(!customrecepient.conversations.Find("\ref[PDARec]"))
