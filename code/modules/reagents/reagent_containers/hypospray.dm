@@ -28,7 +28,7 @@
 	if(!istype(M))
 		return
 	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
-		src.reagents.reaction(M, INGEST)
+		reagents.reaction(M, INGEST)
 		if(M.reagents)
 
 			var/list/injected = list()

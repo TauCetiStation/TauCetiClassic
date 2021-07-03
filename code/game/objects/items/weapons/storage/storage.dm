@@ -417,7 +417,7 @@
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
+		if(verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
 			quick_empty()
 			return
 
