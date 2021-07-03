@@ -480,7 +480,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.holder.show_player_panel(M)
+		holder.show_player_panel(M)
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["give_spell"])

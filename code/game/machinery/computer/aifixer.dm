@@ -76,11 +76,11 @@
 		src.active = 1
 		add_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
 		while (src.occupier.health < 100)
-			src.occupier.adjustOxyLoss(-1)
-			src.occupier.adjustFireLoss(-1)
-			src.occupier.adjustToxLoss(-1)
-			src.occupier.adjustBruteLoss(-1)
-			src.occupier.updatehealth()
+			occupier.adjustOxyLoss(-1)
+			occupier.adjustFireLoss(-1)
+			occupier.adjustToxLoss(-1)
+			occupier.adjustBruteLoss(-1)
+			occupier.updatehealth()
 			if (src.occupier.health >= 0 && src.occupier.stat == DEAD)
 				src.occupier.stat = CONSCIOUS
 				src.occupier.lying = 0
@@ -88,7 +88,7 @@
 				alive_mob_list += src.occupier
 				cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 				add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
-				src.occupier.add_ai_verbs()
+				occupier.add_ai_verbs()
 			updateUsrDialog()
 			sleep(10)
 		src.active = 0

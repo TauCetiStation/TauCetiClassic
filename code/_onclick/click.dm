@@ -138,7 +138,7 @@
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
-	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
+	if(A == loc || (A.loc == loc) || (sdepth != -1 && sdepth <= 1))
 
 		// No adjacency needed
 		if(W)
