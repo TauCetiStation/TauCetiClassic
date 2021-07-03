@@ -431,7 +431,7 @@
 			if (!A.anchored)
 				A.loc = src.connected
 		src.connected.connected = null
-		src.connected.update()
+		connected.update()
 		add_fingerprint(user)
 		qdel(src)
 

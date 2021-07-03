@@ -156,9 +156,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/add_fuel()
 	if(prob(95))
-		src.reagents.add_reagent("luminophore", rand(18,36))
+		reagents.add_reagent("luminophore", rand(18,36))
 	else
-		src.reagents.add_reagent("luminophore", rand(1,2))
+		reagents.add_reagent("luminophore", rand(1,2))
 	var/datum/reagents/R = reagents
 	for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
 		if(luminophore)

@@ -14,6 +14,7 @@
 import { perf } from 'common/perf';
 import { UI_DISABLED, UI_INTERACTIVE } from './constants';
 import { releaseHeldKeys } from './hotkeys';
+import { focusMap } from './focus';
 import { createLogger } from './logging';
 
 const logger = createLogger('backend');
@@ -150,6 +151,7 @@ export const backendMiddleware = store => {
       Byond.winset(window.__windowId__, {
         'is-visible': false,
       });
+      setImmediate(() => focusMap());
     }
 
     if (type === 'backend/update') {

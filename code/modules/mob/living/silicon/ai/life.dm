@@ -26,7 +26,7 @@
 			return
 
 		if (src.machine)
-			if (!( src.machine.check_eye(src) ))
+			if (!( machine.check_eye(src) ))
 				reset_view(null)
 
 		// Handle power damage (oxy)
