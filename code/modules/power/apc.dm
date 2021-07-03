@@ -24,7 +24,7 @@
 #define APC_UPOVERLAY_LOCKED 4096
 #define APC_UPOVERLAY_OPERATING 8192
 
-#define APC_UPDATE_ICON_COOLDOWN 100 // 10 seconds
+#define APC_UPDATE_ICON_COOLDOWN 50 // 5 seconds
 
 #define APC_WAIT_FOR_CHARGE 10 // power ticks
 
@@ -287,7 +287,7 @@
 		status_overlays_environ[4] = image(icon, "apco2-3")
 
 
-	var/update = check_updates() //returns 0 if no need to update icons.
+	var/update = check_updates() // returns 0 if no need to update icons.
 	                             // 1 if we need to update the icon_state
 	                             // 2 if we need to update the overlays
 	if(!update)
@@ -301,11 +301,11 @@
 				icon_state = "apc1-b-nocover"
 			else
 				icon_state = "apc-b"
-		else if(update_state & (UPSTATE_OPENED1|UPSTATE_OPENED2))
+		else if(update_state & (UPSTATE_OPENED1 | UPSTATE_OPENED2))
 			var/basestate = "apc[ cell ? "2" : "1" ]"
 			if(update_state & UPSTATE_OPENED1)
-				if(update_state & (UPSTATE_MAINT|UPSTATE_BROKE))
-					icon_state = "apcmaint" //disabled APC cannot hold cell
+				if(update_state & (UPSTATE_MAINT | UPSTATE_BROKE))
+					icon_state = "apcmaint" // disabled APC cannot hold cell
 				else
 					icon_state = basestate
 		else if(update_state & UPSTATE_BLUESCREEN)
@@ -313,17 +313,16 @@
 		else if(update_state & UPSTATE_WIREEXP)
 			icon_state = "apcewires"
 
-	if(!(update_state & UPSTATE_ALLGOOD))
+	if(!(update_state & UPSTATE_ALLGOOD)) // Not normal state - no overlays
 		if(overlays.len)
 			cut_overlays()
 			return
 
-	if(update & 2)
-
+	if(update & 2) // Updating the overlays
 		if(overlays.len)
 			cut_overlays()
 
-		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
+		if(!(stat & (BROKEN | MAINT)) && (update_state & UPSTATE_ALLGOOD))
 			add_overlay(status_overlays_lock[locked + 1])
 			add_overlay(status_overlays_charging[charging + 1])
 			if(operating)
