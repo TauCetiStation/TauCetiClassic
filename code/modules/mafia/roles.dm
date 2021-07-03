@@ -14,8 +14,8 @@
 	var/role_flags = NONE
 	///how many votes submitted when you vote. used in voting, but not victory
 	var/vote_power = 1
-	///how many votes your role COULD count for, now or later. used in checking victory
-	var/vote_potential = 1
+	///stop spam vote for
+	var/next_vote = 0
 	///what they get equipped with when they are revealed
 	var/datum/outfit/revealed_outfit = /datum/outfit/mafia/assistant
 	///action = uses
@@ -472,7 +472,6 @@
 	revealed_outfit = /datum/outfit/mafia/hop
 
 	targeted_actions = list("Reveal")
-	vote_potential = 3
 
 /datum/mafia_role/hop/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)
 	. = ..()
@@ -730,7 +729,7 @@
 
 /datum/mafia_role/nightmare
 	name = "Кошмар"
-	desc = "Вы монстр-одиночка. Вас нельзя обнаружить с помощью детективных ролей. Вы можете мерцать светом в любой комнате каждую ночь, становясь невосприимчивым к атакам этих ролей. Либо вы можете решить поохотиться, убивая всех в мерцающей комнате. Убейте всех, чтобы победить."
+	desc = "Вы монстр-одиночка. Вас нельзя обнаружить с помощью детективных ролей. Вы можете мерцать светом в любой комнате каждую ночь, становясь невосприимчивым к атакам из них. Дальше, по желанию можете убить всех людей в выбранных комнатах, либо продолжить в них мерцать. Убейте всех, чтобы победить."
 	win_condition = "убей всех."
 	revealed_outfit = /datum/outfit/mafia/nightmare
 	role_flags = ROLE_UNDETECTABLE | ROLE_CAN_KILL
@@ -827,10 +826,9 @@
 	special_theme = "neutral"
 	hud_icon = "hudfugitive"
 
-	actions = list("Self Preservation")
+	actions = list("SelfPreservation")
 	var/charges = 2
 	var/protection_status = FUGITIVE_NOT_PRESERVING
-
 
 /datum/mafia_role/fugitive/New(datum/mafia_controller/game)
 	. = ..()

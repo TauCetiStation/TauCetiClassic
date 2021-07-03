@@ -21,10 +21,10 @@ export const MafiaPanel = (props, context) => {
   } = data;
   const playerAddedHeight = roleinfo ? players.length * 30 : 7;
   const readyGhosts = lobbydata ? lobbydata.filter(
-    player => player.status === "Готов") : null;
+    player => player.status === "Готов" && player.spectating === "Игрок") : null;
   return (
     <Window
-      title="Mafia"
+      title="Мафия"
       theme={role_theme}
       width={650} // 414 or 415 / 444 or 445
       height={300 + playerAddedHeight}>

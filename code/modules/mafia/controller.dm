@@ -28,11 +28,11 @@
 	///defend yourself! don't get lynched! sometimes skipped if nobody votes.
 	var/judgement_phase_period = 30 SECONDS
 	///guilty or innocent, we want a bit of time for players to process the outcome of the vote
-	var/judgement_lynch_period = 5 SECONDS
+	var/judgement_lynch_period = 15 SECONDS
 	///mafia talk at night and pick someone to kill, some town roles use their actions, etc etc.
 	var/night_phase_period = 45 SECONDS
 	///like the lynch period, players need to see what the other players in the game's roles were
-	var/victory_lap_period = 20 MINUTES
+	var/victory_lap_period = 20 SECONDS
 
 	///template picked when the game starts. used for the name and desc reading
 	var/datum/map_template/mafia/current_map
@@ -74,6 +74,7 @@
 	. = ..()
 	global.mafia_game = null
 	end_game()
+	SStgui.close_uis(src)
 	qdel(map_deleter)
 
 /**
@@ -132,7 +133,7 @@
 			continue
 		to_chat(R.body,msg)
 	var/team_suffix = team ? "([uppertext(team)] ЧАТ)" : ""
-	for(var/M in global.dead_mob_list)
+	for(var/M in global.player_list)
 		var/mob/spectator = M
 		if(spectator.ckey in spectators) //was in current game, or spectatin' (won't send to living)
 			var/link = FOLLOW_LINK(M, town_center_landmark)
@@ -303,16 +304,16 @@
 			if(MAFIA_TEAM_MAFIA)
 				total_mafia += R
 				if(R.game_status == MAFIA_ALIVE)
-					alive_mafia += R.vote_potential
+					alive_mafia++
 			if(MAFIA_TEAM_TOWN)
 				total_town += R
 				if(R.game_status == MAFIA_ALIVE)
-					anti_mafia_power += R.vote_potential
+					anti_mafia_power++
 				if(R.role_flags & ROLE_CAN_KILL) //the game cannot autoresolve with killing roles (unless a solo wins anyways, like traitors who are immune)
 					town_can_kill = TRUE
 			if(MAFIA_TEAM_SOLO)
 				if(R.game_status == MAFIA_ALIVE)
-					anti_mafia_power += R.vote_potential
+					anti_mafia_power++
 					solos_to_ask += R
 
 	///PHASE TWO: SEND STATS TO SOLO ANTAGS, SEE IF THEY WON OR TEAMS CANNOT WIN
@@ -331,13 +332,16 @@
 	if(solo_end)
 		start_the_end()
 		return TRUE
+	if(alive_mafia + anti_mafia_power == 1) // stop play in mafia when 1 player
+		start_the_end()
+		return TRUE
 	if(blocked_victory)
 		return FALSE
 	if(alive_mafia == 0)
-		start_the_end("<span class='big green'>!! ПОБЕДА ГОРОДА !!</span>")
+		start_the_end("<span class='green'>!! ПОБЕДА ГОРОДА !!</span>")
 		return TRUE
-	else if(alive_mafia >= anti_mafia_power && !town_can_kill)
-		start_the_end("<span class='big red'>!! ПОБЕДА МАФИИ !!</span>")
+	if(alive_mafia >= anti_mafia_power && !town_can_kill)
+		start_the_end("<span class='red'>!! ПОБЕДА МАФИИ !!</span>")
 		return TRUE
 
 /**
@@ -458,6 +462,9 @@
  * * teams: see mafia team defines for what to put in, makes the messages only send to a specific team (so mafia night votes only sending messages to mafia at night)
  */
 /datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vote_type, teams)
+	if(vote.next_vote > world.time)
+		return
+
 	if(!votes[vote_type])
 		votes[vote_type] = list()
 	var/old_vote = votes[vote_type][voter]
@@ -469,6 +476,8 @@
 		send_message("<span class='notice'>[voter.body.real_name] отменяет свой голос за [target.body.real_name]!</span>", team = teams)
 	else
 		send_message("<span class='notice'>[voter.body.real_name] голосует за [target.body.real_name]!</span>",team = teams)
+
+	vote.next_vote = world.time + 1 SECONDS
 
 /**
  * Clears out the votes of a certain type (day votes, mafia kill votes) while leaving others untouched
@@ -718,7 +727,7 @@
 				if("Vote")
 					if(phase != MAFIA_PHASE_VOTING)
 						return
-					vote_for(user_role,target,vote_type="Day")
+					vote_for(user_role,target,"Day")
 				if("Kill Vote")
 					if(phase != MAFIA_PHASE_NIGHT || user_role.team != MAFIA_TEAM_MAFIA)
 						return
@@ -915,6 +924,7 @@
 		if(!C)//vice versa but in a variable we use later
 			global.mafia_signup -= key
 			global.mafia_bad_signup += key
+			continue
 		if(!isobserver(C.mob))
 			//they are back to playing the game, remove them from the signups
 			global.mafia_signup -= key
