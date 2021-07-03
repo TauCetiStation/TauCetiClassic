@@ -7,10 +7,6 @@
 	icon_state = "alien0"
 	},
 /area/mafia)
-"c" = (
-/obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/floor/abductor,
-/area/mafia)
 "g" = (
 /obj/mafia_game_board,
 /turf/simulated/floor/plating{
@@ -450,7 +446,7 @@ t
 u
 t
 l
-c
+l
 b
 l
 b

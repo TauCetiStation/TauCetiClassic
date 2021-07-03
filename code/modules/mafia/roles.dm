@@ -35,10 +35,6 @@
 
 	var/list/role_notes = list()
 
-
-/datum/mafia_role/New(datum/mafia_controller/game)
-	. = ..()
-
 /**
  * Tests if a visitor can actually perform an action on this role. Verbose on purpose!
  *
