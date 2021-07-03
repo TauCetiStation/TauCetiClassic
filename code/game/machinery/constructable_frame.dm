@@ -159,7 +159,7 @@
 						break
 				if(component_check)
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+					var/obj/machinery/new_machine = new circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
 					new_machine.construction()
 					for(var/obj/O in new_machine.component_parts)
