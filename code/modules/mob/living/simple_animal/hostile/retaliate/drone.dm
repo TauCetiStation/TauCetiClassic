@@ -79,7 +79,7 @@
 	update_icon()
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/malf_drone/proc/update_icon()
+/mob/living/simple_animal/hostile/retaliate/malf_drone/update_icon()
 	if(disabled)
 		icon_state = "drone_0"
 		return

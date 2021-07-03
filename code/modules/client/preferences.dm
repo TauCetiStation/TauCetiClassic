@@ -35,6 +35,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
+	var/clientfps = -1
 
 	// Custom Keybindings
 	var/list/key_bindings = list()

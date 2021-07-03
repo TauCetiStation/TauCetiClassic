@@ -72,7 +72,7 @@
 	return laws.zeroth
 
 /mob/living/silicon/robot/proc/set_zeroth_law(law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.set_zeroth_law(law)
 
@@ -82,32 +82,32 @@
 		to_chat(src, "<span class='warning'>Internal camera is currently being accessed.</span>")
 
 /mob/living/silicon/robot/proc/add_inherent_law(law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.add_inherent_law(law)
 
 /mob/living/silicon/robot/proc/clear_inherent_laws()
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.clear_inherent_laws()
 
 /mob/living/silicon/robot/proc/add_supplied_law(number, law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
 
 /mob/living/silicon/robot/proc/clear_supplied_laws()
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.clear_supplied_laws()
 
 /mob/living/silicon/robot/proc/add_ion_law(law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.add_ion_law(law)
 
 /mob/living/silicon/robot/proc/clear_ion_laws()
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.clear_ion_laws()
 
@@ -116,7 +116,7 @@
 //	set name = "State Laws"
 	say("Current Active Laws:")
 	//laws_sanity_check()
-	//src.laws.show_laws(world)
+	//laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 

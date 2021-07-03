@@ -511,7 +511,7 @@ var/list/ai_verbs_default = list(
 		checklaws()
 
 	if (href_list["lawr"]) // Selects on which channel to state laws
-		var/setchannel = input(usr, "Specify channel.", "Channel selection") in list("State","Common","Science","Command","Medical","Engineering","Security","Supply","Binary","Holopad", "Cancel")
+		var/setchannel = tgui_input_list(usr, "Specify channel.", "Channel selection", list("State","Common","Science","Command","Medical","Engineering","Security","Supply","Binary","Holopad", "Cancel"))
 		if(setchannel == "Cancel")
 			return
 		lawchannel = setchannel
@@ -655,7 +655,7 @@ var/list/ai_verbs_default = list(
 			for(var/i in tempnetwork)
 				cameralist[i] = i
 	var/old_network = network
-	network = input(U, "Which network would you like to view?") as null|anything in cameralist
+	network = tgui_input_list(U, "Which network would you like to view?", "Jump To Network", cameralist)
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -685,7 +685,7 @@ var/list/ai_verbs_default = list(
 		return
 
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Dorfy", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet", "HAL", "Tribunal", "Tribunal Malfunctioning")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/emote = tgui_input_list("Please, select a status!", "AI Status", ai_emotions)
 	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
 		AISD.emotion = emote
 	if(emote == "Friend Computer")  //if Friend Computer, change ALL displays, else restore them to normal
@@ -802,20 +802,20 @@ var/list/ai_verbs_default = list(
 		if(src.camera)
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && src.camera != camera)
-				src.camera.set_light(0)
+				camera.set_light(0)
 				if(!camera.light_disabled)
 					src.camera = camera
-					src.camera.set_light(AI_CAMERA_LUMINOSITY)
+					camera.set_light(AI_CAMERA_LUMINOSITY)
 				else
 					src.camera = null
 			else if(isnull(camera))
-				src.camera.set_light(0)
+				camera.set_light(0)
 				src.camera = null
 		else
 			var/obj/machinery/camera/camera = near_range_camera(src.eyeobj)
 			if(camera && !camera.light_disabled)
 				src.camera = camera
-				src.camera.set_light(AI_CAMERA_LUMINOSITY)
+				camera.set_light(AI_CAMERA_LUMINOSITY)
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
@@ -848,7 +848,7 @@ var/list/ai_verbs_default = list(
 
 	to_chat(src, "Accessing Subspace Transceiver control...")
 	if (src.aiRadio)
-		src.aiRadio.interact(src)
+		aiRadio.interact(src)
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)

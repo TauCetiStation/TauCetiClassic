@@ -20,11 +20,11 @@
 	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
 
-		if (user.get_active_hand() != I || (!in_range(src, usr) && loc != user))
+		if(user.get_active_hand() != I || !Adjacent(usr))
 			return
 
 		name = "Glass Case"
-		if (t)
+		if(t)
 			name += " - '[t]'"
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))

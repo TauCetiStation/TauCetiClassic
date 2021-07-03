@@ -339,9 +339,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	B.data["blood_DNA"] = src.dna.unique_enzymes
 	if(src.resistances && src.resistances.len)
 		if(B.data["resistances"])
-			B.data["resistances"] |= src.resistances.Copy()
+			B.data["resistances"] |= resistances.Copy()
 		else
-			B.data["resistances"] = src.resistances.Copy()
+			B.data["resistances"] = resistances.Copy()
 	B.data["blood_type"] = src.dna.b_type
 
 	var/list/temp_chem = list()
@@ -377,7 +377,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/list/chems = list()
 	chems = params2list(injected.data["trace_chem"])
 	for(var/C in chems)
-		src.reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
+		reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
 	reagents.update_total()
 
 	container.reagents.remove_reagent("blood", amount)

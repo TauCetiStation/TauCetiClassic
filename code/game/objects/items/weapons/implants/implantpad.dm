@@ -23,7 +23,7 @@
 	if ((src.case && (user.l_hand == src || user.r_hand == src)))
 		user.put_in_active_hand(case)
 
-		src.case.add_fingerprint(user)
+		case.add_fingerprint(user)
 		src.case = null
 
 		add_fingerprint(user)
@@ -49,7 +49,7 @@
 	if (src.case)
 		if(src.case.imp)
 			if(istype(src.case.imp, /obj/item/weapon/implant))
-				dat += src.case.imp.get_data()
+				dat += case.imp.get_data()
 				if(istype(src.case.imp, /obj/item/weapon/implant/tracking))
 					dat += {"ID (1-100):
 					<A href='byond://?src=\ref[src];tracking_id=-10'>-</A>
@@ -71,7 +71,7 @@
 	..()
 	if (usr.incapacitated())
 		return
-	if ((usr.contents.Find(src)) || ((in_range(src, usr) && istype(src.loc, /turf))))
+	if (Adjacent(usr))
 		usr.set_machine(src)
 		if (href_list["tracking_id"])
 			var/obj/item/weapon/implant/tracking/T = src.case.imp
