@@ -444,7 +444,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	// Append any tickets also opened by this user if relevant
 	var/list/related_tickets = global.ahelp_tickets.TicketsByCKey(initiator_ckey)
 	if (related_tickets.len > 1)
-		dat += "<br/><b>Other Tickets by User</b><br/>"
+		dat += "<br/><b>Other Tickets by [initiator_ckey]</b><br/>"
 		for (var/datum/admin_help/related_ticket in related_tickets)
 			if (related_ticket.id == id)
 				continue
