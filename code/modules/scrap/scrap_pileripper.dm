@@ -158,10 +158,4 @@
 		L.adjustBruteLoss(45)
 		return
 
-	if(length(L.butcher_results))
-		for(var/path in L.butcher_results)
-			for(var/i = 1 to L.butcher_results[path])
-				new path(get_turf(get_step(src, EAST)))
-
-	L.gib()
-
+	L.harvest(null, get_turf(get_step(src, EAST)))
