@@ -86,7 +86,7 @@ var/list/announcement_sounds = list(
 /datum/announcement/proc/copy(announce_type)
 	var/datum/announcement/AT = announce_type
 	ASSERT(ispath(AT))
-	
+
 	name = initial(AT.name)
 	title = initial(AT.title)
 	subtitle = initial(AT.subtitle)
@@ -121,16 +121,18 @@ var/list/announcement_sounds = list(
 			else
 				WARNING("No sound file for [sound]")
 
-	for(var/mob/M in player_list)
-		if(!isnewplayer(M))
-			if(announce_text)
-				to_chat(M, announce_text + "<br>")
+	for(var/mob/M in player_list - new_player_list)
+		if(!isobserver(M) && !(is_station_level(M.z) || is_mining_level(M.z)))
+			continue
 
-			if(announce_sound)
-				if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
-					continue
+		if(announce_text)
+			to_chat(M, announce_text + "<br>")
 
-				M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
+		if(announce_sound)
+			if((sound == "emer_shut_left" || sound == "crew_shut_left") && IS_ON_ESCAPE_SHUTTLE)
+				continue
+
+			M.playsound_local(null, announce_sound, VOL_EFFECTS_VOICE_ANNOUNCEMENT, volume, FALSE, channel = CHANNEL_ANNOUNCE, wait = TRUE)
 
 	if(flags & ANNOUNCE_COMMS)
 		for (var/obj/machinery/computer/communications/C in communications_list)
@@ -153,6 +155,7 @@ var/list/announcement_sounds = list(
 /datum/announcement/ping
 	sound = "commandreport"
 	flags = ANNOUNCE_SOUND
+
 /datum/announcement/ping/play(sound)
 	if(sound)
 		src.sound = sound
