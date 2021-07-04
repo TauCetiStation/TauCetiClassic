@@ -62,7 +62,7 @@
 
 /datum/map_template/mafia/alien
 	name = "Alien Base"
-	mappath = "maps/mafiamafia_infestation.dmm"
+	mappath = "maps/mafia/mafia_infestation.dmm"
 
 /datum/map_template/mafia/park
 	name = "Peaceful Place"

@@ -2,10 +2,58 @@
 "a" = (
 /turf/unsimulated/wall,
 /area/mafia)
+"b" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/nerdshirt,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"c" = (
+/obj/structure/closet,
+/obj/item/clothing/head/sombrero,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
 "d" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/unsimulated/floor{
 	icon_state = "asteroid";
+	name = "grass"
+	},
+/area/mafia)
+"e" = (
+/obj/structure/closet,
+/obj/item/clothing/head/sombrero/shamebrero,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"f" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"g" = (
+/obj/structure/closet,
+/obj/item/clothing/head/western/cowboy,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"h" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/ianshirt,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
 	name = "grass"
 	},
 /area/mafia)
@@ -19,6 +67,46 @@
 "j" = (
 /obj/structure/mineral_door/wood,
 /obj/effect/landmark/blockway,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"k" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho/red,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"l" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho/ponchoshame,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"m" = (
+/obj/structure/closet,
+/obj/item/clothing/head/sombrero/green,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"n" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/holidaypriest,
+/turf/unsimulated/floor{
+	icon_state = "grass1";
+	name = "grass"
+	},
+/area/mafia)
+"o" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/poncho/rainbow,
 /turf/unsimulated/floor{
 	icon_state = "grass1";
 	name = "grass"
@@ -88,14 +176,14 @@
 /area/mafia)
 "O" = (
 /obj/effect/landmark/mafia,
-/obj/structure/stool,
 /turf/unsimulated/floor{
 	icon_state = "grass1";
 	name = "grass"
 	},
 /area/mafia)
 "P" = (
-/obj/structure/closet/athletic_mixed,
+/obj/structure/closet,
+/obj/item/clothing/suit/shawl,
 /turf/unsimulated/floor{
 	icon_state = "grass1";
 	name = "grass"
@@ -257,11 +345,11 @@ z
 z
 j
 z
-P
+f
 N
 z
 N
-P
+h
 z
 j
 z
@@ -279,7 +367,7 @@ G
 X
 X
 z
-P
+c
 N
 p
 O
@@ -289,7 +377,7 @@ N
 O
 p
 N
-P
+l
 z
 X
 X
@@ -365,7 +453,7 @@ p
 p
 z
 p
-P
+n
 z
 X
 N
@@ -453,7 +541,7 @@ N
 N
 X
 z
-P
+b
 p
 z
 p
@@ -465,7 +553,7 @@ p
 p
 z
 p
-P
+o
 z
 X
 K
@@ -529,7 +617,7 @@ N
 X
 X
 z
-P
+e
 N
 p
 O
@@ -539,7 +627,7 @@ N
 O
 p
 N
-P
+m
 z
 i
 X
@@ -557,11 +645,11 @@ z
 z
 j
 z
-P
+g
 N
 z
 N
-P
+k
 z
 j
 z

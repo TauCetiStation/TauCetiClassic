@@ -103,7 +103,7 @@
 		CRASH("No spawn area detected for Mafia!")
 	var/list/bounds = current_map.load(spawn_area)
 	if(!bounds)
-		CRASH("Loading mafia map failed!")
+		CRASH("Loading mafia map [current_map.name] - [current_map.mappath] failed!")
 	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23,spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
 	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
@@ -662,7 +662,7 @@
 				rolelist_dict = list("CANCEL", "FINISH") + rolelist_dict
 				while(!done)
 					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
-					var/chosen_role_name = input(usr,"Select a role!","Custom Setup Creation",rolelist_dict[1]) as null|anything in rolelist_dict
+					var/chosen_role_name = tgui_input_list(usr,"Select a role!","Custom Setup Creation",rolelist_dict)
 					if(chosen_role_name == "CANCEL")
 						return
 					if(chosen_role_name == "FINISH")
@@ -918,7 +918,7 @@
 	for(var/bad_key in global.mafia_bad_signup)
 		if(global.directory[bad_key])//they have reconnected if we can search their key and get a client
 			global.mafia_bad_signup -= bad_key
-			global.mafia_signup += bad_key
+			global.mafia_signup[bad_key] = bad_key
 	for(var/key in global.mafia_signup)
 		var/client/C = global.directory[key]
 		if(!C)//vice versa but in a variable we use later

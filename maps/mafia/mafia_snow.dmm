@@ -5,6 +5,13 @@
 "b" = (
 /turf/simulated/wall/mineral/silver,
 /area/mafia)
+"c" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
 "f" = (
 /obj/structure/snowman,
 /turf/unsimulated/floor/snow,
@@ -20,23 +27,15 @@
 	},
 /area/mafia)
 "l" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/tea{
-	pixel_x = 6;
-	pixel_y = 4
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/captain,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
 /area/mafia)
 "o" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/tea{
-	pixel_x = -6;
-	pixel_y = -2
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/cargo,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
@@ -61,33 +60,22 @@
 /turf/unsimulated/floor/snow,
 /area/mafia)
 "H" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/tea{
-	pixel_x = -6;
-	pixel_y = 2
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
 /area/mafia)
 "I" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = 4
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
 /area/mafia)
 "J" = (
-/obj/structure/table/woodentable,
 /obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = 6;
-	pixel_y = 4
-	},
+/obj/structure/closet,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
@@ -102,39 +90,27 @@
 /area/mafia)
 "O" = (
 /obj/effect/landmark/mafia,
-/obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
 /area/mafia)
 "P" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = -4
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/hydro,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
 /area/mafia)
 "Q" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/tea{
-	pixel_x = 6;
-	pixel_y = 2
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
 /area/mafia)
 "R" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/tea{
-	pixel_x = -6;
-	pixel_y = 4
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
@@ -145,21 +121,15 @@
 /turf/unsimulated/wall/fakeglass,
 /area/mafia)
 "T" = (
-/obj/structure/table/woodentable,
+/obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
 /area/mafia)
 "W" = (
-/obj/effect/landmark/mafia,
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 1
-	},
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/security,
 /turf/unsimulated/floor/snow{
 	icon_state = "gravsnow"
 	},
@@ -309,7 +279,7 @@ I
 X
 b
 X
-l
+J
 b
 j
 b
@@ -334,10 +304,10 @@ O
 X
 p
 X
-W
+O
 S
 X
-I
+Q
 b
 i
 i
@@ -362,7 +332,7 @@ X
 b
 b
 X
-W
+O
 b
 i
 i
@@ -413,7 +383,7 @@ p
 S
 b
 p
-Q
+W
 b
 i
 i
@@ -438,7 +408,7 @@ p
 X
 X
 X
-W
+O
 j
 L
 i
@@ -488,7 +458,7 @@ p
 X
 X
 X
-W
+O
 j
 i
 i
@@ -513,7 +483,7 @@ p
 p
 b
 p
-T
+c
 b
 K
 i
@@ -562,7 +532,7 @@ X
 b
 b
 X
-W
+O
 b
 i
 i
@@ -584,7 +554,7 @@ O
 X
 S
 X
-W
+O
 p
 X
 R

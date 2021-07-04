@@ -7,14 +7,12 @@
 /area/mafia)
 "j" = (
 /obj/structure/mineral_door/resin,
+/obj/effect/landmark/blockway,
 /turf/unsimulated/wall/fakealien,
 /area/mafia)
 "p" = (
 /obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/wall/fakealien{
-	icon_state = "membrane0";
-	name = "alien membrane"
-	},
+/turf/unsimulated/wall/fakeglass/alien,
 /area/mafia)
 "t" = (
 /obj/structure/alien{
