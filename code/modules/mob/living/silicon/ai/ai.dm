@@ -735,7 +735,6 @@ var/list/ai_verbs_default = list(
 				if(!state)
 					return
 				if(chooses_ai_staff[state])
-					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 					holo_icon = chooses_ai_staff[state]
 			else
 				tgui_alert(usr, "No suitable records found. Aborting.")
@@ -745,7 +744,6 @@ var/list/ai_verbs_default = list(
 			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
 			if(!state)
 				return
-			qdel(holo_icon)
 			holo_icon = chooses_ai_holo[state]
 
 //I am the icon meister. Bow fefore me.	//>fefore
