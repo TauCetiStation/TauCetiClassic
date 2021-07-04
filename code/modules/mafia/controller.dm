@@ -138,7 +138,8 @@
 		if(!spectator.ckey)
 			continue
 		if(spectator.ckey in spectators) //was in current game, or spectatin' (won't send to living)
-			var/link = TURF_LINK(M, get_turf(town_center_landmark))
+			var/turf/T = get_turf(town_center_landmark)
+			var/link = TURF_LINK(M, T)
 			to_chat(M, "[link] МАФИЯ: [msg] [team_suffix]")
 
 /**
