@@ -19,7 +19,7 @@
 /obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
 	if(ishuman(usr))
 		var/mob/M = usr
-		if(!(istype(over_object, /obj/screen) ))
+		if(!(istype(over_object, /atom/movable/screen) ))
 			return ..()
 
 		if(!M.incapacitated())

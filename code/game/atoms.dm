@@ -507,13 +507,15 @@
 	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
-	if(flags & NOBLOODY) return 0
-	if(!dirt_datum) return 0
+	if(flags & NOBLOODY)
+		return FALSE
+	if(!dirt_datum)
+		return FALSE
 	if(!dirt_overlay)
 		dirt_overlay = new/datum/dirt_cover(dirt_datum)
 	else
 		dirt_overlay.add_dirt(dirt_datum)
-	return 1
+	return TRUE
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
@@ -735,3 +737,6 @@
 	imgs[I] = viewers
 
 	return imgs
+
+/atom/proc/update_icon()
+	return

@@ -158,7 +158,7 @@
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) && loc != user))
+		if (!Adjacent(user))
 			return
 		add_fingerprint(user)
 
@@ -339,7 +339,7 @@
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) > 1 && src.loc != user))
+		if (!Adjacent(usr))
 			return
 		add_fingerprint(user)
 		if (t)
@@ -431,7 +431,7 @@
 			if (!A.anchored)
 				A.loc = src.connected
 		src.connected.connected = null
-		src.connected.update()
+		connected.update()
 		add_fingerprint(user)
 		qdel(src)
 

@@ -40,22 +40,22 @@
 				if (src.auth_need - src.authorized.len > 0)
 					message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 					log_game("[user.ckey] has authorized early shuttle launch")
-					to_chat(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+					visible_message("<span class='notice'><B>Alert: [auth_need - authorized.len] authorizations needed until shuttle is launched early</B></span>")
 				else
 					message_admins("[key_name_admin(user)] has launched the shuttle")
 					log_game("[user.ckey] has launched the shuttle early")
-					to_chat(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+					visible_message("<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 					SSshuttle.online = 1
 					SSshuttle.settimeleft(10)
-					src.authorized.Cut()
+					authorized.Cut()
 
 			if("Repeal")
 				src.authorized -= W:registered_name
-				to_chat(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+				visible_message("<span class='notice'><B>Alert: [auth_need - authorized.len] authorizations needed until shuttle is launched early</B></span>")
 
 			if("Abort")
-				to_chat(world, "<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>")
-				src.authorized.Cut()
+				visible_message("<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>")
+				authorized.Cut()
 	return
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)

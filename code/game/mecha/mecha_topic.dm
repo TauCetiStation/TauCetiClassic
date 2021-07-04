@@ -348,13 +348,13 @@
 		return
 
 	if(href_list["req_access"] && add_req_access)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["maint_access"] && maint_access)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/mob/user = F.getMob("user")
 		if(user)
@@ -368,7 +368,7 @@
 		return
 
 	if(href_list["set_internal_tank_valve"] && state >=1)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/mob/user = F.getMob("user")
 		if(user)
@@ -378,21 +378,21 @@
 				to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 
 	if(href_list["add_req_access"] && add_req_access && F.getObj("id_card"))
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		operation_req_access += F.getNum("add_req_access")
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["del_req_access"] && add_req_access && F.getObj("id_card"))
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		operation_req_access -= F.getNum("del_req_access")
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["finish_req_access"])
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		add_req_access = 0
 		var/mob/user = F.getMob("user")

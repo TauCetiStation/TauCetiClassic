@@ -147,7 +147,7 @@
 	return shock_damage
 
 
-/mob/living/carbon/proc/swap_hand()
+/mob/living/carbon/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
@@ -352,7 +352,7 @@
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(eyecheck() < intensity || override_blindness_check)
 		return ..()
 
@@ -408,7 +408,7 @@
 	throw_mode_off()
 	if(usr.incapacitated() || !target)
 		return
-	if(target.type == /obj/screen)
+	if(target.type == /atom/movable/screen)
 		return
 
 	var/atom/movable/item = get_active_hand()
@@ -818,7 +818,7 @@
 
 		stripPanelUnEquip(usr, slot, item_to_add)
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 		else
 			usr << browse(null, "window=mob\ref[src]")

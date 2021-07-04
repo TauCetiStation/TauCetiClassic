@@ -54,3 +54,14 @@
 	var/mob/living/L = user.mob
 	L.lay_down()
 	return TRUE
+
+/datum/keybinding/living/swap_hands
+	hotkey_keys = list("X", "Northeast") // PAGEUP
+	name = "swap_hands"
+	full_name = "Swap hands"
+	description = ""
+
+/datum/keybinding/living/swap_hands/down(client/user)
+	var/mob/living/L = user.mob
+	L.swap_hand()
+	return TRUE

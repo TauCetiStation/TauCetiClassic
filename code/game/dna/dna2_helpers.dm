@@ -132,7 +132,7 @@
 	if(istype(src, /mob/living/carbon/human))
 		if(UI!=null)
 			src.dna.UI=UI
-			src.dna.UpdateUI()
+			dna.UpdateUI()
 		dna.check_integrity()
 		var/mob/living/carbon/human/H = src
 		H.r_hair   = dna.GetUIValueRange(DNA_UI_HAIR_R,    255)

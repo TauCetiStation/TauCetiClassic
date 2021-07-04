@@ -594,7 +594,7 @@
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity, params)
-	if(target in user.contents)
+	if(target.loc == user)
 		return
 	if(proximity)
 		CreateResonance(target, user)
@@ -812,7 +812,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
-	if(in_range(user, src))
+	if(Adjacent(user))
 		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
 		DropOre()
 

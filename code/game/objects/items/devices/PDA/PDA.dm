@@ -382,15 +382,12 @@
 /obj/item/device/pda/proc/can_use()
 
 	if(!ismob(loc))
-		return 0
+		return FALSE
 
 	var/mob/M = loc
 	if(M.incapacitated())
-		return 0
-	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ))
-		return 1
-	else
-		return 0
+		return FALSE
+	return TRUE
 
 /obj/item/device/pda/GetAccess()
 	if(id)
@@ -404,7 +401,7 @@
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
 	. = ..()
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && can_use())
+	if((!istype(over_object, /atom/movable/screen)) && can_use())
 		return attack_self(M)
 	return
 
@@ -615,8 +612,8 @@
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
-	if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
+	// if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that. // Actually, not
+	if (!can_use() || !Adjacent(U))
 		U.unset_machine()
 		if(ui)
 			ui.close()
@@ -735,9 +732,9 @@
 
 //MESSENGER/NOTE FUNCTIONS===================================
 
-		if ("Edit")
+		if("Edit")
 			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
-			if (in_range(src, U) && loc == U && mode == 1)
+			if(Adjacent(U) && mode == 1)
 				note = n
 				notehtml = note
 				note = replacetext(note, "\n", "<br>")
@@ -765,7 +762,7 @@
 
 		if("Ringtone")
 			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
-			if (t && in_range(src, U) && loc == U)
+			if (t && Adjacent(U))
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 					to_chat(U, "The PDA softly beeps.")
 					ui.close()
@@ -1134,7 +1131,7 @@
 
 	if (!t || !istype(P))
 		return
-	if (!in_range(src, U) && loc != U)
+	if (!Adjacent(U))
 		return
 
 	if (isnull(P)||P.toff || toff)
@@ -1337,8 +1334,8 @@
 			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
-			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if(((src in user.contents) && (idcard in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (idcard in user.contents)) )
+			//Basic safety check. If card is held by user and PDA is near user or in user's hand.
+			if(idcard.loc == user)
 				id_check(user, 2)
 				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.

@@ -367,7 +367,7 @@
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		src.reagents.reaction(M, INGEST)
+		reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>[trans] units injected. [reagents.total_volume] units remaining in \the [src].</span>")
