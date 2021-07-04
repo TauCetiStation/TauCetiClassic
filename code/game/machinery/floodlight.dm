@@ -18,6 +18,14 @@
 	cell = new(src)
 	. = ..()
 
+/obj/machinery/floodlight/proc/toggle(on = !on)
+	src.on = on
+	if(on)
+		set_light(brightness_on)
+	else
+		set_light(0)
+	update_icon()
+
 /obj/machinery/floodlight/update_icon()
 	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[on]"
 
@@ -26,9 +34,7 @@
 		if(cell && cell.charge >= use)
 			cell.use(use)
 		else
-			on = FALSE
-			update_icon()
-			set_light(0)
+			toggle(FALSE)
 			visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
@@ -45,16 +51,13 @@
 		cell.updateicon()
 
 		cell = null
-		on = FALSE
+		toggle(FALSE)
 		to_chat(user, "You remove the power cell")
-		update_icon()
 		return
 
 	if(on)
-		on = FALSE
+		toggle(FALSE)
 		to_chat(user, "<span class='notice'>You turn off the light</span>")
-		set_light(0)
-
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 	else
@@ -62,15 +65,12 @@
 			return
 		if(cell.charge <= 0)
 			return
-		on = TRUE
+		toggle(TRUE)
 		to_chat(user, "<span class='notice'>You turn on the light</span>")
-		set_light(brightness_on)
 
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-	update_icon()
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
