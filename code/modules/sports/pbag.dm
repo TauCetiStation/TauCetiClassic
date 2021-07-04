@@ -1,7 +1,7 @@
 /mob/living/pbag
 	name = "punching bag"
 	desc = "It's made by some goons."
-	faction = "neutral"
+	faction = "punching bag"
 	
 	icon = 'code/modules/sports/pbag.dmi'
 	icon_state = "pbag"
