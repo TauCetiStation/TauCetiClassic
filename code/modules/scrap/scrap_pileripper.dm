@@ -158,4 +158,4 @@
 		L.adjustBruteLoss(45)
 		return
 
-	L.harvest(null, get_turf(get_step(src, EAST)))
+	L.harvest(null, get_step(src, EAST))
