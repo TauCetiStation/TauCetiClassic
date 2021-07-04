@@ -553,9 +553,8 @@
 
 /obj/item/weapon/handcuffs/alien/place_handcuffs()
 	. = ..()
-	if(!.)
-		return FALSE
-	flags = DROPDEL // no CONDUCT
+	if(.)
+		flags = DROPDEL // no CONDUCT
 
 // SURGICAL INSTRUMENTS
 /obj/item/weapon/scalpel/alien
