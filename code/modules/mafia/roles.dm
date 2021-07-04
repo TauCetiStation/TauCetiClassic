@@ -47,7 +47,7 @@
 	if(role_flags & ROLE_ROLEBLOCKED)
 		to_chat(visitor.body, "<span class='danger'>Ваше [action] было заблокировано!</span>")
 		return FALSE
-	if(game_status != MAFIA_ALIVE) //They're already dead
+	if(game_status != MAFIA_ALIVE && !(role_flags & ROLE_ACTIONONDEAD)) //They're already dead
 		to_chat(visitor.body, "<span class='danger'>[body.real_name] погиб до того, как вы смогли прийти!</span>")
 		return FALSE
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_VISIT,game,visitor) & MAFIA_VISIT_INTERRUPTED) //visited a warden. something that prevents you by visiting that person
@@ -245,6 +245,7 @@
 	role_type = TOWN_INVEST
 	hud_icon = "hudchaplain"
 	revealed_icon = "chaplain"
+	role_flags = ROLE_ACTIONONDEAD
 
 	targeted_actions = list("Pray")
 	var/datum/mafia_role/current_target

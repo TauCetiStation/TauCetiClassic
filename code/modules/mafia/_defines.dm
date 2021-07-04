@@ -40,6 +40,8 @@
 #define ROLE_VULNERABLE (1<<4)
 ///cannot perform any actions that night, preselected actions fail
 #define ROLE_ROLEBLOCKED (1<<5)
+///allows you to perform an action on a dead person e.g. chaplain
+#define ROLE_ACTIONONDEAD (1<<6)
 
 #define MAFIA_PHASE_SETUP 1
 #define MAFIA_PHASE_DAY 2
