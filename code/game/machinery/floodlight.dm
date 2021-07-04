@@ -18,7 +18,7 @@
 	cell = new(src)
 	. = ..()
 
-/obj/machinery/floodlight/proc/updateicon()
+/obj/machinery/floodlight/update_icon()
 	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[on]"
 
 /obj/machinery/floodlight/process()
@@ -26,8 +26,8 @@
 		if(cell && cell.charge >= use)
 			cell.use(use)
 		else
-			on = 0
-			updateicon()
+			on = FALSE
+			update_icon()
 			set_light(0)
 			visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
@@ -50,12 +50,13 @@
 		cell.updateicon()
 
 		cell = null
+		on = FALSE
 		to_chat(user, "You remove the power cell")
-		updateicon()
+		update_icon()
 		return
 
 	if(on)
-		on = 0
+		on = FALSE
 		to_chat(user, "<span class='notice'>You turn off the light</span>")
 		set_light(0)
 
@@ -66,7 +67,7 @@
 			return
 		if(cell.charge <= 0)
 			return
-		on = 1
+		on = TRUE
 		to_chat(user, "<span class='notice'>You turn on the light</span>")
 		set_light(brightness_on)
 
@@ -74,28 +75,28 @@
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-	updateicon()
+	update_icon()
 
 
 /obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
 	if (isscrewdriver(W))
 		if (!open)
 			if(unlocked)
-				unlocked = 0
+				unlocked = FALSE
 				to_chat(user, "You screw the battery panel in place.")
 			else
-				unlocked = 1
+				unlocked = TRUE
 				to_chat(user, "You unscrew the battery panel.")
 
 	if (iscrowbar(W))
 		if(unlocked)
 			if(open)
-				open = 0
+				open = FALSE
 				cut_overlays()
 				to_chat(user, "You crowbar the battery panel in place.")
 			else
 				if(unlocked)
-					open = 1
+					open = TRUE
 					to_chat(user, "You remove the battery panel.")
 
 	if (istype(W, /obj/item/weapon/stock_parts/cell))
@@ -106,4 +107,4 @@
 				user.drop_from_inventory(W, src)
 				cell = W
 				to_chat(user, "You insert the power cell.")
-	updateicon()
+	update_icon()
