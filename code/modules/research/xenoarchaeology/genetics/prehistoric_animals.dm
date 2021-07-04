@@ -5,7 +5,7 @@
 	icon_state = "samak"
 	icon_living = "samak"
 	icon_dead = "samak_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	move_to_delay = 2
 	maxHealth = 125
 	health = 125
@@ -25,7 +25,7 @@
 	icon_state = "diyaab"
 	icon_living = "diyaab"
 	icon_dead = "diyaab_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	move_to_delay = 1
 	maxHealth = 25
 	health = 25
@@ -45,7 +45,7 @@
 	icon_state = "shantak"
 	icon_living = "shantak"
 	icon_dead = "shantak_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	move_to_delay = 1
 	maxHealth = 75
 	health = 75
@@ -63,7 +63,7 @@
 	icon_state = "yithian"
 	icon_living = "yithian"
 	icon_dead = "yithian_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 
 /mob/living/simple_animal/tindalos
 	name = "tindalos"
@@ -71,4 +71,4 @@
 	icon_state = "tindalos"
 	icon_living = "tindalos"
 	icon_dead = "tindalos_dead"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
