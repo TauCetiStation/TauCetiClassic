@@ -138,7 +138,7 @@
 		if(!spectator.ckey)
 			continue
 		if(spectator.ckey in spectators) //was in current game, or spectatin' (won't send to living)
-			var/link = FOLLOW_LINK(M, town_center_landmark)
+			var/link = TURF_LINK(M, get_turf(town_center_landmark))
 			to_chat(M, "[link] МАФИЯ: [msg] [team_suffix]")
 
 /**
@@ -464,6 +464,10 @@
  * * teams: see mafia team defines for what to put in, makes the messages only send to a specific team (so mafia night votes only sending messages to mafia at night)
  */
 /datum/mafia_controller/proc/vote_for(datum/mafia_role/voter,datum/mafia_role/target,vote_type, teams)
+	if(voter.role_flags & ROLE_ROLEBLOCKED)
+		to_chat(voter.body, "<span class='notice'>Вы заблокированы!</span>")
+		return
+
 	if(voter.next_vote > world.time)
 		return
 

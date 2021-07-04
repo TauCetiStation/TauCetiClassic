@@ -41,14 +41,17 @@
  * Will return false if: Your visit is roleblocked, they have perished, or your visit was interrupted
  */
 /datum/mafia_role/proc/can_action(datum/mafia_controller/game, datum/mafia_role/visitor, action)
+	if(visitor.game_status == MAFIA_DEAD)
+		to_chat(visitor.body, "<span class='danger'>Вы мертвы!</span>")
+		return FALSE
 	if(role_flags & ROLE_ROLEBLOCKED)
-		to_chat(visitor,"<span class='danger'>Ваше [action] было заблокировано!</span>")
+		to_chat(visitor.body, "<span class='danger'>Ваше [action] было заблокировано!</span>")
 		return FALSE
 	if(game_status != MAFIA_ALIVE) //They're already dead
-		to_chat(visitor,"<span class='danger'>[body.real_name] погиб до того, как вы смогли прийти!</span>")
+		to_chat(visitor.body, "<span class='danger'>[body.real_name] погиб до того, как вы смогли прийти!</span>")
 		return FALSE
 	if(SEND_SIGNAL(src,COMSIG_MAFIA_ON_VISIT,game,visitor) & MAFIA_VISIT_INTERRUPTED) //visited a warden. something that prevents you by visiting that person
-		to_chat(visitor,"<span class='danger'>Ваше [action] было прервано!</span>")
+		to_chat(visitor.body, "<span class='danger'>Ваше [action] было прервано!</span>")
 		return FALSE
 	return TRUE
 
