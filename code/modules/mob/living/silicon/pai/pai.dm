@@ -196,6 +196,9 @@
 	unset_machine()
 	src.cameraFollow = null
 
+/mob/living/silicon/pai/ghost()
+	suicide()
+
 //Addition by Mord_Sith to define AI's network change ability
 /*
 /mob/living/silicon/pai/proc/pai_network_change()

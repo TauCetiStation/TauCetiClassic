@@ -885,3 +885,8 @@ var/list/ai_verbs_default = list(
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
 #undef EMERGENCY_MESSAGE_COOLDOWN
+
+/mob/living/silicon/ai/ghost()
+	if(istype(loc, /obj/item/device/aicard) || istype(loc, /obj/item/clothing/suit/space/space_ninja))
+		return ..()
+	wipe_core_verb()

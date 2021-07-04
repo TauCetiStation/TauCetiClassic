@@ -180,7 +180,7 @@
 	set category = "pAI Commands"
 	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)."
 	set name = "pAI Suicide"
-	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
+	var/answer = tgui_alert(usr, "REALLY kill yourself? This action can't be undone.", "Confirm Suicide", list("Yes", "No"))
 	if(answer == "Yes")
 		var/obj/item/device/paicard/card = loc
 		card.removePersonality()
