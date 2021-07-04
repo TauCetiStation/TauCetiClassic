@@ -133,8 +133,10 @@
 			continue
 		to_chat(R.body,msg)
 	var/team_suffix = team ? "([uppertext(team)] ЧАТ)" : ""
-	for(var/M in global.player_list)
+	for(var/M in global.dead_mob_list)
 		var/mob/spectator = M
+		if(!spectator.ckey)
+			continue
 		if(spectator.ckey in spectators) //was in current game, or spectatin' (won't send to living)
 			var/link = FOLLOW_LINK(M, town_center_landmark)
 			to_chat(M, "[link] МАФИЯ: [msg] [team_suffix]")
