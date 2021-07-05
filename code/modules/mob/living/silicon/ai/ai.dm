@@ -136,7 +136,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
-	verbs -= /mob/living/verb/ghost
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(!holo || !isliving(A) || !in_range(eyeobj, A))
@@ -153,7 +152,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
-	verbs += /mob/living/verb/ghost
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()
@@ -735,7 +733,6 @@ var/list/ai_verbs_default = list(
 				if(!state)
 					return
 				if(chooses_ai_staff[state])
-					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 					holo_icon = chooses_ai_staff[state]
 			else
 				tgui_alert(usr, "No suitable records found. Aborting.")
@@ -745,7 +742,6 @@ var/list/ai_verbs_default = list(
 			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
 			if(!state)
 				return
-			qdel(holo_icon)
 			holo_icon = chooses_ai_holo[state]
 
 //I am the icon meister. Bow fefore me.	//>fefore
@@ -887,3 +883,8 @@ var/list/ai_verbs_default = list(
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
 #undef EMERGENCY_MESSAGE_COOLDOWN
+
+/mob/living/silicon/ai/ghost()
+	if(istype(loc, /obj/item/device/aicard) || istype(loc, /obj/item/clothing/suit/space/space_ninja))
+		return ..()
+	wipe_core_verb()
