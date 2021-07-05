@@ -2,7 +2,7 @@
 	name = "punching bag"
 	desc = "It's made by some goons."
 	faction = "untouchable"
-  
+
 	icon = 'icons/obj/sports/pbag.dmi'
 	icon_state = "pbag"
 	logs_combat = FALSE
