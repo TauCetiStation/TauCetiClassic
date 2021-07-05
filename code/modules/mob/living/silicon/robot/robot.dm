@@ -1121,3 +1121,6 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/swap_hand()
+	cycle_modules()

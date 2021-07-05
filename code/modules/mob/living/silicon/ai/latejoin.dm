@@ -10,11 +10,8 @@ var/global/list/empty_playable_ai_cores = list()
 
 	return 1
 
-/mob/living/silicon/ai/verb/wipe_core_verb()
-	set name = "Wipe Core"
-	set category = "OOC"
-	set desc = "Wipe your core. This is functionally equivalent to cryo or robotic storage, freeing up your job slot."
-
+// Wipe your core. This is functionally equivalent to cryo or robotic storage, freeing up your job slot.
+/mob/living/silicon/ai/proc/wipe_core_verb()
 	if(ismalf(usr))
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
