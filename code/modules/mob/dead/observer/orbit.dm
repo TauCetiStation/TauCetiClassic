@@ -40,49 +40,45 @@
 
 /datum/orbit_menu/tgui_static_data(mob/user)
 	var/list/data = list()
-	var/list/alive = list()
-	var/list/antagonists = list()
-	var/list/dead = list()
-	var/list/ghosts = list()
-	var/list/misc = list()
-	var/list/npcs = list()
+	data["misc"] = list()
+	data["ghosts"] = list()
+	data["dead"] = list()
+	data["npcs"] = list()
+	data["alive"] = list()
+	data["antagonists"] = list()
+
 
 	var/list/pois = getpois(mobs_only = FALSE, skip_mindless = FALSE)
 	for(var/name in pois)
 		var/list/serialized = list()
-		serialized["name"] = name
-
 		var/poi = pois[name]
 
+		serialized["name"] = name
 		serialized["ref"] = "\ref[poi]"
 
 		var/mob/M = poi
-		if(istype(M))
-			if (isobserver(M))
-				ghosts += list(serialized)
-			else if(M.stat == DEAD)
-				dead += list(serialized)
-			else if(M.mind == null)
-				npcs += list(serialized)
-			else
-				alive += list(serialized)
+		if(!istype(M))
+			data["misc"] += list(serialized)
+			continue
 
-				var/mob/dead/observer/O = user
-				if(O.antagHUD)
-					for(var/mob/A in mob_list - observer_list)
-						if(A.mind?.special_role)
-							var/antag_serialized = serialized.Copy()
-							antag_serialized["antag"] = A.mind.special_role
-							antagonists += list(antag_serialized)
+		if(isobserver(M))
+			data["ghosts"] += list(serialized)
+			continue
 
+		if(M.stat == DEAD)
+			data["dead"] += list(serialized)
+			continue
 
-		else
-			misc += list(serialized)
+		if(M.mind == null)
+			data["npcs"] += list(serialized)
+			continue
 
-	data["alive"] = alive
-	data["dead"] = dead
-	data["antagonists"] = antagonists
-	data["ghosts"] = ghosts
-	data["misc"] = misc
-	data["npcs"] = npcs
+		data["alive"] += list(serialized)
+
+		var/mob/dead/observer/O = user
+		if(O.antagHUD && M.mind?.special_role)
+			var/antag_serialized = serialized.Copy()
+			antag_serialized["antag"] = M.mind.special_role
+			data["antagonists"] += list(antag_serialized)
+
 	return data
