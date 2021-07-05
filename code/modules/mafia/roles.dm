@@ -585,7 +585,7 @@
 
 	if(protection_status == WARDEN_WILL_LOCKDOWN)
 		charges--
-		UnregisterSignal(src,COMSIG_MAFIA_ON_KILL)
+		UnregisterSignal(src,COMSIG_MAFIA_ON_VISIT)
 		to_chat(body,"<span class='danger'>Вы больше не защищены. Вы потратили свою силу.</span>")
 		protection_status = WARDEN_NOT_LOCKDOWN
 
