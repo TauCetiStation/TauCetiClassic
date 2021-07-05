@@ -71,7 +71,7 @@
 	if(loc != NewLoc)
 		if (!is_diagonal) //Cardinal move
 			. = ..()
-		else //Diagonal move, split it into cardinal 
+		else //Diagonal move, split it into cardinal
 			var/v = Dir & NORTH_SOUTH
 			var/h = Dir & EAST_WEST
 
@@ -94,7 +94,7 @@
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
-	
+
 	if(!is_diagonal && moving_diagonally != SECOND_DIAG_STEP)
 		move_speed = world.time - l_move_time
 		l_move_time = world.time
@@ -243,7 +243,7 @@
 
 	var/datum/thrownthing/TT = new()
 	TT.thrownthing = src
-	RegisterSignal(TT, COMSIG_PARENT_QDELETED, /datum/thrownthing.proc/on_thrownthing_qdel)
+	RegisterSignal(TT, COMSIG_PARENT_QDELETING, /datum/thrownthing.proc/on_thrownthing_qdel)
 	TT.target = target
 	TT.target_turf = get_turf(target)
 	TT.init_dir = get_dir(src, target)
