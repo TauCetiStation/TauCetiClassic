@@ -185,15 +185,14 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/bicon(obj, use_class = 1)
-	var/class = use_class ? "class='icon misc'" : null
+/proc/bicon(obj, css = "class='icon misc'") // if you don't want any styling just pass null
 	if (!obj)
 		return
 
 	if (isicon(obj))
 		if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
 			bicon_cache["\ref[obj]"] = icon2base64(obj)
-		return "<img [class] src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"
+		return "<img [css] src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = obj
@@ -209,10 +208,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
 		bicon_cache[key] = icon2base64(I, key)
-	if(use_class)
-		class = "class='icon [A.icon_state]'"
+	if(css == "class='icon misc'")
+		css = "class='icon [A.icon_state]'"
 
-	return "<img [class] src='data:image/png;base64,[bicon_cache[key]]'>"
+	return "<img [css] src='data:image/png;base64,[bicon_cache[key]]'>"
 
 /proc/to_chat(target, message, handle_whitespace=TRUE)
 	if(!Master.init_time || !SSchat) // This is supposed to be Master.current_runlevel == RUNLEVEL_INIT || !SSchat?.initialized but we don't have these variables
