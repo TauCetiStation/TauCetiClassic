@@ -313,10 +313,30 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	var/area/A = get_area(src)
-	A.powerupdate = 1
-
 	return TRUE
+
+// TGui variant of Topic
+/obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	if(!is_operational_topic())
+		usr.unset_machine(src)
+		return TRUE
+
+	if(!can_mob_interact(usr))
+		return TRUE
+
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !emagged && !allowed(usr))
+		allowed_fail(usr)
+		to_chat(usr, "<span class='warning'>Access Denied.</span>")
+		return TRUE
+
+	usr.set_machine(src)
+	add_fingerprint(usr)
+
+	return FALSE
 
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER|BROKEN|MAINT))
@@ -343,7 +363,7 @@ Class Procs:
 		add_hiddenprint(user)
 	else if(isliving(user))
 		add_fingerprint(user)
-	if(ui_interact(user) != -1)
+	if(is_operational_topic() && ui_interact(user) != -1)
 		user.set_machine(src)
 
 /obj/machinery/attack_ai(mob/user)
@@ -378,9 +398,6 @@ Class Procs:
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return 1
-
-	var/area/A = get_area(src)
-	A.powerupdate = 1 // <- wtf is this var and its comments...
 
 	interact(user)
 	return 0
