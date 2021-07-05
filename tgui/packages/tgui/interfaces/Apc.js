@@ -33,39 +33,29 @@ const powerStatusMap = {
   },
 };
 
-const malfMap = {
-  1: {
-    icon: 'terminal',
-    content: 'Override Programming',
-    action: 'hack',
-  },
-  2: {
-    icon: 'caret-square-down',
-    content: 'Shunt Core Process',
-    action: 'occupy',
-  },
-  3: {
-    icon: 'caret-square-left',
-    content: 'Return to Main Core',
-    action: 'deoccupy',
-  },
-  4: {
-    icon: 'caret-square-down',
-    content: 'Shunt Core Process',
-    action: 'occupy',
-  },
-};
-
 const ApcContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const locked = data.locked && !data.siliconUser;
-  const externalPowerStatus = powerStatusMap[data.externalPower]
+  const {
+    locked,
+    isOperating,
+    externalPower,
+    powerCellStatus,
+    chargeMode,
+    charging,
+    totalLoad,
+    coverLocked,
+    siliconUser,
+    malfCanHack,
+    nightshiftLights,
+    nightshiftPreset,
+    powerChannels,
+  } = data;
+  const isLocked = locked && !siliconUser;
+  const externalPowerStatus = powerStatusMap[externalPower]
     || powerStatusMap[0];
-  const chargingStatus = powerStatusMap[data.chargingStatus]
+  const chargingStatus = powerStatusMap[charging]
     || powerStatusMap[0];
-  const channelArray = data.powerChannels || [];
-  const malfStatus = malfMap[data.malfStatus] || malfMap[0];
-  const adjustedCellChange = data.powerCellStatus / 100;
+  const channelArray = powerChannels || [];
   return (
     <>
       <InterfaceLockNoticeBox />
@@ -76,10 +66,10 @@ const ApcContent = (props, context) => {
             color={externalPowerStatus.color}
             buttons={(
               <Button
-                icon={data.isOperating ? 'power-off' : 'times'}
-                content={data.isOperating ? 'On' : 'Off'}
-                selected={data.isOperating && !locked}
-                disabled={locked}
+                icon={isOperating ? 'power-off' : 'times'}
+                content={isOperating ? 'On' : 'Off'}
+                selected={isOperating && !isLocked}
+                disabled={isLocked}
                 onClick={() => act('breaker')} />
             )}>
             [ {externalPowerStatus.externalPowerText} ]
@@ -88,16 +78,16 @@ const ApcContent = (props, context) => {
             <ProgressBar
               color="good"
               fractionDigits={1}
-              value={adjustedCellChange} />
+              value={powerCellStatus * 0.01} />
           </LabeledList.Item>
           <LabeledList.Item
             label="Charge Mode"
             color={chargingStatus.color}
             buttons={(
               <Button
-                icon={data.chargeMode ? 'sync' : 'times'}
-                content={data.chargeMode ? 'Auto' : 'Off'}
-                disabled={locked}
+                icon={chargeMode ? 'sync' : 'times'}
+                content={chargeMode ? 'Auto' : 'Off'}
+                disabled={isLocked}
                 onClick={() => act('charge')} />
             )}>
             [ {chargingStatus.chargingText} ]
@@ -121,22 +111,22 @@ const ApcContent = (props, context) => {
                     <Button
                       icon="sync"
                       content="Auto"
-                      selected={!locked && (
+                      selected={!isLocked && (
                         channel.status === 1 || channel.status === 3
                       )}
-                      disabled={locked}
+                      disabled={isLocked}
                       onClick={() => act('channel', topicParams.auto)} />
                     <Button
                       icon="power-off"
                       content="On"
-                      selected={!locked && channel.status === 2}
-                      disabled={locked}
+                      selected={!isLocked && channel.status === 2}
+                      disabled={isLocked}
                       onClick={() => act('channel', topicParams.on)} />
                     <Button
                       icon="times"
                       content="Off"
-                      selected={!locked && channel.status === 0}
-                      disabled={locked}
+                      selected={!isLocked && channel.status === 0}
+                      disabled={isLocked}
                       onClick={() => act('channel', topicParams.off)} />
                   </>
                 )}>
@@ -145,20 +135,20 @@ const ApcContent = (props, context) => {
             );
           })}
           <LabeledList.Item label="Total Load">
-            <b>{data.totalLoad}</b>
+            <b>{totalLoad}</b>
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section
         title="Misc"
-        buttons={!!data.siliconUser && (
+        buttons={!!siliconUser && (
           <>
-            {!!data.malfStatus && (
+            {!!malfCanHack && (
               <Button
-                icon={malfStatus.icon}
-                content={malfStatus.content}
+                icon="terminal"
+                content="Override Programming"
                 color="bad"
-                onClick={() => act(malfStatus.action)} />
+                onClick={() => act('hack')} />
             )}
             <Button
               icon="lightbulb-o"
@@ -171,9 +161,9 @@ const ApcContent = (props, context) => {
             label="Cover Lock"
             buttons={(
               <Button
-                icon={data.coverLocked ? 'lock' : 'unlock'}
-                content={data.coverLocked ? 'Engaged' : 'Disengaged'}
-                disabled={locked}
+                icon={coverLocked ? 'lock' : 'unlock'}
+                content={coverLocked ? 'Engaged' : 'Disengaged'}
+                disabled={isLocked}
                 onClick={() => act('cover')} />
             )} />
           <LabeledList.Item
@@ -181,16 +171,16 @@ const ApcContent = (props, context) => {
             buttons={(
               <Button
                 icon="lightbulb-o"
-                content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
+                content={nightshiftLights ? 'Enabled' : 'Disabled'}
                 onClick={() => act('toggle_nightshift')} />
             )} />
-          {!!data.nightshiftLights && (
+          {!!nightshiftLights && (
             <LabeledList.Item
               label="Night Shift Lighting Preset"
               buttons={(
                 <Button
                   icon="lightbulb-o"
-                  content={data.nightshiftPreset}
+                  content={nightshiftPreset}
                   onClick={() => act('change_nightshift')} />
               )} />
           )}

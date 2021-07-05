@@ -6,6 +6,8 @@
 #define POWERSINK_RATE_MAX 10000000 
 // Drain form APC's cells, ~25 kW per power tick:
 #define POWERSINK_APC_DRAIN 50
+// Maximum power that can be drained before exploding:
+#define POWERSINK_MAX_POWER 4e8
 
 
 /obj/item/device/powersink
@@ -22,11 +24,8 @@
 	origin_tech = "powerstorage=3;syndicate=5"
 	var/drain_rate = 0 // amount of power to drain per tick
 	var/power_drained = 0 // has drained this much power
-	var/max_power = 4e8 // maximum power that can be drained before exploding
 	var/mode = 0 // 0 = off, 1 = clamped (off), 2 = operating
-
-
-	var/obj/structure/cable/attached		// the attached cable
+	var/obj/structure/cable/attached // the attached cable
 
 /obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
 	if(isscrewdriver(I))
@@ -102,7 +101,7 @@
 	if(attached)
 		var/datum/powernet/PN = attached.get_powernet()
 		if(PN)
-			set_light(7 + round(10 * power_drained / max_power))
+			set_light(7 + round(10 * power_drained / POWERSINK_MAX_POWER))
 
 			// Found a powernet, so drain up to max power from it:
 			drain_rate = min(drain_rate + POWERSINK_RATE, POWERSINK_RATE_MAX)
@@ -120,14 +119,15 @@
 						if(A.operating && A.cell)
 							power_drained += A.cell.use(POWERSINK_APC_DRAIN) / CELLRATE
 
-		if(power_drained > max_power * 0.9)
+		if(power_drained > POWERSINK_MAX_POWER * 0.9)
 			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
-		if(power_drained >= max_power)
+		if(power_drained >= POWERSINK_MAX_POWER)
 			STOP_PROCESSING(SSobj, src)
 			explosion(src.loc, 3,6,9,12)
 			qdel(src)
 
 
+#undef POWERSINK_MAX_POWER
 #undef POWERSINK_APC_DRAIN
 #undef POWERSINK_RATE_MAX
 #undef POWERSINK_RATE

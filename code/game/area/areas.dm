@@ -26,7 +26,6 @@
 
 	var/eject = null
 
-	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
 	var/requires_power = 1
 	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
 
@@ -310,10 +309,9 @@ var/list/ghostteleportlocs = list()
 
 // called when power status changes
 /area/proc/power_change()
-	powerupdate = 2
 	for(var/obj/machinery/M in src)	// for each machine in the area
-		M.power_change()				// reverify power status (to update icons etc.)
-	for(var/obj/item/device/radio/intercom/I in src)	// Intercoms are not machinery so we need a different loop
+		M.power_change() // reverify power status (to update icons etc.)
+	for(var/obj/item/device/radio/intercom/I in src) // Intercoms are not machinery so we need a different loop
 		I.power_change()
 	if (fire || eject || party)
 		updateicon()

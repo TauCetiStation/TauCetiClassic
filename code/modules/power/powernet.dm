@@ -45,7 +45,7 @@
 		if(C.powernet != src)
 			C.powernet.remove_cable(C) // Remove it
 	C.powernet = src
-	cables[C] = C
+	cables |= C
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
@@ -63,7 +63,7 @@
 		if(M.powernet != src)
 			M.powernet.remove_machine(M) // Remove it
 	M.powernet = src
-	nodes[M] = M
+	nodes |= M
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller

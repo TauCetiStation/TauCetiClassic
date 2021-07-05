@@ -32,13 +32,19 @@ var/power_fail_event = FALSE
 		var/area/current_area = get_area(S)
 		if(current_area.type in skipped_areas || !is_station_level(S.z))
 			continue
-		S.charge = rand(S.charge / 100, S.charge)
+		if(prob(25))
+			S.charge = rand(0, S.charge / 10)
+		else
+			S.charge = 0
 		S.power_failure = TRUE
 		S.power_change()
 
 	for(var/obj/machinery/power/apc/C in apc_list)
 		if(C.cell && is_station_level(C.z))
-			C.cell.charge = rand(C.cell.charge / 100, C.cell.charge)
+			if(prob(25))
+				C.cell.charge = rand(0, C.cell.charge / 10)
+			else
+				C.cell.charge = 0
 			C.shorted = TRUE
 
 /proc/play_ambience()
@@ -81,7 +87,6 @@ var/power_fail_event = FALSE
 	for(var/obj/machinery/power/smes/S in smes_list)
 		if(!is_station_level(S.z))
 			continue
-		S.RefreshParts()
 		S.charge = S.capacity
 		S.input_attempt = TRUE
 		S.output_attempt = TRUE

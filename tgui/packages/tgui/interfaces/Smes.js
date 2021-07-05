@@ -10,7 +10,6 @@ export const Smes = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     capacityPercent,
-    capacity,
     charge,
     inputAttempt,
     inputting,

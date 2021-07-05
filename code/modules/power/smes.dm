@@ -101,22 +101,18 @@
 	..()
 
 /obj/machinery/power/smes/RefreshParts()
-	if(power_fail_event)
-		input_level_max = 0
-		output_level_max = 0
-	else
-		var/IO = 0
-		var/C = 0
-		var/c = 0
-		for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
-			IO += CP.rating
-		input_level_max = 200000 * IO
-		output_level_max = 200000 * IO
-		for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
-			C += PC.maxcharge
-			c += PC.charge
-		capacity = C * 100
-		charge = c * 100
+	var/IO = 0
+	var/C = 0
+	var/c = 0
+	for(var/obj/item/weapon/stock_parts/capacitor/CP in component_parts)
+		IO += CP.rating
+	input_level_max = 200000 * IO
+	output_level_max = 200000 * IO
+	for(var/obj/item/weapon/stock_parts/cell/PC in component_parts)
+		C += PC.maxcharge
+		c += PC.charge
+	capacity = C * 100
+	charge = c * 100
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
 	// opening using screwdriver
@@ -351,14 +347,12 @@
 // UI stuff ////////////////////
 
 /obj/machinery/power/smes/is_operational_topic()
-	return !(stat & (BROKEN | EMPED)) && !power_failure
+	return ..() && !power_failure
 
 /obj/machinery/power/smes/tgui_state(mob/user)
 	return global.machinery_state
 
 /obj/machinery/power/smes/ui_interact(mob/user)
-	if (!is_operational_topic())
-		return
 	tgui_interact(user)
 
 /obj/machinery/power/smes/tgui_interact(mob/user, datum/tgui/ui)
@@ -369,19 +363,16 @@
 
 /obj/machinery/power/smes/tgui_data(mob/user)
 	var/list/data = list(
-		"capacity" = capacity,
 		"capacityPercent" = round(100 * charge / capacity, 0.1),
 		"charge" = charge,
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
-		"inputLevel_text" = DisplayPower(input_level),
 		"inputLevelMax" = input_level_max,
 		"inputAvailable" = max(input_available, 0),
 		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
-		"outputLevel_text" = DisplayPower(output_level),
 		"outputLevelMax" = output_level_max,
 		"outputUsed" = output_load,
 	)
@@ -394,11 +385,6 @@
 	. = ..()
 	if(.)
 		return
-	if (!is_operational_topic())
-		return
-
-	for(var/area/A in all_areas)
-		A.powerupdate = 3
 
 	switch(action)
 		if("tryinput")
@@ -488,12 +474,6 @@
 			message_admins("SMES smoke in [src.loc.loc] [ADMIN_JMP(src)]")
 			log_game("SMES smoke in [src.loc.loc]")
 
-/obj/machinery/power/smes/proc/after_emp()
-	input_attempt = prob(50) ? TRUE : FALSE
-	output_attempt = prob(50) ? TRUE : FALSE
-	input_level = rand(0, input_level_max)
-	output_level = rand(0, output_level_max)
-
 /obj/machinery/power/smes/emp_act(severity)
 	input_attempt = FALSE
 	output_attempt = FALSE
@@ -502,8 +482,16 @@
 	charge -= 1e6 / severity
 	if (charge < 0)
 		charge = 0
-	addtimer(CALLBACK(src, .proc/after_emp), 100)
+	stat |= EMPED
+	addtimer(CALLBACK(src, .proc/after_emp), 150 / severity)
 	..()
+
+/obj/machinery/power/smes/proc/after_emp()
+	input_attempt = prob(50) ? TRUE : FALSE
+	output_attempt = prob(50) ? TRUE : FALSE
+	input_level = rand(0, input_level_max)
+	output_level = rand(0, output_level_max)
+	stat &= ~EMPED
 
 
 
@@ -514,6 +502,16 @@
 /obj/machinery/power/smes/magical/process()
 	charge = capacity
 	..()
+
+/obj/machinery/power/smes/inputting
+	input_attempt = TRUE
+	input_level = 50000
+
+/obj/machinery/power/smes/fullcharge
+
+/obj/machinery/power/smes/fullcharge/atom_init()
+	. = ..()
+	charge = capacity
 
 
 

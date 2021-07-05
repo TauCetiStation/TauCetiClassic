@@ -241,7 +241,7 @@
 	if(!PN)
 		powered = 0
 		return 0
-	var/surplus = max(PN.avail - PN.load, 0)
+	var/surplus = max(PN.avail-PN.load, 0)
 	var/shieldload = min(rand(50,200), surplus)
 	if(shieldload==0 && !storedpower)		// no cable or no power, and no power stored
 		powered = 0
@@ -250,7 +250,7 @@
 		powered = 1
 		if(PN)
 			storedpower += shieldload
-			PN.add_load(shieldload) //uses powernet power.
+			PN.newload += shieldload //uses powernet power.
 			*/
 
 /obj/machinery/shield_gen/proc/toggle()
