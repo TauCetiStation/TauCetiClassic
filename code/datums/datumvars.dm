@@ -165,7 +165,7 @@
 	body += "<div align='center'><table width='100%'><tr><td width='50%'>"
 
 	if(sprite)
-		body += "<table align='center' width='100%'><tr><td>[bicon(D, css = null)]</td><td>"
+		body += "<table align='center' width='100%'><tr><td>[bicon(D, use_class = 0)]</td><td>"
 	else
 		body += "<table align='center' width='100%'><tr><td>"
 
@@ -358,14 +358,14 @@ body
 
 	else if (isicon(value))
 		#ifdef VARSICON
-		html += "[name] = /icon (<span class='value'>[value]</span>) [bicon(value, css = null)]"
+		html += "[name] = /icon (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
 		#else
 		html += "[name] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
 	else if (istype(value, /image))
 		#ifdef VARSICON
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, css = null)]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
 		#else
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
 		#endif
@@ -480,7 +480,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.holder.show_player_panel(M)
+		holder.show_player_panel(M)
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["give_spell"])
