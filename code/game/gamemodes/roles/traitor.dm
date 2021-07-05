@@ -90,11 +90,9 @@
 
 	return TRUE
 
-/datum/role/traitor/AssignToRole(datum/mind/M, override, msg_admins)
+/datum/role/traitor/OnPostSetup(laterole)
 	. = ..()
-	if(!.)
-		return
-	if(issilicon(M.current))
+	if(issilicon(antag.current))
 		add_law_zero(antag.current)
 
 /datum/role/traitor/RemoveFromRole(datum/mind/M, msg_admins)
