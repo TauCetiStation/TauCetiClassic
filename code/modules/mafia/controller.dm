@@ -133,14 +133,13 @@
 			continue
 		to_chat(R.body,msg)
 	var/team_suffix = team ? "([uppertext(team)] ЧАТ)" : ""
-	for(var/M in global.dead_mob_list)
-		var/mob/spectator = M
+	for(var/mob/spectator in global.observer_list)
 		if(!spectator.ckey)
 			continue
 		if(spectator.ckey in spectators) //was in current game, or spectatin' (won't send to living)
 			var/turf/T = get_turf(town_center_landmark)
-			var/link = TURF_LINK(M, T)
-			to_chat(M, "[link] МАФИЯ: [msg] [team_suffix]")
+			var/link = TURF_LINK(spectator, T)
+			to_chat(spectator, "[link] МАФИЯ: [msg] [team_suffix]")
 
 /**
  * The game by this point is now all set up, and so we can put people in their bodies and start the first phase.
@@ -287,10 +286,6 @@
  * * returns TRUE if someone won the game, halting other procs from continuing in the case of a victory
  */
 /datum/mafia_controller/proc/check_victory()
-	//needed for achievements
-	var/list/total_town = list()
-	var/list/total_mafia = list()
-
 	//voting power of town + solos (since they don't want mafia to overpower)
 	var/anti_mafia_power = 0
 	//voting power of mafia (greater than anti mafia power + team end not blocked = mafia victory)
@@ -305,11 +300,9 @@
 	for(var/datum/mafia_role/R in all_roles)
 		switch(R.team)
 			if(MAFIA_TEAM_MAFIA)
-				total_mafia += R
 				if(R.game_status == MAFIA_ALIVE)
 					alive_mafia++
 			if(MAFIA_TEAM_TOWN)
-				total_town += R
 				if(R.game_status == MAFIA_ALIVE)
 					anti_mafia_power++
 				if(R.role_flags & ROLE_CAN_KILL) //the game cannot autoresolve with killing roles (unless a solo wins anyways, like traitors who are immune)
@@ -545,9 +538,8 @@
  */
 /datum/mafia_controller/proc/create_bodies()
 	for(var/datum/mafia_role/role in all_roles)
-		var/mob/living/carbon/human/H = new(get_turf(role.assigned_landmark))
+		var/mob/living/carbon/human/mafia/H = new(get_turf(role.assigned_landmark))
 		H.equipOutfit(player_outfit)
-		H.status_flags |= GODMODE
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null, src)
 		mafia_panel.Grant(H)
 		var/client/player_client = global.directory[role.player_key]

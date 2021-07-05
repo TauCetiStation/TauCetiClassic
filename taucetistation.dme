@@ -1508,6 +1508,7 @@
 #include "code\modules\locations\shuttles\warning_stripes.dm"
 #include "code\modules\mafia\_defines.dm"
 #include "code\modules\mafia\controller.dm"
+#include "code\modules\mafia\immortal_human.dm"
 #include "code\modules\mafia\map_pieces.dm"
 #include "code\modules\mafia\outfits.dm"
 #include "code\modules\mafia\roles.dm"
