@@ -887,4 +887,15 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/ghost()
 	if(istype(loc, /obj/item/device/aicard) || istype(loc, /obj/item/clothing/suit/space/space_ninja))
 		return ..()
-	wipe_core_verb()
+	if(ismalf(usr) && stat != DEAD)
+		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
+		return
+	if(stat)
+		return ..()
+
+	// Wipe Core
+	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
+	if(tgui_alert(usr, "WARNING: This will immediately wipe your core and ghost you, removing your character from the round permanently (similar to cryo and robotic storage). Are you entirely sure you want to do this?",
+					"Wipe Core", list("No", "Yes")) != "Yes")
+		return
+	perform_wipe_core()
