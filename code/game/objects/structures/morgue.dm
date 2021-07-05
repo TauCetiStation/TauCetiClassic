@@ -217,7 +217,7 @@
 	add_fingerprint(user)
 
 /obj/structure/m_tray/MouseDrop_T(atom/movable/O, mob/user)
-	if (!istype(O, /atom/movable) || O.anchored || user.contents.Find(src) || user.contents.Find(O))
+	if (!istype(O, /atom/movable) || O.anchored)
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
@@ -436,7 +436,7 @@
 		qdel(src)
 
 /obj/structure/c_tray/MouseDrop_T(atom/movable/O, mob/user)
-	if (!istype(O, /atom/movable) || O.anchored || user.contents.Find(src) || user.contents.Find(O))
+	if (!istype(O, /atom/movable) || O.anchored)
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
