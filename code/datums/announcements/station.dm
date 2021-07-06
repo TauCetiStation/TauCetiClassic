@@ -37,16 +37,16 @@
 /* Alerts */
 /datum/announcement/station/nuke
 	name = "Alert: Nuke Activation"
-	message =  "Обнаружена активация ядерной боеголовки где-то на станции. Кто-то пытается взорвать станцию!"
+	message =  "Обнаружена активация ядерной боеголовки где-то на станции. Происходит попытка уничтожения станции."
 	sound = "nuke"
 /datum/announcement/station/nuke/play(area/A)
 	if(A)
-		message = "Обнаружена активация ядерной боеголовки в [initial(A.name)]. Кто-то пытается взорвать станцию!"
+		message = "Обнаружена активация ядерной боеголовки в [initial(A.name)]. Происходит попытка уничтожения станции."
 	..()
 
 /datum/announcement/station/maint_revoke
 	name = "Alert: Maintenance Access Revoked"
-	message = "Был аннулирован доступ на все технические туннели."
+	message = "Требование доступа в технические тоннели было аннулировано."
 
 /datum/announcement/station/maint_readd
 	name = "Alert: Maintenance Access Readded"
@@ -74,27 +74,27 @@
 	name = "Shuttle: Crew Called"
 	sound = "crew_shut_called"
 /datum/announcement/station/shuttle/crew_called/play()
-	message = "Процедура смены экипажа начата. Шаттл вызван. Он прибудет через [shuttleminutes2text()]."
+	message = "Процедура смены экипажа начата. Шаттл вызван и прибудет к станции через [shuttleminutes2text()]."
 	..()
 
 /datum/announcement/station/shuttle/crew_recalled
 	name = "Shuttle: Crew Recalled"
-	message = "Шаттл был отозван."
+	message = "Шаттл Транспортировки Экипажа был отозван."
 	sound = "crew_shut_recalled"
 
 /datum/announcement/station/shuttle/crew_docked
 	name = "Shuttle: Crew Docked"
 	sound = "crew_shut_docked"
 /datum/announcement/station/shuttle/crew_docked/play()
-	message = "Шаттл Транспортировки Экипажа пристыковался к станции в соответствии с расписанием. Отправление примерно через [shuttleminutes2text()]."
+	message = "Шаттл Транспортировки Экипажа пристыковался к станции в соответствии с расписанием. Отправление шаттла через [shuttleminutes2text()]."
 	..()
 
 /datum/announcement/station/shuttle/crew_left
 	name = "Shuttle: Crew Left"
-	message = "Шаттл Транспортировки Экипажа покинул станцию. Он прибудет на Центральное Командование через несколько минут."
+	message = "Шаттл Транспортировки Экипажа покинул станцию. Он прибудет к Центральному Командованию через несколько минут."
 	sound = "crew_shut_left"
 /datum/announcement/station/shuttle/crew_left/play()
-	message = "Шаттл Транспортировки Экипажа покинул станцию. Остается [shuttleminutes2text()] до стыковки шаттла к Центральному Командованию."
+	message = "Шаттл Транспортировки Экипажа покинул станцию. До стыковки шаттла к Центральному Командованию: [shuttleminutes2text()]."
 	..()
 
 
@@ -114,7 +114,7 @@
 	name = "Shuttle: Emergency Docked"
 	sound = "emer_shut_docked"
 /datum/announcement/station/shuttle/emer_docked/play()
-	message = "Эвакуационный Шаттл пристыковался к станции. У вас есть [shuttleminutes2text()] для посадки."
+	message = "Эвакуационный Шаттл пристыковался к станции. У экипажа есть [shuttleminutes2text()] для посадки."
 	..()
 
 /datum/announcement/station/shuttle/emer_left
@@ -122,7 +122,7 @@
 	message = "Эвакуационный Шаттл покинул станцию. Он прибудет на Центральное Командование через несколько минут."
 	sound = "emer_shut_left"
 /datum/announcement/station/shuttle/emer_left/play()
-	message = "Эвакуационный Шаттл покинул станцию. Остается [shuttleminutes2text()] до стыковки шаттла к Центральному Командованию."
+	message = "Эвакуационный Шаттл покинул станцию. До стыковки шаттла к Центральному Командованию: [shuttleminutes2text()]."
 	..()
 
 /* Security codes */
@@ -137,8 +137,8 @@
 	name = "Code: Up to Blue"
 	subtitle = "Внимание! Код безопастности повышен до Синего"
 	message = "Командование получило надежную информацию о возможной враждебной активности на борту станции. " + \
-			"Служба безопасности может носить оружие на виду, однако, не следует вынимать его без необходимости. " + \
-			"Разрешается личный обыск персонала и отсеков станции без предварительных санкций."
+			"Служба безопасности может носить оружие на виду и применять в случае крайней необходимости. " + \
+			"Разрешается личный обыск персонала и отсеков станции без предварительных мер."
 	sound = "blue"
 
 /datum/announcement/station/code/downtoblue
@@ -161,7 +161,7 @@
 /datum/announcement/station/code/downtored
 	name = "Code: Down to Red"
 	subtitle = "Внимание! Красный код!"
-	message = "Механизм самоуничтожения деактивирован и над ситуацией был вернут частичный контроль. " + \
+	message = "Механизм самоуничтожения деактивирован. Частичный контроль над ситуацией возвращён. " + \
 			"Тем не менее существует прямая угроза станции. Служба безопасности имеет право носить оружие наготове по собственному усмотрению. " + \
 			"Рекомендуются спонтанные обыски персонала и отсеков."
 	sound = "downtored"
