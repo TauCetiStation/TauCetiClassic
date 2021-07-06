@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(throwing)
 	var/datum/callback/early_callback // used when you want to call something before throw_impact().
 
 /datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, datum/callback/callback, datum/callback/early_callback)
-	src.thrownthing = src
+	src.thrownthing = thrownthing
 	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
 	src.target = target
 	src.target_turf = get_turf(target)
