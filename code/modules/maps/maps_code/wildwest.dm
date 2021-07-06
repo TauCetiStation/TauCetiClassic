@@ -78,7 +78,7 @@
 			if("To Kill")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
-				create_and_setup_role(/datum/role/traitor/wishgtanter, user)
+				create_and_setup_role(/datum/role/traitor/wishgranter, user)
 				user.dna.mutantrace = "shadow"
 				user.update_mutantrace()
 			if("Peace")
