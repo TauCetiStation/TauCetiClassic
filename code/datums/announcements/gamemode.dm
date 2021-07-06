@@ -21,7 +21,7 @@
 /datum/announcement/centcomm/blob/biohazard_station_unlock
 	name = "Biohazard Level Updated - Lock Down Lifted"
 	subtitle = "Biohazard Alert"
-	message = "Biohazard outbreak contained successfully. Quarantine lifted. Please clean up biohazardous material and proceed with standard station duties."
+	message = "Вспышка биологической угрозы успешно локализована. Карантин снят. Удалите биологически опасные материалы и приступайте к стандартным станционным обязанностям."
 
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
@@ -61,7 +61,7 @@
 	sound = "malf1"
 /datum/announcement/centcomm/malf/first/play()
 	message = "Осторожно, [station_name_ru()]. Мы фиксируем необычные показатели в вашей сети. " + \
-			"Похоже, кто-то пытается взломать ваши системы. Сообщим вам позже, когда получим больше информации."
+			"Похоже, кто-то пытается взломать ваши электронные системы. Мы сообщим вам, когда у нас будет больше информации."
 	..()
 
 /datum/announcement/centcomm/malf/second
@@ -84,9 +84,9 @@
 /* Cult */
 /datum/announcement/station/cult/capture_area
 	name = "Anomaly: Bluespace"
-	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: неизвестно."
+	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: неизвестно."
 	sound = "bluspaceanom"
 /datum/announcement/station/cult/capture_area/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: [A.name]."
+		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [A.name]."
 	..()
