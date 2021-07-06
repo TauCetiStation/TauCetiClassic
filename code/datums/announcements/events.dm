@@ -199,7 +199,7 @@
 /datum/announcement/centcomm/irod
 	name = "Event: Immovable Rod"
 	subtitle = "Общая Тревога"
-	message = "Какго хуя это сейчас было?!"
+	message = "Какого хуя это сейчас было?!"
 
 /datum/announcement/centcomm/infestation
 	name = "Event: Vermin infestation"
