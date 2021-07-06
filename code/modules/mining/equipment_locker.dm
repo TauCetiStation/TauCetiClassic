@@ -446,7 +446,7 @@
 		if("Special Mining Rig")
 			new /obj/item/mining_rig_pack(src.loc)
 		if("Mining Meson HUD")
-			new /obj/item/clothing/glasses/hud/geomeson(src.loc)
+			new /obj/item/clothing/glasses/hud/mining/meson(src.loc)
 		if("Cancel")
 			voucher.in_use = 0
 			return

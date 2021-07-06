@@ -47,16 +47,6 @@
 	sightglassesmod = "meson"
 	vision_flags = SEE_TURFS
 
-/obj/item/clothing/glasses/hud/geomeson
-	name = "Geological Meson Optical Scanner"
-	desc = "Used for seeing walls, floors, and stuff through anything."
-	icon_state = "mesonmininghud"
-	action_button_name = "Toggle Goggles"
-	toggleable = TRUE
-	sightglassesmod = "sepia"
-	hud_types = list(DATA_HUD_MINER)
-	vision_flags = SEE_TURFS
-
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription mesons"
 	desc = "Optical Meson Scanner with prescription lenses."
