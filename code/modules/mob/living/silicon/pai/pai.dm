@@ -77,8 +77,6 @@
 	add_language("Tradeband", 1)
 	add_language("Gutter", 1)
 
-	verbs -= /mob/living/verb/ghost
-
 	//PDA
 	pda = new(src)
 	spawn(5)
@@ -197,6 +195,9 @@
 	reset_view(null)
 	unset_machine()
 	src.cameraFollow = null
+
+/mob/living/silicon/pai/ghost()
+	suicide()
 
 //Addition by Mord_Sith to define AI's network change ability
 /*

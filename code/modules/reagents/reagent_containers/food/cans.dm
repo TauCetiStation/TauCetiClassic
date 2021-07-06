@@ -105,7 +105,7 @@
 			refill = reagents.get_master_reagent_id()
 			refillName = reagents.get_master_reagent_name()
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell

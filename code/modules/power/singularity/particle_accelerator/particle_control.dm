@@ -174,7 +174,7 @@
 	if(istype(PA, type))
 		if(PA.connect_master(src))
 			if(PA.report_ready(src))
-				src.connected_parts.Add(PA)
+				connected_parts.Add(PA)
 				return 1
 	return 0
 

@@ -7845,7 +7845,7 @@
 "bxd" = (
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/robodropper,
+/obj/item/weapon/reagent_containers/dropper,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bxf" = (

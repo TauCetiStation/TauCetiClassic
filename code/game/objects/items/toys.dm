@@ -70,9 +70,9 @@
 /obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(src.reagents.total_volume >= 1)
 		visible_message("<span class='warning'>The [src] bursts!</span>","You hear a pop and a splash.")
-		src.reagents.reaction(get_turf(hit_atom))
+		reagents.reaction(get_turf(hit_atom))
 		for(var/atom/A in get_turf(hit_atom))
-			src.reagents.reaction(A)
+			reagents.reaction(A)
 		src.icon_state = "burst"
 		spawn(5)
 			if(src)
@@ -433,7 +433,7 @@
 		D.icon = 'icons/obj/chemical.dmi'
 		D.icon_state = "chempuff"
 		D.create_reagents(5)
-		src.reagents.trans_to(D, 1)
+		reagents.trans_to(D, 1)
 		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, null, -6)
 
 		spawn(0)
@@ -797,7 +797,7 @@ Owl & Griffin toys
 		var/message = pick("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 		to_chat(user, "<span class='notice'>You pull the string on the [src].</span>")
 		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 20)
-		src.loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
+		loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
 		cooldown = 1
 		spawn(30) cooldown = 0
 		return
@@ -816,7 +816,7 @@ Owl & Griffin toys
 		var/message = pick("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 		to_chat(user, "<span class='notice'>You pull the string on the [src].</span>")
 		playsound(user, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 20)
-		src.loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
+		loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
 		cooldown = 1
 		spawn(30) cooldown = 0
 		return
