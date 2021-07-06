@@ -60,7 +60,7 @@
 	icon_state = "stunprod"
 	item_state = "prod"
 	var/obj/item/weapon/stock_parts/cell/bcell = null
-	var/agony = 50
+	var/stunforce = 5
 	var/hitcost = 2000
 	force = 3
 	throwforce = 5
@@ -150,7 +150,7 @@
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(5)
+		user.Weaken(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -171,15 +171,12 @@
 		return
 
 	if(status)
-		user.do_attack_animation(M)
-		var/calc_power = 100
-		if(ishuman(M))
-			var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-			calc_power = agony * H.get_siemens_coefficient_organ(BP)
-		H.apply_effect(calc_power, AGONY, 0)
+		//H.Stun(stunforce)
+		//H.Weaken(stunforce)
+		//H.apply_effect(STUTTER, stunforce)
+		H.apply_effect(60,AGONY,0)
 		user.lastattacked = M
 		H.lastattacker = user
-
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)

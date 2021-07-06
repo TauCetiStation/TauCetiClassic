@@ -140,7 +140,7 @@
 	if(usr != src.occupant)
 		return
 	if(smoke_ready && smoke>0)
-		src.smoke_system.start()
+		smoke_system.start()
 		smoke--
 		smoke_ready = 0
 		spawn(smoke_cooldown)

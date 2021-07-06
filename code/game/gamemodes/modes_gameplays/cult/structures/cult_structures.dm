@@ -144,7 +144,7 @@
 	return ..()
 
 /obj/machinery/optable/torture_table/MouseDrop_T(atom/A, mob/user)
-	if(A in loc)
+	if(A.loc == loc)
 		if(can_buckle && !buckled_mob)
 			user_buckle_mob(A, user)
 	else
