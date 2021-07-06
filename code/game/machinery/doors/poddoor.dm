@@ -12,7 +12,7 @@
 	door_close_sound = 'sound/machines/blast_door.ogg'
 
 /obj/machinery/door/poddoor/cargo
-	icon = 'code/modules/locations/shuttles/cargo.dmi'
+	icon = 'icons/locations/shuttles/cargo.dmi'
 
 /obj/machinery/door/poddoor/atom_init()
 	. = ..()
