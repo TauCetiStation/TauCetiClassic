@@ -101,7 +101,7 @@
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || !Adjacent(user) || !user.Adjacent(target))
+	if(target.buckled)
 		return
 	if(target == user)
 		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
