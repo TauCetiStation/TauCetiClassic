@@ -3,6 +3,7 @@
 	name = "Mafia-Immortal Human"
 	status_flags = GODMODE
 	health = 50000
+	universal_understand = TRUE
 
 /mob/living/carbon/human/mafia/gib()
 	return
