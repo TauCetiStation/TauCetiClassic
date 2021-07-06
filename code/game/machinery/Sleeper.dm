@@ -88,12 +88,7 @@
 	if(occupant && is_operational())
 		open_machine()
 		return
-	var/target = null
-	for(var/mob/living/carbon/C in loc)
-		if(C.buckled)
-			continue
-		else
-			target = C
+	var/mob/living/carbon/target = locate() in loc
 	close_machine(target)
 
 /obj/machinery/sleeper/process()

@@ -90,12 +90,7 @@
 		open_machine()
 		add_fingerprint(user)
 		return
-	var/target = null
-	for(var/mob/living/carbon/C in loc)
-		if(C.buckled)
-			continue
-		else
-			target = C
+	var/mob/living/carbon/target = locate() in loc
 	if(!move_inside_checks(target, user))
 		return
 	add_fingerprint(user)
