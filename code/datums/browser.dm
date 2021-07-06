@@ -320,5 +320,5 @@
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		//world << "[src] was [src.mob.machine], setting to null"
-		src.mob.unset_machine()
+		mob.unset_machine()
 	return

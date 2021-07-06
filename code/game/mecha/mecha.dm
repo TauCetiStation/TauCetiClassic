@@ -228,8 +228,8 @@
 		mech_click = world.time
 
 		if(!istype(object, /atom)) return
-		if(istype(object, /obj/screen))
-			var/obj/screen/using = object
+		if(istype(object, /atom/movable/screen))
+			var/atom/movable/screen/using = object
 			if(using.screen_loc == ui_acti || using.screen_loc == ui_iarrowleft || using.screen_loc == ui_iarrowright)//ignore all HUD objects save 'intent' and its arrows
 				return ..()
 			else
@@ -451,7 +451,7 @@
 
 /obj/mecha/proc/update_health()
 	if(src.health > 0)
-		src.spark_system.start()
+		spark_system.start()
 		diag_hud_set_mechhealth()
 	else
 		destroy()
@@ -738,7 +738,7 @@
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
 		else if(state==3 && src.cell)
-			src.cell.forceMove(src.loc)
+			cell.forceMove(src.loc)
 			src.cell = null
 			state = 4
 			to_chat(user, "You unscrew and pry out the powercell.")
@@ -1191,7 +1191,7 @@
 		*/
 		src.occupant << browse(null, "window=exosuit")
 		if(src.occupant.hud_used && src.last_user_hud && !istype(mob_container, /obj/item/device/mmi))
-			src.occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
+			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
 		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container

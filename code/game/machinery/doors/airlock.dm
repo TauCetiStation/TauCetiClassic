@@ -1128,7 +1128,7 @@ var/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && loc != usr) || !W.use(10))
+	if((!Adjacent(usr) && loc != usr) || !W.use(10))
 		return
 	switch(paintjob)
 		if("Public")

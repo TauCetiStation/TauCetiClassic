@@ -7845,7 +7845,7 @@
 "bxd" = (
 /obj/item/weapon/reagent_containers/spray/cleaner,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/robodropper,
+/obj/item/weapon/reagent_containers/dropper,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bxf" = (
@@ -8455,10 +8455,10 @@
 /area/station/maintenance/bridge)
 "bHn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+	dir = 10
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -33901,18 +33901,19 @@
 /area/station/rnd/sppodconstr)
 "jJi" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 5;
+	icon_state = "warning"
 	},
 /area/station/rnd/mixing)
 "jJo" = (
@@ -71408,12 +71409,6 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "vyZ" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -72864,13 +72859,15 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "vRj" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
 	},
 /turf/simulated/floor{
-	dir = 5;
+	dir = 1;
 	icon_state = "warning"
 	},
 /area/station/rnd/mixing)
@@ -128706,9 +128703,9 @@ xtd
 uFD
 uFD
 uFD
-jJi
+lLH
 bHn
-gjh
+vRj
 sVE
 wNV
 vqj
@@ -128965,7 +128962,7 @@ tGM
 kZV
 vyZ
 vJp
-vRj
+jJi
 lPN
 ucd
 ucd

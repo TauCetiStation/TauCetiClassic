@@ -1,16 +1,16 @@
-var/obj/screen/robot_inventory
+var/atom/movable/screen/robot_inventory
 
 
 /datum/hud/proc/robot_hud()
 
 	src.adding = list()
 	src.other = list()
-	var/obj/screen/using
+	var/atom/movable/screen/using
 
 
 	if(!isdrone(mymob))
 //Medical/Security sensors
-		using = new /obj/screen()
+		using = new /atom/movable/screen()
 		using.name = "Sensor Augmentation"
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "setsensor"
@@ -20,7 +20,7 @@ var/obj/screen/robot_inventory
 		adding += using
 
 //Show PDA screens
-		using = new /obj/screen()
+		using = new /atom/movable/screen()
 		using.name = "Show Pda Screens"
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "pda"
@@ -32,7 +32,7 @@ var/obj/screen/robot_inventory
 		"Pda - Ringtone" = "ringtone", "Pda - Toggle" = "toggleringer")
 		var/screen_position = 2
 		for(var/name in screens)
-			var/obj/screen/ousing = new /obj/screen()
+			var/atom/movable/screen/ousing = new /atom/movable/screen()
 			ousing.name = name
 			ousing.icon = 'icons/mob/screen1_robot.dmi'
 			ousing.icon_state = screens[name]
@@ -43,7 +43,7 @@ var/obj/screen/robot_inventory
 			other += ousing
 
 //Show foto screens
-		using = new /obj/screen()
+		using = new /atom/movable/screen()
 		using.name = "Show Foto Screens"
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "photo"
@@ -54,7 +54,7 @@ var/obj/screen/robot_inventory
 		screens = list("Take Image" = "takephoto", "View Images" = "photos", "Delete Image" = "deletthis")
 		screen_position = 2
 		for(var/name in screens)
-			var/obj/screen/ousing = new /obj/screen()
+			var/atom/movable/screen/ousing = new /atom/movable/screen()
 			ousing.name = name
 			ousing.icon = 'icons/mob/screen1_robot.dmi'
 			ousing.icon_state = screens[name]
@@ -65,7 +65,7 @@ var/obj/screen/robot_inventory
 			other += ousing
 
 //Namepick
-		using = new /obj/screen()
+		using = new /atom/movable/screen()
 		using.name = "Namepick"
 		using.icon = 'icons/mob/screen1_robot.dmi'
 		using.icon_state = "changename"
@@ -75,7 +75,7 @@ var/obj/screen/robot_inventory
 		adding += using
 
 //Manifest
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "Show Crew Manifest"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "crewmanifest"
@@ -85,7 +85,7 @@ var/obj/screen/robot_inventory
 	adding += using
 
 //Diagnosis
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "Self Diagnosis"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "selfdiagnosis"
@@ -95,7 +95,7 @@ var/obj/screen/robot_inventory
 	adding += using
 
 //Alerts
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "Show Alerts"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "showalerts"
@@ -105,7 +105,7 @@ var/obj/screen/robot_inventory
 	adding += using
 
 //State Laws
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "State Laws"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "statelaws"
@@ -115,7 +115,7 @@ var/obj/screen/robot_inventory
 	adding += using
 
 // Show Laws
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "Show Laws"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "showlaws"
@@ -125,7 +125,7 @@ var/obj/screen/robot_inventory
 	adding += using
 
 // Toggle Component
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "Toggle Components"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "togglecompanent"
@@ -135,7 +135,7 @@ var/obj/screen/robot_inventory
 	adding += using
 
 // Toggle Lights
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "Toggle Lights"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "togglelights"
@@ -145,7 +145,7 @@ var/obj/screen/robot_inventory
 	adding += using
 
 //Radio
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "radio"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "radio"
@@ -156,7 +156,7 @@ var/obj/screen/robot_inventory
 
 //Module select
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "module1"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv1"
@@ -166,7 +166,7 @@ var/obj/screen/robot_inventory
 	src.adding += using
 	mymob:inv1 = using
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "module2"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv2"
@@ -176,7 +176,7 @@ var/obj/screen/robot_inventory
 	src.adding += using
 	mymob:inv2 = using
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "module3"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "inv3"
@@ -189,7 +189,7 @@ var/obj/screen/robot_inventory
 //End of module select
 
 //Intent
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "act_intent"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "intent_" + mymob.a_intent
@@ -200,21 +200,21 @@ var/obj/screen/robot_inventory
 	action_intent = using
 
 //Health
-	mymob.healths = new /obj/screen()
+	mymob.healths = new /atom/movable/screen()
 	mymob.healths.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_borg_health
 
 //Installed Module
-	mymob.hands = new /obj/screen()
+	mymob.hands = new /atom/movable/screen()
 	mymob.hands.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.hands.icon_state = "nomod"
 	mymob.hands.name = "module"
 	mymob.hands.screen_loc = ui_borg_module
 
 //Module Panel
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "panel"
 	using.icon = 'icons/mob/screen1_robot.dmi'
 	using.icon_state = "panel"
@@ -224,44 +224,44 @@ var/obj/screen/robot_inventory
 	src.adding += using
 
 //Store
-	mymob.throw_icon = new /obj/screen()
+	mymob.throw_icon = new /atom/movable/screen()
 	mymob.throw_icon.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.throw_icon.icon_state = "store"
 	mymob.throw_icon.name = "store"
 	mymob.throw_icon.screen_loc = ui_borg_store
 
 //Inventory
-	robot_inventory = new /obj/screen()
+	robot_inventory = new /atom/movable/screen()
 	robot_inventory.name = "inventory"
 	robot_inventory.icon = 'icons/mob/screen1_robot.dmi'
 	robot_inventory.icon_state = "inventory"
 	robot_inventory.screen_loc = ui_borg_inventory
 
-	mymob.pullin = new /obj/screen/pull()
+	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_borg_pull
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
+	mymob.zone_sel = new /atom/movable/screen/zone_sel()
 	mymob.zone_sel.icon = 'icons/mob/screen1_robot.dmi'
 	mymob.zone_sel.cut_overlays()
 	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
 
 	//Handle the gun settings buttons
-	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
 	if (mymob.client)
 		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
 			mymob.gun_setting_icon.icon_state = "gun1"
 	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
 		if (G.target)
-			mymob.item_use_icon = new /obj/screen/gun/item(null)
+			mymob.item_use_icon = new /atom/movable/screen/gun/item(null)
 			if (mymob.client.target_can_click)
 				mymob.item_use_icon.icon_state = "gun0"
 			src.adding += mymob.item_use_icon
-			mymob.gun_move_icon = new /obj/screen/gun/move(null)
+			mymob.gun_move_icon = new /atom/movable/screen/gun/move(null)
 			if (mymob.client.target_can_move)
 				mymob.gun_move_icon.icon_state = "gun0"
-				mymob.gun_run_icon = new /obj/screen/gun/run(null)
+				mymob.gun_run_icon = new /atom/movable/screen/gun/run(null)
 				if (mymob.client.target_can_run)
 					mymob.gun_run_icon.icon_state = "gun0"
 				src.adding += mymob.gun_run_icon
@@ -360,10 +360,10 @@ var/obj/screen/robot_inventory
 		screens = list("PDA - Send Message", "PDA - Show Message Log", "Pda - Ringtone", "Pda - Toggle")
 	var/mob/living/silicon/robot/R = mymob
 	if(toggled)
-		for(var/obj/screen/using in other)
+		for(var/atom/movable/screen/using in other)
 			if(using.name in screens)
 				R.client.screen += using
 	else
-		for(var/obj/screen/using in other)
+		for(var/atom/movable/screen/using in other)
 			if(using.name in screens)
 				R.client.screen -= using
