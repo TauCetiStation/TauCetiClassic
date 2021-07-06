@@ -322,7 +322,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
 
-	var/A = input("Area to jump to", "BOOYEA") as null|anything in ghostteleportlocs
+	var/A = tgui_input_list(usr, "Area to jump to", "BOOYEA", ghostteleportlocs)
 	if(!A)
 		return
 	var/area/thearea = ghostteleportlocs[A]
@@ -398,7 +398,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/target = null	   //Chosen target.
 
 		dest += getpois(mobs_only = TRUE) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+		target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", dest)
 
 		if (!target)//Make sure we actually have a target
 			return

@@ -686,4 +686,4 @@
 		var/text = sanitize(input(user, "What do you want to say to everything on and near [station_name()]?.", "Transmit to World", ""))
 		if(!text)
 			return
-		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")
+		to_chat(player_list - new_player_list, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")

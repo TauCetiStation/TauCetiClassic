@@ -40,7 +40,7 @@
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
 	if(user.is_busy(target))
-		return
+		return FALSE
 
 	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, -2)
 
@@ -58,7 +58,7 @@
 						break
 				if (!grabbing)
 					to_chat(user, "<span class='warning'>Your grasp was broken before you could restrain [target]!</span>")
-					return
+					return FALSE
 
 			var/obj/item/weapon/handcuffs/cuffs = src
 			if(!dispenser)
@@ -69,6 +69,7 @@
 			target.equip_to_slot(cuffs, SLOT_HANDCUFFED, TRUE)
 			target.attack_log += "\[[time_stamp()]\] <font color='orange'>[user.name] ([user.ckey]) placed on our [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
 			user.attack_log += "\[[time_stamp()]\] <font color='red'>Placed on [target.name]'s ([target.ckey]) [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
+			return TRUE
 
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
