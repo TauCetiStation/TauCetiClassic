@@ -19,7 +19,7 @@
 /obj/structure/stool/bed/chair/pedalgen
 	name = "Pedal Generator"
 	desc = "Push it to the limit!"
-	icon = 'code/modules/sports/pedalgen.dmi'
+	icon = 'icons/obj/sports/pedalgen.dmi'
 	icon_state = "pedalgen"
 	anchored = FALSE
 	density = FALSE

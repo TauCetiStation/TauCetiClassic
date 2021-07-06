@@ -43,11 +43,6 @@
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
-	var/received_irc_pm = -99999
-	var/irc_admin			//IRC admin that spoke with them last.
-	var/mute_irc = 0
-
-
 		////////////////////////////////////
 		//things that require the database//
 		////////////////////////////////////
@@ -60,7 +55,7 @@
 	var/list/byond_registration // on demand get_byond_registration()
 
 	preload_rsc = 0 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
-	var/static/obj/screen/click_catcher/void
+	var/static/atom/movable/screen/click_catcher/void
 
 		// MEDIAAAAAAAA
 	// Set on login.
@@ -77,7 +72,7 @@
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
 
-	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
+	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = atom/movable/screen.
 
 	var/connection_time
 
@@ -124,7 +119,7 @@
 	 * Assoc list with all the active maps - when a screen obj is added to
 	 * a map, it's put in here as well.
 	 *
-	 * Format: list(<mapname> = list(/obj/screen))
+	 * Format: list(<mapname> = list(/atom/movable/screen))
 	 */
 	var/list/screen_maps = list()
 

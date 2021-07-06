@@ -535,7 +535,7 @@
 		return
 
 	var/datum/spellbook_entry/E = null
-	if(loc == H || (in_range(src, H) && isturf(loc)))
+	if(loc == H || (Adjacent(H) && isturf(loc)))
 		H.set_machine(src)
 		if(href_list["buy"])
 			E = entries[text2num(href_list["buy"])]

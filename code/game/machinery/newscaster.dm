@@ -1063,33 +1063,34 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 /obj/item/weapon/newspaper/Topic(href, href_list)
 	var/mob/living/U = usr
 	..()
-	if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ))
-		U.set_machine(src)
-		if(href_list["next_page"])
-			if(curr_page==src.pages+1)
-				return //Don't need that at all, but anyway.
-			if(src.curr_page == src.pages) //We're at the middle, get to the end
-				src.screen = 2
-			else
-				if(curr_page == 0) //We're at the start, get to the middle
-					src.screen=1
-			src.curr_page++
-			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
+	if(!Adjacent(U))
+		return
+	U.set_machine(src)
+	if(href_list["next_page"])
+		if(curr_page==src.pages+1)
+			return //Don't need that at all, but anyway.
+		if(src.curr_page == src.pages) //We're at the middle, get to the end
+			src.screen = 2
+		else
+			if(curr_page == 0) //We're at the start, get to the middle
+				src.screen=1
+		src.curr_page++
+		playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
-		else if(href_list["prev_page"])
-			if(curr_page == 0)
-				return
-			if(curr_page == 1)
-				src.screen = 0
+	else if(href_list["prev_page"])
+		if(curr_page == 0)
+			return
+		if(curr_page == 1)
+			src.screen = 0
 
-			else
-				if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
-					src.screen = 1
-			src.curr_page--
-			playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
+		else
+			if(curr_page == src.pages+1) //we're at the end, let's go back to the middle.
+				src.screen = 1
+		src.curr_page--
+		playsound(src, pick(SOUNDIN_PAGETURN), VOL_EFFECTS_MASTER)
 
-		if (istype(src.loc, /mob))
-			attack_self(src.loc)
+	if(istype(src.loc, /mob))
+		attack_self(src.loc)
 
 
 /obj/item/weapon/newspaper/attackby(obj/item/I, mob/user, params)
@@ -1100,7 +1101,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
 			if (!s)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!user.Adjacent(src))
 				return
 			src.scribble_page = src.curr_page
 			src.scribble = s

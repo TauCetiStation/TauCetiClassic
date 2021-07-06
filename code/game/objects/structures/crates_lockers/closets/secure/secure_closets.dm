@@ -29,7 +29,7 @@
 		return 0
 
 /obj/structure/closet/secure_closet/AltClick(mob/user)
-	if(!user.incapacitated() && in_range(user, src) && user.IsAdvancedToolUser())
+	if(!user.incapacitated() && Adjacent(user) && user.IsAdvancedToolUser())
 		togglelock(user)
 	..()
 
