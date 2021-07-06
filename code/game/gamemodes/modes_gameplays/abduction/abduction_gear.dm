@@ -548,10 +548,13 @@
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "handcuffAlien"
-	flags = DROPDEL // no CONDUCT
 	origin_tech = "materials=5;combat=4;powerstorage=5"
 	breakouttime = 450
 
+/obj/item/weapon/handcuffs/alien/place_handcuffs()
+	. = ..()
+	if(.)
+		flags = DROPDEL // no CONDUCT
 
 // SURGICAL INSTRUMENTS
 /obj/item/weapon/scalpel/alien

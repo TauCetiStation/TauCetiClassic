@@ -83,7 +83,7 @@ This is emryo growth procs
 
 	if(baby && baby.client)
 		if(growth_rate == 1)
-			baby.throw_alert("alien_embryo", /obj/screen/alert/alien_embryo)
+			baby.throw_alert("alien_embryo", /atom/movable/screen/alert/alien_embryo)
 		else
 			baby.clear_alert("alien_embryo")
 

@@ -1,7 +1,7 @@
 /obj/item/weapon/present
 	name = "gift"
 	desc = "Holiday gift. What's in the box?"
-	icon = 'code/modules/holidays/new_year/presents.dmi'
+	icon = 'icons/holidays/new_year/presents.dmi'
 	icon_state = "gift1"
 
 	var/bad_chance = 0	//Chance of having bad gift

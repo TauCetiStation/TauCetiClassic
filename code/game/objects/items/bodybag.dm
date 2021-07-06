@@ -28,7 +28,7 @@
 		var/t = sanitize(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != W)
 			return
-		if (!in_range(src, user) && src.loc != user)
+		if (!Adjacent(user) && src.loc != user)
 			return
 		if (t)
 			src.name = "body bag - "
@@ -57,7 +57,7 @@
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if((over_object == usr && (Adjacent(usr) || usr.contents.Find(src))))
 		if(opened)	return 0
 		if(contents.len)	return 0
 		visible_message("[usr] folds up the [src.name]")
@@ -118,6 +118,6 @@
 /obj/structure/closet/body_bag/cryobag/MouseDrop(over_object, src_location, over_location)
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if((over_object == usr && (Adjacent(usr) || usr.contents.Find(src))))
 		to_chat(usr, "<span class='warning'>You can't fold that up anymore..</span>")
 	..()

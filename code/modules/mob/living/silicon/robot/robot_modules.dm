@@ -127,7 +127,7 @@
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/splint(src, 10)
 	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
@@ -252,7 +252,7 @@
 	M.matter = 30
 	modules += M
 
-	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/dropper/robot(src)
 
 	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
 	L.lit = 1

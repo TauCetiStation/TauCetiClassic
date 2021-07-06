@@ -1,70 +1,70 @@
-/obj/screen/ghost
+/atom/movable/screen/ghost
 	icon = 'icons/mob/screen_ghost.dmi'
 
-/obj/screen/ghost/MouseEntered()
+/atom/movable/screen/ghost/MouseEntered()
 	flick(icon_state + "_anim", src)
 
-/obj/screen/ghost/jumptomob
+/atom/movable/screen/ghost/jumptomob
 	name = "Jump to mob"
 	icon_state = "jumptomob"
 
-/obj/screen/ghost/jumptomob/Click()
+/atom/movable/screen/ghost/jumptomob/Click()
 	var/mob/dead/observer/G = usr
 	G.jumptomob()
 
-/obj/screen/ghost/orbit
+/atom/movable/screen/ghost/orbit
 	name = "Orbit"
 	icon_state = "orbit"
 
-/obj/screen/ghost/orbit/Click()
+/atom/movable/screen/ghost/orbit/Click()
 	var/mob/dead/observer/G = usr
 	G.follow()
 
-/obj/screen/ghost/reenter_corpse
+/atom/movable/screen/ghost/reenter_corpse
 	name = "Reenter corpse"
 	icon_state = "reenter_corpse"
 
-/obj/screen/ghost/reenter_corpse/Click()
+/atom/movable/screen/ghost/reenter_corpse/Click()
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
-/obj/screen/ghost/teleport
+/atom/movable/screen/ghost/teleport
 	name = "Teleport"
 	icon_state = "teleport"
 
-/obj/screen/ghost/teleport/Click()
+/atom/movable/screen/ghost/teleport/Click()
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
-/obj/screen/ghost/toggle_darkness
+/atom/movable/screen/ghost/toggle_darkness
 	name = "Toggle Darkness"
 	icon_state = "toggle_darkness"
 
-/obj/screen/ghost/toggle_darkness/Click()
+/atom/movable/screen/ghost/toggle_darkness/Click()
 	var/mob/dead/observer/G = usr
 	G.toggle_darkness()
 
 /datum/hud/ghost/New()
 	adding = list()
-	var/obj/screen/using
+	var/atom/movable/screen/using
 
-	using = new /obj/screen/ghost/jumptomob()
+	using = new /atom/movable/screen/ghost/jumptomob()
 	using.screen_loc = ui_ghost_jumptomob
 	adding += using
 
-	using = new /obj/screen/ghost/orbit()
+	using = new /atom/movable/screen/ghost/orbit()
 	using.screen_loc = ui_ghost_orbit
 	adding += using
 
-	using = new /obj/screen/ghost/reenter_corpse()
+	using = new /atom/movable/screen/ghost/reenter_corpse()
 	using.screen_loc = ui_ghost_reenter_corpse
 	adding += using
 
-	using = new /obj/screen/ghost/teleport()
+	using = new /atom/movable/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
 	adding += using
 
-	using = new /obj/screen/ghost/toggle_darkness()
+	using = new /atom/movable/screen/ghost/toggle_darkness()
 	using.screen_loc = ui_ghost_toggle_darkness
 	adding += using
 
