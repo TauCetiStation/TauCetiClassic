@@ -54,7 +54,7 @@
 #define GREET_LATEJOIN		"latejoin"
 #define GREET_CUSTOM		"custom"
 
-#define GREET_AUTOTATOR		"autotator"
+#define GREET_AUTOTRAITOR   "autotraitor"
 #define GREET_SYNDBEACON	"syndbeacon"
 
 ///////////////// FACTION STAGES //////////////////////
