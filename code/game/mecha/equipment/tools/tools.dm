@@ -1,5 +1,5 @@
 /********Hydralic clamp********/
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	name = "hydraulic clamp"
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
@@ -7,18 +7,18 @@
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M)
 	if(..())
 		if(istype(M))
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/attach(obj/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/mecha/M)
 	..()
 	cargo_holder = M
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(atom/target)
 	if(!action_checks(target)) return
 	if(!cargo_holder) return
 	if(istype(target, /obj/structure/stool)) return
@@ -91,7 +91,7 @@
 
 
 /********Drill********/
-/obj/item/mecha_parts/mecha_equipment/tool/drill
+/obj/item/mecha_parts/mecha_equipment/drill
 	name = "drill"
 	desc = "This is the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_drill"
@@ -100,7 +100,7 @@
 	force = 15
 	var/penetration = 5
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target)) return
 	if(isobj(target))
 		var/obj/target_obj = target
@@ -120,7 +120,7 @@
 					if(get_dir(chassis,M)&chassis.dir)
 						M.GetDrilled()
 				log_message("Drilled through [target]")
-				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
@@ -131,7 +131,7 @@
 					if(get_dir(chassis,M)&chassis.dir)
 						M.gets_dug()
 				log_message("Drilled through [target]")
-				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
@@ -146,7 +146,7 @@
 				target.ex_act(2)
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/can_attach(obj/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
 			return 1
@@ -154,7 +154,7 @@
 
 
 /********Diamond drill********/
-/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond drill"
 	desc = "This is an upgraded version of the drill that'll pierce the heavens! (Can be attached to: Combat and Engineering Exosuits)"
 	icon_state = "mecha_diamond_drill"
@@ -163,7 +163,7 @@
 	force = 15
 	penetration = 6
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/action(atom/target)
 	if(!action_checks(target)) return
 	if(isobj(target))
 		var/obj/target_obj = target
@@ -185,7 +185,7 @@
 					if(get_dir(chassis,M)&chassis.dir)
 						M.GetDrilled()
 				log_message("Drilled through [target]")
-				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(chassis,1))
@@ -195,7 +195,7 @@
 				for(var/turf/simulated/floor/plating/airless/asteroid/M in range(target,1))
 					M.gets_dug()
 				log_message("Drilled through [target]")
-				if(locate(/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp) in chassis.equipment)
+				if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 					var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 					if(ore_box)
 						for(var/obj/item/weapon/ore/ore in range(target,1))
@@ -208,7 +208,7 @@
 				target.ex_act(2)
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/can_attach(obj/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill/can_attach(obj/mecha/M)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
 			return 1
@@ -223,7 +223,7 @@
 	. = ..()
 	flags |= OPENCONTAINER
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher
+/obj/item/mecha_parts/mecha_equipment/extinguisher
 	name = "extinguisher"
 	desc = "Exosuit-mounted extinguisher (Can be attached to: Engineering exosuits)"
 	icon_state = "mecha_exting"
@@ -233,15 +233,15 @@
 
 	var/obj/item/weapon/reagent_containers/spray/extinguisher/ext
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/atom_init()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/atom_init()
 	ext = new/obj/item/weapon/reagent_containers/spray/extinguisher/mecha(src)
 	. = ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Destroy()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/Destroy()
 	QDEL_NULL(ext)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/action(atom/target)
 	if(!action_checks(target))
 		return
 
@@ -251,20 +251,20 @@
 		ext.afterattack(target, chassis.occupant)
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/Topic(href, href_list)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/Topic(href, href_list)
 	..()
 	if (href_list["switch"])
 		ext.safety = !ext.safety
 		occupant_message("The [name] now [ext.safety ? "locked" : "ready"].")
 		update_equip_info()
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/get_equip_info()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/on_reagent_change()
+/obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/can_attach(obj/mecha/working/M)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M)
 	if(..())
 		if(istype(M))
 			return 1
@@ -272,7 +272,7 @@
 
 
 /********RCD********/
-/obj/item/mecha_parts/mecha_equipment/tool/rcd
+/obj/item/mecha_parts/mecha_equipment/rcd
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device. (Can be attached to: Any exosuit)"
 	icon_state = "mecha_rcd"
@@ -283,15 +283,15 @@
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
-/obj/item/mecha_parts/mecha_equipment/tool/rcd/atom_init()
+/obj/item/mecha_parts/mecha_equipment/rcd/atom_init()
 	. = ..()
 	mecha_rcd_list += src
 
-/obj/item/mecha_parts/mecha_equipment/tool/rcd/Destroy()
+/obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
 	mecha_rcd_list -= src
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/rcd/action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/rcd/action(atom/target)
 	if(istype(target,/area/shuttle))//>implying these are ever made -Sieve
 		disabled = 1
 	else
@@ -364,7 +364,7 @@
 	return
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/rcd/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/rcd/Topic(href,href_list)
 	..()
 	if(href_list["mode"])
 		mode = text2num(href_list["mode"])
@@ -377,7 +377,7 @@
 				occupant_message("Switched RCD to Construct Airlock.")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/rcd/get_equip_info()
+/obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
 	return "[..()] \[<a href='?src=\ref[src];mode=0'>D</a>|<a href='?src=\ref[src];mode=1'>C</a>|<a href='?src=\ref[src];mode=2'>A</a>\]"
 
 
@@ -1012,7 +1012,7 @@
 
 /********KILL CLAMP********/
 //This is pretty much just for the death-ripley so that it is harmless
-/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp
+/obj/item/mecha_parts/mecha_equipment/safety_clamp
 	name = "KILL CLAMP"
 	icon_state = "mecha_clamp"
 	equip_cooldown = 15
@@ -1020,18 +1020,18 @@
 	var/dam_force = 0
 	var/obj/mecha/working/ripley/cargo_holder
 
-/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/can_attach(obj/mecha/working/ripley/M)
+/obj/item/mecha_parts/mecha_equipment/safety_clamp/can_attach(obj/mecha/working/ripley/M)
 	if(..())
 		if(istype(M))
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/attach(obj/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/safety_clamp/attach(obj/mecha/M)
 	..()
 	cargo_holder = M
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/safety_clamp/action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/safety_clamp/action(atom/target)
 	if(!action_checks(target)) return
 	if(!cargo_holder) return
 	if(istype(target,/obj))
