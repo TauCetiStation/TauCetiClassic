@@ -1,13 +1,13 @@
 #define INFESTATION_LOCATIONS list( \
-	"кухне"                 = /area/station/civilian/kitchen, \
-	"атмосферном"           = /area/station/engineering/atmos, \
-	"мусоросжигателье"      = /area/station/maintenance/incinerator, \
-	"церкви"                = /area/station/civilian/chapel, \
-	"библиотеке"            = /area/station/civilian/library, \
-	"гидропонике"           = /area/station/civilian/hydroponics, \
-	"бункере"               = /area/station/bridge/nuke_storage, \
-	"строительной площадке" = /area/station/construction, \
-	"техническом хранилище"	= /area/station/storage/tech \
+	"кухня"                 = /area/station/civilian/kitchen, \
+	"атмосферный отдел"     = /area/station/engineering/atmos, \
+	"мусоросжигатель"       = /area/station/maintenance/incinerator, \
+	"церковь"               = /area/station/civilian/chapel, \
+	"библиотека"            = /area/station/civilian/library, \
+	"гидропоника"           = /area/station/civilian/hydroponics, \
+	"центральное хранилище" = /area/station/bridge/nuke_storage, \
+	"строительная площадка" = /area/station/construction, \
+	"техническое хранилище"	= /area/station/storage/tech \
 	)
 
 #define VERM_MICE 0
@@ -50,15 +50,15 @@
 		if(VERM_MICE)
 			spawn_types = list(/mob/living/simple_animal/mouse/gray, /mob/living/simple_animal/mouse/brown, /mob/living/simple_animal/mouse/white)
 			max_number = 12
-			vermstring = "мыши"
+			vermstring = "мышей"
 		if(VERM_LIZARDS)
 			spawn_types = list(/mob/living/simple_animal/lizard)
 			max_number = 6
-			vermstring = "ящерицы"
+			vermstring = "ящериц"
 		if(VERM_SPIDERS)
 			spawn_types = list(/obj/effect/spider/spiderling)
 			max_number = 3
-			vermstring = "пауки"
+			vermstring = "пауков"
 
 	spawn(0)
 		var/num = rand(2,max_number)
