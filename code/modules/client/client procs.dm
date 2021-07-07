@@ -610,7 +610,11 @@ var/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers[DRAG])
 		return
-	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	if (prefs.hotkeys)
+		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
