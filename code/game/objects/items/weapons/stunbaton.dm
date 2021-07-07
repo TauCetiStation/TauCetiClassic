@@ -11,6 +11,7 @@
 	var/status = 0
 	var/mob/foundmob = "" //Used in throwing proc.
 	var/agony = 60
+	attack_ignore_harm_check = TRUE
 
 	sweep_step = 2
 

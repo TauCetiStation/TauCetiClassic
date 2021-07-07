@@ -69,6 +69,9 @@
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
+	if(user.a_intent == INTENT_HELP && !attack_ignore_harm_check)
+		return FALSE
+
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, def_zone) & COMPONENT_ITEM_NO_ATTACK)
 		return
 
@@ -77,7 +80,7 @@
 		if (do_surgery(M, user, src))
 			return 0
 
-	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
+	if(stab_eyes && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
 		return eyestab(M,user)
