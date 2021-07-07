@@ -21,7 +21,7 @@
 /datum/announcement/centcomm/blob/biohazard_station_unlock
 	name = "Biohazard Level Updated - Lock Down Lifted"
 	subtitle = "Biohazard Alert"
-	message = "Вспышка биологической угрозы успешно локализована. Карантин снят. Удалите биологически опасные материалы и приступайте к стандартным станционным обязанностям."
+	message = "Вспышка биологической угрозы успешно локализована. Карантин снят. Удалите биологически опасные материалы и возвращайтесь к исполнению своих обязанностей."
 
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
