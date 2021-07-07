@@ -9,7 +9,6 @@
 	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/occupant = null
-	var/datum/global_iterator/pr_mech_sleeper
 	var/inject_amount = 5
 	salvageable = 0
 
@@ -19,10 +18,9 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/atom_init()
-	. = ..()
-	pr_mech_sleeper = new /datum/global_iterator/mech_sleeper(list(src),0)
-	pr_mech_sleeper.set_delay(equip_cooldown)
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/attach(obj/mecha/M)
+	..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/allow_drop()
 	return 0
@@ -73,7 +71,7 @@
 			target.client.eye = chassis
 		*/
 		set_ready_state(0)
-		pr_mech_sleeper.start()
+		START_PROCESSING(SSobj, src)
 		occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
 		chassis.visible_message("[chassis] loads [target] into [src].")
 		log_message("[target] loaded. Life support functions engaged.")
@@ -87,13 +85,8 @@
 	occupant_message("[occupant] ejected. Life support functions disabled.")
 	log_message("[occupant] ejected. Life support functions disabled.")
 	occupant.reset_view()
-	/*
-	if(occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-	*/
 	occupant = null
-	pr_mech_sleeper.stop()
+	STOP_PROCESSING(SSobj, src)
 	set_ready_state(1)
 	return
 
@@ -101,7 +94,11 @@
 	if(occupant)
 		occupant_message("Unable to detach [src] - equipment occupied.")
 		return
-	pr_mech_sleeper.stop()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/get_equip_info()
@@ -214,16 +211,18 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist()
 	go_out()
 
-/datum/global_iterator/mech_sleeper/process(obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
-	if(!S.chassis)
-		S.set_ready_state(1)
-		return stop()
-	if(!S.chassis.has_charge(S.energy_drain))
-		S.set_ready_state(1)
-		S.log_message("Deactivated.")
-		S.occupant_message("[S] deactivated - no power.")
-		return stop()
-	var/mob/living/carbon/M = S.occupant
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/process()
+	if(!chassis)
+		set_ready_state(1)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(!chassis.has_charge(energy_drain))
+		set_ready_state(1)
+		log_message("Deactivated.")
+		occupant_message("[src] deactivated - no power.")
+		STOP_PROCESSING(SSobj, src)
+		return
+	var/mob/living/carbon/M = occupant
 	if(!M)
 		return
 	if(ishuman(M))
@@ -241,8 +240,8 @@
 	M.Stun(2)
 	if(M.reagents.get_reagent_amount("inaprovaline") < 5)
 		M.reagents.add_reagent("inaprovaline", 5)
-	S.chassis.use_power(S.energy_drain)
-	S.update_equip_info()
+	chassis.use_power(energy_drain)
+	update_equip_info()
 	return
 
 
@@ -406,7 +405,6 @@
 	var/synth_speed = 5 //[num] reagent units per cycle
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
-	var/datum/global_iterator/mech_synth/synth
 	range = MELEE|RANGED
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
@@ -422,10 +420,17 @@
 	known_reagents = list("inaprovaline"="Inaprovaline","anti_toxin"="Anti-Toxin (Dylovene)")
 	processed_reagents = new
 	create_reagents(max_volume)
-	synth = new (list(src),0)
+
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/attach(obj/mecha/M)
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/detach()
-	synth.stop()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/critfail()
@@ -526,7 +531,7 @@
 				m++
 		if(processed_reagents.len)
 			message += " added to production"
-			synth.start()
+			START_PROCESSING(SSobj, src)
 			occupant_message(message)
 			occupant_message("Reagent processing started.")
 			log_message("Reagent processing started.")
@@ -662,21 +667,20 @@
 	update_equip_info()
 	return
 
-/datum/global_iterator/mech_synth
-	delay = 100
-
-/datum/global_iterator/mech_synth/process(obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/S)
-	if(!S.chassis)
-		return stop()
-	var/energy_drain = S.energy_drain*10
-	if(!S.processed_reagents.len || S.reagents.total_volume >= S.reagents.maximum_volume || !S.chassis.has_charge(energy_drain))
-		S.occupant_message("<span class='alert'>Reagent processing stopped.</span>")
-		S.log_message("Reagent processing stopped.")
-		return stop()
-	if(anyprob(S.reliability))
-		S.critfail()
-	var/amount = S.synth_speed / S.processed_reagents.len
-	for(var/reagent in S.processed_reagents)
-		S.reagents.add_reagent(reagent,amount)
-		S.chassis.use_power(energy_drain)
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/process()
+	if(!chassis)
+		STOP_PROCESSING(SSobj, src)
+		return
+	var/energy_drain = src.energy_drain*10
+	if(!processed_reagents.len || reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))
+		occupant_message("<span class='alert'>Reagent processing stopped.</span>")
+		log_message("Reagent processing stopped.")
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(anyprob(reliability))
+		critfail()
+	var/amount = synth_speed / processed_reagents.len
+	for(var/reagent in processed_reagents)
+		reagents.add_reagent(reagent,amount)
+		chassis.use_power(energy_drain)
 	return 1
