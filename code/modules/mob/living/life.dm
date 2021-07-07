@@ -114,9 +114,6 @@
 	for(var/datum/action/A in actions)
 		if(A.button)
 			client.screen -= A.button
-		if(!A.target)
-			actions -= A
-			qdel(A)
 
 	if(hud_used.action_buttons_hidden)
 		if(!hud_used.hide_actions_toggle)
