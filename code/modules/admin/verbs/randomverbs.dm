@@ -815,7 +815,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Check Contents"
 
-	var/list/L = M.get_contents()
+	var/list/L = M.GetAllContents()
 	for(var/t in L)
 		to_chat(usr, "[t]")
 	feedback_add_details("admin_verb","CC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -110,7 +110,7 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 /datum/objective/steal/check_completion()
 	if(!steal_target || !owner.current)	return OBJECTIVE_LOSS
 	if(!isliving(owner.current))	return OBJECTIVE_LOSS
-	var/list/all_items = owner.current.get_contents()
+	var/list/all_items = owner.current.GetAllContents()
 	switch (target_name)
 		if("28 moles of phoron (full tank)","10 diamonds","50 gold bars","25 refined uranium bars")
 			var/target_amount = text2num(target_name)//Non-numbers are ignored.
