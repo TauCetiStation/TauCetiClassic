@@ -91,6 +91,13 @@ var/list/blacklisted_builds = list(
 		js_error_manager.log_error(file, message, src)
 		return
 
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
+		return
+
+	//Logs all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
+
 	//byond bug ID:2256651
 	if(asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
@@ -117,10 +124,6 @@ var/list/blacklisted_builds = list(
 			keyUp(keycode)
 		return
 
-	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
-		return
-
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
@@ -135,9 +138,6 @@ var/list/blacklisted_builds = list(
 			return
 		cmd_admin_pm(C,null)
 		return
-
-	//Logs all hrefs
-	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
