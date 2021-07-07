@@ -847,9 +847,6 @@
 	return loc
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.a_intent == INTENT_HELP)
-		return FALSE
-
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
