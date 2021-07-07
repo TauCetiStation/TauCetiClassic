@@ -668,19 +668,14 @@
 	range = 0
 	selectable = FALSE
 	var/health_boost = 2
-	var/datum/global_iterator/pr_repair_droid
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
-
-/obj/item/mecha_parts/mecha_equipment/repair_droid/atom_init()
-	. = ..()
-	pr_repair_droid = new /datum/global_iterator/mecha_repair_droid(list(src),0)
-	pr_repair_droid.set_delay(equip_cooldown)
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M)
 	..()
 	droid_overlay = new(src.icon, icon_state = "repair_droid")
 	M.add_overlay(droid_overlay)
+	START_PROCESSING(SSobj, src)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Destroy()
@@ -690,56 +685,59 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/detach()
 	chassis.cut_overlay(droid_overlay)
-	pr_repair_droid.stop()
+	STOP_PROCESSING(SSobj, src)
 	..()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[pr_repair_droid.active()?"Dea":"A"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
 	if(href_list["toggle_repairs"])
 		chassis.cut_overlay(droid_overlay)
-		if(pr_repair_droid.toggle())
+		if(equip_ready)
+			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
 			log_message("Activated.")
+			set_ready_state(FALSE)
 		else
+			STOP_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid")
 			log_message("Deactivated.")
-			set_ready_state(1)
+			set_ready_state(TRUE)
 		chassis.add_overlay(droid_overlay)
 		send_byjax(chassis.occupant,"exosuit.browser","\ref[src]",get_equip_info())
 	return
 
-/datum/global_iterator/mecha_repair_droid/process(obj/item/mecha_parts/mecha_equipment/repair_droid/RD)
-	if(!RD.chassis)
-		stop()
-		RD.set_ready_state(1)
+/obj/item/mecha_parts/mecha_equipment/repair_droid/process()
+	if(!chassis)
+		STOP_PROCESSING(SSobj, src)
+		set_ready_state(1)
 		return
-	var/health_boost = RD.health_boost
+	var/health_boost = src.health_boost
 	var/repaired = 0
-	if(RD.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
+	if(chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
 		health_boost *= -2
-	else if(RD.chassis.hasInternalDamage() && prob(15))
-		for(var/int_dam_flag in RD.repairable_damage)
-			if(RD.chassis.hasInternalDamage(int_dam_flag))
-				RD.chassis.clearInternalDamage(int_dam_flag)
+	else if(chassis.hasInternalDamage() && prob(15))
+		for(var/int_dam_flag in repairable_damage)
+			if(chassis.hasInternalDamage(int_dam_flag))
+				chassis.clearInternalDamage(int_dam_flag)
 				repaired = 1
 				break
-	if(health_boost<0 || RD.chassis.health < initial(RD.chassis.health))
-		RD.chassis.health += min(health_boost, initial(RD.chassis.health)-RD.chassis.health)
+	if(health_boost<0 || chassis.health < initial(chassis.health))
+		chassis.health += min(health_boost, initial(chassis.health)-chassis.health)
 		repaired = 1
 	if(repaired)
-		if(RD.chassis.use_power(RD.energy_drain))
-			RD.set_ready_state(0)
+		if(chassis.use_power(energy_drain))
+			set_ready_state(0)
 		else
-			stop()
-			RD.set_ready_state(1)
+			STOP_PROCESSING(SSobj, src)
+			set_ready_state(1)
 			return
 	else
-		RD.set_ready_state(1)
+		set_ready_state(1)
 	return
 
 
@@ -752,18 +750,16 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = 0
-	var/datum/global_iterator/pr_energy_relay
 	selectable = FALSE
 	var/coeff = 100
 	var/list/use_channels = list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT)
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/atom_init()
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/attach(obj/mecha/M)
 	. = ..()
-	pr_energy_relay = new /datum/global_iterator/mecha_energy_relay(list(src),0)
-	pr_energy_relay.set_delay(equip_cooldown)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/detach()
-	pr_energy_relay.stop()
+	STOP_PROCESSING(SSobj, src)
 //	chassis.proc_res["dynusepower"] = null
 	chassis.proc_res["dyngetcharge"] = null
 	..()
@@ -805,31 +801,33 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Topic(href, href_list)
 	..()
 	if(href_list["toggle_relay"])
-		if(pr_energy_relay.toggle())
-			set_ready_state(0)
+		if(equip_ready)
+			START_PROCESSING(SSobj, src)
+			set_ready_state(FALSE)
 			log_message("Activated.")
 		else
-			set_ready_state(1)
+			STOP_PROCESSING(SSobj, src)
+			set_ready_state(FALSE)
 			log_message("Deactivated.")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[pr_energy_relay.active()?"Dea":"A"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
-/datum/global_iterator/mecha_energy_relay/process(obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/ER)
-	if(!ER.chassis || ER.chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
-		stop()
-		ER.set_ready_state(1)
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
+	if(!chassis || chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
+		STOP_PROCESSING(SSobj, src)
+		set_ready_state(1)
 		return
-	var/cur_charge = ER.chassis.get_charge()
-	if(isnull(cur_charge) || !ER.chassis.cell)
-		stop()
-		ER.set_ready_state(1)
-		ER.occupant_message("No powercell detected.")
+	var/cur_charge = chassis.get_charge()
+	if(isnull(cur_charge) || !chassis.cell)
+		STOP_PROCESSING(SSobj, src)
+		set_ready_state(1)
+		occupant_message("No powercell detected.")
 		return
-	if(cur_charge<ER.chassis.cell.maxcharge)
-		var/area/A = get_area(ER.chassis)
+	if(cur_charge<chassis.cell.maxcharge)
+		var/area/A = get_area(chassis)
 		if(A)
 			var/pow_chan
 			for(var/c in list(STATIC_EQUIP,STATIC_ENVIRON,STATIC_LIGHT))
@@ -837,9 +835,9 @@
 					pow_chan = c
 					break
 			if(pow_chan)
-				var/delta = min(12, ER.chassis.cell.maxcharge-cur_charge)
-				ER.chassis.give_power(delta)
-				A.use_power(delta*ER.coeff, pow_chan)
+				var/delta = min(12, chassis.cell.maxcharge-cur_charge)
+				chassis.give_power(delta)
+				A.use_power(delta*coeff, pow_chan)
 	return
 
 
@@ -852,7 +850,6 @@
 	equip_cooldown = 10
 	energy_drain = 0
 	range = MELEE
-	var/datum/global_iterator/pr_mech_generator
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
 	var/max_fuel = 150000
@@ -868,11 +865,13 @@
 /obj/item/mecha_parts/mecha_equipment/generator/atom_init_late()
 	fuel = new /obj/item/stack/sheet/mineral/phoron(src)
 	fuel.amount = 0
-	pr_mech_generator = new /datum/global_iterator/mecha_generator(list(src),0)
-	pr_mech_generator.set_delay(equip_cooldown)
+
+/obj/item/mecha_parts/mecha_equipment/generator/attach(obj/mecha/M)
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
-	pr_mech_generator.stop()
+	STOP_PROCESSING(SSobj, src)
 	..()
 	return
 
@@ -880,18 +879,20 @@
 /obj/item/mecha_parts/mecha_equipment/generator/Topic(href, href_list)
 	..()
 	if(href_list["toggle"])
-		if(pr_mech_generator.toggle())
-			set_ready_state(0)
+		if(equip_ready)
+			START_PROCESSING(SSobj, src)
+			set_ready_state(FALSE)
 			log_message("Activated.")
 		else
-			set_ready_state(1)
+			STOP_PROCESSING(SSobj, src)
+			set_ready_state(TRUE)
 			log_message("Deactivated.")
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[pr_mech_generator.active()?"Dea":"A"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(target)
@@ -948,33 +949,33 @@
 	T.assume_air(GM)
 	return
 
-/datum/global_iterator/mecha_generator/process(obj/item/mecha_parts/mecha_equipment/generator/EG)
-	if(!EG.chassis)
-		stop()
-		EG.set_ready_state(1)
+/obj/item/mecha_parts/mecha_equipment/generator/process()
+	if(!chassis)
+		STOP_PROCESSING(SSobj, src)
+		set_ready_state(1)
 		return 0
-	if(EG.fuel.amount<=0)
-		stop()
-		EG.log_message("Deactivated - no fuel.")
-		EG.set_ready_state(1)
+	if(fuel.amount<=0)
+		STOP_PROCESSING(SSobj, src)
+		log_message("Deactivated - no fuel.")
+		set_ready_state(1)
 		return 0
-	if(anyprob(EG.reliability))
-		EG.critfail()
-		stop()
+	if(anyprob(reliability))
+		critfail()
+		STOP_PROCESSING(SSobj, src)
 		return 0
-	var/cur_charge = EG.chassis.get_charge()
+	var/cur_charge = chassis.get_charge()
 	if(isnull(cur_charge))
-		EG.set_ready_state(1)
-		EG.occupant_message("No powercell detected.")
-		EG.log_message("Deactivated.")
-		stop()
+		set_ready_state(1)
+		occupant_message("No powercell detected.")
+		log_message("Deactivated.")
+		STOP_PROCESSING(SSobj, src)
 		return 0
-	var/use_fuel = EG.fuel_per_cycle_idle
-	if(cur_charge<EG.chassis.cell.maxcharge)
-		use_fuel = EG.fuel_per_cycle_active
-		EG.chassis.give_power(EG.power_per_cycle)
-	EG.fuel.amount -= min(use_fuel/EG.fuel.perunit,EG.fuel.amount)
-	EG.update_equip_info()
+	var/use_fuel = fuel_per_cycle_idle
+	if(cur_charge<chassis.cell.maxcharge)
+		use_fuel = fuel_per_cycle_active
+		chassis.give_power(power_per_cycle)
+	fuel.amount -= min(use_fuel/fuel.perunit,fuel.amount)
+	update_equip_info()
 	return 1
 
 
@@ -994,18 +995,18 @@
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/atom_init_late()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src)
 	fuel.amount = 0
-	pr_mech_generator = new /datum/global_iterator/mecha_generator/nuclear(list(src),0)
-	pr_mech_generator.set_delay(equip_cooldown)
+
+/obj/item/mecha_parts/mecha_equipment/generator/nuclear/attach(obj/mecha/M)
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/critfail()
 	return
 
-/datum/global_iterator/mecha_generator/nuclear
-
-/datum/global_iterator/mecha_generator/nuclear/process(obj/item/mecha_parts/mecha_equipment/generator/nuclear/EG)
+/obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		for(var/mob/living/carbon/M in view(EG.chassis))
-			M.apply_effect((EG.rad_per_cycle*3),IRRADIATE,0)
+		for(var/mob/living/carbon/M in view(chassis))
+			M.apply_effect((rad_per_cycle*3),IRRADIATE,0)
 	return 1
 
 
