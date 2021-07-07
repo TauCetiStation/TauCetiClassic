@@ -728,3 +728,10 @@ var/list/blacklisted_builds = list(
 		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
+
+/client/proc/change_view(new_size)
+	if (isnull(new_size))
+		CRASH("change_view called without argument.")
+
+	view = new_size
+	mob.reload_fullscreen()
