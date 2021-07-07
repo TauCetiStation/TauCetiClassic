@@ -260,10 +260,8 @@
 
 /obj/machinery/door/firedoor/do_afterclose()
 	for(var/mob/living/L in orange(0, src))
-		var/turf/mob_turf = get_turf(L)
-		for(var/dir in cardinal)
-			var/turf/new_turf = get_step(mob_turf, dir)
-			if(L.Move(new_turf))
+		for(var/dir in global.cardinal)
+			if(L.Move(get_step(loc, dir)))
 				break
 	..()
 
