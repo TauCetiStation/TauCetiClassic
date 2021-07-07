@@ -60,6 +60,6 @@
 
 		user.update_mutations()
 
-		create_and_setup_role(/datum/role/traitor/wishgtanter, user)
+		create_and_setup_role(/datum/role/traitor/wishgranter, user)
 
 		to_chat(user, "You have a very bad feeling about this.")
