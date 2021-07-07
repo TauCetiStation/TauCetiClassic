@@ -4,7 +4,6 @@
 		mind.active = TRUE
 		mind.current = src
 
-	my_client = client
 	..()
 
 	if(join_motd)

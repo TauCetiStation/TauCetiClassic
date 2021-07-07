@@ -11,7 +11,6 @@
 	var/spawning          = FALSE // Referenced when you want to delete the new_player later on in the code.
 	var/totalPlayers      = FALSE // Player counts for the Lobby tab
 	var/totalPlayersReady = FALSE
-	var/client/my_client
 
 /mob/dead/new_player/atom_init()
 	if(length(newplayer_start))
@@ -40,9 +39,9 @@
 	client << browse(get_lobby_html(), "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
-	if(my_client.mob) // Check if the client is still connected to something
+	if(client.mob) // Check if the client is still connected to something
 		// Hide title screen, allowing player to see the map
-		winset(my_client, "lobbybrowser", "is-disabled=true;is-visible=false")
+		winset(client, "lobbybrowser", "is-disabled=true;is-visible=false")
 
 /mob/dead/new_player/prepare_huds()
 	return
