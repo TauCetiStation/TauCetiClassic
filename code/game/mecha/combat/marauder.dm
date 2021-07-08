@@ -27,6 +27,13 @@
 	var/thrusters_active = FALSE
 	var/datum/action/innate/mecha/mech_toggle_thrusters/thrusters_action = new
 
+/obj/mecha/combat/marauder/Destroy()
+	QDEL_NULL(smoke_system)
+	QDEL_NULL(smoke_action)
+	QDEL_NULL(zoom_action)
+	QDEL_NULL(thrusters_action)
+	return ..()
+
 /obj/mecha/combat/marauder/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(.)
