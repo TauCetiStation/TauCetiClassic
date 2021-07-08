@@ -122,7 +122,7 @@
 
 	if((istype(usr, /mob/living/carbon/human)))
 		var/mob/M = usr
-		if(!( istype(over_object, /obj/screen) ))
+		if(!( istype(over_object, /atom/movable/screen) ))
 			return ..()
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, null, -5)
 		if(!M.incapacitated() && M.back == src)

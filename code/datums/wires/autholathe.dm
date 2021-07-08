@@ -23,6 +23,7 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 	switch(index)
 		if(AUTOLATHE_WIRE_HACK)
 			A.hacked = !mended
+			A.update_static_data(usr)
 
 		if(AUTOLATHE_WIRE_SHOCK)
 			A.shocked = !mended
@@ -36,6 +37,7 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 	switch(index)
 		if(AUTOLATHE_WIRE_HACK)
 			A.hacked = !A.hacked
+			A.update_static_data(usr)
 			addtimer(CALLBACK(src, .proc/pulse_reaction, index), 50)
 
 		if(AUTOLATHE_WIRE_SHOCK)
@@ -53,6 +55,7 @@ var/const/AUTOLATHE_WIRE_DISABLE = 4
 		switch(index)
 			if(AUTOLATHE_WIRE_HACK)
 				A.hacked = FALSE
+				A.update_static_data(usr)
 
 			if(AUTOLATHE_WIRE_SHOCK)
 				A.shocked = FALSE

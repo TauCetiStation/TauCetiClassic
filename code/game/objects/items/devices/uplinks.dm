@@ -141,7 +141,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	// Activates the uplink if it's active
 	if(src.hidden_uplink)
 		if(src.hidden_uplink.active)
-			src.hidden_uplink.trigger(user)
+			hidden_uplink.trigger(user)
 			return 1
 	return 0
 

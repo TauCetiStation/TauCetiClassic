@@ -401,7 +401,7 @@
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
 	. = ..()
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && can_use())
+	if((!istype(over_object, /atom/movable/screen)) && can_use())
 		return attack_self(M)
 	return
 
@@ -1335,7 +1335,7 @@
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If card is held by user and PDA is near user or in user's hand.
-			if(idcard in user.contents && Adjacent(user))
+			if(idcard.loc == user)
 				id_check(user, 2)
 				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.

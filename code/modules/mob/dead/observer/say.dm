@@ -11,7 +11,7 @@
 			to_chat(src, "<span class='alert'>You cannot talk in deadchat (muted).</span>")
 			return
 
-		if (src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
+		if (client.handle_spam_prevention(message,MUTE_DEADCHAT))
 			return
 
 	. = say_dead(message)
@@ -33,7 +33,7 @@
 			to_chat(src, "<span class='alert'>You cannot emote in deadchat (muted).</span>")
 			return
 
-		if(src.client.handle_spam_prevention(message, MUTE_DEADCHAT))
+		if(client.handle_spam_prevention(message, MUTE_DEADCHAT))
 			return
 
 	. = emote_dead(message)

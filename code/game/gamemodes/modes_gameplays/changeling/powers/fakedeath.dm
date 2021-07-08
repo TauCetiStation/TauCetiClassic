@@ -83,9 +83,9 @@
 	if(!..())
 		return
 	C.instatis = TRUE
-	user.throw_alert("regen_stasis", /obj/screen/alert/regen_stasis)
+	user.throw_alert("regen_stasis", /atom/movable/screen/alert/regen_stasis)
 	for(var/mob/M in C.essences)
-		M.throw_alert("regen_stasis", /obj/screen/alert/regen_stasis)
+		M.throw_alert("regen_stasis", /atom/movable/screen/alert/regen_stasis)
 	if(user.stat == DEAD)//In case player gave answer too late
 		user.fake_death = FALSE
 	else

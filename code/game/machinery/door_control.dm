@@ -353,7 +353,7 @@
 		INVOKE_ASYNC(src, .proc/toggle_airlock, A)
 	for(var/obj/machinery/door/poddoor/P in connected_poddoors)
 		INVOKE_ASYNC(src, .proc/toggle_poddoor, P)
-	addtimer(CALLBACK(src, /obj.proc/update_icon), 15)
+	addtimer(CALLBACK(src, /atom.proc/update_icon), 15)
 
 /obj/machinery/door_control/proc/toggle_airlock(obj/machinery/door/airlock/A)
 	if(!A.isAllPowerCut() && A.hasPower())

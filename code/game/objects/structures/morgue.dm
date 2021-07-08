@@ -217,7 +217,7 @@
 	add_fingerprint(user)
 
 /obj/structure/m_tray/MouseDrop_T(atom/movable/O, mob/user)
-	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
+	if (!istype(O, /atom/movable) || O.anchored)
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return
@@ -431,12 +431,12 @@
 			if (!A.anchored)
 				A.loc = src.connected
 		src.connected.connected = null
-		src.connected.update()
+		connected.update()
 		add_fingerprint(user)
 		qdel(src)
 
 /obj/structure/c_tray/MouseDrop_T(atom/movable/O, mob/user)
-	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
+	if (!istype(O, /atom/movable) || O.anchored)
 		return
 	if (!ismob(O) && !istype(O, /obj/structure/closet/body_bag))
 		return

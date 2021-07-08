@@ -328,7 +328,7 @@
 	var/pos = 0
 	for(var/D in cardinal)
 		pos++
-		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		var/atom/movable/screen/O = LAZYACCESS(char_render_holders, "[D]")
 		if(!O)
 			O = new
 			LAZYSET(char_render_holders, "[D]", O)
@@ -340,7 +340,7 @@
 /obj/item/weapon/scissors/proc/clear_character_previews()
 	barber << browse(null, "window=barber_window")
 	for(var/index in char_render_holders)
-		var/obj/screen/S = char_render_holders[index]
+		var/atom/movable/screen/S = char_render_holders[index]
 		if(barber && barber.client)
 			barber.client.screen -= S
 		qdel(S)

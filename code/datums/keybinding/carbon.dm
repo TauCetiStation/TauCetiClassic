@@ -60,17 +60,6 @@
 	user.mob?.a_intent_change(INTENT_HARM)
 	return TRUE
 
-/datum/keybinding/carbon/swap_hands
-	hotkey_keys = list("X", "Northeast") // PAGEUP
-	name = "swap_hands"
-	full_name = "Swap hands"
-	description = ""
-
-/datum/keybinding/carbon/swap_hands/down(client/user)
-	var/mob/living/carbon/C = user.mob
-	C.swap_hand()
-	return TRUE
-
 /datum/keybinding/carbon/give
 	hotkey_keys = list("None")
 	name = "Give_Item"

@@ -218,7 +218,7 @@
 					if(iscarbon(target))
 						playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 						icon_state = "[icon_state_arrest]"
-						addtimer(CALLBACK(src, .proc/update_icon), 2)
+						addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
 						var/mob/living/carbon/M = target
 						do_attack_animation(M)
 						M.apply_effect(60, AGONY, 0) // As much as a normal stunbaton
@@ -240,7 +240,7 @@
 							playsound(src, 'sound/weapons/Egloves.ogg', VOL_EFFECTS_MASTER)
 							visible_message("<span class='danger'>[src] beats [target] with the stun baton!</span>")
 							icon_state = "[icon_state_arrest]"
-							addtimer(CALLBACK(src, .proc/update_icon), 2)
+							addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)
 							if(target.stat)
