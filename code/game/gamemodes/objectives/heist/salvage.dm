@@ -34,7 +34,7 @@
 
 	for(var/datum/role/raider in faction.members)
 		if(raider.antag.current)
-			for(var/obj/item/O in raider.antag.current.get_contents())
+			for(var/obj/item/O in raider.antag.current.GetAllContents())
 				if(istype(O,/obj/item/stack/sheet))
 					if(O.name == str_target)
 						var/obj/item/stack/sheet/S = O
