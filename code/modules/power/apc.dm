@@ -138,6 +138,7 @@
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
+	area.poweralert(1, src) // remove the power alert. yes, 1 is off
 	/*if(occupier)
 		malfvacate(1)*/
 	QDEL_NULL(wires)
