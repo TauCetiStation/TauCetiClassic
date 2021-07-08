@@ -126,7 +126,7 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
-	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/interact_offline = FALSE // Can the machine be interacted with while de-powered.
 	var/allowed_checks = ALLOWED_CHECK_EVERYWHERE // should machine call allowed() in attack_hand(). See machinery/turretid for example.
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
@@ -281,13 +281,32 @@ Class Procs:
 /obj/machinery/wrenched_change()
 	update_power_use()
 
-//By default, we check everything.
-//But sometimes, we need to override this check.
-/obj/machinery/proc/is_operational_topic()
-	return !((stat & (NOPOWER|BROKEN|MAINT|EMPED)) || (panel_open && !interact_open))
+// By default, we check everything.
+// But sometimes, we need to override this check.
+/obj/machinery/proc/is_operational(mob/user)
+	if((stat & (NOPOWER | BROKEN | MAINT)) && !interact_offline)
+		return FALSE
+
+//what to put here ???????????????????????????????????????????????????????????????????????????????????????
+
+	return TRUE
+
+/obj/machinery/proc/is_interactable(mob/user, use_allowed_fail = FALSE)
+	if((stat & (NOPOWER | BROKEN | MAINT | EMPED)) && !interact_offline)
+		return FALSE
+	if(panel_open && !interact_open)
+		return FALSE
+	if(!can_mob_interact(user))
+		return FALSE
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !emagged && !allowed(user))
+		if(use_allowed_fail)
+			allowed_fail(user)
+		return FALSE
+
+	return TRUE
 
 /obj/machinery/get_current_temperature()
-	if(!is_operational_topic())
+	if(!is_operational(usr))
 		return 0
 
 	if(emagged)
@@ -298,16 +317,8 @@ Class Procs:
 /obj/machinery/Topic(href, href_list)
 	..()
 
-	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !is_operational_topic())
+	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !is_interactable(usr))
 		usr.unset_machine(src)
-		return FALSE
-
-	if(!can_mob_interact(usr))
-		return FALSE
-
-	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !emagged && !allowed(usr))
-		allowed_fail(usr)
-		to_chat(usr, "<span class='warning'>Access Denied.</span>")
 		return FALSE
 
 	usr.set_machine(src)
@@ -319,42 +330,25 @@ Class Procs:
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	if(.)
-		return
-
-	if(!is_operational_topic())
 		usr.unset_machine(src)
-		return TRUE
-
-	if(!can_mob_interact(usr))
-		return TRUE
-
-	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !emagged && !allowed(usr))
-		allowed_fail(usr)
-		to_chat(usr, "<span class='warning'>Access Denied.</span>")
-		return TRUE
+		return
 
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
 	return FALSE
 
-/obj/machinery/proc/is_operational()
-	return !(stat & (NOPOWER|BROKEN|MAINT))
-
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
 	if(istype(S) && allowed(S))
 		return TRUE
 	return FALSE
 
-/obj/machinery/proc/is_interactable()
-	if((stat & (NOPOWER|BROKEN)) && !interact_offline)
-		return FALSE
-	if(panel_open && !interact_open)
-		return FALSE
-	return TRUE
-
 /obj/machinery/proc/allowed_fail(mob/user) // incase you want to add something special when allowed fails.
+	to_chat(user, "<span class='warning'>Access Denied.</span>")
 	return
+
+	//add to implementations ???????????????????????????????????????????????????????????????????????????????????????
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -363,7 +357,7 @@ Class Procs:
 		add_hiddenprint(user)
 	else if(isliving(user))
 		add_fingerprint(user)
-	if(is_operational_topic() && ui_interact(user) != -1)
+	if(ui_interact(user) != -1)
 		user.set_machine(src)
 
 /obj/machinery/attack_ai(mob/user)
@@ -380,27 +374,22 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if ((user.lying || user.stat) && !IsAdminGhost(user))
-		return 1
-	if(!is_interactable())
-		return 1
-	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
+	if((user.lying || user.stat) && !IsAdminGhost(user))
+		return TRUE
+	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return 1
-	if (!can_mob_interact(user))
-		return 1
+		return TRUE
+	if(!is_interactable(user = user, use_allowed_fail = TRUE))
+		return TRUE
+
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
 		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
 			user << browse(null, "window=wires")
 			user.unset_machine(src)
-	if((allowed_checks & ALLOWED_CHECK_A_HAND) && !emagged && !allowed(user))
-		allowed_fail(user)
-		to_chat(user, "<span class='warning'>Access Denied.</span>")
-		return 1
 
 	interact(user)
-	return 0
+	return FALSE
 
 /obj/machinery/tgui_close(mob/user)
 	user.unset_machine(src)

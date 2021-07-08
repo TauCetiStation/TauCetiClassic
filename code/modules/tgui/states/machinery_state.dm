@@ -14,5 +14,8 @@ var/global/datum/tgui_state/machinery_state/machinery_state = new
 /datum/tgui_state/machinery_state/proc/can_use_machinery(src_object, mob/user)
 	. = UI_CLOSE
 	var/obj/machinery/machine = src_object
-	if(istype(machine) && machine.is_interactable())
-		. = UI_INTERACTIVE
+	if(istype(machine)
+		if(machine.is_interactable(user))
+			. = UI_INTERACTIVE
+		else if(machine.is_operational(user))
+			. = UI_UPDATE
