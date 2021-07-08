@@ -145,7 +145,7 @@
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
 		/** Impanted**/
 		if(ishuman(current))
-			if(ismindshielded(H, TRUE))
+			if(ismindshielded(H))
 				text += "Mind Shield Implant:<a href='?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=m_add'>Implant him!</a></br>"
