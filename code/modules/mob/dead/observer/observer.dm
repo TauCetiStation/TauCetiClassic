@@ -662,3 +662,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!game)
 		game = create_mafia_game()
 	game.tgui_interact(usr)
+
+/mob/dead/observer/Stat()
+	..()
+	if(statpanel("Status"))
+		stat(null, "Station Time: [worldtime2text()]")
