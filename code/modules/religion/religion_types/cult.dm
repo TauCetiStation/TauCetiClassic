@@ -223,8 +223,6 @@
 	if(ishuman(M))
 		if(M.mind.assigned_role == "Captain")
 			return FALSE
-		if(M.get_species() == GOLEM)
-			return FALSE
 	if(ismindshielded(M) || isloyal(M))
 		return FALSE
 	return TRUE
