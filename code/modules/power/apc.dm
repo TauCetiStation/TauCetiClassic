@@ -391,7 +391,7 @@
 			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
-				area.poweralert(0, src)
+				area.poweralert(1, src)
 				if((stat & BROKEN) || malfhack)
 					user.visible_message(\
 						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
