@@ -540,7 +540,7 @@
 	for(var/datum/mafia_role/role in all_roles)
 		var/mob/living/carbon/human/mafia/H = new(get_turf(role.assigned_landmark))
 		H.equipOutfit(player_outfit)
-		var/datum/action/innate/mafia_panel/mafia_panel = new(null, src)
+		var/datum/action/innate/mafia_panel/mafia_panel = new(H, src)
 		mafia_panel.Grant(H)
 		var/client/player_client = global.directory[role.player_key]
 		if(player_client)
