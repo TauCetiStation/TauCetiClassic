@@ -78,7 +78,8 @@
 		var/mob/dead/observer/O = user
 		if((O.antagHUD || O.client.holder) && isanyantag(M))
 			var/antag_serialized = serialized.Copy()
-			antag_serialized["antag"] = M.mind.special_role
+			for(var/antag_category in M.mind.antag_roles)
+				antag_serialized["antag"] += list(antag_category)
 			data["antagonists"] += list(antag_serialized)
 
 	return data
