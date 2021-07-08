@@ -123,11 +123,6 @@
 		step_rand(M)
 	STOP_PROCESSING(SSobj, src)
 
-	QDEL_NULL(pr_int_temp_processor)
-	QDEL_NULL(pr_give_air)
-	QDEL_NULL(pr_internal_damage)
-	QDEL_NULL(pr_mecha_light)
-
 	QDEL_NULL(eject_action)
 	QDEL_NULL(internals_action)
 	QDEL_NULL(cycle_action)
