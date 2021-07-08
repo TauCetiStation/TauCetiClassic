@@ -91,6 +91,13 @@ var/list/blacklisted_builds = list(
 		js_error_manager.log_error(file, message, src)
 		return
 
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
+		return
+
+	//Logs all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
+
 	//byond bug ID:2256651
 	if(asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
@@ -117,10 +124,6 @@ var/list/blacklisted_builds = list(
 			keyUp(keycode)
 		return
 
-	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
-		return
-
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
@@ -135,9 +138,6 @@ var/list/blacklisted_builds = list(
 			return
 		cmd_admin_pm(C,null)
 		return
-
-	//Logs all hrefs
-	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -610,7 +610,11 @@ var/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers[DRAG])
 		return
-	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	if (prefs.hotkeys)
+		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
@@ -728,3 +732,10 @@ var/list/blacklisted_builds = list(
 		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
+
+/client/proc/change_view(new_size)
+	if (isnull(new_size))
+		CRASH("change_view called without argument.")
+
+	view = new_size
+	mob.reload_fullscreen()
