@@ -6,25 +6,24 @@
 	var/list/screens = list()
 
 /mob/proc/overlay_fullscreen(category, type, severity)
-	var/atom/movable/screen/fullscreen/screen
-	if(screens[category])
-		screen = screens[category]
-		if(screen.type != type)
-			clear_fullscreen(category, FALSE)
-			return .()
-		else if(!severity || severity == screen.severity)
-			return null
-	else
-		screen = new type()
+	var/atom/movable/screen/fullscreen/screen = screens[category]
+	if (!screen || screen.type != type)
+		// needs to be recreated
+		clear_fullscreen(category, FALSE)
+		screens[category] = screen = new type()
+	else if ((!severity || severity == screen.severity) && (!client || screen.screen_loc != "CENTER-7,CENTER-7" || screen.view == client.view))
+		// doesn't need to be updated
+		return screen
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
 	screen.invisibility = initial(screen.invisibility)
 
-	screens[category] = screen
 	if(client)
+		screen.update_for_view(client.view)
 		client.screen += screen
 		screen.add_screen_part(client)
+		screen.screen_part?.update_for_view(client.view)
 	return screen
 
 /mob/proc/clear_fullscreen(category, animated = 10)
@@ -51,12 +50,16 @@
 	for(var/category in screens)
 		clear_fullscreen(category)
 
-/datum/hud/proc/reload_fullscreen()
-	var/list/screens = mymob.screens
+/mob/proc/reload_fullscreen()
+	if(!client)
+		return
+	var/atom/movable/screen/fullscreen/screen
 	for(var/category in screens)
-		var/atom/movable/screen/fullscreen/screen = screens[category]
-		mymob.client.screen |= screen
-		screen.add_screen_part(mymob.client, TRUE)
+		screen = screens[category]
+		screen.update_for_view(client.view)
+		client.screen |= screen
+		screen.add_screen_part(client, TRUE)
+		screen.screen_part?.update_for_view(client.view)
 
 
 /atom/movable/screen/fullscreen
@@ -66,6 +69,7 @@
 	layer = FULLSCREEN_LAYER
 	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/view = 7
 	var/severity = 0
 	var/atom/movable/screen/fullscreen/screen_part
 
@@ -73,6 +77,12 @@
 	QDEL_NULL(screen_part)
 	severity = 0
 	return ..()
+
+/atom/movable/screen/fullscreen/proc/update_for_view(client_view)
+	if (screen_loc == "CENTER-7,CENTER-7" && view != client_view)
+		var/list/actualview = getviewsize(client_view)
+		view = client_view
+		transform = matrix(actualview[1]/FULLSCREEN_OVERLAY_RESOLUTION_X, 0, 0, 0, actualview[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y, 0)
 
 /atom/movable/screen/fullscreen/proc/add_screen_part(client/C, reload)
 	return
