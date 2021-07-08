@@ -128,6 +128,7 @@
 			num_loaded++
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+		playsound(src, 'sound/weapons/guns/ammo_insert.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		I.update_icon()
 		update_icon()
 		return num_loaded
