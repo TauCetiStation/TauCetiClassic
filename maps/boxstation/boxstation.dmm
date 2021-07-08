@@ -60086,6 +60086,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/door/window{
+	dir = 4;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -60858,11 +60863,6 @@
 	},
 /area/station/rnd/xenobiology)
 "cpN" = (
-/obj/machinery/door/window{
-	dir = 8;
-	name = "AI Core Door";
-	req_access = list(16)
-	},
 /obj/machinery/door_control{
 	id = "AI Blast Door";
 	name = "AI Blast Door";
@@ -60880,7 +60880,7 @@
 /area/station/aisat/ai_chamber)
 "cpO" = (
 /obj/machinery/door/window{
-	dir = 4;
+	dir = 8;
 	name = "AI Core Door";
 	req_access = list(16)
 	},
@@ -124483,7 +124483,7 @@ cmk
 coA
 cFP
 cFP
-cpO
+cmf
 cFP
 cFP
 cFP
@@ -124740,7 +124740,7 @@ cmj
 cDj
 cGa
 cpA
-cmf
+cpO
 cqE
 coL
 cpo
