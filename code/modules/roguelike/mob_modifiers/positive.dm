@@ -74,7 +74,7 @@
 	var/mob/living/simple_animal/hostile/H = parent
 
 	qdel(possessed.GetComponent(/datum/component/bounded))
-	UnregisterSignal(possessed, list(COMSIG_PARENT_QDELETED))
+	UnregisterSignal(possessed, list(COMSIG_PARENT_QDELETING))
 
 	if(rejuve_timer)
 		SEND_SIGNAL(possessed, COMSIG_NAME_MOD_REMOVE, /datum/name_modifier/prefix/cursed, 1)
@@ -116,7 +116,7 @@
 
 	// ghostly_filter = filter(type="color", color=ghostly_matrix)
 
-	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETED), .proc/on_phylactery_destroyed)
+	RegisterSignal(possessed, list(COMSIG_PARENT_QDELETING), .proc/on_phylactery_destroyed)
 	possessed.forceMove(H.loc)
 
 	if(QDELING(possessed) || !get_turf(possessed))

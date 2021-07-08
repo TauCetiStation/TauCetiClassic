@@ -71,7 +71,7 @@
 	if(loc != NewLoc)
 		if (!is_diagonal) //Cardinal move
 			. = ..()
-		else //Diagonal move, split it into cardinal 
+		else //Diagonal move, split it into cardinal
 			var/v = Dir & NORTH_SOUTH
 			var/h = Dir & EAST_WEST
 
@@ -94,7 +94,7 @@
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
-	
+
 	if(!is_diagonal && moving_diagonally != SECOND_DIAG_STEP)
 		move_speed = world.time - l_move_time
 		l_move_time = world.time
@@ -241,18 +241,7 @@
 			if (speed <= 0)
 				return //no throw speed, the user was moving too fast.
 
-	var/datum/thrownthing/TT = new()
-	TT.thrownthing = src
-	RegisterSignal(TT, COMSIG_PARENT_QDELETED, /datum/thrownthing.proc/on_thrownthing_qdel)
-	TT.target = target
-	TT.target_turf = get_turf(target)
-	TT.init_dir = get_dir(src, target)
-	TT.maxrange = range
-	TT.speed = speed
-	TT.thrower = thrower
-	TT.diagonals_first = diagonals_first
-	TT.callback = callback
-	TT.early_callback = early_callback
+	var/datum/thrownthing/TT = new(src, target, get_turf(target), get_dir(src, target), range, speed, thrower, diagonals_first, callback, early_callback)
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)

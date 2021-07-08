@@ -7,7 +7,7 @@
 	layer = 4
 
 /obj/machinery/fusion_fuel_compressor/MouseDrop_T(atom/movable/target, mob/user)
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
