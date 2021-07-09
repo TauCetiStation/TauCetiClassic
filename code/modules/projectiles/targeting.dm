@@ -163,17 +163,8 @@
 	 so try not to get on their bad side.</span> ))")
 
 	if(targeted_by.len == 1)
-		spawn(0)
-			target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
-			if(ishuman(src)) //Until this part rewrite.
-				update_targeted()
-			else
-				add_overlay(target_locked)
-			spawn(0)
-				sleep(20)
-				if(target_locked)
-					target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locked")
-					update_targeted()
+		target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
+		update_targeted()
 
 	//Adding the buttons to the controller person
 	var/mob/living/T = I.loc
