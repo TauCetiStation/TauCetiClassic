@@ -80,7 +80,6 @@
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
-	// var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
 	var/nightshift_lights = FALSE
 	var/nightshift_preset = "soft"
@@ -708,11 +707,6 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
 	if(ismalf(malf) && istype(malf))
 		if(src.malfai == (malf.parent || malf))
-			// if(src.occupier == malf)
-			// 	return 3 // 3 = User is shunted in this APC
-			// else if(istype(malf.loc, /obj/machinery/power/apc))
-			// 	return 4 // 4 = User is shunted in another APC
-			// else
 			return 2 // 2 = APC hacked by user, and user is in its core.
 		else
 			return 1 // 1 = APC not hacked.
@@ -1206,8 +1200,6 @@
 	flick("apc-spark", src)
 	if(cell)
 		cell.emplode(severity)
-	// if(occupier)
-	// 	occupier.emplode(severity)
 	lighting = 0
 	equipment = 0
 	environ = 0
