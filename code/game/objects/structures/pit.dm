@@ -195,8 +195,8 @@
 	icon_state = pick("wood","cross")
 
 	var/nam = random_name(pick(MALE,FEMALE))
-	var/born = game_year - rand(70,150)
-	var/died = born + rand(20,60)
+	var/born = game_year - rand(70, 150)
+	var/died = born + rand(20, 60)
 
 	message = "Here lies [nam], [born] - [died]."
 
@@ -257,4 +257,3 @@
 	desc = "Jetson is coming appart"
 	icon_state = "jetsons_f"
 	item_color = "jetsons_f"
-
