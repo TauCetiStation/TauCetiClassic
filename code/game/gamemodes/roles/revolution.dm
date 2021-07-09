@@ -76,7 +76,7 @@
 	if(isrevhead(M) || isrev(M))
 		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
 	else if(M.ismindprotect())
-		to_chat(src, "<span class='warning'><b>[M] is implanted with a loyalty implant - Remove it first!</b></span>")
+		to_chat(src, "<span class='warning'><b>[M] is implanted with a mind protected implant - Remove it first!</b></span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
 		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
 	else
