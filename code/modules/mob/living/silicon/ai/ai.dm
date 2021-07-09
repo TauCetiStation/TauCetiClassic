@@ -136,7 +136,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	verbs |= ai_verbs_default
-	verbs -= /mob/living/verb/ghost
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(!holo || !isliving(A) || !in_range(eyeobj, A))
@@ -153,7 +152,6 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
-	verbs += /mob/living/verb/ghost
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()
@@ -685,7 +683,7 @@ var/list/ai_verbs_default = list(
 		return
 
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Dorfy", "Facepalm", "Friend Computer", "Beer mug", "Dwarf", "Fishtank", "Plump Helmet", "HAL", "Tribunal", "Tribunal Malfunctioning")
-	var/emote = tgui_input_list("Please, select a status!", "AI Status", ai_emotions)
+	var/emote = tgui_input_list(usr, "Please, select a status!", "AI Status", ai_emotions)
 	for(var/obj/machinery/ai_status_display/AISD in ai_status_display_list) //change status
 		AISD.emotion = emote
 	if(emote == "Friend Computer")  //if Friend Computer, change ALL displays, else restore them to normal
@@ -735,7 +733,6 @@ var/list/ai_verbs_default = list(
 				if(!state)
 					return
 				if(chooses_ai_staff[state])
-					qdel(holo_icon) //Clear old icon so we're not storing it in memory.
 					holo_icon = chooses_ai_staff[state]
 			else
 				tgui_alert(usr, "No suitable records found. Aborting.")
@@ -745,7 +742,6 @@ var/list/ai_verbs_default = list(
 			var/state = show_radial_menu(usr, eyeobj, chooses_ai_holo, radius = 38, tooltips = TRUE)
 			if(!state)
 				return
-			qdel(holo_icon)
 			holo_icon = chooses_ai_holo[state]
 
 //I am the icon meister. Bow fefore me.	//>fefore
@@ -887,3 +883,19 @@ var/list/ai_verbs_default = list(
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO
 #undef EMERGENCY_MESSAGE_COOLDOWN
+
+/mob/living/silicon/ai/ghost()
+	if(istype(loc, /obj/item/device/aicard) || istype(loc, /obj/item/clothing/suit/space/space_ninja))
+		return ..()
+	if(ismalf(usr) && stat != DEAD)
+		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
+		return
+	if(stat)
+		return ..()
+
+	// Wipe Core
+	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
+	if(tgui_alert(usr, "WARNING: This will immediately wipe your core and ghost you, removing your character from the round permanently (similar to cryo and robotic storage). Are you entirely sure you want to do this?",
+					"Wipe Core", list("No", "Yes")) != "Yes")
+		return
+	perform_wipe_core()
