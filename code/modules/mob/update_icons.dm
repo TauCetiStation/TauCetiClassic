@@ -110,6 +110,11 @@
 	return
 
 /mob/proc/update_targeted()
+	if(!targeted_by && target_locked)
+		qdel(target_locked)
+	cut_overlays()
+	if (targeted_by && target_locked)
+		add_overlay(target_locked)
 	return
 
 /mob/proc/update_fire()
