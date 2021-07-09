@@ -13,15 +13,15 @@
 
 /datum/announcement/centcomm/anomaly/radstorm
 	name = "Anomaly: Radiation Belt"
-	message = "Вблизи станции обнаружен высокий уровень радиации." + \
-			"Обратитесь в медотсек, если испытываете себя странно. " + \
+	message = "Вблизи станции обнаружен высокий уровень радиации. " + \
+			"Обратитесь в медотсек, если почувствуете себя странно. " + \
 			"Всему экипажу станции рекомендуется укрыться в технических туннелях станции."
 	sound = "radiation"
 
 /datum/announcement/centcomm/anomaly/radstorm_passed
 	name = "Anomaly: Radiation Belt Passed"
 	message = "Станция прошла радиационный пояс. " + \
-			"Обратитесь в медотсек, если вы испытываете необычные симптомы. " + \
+			"Обратитесь в медотсек, если у вас возникнут необычные симптомы. " + \
 			"Вскоре общий доступ к техническим туннелям будет отключен."
 	sound = "radpassed"
 
@@ -61,7 +61,7 @@
 
 /datum/announcement/centcomm/anomaly/bluespace
 	name = "Anomaly: Bluespace"
-	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое место: неизвестно."
+	message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: неизвестно."
 	sound = "bluspaceanom"
 /datum/announcement/centcomm/anomaly/bluespace/play(area/A)
 	if(A)
@@ -127,7 +127,7 @@
 	subtitle = "Тревога. Формы жизни"
 	sound = "carps"
 /datum/announcement/centcomm/carp/play()
-	message = "Обнаружена неизвестная форма жизни вблизи [station_name_ru()], приготовьтесь."
+	message = "Обнаружены неизвестные формы жизни вблизи [station_name_ru()], приготовьтесь."
 	..()
 
 /datum/announcement/centcomm/carp_major
@@ -176,7 +176,7 @@
 	subtitle = "Критический Сбой Электропитания"
 	sound = "poweroff"
 /datum/announcement/centcomm/grid_off/play()
-	message = "Обнаружена нетипичная активность в сети [station_name_ru()]." + \
+	message = "Обнаружена нетипичная активность в сети [station_name_ru()]. " + \
 			"В предохранительных мерах, электропитание станции будет отключено на неопределенный срок."
 	..()
 
@@ -185,7 +185,7 @@
 	subtitle = "Системы Электропитания в Норме"
 	sound = "poweron"
 /datum/announcement/centcomm/grid_on/play()
-	message = "Электропитание было восстановлено ​​на [station_name_ru()]. Приносим извинения за доставленные неудобства."
+	message = "Электропитание было восстановлено на [station_name_ru()]. Приносим извинения за доставленные неудобства."
 	..()
 
 /datum/announcement/centcomm/grid_quick
@@ -204,10 +204,10 @@
 /datum/announcement/centcomm/infestation
 	name = "Event: Vermin infestation"
 	subtitle = "Заражение Паразитами"
-	message = "Биосканеры зафиксировали, что что-то размножается где-то на станции. Избавьтесь от них, пока они не начали влиять на эффективность станции."
+	message = "Биосканеры зафиксировали, что на станции разможаются неизвестные объекты. Избавьтесь от них, пока они не начали влиять на производительность."
 /datum/announcement/centcomm/infestation/play(vermstring, locstring)
 	if(vermstring && locstring)
-		message = "Биосканеры зафиксировали, что [vermstring] размножаются в [locstring]. Избавьтесь от них, пока они не начали влиять на эффективность станции."
+		message = "Биосканеры зафиксировали размножение [vermstring], местоположение: [locstring]. Избавьтесь от них, пока они не начали влиять на производительность."
 	..()
 
 /datum/announcement/centcomm/meteor_wave
@@ -260,7 +260,7 @@
 	else if(prob(50))
 		message = "На ВКН Икар был потерян контакт с боевым крылом дронов. При обнаружении их в этой области, приближаться с осторожностью."
 	else
-		message = "Неизвестные хакеры атаковали боевое крыло дронов, запущенное с ВКН Икар. Если обнаружите их в данной области, приближаться с осторожностью."
+		message = "Неизвестные хакеры атаковали боевое крыло дронов, запущенное с ВКН Икар. Если обнаружите их в данной области, то приближайтесь с осторожностью."
 /datum/announcement/centcomm/icarus_lost/play()
 	randomize_message()
 	..()

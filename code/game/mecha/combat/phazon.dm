@@ -22,6 +22,11 @@
 	var/datum/action/innate/mecha/mech_toggle_phasing/phasing_action = new
 	max_equip = 4
 
+/obj/mecha/combat/phazon/Destroy()
+	QDEL_NULL(switch_damtype_action)
+	QDEL_NULL(phasing_action)
+	return ..()
+
 /obj/mecha/combat/phazon/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	switch_damtype_action.Grant(user, src)
