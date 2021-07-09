@@ -145,12 +145,12 @@
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
 		/** Impanted**/
 		if(ishuman(current))
-			if(ismindshielded(H))
+			if(H.ismindshielded())
 				text += "Mind Shield Implant:<a href='?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=m_add'>Implant him!</a></br>"
 
-			if(isloyal(H))
+			if(H.isloyal())
 				text += "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text += "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
