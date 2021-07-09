@@ -138,8 +138,6 @@
 	area.power_environ = 0
 	area.power_change()
 	area.poweralert(1, src) // remove the power alert. yes, 1 is off
-	/*if(occupier)
-		malfvacate(1)*/
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	if(terminal)
@@ -1245,8 +1243,6 @@
 			GM.apcs--
 	stat |= BROKEN
 	operating = 0
-	/*if(occupier)
-		malfvacate(1)*/
 	update_icon()
 	update()
 
