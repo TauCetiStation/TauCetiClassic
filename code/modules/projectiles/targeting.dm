@@ -138,7 +138,7 @@
 	var/list/targeted_by
 	var/last_move_intent = -100
 	var/last_target_click = -5
-	var/target_locked = null
+	var/image/target_locked = null
 
 /mob/living/proc/Targeted(obj/item/weapon/gun/I) //Self explanitory.
 	if(!I.target)
@@ -164,6 +164,7 @@
 
 	if(targeted_by.len == 1)
 		target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
+		target_locked.appearance_flags  |= (RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
 		update_targeted()
 
 	//Adding the buttons to the controller person
