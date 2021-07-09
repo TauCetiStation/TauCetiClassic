@@ -110,9 +110,9 @@
 	return
 
 /mob/proc/update_targeted()
+	cut_overlay(target_locked)
 	if(!targeted_by && target_locked)
 		qdel(target_locked)
-	cut_overlays()
 	if (targeted_by && target_locked)
 		add_overlay(target_locked)
 	return
