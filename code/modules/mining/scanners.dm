@@ -54,7 +54,6 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	item_state = "glasses"
 	icon_state = "mesonmininghud"
-	item_state = "glasses"
 	icon_custom = null
 	action_button_name = "Toggle Goggles"
 	toggleable = TRUE
