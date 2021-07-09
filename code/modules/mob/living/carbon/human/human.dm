@@ -6,7 +6,6 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	faction = "station"
 	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
 	//icon_state = "body_m_s"
 
@@ -699,7 +698,7 @@
 			// Display a warning if the user mocks up
 			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
@@ -1598,7 +1597,7 @@
 
 	return TRUE
 
-/obj/screen/leap
+/atom/movable/screen/leap
 	name = "toggle leap"
 	icon = 'icons/mob/screen1_action.dmi'
 	icon_state = "action"
@@ -1608,15 +1607,15 @@
 	var/cooldown = 10 SECONDS
 
 
-/obj/screen/leap/atom_init()
+/atom/movable/screen/leap/atom_init()
 	. = ..()
 	add_overlay(image(icon, "leap"))
 	update_icon()
 
-/obj/screen/leap/update_icon()
+/atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/obj/screen/leap/Click()
+/atom/movable/screen/leap/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.toggle_leap()

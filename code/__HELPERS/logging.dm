@@ -51,19 +51,38 @@
 	if (config && config.log_asset)
 		global.asset_log << "\[[time_stamp()]]ASSET: [text][log_end]"
 
-/proc/log_tgui(user_or_client, text)
-	if (config.log_tgui)
-		var/entry = ""
-		if(!user_or_client)
-			entry += "no user"
-		else if(istype(user_or_client, /mob))
-			var/mob/user = user_or_client
-			entry += "[user.ckey] (as [user])"
-		else if(istype(user_or_client, /client))
-			var/client/client = user_or_client
-			entry += "[client.ckey]"
-		entry += ":\n[text]"
-		global.tgui_log << "\[[time_stamp()]]TGUI: [entry][log_end]"
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context, datum/tgui_window/window, datum/src_object)
+	if (!config.log_tgui)
+		return
+
+	var/entry = ""
+	// Insert user info
+	if(!user)
+		entry += "<nobody>"
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [COORD(mob)])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window && window.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "\nUsing: [src_object.type] \ref[src_object]"
+	// Insert message
+	if(message)
+		entry += "\n[message]"
+	global.tgui_log << "\[[time_stamp()]]TGUI: [entry][log_end]"
 
 /proc/log_game(text)
 	if (config.log_game)

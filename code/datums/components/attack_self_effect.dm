@@ -38,7 +38,7 @@
 	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/do_effect)
 	RegisterSignal(parent, list(COMSIG_ITEM_EQUIPPED), .proc/equipped_effect)
 	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED), .proc/dropped_effect)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/del_effect)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/del_effect)
 
 	var/datum/mechanic_tip/self_effect/effect_tip = new(src, effect_type)
 
