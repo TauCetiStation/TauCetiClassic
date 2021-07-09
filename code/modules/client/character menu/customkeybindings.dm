@@ -16,7 +16,7 @@
 	for (var/name in global.keybindings_by_name)
 		var/datum/keybinding/kb = global.keybindings_by_name[name]
 		kb_categories[kb.category] += list(kb)
-
+	. += "<tr><td>Hotkeys Mode: <a href='?_src_=prefs;preference=hotkeys'>[hotkeys ? "Focus on Game" : "Focus on Chat"]</a></td></tr>"
 	. += "<center>"
 	for (var/category in kb_categories)
 		. += "<h3>[category]</h3>"
@@ -90,10 +90,22 @@
 	popup.set_content(HTML)
 	popup.open(FALSE)
 
+/datum/preferences/proc/toggle_hotkeys_mode()
+	hotkeys = !hotkeys
+	if(hotkeys)
+		winset(usr, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+	else
+		winset(usr, null, "input.focus=true input.background-color=[COLOR_INPUT_DISABLED]")
+	save_preferences()
+
+
 /datum/preferences/proc/process_link_custom_keybindings(mob/user, list/href_list)
 	if(!user)
 		return
 	switch(href_list["preference"])
+		if("hotkeys")
+			toggle_hotkeys_mode()
+
 		if("keybindings_capture")
 			var/datum/keybinding/kb = global.keybindings_by_name[href_list["keybinding"]]
 			var/old_key = href_list["old_key"]
