@@ -91,6 +91,8 @@
 		add_fingerprint(user)
 		return
 	var/mob/living/carbon/target = locate() in loc
+	if(!target)
+		return
 	if(!move_inside_checks(target, user))
 		return
 	add_fingerprint(user)

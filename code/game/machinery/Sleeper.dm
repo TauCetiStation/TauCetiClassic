@@ -89,6 +89,8 @@
 		open_machine()
 		return
 	var/mob/living/carbon/target = locate() in loc
+	if(!target)
+		return
 	close_machine(target)
 
 /obj/machinery/sleeper/process()
