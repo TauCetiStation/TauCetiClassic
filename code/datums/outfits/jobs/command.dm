@@ -15,7 +15,7 @@
 	back_style = BACKPACK_STYLE_CAPTAIN
 
 	implants = list(
-		/obj/item/weapon/implant/mindshield/loyalty
+		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H)

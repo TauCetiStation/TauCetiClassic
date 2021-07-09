@@ -221,7 +221,7 @@
 			return FALSE
 		if(M.get_species() == GOLEM)
 			return FALSE
-	if(ismindshielded(M) || isloyal(M))
+	if(isloyal_or_mindshielded(M))
 		return FALSE
 	return TRUE
 

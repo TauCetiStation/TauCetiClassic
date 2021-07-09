@@ -26,15 +26,19 @@
 	return
 
 /proc/ismindshielded(mob/A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(istype(L, /obj/item/weapon/implant/mindshield/loyalty))
-			continue
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in A)
 		if(L.implanted)
 			return TRUE
 	return FALSE
 
 /proc/isloyal(mob/A)
-	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in A)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/proc/isloyal_or_mindshielded(mob/A)
+	for(var/obj/item/weapon/implant/mind_protect/L in A)
 		if(L.implanted)
 			return TRUE
 	return FALSE

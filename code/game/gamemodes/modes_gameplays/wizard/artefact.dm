@@ -126,7 +126,7 @@
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 
-	if(ismindshielded(H) || isloyal(H))
+	if(isloyal_or_mindshielded(H))
 		to_chat(H, "<span class='notice'>Something prevents you from becoming a magic girl that you've allways dreamed of</span>")
 		return
 

@@ -424,22 +424,22 @@
 			href_list["implant"] = copytext(href_list["implant"], 3)
 		if(href_list["implant"] == "remove")
 			if(is_mind_shield)
-				for(var/obj/item/weapon/implant/mindshield/I in H.contents)
+				for(var/obj/item/weapon/implant/mind_protect/mindshield/I in H.contents)
 					if(I.implanted)
 						qdel(I)
 			else
-				for(var/obj/item/weapon/implant/mindshield/loyalty/I in H.contents)
+				for(var/obj/item/weapon/implant/mind_protect/loyalty/I in H.contents)
 					if(I.implanted)
 						qdel(I)
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='notice'><Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT></span>")
 		if(href_list["implant"] == "add")
-			var/obj/item/weapon/implant/mindshield/L
+			var/obj/item/weapon/implant/mind_protect/mindshield/L
 			if(is_mind_shield)
 				L = new(H)
 				L.inject(H)
 			else
-				L = new /obj/item/weapon/implant/mindshield/loyalty(H)
+				L = new /obj/item/weapon/implant/mind_protect/loyalty(H)
 				L.inject(H)
 
 			H.sec_hud_set_implants()
