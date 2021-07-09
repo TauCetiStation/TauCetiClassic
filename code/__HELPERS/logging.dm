@@ -162,6 +162,15 @@
 
 		global.initialization_log << "[text][log_end]"
 
+#ifdef REFERENCE_TRACKING
+/proc/log_gc(text)
+	if (config.log_gc)
+		global.gc_log << "\[[time_stamp()]] [text][log_end]"
+	for(var/client/C in global.admins)
+		//if(check_rights(R_DEBUG, FALSE, C.mob) && (C.prefs.toggles & PREFTOGGLE_CHAT_DEBUGLOGS))
+		to_chat(C, "GC DEBUG: [text]")
+#endif
+
 /proc/log_qdel(text)
 	if (config.log_qdel)
 		global.qdel_log << "[text][log_end]"

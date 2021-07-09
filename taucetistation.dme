@@ -74,6 +74,7 @@
 #include "code\__DEFINES\tick.dm"
 #include "code\__DEFINES\tools.dm"
 #include "code\__DEFINES\traits.dm"
+#include "code\__DEFINES\typeids.dm"
 #include "code\__DEFINES\varedit.dm"
 #include "code\__DEFINES\xenoarchaeology.dm"
 #include "code\__DEFINES\xenomorph.dm"
