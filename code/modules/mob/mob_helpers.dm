@@ -37,7 +37,7 @@
 			return TRUE
 	return FALSE
 
-/mob/proc/isloyal_or_mindshielded()
+/mob/proc/mind_protect()
 	for(var/obj/item/weapon/implant/mind_protect/L in src)
 		if(L.implanted)
 			return TRUE
