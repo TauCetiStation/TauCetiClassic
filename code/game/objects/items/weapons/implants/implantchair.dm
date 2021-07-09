@@ -9,7 +9,7 @@
 
 	var/ready = 1
 	var/malfunction = 0
-	var/list/obj/item/weapon/implant/mind_protect/implant_list = list()
+	var/list/obj/item/weapon/implant/mind_protect/mindshield/implant_list = list()
 	var/max_implants = 5
 	var/injection_cooldown = 600
 	var/replenish_cooldown = 6000
