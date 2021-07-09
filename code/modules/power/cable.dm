@@ -269,7 +269,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/AM in loc)
 		if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
-			if(C.d1 == 0 && d1==0) //only connected if they are both "nodes"
+			if(C.d1 == 0 && d1 == 0) //only connected if they are both "nodes"
 				if(C.powernet == powernet)
 					continue
 				if(C.powernet)

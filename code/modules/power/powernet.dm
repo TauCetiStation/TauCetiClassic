@@ -42,7 +42,9 @@
 //Warning : this proc DON'T check if the cable exists
 /datum/powernet/proc/add_cable(obj/structure/cable/C)
 	if(C.powernet) // If C already has a powernet
-		if(C.powernet != src)
+		if(C.powernet == src)
+			return
+		else
 			C.powernet.remove_cable(C) // Remove it
 	C.powernet = src
 	cables |= C
@@ -51,7 +53,7 @@
 //if the powernet is then empty, delete it
 //Warning : this proc DON'T check if the machine exists
 /datum/powernet/proc/remove_machine(obj/machinery/power/M)
-	nodes -=M
+	nodes -= M
 	M.powernet = null
 	if(is_empty()) // The powernet is now empty
 		qdel(src) // Delete it
@@ -60,10 +62,12 @@
 //Warning : this proc DON'T check if the machine exists
 /datum/powernet/proc/add_machine(obj/machinery/power/M)
 	if(M.powernet) // If M already has a powernet
-		if(M.powernet != src)
+		if(M.powernet == src)
+			return
+		else
 			M.powernet.remove_machine(M) // Remove it
 	M.powernet = src
-	nodes |= M
+	nodes[M] = M
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller
