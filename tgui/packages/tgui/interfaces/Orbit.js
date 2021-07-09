@@ -84,10 +84,12 @@ export const Orbit = (props, context) => {
 
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
-    if (collatedAntagonists[antagonist.antag] === undefined) {
-      collatedAntagonists[antagonist.antag] = [];
+    for (const anta of antagonist.antag) {
+      if (collatedAntagonists[anta] === undefined) {
+        collatedAntagonists[anta] = [];
+      }
+      collatedAntagonists[anta].push(antagonist);
     }
-    collatedAntagonists[antagonist.antag].push(antagonist);
   }
 
   const sortedAntagonists = Object.entries(collatedAntagonists);
