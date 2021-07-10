@@ -416,7 +416,6 @@ SUBSYSTEM_DEF(job)
 			H.species.before_job_equip(H, job)
 
 		job.equip(H)
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/show_location_blurb, H.client, 30)
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
@@ -458,6 +457,8 @@ SUBSYSTEM_DEF(job)
 		if(H.buckled && istype(H.buckled, /obj/structure/stool/bed/chair/wheelchair))
 			H.buckled.loc = H.loc
 			H.buckled.set_dir(H.dir)
+
+	show_location_blurb(H.client, 30)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
