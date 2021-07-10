@@ -458,7 +458,7 @@ SUBSYSTEM_DEF(job)
 			H.buckled.loc = H.loc
 			H.buckled.set_dir(H.dir)
 
-	show_location_blurb(H.client, 30)
+		show_location_blurb(H.client, 30)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
