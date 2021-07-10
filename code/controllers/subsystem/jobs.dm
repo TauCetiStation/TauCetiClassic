@@ -681,8 +681,8 @@ SUBSYSTEM_DEF(job)
 
 	C.screen += T
 	animate(T, alpha = 255, time = 10)
-	for(var/i = 1 to length(text) + 1)
-		T.maptext = "<div style=\"[style]\">[copytext(text, 1, i)] </div>"
+	for(var/i = 1 to length_char(text) + 1)
+		T.maptext = "<div style=\"[style]\">[copytext_char(text, 1, i)] </div>"
 		sleep(1)
 
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/fade_location_blurb, C, T), duration)
