@@ -29,6 +29,7 @@
 /datum/action/innate/mecha/Grant(mob/living/L, obj/mecha/M)
 	if(M)
 		chassis = M
+		target = M
 	..()
 
 /datum/action/innate/mecha/Destroy()

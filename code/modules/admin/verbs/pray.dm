@@ -19,7 +19,7 @@
 		if(usr.client.prefs.muted & MUTE_PRAY)
 			to_chat(usr, "<span class='warning'>You cannot pray (muted).</span>")
 			return
-		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage.dmi', "bible")

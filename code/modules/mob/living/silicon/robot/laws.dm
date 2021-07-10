@@ -116,7 +116,7 @@
 //	set name = "State Laws"
 	say("Current Active Laws:")
 	//laws_sanity_check()
-	//src.laws.show_laws(world)
+	//laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 

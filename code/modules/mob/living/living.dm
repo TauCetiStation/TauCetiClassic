@@ -688,7 +688,7 @@
 		if(moving_diagonally)
 			return .
 
-	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
+	if (s_active && s_active.loc != src && get_turf(s_active) != get_turf(src))	//check s_active.loc != src first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
 	if(update_slimes)
@@ -1168,16 +1168,17 @@
 			harvest(user)
 		return TRUE
 
-/mob/living/proc/harvest(mob/user)
+/mob/living/proc/harvest(mob/user, turf/newloc = loc)
 	if(QDELETED(src))
 		return
 	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
-				new path(src.loc)
+				new path(newloc)
 			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 			butcher_results.Remove(path)
-		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		if(user)
+			visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 
 /mob/living/proc/get_taste_sensitivity()
@@ -1338,3 +1339,6 @@
 			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
 
 	return TRUE
+
+/mob/living/proc/swap_hand()
+	return

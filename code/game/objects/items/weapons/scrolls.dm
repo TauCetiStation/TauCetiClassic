@@ -45,7 +45,7 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in teleportlocs
+	A = tgui_input_list(user, "Area to jump to", "BOOYEA", teleportlocs)
 	if(!A)
 		return
 	var/area/thearea = teleportlocs[A]

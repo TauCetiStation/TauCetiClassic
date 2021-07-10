@@ -33,8 +33,7 @@
 
 /mob/living/parasite/essence/Login()
 	..()
-	if(hud_used)
-		hud_used.reload_fullscreen()
+	reload_fullscreen()
 	if(changeling)
 		for(var/mob/living/parasite/essence/E in changeling.essences)
 			if(E.phantom && E.phantom.showed)
