@@ -416,6 +416,7 @@ SUBSYSTEM_DEF(job)
 			H.species.before_job_equip(H, job)
 
 		job.equip(H)
+		INVOKE_ASYNC(GLOBAL_PROC, .proc/show_location_blurb, H.client, 30)
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
@@ -656,3 +657,37 @@ SUBSYSTEM_DEF(job)
 					never++
 		tmp_str += "HIGH=[high]|MEDIUM=[medium]|LOW=[low]|NEVER=[never]|BANNED=[banned]|YOUNG=[young]|-"
 		feedback_add_details("job_preferences",tmp_str)
+
+
+/proc/show_location_blurb(client/C, duration)
+	set waitfor = FALSE
+
+	if(!C)
+		return
+
+	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
+	var/area/A = get_area(C.mob)
+	var/text = "[current_date_string], [worldtime2text()]\n[station_name()], [A.name]"
+	text = uppertext(text)
+
+	var/obj/effect/overlay/T = new()
+	T.maptext_height = 64
+	T.maptext_width = 512
+	T.layer = FLOAT_LAYER
+	T.plane = HUD_PLANE
+	T.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	T.screen_loc = "LEFT+1,BOTTOM+2"
+
+	C.screen += T
+	animate(T, alpha = 255, time = 10)
+	for(var/i = 1 to length(text) + 1)
+		T.maptext = "<div style=\"[style]\">[copytext(text, 1, i)] </div>"
+		sleep(1)
+
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/fade_location_blurb, C, T), duration)
+
+/proc/fade_location_blurb(client/C, obj/T)
+	animate(T, alpha = 0, time = 5)
+	sleep(5)
+	C.screen -= T
+	qdel(T)
