@@ -733,26 +733,34 @@ var/list/blacklisted_builds = list(
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
 
+#define MAXIMAZED  1<<1
+#define FULLSCREEN 1<<2
 
 /client/verb/toggle_fullscreen()
 	set name = "Toggle Fullscreen"
 	set category = "OOC"
 
-	fullscreen = !fullscreen
-
-	if (fullscreen)
+	if (!(fullscreen & FULLSCREEN))
+		if(winget(usr, "mainwindow", "is-maximized") == "true")
+			fullscreen |= MAXIMAZED
+		else
+			fullscreen &= ~MAXIMAZED
 		winset(usr, "mainwindow", "titlebar=false")
 		winset(usr, "mainwindow", "can-resize=false")
 		winset(usr, "mainwindow", "is-maximized=false")
 		winset(usr, "mainwindow", "is-maximized=true")
 		winset(usr, "mainwindow", "menu=")
+		fullscreen |= FULLSCREEN
 	else
-		winset(usr, "mainwindow", "is-maximized=false")
+		if(!(fullscreen & MAXIMAZED))
+			winset(usr, "mainwindow", "is-maximized=false")
 		winset(usr, "mainwindow", "titlebar=true")
 		winset(usr, "mainwindow", "can-resize=true")
 		winset(usr, "mainwindow", "menu=menu")
+		fullscreen &= ~FULLSCREEN
 
-	fit_viewport()
+#undef MAXIMAZED
+#undef FULLSCREEN
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
