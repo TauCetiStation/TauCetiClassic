@@ -712,7 +712,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		client.screen |= contents
 		if(hud_used)
 			hud_used.hidden_inventory_update() 	//Updates the screenloc of the items on the 'other' inventory bar
-			hud_used.reload_fullscreen()
+			reload_fullscreen()
 
 
 /mob/living/carbon/human/update_inv_handcuffed()

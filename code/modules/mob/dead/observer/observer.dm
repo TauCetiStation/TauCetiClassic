@@ -644,3 +644,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/IsAdvancedToolUser()
 	return IsAdminGhost(src)
+
+/mob/dead/observer/Stat()
+	..()
+	if(statpanel("Status"))
+		stat(null, "Station Time: [worldtime2text()]")
