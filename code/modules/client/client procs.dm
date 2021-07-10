@@ -740,7 +740,9 @@ var/list/blacklisted_builds = list(
 	set name = "Toggle Fullscreen"
 	set category = "OOC"
 
-	if (!(fullscreen & FULLSCREEN))
+	fullscreen ^= FULLSCREEN
+
+	if(fullscreen & FULLSCREEN)
 		if(winget(usr, "mainwindow", "is-maximized") == "true")
 			fullscreen |= MAXIMAZED
 		else
@@ -750,14 +752,12 @@ var/list/blacklisted_builds = list(
 		winset(usr, "mainwindow", "is-maximized=false")
 		winset(usr, "mainwindow", "is-maximized=true")
 		winset(usr, "mainwindow", "menu=")
-		fullscreen |= FULLSCREEN
 	else
 		if(!(fullscreen & MAXIMAZED))
 			winset(usr, "mainwindow", "is-maximized=false")
 		winset(usr, "mainwindow", "titlebar=true")
 		winset(usr, "mainwindow", "can-resize=true")
 		winset(usr, "mainwindow", "menu=menu")
-		fullscreen &= ~FULLSCREEN
 
 #undef MAXIMAZED
 #undef FULLSCREEN
