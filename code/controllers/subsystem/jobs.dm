@@ -672,7 +672,7 @@ SUBSYSTEM_DEF(job)
 	var/age
 	if(ishuman(C.mob))
 		var/mob/living/carbon/human/H = C.mob
-		age += ", [H.age] years"
+		age += ", [H.age] years old"
 
 	lines += "[C.mob.real_name][age]"
 
