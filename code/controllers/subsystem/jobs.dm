@@ -658,7 +658,6 @@ SUBSYSTEM_DEF(job)
 		feedback_add_details("job_preferences",tmp_str)
 
 
-
 /proc/show_location_blurb(client/C)
 	set waitfor = FALSE
 
@@ -714,6 +713,7 @@ SUBSYSTEM_DEF(job)
 	if(C)
 		C.screen -= B
 	qdel(B)
+
 /obj/effect/overlay/blurb
 	maptext_height = 64
 	maptext_width = 512
