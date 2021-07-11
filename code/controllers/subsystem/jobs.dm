@@ -724,5 +724,5 @@ SUBSYSTEM_DEF(job)
 	layer = FLOAT_LAYER
 	plane = HUD_PLANE
 	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "LEFT+1,BOTTOM+2"
