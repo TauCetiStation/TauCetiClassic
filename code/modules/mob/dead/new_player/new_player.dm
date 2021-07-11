@@ -211,9 +211,11 @@
 		character.loc = C.loc
 
 		character = character.AIize(move=0) // AIize the character, but don't move them yet
+
 		show_location_blurb(character.client)
 		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 		SSticker.mode.latespawn(character)
+
 		qdel(C)
 		qdel(src)
 		return
