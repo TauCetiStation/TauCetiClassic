@@ -8804,7 +8804,7 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
 	dir = 1;
