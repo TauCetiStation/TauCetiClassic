@@ -163,7 +163,7 @@
 	 so try not to get on their bad side.</span> ))")
 
 	if(targeted_by.len == 1)
-		target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
+		target_locked = image(icon = 'icons/effects/Targeted.dmi', icon_state = "locking")
 		target_locked.appearance_flags  |= (RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
 		update_targeted()
 
