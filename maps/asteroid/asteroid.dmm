@@ -699,6 +699,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
+"bK" = (
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway South";
+	dir = 1;
+	network = list("MINE")
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
 "bL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -10971,10 +10981,11 @@
 "yi" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway East";
-	dir = 1;
+	dir = 6;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -48395,7 +48406,7 @@ uo
 uo
 ww
 vN
-yi
+bK
 uo
 uo
 uo
@@ -50192,7 +50203,7 @@ tb
 xr
 wU
 uo
-wn
+yi
 vN
 Pc
 zb
