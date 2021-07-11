@@ -216,10 +216,13 @@
 /datum/religion/cult/can_convert(mob/M)
 	if(M.my_religion)
 		return FALSE
+	if(M.stat == DEAD)
+		return FALSE
+	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny
+		return FALSE
 	if(ishuman(M))
-		if(M.mind.assigned_role == "Captain")
-			return FALSE
-		if(M.get_species() == GOLEM)
+		var/mob/living/carbon/human/H = M
+		if(H.mind.assigned_role == "Captain" || H.species.flags[NO_BLOOD])
 			return FALSE
 	if(M.ismindprotect())
 		return FALSE
