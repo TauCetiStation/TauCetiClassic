@@ -142,15 +142,15 @@
 	if(user.is_busy(null, FALSE)) // prevents spam too.
 		return
 
-	to_chat(user, "<span class='notice'>Вы пытаетесь выбраться из капсулы, толкаясь ногами... (Потребуется около 30 секунд.)</span>")
+	to_chat(user, "<span class='notice'>Вы пытаетесь выбраться из криокамеры, толкаясь ногами... (Потребуется около 30 секунд.)</span>")
 	audible_message("<span class='notice'>Вы слышите глухой стук из криокамеры.</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
-	set name = "Eject Cryo Cell."
-	set desc = "Начать процедуру открытия криогенной камеры."
+	set name = "Eject Cryo Cell"
+	set desc = "Начать процедуру открытия криокамеры."
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
@@ -173,7 +173,7 @@
 		if(on)
 			to_chat(user, "Кто-то внутри криокамеры!")
 		else
-			to_chat(user, "Вы едва можете различить форму того, что плавает в криогенной камере.")
+			to_chat(user, "Вы едва можете различить форму того, что плавает в криокамере.")
 	else
 		to_chat(user, "Криокамера выглядит пустой.")
 
@@ -257,6 +257,7 @@
 		if(!state_open)
 			on = !on
 			update_icon()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
@@ -302,14 +303,14 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			to_chat(user, "<span class='warning'>Сосуд уже загружен в криогенную камеру!</span>")
+			to_chat(user, "<span class='warning'>Что-то уже загружено в криокамеру!</span>")
 			return
 		if(!user.drop_from_inventory(I, src))
 			return
 		beaker = I
 		user.visible_message(
 			"[user] помещает [I] в криокамеру.",
-			"<span class='notice'>Вы помещаете сосуд в криогенную камеру.</span>")
+			"<span class='notice'>Вы помещаете [I] в криокамеру.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return
