@@ -667,34 +667,34 @@ SUBSYSTEM_DEF(job)
 	var/static/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
 	var/obj/effect/overlay/blurb/B = new()
 
-	var/list/data = list()
+	var/list/lines = list()
 
 	var/age
 	if(ishuman(C.mob))
 		var/mob/living/carbon/human/H = C.mob
 		age += ", [H.age] years"
 
-	data += "[C.mob.real_name][age]"
+	lines += "[C.mob.real_name][age]"
 
 	if(C.mob.mind)
 		if(length(C.mob.mind.antag_roles))
-			data += C.mob.mind.antag_roles[1]
+			lines += C.mob.mind.antag_roles[1]
 		else
-			data += C.mob.mind.role_alt_title
+			lines += C.mob.mind.role_alt_title
 
 	var/station_name
 	if(is_station_level(C.mob.z))
 		station_name = "[station_name()], "
 
 	var/area/A = get_area(C.mob)
-	data += "[station_name][A.name]"
+	lines += "[station_name][A.name]"
 
-	data += "[current_date_string], [worldtime2text()]"
+	lines += "[current_date_string], [worldtime2text()]"
 
 	var/newline_flag = TRUE
-	for(var/j in 1 to data.len)
-		var/new_line = uppertext(data[j])
-		var/old_line = j > 1 ? uppertext(data[j-1]) : null
+	for(var/j in 1 to lines.len)
+		var/new_line = uppertext(lines[j])
+		var/old_line = j > 1 ? uppertext(lines[j - 1]) : null
 		C.screen += B
 		animate(B, alpha = 255, time = 10)
 		newline_flag = !newline_flag
@@ -705,7 +705,7 @@ SUBSYSTEM_DEF(job)
 			else
 				B.maptext = "<div style=\"line-height: 0.9;[style]\">[curline]</div><br><br></br>"
 			sleep(1)
-		if(newline_flag || j == data.len)
+		if(newline_flag || j == lines.len)
 			sleep(15)
 			animate(B, alpha = 0, time = 15)
 			sleep(15)
