@@ -163,7 +163,7 @@
 	 so try not to get on their bad side.</span> ))")
 
 	if(targeted_by.len == 1)
-		set_target_locked_sprite("locking")
+		INVOKE_ASYNC(src, .proc/set_target_locked_sprite, "locking")
 		addtimer(CALLBACK(src, .proc/set_target_locked_sprite, "locked"), 20)
 
 	//Adding the buttons to the controller person
