@@ -131,6 +131,13 @@
 	QDEL_NULL(pr_give_air)
 	QDEL_NULL(pr_internal_damage)
 	QDEL_NULL(pr_mecha_light)
+
+	QDEL_NULL(eject_action)
+	QDEL_NULL(internals_action)
+	QDEL_NULL(cycle_action)
+	QDEL_NULL(lights_action)
+	QDEL_NULL(stats_action)
+	QDEL_NULL(strafing_action)
 	mechas_list -= src //global mech list
 	return ..()
 

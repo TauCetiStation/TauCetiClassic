@@ -13,6 +13,10 @@ const compareNumberedText = (a, b) => {
   const aName = a.name;
   const bName = b.name;
 
+  if (!aName || !bName) {
+    return 0;
+  }
+
   // Check if aName and bName are the same except for a number at the end
   // e.g. Medibot (2) and Medibot (3)
   const aNumberMatch = aName.match(PATTERN_NUMBER);
@@ -70,7 +74,6 @@ export const Orbit = (props, context) => {
   const {
     alive,
     antagonists,
-    auto_observe,
     dead,
     ghosts,
     misc,
@@ -81,10 +84,12 @@ export const Orbit = (props, context) => {
 
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
-    if (collatedAntagonists[antagonist.antag] === undefined) {
-      collatedAntagonists[antagonist.antag] = [];
+    for (const anta of antagonist.antag) {
+      if (collatedAntagonists[anta] === undefined) {
+        collatedAntagonists[anta] = [];
+      }
+      collatedAntagonists[anta].push(antagonist);
     }
-    collatedAntagonists[antagonist.antag].push(antagonist);
   }
 
   const sortedAntagonists = Object.entries(collatedAntagonists);
