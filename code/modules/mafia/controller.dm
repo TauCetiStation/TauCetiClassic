@@ -248,11 +248,11 @@
 	for(var/i in judgement_innocent_votes)
 		var/datum/mafia_role/role = i
 		send_message("<span class='green'>[role.body.real_name] выбрал НЕВИНОВЕН.</span>")
-	for(var/ii in judgement_abstain_votes)
-		var/datum/mafia_role/role = ii
+	for(var/i in judgement_abstain_votes)
+		var/datum/mafia_role/role = i
 		send_message("<span class='comradio'>[role.body.real_name] воздержался.</span>")
-	for(var/iii in judgement_guilty_votes)
-		var/datum/mafia_role/role = iii
+	for(var/i in judgement_guilty_votes)
+		var/datum/mafia_role/role = i
 		send_message("<span class='red'>[role.body.real_name] выбрал ВИНОВЕН.</span>")
 	if(judgement_guilty_votes.len > judgement_innocent_votes.len) //strictly need majority guilty to lynch
 		send_message("<span class='red'><b>Большинство считает что подсудимый виновен, [on_trial.body.real_name] был казнен.</b></span>")
@@ -709,7 +709,7 @@
 					to_chat(usr, "<span class='notice'>Теперь вы будете получать сообщения из игры.</span>")
 					spectators += C.ckey
 				return TRUE
-	if(user_role && user_role.game_status == MAFIA_DEAD)
+	if(!user_role || user_role.game_status == MAFIA_DEAD)
 		return
 	//User actions (just living)
 	switch(action)
@@ -739,7 +739,7 @@
 						return
 					user_role.handle_action(src,params["atype"],target)
 			return TRUE
-	if(user_role != on_trial)
+	if(on_trial && user_role != on_trial)
 		switch(action)
 			if("vote_abstain")
 				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_abstain_votes))

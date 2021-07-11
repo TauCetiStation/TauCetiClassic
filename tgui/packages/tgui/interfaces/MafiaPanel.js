@@ -19,6 +19,7 @@ export const MafiaPanel = (props, context) => {
     timeleft,
     all_roles,
   } = data;
+  const playerAddedHeight = roleinfo ? players.length * 30 : 7;
   const readyGhosts = lobbydata ? lobbydata.filter(
     player => player.status === "Готов" && player.spectating === "Игрок") : null;
   return (
@@ -26,7 +27,7 @@ export const MafiaPanel = (props, context) => {
       title="Мафия"
       theme={role_theme}
       width={650} // 414 or 415 / 444 or 445
-      height={580}>
+      height={580 + playerAddedHeight}>
       <Window.Content scrollable={admin_controls}>
         {!roleinfo && (
           <Flex scrollable
