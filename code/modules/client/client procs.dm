@@ -733,8 +733,8 @@ var/list/blacklisted_builds = list(
 			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
 			break
 
-#define MAXIMAZED  1<<1
-#define FULLSCREEN 1<<2
+#define MAXIMAZED  (1<<0)
+#define FULLSCREEN (1<<1)
 
 /client/verb/toggle_fullscreen()
 	set name = "Toggle Fullscreen"
