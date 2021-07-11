@@ -268,6 +268,6 @@ var/can_call_ert
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
 	L.inject(src)
 	return 1
