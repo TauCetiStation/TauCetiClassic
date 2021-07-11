@@ -816,7 +816,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/IMP = new(M)
+			var/obj/item/weapon/implant/mind_protect/mindshield/IMP = new(M)
 			IMP.inject(M)
 
 			if(M.mind)
@@ -962,7 +962,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			var/obj/item/weapon/implant/mind_protect/loyalty/L = new(M)
 			L.inject(M)
 		if("hop")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(M), SLOT_W_UNIFORM)
@@ -1010,7 +1010,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			var/obj/item/weapon/implant/mind_protect/loyalty/L = new(M)
 			L.inject(M)
 		if("cmo")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(M), SLOT_W_UNIFORM)
@@ -1533,7 +1533,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			var/obj/item/weapon/implant/mind_protect/loyalty/L = new(M)
 			L.inject(M)
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), SLOT_W_UNIFORM)

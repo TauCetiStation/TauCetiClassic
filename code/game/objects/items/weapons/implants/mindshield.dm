@@ -1,20 +1,7 @@
-/obj/item/weapon/implant/mindshield
-	name = "mindshield implant"
-	desc = "Protects against brainwashing."
+/obj/item/weapon/implant/mind_protect
+	name = "Abstract Implant"
 
-/obj/item/weapon/implant/mindshield/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-				<b>Life:</b> Ten years.<BR>
-				<b>Important Notes:</b> Personnel injected with this device are much more resistant to brainwashing and propaganda.<BR>
-				<HR>
-				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small pod of nanobots that protects the host's mental functions from manipulation.<BR>
-				<b>Special Features:</b> Will prevent and cure most forms of brainwashing and propaganda.<BR>
-				<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
-	return dat
-
-/obj/item/weapon/implant/mindshield/implanted(mob/M)
+/obj/item/weapon/implant/mind_protect/implanted(mob/M)
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
@@ -39,17 +26,31 @@
 
 	return TRUE
 
+/obj/item/weapon/implant/mind_protect/mindshield
+	name = "mindshield implant"
+	desc = "Protects against brainwashing."
 
+/obj/item/weapon/implant/mind_protect/mindshield/get_data()
+	var/dat = {"<b>Implant Specifications:</b><BR>
+				<b>Name:</b> Nanotrasen Employee Management Implant<BR>
+				<b>Life:</b> Ten years.<BR>
+				<b>Important Notes:</b> Personnel injected with this device are much more resistant to brainwashing and propaganda.<BR>
+				<HR>
+				<b>Implant Details:</b><BR>
+				<b>Function:</b> Contains a small pod of nanobots that protects the host's mental functions from manipulation.<BR>
+				<b>Special Features:</b> Will prevent and cure most forms of brainwashing and propaganda.<BR>
+				<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
+	return dat
 
-/obj/item/weapon/implant/mindshield/loyalty
+/obj/item/weapon/implant/mind_protect/loyalty
 	name = "loyalty implant"
 	desc = "Makes you loyal or such."
 
-/obj/item/weapon/implant/mindshield/loyalty/inject(mob/living/carbon/C, def_zone)
+/obj/item/weapon/implant/mind_protect/loyalty/inject(mob/living/carbon/C, def_zone)
 	. = ..()
 	START_PROCESSING(SSobj, C)
 
-/obj/item/weapon/implant/mindshield/loyalty/get_data()
+/obj/item/weapon/implant/mind_protect/loyalty/get_data()
 	var/dat = {"
 	<b>Implant Specifications:</b><BR>
 	<b>Name:</b> Nanotrasen Employee Management Implant<BR>
@@ -63,7 +64,7 @@
 	<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
 	return dat
 
-/obj/item/weapon/implant/mindshield/loyalty/implanted(mob/M)
+/obj/item/weapon/implant/mind_protect/loyalty/implanted(mob/M)
 	. = ..()
 	if(.)
 		if(M.mind)
@@ -83,7 +84,7 @@
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")
 
-/obj/item/weapon/implant/mindshield/loyalty/process()
+/obj/item/weapon/implant/mind_protect/loyalty/process()
 	if (!implanted || !imp_in)
 		STOP_PROCESSING(SSobj, src)
 		return
