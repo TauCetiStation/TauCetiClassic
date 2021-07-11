@@ -664,42 +664,43 @@ SUBSYSTEM_DEF(job)
 	if(!C)
 		return
 
-	var/static/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
+	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
 	var/obj/effect/overlay/blurb/B = new()
 
-	var/list/lines = list()
+	var/list/style_for_line[4]
+	var/list/lines[4]
 
 	var/age
 	if(ishuman(C.mob))
 		var/mob/living/carbon/human/H = C.mob
 		age += ", [H.age] years old"
 
-	lines += "[C.mob.real_name][age]"
+	lines[1] = "[C.mob.real_name][age]"
 
-	if(C.mob.mind)
-		if(length(C.mob.mind.antag_roles))
-			lines += C.mob.mind.antag_roles[1]
-		else
-			lines += C.mob.mind.role_alt_title
+	if(length(C.mob.mind.antag_roles))
+		lines[2] = C.mob.mind.antag_roles[1]
+		style_for_line[2] = "color:red;"
+	else
+		lines[2] = C.mob.mind.role_alt_title
 
 	var/station_name
 	if(is_station_level(C.mob.z))
 		station_name = "[station_name()], "
 
 	var/area/A = get_area(C.mob)
-	lines += "[station_name][A.name]"
+	lines[3] = "[station_name][A.name]"
 
-	lines += "[current_date_string], [worldtime2text()]"
+	lines[4] = "[current_date_string], [worldtime2text()]"
 
 	var/newline_flag = TRUE
 	for(var/j in 1 to lines.len)
 		var/new_line = uppertext(lines[j])
-		var/old_line = j > 1 ? uppertext(lines[j - 1]) : null
+		var/old_line = j > 1 ? "<span style=\"[style_for_line[j - 1]]\">[uppertext(lines[j - 1])]</span>" : null
 		C.screen += B
 		animate(B, alpha = 255, time = 10)
 		newline_flag = !newline_flag
 		for(var/i = 2 to length_char(new_line) + 1)
-			var/curline = copytext_char(new_line, 1, i)
+			var/curline = "<span style=\"[style_for_line[j]]\">[copytext_char(new_line, 1, i)]</span>"
 			if(newline_flag)
 				B.maptext = "<div style=\"[style]\">[old_line]<br>[curline]</div>"
 			else
