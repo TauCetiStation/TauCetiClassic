@@ -19,7 +19,7 @@ export const MafiaPanel = (props, context) => {
     timeleft,
     all_roles,
   } = data;
-  const playerAddedHeight = roleinfo ? players.length * 30 : 7;
+  const playerAddedHeight = roleinfo ? players.length * 10 : 0;
   const readyGhosts = lobbydata ? lobbydata.filter(
     player => player.status === "Готов" && player.spectating === "Игрок") : null;
   return (
