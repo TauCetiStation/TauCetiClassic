@@ -126,7 +126,7 @@
 	var/output
 	for(var/c in D.materials)
 		if(c in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [material2name(c)]"
+			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [c]"
 			i++
 	return output
 
@@ -134,7 +134,7 @@
 	var/output
 	for(var/resource in resources)
 		var/amount = min(res_max_amount, resources[resource])
-		output += "<span class=\"res_name\">[material2name(resource)]: </span>[amount] cm&sup3;"
+		output += "<span class=\"res_name\">[resource]: </span>[amount] cm&sup3;"
 		if(amount>0)
 			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
 		output += "<br/>"
@@ -450,9 +450,9 @@
 
 		var/removed = remove_material(material,amount)
 		if(removed == -1)
-			temp = "Not enough [material2name(material)] to produce a sheet."
+			temp = "Not enough [material] to produce a sheet."
 		else
-			temp = "Ejected [removed] of [material2name(material)]"
+			temp = "Ejected [removed] of [material]"
 		temp += "<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
 	updateUsrDialog()
@@ -543,12 +543,12 @@
 			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 			return
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			to_chat(user, "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>")
+			to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			add_overlay("fab-load-[material2name(material)]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			add_overlay("fab-load-[material]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -556,10 +556,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			cut_overlay("fab-load-[material2name(material)]") //No matter what the overlay shall still be deleted
+			cut_overlay("fab-load-[material]") //No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
-
-/obj/machinery/mecha_part_fabricator/proc/material2name(ID)
-	return copytext(ID,2)

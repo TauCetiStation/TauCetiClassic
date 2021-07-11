@@ -18,13 +18,14 @@
 
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
+	implanted = FALSE
+	imp_in = null
 	if(part)
 		part.implants.Remove(src)
+		part = null
 		if(isliving(imp_in))
 			var/mob/living/L = imp_in
 			L.sec_hud_set_implants()
-		part = null
-	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
