@@ -10258,13 +10258,14 @@
 	},
 /area/asteroid/mine/living_quarters)
 "wr" = (
+/obj/structure/closet/secure_closet/miner,
 /obj/machinery/camera{
 	c_tag = "Storage Room";
-	dir = 1;
+	dir = 6;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
-	icon_state = "warning"
+	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
 "ws" = (
@@ -49429,7 +49430,7 @@ ac
 kO
 lA
 uo
-vB
+wr
 qv
 Au
 Au
@@ -49690,7 +49691,7 @@ vB
 qv
 tS
 vX
-wr
+vq
 uo
 yi
 vN
