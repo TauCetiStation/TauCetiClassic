@@ -659,7 +659,7 @@ SUBSYSTEM_DEF(job)
 
 
 
-/proc/show_location_blurb(client/C, duration = 30)
+/proc/show_location_blurb(client/C)
 	set waitfor = FALSE
 
 	if(!C)
@@ -706,18 +706,14 @@ SUBSYSTEM_DEF(job)
 			else
 				B.maptext = "<div style=\"line-height: 0.9;[style]\">[curline]</div><br><br></br>"
 			sleep(1)
-		if(newline_flag)
-			sleep(14)
+		if(newline_flag || j == data.len)
+			sleep(15)
+			animate(B, alpha = 0, time = 15)
+			sleep(15)
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/fade_location_blurb, C, B), duration)
-
-/proc/fade_location_blurb(client/C, obj/O)
-	animate(O, alpha = 0, time = 5)
-	sleep(5)
 	if(C)
-		C.screen -= O
-	qdel(O)
-
+		C.screen -= B
+	qdel(B)
 /obj/effect/overlay/blurb
 	maptext_height = 64
 	maptext_width = 512
