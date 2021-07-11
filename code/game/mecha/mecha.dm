@@ -86,6 +86,8 @@
 	//Action var
 	var/strafe = FALSE
 
+	var/prev_move_dir = 0
+
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
 
@@ -129,6 +131,13 @@
 	QDEL_NULL(pr_give_air)
 	QDEL_NULL(pr_internal_damage)
 	QDEL_NULL(pr_mecha_light)
+
+	QDEL_NULL(eject_action)
+	QDEL_NULL(internals_action)
+	QDEL_NULL(cycle_action)
+	QDEL_NULL(lights_action)
+	QDEL_NULL(stats_action)
+	QDEL_NULL(strafing_action)
 	mechas_list -= src //global mech list
 	return ..()
 
@@ -226,8 +235,8 @@
 		mech_click = world.time
 
 		if(!istype(object, /atom)) return
-		if(istype(object, /obj/screen))
-			var/obj/screen/using = object
+		if(istype(object, /atom/movable/screen))
+			var/atom/movable/screen/using = object
 			if(using.screen_loc == ui_acti || using.screen_loc == ui_iarrowleft || using.screen_loc == ui_iarrowright)//ignore all HUD objects save 'intent' and its arrows
 				return ..()
 			else
@@ -278,6 +287,10 @@
 
 /obj/mecha/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
 
@@ -311,18 +324,24 @@
 		return 0
 	if(!has_charge(step_energy_drain))
 		return 0
-	if(ISDIAGONALDIR(direction))
-		return FALSE
 	var/move_result = 0
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
-	else if(src.dir != direction && !strafe)
-		move_result = mechturn(direction)
-	else
+	else if(strafe)
 		move_result	= mechstep(direction)
+	else if(direction == dir || direction == prev_move_dir)
+		move_result = mechstep(dir)
+	else if(ISDIAGONALDIR(direction))
+		if(dir & NORTH_SOUTH)
+			move_result = mechturn(direction & EAST_WEST)
+		else
+			move_result = mechturn(direction & NORTH_SOUTH)
+	else
+		move_result = mechturn(direction)
+	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		if(do_after(step_in))
+		if(do_after(step_in * move_result))
 			can_move = 1
 		return 1
 	return 0
@@ -334,6 +353,7 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
+	var/old_loc = loc
 	var/current_dir = dir
 	var/result = step(src, direction)
 	if(strafe)
@@ -341,6 +361,9 @@
 	if(result)
 		playsound(src, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 40)
 		use_power(step_energy_drain)
+		direction = get_dir(src, old_loc)
+		if(ISDIAGONALDIR(direction))
+			return 2
 	return result
 
 /obj/mecha/proc/mechsteprand()
@@ -435,7 +458,7 @@
 
 /obj/mecha/proc/update_health()
 	if(src.health > 0)
-		src.spark_system.start()
+		spark_system.start()
 		diag_hud_set_mechhealth()
 	else
 		destroy()
@@ -460,6 +483,7 @@
 
 /obj/mecha/proc/toggle_strafe()
 	strafe = !strafe
+	prev_move_dir = 0
 
 	occupant_message("<span class='notice'>Toggled strafing mode [strafe?"on":"off"].</span>")
 	log_message("Toggled strafing mode [strafe?"on":"off"].")
@@ -721,7 +745,7 @@
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
 		else if(state==3 && src.cell)
-			src.cell.forceMove(src.loc)
+			cell.forceMove(src.loc)
 			src.cell = null
 			state = 4
 			to_chat(user, "You unscrew and pry out the powercell.")
@@ -1093,6 +1117,7 @@
 		Move(src.loc)
 		src.icon_state = reset_icon()
 		set_dir(dir_in)
+		GrantActions(brainmob)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		log_admin("[key_name(mmi_as_oc)] has moved in [src.type] with name [src.name] as MMI brain by [key_name(user)]")
 		if(!hasInternalDamage())
@@ -1172,10 +1197,10 @@
 			src.occupant.client.perspective = MOB_PERSPECTIVE
 		*/
 		src.occupant << browse(null, "window=exosuit")
-		if(src.occupant.hud_used && src.last_user_hud)
-			src.occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
+		if(src.occupant.hud_used && src.last_user_hud && !istype(mob_container, /obj/item/device/mmi))
+			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
 
-		if(istype(mob_container, /obj/item/device/mmi) || istype(mob_container, /obj/item/device/mmi/posibrain))
+		if(istype(mob_container, /obj/item/device/mmi))
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi

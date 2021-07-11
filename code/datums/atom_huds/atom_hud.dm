@@ -4,7 +4,7 @@ var/global/list/all_huds = list()
 
 //global HUD LIST
 //if you add new defines, then change number of assoc list
-var/global/list/huds[24]
+var/global/list/huds[23]
 
 /proc/init_hud_list() // proc used in global_list.dm
 	// Crooked port from TG, but he needed
@@ -57,7 +57,7 @@ var/global/list/huds[24]
 	if(!M || !hudusers[M])
 		return
 	if (absolute || !--hudusers[M])
-		UnregisterSignal(M, COMSIG_PARENT_QDELETED)
+		UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 		hudusers -= M
 		if(next_time_allowed[M])
 			next_time_allowed -= M
@@ -86,7 +86,7 @@ var/global/list/huds[24]
 		return
 	if(!hudusers[M])
 		hudusers[M] = 1
-		RegisterSignal(M, COMSIG_PARENT_QDELETED, .proc/unregister_mob)
+		RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unregister_mob)
 		if(next_time_allowed[M] > world.time)
 			if(!queued_to_see[M])
 				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, M), next_time_allowed[M] - world.time)

@@ -1,14 +1,17 @@
-/client/var/datum/admin_help/current_ticket	//the current ticket the (usually) not-admin client is dealing with
+/// Client var used for tracking the ticket the (usually) not-admin client is dealing with
+/client/var/datum/admin_help/current_ticket
 
-//
-//TICKET MANAGER
-//
-
+/**
+ * # Adminhelp Ticket Manager
+ */
 var/global/datum/admin_help_tickets/ahelp_tickets
 
 /datum/admin_help_tickets
+	/// The set of all active tickets
 	var/list/active_tickets = list()
+	/// The set of all closed tickets
 	var/list/closed_tickets = list()
+	/// The set of all resolved tickets
 	var/list/resolved_tickets = list()
 
 	var/obj/effect/statclick/ticket_list/astatclick = new(null, null, AHELP_ACTIVE)
@@ -25,6 +28,14 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	QDEL_NULL(cstatclick)
 	QDEL_NULL(rstatclick)
 	return ..()
+
+/datum/admin_help_tickets/proc/TicketsByCKey(ckey)
+	. = list()
+	var/list/lists = list(active_tickets, closed_tickets, resolved_tickets)
+	for(var/I in lists)
+		for(var/datum/admin_help/AH in I)
+			if(AH.initiator_ckey == ckey)
+				. += AH
 
 //private
 /datum/admin_help_tickets/proc/ListInsert(datum/admin_help/new_ticket)
@@ -123,34 +134,46 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /obj/effect/statclick/ticket_list/Click()
 	global.ahelp_tickets.BrowseTickets(current_state)
 
-//
-//TICKET DATUM
-//
-
+/**
+ * # Adminhelp Ticket
+ */
 /datum/admin_help
+	/// Unique ID of the ticket
 	var/id
+	/// The current name of the ticket
 	var/name
+	/// The current state of the ticket
 	var/state = AHELP_ACTIVE
-
-	var/opened_at // ticks
+	/// The time (ticks) at which the ticket was opened
+	var/opened_at
+	/// The time (ticks) at which the ticket was closed
 	var/closed_at
-	var/opened_at_server // timeofday
+	/// The time (timeofday) at which the ticket was opened
+	var/opened_at_server
+	/// The time (timeofday) at which the ticket was closed
 	var/closed_at_server
-
-	var/client/initiator	//semi-misnomer, it's the person who ahelped/was bwoinked
+	/// Semi-misnomer, it's the person who ahelped/was bwoinked
+	var/client/initiator
+	/// The ckey of the initiator
 	var/initiator_ckey
+	/// The key name of the initiator
 	var/initiator_key_name
+	/// If any admins were online when the ticket was initialized
 	var/heard_by_no_admins = FALSE
-
-	var/list/_interactions	//use AddInteraction() or, preferably, admin_ticket_log()
-
+	/// The collection of interactions with this ticket. Use AddInteraction() or, preferably, admin_ticket_log()
+	var/list/_interactions
+	/// Statclick holder for the ticket
 	var/obj/effect/statclick/ahelp/statclick
-
+	/// Static counter used for generating each ticket ID
 	var/static/ticket_counter = 0
 
-//call this on its own to create a ticket, don't manually assign current_ticket
-//msg is the title of the ticket: usually the ahelp text
-//is_bwoink is TRUE if this ticket was started by an admin PM
+/**
+ * Call this on its own to create a ticket, don't manually assign current_ticket
+ *
+ * Arguments:
+ * * msg - The title of the ticket: usually the ahelp text
+ * * is_bwoink - Boolean operator, TRUE if this ticket was started by an admin PM
+ */
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	if(!msg || !C || !C.mob)
 		qdel(src)
@@ -402,19 +425,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/list/dat = list("<title>Ticket #[id]</title>")
 	var/ref_src = "\ref[src]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
-	dat += "<b>State: "
-	switch(state)
-		if(AHELP_ACTIVE)
-			dat += "<font color='red'>OPEN</font>"
-		if(AHELP_RESOLVED)
-			dat += "<font color='green'>RESOLVED</font>"
-		if(AHELP_CLOSED)
-			dat += "CLOSED"
-		else
-			dat += "UNKNOWN"
-	dat += "</b>[global.TAB][TicketHref("Refresh", ref_src)][global.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
+	dat += "<b>State: [ticket_status()]</b>"
+	dat += "[TAB][TicketHref("Refresh", ref_src)][TAB][TicketHref("Re-Title", ref_src, "retitle")]"
 	if(state != AHELP_ACTIVE)
-		dat += "[global.TAB][TicketHref("Reopen", ref_src, "reopen")]"
+		dat += "[TAB][TicketHref("Reopen", ref_src, "reopen")]"
 	dat += "<br><br>Opened at: [time_stamp(wtime = opened_at_server)] (Approx [DisplayTimeText(world.time - opened_at)] ago)"
 	if(closed_at && closed_at_server)
 		dat += "<br>Closed at: [time_stamp(wtime = closed_at_server)] (Approx [DisplayTimeText(world.time - closed_at)] ago)"
@@ -422,14 +436,38 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(initiator)
 		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
 	else
-		dat += "<b>DISCONNECTED</b>[global.TAB][ClosureLinks(ref_src)]<br>"
+		dat += "<b>DISCONNECTED</b>[TAB][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
 	for(var/I in _interactions)
 		dat += "[I]<br>"
 
+	// Append any tickets also opened by this user if relevant
+	var/list/related_tickets = global.ahelp_tickets.TicketsByCKey(initiator_ckey)
+	if (related_tickets.len > 1)
+		dat += "<br/><b>Other Tickets by [initiator_ckey]</b><br/>"
+		for (var/datum/admin_help/related_ticket in related_tickets)
+			if (related_ticket.id == id)
+				continue
+			dat += "[related_ticket.TicketHref("#[related_ticket.id]")] ([related_ticket.ticket_status()]): [related_ticket.name]<br/>"
+
 	var/datum/browser/popup = new(usr, "ahelp[id]", null, 620, 480, null, CSS_THEME_LIGHT)
 	popup.set_content(dat.Join())
 	popup.open()
+
+/**
+ * Renders the current status of the ticket into a displayable string
+ */
+/datum/admin_help/proc/ticket_status()
+	switch(state)
+		if(AHELP_ACTIVE)
+			return "<font color='red'>OPEN</font>"
+		if(AHELP_RESOLVED)
+			return "<font color='green'>RESOLVED</font>"
+		if(AHELP_CLOSED)
+			return "CLOSED"
+		else
+			stack_trace("Invalid ticket state: [state]")
+			return "INVALID, CALL A CODER"
 
 /datum/admin_help/proc/Retitle()
 	var/new_title = sanitize(input(usr, "Enter a title for the ticket", "Rename Ticket", name) as text|null)
@@ -589,7 +627,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		if(!afkmins.len && !stealthmins.len && !powerlessmins.len)
 			final = "No admins online"
 		else
-			final = "All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
+			final = "All admins stealthed\[[get_english_list(stealthmins)]\], AFK\[[get_english_list(afkmins)]\], or lacks +BAN\[[get_english_list(powerlessmins)]\]! Total: [allmins.len] "
 
 		world.send2bridge(
 			type = type,

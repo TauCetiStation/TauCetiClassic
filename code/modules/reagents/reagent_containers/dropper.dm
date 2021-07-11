@@ -51,11 +51,11 @@
 				if(safe_thing)
 					if(!safe_thing.reagents)
 						safe_thing.create_reagents(100)
-					trans = src.reagents.trans_to(safe_thing, amount_per_transfer_from_this)
+					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this)
 
 					user.visible_message("<span class='warning'><B>[user] tries to squirt something into [target]'s eyes, but fails!</B></span>")
 					spawn(5)
-						src.reagents.reaction(safe_thing, TOUCH)
+						reagents.reaction(safe_thing, TOUCH)
 
 					to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 					if (src.reagents.total_volume<=0)
@@ -64,17 +64,17 @@
 					return
 
 			user.visible_message("<span class='warning'><B>[user] squirts something into [target]'s eyes!</B></span>")
-			src.reagents.reaction(target, TOUCH)
+			reagents.reaction(target, TOUCH)
 
 			var/mob/living/M = target
 
 			var/list/injected = list()
 			for(var/datum/reagent/R in src.reagents.reagent_list)
 				injected += R.name
-			var/contained = english_list(injected)
+			var/contained = get_english_list(injected)
 			M.log_combat(user, "squirted with [name], reagents: [contained]")
 
-		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 		if (src.reagents.total_volume<=0)
 			filled = 0

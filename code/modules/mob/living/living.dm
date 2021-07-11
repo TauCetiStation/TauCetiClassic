@@ -637,130 +637,133 @@
 	if (restrained())
 		stop_pulling()
 
+	var/old_dir = dir
+	var/turf/old_loc = loc
 
-	var/t7 = 1
-	if (restrained())
-		for(var/mob/living/M in range(src, 1))
-			if ((M.pulling == src && M.stat == CONSCIOUS && !( M.restrained() )))
-				t7 = null
-	if(t7 && pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
-		var/turf/T = loc
-		. = ..()
-
-		if (pulling && pulling.loc)
-			if(!( isturf(pulling.loc) ))
-				stop_pulling()
-				return
+	if(!moving_diagonally)
+		if(pulling && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
+			if(pulling.loc)
+				if(!isturf(pulling.loc))
+					stop_pulling()
+					return
 			else
 				if(Debug)
 					log_debug("pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]")
 					log_debug("REPORT THIS")
 
-		/////
-		if(pulling && pulling.anchored)
+			if(pulling.anchored)
+				stop_pulling()
+				return
+		else
 			stop_pulling()
-			return
 
-		if (!restrained())
+		. = ..()
+
+		if(pulling && !restrained())
 			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
+			if(get_dist(src, pulling) > 1 || ISDIAGONALDIR(diag))
+				if(isliving(pulling))
 					var/mob/living/M = pulling
-					var/ok = 1
-					if (locate(/obj/item/weapon/grab, M.grabbed_by))
+					if(M.grabbed_by.len)
 						if (prob(75))
 							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
 							if (istype(G, /obj/item/weapon/grab))
 								M.visible_message("<span class='warning'>[G.affecting] has been pulled from [G.assailant]'s grip by [src].</span>")
-								//G = null
 								qdel(G)
-						else
-							ok = 0
-						if (locate(/obj/item/weapon/grab, M.grabbed_by.len))
-							ok = 0
-					if (ok)
+
+					if(!M.grabbed_by.len)
 						var/atom/movable/AM = M.pulling
 						M.stop_pulling()
 
-						//this is the gay blood on floor shit -- Added back -- Skie
-						if(M.lying && (prob(M.getBruteLoss() / 2)))
-							makeTrail(T, M)
-						if(M.pull_damage())
-							if(prob(25))
-								M.adjustBruteLoss(2)
-								visible_message("<span class='warning'>[M]'s wounds worsen terribly from being dragged!</span>")
-								var/turf/location = M.loc
-								if (istype(location, /turf/simulated))
-									if(ishuman(M))
-										var/mob/living/carbon/human/H = M
-										var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-										if(blood_volume > 0)
-											H.vessel.remove_reagent("blood",1)
-
-
-						pulling.Move(T, get_dir(pulling, T))
+						pulling.Move(old_loc, get_dir(pulling, old_loc))
 						if(M && AM)
 							M.start_pulling(AM)
 				else
-					if (pulling)
-						pulling.Move(T, get_dir(pulling, T))
+					pulling.Move(old_loc, get_dir(pulling, old_loc))
 	else
-		stop_pulling()
 		. = ..()
 
-	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
+	if(!ISDIAGONALDIR(Dir))
+		pull_trail_damage(NewLoc, old_loc, old_dir)
+		if(moving_diagonally)
+			return .
+
+	if (s_active && s_active.loc != src && get_turf(s_active) != get_turf(src))	//check s_active.loc != src first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
 	if(update_slimes)
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
 
-/mob/living/proc/makeTrail(turf/T, mob/living/M)
+/mob/living/proc/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
+	if(!isturf(old_loc) || old_loc == loc)
+		return FALSE
+	if(!lying || buckled || grabbed_by.len || !mob_has_gravity())
+		return FALSE
+	if(prob(getBruteLoss() / 2))
+		makeTrail(new_loc, old_loc, old_dir)
+	if(pull_damage() && prob(25))
+		adjustBruteLoss(2)
+		visible_message("<span class='warning'>[src]'s wounds worsen terribly from being dragged!</span>")
+		return TRUE
+	return FALSE
+
+/mob/living/carbon/human/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
+	if(..())
+		var/blood_volume = round(vessel.get_reagent_amount("blood"))
+		if(blood_volume > 0)
+			vessel.remove_reagent("blood", 1)
+
+/mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
+	if(!isturf(old_loc))
+		return
+
+	var/trail_type = getTrail()
+	if(!trail_type)
+		return
+
 	var/blood_exists = 0
-	var/trail_type = M.getTrail()
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in M.loc) //checks for blood splatter already on the floor
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/C in old_loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (isturf(M.loc) && trail_type != null)
-		var/newdir = get_dir(T, M.loc)
-		if(newdir != M.dir)
-			newdir = newdir | M.dir
-			if(newdir == 3) //N + S
-				newdir = NORTH
-			else if(newdir == 12) //E + W
-				newdir = EAST
-		if((newdir in list(1, 2, 4, 8)) && (prob(50)))
-			newdir = turn(get_dir(T, M.loc), 180)
-		var/datum/dirt_cover/new_cover
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.species)
-				new_cover = new(H.species.blood_datum)
-		if(!new_cover)
-			new_cover = new/datum/dirt_cover/red_blood
-		if(!blood_exists)
-			var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
-			BL.basedatum = new_cover
-			BL.update_icon()
-		else
-			for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
-				TH.basedatum.add_dirt(new_cover)
-				TH.update_icon()
-		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
-			if(!TH.amount)
-				STOP_PROCESSING(SSobj, TH)
-				TH.name = initial(TH.name)
-				TH.desc = initial(TH.desc)
-				TH.amount = initial(TH.amount)
-				TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
-				START_PROCESSING(SSobj, TH)
-			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-				TH.existing_dirs += newdir
-				TH.add_overlay(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-			if(M.dna)
-				TH.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
+
+	var/newdir = turn(dir, 180)
+	if(newdir != old_dir)
+		newdir = newdir | old_dir
+		if(newdir == NORTH_SOUTH) //N + S
+			newdir = NORTH
+		else if(newdir == EAST_WEST) //E + W
+			newdir = EAST
+	if((newdir in global.cardinal) && (prob(50)))
+		newdir = turn(newdir, 180)
+
+	var/datum/dirt_cover/new_cover
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.species)
+			new_cover = new(H.species.blood_datum)
+	if(!new_cover)
+		new_cover = new/datum/dirt_cover/red_blood
+	if(!blood_exists)
+		var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(old_loc)
+		BL.basedatum = new_cover
+		BL.update_icon()
+	else
+		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
+			TH.basedatum.add_dirt(new_cover)
+			TH.update_icon()
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in old_loc)
+		if(!TH.amount)
+			STOP_PROCESSING(SSobj, TH)
+			TH.name = initial(TH.name)
+			TH.desc = initial(TH.desc)
+			TH.amount = initial(TH.amount)
+			TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
+			START_PROCESSING(SSobj, TH)
+		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			TH.existing_dirs += newdir
+			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+		if(dna)
+			TH.blood_DNA[dna.unique_enzymes] = dna.b_type
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
 	return null
@@ -1014,7 +1017,7 @@
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
@@ -1035,7 +1038,7 @@
 	return initial(pixel_y)
 
 //Attack animation port below
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
+/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/final_pixel_y = initial(pixel_y)
@@ -1068,10 +1071,15 @@
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = default_pixel_y
-	..(A, final_pixel_y)
+/mob/living/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	end_pixel_y = default_pixel_y
+	..()
 
+	if(has_effect)
+		do_item_attack_animation(A, visual_effect_icon, visual_effect_color)
+
+
+/mob/living/proc/do_item_attack_animation(atom/A, visual_effect_icon, visual_effect_color)
 	var/list/viewing = list()
 	for(var/mob/M in viewers(A))
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
@@ -1079,16 +1087,14 @@
 
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
-	if(hand)
-		if(l_hand)
-			if(l_hand.alternate_appearances)
-				viewing = alternate_attack_animation(l_hand, A, viewing)
-			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
-	else
-		if(r_hand)
-			if(r_hand.alternate_appearances)
-				viewing = alternate_attack_animation(r_hand, A, viewing)
-			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	var/obj/item/used_item = get_active_hand()
+	if(used_item)
+		if(used_item.alternate_appearances)
+			viewing = alternate_attack_animation(used_item, A, viewing)
+		I = image(used_item.icon, A, used_item.icon_state, A.layer + 1)
+	else if(visual_effect_icon)
+		I = image('icons/effects/attack_overlays.dmi', A, visual_effect_icon, A.layer + 0.1)
+		I.color = visual_effect_color
 
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -1162,16 +1168,17 @@
 			harvest(user)
 		return TRUE
 
-/mob/living/proc/harvest(mob/user)
+/mob/living/proc/harvest(mob/user, turf/newloc = loc)
 	if(QDELETED(src))
 		return
 	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
-				new path(src.loc)
+				new path(newloc)
 			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 			butcher_results.Remove(path)
-		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		if(user)
+			visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 
 /mob/living/proc/get_taste_sensitivity()
@@ -1213,7 +1220,7 @@
 			lasttaste = world.time
 			return
 
-		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
+		to_chat(src, "<span class='notice'>You can taste [get_english_list(final_taste_list)].</span>")
 		lasttaste = world.time
 
 // This proc returns TRUE if less than given percentage is not covered.
@@ -1332,3 +1339,6 @@
 			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
 
 	return TRUE
+
+/mob/living/proc/swap_hand()
+	return

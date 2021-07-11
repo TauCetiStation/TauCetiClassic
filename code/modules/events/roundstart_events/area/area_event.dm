@@ -35,4 +35,4 @@
 	for(var/area/A in targeted_areas)
 		names += A.name
 
-	log_game("RoundStart Event: Selected areas is [english_list(names)]")
+	log_game("RoundStart Event: Selected areas is [get_english_list(names)]")

@@ -72,7 +72,7 @@
 			var/obj/item/clothing/under/U = w_uniform
 			for(var/accessory in U.accessories)
 				ties += "[bicon(accessory)] \a [accessory]"
-		var/tie_msg = ties.len ? ". Attached to it is [english_list(ties)]" : ""
+		var/tie_msg = ties.len ? ". Attached to it is [get_english_list(ties)]" : ""
 
 		if(w_uniform.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][tie_msg]!</span>\n"
@@ -453,8 +453,10 @@
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their [BP.name]!</b></span>\n"
 	if(digitalcamo)
 		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
-	if(mind && mind.changeling && mind.changeling.isabsorbing)
-		msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
+	if(ischangeling(src))
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(C.isabsorbing)
+			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]

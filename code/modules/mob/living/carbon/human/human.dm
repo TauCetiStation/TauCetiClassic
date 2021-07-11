@@ -6,7 +6,6 @@
 	real_name = "unknown"
 	voice_name = "unknown"
 	icon = 'icons/mob/human.dmi'
-	faction = "station"
 	hud_possible = list(HEALTH_HUD, STATUS_HUD, ID_HUD, WANTED_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, IMPTRACK_HUD, IMPMINDS_HUD, ANTAG_HUD, HOLY_HUD, GOLEM_MASTER_HUD, BROKEN_HUD, ALIEN_EMBRYO_HUD)
 	//icon_state = "body_m_s"
 
@@ -14,16 +13,14 @@
 	var/heart_beat = 0
 	var/embedded_flag	  //To check if we've need to roll for damage on movement while an item is imbedded in us.
 
-	var/scientist = 0	//Vars used in abductors checks and etc. Should be here because in species datums it changes globaly.
-	var/agent = 0
-	var/team = 0
 	var/metadata
 	var/gnomed = 0 // timer used by gnomecurse.dm
 	var/hulk_activator = null
 
 	var/last_massage = 0
 	var/massages_done_right = 0
-
+	attack_push_vis_effect = ATTACK_EFFECT_PUNCH
+	attack_disarm_vis_effect = ATTACK_EFFECT_DISARM
 	throw_range = 2
 
 	moveset_type = /datum/combat_moveset/human
@@ -125,14 +122,14 @@
 	update_mutantrace()
 	regenerate_icons()
 
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-	spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
-	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
-	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
-	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/glare)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow_walk)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
@@ -174,8 +171,6 @@
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
 
-		CHANGELING_STATPANEL_STATS(null)
-
 		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
@@ -196,7 +191,10 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
-	CHANGELING_STATPANEL_POWERS(null)
+	if(mind)
+		for(var/role in mind.antag_roles)
+			var/datum/role/R = mind.antag_roles[role]
+			stat(R.StatPanel())
 
 	if(istype(wear_suit, /obj/item/clothing/suit/space/rig))
 		var/obj/item/clothing/suit/space/rig/rig = wear_suit
@@ -700,7 +698,7 @@
 			// Display a warning if the user mocks up
 			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 
 	if (href_list["bandages"] && usr.CanUseTopicInventory(src))
@@ -1599,7 +1597,7 @@
 
 	return TRUE
 
-/obj/screen/leap
+/atom/movable/screen/leap
 	name = "toggle leap"
 	icon = 'icons/mob/screen1_action.dmi'
 	icon_state = "action"
@@ -1609,15 +1607,15 @@
 	var/cooldown = 10 SECONDS
 
 
-/obj/screen/leap/atom_init()
+/atom/movable/screen/leap/atom_init()
 	. = ..()
 	add_overlay(image(icon, "leap"))
 	update_icon()
 
-/obj/screen/leap/update_icon()
+/atom/movable/screen/leap/update_icon()
 	icon_state = "[initial(icon_state)]_[on]"
 
-/obj/screen/leap/Click()
+/atom/movable/screen/leap/Click()
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.toggle_leap()

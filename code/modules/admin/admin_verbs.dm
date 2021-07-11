@@ -156,6 +156,7 @@ var/list/admin_verbs_server = list(
 var/list/admin_verbs_debug = list(
 	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -172,7 +173,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
 	/client/proc/reload_config,
-	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
@@ -271,6 +271,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -345,25 +346,11 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_rejuv,
 		admin_verbs_sounds,
 		admin_verbs_spawn,
+		admin_verbs_whitelist,
 		admin_verbs_event,
 		admin_verbs_log,
 		admin_verbs_variables,
-		//Debug verbs added by "show debug verbs",
-		/client/proc/Cell,
-		/client/proc/do_not_use_these,
-		/client/proc/camera_view,
-		/client/proc/sec_camera_report,
-		/client/proc/intercom_view,
-		/client/proc/atmosscan,
-		/client/proc/powerdebug,
-		/client/proc/count_objects_on_z_level,
-		/client/proc/count_objects_all,
-		/client/proc/cmd_assume_direct_control,
-		/client/proc/startSinglo,
-		/client/proc/set_fps,
-		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/splash,
-		/client/proc/cmd_admin_areatest
+		debug_verbs
 		)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
@@ -797,7 +784,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check AI Laws"
 	set category = "Admin"
 	if(holder)
-		src.holder.output_ai_laws()
+		holder.output_ai_laws()
 
 //---- bs12 verbs ----
 
@@ -1072,7 +1059,7 @@ var/list/admin_verbs_hideable = list(
 		display_name = holder.fakekey
 
 	for(var/mob/M in player_list)
-		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
+		if((isanyantag(M)) || (M.client && M.client.holder))
 			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
 	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
@@ -1099,11 +1086,15 @@ var/list/admin_verbs_hideable = list(
 	set name = "Change Blobs to Win"
 	set category = "Event"
 	if(holder)
-		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
+		if(!conglomerate)
+			return
+
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", conglomerate.blobwincount) as num|null
 		if(new_count)
-			blobwincount = new_count
-			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			conglomerate.blobwincount = new_count
+			log_admin("[key_name(usr)] changed blobwincount to [conglomerate.blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [conglomerate.blobwincount]")
 			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 

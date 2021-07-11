@@ -74,6 +74,12 @@ $bg-map: colors.$bg-map !default;
     margin-right: 0.25em;
   }
 }
+.Button--hasContent.Button--iconPosition--right {
+  .fa, .fas, .far {
+    margin-right: 0px;
+    margin-left: 3px;
+  }
+}
 
 .Button--ellipsis {
   overflow: hidden;

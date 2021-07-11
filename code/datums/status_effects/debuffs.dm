@@ -25,7 +25,7 @@
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
-	alert_type = /obj/screen/alert/status_effect/asleep
+	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
@@ -61,7 +61,7 @@
 			if(!carbon_owner || !carbon_owner.hal_crit)
 				owner.emote("snore")
 
-/obj/screen/alert/status_effect/asleep
+/atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
@@ -71,7 +71,7 @@
 	id = "stasis_bag"
 	duration = -1
 	tick_interval = 10
-	alert_type = /obj/screen/alert/status_effect/stasis_bag
+	alert_type = /atom/movable/screen/alert/status_effect/stasis_bag
 	var/last_dead_time
 
 /datum/status_effect/incapacitating/stasis_bag/proc/update_time_of_death()
@@ -108,7 +108,7 @@
 	update_time_of_death()
 	return ..()
 
-/obj/screen/alert/status_effect/stasis_bag
+/atom/movable/screen/alert/status_effect/stasis_bag
 	name = "Stasis Bag"
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"

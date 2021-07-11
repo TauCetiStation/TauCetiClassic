@@ -184,7 +184,7 @@ var/global/list/toilet_list = list()
 
 /datum/event/roundstart/leaked_pipe/start()
 	for(var/atom/A in toilet_list)
-		if(is_station_level(A.z) && !prob(50))
+		if(!is_station_level(A.z) || !prob(50))
 			continue
 
 		var/turf/T = get_turf(A)

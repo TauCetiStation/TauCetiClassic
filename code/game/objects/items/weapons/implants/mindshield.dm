@@ -18,14 +18,15 @@
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
-	if(H.mind && (H.mind in (SSticker.mode.head_revolutionaries)) || is_shadow_or_thrall(H)|| H.mind.special_role == "Wizard")
+	if(isrevhead(H) || isshadowling(H) || isshadowthrall(H)|| iswizard(H))
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 
-	if(H.mind && (H.mind in SSticker.mode.revolutionaries))
-		SSticker.mode.remove_revolutionary(H.mind)
+	if(H.mind && isrev(H))
+		var/datum/role/R = H.mind.GetRole(REV)
+		R.RemoveFromRole(H.mind)
 
-	if(H.mind && iscultist(H))
+	if(iscultist(H))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 	else
@@ -66,20 +67,18 @@
 	. = ..()
 	if(.)
 		if(M.mind)
-			var/cleared_role = TRUE
-			switch(M.mind.special_role)
-				if("traitor")
-					SSticker.mode.remove_traitor(M.mind)
-					M.mind.remove_objectives()
-				if("Syndicate")
-					SSticker.mode.remove_nuclear(M.mind)
-					M.mind.remove_objectives()
-				else
-					cleared_role = FALSE
+			var/cleared_role = FALSE
+			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, HEADREV)
+			for(var/role in remove_roles)
+				var/datum/role/R = M.mind.GetRole(role)
+				if(!R)
+					continue
+				R.RemoveFromRole(M.mind)
+				cleared_role = TRUE
+
 			if(cleared_role)
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
 				to_chat(M, "<span class='danger'>You were implanted with [src] and now you must serve NT. Your old mission doesn't matter now.</span>")
-				SSticker.reconverted_antags[M.key] = M.mind
 
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")

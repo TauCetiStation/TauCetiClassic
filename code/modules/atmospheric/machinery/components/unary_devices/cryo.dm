@@ -125,7 +125,7 @@
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
+	if(user.incapacitated() || !iscarbon(target))
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
@@ -253,7 +253,7 @@
 	if(user == occupant)
 		return
 
-	if(!user.incapacitated() && in_range(user, src))
+	if(!user.incapacitated() && Adjacent(user))
 		if(!state_open)
 			on = !on
 			update_icon()
@@ -265,7 +265,7 @@
 	if(user == occupant)
 		return
 
-	if(!user.incapacitated() && in_range(user, src))
+	if(!user.incapacitated() && Adjacent(user))
 		if(state_open)
 			close_machine()
 		else

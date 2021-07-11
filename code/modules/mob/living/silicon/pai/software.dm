@@ -216,7 +216,7 @@
 					var/cost = src.available_software[target]
 					if(src.ram >= cost)
 						src.ram -= cost
-						src.software.Add(target)
+						software.Add(target)
 					else
 						src.temp = "Insufficient RAM available."
 				else
@@ -258,7 +258,7 @@
 					pID = 8
 				if("What")
 					pID = 9
-			src.card.setEmotion(pID)
+			card.setEmotion(pID)
 
 		if("signaller")
 

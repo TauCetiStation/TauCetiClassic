@@ -315,7 +315,7 @@
 	var/new_color = input(user, "Choose color!") as color|null
 	if(!new_color) return
 
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(1))
+	if(!Adjacent(usr) || !W.use(1))
 		return
 	else
 		color = new_color
@@ -400,6 +400,10 @@
 /obj/structure/window/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	update_nearby_tiles(need_rebuild=1)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	set_dir(ini_dir)
 	update_nearby_tiles(need_rebuild=1)
 

@@ -79,7 +79,7 @@ var/datum/gear_tweak/color/gear_tweak_free_color_choice = new()
 	..()
 
 /datum/gear_tweak/contents/get_contents(metadata)
-	return "Contents: [english_list(metadata, and_text = ", ")]"
+	return "Contents: [get_english_list(metadata, and_text = ", ")]"
 
 /datum/gear_tweak/contents/get_default()
 	. = list()

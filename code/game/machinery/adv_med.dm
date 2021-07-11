@@ -69,7 +69,7 @@
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
 
 /obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user))
+	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
@@ -171,8 +171,7 @@
 			else
 				dat += text("<font color='[]'>\tHealth %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
 
-				//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
-				if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
+				if(ischangeling(occupant) && occupant.fake_death)
 					dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
 				if(occupant.virus2.len)

@@ -9,8 +9,11 @@
  * Misc
  */
 
+/proc/get_russian_list(list/input, nothing_text = "ничего", and_text = " и ", comma_text = ", ", final_comma_text = "")
+	return get_english_list(input, nothing_text, and_text, comma_text, final_comma_text)
+
 //Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/get_english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -133,7 +136,7 @@
 
 	total = rand(1, total)
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 
@@ -801,3 +804,9 @@
 #define LAZYCLEARLIST(L) if(L) L.Cut()
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+// Helper macros to aid in optimizing lazy instantiation of lists.
+// All of these are null-safe, you can use them without knowing if the list var is initialized yet
+
+// Adds I to L, initalizing L if necessary, if I is not already in L
+#define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;

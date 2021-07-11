@@ -26,6 +26,9 @@
 	var/leaping = 0
 	ventcrawler = 2
 
+	attack_push_vis_effect = ATTACK_EFFECT_CLAW
+	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
+
 /mob/living/carbon/xenomorph/atom_init()
 	. = ..()
 	add_language("Xenomorph language")
@@ -107,7 +110,7 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360)
 		//Body temperature is too hot.
-		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
+		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(400 to 600)
 				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
@@ -122,11 +125,11 @@
 	var/pressure_damage = heal_rate		//aliens won't take damage from pressure if stay on weeds
 	if(pressure >= WARNING_HIGH_PRESSURE)
 		apply_damage(pressure_damage, BRUTE)
-		throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 	else if(pressure >= WARNING_LOW_PRESSURE)
 		clear_alert("pressure")
 	else
-		throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 		apply_damage(pressure_damage, BRUTE)
 
 /mob/living/carbon/xenomorph/proc/handle_mutations_and_radiation()
@@ -272,6 +275,9 @@ Hit Procs
 
 /mob/living/carbon/xenomorph/getTrail()
 	return "xltrails"
+
+/mob/living/carbon/xenomorph/crawl()
+	return
 
 /mob/living/carbon/xenomorph/swap_hand()
 	var/obj/item/item_in_hand = get_active_hand()

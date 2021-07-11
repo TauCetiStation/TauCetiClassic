@@ -137,10 +137,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	if(href_list["move"])
-		//if(SSticker.mode.name == "blob")
-		//	if(SSticker.mode:declared)
-		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		//		return
 
 		if (!mining_shuttle_moving)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
@@ -471,7 +467,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = target
 		loc = null

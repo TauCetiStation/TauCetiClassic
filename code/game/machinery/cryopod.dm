@@ -165,6 +165,40 @@ var/global/list/frozen_items = list()
 		icon_state = "cryosleeper_left"
 	. = ..()
 
+/obj/machinery/cryopod/proc/delete_objective(datum/objective/target/O)
+	if(!O)
+		return
+
+	//We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
+	if(!istype(O, /datum/objective/target/rp_rev))
+		O.find_target()
+
+	if(!O.target)
+		target_objectives -= O
+		var/datum/faction/F = O.faction
+		if(F)
+			F.handleRemovedObjective(O)
+			return
+
+		if(O.owner)
+			for(var/role in O.owner.antag_roles)
+				var/datum/role/R = O.owner.antag_roles[role]
+				R.handleRemovedObjective(O)
+			return
+
+		qdel(O)
+
+/obj/machinery/cryopod/proc/remove_objective(datum/objective/target/O)
+	if(O.target != occupant.mind)
+		return
+
+	if(O?.owner?.current)
+		to_chat(O.owner.current, "<span class='red'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]...</span>")
+
+	O.target = null
+
+	addtimer(CALLBACK(src, .proc/delete_objective, O), 1) //This should ideally fire after the occupant is deleted.
+
 //Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()
 	if(occupant)
@@ -181,36 +215,14 @@ var/global/list/frozen_items = list()
 				preserve_item(W)
 
 			//Update any existing objectives involving this mob.
-			for(var/datum/objective/O in all_objectives)
-				if(istype(O,/datum/objective/rp_rev) && O.target == occupant.mind) //We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
-					qdel(O) //TODO: Update rev objectives on login by head (may happen already?) ~ Z
-				else if(O.target && istype(O.target, /datum/mind))
-					if(O.target == occupant.mind)
-						if(O.owner && O.owner.current)
-							to_chat(O.owner.current, "<span class='red'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]...</span>")
-						O.target = null
-						spawn(1) //This should ideally fire after the occupant is deleted.
-							if(!O)
-								return
-							O.find_target()
-							if(!O.target)
-								all_objectives -= O
-								O.owner.objectives -= O
-								qdel(O)
+			for(var/datum/objective/target/O in target_objectives)
+				remove_objective(O)
 
 			//Handle job slot/tater cleanup.
 			if(occupant && occupant.mind)
 				var/job = occupant.mind.assigned_role
 
 				SSjob.FreeRole(job)
-
-				/*if(occupant.mind.objectives.len)
-					qdel(occupant.mind.objectives)
-					occupant.mind.special_role = null
-				else
-					if(SSticker.mode.name == "AutoTraitor")
-						var/datum/game_mode/traitor/autotraitor/current_mode = SSticker.mode
-						current_mode.possible_traitors.Remove(occupant)*/
 
 			// Delete them from datacore.
 
@@ -230,8 +242,6 @@ var/global/list/frozen_items = list()
 				icon_state = "cryosleeper_right"
 			else
 				icon_state = "cryosleeper_left"
-
-			//TODO: Check objectives/mode, update new targets if this mob is the target, spawn new antags?
 
 			//This should guarantee that ghosts don't spawn.
 			occupant.ckey = null

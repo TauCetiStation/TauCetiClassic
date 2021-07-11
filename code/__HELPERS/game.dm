@@ -350,7 +350,7 @@
 	return null
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
-	if(!isobj(O))	O = new /obj/screen/text()
+	if(!isobj(O))	O = new /atom/movable/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -652,7 +652,7 @@
 
 // first answer "Yes" > transfer
 /mob/proc/try_request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
-	if(key || mind || stat != CONSCIOUS)
+	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
 	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))

@@ -1,8 +1,9 @@
 /datum/poll
-	var/name = "Voting"
-	var/question = "Voting, voting, candidates are faggots!"
+	var/name = "Голосование"
+	var/question = ""
 	var/color = "white" // span color of question and name
 	var/description = ""
+	var/warning_message = ""
 	var/list/choice_types = list(/datum/vote_choice) //Choices will be initialized from this list
 	var/list/choices = list() // contents initiated /datum/vote_choice
 	var/initiator = null
@@ -33,7 +34,7 @@
 	if(usr && usr.client)
 		initiator = usr.client.key
 	else
-		initiator = "server"
+		initiator = "Сервер"
 	on_start()
 	SSvote.active_vote = src
 	return TRUE
@@ -49,7 +50,10 @@
 	if(.)
 		return
 	if(world.time < next_vote)
-		return "Vote Cooldown: [round((next_vote - world.time) / 600)] Minutes"
+		return "Голосование снова станет доступным через [round((next_vote - world.time) / 600)] [pluralize_russian(round((next_vote - world.time) / 600), "минуту", "минуты", "минут")]"
+
+/datum/poll/proc/get_blocking_or_warning_message()
+	return get_blocking_reason() || warning_message
 
 /datum/poll/proc/on_start()
 	return
@@ -127,17 +131,17 @@
 
 	//Need to pass the minimum threshold of voters
 	if(total_voters() < minimum_voters)
-		text += "<b>Vote Failed: Not enough voters.</b><br>"
-		text += "[total_voters()]/[minimum_voters] players voted.<br><br>"
+		text += "<b>Голосование отменено: Недостаточно игроков проголосовало.</b><br>"
+		text += "[total_voters()]/[minimum_voters] игроков проголосовало.<br><br>"
 		invalid = TRUE
 
 	//Lets see if the max votes meets the minimum threshold
 	else if(total_votes() > 0) //Make sure we dont divide by zero
 		var/max_votepercent = max_votes / total_votes()
 		if(max_votepercent < minimum_win_percentage)
-			text += "<b>Vote Failed: Insufficient majority.</b><br>"
-			text += "No option achieved the required [minimum_win_percentage*100]% majority.<br>"
-			text += "The highest vote share was [PERCENT(max_votepercent)]%<br><br>"
+			text += "<b>Голосование отменено: Недостаточное большинство</b><br>"
+			text += "Ни один из вариантов не набрал необходимые [minimum_win_percentage*100]% для победы.<br>"
+			text += "Наибольший процент голосов: [PERCENT(max_votepercent)]%<br><br>"
 			invalid = TRUE
 
 	var/datum/vote_choice/winner = null
@@ -151,7 +155,7 @@
 
 	var/non_voters = clients.len - all_voters.len
 
-	text += "<b>Votes:</b><br>"
+	text += "<b>Голоса:</b><br>"
 	for(var/datum/vote_choice/ch in choice_votes)
 		var/ch_percent = total_votes() ? PERCENT(choice_votes[ch] / total_votes()) : 0
 		if(ch in winners)
@@ -159,11 +163,11 @@
 		else
 			text += "\t[ch.text] - [ch_percent]%[detailed_result ? " ([choice_votes[ch]])" : ""]<br>"
 
-	text += "Total voted - [all_voters.len]<br>"
-	text += "Did not vote - [non_voters]<br>"
+	text += "Всего проголосовало - [all_voters.len]<br>"
+	text += "Не проголосовало - [non_voters]<br>"
 
 	if(winner)
-		text += "<b>Vote Result[winners.len > 1 ? " (Random)" : ""]: [winner.text]</b><br>"
+		text += "<b>Результат голосования [winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
 
 	log_vote(text)
 	to_chat(world, "<span class='vote'>[text]</span>")
