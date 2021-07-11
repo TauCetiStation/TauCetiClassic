@@ -135,7 +135,7 @@
 			return FALSE
 		if(mind.current.get_species() == GOLEM)
 			return FALSE
-	if(ismindshielded(mind.current))
+	if(mind.current.ismindshielded())
 		return FALSE
 	return TRUE
 
