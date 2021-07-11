@@ -163,9 +163,8 @@
 	 so try not to get on their bad side.</span> ))")
 
 	if(targeted_by.len == 1)
-		target_locked = image(icon = 'icons/effects/Targeted.dmi', icon_state = "locking")
-		target_locked.appearance_flags  |= (RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
-		update_targeted()
+		set_target_locked_sprite("locking")
+		addtimer(CALLBACK(src, .proc/set_target_locked_sprite, "locked"), 20)
 
 	//Adding the buttons to the controller person
 	var/mob/living/T = I.loc
@@ -197,6 +196,11 @@
 				I.lock_time = world.time + 5
 				I.last_moved_mob = src
 			sleep(1)
+
+/mob/living/proc/set_target_locked_sprite(icon_name = "locking")
+	target_locked = image(icon = 'icons/effects/Targeted.dmi', icon_state = icon_name)
+	target_locked.appearance_flags  |= (RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
+	update_targeted()
 
 /mob/living/proc/NotTargeted(obj/item/weapon/gun/I)
 	if(!I.silenced)
