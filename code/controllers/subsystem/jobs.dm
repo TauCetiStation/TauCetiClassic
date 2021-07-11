@@ -700,11 +700,11 @@ SUBSYSTEM_DEF(job)
 		animate(B, alpha = 255, time = 10)
 		newline_flag = !newline_flag
 		for(var/i = 2 to length_char(new_line) + 1)
-			var/curline = "<span style=\"[style_for_line[j]]\">[copytext_char(new_line, 1, i)]</span>"
+			var/cur_line = "<span style=\"[style_for_line[j]]\">[copytext_char(new_line, 1, i)]</span>"
 			if(newline_flag)
-				B.maptext = "<div style=\"[style]\">[old_line]<br>[curline]</div>"
+				B.maptext = "<div style=\"[style]\">[old_line]<br>[cur_line]</div>"
 			else
-				B.maptext = "<div style=\"line-height: 0.9;[style]\">[curline]</div><br><br></br>"
+				B.maptext = "<div style=\"line-height: 0.9;[style]\">[cur_line]</div><br><br></br>"
 			sleep(1)
 		if(newline_flag || j == lines.len)
 			sleep(15)
