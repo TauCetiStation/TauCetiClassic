@@ -458,8 +458,6 @@ SUBSYSTEM_DEF(job)
 			H.buckled.loc = H.loc
 			H.buckled.set_dir(H.dir)
 
-		show_location_blurb(H.client, 30)
-
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
 
@@ -660,35 +658,71 @@ SUBSYSTEM_DEF(job)
 		feedback_add_details("job_preferences",tmp_str)
 
 
-/proc/show_location_blurb(client/C, duration)
+
+/proc/show_location_blurb(client/C, duration = 30)
 	set waitfor = FALSE
 
 	if(!C)
 		return
 
-	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
+	var/static/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 11px;"
+	var/obj/effect/overlay/blurb/B = new()
+
+	var/list/data = list()
+
+	var/age
+	if(ishuman(C.mob))
+		var/mob/living/carbon/human/H = C.mob
+		age += ", [H.age] years"
+
+	data += "[C.mob.real_name][age]"
+
+	if(C.mob.mind)
+		if(length(C.mob.mind.antag_roles))
+			data += C.mob.mind.antag_roles[1]
+		else
+			data += C.mob.mind.role_alt_title
+
+	var/station_name
+	if(is_station_level(C.mob.z))
+		station_name = "[station_name()], "
+
 	var/area/A = get_area(C.mob)
-	var/text = "[current_date_string], [worldtime2text()]\n[station_name()], [A.name]"
-	text = uppertext(text)
+	data += "[station_name][A.name]"
 
-	var/obj/effect/overlay/T = new()
-	T.maptext_height = 64
-	T.maptext_width = 512
-	T.layer = FLOAT_LAYER
-	T.plane = HUD_PLANE
-	T.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	T.screen_loc = "LEFT+1,BOTTOM+2"
+	data += "[current_date_string], [worldtime2text()]"
 
-	C.screen += T
-	animate(T, alpha = 255, time = 10)
-	for(var/i = 1 to length_char(text) + 1)
-		T.maptext = "<div style=\"[style]\">[copytext_char(text, 1, i)] </div>"
-		sleep(1)
+	var/newline_flag = TRUE
+	for(var/j in 1 to data.len)
+		var/new_line = uppertext(data[j])
+		var/old_line = j > 1 ? uppertext(data[j-1]) : null
+		C.screen += B
+		animate(B, alpha = 255, time = 10)
+		newline_flag = !newline_flag
+		for(var/i = 2 to length_char(new_line) + 1)
+			var/curline = copytext_char(new_line, 1, i)
+			if(newline_flag)
+				B.maptext = "<div style=\"[style]\">[old_line]<br>[curline]</div>"
+			else
+				B.maptext = "<div style=\"line-height: 0.9;[style]\">[curline]</div><br><br></br>"
+			sleep(1)
+		if(newline_flag)
+			sleep(14)
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/fade_location_blurb, C, T), duration)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/fade_location_blurb, C, B), duration)
 
-/proc/fade_location_blurb(client/C, obj/T)
-	animate(T, alpha = 0, time = 5)
+/proc/fade_location_blurb(client/C, obj/O)
+	animate(O, alpha = 0, time = 5)
 	sleep(5)
-	C.screen -= T
-	qdel(T)
+	if(C)
+		C.screen -= O
+	qdel(O)
+
+/obj/effect/overlay/blurb
+	maptext_height = 64
+	maptext_width = 512
+	layer = FLOAT_LAYER
+	plane = HUD_PLANE
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screen_loc = "LEFT+1,BOTTOM+2"

@@ -211,7 +211,7 @@
 		character.loc = C.loc
 
 		character = character.AIize(move=0) // AIize the character, but don't move them yet
-		show_location_blurb(character.client, 30)
+		show_location_blurb(character.client)
 		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 		SSticker.mode.latespawn(character)
 		qdel(C)
@@ -220,7 +220,7 @@
 
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
-	show_location_blurb(character.client, 30)
+	show_location_blurb(character.client)
 	// Moving wheelchair if they have one
 	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
 		character.buckled.loc = character.loc
