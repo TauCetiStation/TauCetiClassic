@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(holiday)
 	name = "Holiday"
 	init_order = SS_INIT_HOLIDAY
 	flags = SS_NO_FIRE
-	var/list/holidays
+	var/list/holidays = list()
 
 /datum/controller/subsystem/holiday/Initialize(start_timeofday)
 	if(!config.allow_holidays)
@@ -16,11 +16,9 @@ SUBSYSTEM_DEF(holiday)
 		var/datum/holiday/holiday = new H
 		if(holiday.shouldCelebrate(DD, MM, YY))
 			holiday.celebrate()
-			if(!holidays)
-				holidays = list()
 			holidays[holiday.name] = holiday
 
-	if(holidays)
+	if(length(holidays))
 		world.update_status()
 
 	return ..()
