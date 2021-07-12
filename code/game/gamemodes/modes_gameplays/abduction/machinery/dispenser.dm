@@ -19,8 +19,8 @@
 	. = ..()
 	gland_types = typesof(/obj/item/gland) - /obj/item/gland
 	gland_types = shuffle(gland_types)
-	gland_colors = new/list(gland_types.len)
-	amounts = new/list(gland_types.len)
+	gland_colors[gland_types.len]
+	amounts[gland_types.len]
 	for (var/i in 1 to gland_types.len)
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
