@@ -246,7 +246,7 @@
 	if(istext(column))
 		column = columns.Find(column)
 	if(!conversions)
-		conversions[column]
+		conversions = new/list(column)
 	else if(conversions.len < column)
 		conversions.len = column
 	conversions[column] = conversion
