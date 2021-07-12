@@ -2,7 +2,6 @@
 	name = "Human-Rights Day"
 	begin_day = 10
 	begin_month = DECEMBER
-	always_celebrate = TRUE
 
 
 
@@ -10,7 +9,6 @@
 	name = MONKEYDAY
 	begin_day = 14
 	begin_month = DECEMBER
-	always_celebrate = TRUE
 
 
 
@@ -18,7 +16,6 @@
 	name = "End of the World"
 	begin_day = 21
 	begin_month = DECEMBER
-	always_celebrate = TRUE
 
 
 
@@ -27,7 +24,6 @@
 	begin_day = 23
 	begin_month = DECEMBER
 	end_day = 27
-	always_celebrate = TRUE
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
@@ -40,7 +36,6 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
-	always_celebrate = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
 	return pick("Party","New","Hangover","Resolution", "Auld")

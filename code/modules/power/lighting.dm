@@ -226,7 +226,7 @@
 
 /obj/machinery/light/atom_init()
 	. = ..()
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS)
 		brightness_power = LAMP_BRIGHTNESS_HOLIDAY
 
 /obj/machinery/light/small
