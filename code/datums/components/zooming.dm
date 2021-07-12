@@ -11,6 +11,10 @@
 
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/toggle_zoom)
 
+/datum/component/zooming/Destroy()
+	zoomer = null
+	return ..()
+
 /datum/component/zooming/proc/toggle_zoom(datum/source, mob/user)
 	if(user.incapacitated() || !ishuman(user))
 		to_chat(user, "You are unable to focus down the scope of \the [parent].")
