@@ -43,7 +43,7 @@
 		return ..()
 
 /obj/item/device/paicard/attack_self(mob/user)
-	if (!in_range(src, user))
+	if (!Adjacent(user))
 		return
 	user.set_machine(src)
 	var/dat = {"

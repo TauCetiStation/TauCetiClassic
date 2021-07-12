@@ -80,7 +80,6 @@
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 //used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
-	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
 	var/nightshift_lights = FALSE
 	var/nightshift_preset = "soft"
@@ -106,7 +105,7 @@
 	apc_list += src
 	wires = new(src)
 
-	// offset 24 pixels in direction of dir
+	// offset 27 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if(building)
 		set_dir(ndir)
@@ -138,8 +137,7 @@
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
-	/*if(occupier)
-		malfvacate(1)*/
+	area.poweralert(1, src) // remove the power alert. yes, 1 is off
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	if(terminal)
@@ -185,7 +183,7 @@
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
-	if(src in oview(1, user))
+	if (in_range(user, src))
 		if(stat & BROKEN)
 			to_chat(user, "Looks broken.")
 			return
@@ -391,6 +389,7 @@
 			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
+				area.poweralert(1, src)
 				if((stat & BROKEN) || malfhack)
 					user.visible_message(\
 						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
@@ -647,7 +646,7 @@
 									to_chat (user, "<span class='notice'>There is not enough charge to draw from that APC.</span>")
 									break
 
-								else if(src.cell.use(500))
+								else if(cell.use(500))
 									H.nutrition += C.maxcharge*0.1
 									to_chat(user, "<span class='notice'>Draining... Battery has [round(100.0*H.nutrition/C.maxcharge)]% of charge.</span>")
 
@@ -706,12 +705,7 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
 	if(ismalf(malf) && istype(malf))
 		if(src.malfai == (malf.parent || malf))
-			if(src.occupier == malf)
-				return 3 // 3 = User is shunted in this APC
-			else if(istype(malf.loc, /obj/machinery/power/apc))
-				return 4 // 4 = User is shunted in another APC
-			else
-				return 2 // 2 = APC hacked by user, and user is in its core.
+			return 2 // 2 = APC hacked by user, and user is in its core.
 		else
 			return 1 // 1 = APC not hacked.
 	else
@@ -826,7 +820,7 @@
 	else
 		if(locked)
 			return FALSE
-		if((!in_range(src, user) || !istype(src.loc, /turf)))
+		if(!Adjacent(user) || !istype(src.loc, /turf))
 			nanomanager.close_user_uis(user, src)
 
 			return 0
@@ -944,7 +938,7 @@
 	if(src.z != ZLEVEL_STATION)
 		return
 	src.occupier = new /mob/living/silicon/ai(src,malf.laws,null,1)
-	src.occupier.adjustOxyLoss(malf.getOxyLoss())
+	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(src.occupier.name,"APC Copy"))
 		src.occupier.name = "[malf.name] APC Copy"
 	if(malf.parent)
@@ -957,23 +951,23 @@
 		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
-	src.occupier.cancel_camera()
+	occupier.cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!src.occupier)
 		return
 	if(src.occupier.parent && src.occupier.parent.stat != DEAD)
-		src.occupier.mind.transfer_to(src.occupier.parent)
-		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
-		src.occupier.parent.cancel_camera()
+		occupier.mind.transfer_to(src.occupier.parent)
+		occupier.parent.adjustOxyLoss(occupier.getOxyLoss())
+		occupier.parent.cancel_camera()
 		qdel(src.occupier)
 
 	else
 		to_chat(src.occupier, "<span class='warning'>Primary core damaged, unable to return core processes.</span>")
 		if(forced)
 			src.occupier.loc = src.loc
-			src.occupier.death()
-			src.occupier.gib()*/
+			occupier.death()
+			occupier.gib()*/
 
 
 /obj/machinery/power/apc/proc/ion_act()
@@ -1204,8 +1198,6 @@
 	flick("apc-spark", src)
 	if(cell)
 		cell.emplode(severity)
-	if(occupier)
-		occupier.emplode(severity)
 	lighting = 0
 	equipment = 0
 	environ = 0
@@ -1251,8 +1243,6 @@
 			GM.apcs--
 	stat |= BROKEN
 	operating = 0
-	/*if(occupier)
-		malfvacate(1)*/
 	update_icon()
 	update()
 

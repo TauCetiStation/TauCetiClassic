@@ -41,8 +41,8 @@
 	resolve_callback = _resolve_callback
 
 	RegisterSignal(bound_to, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_LOC_MOVED), .proc/check_bounds)
-	RegisterSignal(bound_to, list(COMSIG_PARENT_PREQDELETED), .proc/on_bound_destroyed)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETED), .proc/on_bound_destroyed)
+	RegisterSignal(bound_to, list(COMSIG_PARENT_QDELETING), .proc/on_bound_destroyed)
+	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), .proc/on_bound_destroyed)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED), .proc/check_bounds)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE), .proc/on_try_move)
 
@@ -177,7 +177,7 @@
 /datum/component/bounded/proc/hide_radius()
 	SEND_SIGNAL(bound_to, COMSIG_HIDE_RADIUS)
 
-/datum/component/bounded/proc/on_bound_destroyed(force, qdel_hint)
+/datum/component/bounded/proc/on_bound_destroyed(force)
 	// Perhaps add an abilities to resolve this situation with a callback? ~Luduk
 	qdel(src)
 

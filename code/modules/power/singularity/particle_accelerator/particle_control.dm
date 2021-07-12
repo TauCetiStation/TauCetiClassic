@@ -174,7 +174,7 @@
 	if(istype(PA, type))
 		if(PA.connect_master(src))
 			if(PA.report_ready(src))
-				src.connected_parts.Add(PA)
+				connected_parts.Add(PA)
 				return 1
 	return 0
 
@@ -197,7 +197,7 @@
 
 
 /obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
-	if(!in_range(src, user) && !issilicon(user) && !isobserver(user))
+	if(!Adjacent(user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=pacontrol")
 		return

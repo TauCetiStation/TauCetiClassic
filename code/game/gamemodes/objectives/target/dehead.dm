@@ -6,7 +6,7 @@
 		return OBJECTIVE_WIN
 	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
 		return OBJECTIVE_LOSS
-	var/list/all_items = owner.current.get_contents()
+	var/list/all_items = owner.current.GetAllContents()
 	for(var/obj/item/device/biocan/B in all_items)
 		if(B.brainmob && B.brainmob == target.current)
 			return OBJECTIVE_WIN

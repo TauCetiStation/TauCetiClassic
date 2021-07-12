@@ -20,14 +20,14 @@
 
 //Hud stuff
 
-	var/obj/screen/inv1 = null
-	var/obj/screen/inv2 = null
-	var/obj/screen/inv3 = null
+	var/atom/movable/screen/inv1 = null
+	var/atom/movable/screen/inv2 = null
+	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
 	var/shown_robot_pda = 0
 	var/shown_robot_foto = 0
-	var/obj/screen/robot_modules_background
+	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
@@ -328,7 +328,7 @@
 	if(custom_name)
 		changed_name = custom_name
 		if(client)
-			for(var/obj/screen/screen in client.screen)
+			for(var/atom/movable/screen/screen in client.screen)
 				if(screen.name == "Namepick")
 					client.screen -= screen
 					qdel(screen)
@@ -736,7 +736,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked", /obj/screen/alert/hacked)
+				throw_alert("hacked", /atom/movable/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				set_ai_link(null)
@@ -772,7 +772,7 @@
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
 						qdel(D)
 					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-					src.module.rebuild()
+					module.rebuild()
 				updateicon()
 			else
 				to_chat(user, "You fail to hack [src]'s interface.")
@@ -1067,7 +1067,7 @@
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		src.camera.clear_all_networks()
+		camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
 	update_manifest()
 
@@ -1121,3 +1121,6 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/swap_hand()
+	cycle_modules()

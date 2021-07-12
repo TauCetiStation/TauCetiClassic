@@ -11,11 +11,11 @@
 	var/list/papers = new/list()	//List of papers put in the bin for reference.
 
 
-/obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
+/obj/item/weapon/paper_bin/MouseDrop(mob/user)
 	. = ..()
-	if(user == usr && (!usr.incapacitated() && (usr.contents.Find(src) || in_range(src, usr))))
+	if(user == usr && !usr.incapacitated() && Adjacent(usr))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal) && !isessence(usr))
-			if( !usr.get_active_hand() )		//if active hand is empty
+			if(!usr.get_active_hand())		//if active hand is empty
 				attack_hand(usr, 1, 1)
 
 	return

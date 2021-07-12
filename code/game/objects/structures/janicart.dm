@@ -194,7 +194,7 @@
 	popup.open()
 
 /obj/structure/stool/bed/chair/janitorialcart/Topic(href, href_list)
-	if(!in_range(src, usr))
+	if(!Adjacent(usr))
 		return
 	if(!isliving(usr))
 		return

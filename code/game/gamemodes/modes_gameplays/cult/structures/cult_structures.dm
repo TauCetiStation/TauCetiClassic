@@ -144,7 +144,7 @@
 	return ..()
 
 /obj/machinery/optable/torture_table/MouseDrop_T(atom/A, mob/user)
-	if(A in loc)
+	if(A.loc == loc)
 		if(can_buckle && !buckled_mob)
 			user_buckle_mob(A, user)
 	else
@@ -224,7 +224,7 @@
 		user.eject_from_wall(TRUE, companions = companions)
 		for(var/mob/M in companions + user)
 			if(M.client)
-				new /obj/screen/temp/cult_teleportation(M, M)
+				new /atom/movable/screen/temp/cult_teleportation(M, M)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = user
 				H.Paralyse(5)

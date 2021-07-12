@@ -1,12 +1,12 @@
 //TODO: разложить все по полочкам
 /obj/structure/sign/directions/velocity
 	name = "Direction sign"
-	icon = 'code/modules/locations/centcomm/tablo.dmi'
+	icon = 'icons/locations/centcomm/tablo.dmi'
 	icon_state = "tablo01"
 
 /obj/structure/sign/directions/dock_tablo
 	name = "LED Display"
-	icon = 'code/modules/locations/centcomm/tablo.dmi'
+	icon = 'icons/locations/centcomm/tablo.dmi'
 	icon_state = "dock1"
 
 /obj/structure/sign/directions/dock_tablo/tablo2
@@ -27,13 +27,13 @@
 /obj/structure/sign/velocity_tablo
 	name = "Velocity LED Display"
 	desc = "A display, sometimes shows you useful information."
-	icon = 'code/modules/locations/centcomm/monitor_90.dmi'
+	icon = 'icons/locations/centcomm/monitor_90.dmi'
 
 /*/obj/structure/sign/tablo/display
-	icon = 'code/modules/locations/centcomm/monitor.dmi'
+	icon = 'icons/locations/centcomm/monitor.dmi'
 
 /obj/structure/sign/tablo/display/display_90
-	icon = 'code/modules/locations/centcomm/monitor_90.dmi'*/
+	icon = 'icons/locations/centcomm/monitor_90.dmi'*/
 
 //надеюсь в скором времени переписать
 /obj/machinery/information_display
@@ -45,7 +45,7 @@
 				//2 - off
 	name = "Information display"
 
-	icon = 'code/modules/locations/centcomm/monitor_90.dmi'
+	icon = 'icons/locations/centcomm/monitor_90.dmi'
 	var/icon_state_on
 
 /obj/machinery/information_display/atom_init()

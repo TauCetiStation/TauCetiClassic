@@ -189,8 +189,8 @@
 				if(src.currmsg)
 					var/title = src.messagetitle[src.currmsg]
 					var/text  = src.messagetext[src.currmsg]
-					src.messagetitle.Remove(title)
-					src.messagetext.Remove(text)
+					messagetitle.Remove(title)
+					messagetext.Remove(text)
 					if(src.currmsg == src.aicurrmsg)
 						src.aicurrmsg = 0
 					src.currmsg = 0
@@ -280,8 +280,8 @@
 			if(src.aicurrmsg)
 				var/title = src.messagetitle[src.aicurrmsg]
 				var/text  = src.messagetext[src.aicurrmsg]
-				src.messagetitle.Remove(title)
-				src.messagetext.Remove(text)
+				messagetitle.Remove(title)
+				messagetext.Remove(text)
 				if(src.currmsg == src.aicurrmsg)
 					src.currmsg = 0
 				src.aicurrmsg = 0
