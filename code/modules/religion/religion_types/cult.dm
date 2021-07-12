@@ -224,7 +224,7 @@
 		var/mob/living/carbon/human/H = M
 		if(H.mind.assigned_role == "Captain" || H.species.flags[NO_BLOOD])
 			return FALSE
-	if(ismindshielded(M) || isloyal(M))
+	if(M.ismindprotect())
 		return FALSE
 	return TRUE
 

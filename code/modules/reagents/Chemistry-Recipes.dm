@@ -963,7 +963,7 @@
 	required_other = 4
 
 /datum/chemical_reaction/slimebork/on_reaction(datum/reagents/holder, created_volume)
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - /obj/item/weapon/reagent_containers/food/snacks
+	var/list/borks = subtypesof(/obj/item/weapon/reagent_containers/food/snacks)
 	// BORK BORK BORK
 
 	playsound(holder.my_atom, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
@@ -1482,7 +1482,7 @@
 	required_other = 1
 
 /datum/chemical_reaction/slimepaint/on_reaction(datum/reagents/holder)
-	var/list/paints = typesof(/obj/item/weapon/reagent_containers/glass/paint) - /obj/item/weapon/reagent_containers/glass/paint
+	var/list/paints = subtypesof(/obj/item/weapon/reagent_containers/glass/paint)
 	var/chosen = pick(paints)
 	var/obj/B = new chosen
 	if(B)
