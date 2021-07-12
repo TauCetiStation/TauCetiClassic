@@ -411,7 +411,6 @@
 				on = has_power()
 				update()
 
-				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
 				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)

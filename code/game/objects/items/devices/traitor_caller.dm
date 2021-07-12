@@ -20,7 +20,7 @@
 	for(var/mob/living/carbon/human/player in player_list)
 		if(player.client && player.mind && player.stat != DEAD && !player.mind.special_role \
 		&& (ROLE_TRAITOR in player.client.prefs.be_role) && !jobban_isbanned(player, "Syndicate") \
-		&& !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
+		&& !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !player.ismindprotect())
 
 			possible_traitors += player
 			for(var/job in list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain"))
@@ -33,18 +33,5 @@
 		return
 
 	var/mob/living/carbon/human/newtraitor = pick(possible_traitors)
-	SSticker.mode.equip_traitor(newtraitor)
-	SSticker.mode.syndicates += newtraitor.mind
-	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", newtraitor)
-	to_chat(newtraitor, "<span class='userdanger'> <B>ATTENTION:</B> You hear a call from Syndicate...</span>")
-	to_chat(newtraitor, "<B>You are now a special traitor.</B>")
-	newtraitor.mind.special_role = "Syndicate"
-	SSticker.mode.forge_syndicate_objectives(newtraitor.mind)
-	newtraitor.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(newtraitor), SLOT_R_STORE)
-	to_chat(newtraitor, "<span class='notice'> Your current objectives:</span>")
-	var/obj_count = 1
-	for(var/datum/objective/objective in newtraitor.mind.objectives)
-		to_chat(newtraitor, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
-
+	create_and_setup_role(/datum/role/traitor/syndcall, newtraitor)
 

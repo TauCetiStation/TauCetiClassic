@@ -137,7 +137,7 @@
 /mob/living/simple_animal/parrot/Topic(href, href_list)
 
 	//Can the usr physically do this?
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(usr.incapacitated() || !Adjacent(usr))
 		return
 
 	//Is the usr's mob type able to do this? (lolaliens)
@@ -184,8 +184,7 @@
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
 
-						usr.drop_item()
-						headset_to_add.loc = src
+						usr.drop_from_inventory(headset_to_add, src)
 						src.ears = headset_to_add
 						to_chat(usr, "You fit the headset onto [src].")
 
@@ -400,8 +399,8 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		if(in_range(src, parrot_interest))
-
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it 
+											// ! and i'm not going to invent new alg for this
 			if(isliving(parrot_interest))
 				steal_from_mob()
 
@@ -426,7 +425,8 @@
 			parrot_state = PARROT_WANDER
 			return
 
-		if(in_range(src, parrot_perch))
+		if(in_range(src, parrot_perch))	// ! changing this to Adjacent() will probably break it 
+										// ! and i'm not going to invent new alg for this
 			src.loc = parrot_perch.loc
 			drop_held_item()
 			parrot_state = PARROT_PERCH
@@ -458,8 +458,8 @@
 		var/mob/living/L = parrot_interest
 
 		//If the mob is close enough to interact with
-		if(in_range(src, parrot_interest))
-
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it 
+											// ! and i'm not going to invent new alg for this
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
 				parrot_interest = null

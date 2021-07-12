@@ -95,7 +95,7 @@
 						R += num2text(RA.volume) + "),"
 				M.log_combat(user, "shot with a <b>syringegun</b>")
 
-				if(!M.check_thickmaterial(target_zone = user.zone_sel.selecting) && !M.isSynthetic(user.zone_sel.selecting))
+				if(!M.check_thickmaterial(target_zone = user.get_targetzone()) && !M.isSynthetic(user.get_targetzone()))
 					if(D.reagents)
 						M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 						D.reagents.trans_to(M, 15)

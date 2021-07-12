@@ -112,7 +112,7 @@
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
 
 /turf/simulated/mineral/proc/MineralSpread()
@@ -160,10 +160,6 @@
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
-
-	if (!(ishuman(user) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
-		return
 	user.SetNextMove(CLICK_CD_RAPID)
 
 	if (istype(W, /obj/item/device/core_sampler))

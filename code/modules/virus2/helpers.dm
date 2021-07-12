@@ -145,7 +145,7 @@
 //					log_debug("Could not reach target")
 
 			if (vector == "Contact")
-				if (in_range(src, victim))
+				if (Adjacent(victim))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
 
@@ -156,7 +156,7 @@
 
 		if (ishuman(victim) && zone_sel)
 			var/mob/living/carbon/human/H = victim
-			var/obj/item/organ/external/BP = H.get_bodypart(zone_sel.selecting)
+			var/obj/item/organ/external/BP = H.get_bodypart(get_targetzone())
 			var/list/clothes = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
 			for(var/obj/item/clothing/C in clothes)
 				if(C && istype(C))

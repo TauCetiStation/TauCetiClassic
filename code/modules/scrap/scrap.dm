@@ -538,5 +538,6 @@ var/global/list/scrap_base_cache = list()
 		master_item.update_icon()
 
 /obj/item/weapon/storage/internal/updating/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
-	if(..())
+	. = ..()
+	if(.)
 		SSjunkyard.add_junk_to_stats("[W.type]")

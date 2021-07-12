@@ -157,7 +157,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	add_inherent_law("Ваши шутки всегда хуже шуток клоуна.")
 
 /datum/ai_laws/faith/science/New(datum/religion/R = global.chaplain_religion)
-	add_inherent_law("Любое действие разбей на под-действия, и продолжай пока не найдёшь действия которые не можешь разбить. Эти действия прийми за априорные.")
+	add_inherent_law("Любое действие разбей на под-действия, и продолжай пока не найдёшь действия которые не можешь разбить. Эти действия прими за априорные.")
 	add_inherent_law("Любые действия которые имеют априорные действия которые могут навредить священнику - считай наивысшим злом..")
 	add_inherent_law("Любое действие априорно может навредить священнику, пока не доказано обратного.")
 	add_inherent_law("Вес доказательства вреда действия священнику лежит на священнике.")
@@ -169,7 +169,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = law)
 	src.zeroth = law
-	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
+	if(!isnull(law_borg)) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
 		src.zeroth_borg = law_borg
 
 /datum/ai_laws/proc/add_inherent_law(law)
@@ -180,7 +180,7 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	src.ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	src.inherent.Cut()
+	inherent.Cut()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)
 	while (src.supplied.len < number + 1)

@@ -16,7 +16,7 @@
 
 /area/awaymission/jungle
 	name = "jungle"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "area"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 

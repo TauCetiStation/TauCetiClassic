@@ -1,8 +1,5 @@
-/*
-CONTAINS:
-SAFES
-FLOOR SAFES
-*/
+/// Chance for a sound clue
+#define SOUND_CHANCE 10
 
 //SAFES
 /obj/structure/safe
@@ -12,60 +9,38 @@ FLOOR SAFES
 	icon_state = "safe"
 	anchored = TRUE
 	density = TRUE
-	var/open = 0		//is the safe open?
-	var/tumbler_1_pos	//the tumbler position- from 0 to 72
-	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
-	var/tumbler_2_pos
-	var/tumbler_2_open
-	var/dial = 0		//where is the dial pointing?
-	var/space = 0		//the combined w_class of everything in the safe
-	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
-
+	/// The maximum combined w_class of stuff in the safe
+	var/maxspace = 24
+	/// The amount of tumblers that will be generated
+	var/number_of_tumblers = 2
+	/// Whether the safe is open or not
+	var/open = FALSE
+	/// Whether the safe is locked or not
+	var/locked = TRUE
+	/// The position the dial is pointing to
+	var/dial = 0
+	/// The list of tumbler dial positions that need to be hit
+	var/list/tumblers = list()
+	/// The index in the tumblers list of the tumbler dial position that needs to be hit
+	var/current_tumbler_index = 1
+	/// The combined w_class of everything in the safe
+	var/space = 0
+	/// Tough, but breakable if explosion counts reaches set value
 
 /obj/structure/safe/atom_init()
 	. = ..()
-	tumbler_1_pos = rand(0, 72)
-	tumbler_1_open = rand(0, 72)
 
-	tumbler_2_pos = rand(0, 72)
-	tumbler_2_open = rand(0, 72)
+	// Combination generation
+	for(var/i in 1 to number_of_tumblers)
+		tumblers.Add(rand(0, 99))
 
-
-/obj/structure/safe/atom_init()
-	. = ..()
+	// Put as many items on our turf inside as possible
 	for(var/obj/item/I in loc)
 		if(space >= maxspace)
 			return
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			I.loc = src
-
-
-/obj/structure/safe/proc/check_unlocked(mob/user, canhear)
-	if(user && canhear)
-		if(tumbler_1_pos == tumbler_1_open)
-			to_chat(user, "<span class='notice'>You hear a [pick("tonk", "krunk", "plunk")] from [src].</span>")
-		if(tumbler_2_pos == tumbler_2_open)
-			to_chat(user, "<span class='notice'>You hear a [pick("tink", "krink", "plink")] from [src].</span>")
-	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
-		if(user) visible_message("<b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b>")
-		return 1
-	return 0
-
-
-/obj/structure/safe/proc/decrement(num)
-	num -= 1
-	if(num < 0)
-		num = 71
-	return num
-
-
-/obj/structure/safe/proc/increment(num)
-	num += 1
-	if(num > 71)
-		num = 0
-	return num
-
+			I.forceMove(src)
 
 /obj/structure/safe/update_icon()
 	if(open)
@@ -73,118 +48,182 @@ FLOOR SAFES
 	else
 		icon_state = initial(icon_state)
 
-
-/obj/structure/safe/attack_hand(mob/user)
-	user.set_machine(src)
-	var/dat = "<center>"
-	dat += "<a href='?src=\ref[src];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=\ref[src];decrement=1'>-</a> [dial * 5] <a href='?src=\ref[src];increment=1'>+</a>"
+/obj/structure/safe/examine(mob/user)
+	..()
 	if(open)
-		dat += "<table>"
-		for(var/i = contents.len, i>=1, i--)
-			var/obj/item/P = contents[i]
-			dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[P.name]</a></td></tr>"
-		dat += "</table></center>"
+		to_chat(user, "The inside of the the door has numbers written on it: <b>[get_combination()]</b>")
 
-	var/datum/browser/popup = new(user, "safe", src.name, 350, 300)
-	popup.set_content(dat)
-	popup.open()
+/obj/structure/safe/proc/get_combination()
+	return jointext(tumblers, ", ")
 
-/obj/structure/safe/Topic(href, href_list)
-	if(!ishuman(usr))	return
-	var/mob/living/carbon/human/user = usr
-
-	var/canhear = 0
-	if(istype(user.l_hand, /obj/item/clothing/accessory/stethoscope) || istype(user.r_hand, /obj/item/clothing/accessory/stethoscope))
-		canhear = 1
-
-	if(href_list["open"])
-		if(check_unlocked())
-			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
-			open = !open
-			update_icon()
-			updateUsrDialog()
-			return
-		else
-			to_chat(user, "<span class='notice'>You can't [open ? "close" : "open"] [src], the lock is engaged!</span>")
-			return
-
-	if(href_list["decrement"])
-		dial = decrement(dial)
-		if(dial == tumbler_1_pos + 1 || dial == tumbler_1_pos - 71)
-			tumbler_1_pos = decrement(tumbler_1_pos)
-			if(canhear)
-				to_chat(user, "<span class='notice'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
-			if(tumbler_1_pos == tumbler_2_pos + 37 || tumbler_1_pos == tumbler_2_pos - 35)
-				tumbler_2_pos = decrement(tumbler_2_pos)
-				if(canhear)
-					to_chat(user, "<span class='notice'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
-			check_unlocked(user, canhear)
-		updateUsrDialog()
-		return
-
-	if(href_list["increment"])
-		dial = increment(dial)
-		if(dial == tumbler_1_pos - 1 || dial == tumbler_1_pos + 71)
-			tumbler_1_pos = increment(tumbler_1_pos)
-			if(canhear)
-				to_chat(user, "<span class='notice'>You hear a [pick("clack", "scrape", "clank")] from [src].</span>")
-			if(tumbler_1_pos == tumbler_2_pos - 37 || tumbler_1_pos == tumbler_2_pos + 35)
-				tumbler_2_pos = increment(tumbler_2_pos)
-				if(canhear)
-					to_chat(user, "<span class='notice'>You hear a [pick("click", "chink", "clink")] from [src].</span>")
-			check_unlocked(user, canhear)
-		updateUsrDialog()
-		return
-
-	if(href_list["retrieve"])
-		user << browse(null, "window=safe") // Close the menu
-
-		var/obj/item/P = locate(href_list["retrieve"]) in src
-		if(open)
-			if(P && in_range(src, user))
-				user.put_in_hands(P)
-				updateUsrDialog()
-
-
-/obj/structure/safe/attackby(obj/item/I, mob/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
-	add_fingerprint(user)
+/obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
 		if(I.w_class + space <= maxspace)
+			if(!user.drop_from_inventory(I, src))
+				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the safe!</span>")
+				return
 			space += I.w_class
-			user.drop_item()
-			I.loc = src
+			I.forceMove(src)
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
-			updateUsrDialog()
+			SStgui.update_uis(src)
 		else
-			to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
+			to_chat(user, "<span class='warning'>[I] won't fit in [src].</span>")
 	else
 		if(istype(I, /obj/item/clothing/accessory/stethoscope))
-			to_chat(user, "Hold [I] in one of your hands while you manipulate the dial.")
-
+			attack_hand(user)
+			return
+		else
+			to_chat(user, "<span class='warning'>You can't put [I] into the safe while it is closed!</span>")
+			return
 
 /obj/structure/safe/blob_act()
 	return
 
-
 /obj/structure/safe/ex_act(severity)
 	return
 
+/obj/structure/safe/tgui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/safe),
+	)
+
+/obj/structure/safe/tgui_state(mob/user)
+	return global.physical_state
+
+/obj/structure/safe/attack_hand(mob/user)
+	if(..())
+		return
+	tgui_interact(user)
+
+/obj/structure/safe/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Safe", name)
+		ui.open()
+
+/obj/structure/safe/tgui_data(mob/user)
+	var/list/data = list()
+	data["dial"] = dial
+	data["open"] = open
+	data["locked"] = locked
+
+	if(open)
+		var/list/contents_names = list()
+		data["contents"] = contents_names
+		for(var/obj/O in contents)
+			contents_names[++contents_names.len] = list("name" = O.name, "sprite" = O.icon_state)
+			user << browse_rsc(icon(O.icon, O.icon_state), "[O.icon_state].png")
+
+	return data
+
+
+/obj/structure/safe/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return FALSE
+
+	if(!ishuman(usr))
+		return FALSE
+	var/mob/living/carbon/human/user = usr
+
+	var/canhear = FALSE
+	if(istype(user.l_hand, /obj/item/clothing/accessory/stethoscope) || istype(user.r_hand, /obj/item/clothing/accessory/stethoscope))
+		canhear = TRUE
+
+	switch(action)
+		if("open")
+			if(!check_unlocked() && !open)
+				to_chat(user, "<span class='warning'>You cannot open [src], as its lock is engaged!</span>")
+				return FALSE
+			to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
+			open = !open
+			update_icon()
+			return TRUE
+		if("turnright")
+			if(open)
+				return FALSE
+			var/ticks = text2num(params["num"])
+			for(var/i = 1 to ticks)
+				dial = WRAP(dial - 1, 0, 100)
+
+				var/invalid_turn = current_tumbler_index % 2 == 0 || current_tumbler_index > number_of_tumblers
+				if(invalid_turn) // The moment you turn the wrong way or go too far, the tumblers reset
+					current_tumbler_index = 1
+
+				if(!invalid_turn && dial == tumblers[current_tumbler_index])
+					notify_user(user, canhear, list("tink", "krink", "plink"), ticks, i)
+					current_tumbler_index++
+				else
+					notify_user(user, canhear, list("clack", "scrape", "clank"), ticks, i)
+			check_unlocked()
+			return TRUE
+		if("turnleft")
+			if(open)
+				return FALSE
+			var/ticks = text2num(params["num"])
+			for(var/i = 1 to ticks)
+				dial = WRAP(dial + 1, 0, 100)
+
+				var/invalid_turn = current_tumbler_index % 2 != 0 || current_tumbler_index > number_of_tumblers
+				if(invalid_turn) // The moment you turn the wrong way or go too far, the tumblers reset
+					current_tumbler_index = 1
+
+				if(!invalid_turn && dial == tumblers[current_tumbler_index])
+					notify_user(user, canhear, list("tonk", "krunk", "plunk"), ticks, i)
+					current_tumbler_index++
+				else
+					notify_user(user, canhear, list("click", "chink", "clink"), ticks, i)
+			check_unlocked()
+			return TRUE
+		if("retrieve")
+			if(!open)
+				return FALSE
+			var/index = text2num(params["index"])
+			if(!index)
+				return FALSE
+			var/obj/item/I = contents[index]
+			if(!I || !Adjacent(user))
+				return FALSE
+			user.put_in_hands(I)
+			space -= I.w_class
+			return TRUE
+
+/**
+  * Called every dial turn to determine whether the safe should unlock or not.
+  */
+/obj/structure/safe/proc/check_unlocked()
+	if(current_tumbler_index > number_of_tumblers)
+		locked = FALSE
+		visible_message("<span class='boldnotice'>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</span>")
+		return TRUE
+	locked = TRUE
+	return FALSE
+
+/**
+  * Called every dial turn to provide feedback if possible.
+  */
+/obj/structure/safe/proc/notify_user(user, canhear, sounds, total_ticks, current_tick)
+	if(!canhear)
+		return
+	if(current_tick == 2)
+		to_chat(user, "<span class='italics'>The sounds from [src] are too fast and blend together.</span>")
+	if(total_ticks == 1 || prob(SOUND_CHANCE))
+		to_chat(user, "<span class='italics'>You hear a [pick(sounds)] from [src].</span>")
 
 //FLOOR SAFES
 /obj/structure/safe/floor
 	name = "floor safe"
 	icon_state = "floorsafe"
+	level = 1
 	density = FALSE
-	level = 1	//underfloor
-	layer = 2.5
-
+	layer = FIREDOOR_LAYER
 
 /obj/structure/safe/floor/atom_init()
 	. = ..()
 	var/turf/T = loc
 	hide(T.intact)
 
-
 /obj/structure/safe/floor/hide(intact)
 	invisibility = intact ? 101 : 0
+
+#undef SOUND_CHANCE

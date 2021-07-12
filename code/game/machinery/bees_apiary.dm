@@ -50,14 +50,12 @@
 		else
 			health = 10
 			nutrilevel += 10
-			user.drop_item()
 			qdel(O)
 			to_chat(user, "<span class='notice'>You carefully insert the queen into [src], she gets busy making a hive.</span>")
 			bees_in_hive = 0
 	else if(istype(O, /obj/item/beezeez))
 		beezeez += 100
 		nutrilevel += 10
-		user.drop_item()
 		if(health > 0)
 			to_chat(user, "<span class='notice'>You insert [O] into [src]. A relaxed humming appears to pick up.</span>")
 		else

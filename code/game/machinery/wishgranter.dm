@@ -60,16 +60,6 @@
 
 		user.update_mutations()
 
-		SSticker.mode.traitors += user.mind
-		user.mind.special_role = "Avatar of the Wish Granter"
-
-		var/datum/objective/silence/silence = new
-		silence.owner = user.mind
-		user.mind.objectives += silence
-
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in user.mind.objectives)
-			to_chat(user, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
-			obj_count++
+		create_and_setup_role(/datum/role/traitor/wishgranter, user)
 
 		to_chat(user, "You have a very bad feeling about this.")

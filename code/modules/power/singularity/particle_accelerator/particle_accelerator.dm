@@ -137,7 +137,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(master && master.active)
+	if(master && master.active && !moving_diagonally)
 		master.toggle_power()
 		log_investigate("was moved whilst active; it <font color='red'>powered down</font>.",INVESTIGATE_SINGULO)
 

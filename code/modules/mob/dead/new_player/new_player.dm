@@ -51,7 +51,7 @@
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", SSticker.bundle ? "[SSticker.bundle.name]" : "[master_mode]")
 
 		if(world.is_round_preparing())
 			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")

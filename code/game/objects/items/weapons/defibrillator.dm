@@ -493,26 +493,6 @@
 		update_icon()
 	..()
 
-/obj/item/weapon/twohanded/shockpaddles/robot
-	name = "defibrillator paddles"
-	desc = "A pair of advanced shockpaddles powered by a robot's internal power cell, able to penetrate thick clothing."
-	charge_cost = 50
-	combat = TRUE
-	cooldown_time = 3 SECONDS
-
-/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.charge >= charge_amt)
-
-/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.use(charge_amt))
-
-/obj/item/weapon/twohanded/shockpaddles/robot/attack_self(mob/user)
-	return //No, this can't be wielded
-
 /*
 	Shockpaddles that are linked to a base unit
 */

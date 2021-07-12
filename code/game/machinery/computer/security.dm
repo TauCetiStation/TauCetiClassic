@@ -25,7 +25,7 @@
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
-		usr.drop_item()
+		usr.drop_from_inventory(O, src)
 		O.loc = src
 		scan = O
 		to_chat(user, "You insert [O].")
@@ -241,8 +241,7 @@ What a mess.*/
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					scan = I
 					if(ishuman(usr))
 						var/mob/living/carbon/human/H = usr
@@ -371,7 +370,7 @@ What a mess.*/
 				return
 			var/a2 = active2
 			var/t1 = sanitize(input("Add Comment:", "Secure. records", null, null)  as message)
-			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
+			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
 			if(scan)
 				add_record(scan, active2, t1)
@@ -540,7 +539,7 @@ What a mess.*/
 	updateUsrDialog()
 
 /obj/machinery/computer/secure_data/proc/is_not_allowed(mob/user)
-	return !src.authenticated || user.incapacitated()|| (!in_range(src, user) && !issilicon(usr) && !isobserver(usr))
+	return !src.authenticated || user.incapacitated()|| (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr))
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/icon/I = null

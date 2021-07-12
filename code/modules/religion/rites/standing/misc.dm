@@ -147,7 +147,7 @@
  */
 /datum/religion_rites/standing/animation
 	name = "Анимация"
-	desc = "Возраждает вещи на алтаре."
+	desc = "Возрождает вещи на алтаре."
 	ritual_length = (50 SECONDS)
 	ritual_invocations = list("I appeal to you - you are the strength of the Lord...",
 							  "...given from the light given by the wisdom of the gods returned...",

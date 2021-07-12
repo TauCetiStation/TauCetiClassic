@@ -457,7 +457,7 @@
 		var/mob/living/L = AM
 		L.turf_collision(src)
 
-/turf/proc/update_icon()
+/turf/update_icon()
 	if(is_flooded(absolute = 1))
 		if(!(locate(/obj/effect/flood) in contents))
 			new /obj/effect/flood(src)

@@ -81,6 +81,10 @@
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(has_gravity(src))
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 
@@ -147,7 +151,7 @@
 
 /obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr))
 			return
 		if(buckled_mob)

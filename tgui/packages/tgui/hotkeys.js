@@ -8,6 +8,21 @@ import { createLogger } from './logging';
 
 const logger = createLogger('hotkeys');
 
+// BYOND macros, in `key: command` format.
+const byondMacros = {};
+
+// Array of acquired keys, which will not be sent to BYOND.
+const hotKeysAcquired = [
+  // Default set of acquired keys
+  KEY_ESCAPE,
+  KEY_ENTER,
+  KEY_SPACE,
+  KEY_TAB,
+  KEY_CTRL,
+  KEY_SHIFT,
+  KEY_F5,
+];
+
 // Key codes
 export const KEY_BACKSPACE = 8;
 export const KEY_TAB = 9;
@@ -142,7 +157,7 @@ const getKeyData = e => {
  * in game while the browser window is focused.
  */
 const handlePassthrough = (e, eventType) => {
-  if (e.defaultPrevented) {
+  if (e.defaultPrevented || hotKeysAcquired.includes(e.code)) {
     return;
   }
   const targetName = e.target && e.target.localName;
@@ -166,6 +181,24 @@ const handlePassthrough = (e, eventType) => {
   if (eventType === 'keyup' && keyState[keyCode]) {
     logger.debug('passthrough', eventType, keyData);
     return Byond.topic({ __keyup: keyCode });
+  }
+};
+
+/**
+ * Acquires a lock on the hotkey, which prevents it from being
+ * passed through to BYOND.
+ */
+export const acquireHotKey = keyCode => {
+  hotKeysAcquired.push(keyCode);
+};
+
+/**
+ * Makes the hotkey available to BYOND again.
+ */
+export const releaseHotKey = keyCode => {
+  const index = hotKeysAcquired.indexOf(keyCode);
+  if (index >= 0) {
+    hotKeysAcquired.splice(index, 1);
   }
 };
 

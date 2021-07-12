@@ -1,7 +1,7 @@
 /* CENTRAL COMMAND */
 /datum/announcement/centcomm
-	title = "Central Command Update"
-	subtitle = "NanoTrasen Update"
+	title = "Оповещение Центрального Командования"
+	subtitle = "Оповещение НаноТрейзен"
 	sound = "commandreport"
 	flags = ANNOUNCE_TEXT | ANNOUNCE_SOUND
 
@@ -12,23 +12,23 @@
 
 /datum/announcement/centcomm/admin
 	name = "Centcomm: Admin Stub"
-	message = "\[Enter your message for the station here.]"
+	message = "\[Введите свое сообщение здесь.\]"
 	flags = ANNOUNCE_ALL
 
 /datum/announcement/centcomm/yesert
 	name = "Centcomm: ERT Approved"
-	subtitle = "Central Command"
-	message = "Похоже, отряд быстрого реагирования был запрошен на станцию. Мы подготовим и отправим его в кратчайшие сроки."
+	subtitle = "Центральное Командование"
 	sound = "yesert"
+  
 /datum/announcement/centcomm/yesert/play()
-	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name()]. Мы подготовим и отправим его в кратчайшие сроки."
+	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. Мы подготовим и отправим его в кратчайшие сроки."
 	..()
 
 /datum/announcement/centcomm/noert
 	name = "Centcomm: ERT Denied"
-	subtitle = "Central Command"
-	message = "Похоже, отряд быстрого реагирования был запрошен на станцию . К сожалению, мы не смогли отправить его в этот раз."
+	subtitle = "Центральное Командование"
 	sound = "yesert"
+  
 /datum/announcement/centcomm/noert/play()
-	message = "Похоже, отряд быстрого реагирования был запрошен на станцию [station_name()]. К сожалению, мы не смогли отправить его в этот раз."
+	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."
 	..()

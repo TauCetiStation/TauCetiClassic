@@ -103,7 +103,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(SSticker.mode.name == "rp-revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)
@@ -510,7 +510,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())

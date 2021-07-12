@@ -20,14 +20,14 @@
 
 //Hud stuff
 
-	var/obj/screen/inv1 = null
-	var/obj/screen/inv2 = null
-	var/obj/screen/inv3 = null
+	var/atom/movable/screen/inv1 = null
+	var/atom/movable/screen/inv2 = null
+	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
 	var/shown_robot_pda = 0
 	var/shown_robot_foto = 0
-	var/obj/screen/robot_modules_background
+	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
@@ -328,7 +328,7 @@
 	if(custom_name)
 		changed_name = custom_name
 		if(client)
-			for(var/obj/screen/screen in client.screen)
+			for(var/atom/movable/screen/screen in client.screen)
 				if(screen.name == "Namepick")
 					client.screen -= screen
 					qdel(screen)
@@ -438,15 +438,14 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
-	if(SSticker && SSticker.mode && SSticker.mode.name == "AI malfunction")
-		var/datum/game_mode/malfunction/malf = SSticker.mode
-		for (var/datum/mind/malfai in malf.malf_ai)
-			if(connected_ai)
-				if(connected_ai.mind == malfai)
-					if(malf.apcs >= 3)
-						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
-			else if(SSticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(SSticker.mode:AI_win_timeleft/(SSticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+	if(ismalf(connected_ai))
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+		if(malf.apcs >= 3)
+			stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
+	else
+		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
+		if(malf?.malf_mode_declared)
+			stat(null, "Time left: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -645,8 +644,7 @@
 		else if(cell)
 			to_chat(user, "There is a power cell already installed.")
 		else
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			cell = W
 			to_chat(user, "You insert the power cell.")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
@@ -707,8 +705,7 @@
 		else
 			if(U.action(src))
 				to_chat(usr, "You apply the upgrade to [src]!")
-				usr.drop_item()
-				U.loc = src
+				usr.drop_from_inventory(U, src)
 			else
 				to_chat(usr, "Upgrade error!")
 
@@ -739,7 +736,7 @@
 		else
 			sleep(6)
 			if(prob(50))
-				throw_alert("hacked", /obj/screen/alert/hacked)
+				throw_alert("hacked", /atom/movable/screen/alert/hacked)
 				emagged = 1
 				lawupdate = 0
 				set_ai_link(null)
@@ -775,7 +772,7 @@
 					for(var/obj/item/weapon/pickaxe/drill/borgdrill/D in src.module.modules)
 						qdel(D)
 					src.module.modules += new /obj/item/weapon/pickaxe/drill/diamond_drill(src.module)
-					src.module.rebuild()
+					module.rebuild()
 				updateicon()
 			else
 				to_chat(user, "You fail to hack [src]'s interface.")
@@ -1021,7 +1018,7 @@
 
 	. = ..()
 
-	if(module)
+	if(module && !ISDIAGONALDIR(Dir))
 		if(module.type == /obj/item/weapon/robot_module/janitor)
 			var/turf/tile = loc
 			if(isturf(tile))
@@ -1070,7 +1067,7 @@
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
-		src.camera.clear_all_networks()
+		camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
 	update_manifest()
 
@@ -1124,3 +1121,6 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/swap_hand()
+	cycle_modules()

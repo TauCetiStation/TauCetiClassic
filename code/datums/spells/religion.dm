@@ -400,7 +400,7 @@
 	if(usr.my_religion.runes_by_mob[usr])
 		var/list/L = usr.my_religion.runes_by_mob[usr]
 		if(L.len > usr.my_religion.max_runes_on_mob)
-			to_chat(usr, "<span class='warning'>Вуаль пространтсва не сможет сдержать больше рун!</span>")
+			to_chat(usr, "<span class='warning'>Вуаль пространства не сможет сдержать больше рун!</span>")
 			return
 
 	var/obj/effect/rune/R = new agent.building_type(get_turf(usr), usr.my_religion, usr)

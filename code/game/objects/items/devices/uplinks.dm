@@ -7,22 +7,12 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 */
 //TG-stuff
 /obj/item/device/uplink
-	var/welcome 					// Welcoming menu message
-	var/uses 						// Numbers of crystals
+	var/welcome = "Syndicate Uplink Console:"					// Welcoming menu message
+	var/uses = 20 						// Numbers of crystals
 	// List of items not to shove in their hands.
-	var/list/purchase_log = list()
 	var/active = 0
 	var/uplink_type = "traitor" //0 - traitor uplink, 1 - nuke
 	var/list/uplink_items = list()
-
-/obj/item/device/uplink/atom_init()
-	. = ..()
-	if(SSticker && SSticker.mode)
-		welcome = SSticker.mode.uplink_welcome
-		uses = SSticker.mode.uplink_uses
-	else
-		welcome = "Syndicate Uplink Console:"
-		uses = 20
 
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/interact(mob/user)
@@ -98,6 +88,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 				var/datum/uplink_item/I = uplink[number]
 				if(I)
 					I.buy(src, usr)
+					interact(usr)
 
 
 // HIDDEN UPLINK - Can be stored in anything but the host item has to have a trigger for it.
@@ -150,7 +141,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	// Activates the uplink if it's active
 	if(src.hidden_uplink)
 		if(src.hidden_uplink.active)
-			src.hidden_uplink.trigger(user)
+			hidden_uplink.trigger(user)
 			return 1
 	return 0
 

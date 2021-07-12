@@ -72,11 +72,10 @@
 
 		to_chat(user, "<span class='notice'>You install [O] in [src]!</span>")
 
-		user.drop_item()
+		user.drop_from_inventory(O, src)
 		src.mmi = O
 		transfer_personality(O)
 
-		O.loc = src
 		update_icon()
 		return 1
 
@@ -161,7 +160,7 @@
 	eject_brain()
 	death()
 
-/mob/living/simple_animal/spiderbot/proc/update_icon()
+/mob/living/simple_animal/spiderbot/update_icon()
 	if(mmi)
 		if(istype(mmi,/obj/item/device/mmi))
 			icon_state = "spiderbot-chassis-mmi"

@@ -17,7 +17,7 @@
 	var/check_flags = 0
 	var/processing = 0
 	var/active = 0
-	var/obj/screen/movable/action_button/button = null
+	var/atom/movable/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
@@ -86,10 +86,10 @@
 /datum/action/proc/IsAvailable()
 	return Checks()
 
-/obj/screen/movable/action_button/MouseEntered(location,control,params)
+/atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	openToolTip(usr, src, params, title = name, content = desc)
 
-/obj/screen/movable/action_button/MouseExited()
+/atom/movable/screen/movable/action_button/MouseExited()
 	closeToolTip(usr)
 
 /datum/action/proc/Checks()// returns 1 if all checks pass
@@ -115,15 +115,15 @@
 /datum/action/proc/UpdateName()
 	return name
 
-/obj/screen/movable/action_button
+/atom/movable/screen/movable/action_button
 	var/datum/action/owner
 	screen_loc = "WEST,NORTH"
 
-/obj/screen/movable/action_button/Destroy()
+/atom/movable/screen/movable/action_button/Destroy()
 	owner = null
 	return ..()
 
-/obj/screen/movable/action_button/Click(location,control,params)
+/atom/movable/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)
 	if(modifiers[SHIFT_CLICK])
 		moved = 0
@@ -133,7 +133,7 @@
 	owner.Trigger()
 	return 1
 
-/obj/screen/movable/action_button/proc/UpdateIcon()
+/atom/movable/screen/movable/action_button/proc/UpdateIcon()
 	if(!owner)
 		return
 	icon = owner.button_icon
@@ -156,13 +156,13 @@
 		color = rgb(255,255,255,255)
 
 //Hide/Show Action Buttons ... Button
-/obj/screen/movable/action_button/hide_toggle
+/atom/movable/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
 
-/obj/screen/movable/action_button/hide_toggle/Click()
+/atom/movable/screen/movable/action_button/hide_toggle/Click()
 	usr.hud_used.action_buttons_hidden = !usr.hud_used.action_buttons_hidden
 
 	hidden = usr.hud_used.action_buttons_hidden
@@ -173,7 +173,7 @@
 	UpdateIcon()
 	usr.update_action_buttons()
 
-/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
+/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
 	if(isxeno(user))
 		icon_state = "bg_alien"
 	else
@@ -181,13 +181,13 @@
 	UpdateIcon()
 	return
 
-/obj/screen/movable/action_button/hide_toggle/UpdateIcon()
+/atom/movable/screen/movable/action_button/hide_toggle/UpdateIcon()
 	cut_overlays()
 	var/image/img = image(icon,src,hidden?"show":"hide")
 	add_overlay(img)
 	return
 
-//This is the proc used to update all the action buttons. Properly defined in /mob/living/
+//This is the proc used to update all the action buttons. Properly defined in /mob/living
 /mob/proc/update_action_buttons()
 	return
 
@@ -204,7 +204,7 @@
 	var/coord_row_offset = AB_NORTH_OFFSET
 	return "WEST[coord_col]:[coord_col_offset],NORTH[coord_row]:[coord_row_offset]"
 
-/datum/hud/proc/SetButtonCoords(obj/screen/button,number)
+/datum/hud/proc/SetButtonCoords(atom/movable/screen/button,number)
 	var/row = round((number-1)/AB_MAX_COLUMNS)
 	var/col = ((number - 1)%(AB_MAX_COLUMNS)) + 1
 	var/x_offset = 32*(col-1) + AB_WEST_OFFSET + 2*col

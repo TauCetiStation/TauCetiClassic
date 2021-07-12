@@ -4,6 +4,8 @@
 
 	if (notransform)
 		return
+	if(!loc)
+		return
 
 	..()
 
@@ -239,7 +241,7 @@
 		// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
 		//if(!src.rejuv) src.oxyloss++
-		if(!src.reagents.has_reagent("inaprovaline")) adjustOxyLoss(10)
+		if(!reagents.has_reagent("inaprovaline")) adjustOxyLoss(10)
 
 		if(src.stat != DEAD)	src.stat = UNCONSCIOUS
 

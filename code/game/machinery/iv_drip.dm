@@ -58,8 +58,11 @@
 		src.attached = null
 		update_icon()
 		return
-
-	if(in_range(src, usr) && ishuman(over_object) && get_dist(over_object, src) <= 1)
+		
+	if(!(Adjacent(usr) || Adjacent(over_object) || usr.Adjacent(over_object)))
+		return
+		
+	if(ishuman(over_object))
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
 		update_icon()
@@ -71,8 +74,7 @@
 			to_chat(user, "There is already a reagent container loaded!")
 			return
 
-		user.drop_item()
-		W.loc = src
+		user.drop_from_inventory(W, src)
 		src.beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
 		update_icon()
@@ -101,7 +103,7 @@
 				if(istype(src.beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 4
-				src.beaker.reagents.trans_to(src.attached, transfer_amount)
+				beaker.reagents.trans_to(src.attached, transfer_amount)
 				update_icon()
 
 		// Take blood

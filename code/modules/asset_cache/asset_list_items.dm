@@ -156,11 +156,54 @@
 		insert_icon_in_list(imgid, I)
 	return ..()
 
+/datum/asset/spritesheet/sheetmaterials
+	name = "sheetmaterials"
+
+/datum/asset/spritesheet/sheetmaterials/register()
+	for (var/type in subtypesof(/obj/item/stack/sheet))
+		var/obj/item = type
+		var/icon/I = icon(initial(item.icon), initial(item.icon_state)) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+/datum/asset/spritesheet/equipment_locker
+	name = "equipment_locker"
+
+/datum/asset/spritesheet/equipment_locker/register()
+	var/list/equipment_locker_products = list(
+			/obj/item/device/gps/mining,
+			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,
+			/obj/item/weapon/reagent_containers/pill/lipozine,
+			/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,
+			/obj/item/weapon/storage/box/autoinjector/stimpack,
+			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+			/obj/item/weapon/survivalcapsule,
+			/obj/item/weapon/survivalcapsule/improved,
+			/obj/item/weapon/survivalcapsule/elite,
+			/obj/item/kinetic_upgrade/speed,
+			/obj/item/weapon/reagent_containers/food/snacks/hotchili,
+			/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+			/obj/item/weapon/soap/nanotrasen,
+			/obj/item/clothing/mask/facehugger_toy,
+			/obj/item/weapon/card/mining_point_card,
+			/obj/item/weapon/spacecash/c1000,
+			/obj/item/weapon/mining_voucher,
+	)
+	for (var/k in equipment_locker_products)
+		var/atom/item = k
+		if (!ispath(item, /atom))
+			continue
+		var/obj/product = new item
+		var/icon/I = getFlatIcon(product)
+		var/imgid = replacetext(replacetext("[item]", "[/obj/item]/", ""), "/", "-")
+		insert_icon_in_list(imgid, I)
+	return ..()
+
 /datum/asset/spritesheet/autolathe
 	name = "autolathe"
 
 /datum/asset/spritesheet/autolathe/register()
-	var/list/recipes = global.autolathe_recipes + global.autolathe_recipes_hidden
+	var/list/recipes = global.autolathe_recipes_all
 	for (var/datum/autolathe_recipe/r in recipes)
 		var/obj/item = r.result_type
 		var/icon/I = icon(initial(item.icon), initial(item.icon_state)) //for some reason, the getFlatIcon(item) function does not create images of objects such as /obj/item/ammo_casing
@@ -170,6 +213,11 @@
 
 /datum/asset/spritesheet/cargo
 	name = "cargo"
+
+/datum/asset/simple/safe
+	assets = list(
+		"safe_dial.png" = 'html/safe_dial.png'
+	)
 
 /datum/asset/spritesheet/cargo/register()
 	var/all_objects = list()

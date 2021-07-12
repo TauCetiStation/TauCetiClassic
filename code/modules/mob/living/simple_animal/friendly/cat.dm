@@ -121,8 +121,7 @@
 		if(!item_to_add || inventory_mouth)
 			return
 		else if(item_to_add.type == /obj/item/clothing/mask/cigarette)
-			usr.drop_item()
-			item_to_add.loc = src
+			usr.drop_from_inventory(item_to_add, src)
 			src.inventory_mouth = item_to_add
 			regenerate_icons()
 			show_inv(usr)
@@ -158,3 +157,109 @@
 	faction = list("syndicate")
 	//var/turns_since_scan = 0
 	//var/mob/living/simple_animal/mouse/movement_target
+
+
+// Real runtime cat
+
+var/global/cat_number = 0
+
+/mob/living/simple_animal/cat/real_runtime
+	name = "Dusty"
+	desc = "Мурлыкающая жертва экспериментов. Пробирается в наше измерение, когда сама вуаль реальности разрывается на части."
+	icon_state = "runtimecat"
+	density = FALSE
+	universal_speak = TRUE
+	can_be_pulled = FALSE
+
+	a_intent = INTENT_HARM
+
+	status_flags = GODMODE // Bluespace cat
+	min_oxy = 0
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+
+	harm_intent_damage = 10
+	melee_damage = 10
+	attacktext = "slashed"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+
+	var/const/cat_life_duration = 1 MINUTES
+
+/mob/living/simple_animal/cat/real_runtime/atom_init(mapload, runtime_line)
+	. = ..()
+	cat_number += 1
+	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
+	new /obj/effect/temp_visual/pulse(loc)
+	new /obj/effect/temp_visual/sparkles(loc)
+
+	addtimer(CALLBACK(src, .proc/back_to_bluespace), cat_life_duration)
+	addtimer(CALLBACK(src, .proc/say_runtime, runtime_line), 5 SECONDS)
+
+	for(var/i in rand(1, 3))
+		step(src, pick(global.alldirs))
+
+/mob/living/simple_animal/cat/real_runtime/Destroy()
+	cat_number -= 1
+
+	playsound(loc, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER, 50)
+	new /obj/effect/temp_visual/pulse(loc)
+	new /obj/effect/temp_visual/sparkles(loc)
+	return ..()
+
+/mob/living/simple_animal/cat/real_runtime/attackby(obj/item/O, mob/living/user)
+	. = ..()
+	if(.)
+		visible_message("<span class='danger'>[user]'s [O.name] harmlessly passes through \the [src].</span>")
+		strike_back(user)
+
+// It's easier to do this than to climb into a combos
+/mob/living/simple_animal/cat/real_runtime/attack_hand(mob/living/carbon/human/M)
+	switch(M.a_intent)
+
+		if(INTENT_HELP)
+			M.visible_message("<span class='notice'>[M] pets \the [src].</span>")
+
+		if(INTENT_PUSH)
+			M.visible_message("<span class='notice'>[M]'s hand passes through \the [src].</span>")
+			M.do_attack_animation(src)
+
+		if(INTENT_GRAB)
+			if(M == src)
+				return
+			if(!(status_flags & CANPUSH))
+				return
+
+			M.visible_message("<span class='notice'>[M]'s hand passes through \the [src].</span>")
+			M.do_attack_animation(src)
+
+		if(INTENT_HARM)
+			M.visible_message("<span class='warning'>[M] tries to kick \the [src] but [M.gender == FEMALE ? "her" : "his"] foot passes through.</span>")
+			M.do_attack_animation(src)
+			visible_message("<span class='warning'>\The [src] hisses.</span>")
+			strike_back(M)
+
+/mob/living/simple_animal/cat/real_runtime/proc/say_runtime(runtime_line)
+	if(!runtime_line)
+		return
+	var/text = "Зафиксирована аномалия #[runtime_line]. Пожалуйста, отойдите подальше."
+	say(text)
+
+/mob/living/simple_animal/cat/real_runtime/proc/back_to_bluespace()
+	qdel(src)
+
+/mob/living/simple_animal/cat/real_runtime/proc/strike_back(mob/living/target_mob)
+	if(!Adjacent(target_mob))
+		return
+	target_mob.attack_unarmed(src)
+
+/mob/living/simple_animal/cat/real_runtime/bullet_act(obj/item/projectile/proj)
+	return PROJECTILE_FORCE_MISS
+
+/mob/living/simple_animal/cat/real_runtime/ex_act(severity)
+	return
+
+/mob/living/simple_animal/cat/real_runtime/singularity_act()
+	return
+
+/mob/living/simple_animal/cat/real_runtime/MouseDrop(atom/over_object)
+	return

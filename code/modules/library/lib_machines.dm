@@ -482,8 +482,7 @@
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 /obj/machinery/libraryscanner/ui_interact(mob/user)
 	var/dat = ""
@@ -532,8 +531,7 @@
 
 /obj/machinery/bookbinder/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		visible_message("[src] begins to hum as it warms up its printing drums.")

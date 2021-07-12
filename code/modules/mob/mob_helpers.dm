@@ -1,25 +1,3 @@
-#define CHANGELING_STATPANEL_STATS(BYOND) \
-	if(mind && mind.changeling) \
-	{ \
-		stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]"); \
-		stat("Genetic Damage Time", mind.changeling.geneticdamage); \
-		stat("Absorbed DNA", mind.changeling.absorbedcount); \
-	}
-
-
-#define CHANGELING_STATPANEL_POWERS(BYOND) \
-	if(mind && mind.changeling && mind.changeling.purchasedpowers.len) \
-	{ \
-		for(var/P in mind.changeling.purchasedpowers) \
-		{ \
-			var/obj/effect/proc_holder/changeling/S = P; \
-			if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
-			{ \
-				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
-			} \
-		} \
-	}
-
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
@@ -47,16 +25,20 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield || istype(L, /obj/item/weapon/implant/mindshield/loyalty))
-			continue
+/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE
 
-/proc/isloyal(A)
-	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+/mob/proc/isloyal()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ismindprotect()
+	for(var/obj/item/weapon/implant/mind_protect/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE

@@ -30,7 +30,7 @@
 		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	if(in_range(user, src))
+	if(user.Adjacent(src))
 		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 		if(charging)
 			to_chat(user, "Current charge: [charging.charge]")
@@ -51,8 +51,7 @@
 				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
 				return
 
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1

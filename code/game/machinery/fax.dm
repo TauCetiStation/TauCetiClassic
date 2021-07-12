@@ -132,8 +132,7 @@ var/list/alldepartments = list("Central Command")
 		else if(ishuman (usr))
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				usr.drop_item()
-				I.loc = src
+				usr.drop_from_inventory(I, src)
 				scan = I
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
@@ -159,9 +158,8 @@ var/list/alldepartments = list("Central Command")
 
 	if(istype(O, /obj/item/weapon/paper))
 		if(!tofax)
-			user.drop_item()
+			user.drop_from_inventory(O, src)
 			tofax = O
-			O.loc = src
 			to_chat(user, "<span class='notice'>You insert the paper into \the [src].</span>")
 			flick("faxsend", src)
 			updateUsrDialog()
@@ -172,7 +170,7 @@ var/list/alldepartments = list("Central Command")
 
 		var/obj/item/weapon/card/id/idcard = O
 		if(!scan)
-			usr.drop_item()
+			usr.drop_from_inventory(idcard, src)
 			idcard.loc = src
 			scan = idcard
 			if(ishuman(usr))

@@ -441,7 +441,7 @@
 		var/field_dir = get_dir(T2,get_step(T2, NSEW))
 		T = get_step(T2, NSEW)
 		T2 = T
-		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall/(src, G) //(ref to this gen, ref to connected gen)
+		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall(src, G) //(ref to this gen, ref to connected gen)
 		CF.loc = T
 		CF.set_dir(field_dir)
 

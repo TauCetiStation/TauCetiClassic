@@ -137,7 +137,7 @@
 	icon_state = "wrap_paper"
 	var/amount = 20.0
 
-/obj/item/weapon/wrapping_paper/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/wrapping_paper/attackby(obj/item/I, mob/living/user, params)
 	if(!locate(/obj/structure/table, loc))
 		to_chat(user, "<span class='notice'>You MUST put the paper on a table!</span>")
 		return
@@ -153,12 +153,11 @@
 					return
 
 				src.amount -= a_used
-				user.drop_item()
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
+				user.drop_from_inventory(I, G)
 				G.size = I.w_class
 				G.w_class = G.size + 1
 				G.icon_state = text("gift[]", G.size)
-				I.forceMove(G)
 				G.add_fingerprint(user)
 				I.add_fingerprint(user)
 				add_fingerprint(user)

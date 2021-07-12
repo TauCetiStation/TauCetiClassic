@@ -31,8 +31,7 @@
 		if(!inserted_battery)
 			to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			src.inserted_battery = I
 			icon_state = "harvester_battery"
 			updateDialog()
@@ -257,7 +256,7 @@
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 
 		src.inserted_battery.loc = src.loc
-		src.inserted_battery.update_icon()
+		inserted_battery.update_icon()
 		src.inserted_battery = null
 		icon_state = "harvester"
 		owned_scanner.icon_state = "xenoarch_scanner"

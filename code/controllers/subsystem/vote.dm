@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(vote)
 
 
 /datum/controller/subsystem/vote/proc/interface_client(client/C)
-	var/datum/browser/panel = new(C, "vote", "Voting Panel", 500, 650, nref = src)
+	var/datum/browser/panel = new(C, "vote", "Панель голосования", 550, 650, nref = src)
 	panel.set_content(interface(C))
 	panel.open()
 
@@ -53,9 +53,9 @@ SUBSYSTEM_DEF(vote)
 	for(var/client/C in clients)
 		interface_client(C)
 
-	var/text = "[poll.name] vote started by [poll.initiator]."
+	var/text = "[poll.initiator] начал голосование \"[poll.name]\"."
 	log_vote(text)
-	to_chat(world, "<span class='vote'><b>[text]</b><br>Type <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes. <br>You have [get_vote_time()] seconds to vote.</span>")
+	to_chat(world, "<span class='vote'><b>[text]</b><br>Введите <b>vote</b> или нажмите <a href='?src=\ref[src]'>здесь</a>, чтобы проголосовать. <br>У вас есть [get_vote_time()] [pluralize_russian(get_vote_time(), "секунда", "секунды", "секунд")], чтобы проголосовать.</span>")
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/misc/notice1.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 
@@ -82,30 +82,30 @@ SUBSYSTEM_DEF(vote)
 	voters |= C
 
 	if(active_vote)
-		. += "<h2>Vote: <span style='color:[active_vote.color]'>[active_vote.name]</span></h2>"
+		. += "<h2>Голосование: <span style='color:[active_vote.color]'>[active_vote.name]</span></h2>"
 		. += "<i><b><span style='color:[active_vote.color]'>[active_vote.question]</span></b></i><br><br>"
-		. += "Time Left: [get_vote_time()] s<br>"
-		. += "Started by: <b>[active_vote.initiator]</b><hr>"
+		. += "Оставшееся время: [get_vote_time()] s<br>"
+		. += "Инициатор голосования: <b>[active_vote.initiator]</b><hr>"
 
 		if(active_vote.multiple_votes)
-			. += "You can vote <b>multiple</b> choices.<br>"
+			. += "Вы можете проголосовать за <b>несколько</b> вариантов.<br>"
 		else
-			. += "You can vote <b>only one</b> choice.<br>"
+			. += "Вы можете проголосовать <b>только за один</b> вариант.<br>"
 
 		if(active_vote.can_revote)
-			. += "You <b>can change</b> your vote.<br>"
+			. += "Вы <b>можете изменить</b> свой голос.<br>"
 		else
-			. += "You <b>can't change</b> your vote.<br>"
+			. += "Вы <b>не можете изменить</b> свой голос.<br>"
 
 		if(active_vote.can_unvote)
-			. += "You <b>can remove</b> vote.<br>"
+			. += "Вы <b>можете отменить</b> свой голос.<br>"
 		else
-			. += "You <b>can't remove</b> vote.<br>"
+			. += "Вы <b>не можете отменить</b> свой голос.<br>"
 		if(active_vote.minimum_win_percentage)
-			. += "A minimum <b>[active_vote.minimum_win_percentage * 100]%</b> is required to win the option."
+			. += "Необходимо набрать минимум <b>[active_vote.minimum_win_percentage * 100]%</b>, чтобы вариант победил."
 
 		. += "<hr>"
-		. += "<table width = '100%'><tr><td width = '80%' align = 'center'><b>Choices</b></td><td align = 'center'><b>Votes</b></td>"
+		. += "<table width = '100%'><tr><td width = '80%' align = 'center'><b>Варианты</b></td><td align = 'center'><b>Голоса</b></td>"
 
 		for(var/datum/vote_choice/choice in active_vote.choices)
 			var/c_votes = (active_vote.see_votes || admin) ? choice.total_votes() : "*"
@@ -121,10 +121,10 @@ SUBSYSTEM_DEF(vote)
 		if(active_vote.description)
 			. += "[active_vote.description]<hr>"
 		if(admin)
-			. += "<a href='?src=\ref[src];cancel=1'>Cancel Vote</a>"
+			. += "<a href='?src=\ref[src];cancel=1'>Отменить голосование</a>"
 	else
 		var/any_votes = FALSE
-		. += "<h2>Start a vote:</h2><hr>"
+		. += "<h2>Начать голосование:</h2><hr>"
 		. += "<table width='auto'>"
 		for(var/P in votes)
 			var/datum/poll/poll = votes[P]
@@ -140,18 +140,18 @@ SUBSYSTEM_DEF(vote)
 				. += "<td class='collapsing'><s>[poll.name]</s></td>"
 				if(admin)
 					if(!poll.get_force_blocking_reason())
-						. += "<td class='collapsing'><a href='?src=\ref[src];start_vote=\ref[poll]'>force</a></td>"
+						. += "<td class='collapsing'><a href='?src=\ref[src];start_vote=\ref[poll]'>начать</a></td>"
 					else
-						. += "<td class='collapsing'><s>\[force]</s></td>"
+						. += "<td class='collapsing'><s>\[начать]</s></td>"
 				else
 					. += "<td class='collapsing'></td>"
 			if(admin)
-				. += "<td class='collapsing'><a href='?src=\ref[src];toggle_admin=\ref[poll]'>[poll.only_admin ? "Only admin" : "Allowed"]</a></td>"
-			. += "<td><i>[poll.get_blocking_reason()]</i></td>"
+				. += "<td class='collapsing'><a href='?src=\ref[src];toggle_admin=\ref[poll]'>[poll.only_admin ? "Только админы" : "Разрешено всем"]</a></td>"
+			. += "<td><i>[poll.get_blocking_or_warning_message()]</i></td>"
 			. += "</tr>"
 
 		if(!any_votes)
-			. += "<li><i>There is no available votes here now.</i></li>"
+			. += "<li><i>Сейчас здесь нет доступных голосований.</i></li>"
 
 		. += "</table><hr>"
 	return .
@@ -176,7 +176,7 @@ SUBSYSTEM_DEF(vote)
 
 	if(href_list["cancel"])
 		if(active_vote && check_rights())
-			to_chat(world, "<span class='vote'><b>[active_vote.name] vote canceled by [usr.key].</b></span>")
+			to_chat(world, "<span class='vote'><b>[usr.key] отменил голосование \"[active_vote.name]\".</b></span>")
 			stop_vote()
 
 	if(href_list["close"])

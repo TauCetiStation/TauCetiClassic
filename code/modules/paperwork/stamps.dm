@@ -169,7 +169,7 @@
 
 	var/input_stamp = input(user, "Choose a stamp to disguise as.", "Choose a stamp.") as null|anything in show_stamps
 
-	if(user && (src in user.contents))
+	if(user && loc == user)
 
 		var/obj/item/weapon/stamp/chosen_stamp = stamps[capitalize(input_stamp)]
 

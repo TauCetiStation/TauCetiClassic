@@ -96,15 +96,15 @@
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
 //Material defines
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PHORON		"$phoron"
-#define MAT_PLASTIC		"$plastic"
-#define MAT_BANANIUM	"$bananium"
+#define MAT_METAL		"metal"
+#define MAT_GLASS		"glass"
+#define MAT_SILVER		"silver"
+#define MAT_GOLD		"gold"
+#define MAT_DIAMOND		"diamond"
+#define MAT_URANIUM		"uranium"
+#define MAT_PHORON		"phoron"
+#define MAT_PLASTIC		"plastic"
+#define MAT_BANANIUM	"bananium"
 
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
@@ -136,6 +136,14 @@
 #define MAP_MAXX 4
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
+
+//Movement dir masks
+#define NORTH_SOUTH 3 // NORTH | SOUTH
+#define EAST_WEST 12 // EAST | WEST
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
 
 // Bluespace shelter deploy checks
 #define SHELTER_DEPLOY_ALLOWED "allowed"
@@ -263,3 +271,14 @@
 #define REGION_SUPPLY		6
 #define REGION_COMMAND		7
 #define REGION_CENTCOMM		8
+
+#define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
+	. = ..();\
+	global.##list += src;}\
+##type/Destroy(){\
+	global.##list -= src;\
+	return ..()}
+
+// Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15

@@ -321,7 +321,7 @@
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
-	..()
+	return ..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))

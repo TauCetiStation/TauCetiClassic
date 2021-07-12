@@ -113,12 +113,11 @@
 					return
 				var/obj/item/weapon/circuitboard/B = P
 				if(B.board_type == "machine")
-					if(!user.drop_item())
+					if(!user.drop_from_inventory(P, src))
 						return
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
 					circuit = P
-					P.loc = src
 					icon_state = "box_2"
 					state = 3
 					components = list()
@@ -160,7 +159,7 @@
 						break
 				if(component_check)
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc)
+					var/obj/machinery/new_machine = new circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
 					new_machine.construction()
 					for(var/obj/O in new_machine.component_parts)
@@ -215,9 +214,8 @@
 							else
 								to_chat(user, "<span class='warning'>You need more cable!</span>")
 							return
-						if(!user.drop_item())
+						if(!user.drop_from_inventory(P, src))
 							break
-						P.loc = src
 						components += P
 						req_components[I]--
 						update_req_desc()

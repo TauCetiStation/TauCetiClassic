@@ -159,3 +159,6 @@ var/list/announcement_sounds = list(
 	..()
 
 /var/datum/announcement/announcement_ping = new /datum/announcement/ping // For sound-only
+
+/datum/announcement/proc/randomize_message()
+	return
