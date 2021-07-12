@@ -1597,7 +1597,7 @@ Owl & Griffin toys
 		user.update_icons()
 		cracked = 1
 		icon_state = "cracker1"
-		var/obj/item/weapon/toy/xmas_cracker/other_half = new /obj/item/weapon/toy/xmas_cracker(target)
+		var/obj/item/toy/xmas_cracker/other_half = new /obj/item/toy/xmas_cracker(target)
 		other_half.cracked = 1
 		other_half.icon_state = "cracker2"
 		target.put_in_active_hand(other_half)
