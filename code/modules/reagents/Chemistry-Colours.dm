@@ -3,10 +3,10 @@
 		return 0
 
 	var/contents = length(reagent_list)
-	var/list/weight = new /list(contents)
-	var/list/redcolor = new /list(contents)
-	var/list/greencolor = new /list(contents)
-	var/list/bluecolor = new /list(contents)
+	var/list/weight = list(contents)
+	var/list/redcolor = list(contents)
+	var/list/greencolor = list(contents)
+	var/list/bluecolor = list(contents)
 	var/i
 
 	//fill the list of weights
