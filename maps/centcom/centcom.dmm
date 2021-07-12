@@ -17425,15 +17425,15 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bGb" = (
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
-/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill,
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
-/obj/item/mecha_parts/mecha_equipment/tool/rcd,
-/obj/item/mecha_parts/mecha_equipment/tool/rcd,
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
+/obj/item/mecha_parts/mecha_equipment/cable_layer,
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
+/obj/item/mecha_parts/mecha_equipment/extinguisher,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/rcd,
+/obj/item/mecha_parts/mecha_equipment/rcd,
+/obj/item/mecha_parts/mecha_equipment/sleeper,
+/obj/item/mecha_parts/mecha_equipment/sleeper,
+/obj/item/mecha_parts/mecha_equipment/syringe_gun,
 /obj/structure/table/reinforced,
 /turf/unsimulated/floor{
 	dir = 1;
