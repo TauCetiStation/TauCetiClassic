@@ -278,3 +278,7 @@
 ##type/Destroy(){\
 	global.##list -= src;\
 	return ..()}
+
+// Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
