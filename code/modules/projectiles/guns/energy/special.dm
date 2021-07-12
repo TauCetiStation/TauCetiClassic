@@ -154,11 +154,14 @@
 	slot_flags = SLOT_FLAGS_BACK
 	fire_delay = 35
 	w_class = ITEM_SIZE_LARGE
-	var/zoom = 0
 
 /obj/item/weapon/gun/energy/sniperrifle/atom_init()
 	. = ..()
 	update_icon()
+	AddComponent(/datum/component/zooming)
+
+/obj/item/weapon/gun/energy/sniperrifle/attack_self(mob/user)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
@@ -172,56 +175,6 @@
 				icon_state = "[initial(icon_state)][ratio]"
 				item_state = "[initial(item_state)][ratio]"
 	return
-
-/obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
-	if(zoom)
-		if(user.client)
-			user.client.change_view(world.view)
-		if(user.hud_used)
-			user.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoom = 0
-	..()
-
-/*
-This is called from
-modules/mob/mob_movement.dm if you move you will be zoomed out
-modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
-*/
-
-/obj/item/weapon/gun/energy/sniperrifle/attack_self()
-	toggle_zoom()
-
-/obj/item/weapon/gun/energy/sniperrifle/verb/toggle_zoom()
-	set category = "Object"
-	set name = "Use Sniper Scope"
-	set popup_menu = 0
-	if(usr.incapacitated() || !(istype(usr,/mob/living/carbon/human)))
-		to_chat(usr, "You are unable to focus down the scope of the rifle.")
-		return
-	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
-	//	usr << "Your welding equipment gets in the way of you looking down the scope"
-	//	return
-	if(!zoom && usr.get_active_hand() != src)
-		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
-		return
-
-	if(usr.client.view == world.view)
-		if(usr.hud_used)
-			usr.hud_used.show_hud(HUD_STYLE_REDUCED)
-		usr.client.change_view(12)
-		zoom = 1
-	else
-		usr.client.change_view(world.view)
-		if(usr.hud_used)
-			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoom = 0
-	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
-	return
-
-/obj/item/weapon/gun/energy/sniperrifle/equipped(mob/user, slot)
-	if(zoom)
-		toggle_zoom()
-	..(user, slot)
 
 /obj/item/weapon/gun/energy/sniperrifle/rails
 	name = "Rails rifle"
@@ -467,53 +420,12 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 
 	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
 
-	var/zoomed = FALSE
+/obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
+	. = ..()
+	AddComponent(/datum/component/zooming, 12, TRUE)
 
-/obj/item/weapon/gun/energy/pyrometer/ce/dropped(mob/user)
-	if(zoomed)
-		if(user.client)
-			user.client.change_view(world.view)
-		if(user.hud_used)
-			user.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoomed = FALSE
-	..()
-
-/obj/item/weapon/gun/energy/pyrometer/ce/attack_self()
-	toggle_zoom()
-
-/obj/item/weapon/gun/energy/pyrometer/ce/verb/toggle_zoom()
-	set category = "Object"
-	set name = "Use Sniper Scope"
-	set src in usr
-
-	if(!ishuman(usr) || usr.incapacitated())
-		to_chat(usr, "You are unable to focus down the scope of the rifle.")
-		return
-
-	var/mob/living/carbon/human/user = usr
-
-	if(!zoomed && user.get_active_hand() != src)
-		to_chat(usr, "You are too distracted to look down the scope, perhaps if it was in your active hand this might work better")
-		return
-
-	if(user.client.view == world.view)
-		if(user.hud_used)
-			user.hud_used.show_hud(HUD_STYLE_REDUCED)
-		user.client.change_view(12)
-		zoomed = TRUE
-	else
-		usr.client.change_view(world.view)
-		if(usr.hud_used)
-			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
-		zoomed = FALSE
-	to_chat(user, "<font color='[zoomed ? "blue" : "red"]'>Zoom mode [zoomed ? "en" : "dis"]abled.</font>")
-
-/obj/item/weapon/gun/energy/pyrometer/ce/equipped(mob/user, slot)
-	if(zoomed)
-		toggle_zoom()
-	..()
-
-
+/obj/item/weapon/gun/energy/pyrometer/ce/attack_self(mob/user)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
 /obj/item/weapon/gun/energy/pyrometer/science_phoron
 	name = "phoron-orienter pyrometer"
