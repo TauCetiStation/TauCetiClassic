@@ -294,7 +294,7 @@
 		next_dest = signal.data["next_patrol"]
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
-	src.target_types = new/list()
+	src.target_types = list()
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
 	target_types += /obj/effect/decal/cleanable/vomit

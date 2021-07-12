@@ -425,7 +425,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
 /proc/fake_attack(mob/living/target)
-//	var/list/possible_clones = new/list()
+//	var/list/possible_clones = list()
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 

@@ -228,7 +228,7 @@ What a mess.*/
 			var/t1 = sanitize_safe(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text, ascii_only = TRUE)
 			if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr))))
 				return FALSE
-			Perp = new/list()
+			Perp = list()
 			t1 = lowertext(t1)
 			var/list/components = splittext(t1, " ")
 			if(components.len > 5)
