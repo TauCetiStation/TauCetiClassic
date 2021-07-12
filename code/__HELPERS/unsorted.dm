@@ -1582,12 +1582,9 @@ var/list/WALLITEMS = typecacheof(list(
 	if(new_screen)
 		global.current_lobby_screen = new_screen
 	else
-		var/newyear
-		#ifdef NEWYEARCONTENT
-		global.current_lobby_screen = pick(global.new_year_screens)
-		newyear = TRUE
-		#endif
-		if(!newyear)
+		if(SSholiday.holidays[NEW_YEAR])
+			global.current_lobby_screen = pick(global.new_year_screens)
+		else
 			global.current_lobby_screen = pick(global.lobby_screens)
 
 	for(var/mob/dead/new_player/N in new_player_list)

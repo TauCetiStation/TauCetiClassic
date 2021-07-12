@@ -36,10 +36,10 @@
 	begin_month = DECEMBER
 	end_day = 2
 	end_month = JANUARY
+	always_celebrate = TRUE
 
 /datum/holiday/new_year/getStationPrefix()
 	return pick("Party","New","Hangover","Resolution", "Auld")
-
 
 
 /datum/holiday/boxing
