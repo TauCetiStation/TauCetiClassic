@@ -510,7 +510,7 @@ SUBSYSTEM_DEF(job)
 		H.species.after_job_equip(H, job)
 
 	// Happy Valentines day!
-	if(Holiday == "Valentine's Day")
+	if(SSholiday.holidays[VALENTINES])
 		for(var/obj/item/weapon/storage/backpack/BACKP in H)
 			new /obj/item/weapon/storage/fancy/heart_box(BACKP)
 
