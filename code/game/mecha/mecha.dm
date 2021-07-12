@@ -62,12 +62,6 @@
 	var/list/operation_req_access = list()//required access level for mecha operation
 	var/list/internals_req_access = list(access_engine,access_robotics)//required access level to open cell compartment
 
-	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
-	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
-	var/datum/global_iterator/pr_internal_damage //processes internal damage
-	var/datum/global_iterator/pr_mecha_light // processing mecha lights
-
-
 	var/wreckage
 
 	var/list/equipment = new
@@ -107,7 +101,7 @@
 	spark_system.attach(src)
 	add_cell()
 	poi_list += src
-	add_iterators()
+	START_PROCESSING(SSobj, src)
 	log_message("[src.name] created.")
 	loc.Entered(src)
 	mechas_list += src //global mech list
@@ -127,10 +121,7 @@
 		M.loc = get_turf(src)
 		M.loc.Entered(M)
 		step_rand(M)
-	QDEL_NULL(pr_int_temp_processor)
-	QDEL_NULL(pr_give_air)
-	QDEL_NULL(pr_internal_damage)
-	QDEL_NULL(pr_mecha_light)
+	STOP_PROCESSING(SSobj, src)
 
 	QDEL_NULL(eject_action)
 	QDEL_NULL(internals_action)
@@ -172,17 +163,6 @@
 	radio.icon = icon
 	radio.icon_state = icon_state
 
-/obj/mecha/proc/add_iterators()
-	pr_int_temp_processor = new /datum/global_iterator/mecha_preserve_temp(list(src))
-	pr_give_air = new /datum/global_iterator/mecha_tank_give_air(list(src))
-	pr_internal_damage = new /datum/global_iterator/mecha_internal_damage(list(src),0)
-	pr_mecha_light = new /datum/global_iterator/mecha_light(list(src))
-
-/obj/mecha/proc/do_after(delay)
-	sleep(delay)
-	if(src)
-		return 1
-	return 0
 
 /obj/mecha/proc/enter_after(delay, mob/user, numticks = 5)
 	var/delayfraction = delay/numticks
@@ -222,32 +202,6 @@
 	if(M==occupant && radio.broadcasting)
 		radio.talk_into(M, text)
 	return
-
-////////////////////////////
-///// Action processing ////
-////////////////////////////
-/*
-/atom/DblClick(object,location,control,params)
-	var/mob/M = src.mob
-	if(M && M.in_contents_of(/obj/mecha))
-
-		if(mech_click == world.time) return
-		mech_click = world.time
-
-		if(!istype(object, /atom)) return
-		if(istype(object, /atom/movable/screen))
-			var/atom/movable/screen/using = object
-			if(using.screen_loc == ui_acti || using.screen_loc == ui_iarrowleft || using.screen_loc == ui_iarrowright)//ignore all HUD objects save 'intent' and its arrows
-				return ..()
-			else
-				return
-		var/obj/mecha/Mech = M.loc
-		spawn() //this helps prevent clickspam fest.
-			if (Mech)
-				Mech.click_action(object,M)
-//	else
-//		return ..()
-*/
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
@@ -341,8 +295,7 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		if(do_after(step_in * move_result))
-			can_move = 1
+		VARSET_IN(src, can_move, TRUE, step_in * move_result)
 		return 1
 	return 0
 
@@ -416,7 +369,6 @@
 
 /obj/mecha/proc/setInternalDamage(int_dam_flag)
 	internal_damage |= int_dam_flag
-	pr_internal_damage.start()
 	log_append_to_last("Internal damage of type [int_dam_flag].",1)
 	if(occupant)
 		occupant.playsound_local(null, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -424,15 +376,16 @@
 	return
 
 /obj/mecha/proc/clearInternalDamage(int_dam_flag)
+	if(internal_damage & int_dam_flag)
+		switch(int_dam_flag)
+			if(MECHA_INT_TEMP_CONTROL)
+				occupant_message("<span class='boldnotice'>Life support system reactivated.</span>")
+			if(MECHA_INT_FIRE)
+				occupant_message("<span class='boldnotice'>Internal fire extinquished.</span>")
+			if(MECHA_INT_TANK_BREACH)
+				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag
-	switch(int_dam_flag)
-		if(MECHA_INT_TEMP_CONTROL)
-			occupant_message("<font color='blue'><b>Life support system reactivated.</b></font>")
-			pr_int_temp_processor.start()
-		if(MECHA_INT_FIRE)
-			occupant_message("<font color='blue'><b>Internal fire extinquished.</b></font>")
-		if(MECHA_INT_TANK_BREACH)
-			occupant_message("<font color='blue'><b>Damaged internal tank has been sealed.</b></font>")
+
 	diag_hud_set_mechstat()
 	return
 
@@ -618,28 +571,6 @@
 				take_damage(initial(src.health)/5)
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
-
-/*Will fix later -Sieve
-/obj/mecha/attack_blob(mob/user as mob)
-	log_message("Attack by blob. Attacker - [user].",1)
-	if(!prob(src.deflect_chance))
-		take_damage(6)
-		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-		playsound(src, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='warning'>You smash at the armored suit!</span>")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.oldshow_message("<span class='warning'>The [user] smashes against [src.name]'s armor!</span>", 1)
-	else
-		log_append_to_last("Armor saved.")
-		playsound(src, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>Your attack had no effect!</span>")
-		occupant_message("<span class='notice'>The [user]'s attack is stopped by the armor.</span>")
-		for (var/mob/V in viewers(src))
-			if(V.client && !(V.blinded))
-				V.oldshow_message("<span class='notice'>The [user] rebounds off the [src.name] armor!</span>", 1)
-	return
-*/
 
 
 /obj/mecha/blob_act()
@@ -827,36 +758,9 @@
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
-/*
-		log_message("Attacked by [W]. Attacker - [user]")
-		if(prob(src.deflect_chance))
-			to_chat(user, "<span class='warning'>The [W] bounces off [src.name] armor.</span>")
-			log_append_to_last("Armor saved.")
-/*
-			for (var/mob/V in viewers(src))
-				if(V.client && !(V.blinded))
-					V.oldshow_message("The [W] bounces off [src.name] armor.", 1)
-*/
-		else
-			occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
-			user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
-			take_damage(W.force,W.damtype)
-			check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-*/
+
 	return
 
-
-
-/*
-/obj/mecha/attack_ai(mob/living/silicon/ai/user)
-	if(!istype(user, /mob/living/silicon/ai))
-		return
-	var/output = {"<b>Assume direct control over [src]?</b>
-						<a href='?src=\ref[src];ai_take_control=\ref[user];duration=3000'>Yes</a><br>
-						"}
-	user << browse(output, "window=mecha_attack_ai")
-	return
-*/
 
 /////////////////////////////////////
 ////////  Atmospheric stuff  ////////
@@ -1015,11 +919,7 @@
 		to_chat(usr, "<span class='notice'><B>The [src.name] is already occupied!</B></span>")
 		log_append_to_last("Permission denied.")
 		return
-/*
-	if (usr.abiotic())
-		to_chat(usr, "<span class='notice'><B>Subject cannot have abiotic items on.</B></span>")
-		return
-*/
+
 	var/passed
 	if(src.dna)
 		if(usr.dna.unique_enzymes==src.dna)
@@ -1034,7 +934,6 @@
 		if(M.Victim == usr)
 			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
-//	usr << "You start climbing into [src.name]"
 
 	visible_message("<span class='notice'>[usr] starts to climb into [src.name]</span>")
 
@@ -1079,8 +978,6 @@
 	else if(dna && dna!=mmi_as_oc.brainmob.dna.unique_enzymes)
 		to_chat(user, "Stop it!")
 		return 0
-	//Added a message here since people assume their first click failed or something./N
-//	user << "Installing MMI, please stand by."
 
 	visible_message("<span class='notice'>[usr] starts to insert an MMI into [src.name]</span>")
 
@@ -1104,10 +1001,6 @@
 		user.drop_from_inventory(mmi_as_oc)
 		var/mob/brainmob = mmi_as_oc.brainmob
 		brainmob.reset_view(src)
-	/*
-		brainmob.client.eye = src
-		brainmob.client.perspective = EYE_PERSPECTIVE
-	*/
 		occupant = brainmob
 		brainmob.loc = src //should allow relaymove
 		brainmob.canmove = 1
@@ -1130,18 +1023,8 @@
 	if(usr != src.occupant)
 		return
 
-	//pr_update_stats.start()
 	src.occupant << browse(get_stats_html(), "window=exosuit")
 	return
-
-/*
-/obj/mecha/verb/force_eject()
-	set category = "Object"
-	set name = "Force Eject"
-	set src in view(5)
-	go_out()
-	return
-*/
 
 /obj/mecha/proc/eject()
 	if(usr != src.occupant)
@@ -1166,36 +1049,12 @@
 	else
 		return
 	if(mob_container.forceMove(src.loc))//ejecting mob container
-	/*
-		if(ishuman(occupant) && (return_pressure() > HAZARD_HIGH_PRESSURE))
-			use_internal_tank = 0
-			var/datum/gas_mixture/environment = get_turf_air()
-			if(environment)
-				var/env_pressure = environment.return_pressure()
-				var/pressure_delta = (cabin.return_pressure() - env_pressure)
-		//Can not have a pressure delta that would cause environment pressure > tank pressure
 
-				var/transfer_moles = 0
-				if(pressure_delta > 0)
-					transfer_moles = pressure_delta*environment.volume/(cabin.return_temperature() * R_IDEAL_GAS_EQUATION)
-
-			//Actually transfer the gas
-					var/datum/gas_mixture/removed = cabin.air_contents.remove(transfer_moles)
-					loc.assume_air(removed)
-
-			occupant.SetStunned(5)
-			occupant.SetWeakened(5)
-			to_chat(occupant, "You were blown out of the mech!")
-	*/
 		playsound(src, 'sound/mecha/mech_eject.ogg', VOL_EFFECTS_MASTER, 75, FALSE, -3)
 		log_message("[mob_container] moved out.")
 		log_admin("[key_name(mob_container)] has moved out of [src.type] with name [src.name]")
 		occupant.reset_view()
-		/*
-		if(src.occupant.client)
-			src.occupant.client.eye = src.occupant.client.mob
-			src.occupant.client.perspective = MOB_PERSPECTIVE
-		*/
+
 		src.occupant << browse(null, "window=exosuit")
 		if(src.occupant.hud_used && src.last_user_hud && !istype(mob_container, /obj/item/device/mmi))
 			occupant.hud_used.show_hud(HUD_STYLE_STANDARD)
@@ -1316,127 +1175,88 @@
 //////////////////////////////////////////
 
 
-/datum/global_iterator/mecha_preserve_temp  //normalizing cabin air temperature to 20 degrees celsium
-	delay = 20
+//processing internal damage, temperature, air regulation, alert updates, lights power use.
+/obj/mecha/process()
+	process_mecha_preserve_temp()
+	process_mecha_tank_give_air()
+	process_mecha_internal_damage()
+	process_light()
 
-/datum/global_iterator/mecha_preserve_temp/process(obj/mecha/mecha)
-	if(mecha.cabin_air && mecha.cabin_air.volume > 0)
-		var/delta = mecha.cabin_air.temperature - T20C
-		mecha.cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
+/obj/mecha/proc/process_mecha_preserve_temp()
+	if(cabin_air && cabin_air.volume > 0)
+		var/delta = cabin_air.temperature - T20C
+		cabin_air.temperature -= max(-10, min(10, round(delta/4,0.1)))
 	return
 
-/datum/global_iterator/mecha_tank_give_air
-	delay = 15
+/obj/mecha/proc/process_mecha_tank_give_air()
+	if(!internal_tank)
+		return
 
-/datum/global_iterator/mecha_tank_give_air/process(obj/mecha/mecha)
-	if(mecha.internal_tank)
-		var/datum/gas_mixture/tank_air = mecha.internal_tank.return_air()
-		var/datum/gas_mixture/cabin_air = mecha.cabin_air
+	var/datum/gas_mixture/tank_air = internal_tank.return_air()
 
-		var/release_pressure = mecha.internal_tank_valve
-		var/cabin_pressure = cabin_air.return_pressure()
-		var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
-		var/transfer_moles = 0
-		if(pressure_delta > 0) //cabin pressure lower than release pressure
-			if(tank_air.temperature > 0)
-				transfer_moles = pressure_delta * cabin_air.volume / (cabin_air.temperature * R_IDEAL_GAS_EQUATION)
-				var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
-				cabin_air.merge(removed)
-		else if(pressure_delta < 0) //cabin pressure higher than release pressure
-			var/datum/gas_mixture/t_air = mecha.get_turf_air()
-			pressure_delta = cabin_pressure - release_pressure
+	var/release_pressure = internal_tank_valve
+	var/cabin_pressure = cabin_air.return_pressure()
+	var/pressure_delta = min(release_pressure - cabin_pressure, (tank_air.return_pressure() - cabin_pressure)/2)
+	var/transfer_moles = 0
+	if(pressure_delta > 0) //cabin pressure lower than release pressure
+		if(tank_air.temperature > 0)
+			transfer_moles = pressure_delta * cabin_air.volume / (cabin_air.temperature * R_IDEAL_GAS_EQUATION)
+			var/datum/gas_mixture/removed = tank_air.remove(transfer_moles)
+			cabin_air.merge(removed)
+	else if(pressure_delta < 0) //cabin pressure higher than release pressure
+		var/datum/gas_mixture/t_air = get_turf_air()
+		pressure_delta = cabin_pressure - release_pressure
+		if(t_air)
+			pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
+		if(pressure_delta > 0) //if location pressure is lower than cabin pressure
+			transfer_moles = pressure_delta * cabin_air.volume/(cabin_air.temperature * R_IDEAL_GAS_EQUATION)
+			var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
 			if(t_air)
-				pressure_delta = min(cabin_pressure - t_air.return_pressure(), pressure_delta)
-			if(pressure_delta > 0) //if location pressure is lower than cabin pressure
-				transfer_moles = pressure_delta * cabin_air.volume/(cabin_air.temperature * R_IDEAL_GAS_EQUATION)
-				var/datum/gas_mixture/removed = cabin_air.remove(transfer_moles)
-				if(t_air)
-					t_air.merge(removed)
-				else //just delete the cabin gas, we're in space or some shit
-					qdel(removed)
-	else
-		return stop()
-	return
+				t_air.merge(removed)
+			else //just delete the cabin gas, we're in space or some shit
+				qdel(removed)
 
-/datum/global_iterator/mecha_internal_damage/process(obj/mecha/mecha) // processing internal damage
-	if(!mecha.hasInternalDamage())
-		return stop()
-	if(mecha.hasInternalDamage(MECHA_INT_FIRE))
-		if(!mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
-			mecha.clearInternalDamage(MECHA_INT_FIRE)
-		if(mecha.internal_tank)
-			if(mecha.internal_tank.return_pressure() > mecha.internal_tank.maximum_pressure && !(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)))
-				mecha.setInternalDamage(MECHA_INT_TANK_BREACH)
-			var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
+
+/obj/mecha/proc/process_mecha_internal_damage() // processing internal damage
+	if(!hasInternalDamage())
+		return
+	if(hasInternalDamage(MECHA_INT_FIRE))
+		if(!hasInternalDamage(MECHA_INT_TEMP_CONTROL) && prob(5))
+			clearInternalDamage(MECHA_INT_FIRE)
+		if(internal_tank)
+			if(internal_tank.return_pressure() > internal_tank.maximum_pressure && !(hasInternalDamage(MECHA_INT_TANK_BREACH)))
+				setInternalDamage(MECHA_INT_TANK_BREACH)
+			var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 			if(int_tank_air && int_tank_air.volume > 0) //heat the air_contents
 				int_tank_air.temperature = min(6000 + T0C, int_tank_air.temperature + rand(10, 15))
-		if(mecha.cabin_air && mecha.cabin_air.volume>0)
-			mecha.cabin_air.temperature = min(6000 + T0C, mecha.cabin_air.temperature+rand(10, 15))
-			if(mecha.cabin_air.temperature > mecha.max_temperature / 2)
-				mecha.take_damage(4 / round(mecha.max_temperature / mecha.cabin_air.temperature, 0.1),"fire")
-	if(mecha.hasInternalDamage(MECHA_INT_TEMP_CONTROL)) //stop the mecha_preserve_temp loop datum
-		mecha.pr_int_temp_processor.stop()
-	if(mecha.hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank
-		if(mecha.internal_tank)
-			var/datum/gas_mixture/int_tank_air = mecha.internal_tank.return_air()
+		if(cabin_air && cabin_air.volume>0)
+			cabin_air.temperature = min(6000 + T0C, cabin_air.temperature+rand(10, 15))
+			if(cabin_air.temperature > max_temperature / 2)
+				take_damage(4 / round(max_temperature / cabin_air.temperature, 0.1),"fire")
+	if(hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank
+		if(internal_tank)
+			var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
 			var/datum/gas_mixture/leaked_gas = int_tank_air.remove_ratio(0.10)
-			if(mecha.loc && hascall(mecha.loc,"assume_air"))
-				mecha.loc.assume_air(leaked_gas)
+			if(loc && hascall(loc,"assume_air"))
+				loc.assume_air(leaked_gas)
 			else
 				qdel(leaked_gas)
-	if(mecha.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
-		if(mecha.get_charge())
-			mecha.spark_system.start()
-			mecha.cell.charge -= min(20, mecha.cell.charge)
-			mecha.cell.maxcharge -= min(20, mecha.cell.maxcharge)
-			mecha.diag_hud_set_mechcell()
+	if(hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
+		if(get_charge())
+			spark_system.start()
+			cell.charge -= min(20, cell.charge)
+			cell.maxcharge -= min(20, cell.maxcharge)
+			diag_hud_set_mechcell()
 	return
 
-/datum/global_iterator/mecha_light/process(obj/mecha/mecha)
-	if(!mecha.lights)
+/obj/mecha/proc/process_light()
+	if(!lights)
 		return
-	if(mecha.has_charge(mecha.lights_power))
-		mecha.use_power(mecha.lights_power)
+	if(has_charge(lights_power))
+		use_power(lights_power)
 	else
-		mecha.lights = 0
-		mecha.set_light(mecha.light_range - mecha.lights_power)
+		lights = 0
+		set_light(light_range - lights_power)
 	return
-
-/////////////
-
-//debug
-/*
-/obj/mecha/verb/test_int_damage()
-	set name = "Test internal damage"
-	set category = "Exosuit Interface"
-	set src in view(0)
-	if(!occupant) return
-	if(usr!=occupant)
-		return
-	var/output = {"<html>
-						<head>
-						</head>
-						<body>
-						<h3>Set:</h3>
-						<a href='?src=\ref[src];debug=1;set_i_dam=[MECHA_INT_FIRE]'>MECHA_INT_FIRE</a><br />
-						<a href='?src=\ref[src];debug=1;set_i_dam=[MECHA_INT_TEMP_CONTROL]'>MECHA_INT_TEMP_CONTROL</a><br />
-						<a href='?src=\ref[src];debug=1;set_i_dam=[MECHA_INT_SHORT_CIRCUIT]'>MECHA_INT_SHORT_CIRCUIT</a><br />
-						<a href='?src=\ref[src];debug=1;set_i_dam=[MECHA_INT_TANK_BREACH]'>MECHA_INT_TANK_BREACH</a><br />
-						<a href='?src=\ref[src];debug=1;set_i_dam=[MECHA_INT_CONTROL_LOST]'>MECHA_INT_CONTROL_LOST</a><br />
-						<hr />
-						<h3>Clear:</h3>
-						<a href='?src=\ref[src];debug=1;clear_i_dam=[MECHA_INT_FIRE]'>MECHA_INT_FIRE</a><br />
-						<a href='?src=\ref[src];debug=1;clear_i_dam=[MECHA_INT_TEMP_CONTROL]'>MECHA_INT_TEMP_CONTROL</a><br />
-						<a href='?src=\ref[src];debug=1;clear_i_dam=[MECHA_INT_SHORT_CIRCUIT]'>MECHA_INT_SHORT_CIRCUIT</a><br />
-						<a href='?src=\ref[src];debug=1;clear_i_dam=[MECHA_INT_TANK_BREACH]'>MECHA_INT_TANK_BREACH</a><br />
-						<a href='?src=\ref[src];debug=1;clear_i_dam=[MECHA_INT_CONTROL_LOST]'>MECHA_INT_CONTROL_LOST</a><br />
- 					   </body>
-						</html>"}
-
-	occupant << browse(output, "window=ex_debug")
-	//src.health = initial(src.health)/2.2
-	//check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-	return
-*/
 
 #undef MECHA_TIME_TO_ENTER
