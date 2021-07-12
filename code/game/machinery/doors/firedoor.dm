@@ -259,7 +259,7 @@
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_afterclose()
-	for(var/mob/living/L in orange(0, src))
+	for(var/mob/living/L in get_turf(src))
 		for(var/dir in global.cardinal)
 			if(L.Move(get_step(loc, dir)))
 				break
