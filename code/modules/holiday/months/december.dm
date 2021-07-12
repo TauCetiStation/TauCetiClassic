@@ -12,13 +12,6 @@
 
 
 
-/datum/holiday/end_of_world
-	name = "End of the World"
-	begin_day = 21
-	begin_month = DECEMBER
-
-
-
 /datum/holiday/xmas
 	name = "Catolic Christmas"
 	begin_day = 23

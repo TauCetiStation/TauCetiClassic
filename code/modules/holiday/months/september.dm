@@ -27,26 +27,3 @@
 
 /datum/holiday/programmers/getStationPrefix()
 	return pick("span>","DEBUG: ","null","/list","EVENT PREFIX NOT FOUND") //Portability
-
-
-
-/datum/holiday/pirate
-	name = "Talk-Like-a-Pirate Day"
-	begin_day = 19
-	begin_month = SEPTEMBER
-
-/datum/holiday/pirate/greet()
-	return "Ye be talkin' like a pirate today or else ye'r walkin' tha plank, matey!"
-
-/datum/holiday/pirate/getStationPrefix()
-	return pick("Yarr","Scurvy","Yo-ho-ho")
-
-
-
-/datum/holiday/questions
-	name = "Stupid-Questions Day"
-	begin_day = 28
-	begin_month = SEPTEMBER
-
-/datum/holiday/questions/greet()
-	return "Are you having a happy [name]?"

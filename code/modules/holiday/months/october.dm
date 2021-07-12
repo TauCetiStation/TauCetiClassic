@@ -11,11 +11,6 @@
 	begin_day = 7
 	begin_month = OCTOBER
 
-/datum/holiday/boss
-	name = "Boss' Day"
-	begin_day = 16
-	begin_month = OCTOBER
-
 
 /datum/holiday/halloween
 	name = HALLOWEEN
