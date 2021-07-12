@@ -202,6 +202,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/swap_hand(): ()
+#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
@@ -266,6 +268,3 @@
 #define COMSIG_SHOW_RADIUS "show_radius"
 /// send this signal to remove /datum/component/vis_radius to a mobs: ()
 #define COMSIG_HIDE_RADIUS "hide_radius"
-
-///from base of mob/swap_hand(): (obj/item)
-#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
