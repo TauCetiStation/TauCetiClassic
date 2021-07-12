@@ -80,6 +80,25 @@
 	close_machine(target)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/bodyscanner/AltClick(mob/user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(occupant)
+		open_machine()
+		add_fingerprint(user)
+		return
+	var/mob/living/carbon/target = locate() in loc
+	if(!target)
+		return
+	if(!move_inside_checks(target, user))
+		return
+	add_fingerprint(user)
+	close_machine(target)
+	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 /obj/machinery/bodyscanner/ex_act(severity)
 	var/should_destroy = FALSE
 	switch(severity)
