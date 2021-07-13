@@ -8,7 +8,7 @@
 	return "Happy birthday, Ian!"
 
 /datum/holiday/ianbirthday/getStationPrefix()
-	return pick("Ian", "Corgi", "Erro")
+	return pick("Ian", "Corgi", "Lisa")
 
 /datum/holiday/programmers
 	name = "Programmers' Day"
