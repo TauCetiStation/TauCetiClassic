@@ -2,7 +2,7 @@ import { filter, map, sortBy, uniq } from 'common/collections';
 import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, Input, Section, Stack, Tabs } from '../components';
+import { Box, Button, Icon, Input, Section, Flex, Tabs } from '../components';
 import { Window } from '../layouts';
 
 // here's an important mental define:
@@ -67,35 +67,35 @@ export const SelectEquipment = (props, context) => {
       width={650}
       height={415}>
       <Window.Content>
-        <Stack fill>
-          <Stack.Item>
-            <Stack fill vertical>
-              <Stack.Item>
+        <Flex direction="column">
+          <Flex.Item mt={1}>
+            <Flex direction="column" height="100%">
+              <Flex.Item mt={1}>
                 <Input
                   fluid
                   autoFocus
                   placeholder="Search"
                   value={searchText}
                   onInput={(e, value) => setSearchText(value)} />
-              </Stack.Item>
-              <Stack.Item>
+              </Flex.Item>
+              <Flex.Item mt={1}>
                 <DisplayTabs categories={categories} />
-              </Stack.Item>
-              <Stack.Item mt={0} grow={1} basis={0}>
+              </Flex.Item>
+              <Flex.Item mt={1} grow={1} basis={0}>
                 <OutfitDisplay
                   entries={visibleOutfits}
                   currentTab={tab} />
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-          <Stack.Item grow={1} basis={0}>
-            <Stack fill vertical>
-              <Stack.Item>
+              </Flex.Item>
+            </Flex>
+          </Flex.Item>
+          <Flex.Item mt={1} grow={1} basis={0}>
+            <Flex direction="column" height="100%">
+              <Flex.Item mt={1}>
                 <Section>
                   <CurrentlySelectedDisplay entry={currentOutfitEntry} />
                 </Section>
-              </Stack.Item>
-              <Stack.Item grow={1}>
+              </Flex.Item>
+              <Flex.Item mt={1} grow={1} direction="column">
                 <Section
                   fill
                   title={name}
@@ -109,10 +109,10 @@ export const SelectEquipment = (props, context) => {
                       '-ms-interpolation-mode': 'nearest-neighbor',
                     }} />
                 </Section>
-              </Stack.Item>
-            </Stack>
-          </Stack.Item>
-        </Stack>
+              </Flex.Item>
+            </Flex>
+          </Flex.Item>
+        </Flex>
       </Window.Content>
     </Window>
   );
@@ -171,9 +171,9 @@ const CurrentlySelectedDisplay = (props, context) => {
   const { current_outfit } = data;
   const { entry } = props;
   return (
-    <Stack align="center">
+    <Flex align="center">
       {entry?.path && (
-        <Stack.Item>
+        <Flex.Item mt={1}>
           <Icon
             size={1.6}
             name={entry.favorite ? 'star' : 'star-o'}
@@ -182,9 +182,9 @@ const CurrentlySelectedDisplay = (props, context) => {
             onClick={() => act('togglefavorite', {
               path: entry.path,
             })} />
-        </Stack.Item>
+        </Flex.Item>
       )}
-      <Stack.Item grow={1} basis={0}>
+      <Flex.Item mt={1} grow={1} basis={0}>
         <Box color="label">
           Currently selected:
         </Box>
@@ -197,8 +197,8 @@ const CurrentlySelectedDisplay = (props, context) => {
           }}>
           {entry?.name}
         </Box>
-      </Stack.Item>
-      <Stack.Item>
+      </Flex.Item>
+      <Flex.Item mt={1}>
         <Button
           mr={0.8}
           lineHeight={2}
@@ -208,7 +208,7 @@ const CurrentlySelectedDisplay = (props, context) => {
           })}>
           Confirm
         </Button>
-      </Stack.Item>
-    </Stack>
+      </Flex.Item>
+    </Flex>
   );
 };
