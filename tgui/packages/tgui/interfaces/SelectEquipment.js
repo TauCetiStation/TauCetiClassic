@@ -67,10 +67,10 @@ export const SelectEquipment = (props, context) => {
       width={650}
       height={415}>
       <Window.Content>
-        <Flex direction="column">
-          <Flex.Item mt={1}>
+        <Flex direction="row" height="100%" >
+          <Flex.Item mr={1}>
             <Flex direction="column" height="100%">
-              <Flex.Item mt={1}>
+              <Flex.Item>
                 <Input
                   fluid
                   autoFocus
@@ -88,9 +88,9 @@ export const SelectEquipment = (props, context) => {
               </Flex.Item>
             </Flex>
           </Flex.Item>
-          <Flex.Item mt={1} grow={1} basis={0}>
+          <Flex.Item grow={1} basis={0}>
             <Flex direction="column" height="100%">
-              <Flex.Item mt={1}>
+              <Flex.Item>
                 <Section>
                   <CurrentlySelectedDisplay entry={currentOutfitEntry} />
                 </Section>
@@ -185,7 +185,7 @@ const CurrentlySelectedDisplay = (props, context) => {
         </Flex.Item>
       )}
       <Flex.Item mt={1} grow={1} basis={0}>
-        <Box color="label">
+        <Box color="label" mr={2}>
           Currently selected:
         </Box>
         <Box

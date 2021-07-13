@@ -5,10 +5,10 @@ var/global/custom_outfits = list()
 	set name = "Select equipment"
 
 	if(!ishuman(target))
-		tgui_alert(usr, "Invalid mob")
+		tgui_alert(src, "Invalid mob")
 		return
 
-	var/datum/select_equipment/ui = new(usr, target)
+	var/datum/select_equipment/ui = new(src, target)
 	ui.tgui_interact(usr)
 
 /*
@@ -39,11 +39,11 @@ var/global/custom_outfits = list()
 	//serializable string for the UI to keep track of which outfit is selected
 	var/selected_identifier = "/datum/outfit"
 
-/datum/select_equipment/New(_user, mob/target)
-	user = CLIENT_FROM_VAR(_user)
+/datum/select_equipment/New(client/user, mob/target)
+	src.user = user
 
 	if(!ishuman(target) && !isobserver(target))
-		alert("Invalid mob")
+		tgui_alert(user, "Invalid mob")
 		return
 	target_mob = target
 
@@ -204,7 +204,7 @@ var/global/custom_outfits = list()
 
 /client/proc/admin_apply_outfit(mob/target, dresscode)
 	if(!ishuman(target) && !isobserver(target))
-		alert("Invalid mob")
+		tgui_alert(src, "Invalid mob")
 		return
 
 	if(!dresscode)
@@ -217,7 +217,7 @@ var/global/custom_outfits = list()
 	else
 		human_target = target
 		if(human_target.l_store || human_target.r_store || human_target.s_store) //saves a lot of time for admins and coders alike
-			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
+			if(tgui_alert(src, "Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
 				delete_pocket = TRUE
 
 	feedback_add_details("admin_verb","Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
