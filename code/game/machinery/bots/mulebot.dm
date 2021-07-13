@@ -10,7 +10,6 @@
 	name = "Mulebot"
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
-	layer = MOB_LAYER
 	density = TRUE
 	anchored = TRUE
 	animate_movement=1

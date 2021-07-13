@@ -18,7 +18,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
-	layer = MOB_LAYER
 	density = FALSE
 	anchored = FALSE
 	//weight = 1.0E7
