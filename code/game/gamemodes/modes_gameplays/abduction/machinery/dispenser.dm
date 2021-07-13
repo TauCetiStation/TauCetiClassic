@@ -17,7 +17,7 @@
 
 /obj/machinery/abductor/gland_dispenser/atom_init()
 	. = ..()
-	gland_types = typesof(/obj/item/gland) - /obj/item/gland
+	gland_types = subtypesof(/obj/item/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
