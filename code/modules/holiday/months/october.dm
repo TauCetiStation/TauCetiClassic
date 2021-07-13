@@ -11,7 +11,6 @@
 	begin_day = 7
 	begin_month = OCTOBER
 
-
 /datum/holiday/halloween
 	name = HALLOWEEN
 	begin_day = 29

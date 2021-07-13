@@ -3,14 +3,10 @@
 	begin_day = 10
 	begin_month = DECEMBER
 
-
-
 /datum/holiday/monkey
 	name = MONKEYDAY
 	begin_day = 14
 	begin_month = DECEMBER
-
-
 
 /datum/holiday/xmas
 	name = "Catolic Christmas"
@@ -20,8 +16,6 @@
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
-
-
 
 /datum/holiday/new_year
 	name = NEW_YEAR

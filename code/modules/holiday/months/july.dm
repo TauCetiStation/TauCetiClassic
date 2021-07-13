@@ -3,8 +3,6 @@
 	begin_day = 1
 	begin_month = JULY
 
-
-
 /datum/holiday/ufo
 	name = "UFO Day"
 	begin_day = 2
@@ -13,14 +11,10 @@
 /datum/holiday/ufo/getStationPrefix() //Is such a thing even possible?
 	return pick("Ayy","Truth","Tsoukalos","Mulder","Scully") //Yes it is!
 
-
-
 /datum/holiday/writer
 	name = "Writer's Day"
 	begin_day = 8
 	begin_month = JULY
-
-
 
 /datum/holiday/friendship
 	name = "Friendship Day"
@@ -29,8 +23,6 @@
 
 /datum/holiday/friendship/greet()
 	return "Have a magical [name]!"
-
-
 
 /datum/holiday/wizards_day
 	name = "Wizard's Day"

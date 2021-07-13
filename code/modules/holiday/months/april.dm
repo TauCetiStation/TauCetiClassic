@@ -3,8 +3,6 @@
 	begin_month = APRIL
 	begin_day = 1
 
-
-
 /datum/holiday/spess
 	name = "Cosmonautics Day"
 	begin_day = 12
