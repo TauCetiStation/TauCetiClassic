@@ -1151,6 +1151,7 @@
 #include "code\modules\admin\verbs\possess.dm"
 #include "code\modules\admin\verbs\pray.dm"
 #include "code\modules\admin\verbs\randomverbs.dm"
+#include "code\modules\admin\verbs\selectequipment.dm"
 #include "code\modules\admin\verbs\striketeam.dm"
 #include "code\modules\admin\verbs\striketeam_syndicate.dm"
 #include "code\modules\admin\verbs\tripAI.dm"

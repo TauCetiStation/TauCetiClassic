@@ -156,6 +156,9 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/gear_tab = "General"
 	var/list/custom_items = list()
 
+	///What outfit typepaths we've favorited in the SelectEquipment menu
+	var/list/favorite_outfits = list()
+
 /datum/preferences/New(client/C)
 	parent = C
 	UI_style = global.available_ui_styles[1]

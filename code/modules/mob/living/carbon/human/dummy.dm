@@ -30,13 +30,27 @@ var/global/list/dummy_mob_list = list()
 		D = new(null, species)
 		global.human_dummy_list[slotkey] = D
 		global.dummy_mob_list += D
+	else
+		D.regenerate_icons() //they were cut in wipe_state()
 	D.in_use = TRUE
 	return D
 
-/proc/unset_busy_human_dummy(slotnumber)
-	if(!slotnumber)
+/proc/unset_busy_human_dummy(slotkey)
+	if(!slotkey)
 		return
-	var/mob/living/carbon/human/dummy/D = global.human_dummy_list[slotnumber]
+	var/mob/living/carbon/human/dummy/D = global.human_dummy_list[slotkey]
 	if(istype(D))
 		D.wipe_state()
 		D.in_use = FALSE
+
+
+/proc/clear_human_dummy(slotkey)
+	if(!slotkey)
+		return
+
+	var/mob/living/carbon/human/dummy/dummy = global.human_dummy_list[slotkey]
+
+	global.human_dummy_list -= slotkey
+	if(istype(dummy))
+		global.dummy_mob_list -= dummy
+		qdel(dummy)

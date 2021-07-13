@@ -332,6 +332,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_admin_vol"]						>> snd_admin_vol
 	S["snd_jukebox_vol"]					>> snd_jukebox_vol
 
+	//favorite outfits
+	S["favorite_outfits"]	>> favorite_outfits
+
+	var/list/parsed_favs = list()
+	for(var/typetext in favorite_outfits)
+		var/datum/outfit/path = text2path(typetext)
+		if(ispath(path)) //whatever typepath fails this check probably doesn't exist anymore
+			parsed_favs += path
+	favorite_outfits = uniquelist(parsed_favs)
+
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -359,6 +369,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax_theme	= sanitize_text(parallax_theme, initial(parallax_theme))
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
+	favorite_outfits = SANITIZE_LIST(favorite_outfits)
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
@@ -453,6 +464,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_notifications_vol"]				<< snd_notifications_vol
 	S["snd_admin_vol"]						<< snd_admin_vol
 	S["snd_jukebox_vol"]					<< snd_jukebox_vol
+
+	//favorite outfits
+	S["favorite_outfits"]	<< favorite_outfits
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)
