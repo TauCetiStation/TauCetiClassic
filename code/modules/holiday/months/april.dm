@@ -9,7 +9,7 @@
 	begin_month = APRIL
 
 /datum/holiday/spess/greet()
-	return "On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space!"
+	return "On this day over [round(game_year - 1961, 100)] years ago, Comrade Yuri Gagarin first ventured into space!"
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
