@@ -88,15 +88,14 @@
 /mob/camera/blob/blob_act()
 	return
 
-/mob/camera/blob/Stat()
-	..()
-	if(statpanel("Status"))
-		if(blob_core)
-			stat(null, "Core Health: [blob_core.health]")
-		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
-		stat(null, "Progress: [blobs.len]/[b_congl.blobwincount]")
-		stat(null, "Total Nodes: [blob_nodes.len]")
-		stat(null, "Total Cores: [blob_cores.len]")
+/mob/camera/blob/get_status_tab_items()
+	. = ..()
+	if(blob_core)
+		. += "Core Health: [blob_core.health]"
+	. += "Power Stored: [blob_points]/[max_blob_points]"
+	. += "Progress: [blobs.len]/[b_congl.blobwincount]"
+	. += "Total Nodes: [blob_nodes.len]"
+	. += "Total Cores: [blob_cores.len]"
 
 /mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = FALSE

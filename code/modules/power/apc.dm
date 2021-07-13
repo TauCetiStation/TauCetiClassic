@@ -949,8 +949,8 @@
 	src.occupier.eyeobj.name = "[src.occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
-	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
-	src.occupier.verbs += /datum/game_mode/malfunction/proc/takeover
+	src.occupier.add_verb(/mob/living/silicon/ai/proc/corereturn)
+	src.occupier.add_verb(/datum/game_mode/malfunction/proc/takeover)
 	occupier.cancel_camera()
 
 /obj/machinery/power/apc/proc/malfvacate(forced)

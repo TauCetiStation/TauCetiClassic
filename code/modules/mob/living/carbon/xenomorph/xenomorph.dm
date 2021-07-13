@@ -158,34 +158,34 @@
 				radiation -= 3
 				adjustToxLoss(3)
 
-/mob/living/carbon/xenomorph/Stat()
-	..()
-	if(statpanel("Status"))
-		if(!isxenoqueen(src))
-			var/mob/living/carbon/xenomorph/queen = null
-			for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
-				if(Q.stat == DEAD || !Q.key)
-					continue
-				queen = Q
-			if(!queen)
-				stat("Королева: Нет")
-			else
-				stat("Здоровье Королевы: [queen.health]/[queen.maxHealth]")
-				stat("Локация Королевы: [queen.loc.loc.name]")
-				stat("Королева в сознании: [queen.stat ? "Нет" : "Да"]")
-				stat(null) //for readability
+/mob/living/carbon/xenomorph/get_status_tab_items()
+	. = ..()
 
-		stat("Статус Улья:")
-		for(var/key in alien_list)
-			var/count = 0
-			if(key == ALIEN_QUEEN)
+	if(!isxenoqueen(src))
+		var/mob/living/carbon/xenomorph/queen = null
+		for(var/mob/living/carbon/xenomorph/humanoid/queen/Q in alien_list[ALIEN_QUEEN])
+			if(Q.stat == DEAD || !Q.key)
 				continue
-			for(var/mob/living/carbon/xenomorph/A in alien_list[key])
-				if(A.stat == DEAD || !A.key)
-					continue
-				count++
-			if(count)
-				stat("[key]: [count]")
+			queen = Q
+		if(!queen)
+			. += "Королева: Нет"
+		else
+			. += "Здоровье Королевы: [queen.health]/[queen.maxHealth]"
+			. += "Локация Королевы: [queen.loc.loc.name]"
+			. += "Королева в сознании: [queen.stat ? "Нет" : "Да"]"
+			. += "" //for readability
+
+	. += "Статус Улья:"
+	for(var/key in alien_list)
+		var/count = 0
+		if(key == ALIEN_QUEEN)
+			continue
+		for(var/mob/living/carbon/xenomorph/A in alien_list[key])
+			if(A.stat == DEAD || !A.key)
+				continue
+			count++
+		if(count)
+			. += "[key]: [count]"
 
 /mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
 	if(status_flags & CANSTUN || ignore_canstun)

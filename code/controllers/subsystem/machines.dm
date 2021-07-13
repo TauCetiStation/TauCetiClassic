@@ -29,7 +29,8 @@ SUBSYSTEM_DEF(machines)
 
 
 /datum/controller/subsystem/machines/stat_entry()
-	..("M:[processing.len]|PN:[powernets.len]")
+	. = ..()
+	. += "M:[processing.len]|PN:[powernets.len]"
 
 
 /datum/controller/subsystem/machines/fire(resumed = 0)

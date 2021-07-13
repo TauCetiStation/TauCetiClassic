@@ -109,18 +109,18 @@
 	return 0
 
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
-/mob/living/silicon/Stat()
-	..()
+/mob/living/silicon/get_status_tab_items()
+	. = ..()
 	if(statpanel("Status"))
-		stat(null, "Station Time: [worldtime2text()]")
+		. += "Station Time: [worldtime2text()]"
 
 		if(SSshuttle.online && SSshuttle.location < 2)
-			stat(null, "ETA-[shuttleeta2text()]")
+			. += "ETA-[shuttleeta2text()]"
 
 		if(stat == CONSCIOUS)
-			stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))
+			. += "System integrity: [round((health / maxHealth) * 100)]%"
 		else
-			stat(null, text("Systems nonfunctional"))
+			. += "Systems nonfunctional"
 
 		show_malf_ai()
 

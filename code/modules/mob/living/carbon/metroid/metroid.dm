@@ -181,22 +181,21 @@
 /mob/living/carbon/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
-/mob/living/carbon/slime/Stat()
-	..()
+/mob/living/carbon/slime/get_status_tab_items()
+	. = ..()
 
-	if(statpanel("Status"))
-		if(isslimeadult(src))
-			stat(null, "Health: [round((health / 200) * 100)]%")
-			stat(null, "Nutrition: [nutrition]/1200")
-			if(amount_grown >= max_grown)
-				stat(null, "You can reproduce!")
-		else
-			stat(null, "Health: [round((health / 150) * 100)]%")
-			stat(null, "Nutrition: [nutrition]/1000")
-			if(amount_grown >= max_grown)
-				stat(null, "You can evolve!")
+	if(isslimeadult(src))
+		. += "Health: [round((health / 200) * 100)]%"
+		. += "Nutrition: [nutrition]/1200"
+		if(amount_grown >= max_grown)
+			. += "You can reproduce!"
+	else
+		. += "Health: [round((health / 150) * 100)]%"
+		. += "Nutrition: [nutrition]/1000"
+		if(amount_grown >= max_grown)
+			. += "You can evolve!"
 
-		stat(null,"Power Level: [powerlevel]")
+	. +="Power Level: [powerlevel]"
 
 
 /mob/living/carbon/slime/adjustFireLoss(amount)

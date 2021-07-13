@@ -39,7 +39,7 @@
 
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
-	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
+	antag.current.add_verb(/mob/living/carbon/human/proc/RevConvert)
 
 	// Show each head revolutionary up to 3 candidates
 	var/list/already_considered = list()
@@ -57,7 +57,7 @@
 	set category = "IC"
 
 	if(!isrevhead(src))
-		verbs -= /mob/living/carbon/human/proc/RevConvert
+		remove_verb(/mob/living/carbon/human/proc/RevConvert)
 		return FALSE
 
 	var/list/Possible = list()
@@ -70,7 +70,7 @@
 
 	var/mob/living/carbon/human/M = input("Select a person to convert", "Viva la revolution!", null) as mob in Possible
 	if(!isrevhead(src))
-		verbs -= /mob/living/carbon/human/proc/RevConvert
+		remove_verb(/mob/living/carbon/human/proc/RevConvert)
 		return FALSE
 
 	if(isrevhead(M) || isrev(M))

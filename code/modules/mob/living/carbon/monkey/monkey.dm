@@ -151,17 +151,17 @@
 	help_shake_act(attacker)
 	get_scooped(attacker)
 
-/mob/living/carbon/monkey/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-		if(istype(src, /mob/living/carbon/monkey/diona))
-			stat(null, "Nutriment: [nutrition]/400")
+/mob/living/carbon/monkey/get_status_tab_items()
+	. = ..()
+
+	. += "Intent: [a_intent]"
+	. += "Move Mode: [m_intent]"
+	if(istype(src, /mob/living/carbon/monkey/diona))
+		. += "Nutriment: [nutrition]/400"
 	if(mind)
 		for(var/role in mind.antag_roles)
 			var/datum/role/R = mind.antag_roles[role]
-			stat(R.StatPanel())
+			. += R.StatPanel()
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"

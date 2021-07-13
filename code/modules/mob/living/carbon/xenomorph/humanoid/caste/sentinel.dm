@@ -14,7 +14,7 @@
 	R.my_atom = src
 	name = "alien sentinel ([rand(1, 1000)])"
 	real_name = name
-	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin, /mob/living/carbon/xenomorph/humanoid/proc/air_plant)
+	add_verb(/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/neurotoxin, /mob/living/carbon/xenomorph/humanoid/proc/air_plant)
 	alien_list[ALIEN_SENTINEL] += src
 	. = ..()
 

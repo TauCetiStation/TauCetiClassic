@@ -14,27 +14,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	name = text
 	return src
 
-/obj/effect/statclick/debug
-	var/class
-
-/obj/effect/statclick/debug/Click()
-	if(!usr.client.holder || !target)
-		return
-	if(!(usr.client.holder.rights & R_DEBUG))
-		return
-	if(!class)
-		if(istype(target, /datum/controller/subsystem))
-			class = "subsystem"
-		else if(istype(target, /datum/controller))
-			class = "controller"
-		else if(istype(target, /datum))
-			class = "datum"
-		else
-			class = "unknown"
-
-	usr.client.debug_variables(target)
-	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
-
 /client/proc/generate_round_scoreboard()
 	set category = "Debug"
 	set name = "Throw Scoreboad"

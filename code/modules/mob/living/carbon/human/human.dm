@@ -56,7 +56,7 @@
 
 	handcrafting = new()
 
-	verbs += /mob/living/carbon/proc/crawl
+	add_verb(/mob/living/carbon/proc/crawl)
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -150,46 +150,45 @@
 /mob/living/carbon/human/OpenCraftingMenu()
 	handcrafting.ui_interact(src)
 
-/mob/living/carbon/human/Stat()
-	..()
+/mob/living/carbon/human/get_status_tab_items()
+	. = ..()
 
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-		//Info for IPC
-		if(species.flags[IS_SYNTHETIC])
-			var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
-			var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
-			if(I)
-				stat(null, "Charge: [round(100.0*nutrition/I.maxcharge, 1)]%")
-				stat(null, "Operating temp: [round(bodytemperature-T0C)]&deg;C")
-		if(internal)
-			if(!internal.air_contents)
-				qdel(internal)
-			else
-				stat("Internal Atmosphere Info", internal.name)
-				stat("Tank Pressure", internal.air_contents.return_pressure())
-				stat("Distribution Pressure", internal.distribute_pressure)
+	. += "Intent: [a_intent]"
+	. += "Move Mode: [m_intent]"
+	//Info for IPC
+	if(species.flags[IS_SYNTHETIC])
+		var/obj/item/organ/internal/liver/IO = organs_by_name[O_LIVER]
+		var/obj/item/weapon/stock_parts/cell/I = locate(/obj/item/weapon/stock_parts/cell) in IO
+		if(I)
+			. += "Charge: [round(100.0*nutrition/I.maxcharge, 1)]%"
+			. += "Operating temp: [round(bodytemperature-T0C)]&deg;C"
+	if(internal)
+		if(!internal.air_contents)
+			qdel(internal)
+		else
+			. += "Internal Atmosphere Info [internal.name]"
+			. += "Tank Pressure [internal.air_contents.return_pressure()]"
+			. += "Distribution Pressure [internal.distribute_pressure]"
 
-		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
-			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
-			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
-			stat("Current Time:", "[worldtime2text()]")
-			if(SN.s_initialized)
-				//Suit gear
-				stat("Energy Charge", "[round(SN.cell.charge/100)]%")
-				stat("Smoke Bombs:", "\Roman [SN.s_bombs]")
-				//Ninja status
-				stat("Fingerprints:", "[md5(dna.uni_identity)]")
-				stat("Unique Identity:", "[dna.unique_enzymes]")
-				stat("Overall Status:", "[stat > 1 ? "dead" : "[health]% healthy"]")
-				stat("Nutrition Status:", "[nutrition]")
-				stat("Oxygen Loss:", "[getOxyLoss()]")
-				stat("Toxin Levels:", "[getToxLoss()]")
-				stat("Burn Severity:", "[getFireLoss()]")
-				stat("Brute Trauma:", "[getBruteLoss()]")
-				stat("Radiation Levels:","[radiation] rad")
-				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
+	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
+		var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
+		. += "SpiderOS Status: [SN.s_initialized ? "Initialized" : "Disabled"]"
+		. += "Current Time: [worldtime2text()]"
+		if(SN.s_initialized)
+			//Suit gear
+			. += "Energy Charge [round(SN.cell.charge/100)]%"
+			. += "Smoke Bombs: \Roman [SN.s_bombs]"
+			//Ninja status
+			. += "Fingerprints: [md5(dna.uni_identity)]"
+			. += "Unique Identity: [dna.unique_enzymes]"
+			. += "Overall Status: [stat > 1 ? "dead" : "[health]% healthy"]"
+			. += "Nutrition Status: [nutrition]"
+			. += "Oxygen Loss: [getOxyLoss()]"
+			. += "Toxin Levels: [getToxLoss()]"
+			. += "Burn Severity: [getFireLoss()]"
+			. += "Brute Trauma: [getBruteLoss()]"
+			. += "Radiation Levels: [radiation] rad"
+			. += "Body Temperature: [bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)"
 
 	if(mind)
 		for(var/role in mind.antag_roles)
@@ -1074,7 +1073,7 @@
 		return
 
 	if(!(MORPH in mutations))
-		src.verbs -= /mob/living/carbon/human/proc/morph
+		src.remove_verb(/mob/living/carbon/human/proc/morph)
 		return
 
 	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
@@ -1153,7 +1152,7 @@
 		return
 
 	if(!(REMOTE_TALK in src.mutations))
-		src.verbs -= /mob/living/carbon/human/proc/remotesay
+		src.remove_verb(/mob/living/carbon/human/proc/remotesay)
 		return
 
 	var/list/names = list()
@@ -1205,7 +1204,7 @@
 	if(!(REMOTE_VIEW in src.mutations))
 		remoteview_target = null
 		reset_view(0)
-		src.verbs -= /mob/living/carbon/human/proc/remoteobserve
+		src.remove_verb(/mob/living/carbon/human/proc/remoteobserve)
 		return
 
 	if(client.eye != client.mob)
@@ -1332,7 +1331,7 @@
 	hand_dirt_datum = new(dirt_overlay)
 
 	update_inv_gloves()	//handles bloody hands overlays and updating
-	verbs += /mob/living/carbon/human/proc/bloody_doodle
+	add_verb(/mob/living/carbon/human/proc/bloody_doodle)
 	return 1 //we applied blood to the item
 
 // returns associative list (implant = bodypart)
@@ -1486,7 +1485,7 @@
 		return 0 //something is terribly wrong
 
 	if(!bloody_hands)
-		verbs -= /mob/living/carbon/human/proc/bloody_doodle
+		remove_verb(/mob/living/carbon/human/proc/bloody_doodle)
 
 	if(src.gloves)
 		to_chat(src, "<span class='warning'>[src.gloves] мешают вам это сделать.</span>")

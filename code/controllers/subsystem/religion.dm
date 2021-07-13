@@ -7,7 +7,8 @@ SUBSYSTEM_DEF(religion)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/religion/stat_entry()
-	..("P:[processing.len]")
+	. = ..()
+	. += "P:[processing.len]"
 
 /datum/controller/subsystem/religion/fire(resumed = 0)
 	if (!resumed)

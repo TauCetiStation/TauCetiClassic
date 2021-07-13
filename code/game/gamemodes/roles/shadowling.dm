@@ -26,7 +26,7 @@
 		to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
 		S.mutations.Remove(CLUMSY)
 
-	S.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+	S.add_verb(/mob/living/carbon/human/proc/shadowling_hatch)
 	S.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
 	S.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
 

@@ -7,7 +7,8 @@ SUBSYSTEM_DEF(mob_modifier)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/mob_modifier/stat_entry()
-	..("P:[processing.len]")
+	. = ..()
+	. += "P:[processing.len]"
 
 /datum/controller/subsystem/mob_modifier/fire(resumed = 0)
 	if (!resumed)

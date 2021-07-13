@@ -14,9 +14,6 @@ var/datum/cameranet/cameranet = new()
 	var/list/chunks = list()
 	var/ready = 0
 
-	// The object used for the clickable stat() button.
-	var/obj/effect/statclick/statclick
-
 /datum/cameranet/proc/process_sort()
 	if(cameras_unsorted)
 		cameras = dd_sortedObjectList(cameras)
@@ -157,10 +154,7 @@ var/datum/cameranet/cameranet = new()
 	return 0
 
 /datum/cameranet/proc/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
-
-	stat(name, statclick.update("Cameras: [cameranet.cameras.len] | Chunks: [cameranet.chunks.len]"))
+	. = "Cameras: [cameranet.cameras.len] | Chunks: [cameranet.chunks.len]"
 
 // Debug verb for VVing the chunk that the turf is in.
 /*

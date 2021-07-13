@@ -41,7 +41,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
 
-	verbs += /mob/dead/observer/proc/dead_tele
+	add_verb(/mob/dead/observer/proc/dead_tele)
 
 	ghostimage = image(icon, src, "ghost")
 	ghost_darkness_images |= ghostimage
@@ -170,7 +170,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		ghost.playsound_stop(CHANNEL_AMBIENT)
 		ghost.playsound_stop(CHANNEL_AMBIENT_LOOP)
 		if(client && !ghost.client.holder && !config.antag_hud_allowed)		// For new ghosts we remove the verb from even showing up if it's not allowed.
-			ghost.verbs -= /mob/dead/observer/verb/toggle_antagHUD			// Poor guys, don't know what they are missing!
+			ghost.remove_verb(/mob/dead/observer/verb/toggle_antagHUD)			// Poor guys, don't know what they are missing!
 		return ghost
 
 /*
@@ -318,9 +318,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!istype(usr, /mob/dead/observer))
 		to_chat(usr, "Not when you're not dead!")
 		return
-	usr.verbs -= /mob/dead/observer/proc/dead_tele
+	usr.remove_verb(/mob/dead/observer/proc/dead_tele)
 	spawn(30)
-		usr.verbs += /mob/dead/observer/proc/dead_tele
+		usr.add_verb(/mob/dead/observer/proc/dead_tele)
 
 	var/A = tgui_input_list(usr, "Area to jump to", "BOOYEA", ghostteleportlocs)
 	if(!A)

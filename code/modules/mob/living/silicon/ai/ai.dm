@@ -151,7 +151,7 @@ var/list/ai_verbs_default = list(
 
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
-	verbs -= ai_verbs_default
+	remove_verb(ai_verbs_default)
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()

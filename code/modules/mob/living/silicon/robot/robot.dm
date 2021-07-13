@@ -450,26 +450,26 @@
 
 
 // update the status screen display
-/mob/living/silicon/robot/Stat()
-	..()
-	if(statpanel("Status"))
-		if(cell)
-			stat(null, text("Charge Left: [round(cell.percent())]%"))
-			stat(null, text("Cell Rating: [round(cell.maxcharge)]")) // Round just in case we somehow get crazy values
-			stat(null, text("Power Cell Load: [round(used_power_this_tick)]W"))
-		else
-			stat(null, text("No Cell Inserted!"))
+/mob/living/silicon/robot/get_status_tab_items()
+	. = ..()
 
-		if(module)
-			var/obj/item/weapon/tank/jetpack/current_jetpack = locate(/obj/item/weapon/tank/jetpack) in module.modules
-			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
-				stat("Internal Atmosphere Info: [current_jetpack.name]")
-				stat("Tank Pressure: [current_jetpack.air_contents.return_pressure()]")
-		if(locate(/obj/item/device/gps/cyborg))
-			var/turf/T = get_turf(src)
-			stat(null, "GPS: [COORD(T)]")
+	if(cell)
+		. += "Charge Left: [round(cell.percent())]%"
+		. += "Cell Rating: [round(cell.maxcharge)]" // Round just in case we somehow get crazy values
+		. += "Power Cell Load: [round(used_power_this_tick)]W"
+	else
+		. += "No Cell Inserted!"
 
-		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
+	if(module)
+		var/obj/item/weapon/tank/jetpack/current_jetpack = locate(/obj/item/weapon/tank/jetpack) in module.modules
+		if(current_jetpack) // if you have a jetpack, show the internal tank pressure
+			. += "Internal Atmosphere Info: [current_jetpack.name]"
+			. += "Tank Pressure: [current_jetpack.air_contents.return_pressure()]"
+	if(locate(/obj/item/device/gps/cyborg))
+		var/turf/T = get_turf(src)
+		. += "GPS: [COORD(T)]"
+
+	. += "Lights: [lights_on ? "ON" : "OFF"]"
 
 /mob/living/silicon/robot/restrained()
 	return 0
@@ -1082,7 +1082,7 @@
 	if(R)
 		R.UnlinkSelf()
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
-		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
+		src.remove_verb(/mob/living/silicon/robot/proc/ResetSecurityCodes)
 
 /mob/living/silicon/robot/verb/pose()
 	set name = "Set Pose"

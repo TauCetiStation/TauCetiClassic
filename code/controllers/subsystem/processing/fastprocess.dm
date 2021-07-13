@@ -8,7 +8,8 @@ SUBSYSTEM_DEF(fastprocess)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/fastprocess/stat_entry()
-	..("FP:[processing.len]")
+	. = ..()
+	. += "FP:[processing.len]"
 
 /datum/controller/subsystem/fastprocess/fire(resumed = 0)
 	if (!resumed)

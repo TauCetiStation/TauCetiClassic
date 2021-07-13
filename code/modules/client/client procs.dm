@@ -139,6 +139,13 @@ var/list/blacklisted_builds = list(
 		cmd_admin_pm(C,null)
 		return
 
+
+	if(href_list["reload_statbrowser"])
+		src << browse(file('html/statbrowser.html'), "window=statbrowser")
+
+	//Logs all hrefs
+	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
+
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob
@@ -240,7 +247,7 @@ var/list/blacklisted_builds = list(
 		admins += src
 		if(holder.deadminned)
 			holder.disassociate()
-			verbs += /client/proc/readmin_self
+			add_verb(/client/proc/readmin_self)
 
 	if(ckey in mentor_ckeys)
 		mentors += src
@@ -274,6 +281,9 @@ var/list/blacklisted_builds = list(
 
 	if(SSinput.initialized)
 		set_macros()
+
+	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
 
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
@@ -768,3 +778,31 @@ var/list/blacklisted_builds = list(
 
 	view = new_size
 	mob.reload_fullscreen()
+
+/client/proc/check_panel_loaded()
+	if(statbrowser_ready)
+		return
+	to_chat(src, "Statpanel failed to load, click <a href='?src=\ref[src];reload_statbrowser=1'>here</a> to reload the panel ")
+
+
+/// compiles a full list of verbs and sends it to the browser
+/client/proc/init_verbs()
+	var/list/verblist = list()
+	var/list/verbstoprocess = verbs.Copy()
+	if(mob)
+		verbstoprocess += mob.verbs
+		for(var/AM in mob.contents)
+			var/atom/movable/thing = AM
+			verbstoprocess += thing.verbs
+	panel_tabs.Cut() // panel_tabs get reset in init_verbs on JS side anyway
+	for(var/thing in verbstoprocess)
+		var/procpath/verb_to_init = thing
+		if(!verb_to_init)
+			continue
+		if(verb_to_init.hidden)
+			continue
+		if(!istext(verb_to_init.category))
+			continue
+		panel_tabs |= verb_to_init.category
+		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
+	src << output("[url_encode(json_encode(panel_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")

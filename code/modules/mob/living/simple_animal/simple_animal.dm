@@ -278,11 +278,10 @@
 
 	return tally+config.animal_delay
 
-/mob/living/simple_animal/Stat()
-	..()
+/mob/living/simple_animal/get_status_tab_items()
+	. = ..()
 
-	if(statpanel("Status"))
-		stat(null, "Health: [round((health / maxHealth) * 100)]%")
+	. += "Health: [round((health / maxHealth) * 100)]%"
 
 /mob/living/simple_animal/death()
 	icon_state = icon_dead

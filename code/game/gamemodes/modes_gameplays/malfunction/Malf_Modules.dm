@@ -26,7 +26,7 @@ robot_fabricator
 	if(owner)
 		owner.current_modules[module_name] = null
 		if(verb_caller && owner.client)
-			owner.verbs -= verb_caller
+			owner.remove_verb(verb_caller)
 		owner = null
 	return ..()
 

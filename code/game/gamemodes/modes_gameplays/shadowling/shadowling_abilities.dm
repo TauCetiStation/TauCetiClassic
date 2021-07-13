@@ -339,8 +339,8 @@
 			to_chat(usr, "<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>")
 			for(M in alive_mob_list)
 				if(isshadowling(M))
-					M.mind.current.verbs -= /mob/living/carbon/human/proc/shadowling_hatch //In case a shadowling hasn't hatched
-					M.mind.current.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
+					M.mind.current.remove_verb(/mob/living/carbon/human/proc/shadowling_hatch) //In case a shadowling hasn't hatched
+					M.mind.current.add_verb(/mob/living/carbon/human/proc/shadowling_ascendance)
 					for(var/obj/effect/proc_holder/spell/targeted/collective_mind/spell_to_remove in M.spell_list)
 						M.RemoveSpell(spell_to_remove)
 					if(M == usr)

@@ -188,9 +188,6 @@ var/list/net_announcer_secret = list()
 
 	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
 
-	// The object used for the clickable stat() button.
-	var/obj/effect/statclick/statclick
-
 	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 	var/starlight = FALSE	// Whether space turfs have ambient light or not
 	var/nightshift = FALSE
@@ -805,10 +802,7 @@ var/list/net_announcer_secret = list()
 	return exactly_runnable_modes
 
 /datum/configuration/proc/stat_entry()
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
-
-	stat("[name]:", statclick)
+	. = "Edit"
 
 /datum/configuration/proc/loadmaplist(filename)
 	var/list/Lines = file2list(filename)

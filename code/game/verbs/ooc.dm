@@ -182,7 +182,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 /client/verb/fix_chat()
 	set name = "Fix chat"
-	set category = "OOC"
+	set category = "OOC.FIX SS13!"
 	if (!chatOutput || !istype(chatOutput))
 		var/action = tgui_alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", list("Recreate Chat Output data", "Cancel"))
 		if (action != "Recreate Chat Output data")
@@ -264,7 +264,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 /client/verb/fix_ui()
 	set name = "Fix UI"
 	set desc = "Closes all opened NanoUI/TGUI and Reload your TGUI/NanoUI assets if they are not working"
-	set category = "OOC"
+	set category = "OOC.FIX SS13!"
 
 	if(last_ui_resource_send > world.time)
 		to_chat(usr, "<span class='warning'>You requested your TGUI/NanoUI resource files too quickly. This will reload your NanoUI and TGUI/NanoUI resources. If you have any open UIs this may break them. Please try again in [(last_ui_resource_send - world.time)/10] seconds.</span>")

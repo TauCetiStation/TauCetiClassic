@@ -69,7 +69,7 @@
 	client.screen += blocker
 
 	//Clear ability list and update from mob.
-	client.verbs -= ability_verbs
+	client.remove_verb(ability_verbs)
 
 	if(abilities)
 		client.verbs |= abilities
@@ -83,3 +83,5 @@
 		var/mob/living/carbon/human/H = src
 		if(H.species && H.species.abilities)
 			client.verbs |= H.species.abilities
+
+	client.init_verbs()

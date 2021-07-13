@@ -579,9 +579,9 @@
 		B.host_brain.name = "host brain"
 		B.host_brain.real_name = "host brain"
 
-	verbs -= /mob/living/carbon/proc/release_control
-	verbs -= /mob/living/carbon/proc/punish_host
-	verbs -= /mob/living/carbon/proc/spawn_larvae
+	remove_verb(/mob/living/carbon/proc/release_control)
+	remove_verb(/mob/living/carbon/proc/punish_host)
+	remove_verb(/mob/living/carbon/proc/spawn_larvae)
 
 	med_hud_set_status()
 

@@ -35,7 +35,8 @@ SUBSYSTEM_DEF(quirks)
 		C.prefs.UpdateAllowedQuirks()
 
 /datum/controller/subsystem/quirks/stat_entry()
-	..("P:[processing.len]")
+	. = ..()
+	. += "P:[processing.len]"
 
 /datum/controller/subsystem/quirks/fire(resumed = 0)
 	if (!resumed)

@@ -9,7 +9,8 @@ SUBSYSTEM_DEF(mobs)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/mobs/stat_entry()
-	..("P:[mob_list.len]")
+	. = ..()
+	. += "P:[mob_list.len]"
 
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)

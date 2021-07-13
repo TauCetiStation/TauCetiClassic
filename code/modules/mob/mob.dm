@@ -470,7 +470,30 @@
 		var/datum/browser/popup = new(usr, "window=flavor [name]", "Flavor [name]", 500, 200, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(flavor_text)
 		popup.open()
-	return
+
+	var/client/usr_client = usr.client
+	var/list/paramslist = list()
+	if(href_list["statpanel_item_click"])
+		switch(href_list["statpanel_item_click"])
+			if("left")
+				paramslist[LEFT_CLICK] = "1"
+			if("right")
+				paramslist[RIGHT_CLICK] = "1"
+			if("middle")
+				paramslist[MIDDLE_CLICK] = "1"
+			else
+				return
+
+		if(href_list["statpanel_item_shiftclick"])
+			paramslist[SHIFT_CLICK] = "1"
+		if(href_list["statpanel_item_ctrlclick"])
+			paramslist[CTRL_CLICK] = "1"
+		if(href_list["statpanel_item_altclick"])
+			paramslist[ALT_CLICK] = "1"
+
+		var/mouseparams = list2params(paramslist)
+		usr_client.Click(src, loc, null, mouseparams)
+		return TRUE
 
 
 /mob/proc/pull_damage()
@@ -649,76 +672,30 @@ note dizziness decrements automatically in the mob's Life() proc.
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
 
-/mob/Stat()
-	..()
+/mob/proc/get_status_tab_items()
+	SHOULD_NOT_SLEEP(TRUE)
+	. = list()
 
-	if(statpanel("Status"))
-		if(global.round_id)
-			stat(null, "Round ID: #[global.round_id]")
-		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
-		if(client)
-			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
-			stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
-			var/datum/map_config/cached = SSmapping.next_map_config
-			if(cached)
-				stat(null, "Next Map: [cached.map_name]")
-			if(client.holder)
-				if (config.registration_panic_bunker_age)
-					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
-				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
-				if(GM?.malf_mode_declared)
-					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
-				if(SSshuttle.online && SSshuttle.location < 2)
-					stat(null, "ETA-[shuttleeta2text()]")
+	. += "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]"
 
-	if(client && client.holder)
-		if(statpanel("Tickets"))
-			global.ahelp_tickets.stat_entry()
-		if(client.holder.rights & R_ADMIN)
-			if(statpanel("MC"))
-				stat("CPU:", "[world.cpu]")
-				if(client.holder.rights & R_DEBUG)
-					stat("Location:", "[COORD(src)]")
-					stat("Instances:", "[world.contents.len]")
-					config.stat_entry()
-					stat(null)
-					if(Master)
-						Master.stat_entry()
-					else
-						stat("Master Controller:", "ERROR")
-					if(Failsafe)
-						Failsafe.stat_entry()
-					else
-						stat("Failsafe Controller:", "ERROR")
-					if(Master)
-						stat(null)
-						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							SS.stat_entry()
-					cameranet.stat_entry()
-
-	if(listed_turf && client)
-		if(!TurfAdjacent(listed_turf))
-			listed_turf = null
-		else
-			statpanel(listed_turf.name, null, listed_turf)
-			for(var/atom/A in listed_turf)
-				if(!A.mouse_opacity)
-					continue
-				if(A.invisibility > see_invisible)
-					continue
-				if(is_type_in_list(A, shouldnt_see))
-					continue
-				statpanel(listed_turf.name, null, A)
+	if(client.holder)
+		if (config.registration_panic_bunker_age)
+			. += "Registration panic bunker age: [config.registration_panic_bunker_age]"
+		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+		if(GM?.malf_mode_declared)
+			. += "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]"
 
 	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
-					statpanel(S.panel,"[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					. += "[S.panel] [S.charge_counter/10.0]/[S.charge_max/10] [S]"
 				if("charges")
-					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
+					. += "[S.panel] [S.charge_counter]/[S.charge_max] [S]"
 				if("holdervar")
-					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
+					. += "[S.panel] [S.holder_var_type] [S.holder_var_amount] [S]"
+
+	. += ""
 
 // facing verbs
 /mob/proc/canface()
@@ -985,7 +962,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
 	valid_objects = get_visible_implants(0)
 	if(valid_objects.len == 1) //Yanking out last object - removing verb.
-		src.verbs -= /mob/proc/yank_out_object
+		src.remove_verb(/mob/proc/yank_out_object)
 		clear_alert("embeddedobject")
 
 	embedded -= selection

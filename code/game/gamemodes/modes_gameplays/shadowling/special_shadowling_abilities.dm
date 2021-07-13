@@ -6,16 +6,16 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 	if(usr.incapacitated())
 		return
-	usr.verbs -= /mob/living/carbon/human/proc/shadowling_hatch
+	usr.remove_verb(/mob/living/carbon/human/proc/shadowling_hatch)
 	switch(tgui_alert(src,"Are you sure you want to hatch? You cannot undo this!",, list("Yes","No")))
 		if("No")
 			to_chat(usr, "<span class='warning'>You decide against hatching for now.</span>")
-			usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+			usr.add_verb(/mob/living/carbon/human/proc/shadowling_hatch)
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
 				to_chat(usr, "<span class='warning'>You can't hatch here.</span>")
-				usr.verbs += /mob/living/carbon/human/proc/shadowling_hatch
+				usr.add_verb(/mob/living/carbon/human/proc/shadowling_hatch)
 				return
 			usr.notransform = TRUE
 			usr.visible_message("<span class='warning'>[usr]'s things suddenly slip off. They hunch over and vomit up a copious amount of purple goo which begins to shape around them!</span>", \
@@ -87,16 +87,16 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 	if(usr.incapacitated())
 		return
-	usr.verbs -= /mob/living/carbon/human/proc/shadowling_ascendance
+	usr.remove_verb(/mob/living/carbon/human/proc/shadowling_ascendance)
 	switch(tgui_alert(usr, "It is time to ascend. Are you completely sure about this? You cannot undo this!",, list("Yes","No")))
 		if("No")
 			to_chat(usr, "<span class='warning'>You decide against ascending for now.</span>")
-			usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
+			usr.add_verb(/mob/living/carbon/human/proc/shadowling_ascendance)
 			return
 		if("Yes")
 			if(!istype(usr.loc, /turf))
 				to_chat(usr, "<span class='warning'>You can't evolve here.</span>")
-				usr.verbs += /mob/living/carbon/human/proc/shadowling_ascendance
+				usr.add_verb(/mob/living/carbon/human/proc/shadowling_ascendance)
 				return
 			var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 			usr.notransform = TRUE

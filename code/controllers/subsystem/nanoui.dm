@@ -12,7 +12,8 @@ SUBSYSTEM_DEF(nanoui)
 	var/list/processing = list() // A list of processing UIs, ungrouped.
 
 /datum/controller/subsystem/nanoui/stat_entry()
-	..("P:[processing.len]")
+	. = ..()
+	. += "P:[processing.len]"
 
 /datum/controller/subsystem/nanoui/fire(resumed = 0)
 	if (!resumed)

@@ -159,7 +159,7 @@
 /mob/living/proc/embed(obj/item/I)
 	I.loc = src
 	embedded += I
-	verbs += /mob/proc/yank_out_object
+	add_verb(/mob/proc/yank_out_object)
 
 /mob/living/proc/pin_to_turf(obj/item/I)
 	if(!I)
