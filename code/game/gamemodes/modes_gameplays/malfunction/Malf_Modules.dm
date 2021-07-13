@@ -193,7 +193,7 @@ robot_fabricator
 		rcdmod.uses--
 		for(var/obj/item/weapon/rcd/rcd in rcd_list)
 			rcd.disabled = TRUE
-		for(var/obj/item/mecha_parts/mecha_equipment/tool/rcd/rcd in mecha_rcd_list)
+		for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd in mecha_rcd_list)
 			rcd.disabled = TRUE
 		to_chat(src, "<span class='notice'>RCD-disabling pulse emitted.</span>")
 	else

@@ -295,7 +295,7 @@
 		return
 
 	if(istype(I, /obj/item/toy/crayon))
-		var/paths = typesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant - /obj/item/weapon/transparant/text
+		var/paths = subtypesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant/text
 		var/targName = input(usr, "Choose transparant pattern", "Pattern list") in paths
 		if(!targName)
 			return
