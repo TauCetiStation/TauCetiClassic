@@ -18,8 +18,6 @@ SUBSYSTEM_DEF(statpanels)
 			"Map: [SSmapping.config?.map_name || "Loading..."]",
 			cached ? "Next Map: [cached.map_name]" : null,
 		)
-		if(SSshuttle.online && SSshuttle.location < 2)
-			global_data += "ETA-[shuttleeta2text()]"
 		encoded_global_data = url_encode(json_encode(global_data))
 		src.currentrun = global.clients.Copy()
 		mc_data_encoded = null

@@ -684,7 +684,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM?.malf_mode_declared)
 			. += "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]"
-
+		if(SSshuttle.online && SSshuttle.location < 2)
+			. += "ETA-[shuttleeta2text()]"
 	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
