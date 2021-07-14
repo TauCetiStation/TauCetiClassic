@@ -962,7 +962,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
 	valid_objects = get_visible_implants(0)
 	if(valid_objects.len == 1) //Yanking out last object - removing verb.
-		src.remove_verb(/mob/proc/yank_out_object)
+		remove_verb(/mob/proc/yank_out_object)
 		clear_alert("embeddedobject")
 
 	embedded -= selection

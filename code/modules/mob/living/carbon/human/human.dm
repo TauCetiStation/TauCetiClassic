@@ -1073,7 +1073,7 @@
 		return
 
 	if(!(MORPH in mutations))
-		src.remove_verb(/mob/living/carbon/human/proc/morph)
+		remove_verb(/mob/living/carbon/human/proc/morph)
 		return
 
 	var/new_facial = input("Please select facial hair color.", "Character Generation",rgb(r_facial,g_facial,b_facial)) as color
@@ -1152,7 +1152,7 @@
 		return
 
 	if(!(REMOTE_TALK in src.mutations))
-		src.remove_verb(/mob/living/carbon/human/proc/remotesay)
+		remove_verb(/mob/living/carbon/human/proc/remotesay)
 		return
 
 	var/list/names = list()
@@ -1204,7 +1204,7 @@
 	if(!(REMOTE_VIEW in src.mutations))
 		remoteview_target = null
 		reset_view(0)
-		src.remove_verb(/mob/living/carbon/human/proc/remoteobserve)
+		remove_verb(/mob/living/carbon/human/proc/remoteobserve)
 		return
 
 	if(client.eye != client.mob)

@@ -11,7 +11,7 @@
 	set category = "Superpower"
 
 	if(!(HULK in src.mutations))
-		src.remove_verb(/mob/living/carbon/human/proc/hulk_jump)
+		remove_verb(/mob/living/carbon/human/proc/hulk_jump)
 		return
 
 	var/failure = 0
@@ -135,7 +135,7 @@
 	set category = "Superpower"
 
 	if(!(HULK in src.mutations))
-		src.remove_verb(/mob/living/carbon/human/proc/hulk_dash)
+		remove_verb(/mob/living/carbon/human/proc/hulk_dash)
 		return
 
 	var/turf/T = get_turf(get_step(usr,usr.dir))
@@ -315,7 +315,7 @@
 	set category = "Superpower"
 
 	if(!(HULK in src.mutations))
-		src.remove_verb(/mob/living/carbon/human/proc/hulk_smash)
+		remove_verb(/mob/living/carbon/human/proc/hulk_smash)
 		return
 
 	if (usr.incapacitated() || !usr.canmove)

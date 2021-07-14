@@ -1082,7 +1082,7 @@
 	if(R)
 		R.UnlinkSelf()
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
-		src.remove_verb(/mob/living/silicon/robot/proc/ResetSecurityCodes)
+		remove_verb(/mob/living/silicon/robot/proc/ResetSecurityCodes)
 
 /mob/living/silicon/robot/verb/pose()
 	set name = "Set Pose"
