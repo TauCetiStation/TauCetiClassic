@@ -53,6 +53,16 @@
 	var/obj/item/i = usr.get_active_hand()
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
+
+	var/datum/faction/gang/gang_mode
+	if(user.mind)
+		var/datum/role/R = isgangster(user)
+		if(R && istype(R.faction, /datum/faction/gang))
+			gang_mode = R.faction
+
+	if(gang_mode && !can_claim_for_gang(user, target, gang_mode))
+		return
+
 	if(is_type_in_list(target,validSurfaces))
 		if(!actions)
 			actions = list()
@@ -108,7 +118,12 @@
 		if(instant)
 			playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 		if(instant > 0 || (!user.is_busy(src) && do_after(user, 40, target = target)))
-			new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+			if(gang_mode)
+				if(!can_claim_for_gang(user, target, gang_mode))
+					return
+				tag_for_gang(user, target, gang_mode)
+			else
+				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
 			if(drawtype in list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"))
 				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
@@ -121,7 +136,53 @@
 				to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 				if(!instant)
 					qdel(src)
-	return
+
+/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
+	var/area/A = get_area(target)
+	if(!A || !is_station_level(A.z))
+		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
+		return FALSE
+
+	var/spraying_over = FALSE
+	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
+		spraying_over = TRUE
+
+	for(var/obj/machinery/power/apc in target)
+		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
+		return FALSE
+
+	var/obj/effect/decal/cleanable/crayon/gang/occupying_gang = territory_claimed(A, user)
+	if(occupying_gang && !spraying_over)
+		if(occupying_gang.my_gang == gang)
+			to_chat(user, "<span class='danger'>[A] has already been tagged by our gang!</span>")
+		else
+			to_chat(user, "<span class='danger'>[A] has already been tagged by a gang! You must find and spray over the old tag instead!</span>")
+		return FALSE
+
+	// stolen from oldgang lmao
+	return TRUE
+
+/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
+	var/list/gangs = find_factions_by_type(/datum/faction/gang)
+	for(var/gang in gangs)
+		var/datum/faction/gang/G = gang
+		for(var/obj/effect/decal/cleanable/crayon/gang/tag in G.gang_tags)
+			if(get_area(tag) == territory)
+				return tag
+
+/obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target, datum/faction/gang/gang)
+	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
+		qdel(old_marking)
+
+	var/area/territory = get_area(target)
+
+	var/obj/effect/decal/cleanable/crayon/gang/tag = new /obj/effect/decal/cleanable/crayon/gang(target)
+	tag.my_gang = gang
+	tag.my_gang.gang_tags += tag
+	tag.icon_state = "[gang.gang_id]_tag"
+	tag.name = "[gang.name] gang tag"
+	tag.desc = "Looks like someone's claimed this area for [gang.name]."
+	to_chat(user, "<span class='notice'>You tagged [territory] for [gang.name]!</span>")
 
 /obj/item/toy/crayon/red
 	icon_state = "crayonred"

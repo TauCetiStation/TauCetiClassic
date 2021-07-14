@@ -137,3 +137,16 @@
 	icon_state = "secmedhud"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY)
+
+/obj/item/clothing/glasses/sunglasses/hud/spacecop
+	name = "police aviators"
+	desc = "For thinking you look cool while brutalizing protestors and minorities."
+	icon_state = "bigsunglasses"
+	hud_types = list(ANTAG_HUD_GANGSTER)
+	darkness_view = 1
+
+/obj/item/clothing/glasses/sunglasses/hud/spacecop/hidden // for the undercover cop
+	name = "sunglasses"
+	desc = "These sunglasses are special, and let you view potential criminals."
+	icon_state = "sun"
+	item_state = "sunglasses"

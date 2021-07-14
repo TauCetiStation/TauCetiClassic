@@ -4,7 +4,7 @@ var/global/list/all_huds = list()
 
 //global HUD LIST
 //if you add new defines, then change number of assoc list
-var/global/list/huds[23]
+var/global/list/huds[25]
 
 /proc/init_hud_list() // proc used in global_list.dm
 	// Crooked port from TG, but he needed
@@ -32,6 +32,8 @@ var/global/list/huds[23]
 	huds[ANTAG_HUD_ERT] = new/datum/atom_hud/antag
 	huds[ANTAG_HUD_MALF] = new/datum/atom_hud/antag/hidden
 	huds[ANTAG_HUD_ZOMB] = new/datum/atom_hud/antag
+	huds[ANTAG_HUD_GANGSTER] = new/datum/atom_hud/antag/hidden
+	huds[ANTAG_HUD_SPACECOP] = new/datum/atom_hud/antag
 
 /datum/atom_hud
 	var/list/atom/hudatoms = list() //list of all atoms which display this hud

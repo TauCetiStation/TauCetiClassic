@@ -21,6 +21,7 @@
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
+	var/transparent_when_unavailable = TRUE
 	var/mob/living/owner
 
 /datum/action/New(Target)
@@ -86,6 +87,13 @@
 /datum/action/proc/IsAvailable()
 	return Checks()
 
+/datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+	if(button)
+		if(!IsAvailable())
+			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+		else
+			button.color = rgb(255,255,255,255)
+
 /atom/movable/screen/movable/action_button/MouseEntered(location,control,params)
 	openToolTip(usr, src, params, title = name, content = desc)
 
@@ -114,6 +122,50 @@
 
 /datum/action/proc/UpdateName()
 	return name
+
+//Preset for an action with a cooldown
+
+/datum/action/cooldown
+	check_flags = NONE
+	transparent_when_unavailable = FALSE
+	var/cooldown_time = 0
+	var/next_use_time = 0
+
+/datum/action/cooldown/New()
+	..()
+	button.maptext = ""
+	button.maptext_x = 8
+	button.maptext_y = 0
+	button.maptext_width = 24
+	button.maptext_height = 12
+
+/datum/action/cooldown/IsAvailable()
+	return next_use_time <= world.time
+
+/datum/action/cooldown/proc/StartCooldown()
+	next_use_time = world.time + cooldown_time
+	button.maptext = MAPTEXT("<b>[round(cooldown_time/10, 0.1)]</b>")
+	UpdateButtonIcon()
+	START_PROCESSING(SSfastprocess, src)
+
+/datum/action/cooldown/process()
+	if(!owner)
+		button.maptext = ""
+		STOP_PROCESSING(SSfastprocess, src)
+	var/timeleft = max(next_use_time - world.time, 0)
+	if(timeleft == 0)
+		button.maptext = ""
+		UpdateButtonIcon()
+		STOP_PROCESSING(SSfastprocess, src)
+	else
+		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
+
+/datum/action/cooldown/Grant(mob/M)
+	..()
+	if(owner)
+		UpdateButtonIcon()
+		if(next_use_time > world.time)
+			START_PROCESSING(SSfastprocess, src)
 
 /atom/movable/screen/movable/action_button
 	var/datum/action/owner

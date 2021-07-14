@@ -379,3 +379,13 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/stack/medical/advanced/bruise_pack(src)
+
+/obj/item/weapon/storage/backpack/henchmen
+	name = "wings"
+	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
+	icon_state = "henchmen"
+
+/obj/item/weapon/storage/backpack/dufflebag/cops
+	name = "police bag"
+	desc = "A large duffel bag for holding extra police gear."
+	slowdown = 0
