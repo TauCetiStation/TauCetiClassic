@@ -135,7 +135,7 @@ var/list/ai_verbs_default = list(
 	var/datum/announcement/station/command/ai/announcement = new
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
-	verbs |= ai_verbs_default
+	verbs.add_verb(ai_verbs_default)
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(!holo || !isliving(A) || !in_range(eyeobj, A))

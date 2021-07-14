@@ -20,7 +20,7 @@ robot_fabricator
 	owner = module_owner
 	module_owner.current_modules[module_name] = src
 	if(verb_caller)
-		owner.verbs |= verb_caller
+		owner.add_verb(verb_caller)
 
 /datum/AI_Module/Destroy()
 	if(owner)
