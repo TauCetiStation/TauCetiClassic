@@ -41,7 +41,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/syndicate_beacon/is_operational_topic()
+/obj/machinery/syndicate_beacon/is_operational()
 	return TRUE
 
 /obj/machinery/syndicate_beacon/Topic(href, href_list)

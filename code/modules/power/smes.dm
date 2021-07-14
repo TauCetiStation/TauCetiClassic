@@ -366,8 +366,8 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
-/obj/machinery/power/smes/is_operational_topic()
-	return !(stat & (BROKEN|EMPED))
+/obj/machinery/power/smes/is_operational()
+	return !(stat & (BROKEN | EMPED))
 
 /obj/machinery/power/smes/Topic(href, href_list)
 	. = ..()

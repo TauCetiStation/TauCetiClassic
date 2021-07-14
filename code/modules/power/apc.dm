@@ -833,8 +833,8 @@
 
 	return 1
 
-/obj/machinery/power/apc/is_operational_topic()
-	return !(stat & (BROKEN|MAINT|EMPED))
+/obj/machinery/power/apc/is_operational()
+	return !(stat & (BROKEN | MAINT | EMPED))
 
 /obj/machinery/power/apc/Topic(href, href_list, usingUI = TRUE)
 	. = ..(href, href_list)
