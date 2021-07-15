@@ -692,11 +692,12 @@ SUBSYSTEM_DEF(job)
 
 	lines[4] = "[current_date_string], [worldtime2text()]"
 
+	C.screen += B
+
 	var/newline_flag = TRUE
 	for(var/j in 1 to lines.len)
 		var/new_line = uppertext(lines[j])
 		var/old_line = j > 1 ? "<span style=\"[style_for_line[j - 1]]\">[uppertext(lines[j - 1])]</span>" : null
-		C.screen += B
 		animate(B, alpha = 255, time = 10)
 		newline_flag = !newline_flag
 		for(var/i = 2 to length_char(new_line) + 1)
