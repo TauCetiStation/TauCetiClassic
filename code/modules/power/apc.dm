@@ -176,7 +176,7 @@
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
-	area.poweralert(1, src) // remove the power alert. yes, 1 is off
+	area.poweralert(FALSE, src) // Remove the power alert
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	if(terminal)
@@ -417,7 +417,7 @@
 			to_chat(user, "You are trying to remove the power control board...") // lpeters - fixed grammar issues
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
-				area.poweralert(1, src)
+				area.poweralert(FALSE, src)
 				if((stat & BROKEN) || malfhack)
 					user.visible_message(\
 						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
