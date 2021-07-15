@@ -9,7 +9,8 @@
 /mob/proc/add_verb(...)
 	var/verbs_list = get_verbs_list(args)
 	verbs += verbs_list
-	src << output("[get_output_verbs_list(verbs_list)];", "statbrowser:add_verb_list")
+	if(client)
+		src << output("[get_output_verbs_list(verbs_list)];", "statbrowser:add_verb_list")
 
 /client/proc/add_verb(...)
 	var/verbs_list = get_verbs_list(args)
@@ -19,7 +20,8 @@
 /mob/proc/remove_verb(...)
 	var/list/verbs_list = get_verbs_list(args)
 	verbs -= verbs_list
-	src << output("[get_output_verbs_list(verbs_list)];", "statbrowser:remove_verb_list")
+	if(client)
+		src << output("[get_output_verbs_list(verbs_list)];", "statbrowser:remove_verb_list")
 
 /client/proc/remove_verb(...)
 	var/list/verbs_list = get_verbs_list(args)
