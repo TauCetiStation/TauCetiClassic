@@ -9,7 +9,11 @@
 	antag_hud_name = "hud_gangster"
 
 	/// The action used to spawn family induction packages.
-	var/datum/action/cooldown/spawn_induction_package/package_spawner = new()
+	var/datum/action/cooldown/spawn_induction_package/package_spawner
+
+/datum/role/gangster/New(datum/mind/M, datum/faction/fac, override)
+	. = ..()
+	package_spawner = new(src)
 
 /datum/role/gangster/OnPreSetup()
 	. = ..()
@@ -23,7 +27,7 @@
 /datum/role/gangster/OnPostSetup(laterole)
 	..()
 	package_spawner.Grant(antag.current)
-	package_spawner.my_gang_datum = src
+	package_spawner.my_gang_datum = faction
 	var/mob/living/M = antag.current
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used

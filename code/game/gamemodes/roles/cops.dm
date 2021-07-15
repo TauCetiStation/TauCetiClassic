@@ -50,7 +50,7 @@
 
 	logo_state = "space_cop"
 
-	var/outfit = /datum/outfit/families_police/beatcop
+	var/outfit
 
 /datum/role/cop/OnPostSetup(laterole)
 	. = ..()
@@ -71,9 +71,12 @@
 		var/datum/hud/H = L.hud_used
 		H.mymob.client.screen -= H.wanted_lvl
 		QDEL_NULL(H.wanted_lvl)
-	..()
 
-/datum/role/cop/Greet(greeting, custom)
+/datum/role/cop/beatcop
+	name = "Beat Cop"
+	outfit = /datum/outfit/families_police/beatcop
+
+/datum/role/cop/beatcop/Greet(greeting, custom)
 	if(!..())
 		return FALSE
 
@@ -91,10 +94,6 @@
 	to_chat(antag.current, missiondesc)
 
 	antag.current.playsound_local(null, 'sound/antag/families_police.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-/datum/role/cop/beatcop
-	name = "Beat Cop"
-	outfit = /datum/outfit/families_police/beatcop
 
 /datum/role/cop/beatcop/armored
 	name = "Armored Beat Cop"

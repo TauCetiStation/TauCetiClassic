@@ -1,11 +1,3 @@
-/datum/outfit/families_police/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	..()
-
 /datum/outfit/families_police/beatcop
 	name = "Families: Beat Cop"
 
@@ -28,6 +20,7 @@
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/ammo_box/magazine/c45r = 3,
 		/obj/item/ammo_box/c45 = 2,
+		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/storage/box/survival
 	)
 
@@ -43,6 +36,7 @@
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 2,
+		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/storage/box/survival
 	)
 
@@ -58,6 +52,7 @@
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 2,
+		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/storage/box/survival
 	)
 
@@ -65,6 +60,7 @@
 	name = "Families: Space FBI Officer"
 	suit = /obj/item/clothing/suit/armor/laserproof
 	head = /obj/item/clothing/head/helmet/riot
+	head = /obj/item/clothing/head/helmet/HoS/dermal
 	belt = /obj/item/weapon/gun/projectile/automatic
 	gloves = /obj/item/clothing/gloves/combat
 	backpack_contents = list(
@@ -74,20 +70,25 @@
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/ammo_box/magazine/msmg9mm = 3,
 		/obj/item/ammo_box/c9mm = 2,
+		/obj/item/weapon/melee/baton,
 		/obj/item/weapon/storage/box/survival
 	)
 
 /datum/outfit/families_police/beatcop/military
 	name = "Families: Space Military"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/laserproof
-	head = /obj/item/clothing/head/helmet/HoS/dermal
-	belt = /obj/item/weapon/gun/energy/laser/scatter
-	gloves = /obj/item/clothing/gloves/combat
+	uniform = /obj/item/clothing/under/tactical/marinad
+	suit = /obj/item/clothing/suit/marinad
+	head = /obj/item/clothing/head/helmet/tactical/marinad
+	belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	gloves = /obj/item/clothing/gloves/security/marinad
+	back = /obj/item/weapon/storage/backpack/dufflebag/marinad
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/weapon/shield/riot/tele = 1,
+		/obj/item/ammo_box/magazine/m556 = 2,
+		/obj/item/weapon/melee/baton,
+		/obj/item/weapon/gun/projectile/automatic/a28,
 		/obj/item/weapon/storage/box/survival
 	)

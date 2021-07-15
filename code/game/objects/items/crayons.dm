@@ -56,7 +56,7 @@
 
 	var/datum/faction/gang/gang_mode
 	if(user.mind)
-		var/datum/role/R = isgangster(user)
+		var/datum/role/R = isanygangster(user)
 		if(R && istype(R.faction, /datum/faction/gang))
 			gang_mode = R.faction
 
@@ -139,7 +139,7 @@
 
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/faction/gang/gang)
 	var/area/A = get_area(target)
-	if(!A || !is_station_level(A.z))
+	if(!A || !is_station_level(A.z) || !A.valid_territory)
 		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
 		return FALSE
 

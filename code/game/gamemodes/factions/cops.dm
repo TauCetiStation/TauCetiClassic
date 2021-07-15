@@ -8,7 +8,7 @@
 
 	logo_state = "space_cop"
 
-	min_roles = 1
+	min_roles = 0
 	max_roles = 3
 
 	/// The time, in deciseconds, that the datum's OnPostSetup() occured at. Used in end_time. Used and set internally.

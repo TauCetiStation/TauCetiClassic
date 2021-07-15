@@ -822,27 +822,37 @@
 	name = "jack bros outfit"
 	desc = "For when it's time to hee some hos."
 	icon_state = "JackFrostUniform"
+	item_state = "JackFrostUniform"
+	item_color = "JackFrostUniform"
 
 /obj/item/clothing/under/yakuza
 	name = "tojo clan pants"
 	desc = "For those long nights under the traffic cone."
 	icon_state = "MajimaPants"
+	item_state = "MajimaPants"
+	item_color = "MajimaPants"
 
 /obj/item/clothing/suit/dutch
 	name = "dutch's jacket"
 	desc = "For those long nights on the beach in Tahiti."
 	icon_state = "DutchJacket"
 	body_parts_covered = ARMS
+	item_state = "DutchJacket"
+	item_color = "DutchJacket"
 
 /obj/item/clothing/under/dutch
 	name = "dutch's suit"
 	desc = "You can feel a <b>god damn plan</b> coming on."
 	icon_state = "DutchUniform"
+	item_state = "DutchUniform"
+	item_color = "DutchUniform"
 
 /obj/item/clothing/under/swagoutfit
 	name = "Swag outfit"
 	desc = "Why don't you go secure some bitches?"
 	icon_state = "SwagOutfit"
+	item_state = "SwagOutfit"
+	item_color = "SwagOutfit"
 
 /obj/item/clothing/head/spacepolice
 	name = "space police cap"
@@ -853,8 +863,19 @@
 	name = "henchmen jumpsuit"
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
 	icon_state = "henchmen"
+	item_state = "henchmen"
+	item_color = "henchmen"
+	flags = HEADCOVERSEYES|BLOCKHAIR
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HEAD
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES
+
+/obj/item/clothing/under/henchmen/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_hair()
+		H.update_inv_ears()
+		H.update_inv_wear_mask()
 
 /obj/item/clothing/shoes/yakuza
 	name = "tojo clan shoes"
@@ -865,6 +886,7 @@
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
+
 /obj/item/clothing/shoes/swagshoes
 	name = "swag shoes"
 	desc = "They got me for my foams!"

@@ -19,9 +19,11 @@
 	/// Whether the space cops have arrived. Set internally; used internally, and for updating the wanted HUD.
 	var/cops_arrived = FALSE
 	/// The current wanted level. Set internally; used internally, and for updating the wanted HUD.
-	var/wanted_level
+	var/wanted_level = 0
 
 /datum/faction/cops/process()
+	if(isnull(start_time) || isnull(end_time))
+		return
 	if(world.time > (end_time - 5 MINUTES) && !sent_second_announcement)
 		five_minute_warning()
 		addtimer(CALLBACK(src, .proc/send_in_the_fuzz), 5 MINUTES)
@@ -30,10 +32,6 @@
 /datum/faction/cops/proc/five_minute_warning()
 	second_announce.play()
 	sent_second_announcement = TRUE
-
-/datum/faction/cops/proc/change_apperance(mob/living/carbon/human/cop, client/C)
-	var/new_name = sanitize_safe(input(C, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
-	C.create_human_apperance(cop, new_name)
 
 /datum/faction/cops/proc/end_hostile_sit()
 	SSshuttle.fake_recall = FALSE
@@ -73,34 +71,7 @@
 	if(global.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
 		team_size += 3
 
-	var/list/candidates = pollGhostCandidates("Хотите помочь разобраться с преступностью на станции?", ROLE_FAMILIES)
-	if(candidates.len)
-		//Pick the (un)lucky players
-		var/numagents = min(team_size, candidates.len)
-
-		var/list/spawnpoints = global.copsstart
-		var/index = 0
-		while(numagents && candidates.len)
-			var/spawnloc = spawnpoints[index+1]
-			//loop through spawnpoints one at a time
-			index = (index + 1) % spawnpoints.len
-			var/mob/dead/observer/chosen_candidate = pick(candidates)
-			candidates -= chosen_candidate
-			if(!chosen_candidate.key)
-				continue
-
-			//Spawn the body
-			var/mob/living/carbon/human/cop = new(spawnloc)
-			INVOKE_ASYNC(src, .proc/change_apperance, cop, chosen_candidate.client)
-			cop.key = chosen_candidate.key
-
-			//Give antag datum
-			var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
-			if(faction)
-				faction.roletype = cops_to_send
-				add_faction_member(faction, cop, TRUE, TRUE)
-
-			numagents--
+	spawn_space_police(team_size, cops_to_send)
 
 	cops_arrived = TRUE
 	update_wanted_level(wanted_level) // gotta make sure everyone's wanted level display looks nice

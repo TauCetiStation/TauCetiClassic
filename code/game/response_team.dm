@@ -161,25 +161,25 @@ var/can_call_ert
 /client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
 	//todo: god damn this.
 	//make it a panel, like in character creation
-	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	var/new_facial = input(src, "Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
 		H.r_facial = hex2num(copytext(new_facial, 2, 4))
 		H.g_facial = hex2num(copytext(new_facial, 4, 6))
 		H.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input("Please select hair color.", "Character Generation") as color
+	var/new_hair = input(src, "Please select hair color.", "Character Generation") as color
 	if(new_facial)
 		H.r_hair = hex2num(copytext(new_hair, 2, 4))
 		H.g_hair = hex2num(copytext(new_hair, 4, 6))
 		H.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-	var/new_eyes = input("Please select eye color.", "Character Generation") as color
+	var/new_eyes = input(src, "Please select eye color.", "Character Generation") as color
 	if(new_eyes)
 		H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
 		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input(src, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
 
 	if (!new_tone)
 		new_tone = 35
@@ -196,7 +196,7 @@ var/can_call_ert
 		hairs.Add(hair.name) // add hair name to hairs
 		qdel(hair) // delete the hair after it's all done
 
-	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
+	var/new_gender = tgui_alert(src, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
 		if(new_gender == "Male")
 			H.gender = MALE
@@ -204,12 +204,12 @@ var/can_call_ert
 			H.gender = FEMALE
 
 	//hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
+	var/new_hstyle = input(src, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
 	if(new_hstyle)
 		H.h_style = new_hstyle
 
 	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
+	var/new_fstyle = input(src, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
 	if(new_fstyle)
 		H.f_style = new_fstyle
 

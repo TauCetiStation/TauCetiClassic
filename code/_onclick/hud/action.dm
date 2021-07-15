@@ -1,7 +1,7 @@
 #define AB_ITEM 1
 #define AB_SPELL 2
 #define AB_INNATE 3
-//#define AB_GENERIC 4
+#define AB_GENERIC 4
 
 #define AB_CHECK_RESTRAINED 1
 #define AB_CHECK_STUNNED 2
@@ -26,6 +26,9 @@
 
 /datum/action/New(Target)
 	target = Target
+	button = new
+	button.owner = src
+	button.name = name
 
 /datum/action/Destroy()
 	if(owner)
@@ -124,8 +127,8 @@
 	return name
 
 //Preset for an action with a cooldown
-
 /datum/action/cooldown
+	action_type = AB_GENERIC
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
 	var/cooldown_time = 0

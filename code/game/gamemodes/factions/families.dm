@@ -6,7 +6,7 @@
 	initroletype = /datum/role/gangster/leader
 	roletype = /datum/role/gangster
 
-	min_roles = 1
+	min_roles = 0
 	max_roles = 2
 
 	/// The number of family members more that a family may have over other active families. Can be set externally; used internally.
@@ -28,6 +28,7 @@
 
 /datum/faction/gang/forgeObjectives()
 	. = ..()
+	AppendObjective(/datum/objective/gang/points)
 	AppendObjective(gang_objective_type)
 
 /datum/faction/gang/custom_result()
@@ -170,12 +171,10 @@
 							/obj/item/clothing/shoes/yakuza,
 							/obj/item/clothing/mask/scarf/yellow,
 							/obj/item/clothing/mask/bandana/gold,
-							/obj/item/clothing/head/hardhat,
-							/obj/item/clothing/under/mafia/sue)
+							/obj/item/clothing/suit/jacket/leather)
 	free_clothes = list(/obj/item/clothing/under/yakuza,
 						/obj/item/clothing/shoes/yakuza,
-						/obj/item/clothing/under/mafia/sue,
-						/obj/item/clothing/head/hardhat,
+						/obj/item/clothing/suit/jacket/leather,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective_type = /datum/objective/gang/save_station
 

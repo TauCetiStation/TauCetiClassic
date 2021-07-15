@@ -18,4 +18,4 @@
 	closeToolTip(usr)
 
 /atom/movable/screen/wanted/proc/update_icon_state()
-	icon_state = "[base_icon_state]_[level][cops_arrived ? "_active" : null]"
+	icon_state = "[base_icon_state]_[wanted_level][cops_arrived ? "_active" : null]"
