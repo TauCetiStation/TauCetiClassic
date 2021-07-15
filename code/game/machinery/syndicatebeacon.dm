@@ -68,7 +68,7 @@
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
-			var/datum/role/traitor/wishgtanter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
+			var/datum/role/traitor/wishgranter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
 			T.Greet(GREET_SYNDBEACON)
 
 	updateUsrDialog()

@@ -39,6 +39,10 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	// Custom Keybindings
 	var/list/key_bindings = list()
+	// If hotkey mode is enabled, then clicking the map will automatically
+	// unfocus the text bar. This removes the red color from the text bar
+	// so that the visual focus indicator matches reality.
+	var/hotkeys = TRUE
 
 	var/tooltip = TRUE
 	var/tooltip_font = "Small Fonts"

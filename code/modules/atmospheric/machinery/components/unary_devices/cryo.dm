@@ -125,10 +125,10 @@
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
+	if(user.incapacitated() || !iscarbon(target))
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 	close_machine(target)
 
@@ -142,21 +142,21 @@
 	if(user.is_busy(null, FALSE)) // prevents spam too.
 		return
 
-	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
-	audible_message("<span class='notice'>You hear a thump from [src].</span>")
+	to_chat(user, "<span class='notice'>Вы пытаетесь выбраться из криокамеры, толкаясь ногами... (Потребуется около 30 секунд.)</span>")
+	audible_message("<span class='notice'>Вы слышите глухой стук из криокамеры.</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
 	set name = "Eject Cryo Cell"
-	set desc = "Begin the release sequence inside the cryo tube."
+	set desc = "Начать процедуру открытия криокамеры."
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
 		if(usr.stat == DEAD)	//and he's not dead....
 			return
-		to_chat(usr, "<span class='notice'>Release sequence activated. This will take about a minute.</span>")
+		to_chat(usr, "<span class='notice'>Процедура открытия активирована. Это займет около минуты.</span>")
 		sleep(600)
 		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
 			return
@@ -171,11 +171,11 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			to_chat(user, "Кто-то внутри криокамеры!")
 		else
-			to_chat(user, "You can barely make out a form floating in [src].")
+			to_chat(user, "Вы едва можете различить форму того, что плавает в криокамере.")
 	else
-		to_chat(user, "[src] seems empty.")
+		to_chat(user, "Криокамера выглядит пустой.")
 
  /**
   * The ui_interact proc is used to open and update Nano UIs
@@ -247,7 +247,10 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
+		return
+
+	if(user == occupant)
 		return
 
 	if(!user.incapacitated() && Adjacent(user))
@@ -257,7 +260,10 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
+		return
+
+	if(user == occupant)
 		return
 
 	if(!user.incapacitated() && Adjacent(user))
@@ -297,14 +303,14 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
+			to_chat(user, "<span class='warning'>Что-то уже загружено в криокамеру!</span>")
 			return
 		if(!user.drop_from_inventory(I, src))
 			return
 		beaker = I
 		user.visible_message(
-			"[user] places [I] in [src].",
-			"<span class='notice'>You place [I] in [src].</span>")
+			"[user] помещает [I] в криокамеру.",
+			"<span class='notice'>Вы помещаете [I] в криокамеру.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return

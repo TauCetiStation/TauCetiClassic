@@ -18,7 +18,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
-	layer = MOB_LAYER
 	density = FALSE
 	anchored = FALSE
 	//weight = 1.0E7
@@ -294,7 +293,7 @@
 		next_dest = signal.data["next_patrol"]
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
-	src.target_types = new/list()
+	src.target_types = list()
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
 	target_types += /obj/effect/decal/cleanable/vomit
