@@ -12,7 +12,7 @@
 
 /atom/movable/screen/wanted/MouseEntered(location,control,params)
 	. = ..()
-	openToolTip(usr,src,params,title = name,content = desc, theme = "alerttooltipstyle")
+	openToolTip(usr, src, params, title = name, content = desc, theme = "alerttooltipstyle")
 
 /atom/movable/screen/wanted/MouseExited()
 	closeToolTip(usr)
