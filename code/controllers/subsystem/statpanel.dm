@@ -6,7 +6,8 @@ SUBSYSTEM_DEF(statpanels)
 	flags = SS_TICKER | SS_FIRE_IN_LOBBY
 	var/list/currentrun = list()
 	var/encoded_global_data
-	var/mc_data_encoded
+	var/mc_data_encoded // R_DEBUG
+	var/mc_data_for_admins_encoded
 	var/list/cached_images = list()
 
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
@@ -36,12 +37,15 @@ SUBSYSTEM_DEF(statpanels)
 			target << output("1", "statbrowser:update_split_admin_tabs")
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
 				target << output("", "statbrowser:add_admin_tabs") // [url_encode(target.holder.href_token)]
-			if(target.stat_tab == "MC")
+			if(target.holder.rights & R_ADMIN && target.stat_tab == "MC")
 				var/turf/eye_turf = get_turf(target.eye)
 				var/coord_entry = url_encode(COORD(eye_turf))
 				if(!mc_data_encoded)
 					generate_mc_data()
-				target << output("[mc_data_encoded];[coord_entry]", "statbrowser:update_mc")
+				if(target.holder.rights & R_DEBUG)
+					target << output("[mc_data_encoded];[coord_entry]", "statbrowser:update_mc")
+				else
+					target << output("[mc_data_for_admins_encoded];[coord_entry]", "statbrowser:update_mc")
 			if(target.stat_tab == "Tickets")
 				var/list/ahelp_tickets = global.ahelp_tickets.stat_entry()
 				target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
@@ -87,7 +91,7 @@ SUBSYSTEM_DEF(statpanels)
 		if(MC_TICK_CHECK)
 			return
 
-
+// R_DEBUG
 /datum/controller/subsystem/statpanels/proc/generate_mc_data()
 	var/list/mc_data = list(
 		list("CPU:", world.cpu),
@@ -104,6 +108,10 @@ SUBSYSTEM_DEF(statpanels)
 		mc_data[++mc_data.len] = list("\[[sub_system.state_letter()]][sub_system.name]", sub_system.stat_entry(), "\ref[sub_system]")
 	mc_data[++mc_data.len] = list("Camera Net", "Cameras: [global.cameranet.cameras.len] | Chunks: [global.cameranet.chunks.len]", "\ref[global.cameranet]")
 	mc_data_encoded = url_encode(json_encode(mc_data))
+	var/list/mc_data_for_admins = list(
+		list("CPU:", world.cpu),
+	)
+	mc_data_for_admins_encoded = url_encode(json_encode(mc_data_for_admins))
 
 /atom/proc/remove_from_cache()
 	SIGNAL_HANDLER
