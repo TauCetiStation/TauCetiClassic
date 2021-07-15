@@ -7,6 +7,15 @@
 	/// The team datum that the person who uses this package should be added to.
 	var/datum/faction/gang/team_to_use
 
+/obj/item/gang_induction_package/atom_init(mapload, ...)
+	. = ..()
+	// prevent spawn of kits
+	QDEL_IN(src, 20 SECONDS)
+
+/obj/item/gang_induction_package/Destroy()
+	new /obj/effect/temp_visual/pulse(get_turf(src))
+	return ..()
+
 /obj/item/gang_induction_package/attack_self(mob/living/user)
 	..()
 	if(user.ismindprotect())
