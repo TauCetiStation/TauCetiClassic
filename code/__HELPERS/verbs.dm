@@ -1,9 +1,9 @@
 /**
- * handles adding verbs and updating the stat panel browser
+ * handles adding/removing verbs and updating the stat panel browser
  *
  * pass the verb type path to this instead of adding it directly to verbs so the statpanel can update
  * Arguments:
- * * verb - typepath to a verb, or a list of verbs, supports lists of lists
+ * * ... - typepath to a verb, or a list of verbs, supports lists of lists
  */
 
 /mob/proc/add_verb(...)
@@ -16,13 +16,6 @@
 	verbs += verbs_list
 	src << output("[get_output_verbs_list(verbs_list)];", "statbrowser:add_verb_list")
 
-/**
- * handles removing verb and sending it to browser to update, use this for removing verbs
- *
- * pass the verb type path to this instead of removing it from verbs so the statpanel can update
- * Arguments:
- * * verb - typepath to a verb, or a list of verbs, supports lists of lists
- */
 /mob/proc/remove_verb(...)
 	var/list/verbs_list = get_verbs_list(args)
 	verbs -= verbs_list
