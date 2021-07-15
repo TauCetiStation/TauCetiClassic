@@ -143,9 +143,6 @@ var/list/blacklisted_builds = list(
 	if(href_list["reload_statbrowser"])
 		src << browse(file('html/statbrowser.html'), "window=statbrowser")
 
-	//Logs all hrefs
-	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
-
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
 		if("usr")		hsrc = mob
