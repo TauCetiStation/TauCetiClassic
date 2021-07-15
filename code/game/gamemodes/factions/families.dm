@@ -51,7 +51,7 @@
 		alive_cops++
 	if(alive_gangsters > alive_cops)
 		return "<span class='green'>Банда смогла выжить</span>"
-	return "<span class='red'>Полиция уничтожила банду</span>"
+	return "<span class='red'>НаноТрейзен уничтожила банду</span>"
 
 /datum/faction/gang/GetScoreboard()
 	. = ..()

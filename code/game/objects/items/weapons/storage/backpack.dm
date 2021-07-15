@@ -386,6 +386,6 @@
 	icon_state = "henchmen"
 
 /obj/item/weapon/storage/backpack/dufflebag/cops
-	name = "police bag"
-	desc = "A large duffel bag for holding extra police gear."
+	name = "NanoTrasen bag"
+	desc = "A large duffel bag for holding extra NanoTrasen gear."
 	slowdown = 0

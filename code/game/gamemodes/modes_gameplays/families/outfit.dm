@@ -1,5 +1,5 @@
 /datum/outfit/families_police/beatcop
-	name = "Families: Beat Cop"
+	name = "Families: Офицер"
 
 	uniform = /obj/item/clothing/under/rank/security/beatcop
 	back = /obj/item/weapon/storage/backpack/dufflebag/cops
@@ -24,9 +24,8 @@
 		/obj/item/weapon/storage/box/survival
 	)
 
-
 /datum/outfit/families_police/beatcop/armored
-	name = "Families: Armored Beat Cop"
+	name = "Families: Вооруженный Офицер"
 	suit = /obj/item/clothing/suit/armor/vest/security
 	head = /obj/item/clothing/head/helmet
 	l_hand = /obj/item/weapon/gun/projectile/shotgun/combat
@@ -41,7 +40,7 @@
 	)
 
 /datum/outfit/families_police/beatcop/swat
-	name = "Families: SWAT Beat Cop"
+	name = "Families: Боец Тактической Группы"
 	suit = /obj/item/clothing/suit/armor/riot
 	head = /obj/item/clothing/head/helmet
 	gloves = /obj/item/clothing/gloves/combat
@@ -57,7 +56,7 @@
 	)
 
 /datum/outfit/families_police/beatcop/fbi
-	name = "Families: Space FBI Officer"
+	name = "Families: Инспектор"
 	suit = /obj/item/clothing/suit/armor/laserproof
 	head = /obj/item/clothing/head/helmet/riot
 	head = /obj/item/clothing/head/helmet/HoS/dermal
@@ -75,7 +74,7 @@
 	)
 
 /datum/outfit/families_police/beatcop/military
-	name = "Families: Space Military"
+	name = "Families: Боец ВСНТ"
 	uniform = /obj/item/clothing/under/tactical/marinad
 	suit = /obj/item/clothing/suit/marinad
 	head = /obj/item/clothing/head/helmet/tactical/marinad

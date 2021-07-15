@@ -99,9 +99,9 @@
 		else
 			report = "<span class='red'>[highest_gang] побеждает, набрав наибольшее количество очков!</span>"
 	else if(alive_gangsters == alive_cops)
-		report = "<span class='orange'>Легенды гласят, что у полиции и семей до сих пор идет конфликт!</span>"
+		report = "<span class='orange'>Легенды гласят, что у НаноТрейзен и семей до сих пор идет конфликт!</span>"
 	else
-		report = "<span class='green'>Полиция смогла остановить деятельность банд!</span>"
+		report = "<span class='green'>НаноТрейзен смогла остановить деятельность банд!</span>"
 
 	return "[report]"
 

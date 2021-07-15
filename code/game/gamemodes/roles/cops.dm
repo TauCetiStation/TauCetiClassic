@@ -31,12 +31,11 @@
 /datum/role/cop/undercover/Greet()
 	..()
 	var/missiondesc = ""
-	missiondesc += "<BR><B><font size=3 color=red>Вы НЕ являетесь сотрудником НаноТрейзен. Вы работаете на местное правительство.</font></B>"
-	missiondesc += "<BR>Вы являетесь сотрудником полиции под прикрытием на борту [station_name()]. Вы были посланы сюда Звёздной Коалицией Тау Киты из-за подозрений в жестоком поведении со стороны сотрудников безопасности и для того, чтобы следить за потенциальной перступной деятельностью."
+	missiondesc += "Вы являетесь офицером под  прикрытием на борту [station_name()], работающим на Отдел по Борьбе с Организованной Преступностью. Вы были посланы сюда из-за подозрений в халатном поведении сотрудников безопасности и для того, чтобы следить за потенциальной перступной деятельностью."
 	missiondesc += "<BR><B>Ваша Миссия</B>:"
 	missiondesc += "<BR> <B>1.</B> Внимательно следите за любыми гангстерами, которых вы заметите. Вы можете их увидеть, используя свои специальные очки в рюкзаке."
 	missiondesc += "<BR> <B>2.</B> Смотрите за тем, как Служба Безопасности справляется с бандитами, и следите за чрезмерной жестокостью с их стороны."
-	missiondesc += "<BR> <B>3.</B> Оставайтесь под прикрытием и не попадайтесь на глаза службе безопасноси или каким-либо бандам. НаноТрейзен не любит, когда за ними шпионят."
+	missiondesc += "<BR> <B>3.</B> Оставайтесь под прикрытием и не попадайтесь на глаза службе безопасноси или каким-либо бандам. Никто не любит проверок с инспекций."
 	missiondesc += "<BR> <B>4.</B> Когда ваши коллеги прибудут через час, свяжитесь с ними и сообщите им обо всем, что вы видели. Помогите им в обеспечении безопасности.</span>"
 	to_chat(antag.current, missiondesc)
 
@@ -74,7 +73,7 @@
 		QDEL_NULL(H.wanted_lvl)
 
 /datum/role/cop/beatcop
-	name = "Beat Cop"
+	name = "Офицер"
 	outfit = /datum/outfit/families_police/beatcop
 
 /datum/role/cop/beatcop/Greet(greeting, custom)
@@ -82,32 +81,31 @@
 		return FALSE
 
 	var/missiondesc = ""
-	missiondesc += "<BR><B><font size=5 color=red>Вы НЕ являетесь сотрудником НаноТрейзен. Вы работаете на местное правительство.</font></B>"
-	missiondesc += "<BR><B><font size=5 color=red>Вы НЕ Эскадрон Смерти. Вы здесь, чтобы помочь невинным людям избежать насилия, остановить преступную деятельность и другие опасные штуки.</font></B>"
-	missiondesc += "<BR>После всплеска бандитского насилия на [station_name()], вы отвечаете на экстренные вызов со станции для немедленной помощи полиции ЗКТК.\n"
+	missiondesc += "<B><font size=5 color=red>Вы НЕ Эскадрон Смерти. Вы здесь, чтобы помочь невинным людям избежать насилия, остановить преступную деятельность и другие опасные штуки.</font></B>"
+	missiondesc += "<BR>Вы работаете на <B>Отдел по Борьбе с Организованной Преступностью</B>. Вы находитесь по иерархии выше любого сотрудника станции."
+	missiondesc += "<BR>После всплеска бандитского насилия на [station_name()], вы отвечаете на экстренные вызов со станции для немедленной помощи .\n"
 	missiondesc += "<BR><B>Ваша Миссия</B>:"
 	missiondesc += "<BR> <B>1.</B> Служите обществу."
 	missiondesc += "<BR> <B>2.</B> Защищайте невинных."
 	missiondesc += "<BR> <B>3.</B> Соблюдайте закон."
-	missiondesc += "<BR> <B>4.</B> Найдите копов под прикрытием."
+	missiondesc += "<BR> <B>4.</B> Найдите внедрённых офицеров."
 	missiondesc += "<BR> <B>5.</B> Задержите сотрудников Службы Безопасности НаноТрейзен, если они будут причинять вред персоналу."
-	missiondesc += "<BR> Вы можете <B>видеть бандитов</B> используя ваши <B>специальные очки</B>.</span>"
 	to_chat(antag.current, missiondesc)
 
 	antag.current.playsound_local(null, 'sound/antag/families_police.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/role/cop/beatcop/armored
-	name = "Armored Beat Cop"
+	name = "Officer"
 	outfit = /datum/outfit/families_police/beatcop/armored
 
 /datum/role/cop/beatcop/swat
-	name = "S.W.A.T. Member"
+	name = "Tactical Group Fighter"
 	outfit = /datum/outfit/families_police/beatcop/swat
 
 /datum/role/cop/beatcop/fbi
-	name = "FBI Agent"
+	name = "Inspector"
 	outfit = /datum/outfit/families_police/beatcop/fbi
 
 /datum/role/cop/beatcop/military
-	name = "Space Military"
+	name = "MFNT Fighter"
 	outfit = /datum/outfit/families_police/beatcop/military

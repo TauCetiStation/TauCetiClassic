@@ -438,8 +438,10 @@
 	rank = "Emergency Response Team"
 
 /obj/item/weapon/card/id/space_police
-	name = "Space Police of Tau Ceti"
-	assignment = "Space Police"
+	name = "Organized Crimes Department"
+	assignment = "Organized Crimes Department"
+	rank = "Organized Crimes Department"
+
 	icon_state = "ert"
 
 /obj/item/weapon/card/id/space_police/atom_init()

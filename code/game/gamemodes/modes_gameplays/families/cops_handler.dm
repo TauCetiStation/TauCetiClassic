@@ -136,21 +136,21 @@
 		if(2)
 			if(!sent_second_announcement) // when you hear that they're "arriving in 5 minutes," that's a goddamn guarantee
 				end_time = start_time + 50 MINUTES
-			announcement_message = "Небольшое количество полицейского транспорта было замечено на пути к [station_name()]."
+			announcement_message = "Небольшое количество транспорта ОБОП было замечено на пути к [station_name()]."
 		if(3)
 			if(!sent_second_announcement)
 				end_time = start_time + 40 MINUTES
-			announcement_message = "Большой отряд полицейского транспорта был замечен на пути к [station_name()]."
+			announcement_message = "Большой отряд транспорта ОБОП был замечен на пути к [station_name()]."
 		if(4)
 			if(!sent_second_announcement)
 				end_time = start_time + 35 MINUTES
-			announcement_message = "Флот высокотехнологичного транспорта был замечен на пути к [station_name()]."
+			announcement_message = "Флот высокотехнологичного транспорта ОБОП был замечен на пути к [station_name()]."
 		if(5)
 			if(!sent_second_announcement)
 				end_time = start_time + 30 MINUTES
-			announcement_message = "Флот, направляющийся к [station_name()], теперь имеет транспорт национальной гвардии."
+			announcement_message = "Флот, направляющийся к [station_name()], теперь имеет военизированный транспорт."
 
-	announcement_message += " Они прибудут через [(end_time - start_time) / (1 MINUTES)] минут."
+	announcement_message += " ОБОП прибудет через [(end_time - start_time) / (1 MINUTES)] минут."
 	if(newlevel == 1) // specific exception to stop the announcement from triggering right after the families themselves are announced because aesthetics
 		return
 
@@ -164,11 +164,11 @@
 		if(1)
 			if(!sent_second_announcement)
 				end_time = start_time + 60 MINUTES
-			announcement_message = "Сейчас только несколько едениц полицейского транспорта направляется к [station_name()]."
+			announcement_message = "Сейчас только несколько едениц транспорта ОБОП направляется к [station_name()]."
 		if(2)
 			if(!sent_second_announcement)
 				end_time = start_time + 50 MINUTES
-			announcement_message = "В сторону [station_name()] теперь направляется меньше полицейского транспорта."
+			announcement_message = "В сторону [station_name()] теперь направляется меньше транспорта ОБОП."
 		if(3)
 			if(!sent_second_announcement)
 				end_time = start_time + 40 MINUTES
@@ -176,9 +176,9 @@
 		if(4)
 			if(!sent_second_announcement)
 				end_time = start_time + 35 MINUTES
-			announcement_message = "Конвой, направляющийся к [station_name()], больше не имеет транспорт национальной гвардии."
+			announcement_message = "Конвой, направляющийся к [station_name()], больше не имеет военизированный транспорт."
 
-	announcement_message += " Они прибудут через [(end_time - start_time) / (1 MINUTES)] минут."
+	announcement_message += " ОБОП прибудут через [(end_time - start_time) / (1 MINUTES)] минут."
 	announce.play(announcement_message)
 
 #undef LOWPOP_FAMILIES_COUNT

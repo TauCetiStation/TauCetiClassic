@@ -1,5 +1,5 @@
 /datum/action/cooldown/spawn_induction_package
-	name = "Create Induction Package"
+	name = "Создать Вступительный Набор"
 	check_flags = AB_CHECK_ALIVE
 	button_icon_state = "recruit"
 	cooldown_time = 300

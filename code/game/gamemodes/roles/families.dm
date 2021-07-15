@@ -47,12 +47,11 @@
 /datum/role/gangster/Greet(laterole)
 	antag.current.playsound_local(null, 'sound/antag/thatshowfamiliesworks.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+	to_chat(antag.current, "<B><font size=6 color=red>Вы все еще командный антагонист. Делай то, что нужно твоей банде!</font></B>")
 	to_chat(antag.current, "<B>Поскольку Вы первый гангстер, ваша форма и баллончик с краской находится в инвентаре!</B>")
-
 	to_chat(antag.current, "<B><font size=3 color=red>[faction.name] на всю жизнь!</font></B>")
 	to_chat(antag.current, "<B><font size=2 color=red>Помечайте территорию краской, надевай цвета своей банды, и набирай больше гангстеров с помощью Вступительных Наборов!</font></B>")
-	to_chat(antag.current, "<B><font size=6 color=red>Вы все еще командный антагонист. Делай то, что нужно твоей банде!</font></B>")
-	to_chat(antag.current, "<B><font size=4 color=red>Будьте осторожны, убийства приведут к более решительным действиям полиции.</font></B>")
+	to_chat(antag.current, "<B><font size=4 color=red>Будьте осторожны, убийства приведут к более решительным действиям НаноТрейзен.</font></B>")
 
 /datum/role/gangster/extraPanelButtons()
 	var/dat = ..()

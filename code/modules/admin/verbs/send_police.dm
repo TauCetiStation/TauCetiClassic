@@ -11,11 +11,11 @@
 		return FALSE
 
 	var/list/equip_by_type = list(
-		"Beat Cop" = /datum/role/cop/beatcop,
-		"Armored" = /datum/role/cop/beatcop/armored,
-		"SWAT" = /datum/role/cop/beatcop/swat,
-		"FBI" = /datum/role/cop/beatcop/fbi,
-		"Military" = /datum/role/cop/beatcop/military,
+		"Офицер" = /datum/role/cop/beatcop,
+		"Вооруженный Офицер" = /datum/role/cop/beatcop/armored,
+		"Боец Тактической Группы" = /datum/role/cop/beatcop/swat,
+		"Инспектор" = /datum/role/cop/beatcop/fbi,
+		"Боец ВСНТ" = /datum/role/cop/beatcop/military,
 	)
 
 	var/name = input(usr, "Choose a equip of Space Police", "Team Eqip") in equip_by_type
