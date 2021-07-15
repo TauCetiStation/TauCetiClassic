@@ -80,8 +80,7 @@ export const Autolathe = (props, context) => {
                 </Button>
                 {recipe.is_stack === 1 && (
                   <Box as="span">
-                    {[5, 10, 25, 50]
-                      .map(mult => MultButton(recipe, materials, act, mult))}
+                    {[5, 10, 25, 50].map(mult => MultButton(recipe, materials, act, mult))}
                   </Box>
                 )}
               </Flex.Item>

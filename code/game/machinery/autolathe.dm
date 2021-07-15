@@ -387,9 +387,9 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		var/max_multiplier = 1
 
 		if(istype(recipe, /datum/autolathe_recipe/stack)) // stacks are the only items which can have a multiplier higher than 1 -walter0o
-			max_multiplier = min(recipe.max_res_amount, \
-			    recipe.resources[MAT_METAL] ? round(stored_material[MAT_METAL] / recipe.resources[MAT_METAL]) : INFINITY, \
-			    recipe.resources[MAT_GLASS] ? round(stored_material[MAT_GLASS] / recipe.resources[MAT_GLASS]) : INFINITY)
+			max_multiplier = min(recipe.max_res_amount,
+				recipe.resources[MAT_METAL] ? round(stored_material[MAT_METAL] / recipe.resources[MAT_METAL]) : INFINITY,
+				recipe.resources[MAT_GLASS] ? round(stored_material[MAT_GLASS] / recipe.resources[MAT_GLASS]) : INFINITY)
 
 		if((multiplier > max_multiplier) || (multiplier <= 0)) // somebody is trying to exploit, alert admins-walter0o
 
