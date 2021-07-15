@@ -73,7 +73,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/reagent_containers/glass/beaker/large, CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/vial,  CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/syringe,            CATEGORY_MEDICAL),
-	R(/obj/item/stack/cable_coil/red,                CATEGORY_ENGINEERING),
+	R(/obj/item/stack/cable_coil/random,             CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/stock_parts/console_screen,   CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/module/power_control,         CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/airlock_electronics,          CATEGORY_ENGINEERING),
