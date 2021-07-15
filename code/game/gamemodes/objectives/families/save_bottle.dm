@@ -1,5 +1,5 @@
 /datum/objective/gang/save_bottle
-	explanation_text = "У нас начинают заканчиваться припасы на базе. Братан, убедись, что у каждого нашего товарища будет бутылка какой-нибудь выбивки."
+	explanation_text = "У нас начинают заканчиваться припасы на базе. Братан, убедись, что у каждого нашего товарища будет бутылка какой-нибудь выпивки."
 
 /datum/objective/gang/save_bottle/check_completion()
 	for(var/R in faction.members)
