@@ -93,4 +93,4 @@ var/datum/controller/failsafe/Failsafe
 	return Failsafe.defcon
 
 /datum/controller/failsafe/stat_entry()
-	. = "Failsafe Controller: Defcon: [defcon_pretty()] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.master_iteration]"
+	. = "Defcon: [defcon_pretty()] (Interval: [Failsafe.processing_interval] | Iteration: [Failsafe.master_iteration]"
