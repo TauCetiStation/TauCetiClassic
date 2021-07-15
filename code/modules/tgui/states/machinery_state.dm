@@ -15,8 +15,7 @@ var/global/datum/tgui_state/machinery_state/machinery_state = new
 	. = UI_CLOSE
 	var/obj/machinery/machine = src_object
 	if(istype(machine) && machine.can_interact_with(user)) // Can physically interact
-		if((machine.allowed_checks & ALLOWED_CHECK_TOPIC) && machine.allowed(user)) // Has access to the machine
-			. = UI_INTERACTIVE
-		else
-			machine.allowed_fail(user)
+		if((machine.allowed_checks & ALLOWED_CHECK_TOPIC) && !machine.allowed(user)) // Has no access to the machine
 			. = UI_UPDATE
+		else
+			. = UI_INTERACTIVE
