@@ -281,11 +281,19 @@ Class Procs:
 /obj/machinery/wrenched_change()
 	update_power_use()
 
-// By default, we check everything.
-// But sometimes, we need to override this check.
+/**
+ * Can this machine work in its current state?
+ * By default, we check everything.
+ * But sometimes, we need to override this check.
+ */
 /obj/machinery/proc/is_operational()
 	return !(stat & (NOPOWER | BROKEN | MAINT | EMPED))
 
+/**
+ * Can this particular `user` interact with the machine?
+ * Calls `is_operational()` first.
+ * If you're going to override it, in most cases don't forget: `. = ..()`
+ */
 /obj/machinery/proc/can_interact_with(mob/user)
 	if(!is_operational() && !interact_offline)
 		return FALSE
@@ -312,8 +320,7 @@ Class Procs:
 		usr.unset_machine(src)
 		return FALSE
 
-	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(usr)) keep here
-		usr.unset_machine(src)
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(usr))
 		allowed_fail(usr)
 		return FALSE
 
@@ -324,12 +331,6 @@ Class Procs:
 
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
-		usr.unset_machine(src)
-		return TRUE
-
-	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(usr)) move to state without _fail
-		usr.unset_machine(src)
-		allowed_fail(usr)
 		return TRUE
 
 	usr.set_machine(src)
@@ -342,13 +343,20 @@ Class Procs:
 		return TRUE
 	return FALSE
 
-/obj/machinery/proc/allowed_fail(mob/user) // In case you want to add something special when allowed fails.
+/**
+ * In case you want to add something special when access check fails
+ */
+/obj/machinery/proc/allowed_fail(mob/user)
 	to_chat(user, "<span class='warning'>Access Denied.</span>")
 	return
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * Action, when `user` clicks with his hand on the machine.
+ * If this called, user has already passed as capable to interact with the machine.
+ */
 /obj/machinery/interact(mob/user)
 	if(issilicon(user) || isobserver(user))
 		add_hiddenprint(user)

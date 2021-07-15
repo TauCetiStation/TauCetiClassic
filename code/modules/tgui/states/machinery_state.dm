@@ -14,5 +14,9 @@ var/global/datum/tgui_state/machinery_state/machinery_state = new
 /datum/tgui_state/machinery_state/proc/can_use_machinery(src_object, mob/user)
 	. = UI_CLOSE
 	var/obj/machinery/machine = src_object
-	if(istype(machine) && machine.can_interact_with(user))
-		. = UI_INTERACTIVE
+	if(istype(machine) && machine.can_interact_with(user)) // Can physically interact
+		if((machine.allowed_checks & ALLOWED_CHECK_TOPIC) && machine.allowed(user)) // Has access to the machine
+			. = UI_INTERACTIVE
+		else
+			machine.allowed_fail(user)
+			. = UI_UPDATE
