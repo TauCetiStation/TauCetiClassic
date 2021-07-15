@@ -61887,7 +61887,7 @@
 /area/station/security/brig)
 "sxQ" = (
 /obj/structure/table,
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "sxS" = (

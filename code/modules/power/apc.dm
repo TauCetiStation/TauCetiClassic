@@ -123,7 +123,6 @@
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 // used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
-	var/mob/living/silicon/ai/occupier = null
 	var/longtermpower = 10
 	var/nightshift_lights = FALSE
 	var/nightshift_preset = "soft"
@@ -145,7 +144,7 @@
 	apc_list += src
 	wires = new(src)
 
-	// offset 24 pixels in direction of dir
+	// offset 27 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if(building)
 		set_dir(ndir)
@@ -177,6 +176,7 @@
 	area.power_equip = 0
 	area.power_environ = 0
 	area.power_change()
+	area.poweralert(1, src) // remove the power alert. yes, 1 is off
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	if(terminal)
@@ -221,7 +221,7 @@
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
-	if(src in oview(1, user))
+	if (in_range(user, src))
 		if(stat & BROKEN)
 			to_chat(user, "Looks broken.")
 			return
@@ -417,6 +417,7 @@
 			to_chat(user, "You are trying to remove the power control board...") // lpeters - fixed grammar issues
 			if(W.use_tool(src, user, 50, volume = 50))
 				has_electronics = 0
+				area.poweralert(1, src)
 				if((stat & BROKEN) || malfhack)
 					user.visible_message(\
 						"<span class='warning'>[user.name] has broken the power control board inside [src.name]!</span>",\
@@ -738,12 +739,7 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
 	if(ismalf(malf) && istype(malf))
 		if(src.malfai == (malf.parent || malf))
-			if(src.occupier == malf)
-				return 3 // 3 = User is shunted in this APC
-			else if(istype(malf.loc, /obj/machinery/power/apc))
-				return 4 // 4 = User is shunted in another APC
-			else
-				return 2 // 2 = APC hacked by user, and user is in its core.
+			return 2 // 2 = APC hacked by user, and user is in its core.
 		else
 			return 1 // 1 = APC not hacked.
 	else
@@ -1149,8 +1145,6 @@
 	flick("apc-spark", src)
 	if(cell)
 		cell.emplode(severity)
-	if(occupier)
-		occupier.emplode(severity)
 	lighting = APC_CHANNEL_OFF
 	equipment = APC_CHANNEL_OFF
 	environ = APC_CHANNEL_OFF
