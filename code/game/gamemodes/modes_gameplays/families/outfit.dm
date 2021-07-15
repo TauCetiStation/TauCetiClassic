@@ -13,6 +13,8 @@
 	id = /obj/item/weapon/card/id/space_police
 	r_hand = /obj/item/weapon/gun/energy/taser
 
+	survival_box = TRUE
+
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
@@ -20,8 +22,7 @@
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/ammo_box/magazine/c45r = 3,
 		/obj/item/ammo_box/c45 = 2,
-		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/storage/box/survival
+		/obj/item/weapon/melee/baton = 1,
 	)
 
 /datum/outfit/families_police/beatcop/armored
@@ -35,8 +36,7 @@
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 2,
-		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/storage/box/survival
+		/obj/item/weapon/melee/baton = 1,
 	)
 
 /datum/outfit/families_police/beatcop/swat
@@ -51,8 +51,7 @@
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 2,
-		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/storage/box/survival
+		/obj/item/weapon/melee/baton = 1,
 	)
 
 /datum/outfit/families_police/beatcop/fbi
@@ -69,8 +68,7 @@
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/ammo_box/magazine/msmg9mm = 3,
 		/obj/item/ammo_box/c9mm = 2,
-		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/storage/box/survival
+		/obj/item/weapon/melee/baton = 1,
 	)
 
 /datum/outfit/families_police/beatcop/military
@@ -87,7 +85,6 @@
 		/obj/item/weapon/storage/box/flashbangs = 1,
 		/obj/item/weapon/shield/riot/tele = 1,
 		/obj/item/ammo_box/magazine/m556 = 2,
-		/obj/item/weapon/melee/baton,
-		/obj/item/weapon/gun/projectile/automatic/a28,
-		/obj/item/weapon/storage/box/survival
+		/obj/item/weapon/melee/baton = 1,
+		/obj/item/weapon/gun/projectile/automatic/a28 = 1,
 	)

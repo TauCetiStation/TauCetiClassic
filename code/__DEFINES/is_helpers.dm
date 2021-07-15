@@ -132,6 +132,8 @@
 
 #define isrole(type, H) (H?.mind ? H.mind.GetRole(type) : FALSE)
 
+#define isrolebytype(type, H) (H?.mind ? H.mind.GetRoleByType(type) : FALSE)
+
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
 
 #define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
@@ -178,9 +180,9 @@
 
 #define isgangsterlead(H) isrole(GANGSTER_LEADER, H)
 
-#define isanygangster(H) (H?.mind ? H.mind.GetRoleByType(/datum/role/gangster) : FALSE)
+#define isanygangster(H) isrolebytype(/datum/role/gangster, H)
 
-#define isanycop(H) (H?.mind ? H.mind.GetRoleByType(/datum/role/cop) : FALSE)
+#define isanycop(H) isrolebytype(/datum/role/cop, H)
 
 // BLOB
 
