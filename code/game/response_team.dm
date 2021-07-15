@@ -192,7 +192,7 @@ var/can_call_ert
 	M.s_tone =  -M.s_tone + 35
 
 	// hair
-	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
 	var/list/hairs = list()
 
 	// loop through potential hairs
@@ -268,6 +268,6 @@ var/can_call_ert
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
 	L.inject(src)
 	return 1

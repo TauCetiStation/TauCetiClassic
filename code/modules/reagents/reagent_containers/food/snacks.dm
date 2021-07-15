@@ -567,7 +567,7 @@
 	if (src.warm)
 		spawn( 4200 )
 			src.warm = 0
-			src.reagents.del_reagent("tricordrazine")
+			reagents.del_reagent("tricordrazine")
 			src.name = "donk-pocket"
 	return
 
@@ -2228,7 +2228,7 @@
 				user.drop_from_inventory(box, src)
 
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
-				src.boxes.Add( boxestoadd )
+				boxes.Add( boxestoadd )
 
 				box.update_icon()
 				update_icon()

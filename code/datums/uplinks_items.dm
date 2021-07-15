@@ -56,14 +56,14 @@
 	if(!istype(U))
 		return 0
 
-	if (!user || user.incapacitated())
+	if(!user || user.incapacitated())
 		return 0
 
-	if (!( istype(user, /mob/living/carbon/human)))
+	if(!( istype(user, /mob/living/carbon/human)))
 		return 0
 
-	// If the uplink's holder is in the user's contents
-	if ((U.loc in user.contents || (in_range(U.loc, user) && istype(U.loc.loc, /turf))))
+	// If the uplink's holder is in the user's contents or near him
+	if(U.Adjacent(user, recurse = 2))
 		user.set_machine(U)
 		if(cost > U.uses)
 			return 0

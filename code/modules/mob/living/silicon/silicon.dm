@@ -200,10 +200,10 @@
 
 /mob/living/silicon/proc/write_laws()
 	if(laws)
-		var/text = src.laws.write_laws()
+		var/text = laws.write_laws()
 		return text
 
-/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash/noise)
 	if(affect_silicon)
 		return ..()
 

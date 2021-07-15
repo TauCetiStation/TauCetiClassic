@@ -35,9 +35,14 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
+	var/clientfps = -1
 
 	// Custom Keybindings
 	var/list/key_bindings = list()
+	// If hotkey mode is enabled, then clicking the map will automatically
+	// unfocus the text bar. This removes the red color from the text bar
+	// so that the visual focus indicator matches reality.
+	var/hotkeys = TRUE
 
 	var/tooltip = TRUE
 	var/tooltip_font = "Small Fonts"

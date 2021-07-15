@@ -104,7 +104,7 @@
 	if(usr.incapacitated())
 		return
 
-	if(!(usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))))
+	if(!Adjacent(usr))
 		return
 
 	if(href_list["mode"])

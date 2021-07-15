@@ -49,9 +49,10 @@
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves)
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
-			BP.take_damage(0, force)
+		if(H.gloves)
+			return
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+		BP.take_damage(0, force)
 	else
 		user.take_bodypart_damage(0, force)
 

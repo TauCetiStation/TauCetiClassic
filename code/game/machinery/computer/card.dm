@@ -35,7 +35,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
-	if(in_range(user, src))
+	if(Adjacent(user))
 		eject_id()
 
 /obj/machinery/computer/card/verb/eject_id()
@@ -240,8 +240,7 @@
 
 		if ("reg")
 			if (is_authenticated())
-				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if (Adjacent(usr) || issilicon(usr))
 					var/temp_name = sanitize_name(href_list["reg"])
 					if(temp_name)
 						modify.registered_name = temp_name
@@ -251,8 +250,7 @@
 
 		if ("account")
 			if (is_authenticated())
-				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if (Adjacent(usr) || issilicon(usr))
 					var/datum/money_account/account = get_account(text2num(href_list["account"]))
 					if(account)
 						modify.associated_account_number = account.account_number

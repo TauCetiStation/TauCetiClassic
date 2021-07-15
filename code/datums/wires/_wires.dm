@@ -253,7 +253,7 @@ var/global/list/wire_daltonism_colors = list()
 	if(.)
 		return
 
-	if(!(in_range(holder, usr) && isliving(usr)))
+	if(!(usr.Adjacent(holder) && isliving(usr)))
 		return
 
 	var/mob/living/L = usr

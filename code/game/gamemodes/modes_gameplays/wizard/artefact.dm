@@ -126,7 +126,7 @@
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 
-	if(ismindshielded(H))
+	if(H.ismindprotect())
 		to_chat(H, "<span class='notice'>Something prevents you from becoming a magic girl that you've allways dreamed of</span>")
 		return
 
@@ -134,10 +134,11 @@
 		if(H.mind == mind)
 			to_chat(H, "<span class='notice'>Not so fast, self-confident fulmar</span>")
 			return
+
 	if(H.incapacitated())
 		return
 
-	if(loc == H || (in_range(src, H) && isturf(loc)))
+	if(Adjacent(H))
 		H.set_machine(src)
 		if(href_list["school"])
 			if(!uses)

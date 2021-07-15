@@ -161,7 +161,6 @@ var/list/ghostteleportlocs = list()
 						a.cancelAlarm("Power", src, source)
 					else
 						a.triggerAlarm("Power", src, cameras, source)
-	return
 
 /area/proc/atmosalert(danger_level)
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.

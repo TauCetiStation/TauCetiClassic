@@ -8,7 +8,6 @@
 	desc = "A little medical robot. He looks somewhat underwhelmed."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "medibot0"
-	layer = 5.0
 	density = FALSE
 	anchored = FALSE
 	health = 20
@@ -578,7 +577,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && loc != usr)
+		if(!user.Adjacent(src))
 			return
 		created_name = t
 

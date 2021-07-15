@@ -30,7 +30,7 @@
 		cut_overlays()
 /obj/machinery/cell_charger/examine(mob/user)
 	..()
-	if(in_range(user, src))
+	if(user.Adjacent(src))
 		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 		if(charging)
 			to_chat(user, "Current charge: [charging.charge]")

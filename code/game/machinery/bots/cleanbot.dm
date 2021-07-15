@@ -18,7 +18,6 @@
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "cleanbot0"
-	layer = MOB_LAYER
 	density = FALSE
 	anchored = FALSE
 	//weight = 1.0E7
@@ -370,7 +369,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if (!user.Adjacent(src))
 			return
 		created_name = t
 

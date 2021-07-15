@@ -96,15 +96,15 @@
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
 //Material defines
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PHORON		"$phoron"
-#define MAT_PLASTIC		"$plastic"
-#define MAT_BANANIUM	"$bananium"
+#define MAT_METAL		"metal"
+#define MAT_GLASS		"glass"
+#define MAT_SILVER		"silver"
+#define MAT_GOLD		"gold"
+#define MAT_DIAMOND		"diamond"
+#define MAT_URANIUM		"uranium"
+#define MAT_PHORON		"phoron"
+#define MAT_PLASTIC		"plastic"
+#define MAT_BANANIUM	"bananium"
 
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
@@ -271,3 +271,14 @@
 #define REGION_SUPPLY		6
 #define REGION_COMMAND		7
 #define REGION_CENTCOMM		8
+
+#define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
+	. = ..();\
+	global.##list += src;}\
+##type/Destroy(){\
+	global.##list -= src;\
+	return ..()}
+
+// Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15

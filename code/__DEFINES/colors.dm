@@ -9,6 +9,7 @@
 #define COLOR_DARK_GRAY        "#404040"
 #define COLOR_MAROON           "#800000"
 #define COLOR_PURPLE           "#800080"
+#define COLOR_DARK_PURPLE      "#6b2b63"
 #define COLOR_VIOLET           "#9933ff"
 #define COLOR_OLIVE            "#808000"
 #define COLOR_BROWN_ORANGE     "#824b28"
@@ -23,6 +24,7 @@
 #define COLOR_TEAL             "#33cccc"
 #define COLOR_RED              "#ff0000"
 #define COLOR_PINK             "#ff00ff"
+#define COLOR_LIGHT_PINK       "#ff87ff"
 #define COLOR_ORANGE           "#ff9900"
 #define COLOR_YELLOW           "#ffff00"
 #define COLOR_GRAY             "#808080"
@@ -63,6 +65,7 @@
 #define COLOR_CIVIE_GREEN      "#b7f27d"
 #define COLOR_TITANIUM         "#d1e6e3"
 #define COLOR_DARK_GUNMETAL    "#4c535b"
+#define COLOR_ADAMANTINE       "#269999"
 
 #define	PIPE_COLOR_GREY		"#ffffff"	// yes white is grey
 #define	PIPE_COLOR_RED		"#ff0000"
