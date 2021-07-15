@@ -2,7 +2,7 @@
 //Used to control the lasers
 /obj/machinery/computer/lasercon
 	name = "Laser control computer"
-	var/list/lasers = new/list
+	var/list/lasers = list()
 	icon_state = "atmos"
 	var/id
 	//var/advanced = 0
