@@ -80,20 +80,8 @@ export const Autolathe = (props, context) => {
                 </Button>
                 {recipe.is_stack === 1 && (
                   <Box as="span">
-                    <Button
-                      color={recipe.hidden && "red" || null}
-                      disabled={!canBeMade(recipe, materials, 5)}
-                      onClick={() => act("make", { make: recipe.ref,
-                        multiplier: 5 })}>
-                      x5
-                    </Button>
-                    <Button
-                      color={recipe.hidden && "red" || null}
-                      disabled={!canBeMade(recipe, materials, 10)}
-                      onClick={() => act("make", { make: recipe.ref,
-                        multiplier: 10 })}>
-                      x10
-                    </Button>
+                    {[5, 10, 25, 50]
+                      .map(mult => MultButton(recipe, materials, act, mult))}
                   </Box>
                 )}
               </Flex.Item>
@@ -200,6 +188,21 @@ const canBeMade = (recipe, materials, mult = 1) => {
   }
 
   return true;
+};
+
+const MultButton = (recipe, materials, act, mult) => {
+  if (mult <= recipe.max_mult) {
+    return (
+      <Button
+        color={recipe.hidden && "red" || null}
+        disabled={!canBeMade(recipe, materials, mult)}
+        onClick={() => act("make", { make: recipe.ref, multiplier: mult })}>
+        x{mult}
+      </Button>
+    );
+  }
+
+  return (null);
 };
 
 export const Materials = (props, context) => {
