@@ -1,3 +1,4 @@
+// Lore is very different from /tg/, but the names and terminology in code are left same
 /datum/role/cop/undercover
 	name = UNDERCOVER_COP
 	id = UNDERCOVER_COP

@@ -49,6 +49,10 @@
 
 			//Spawn the body
 			var/mob/living/carbon/human/cop = new(spawnloc)
+			// Prevent walking while customizing appearance
+			cop.moving_diagonally
+			cop.anchored = TRUE
+			cop.canmove = FALSE
 			INVOKE_ASYNC(GLOBAL_PROC, .proc/police_change_apperance, cop, chosen_candidate.client)
 			cop.key = chosen_candidate.key
 
@@ -67,3 +71,5 @@
 	C.create_human_apperance(cop, new_name)
 	var/obj/item/weapon/card/id/W = cop.wear_id
 	W.registered_name = cop.real_name
+	cop.anchored = FALSE
+	cop.canmove = TRUE
