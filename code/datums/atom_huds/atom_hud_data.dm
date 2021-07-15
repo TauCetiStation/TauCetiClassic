@@ -156,12 +156,12 @@
 		holder = hud_list[i]
 		holder.icon_state = null
 
-	if(isloyal(src))
+	if(isloyal())
 		holder = hud_list[IMPLOYAL_HUD]
 		holder.icon_state = "hud_imp_loyal"
 		y += -5
 
-	if(ismindshielded(src))
+	if(ismindshielded())
 		holder = hud_list[IMPMINDS_HUD]
 		holder.icon_state = "hud_imp_mindshield"
 		holder.pixel_y = y

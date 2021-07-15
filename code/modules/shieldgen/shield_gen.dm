@@ -32,7 +32,7 @@
 	active_power_usage = 100
 
 /obj/machinery/shield_gen/atom_init()
-	field = new/list()
+	field = list()
 	. = ..()
 
 /obj/machinery/shield_gen/atom_init_late()
