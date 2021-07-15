@@ -7,7 +7,7 @@
 		if(!G.antag)
 			continue
 		var/mob/M = G.antag.current
-		if(!considered_alive(M))
+		if(!considered_alive(M.mind))
 			continue // dead people cant really do the objective lol
 		var/list/items_to_check = M.GetAllContents()
 		var/bottle_finded = locate(/obj/item/weapon/reagent_containers/food/drinks/bottle) in items_to_check

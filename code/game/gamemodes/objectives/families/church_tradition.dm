@@ -7,13 +7,13 @@
 		if(!G.antag)
 			continue
 		var/mob/M = G.antag.current
-		if(considered_alive(M))
+		if(considered_alive(M.mind))
 			continue
 		if(istype(M.loc, /obj/structure/closet/coffin))
 			continue
 		return OBJECTIVE_LOSS
 	if(global.chaplain_religion.members.len)
 		for(var/mob/M in global.chaplain_religion.members)
-			if(!considered_alive(M) && !M.suiciding)
+			if(!considered_alive(M.mind) && !M.suiciding)
 				return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN

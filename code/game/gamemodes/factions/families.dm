@@ -108,10 +108,12 @@
 	gang_id = "RM"
 	acceptable_clothes = list(/obj/item/clothing/head/soft/red,
 							/obj/item/clothing/mask/scarf/red,
-							/obj/item/clothing/under/color/white,
+							/obj/item/clothing/suit/jacket,
+							/obj/item/clothing/under/suit_jacket/rouge,
 							/obj/item/clothing/head/ushanka)
 	free_clothes = list(/obj/item/clothing/head/ushanka,
-						/obj/item/clothing/under/color/white,
+						/obj/item/clothing/suit/jacket,
+						/obj/item/clothing/under/suit_jacket/rouge,
 						/obj/item/toy/crayon/spraycan)
 	gang_objective_type = /datum/objective/gang/save_bottle
 

@@ -60,9 +60,6 @@
 		if(R && istype(R.faction, /datum/faction/gang))
 			gang_mode = R.faction
 
-	if(gang_mode && !can_claim_for_gang(user, target, gang_mode))
-		return
-
 	if(is_type_in_list(target,validSurfaces))
 		if(!actions)
 			actions = list()
@@ -73,6 +70,12 @@
 			"arrow" = "up")
 			for(var/action in action_icon)
 				actions[action] = image(icon = 'icons/effects/crayondecal.dmi', icon_state = action_icon[action])
+		if(gang_mode)
+			var/static/list/gang_tags = list()
+			if(!gang_tags[gang_mode.gang_id])
+				gang_tags[gang_mode.gang_id] = image(icon = 'icons/obj/gang/tags.dmi', icon_state = "[gang_mode.gang_id]_tag")
+
+			actions[gang_mode.name] = gang_tags[gang_mode.gang_id]
 
 		var/drawtype = show_radial_menu(user, target, actions, require_near = TRUE, tooltips = TRUE)
 		var/sub = ""
@@ -109,8 +112,7 @@
 
 		if(!Adjacent(target) || usr.get_active_hand() != i) // Some check to see if he's allowed to write
 			return
-		else
-			to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
+		to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] [sub] [drawtype] on the [target.name].</span>")
 
 		if(!user.Adjacent(target))
 			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
@@ -118,7 +120,7 @@
 		if(instant)
 			playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 		if(instant > 0 || (!user.is_busy(src) && do_after(user, 40, target = target)))
-			if(gang_mode)
+			if(gang_mode && drawtype == gang_mode.name)
 				if(!can_claim_for_gang(user, target, gang_mode))
 					return
 				tag_for_gang(user, target, gang_mode)

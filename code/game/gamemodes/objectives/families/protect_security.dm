@@ -4,6 +4,6 @@
 /datum/objective/gang/protect_security/check_completion()
 	for(var/mob/M in global.player_list)
 		if(M.mind?.assigned_role in security_positions)
-			if(!considered_alive(M) && !M.suiciding)
+			if(!considered_alive(M.mind) && !M.suiciding)
 				return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN

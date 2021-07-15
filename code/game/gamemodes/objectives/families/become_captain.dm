@@ -7,7 +7,7 @@
 		if(!G.antag)
 			continue
 		var/mob/M = G.antag.current
-		if(!considered_alive(M))
+		if(!considered_alive(M.mind))
 			continue // dead people cant really do the objective lol
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

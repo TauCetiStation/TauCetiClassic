@@ -184,7 +184,7 @@ var/can_call_ert
 	if (!new_tone)
 		new_tone = 35
 	H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-	H.s_tone =  -H.s_tone + 35
+	H.s_tone = -H.s_tone + 35
 
 	// hair
 	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
@@ -220,6 +220,8 @@ var/can_call_ert
 
 	H.real_name = _name
 	H.name = _name
+	if(H.mind)
+		H.mind.name = _name
 	H.age = rand(H.species.min_age, H.species.min_age * 1.25)
 
 	H.dna.ready_dna(H)//Creates DNA.

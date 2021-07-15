@@ -8,7 +8,7 @@
 	if(!istype(G))
 		return OBJECTIVE_LOSS
 	for(var/mob/M in global.player_list)
-		if(!considered_alive(M))
+		if(!considered_alive(M.mind))
 			continue
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

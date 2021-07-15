@@ -847,15 +847,8 @@
 	item_state = "DutchUniform"
 	item_color = "DutchUniform"
 
-/obj/item/clothing/under/swagoutfit
-	name = "Swag outfit"
-	desc = "Why don't you go secure some bitches?"
-	icon_state = "SwagOutfit"
-	item_state = "SwagOutfit"
-	item_color = "SwagOutfit"
-
 /obj/item/clothing/head/spacepolice
-	name = "space police cap"
+	name = "NanoTrasen cap"
 	desc = "A blue cap for patrolling the daily beat."
 	icon_state = "policecap_families"
 
@@ -886,11 +879,6 @@
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
-
-/obj/item/clothing/shoes/swagshoes
-	name = "swag shoes"
-	desc = "They got me for my foams!"
-	icon_state = "SwagShoes"
 
 /obj/item/clothing/head/jackbros
 	name = "frosty hat"

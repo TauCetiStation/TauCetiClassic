@@ -170,8 +170,8 @@
  * Space Police
  */
 /obj/item/clothing/under/rank/security/beatcop
-	name = "space police uniform"
-	desc = "A police uniform often found in the lines at donut shops."
+	name = "NanoTrasen uniform"
+	desc = "A NanoTrasen uniform often found in the lines at donut shops."
 	icon_state = "spacepolice_families"
 	item_state = "spacepolice_families"
 	item_color = "spacepolice_families"
