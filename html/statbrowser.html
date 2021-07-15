@@ -704,7 +704,10 @@ function draw_mc() {
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
+			a.href = "#"
+			a.addEventListener("mousedown", function() {
+				window.location.href = "byond://?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
+			})
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
@@ -716,6 +719,7 @@ function draw_mc() {
 	}
 	document.getElementById("statcontent").appendChild(table);
 }
+
 function update_tickets(T){
 	tickets = JSON.parse(T);
 	if(!verb_tabs.includes("Tickets")) {
@@ -860,7 +864,10 @@ function draw_tickets() {
 			td2.appendChild(a);
 		} else if(part[3]){
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
+			a.href = "#"
+			a.addEventListener("mousedown", function() {
+				window.location.href = "byond://?src=" + part[3] + ";statpanel_item_click=left";
+			})
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
@@ -904,7 +911,8 @@ function draw_verbs(cat){
 			}
 
 			var a = document.createElement("a");
-			a.href = "byond://winset?command=" + command.replace(/\s/g, "-");
+			a.href = "#"
+			a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
 			a.className = "grid-item";
 			var t = document.createElement("span");
 			t[textContentKey] = command;
@@ -928,6 +936,14 @@ function draw_verbs(cat){
 			content.appendChild(additions[cat]);
 		}
 	}
+}
+
+function make_verb_onclick(command) {
+	return function() {
+		run_after_focus(function() {
+			send_byond_command(command);
+		});
+	};
 }
 
 function restoreFocus() {
