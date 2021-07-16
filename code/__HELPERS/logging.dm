@@ -167,8 +167,8 @@
 	if (config.log_gc)
 		global.gc_log << "\[[time_stamp()]] [text][log_end]"
 	for(var/client/C in global.admins)
-		//if(check_rights(R_DEBUG, FALSE, C.mob) && (C.prefs.toggles & PREFTOGGLE_CHAT_DEBUGLOGS))
-		to_chat(C, "GC DEBUG: [text]")
+		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
+			to_chat(C, "GC DEBUG: [text]")
 #endif
 
 /proc/log_qdel(text)
