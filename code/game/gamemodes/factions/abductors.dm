@@ -22,7 +22,6 @@ var/global/abductor_landmarks_setuped = FALSE
 /datum/faction/abductors
 	name = F_ABDUCTORS
 	ID = F_ABDUCTORS
-	logo_state = "abductor-logo"
 	required_pref = ROLE_ABDUCTOR
 
 	initroletype = /datum/role/abductor/agent

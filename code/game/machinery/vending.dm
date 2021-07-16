@@ -1147,7 +1147,7 @@
 	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1,
 	/obj/item/clothing/under/dress/dress_summer=2,/obj/item/clothing/under/dress/dress_vintage=2,/obj/item/clothing/under/dress/dress_evening=2,/obj/item/clothing/under/dress/dress_party=2,
 	/obj/item/clothing/glasses/aviator_orange=2, /obj/item/clothing/glasses/aviator_black=2, /obj/item/clothing/glasses/aviator_red=2, /obj/item/clothing/glasses/aviator_mirror=2,
-	/obj/item/clothing/glasses/jerusalem=2, /obj/item/clothing/glasses/threedglasses=2, /obj/item/clothing/glasses/gar=2)
+	/obj/item/clothing/glasses/jerusalem=2, /obj/item/clothing/glasses/threedglasses=2, /obj/item/clothing/glasses/gar=2,/obj/item/clothing/suit/jacket/letterman = 2, /obj/item/clothing/suit/jacket/letterman_red = 2,)
 
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=4,/obj/item/clothing/mask/balaclava=4,/obj/item/clothing/head/tacticool_hat=4, /obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
 
@@ -1175,7 +1175,7 @@
 	/obj/item/clothing/under/sukeban_dress=140,/obj/item/clothing/suit/sukeban_coat=135,/obj/item/clothing/under/pinkpolo=75,/obj/item/clothing/under/pretty_dress=85,
 	/obj/item/clothing/under/dress/dress_summer=100,/obj/item/clothing/under/dress/dress_vintage=120,/obj/item/clothing/under/dress/dress_evening=125,/obj/item/clothing/under/dress/dress_party=110,
     /obj/item/clothing/glasses/aviator_orange=35, /obj/item/clothing/glasses/aviator_black=40, /obj/item/clothing/glasses/aviator_red=37, /obj/item/clothing/glasses/aviator_mirror=30,
-	/obj/item/clothing/glasses/jerusalem=30, /obj/item/clothing/glasses/threedglasses=25, /obj/item/clothing/glasses/gar=34)
+	/obj/item/clothing/glasses/jerusalem=30, /obj/item/clothing/glasses/threedglasses=25, /obj/item/clothing/glasses/gar=34, /obj/item/clothing/suit/jacket/letterman = 50, /obj/item/clothing/suit/jacket/letterman_red = 50,)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 //from old nanotrasen

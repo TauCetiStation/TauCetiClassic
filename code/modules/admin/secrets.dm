@@ -67,6 +67,7 @@
 					<h4>Teams</h4>
 					<A href='?src=\ref[src];secretsfun=syndstriketeam'>Send in a Syndicate Strike Team</A><BR>
 					<A href='?src=\ref[src];secretsfun=striketeam'>Send in a Deathsquad</A><BR>
+					<A href='?src=\ref[src];secretsfun=police'>Send in a Space Police</A><BR>
 					<A href='?src=\ref[src];secretsfun=spaceninja'>Send in a Space Ninja</A><BR>
 					<h4>Change Security Level</h4>
 					<A href='?src=\ref[src];secretsfun=securitylevel0'>Security Level - Green</A><BR>
@@ -184,6 +185,11 @@
 			if(usr.client.syndicate_strike_team())
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","Syndi Strike")
+		// Send in a Space Police
+		if("police")
+			if(usr.client.send_space_police())
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Space Police")
 		// Triple AI mode (needs to be used in the lobby)
 		if("tripleAI")
 			usr.client.triple_ai()

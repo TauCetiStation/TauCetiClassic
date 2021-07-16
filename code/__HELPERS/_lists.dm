@@ -57,12 +57,12 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
-		return 0
+	if(!length(L) || !A)
+		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)

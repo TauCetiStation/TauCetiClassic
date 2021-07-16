@@ -159,7 +159,7 @@
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "oldwardenhelm"
+	icon_state = "policehelm"
 	item_state = "helmet"
 	force = 0
 	hitsound = list()

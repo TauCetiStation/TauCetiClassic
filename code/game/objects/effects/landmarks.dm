@@ -104,6 +104,14 @@
 	..()
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/cops_spawn
+	name = "Space Cops"
+
+/obj/effect/landmark/cops_spawn/atom_init(mapload)
+	..()
+	global.copsstart += loc
+	return INITIALIZE_HINT_QDEL
+
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 

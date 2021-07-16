@@ -78,6 +78,10 @@
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sec
 
+/obj/item/device/radio/headset/headset_sec/alt
+	name = "security radio headset"
+	icon_state = "sec_headset_alt"
+
 /obj/item/device/radio/headset/headset_sec/nt_pmc
 	name = "NT PMC Radio Headset. Works with default security frequency."
 	icon_state = "nt_pmc_earset"

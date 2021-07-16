@@ -18,6 +18,7 @@
 #define ROLE_PLANT             "Diona"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
+#define ROLE_FAMILIES          "Families"
 #define ROLE_GHOSTLY           "Ghostly Roles"
 
 #define ROLE_ERT               "Emergency Response Team"
@@ -37,6 +38,7 @@ var/global/list/antag_roles = list(
 	ROLE_RAIDER,
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
+	ROLE_FAMILIES,
 )
 
 var/global/list/special_roles = list(
@@ -54,6 +56,7 @@ var/global/list/special_roles = list(
 	ROLE_SHADOWLING,
 	ROLE_ABDUCTOR,
 	ROLE_GHOSTLY,
+	ROLE_FAMILIES,
 )
 
 //Prefs for ignore a question which give ghosty roles

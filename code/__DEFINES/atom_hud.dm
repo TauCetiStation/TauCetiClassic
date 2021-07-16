@@ -74,6 +74,8 @@
 #define ANTAG_HUD_ERT           21
 #define ANTAG_HUD_MALF          22
 #define ANTAG_HUD_ZOMB          23
+#define ANTAG_HUD_GANGSTER      24
+#define ANTAG_HUD_SPACECOP      25
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

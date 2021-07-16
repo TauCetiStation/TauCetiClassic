@@ -9,7 +9,7 @@
 		return null
 
 	var/list/L = list()
-	for(var/datum/faction/F in SSticker.mode.factions)
+	for(var/F in SSticker.mode.factions)
 		if(istype(F, faction_type))
 			L += F
 

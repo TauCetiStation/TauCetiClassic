@@ -196,11 +196,11 @@
 			score_results += custom_result
 		else
 			if (IsSuccessful())
-				score_results += "<font color='green'><B>\The [capitalize(name)] was successful!</B></font>"
+				score_results += "<span class='green'><B>\The [capitalize(name)] was successful!</B></span>"
 				feedback_add_details("[ID]_success","SUCCESS")
 				score["roleswon"]++
 			else if (minor_victory)
-				score_results += "<font color='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</font>"
+				score_results += "<span class='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</span>"
 				feedback_add_details("[ID]_success","HALF")
 			else
 				score_results += "<span class='red'><B>\The [capitalize(name)] has failed.</B></span>"

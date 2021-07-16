@@ -147,3 +147,6 @@
 #define ui_ian_head    "CENTER-3:14,SOUTH:5"
 #define ui_stamina     "EAST-1:28,CENTER:5"
 #define ui_ian_pselect "EAST-4:22,SOUTH:5"
+
+//Families
+#define ui_wanted_lvl "NORTH,11"

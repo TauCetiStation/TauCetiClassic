@@ -43,6 +43,7 @@ var/global/list/available_ui_styles = list(
 	var/atom/movable/screen/action_intent
 	var/atom/movable/screen/move_intent
 	var/atom/movable/screen/staminadisplay
+	var/atom/movable/screen/wanted/wanted_lvl
 
 	var/list/adding
 	var/list/other
@@ -75,6 +76,7 @@ var/global/list/available_ui_styles = list(
 	push_intent = null
 	help_intent = null
 	lingchemdisplay = null
+	wanted_lvl = null
 	blobpwrdisplay = null
 	blobhealthdisplay = null
 	r_hand_hud_object = null
