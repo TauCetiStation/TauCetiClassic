@@ -346,7 +346,7 @@ SUBSYSTEM_DEF(garbage)
 
 #ifdef REFERENCE_TRACKING
 
-/datum/proc/find_refs()
+/datum/proc/find_refs(datum/D in world)
 	set category = "Debug"
 	set name = "Find References"
 
@@ -406,7 +406,7 @@ SUBSYSTEM_DEF(garbage)
 	SSgarbage.can_fire = 1
 	SSgarbage.next_fire = world.time + world.tick_lag
 
-/datum/proc/qdel_then_find_references()
+/datum/proc/qdel_then_find_references(datum/D in world)
 	set category = "Debug"
 	set name = "qdel() then Find References"
 	if(!check_rights(R_DEBUG))
@@ -416,7 +416,7 @@ SUBSYSTEM_DEF(garbage)
 	if(!running_find_references)
 		find_references(TRUE)
 
-/datum/proc/qdel_then_if_fail_find_references()
+/datum/proc/qdel_then_if_fail_find_references(datum/D in world)
 	set category = "Debug"
 	set name = "qdel() then Find References if GC failure"
 	if(!check_rights(R_DEBUG))
