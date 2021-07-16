@@ -84,11 +84,11 @@
 
 	var/obj/item/weapon/nullrod/staff/container
 
-/mob/living/simple_animal/shade/god/Stat()
-	..()
-	if(statpanel("Status"))
-		if(my_religion)
-			stat(null, "Favor: [round(my_religion.favor)]/[my_religion.max_favor]")
+/mob/living/simple_animal/shade/god/get_status_tab_items()
+	. = ..()
+
+	if(my_religion)
+		. += "Favor: [round(my_religion.favor)]/[my_religion.max_favor]"
 
 /mob/living/simple_animal/shade/god/incapacitated(restrained_type = ARMS)
 	// So the god can't use verbs and stuff like that.

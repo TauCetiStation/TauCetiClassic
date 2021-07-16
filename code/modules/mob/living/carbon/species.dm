@@ -338,10 +338,10 @@
 
 /datum/species/unathi/on_gain(mob/living/M)
 	..()
-	M.verbs += /mob/living/carbon/human/proc/air_sample
+	M.add_verb(/mob/living/carbon/human/proc/air_sample)
 
 /datum/species/unathi/on_loose(mob/living/M)
-	M.verbs -= /mob/living/carbon/human/proc/air_sample
+	M.remove_verb(/mob/living/carbon/human/proc/air_sample)
 	..()
 
 /datum/species/tajaran
@@ -568,7 +568,7 @@
 			H.client.screen += H.leap_icon
 
 	else
-		H.verbs += /mob/living/carbon/human/proc/gut
+		H.add_verb(/mob/living/carbon/human/proc/gut)
 
 	..()
 
@@ -582,7 +582,7 @@
 			QDEL_NULL(H.leap_icon)
 
 	else
-		H.verbs -= /mob/living/carbon/human/proc/gut
+		H.remove_verb(/mob/living/carbon/human/proc/gut)
 
 	..()
 
@@ -850,17 +850,17 @@
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
-	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
-	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
-	H.verbs += /mob/living/carbon/human/proc/IPC_display_text
+	H.add_verb(/mob/living/carbon/human/proc/IPC_change_screen)
+	H.add_verb(/mob/living/carbon/human/proc/IPC_toggle_screen)
+	H.add_verb(/mob/living/carbon/human/proc/IPC_display_text)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
 		H.set_light(BP.screen_brightness)
 
 /datum/species/machine/on_loose(mob/living/carbon/human/H)
-	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
-	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
-	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
+	H.remove_verb(/mob/living/carbon/human/proc/IPC_change_screen)
+	H.remove_verb(/mob/living/carbon/human/proc/IPC_toggle_screen)
+	H.remove_verb(/mob/living/carbon/human/proc/IPC_display_text)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)

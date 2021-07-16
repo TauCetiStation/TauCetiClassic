@@ -3,8 +3,8 @@
 // SPACE NINJA SUIT
 /obj/item/clothing/suit/space/space_ninja/atom_init()
 	. = ..()
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
-	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction//for AIs
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init //suit initialize verb
+	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction //for AIs
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo
 	//verbs += /obj/item/clothing/suit/space/space_ninja/proc/display_verb_procs//DEBUG. Doesn't work.
 	spark_system = new()//spark initialize

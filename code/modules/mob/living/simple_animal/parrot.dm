@@ -98,9 +98,9 @@
 
 	parrot_sleep_dur = parrot_sleep_max //In case someone decides to change the max without changing the duration var
 
-	verbs.Add(/mob/living/simple_animal/parrot/proc/steal_from_ground, \
-			  /mob/living/simple_animal/parrot/proc/steal_from_mob, \
-			  /mob/living/simple_animal/parrot/verb/drop_held_item_player, \
+	add_verb(/mob/living/simple_animal/parrot/proc/steal_from_ground,
+			  /mob/living/simple_animal/parrot/proc/steal_from_mob,
+			  /mob/living/simple_animal/parrot/verb/drop_held_item_player,
 			  /mob/living/simple_animal/parrot/proc/perch_player)
 
 
@@ -111,10 +111,9 @@
 	walk(src,0)
 	..()
 
-/mob/living/simple_animal/parrot/Stat()
-	..()
-	if(statpanel("Status"))
-		stat("Held Item", held_item)
+/mob/living/simple_animal/parrot/get_status_tab_items()
+	. = ..()
+	. += "Held Item [held_item]"
 
 /*
  * Inventory
@@ -399,7 +398,7 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it 
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
 											// ! and i'm not going to invent new alg for this
 			if(isliving(parrot_interest))
 				steal_from_mob()
@@ -425,7 +424,7 @@
 			parrot_state = PARROT_WANDER
 			return
 
-		if(in_range(src, parrot_perch))	// ! changing this to Adjacent() will probably break it 
+		if(in_range(src, parrot_perch))	// ! changing this to Adjacent() will probably break it
 										// ! and i'm not going to invent new alg for this
 			src.loc = parrot_perch.loc
 			drop_held_item()
@@ -458,7 +457,7 @@
 		var/mob/living/L = parrot_interest
 
 		//If the mob is close enough to interact with
-		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it 
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
 											// ! and i'm not going to invent new alg for this
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)

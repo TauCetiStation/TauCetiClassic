@@ -10,7 +10,8 @@ SUBSYSTEM_DEF(orbit)
 	var/list/orbits     = list()
 
 /datum/controller/subsystem/orbit/stat_entry()
-	..("P:[orbits.len]")
+	. = ..()
+	. += "P:[orbits.len]"
 
 
 /datum/controller/subsystem/orbit/fire(resumed = 0)

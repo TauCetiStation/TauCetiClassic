@@ -52,28 +52,28 @@ SUBSYSTEM_DEF(air)
 	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
 
-/datum/controller/subsystem/air/stat_entry(msg)
-	msg += "\nC:{"
-	msg += "PN:[round(cost_pipenets,1)]|"
-	msg += "AM:[round(cost_atmos_machinery,1)]"
-	msg += "TC:[round(cost_tiles_curr,1)]|"
-	msg += "TD:[round(cost_tiles_def,1)]|"
-	msg += "E:[round(cost_edges,1)]|"
-	msg += "FZ:[round(cost_fire_zones,1)]|"
-	msg += "HS:[round(cost_hotspots,1)]|"
-	msg += "Z:[round(cost_zones,1)]|"
-	msg += "} "
-	msg += "PN:[networks.len]|"
-	msg += "AM:[atmos_machinery.len]|"
-	msg += "TTU:[tiles_to_update.len]|"
-	msg += "DT:[deferred_tiles.len]|"
-	msg += "E:[active_edges.len]|"
-	msg += "FZ:[active_fire_zones.len]"
-	msg += "HS:[active_hotspots.len]|"
-	msg += "ZTU:[zones_to_update.len]|"
-	msg += "E:[edges.len]|"
-	msg += "Z:[zones.len]|"
-	..(msg)
+/datum/controller/subsystem/air/stat_entry()
+	. = ..()
+	. += "\nC:{"
+	. += "PN:[round(cost_pipenets,1)]|"
+	. += "AM:[round(cost_atmos_machinery,1)]"
+	. += "TC:[round(cost_tiles_curr,1)]|"
+	. += "TD:[round(cost_tiles_def,1)]|"
+	. += "E:[round(cost_edges,1)]|"
+	. += "FZ:[round(cost_fire_zones,1)]|"
+	. += "HS:[round(cost_hotspots,1)]|"
+	. += "Z:[round(cost_zones,1)]|"
+	. += "} "
+	. += "PN:[networks.len]|"
+	. += "AM:[atmos_machinery.len]|"
+	. += "TTU:[tiles_to_update.len]|"
+	. += "DT:[deferred_tiles.len]|"
+	. += "E:[active_edges.len]|"
+	. += "FZ:[active_fire_zones.len]"
+	. += "HS:[active_hotspots.len]|"
+	. += "ZTU:[zones_to_update.len]|"
+	. += "E:[edges.len]|"
+	. += "Z:[zones.len]|"
 
 
 /datum/controller/subsystem/air/Initialize(timeofday)

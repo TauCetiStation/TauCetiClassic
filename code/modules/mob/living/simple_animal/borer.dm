@@ -157,10 +157,9 @@
 			to_chat(M, "[FOLLOW_LINK(M, src)] [truename] whispers to [host], \"[message]\"")
 
 
-/mob/living/simple_animal/borer/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Chemicals: [chemicals]/[max_chemicals]")
+/mob/living/simple_animal/borer/get_status_tab_items()
+	. = ..()
+	. += "Chemicals: [chemicals]/[max_chemicals]"
 
 /mob/living/simple_animal/borer/proc/borer_speak(message)
 	if(!message)
@@ -255,9 +254,9 @@
 	host.ckey = ckey
 	controlling = TRUE
 
-	host.verbs += /mob/living/carbon/proc/release_control
-	host.verbs += /mob/living/carbon/proc/punish_host
-	host.verbs += /mob/living/carbon/proc/spawn_larvae
+	host.add_verb(/mob/living/carbon/proc/release_control)
+	host.add_verb(/mob/living/carbon/proc/punish_host)
+	host.add_verb(/mob/living/carbon/proc/spawn_larvae)
 
 	host.med_hud_set_status()
 
@@ -366,9 +365,9 @@
 	host.reset_view(null)
 	host.machine = null
 
-	host.verbs -= /mob/living/carbon/proc/release_control
-	host.verbs -= /mob/living/carbon/proc/punish_host
-	host.verbs -= /mob/living/carbon/proc/spawn_larvae
+	host.remove_verb(/mob/living/carbon/proc/release_control)
+	host.remove_verb(/mob/living/carbon/proc/punish_host)
+	host.remove_verb(/mob/living/carbon/proc/spawn_larvae)
 
 	if(host_brain.ckey)
 		ckey = host.ckey

@@ -15,7 +15,8 @@ SUBSYSTEM_DEF(overlays)
 	return ..()
 
 /datum/controller/subsystem/overlays/stat_entry()
-	..("Ov:[length(queue)]")
+	. = ..()
+	. += "Ov:[length(queue)]"
 
 /datum/controller/subsystem/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches

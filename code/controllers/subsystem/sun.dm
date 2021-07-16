@@ -20,8 +20,9 @@ SUBSYSTEM_DEF(sun)
 	if(prob(50))					// same chance to rotate clockwise than counter-clockwise
 		rate = -rate
 
-/datum/controller/subsystem/sun/stat_entry(msg)
-	..("P:[solars.len]")
+/datum/controller/subsystem/sun/stat_entry()
+	. = ..()
+	. += "P:[solars.len]"
 
 /datum/controller/subsystem/sun/fire()
 	angle = ((rate*world.time/100)%360 + 360)%360

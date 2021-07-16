@@ -257,8 +257,8 @@
 
 /datum/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		H.verbs += /client/proc/mimespeak
-		H.verbs += /client/proc/mimewall
+		H.add_verb(/client/proc/mimespeak)
+		H.add_verb(/client/proc/mimewall)
 		H.mind.special_verbs += /client/proc/mimespeak
 		H.mind.special_verbs += /client/proc/mimewall
 		H.miming = 1

@@ -12,7 +12,8 @@ SUBSYSTEM_DEF(lighting)
 	flags = SS_TICKER
 
 /datum/controller/subsystem/lighting/stat_entry()
-	..("L:[global.lighting_update_lights.len]|C:[global.lighting_update_corners.len]|O:[global.lighting_update_objects.len]")
+	. = ..()
+	. += "L:[global.lighting_update_lights.len]|C:[global.lighting_update_corners.len]|O:[global.lighting_update_objects.len]"
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)
 	if(!initialized)

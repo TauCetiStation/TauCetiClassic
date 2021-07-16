@@ -14,4 +14,4 @@
 		client.media.stop_music()
 
 	if(is_alien_whitelisted(src, "ian") || (client.supporter && !is_alien_whitelisted_banned(src, "ian")))
-		verbs += /mob/dead/observer/proc/ianize
+		add_verb(/mob/dead/observer/proc/ianize)

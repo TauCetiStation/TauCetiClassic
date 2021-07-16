@@ -1,7 +1,7 @@
 //toggles
 /client/verb/toggle_ghost_ears()
 	set name = "Show/Hide GhostEars"
-	set category = "Preferences"
+	set category = "Preferences.Ghost"
 	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs."
 	prefs.chat_toggles ^= CHAT_GHOSTEARS
 	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
@@ -10,7 +10,7 @@
 
 /client/verb/toggle_ghost_npc()
 	set name = "Show/Hide GhostNPCsSpeech"
-	set category = "Preferences"
+	set category = "Preferences.Ghost"
 	set desc = ".Toggle Between seeing all non-player mobs speech, and only speech of nearby non-player mobs."
 	prefs.chat_toggles ^= CHAT_GHOSTNPC
 	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTNPC) ? "see all non-player mobs speech in the world" : "only see speech from nearby non-player mobs"].")
@@ -19,7 +19,7 @@
 
 /client/verb/toggle_ghost_radio()
 	set name = "Enable/Disable GhostRadio"
-	set category = "Preferences"
+	set category = "Preferences.Ghost"
 	set desc = ".Toggle between hearing all radio chatter, or only from nearby speakers."
 	prefs.chat_toggles ^= CHAT_GHOSTRADIO
 	to_chat(src, "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTRADIO) ? "hear all radio chat in the world" : "only hear from nearby speakers"].")
@@ -38,7 +38,7 @@
 
 /client/verb/deadchat() // Deadchat toggle is usable by anyone.
 	set name = "Show/Hide Deadchat"
-	set category = "Preferences"
+	set category = "Preferences.Ghost"
 	set desc ="Toggles seeing deadchat."
 	prefs.chat_toggles ^= CHAT_DEAD
 	prefs.save_preferences()
@@ -52,7 +52,7 @@
 
 /client/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
-	set category = "Preferences"
+	set category = "Preferences.Ghost"
 	set desc = "Toggles seeing prayers."
 	prefs.chat_toggles ^= CHAT_PRAYER
 	prefs.save_preferences()
@@ -106,7 +106,7 @@
 
 /client/verb/change_ui()
 	set name = "Change UI"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Configure your user interface."
 
 	if(!ishuman(usr))
@@ -148,7 +148,7 @@
 
 /client/verb/toggle_anim_attacks()
 	set name = "Show/Hide Melee Animations"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Toggles seeing melee attack animations."
 	prefs.toggles ^= SHOW_ANIMATIONS
 	prefs.save_preferences()
@@ -157,7 +157,7 @@
 
 /client/verb/toggle_progress_bar()
 	set name = "Show/Hide Progress Bar"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Toggles visibility of progress bars."
 	prefs.toggles ^= SHOW_PROGBAR
 	prefs.save_preferences()
@@ -168,7 +168,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/pick_ghost_orbit()
 	set name = "Choose Ghost Orbit"
-	set category = "Preferences"
+	set category = "Preferences.Ghost"
 	set desc = "Choose your preferred ghostly orbit."
 
 	var/new_orbit = input(src, "Choose your ghostly orbit:") as null|anything in ghost_orbits
@@ -190,7 +190,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/toggle_ambient_occlusion()
 	set name = "Toggle Ambient Occlusion"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Toggle ambient occlusion."
 
 	prefs.ambientocclusion = !prefs.ambientocclusion
@@ -203,7 +203,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/set_parallax_quality()
 	set name = "Set Parallax Quality"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Set space parallax quality."
 
 	var/new_setting = input(src, "Parallax quality:") as null|anything in list("Disable", "Low", "Medium", "High", "Insane")
@@ -231,7 +231,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/set_parallax_theme()
 	set name = "Set Parallax Theme"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Set space parallax theme."
 
 	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
@@ -249,7 +249,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/toggle_ghost_sight()
 	set name = "Change Ghost Sight Options"
-	set category = "Preferences"
+	set category = "Preferences.Ghost"
 	set desc = "Toggle between seeing all mob emotes, all manual-only emotes and only emotes of nearby mobs."
 
 	var/new_setting = input(src, "Ghost Sight Options:") as null|anything in list("Absolutely all emotes", "All manual-only", "Only emotes of nearby mobs")
@@ -281,7 +281,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/toggle_tooltip()
 	set name = "Tooltip: Show/Hide"
-	set category = "Preferences"
+	set category = "Preferences.Tooltip"
 	set desc = "Toggle Name of Items"
 
 	prefs.tooltip = !prefs.tooltip
@@ -297,7 +297,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/change_font_tooltip()
 	set name = "Tooltip: Change Font"
-	set category = "Preferences"
+	set category = "Preferences.Tooltip"
 	set desc = "Toggle Font of Names of Items"
 
 	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Serif", "Verdana", "Custom Font")
@@ -317,7 +317,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/change_size_tooltip()
 	set name = "Tooltip: Change Size"
-	set category = "Preferences"
+	set category = "Preferences.Tooltip"
 	set desc = "Change Size of Names of Items"
 
 	prefs.tooltip_size = input(usr, "Введите размер Названий Предметов") as num
@@ -328,7 +328,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/toggle_outline()
 	set name = "Toggle Outline"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Toggle Outline"
 
 	prefs.outline_enabled = !prefs.outline_enabled
@@ -338,7 +338,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/change_outline_color()
 	set name = "Change Outline Color"
-	set category = "Preferences"
+	set category = "Preferences.Effects"
 	set desc = "Change Outline Color"
 
 	var/pickedOutlineColor = input(usr, "Choose your outline color.", "General Preference", prefs.outline_color) as color|null
@@ -351,7 +351,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/verb/toggle_eorg()
 	set name = "Toggle End of Round Deathmatch"
-	set category = "Preferences"
+	set category = "Preferences.Endgame"
 	set desc = "At the end of the round you will be teleported to thunderdome to freely bash your fellow colleagues."
 
 	prefs.eorg_enabled = !prefs.eorg_enabled

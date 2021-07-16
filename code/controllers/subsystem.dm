@@ -161,20 +161,14 @@
 	return
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
-/datum/controller/subsystem/stat_entry(msg)
-	if(!statclick)
-		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
+/datum/controller/subsystem/stat_entry()
+	SHOULD_CALL_PARENT(TRUE)
 
+	. = ..()
 	if(can_fire)
-		msg = "[round(cost, 1)]ms|[round(tick_usage, 1)]%|[round(ticks, 0.1)]\t[msg]"
+		. += "[round(cost, 1)]ms|[round(tick_usage, 1)]%|[round(ticks, 0.1)]\t[.]"
 	else
-		msg = "OFFLINE\t[msg]"
-
-	var/title = name
-	if (can_fire)
-		title = "\[[state_letter()]][title]"
-
-	stat(title, statclick.update(msg))
+		. += "OFFLINE\t[.]"
 
 /datum/controller/subsystem/proc/state_letter()
 	switch (state)
