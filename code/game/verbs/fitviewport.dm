@@ -1,3 +1,9 @@
+/client/verb/onresize()
+	set hidden = TRUE
+
+	if(prefs.auto_fit_viewport)
+		fit_viewport()
+
 /client/verb/fit_viewport()
 	set name = "Fit viewport"
 	set category = "OOC"

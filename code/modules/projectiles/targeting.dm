@@ -138,7 +138,7 @@
 	var/list/targeted_by
 	var/last_move_intent = -100
 	var/last_target_click = -5
-	var/target_locked = null
+	var/image/target_locked = null
 
 /mob/living/proc/Targeted(obj/item/weapon/gun/I) //Self explanitory.
 	if(!I.target)
@@ -163,17 +163,8 @@
 	 so try not to get on their bad side.</span> ))")
 
 	if(targeted_by.len == 1)
-		spawn(0)
-			target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locking")
-			if(ishuman(src)) //Until this part rewrite.
-				update_targeted()
-			else
-				add_overlay(target_locked)
-			spawn(0)
-				sleep(20)
-				if(target_locked)
-					target_locked = image("icon" = 'icons/effects/Targeted.dmi', "icon_state" = "locked")
-					update_targeted()
+		INVOKE_ASYNC(src, .proc/set_target_locked_sprite, "locking")
+		addtimer(CALLBACK(src, .proc/set_target_locked_sprite, "locked"), 20)
 
 	//Adding the buttons to the controller person
 	var/mob/living/T = I.loc
@@ -205,6 +196,11 @@
 				I.lock_time = world.time + 5
 				I.last_moved_mob = src
 			sleep(1)
+
+/mob/living/proc/set_target_locked_sprite(icon_name = "locking")
+	target_locked = image(icon = 'icons/effects/Targeted.dmi', icon_state = icon_name)
+	target_locked.appearance_flags  |= (RESET_TRANSFORM|RESET_ALPHA|RESET_COLOR)
+	update_targeted()
 
 /mob/living/proc/NotTargeted(obj/item/weapon/gun/I)
 	if(!I.silenced)

@@ -699,6 +699,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
+"bK" = (
+/obj/machinery/camera{
+	c_tag = "Crew Area Hallway South";
+	dir = 1;
+	network = list("MINE")
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
 "bL" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -3016,6 +3026,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
+"gg" = (
+/obj/machinery/light,
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/asteroid/mine/living_quarters)
 "gh" = (
 /obj/structure/table,
 /obj/item/weapon/folder,
@@ -10242,13 +10258,14 @@
 	},
 /area/asteroid/mine/living_quarters)
 "wr" = (
+/obj/structure/closet/secure_closet/miner,
 /obj/machinery/camera{
 	c_tag = "Storage Room";
-	dir = 1;
+	dir = 6;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
-	icon_state = "warning"
+	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
 "ws" = (
@@ -10971,10 +10988,10 @@
 "yi" = (
 /obj/machinery/camera{
 	c_tag = "Crew Area Hallway East";
-	dir = 1;
 	network = list("MINE")
 	},
 /turf/simulated/floor{
+	dir = 1;
 	icon_state = "brown"
 	},
 /area/asteroid/mine/living_quarters)
@@ -11397,14 +11414,12 @@
 	},
 /area/asteroid/mine/eva)
 "zF" = (
-/obj/machinery/camera{
-	c_tag = "Crew Area Hallway West";
-	dir = 4;
-	network = list("MINE")
+/obj/structure/closet/secure_closet/miner,
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
+	icon_state = "delivery"
 	},
 /area/asteroid/mine/living_quarters)
 "zG" = (
@@ -46081,7 +46096,7 @@ vU
 tc
 zb
 wl
-zF
+pX
 Nc
 uo
 kO
@@ -47110,7 +47125,7 @@ pw
 uo
 ww
 yv
-Pc
+bK
 uo
 Kd
 Wd
@@ -48395,7 +48410,7 @@ uo
 uo
 ww
 vN
-yi
+Pc
 uo
 uo
 uo
@@ -49158,7 +49173,7 @@ kO
 kO
 lA
 uo
-vB
+zF
 qv
 Au
 Au
@@ -49415,7 +49430,7 @@ ac
 kO
 lA
 uo
-vB
+wr
 qv
 Au
 Au
@@ -49676,11 +49691,11 @@ vB
 qv
 tS
 vX
-wr
+vq
 uo
-ww
+yi
 vN
-Pc
+gg
 yd
 Nd
 Zd
