@@ -386,7 +386,7 @@
 				react_pool -= reactant
 
 		//loop through all the reacting reagents, picking out random reactions for them
-		var/list/produced_reactants = new/list
+		var/list/produced_reactants = list()
 		var/list/p_react_pool = react_pool.Copy()
 		while(p_react_pool.len)
 			//pick one of the unprocessed reacting reagents randomly
@@ -401,7 +401,7 @@
 				possible_s_reacts.Remove(cur_p_react)
 
 			//loop through and work out all the possible reactions
-			var/list/possible_reactions = new/list
+			var/list/possible_reactions = list()
 			for(var/cur_s_react in possible_s_reacts)
 				if(possible_s_reacts[cur_s_react] < 1)
 					continue

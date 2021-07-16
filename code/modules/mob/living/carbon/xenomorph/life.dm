@@ -31,9 +31,6 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	if(client)
-		handle_regular_hud_updates()
-
 /mob/living/carbon/xenomorph/proc/handle_regular_status_updates()
 	updatehealth()
 

@@ -12,8 +12,8 @@
 	var/playing = FALSE
 	var/timerecorded = FALSE
 	var/playsleepseconds = 0
-	var/list/storedinfo = new/list()
-	var/list/timestamp = new/list()
+	var/list/storedinfo = list()
+	var/list/timestamp = list()
 	var/canprint = TRUE
 	flags = CONDUCT
 	throwforce = 2
