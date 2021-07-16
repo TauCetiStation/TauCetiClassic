@@ -79,6 +79,7 @@
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
 
+	var/attack_ignore_harm_check = FALSE
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -846,6 +847,8 @@
 	return loc
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.a_intent == INTENT_HELP)
+		return FALSE
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
