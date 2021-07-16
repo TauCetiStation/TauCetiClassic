@@ -14,7 +14,7 @@
 			if(!name)
 				continue
 			var/icon/logo = icon('icons/misc/logos.dmi', name)
-			dat += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> - [name] <BR>"
+			dat += "[bicon(logo, css = "style='position:relative; top:10;'")] - [name] <BR>"
 
 	var/datum/browser/popup = new(usr, "setup_faction", "Faction Settings", 500, 700)
 	popup.set_content(dat)
