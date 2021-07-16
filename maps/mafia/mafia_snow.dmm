@@ -1,0 +1,717 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall,
+/area/mafia)
+"b" = (
+/turf/simulated/wall/mineral/silver,
+/area/mafia)
+"c" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/science,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"f" = (
+/obj/structure/snowman,
+/turf/unsimulated/floor/snow,
+/area/mafia)
+"i" = (
+/turf/unsimulated/floor/snow,
+/area/mafia)
+"j" = (
+/obj/structure/mineral_door/silver,
+/obj/effect/landmark/blockway,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"l" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/captain,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"o" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/cargo,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"p" = (
+/obj/machinery/door/poddoor/mafia,
+/turf/unsimulated/wall/fakeglass,
+/area/mafia)
+"t" = (
+/turf/unsimulated/floor/snow{
+	icon_state = "plating"
+	},
+/area/mafia)
+"u" = (
+/obj/effect/landmark/mafia/town_center,
+/turf/unsimulated/floor/snow{
+	icon_state = "plating"
+	},
+/area/mafia)
+"v" = (
+/obj/mafia_game_board,
+/turf/unsimulated/floor/snow,
+/area/mafia)
+"H" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/engineering,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"I" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"J" = (
+/obj/item/clothing/suit/hooded/wintercoat,
+/obj/structure/closet,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"K" = (
+/obj/item/decoration/snowman,
+/turf/unsimulated/floor/snow,
+/area/mafia)
+"L" = (
+/obj/item/snowball,
+/turf/unsimulated/floor/snow,
+/area/mafia)
+"O" = (
+/obj/effect/landmark/mafia,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"P" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/hydro,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"Q" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"R" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/miner,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"S" = (
+/obj/machinery/door/poddoor/mafia,
+/obj/item/decoration/snowflake,
+/turf/unsimulated/wall/fakeglass,
+/area/mafia)
+"T" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"W" = (
+/obj/structure/closet,
+/obj/item/clothing/suit/hooded/wintercoat/security,
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+"X" = (
+/turf/unsimulated/floor/snow{
+	icon_state = "gravsnow"
+	},
+/area/mafia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+i
+i
+i
+L
+i
+i
+i
+K
+i
+L
+f
+i
+i
+i
+i
+i
+L
+b
+b
+a
+"}
+(4,1,1) = {"
+a
+b
+b
+i
+v
+i
+f
+i
+i
+L
+i
+i
+i
+i
+i
+K
+L
+i
+v
+i
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+i
+i
+i
+i
+i
+b
+b
+j
+b
+j
+b
+b
+i
+i
+i
+i
+i
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+K
+i
+b
+b
+j
+b
+I
+X
+b
+X
+J
+b
+j
+b
+b
+L
+i
+b
+b
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+L
+i
+b
+J
+X
+S
+O
+X
+p
+X
+O
+S
+X
+Q
+b
+i
+i
+L
+b
+a
+"}
+(8,1,1) = {"
+a
+b
+i
+i
+i
+b
+O
+X
+b
+b
+X
+b
+X
+b
+b
+X
+O
+b
+i
+i
+f
+b
+a
+"}
+(9,1,1) = {"
+a
+b
+i
+i
+b
+b
+p
+X
+X
+p
+X
+S
+X
+p
+X
+X
+p
+b
+b
+i
+i
+b
+a
+"}
+(10,1,1) = {"
+a
+b
+i
+K
+b
+l
+S
+b
+p
+p
+p
+p
+p
+p
+S
+b
+p
+W
+b
+i
+i
+b
+a
+"}
+(11,1,1) = {"
+a
+b
+i
+i
+j
+O
+X
+X
+X
+S
+t
+t
+t
+p
+X
+X
+X
+O
+j
+L
+i
+b
+a
+"}
+(12,1,1) = {"
+a
+b
+L
+i
+b
+b
+p
+b
+p
+p
+t
+u
+t
+S
+p
+b
+S
+b
+b
+i
+i
+b
+a
+"}
+(13,1,1) = {"
+a
+b
+i
+i
+j
+O
+X
+X
+X
+p
+t
+t
+t
+p
+X
+X
+X
+O
+j
+i
+i
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+K
+i
+b
+o
+p
+b
+p
+p
+S
+p
+p
+p
+p
+b
+p
+c
+b
+K
+i
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+i
+L
+b
+b
+S
+X
+X
+p
+X
+p
+X
+p
+X
+X
+S
+b
+b
+i
+L
+b
+a
+"}
+(16,1,1) = {"
+a
+b
+i
+i
+K
+b
+O
+X
+b
+b
+X
+b
+X
+b
+b
+X
+O
+b
+i
+i
+i
+b
+a
+"}
+(17,1,1) = {"
+a
+b
+i
+i
+i
+b
+H
+X
+p
+O
+X
+S
+X
+O
+p
+X
+R
+b
+f
+i
+i
+b
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+i
+i
+b
+b
+j
+b
+P
+X
+b
+X
+T
+b
+j
+b
+b
+i
+i
+b
+b
+a
+"}
+(19,1,1) = {"
+a
+b
+b
+i
+i
+f
+i
+L
+b
+b
+j
+b
+j
+b
+b
+i
+K
+i
+i
+i
+b
+b
+a
+"}
+(20,1,1) = {"
+a
+b
+b
+K
+v
+i
+i
+i
+i
+K
+i
+i
+i
+i
+i
+i
+i
+i
+v
+i
+b
+b
+a
+"}
+(21,1,1) = {"
+a
+b
+b
+i
+i
+L
+i
+K
+i
+i
+i
+L
+i
+f
+i
+i
+i
+i
+i
+K
+b
+b
+a
+"}
+(22,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

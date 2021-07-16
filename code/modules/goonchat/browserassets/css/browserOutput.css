@@ -356,6 +356,7 @@ h1.alert, h2.alert		{color: #000000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+.boldnotice				{color: #000099;	font-weight: bold;}
 
 .wet					{color: #007FBF;}
 
@@ -445,3 +446,10 @@ table.staffwho .Admins    {color:#E67E22;}
 table.staffwho .Mentors   {color:#E91E63;}
 table.staffwho .Developers{color:#5E5ED1;}
 table.staffwho .Xenovisors{color:#2ECC71;}
+
+.clown {
+	color: #ff70c1;
+	font-size: 160%;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: bold;
+  }

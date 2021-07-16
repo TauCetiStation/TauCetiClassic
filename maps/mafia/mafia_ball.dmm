@@ -1,0 +1,680 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall,
+/area/mafia)
+"b" = (
+/turf/simulated/floor/plating/ironsand,
+/area/mafia)
+"c" = (
+/obj/structure/temple_falsewall,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"d" = (
+/turf/simulated/floor/plating,
+/area/mafia)
+"e" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"f" = (
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+"g" = (
+/obj/mafia_game_board,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/mafia)
+"h" = (
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/mafia)
+"i" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/mafia)
+"j" = (
+/turf/simulated/wall/mineral/silver,
+/area/mafia)
+"k" = (
+/obj/mafia_game_board,
+/turf/simulated/floor/plating,
+/area/mafia)
+"l" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	locked = 1;
+	req_access = list(101)
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/mafia)
+"m" = (
+/obj/structure/closet/cabinet{
+	anchored = 1
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/mafia)
+"n" = (
+/obj/effect/landmark/mafia,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/mafia)
+"o" = (
+/obj/structure/temple_falsewall,
+/turf/simulated/floor/plating,
+/area/mafia)
+"p" = (
+/obj/machinery/door/poddoor/mafia,
+/turf/unsimulated/wall/fakeglass,
+/area/mafia)
+"q" = (
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/mafia)
+"s" = (
+/turf/unsimulated/floor/fakespace,
+/area/mafia)
+"t" = (
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/mafia)
+"u" = (
+/obj/effect/landmark/mafia/town_center,
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/mafia)
+"v" = (
+/obj/mafia_game_board,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/mafia)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(4,1,1) = {"
+a
+b
+b
+b
+g
+h
+d
+d
+d
+d
+d
+c
+d
+d
+d
+d
+d
+h
+k
+b
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+b
+h
+d
+d
+e
+j
+j
+l
+j
+l
+j
+j
+d
+d
+i
+h
+b
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+i
+j
+j
+l
+j
+m
+q
+j
+q
+m
+j
+l
+j
+j
+d
+b
+b
+b
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+d
+j
+m
+q
+p
+n
+q
+p
+q
+n
+p
+q
+m
+j
+d
+b
+b
+b
+a
+"}
+(8,1,1) = {"
+a
+b
+b
+d
+d
+j
+n
+q
+j
+j
+q
+j
+q
+j
+j
+q
+n
+j
+d
+d
+b
+b
+a
+"}
+(9,1,1) = {"
+a
+b
+b
+d
+j
+j
+p
+q
+q
+p
+q
+p
+q
+p
+q
+q
+p
+j
+j
+d
+b
+b
+a
+"}
+(10,1,1) = {"
+a
+b
+b
+d
+j
+m
+p
+j
+p
+p
+p
+p
+p
+p
+p
+j
+p
+m
+j
+d
+b
+b
+a
+"}
+(11,1,1) = {"
+a
+b
+b
+d
+l
+n
+q
+q
+q
+p
+s
+t
+s
+p
+q
+q
+q
+n
+l
+e
+b
+b
+a
+"}
+(12,1,1) = {"
+a
+b
+b
+c
+j
+j
+p
+j
+p
+p
+t
+u
+t
+p
+p
+j
+p
+j
+j
+o
+b
+b
+a
+"}
+(13,1,1) = {"
+a
+b
+b
+d
+l
+n
+q
+q
+q
+p
+s
+t
+s
+p
+q
+q
+q
+n
+l
+d
+b
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+b
+d
+j
+m
+p
+j
+p
+p
+p
+p
+p
+p
+p
+j
+p
+m
+j
+i
+b
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+b
+d
+j
+j
+p
+q
+q
+p
+q
+p
+q
+p
+q
+q
+p
+j
+j
+d
+b
+b
+a
+"}
+(16,1,1) = {"
+a
+b
+b
+f
+d
+j
+n
+q
+j
+j
+q
+j
+q
+j
+j
+q
+n
+j
+d
+d
+b
+b
+a
+"}
+(17,1,1) = {"
+a
+b
+b
+b
+d
+j
+m
+q
+p
+n
+q
+p
+q
+n
+p
+q
+m
+j
+d
+b
+b
+b
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+b
+d
+j
+j
+l
+j
+m
+q
+j
+q
+m
+j
+l
+j
+j
+d
+b
+b
+b
+a
+"}
+(19,1,1) = {"
+a
+b
+b
+b
+h
+i
+d
+d
+j
+j
+l
+j
+l
+j
+j
+d
+e
+d
+h
+b
+b
+b
+a
+"}
+(20,1,1) = {"
+a
+b
+b
+b
+k
+h
+d
+d
+e
+d
+d
+o
+d
+d
+d
+d
+d
+h
+v
+b
+b
+b
+a
+"}
+(21,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(22,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

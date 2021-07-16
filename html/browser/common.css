@@ -267,6 +267,7 @@ h4 {font-size: 12px;}
 .yellow     {color:#fbd814}
 .olive      {color:#c0d919}
 .green      {color:#22be47}
+.nicegreen  {color:#14a833}
 .teal       {color:#00c5bd}
 .blue       {color:#238cdc}
 .violet     {color:#6c3fcc}
@@ -312,6 +313,11 @@ h4 {font-size: 12px;}
 	margin: 4px;
 }
 
+.boldnotice {
+	color: #000099;
+	font-weight: bold;
+  }
+
 .notice.icon {
 	padding: 2px 4px 0 20px;
 }
@@ -324,8 +330,20 @@ h4 {font-size: 12px;}
 	height: 16px;
 }
 
+.clown {
+	color: #ff70c1;
+	font-size: 160%;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: bold;
+  }
+
 div.notice {
 	clear: both;
+}
+
+.greentext {
+	color: #90ee90;
+	font-weight: bold;
 }
 
 .Section {
