@@ -1340,5 +1340,6 @@
 
 	return TRUE
 
-/mob/living/proc/swap_hand()
+/mob/proc/swap_hand()
+	SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS)
 	return

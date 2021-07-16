@@ -202,6 +202,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/swap_hand(): ()
+#define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()

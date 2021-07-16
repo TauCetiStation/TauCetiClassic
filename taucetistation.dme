@@ -254,6 +254,7 @@
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\visible_radius.dm"
 #include "code\datums\components\waddle.dm"
+#include "code\datums\components\zooming.dm"
 #include "code\datums\components\gamemodes\gamemode.dm"
 #include "code\datums\components\gamemodes\syndicate.dm"
 #include "code\datums\components\rites\consent.dm"
