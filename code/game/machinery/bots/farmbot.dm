@@ -28,7 +28,6 @@
 	desc = "The botanist's best friend."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "farmbot0"
-	layer = 5.0
 	density = TRUE
 	anchored = FALSE
 	health = 50

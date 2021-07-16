@@ -7,6 +7,7 @@
 	health = 100
 	maxhealth = 100
 
+	layer = INFRONT_MOB_LAYER
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
 

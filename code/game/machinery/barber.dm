@@ -337,7 +337,7 @@ A proc that does all the animations before mix()-ing.
 		return
 	if(user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || !Adjacent(user) || !Adjacent(target) || !user.Adjacent(target))
+	if(target.buckled)
 		return
 	if(!user.IsAdvancedToolUser() && target != user)
 		return

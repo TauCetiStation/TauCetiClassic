@@ -14,7 +14,7 @@
 	var/obj/machinery/abductor/console/console
 
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
+	if(user.incapacitated() || !ishuman(target))
 		return
 	if(IsAbductor(target))
 		return

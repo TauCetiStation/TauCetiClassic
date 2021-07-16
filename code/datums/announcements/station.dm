@@ -20,9 +20,8 @@
 /datum/announcement/station/command/department
 	name = "Heads: Department"
 /datum/announcement/station/command/department/play(department, message)
-	// TODO translate department name
 	if(department && message)
-		title = "Оповещение от [department]"
+		title = "Оповещение из [department]"
 	..(message)
 
 /datum/announcement/station/command/ai
@@ -86,7 +85,7 @@
 	name = "Shuttle: Crew Docked"
 	sound = "crew_shut_docked"
 /datum/announcement/station/shuttle/crew_docked/play()
-	message = "Шаттл Транспортировки Экипажа пристыковался к станции в соответствии с расписанием. Отправление примерно через [shuttleminutes2text()]."
+	message = "Шаттл Транспортировки Экипажа пристыковался к станции в соответствии с расписанием. Отправление через [shuttleminutes2text()]."
 	..()
 
 /datum/announcement/station/shuttle/crew_left
