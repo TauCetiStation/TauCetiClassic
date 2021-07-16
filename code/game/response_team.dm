@@ -10,28 +10,30 @@ var/can_call_ert
 /client/proc/response_team()
 	set name = "Dispatch Emergency Response Team"
 	set category = "Special Verbs"
-	set desc = "Send an emergency response team to the station."
+	set desc = "Отправляет отряд быстрого реагирования на станцию."
 
 	if(!holder)
-		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
+		to_chat(usr, "<span class='warning'>Только администрация может использовать это.</span>")
 		return
 	if(!SSticker)
-		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
+		to_chat(usr, "<span class='warning'>Игра еще не началась!</span>")
 		return
 	if(SSticker.current_state == 1)
-		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
+		to_chat(usr, "<span class='warning'>Раунд еще не начался!</span>")
 		return
 	if(send_emergency_team)
-		to_chat(usr, "<span class='warning'>Central Command has already dispatched an emergency response team!</span>")
+		to_chat(usr, "<span class='warning'>Центральное командование уже отправило отряд быстрого реагирования!</span>")
 		return
-	if(tgui_alert(usr, "Do you want to dispatch an Emergency Response Team?",, list("Yes","No")) != "Yes")
+
+	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
-		switch(tgui_alert(usr, "The station is not in red alert. Do you still want to dispatch a response team?",, list("Yes","No")))
-			if("No")
+		switch(tgui_alert(usr, "На станции не введен красный код. Вы все еще хотите отправить отряд быстрого реагирования?",, list("Да","Нет")))
+			if("Нет")
 				return
+        
 	if(send_emergency_team)
-		to_chat(usr, "<span class='warning'>Looks like somebody beat you to it!</span>")
+		to_chat(usr, "<span class='warning'>Похоже, кто-то уже опередил вас!</span>")
 		return
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.", 1)
@@ -41,30 +43,31 @@ var/can_call_ert
 
 
 /client/verb/JoinResponseTeam()
+	set name = "Вступить в ОБР"
 	set category = "IC"
 
 	if(isobserver(usr) || isnewplayer(usr) || ismouse(usr) || isbrain(usr) || usr.is_dead())
 		if(!send_emergency_team)
-			to_chat(usr, "No emergency response team is currently being sent.")
+			to_chat(usr, "В данный момент нет вызванного отряда быстрого реагирования.")
 			return
 	/*	if(admin_emergency_team)
 			to_chat(usr, "An emergency response team has already been sent.")
 			return */
 		if(jobban_isbanned(usr, "Syndicate") || jobban_isbanned(usr, ROLE_ERT) || jobban_isbanned(usr, "Security Officer"))
-			to_chat(usr, "<span class='danger'>You are jobbanned from the emergency reponse team!</span>")
+			to_chat(usr, "<span class='danger'>Администрация запретила вам вступать в отряд быстрого реагирования!</span>")
 			return
 
 		var/available_in_minutes = role_available_in_minutes(usr, ROLE_ERT)
 		if(available_in_minutes)
-			to_chat(usr, "<span class='notice'>This role will be unlocked in [available_in_minutes] minutes (e.g.: you gain minutes while playing).</span>")
+			to_chat(usr, "<span class='notice'>Эта роль будет открыта через [pluralize_russian(available_in_minutes, "[available_in_minutes] минуту", "[available_in_minutes] минуты", "[available_in_minutes] минут")]. Продолжайте играть для получения доступа.</span>")
 			return
 
 		if(response_team_members.len > 5)
-			to_chat(usr, "The emergency response team is already full!")
+			to_chat(usr, "Отряд быстрого реагирования уже заполнен!")
 
 		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
 			L.name = null//Reserving the place.
-			var/new_name = sanitize_safe(input(usr, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
+			var/new_name = sanitize_safe(input(usr, "Введите имя","Имя") as null|text, MAX_LNAME_LEN)
 			if(!new_name)//Somebody changed his mind, place is available again.
 				L.name = "Commando"
 				return
@@ -75,19 +78,19 @@ var/can_call_ert
 			new_commando.key = usr.key
 			create_random_account_and_store_in_mind(new_commando)
 
-			to_chat(new_commando, "<span class='notice'>You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.</span>")
-			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.</b>")
+			to_chat(new_commando, "<span class='notice'>Вы являетесь [!leader_selected?"членом":"<B>ЛИДЕРОМ</B>"] отряда быстрого реагирования, видом военного подразделения, под управлением ЦК.<BR>На станции [station_name()] (<B>[get_security_level()]</B>) код, ваша задача найти и устранить проблему.</span>")
+			to_chat(new_commando, "<b>Для начала вооружитесь и обсудите план со своей командой. Другие члены могут присоединиться позже. Не выдвигайтесь, пока не будете полностью готовы.</b>")
 			if(!leader_selected)
-				to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
+				to_chat(new_commando, "<b>Как член отряда быстрого реагирования, вы отвечаете перед лидером и представителями ЦК с более высоким приоритетом и перед капитаном с более низким.</b>")
 			else
-				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
+				to_chat(new_commando, "<b>Как лидер отряда быстрого реагирования, вы отвечаете только перед ЦК и перед капитаном с более низким приоритетом. Вы можете ослушаться приказа, если это поможет выполнению миссии. Рекомендуется координироваться с капитаном, если возможно.</b>")
 
 			var/datum/faction/strike_team/ert/ERT = find_faction_by_type(/datum/faction/strike_team/ert)
 			if(ERT)
 				add_faction_member(ERT, new_commando, FALSE)
 
 	else
-		to_chat(usr, "You need to be an observer, mouse, brain or new player to use this.")
+		to_chat(usr, "Вы должны быть наблюдателем, мышкой, мозгом или новым игроком, чтобы присоединиться.")
 
 // returns a number of dead players in %
 /proc/percentage_dead()
@@ -166,25 +169,25 @@ var/can_call_ert
 
 	//todo: god damn this.
 	//make it a panel, like in character creation
-	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
+	var/new_facial = input("Выберите цвет растительности на лице.", "Создание персонажа") as color
 	if(new_facial)
 		M.r_facial = hex2num(copytext(new_facial, 2, 4))
 		M.g_facial = hex2num(copytext(new_facial, 4, 6))
 		M.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input("Please select hair color.", "Character Generation") as color
+	var/new_hair = input("Выберите цвет прически.", "Создание персонажа") as color
 	if(new_facial)
 		M.r_hair = hex2num(copytext(new_hair, 2, 4))
 		M.g_hair = hex2num(copytext(new_hair, 4, 6))
 		M.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-	var/new_eyes = input("Please select eye color.", "Character Generation") as color
+	var/new_eyes = input("Выберите цвет глаз.", "Создание персонажа") as color
 	if(new_eyes)
 		M.r_eyes = hex2num(copytext(new_eyes, 2, 4))
 		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input("Выберите тон кожи: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Создание персонажа")  as text
 
 	if (!new_tone)
 		new_tone = 35
@@ -201,20 +204,21 @@ var/can_call_ert
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
+	var/new_gender = tgui_alert(usr, "Выберите пол.", "Создание персонажа", list("Мужской", "Женский"))
+
 	if (new_gender)
-		if(new_gender == "Male")
+		if(new_gender == "Мужской")
 			M.gender = MALE
 		else
 			M.gender = FEMALE
 
 	//hair
-	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
+	var/new_hstyle = input(usr, "Выберите прическу", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)
 	if(new_hstyle)
 		M.h_style = new_hstyle
 
 	// facial hair
-	var/new_fstyle = input(usr, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
+	var/new_fstyle = input(usr, "Выберите стиль лицевой растительности", "Отличительные признаки")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, M.get_species(), M.gender)
 	if(new_fstyle)
 		M.f_style = new_fstyle
 
