@@ -313,9 +313,6 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	var/area/A = get_area(src)
-	A.powerupdate = 1
-
 	return TRUE
 
 /obj/machinery/proc/is_operational()
@@ -378,9 +375,6 @@ Class Procs:
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return 1
-
-	var/area/A = get_area(src)
-	A.powerupdate = 1 // <- wtf is this var and its comments...
 
 	interact(user)
 	return 0

@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && avail(active_power_usage))
+	if (active && powered)
 		icon_state = "emitter-active"
 	else if(panel_open)
 		icon_state = "emitter-open"
@@ -131,15 +131,15 @@
 		return
 	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
-		if(!active_power_usage || avail(active_power_usage))
+		if(!active_power_usage || active_power_usage <= max(surplus(), 0))
 			add_load(active_power_usage)
 			if(!powered)
-				powered = 1
+				powered = TRUE
 				update_icon()
 				log_investigate("regained power and turned <font color='green'>on</font>",INVESTIGATE_SINGULO)
 		else
 			if(powered)
-				powered = 0
+				powered = FALSE
 				update_icon()
 				log_investigate("lost power and turned <font color='red'>off</font>",INVESTIGATE_SINGULO)
 			return

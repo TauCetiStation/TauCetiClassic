@@ -382,12 +382,11 @@
 
 	if(!PN)
 		PN = new()
-		powernets += PN
-	NC.powernet = PN
-	PN.cables += NC
-	NC.mergeConnectedNetworks(NC.d2)
+	PN.add_cable(NC)
 
+	NC.mergeConnectedNetworks(NC.d2)
 	//NC.mergeConnectedNetworksOnTurf()
+
 	last_piece = NC
 	return 1
 

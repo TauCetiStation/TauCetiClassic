@@ -283,8 +283,8 @@
 	if(mode==433)
 		if(powmonitor)
 			values["powermonitor_detected"] = TRUE
-			values["poweravail"] = powmonitor.powernet.avail
-			values["powerload"] = num2text(powmonitor.powernet.viewload,10)
+			values["poweravail"] = DisplayPower(powmonitor.powernet.viewavail)
+			values["powerload"] = DisplayPower(powmonitor.powernet.viewload)
 
 			var/list/L = list()
 			for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
@@ -296,7 +296,7 @@
 			var/list/chg = list("N","C","F")	// Charging: nope, charging, full
 			var/apcData[0]
 			for(var/obj/machinery/power/apc/A in L)
-				apcData[++apcData.len] = list("Name" = html_encode(A.area.name), "Equipment" = Status[A.equipment+1], "Lights" = Status[A.lighting+1], "Environment" = Status[A.environ+1], "CellStatus" = A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "N/C", "Load" = add_lspace(A.lastused_total, 6))
+				apcData[++apcData.len] = list("Name" = html_encode(A.area.name), "Equipment" = Status[A.equipment+1], "Lights" = Status[A.lighting+1], "Environment" = Status[A.environ+1], "CellStatus" = A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "N/C", "Load" = add_lspace(round(A.lastused_total), 6))
 
 			values["apcs"] = apcData
 		else

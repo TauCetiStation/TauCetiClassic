@@ -22147,9 +22147,7 @@
 /area/station/rnd/hallway)
 "fTt" = (
 /obj/structure/cable,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
@@ -22433,8 +22431,7 @@
 /turf/simulated/floor/plating,
 /area/station/gateway)
 "fYR" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 1;
 	name = "Prison Wing APC";
 	pixel_y = 25
@@ -25288,8 +25285,7 @@
 /obj/item/weapon/stock_parts/cell{
 	maxcharge = 2000
 	},
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 1;
 	name = "Cargo Bay APC";
 	pixel_x = 1;
@@ -33661,10 +33657,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jGI" = (
-/obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -35838,9 +35831,7 @@
 	},
 /area/station/maintenance/cargo)
 "koC" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -35952,10 +35943,7 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "krj" = (
-/obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -36261,8 +36249,7 @@
 /area/station/maintenance/medbay)
 "kvS" = (
 /obj/structure/closet/secure_closet/recycler,
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 8;
 	name = "Recycler office APC";
 	pixel_x = -27
@@ -40349,8 +40336,7 @@
 	},
 /area/station/rnd/mixing)
 "lIM" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 8;
 	name = "MiniSat Antechamber Power APC";
 	pixel_x = -25
@@ -47920,8 +47906,7 @@
 	name = "Aisat Turret Control";
 	pixel_x = 30
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 1;
 	name = "MiniSat External Power APC";
 	pixel_y = 25
@@ -56311,8 +56296,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 20000;
+/obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Engineering APC";
 	pixel_y = 25
@@ -57097,8 +57081,7 @@
 /area/station/hallway/primary/central)
 "qVF" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 8;
 	name = "Cargo Office APC";
 	pixel_x = -25
@@ -60358,10 +60341,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "sck" = (
-/obj/machinery/power/smes{
-	charge = 100000;
-	chargecount = 100000
-	},
+/obj/machinery/power/smes,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -61309,8 +61289,7 @@
 	},
 /area/station/medical/cryo)
 "spu" = (
-/obj/machinery/power/apc{
-	cell_type = 2000;
+/obj/machinery/power/apc/smallcell{
 	dir = 8;
 	name = "Forensic APC";
 	pixel_x = -26
@@ -64846,8 +64825,7 @@
 	},
 /area/station/medical/virology)
 "twb" = (
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 4;
 	name = "Central Hall APC";
 	pixel_x = 24
@@ -71331,8 +71309,7 @@
 	},
 /area/station/medical/surgery2)
 "vyk" = (
-/obj/machinery/power/apc{
-	cell_type = 10000;
+/obj/machinery/power/apc/mediumcell{
 	dir = 4;
 	name = "Bridge APC";
 	pixel_x = 24
@@ -71834,8 +71811,7 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 1;
 	name = "MiniSat Internal Power APC";
 	pixel_y = 25
@@ -75563,8 +75539,7 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 4;
 	name = "Execution Chamber APC";
 	pixel_x = 24;
