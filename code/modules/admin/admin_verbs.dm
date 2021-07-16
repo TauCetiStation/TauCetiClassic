@@ -186,9 +186,9 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 #ifdef REFERENCE_TRACKING
-/datum/proc/find_refs,
-/datum/proc/qdel_then_find_references,
-/datum/proc/qdel_then_if_fail_find_references,
+/client/proc/find_refs,
+/client/proc/qdel_then_find_references,
+/client/proc/qdel_then_if_fail_find_references,
 #endif
 	)
 var/list/admin_verbs_possess = list(
