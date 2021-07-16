@@ -399,9 +399,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
 			R.receive_signal(signal)
 
-
-		sleep(rand(10,25)) // wait a little...
-
 		if(signal.data["done"] && (position.z in signal.data["level"]))
 			// we're done here.
 			return TRUE
