@@ -167,3 +167,74 @@
 		else
 			to_chat(user, "<span class='warning'>It seems [H]'s [IO] is too squishy... It doesn't beat at all!</span>")
 	..()
+
+/obj/item/weapon/AVtool
+	name = "AV tool"
+	desc = "An AV tool powered by a robot's internal power cell, able to work with masked patients."
+	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "avtool_idle"
+	item_state = "avtool_idle"
+	var/charge_cost = 50
+	var/busy = FALSE
+
+/obj/item/weapon/AVtool/proc/check_charge(charge_amt)
+	if(isrobot(loc))
+		var/mob/living/silicon/robot/R = loc
+		return (R.cell && R.cell.charge >= charge_amt)
+
+/obj/item/weapon/AVtool/proc/can_use(mob/living/silicon/robot/user, mob/living/carbon/human/M)
+	var/target_zone = user.get_targetzone()
+	if(busy || user.is_busy(M))
+		to_chat(user, "<span class='warning'>You are too busy.</span>")
+		return FALSE
+
+	if(M.health > config.health_threshold_crit)
+		to_chat(user, "<span class='warning'>Patient's condition is not critical.</span>")
+		return FALSE
+
+	if(target_zone != O_MOUTH)
+		to_chat(user, "<span class='warning'>AV tool works only through the mouth.</span>")
+		return FALSE
+
+	if(!check_charge(charge_cost))
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough charge left to do that.</span>")
+		return FALSE
+
+	if(M.species && M.species.flags[NO_BREATHE])
+		to_chat(user, "<span class='notice bold'>You can not perform AV on these species!</span>")
+		return
+
+	return TRUE
+
+/obj/item/weapon/AVtool/attack(mob/living/carbon/human/M, mob/living/silicon/robot/user, def_zone)
+	var/mob/living/carbon/human/H = M
+	if(!istype(H) || !can_use(user, M))
+		return
+
+	busy = TRUE
+	icon_state = "avtool_ventilating"
+
+	perform_av(M, user)
+
+	busy = FALSE
+	icon_state = "avtool_idle"
+
+/obj/item/weapon/AVtool/proc/perform_av(mob/living/carbon/human/H, mob/living/silicon/robot/user)
+
+	while(H.health < config.health_threshold_crit)
+		var/heal_check = H.health
+
+		if(!do_mob(user, H, 2 SECONDS))
+			break
+
+		var/suff = min(H.getOxyLoss(), 5)
+		H.adjustOxyLoss(-suff)
+		visible_message("<span class='warning'>[user] performs AV on [H]!</span>")
+		to_chat(H, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+		H.updatehealth()
+
+		if(heal_check == H.health)
+			to_chat(user, "<span class='warning'>Further AV is pointless.</span>")
+			break
+
+		user.cell.use(charge_cost)
