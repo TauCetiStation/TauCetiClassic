@@ -678,7 +678,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	var/list/areas = new/list()
+	var/list/areas = list()
 	for(var/area/N in all_areas)
 		if(istype(N, areatype))
 			areas += N
@@ -728,7 +728,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/area/areatemp = areatype
 		areatype = areatemp.type
 
-	var/list/atoms = new/list()
+	var/list/atoms = list()
 	for(var/area/N in all_areas)
 		if(istype(N, areatype))
 			for(var/atom/A in N)
@@ -764,7 +764,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
-	var/list/refined_src = new/list()
+	var/list/refined_src = list()
 	for(var/turf/T in turfs_src)
 		refined_src += T
 		refined_src[T] = new/datum/coords
@@ -772,7 +772,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		C.x_pos = (T.x - src_min_x)
 		C.y_pos = (T.y - src_min_y)
 
-	var/list/refined_trg = new/list()
+	var/list/refined_trg = list()
 	for(var/turf/T in turfs_trg)
 		refined_trg += T
 		refined_trg[T] = new/datum/coords
@@ -781,7 +781,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		C.y_pos = (T.y - trg_min_y)
 
 
-	var/list/toupdate = new/list()
+	var/list/toupdate = list()
 
 	moving:
 		for (var/turf/T in refined_src)
@@ -913,7 +913,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 
-	var/list/refined_src = new/list()
+	var/list/refined_src = list()
 	for(var/turf/T in turfs_src)
 		refined_src += T
 		refined_src[T] = new/datum/coords
@@ -921,7 +921,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		C.x_pos = (T.x - src_min_x)
 		C.y_pos = (T.y - src_min_y)
 
-	var/list/refined_trg = new/list()
+	var/list/refined_trg = list()
 	for(var/turf/T in turfs_trg)
 		refined_trg += T
 		refined_trg[T] = new/datum/coords
@@ -929,7 +929,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		C.x_pos = (T.x - trg_min_x)
 		C.y_pos = (T.y - trg_min_y)
 
-	var/list/toupdate = new/list()
+	var/list/toupdate = list()
 
 	var/copiedobjs = list()
 
@@ -955,10 +955,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
 
-					var/list/objs = new/list()
-					var/list/newobjs = new/list()
-					var/list/mobs = new/list()
-					var/list/newmobs = new/list()
+					var/list/objs = list()
+					var/list/newobjs = list()
+					var/list/mobs = list()
+					var/list/newmobs = list()
 
 					for(var/obj/O in T)
 
@@ -1010,7 +1010,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 
 
-	var/list/doors = new/list()
+	var/list/doors = list()
 
 	if(toupdate.len)
 		for(var/turf/simulated/T1 in toupdate)
