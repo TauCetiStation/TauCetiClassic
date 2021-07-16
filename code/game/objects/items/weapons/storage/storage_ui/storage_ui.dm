@@ -1,7 +1,7 @@
 /datum/storage_ui
 	var/obj/item/weapon/storage/storage
-	var/list/click_border_start = new/list() //In slotless storage, stores areas where clicking will refer to the associated item
-	var/list/click_border_end = new/list()
+	var/list/click_border_start = list() //In slotless storage, stores areas where clicking will refer to the associated item
+	var/list/click_border_end = list()
 
 /datum/storage_ui/New(storage)
 	src.storage = storage
