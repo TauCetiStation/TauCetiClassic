@@ -225,7 +225,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/power/port_gen/pacman/is_operational_topic()
+/obj/machinery/power/port_gen/pacman/is_operational()
 	return TRUE
 
 /obj/machinery/power/port_gen/pacman/Topic(href, href_list)

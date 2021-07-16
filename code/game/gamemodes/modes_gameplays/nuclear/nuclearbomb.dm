@@ -240,7 +240,7 @@ var/bomb_set
 		src.deployable = 1
 	return
 
-/obj/machinery/nuclearbomb/is_operational_topic()
+/obj/machinery/nuclearbomb/is_operational()
 	return TRUE
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)

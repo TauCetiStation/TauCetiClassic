@@ -167,7 +167,7 @@ var/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You require milk and ice to make vanilla icecream.</span>")
 	updateDialog()
 
-/obj/machinery/icecream_vat/is_operational_topic()
+/obj/machinery/icecream_vat/is_operational()
 	return TRUE
 
 /obj/machinery/icecream_vat/Topic(href, href_list)

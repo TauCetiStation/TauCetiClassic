@@ -97,6 +97,7 @@
 			return
 
 /obj/machinery/door_control/allowed_fail(mob/user)
+	..()
 	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
 	flick("doorctrl-denied",src)
 

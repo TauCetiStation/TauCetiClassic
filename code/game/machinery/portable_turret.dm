@@ -276,8 +276,8 @@ var/list/turret_icons
 				return TRUE
 	return FALSE
 
-/obj/machinery/porta_turret/is_operational_topic()
-	return !((stat & (NOPOWER|BROKEN)) || HasController()) && anchored
+/obj/machinery/porta_turret/is_operational()
+	return !((stat & (NOPOWER | BROKEN)) || HasController()) && anchored
 
 /obj/machinery/porta_turret/Topic(href, href_list)
 	. = ..()

@@ -71,7 +71,7 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-/obj/machinery/pipedispenser/is_operational_topic()
+/obj/machinery/pipedispenser/is_operational()
 	return TRUE
 
 /obj/machinery/pipedispenser/Topic(href, href_list)

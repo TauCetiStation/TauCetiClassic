@@ -332,7 +332,7 @@
 
 	return TRUE
 
-/obj/machinery/disposal/is_operational_topic()
+/obj/machinery/disposal/is_operational()
 	return !(stat & BROKEN)
 
 // eject the contents of the disposal unit

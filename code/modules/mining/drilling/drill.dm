@@ -311,7 +311,7 @@
 		return
 	..()
 
-/obj/machinery/mining/drill/is_interactable()
+/obj/machinery/mining/drill/is_operational()
 	return TRUE
 
 /obj/machinery/mining/drill/attack_hand(mob/user)

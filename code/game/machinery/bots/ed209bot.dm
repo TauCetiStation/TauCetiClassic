@@ -53,12 +53,16 @@
 /obj/machinery/bot/secbot/ed209/update_icon()
 	icon_state = "[lasertag_color]ed209[on]"
 
-/obj/machinery/bot/secbot/ed209/is_operational_topic()
-	if(lasertag_color && ishuman(usr))
-		var/mob/living/carbon/human/H = usr
+/obj/machinery/bot/secbot/ed209/can_interact_with(mob/user)
+	if(!..())
+		return FALSE
+
+	if(lasertag_color && ishuman(user))
+		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/suit/lasertag/L = H.wear_suit
 		if(istype(L) && L.lasertag_color != lasertag_color)
 			return FALSE
+
 	return TRUE
 
 /obj/machinery/bot/secbot/ed209/ui_interact(mob/user)
