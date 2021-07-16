@@ -111,6 +111,13 @@
 		if("No")
 			return
 
+/obj/structure/sign/poster/examine(mob/living/carbon/human/H)
+	..()
+	if(original_name == "Walk")
+		H.set_m_intent(MOVE_INTENT_WALK)
+	if(original_name == "Help Others")
+		H.a_intent_change(INTENT_HELP)
+
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
 	pixel_y = 0
