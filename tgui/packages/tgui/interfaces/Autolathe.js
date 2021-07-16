@@ -78,9 +78,10 @@ export const Autolathe = (props, context) => {
                   onClick={() => act("make", { make: recipe.ref })}>
                   {toTitleCase(recipe.name)}
                 </Button>
-                {recipe.is_stack === 1 && (
+                {recipe.max_mult > 1 && (
                   <Box as="span">
-                    {[5, 10, 25, 50].map(mult => MultButton(recipe, materials, act, mult))}
+                    {[5, 10, (recipe.max_mult / 2) >> 0, recipe.max_mult]
+                      .map(mult => MultButton(recipe, materials, act, mult))}
                   </Box>
                 )}
               </Flex.Item>
@@ -200,8 +201,6 @@ const MultButton = (recipe, materials, act, mult) => {
       </Button>
     );
   }
-
-  return (null);
 };
 
 export const Materials = (props, context) => {

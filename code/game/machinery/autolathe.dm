@@ -231,7 +231,6 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 			"requirements" = AR.resources,
 			"hidden" = (AR in autolathe_recipes_hidden),
 			"path" = PATH2CSS(AR.result_type),
-			"is_stack" = istype(AR, /datum/autolathe_recipe/stack),
 			"max_mult" = AR.max_res_amount
 		)))
 	data["recipes"] = recipes
@@ -408,7 +407,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				if(istype(recipe, /datum/autolathe_recipe/stack))
 					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] * multiplier
 					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] * multiplier
-					var/obj/new_item = new recipe.result_type(T)
+					var/obj/new_item = new recipe.result_type(T, multiplier)
 					var/obj/item/stack/S = new_item
 					S.set_amount(multiplier)
 				else
