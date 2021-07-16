@@ -407,9 +407,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				if(istype(recipe, /datum/autolathe_recipe/stack))
 					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] * multiplier
 					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] * multiplier
-					var/obj/new_item = new recipe.result_type(T, multiplier)
-					var/obj/item/stack/S = new_item
-					S.set_amount(multiplier)
+					new recipe.result_type(T, multiplier)
 				else
 					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] / coeff
 					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] / coeff
