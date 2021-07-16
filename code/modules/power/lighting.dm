@@ -8,12 +8,8 @@
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
-#ifdef NEWYEARCONTENT
-    #define LAMP_BRIGHTNESS 1.5
-#else
-    #define LAMP_BRIGHTNESS 2
-#endif
-
+#define LAMP_BRIGHTNESS 2
+#define LAMP_BRIGHTNESS_HOLIDAY 1.5
 
 
 /obj/item/light_fixture_frame
@@ -227,6 +223,11 @@
 	var/nightshift_light_color = "#ffdbb5"
 
 // the smaller bulb light fixture
+
+/obj/machinery/light/atom_init()
+	. = ..()
+	if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS)
+		brightness_power = LAMP_BRIGHTNESS_HOLIDAY
 
 /obj/machinery/light/small
 	icon_state = "bulb1"

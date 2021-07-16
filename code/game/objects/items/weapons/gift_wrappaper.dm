@@ -161,9 +161,8 @@
 				G.add_fingerprint(user)
 				I.add_fingerprint(user)
 				add_fingerprint(user)
-				#ifdef NEWYEARCONTENT
-				to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
-				#endif
+				if(SSholiday.holidays[NEW_YEAR])
+					to_chat(user, "<span class='notice'>You feel like you could put that under a christmas tree.</span>")
 			if (src.amount <= 0)
 				new /obj/item/weapon/c_tube( src.loc )
 				qdel(src)
