@@ -114,7 +114,7 @@
 	var/lastused_environ = 0
 	var/lastused_total = 0
 	var/main_status = 0
-	var/wiresexposed = 0
+	var/wiresexposed = FALSE
 	powernet = 0 //HACK: set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = 0 // New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null // See above --NeoFite
@@ -759,6 +759,9 @@
 
 // UI stuff ////////////////////
 
+/obj/machinery/power/apc/is_operational()
+	return !(stat & (BROKEN | MAINT | EMPED))
+
 /obj/machinery/power/apc/tgui_state(mob/user)
 	return global.machinery_state
 
@@ -776,7 +779,8 @@
 		"locked" = locked,
 		"isOperating" = operating,
 		"externalPower" = main_status,
-		"powerCellStatus" = cell ? cell.percent() : null,
+		"powerCellStatus" = cell != null,
+		"powerCellCharge" = cell ? cell.percent() : 0,
 		"chargeMode" = chargemode,
 		"charging" = charging,
 		"totalLoad" = DisplayPower(lastused_total),

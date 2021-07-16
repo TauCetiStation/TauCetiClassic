@@ -346,8 +346,8 @@
 
 // UI stuff ////////////////////
 
-/obj/machinery/power/smes/is_operational_topic()
-	return ..() && !power_failure
+/obj/machinery/power/smes/is_operational()
+	return !(stat & (BROKEN | EMPED)) && !power_failure
 
 /obj/machinery/power/smes/tgui_state(mob/user)
 	return global.machinery_state

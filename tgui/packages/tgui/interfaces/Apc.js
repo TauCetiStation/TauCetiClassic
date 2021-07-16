@@ -40,6 +40,7 @@ const ApcContent = (props, context) => {
     isOperating,
     externalPower,
     powerCellStatus,
+    powerCellCharge,
     chargeMode,
     charging,
     totalLoad,
@@ -75,10 +76,16 @@ const ApcContent = (props, context) => {
             [ {externalPowerStatus.externalPowerText} ]
           </LabeledList.Item>
           <LabeledList.Item label="Power Cell">
-            <ProgressBar
-              color="good"
-              fractionDigits={1}
-              value={powerCellStatus * 0.01} />
+            {!!powerCellStatus && (
+              <ProgressBar
+                color="good"
+                fractionDigits={1}
+                value={powerCellCharge * 0.01} />
+            ) || (
+              <Box color="bad">
+                Power cell removed
+              </Box>
+            )}
           </LabeledList.Item>
           <LabeledList.Item
             label="Charge Mode"
