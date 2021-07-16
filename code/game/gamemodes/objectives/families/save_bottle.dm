@@ -1,5 +1,5 @@
 /datum/objective/gang/save_bottle
-	explanation_text = "У нас начинают заканчиваться припасы на базе. Братан, убедись, что у каждого нашего товарища будет бутылка какой-нибудь выпивки."
+	explanation_text = "У нас начинает заканчиваться водка на базе. Братан, убедись, что у каждого нашего товарища будет емкость с этой божьей росой."
 
 /datum/objective/gang/save_bottle/check_completion()
 	for(var/R in faction.members)
@@ -10,8 +10,13 @@
 		if(!considered_alive(M.mind))
 			continue // dead people cant really do the objective lol
 		var/list/items_to_check = M.GetAllContents()
-		var/bottle_finded = locate(/obj/item/weapon/reagent_containers/food/drinks/bottle) in items_to_check
-		if(bottle_finded)
-			continue
-		return OBJECTIVE_LOSS // didnt pass the bottle check, no point in continuing to loop
+		var/vodka_finded = FALSE
+		for(var/obj/item/weapon/reagent_containers/RC in items_to_check)
+			if(!RC.reagents || !RC.reagents.reagent_list)
+				continue
+			if(locate(/datum/reagent/consumable/ethanol/vodka) in RC.reagents.reagent_list)
+				vodka_finded = TRUE
+				break
+		if(!vodka_finded)
+			return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN
