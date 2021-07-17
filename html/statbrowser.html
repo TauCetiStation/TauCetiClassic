@@ -883,6 +883,14 @@ function draw_tickets() {
 	document.getElementById("statcontent").appendChild(table);
 }
 
+function make_verb_onclick(command) {
+	return function() {
+		run_after_focus(function() {
+			send_byond_command(command);
+		});
+	};
+}
+
 function draw_verbs(cat){
 	statcontentdiv[textContentKey] = "";
 	var table = document.createElement("div");
@@ -939,14 +947,6 @@ function draw_verbs(cat){
 			content.appendChild(additions[cat]);
 		}
 	}
-}
-
-function make_verb_onclick(command) {
-	return function() {
-		run_after_focus(function() {
-			send_byond_command(command);
-		});
-	};
 }
 
 function restoreFocus() {
