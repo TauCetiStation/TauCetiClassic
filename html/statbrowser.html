@@ -299,7 +299,6 @@ if (!String.prototype.trim) {
 var status_tab_parts = ["Loading..."];
 var current_tab = null;
 var mc_tab_parts = [["Loading...", ""]];
-var href_token = null;
 var verb_tabs = [];
 var verbs = [["", ""]]; // list with a list inside
 var tickets = [];
@@ -747,13 +746,11 @@ function remove_tickets() {
 
 // removes MC, Tickets and MC tabs.
 function remove_admin_tabs() {
-	href_token = null;
 	remove_mc();
 	remove_tickets();
 }
 
-function add_admin_tabs(ht) {
-	href_token = ht;
+function add_admin_tabs() {
 	addPermanentTab("MC");
 	addPermanentTab("Tickets");
 }
