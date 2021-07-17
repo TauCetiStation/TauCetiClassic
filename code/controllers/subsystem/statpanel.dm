@@ -136,12 +136,6 @@ SUBSYSTEM_DEF(statpanels)
 
 	panel_tabs -= tabs
 
-/client/verb/reset_tabs()
-	set name = "Reset Tabs"
-	set hidden = TRUE
-
-	panel_tabs = list()
-
 /client/verb/panel_ready()
 	set name = "Panel Ready"
 	set hidden = TRUE
