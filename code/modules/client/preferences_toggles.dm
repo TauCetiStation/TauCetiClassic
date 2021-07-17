@@ -369,3 +369,14 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	else
 		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус останется на чате.")
 	feedback_add_details("admin_verb", "thm")
+
+/client/proc/toggle_split_admin_tabs()
+	set name = "Toggle Split Admin Tabs"
+	set category = "Preferences.Admin"
+	set desc = "Toggle the admin tab being split into separate tabs instead of being merged into one"
+	if(!holder)
+		return
+	prefs.split_admin_tabs = !prefs.split_admin_tabs
+	prefs.save_preferences()
+	to_chat(src, "Admin tabs will now [prefs.split_admin_tabs ? "be" : "not be"] split.")
+	feedback_add_details("admin_verb", "toggle_split_admin_tabs")

@@ -14,17 +14,10 @@
 	. += 				"<tr><td>Outline Color: <span style='border:1px solid #161616; background-color: [outline_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=outline_color'>Change</a><BR>"
 	. += 				"<tr><td>FPS: <a href='?_src_=prefs;preference=change_fps'>[clientfps]</a></td></tr>"
 	. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext_char(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
-	//if(user.client) TG
-	//	if(user.client.holder)
-	//		. += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
+	if(user.client.holder)
+		. += 				"<tr><td><b>Admin Settings:</b><td></tr>"
+		. += 				"<tr><td>Split Admin Tabs: <a href='?_src_=prefs;preference=split_admin_tabs'>[split_admin_tabs?"Enabled":"Disabled"]</a></td></tr>"
 
-	//	if(unlock_content || check_rights_for(user.client, R_ADMIN))
-	//		. += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
-
-	//	if(unlock_content)
-	//		. += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
-	//		. += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
-	//		. += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
 	. += 			"</table>"
 	. += 		"</td>"
 	. += 		"<td>"
@@ -170,6 +163,9 @@
 			if (!isnull(desiredfps))
 				clientfps = sanitize_integer(desiredfps, -1, 1000, clientfps)
 				parent.fps = (clientfps < 0) ? RECOMMENDED_FPS : clientfps
+
+		if("split_admin_tabs")
+			split_admin_tabs = !split_admin_tabs
 
 		if("parallaxup")
 			parallax = WRAP(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)

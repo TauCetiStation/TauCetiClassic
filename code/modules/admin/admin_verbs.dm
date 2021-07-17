@@ -46,6 +46,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/dsay,					//talk in deadchat using our ckey/fakekey,
 	/client/proc/toggleprayers,			//toggles prayers on/off,
 	/client/proc/toggle_hear_radio,		//toggles whether we hear the radio,
+	/client/proc/toggle_split_admin_tabs,
 	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		//toggles ooc on/off for everyone,
 	/datum/admins/proc/togglelooc,		//toggles looc on/off for everyone,
@@ -583,7 +584,7 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 	var/list/spell_names = list()
@@ -599,7 +600,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 /client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Give Disease (old)"
 	set desc = "Gives a (tg-style) Disease to a mob."
 	var/list/disease_names = list()
@@ -615,7 +616,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
 
@@ -705,7 +706,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/change_title_screen()
 	set name = "Title Screen: Change"
-	set category = "Fun"
+	set category = "Admin.Fun"
 
 	if(!check_rights(R_FUN))
 		return
@@ -798,7 +799,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/editappear(mob/living/carbon/human/M as mob in human_list)
 	set name = "Edit Appearance"
-	set category = "Fun"
+	set category = "Admin.Fun"
 
 	if(!check_rights(R_FUN))
 		return
@@ -976,7 +977,7 @@ var/list/admin_verbs_hideable = list(
 
 
 /client/proc/man_up(mob/T as mob in player_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Man Up"
 	set desc = "Tells mob to man up and deal with it."
 
@@ -988,7 +989,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>")
 
 /client/proc/global_man_up()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Man Up Global"
 	set desc = "Tells everyone to man up and deal with it."
 
@@ -1002,7 +1003,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/achievement()
 	set name = "Give Achievement"
-	set category = "Fun"
+	set category = "Admin.Fun"
 
 	if(!check_rights(R_FUN))
 		return
@@ -1066,7 +1067,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
@@ -1076,7 +1077,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/admin_crew_salary()
 	set name = "Salary"
-	set category = "Event"
+	set category = "Admin.Events"
 	if(holder)
 		holder.change_crew_salary()
 	feedback_add_details("admin_verb","Salary") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1084,7 +1085,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/change_blobwincount()
 	set name = "Change Blobs to Win"
-	set category = "Event"
+	set category = "Admin.Events"
 	if(holder)
 		var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
 		if(!conglomerate)
@@ -1103,7 +1104,7 @@ var/list/admin_verbs_hideable = list(
 //////////////////////////////
 
 /client/proc/event_map_loader()
-	set category = "Event"
+	set category = "Admin.Events"
 	set name = "Event map loader"
 	if(!check_rights(R_EVENT))
 		return
@@ -1159,7 +1160,7 @@ var/list/admin_verbs_hideable = list(
 //////////////////////////////
 
 /client/proc/gateway_toggle()
-	set category = "Event"
+	set category = "Admin.Events"
 	set name = "Toggle Station Gateway"
 
 	if(!check_rights(R_FUN))
@@ -1176,7 +1177,7 @@ var/list/admin_verbs_hideable = list(
 var/centcom_barriers_stat = 1
 
 /client/proc/centcom_barriers_toggle()
-	set category = "Event"
+	set category = "Admin.Events"
 	set name = "Centcom Barriers Toggle"
 
 	centcom_barriers_stat = !centcom_barriers_stat

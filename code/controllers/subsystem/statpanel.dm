@@ -34,9 +34,9 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
-			target << output("1", "statbrowser:update_split_admin_tabs")
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
 				target << output("", "statbrowser:add_admin_tabs") // [url_encode(target.holder.href_token)]
+			target << output("[target.prefs.split_admin_tabs]", "statbrowser:update_split_admin_tabs")
 			if(target.holder.rights & R_ADMIN && target.stat_tab == "MC")
 				var/turf/eye_turf = get_turf(target.eye)
 				var/coord_entry = url_encode(COORD(eye_turf))

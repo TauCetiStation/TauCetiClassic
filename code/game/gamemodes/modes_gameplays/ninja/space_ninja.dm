@@ -35,7 +35,7 @@
 // CURRENT GHOST VERB
 
 /client/proc/send_space_ninja()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Spawn Space Ninja"
 	set desc = "Spawns a space ninja for when you need a teenager with attitude."
 	set popup_menu = 0

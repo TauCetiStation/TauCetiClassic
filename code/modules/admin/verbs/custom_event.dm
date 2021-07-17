@@ -1,6 +1,6 @@
 // verb for admins to set custom event
 /client/proc/cmd_admin_change_custom_event()
-	set category = "Event"
+	set category = "Admin.Events"
 	set name = "Change Custom Event"
 
 	if(!holder)
