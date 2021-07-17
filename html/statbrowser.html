@@ -395,7 +395,8 @@ function createStatusTab(name) {
 		B.style.order = 2
 	else if(name == "MC")
 		B.style.order = 3
-
+	else if(name == turfname)
+		B.style.order = 4
 	//END ORDERING
 	menu.appendChild(B);
 	SendTabToByond(name);
