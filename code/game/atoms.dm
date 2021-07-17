@@ -746,6 +746,11 @@
 	. = ..()
 	if(!usr?.client)
 		return
+
+	if(statpanel_item_click(href_list))
+		return TRUE
+
+/atom/proc/statpanel_item_click(list/href_list)
 	var/client/usr_client = usr.client
 	var/list/paramslist = list()
 
