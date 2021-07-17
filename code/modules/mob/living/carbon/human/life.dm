@@ -121,8 +121,6 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	handle_regular_hud_updates()
-
 	//Species-specific update.
 	if(species)
 		species.on_life(src)

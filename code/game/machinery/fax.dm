@@ -84,7 +84,7 @@ var/list/alldepartments = list("Central Command")
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/faxmachine/is_operational_topic()
+/obj/machinery/faxmachine/is_operational()
 	return TRUE
 
 /obj/machinery/faxmachine/Topic(href, href_list)

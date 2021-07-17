@@ -229,7 +229,7 @@ log transactions
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/atm/is_operational_topic()
+/obj/machinery/atm/is_operational()
 	return TRUE
 
 /obj/machinery/atm/Topic(href, href_list)
