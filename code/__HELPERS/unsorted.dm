@@ -1267,11 +1267,6 @@ var/list/WALLITEMS = typecacheof(list(
 	tY = clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
-/proc/iscatwalk(atom/A)
-	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
-		return 1
-	return 0
-
 /proc/getOPressureDifferential(turf/loc)
 	var/minp=16777216;
 	var/maxp=0;
