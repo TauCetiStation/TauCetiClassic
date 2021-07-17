@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(statpanels)
 	name = "Stat Panels"
-	wait = 7
+	wait = SS_WAIT_PANEL
 	init_order = SS_INIT_STATPANELS
 	priority = SS_PRIORITY_STATPANEL
 	flags = SS_TICKER | SS_FIRE_IN_LOBBY

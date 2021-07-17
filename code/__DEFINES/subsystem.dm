@@ -81,6 +81,7 @@
 #define SS_WAIT_ORBIT         2
 #define SS_WAIT_FASTPROCESS   2
 #define SS_WAIT_FLUIDS        3
+#define SS_WAIT_PANEL         4
 #define SS_WAIT_GARBAGE       5
 #define SS_WAIT_SPACEDRIFT    5
 #define SS_WAIT_TGUI          9
