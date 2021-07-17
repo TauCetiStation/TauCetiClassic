@@ -3,6 +3,9 @@
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	return
 
+/client
+	var/last_vv_search = ""
+
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
@@ -213,7 +216,7 @@
 
 	body += "</div></td>"
 
-	body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
+	body += "<td width='50%'><div align='center'><a href='' onclick=\"this.href='?_src_=vars;datumrefresh=\ref[D];filter='+document.getElementById('filter').value\">Refresh</a>"
 
 	//if(ismob(D))
 	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
@@ -294,7 +297,8 @@
 	body += "<b>C</b> - Change, asks you for the var type first.<br>"
 	body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
 
-	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
+	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='[last_vv_search]' style='width:100%;'></td></tr></table><hr>"
+	last_vv_search = ""
 
 	body += "<ol id='vars'>"
 
@@ -1047,6 +1051,7 @@ body
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!istype(DAT, /datum))
 			return
+		last_vv_search = href_list["filter"] ? href_list["filter"] : ""
 		debug_variables(DAT)
 
 	return
