@@ -471,7 +471,7 @@
 		popup.set_content(flavor_text)
 		popup.open()
 
-	if(statpanel_item_click())
+	if(statpanel_item_click(href_list))
 		return TRUE
 
 
