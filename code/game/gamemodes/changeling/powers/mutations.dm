@@ -95,7 +95,7 @@
 
 /obj/effect/proc_holder/changeling/weapon/arm_blade
 	name = "Рука-Лезвие"
-	desc = "Мы превращаем одну из рук в смертоносный клинок."
+	desc = "Мы превращаем одну из наших рук в смертоносный клинок."
 	helptext = "Нельзя использовать в форме обезьяны."
 	chemical_cost = 20
 	genomecost = 2
