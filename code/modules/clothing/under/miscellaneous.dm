@@ -852,6 +852,11 @@
 	desc = "A blue cap for patrolling the daily beat."
 	icon_state = "policecap_families"
 
+/obj/item/clothing/head/clownpolice
+	name = "police cap"
+	desc = "A blue cap for patrolling the daily beat."
+	icon_state = "policecap_families"
+
 /obj/item/clothing/under/henchmen
 	name = "henchmen jumpsuit"
 	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."

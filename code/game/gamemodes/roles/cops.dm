@@ -8,7 +8,7 @@
 
 	logo_state = "undercover_cop"
 
-	var/free_clothes = list(/obj/item/clothing/glasses/sunglasses/hud/spacecop/hidden,
+	var/free_clothes = list(/obj/item/clothing/glasses/sunglasses/hud/cop_hidden,
 					/obj/item/clothing/under/rank/security/beatcop,
 					/obj/item/clothing/head/spacepolice)
 
@@ -55,7 +55,7 @@
 /datum/role/cop/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/carbon/human/M = antag.current
-	if(M.hud_used)
+	if(M.hud_used && M.client)
 		var/datum/hud/H = M.hud_used
 		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
 		H.wanted_lvl = giving_wanted_lvl
@@ -67,7 +67,7 @@
 /datum/role/cop/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	var/mob/living/L = M.current
-	if(L.hud_used)
+	if(L.hud_used && L.client)
 		var/datum/hud/H = L.hud_used
 		H.mymob.client.screen -= H.wanted_lvl
 		QDEL_NULL(H.wanted_lvl)

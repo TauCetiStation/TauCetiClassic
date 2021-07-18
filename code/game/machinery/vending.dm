@@ -1306,7 +1306,7 @@
 					/obj/item/clothing/under/fluff/olddressuniform = 5, /obj/item/clothing/under/fluff/jumpsuitdown = 5, /obj/item/clothing/under/fluff/jane_sidsuit = 5, /obj/item/clothing/under/sundress = 5,
 					/obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/clothing/head/helmet/roman = 2, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/smoking = 3,
 					/obj/item/clothing/suit/tuxedo = 3,/obj/item/clothing/under/popking = 1, /obj/item/clothing/under/popking/alternate = 1, /obj/item/clothing/suit/hooded/angel_suit = 1,
-					/obj/item/clothing/mask/fake_face = 2, /obj/item/clothing/suit/hooded/ian_costume = 1, /obj/item/clothing/suit/hooded/carp_costume = 1)
+					/obj/item/clothing/mask/fake_face = 2, /obj/item/clothing/suit/hooded/ian_costume = 1, /obj/item/clothing/suit/hooded/carp_costume = 1, /obj/item/clothing/under/rank/clownpolice = 3, /obj/item/clothing/head/clownpolice = 3,)
 	prices = list(/obj/item/clothing/head/xenos = 50, /obj/item/clothing/suit/xenos = 80, /obj/item/clothing/suit/monkeysuit = 80, /obj/item/clothing/suit/hooded/carp_costume = 100)
 	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)
 

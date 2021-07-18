@@ -29,7 +29,7 @@
 	package_spawner.Grant(antag.current)
 	package_spawner.my_gang_datum = faction
 	var/mob/living/M = antag.current
-	if(M.hud_used)
+	if(M.hud_used && M.client)
 		var/datum/hud/H = M.hud_used
 		var/atom/movable/screen/wanted/giving_wanted_lvl = new
 		H.wanted_lvl = giving_wanted_lvl
@@ -39,7 +39,7 @@
 	. = ..()
 	package_spawner.Remove(M.current)
 	var/mob/living/L = M.current
-	if(L.hud_used)
+	if(L.hud_used && L.client)
 		var/datum/hud/H = L.hud_used
 		H.mymob.client.screen -= H.wanted_lvl
 		QDEL_NULL(H.wanted_lvl)

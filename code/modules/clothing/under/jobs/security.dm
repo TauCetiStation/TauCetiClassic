@@ -175,3 +175,10 @@
 	icon_state = "spacepolice_families"
 	item_state = "spacepolice_families"
 	item_color = "spacepolice_families"
+
+/obj/item/clothing/under/rank/clownpolice
+	name = "police uniform"
+	desc = "A police uniform often found in the lines at donut shops."
+	icon_state = "spacepolice_families"
+	item_state = "spacepolice_families"
+	item_color = "spacepolice_families"
