@@ -349,7 +349,6 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	global.ahelp_tickets.active_tickets -= src
 	if(initiator && initiator.current_ticket == src)
 		initiator.current_ticket = null
-	global.ahelp_tickets.update_entry()
 
 //Mark open ticket as closed/meme
 /datum/admin_help/proc/Close(key_name = key_name_admin(usr), silent = FALSE)
