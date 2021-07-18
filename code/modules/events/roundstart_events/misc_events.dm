@@ -21,7 +21,7 @@
 
 var/global/list/fueltank_list = list()
 /datum/event/roundstart/fueltank/start()
-	for(var/atom/fueltank in fueltank_list)
+	for(var/atom/fueltank in global.fueltank_list)
 		if(prob(10))
 			message_admins("RoundStart Event: [fueltank] was removed from [COORD(fueltank)]")
 			log_game("RoundStart Event: [fueltank] was removed from [COORD(fueltank)]")
@@ -29,7 +29,7 @@ var/global/list/fueltank_list = list()
 
 var/global/list/watertank_list = list()
 /datum/event/roundstart/watertank/start()
-	for(var/atom/watertank in watertank_list)
+	for(var/atom/watertank in global.watertank_list)
 		if(prob(10))
 			message_admins("RoundStart Event: [watertank] was removed from [COORD(watertank)]")
 			log_game("RoundStart Event: [watertank] was removed from [COORD(watertank)]")
@@ -37,7 +37,7 @@ var/global/list/watertank_list = list()
 
 var/global/list/cleaners_list = list()
 /datum/event/roundstart/cleaner/start()
-	for(var/atom/cleaner in cleaners_list)
+	for(var/atom/cleaner in global.cleaners_list)
 		if(prob(50))
 			message_admins("RoundStart Event: [cleaner] was removed from [COORD(cleaner)]")
 			log_game("RoundStart Event: [cleaner] was removed from [COORD(cleaner)]")
@@ -45,7 +45,7 @@ var/global/list/cleaners_list = list()
 
 var/global/list/extinguisher_list = list()
 /datum/event/roundstart/extinguisher/start()
-	for(var/obj/item/weapon/reagent_containers/spray/extinguisher/E in extinguisher_list)
+	for(var/obj/item/weapon/reagent_containers/spray/extinguisher/E in global.extinguisher_list)
 		if(istype(E, /obj/item/weapon/reagent_containers/spray/extinguisher/golden))
 			continue
 		if(prob(60))
@@ -62,7 +62,7 @@ var/global/list/extinguisher_list = list()
 
 var/global/list/particle_accelerator_list = list()
 /datum/event/roundstart/PA/start()
-	for(var/atom/PA in particle_accelerator_list)
+	for(var/atom/PA in global.particle_accelerator_list)
 		if(!prob(60))
 			continue
 		var/old_loc = COORD(PA)
@@ -73,7 +73,7 @@ var/global/list/particle_accelerator_list = list()
 
 var/global/list/tank_dispenser_list = list()
 /datum/event/roundstart/tank_dispenser/start()
-	for(var/obj/structure/dispenser/D in tank_dispenser_list)
+	for(var/obj/structure/dispenser/D in global.tank_dispenser_list)
 		if(!prob(50))
 			continue
 		if(D.oxygentanks)
@@ -90,7 +90,7 @@ var/global/list/tank_dispenser_list = list()
 
 var/global/list/sec_closets_list = list()
 /datum/event/roundstart/sec_equipment/start()
-	for(var/obj/structure/closet/closet in sec_closets_list)
+	for(var/obj/structure/closet/closet in global.sec_closets_list)
 		message_admins("RoundStart Event: Random items has been removed from [closet] in [COORD(closet)]")
 		for(var/obj/item/I in closet)
 			if(prob(20))
@@ -154,11 +154,11 @@ var/global/list/sec_closets_list = list()
 
 var/global/list/chief_animal_list = list()
 /datum/event/roundstart/head_animals/start()
-	for(var/i in 1 to chief_animal_list.len)
+	for(var/i in 1 to global.chief_animal_list.len)
 		if(!prob(40))
 			continue
-		var/mob/M1 = pick(chief_animal_list)
-		var/mob/M2 = pick(chief_animal_list)
+		var/mob/M1 = pick(global.chief_animal_list)
+		var/mob/M2 = pick(global.chief_animal_list)
 		if(M1 != M2)
 			LOC_SWAP(M1, M2)
 
@@ -167,7 +167,7 @@ var/global/list/chief_animal_list = list()
 
 var/global/list/scrap_list = list()
 /datum/event/roundstart/del_scrap/start()
-	for(var/A in scrap_list)
+	for(var/A in global.scrap_list)
 		qdel(A)
 
 	message_admins("RoundStart Event: All scrap was deleted.")
@@ -175,7 +175,7 @@ var/global/list/scrap_list = list()
 
 var/global/list/toilet_list = list()
 /datum/event/roundstart/del_toilet/start()
-	for(var/atom/A in toilet_list)
+	for(var/atom/A in global.toilet_list)
 		if(is_station_level(A.z))
 			qdel(A)
 
@@ -183,7 +183,7 @@ var/global/list/toilet_list = list()
 	log_game("RoundStart Event: All toilets was deleted.")
 
 /datum/event/roundstart/leaked_pipe/start()
-	for(var/atom/A in toilet_list)
+	for(var/atom/A in global.toilet_list)
 		if(!is_station_level(A.z) || !prob(50))
 			continue
 

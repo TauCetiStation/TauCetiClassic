@@ -135,13 +135,10 @@
 		add_overlay(image('icons/mob/animal.dmi',inventory_mouth.icon_state))
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/Runtime, chief_animal_list)
 /mob/living/simple_animal/cat/Runtime
 	name = "Runtime"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
-
-/mob/living/simple_animal/cat/Runtime/atom_init()
-	. = ..()
-	chief_animal_list += src
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"
