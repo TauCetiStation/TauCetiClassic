@@ -246,7 +246,7 @@
 
 /obj/effect/proc_holder/changeling/sting/unfat
 	name = "Жировое Жало"
-	desc = "Мы тихо жалим человека, заставляя его моментально набрать вес."
+	desc = "Мы незаметно жалим человека, заставляя его моментально набрать вес."
 	helptext = ""
 	sting_icon = "sting_fat"
 	chemical_cost = 5
