@@ -7,11 +7,17 @@
 
 /* DATA HUD DATUMS */
 /atom/proc/add_to_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/hud_name in global.huds)
+		if(!istype(global.huds[hud_name], /datum/atom_hud/data))
+			continue
+		var/datum/atom_hud/data/hud = global.huds[hud_name]
 		hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/hud_name in global.huds)
+		if(!istype(global.huds[hud_name], /datum/atom_hud/data))
+			continue
+		var/datum/atom_hud/data/hud = global.huds[hud_name]
 		hud.remove_from_hud(src)
 
 /datum/atom_hud/data

@@ -498,7 +498,8 @@ SUBSYSTEM_DEF(ticker)
 	mode.ShuttleDocked(location)
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in global.huds)
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		for(var/m in global.player_list)
 			var/mob/M = m
 			H.add_hud_to(M)
