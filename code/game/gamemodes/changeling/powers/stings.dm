@@ -226,7 +226,7 @@
 
 /obj/effect/proc_holder/changeling/sting/blind
 	name = "Жало Слепоты"
-	helptext = "Временно слепит жертву."
+	helptext = "Временно ослепляет жертву."
 
 	desc = "Этот укус полностью ослепляет цель на короткое время. Цель не замечает, что ее ужалили."
 	sting_icon = "sting_blind"
