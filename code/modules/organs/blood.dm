@@ -363,7 +363,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	. = ..()
 	vessel.remove_reagent("blood",amount) // Removes blood if human
 
-//Transfers blood from container ot vessels
+//Transfers blood from container to vessels
 /mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 	if (!injected)
@@ -377,19 +377,17 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/list/chems = list()
 	chems = params2list(injected.data["trace_chem"])
 	for(var/C in chems)
-		reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
-	reagents.update_total()
+		reagents.add_reagent(C, (text2num(chems[C]) / BLOOD_VOLUME_NORMAL) * amount) // adds trace chemicals to owner's blood
 
 	container.reagents.remove_reagent("blood", amount)
 
-//Transfers blood from container ot vessels, respecting blood types compatability.
+//Transfers blood from container to vessels, respecting blood types compatability.
 /mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, amount)
 
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 
 	if(species && species.flags[NO_BLOOD])
 		reagents.add_reagent("blood", amount, injected.data)
-		reagents.update_total()
 		return
 
 	if(!injected)
@@ -401,11 +399,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!our)
 		fixblood()
 		our = get_blood(vessel)
-	vessel.update_total()
 
-	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
-		reagents.add_reagent("toxin",amount * 0.5)
-		reagents.update_total()
+	if(blood_incompatible(injected.data["blood_type"], our.data["blood_type"]))
+		reagents.add_reagent("toxin", amount * 0.5)
 	..()
 
 //Gets human's own blood.
@@ -418,19 +414,24 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 					return D
 	return res
 
-/proc/blood_incompatible(donor,receiver)
-	if(!donor || !receiver) return 0
-	var/donor_antigen = copytext(donor,1,-1)
-	var/receiver_antigen = copytext(receiver,1,-1)
-	var/donor_rh = (findtext(donor,"+")>0)
-	var/receiver_rh = (findtext(receiver,"+")>0)
-	if(donor_rh && !receiver_rh) return 1
+/proc/blood_incompatible(donor, receiver)
+	if(!donor || !receiver)
+		return FALSE
+	var/donor_antigen = copytext(donor, 1, -1)
+	var/receiver_antigen = copytext(receiver, 1, -1)
+	var/donor_rh = (findtext(donor, "+") > 0)
+	var/receiver_rh = (findtext(receiver, "+") > 0)
+	if(donor_rh && !receiver_rh) // Bad: "+" -> "-". Other combinations is ok
+		return TRUE
 	switch(receiver_antigen)
 		if("A")
-			if(donor_antigen != "A" && donor_antigen != "O") return 1
+			if(donor_antigen != "A" && donor_antigen != "O")
+				return TRUE
 		if("B")
-			if(donor_antigen != "B" && donor_antigen != "O") return 1
+			if(donor_antigen != "B" && donor_antigen != "O")
+				return TRUE
 		if("O")
-			if(donor_antigen != "O") return 1
-		//AB is a universal receiver.
-	return 0
+			if(donor_antigen != "O")
+				return TRUE
+		// AB is a universal receiver
+	return FALSE

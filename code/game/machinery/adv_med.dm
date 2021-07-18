@@ -212,7 +212,7 @@
 
 				if(occupant.vessel)
 					var/blood_volume = round(occupant.vessel.get_reagent_amount("blood"))
-					var/blood_percent =  blood_volume / 560
+					var/blood_percent =  blood_volume / BLOOD_VOLUME_NORMAL
 					blood_percent *= 100
 					dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume > 448 ? "blue" : "red"), blood_percent, blood_volume)
 				if(occupant.reagents)
