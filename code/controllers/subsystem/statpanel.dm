@@ -34,8 +34,6 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.holder)
 			target << output("", "statbrowser:remove_admin_tabs")
 		else
-			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
-				target << output("", "statbrowser:add_admin_tabs")
 			target << output("[target.prefs.split_admin_tabs]", "statbrowser:update_split_admin_tabs")
 			if(target.holder.rights & R_ADMIN && target.stat_tab == "MC")
 				var/turf/eye_turf = get_turf(target.eye)
@@ -46,9 +44,6 @@ SUBSYSTEM_DEF(statpanels)
 					target << output("[mc_data_encoded];[coord_entry]", "statbrowser:update_mc")
 				else
 					target << output("[mc_data_for_admins_encoded];[coord_entry]", "statbrowser:update_mc")
-			if(target.stat_tab == "Tickets")
-				var/list/ahelp_tickets = global.ahelp_tickets.stat_entry()
-				target << output("[url_encode(json_encode(ahelp_tickets))];", "statbrowser:update_tickets")
 		if(target.mob?.listed_turf)
 			var/mob/target_mob = target.mob
 			if(!target_mob.TurfAdjacent(target_mob.listed_turf))
@@ -142,6 +137,9 @@ SUBSYSTEM_DEF(statpanels)
 
 	statbrowser_ready = TRUE
 	init_verbs()
+	if(holder)
+		src << output(null, "statbrowser:add_admin_tabs")
+		src << output("[global.ahelp_tickets.last_stat_entry];", "statbrowser:update_tickets")
 
 /client/verb/update_verbs()
 	set name = "Update Verbs"
@@ -149,3 +147,11 @@ SUBSYSTEM_DEF(statpanels)
 
 	init_verbs()
 
+/client/verb/update_tickets()
+	set name = "Update Tickets"
+	set hidden = TRUE
+
+	if(!holder)
+		return
+
+	src << output("[global.ahelp_tickets.last_stat_entry];", "statbrowser:update_tickets")

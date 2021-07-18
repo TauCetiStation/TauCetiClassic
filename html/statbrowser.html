@@ -658,10 +658,10 @@ function tab_change(tab) {
 		draw_status();
 	} else if(tab == "MC") {
 		draw_mc();
-	} else if(verb_tabs_thingy){
-		draw_verbs(tab);
 	} else if(tab == "Tickets") {
 		draw_tickets();
+	} else if(verb_tabs_thingy){
+		draw_verbs(tab);
 	}else if(tab == turfname) {
 		draw_listedturf();
 	} else {
