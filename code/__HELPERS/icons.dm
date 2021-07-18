@@ -923,7 +923,7 @@ var/global/list/humanoid_icon_cache = list()
 
 	if (!isicon(I))
 		if (isfile(thing)) //special snowflake
-			var/name = sanitize_name("[generate_asset_name(thing)].png")
+			var/name = sanitize_filename("[generate_asset_name(thing)].png")
 			if (!SSassets.cache[name])
 				register_asset(name, thing)
 			for (var/thing2 in targets)
