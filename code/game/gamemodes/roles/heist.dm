@@ -57,7 +57,7 @@
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	antag.name = vox.name
-	vox.age = rand(vox.species.min_age, vox.species.max_age)
+	vox.age = rand(1, 15) // its fucking lore
 	vox.dna.mutantrace = "vox"
 	vox.set_species(VOX)
 	vox.languages = list() // Removing language from chargen.
