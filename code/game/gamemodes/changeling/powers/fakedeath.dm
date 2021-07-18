@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/fakedeath
 	name = "Регенеративный Сон"
-	desc = "Мы впадаем в сон, залечивающий любые раны."
+	desc = "Мы впадаем в стазис, залечивающий любые раны."
 	helptext = "Можно использовать до и после смерти. Длина сна различается."
 	chemical_cost = 20
 	genomecost = 0
