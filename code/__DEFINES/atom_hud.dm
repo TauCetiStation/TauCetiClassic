@@ -48,7 +48,6 @@
 #define HUD_LIST_LIST 1
 
 //data HUD (medhud, sechud) defines
-// if you add new defines, then change number of assoc list
 #define DATA_HUD_SECURITY       "data_hud_sec"
 #define DATA_HUD_MEDICAL        "data_hud_med"
 #define DATA_HUD_MEDICAL_ADV    "data_hud_med_adv"
