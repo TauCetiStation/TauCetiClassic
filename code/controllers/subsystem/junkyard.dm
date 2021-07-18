@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(junkyard)
 	var/savefile/S = new /savefile("data/junkyard/stats.sav")
 	S["junk"] 	>> junk
 	if(isnull(junk))
-		junk = new/list()
+		junk = list()
 
 /datum/controller/subsystem/junkyard/proc/populate_junkyard()
 	var/zlevel = SSmapping.level_by_trait(ZTRAIT_JUNKYARD)

@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/fire()
 	if(moving == 1)
-		var/ticksleft = (eta_timeofday - world.timeofday)
+		var/ticksleft = (eta_timeofday - REALTIMEOFDAY)
 		if(ticksleft > 0)
 			eta = round(ticksleft/600,1)
 		else
@@ -627,7 +627,7 @@ SUBSYSTEM_DEF(shuttle)
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
 /datum/controller/subsystem/shuttle/proc/timeleft()
 	if(online)
-		var/timeleft = round((endtime - world.timeofday)/10 ,1)
+		var/timeleft = round((endtime - REALTIMEOFDAY)/10 ,1)
 		if(direction == 1 || direction == 2)
 			return timeleft
 		else
@@ -637,7 +637,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	// sets the time left to a given delay (in seconds)
 /datum/controller/subsystem/shuttle/proc/settimeleft(delay)
-	endtime = world.timeofday + delay * 10
+	endtime = REALTIMEOFDAY + delay * 10
 	timelimit = delay
 
 	// sets the shuttle direction
@@ -647,8 +647,8 @@ SUBSYSTEM_DEF(shuttle)
 		return
 	direction = dirn
 	// if changing direction, flip the timeleft by SHUTTLEARRIVETIME
-	var/ticksleft = endtime - world.timeofday
-	endtime = world.timeofday + (get_shuttle_arrive_time()*10 - ticksleft)
+	var/ticksleft = endtime - REALTIMEOFDAY
+	endtime = REALTIMEOFDAY + (get_shuttle_arrive_time()*10 - ticksleft)
 	return
 
 /obj/effect/bgstar

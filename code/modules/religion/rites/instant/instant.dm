@@ -76,36 +76,19 @@
 	favor_cost = 100
 	can_talismaned = FALSE
 
-/datum/religion_rites/instant/cult/convert/proc/can_convert(mob/living/user, obj/AOG)
-	if(!ishuman(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
-		return FALSE
-
-	var/mob/living/carbon/human/H = AOG.buckled_mob
-	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD])
-		to_chat(user, "<span class='warning'>Неподходящее тело.</span>")
-		return FALSE
-	if(!global.cult_religion.can_convert(H))
-		to_chat(user, "<span class='warning'>Разум тела сопротивляется.</span>")
-		return FALSE
-	if(jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate"))
-		to_chat(user, "<span class='warning'>Нар-Си не нужно такое тело.</span>")
-		return FALSE
-
-	return TRUE
-
 /datum/religion_rites/instant/cult/convert/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
-	if(!can_convert(user, AOG))
+	if(!religion.can_convert(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Вы не можете обратить это существо.</span>")
 		return FALSE
 
 	return TRUE
 
 /datum/religion_rites/instant/cult/convert/invoke_effect(mob/living/user, obj/AOG)
 	..()
-	if(!can_convert(user, AOG))
+	if(!religion.can_convert(AOG.buckled_mob))
 		return FALSE
 
 	religion.add_member(AOG.buckled_mob, CULT_ROLE_HIGHPRIEST)

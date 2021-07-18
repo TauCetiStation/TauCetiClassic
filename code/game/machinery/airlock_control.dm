@@ -147,6 +147,7 @@
 		icon_state = "airlock_sensor_off"
 
 /obj/machinery/airlock_sensor/allowed_fail()
+	..()
 	flick("access_button_cycle", src)
 
 /obj/machinery/airlock_sensor/attack_hand(mob/user)
@@ -220,6 +221,7 @@
 		icon_state = "access_button_off"
 
 /obj/machinery/access_button/allowed_fail()
+	..()
 	flick("access_button_cycle", src)
 
 /obj/machinery/access_button/attack_hand(mob/user)
