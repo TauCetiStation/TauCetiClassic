@@ -146,12 +146,3 @@ SUBSYSTEM_DEF(statpanels)
 	set hidden = TRUE
 
 	init_verbs()
-
-/client/verb/update_tickets()
-	set name = "Update Tickets"
-	set hidden = TRUE
-
-	if(!holder)
-		return
-
-	src << output("[global.ahelp_tickets.last_stat_entry];", "statbrowser:update_tickets")
