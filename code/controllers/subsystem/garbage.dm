@@ -262,9 +262,6 @@ SUBSYSTEM_DEF(garbage)
 	name = "[mytype]"
 
 #ifdef REFERENCE_TRACKING
-/proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
-	thing_to_del.qdel_and_find_ref_if_fail(force)
-
 /datum/proc/qdel_and_find_ref_if_fail(force = FALSE)
 	SSgarbage.reference_find_on_fail["\ref[src]"] = TRUE
 	qdel(src, force)
@@ -382,19 +379,17 @@ SUBSYSTEM_DEF(garbage)
 
 	DoSearchVar(global.vars, "global") //globals
 	log_gc("Finished searching globals")
+
 	for(var/datum/thing in world) //atoms (don't beleive it's lies)
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
-
 	log_gc("Finished searching atoms")
 
 	for(var/datum/thing) //datums
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
-
 	log_gc("Finished searching datums")
 
 	for(var/client/thing) //clients
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
-
 	log_gc("Finished searching clients")
 
 	log_gc("Completed search for references to a [type].")
@@ -422,7 +417,7 @@ SUBSYSTEM_DEF(garbage)
 	if(!check_rights(R_DEBUG))
 		return
 
-	qdel_and_find_ref_if_fail(D, TRUE)
+	D.qdel_and_find_ref_if_fail(TRUE)
 
 /datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
 	if((usr?.client && !usr.client.running_find_references) || SSgarbage.ref_search_stop)
@@ -449,7 +444,7 @@ SUBSYSTEM_DEF(garbage)
 			#ifndef FIND_REF_NO_CHECK_TICK
 			CHECK_TICK
 			#endif
-			if(varname == "vars" || varname == "vis_locs") //Fun fact, vis_locs don't count for references
+			if(varname in list("vars", "vis_locs", "verbs", "underlays", "overlays", "contents", "screen")) //Fun fact, vis_locs don't count for references
 				continue
 			var/variable = vars_list[varname]
 
@@ -462,6 +457,7 @@ SUBSYSTEM_DEF(garbage)
 
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
+		var/is_assoc = is_associative_list(potential_container)
 		var/list/potential_cache = potential_container
 		for(var/element_in_list in potential_cache)
 			#ifndef FIND_REF_NO_CHECK_TICK
@@ -469,12 +465,13 @@ SUBSYSTEM_DEF(garbage)
 			#endif
 			//Check normal entrys
 			if(element_in_list == src)
-				log_gc("Found [type] \ref[src] in list [container_name].")
+				log_gc("Found [type] \ref[src] in list [container_name]\[[element_in_list]\].")
 				continue
 
 			var/assoc_val = null
-			if(istext(assoc_val))
 			if(!isnum(element_in_list) && normal)
+				assoc_val = potential_cache[element_in_list]
+			if(!isnum(element_in_list) && is_assoc)
 				assoc_val = potential_cache[element_in_list]
 			//Check assoc entrys
 			if(assoc_val == src)
@@ -486,7 +483,7 @@ SUBSYSTEM_DEF(garbage)
 				DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
 			//Check assoc sublists
 			if(islist(assoc_val))
-				DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", recursive_limit - 1, search_time)
+				DoSearchVar(assoc_val, "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", recursive_limit - 1, search_time)
 
 #ifndef FIND_REF_NO_CHECK_TICK
 	CHECK_TICK
