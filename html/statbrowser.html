@@ -786,22 +786,22 @@ function draw_listedturf() {
 	for(var i = 0; i < turfcontents.length; i++) {
 		var part = turfcontents[i];
 		if(storedimages[part[1]] == null && part[2]) {
-			var div = document.createElement("span");
-			div.innerHTML = part[2];
-			div.id = part[1];
+			var img = document.createElement("img");
+			img.src = part[2];
+			img.id = part[1];
 			storedimages[part[1]] = part[2];
-			div.onerror = function() {
+			img.onerror = function() {
 				iconError();
 			};
-			table.appendChild(div);
+			table.appendChild(img);
 		} else {
-			var div = document.createElement("span");
-			div.onerror = function() {
+			var img = document.createElement("img");
+			img.onerror = function() {
 				iconError();
 			};
-			div.innerHTML = storedimages[part[1]];
-			div.id = part[1];
-			table.appendChild(div);
+			img.src = storedimages[part[1]];
+			img.id = part[1];
+			table.appendChild(img);
 		}
 		var b = document.createElement("div");
 		var clickcatcher = "";

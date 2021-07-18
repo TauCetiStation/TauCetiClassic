@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(statpanels)
 					if(!target_image.loc || target_image.loc.loc != target_mob.listed_turf || !target_image.override)
 						continue
 					overrides += target_image.loc
-				turfitems[++turfitems.len] = list("[target_mob.listed_turf]", ref(target_mob.listed_turf), bicon(target_mob.listed_turf))
+				turfitems[++turfitems.len] = list("[target_mob.listed_turf]", ref(target_mob.listed_turf), icon2html(target_mob.listed_turf, target, sourceonly=TRUE))
 				for(var/tc in target_mob.listed_turf)
 					var/atom/movable/turf_content = tc
 					if(turf_content.mouse_opacity == MOUSE_OPACITY_TRANSPARENT)
@@ -78,9 +78,9 @@ SUBSYSTEM_DEF(statpanels)
 							cached_images += ref(turf_content)
 							turf_content.RegisterSignal(turf_content, COMSIG_PARENT_QDELETING, /atom/.proc/remove_from_cache) // we reset cache if anything in it gets deleted
 							if(ismob(turf_content) || length(turf_content.overlays) > 2)
-								turfitems[++turfitems.len] = list("[turf_content.name]", ref(turf_content), bicon(turf_content))
+								turfitems[++turfitems.len] = list("[turf_content.name]", ref(turf_content), costly_icon2html(turf_content, target, sourceonly=TRUE))
 							else
-								turfitems[++turfitems.len] = list("[turf_content.name]", ref(turf_content), bicon(turf_content))
+								turfitems[++turfitems.len] = list("[turf_content.name]", ref(turf_content), icon2html(turf_content, target, sourceonly=TRUE))
 						else
 							turfitems[++turfitems.len] = list("[turf_content.name]", ref(turf_content))
 					else

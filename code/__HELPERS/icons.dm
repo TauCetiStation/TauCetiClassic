@@ -900,3 +900,82 @@ var/global/list/humanoid_icon_cache = list()
 		return out_icon
 	else
 		return humanoid_icon_cache[icon_id]
+
+/proc/icon2html(thing, target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE, extra_classes = null)
+	if (!thing)
+		return
+
+	var/key
+	var/icon/I = thing
+
+	if (!target)
+		return
+	if (target == world)
+		target = global.clients
+
+	var/list/targets
+	if (!islist(target))
+		targets = list(target)
+	else
+		targets = target
+		if (!targets.len)
+			return
+
+	if (!isicon(I))
+		if (isfile(thing)) //special snowflake
+			var/name = sanitize_name("[generate_asset_name(thing)].png")
+			if (!SSassets.cache[name])
+				register_asset(name, thing)
+			for (var/thing2 in targets)
+				send_asset(thing2, name)
+			if(sourceonly)
+				return get_asset_url(name)
+			return "<img class='[extra_classes] icon icon-misc' src='[get_asset_url(name)]'>"
+		var/atom/A = thing
+
+		I = A.icon
+
+		if (isnull(icon_state))
+			icon_state = A.icon_state
+			//Despite casting to atom, this code path supports mutable appearances, so let's be nice to them
+			if(isnull(icon_state))
+				icon_state = initial(A.icon_state)
+				if (isnull(dir))
+					dir = initial(A.dir)
+
+		if (isnull(dir))
+			dir = A.dir
+
+		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = I
+			I = icon()
+			I.Insert(temp, dir = SOUTH)
+			dir = SOUTH
+	else
+		if (isnull(dir))
+			dir = SOUTH
+		if (isnull(icon_state))
+			icon_state = ""
+
+	I = icon(I, icon_state, dir, frame, moving)
+
+	key = "[generate_asset_name(I)].png"
+	if(!SSassets.cache[key])
+		register_asset(key, I)
+	for (var/thing2 in targets)
+		send_asset(thing2, key)
+	if(sourceonly)
+		return get_asset_url(key)
+	return "<img class='[extra_classes] icon icon-[icon_state]' src='[get_asset_url(key)]'>"
+
+
+//Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
+/proc/costly_icon2html(thing, target, sourceonly = FALSE)
+	if (!thing)
+		return
+
+	if (isicon(thing))
+		return icon2html(thing, target)
+
+	var/icon/I = getFlatIcon(thing)
+	return icon2html(I, target, sourceonly = sourceonly)
