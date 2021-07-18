@@ -691,12 +691,6 @@ The _flatIcons list is a cache for generated icon files.
 			else
 				noIcon = TRUE // Do not render this object.
 
-	if(!noIcon && !(curstate in icon_states(curicon)))
-		if("" in icon_states(curicon))
-			curstate = ""
-		else
-			noIcon = TRUE // Do not render this object.
-
 	var/curdir
 	var/base_icon_dir //We'll use this to get the icon state to display if not null BUT NOT pass it to overlays as the dir we have
 
