@@ -8,23 +8,24 @@
 	desc = "The poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
-	var/poster_type
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
+	var/random_basetype
 
 /obj/item/weapon/poster/contraband
 	name = "contraband poster"
 	icon_state = "rolled_poster"
-	poster_type = /obj/structure/sign/poster/contraband/random
+	random_basetype = /obj/structure/sign/poster/contraband
 
 /obj/item/weapon/poster/legit
 	name = "motivational poster"
 	icon_state = "rolled_legit"
-	poster_type = /obj/structure/sign/poster/official/random
+	random_basetype = /obj/structure/sign/poster/official
 
 /obj/item/weapon/poster/atom_init(mapload, obj/structure/sign/poster/new_poster_structure)
 	. = ..()
 	resulting_poster = new_poster_structure
-	if(!new_poster_structure && poster_type)
+	if(!resulting_poster && random_basetype)
+		var/poster_type = get_random_poster_type(random_basetype)
 		resulting_poster = new poster_type(src)
 
 	// posters store what name and description they would like their
@@ -66,7 +67,7 @@
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
 
-/obj/structure/sign/poster/proc/get_random_poster_type(base_type)
+/proc/get_random_poster_type(base_type)
 	var/list/poster_types = subtypesof(base_type)
 	var/list/approved_types = list()
 	for(var/t in poster_types)
