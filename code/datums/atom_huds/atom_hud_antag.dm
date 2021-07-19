@@ -1,10 +1,15 @@
 /proc/get_all_antag_huds()
 	RETURN_TYPE(/list)
-	. = list()
-	for(var/hud_name in global.huds)
-		if(!istype(global.huds[hud_name], /datum/atom_hud/antag))
-			continue
-		. += global.huds[hud_name]
+	var/static/list/all_antag_huds
+
+	if(!all_antag_huds)
+		all_antag_huds = list()
+		for(var/hud_name in global.huds)
+			if(!istype(global.huds[hud_name], /datum/atom_hud/antag))
+				continue
+			all_antag_huds += global.huds[hud_name]
+
+	return all_antag_huds
 
 /datum/atom_hud/antag
 	hud_icons = list(ANTAG_HUD)
