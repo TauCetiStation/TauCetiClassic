@@ -260,9 +260,7 @@
 
 /obj/machinery/door/firedoor/do_afterclose()
 	for(var/mob/living/L in get_turf(src))
-		for(var/dir in global.cardinal)
-			if(L.Move(get_step(loc, dir)))
-				break
+		try_move_adjacent(L)
 	..()
 
 /obj/machinery/door/firedoor/do_open()
