@@ -902,7 +902,8 @@ var/list/admin_verbs_hideable = list(
 	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY)) // add data huds
 		var/datum/atom_hud/H = global.huds[hudtype]
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-	for(var/datum/atom_hud/antag/H in global.huds) // add antag huds
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	if(ishuman(mob))
