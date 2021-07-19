@@ -6,7 +6,7 @@
 	initroletype = /datum/role/gangster/leader
 	roletype = /datum/role/gangster
 
-	min_roles = 0
+	min_roles = 1
 	max_roles = 2
 
 	/// The number of family members more that a family may have over other active families. Can be set externally; used internally.
