@@ -112,3 +112,13 @@
 		if("closing")
 			flick("pdoorc1", src)
 	return
+
+/obj/machinery/door/poddoor/mafia
+	name = "Station Night Shutters"
+	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream."
+	id = "mafia"
+	icon_state = "pdoor0"
+	layer = BELOW_TURF_LAYER
+	base_layer = BELOW_TURF_LAYER
+	opacity = FALSE
+	density = FALSE

@@ -16,7 +16,7 @@
 	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
-	qdel(hud_used)
+	QDEL_NULL(hud_used)
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 

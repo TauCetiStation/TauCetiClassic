@@ -61908,7 +61908,7 @@
 /area/station/security/brig)
 "sxQ" = (
 /obj/structure/table,
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "sxS" = (
@@ -79623,7 +79623,7 @@
 	},
 /area/station/civilian/chapel/office)
 "yfW" = (
-/mob/living/simple_animal/cat/Runtime,
+/mob/living/simple_animal/cat/dusty,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"

@@ -43,3 +43,12 @@
 	user.mob.button_pressed_F12()
 	return TRUE
 
+/datum/keybinding/client/toggle_fullscreen
+	hotkey_keys = list("F11")
+	name = "toggle_fullscreen"
+	full_name = "Toggle Fullscreen"
+	description = "Toggle Fullscreen"
+
+/datum/keybinding/client/toggle_fullscreen/down(client/user)
+	user.toggle_fullscreen()
+	return TRUE

@@ -160,7 +160,7 @@
 		// The UI is already open so push the new data to it
 		ui.push_data(data)
 
-/obj/machinery/space_heater/is_operational_topic()
+/obj/machinery/space_heater/is_operational()
 	return !(stat & BROKEN)
 
 /obj/machinery/space_heater/Topic(href, href_list)

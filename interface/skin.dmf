@@ -145,6 +145,7 @@ window "mainwindow"
 		icon = 'icons\\ss13_64.png'
 		macro = "default"
 		menu = "menu"
+		on-size = "onresize"
 	elem "asset_cache_browser"
 		type = BROWSER
 		pos = 424,208
