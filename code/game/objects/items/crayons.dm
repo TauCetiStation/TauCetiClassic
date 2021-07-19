@@ -11,7 +11,6 @@
 	var/instant = 0
 	var/colourName = "red" // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
-	var/gang = 0 // For marking territory
 	var/edible = 1
 
 	var/list/actions
@@ -333,9 +332,3 @@
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
 	add_overlay(I)
-
-/obj/item/toy/crayon/spraycan/gang
-	desc = "A modified container containing suspicious paint."
-	gang = 1
-	uses = 20
-	instant = -1
