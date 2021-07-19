@@ -170,7 +170,7 @@ var/global/BSACooldown = 0
 				Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>
 				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A>|
 				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A>
-				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A>
+				<A href='?src=\ref[src];simplemake=dusty;mob=\ref[M]'>Dusty</A>
 				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A>
 				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A>
 				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A>|

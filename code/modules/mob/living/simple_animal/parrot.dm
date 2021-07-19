@@ -678,6 +678,7 @@
 /*
  * Sub-types
  */
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
@@ -707,7 +708,6 @@
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 	. = ..()
-	chief_animal_list += src
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

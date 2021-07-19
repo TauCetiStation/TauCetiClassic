@@ -7,7 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 	if(moveset_type)

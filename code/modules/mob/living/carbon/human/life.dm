@@ -60,8 +60,6 @@
 
 	voice = GetVoice()
 
-	handle_combat()
-
 	//No need to update all of these procs if the guy is dead.
 	if(stat != DEAD && !IS_IN_STASIS(src))
 		if(SSmobs.times_fired%4==2 || failed_last_breath || (health < config.health_threshold_crit)) 	//First, resolve location and get a breath
@@ -120,8 +118,6 @@
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
-
-	handle_regular_hud_updates()
 
 	//Species-specific update.
 	if(species)

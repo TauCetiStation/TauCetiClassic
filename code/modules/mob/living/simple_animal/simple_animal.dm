@@ -333,14 +333,6 @@
 			return FALSE
 	return TRUE
 
-// Call when target overlay should be added/removed
-/mob/living/simple_animal/update_targeted()
-	if(!targeted_by && target_locked)
-		qdel(target_locked)
-	cut_overlays()
-	if (targeted_by && target_locked)
-		add_overlay(target_locked)
-
 /mob/living/simple_animal/update_fire()
 	return
 /mob/living/simple_animal/IgniteMob()

@@ -247,7 +247,7 @@
 		return FALSE
 
 	if(machine && istype(machine, /obj/machinery/computer/security))
-		if(!Adjacent(machine) || !machine.is_interactable())
+		if(!Adjacent(machine) || !machine.can_interact_with(src))
 			return FALSE
 		var/obj/machinery/computer/security/console = machine
 		var/turf/T = get_turf(console.active_camera)

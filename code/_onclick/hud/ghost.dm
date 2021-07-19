@@ -36,6 +36,14 @@
 	var/mob/dead/observer/G = usr
 	G.dead_tele()
 
+/atom/movable/screen/ghost/mafia
+	name = "Mafia Signup"
+	icon_state = "mafia"
+
+/atom/movable/screen/ghost/mafia/Click()
+	var/mob/dead/observer/G = usr
+	G.mafia_signup()
+
 /atom/movable/screen/ghost/toggle_darkness
 	name = "Toggle Darkness"
 	icon_state = "toggle_darkness"
@@ -62,6 +70,10 @@
 
 	using = new /atom/movable/screen/ghost/teleport()
 	using.screen_loc = ui_ghost_teleport
+	adding += using
+
+	using = new /atom/movable/screen/ghost/mafia()
+	using.screen_loc = ui_ghost_mafia
 	adding += using
 
 	using = new /atom/movable/screen/ghost/toggle_darkness()
