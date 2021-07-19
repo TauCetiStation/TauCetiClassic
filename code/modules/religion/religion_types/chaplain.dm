@@ -155,13 +155,18 @@
 		new_book_style = show_radial_menu(chaplain, chaplain, bible_skins, tooltips = TRUE)
 
 		var/datum/bible_info/BB = bible_variants[new_book_style]
-		if(BB)
-			BB.apply_visuals_to(B)
-			bible_info = BB
+		if(!BB)
+			break
 
-			chaplain.update_inv_l_hand() // so that it updates the bible's item_state in his hand
+		BB.apply_visuals_to(B)
+		bible_info = BB
+
+		chaplain.update_inv_l_hand() // so that it updates the bible's item_state in his hand
 
 		var/like = show_radial_menu(chaplain, chaplain, radial_question, tooltips = TRUE)
+		if(!like)
+			break
+
 		switch(like)
 			if("Yes")
 				accepted = TRUE
@@ -169,8 +174,6 @@
 				if(choose_timeout <= world.time)
 					to_chat(chaplain, "Welp, out of time, buddy. You're stuck. Next time choose faster.")
 					accepted = TRUE
-			else
-				accepted = TRUE
 
 	feedback_set_details("religion_deity","[new_deity]")
 	feedback_set_details("religion_book","[new_book_style]")
