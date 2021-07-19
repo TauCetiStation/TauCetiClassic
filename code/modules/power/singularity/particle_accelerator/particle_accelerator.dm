@@ -55,6 +55,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 */
 
+ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_list)
 /obj/structure/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
@@ -68,10 +69,6 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	var/powered = 0
 	var/strength = null
 	var/desc_holder = null
-
-/obj/structure/particle_accelerator/atom_init()
-	. = ..()
-	particle_accelerator_list += src
 
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = 0
