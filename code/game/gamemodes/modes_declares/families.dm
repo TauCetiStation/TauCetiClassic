@@ -4,7 +4,6 @@
 	probability = 100
 
 	factions_allowed = list(/datum/faction/cops)
-	factions_allowed = list()
 
 	minimum_player_count = 30
 	minimum_players_bundles = 30

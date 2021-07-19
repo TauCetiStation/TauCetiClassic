@@ -42,7 +42,7 @@
 	. = ..()
 	. += "Уровень розыска: [wanted_level]"
 	var/time_to_cops = end_time / 600
-	. += "До прилёта полиции: [time_to_cops] minutes"
+	. += "До прилёта полиции: [round(time_to_cops)] minutes\n"
 	. += "Уникальных смертей: [global.deaths_during_shift]"
 
 /datum/faction/cops/custom_result()

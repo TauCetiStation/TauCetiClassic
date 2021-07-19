@@ -59,7 +59,7 @@
 
 /datum/faction/gang/AdminPanelEntry()
 	. = ..()
-	. += "Очки: [points]"
+	. += "Очки: [points]\n"
 	. += "Граффити: [gang_tags.len]"
 
 /// Adds points to the points var.
