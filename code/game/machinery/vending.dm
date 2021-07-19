@@ -1161,6 +1161,8 @@
 	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
 	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=50,
 	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/suit_jacket/rouge =148,/obj/item/clothing/under/pants/jeans=105,
+	/obj/item/clothing/head/beanie = 50,/obj/item/clothing/head/beanie/black = 50,/obj/item/clothing/head/beanie/red = 50,/obj/item/clothing/head/beanie/green = 50, /obj/item/clothing/head/beanie/darkblue = 50,
+	/obj/item/clothing/head/beanie/purple = 50,/obj/item/clothing/head/beanie/yellow = 50,/obj/item/clothing/head/beanie/orange = 50,/obj/item/clothing/head/beanie/cyan = 50,
 	/obj/item/clothing/under/pants/classicjeans=105,/obj/item/clothing/under/pants/camo = 105,/obj/item/clothing/under/pants/blackjeans=105,/obj/item/clothing/under/pants/khaki=105,
 	/obj/item/clothing/under/pants/white=105,/obj/item/clothing/under/pants/red=105,/obj/item/clothing/under/pants/black=105,
 	/obj/item/clothing/under/pants/tan=105,/obj/item/clothing/under/pants/blue=105,/obj/item/clothing/under/pants/track=105,
