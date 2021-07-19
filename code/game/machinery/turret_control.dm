@@ -83,8 +83,8 @@
 
 	return FALSE
 
-/obj/machinery/turretid/is_operational_topic()
-	return !(stat & (NOPOWER|BROKEN))
+/obj/machinery/turretid/is_operational()
+	return !(stat & (NOPOWER | BROKEN))
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)

@@ -48,34 +48,34 @@
 #define HUD_LIST_LIST 1
 
 //data HUD (medhud, sechud) defines
-// the numbers don't mean anything, as long as they are different
-#define DATA_HUD_SECURITY				1
-#define DATA_HUD_MEDICAL				2
-#define DATA_HUD_MEDICAL_ADV			3
-#define DATA_HUD_DIAGNOSTIC				4
-#define DATA_HUD_BROKEN					5
-#define DATA_HUD_MINER					6
-#define DATA_HUD_GOLEM					7
-#define DATA_HUD_EMBRYO					8
-#define DATA_HUD_HOLY					9
+#define DATA_HUD_SECURITY       "data_hud_sec"
+#define DATA_HUD_MEDICAL        "data_hud_med"
+#define DATA_HUD_MEDICAL_ADV    "data_hud_med_adv"
+#define DATA_HUD_DIAGNOSTIC     "data_hud_diag"
+#define DATA_HUD_BROKEN         "data_hud_broken"
+#define DATA_HUD_MINER          "data_hud_miner"
+#define DATA_HUD_GOLEM          "data_hud_golem"
+#define DATA_HUD_EMBRYO         "data_hud_embryo"
+#define DATA_HUD_HOLY           "data_hud_holy"
 
 //antag HUD defines
-#define ANTAG_HUD_CULT          10
-#define ANTAG_HUD_REV           11
-#define ANTAG_HUD_OPS           12
-#define ANTAG_HUD_WIZ           13
-#define ANTAG_HUD_SHADOW        14
-#define ANTAG_HUD_TRAITOR       15
-#define ANTAG_HUD_NINJA         16
-#define ANTAG_HUD_CHANGELING    17
-#define ANTAG_HUD_ABDUCTOR      18
-#define ANTAG_HUD_ALIEN         19
-#define ANTAG_HUD_DEATHCOM      20
-#define ANTAG_HUD_ERT           21
-#define ANTAG_HUD_MALF          22
-#define ANTAG_HUD_ZOMB          23
-#define ANTAG_HUD_GANGSTER      24
-#define ANTAG_HUD_SPACECOP      25
+#define ANTAG_HUD_CULT          "antag_hud_cult"
+#define ANTAG_HUD_REV           "antag_hud_rev"
+#define ANTAG_HUD_OPS           "antag_hud_ops"
+#define ANTAG_HUD_WIZ           "antag_hud_wiz"
+#define ANTAG_HUD_SHADOW        "antag_hud_shadow"
+#define ANTAG_HUD_TRAITOR       "antag_hud_traitor"
+#define ANTAG_HUD_NINJA         "antag_hud_ninja"
+#define ANTAG_HUD_CHANGELING    "antag_hud_chang"
+#define ANTAG_HUD_ABDUCTOR      "antag_hud_abductor"
+#define ANTAG_HUD_ALIEN         "antag_hud_alien"
+#define ANTAG_HUD_DEATHCOM      "antag_hud_deathcom"
+#define ANTAG_HUD_ERT           "antag_hud_ert"
+#define ANTAG_HUD_MALF          "antag_hud_malf"
+#define ANTAG_HUD_ZOMB          "antag_hud_zomb"
+#define ANTAG_HUD_GANGSTER      "antag_hud_gangster"
+#define ANTAG_HUD_SPACECOP      "antag_hud_cop"
+
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20
