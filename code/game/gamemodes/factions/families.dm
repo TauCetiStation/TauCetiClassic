@@ -57,6 +57,11 @@
 	. = ..()
 	. += "Очки: [points]"
 
+/datum/faction/gang/AdminPanelEntry()
+	. = ..()
+	. += "Очки: [points]"
+	. += "Граффити: [gang_tags.len]"
+
 /// Adds points to the points var.
 /datum/faction/gang/proc/adjust_points(points_to_adjust)
 	points += points_to_adjust

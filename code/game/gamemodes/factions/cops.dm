@@ -38,6 +38,13 @@
 	sent_announcement = TRUE
 	check_wanted_level() // i like it when the wanted level updates at the same time as the announcement
 
+/datum/faction/cops/AdminPanelEntry()
+	. = ..()
+	. += "Уровень розыска: [wanted_level]"
+	var/time_to_cops = end_time / 600
+	. += "До прилёта полиции: [time_to_cops] minutes"
+	. += "Уникальных смертей: [global.deaths_during_shift]"
+
 /datum/faction/cops/custom_result()
 	var/list/all_gangs = find_factions_by_type(/datum/faction/gang)
 	if(!all_gangs.len)
