@@ -938,7 +938,7 @@ var/global/list/humanoid_icon_cache = list()
 		if (isnull(icon_state))
 			icon_state = A.icon_state
 			//Despite casting to atom, this code path supports mutable appearances, so let's be nice to them
-			if(isnull(icon_state))
+			if(isnull(icon_state) || (isatom(thing) && A.flags_2 & HTML_USE_INITAL_ICON_2))
 				icon_state = initial(A.icon_state)
 				if (isnull(dir))
 					dir = initial(A.dir)

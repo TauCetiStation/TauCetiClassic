@@ -67,6 +67,8 @@ var/list/airlock_overlays = list()
 	var/door_bolt_up_sound      = 'sound/machines/airlock/bolts_up_1.ogg'
 	var/door_bolt_down_sound    = 'sound/machines/airlock/bolts_down_1.ogg'
 
+	flags_2 = HTML_USE_INITAL_ICON_2
+
 /obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
 	airlock_list += src
