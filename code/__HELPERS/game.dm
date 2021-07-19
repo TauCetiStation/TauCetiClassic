@@ -347,7 +347,7 @@
 	if(M?.current)
 		if(enforce_human)
 			return M.current.stat != DEAD && !issilicon(M.current) && !isbrain(M.current)
-		else if(isliving(M.current))
+		if(isliving(M.current))
 			return M.current.stat != DEAD
 	return FALSE
 
