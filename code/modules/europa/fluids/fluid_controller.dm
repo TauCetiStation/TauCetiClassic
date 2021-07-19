@@ -14,7 +14,8 @@ SUBSYSTEM_DEF(fluids)
 	var/water_act_delay = 15 // A bit longer than machines.
 
 /datum/controller/subsystem/fluids/stat_entry()
-	..("AF:[active_fluids.len]|FS:[water_sources.len]")
+	. = ..()
+	. += "AF:[active_fluids.len]|FS:[water_sources.len]"
 
 /datum/controller/subsystem/fluids/fire(resumed = 0)
 	// Process water sources.

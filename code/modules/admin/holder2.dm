@@ -38,6 +38,7 @@ var/list/admin_datums = list()
 		owner.deadmin_holder = owner.holder
 		owner.holder = null
 		deadminned = TRUE
+		owner << output(null, "statbrowser:remove_admin_tabs")
 
 /datum/admins/proc/reassociate()
 	if(owner)
@@ -46,6 +47,8 @@ var/list/admin_datums = list()
 		owner.deadmin_holder = null
 		deadminned = FALSE
 		owner.add_admin_verbs()
+		owner << output(null, "statbrowser:add_admin_tabs")
+		owner << output("[global.ahelp_tickets.last_stat_entry];", "statbrowser:update_tickets")
 
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)

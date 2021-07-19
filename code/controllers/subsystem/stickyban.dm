@@ -22,8 +22,9 @@ SUBSYSTEM_DEF(stickyban)
 	sync_config(bannedkeys)
 	return ..()
 
-/datum/controller/subsystem/stickyban/stat_entry(msg)
-	..("I:[initialized] D:[length(dbcache)] C:[length(cache)]")
+/datum/controller/subsystem/stickyban/stat_entry()
+	. = ..()
+	. += "I:[initialized] D:[length(dbcache)] C:[length(cache)]"
 
 /datum/controller/subsystem/stickyban/proc/sync_db(list/current_bannedkeys)
 	// Private procedure for subsystem init

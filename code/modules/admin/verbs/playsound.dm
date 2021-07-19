@@ -2,7 +2,7 @@ var/global/list/sounds_cache_global = list()
 var/global/list/sounds_cache_local = list()
 
 /client/proc/play_global_sound()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Global Sound"
 
 	if(!check_rights(R_SOUNDS))
@@ -40,7 +40,7 @@ var/global/list/sounds_cache_local = list()
 
 
 /client/proc/play_local_sound()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Play Local Sound"
 
 	if(!check_rights(R_SOUNDS))
@@ -88,7 +88,7 @@ var/global/list/sounds_cache_local = list()
 
 
 /client/proc/stop_server_sound()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Stop Global Sound"
 	if(!check_rights(R_SOUNDS))
 		return
@@ -98,7 +98,7 @@ var/global/list/sounds_cache_local = list()
 	message_admins("[key_name_admin(src)] has stopped the global sound.")
 
 /client/proc/set_bwoink_sound()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Set Own Bwoink Sound"
 
 	if(!check_rights(R_ADMIN))

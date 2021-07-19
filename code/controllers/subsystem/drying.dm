@@ -9,7 +9,8 @@ SUBSYSTEM_DEF(drying)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/drying/stat_entry()
-	..("P:[drying.len]")
+	. = ..()
+	. += "P:[drying.len]"
 
 /datum/controller/subsystem/drying/fire(resumed = 0)
 	if (!resumed)

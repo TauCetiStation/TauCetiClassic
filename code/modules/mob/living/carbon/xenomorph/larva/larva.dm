@@ -27,7 +27,7 @@
 	name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	verbs += /mob/living/carbon/xenomorph/proc/hide
+	add_verb(/mob/living/carbon/xenomorph/proc/hide)
 	alien_list[ALIEN_LARVA] += src
 	. = ..()
 
@@ -36,15 +36,14 @@
 	return ..()
 
 //This needs to be fixed
-/mob/living/carbon/xenomorph/larva/Stat()
-	..()
-	stat(null)
-	if(statpanel("Status"))
-		if(istype(loc, /obj/item/alien_embryo))
-			var/obj/item/alien_embryo/E = loc
-			stat("Прогресс роста эмбриона: [E.growth_counter]/[FULL_EMBRYO_GROWTH]")
-		else
-			stat("Прогресс роста: [amount_grown]/[max_grown]")
+/mob/living/carbon/xenomorph/larva/get_status_tab_items()
+	. = ..()
+
+	if(istype(loc, /obj/item/alien_embryo))
+		var/obj/item/alien_embryo/E = loc
+		. += "Прогресс роста эмбриона: [E.growth_counter]/[FULL_EMBRYO_GROWTH]"
+	else
+		. += "Прогресс роста: [amount_grown]/[max_grown]"
 
 //If the player wants to become a ghost while in the embryo, then the control of the embryo must be transferred to the AI
 /mob/living/carbon/xenomorph/larva/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)

@@ -17,7 +17,8 @@ SUBSYSTEM_DEF(throwing)
 
 
 /datum/controller/subsystem/throwing/stat_entry()
-	..("P:[processing.len]")
+	. = ..()
+	. += "P:[processing.len]"
 
 
 /datum/controller/subsystem/throwing/fire(resumed = 0)

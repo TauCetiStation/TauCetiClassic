@@ -123,7 +123,7 @@ var/global/list/image/splatter_cache=list()
 		user.bloody_hands += taken
 		user.hand_dirt_datum = new(basedatum)
 		user.update_inv_gloves()
-		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
+		user.add_verb(/mob/living/carbon/human/proc/bloody_doodle)
 
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("mgibbl1", "mgibbl2", "mgibbl3", "mgibbl4", "mgibbl5")

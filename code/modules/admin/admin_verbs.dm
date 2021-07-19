@@ -46,6 +46,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/dsay,					//talk in deadchat using our ckey/fakekey,
 	/client/proc/toggleprayers,			//toggles prayers on/off,
 	/client/proc/toggle_hear_radio,		//toggles whether we hear the radio,
+	/client/proc/toggle_split_admin_tabs,
 	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		//toggles ooc on/off for everyone,
 	/datum/admins/proc/togglelooc,		//toggles looc on/off for everyone,
@@ -295,45 +296,45 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/add_admin_verbs()
 	if(holder)
-		verbs += admin_verbs_default
+		add_verb(admin_verbs_default)
 		if(holder.rights & R_BUILDMODE)
-			verbs += /client/proc/togglebuildmodeself
+			add_verb(/client/proc/togglebuildmodeself)
 		if(holder.rights & R_ADMIN)
-			verbs += admin_verbs_admin
+			add_verb(admin_verbs_admin)
 		if(holder.rights & R_BAN)
-			verbs += admin_verbs_ban
+			add_verb(admin_verbs_ban)
 		if(holder.rights & R_FUN)
-			verbs += admin_verbs_fun
+			add_verb(admin_verbs_fun)
 		if(holder.rights & R_SERVER)
-			verbs += admin_verbs_server
+			add_verb(admin_verbs_server)
 		if(holder.rights & R_DEBUG)
-			verbs += admin_verbs_debug
+			add_verb(admin_verbs_debug)
 		if(holder.rights & R_POSSESS)
-			verbs += admin_verbs_possess
+			add_verb(admin_verbs_possess)
 		if(holder.rights & R_PERMISSIONS)
-			verbs += admin_verbs_permissions
+			add_verb(admin_verbs_permissions)
 		if(holder.rights & R_STEALTH)
-			verbs += /client/proc/stealth
+			add_verb(/client/proc/stealth)
 		if(holder.rights & R_REJUVINATE)
-			verbs += admin_verbs_rejuv
+			add_verb(admin_verbs_rejuv)
 		if(holder.rights & R_SOUNDS)
-			verbs += admin_verbs_sounds
+			add_verb(admin_verbs_sounds)
 		if(holder.rights & R_SPAWN)
-			verbs += admin_verbs_spawn
+			add_verb(admin_verbs_spawn)
 		if(holder.rights & R_WHITELIST)
-			verbs += admin_verbs_whitelist
+			add_verb(admin_verbs_whitelist)
 		if(holder.rights & R_EVENT)
-			verbs += admin_verbs_event
+			add_verb(admin_verbs_event)
 		if(holder.rights & R_LOG)
-			verbs += admin_verbs_log
+			add_verb(admin_verbs_log)
 		if(holder.rights & R_VAREDIT)
-			verbs += admin_verbs_variables
+			add_verb(admin_verbs_variables)
 
 		if(holder.rights & R_ADMIN)
 			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 
 /client/proc/remove_admin_verbs()
-	verbs.Remove(
+	remove_verb(
 		admin_verbs_default,
 		/client/proc/togglebuildmodeself,
 		admin_verbs_admin,
@@ -358,8 +359,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"
 
-	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
-	verbs += /client/proc/show_verbs
+	remove_verb(/client/proc/hide_most_verbs, admin_verbs_hideable)
+	add_verb(/client/proc/show_verbs)
 
 	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -370,7 +371,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 
 	remove_admin_verbs()
-	verbs += /client/proc/show_verbs
+	add_verb(/client/proc/show_verbs)
 
 	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -380,7 +381,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Adminverbs - Show"
 	set category = "Admin"
 
-	verbs -= /client/proc/show_verbs
+	remove_verb(/client/proc/show_verbs)
 	add_admin_verbs()
 
 	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
@@ -584,7 +585,7 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/give_spell(mob/T as mob in mob_list) // -- Urist
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 	var/list/spell_names = list()
@@ -600,7 +601,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
 /client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Give Disease (old)"
 	set desc = "Gives a (tg-style) Disease to a mob."
 	var/list/disease_names = list()
@@ -616,7 +617,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Give Disease"
 	set desc = "Gives a Disease to a mob."
 
@@ -706,7 +707,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/change_title_screen()
 	set name = "Title Screen: Change"
-	set category = "Fun"
+	set category = "Admin.Fun"
 
 	if(!check_rights(R_FUN))
 		return
@@ -748,7 +749,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[key_name(usr)] re-admined themself.")
 		message_admins("[key_name_admin(usr)] re-admined themself.")
 		to_chat(src, "<span class='interface'>You now have the keys to control the planet, or at least a small space station.</span>")
-		verbs -= /client/proc/readmin_self
+		remove_verb(/client/proc/readmin_self)
 		feedback_add_details("admin_verb","RAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/deadmin_self()
@@ -766,7 +767,7 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[key_name_admin(usr)] deadmined themself.")
 		deadmin()
 		to_chat(src, "<span class='interface'>You are now a normal player.</span>")
-		verbs += /client/proc/readmin_self
+		add_verb(/client/proc/readmin_self)
 		feedback_add_details("admin_verb","DAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_log_hrefs()
@@ -799,7 +800,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/editappear(mob/living/carbon/human/M as mob in human_list)
 	set name = "Edit Appearance"
-	set category = "Fun"
+	set category = "Admin.Fun"
 
 	if(!check_rights(R_FUN))
 		return
@@ -920,7 +921,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/toggleattacklogs()
 	set name = "Toggle Attack Log Messages"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 
 	prefs.chat_toggles ^= CHAT_ATTACKLOGS
 	if (prefs.chat_toggles & CHAT_ATTACKLOGS)
@@ -930,7 +931,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/toggle_noclient_attacklogs()
 	set name = "Toggle No Client Attack Log Messages"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 
 	prefs.chat_toggles ^= CHAT_NOCLIENT_ATTACK
 	if (prefs.chat_toggles & CHAT_NOCLIENT_ATTACK)
@@ -968,7 +969,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/toggledebuglogs()
 	set name = "Toggle Debug Log Messages"
-	set category = "Preferences"
+	set category = "Preferences.Admin"
 
 	prefs.chat_toggles ^= CHAT_DEBUGLOGS
 	if (prefs.chat_toggles & CHAT_DEBUGLOGS)
@@ -978,7 +979,7 @@ var/list/admin_verbs_hideable = list(
 
 
 /client/proc/man_up(mob/T as mob in player_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Man Up"
 	set desc = "Tells mob to man up and deal with it."
 
@@ -990,7 +991,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("<span class='notice'>[key_name_admin(usr)] told [key_name(T)] to man up and deal with it.</span>")
 
 /client/proc/global_man_up()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Man Up Global"
 	set desc = "Tells everyone to man up and deal with it."
 
@@ -1004,7 +1005,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/achievement()
 	set name = "Give Achievement"
-	set category = "Fun"
+	set category = "Admin.Fun"
 
 	if(!check_rights(R_FUN))
 		return
@@ -1068,7 +1069,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
@@ -1078,7 +1079,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/admin_crew_salary()
 	set name = "Salary"
-	set category = "Event"
+	set category = "Admin.Events"
 	if(holder)
 		holder.change_crew_salary()
 	feedback_add_details("admin_verb","Salary") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1086,7 +1087,7 @@ var/list/admin_verbs_hideable = list(
 
 /client/proc/change_blobwincount()
 	set name = "Change Blobs to Win"
-	set category = "Event"
+	set category = "Admin.Events"
 	if(holder)
 		var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
 		if(!conglomerate)
@@ -1105,7 +1106,7 @@ var/list/admin_verbs_hideable = list(
 //////////////////////////////
 
 /client/proc/event_map_loader()
-	set category = "Event"
+	set category = "Admin.Events"
 	set name = "Event map loader"
 	if(!check_rights(R_EVENT))
 		return
@@ -1161,7 +1162,7 @@ var/list/admin_verbs_hideable = list(
 //////////////////////////////
 
 /client/proc/gateway_toggle()
-	set category = "Event"
+	set category = "Admin.Events"
 	set name = "Toggle Station Gateway"
 
 	if(!check_rights(R_FUN))
@@ -1178,7 +1179,7 @@ var/list/admin_verbs_hideable = list(
 var/centcom_barriers_stat = 1
 
 /client/proc/centcom_barriers_toggle()
-	set category = "Event"
+	set category = "Admin.Events"
 	set name = "Centcom Barriers Toggle"
 
 	centcom_barriers_stat = !centcom_barriers_stat

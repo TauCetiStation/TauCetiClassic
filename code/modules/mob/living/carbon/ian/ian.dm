@@ -64,7 +64,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 	. = ..()
 
-	verbs += /mob/living/carbon/proc/crawl
+	add_verb(/mob/living/carbon/proc/crawl)
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()

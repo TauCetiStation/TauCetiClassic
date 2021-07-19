@@ -32,8 +32,9 @@ SUBSYSTEM_DEF(timer)
 	clienttime_timers = list()
 
 
-/datum/controller/subsystem/timer/stat_entry(msg)
-	..("B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]")
+/datum/controller/subsystem/timer/stat_entry()
+	. = ..()
+	. += "B:[bucket_count] P:[length(processing)] H:[length(hashes)] C:[length(clienttime_timers)]"
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	if (length(clienttime_timers))

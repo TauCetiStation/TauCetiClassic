@@ -28,7 +28,7 @@
 
 // byond bug ID:2694120
 /client/verb/reset_macros_wrapper()
-	set category = "OOC"
+	set category = "OOC.FIX SS13!"
 	set name = "Fix keybindings"
 
 	reset_macros()

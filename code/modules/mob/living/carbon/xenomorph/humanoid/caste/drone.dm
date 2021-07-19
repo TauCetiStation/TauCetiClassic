@@ -12,7 +12,7 @@
 	R.my_atom = src
 	name = "alien drone ([rand(1, 1000)])"
 	real_name = name
-	verbs.Add(/mob/living/carbon/xenomorph/humanoid/proc/resin, /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/air_plant)
+	add_verb(/mob/living/carbon/xenomorph/humanoid/proc/resin, /mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid, /mob/living/carbon/xenomorph/humanoid/proc/air_plant)
 	alien_list[ALIEN_DRONE] += src
 	. = ..()
 

@@ -8,7 +8,8 @@ SUBSYSTEM_DEF(obj)
 	var/list/currentrun = list()
 
 /datum/controller/subsystem/obj/stat_entry()
-	..("P:[processing.len]")
+	. = ..()
+	. += "P:[processing.len]"
 
 /datum/controller/subsystem/obj/fire(resumed = 0)
 	if (!resumed)

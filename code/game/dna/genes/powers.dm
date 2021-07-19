@@ -24,11 +24,11 @@
 
 /datum/dna/gene/basic/remoteview/activate(mob/M, connected, flags)
 	..(M,connected,flags)
-	M.verbs += /mob/living/carbon/human/proc/remoteobserve
+	M.add_verb(/mob/living/carbon/human/proc/remoteobserve)
 
 /datum/dna/gene/basic/remoteview/deactivate(mob/M, connected, flags)
 	..(M,connected,flags)
-	M.verbs -= /mob/living/carbon/human/proc/remoteobserve
+	M.remove_verb(/mob/living/carbon/human/proc/remoteobserve)
 
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
@@ -92,11 +92,11 @@
 
 /datum/dna/gene/basic/remotetalk/activate(mob/M, connected, flags)
 	..(M,connected,flags)
-	M.verbs += /mob/living/carbon/human/proc/remotesay
+	M.add_verb(/mob/living/carbon/human/proc/remotesay)
 
 /datum/dna/gene/basic/remotetalk/deactivate(mob/M, connected, flags)
 	..(M,connected,flags)
-	M.verbs -= /mob/living/carbon/human/proc/remotesay
+	M.remove_verb(/mob/living/carbon/human/proc/remotesay)
 
 /datum/dna/gene/basic/morph
 	name="Morph"
@@ -109,11 +109,11 @@
 
 /datum/dna/gene/basic/morph/activate(mob/M)
 	..(M)
-	M.verbs += /mob/living/carbon/human/proc/morph
+	M.add_verb(/mob/living/carbon/human/proc/morph)
 
 /datum/dna/gene/basic/morph/deactivate(mob/M)
 	..(M)
-	M.verbs -= /mob/living/carbon/human/proc/morph
+	M.remove_verb(/mob/living/carbon/human/proc/morph)
 
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"

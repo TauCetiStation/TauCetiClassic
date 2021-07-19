@@ -18,12 +18,12 @@
 		return
 	addtimer(CALLBACK(GLOBAL_PROC, /client/proc/return_mimewall, H), 300)
 	H.visible_message("<span class='notice'>[H] looks as if a wall is in front of them.</span>", "You form a wall in front of yourself.")
-	H.verbs -= /client/proc/mimewall
+	H.remove_verb(/client/proc/mimewall)
 	H.mind.special_verbs  -= /client/proc/mimewall
 	new /obj/effect/forcefield/magic/mime(get_turf(H), H, 300)
 
 /client/proc/return_mimewall(mob/living/carbon/human/H)
-	H.verbs += /client/proc/mimewall
+	H.add_verb(/client/proc/mimewall)
 	if(H.mind)
 		H.mind.special_verbs  += /client/proc/mimewall
 

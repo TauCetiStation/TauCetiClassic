@@ -332,6 +332,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_admin_vol"]						>> snd_admin_vol
 	S["snd_jukebox_vol"]					>> snd_jukebox_vol
 
+	// ADMINS
+	S["split_admin_tabs"]					>> split_admin_tabs
+
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -377,6 +380,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	snd_notifications_vol	= sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
 	snd_admin_vol	= sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
 	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
+
+	split_admin_tabs = sanitize_integer(split_admin_tabs, 0, 1, initial(split_admin_tabs))
 
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
@@ -453,6 +458,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_notifications_vol"]				<< snd_notifications_vol
 	S["snd_admin_vol"]						<< snd_admin_vol
 	S["snd_jukebox_vol"]					<< snd_jukebox_vol
+
+	// Admins
+	S["split_admin_tabs"]					<< split_admin_tabs
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)

@@ -361,11 +361,12 @@ window "rpane"
 		is-pane = true
 	elem "rpanewindow"
 		type = CHILD
-		pos = 0,0
-		size = 640x499
+		pos = 0,30
+		size = 640x445
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
+		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
 	elem "rulesb"
@@ -446,23 +447,9 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		is-visible = false
 		saved-params = "is-checked"
 		text = "Text"
 		command = ".winset \"rpanewindow.left=;\""
-		is-checked = true
-		group = "rpanemode"
-		button-type = pushbox
-	elem "browseb"
-		type = BUTTON
-		pos = 464,0
-		size = 60x16
-		anchor1 = none
-		anchor2 = none
-		is-visible = false
-		saved-params = "is-checked"
-		text = "Browser"
-		command = ".winset \"rpanewindow.left=browserwindow\""
 		group = "rpanemode"
 		button-type = pushbox
 	elem "infob"
@@ -471,54 +458,31 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		is-visible = false
 		saved-params = "is-checked"
 		text = "Info"
-		command = ".winset \"rpanewindow.left=infowindow\""
+		command = ".winset \"rpanewindow.left=statwindow\""
+		is-checked = true
 		group = "rpanemode"
 		button-type = pushbox
 
-window "browserwindow"
-	elem "browserwindow"
+window "statwindow"
+	elem "statwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
 		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "Browser"
 		is-pane = true
-	elem "browser"
+	elem "statbrowser"
 		type = BROWSER
 		pos = 0,0
-		size = 640x499
-		anchor1 = 0,0
-		anchor2 = 100,100
-		background-color = #ffffff
-		is-default = true
-		saved-params = ""
-		on-show = ".winset\"rpane.infob.is-visible=true?rpane.infob.pos=130,0;rpane.textb.is-visible=true;rpane.browseb.is-visible=true;rpane.browseb.is-checked=true;rpane.rpanewindow.pos=0,30;rpane.rpanewindow.size=0x0;rpane.rpanewindow.left=browserwindow\""
-		on-hide = ".winset\"rpane.infob.is-visible=true?rpane.infob.is-checked=true rpane.infob.pos=65,0 rpane.rpanewindow.left=infowindow:rpane.rpanewindow.left=textwindow rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0\""
-
-window "infowindow"
-	elem "infowindow"
-		type = MAIN
-		pos = 281,0
 		size = 640x480
-		anchor1 = none
-		anchor2 = none
-		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "Info"
-		is-pane = true
-	elem "info"
-		type = INFO
-		pos = 0,0
-		size = 638x475
 		anchor1 = 0,0
 		anchor2 = 100,100
-		is-default = true
+		is-visible = false
 		saved-params = ""
 		highlight-color = #00aa00
-		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
-		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
+		on-show = ".winset\"rpane.infob.is-checked=true rpane.rpanewindow.left=statwindow\""
+		on-hide = ".winset\"rpane.rpanewindow.left=\""
 

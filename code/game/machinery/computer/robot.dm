@@ -194,7 +194,7 @@
 						var/mob/living/silicon/ai/AI = R.connected_ai
 						R.set_zeroth_law(AI.laws.zeroth_borg)
 						if(R.mind.special_role)
-							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
+							R.add_verb(/mob/living/silicon/robot/proc/ResetSecurityCodes)
 
 	updateUsrDialog()
 

@@ -1,5 +1,5 @@
 /client/proc/epileptic_anomaly()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Epileptic Anomaly(in dev!)"
 	if(!check_rights(R_FUN))	return
 
@@ -23,7 +23,7 @@
 	log_admin("[key_name(src)] called color anomaly in [A]")
 
 /client/proc/epileptic_anomaly_cancel()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Cancel Epileptic Anomaly"
 	if(!check_rights(R_FUN))	return
 

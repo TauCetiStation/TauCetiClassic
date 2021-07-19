@@ -35,25 +35,25 @@ SUBSYSTEM_DEF(garbage)
 		pass_counts[i] = 0
 		fail_counts[i] = 0
 
-/datum/controller/subsystem/garbage/stat_entry(msg)
+/datum/controller/subsystem/garbage/stat_entry()
+	. = ..()
 	var/list/counts = list()
 	for (var/list/L in queues)
 		counts += length(L)
-	msg += "Q:[counts.Join(",")]|D:[delslasttick]|G:[gcedlasttick]|"
-	msg += "GR:"
+	. += "Q:[counts.Join(",")]|D:[delslasttick]|G:[gcedlasttick]|"
+	. += "GR:"
 	if (!(delslasttick+gcedlasttick))
-		msg += "n/a|"
+		. += "n/a|"
 	else
-		msg += "[round((gcedlasttick/(delslasttick+gcedlasttick))*100, 0.01)]%|"
+		. += "[round((gcedlasttick/(delslasttick+gcedlasttick))*100, 0.01)]%|"
 
-	msg += "TD:[totaldels]|TG:[totalgcs]|"
+	. += "TD:[totaldels]|TG:[totalgcs]|"
 	if (!(totaldels+totalgcs))
-		msg += "n/a|"
+		. += "n/a|"
 	else
-		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
-	msg += " P:[pass_counts.Join(",")]"
-	msg += "|F:[fail_counts.Join(",")]"
-	..(msg)
+		. += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
+	. += " P:[pass_counts.Join(",")]"
+	. += "|F:[fail_counts.Join(",")]"
 
 /datum/controller/subsystem/garbage/fire()
 	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.

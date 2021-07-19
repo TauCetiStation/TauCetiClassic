@@ -55,7 +55,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Robot"
 
 	if(!SSticker)
@@ -70,7 +70,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_animalize(mob/M in mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Simple Animal"
 
 	if(!SSticker)
@@ -91,7 +91,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 
 
 /client/proc/makepAI(turf/T in mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make pAI"
 	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI."
 
@@ -118,7 +118,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	feedback_add_details("admin_verb","MPAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_alienize(mob/M in mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Alien"
 
 	if(!SSticker)
@@ -135,7 +135,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_slimeize(mob/M in mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make slime"
 
 	if(!SSticker)
@@ -152,7 +152,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 		tgui_alert(usr, "Invalid mob")
 
 /client/proc/cmd_admin_blobize(mob/M in mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Blob"
 
 	if(!SSticker)
@@ -392,7 +392,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 
 //todo: this proc should use /datum/outfit
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Select equipment"
 	if(!ishuman(M))
 		tgui_alert(usr, "Invalid mob")

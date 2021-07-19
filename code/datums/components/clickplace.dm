@@ -79,11 +79,11 @@
 
 	var/list/click_params = params2list(params)
 	//Center the icon where the user clicked.
-	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
-		return
-
-	var/p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
-	var/p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+	var/p_x
+	var/p_y
+	if(click_params && click_params[ICON_X] && click_params[ICON_Y])
+		p_x = clamp(text2num(click_params[ICON_X]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
+		p_y = clamp(text2num(click_params[ICON_Y]) - 16, -(world.icon_size * 0.5), world.icon_size * 0.5)
 
 	var/atom/A = parent
 	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x - I.pixel_x, additional_pixel_y=p_y - I.pixel_y))

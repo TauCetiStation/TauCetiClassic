@@ -242,8 +242,8 @@
 	B.ghost_name = G_found.real_name
 	if (G_found.client)
 		G_found.client.mob = B
-	B.verbs += /mob/living/blob/verb/create_node
-	B.verbs += /mob/living/blob/verb/create_factory
+	B.add_verb(/mob/living/blob/verb/create_node)
+	B.add_verb(/mob/living/blob/verb/create_factory)
 	to_chat(B, "<B>You are now a blob fragment.</B>")
 	to_chat(B, "You are a weak bit that has temporarily broken off of the blob.")
 	to_chat(B, "If you stay on the blob for too long you will likely be reabsorbed.")

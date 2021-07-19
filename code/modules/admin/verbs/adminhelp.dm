@@ -19,6 +19,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	var/obj/effect/statclick/ticket_list/rstatclick = new(null, null, AHELP_RESOLVED)
 
 	var/list/ckey_cooldown_holder = list()
+	var/last_stat_entry
+
+/datum/admin_help_tickets/New()
+	update_entry()
 
 /datum/admin_help_tickets/Destroy()
 	QDEL_LIST(active_tickets)
@@ -86,18 +90,27 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 
 //Tickets statpanel
 /datum/admin_help_tickets/proc/stat_entry()
+	var/list/L = list()
 	var/num_disconnected = 0
-	stat("Active Tickets:", astatclick.update("[active_tickets.len]"))
+	L[++L.len] = list("Active Tickets:", "[astatclick.update("[active_tickets.len]")]", null, ref(astatclick))
+	astatclick.update("[active_tickets.len]")
 	for(var/I in active_tickets)
 		var/datum/admin_help/AH = I
 		if(AH.initiator)
-			stat("#[AH.id]. [AH.initiator_key_name]:", AH.statclick.update())
+			var/obj/effect/statclick/updated = AH.statclick.update()
+			L[++L.len] = list("#[AH.id]. [AH.initiator_key_name]:", "[updated.name]", ref(AH))
 		else
 			++num_disconnected
 	if(num_disconnected)
-		stat("Disconnected:", astatclick.update("[num_disconnected]"))
-	stat("Closed Tickets:", cstatclick.update("[closed_tickets.len]"))
-	stat("Resolved Tickets:", rstatclick.update("[resolved_tickets.len]"))
+		L[++L.len] = list("Disconnected:", "[astatclick.update("[num_disconnected]")]", null, ref(astatclick))
+	L[++L.len] = list("Closed Tickets:", "[cstatclick.update("[closed_tickets.len]")]", null, ref(cstatclick))
+	L[++L.len] = list("Resolved Tickets:", "[rstatclick.update("[resolved_tickets.len]")]", null, ref(rstatclick))
+	return L
+
+/datum/admin_help_tickets/proc/update_entry()
+	last_stat_entry = "[url_encode(json_encode(stat_entry()))]"
+	for(var/client/C in admins)
+		C << output("[last_stat_entry];", "statbrowser:update_tickets")
 
 //Reassociate still open ticket if one exists
 /datum/admin_help_tickets/proc/ClientLogin(client/C)
@@ -105,6 +118,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(C.current_ticket)
 		C.current_ticket.initiator = C
 		C.current_ticket.AddInteraction("Client reconnected.")
+		update_entry()
 
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
@@ -112,6 +126,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		C.current_ticket.AddInteraction("Client disconnected.")
 		C.current_ticket.initiator = null
 		C.current_ticket = null
+		update_entry()
 
 //Get a ticket given a ckey
 /datum/admin_help_tickets/proc/CKey2ActiveTicket(ckey)
@@ -222,11 +237,13 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			heard_by_no_admins = TRUE
 
 	global.ahelp_tickets.active_tickets += src
+	global.ahelp_tickets.update_entry()
 
 /datum/admin_help/Destroy()
 	RemoveActive()
 	global.ahelp_tickets.closed_tickets -= src
 	global.ahelp_tickets.resolved_tickets -= src
+	global.ahelp_tickets.update_entry()
 	return ..()
 
 /datum/admin_help/proc/AddInteraction(formatted_message)
@@ -320,6 +337,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 		attachment_color = BRIDGE_COLOR_ADMINLOG,
 	)
 	TicketPanel()	//can only be done from here, so refresh it
+	global.ahelp_tickets.update_entry()
 
 //private
 /datum/admin_help/proc/RemoveActive()
@@ -349,6 +367,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			attachment_title = "**Ticket #[id]** closed by **[key_name(usr)]**",
 			attachment_color = BRIDGE_COLOR_ADMINLOG,
 		)
+	global.ahelp_tickets.update_entry()
 
 //Mark open ticket as resolved/legitimate, returns ahelp verb
 /datum/admin_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE)
@@ -371,6 +390,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 			attachment_title = "**Ticket #[id]** resolved by **[key_name(usr)]**",
 			attachment_color = BRIDGE_COLOR_ADMINLOG,
 		)
+	global.ahelp_tickets.update_entry()
 
 //Close and return ahelp verb, use if ticket is incoherent
 /datum/admin_help/proc/Reject(key_name = key_name_admin(usr))

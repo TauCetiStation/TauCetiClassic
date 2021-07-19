@@ -254,7 +254,7 @@
 
 
 /client/proc/cmd_admin_add_random_ai_law()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Add Random AI Law"
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
@@ -275,7 +275,7 @@
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/send_gods_message()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "God's message"
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
@@ -399,7 +399,7 @@ Ccomp's first proc.
 	if(config.antag_hud_allowed)
 		for(var/mob/dead/observer/g in get_ghosts())
 			if(!g.client.holder)						//Remove the verb from non-admin ghosts
-				g.verbs -= /mob/dead/observer/verb/toggle_antagHUD
+				g.remove_verb(/mob/dead/observer/verb/toggle_antagHUD)
 			if(g.antagHUD)
 				g.antagHUD = 0						// Disable it on those that have it enabled
 				g.has_enabled_antagHUD = 2				// We'll allow them to respawn
@@ -410,7 +410,7 @@ Ccomp's first proc.
 	else
 		for(var/mob/dead/observer/g in get_ghosts())
 			if(!g.client.holder)						// Add the verb back for all non-admin ghosts
-				g.verbs += /mob/dead/observer/verb/toggle_antagHUD
+				g.add_verb(/mob/dead/observer/verb/toggle_antagHUD)
 			to_chat(g, "<span class='notice'><B>The Administrator has enabled AntagHUD </B></span>")// Notify all observers they can now use AntagHUD
 		config.antag_hud_allowed = 1
 		action = "enabled"
@@ -602,7 +602,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	return new_character
 
 /client/proc/cmd_admin_add_freeform_ai_law()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Add Custom AI law"
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
@@ -771,7 +771,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
-	set category = "Fun"
+	set category = "Admin.Fun"
 
 	var/confirm = tgui_alert(src, "You sure?", "Confirm", list("Yes", "No"))
 	if(confirm == "Yes")
@@ -963,7 +963,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 /client/proc/everyone_random()
-	set category = "Fun"
+	set category = "Admin.Fun"
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
 

@@ -114,6 +114,7 @@
 	if(!A || !A.smooth)
 		return
 	A.smooth &= ~SMOOTH_QUEUED
+	A.flags_2 |= HTML_USE_INITAL_ICON_2
 	if (!A.z)
 		return
 	if(QDELETED(A))

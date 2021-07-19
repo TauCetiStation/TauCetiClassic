@@ -401,14 +401,14 @@ SUBSYSTEM_DEF(demo)
 			return diffed_string
 	return undiffed_string
 
-/datum/controller/subsystem/demo/stat_entry(msg)
-	msg += "Remaining: {"
-	msg += "Trf:[marked_turfs.len]|"
-	msg += "New:[marked_new.len]|"
-	msg += "Upd:[marked_dirty.len]|"
-	msg += "Del:[del_list.len]"
-	msg += "}"
-	..(msg)
+/datum/controller/subsystem/demo/stat_entry()
+	. = ..()
+	. += "Remaining: {"
+	. += "Trf:[marked_turfs.len]|"
+	. += "New:[marked_new.len]|"
+	. += "Upd:[marked_dirty.len]|"
+	. += "Del:[del_list.len]"
+	. += "}"
 
 /datum/controller/subsystem/demo/proc/mark_turf(turf/T)
 	if(!isturf(T))

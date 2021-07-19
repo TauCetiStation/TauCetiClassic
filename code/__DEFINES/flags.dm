@@ -56,6 +56,8 @@
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
 #define OVERLAY_QUEUED_2   (1<<1)
+/// Should we use the initial icon for display? Mostly used by overlay only objects
+#define HTML_USE_INITAL_ICON_2 (1<<2)
 
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)

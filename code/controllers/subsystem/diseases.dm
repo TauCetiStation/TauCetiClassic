@@ -6,8 +6,9 @@ SUBSYSTEM_DEF(diseases)
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/controller/subsystem/diseases/stat_entry(msg)
-	..("P:[processing.len]")
+/datum/controller/subsystem/diseases/stat_entry()
+	. = ..()
+	. += "P:[processing.len]"
 
 /datum/controller/subsystem/diseases/fire(resumed = 0)
 	if (!resumed)

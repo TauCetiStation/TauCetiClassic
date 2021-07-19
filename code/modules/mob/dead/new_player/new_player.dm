@@ -47,18 +47,17 @@
 /mob/dead/new_player/prepare_huds()
 	return
 
-/mob/dead/new_player/Stat()
-	..()
+/mob/dead/new_player/get_status_tab_items()
+	. = ..()
 
-	if(statpanel("Lobby"))
-		stat("Game Mode:", SSticker.bundle ? "[SSticker.bundle.name]" : "[master_mode]")
+	. += "Game Mode: [SSticker.bundle ? SSticker.bundle.name : master_mode]"
 
-		if(world.is_round_preparing())
-			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
+	if(world.is_round_preparing())
+		. += "Time To Start: [(SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED"]"
 
-			stat("Players:", "[SSticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[SSticker.totalPlayersReady]")
+		. += "Players: [SSticker.totalPlayers]"
+		if(client.holder)
+			. += "Players Ready: [SSticker.totalPlayersReady]"
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr || !client)
@@ -117,7 +116,7 @@
 			observer.real_name = client.prefs.real_name
 			observer.name = observer.real_name
 			if(!client.holder && !config.antag_hud_allowed)           // For new ghosts we remove the verb from even showing up if it's not allowed.
-				observer.verbs -= /mob/dead/observer/verb/toggle_antagHUD        // Poor guys, don't know what they are missing!
+				observer.remove_verb(/mob/dead/observer/verb/toggle_antagHUD)        // Poor guys, don't know what they are missing!
 			observer.key = key
 			qdel(src)
 

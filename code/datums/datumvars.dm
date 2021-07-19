@@ -963,7 +963,7 @@ body
 		if(!verb || verb == "Cancel")
 			return
 		else
-			H.verbs += verb
+			H.add_verb(verb)
 
 	else if(href_list["remverb"])
 		if(!check_rights(R_DEBUG))
@@ -981,7 +981,7 @@ body
 		if(!verb)
 			return
 		else
-			H.verbs -= verb
+			H.remove_verb(verb)
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))
