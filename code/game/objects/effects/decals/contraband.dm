@@ -75,7 +75,7 @@
 		if(initial(T.icon_state) && !initial(T.random_basetype))
 			approved_types |= T
 
-	. = pick(approved_types)
+	return pick(approved_types)
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(iswirecutter(W))
