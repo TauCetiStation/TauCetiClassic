@@ -169,6 +169,8 @@
 				if(choose_timeout <= world.time)
 					to_chat(chaplain, "Welp, out of time, buddy. You're stuck. Next time choose faster.")
 					accepted = TRUE
+			else
+				accepted = TRUE
 
 	feedback_set_details("religion_deity","[new_deity]")
 	feedback_set_details("religion_book","[new_book_style]")
