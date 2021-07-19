@@ -137,16 +137,3 @@
 	icon_state = "secmedhud"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY)
-
-/obj/item/clothing/glasses/sunglasses/hud/cop_hidden // for the undercover cop
-	name = "sunglasses"
-	icon_state = "sun"
-	item_state = "sunglasses"
-
-	hud_types = list(ANTAG_HUD_GANGSTER)
-
-/obj/item/clothing/glasses/sunglasses/hud/cop_hidden/enable_hud(mob/living/carbon/human/user)
-	if(!isanycop(user))
-		return
-
-	..()
