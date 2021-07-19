@@ -242,6 +242,10 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5 * charge / (capacity ? capacity : 5e6))
 
+// Sequence of events:
+// 1. process() - from SSmachines
+// 2. waiting...
+// 3. restore() - from powernet/reset()
 /obj/machinery/power/smes/process()
 	if(stat & BROKEN)
 		return
@@ -288,11 +292,11 @@
 
 			if(output_used < SMES_EPS) // Either no charge or output level set to 0
 				outputting = FALSE
-				//log_investigate("lost power and turned <font color='red'>off</font>", INVESTIGATE_SINGULO)
 
 		else if((charge / SMESRATE) >= output_level && output_level > 0)
 			// Was not discharging - check if can start. First check is to prevent outputting flickering every tick
 			outputting = TRUE
+			output_used = 0
 
 		else // Nothing to discharge
 			output_used = 0

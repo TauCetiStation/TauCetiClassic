@@ -119,7 +119,7 @@
 	var/malfhack = 0 // New var for my changes to AI malf. --NeoFite
 	var/mob/living/silicon/ai/malfai = null // See above --NeoFite
 	var/debug = 0
-	var/autoflag = 0 // For optimization. 0 = off, 1 = eqp and lights off, 2 = eqp off, 3 = all on, 4 = all on + no alarm, other = re-autoset
+	var/autoflag = 0 // For optimization. 0 = off, 1 = eqp and lights off, 2 = eqp off, 3 = all on, other = re-autoset
 	var/has_electronics = 0 // 0 - none, 1 - plugged in, 2 - secured by screwdriver
 	var/overload = 1 // used for the Blackout malf module
 	var/beenhit = 0 // used for counting how many times it has been hit, used for Aliens at the moment
@@ -1045,14 +1045,12 @@
 
 		// Set channels depending on how much charge we have left:
 		if(cell_percent >= 30 || longtermpower > 0) // Put most likely at the top so we don't check it last, effeciency 101
-			if(autoflag != 3 && autoflag != 4)
+			if(autoflag != 3)
 				equipment = autoset(equipment, AUTOSET_ON)
 				lighting = autoset(lighting, AUTOSET_ON)
 				environ = autoset(environ, AUTOSET_ON)
-				autoflag = 3
-			else if(autoflag == 3 && cell_percent > 35) // Switch off the alert
 				area.poweralert(FALSE, src)
-				autoflag = 4
+				autoflag = 3
 		else if(cell_percent >= 15) // < 30%, turn off equipment
 			if(autoflag != 2)
 				equipment = autoset(equipment, AUTOSET_OFF)
