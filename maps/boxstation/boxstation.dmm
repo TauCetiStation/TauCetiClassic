@@ -77496,7 +77496,7 @@
 /area/station/medical/cmo)
 "oCb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/mob/living/simple_animal/cat/Runtime,
+/mob/living/simple_animal/cat/dusty,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"

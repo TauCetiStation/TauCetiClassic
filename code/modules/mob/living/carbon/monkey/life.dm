@@ -49,7 +49,6 @@
 	handle_fire()
 
 	//Status updates, death etc.
-	handle_combat() // Even in death we still fight.
 	handle_regular_status_updates()
 	update_canmove()
 
