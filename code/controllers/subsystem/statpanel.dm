@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(statpanels)
 						if(!(ref(turf_content) in cached_images))
 							cached_images += ref(turf_content)
 							turf_content.RegisterSignal(turf_content, COMSIG_PARENT_QDELETING, /atom/.proc/remove_from_cache) // we reset cache if anything in it gets deleted
-							if(ismob(turf_content) || length(turf_content.overlays) > 2)
+							if(ismob(turf_content) || (length(turf_content.overlays) > 2 && length(turf_content.overlays) < 20))
 								turfitems[++turfitems.len] = list("[turf_content.name]", ref(turf_content), costly_icon2html(turf_content, target, sourceonly=TRUE))
 							else
 								turfitems[++turfitems.len] = list("[turf_content.name]", ref(turf_content), icon2html(turf_content, target, sourceonly=TRUE))
