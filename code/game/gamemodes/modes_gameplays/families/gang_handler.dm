@@ -24,7 +24,7 @@ var/global/deaths_during_shift = 0
 /// Internal. Assigns points to families according to gang tags.
 /datum/faction/gang/proc/check_tagged_turfs()
 	for(var/T in gang_tags)
-		adjust_points(50)
+		adjust_points(5)
 
 		CHECK_TICK
 
@@ -37,7 +37,7 @@ var/global/deaths_during_shift = 0
 		var/mob/living/carbon/human/H = G.antag.current
 		for(var/clothing in H.get_all_slots())
 			if(is_type_in_list(clothing, acceptable_clothes))
-				adjust_points(10)
+				adjust_points(1)
 
 		CHECK_TICK
 
@@ -64,6 +64,6 @@ var/global/deaths_during_shift = 0
 
 		if(gang_members >= CREW_SIZE_MIN)
 			if(gang_members >= CREW_SIZE_MAX)
-				adjust_points(5) // Discourage larger clumps, spread ur people out
+				adjust_points(0.5) // Discourage larger clumps, spread ur people out
 			else
-				adjust_points(10)
+				adjust_points(1)

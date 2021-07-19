@@ -55,7 +55,7 @@
 
 /datum/faction/gang/GetScoreboard()
 	. = ..()
-	. += "Очки: [points]"
+	. += "Очки: [round(points)]"
 
 /datum/faction/gang/AdminPanelEntry()
 	. = ..()

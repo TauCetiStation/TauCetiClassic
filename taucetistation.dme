@@ -582,6 +582,7 @@
 #include "code\game\gamemodes\objectives\families\become_captain.dm"
 #include "code\game\gamemodes\objectives\families\capture_station.dm"
 #include "code\game\gamemodes\objectives\families\church_tradition.dm"
+#include "code\game\gamemodes\objectives\families\destroy_gangs.dm"
 #include "code\game\gamemodes\objectives\families\kill_head.dm"
 #include "code\game\gamemodes\objectives\families\kill_undercover_cops.dm"
 #include "code\game\gamemodes\objectives\families\points.dm"

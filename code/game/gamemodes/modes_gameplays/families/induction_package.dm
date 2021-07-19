@@ -41,7 +41,7 @@
 	add_faction_member(team_to_use, user, TRUE, TRUE)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))
-	team_to_use.adjust_points(30)
+	team_to_use.adjust_points(3)
 
 /// Checks if the user is trying to use the package of the family they are in, and if not, adds them to the family, with some differing processing depending on whether the user is already a family member.
 /obj/item/gang_induction_package/proc/attempt_join_gang(mob/living/user)
@@ -51,7 +51,7 @@
 			if(is_gangster.faction == team_to_use || !istype(is_gangster.faction, /datum/faction/gang))
 				return
 			var/datum/faction/gang/gang = is_gangster.faction
-			gang.adjust_points(-30)
+			gang.adjust_points(-3)
 			is_gangster.Drop()
 		add_to_gang(user)
 		qdel(src)

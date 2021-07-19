@@ -27,6 +27,10 @@
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
+/datum/faction/cops/forgeObjectives()
+	. = ..()
+	AppendObjective(/datum/objective/gang/destroy_gangs)
+
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()
 	var/list/gangs = find_factions_by_type(/datum/faction/gang)
@@ -85,7 +89,7 @@
 			if(!ishuman(gangbanger.antag.current))
 				continue
 			var/mob/living/carbon/human/H = gangbanger.antag.current
-			if(H.stat)
+			if(H.stat || H.handcuffed)
 				continue
 			alive_gangsters++
 	for(var/M in members)
