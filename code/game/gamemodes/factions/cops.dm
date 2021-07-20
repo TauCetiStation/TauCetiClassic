@@ -45,7 +45,7 @@
 /datum/faction/cops/AdminPanelEntry()
 	. = ..()
 	. += "<br>Уровень розыска: [wanted_level]"
-	var/time_to_cops = end_time / 600
+	var/time_to_cops = (end_time - world.time) / 600
 	. += "<br>До прилёта полиции: [round(time_to_cops)] минут"
 	. += "<br>Уникальных смертей: [global.deaths_during_shift]"
 
