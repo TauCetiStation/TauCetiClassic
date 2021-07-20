@@ -256,9 +256,7 @@
 /turf/unsimulated/floor,
 /area/centcom)
 "aJ" = (
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
+/obj/structure/sign/poster/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -283,9 +281,8 @@
 	},
 /area/centcom)
 "aM" = (
-/obj/effect/landmark{
-	name = "Observer-Start"
-	},
+/obj/structure/table/reinforced,
+/obj/structure/sign/poster/random,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -296,6 +293,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/grille,
+/obj/structure/sign/poster/official,
 /turf/unsimulated/floor,
 /area/centcom)
 "aO" = (
@@ -322,9 +320,28 @@
 	icon_state = "warning"
 	},
 /area/centcom)
+"aS" = (
+/obj/structure/sign/poster/official,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
 "aT" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
+	},
+/area/centcom)
+"aU" = (
+/obj/structure/sign/poster/official/walk,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"aV" = (
+/obj/machinery/light,
+/obj/structure/sign/poster/official,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom)
 "aW" = (
@@ -3777,9 +3794,9 @@ aw
 ay
 aF
 aN
-ay
-ay
-ay
+aS
+aS
+aS
 ac
 aa
 aa
@@ -3927,7 +3944,7 @@ aa
 ac
 ax
 ay
-ay
+aJ
 aK
 ay
 ay
@@ -4079,11 +4096,11 @@ aa
 ac
 ay
 ay
+aJ
 ay
 ay
 ay
-ay
-ay
+aS
 ac
 aa
 aa
@@ -4231,11 +4248,11 @@ aa
 ac
 ay
 ay
-ay
+aJ
 aL
 ay
 ay
-ay
+aS
 ac
 aa
 aa
@@ -4383,11 +4400,11 @@ aa
 ac
 ay
 ay
+aJ
 ay
+aU
 ay
-ay
-ay
-ay
+aS
 ac
 aa
 aa
@@ -4535,11 +4552,11 @@ aa
 ac
 aW
 aC
-az
+aM
 ay
 ay
 ay
-aY
+aV
 ac
 aa
 aa
@@ -4687,11 +4704,11 @@ af
 as
 az
 az
-az
+aM
 ay
 ay
 ay
-ay
+aS
 ad
 af
 af
@@ -4839,10 +4856,10 @@ al
 al
 ay
 ay
-ay
-ay
-ay
-ay
+aJ
+aJ
+aJ
+aJ
 ay
 aR
 bf
@@ -4989,13 +5006,13 @@ ah
 am
 ap
 al
-ay
-ay
-ay
 aJ
-ay
-ay
-ay
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 aR
 ay
 ay
@@ -5141,13 +5158,13 @@ ai
 an
 aq
 al
-ay
-ay
-ay
 aJ
-ay
-ay
-ay
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 aR
 ay
 ay
@@ -5293,13 +5310,13 @@ aj
 ao
 ar
 al
-ay
-ay
-ay
-aM
-ay
-ay
-ay
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 aR
 ay
 ay
@@ -5445,13 +5462,13 @@ ak
 al
 al
 al
-ay
-ay
-ay
-ay
-ay
-ay
-ay
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 aR
 bg
 ay
@@ -5597,13 +5614,13 @@ af
 af
 af
 at
-ay
-ay
-ay
-ay
-ay
-ay
-ay
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ab
 af
 af
@@ -5749,13 +5766,13 @@ aa
 aa
 aa
 ac
-aX
-ay
-ay
-ay
-ay
-ay
-aY
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ac
 aa
 aa
