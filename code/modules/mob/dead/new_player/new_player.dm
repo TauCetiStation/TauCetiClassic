@@ -42,7 +42,8 @@
 	return
 
 /mob/proc/hide_titlescreen()
-	winset(client, "lobbybrowser", "is-disabled=true;is-visible=false")
+	if(client)
+		winset(client, "lobbybrowser", "is-disabled=true;is-visible=false")
 
 /mob/dead/new_player/prepare_huds()
 	return
