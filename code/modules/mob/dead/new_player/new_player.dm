@@ -42,6 +42,9 @@
 	return
 
 /mob/proc/hide_titlescreen()
+	set waitfor = FALSE
+
+	stoplag()
 	if(client)
 		winset(client, "lobbybrowser", "is-disabled=true;is-visible=false")
 
