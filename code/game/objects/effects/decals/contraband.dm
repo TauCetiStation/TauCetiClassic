@@ -77,6 +77,13 @@
 
 	return pick(approved_types)
 
+/obj/structure/sign/poster/examine(mob/user, distance)
+	..()
+	set_intent()
+
+/obj/structure/sign/poster/proc/set_intent(mob/user)
+	return
+
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(iswirecutter(W))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -104,13 +111,6 @@
 			add_fingerprint(user)
 		if("No")
 			return
-
-/obj/structure/sign/poster/examine(mob/living/carbon/human/H)
-	..()
-	if(original_name == "Walk")
-		H.set_m_intent(MOVE_INTENT_WALK)
-	if(original_name == "Help Others")
-		H.a_intent_change(INTENT_HELP)
 
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
@@ -435,6 +435,9 @@
 	desc = "A poster encouraging you to help fellow crewmembers."
 	icon_state = "poster4_legit"
 
+/obj/structure/sign/poster/official/help_others/set_intent(mob/user)
+	user.a_intent_change(INTENT_HELP)
+
 /obj/structure/sign/poster/official/build
 	name = "Build"
 	desc = "A poster glorifying the engineering team."
@@ -464,6 +467,12 @@
 	name = "Walk"
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "poster10_legit"
+
+/obj/structure/sign/poster/official/walk/set_intent(datum/source, mob/user)
+	if(!isliving(user))
+		return
+	var/mob/living/L = user
+	L.set_m_intent(MOVE_INTENT_WALK)
 
 /obj/structure/sign/poster/official/state_laws
 	name = "State Laws"
