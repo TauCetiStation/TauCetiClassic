@@ -77,13 +77,6 @@
 
 	return pick(approved_types)
 
-/obj/structure/sign/poster/examine(mob/user, distance)
-	..()
-	set_intent(user)
-
-/obj/structure/sign/poster/proc/set_intent(mob/user)
-	return
-
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(iswirecutter(W))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -435,7 +428,8 @@
 	desc = "A poster encouraging you to help fellow crewmembers."
 	icon_state = "poster4_legit"
 
-/obj/structure/sign/poster/official/help_others/set_intent(mob/user)
+/obj/structure/sign/poster/official/help_others/examine(mob/user)
+	..()
 	user.a_intent_change(INTENT_HELP)
 
 /obj/structure/sign/poster/official/build
@@ -468,11 +462,11 @@
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "poster10_legit"
 
-/obj/structure/sign/poster/official/walk/set_intent(mob/user)
-	if(!isliving(user))
-		return
-	var/mob/living/L = user
-	L.set_m_intent(MOVE_INTENT_WALK)
+/obj/structure/sign/poster/official/walk/examine(mob/user)
+	..()
+	if(isliving(user))
+		var/mob/living/L = user
+		L.set_m_intent(MOVE_INTENT_WALK)
 
 /obj/structure/sign/poster/official/state_laws
 	name = "State Laws"
