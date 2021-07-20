@@ -220,7 +220,7 @@
 	set desc = "Release an item from your magnetic gripper."
 	set category = "Drone"
 
-	drop_item(null, get_turf(src))
+	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
