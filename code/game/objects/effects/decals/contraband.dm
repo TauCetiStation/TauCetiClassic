@@ -79,7 +79,7 @@
 
 /obj/structure/sign/poster/examine(mob/user, distance)
 	..()
-	set_intent()
+	set_intent(user)
 
 /obj/structure/sign/poster/proc/set_intent(mob/user)
 	return
