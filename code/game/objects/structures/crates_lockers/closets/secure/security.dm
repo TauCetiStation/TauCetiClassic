@@ -185,6 +185,7 @@
 	new /obj/item/clothing/head/santa(src)
 	#endif
 
+ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_list)
 /obj/structure/closet/secure_closet/security
 	name = "Security Officer's Locker"
 	req_access = list(access_brig)
@@ -194,10 +195,6 @@
 	icon_opened = "secopen"
 	icon_broken = "secbroken"
 	icon_off = "secoff"
-
-/obj/structure/closet/secure_closet/security/atom_init(mapload)
-	. = ..()
-	sec_closets_list += src
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	if(prob(50))
