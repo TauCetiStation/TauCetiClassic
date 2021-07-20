@@ -661,6 +661,7 @@ SUBSYSTEM_DEF(job)
 /proc/show_location_blurb(client/C)
 	set waitfor = FALSE
 
+	stoplag(1.5 SECOND)
 	if(!C)
 		return
 
