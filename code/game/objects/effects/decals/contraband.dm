@@ -468,7 +468,7 @@
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "poster10_legit"
 
-/obj/structure/sign/poster/official/walk/set_intent(datum/source, mob/user)
+/obj/structure/sign/poster/official/walk/set_intent(mob/user)
 	if(!isliving(user))
 		return
 	var/mob/living/L = user
