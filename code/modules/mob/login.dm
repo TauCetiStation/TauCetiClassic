@@ -81,4 +81,5 @@
 		if(H.species && H.species.abilities)
 			client.verbs |= H.species.abilities
 
-	hide_titlescreen()
+	spawn(10)
+		hide_titlescreen()
