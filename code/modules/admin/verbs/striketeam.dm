@@ -161,7 +161,7 @@ var/global/sent_strike_team = FALSE
 
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND)
 
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
 	L.inject(src)
 
 	var/obj/item/weapon/card/id/centcom/C = new(src)

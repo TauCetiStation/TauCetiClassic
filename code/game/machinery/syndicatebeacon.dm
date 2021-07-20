@@ -41,7 +41,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/syndicate_beacon/is_operational_topic()
+/obj/machinery/syndicate_beacon/is_operational()
 	return TRUE
 
 /obj/machinery/syndicate_beacon/Topic(href, href_list)
@@ -68,7 +68,7 @@
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
-			var/datum/role/traitor/wishgtanter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
+			var/datum/role/traitor/wishgranter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
 			T.Greet(GREET_SYNDBEACON)
 
 	updateUsrDialog()

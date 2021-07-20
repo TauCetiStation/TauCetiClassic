@@ -1,6 +1,6 @@
 var/global/list/scrap_base_cache = list()
 
-
+ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 /obj/structure/scrap
 	name = "scrap pile"
 	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "
@@ -44,7 +44,6 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/atom_init()
 	. = ..()
 	update_icon(1)
-	scrap_list += src
 
 
 /obj/effect/scrapshot

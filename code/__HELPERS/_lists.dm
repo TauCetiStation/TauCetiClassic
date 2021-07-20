@@ -727,6 +727,14 @@
 		if (typecache[A.type])
 			. += A
 
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(!typecache[A.type])
+			. += A
+
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -807,9 +815,6 @@
 
 // Helper macros to aid in optimizing lazy instantiation of lists.
 // All of these are null-safe, you can use them without knowing if the list var is initialized yet
-
-//Picks from the list, with some safeties, and returns the "default" arg if it fails
-#define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
 
 // Adds I to L, initalizing L if necessary, if I is not already in L
 #define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;

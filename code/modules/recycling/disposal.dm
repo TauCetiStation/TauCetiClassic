@@ -147,7 +147,7 @@
 /obj/machinery/disposal/proc/MouseDrop_Mob(mob/living/target, mob/living/user)
 	if(user.incapacitated())
 		return
-	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
+	if(target.buckled)
 		return
 	//animals cannot put mobs other than themselves into disposal
 	if(isanimal(user) && target != user)
@@ -332,7 +332,7 @@
 
 	return TRUE
 
-/obj/machinery/disposal/is_operational_topic()
+/obj/machinery/disposal/is_operational()
 	return !(stat & BROKEN)
 
 // eject the contents of the disposal unit

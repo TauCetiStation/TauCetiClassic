@@ -71,7 +71,7 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-/obj/machinery/pipedispenser/is_operational_topic()
+/obj/machinery/pipedispenser/is_operational()
 	return TRUE
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
@@ -159,7 +159,7 @@ Nah
 		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
-	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (!istype(pipe))
 		return
 
 	if (pipe.anchored)

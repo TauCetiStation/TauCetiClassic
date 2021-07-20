@@ -56,7 +56,7 @@
 /obj/item/weapon/gripper/proc/wrap(obj/item/I)
 	wrapped = I
 	I.forceMove(src)
-	RegisterSignal(I, list(COMSIG_PARENT_PREQDELETED), .proc/clear_wrapped)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/clear_wrapped)
 
 /obj/item/weapon/gripper/proc/attack_as_hand(datum/source, atom/T, mob/user, params)
 	if(wrapped)
@@ -98,7 +98,7 @@
 		I.forceMove(T)
 	else
 		I.forceMove(get_turf(user))
-	UnregisterSignal(wrapped, list(COMSIG_PARENT_PREQDELETED))
+	UnregisterSignal(wrapped, list(COMSIG_PARENT_QDELETING))
 	wrapped = null
 	return TRUE
 

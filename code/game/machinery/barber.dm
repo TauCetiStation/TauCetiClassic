@@ -92,9 +92,6 @@
 /obj/machinery/color_mixer/is_operational()
 	return ..() && !isWireCut(COLOR_MIXER_POWER)
 
-/obj/machinery/color_mixer/is_operational_topic()
-	return ..() && !isWireCut(COLOR_MIXER_POWER)
-
 /obj/machinery/color_mixer/proc/Spray_at(atom/A, quantity)
 	var/obj/item/weapon/reagent_containers/glass/B
 	for(var/tank in tanks)
@@ -340,7 +337,7 @@ A proc that does all the animations before mix()-ing.
 		return
 	if(user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || !Adjacent(user) || !Adjacent(target) || !user.Adjacent(target))
+	if(target.buckled)
 		return
 	if(!user.IsAdvancedToolUser() && target != user)
 		return
@@ -381,9 +378,6 @@ A proc that does all the animations before mix()-ing.
 			L.adjustBruteLoss(50)
 
 /obj/machinery/color_mixer/ui_interact(mob/user)
-	if(!is_operational())
-		return
-
 	var/dat
 	dat += "<div class='Section'>"
 	for(var/tab in tabs)
