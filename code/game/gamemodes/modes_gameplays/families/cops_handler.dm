@@ -36,7 +36,9 @@
 
 /datum/faction/cops/proc/end_hostile_sit()
 	SSshuttle.fake_recall = FALSE
+	SSshuttle.shuttlealert(1)
 	SSshuttle.incall(0.8)
+	SSshuttle.announce_crew_called.play()
 
 /// Internal. Polls ghosts and sends in a team of space cops according to the wanted level, accompanied by an announcement. Will let the shuttle leave 10 minutes after sending. Freezes the wanted level.
 /datum/faction/cops/proc/send_in_the_fuzz()
