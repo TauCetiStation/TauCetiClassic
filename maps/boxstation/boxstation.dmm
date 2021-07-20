@@ -66978,7 +66978,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/space)
+/area/station/aisat)
 "cEJ" = (
 /obj/machinery/telecomms/receiver/preset_right,
 /turf/simulated/floor/bluegrid{
@@ -67187,7 +67187,7 @@
 	dir = 4;
 	icon_state = "warnplate"
 	},
-/area/space)
+/area/station/aisat)
 "cFF" = (
 /obj/structure/computerframe,
 /turf/simulated/floor{
@@ -67797,7 +67797,7 @@
 "cHm" = (
 /obj/structure/sign/warning/securearea,
 /turf/simulated/wall/r_wall,
-/area/space)
+/area/station/aisat)
 "cHn" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -70437,7 +70437,7 @@
 	req_one_access = list(11,24)
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/aisat)
 "ekb" = (
 /obj/random/vending/cola,
 /turf/simulated/floor/wood,
@@ -70527,9 +70527,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/arrival)
-"epQ" = (
-/turf/simulated/wall/r_wall,
-/area/space)
 "eqb" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/wood,
@@ -120248,7 +120245,7 @@ aaa
 aaa
 cHm
 ejR
-epQ
+cCW
 aaa
 aaa
 aaa
