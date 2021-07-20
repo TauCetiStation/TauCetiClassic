@@ -105,6 +105,8 @@
 			var/obj/O = locate("landmark*Observer-Start")
 			to_chat(src, "<span class='notice'>Now teleporting.</span>")
 			observer.loc = O.loc
+			client.eye = observer.loc
+			client.perspective = EYE_PERSPECTIVE
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
 			// client.prefs.update_preview_icon()
