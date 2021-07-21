@@ -429,7 +429,7 @@
 	icon_state = "poster4_legit"
 
 /obj/structure/sign/poster/official/help_others/examine(mob/user)
-	..()
+	. = ..()
 	user.a_intent_change(INTENT_HELP)
 
 /obj/structure/sign/poster/official/build
