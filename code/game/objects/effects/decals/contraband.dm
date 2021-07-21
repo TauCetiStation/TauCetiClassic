@@ -463,7 +463,7 @@
 	icon_state = "poster10_legit"
 
 /obj/structure/sign/poster/official/walk/examine(mob/user)
-	..()
+	. = ..()
 	if(isliving(user))
 		var/mob/living/L = user
 		L.set_m_intent(MOVE_INTENT_WALK)
