@@ -66,8 +66,9 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			user.drop_from_inventory(O)
-	return	unwield()
+			O.unwield()
+
+	return unwield()
 
 /obj/item/weapon/twohanded/update_icon()
 	return
@@ -96,7 +97,7 @@
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
-			user.drop_from_inventory(O)
+			O.unwield()
 		return
 
 	else if(ishuman(user))
@@ -113,7 +114,8 @@
 	flags = ABSTRACT
 
 /obj/item/weapon/twohanded/offhand/unwield()
-	qdel(src)
+	if(!QDELING(src))
+		qdel(src)
 
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)

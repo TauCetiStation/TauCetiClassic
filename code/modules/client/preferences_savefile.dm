@@ -292,6 +292,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["UI_style"]			>> UI_style
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
+	S["clientfps"]			>> clientfps
 	S["default_slot"]		>> default_slot
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
@@ -314,6 +315,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// Custom hotkeys
 	S["key_bindings"]		>> key_bindings
 	check_keybindings()
+	S["hotkeys"]		>> hotkeys
 
 	//TGUI
 	S["tgui_fancy"]		>> tgui_fancy
@@ -340,6 +342,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	aooccolor		= normalize_color(sanitize_hexcolor(aooccolor, initial(aooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
+	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
@@ -349,6 +352,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
 	UI_style_alpha	= sanitize_integer(UI_style_alpha, 0, 255, initial(UI_style_alpha))
 	key_bindings 	= sanitize_keybindings(key_bindings)
+	hotkeys 		= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
@@ -411,6 +415,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["UI_style"]			<< UI_style
 	S["UI_style_color"]		<< UI_style_color
 	S["UI_style_alpha"]		<< UI_style_alpha
+	S["clientfps"]			<< clientfps
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
@@ -429,6 +434,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// Custom hotkeys
 	S["key_bindings"]		<< key_bindings
+	S["hotkeys"]			<< hotkeys
 
 	S["outline_enabled"]	<< outline_enabled
 	S["outline_color"]		<< outline_color

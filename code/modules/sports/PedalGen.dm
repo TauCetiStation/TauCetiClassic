@@ -19,7 +19,7 @@
 /obj/structure/stool/bed/chair/pedalgen
 	name = "Pedal Generator"
 	desc = "Push it to the limit!"
-	icon = 'code/modules/sports/pedalgen.dmi'
+	icon = 'icons/obj/sports/pedalgen.dmi'
 	icon_state = "pedalgen"
 	anchored = FALSE
 	density = FALSE
@@ -100,7 +100,7 @@
 
 /obj/structure/stool/bed/chair/pedalgen/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(buckled_mob)
+	if(buckled_mob && !moving_diagonally)
 		if(buckled_mob.buckled == src)
 			buckled_mob.loc = loc
 			update_mob(buckled_mob)

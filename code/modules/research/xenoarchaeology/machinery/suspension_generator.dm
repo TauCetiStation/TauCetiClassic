@@ -63,8 +63,7 @@
 			if(cell)
 				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
 			else
-				user.drop_item()
-				W.loc = src
+				user.drop_from_inventory(W, src)
 				cell = W
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
 				playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
@@ -163,7 +162,7 @@
 		if(cell.charge <= 0)
 			deactivate()
 
-/obj/machinery/suspension_gen/is_operational_topic()
+/obj/machinery/suspension_gen/is_operational()
 	return TRUE
 
 /obj/machinery/suspension_gen/Topic(href, href_list)

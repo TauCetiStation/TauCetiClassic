@@ -191,8 +191,7 @@
 			return
 
 		beaker = B
-		user.drop_item()
-		B.loc = src
+		user.drop_from_inventory(B, src)
 		user.visible_message("[user] adds \a [B] to \the [src]!", "You add \a [B] to \the [src]!")
 		return
 
@@ -283,8 +282,7 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			nanomanager.update_uis(src) // update all UIs attached to src

@@ -506,7 +506,7 @@
 		target.dna = PB.brainmob.dna
 	qdel(tool)
 	target.stat = CONSCIOUS
-	
+
 //////////////////////////////////////////////////////////////////
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
@@ -725,11 +725,10 @@
 	user.visible_message("<span class='notice'>[user] has put in \the [tool] into [target]'s accumulator slot.</span>",
 	"<span class='notice'>You have put in \the [tool] into [target]'s accumulator slot.</span>")
 
-	user.drop_item()
 	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
-	tool.forceMove(accum)
+	user.drop_from_inventory(tool, accum)
 
 	var/obj/item/weapon/stock_parts/cell/C = tool
-	
+
 	target.nutrition = C.charge
 

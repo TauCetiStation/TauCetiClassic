@@ -62,7 +62,6 @@ var/can_call_ert
 		if(response_team_members.len > 5)
 			to_chat(usr, "The emergency response team is already full!")
 
-
 		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
 			L.name = null//Reserving the place.
 			var/new_name = sanitize_safe(input(usr, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
@@ -82,7 +81,10 @@ var/can_call_ert
 				to_chat(new_commando, "<b>As member of the Emergency Response Team, you answer to your leader and CentCom officials with higher priority and the commander of the ship with lower.</b>")
 			else
 				to_chat(new_commando, "<b>As leader of the Emergency Response Team, you answer only to CentComm and the commander of the ship with lower. You can override orders when it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the commander of the ship where possible, however.</b>")
-			return
+
+			var/datum/faction/strike_team/ert/ERT = find_faction_by_type(/datum/faction/strike_team/ert)
+			if(ERT)
+				add_faction_member(ERT, new_commando, FALSE)
 
 	else
 		to_chat(usr, "You need to be an observer, mouse, brain or new player to use this.")
@@ -150,6 +152,8 @@ var/can_call_ert
 	announcement.play()
 	can_call_ert = 0 // Only one call per round, gentleman.
 	send_emergency_team = 1
+	var/datum/faction/strike_team/ert/ERT = SSticker.mode.CreateFaction(/datum/faction/strike_team/ert)
+	ERT.forgeObjectives("Help the station crew")
 
 	sleep(600 * 5)
 	send_emergency_team = 0 // Can no longer join the ERT.
@@ -188,7 +192,7 @@ var/can_call_ert
 	M.s_tone =  -M.s_tone + 35
 
 	// hair
-	var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
+	var/list/all_hairs = subtypesof(/datum/sprite_accessory/hair)
 	var/list/hairs = list()
 
 	// loop through potential hairs
@@ -233,7 +237,6 @@ var/can_call_ert
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
-	M.mind.add_antag_hud(ANTAG_HUD_ERT, "hudoperative", M)
 	if(!(M.mind in SSticker.minds))
 		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = spawn_location
@@ -265,6 +268,6 @@ var/can_call_ert
 		W.name = "[real_name]'s ID Card ([W.assignment])"
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
 	L.inject(src)
 	return 1

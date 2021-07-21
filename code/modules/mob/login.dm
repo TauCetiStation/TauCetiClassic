@@ -47,7 +47,7 @@
 		client.perspective = MOB_PERSPECTIVE
 
 	//Some weird magic to block users who cant see lighting normally
-	var/obj/screen/blocker = new /obj/screen()
+	var/atom/movable/screen/blocker = new /atom/movable/screen()
 	blocker.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	blocker.icon = 'icons/effects/chaos.dmi'
 	blocker.icon_state = "8"
@@ -67,9 +67,6 @@
 	add_click_catcher()
 
 	client.screen += blocker
-
-	//Clear ability list and update from mob.
-	client.verbs -= ability_verbs
 
 	if(abilities)
 		client.verbs |= abilities

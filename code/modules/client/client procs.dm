@@ -91,6 +91,13 @@ var/list/blacklisted_builds = list(
 		js_error_manager.log_error(file, message, src)
 		return
 
+	// Tgui Topic middleware
+	if(!tgui_Topic(href_list))
+		return
+
+	//Logs all hrefs
+	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")
+
 	//byond bug ID:2256651
 	if(asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
@@ -98,6 +105,11 @@ var/list/blacklisted_builds = list(
 		return
 	if(href_list["asset_cache_preload_data"])
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
+		return
+
+	//byond bug ID:2694120
+	if(href_list["reset_macros"])
+		reset_macros(skip_alert = TRUE)
 		return
 
 	// Keypress passthrough
@@ -110,10 +122,6 @@ var/list/blacklisted_builds = list(
 		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
 		if(keycode)
 			keyUp(keycode)
-		return
-
-	// Tgui Topic middleware
-	if(!tgui_Topic(href_list))
 		return
 
 	//Admin PM
@@ -130,19 +138,6 @@ var/list/blacklisted_builds = list(
 			return
 		cmd_admin_pm(C,null)
 		return
-
-	if(href_list["irc_msg"])
-		if(!holder && received_irc_pm < world.time - 6000) //Worse they can do is spam IRC for 10 minutes
-			to_chat(usr, "<span class='warning'>You are no longer able to use this, it's been more then 10 minutes since an admin on IRC has responded to you</span>")
-			return
-		if(mute_irc)
-			to_chat(usr, "<span class='warning'You cannot use this as your client has been muted from sending messages to the admins on IRC</span>")
-			return
-		cmd_admin_irc_pm()
-		return
-
-	//Logs all hrefs
-	log_href("[src] (usr:[usr]) || [hsrc ? "[hsrc] " : ""][href]")
 
 	switch(href_list["_src_"])
 		if("holder")	hsrc = holder
@@ -259,6 +254,7 @@ var/list/blacklisted_builds = list(
 		preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
+	fps = (prefs.clientfps < 0) ? RECOMMENDED_FPS : prefs.clientfps
 
 	var/cur_date = time2text(world.realtime, "YYYY/MM/DD hh:mm:ss")
 	if("[computer_id]" in prefs.cid_list)
@@ -303,7 +299,7 @@ var/list/blacklisted_builds = list(
 			var/list/fluff_list = custom_item_premoderation_list()
 			var/fluff_count = fluff_list.len
 			if(fluff_count)
-				to_chat(src, "<span class='alert bold'>В рассмотрении [russian_plural(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [russian_plural(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
+				to_chat(src, "<span class='alert bold'>В рассмотрении [pluralize_russian(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [pluralize_russian(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
@@ -327,7 +323,7 @@ var/list/blacklisted_builds = list(
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
-	
+
 	if(prefs.auto_fit_viewport)
 		fit_viewport()
 
@@ -614,7 +610,11 @@ var/list/blacklisted_builds = list(
 	var/list/modifiers = params2list(params)
 	if(modifiers[DRAG])
 		return
-	winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	if (prefs.hotkeys)
+		winset(src, null, "input.background-color=[COLOR_INPUT_DISABLED]")
+	else
+		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
+
 	..()
 
 /client/proc/is_afk(duration = config.afk_time_bracket)
@@ -645,21 +645,11 @@ var/list/blacklisted_builds = list(
 		void = new()
 		screen += void
 
-//This may help with UI's that were stuck and don't want to open anymore.
-/client/verb/close_nanouis()
-	set name = "Fix UI (Close All)"
-	set category = "OOC"
-	set desc = "Closes all opened NanoUI/TGUI."
-
-	nanomanager.close_user_uis(usr)
-	SStgui.force_close_all_windows(usr)
-	to_chat(src, "<span class='notice'>You forcibly close any opened TGUI/NanoUI interfaces.</span>")
-
 /client/proc/show_character_previews(mutable_appearance/MA)
 	var/pos = 0
 	for(var/D in cardinal)
 		pos++
-		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		var/atom/movable/screen/O = LAZYACCESS(char_render_holders, "[D]")
 		if(!O)
 			O = new
 			LAZYSET(char_render_holders, "[D]", O)
@@ -671,7 +661,7 @@ var/list/blacklisted_builds = list(
 
 /client/proc/clear_character_previews()
 	for(var/index in char_render_holders)
-		var/obj/screen/S = char_render_holders[index]
+		var/atom/movable/screen/S = char_render_holders[index]
 		screen -= S
 		qdel(S)
 	char_render_holders = null
@@ -692,6 +682,14 @@ var/list/blacklisted_builds = list(
 
 	return byond_registration
 
+/client/proc/GetRolePrefs()
+	var/list/roleprefs = list()
+	for(var/role_id in antag_roles)
+		if(role_id in prefs.be_role)
+			roleprefs += role_id
+	if(!roleprefs.len)
+		return "none"
+	return get_english_list(roleprefs)
 
 /**
  * Updates the keybinds for special keys
@@ -707,6 +705,7 @@ var/list/blacklisted_builds = list(
 	if(!D?.key_bindings)
 		return
 	movement_keys = list()
+	var/list/communication_hotkeys = list()
 	for(var/key in D.key_bindings)
 		for(var/kb_name in D.key_bindings[key])
 			switch(kb_name)
@@ -720,7 +719,52 @@ var/list/blacklisted_builds = list(
 					movement_keys[key] = SOUTH
 				if("Say")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=.say") // ".say" is wrapper over say, see in code\modules\mob\typing_indicator.dm
+					communication_hotkeys += key
 				if("OOC")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=ooc")
+					communication_hotkeys += key
 				if("Me")
 					winset(src, "default-\ref[key]", "parent=default;name=[key];command=me")
+					communication_hotkeys += key
+
+	// winget() does not work for F1 and F2
+	for(var/key in communication_hotkeys)
+		if(!(key in list("F1","F2")) && !winget(src, "default-\ref[key]", "command"))
+			to_chat(src, "Вероятно Вы вошли в игру с русской раскладкой клавиатуры.\n<a href='?src=\ref[src];reset_macros=1'>Пожалуйста, переключитесь на английскую раскладку и кликните сюда, чтобы исправить хоткеи коммуникаций.</a>")
+			break
+
+#define MAXIMAZED  (1<<0)
+#define FULLSCREEN (1<<1)
+
+/client/verb/toggle_fullscreen()
+	set name = "Toggle Fullscreen"
+	set category = "OOC"
+
+	fullscreen ^= FULLSCREEN
+
+	if(fullscreen & FULLSCREEN)
+		if(winget(usr, "mainwindow", "is-maximized") == "true")
+			fullscreen |= MAXIMAZED
+		else
+			fullscreen &= ~MAXIMAZED
+		winset(usr, "mainwindow", "titlebar=false")
+		winset(usr, "mainwindow", "can-resize=false")
+		winset(usr, "mainwindow", "is-maximized=false")
+		winset(usr, "mainwindow", "is-maximized=true")
+		winset(usr, "mainwindow", "menu=")
+	else
+		if(!(fullscreen & MAXIMAZED))
+			winset(usr, "mainwindow", "is-maximized=false")
+		winset(usr, "mainwindow", "titlebar=true")
+		winset(usr, "mainwindow", "can-resize=true")
+		winset(usr, "mainwindow", "menu=menu")
+
+#undef MAXIMAZED
+#undef FULLSCREEN
+
+/client/proc/change_view(new_size)
+	if (isnull(new_size))
+		CRASH("change_view called without argument.")
+
+	view = new_size
+	mob.reload_fullscreen()

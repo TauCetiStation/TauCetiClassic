@@ -80,7 +80,7 @@
 
 	return active_with_role
 
-/datum/event/proc/num_players()
+/proc/num_players()
 	var/players = 0
 	for(var/mob/living/carbon/human/P in player_list)
 		if(P.client)

@@ -86,7 +86,7 @@
 	target.in_use_action = TRUE
 
 	if(check_target_zone)
-		check_target_zone = user.zone_sel.selecting
+		check_target_zone = user.get_targetzone()
 
 	var/user_loc = user.loc
 
@@ -133,7 +133,7 @@
 				. = FALSE
 				break
 
-		if(check_target_zone && user.zone_sel.selecting != check_target_zone)
+		if(check_target_zone && user.get_targetzone() != check_target_zone)
 			. = FALSE
 			break
 	if(progress)

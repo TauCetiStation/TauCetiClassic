@@ -158,7 +158,7 @@
 				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
 		else
-			user.drop_item(src)
+			user.drop_from_inventory(O, src)
 			user.visible_message( \
 				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
@@ -367,7 +367,7 @@
 		O.loc = src.loc
 	if (src.reagents.total_volume)
 		src.dirty++
-	src.reagents.clear_reagents()
+	reagents.clear_reagents()
 	to_chat(usr, "<span class='notice'>You dispose of [src] contents.</span>")
 	updateUsrDialog()
 
@@ -405,7 +405,7 @@
 			if (id)
 				amount+=O.reagents.get_reagent_amount(id)
 		qdel(O)
-	src.reagents.clear_reagents()
+	reagents.clear_reagents()
 	ffuu.reagents.add_reagent("carbon", amount)
 	ffuu.reagents.add_reagent("toxin", amount/10)
 	return ffuu

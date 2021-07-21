@@ -72,10 +72,24 @@
 	return 0
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target) || target.buckled)
+	if(user.incapacitated() || !iscarbon(target) || target.buckled)
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	close_machine(target)
+
+/obj/machinery/sleeper/AltClick(mob/user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(occupant && is_operational())
+		open_machine()
+		return
+	var/mob/living/carbon/target = locate() in loc
+	if(!target)
 		return
 	close_machine(target)
 
@@ -109,8 +123,7 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!beaker)
 			beaker = I
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
 			updateUsrDialog()
 			return
@@ -297,7 +310,7 @@
 		remove_beaker()
 	else if(href_list["togglefilter"])
 		toggle_filter()
-	else if(occupant && occupant.stat != DEAD && is_operational())
+	else if(occupant && occupant.stat != DEAD)
 		if(href_list["inject"] == "inaprovaline" || (occupant.health > min_health && (href_list["inject"] in available_chems)))
 			inject_chem(usr, href_list["inject"])
 		else

@@ -503,8 +503,7 @@
 			to_chat(user, "<font color='blue'>The unit already contains a suit.</font>")
 			return
 		to_chat(user, "You load the [S.name] into the storage compartment.")
-		user.drop_item()
-		S.loc = src
+		user.drop_from_inventory(S, src)
 		src.SUIT = S
 		update_icon()
 		updateUsrDialog()
@@ -517,8 +516,7 @@
 			to_chat(user, "<font color='blue'>The unit already contains a helmet.</font>")
 			return
 		to_chat(user, "You load the [H.name] into the storage compartment.")
-		user.drop_item()
-		H.loc = src
+		user.drop_from_inventory(H, src)
 		src.HELMET = H
 		update_icon()
 		updateUsrDialog()
@@ -531,8 +529,7 @@
 			to_chat(user, "<font color='blue'>The unit already contains a mask.</font>")
 			return
 		to_chat(user, "You load the [M.name] into the storage compartment.")
-		user.drop_item()
-		M.loc = src
+		user.drop_from_inventory(M, src)
 		src.MASK = M
 		update_icon()
 		updateUsrDialog()

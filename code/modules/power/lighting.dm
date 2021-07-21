@@ -8,12 +8,8 @@
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
-#ifdef NEWYEARCONTENT
-    #define LAMP_BRIGHTNESS 1.5
-#else
-    #define LAMP_BRIGHTNESS 2
-#endif
-
+#define LAMP_BRIGHTNESS 2
+#define LAMP_BRIGHTNESS_HOLIDAY 1.5
 
 
 /obj/item/light_fixture_frame
@@ -228,6 +224,11 @@
 
 // the smaller bulb light fixture
 
+/obj/machinery/light/atom_init()
+	. = ..()
+	if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS)
+		brightness_power = LAMP_BRIGHTNESS_HOLIDAY
+
 /obj/machinery/light/small
 	icon_state = "bulb1"
 	base_state = "bulb"
@@ -411,7 +412,6 @@
 				on = has_power()
 				update()
 
-				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
 				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)

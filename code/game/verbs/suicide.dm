@@ -13,9 +13,9 @@
 
 
 	var/permitted = 0
-	var/list/allowed = list("Syndicate","traitor","Wizard","Head Revolutionary","Cultist","Changeling")
+	var/list/allowed = list(NUKE_OP,TRAITOR,WIZARD,HEADREV,CULTIST,CHANGELING)
 	for(var/T in allowed)
-		if(mind.special_role == T)
+		if(isrole(T, src))
 			permitted = 1
 			break
 
@@ -176,11 +176,9 @@
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		updatehealth()
 
-/mob/living/silicon/pai/verb/suicide()
-	set category = "pAI Commands"
-	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)."
-	set name = "pAI Suicide"
-	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
+// Kill yourself and become a ghost (You will receive a confirmation prompt).
+/mob/living/silicon/pai/proc/suicide()
+	var/answer = tgui_alert(usr, "REALLY kill yourself? This action can't be undone.", "Confirm Suicide", list("Yes", "No"))
 	if(answer == "Yes")
 		var/obj/item/device/paicard/card = loc
 		card.removePersonality()

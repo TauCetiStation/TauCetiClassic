@@ -30,11 +30,9 @@
 		apply_damage(Proj.damage)
 
 /obj/structure/alien/attackby(obj/item/weapon/W, mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(user.a_intent != INTENT_HARM)
+	. = ..()
+	if(!.)
 		return FALSE
-	if(!(W.flags & NOATTACKANIMATION))
-		user.do_attack_animation(src)
 	if(length(W.hitsound))
 		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
 	else
@@ -436,8 +434,7 @@
 		if(GROWN)
 			var/mob/living/carbon/xenomorph/facehugger/FH = new /mob/living/carbon/xenomorph/facehugger(get_turf(src))
 			FH.key = user.key
-			FH.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", FH)
-			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces!</span>")
+			to_chat(FH, "<span class='notice'>You are now a facehugger, go hug some human faces <3</span>")
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING

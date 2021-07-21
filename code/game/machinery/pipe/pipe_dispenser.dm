@@ -71,7 +71,7 @@
 	popup.set_content("<TT>[dat]</TT>")
 	popup.open()
 
-/obj/machinery/pipedispenser/is_operational_topic()
+/obj/machinery/pipedispenser/is_operational()
 	return TRUE
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
@@ -104,7 +104,6 @@
 	add_fingerprint(usr)
 	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
 		to_chat(usr, "<span class='notice'>You put \the [W] back into \the [src].</span>")
-		user.drop_item()
 		qdel(W)
 		return
 	else if (iswrench(W) && !user.is_busy(src))
@@ -160,7 +159,7 @@ Nah
 		to_chat(usr, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
 
-	if (!istype(pipe) || get_dist(usr, src) > 1 || get_dist(src,pipe) > 1 )
+	if (!istype(pipe))
 		return
 
 	if (pipe.anchored)

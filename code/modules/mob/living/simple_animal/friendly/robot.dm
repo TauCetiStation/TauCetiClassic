@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 /mob/living/simple_animal/det5
 	name = "DET5"
 	icon_state = "robot_rd"
@@ -31,10 +32,6 @@
 	var/searchfortarget = 0	   //  if this is TRUE, robot will be searching for target to explode.
 	var/act_emag
 	var/obj/machinery/computer/rdconsole/rdconsole = null
-
-/mob/living/simple_animal/det5/atom_init()
-	. = ..()
-	chief_animal_list += src
 
 /mob/living/simple_animal/det5/Life()
 	..()

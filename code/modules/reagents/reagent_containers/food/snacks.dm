@@ -567,7 +567,7 @@
 	if (src.warm)
 		spawn( 4200 )
 			src.warm = 0
-			src.reagents.del_reagent("tricordrazine")
+			reagents.del_reagent("tricordrazine")
 			src.name = "donk-pocket"
 	return
 
@@ -1273,8 +1273,7 @@
 	if(!proximity) return
 	if(istype(target,/obj/structure/sink) && !wrapped)
 		to_chat(user, "<span class='notice'>You place \the [name] under a stream of water...</span>")
-		user.drop_item()
-		loc = get_turf(target)
+		user.drop_from_inventory(src, get_turf(target))
 		return Expand()
 	..()
 
@@ -2060,7 +2059,7 @@
 	filling_color = "#baa14c"
 	bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/pizzaslice/
+/obj/item/weapon/reagent_containers/food/snacks/pizzaslice
 	filling_color = "#baa14c"
 	bitesize = 2
 
@@ -2226,11 +2225,10 @@
 				boxestoadd += i
 
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
-				user.drop_item()
+				user.drop_from_inventory(box, src)
 
-				box.loc = src
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
-				src.boxes.Add( boxestoadd )
+				boxes.Add( boxestoadd )
 
 				box.update_icon()
 				update_icon()
@@ -2246,8 +2244,7 @@
 	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza) ) // Long ass fucking object name
 
 		if( src.open )
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			src.pizza = I
 
 			update_icon()
@@ -3273,3 +3270,19 @@
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard
 	icon_state = "cheesyfries_cardboard"
 	trash = /obj/item/trash/fries
+
+
+/// candy heart
+/obj/item/weapon/reagent_containers/food/snacks/candyheart
+	name = "candy heart"
+	icon = 'icons/obj/valentines.dmi'
+	icon_state = "candyheart"
+	desc = "A heart-shaped candy filled with love."
+	bitesize = 3
+	trash = /obj/item/weapon/paper/lovenote
+
+/obj/item/weapon/reagent_containers/food/snacks/candyheart/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 3)
+	icon_state = pick("candyheart_pink", "candyheart_green", "candyheart_blue", "candyheart_yellow")

@@ -602,7 +602,7 @@
 		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, VOL_EFFECTS_MASTER)
 
 //Sorts stock parts inside an RPED by their rating.
-//Only use /obj/item/weapon/stock_parts/ with this sort proc!
+//Only use /obj/item/weapon/stock_parts with this sort proc!
 /proc/cmp_rped_sort(obj/item/weapon/stock_parts/A, obj/item/weapon/stock_parts/B)
 	return B.rating - A.rating
 
@@ -881,7 +881,7 @@
 		to_chat(user, "<span class='userdanger'>[M] Must be lie down first!</span>")
 		return
 
-	var/zone = check_zone(user.zone_sel.selecting)
+	var/zone = check_zone(user.get_targetzone())
 	var/obj/item/organ/external/BP = M.get_bodypart(zone)
 	for(var/obj/item/clothing/C in M.get_equipped_items())
 		if(C.body_parts_covered & BP.body_part)

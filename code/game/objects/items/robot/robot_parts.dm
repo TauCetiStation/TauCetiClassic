@@ -216,7 +216,7 @@
 				to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 				return
 
-			if((M.brainmob.mind in SSticker.mode.head_revolutionaries))
+			if(isrevhead(M.brainmob))
 				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [M].</span>")
 				return
 
@@ -261,7 +261,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, created_name), MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if (!Adjacent(usr))
 			return
 
 		created_name = t
@@ -317,7 +317,7 @@
 		if(flash1 && flash2)
 			to_chat(user, "<span class='info'>You have already inserted the eyes!</span>")
 			return
-		if(!user.drop_item(src))
+		if(!user.drop_from_inventory(I, src))
 			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
 			return
 		else

@@ -101,9 +101,8 @@
 				// insert cell
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item()
+					user.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
 		else
@@ -161,7 +160,7 @@
 		// The UI is already open so push the new data to it
 		ui.push_data(data)
 
-/obj/machinery/space_heater/is_operational_topic()
+/obj/machinery/space_heater/is_operational()
 	return !(stat & BROKEN)
 
 /obj/machinery/space_heater/Topic(href, href_list)
@@ -207,10 +206,9 @@
 		if(!cell)
 			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 			if(istype(C))
-				if(!usr.drop_item())
+				if(!usr.drop_from_inventory(C, src))
 					return
 				cell = C
-				C.loc = src
 				C.add_fingerprint(usr)
 
 				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")

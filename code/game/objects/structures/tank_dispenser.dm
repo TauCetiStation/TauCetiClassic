@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 /obj/structure/dispenser
 	name = "tank storage unit"
 	desc = "A simple yet bulky storage device for gas tanks. Has room for up to ten oxygen tanks, and ten phoron tanks."
@@ -21,8 +22,6 @@
 /obj/structure/dispenser/atom_init()
 	. = ..()
 	update_icon()
-
-	tank_dispenser_list += src
 
 
 /obj/structure/dispenser/update_icon()
@@ -49,8 +48,7 @@
 /obj/structure/dispenser/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/tank/oxygen) || istype(I, /obj/item/weapon/tank/air) || istype(I, /obj/item/weapon/tank/anesthetic))
 		if(oxygentanks < 10)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			oxytanks.Add(I)
 			oxygentanks++
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
@@ -60,8 +58,7 @@
 		return
 	if(istype(I, /obj/item/weapon/tank/phoron))
 		if(phorontanks < 10)
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			platanks.Add(I)
 			phorontanks++
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")

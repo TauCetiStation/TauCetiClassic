@@ -99,7 +99,6 @@
 		if(degutted)
 			to_chat(user, "<span class='notice'>You place the payload into the shell.</span>")
 			degutted = 0
-			user.drop_item()
 			qdel(I)
 		else
 			to_chat(user, "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>")
@@ -125,18 +124,18 @@
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = clamp(newtime, 60, 60000)
-	if(in_range(src, user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
+	if(Adjacent(user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
-		src.loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
-	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && in_range(src, user) && isliving(user))
+		loc.visible_message("<span class='notice'>[bicon(src)] timer set for [timer] seconds.</span>")
+	if(tgui_alert(user, "Would you like to start the countdown now?",, list("Yes","No")) == "Yes" && Adjacent(user) && isliving(user))
 		if(defused || active || degutted)
 			if(degutted)
-				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: Payload missing</span>")
 			else if(defused)
-				src.loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
+				loc.visible_message("<span class='notice'>[bicon(src)] Device error: User intervention required</span>")
 			return
 		else
-			src.loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
+			loc.visible_message("<span class='warning'>[bicon(src)] [timer] seconds until detonation, please clear the area.</span>")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 30)
 			if(!open_panel)
 				icon_state = "syndicate-bomb-active"

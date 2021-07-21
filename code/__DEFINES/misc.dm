@@ -96,15 +96,15 @@
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
 //Material defines
-#define MAT_METAL		"$metal"
-#define MAT_GLASS		"$glass"
-#define MAT_SILVER		"$silver"
-#define MAT_GOLD		"$gold"
-#define MAT_DIAMOND		"$diamond"
-#define MAT_URANIUM		"$uranium"
-#define MAT_PHORON		"$phoron"
-#define MAT_PLASTIC		"$plastic"
-#define MAT_BANANIUM	"$bananium"
+#define MAT_METAL		"metal"
+#define MAT_GLASS		"glass"
+#define MAT_SILVER		"silver"
+#define MAT_GOLD		"gold"
+#define MAT_DIAMOND		"diamond"
+#define MAT_URANIUM		"uranium"
+#define MAT_PHORON		"phoron"
+#define MAT_PLASTIC		"plastic"
+#define MAT_BANANIUM	"bananium"
 
 #define COIN_GOLD "Gold coin"
 #define COIN_SILVER "Silver coin"
@@ -137,6 +137,14 @@
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
+//Movement dir masks
+#define NORTH_SOUTH 3 // NORTH | SOUTH
+#define EAST_WEST 12 // EAST | WEST
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
+
 // Bluespace shelter deploy checks
 #define SHELTER_DEPLOY_ALLOWED "allowed"
 #define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
@@ -159,9 +167,20 @@
 #define TELE_CHECK_TURFS 1
 #define TELE_CHECK_ALL 2
 
-//get_turf(): Returns the turf that contains the atom.
-//Example: A fork inside a box inside a locker will return the turf the locker is standing on.
+/**
+ * Get the turf that `A` resides in, regardless of any containers.
+ *
+ * Use in favor of `A.loc` or `src.loc` so that things work correctly when
+ * stored inside an inventory, locker, or other container.
+ */
 #define get_turf(A) (get_step(A, 0))
+
+/**
+ * Get the ultimate area of `A`, similarly to [get_turf].
+ *
+ * Use instead of `A.loc.loc`.
+ */
+#define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
 
 // Door assembly states
 #define ASSEMBLY_SECURED       0
@@ -263,3 +282,14 @@
 #define REGION_SUPPLY		6
 #define REGION_COMMAND		7
 #define REGION_CENTCOMM		8
+
+#define ADD_TO_GLOBAL_LIST(type, list) ##type/atom_init(){\
+	. = ..();\
+	global.##list += src;}\
+##type/Destroy(){\
+	global.##list -= src;\
+	return ..()}
+
+// Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15

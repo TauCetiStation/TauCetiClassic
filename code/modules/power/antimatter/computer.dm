@@ -36,7 +36,7 @@
 	switch(href_list["operation"])
 		// main interface
 		if("activate")
-			src.connected_E.engine_process()
+			connected_E.engine_process()
 		if("engine")
 			src.state = STATE_ENGINE
 		if("injector")

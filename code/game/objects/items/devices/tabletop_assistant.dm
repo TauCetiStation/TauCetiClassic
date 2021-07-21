@@ -104,7 +104,7 @@
 	if(usr.incapacitated())
 		return
 
-	if(!(usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))))
+	if(!Adjacent(usr))
 		return
 
 	if(href_list["mode"])
@@ -213,9 +213,6 @@
 	if(!isobj(target))
 		return
 	var/obj/O = target
-	if(!(istype(user, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
 	switch(mode)
 		if(CARD_MODE)
 			if(istype(O, /obj/item/toy/cards))

@@ -4,11 +4,11 @@
 	src.other = list()
 	src.hotkeybuttons = list() //These can be disabled for hotkey usersx
 
-	var/obj/screen/using
-	var/obj/screen/inventory/inv_box
+	var/atom/movable/screen/using
+	var/atom/movable/screen/inventory/inv_box
 	var/mob/living/carbon/human/H = mymob
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "act_intent"
 	using.icon = ui_style
 	using.icon_state = "intent_" + mymob.a_intent
@@ -18,7 +18,7 @@
 	src.adding += using
 	action_intent = using
 
-	using = new /obj/screen/inventory/craft
+	using = new /atom/movable/screen/inventory/craft
 	src.adding += using
 
 //intent small hud objects
@@ -27,7 +27,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_HELP
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -39,7 +39,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_PUSH
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -51,7 +51,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_GRAB
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -63,7 +63,7 @@
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
-	using = new /obj/screen( src )
+	using = new /atom/movable/screen( src )
 	using.name = INTENT_HARM
 	using.icon = ico
 	using.screen_loc = ui_acti
@@ -74,7 +74,7 @@
 
 //end intent small hud objects
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "mov_intent"
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
@@ -86,7 +86,7 @@
 	src.adding += using
 	move_intent = using
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "drop"
 	using.icon = ui_style
 	using.icon_state = "act_drop"
@@ -97,7 +97,7 @@
 	using.alpha = ui_alpha
 	src.hotkeybuttons += using
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = SLOT_W_UNIFORM
@@ -109,7 +109,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "o_clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = SLOT_WEAR_SUIT
@@ -121,7 +121,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "r_hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_r_inactive"
@@ -137,7 +137,7 @@
 	src.r_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "l_hand"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hand_l_inactive"
@@ -152,7 +152,7 @@
 	src.l_hand_hud_object = inv_box
 	src.adding += inv_box
 
-	using = new /obj/screen/inventory()
+	using = new /atom/movable/screen/inventory()
 	using.name = "hand"
 	using.icon = ui_style
 	using.icon_state = "hand1"
@@ -163,7 +163,7 @@
 	using.alpha = ui_alpha
 	src.adding += using
 
-	using = new /obj/screen/inventory()
+	using = new /atom/movable/screen/inventory()
 	using.name = "hand"
 	using.icon = ui_style
 	using.icon_state = "hand2"
@@ -174,7 +174,7 @@
 	using.alpha = ui_alpha
 	src.adding += using
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "id"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
@@ -186,7 +186,7 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
@@ -198,7 +198,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
@@ -210,7 +210,7 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "storage1"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
@@ -222,7 +222,7 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "storage2"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
@@ -234,7 +234,7 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "suit storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suitstorage"
@@ -246,7 +246,7 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "resist"
 	using.icon = ui_style
 	using.icon_state = "act_resist"
@@ -257,7 +257,7 @@
 	using.alpha = ui_alpha
 	src.hotkeybuttons += using
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "toggle"
 	using.icon = ui_style
 	using.icon_state = "other"
@@ -268,7 +268,7 @@
 	using.alpha = ui_alpha
 	src.adding += using
 
-	using = new /obj/screen()
+	using = new /atom/movable/screen()
 	using.name = "equip"
 	using.icon = ui_style
 	using.icon_state = "act_equip"
@@ -279,7 +279,7 @@
 	using.alpha = ui_alpha
 	src.adding += using
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "gloves"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
@@ -291,7 +291,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "eyes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "glasses"
@@ -303,7 +303,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "l_ear"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
@@ -315,7 +315,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "r_ear"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
@@ -327,7 +327,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "head"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "hair"
@@ -339,7 +339,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "shoes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
@@ -351,7 +351,7 @@
 	inv_box.alpha = ui_alpha
 	src.other += inv_box
 
-	inv_box = new /obj/screen/inventory()
+	inv_box = new /atom/movable/screen/inventory()
 	inv_box.name = "belt"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
@@ -363,7 +363,7 @@
 	inv_box.alpha = ui_alpha
 	src.adding += inv_box
 
-	mymob.throw_icon = new /obj/screen()
+	mymob.throw_icon = new /atom/movable/screen()
 	mymob.throw_icon.icon = ui_style
 	mymob.throw_icon.icon_state = "act_throw_off"
 	mymob.throw_icon.name = "throw"
@@ -372,7 +372,7 @@
 	mymob.throw_icon.alpha = ui_alpha
 	src.hotkeybuttons += mymob.throw_icon
 
-	mymob.internals = new /obj/screen()
+	mymob.internals = new /atom/movable/screen()
 	mymob.internals.icon = ui_style
 	mymob.internals.icon_state = "internal0"
 	if(istype(mymob.internal, /obj/item/weapon/tank))
@@ -380,12 +380,12 @@
 	mymob.internals.name = "internal"
 	mymob.internals.screen_loc = ui_internal
 
-	mymob.healths = new /obj/screen()
+	mymob.healths = new /atom/movable/screen()
 	mymob.healths.icon = 'icons/mob/screen_gen.dmi'
 	mymob.healths.icon_state = "health0"
 	mymob.healths.name = "health"
 	mymob.healths.screen_loc = ui_health
-	mymob.healthdoll = new /obj/screen()
+	mymob.healthdoll = new /atom/movable/screen()
 	mymob.healthdoll.icon = 'icons/mob/screen_gen.dmi'
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
@@ -400,13 +400,13 @@
 	mymob.nutrition_icon.screen_loc = ui_nutrition
 
 
-	mymob.pullin = new /obj/screen/pull()
+	mymob.pullin = new /atom/movable/screen/pull()
 	mymob.pullin.icon = ui_style
 	mymob.pullin.update_icon(mymob)
 	mymob.pullin.screen_loc = ui_pull_resist
 	src.hotkeybuttons += mymob.pullin
 
-	lingchemdisplay = new /obj/screen()
+	lingchemdisplay = new /atom/movable/screen()
 	lingchemdisplay.icon = 'icons/mob/screen_gen.dmi'
 	lingchemdisplay.name = "chemical storage"
 	lingchemdisplay.icon_state = "power_display"
@@ -415,7 +415,7 @@
 	lingchemdisplay.plane = ABOVE_HUD_PLANE
 	lingchemdisplay.invisibility = 101
 
-	lingstingdisplay = new /obj/screen()
+	lingstingdisplay = new /atom/movable/screen()
 	lingstingdisplay.icon = 'icons/mob/screen_gen.dmi'
 	lingstingdisplay.name = "current sting"
 	lingstingdisplay.screen_loc = ui_lingstingdisplay
@@ -423,33 +423,33 @@
 	lingstingdisplay.plane = ABOVE_HUD_PLANE
 	lingstingdisplay.invisibility = 101
 
-	mymob.pain = new /obj/screen( null )
+	mymob.pain = new /atom/movable/screen( null )
 
-	mymob.zone_sel = new /obj/screen/zone_sel( null )
+	mymob.zone_sel = new /atom/movable/screen/zone_sel( null )
 	mymob.zone_sel.icon = ui_style
 	mymob.zone_sel.color = ui_color
 	mymob.zone_sel.alpha = ui_alpha
 	mymob.zone_sel.cut_overlays()
-	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]"))
+	mymob.zone_sel.add_overlay(image('icons/mob/zone_sel.dmi', "[mymob.get_targetzone()]"))
 
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon
 
 	//Handle the gun settings buttons
-	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
+	mymob.gun_setting_icon = new /atom/movable/screen/gun/mode(null)
 	if (mymob.client)
 		if (mymob.client.gun_mode) // If in aim mode, correct the sprite
 			mymob.gun_setting_icon.icon_state = "gun1"
 	for(var/obj/item/weapon/gun/G in mymob) // If targeting someone, display other buttons
 		if (G.target)
-			mymob.item_use_icon = new /obj/screen/gun/item(null)
+			mymob.item_use_icon = new /atom/movable/screen/gun/item(null)
 			if (mymob.client.target_can_click)
 				mymob.item_use_icon.icon_state = "gun0"
 			src.adding += mymob.item_use_icon
-			mymob.gun_move_icon = new /obj/screen/gun/move(null)
+			mymob.gun_move_icon = new /atom/movable/screen/gun/move(null)
 			if (mymob.client.target_can_move)
 				mymob.gun_move_icon.icon_state = "gun0"
-				mymob.gun_run_icon = new /obj/screen/gun/run(null)
+				mymob.gun_run_icon = new /atom/movable/screen/gun/run(null)
 				if (mymob.client.target_can_run)
 					mymob.gun_run_icon.icon_state = "gun0"
 				src.adding += mymob.gun_run_icon

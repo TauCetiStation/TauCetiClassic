@@ -133,7 +133,7 @@
 		var/new_color = input(user, "Choose color!") as color|null
 		if(!new_color)
 			return
-		if(!in_range(src, usr) || !A.use(1))
+		if(!Adjacent(usr) || !A.use(1))
 			return
 		wrapper_color = new_color
 		update_icon()
@@ -147,7 +147,7 @@
 	if(!contents.len)
 		to_chat(user, "<span class='warning'>It's empty!</span>")
 		return 1
-	var/zone = user.zone_sel.selecting
+	var/zone = user.get_targetzone()
 	if(zone == O_MOUTH && CanEat(user, target, src, "eat"))
 		user.visible_message("<span class='notice'>[user] pops a pill from \the [src].</span>")
 		playsound(src, 'sound/effects/peelz.ogg', VOL_EFFECTS_MASTER)

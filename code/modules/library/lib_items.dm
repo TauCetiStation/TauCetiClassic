@@ -28,8 +28,7 @@
 
 /obj/structure/bookcase/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))
@@ -44,7 +43,7 @@
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
 		if(choice)
-			if(usr.incapacitated() || !in_range(loc, usr))
+			if(usr.incapacitated() || !Adjacent(usr))
 				return
 			if(ishuman(user))
 				if(!user.get_active_hand())

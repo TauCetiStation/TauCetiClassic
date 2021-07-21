@@ -33,11 +33,10 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/cargo
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 
 /**********************Shuttle Computer**************************/
 /*var/mining_shuttle_tickstomove = 10
@@ -137,10 +136,6 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 	if(href_list["move"])
-		//if(SSticker.mode.name == "blob")
-		//	if(SSticker.mode:declared)
-		//		usr << "Under directive 7-10, [station_name()] is quarantined until further notice."
-		//		return
 
 		if (!mining_shuttle_moving)
 			to_chat(usr, "<span class='notice'>Shuttle recieved message and will be sent shortly.</span>")
@@ -252,7 +247,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	next_hit = world.time + COUNTER_COOLDOWN
 	asshole_counter += 1
 
-	var/target_zone = user.zone_sel.selecting
+	var/target_zone = user.get_targetzone()
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
@@ -471,7 +466,7 @@ var/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target) && in_range(user, target))
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = target
 		loc = null

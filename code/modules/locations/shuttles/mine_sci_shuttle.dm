@@ -70,7 +70,7 @@ var/global/area/asteroid/mine_sci_curr_location = null
 
 /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	name = "Shuttle Console"
-	icon = 'code/modules/locations/shuttles/computer_shuttle_mining.dmi'
+	icon = 'icons/locations/shuttles/computer_shuttle_mining.dmi'
 	state_broken_preset = null
 	state_nopower_preset = null
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp

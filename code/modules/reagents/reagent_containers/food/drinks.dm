@@ -118,7 +118,7 @@
 			refill = reagents.get_master_reagent_id()
 			refillName = reagents.get_master_reagent_name()
 
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
@@ -166,13 +166,7 @@
 		return
 
 	if(!do_after(usr, reagents.total_volume, target=src, can_move=FALSE))
-		if(!Adjacent(usr))
-			usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
-		reagents.standard_splash(loc, user=usr)
-		return
-
-	if(!Adjacent(usr))
-		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over the floor!</span>", "<span class='warning'>You splashed the [src] all over the floor!</span>")
+		usr.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
 		reagents.standard_splash(loc, user=usr)
 		return
 

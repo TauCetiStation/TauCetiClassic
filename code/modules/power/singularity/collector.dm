@@ -59,9 +59,8 @@ var/global/list/rad_collectors = list()
 		if(src.P)
 			to_chat(user, "<span class='warning'>There's already a phoron tank loaded.</span>")
 			return 1
-		user.drop_item()
+		user.drop_from_inventory(W, src)
 		src.P = W
-		W.loc = src
 		update_icons()
 	else if(iscrowbar(W))
 		if(P && !src.locked)

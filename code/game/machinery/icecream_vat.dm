@@ -115,8 +115,7 @@ var/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You must remove [held_container] from [src] first.</span>")
 			else
 				to_chat(user, "<span class='info'>You insert [O] into [src].</span>")
-				user.drop_item()
-				O.loc = src
+				user.drop_from_inventory(O, src)
 				held_container = O
 		else
 			var/obj/item/weapon/reagent_containers/R = O
@@ -168,7 +167,7 @@ var/list/ingredients_source = list(
 				to_chat(user, "<span class='notice'>You require milk and ice to make vanilla icecream.</span>")
 	updateDialog()
 
-/obj/machinery/icecream_vat/is_operational_topic()
+/obj/machinery/icecream_vat/is_operational()
 	return TRUE
 
 /obj/machinery/icecream_vat/Topic(href, href_list)

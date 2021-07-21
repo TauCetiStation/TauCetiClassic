@@ -23,6 +23,10 @@
 
 /obj/structure/stool/bed/chair/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
 		if(occupant && (src.loc != occupant.loc))
@@ -68,12 +72,11 @@
 		if(!SK.status)
 			to_chat(user, "<span class='notice'>[SK] is not ready to be attached!</span>")
 			return
-		user.drop_item()
 		var/obj/structure/stool/bed/chair/e_chair/E = new /obj/structure/stool/bed/chair/e_chair(src.loc)
+		user.drop_from_inventory(SK, E)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		E.set_dir(dir)
 		E.part = SK
-		SK.loc = E
 		SK.master = E
 		qdel(src)
 
@@ -341,7 +344,7 @@
 	add_fingerprint(user)
 
 /obj/structure/stool/bed/chair/noose/user_buckle_mob(mob/living/carbon/human/M, mob/user)
-	if(!in_range(user, src) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
+	if(!Adjacent(user) || user.stat || user.restrained() || !ishuman(M) || user.is_busy())
 		return FALSE
 
 	var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
@@ -371,7 +374,7 @@
 			playsound(src, 'sound/effects/noosed.ogg', VOL_EFFECTS_MASTER)
 			message_admins("[key_name_admin(M)] was hanged by [key_name(user)]. [ADMIN_JMP(M)]")
 			for(var/alert in M.alerts)
-				var/obj/screen/alert/A = M.alerts[alert]
+				var/atom/movable/screen/alert/A = M.alerts[alert]
 				if(A.master.icon_state == "noose") // our alert icon is terrible, let's build a new one
 					A.cut_overlays()
 					A.add_overlay(image(icon, "noose"))

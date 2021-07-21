@@ -10,7 +10,6 @@
 	name = "Mulebot"
 	desc = "A Multiple Utility Load Effector bot."
 	icon_state = "mulebot0"
-	layer = MOB_LAYER
 	density = TRUE
 	anchored = TRUE
 	animate_movement=1
@@ -98,8 +97,7 @@
 /obj/machinery/bot/mulebot/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/stock_parts/cell) && open && !cell)
 		var/obj/item/weapon/stock_parts/cell/C = I
-		user.drop_item()
-		C.loc = src
+		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
 	else if(isscrewdriver(I))
@@ -266,9 +264,8 @@
 			if(open && !cell)
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					usr.drop_item()
+					usr.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 
 					usr.visible_message("<span class='notice'>[usr] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")

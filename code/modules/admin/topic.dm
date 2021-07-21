@@ -6,10 +6,6 @@
 		message_admins("[key_name_admin(usr)] has attempted to override the admin panel!")
 		return
 
-	if(SSticker.mode && SSticker.mode.check_antagonists_topic(href, href_list))
-		check_antagonists()
-		return
-
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
 			return
@@ -32,49 +28,58 @@
 			stickyban("show", null)
 
 	if(href_list["makeAntag"])
+		if(!SSticker.mode)
+			to_chat(usr, "The round has not started yet,")
+			return
+		var/count = input("How many antags would you like to create?", "Create Antagonists") as num|null
+		if(!count)
+			return
+
+		var/stealth = FALSE
+		if(tgui_alert(usr, "Do you want to ask a pool of players about wanting to be a role?", "Stealth Antags", list("Yes", "No")) == "No")
+			stealth = TRUE
+			message_admins("[key_name(usr)] has attempted to spawn secretly.")
 		switch(href_list["makeAntag"])
 			if("1")
-				log_admin("[key_name(usr)] has spawned a traitor.")
-				if(!makeTraitors())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] traitors.")
+				var/success = makeAntag(null, /datum/faction/traitor, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of traitors made.")
+				to_chat(usr, "<span class='notice'>[success] number of traitors made.</span>")
 			if("2")
-				log_admin("[key_name(usr)] has spawned a changeling.")
-				if(!makeChanglings())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] changelings.")
+				var/success = makeAntag(null, /datum/faction/changeling, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of changelings made.")
+				to_chat(usr, "<span class='notice'>[success] number of changelings made.</span>")
 			if("3")
-				log_admin("[key_name(usr)] has spawned revolutionaries.")
-				if(!makeRevs())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] revolutionaries.")
+				var/success = makeAntag(null, /datum/faction/revolution, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of revolutionaries made.")
+				to_chat(usr, "<span class='notice'>[success] number of revolutionaries made.</span>")
 			if("4")
-				log_admin("[key_name(usr)] has spawned a cultists.")
-				if(!makeCult())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] cultists.")
+				var/success = makeAntag(null, /datum/faction/cult, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of cultists made.")
+				to_chat(usr, "<span class='notice'>[success] number of cultists made.</span>")
 			if("5")
-				log_admin("[key_name(usr)] has spawned a malf AI.")
-				if(!makeMalfAImode())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] malfunctioning AI.")
+				var/success = makeAntag(null, /datum/faction/malf_silicons, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of angry computer screens made.")
+				to_chat(usr, "<span class='notice'>[success] number of malf AIs made.</span>")
 			if("6")
-				log_admin("[key_name(usr)] has spawned a wizard.")
-				if(!makeWizard())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] wizards.")
+				var/success = makeAntag(null, /datum/faction/wizards, count, FROM_GHOSTS, stealth)
+				message_admins("[success] number of wizards made.")
+				to_chat(usr, "<span class='notice'>[success] number of wizards made.</span>")
 			if("7")
-				log_admin("[key_name(usr)] has spawned a nuke team.")
-				if(!makeNukeTeam())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
-			/*
+				message_admins("[key_name(usr)] has spawned aliens.")
+				var/success = makeAntag(null, /datum/faction/infestation, count, FROM_GHOSTS, stealth)
+				message_admins("[success] number of aliens made.")
+				to_chat(usr, "<span class='notice'>[success] number of aliens made.</span>")
 			if("8")
-				log_admin("[key_name(usr)] has spawned a ninja.")
-				makeSpaceNinja()
-			if("9")
-				log_admin("[key_name(usr)] has spawned aliens.")
-				makeAliens()
-			*/
-			if("10")
-				log_admin("[key_name(usr)] has spawned a death squad.")
-			if("11")
-				log_admin("[key_name(usr)] has spawned vox raiders.")
-				if(!makeVoxRaiders())
-					to_chat(usr, "<span class='warning'>Unfortunately there weren't enough candidates available.</span>")
+				message_admins("[key_name(usr)] has spawned voxs.")
+				var/success = makeAntag(null, /datum/faction/heist, count, FROM_GHOSTS, stealth)
+				message_admins("[success] number of voxs made.")
+				to_chat(usr, "<span class='notice'>[success] number of voxs made.</span>")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"] || href_list["dbsearchbantype"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -262,15 +267,12 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if( SSticker.mode.name == "blob" )
-			tgui_alert(usr, "You can't call the shuttle during blob!")
-			return
-
 		switch(href_list["call_shuttle"])
 			if("1")
 				if ((!( SSticker ) || SSshuttle.location))
 					return
 				SSshuttle.incall()
+				SSshuttle.shuttlealert(1)
 				SSshuttle.announce_emer_called.play()
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='notice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
@@ -345,12 +347,12 @@
 			if("sentinel")			M.change_mob_type( /mob/living/carbon/xenomorph/humanoid/sentinel , null, null, delmob )
 			if("larva")				M.change_mob_type( /mob/living/carbon/xenomorph/larva , null, null, delmob )
 			if("human")				M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-			if("slime")			M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
+			if("slime")				M.change_mob_type( /mob/living/carbon/slime , null, null, delmob )
 			if("adultslime")		M.change_mob_type( /mob/living/carbon/slime/adult , null, null, delmob )
 			if("monkey")			M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("robot")				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
-			if("runtime")			M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob )
+			if("dusty")				M.change_mob_type( /mob/living/simple_animal/cat/dusty , null, null, delmob )
 			if("corgi")				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob )
 			if("crab")				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
 			if("coffee")			M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
@@ -716,6 +718,8 @@
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
+
+		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
@@ -1102,10 +1106,13 @@
 		if(SSticker && SSticker.mode)
 			return tgui_alert(usr, "The game has already started.")
 		var/dat = ""
-		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
-		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
+		for(var/mode in config.mode_names)
+			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[mode]</A><br>"}
+		dat += "<HR>"
+		for(var/type in subtypesof(/datum/modesbundle))
+			var/datum/modesbundle/bound_type = type
+			var/bname = initial(bound_type.name)
+			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}
 
 		var/datum/browser/popup = new(usr, "c_mode", "What mode do you wish to play?", 400, 535)
@@ -1118,12 +1125,16 @@
 
 		if(SSticker && SSticker.mode)
 			return tgui_alert(usr, "The game has already started.")
-		if(master_mode != "secret")
+		if(master_mode != "Secret")
 			return tgui_alert(usr, "The game mode has to be secret!")
 		var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
-		for(var/mode in config.modes)
-			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
-		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
+		for(var/mode in config.mode_names)
+			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[mode]</A><br>"}
+		dat += "<HR>"
+		for(var/type in subtypesof(/datum/modesbundle))
+			var/datum/modesbundle/bound_type = type
+			var/bname = initial(bound_type.name)
+			dat += {"<A href='?src=\ref[src];f_secret2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [secret_force_mode]"}
 
 		var/datum/browser/popup = new(usr, "f_secret")
@@ -1150,7 +1161,7 @@
 
 		if(SSticker && SSticker.mode)
 			return tgui_alert(usr, "The game has already started.")
-		if(master_mode != "secret")
+		if(master_mode != "Secret")
 			return tgui_alert(usr, "The game mode has to be secret!")
 		secret_force_mode = href_list["f_secret2"]
 		log_admin("[key_name(usr)] set the forced secret mode as [secret_force_mode].")
@@ -1509,7 +1520,7 @@
 
 		//Job + antagonist
 		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <span class='red'><b>[M.mind.special_role]</b></span>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <span class='red'><b>[M.mind.special_role]</b></span>"
 		else
 			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
 
@@ -1894,16 +1905,16 @@
 					break
 
 		if (number == 1)
-			log_admin("[key_name(usr)] created a [english_list(paths)]")
+			log_admin("[key_name(usr)] created a [get_english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created a [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created a [get_english_list(paths)]")
 					break
 		else
-			log_admin("[key_name(usr)] created [number]ea [english_list(paths)]")
+			log_admin("[key_name(usr)] created [number]ea [get_english_list(paths)]")
 			for(var/path in paths)
 				if(ispath(path, /mob))
-					message_admins("[key_name_admin(usr)] created [number]ea [english_list(paths)]")
+					message_admins("[key_name_admin(usr)] created [number]ea [get_english_list(paths)]")
 					break
 		return
 

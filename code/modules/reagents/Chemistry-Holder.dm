@@ -4,7 +4,7 @@ var/const/INGEST = 2
 ///////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagents
-	var/list/datum/reagent/reagent_list = new/list()
+	var/list/datum/reagent/reagent_list = list()
 	var/total_volume = 0
 	var/maximum_volume = 100
 	var/atom/my_atom = null
@@ -239,7 +239,7 @@ var/const/INGEST = 2
 				var/total_matching_catalysts= 0
 				var/matching_container = 0
 				var/matching_other = 0
-				var/list/multipliers = new/list()
+				var/list/multipliers = list()
 
 				for(var/B in C.required_reagents)
 					if(!has_reagent(B, C.required_reagents[B]))	break

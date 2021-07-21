@@ -107,7 +107,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> you can't add anymore to [target].</span>")
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'> You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
@@ -212,8 +212,7 @@
 
 	if(O.type in can_be_placed)
 		if(contents.len < max_items_inside)
-			user.drop_item()
-			O.forceMove(src)
+			user.drop_from_inventory(O, src)
 			update_icon()
 		else
 			to_chat(user, "<span class='rose'>\The [src] is full!</span>")
@@ -224,7 +223,7 @@
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents
 		if(choice)
-			if(!in_range(loc, usr) || usr.incapacitated())
+			if(!Adjacent(usr) || usr.incapacitated())
 				return
 			if(ishuman(user))
 				user.put_in_hands(choice)

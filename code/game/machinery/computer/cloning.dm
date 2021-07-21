@@ -73,8 +73,7 @@
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
-			user.drop_item()
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			src.diskette = W
 			to_chat(user, "You insert [W].")
 			updateUsrDialog()
@@ -255,7 +254,7 @@
 			var/obj/item/weapon/card/id/C = usr.get_active_hand()
 			if (istype(C)||istype(C, /obj/item/device/pda))
 				if(check_access(C))
-					src.records.Remove(src.active_record)
+					records.Remove(src.active_record)
 					qdel(src.active_record)
 					src.temp = "Record deleted."
 					src.menu = 2

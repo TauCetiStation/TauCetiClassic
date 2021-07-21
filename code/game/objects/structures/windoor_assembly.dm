@@ -159,8 +159,7 @@
 				var/obj/item/weapon/airlock_electronics/AE = W
 				if(!AE.broken)
 					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
-					user.drop_item()
-					AE.loc = src
+					user.drop_from_inventory(AE, src)
 					if(W.use_tool(src, user, 40, volume = 100))
 						if(src.electronics)
 							AE.loc = src.loc
@@ -189,7 +188,7 @@
 				var/t = sanitize_safe(input(user, "Enter the name for the door.", src.name, input_default(src.created_name)), MAX_LNAME_LEN)
 				if(!t)
 					return
-				if(!in_range(src, usr) && src.loc != usr)
+				if(!Adjacent(usr))
 					return
 				created_name = t
 				return

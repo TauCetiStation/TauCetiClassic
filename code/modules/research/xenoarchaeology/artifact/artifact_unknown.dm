@@ -227,7 +227,7 @@
 	if(.)
 		return
 
-	if(!in_range(src, user) && !IsAdminGhost(user))
+	if(!Adjacent(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='warning'> You can't reach [src] from here.</span>")
 		return 1
 	if(ishuman(user))
@@ -366,6 +366,10 @@
 
 /obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(ISDIAGONALDIR(Dir))
+		return .
+
 	if(my_effect)
 		my_effect.UpdateMove()
 	if(secondary_effect)

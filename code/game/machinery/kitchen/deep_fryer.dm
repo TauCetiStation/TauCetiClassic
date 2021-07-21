@@ -56,9 +56,8 @@
 	if (ishuman(user) && !(I.flags & DROPDEL))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
-		user.drop_item()
 		frying = I
-		frying.loc = src
+		user.drop_from_inventory(frying, src)
 		icon_state = "fryer_on"
 
 

@@ -82,7 +82,7 @@
 					var/calc_power = 100
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
-						var/obj/item/organ/external/BP = H.get_bodypart(attacker.zone_sel.selecting)
+						var/obj/item/organ/external/BP = H.get_bodypart(attacker.get_targetzone())
 
 						calc_power *= H.get_siemens_coefficient_organ(BP)
 

@@ -13,8 +13,8 @@
 
 /obj/machinery/computer/lockdown/atom_init()
 	..()
-	connected_doors = new/list()
-	displayedNetworks  = new/list()
+	connected_doors = list()
+	displayedNetworks  = list()
 	//only load blast doors for map-defined departments for the moment
 	//door networks are hardcoded here.
 	switch(department)
@@ -43,7 +43,7 @@
 			connected_doors.Add("Patient Room 3 Shutters")
 
 	for(var/net in connected_doors)
-		connected_doors[net] = new/list()
+		connected_doors[net] = list()
 
 	return INITIALIZE_HINT_LATELOAD
 
