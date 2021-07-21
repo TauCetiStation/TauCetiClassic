@@ -310,7 +310,7 @@
 		remove_beaker()
 	else if(href_list["togglefilter"])
 		toggle_filter()
-	else if(occupant && occupant.stat != DEAD && is_operational())
+	else if(occupant && occupant.stat != DEAD)
 		if(href_list["inject"] == "inaprovaline" || (occupant.health > min_health && (href_list["inject"] in available_chems)))
 			inject_chem(usr, href_list["inject"])
 		else

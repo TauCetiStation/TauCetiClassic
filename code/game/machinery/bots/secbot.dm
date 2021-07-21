@@ -4,7 +4,6 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
 	var/icon_state_arrest = "secbot-c"
-	layer = 5.0
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -52,7 +51,6 @@
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
 	idcheck = 0
 	auto_patrol = 1
-	layer = MOB_LAYER
 
 /obj/item/weapon/secbot_assembly
 	name = "helmet/signaler assembly"

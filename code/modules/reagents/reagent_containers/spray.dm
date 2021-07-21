@@ -379,6 +379,7 @@
 		to_chat(usr, "<span class='notice'>Take the cap off first.</span>")
 
 //space cleaner
+ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_list)
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
@@ -391,8 +392,6 @@
 /obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
 	. = ..()
 	reagents.add_reagent("cleaner", volume)
-
-	cleaners_list += src
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper

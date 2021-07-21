@@ -260,6 +260,8 @@ SUBSYSTEM_DEF(ticker)
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()
+		show_blurbs()
+
 		SSevents.start_roundstart_event()
 
 		for(var/mob/dead/new_player/N in new_player_list)
@@ -276,6 +278,9 @@ SUBSYSTEM_DEF(ticker)
 
 	return 1
 
+/datum/controller/subsystem/ticker/proc/show_blurbs()
+	for(var/datum/mind/M in SSticker.minds)
+		show_location_blurb(M.current.client)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
@@ -496,7 +501,8 @@ SUBSYSTEM_DEF(ticker)
 	mode.ShuttleDocked(location)
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in global.huds)
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		for(var/m in global.player_list)
 			var/mob/M = m
 			H.add_hud_to(M)

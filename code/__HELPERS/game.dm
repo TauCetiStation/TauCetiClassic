@@ -14,12 +14,6 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
-
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
@@ -71,7 +65,7 @@
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/T in range(radius, centerturf))
@@ -86,7 +80,7 @@
 /proc/circleview(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/atoms = new/list()
+	var/list/atoms = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/A in view(radius, centerturf))
@@ -109,7 +103,7 @@
 /proc/circlerangeturfs(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in range(radius, centerturf))
@@ -122,7 +116,7 @@
 /proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in view(radius, centerturf))
@@ -504,8 +498,8 @@
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
-	var/list/processed_list = new/list()
-	var/found_atoms = new/list()
+	var/list/processed_list = list()
+	var/found_atoms = list()
 
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
@@ -526,7 +520,7 @@
 	if (O)
 		return recursive_type_check(O, type_path) - O
 	else
-		return new/list()
+		return list()
 
 //============TG PORTS============
 /proc/remove_images_from_clients(image/I, list/show_to)
@@ -553,7 +547,7 @@
 	return ((temp + T0C))
 
 /proc/getCardinalAirInfo(turf/loc, list/stats=list("temperature"))
-	var/list/temps = new/list(4)
+	var/list/temps[4]
 	for(var/dir in cardinal)
 		var/direction
 		switch(dir)
@@ -566,7 +560,7 @@
 			if(WEST)
 				direction = 4
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
-		var/list/rstats = new /list(stats.len)
+		var/list/rstats[stats.len]
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			for(var/i in 1 to stats.len)
