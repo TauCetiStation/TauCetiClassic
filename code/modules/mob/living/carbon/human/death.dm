@@ -1,5 +1,3 @@
-var/global/list/dead_players_during_shift = list()
-
 /mob/living/carbon/human/gib()
 	death(1)
 	var/atom/movable/overlay/animation = null
@@ -45,9 +43,7 @@ var/global/list/dead_players_during_shift = list()
 	med_hud_set_health()
 	med_hud_set_status()
 
-	if(client && !suiciding && !(client in global.dead_players_during_shift))
-		global.dead_players_during_shift += client
-		global.deaths_during_shift++
+	global.deaths_during_shift++
 
 	//Handle species-specific deaths.
 	if(species)
