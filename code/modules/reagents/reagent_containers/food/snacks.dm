@@ -3270,3 +3270,19 @@
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard
 	icon_state = "cheesyfries_cardboard"
 	trash = /obj/item/trash/fries
+
+
+/// candy heart
+/obj/item/weapon/reagent_containers/food/snacks/candyheart
+	name = "candy heart"
+	icon = 'icons/obj/valentines.dmi'
+	icon_state = "candyheart"
+	desc = "A heart-shaped candy filled with love."
+	bitesize = 3
+	trash = /obj/item/weapon/paper/lovenote
+
+/obj/item/weapon/reagent_containers/food/snacks/candyheart/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 3)
+	icon_state = pick("candyheart_pink", "candyheart_green", "candyheart_blue", "candyheart_yellow")

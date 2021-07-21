@@ -13,8 +13,6 @@
 #define MAX_NAME_LEN          26
 #define MAX_LNAME_LEN         64
 
-//#define NEWYEARCONTENT		// Closets use this to spawn items like santa clothes. // TODO: convert this to holiday event?
-
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 513
 #if DM_VERSION < MIN_COMPILER_VERSION
