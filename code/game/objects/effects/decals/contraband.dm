@@ -430,6 +430,10 @@
 	desc = "A poster encouraging you to help fellow crewmembers."
 	icon_state = "poster4_legit"
 
+/obj/structure/sign/poster/official/help_others/examine(mob/user)
+	. = ..()
+	user.a_intent_change(INTENT_HELP)
+
 /obj/structure/sign/poster/official/build
 	name = "Build"
 	desc = "A poster glorifying the engineering team."
@@ -459,6 +463,12 @@
 	name = "Walk"
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "poster10_legit"
+
+/obj/structure/sign/poster/official/walk/examine(mob/user)
+	. = ..()
+	if(isliving(user))
+		var/mob/living/L = user
+		L.set_m_intent(MOVE_INTENT_WALK)
 
 /obj/structure/sign/poster/official/state_laws
 	name = "State Laws"

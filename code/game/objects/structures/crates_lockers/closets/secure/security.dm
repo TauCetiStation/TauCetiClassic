@@ -32,11 +32,10 @@
 	new /obj/item/device/remote_device/captain(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
@@ -134,11 +133,10 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
@@ -179,11 +177,10 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/weapon/storage/box/mines/shock(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
 ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_list)
 /obj/structure/closet/secure_closet/security
@@ -220,11 +217,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/ushanka(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/ushanka(src)
+
 
 /obj/structure/closet/secure_closet/security/cargo
 

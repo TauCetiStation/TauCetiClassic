@@ -62,8 +62,6 @@ var/base_commit_sha = 0
 	spawn(10)
 		Master.Initialize()
 
-	Get_Holiday()
-
 	update_status()
 
 	. = ..()
