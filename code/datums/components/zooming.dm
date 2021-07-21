@@ -16,7 +16,7 @@
 	return ..()
 
 /datum/component/zooming/proc/toggle_zoom(datum/source, mob/user)
-	if(user.incapacitated() || !ishuman(user))
+	if(user.incapacitated() || !user.IsAdvancedToolUser())
 		to_chat(user, "You are unable to focus down the scope of \the [parent].")
 		return
 
