@@ -731,7 +731,7 @@
 	"If you were a carp I'd fi-lay you.",
 	"I'm a nuke op, and my pinpointer leads to your heart.",
 	"Is that an esword in your pocket, or are you excited to see me?",
-	"I've been chasing you like Runtime chases a laser pointer.",
+	"I've been chasing you like Dusty chases a laser pointer.",
 	"I'm no cat, but you've got me in my feel-inids.",
 	"If you were a disposal bin I'd ride you all day.",
 	"You're the vomit to my flyperson.",
