@@ -58,8 +58,10 @@
 /obj/structure/sign/poster/atom_init(mapload, rolled_official)
 	. = ..()
 	if(random_basetype)
-		var/obj/structure/sign/poster/selected = get_random_poster_type(random_basetype)
-		new selected(loc)
+		var/poster_type = get_random_poster_type(random_basetype)
+		var/obj/structure/sign/poster/new_poster = new poster_type(loc)
+		new_poster.pixel_x = pixel_x
+		new_poster.pixel_y = pixel_y
 		return INITIALIZE_HINT_QDEL
 	if(!ruined)
 		original_name = name // can't use initial because of random posters
