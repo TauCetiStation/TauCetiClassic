@@ -512,6 +512,9 @@ var/list/turret_icons
 	if(!check_trajectory(L, src))	//check if we have true line of sight
 		return TURRET_NOT_TARGET
 
+	if(istype(L, /mob/living/simple_animal/cat/runtime))	// that cat can appear anytime everywhere
+		return TURRET_NOT_TARGET							// and cannot be hit by turrets
+
 	if(isAI(L) || (lethal && (locate(/mob/living/silicon/ai) in get_turf(L))))		//don't accidentally kill the AI!
 		return TURRET_NOT_TARGET
 
