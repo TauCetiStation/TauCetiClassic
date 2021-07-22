@@ -10,9 +10,11 @@
 
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART)
 
+	var/telecrystals = 20
+
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 20)
+	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))

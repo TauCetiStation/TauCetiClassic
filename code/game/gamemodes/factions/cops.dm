@@ -33,8 +33,6 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	to_chat(world, "FAFWA")
-
 	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES)
 	var/spawncount = 2
 	var/indx = 1
@@ -55,7 +53,7 @@
 	H.loc = spawnloc
 	H.key = C.key
 
-	create_and_setup_role(/datum/role/dealer, H, TRUE)
+	create_and_setup_role(/datum/role/traitor/dealer, H, TRUE)
 
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()

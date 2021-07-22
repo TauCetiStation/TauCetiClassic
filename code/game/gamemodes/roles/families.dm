@@ -99,21 +99,18 @@
 	..()
 	equip_gangster_in_inventory()
 
-/datum/role/dealer
+/datum/role/traitor/dealer
 	name = "Gun Dealer"
-	id = TRAITOR
-	required_pref = ROLE_TRAITOR
-	logo_state = "synd-logo"
+	required_pref = ROLE_FAMILIES
 
-/datum/role/dealer/OnPostSetup(laterole)
+	telecrystals = 10
+
+/datum/role/traitor/dealer/OnPostSetup(laterole)
 	var/mob/living/carbon/human/H = antag.current
 	H.equipOutfit(/datum/outfit/families_traitor)
 	. = ..()
 
-/datum/role/dealer/forgeObjectives()
-	if(!..())
-		return FALSE
-
+/datum/role/traitor/dealer/forgeObjectives()
 	var/list/gangs = find_factions_by_type(/datum/faction/gang)
 
 	var/min_points = INFINITY
@@ -137,11 +134,12 @@
 	AppendObjective(/datum/objective/survive)
 	return TRUE
 
-/datum/role/dealer/Greet(greeting,custom)
+/datum/role/traitor/dealer/Greet(greeting,custom)
 	if(!..())
 		return FALSE
 
 	to_chat(antag.current, "<span class='warning'>Вас экстренно отослал синдикат, чтобы вы успели навести хаос на станции.</span>")
-	to_chat(antag.current, "<span class='warning'>У вас есть аплинк с уменьшенным арсеналом, но с большим количеством телекристаллов.</span>")
+	to_chat(antag.current, "<span class='warning'>У вас есть аплинк с уменьшенным арсеналом.</span>")
 	to_chat(antag.current, "<span class='warning'>С помощью ПДА и ИД-карты вы можете связаться с членами банды, не теряя маскировки.</span>")
+	to_chat(antag.current, "<span class='warning'>Вам была выдана система фултон, используя её вы сможете отправить любые ценные вещи(мехи, оружие, машинерия) синдикату и получить дополнительные телекристаллы.</span>")
 	return TRUE

@@ -98,12 +98,13 @@
 	shoes = /obj/item/clothing/shoes/boots/combat
 	l_hand = /obj/item/weapon/tank/jetpack/oxygen/harness
 	l_pocket = /obj/item/weapon/tank/emergency_oxygen/engi
-	l_ear = /obj/item/device/radio/headset/syndicate
+	l_ear = /obj/item/device/radio/headset
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	belt = /obj/item/device/pda
 	back = PREFERENCE_BACKPACK_FORCE
 	backpack_contents = list(
 		/obj/item/device/radio/uplink/dealer,
 		/obj/item/weapon/reagent_containers/pill/cyanide,
+		/obj/item/weapon/extraction_pack/syndicate,
 		)
 	survival_box = TRUE
