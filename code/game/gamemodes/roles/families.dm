@@ -139,7 +139,7 @@
 		return FALSE
 
 	to_chat(antag.current, "<span class='warning'>Вас экстренно отослал синдикат, чтобы вы успели навести хаос на станции.</span>")
-	to_chat(antag.current, "<span class='warning'>У вас есть аплинк с уменьшенным арсеналом.</span>")
+	to_chat(antag.current, "<span class='warning'>У вас есть аплинк с уменьшенным, но более интересным арсеналом. Бандитам это точно понравится.</span>")
 	to_chat(antag.current, "<span class='warning'>С помощью ПДА и ИД-карты вы можете связаться с членами банды, не теряя маскировки.</span>")
 	to_chat(antag.current, "<span class='warning'>Вам была выдана система фултон, используя её вы сможете отправить любые ценные вещи(мехи, оружие, машинерия) синдикату и получить дополнительные телекристаллы.</span>")
 	return TRUE
