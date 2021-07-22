@@ -8,7 +8,7 @@
 
 	logo_state = "space_cop"
 
-	min_roles = 0
+	min_roles = 1
 	max_roles = 3
 
 	/// The time, in deciseconds, that the datum's OnPostSetup() occured at. Used in end_time. Used and set internally.
@@ -24,7 +24,7 @@
 	start_time = world.time
 	end_time = start_time + 60 MINUTES
 
-	addtimer(CALLBACK(src, .proc/send_syndicate), 20 SECONDS) // called here because cops are only faction
+	addtimer(CALLBACK(src, .proc/send_syndicate), 30 MINUTES) // called here because cops are only faction
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
