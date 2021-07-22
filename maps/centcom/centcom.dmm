@@ -2235,6 +2235,10 @@
 /obj/effect/landmark/mafia_game_area,
 /turf/space,
 /area/space)
+"afW" = (
+/obj/effect/landmark/dealer_spawn,
+/turf/space,
+/area/space)
 "aga" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
@@ -65847,7 +65851,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+afW
 aaM
 aaM
 aaM

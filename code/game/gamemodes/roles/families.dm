@@ -98,3 +98,50 @@
 /datum/role/gangster/leader/OnPostSetup(laterole)
 	..()
 	equip_gangster_in_inventory()
+
+/datum/role/dealer
+	name = "Gun Dealer"
+	id = TRAITOR
+	required_pref = ROLE_TRAITOR
+	logo_state = "synd-logo"
+
+/datum/role/dealer/OnPostSetup(laterole)
+	var/mob/living/carbon/human/H = antag.current
+	H.equipOutfit(/datum/outfit/families_traitor)
+	. = ..()
+
+/datum/role/dealer/forgeObjectives()
+	if(!..())
+		return FALSE
+
+	var/list/gangs = find_factions_by_type(/datum/faction/gang)
+
+	var/min_points = INFINITY
+	var/datum/faction/gang/weakest_gang
+	for(var/GG in gangs)
+		var/datum/faction/gang/G = GG
+		if(G.help_sent)
+			continue
+		if(G.points < min_points)
+			min_points = G.points
+			weakest_gang = G
+	gangs -= weakest_gang
+
+	var/datum/faction/gang/G = pick(gangs)
+	G.help_sent = TRUE
+	var/datum/objective/gang/help_gang/HG = AppendObjective(/datum/objective/gang/help_gang)
+	if(HG)
+		HG.explanation_text = "Попытайтесь привести к победе [G.name]"
+		HG.my_gang = G
+
+	AppendObjective(/datum/objective/survive)
+	return TRUE
+
+/datum/role/dealer/Greet(greeting,custom)
+	if(!..())
+		return FALSE
+
+	to_chat(antag.current, "<span class='warning'>Вас экстренно отослал синдикат, чтобы вы успели навести хаос на станции.</span>")
+	to_chat(antag.current, "<span class='warning'>У вас есть аплинк с уменьшенным арсеналом, но с большим количеством телекристаллов.</span>")
+	to_chat(antag.current, "<span class='warning'>С помощью ПДА и ИД-карты вы можете связаться с членами банды, не теряя маскировки.</span>")
+	return TRUE

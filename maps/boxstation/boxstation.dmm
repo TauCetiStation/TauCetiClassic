@@ -42993,6 +42993,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
+"byi" = (
+/obj/effect/landmark/dealer_spawn,
+/turf/space,
+/area/space)
 "bym" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -95663,7 +95667,7 @@ aaa
 aaa
 aaa
 aag
-aaa
+byi
 aaa
 aaa
 aaa
@@ -99923,7 +99927,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa
@@ -122773,7 +122777,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa
@@ -135767,7 +135771,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+byi
 aaa
 aaa
 aaa

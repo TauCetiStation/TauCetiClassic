@@ -29,6 +29,7 @@ var/list/prisonwarped = list()	//list of players already warped
 var/list/blobstart = list()
 var/list/ninjastart = list()
 var/list/copsstart = list()
+var/list/dealerstart = list()
 var/list/eorgwarp = list()
 var/list/cardinal = list(NORTH, SOUTH, EAST, WEST)
 var/list/cardinalz = list(NORTH, SOUTH, EAST, WEST, UP, DOWN)

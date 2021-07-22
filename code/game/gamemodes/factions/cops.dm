@@ -8,7 +8,7 @@
 
 	logo_state = "space_cop"
 
-	min_roles = 1
+	min_roles = 0
 	max_roles = 3
 
 	/// The time, in deciseconds, that the datum's OnPostSetup() occured at. Used in end_time. Used and set internally.
@@ -24,12 +24,38 @@
 	start_time = world.time
 	end_time = start_time + 60 MINUTES
 
+	addtimer(CALLBACK(src, .proc/send_syndicate), 20 SECONDS) // called here because cops are only faction
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.fake_recall = TRUE
 
 /datum/faction/cops/forgeObjectives()
 	. = ..()
 	AppendObjective(/datum/objective/gang/destroy_gangs)
+
+/datum/faction/cops/proc/send_syndicate()
+	to_chat(world, "FAFWA")
+
+	var/list/candidates = pollGhostCandidates("Хотите помочь бандам устроить хаос?", ROLE_FAMILIES)
+	var/spawncount = 2
+	var/indx = 1
+	while(spawncount > 0 && candidates.len)
+		var/spawnloc = dealerstart[indx]
+		var/mob/candidate = pick(candidates)
+
+		INVOKE_ASYNC(src, .proc/traitor_create_apperance, spawnloc, candidate.client)
+
+		candidates -= candidate
+		spawncount--
+
+/datum/faction/cops/proc/traitor_create_apperance(spawnloc, client/C)
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+
+	create_and_setup_role(/datum/role/dealer, H, TRUE)
 
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()

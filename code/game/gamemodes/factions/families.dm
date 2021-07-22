@@ -6,7 +6,7 @@
 	initroletype = /datum/role/gangster/leader
 	roletype = /datum/role/gangster
 
-	min_roles = 1
+	min_roles = 0
 	max_roles = 2
 
 	/// The number of family members more that a family may have over other active families. Can be set externally; used internally.
@@ -21,6 +21,8 @@
 	var/list/free_clothes = list()
 	/// Each gang has its own type of objective
 	var/gang_objective_type
+	/// Used for gun dealers
+	var/help_sent = FALSE
 
 /datum/faction/gang/New()
 	logo_state = gang_id

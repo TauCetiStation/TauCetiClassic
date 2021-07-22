@@ -118,7 +118,7 @@
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 8
-	uplink_types = list("nuclear")
+	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/dangerous/revolver/traitor
 	name = "TR-8-R Revolver"
@@ -139,7 +139,7 @@
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires .45 ACP automatic rounds with a 20-round magazine. Has large variety of ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 12
-	uplink_types = list("nuclear")
+	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/dangerous/bulldog
 	name = "V15 Bulldog shotgun"
@@ -174,7 +174,7 @@
 	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/a74
 	cost = 20
-	uplink_types = list("nuclear")
+	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -315,7 +315,7 @@
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
 	cost = 3
-	uplink_types = list("nuclear")
+	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/ammo/smg_hp
 	name = "Ammo-.45 ACP High Power"
@@ -343,7 +343,7 @@
 	desc = "A 30-round 7.74 magazine for use in the A74 assault rifle."
 	item = /obj/item/ammo_box/magazine/a74mm
 	cost = 7
-	uplink_types = list("nuclear")
+	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/ammo/bullbuck
 	name = "Ammo-12g Buckshot"
@@ -412,6 +412,7 @@
 
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -464,6 +465,7 @@
 
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/stealthy_tools/chameleon_kit
 	name = "Chameleon Kit"
@@ -734,6 +736,7 @@
 
 /datum/uplink_item/implants
 	category = "Implants"
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"

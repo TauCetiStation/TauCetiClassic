@@ -165,15 +165,23 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // Includes normal radio uplink, multitool uplink,
 // implant uplink (not the implant tool) and a preset headset uplink.
 
+/obj/item/device/radio/uplink
+	icon_state = "radio"
+
 /obj/item/device/radio/uplink/atom_init()
 	. = ..()
 	hidden_uplink = new(src)
-	icon_state = "radio"
 	hidden_uplink.uplink_type = "nuclear"
 
 /obj/item/device/radio/uplink/attack_self(mob/user)
 	if(hidden_uplink)
 		hidden_uplink.trigger(user)
+
+/obj/item/device/radio/uplink/dealer/atom_init()
+	. = ..()
+	hidden_uplink = new(src)
+	hidden_uplink.uplink_type = "dealer"
+	hidden_uplink.uses = 30
 
 /obj/item/device/multitool/uplink/atom_init()
 	. = ..()

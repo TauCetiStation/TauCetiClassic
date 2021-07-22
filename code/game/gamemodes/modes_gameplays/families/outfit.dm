@@ -88,3 +88,22 @@
 		/obj/item/weapon/melee/baton = 1,
 		/obj/item/weapon/gun/projectile/automatic/a28 = 1,
 	)
+
+/datum/outfit/families_traitor
+	name = "Families: Агент Синдиката"
+	uniform = /obj/item/clothing/under/syndicate
+	head = /obj/item/clothing/head/helmet/space/syndicate
+	suit = /obj/item/clothing/suit/space/syndicate
+	mask = /obj/item/clothing/mask/breath
+	shoes = /obj/item/clothing/shoes/boots/combat
+	l_hand = /obj/item/weapon/tank/jetpack/oxygen/harness
+	l_pocket = /obj/item/weapon/tank/emergency_oxygen/engi
+	l_ear = /obj/item/device/radio/headset/syndicate
+	id = /obj/item/weapon/card/id/syndicate/nuker
+	belt = /obj/item/device/pda
+	back = PREFERENCE_BACKPACK_FORCE
+	backpack_contents = list(
+		/obj/item/device/radio/uplink/dealer,
+		/obj/item/weapon/reagent_containers/pill/cyanide,
+		)
+	survival_box = TRUE

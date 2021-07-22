@@ -5,8 +5,8 @@
 
 	factions_allowed = list(/datum/faction/cops)
 
-	minimum_player_count = 30
-	minimum_players_bundles = 30
+	minimum_player_count = 0
+	minimum_players_bundles = 0
 
 	var/gangs_to_generate = 3
 
