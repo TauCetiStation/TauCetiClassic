@@ -23,10 +23,7 @@ var/global/deaths_during_shift = 0
 
 /// Internal. Assigns points to families according to gang tags.
 /datum/faction/gang/proc/check_tagged_turfs()
-	for(var/T in gang_tags)
-		adjust_points(5)
-
-		CHECK_TICK
+	adjust_points(5 * gang_tags.len)
 
 /// Internal. Assigns points to families according to clothing of all currently living humans.
 /datum/faction/gang/proc/check_gang_clothes() // TODO: make this grab the sprite itself, average out what the primary color would be, then compare how close it is to the gang color so I don't have to manually fill shit out for 5 years for every gang type
@@ -51,19 +48,19 @@ var/global/deaths_during_shift = 0
 		areas_to_check += get_area(G.antag.current)
 	for(var/AA in areas_to_check)
 		var/area/A = AA
-		var/gang_members = 0
+		var/members_in_area = 0
 		for(var/mob/living/carbon/human/H in A)
 			if(H.stat || !H.mind || !H.client)
 				continue
 			var/datum/role/gangster/is_gangster = isanygangster(H)
-			if(is_gangster)
-				gang_members++
+			if(is_gangster in members)
+				members_in_area++
 			CHECK_TICK
-		if(!gang_members)
+		if(!members_in_area)
 			continue
 
-		if(gang_members >= CREW_SIZE_MIN)
-			if(gang_members >= CREW_SIZE_MAX)
+		if(members_in_area >= CREW_SIZE_MIN)
+			if(members_in_area >= CREW_SIZE_MAX)
 				adjust_points(0.5) // Discourage larger clumps, spread ur people out
 			else
 				adjust_points(1)

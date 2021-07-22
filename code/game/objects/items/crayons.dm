@@ -74,7 +74,7 @@
 			if(!gang_tags[gang_mode.gang_id])
 				gang_tags[gang_mode.gang_id] = image(icon = 'icons/obj/gang/tags.dmi', icon_state = "[gang_mode.gang_id]_tag")
 
-			actions[gang_mode.name] = gang_tags[gang_mode.gang_id]
+			actions["family"] = gang_tags[gang_mode.gang_id]
 
 		var/drawtype = show_radial_menu(user, target, actions, require_near = TRUE, tooltips = TRUE)
 		var/sub = ""
@@ -119,7 +119,7 @@
 		if(instant)
 			playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 		if(instant > 0 || (!user.is_busy(src) && do_after(user, 40, target = target)))
-			if(gang_mode && drawtype == gang_mode.name)
+			if(gang_mode && drawtype == "family")
 				if(!can_claim_for_gang(user, target, gang_mode))
 					return
 				tag_for_gang(user, target, gang_mode)
@@ -146,11 +146,9 @@
 
 	var/spraying_over = FALSE
 	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
-		spraying_over = TRUE
-
-	for(var/obj/machinery/power/apc in target)
-		to_chat(user, "<span class='warning'>You can't tag an APC.</span>")
-		return FALSE
+		if(G.my_gang != gang)
+			spraying_over = TRUE
+			break
 
 	var/obj/effect/decal/cleanable/crayon/gang/occupying_gang = territory_claimed(A, user)
 	if(occupying_gang && !spraying_over)
@@ -172,6 +170,12 @@
 				return tag
 
 /obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target, datum/faction/gang/gang)
+	var/obj/effect/decal/cleanable/crayon/gang/enemy_tag = locate() in target
+	if(enemy_tag)
+		if(!do_after(user, 40, target = target))
+			return
+		gang.adjust_points(2)
+
 	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 		qdel(old_marking)
 
