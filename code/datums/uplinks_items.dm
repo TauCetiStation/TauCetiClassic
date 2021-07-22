@@ -118,7 +118,7 @@
 	desc = "The syndicate revolver is a traditional handgun that fires .357 Magnum cartridges and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
 	cost = 8
-	uplink_types = list("nuclear", "dealer")
+	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/revolver/traitor
 	name = "TR-8-R Revolver"
@@ -126,13 +126,26 @@
 	item = /obj/item/weapon/gun/projectile/revolver/traitor
 	uplink_types = list("traitor")
 
-
 /datum/uplink_item/dangerous/pistol
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 6
+
+/datum/uplink_item/dangerous/deagle
+	name = "Desert Eagle"
+	desc = "A robust handgun that uses .50 AE ammo."
+	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	cost = 8
+	uplink_types = list("dealer")
+
+/datum/uplink_item/dangerous/deagle_gold
+	name = "Desert Eagle Gold"
+	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
+	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	cost = 9
+	uplink_types = list("dealer")
 
 /datum/uplink_item/dangerous/smg
 	name = "C-20r Submachine Gun"
@@ -146,6 +159,13 @@
 	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
 	item = /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	cost = 12
+	uplink_types = list("dealer")
+
+/datum/uplink_item/dangerous/tommygun
+	name = "Tommygun"
+	desc = "Based on the classic 'Chicago Typewriter'. Uses 9mm rounds."
+	item = /obj/item/weapon/gun/projectile/automatic/tommygun
+	cost = 15
 	uplink_types = list("dealer")
 
 /datum/uplink_item/dangerous/bulldog
@@ -206,6 +226,7 @@
 		 deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/weapon/melee/powerfist
 	cost = 8
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
@@ -224,6 +245,7 @@
 	desc = "A box that contains an EMP grenades. Useful to disrupt communication and silicon lifeforms."
 	item = /obj/item/weapon/storage/box/emps
 	cost = 5
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
@@ -267,6 +289,7 @@
 	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
 	item = /obj/item/weapon/antag_spawner/borg_tele
 	cost = 36
+	uplink_types = list("nuclear", "traitor")
 
 //for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
@@ -286,12 +309,14 @@
 	desc = "A mine that explodes upon pressure. Use multitool to disarm it."
 	item = /obj/item/mine
 	cost = 3
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/dangerous/incendiary_mine
 	name = "Incendiary Mine"
 	desc = "A variation of many different mines, this one will set on fire anyone unfortunate to step on it."
 	item = /obj/item/mine/incendiary
 	cost = 3
+	uplink_types = list("nuclear", "traitor")
 
 // AMMUNITION
 
@@ -303,6 +328,7 @@
 	desc = "A 40-round .45 magazine for use in Robot submachine gun."
 	item = /obj/item/ammo_box/magazine/borg45
 	cost = 3
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
@@ -316,6 +342,7 @@
 	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
 	item = /obj/item/ammo_box/a357
 	cost = 3
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
@@ -329,6 +356,20 @@
 	desc = "A 32-round 9mm magazine for use in the Mac-10."
 	item = /obj/item/ammo_box/magazine/uzim9mm
 	cost = 3
+	uplink_types = list("dealer")
+
+/datum/uplink_item/ammo/tommygun
+	name = "9mm Tommygun Magazine"
+	desc = "A 50-round 9mm magazine for use in the tommygun."
+	item = /obj/item/ammo_box/magazine/tommygunm45
+	cost = 4
+	uplink_types = list("dealer")
+
+/datum/uplink_item/ammo/deagle
+	name = "Ammo-.45 AE Magazine"
+	desc = "A 7-round .45 AE magazine for use in the desert eagle."
+	item = /obj/item/ammo_box/magazine/m50
+	cost = 4
 	uplink_types = list("dealer")
 
 /datum/uplink_item/ammo/smg_hp
@@ -486,6 +527,13 @@
 	desc = "A sharp, concealable, spring-loaded knife."
 	item = /obj/item/weapon/switchblade
 	cost = 2
+	uplink_types = list("dealer")
+
+/datum/uplink_item/stealthy_tools/icepick
+	name = "Ice Pick"
+	desc = "Used for chopping ice. Also excellent for mafia esque murders."
+	item = /obj/item/weapon/melee/icepick
+	cost = 1
 	uplink_types = list("dealer")
 
 /datum/uplink_item/stealthy_tools/chameleon_kit
@@ -817,6 +865,7 @@
 
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
