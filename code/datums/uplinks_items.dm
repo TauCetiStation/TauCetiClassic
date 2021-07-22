@@ -139,7 +139,14 @@
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires .45 ACP automatic rounds with a 20-round magazine. Has large variety of ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 12
-	uplink_types = list("nuclear", "dealer")
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/dangerous/mini_uzi
+	name = "Mac-10"
+	desc = "A lightweight, fast firing gun, for when you want someone dead. Uses 9mm rounds."
+	item = /obj/item/weapon/gun/projectile/automatic/mini_uzi
+	cost = 12
+	uplink_types = list("dealer")
 
 /datum/uplink_item/dangerous/bulldog
 	name = "V15 Bulldog shotgun"
@@ -315,7 +322,14 @@
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
 	cost = 3
-	uplink_types = list("nuclear", "dealer")
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/ammo/uzi
+	name = "9mm Mac-10 Magazine"
+	desc = "A 32-round 9mm magazine for use in the Mac-10."
+	item = /obj/item/ammo_box/magazine/uzim9mm
+	cost = 3
+	uplink_types = list("dealer")
 
 /datum/uplink_item/ammo/smg_hp
 	name = "Ammo-.45 ACP High Power"
@@ -466,6 +480,13 @@
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
 	uplink_types = list("nuclear", "traitor")
+
+/datum/uplink_item/stealthy_tools/switchblade
+	name = "Switchblade"
+	desc = "A sharp, concealable, spring-loaded knife."
+	item = /obj/item/weapon/switchblade
+	cost = 2
+	uplink_types = list("dealer")
 
 /datum/uplink_item/stealthy_tools/chameleon_kit
 	name = "Chameleon Kit"
