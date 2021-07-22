@@ -218,6 +218,9 @@ var/can_call_ert
 	H.update_body()
 	H.check_dna(H)
 
+	if(!_name)
+		_name = H.gender == FEMALE ? pick(global.first_names_female) : pick(global.first_names_male)
+
 	H.real_name = _name
 	H.name = _name
 	if(H.mind)

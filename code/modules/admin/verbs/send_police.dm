@@ -31,7 +31,7 @@
 	return TRUE
 
 /proc/spawn_space_police(team_size, cops_to_send)
-	var/list/candidates = pollGhostCandidates("Хотите помочь разобраться с преступностью на станции?", ROLE_FAMILIES)
+	var/list/candidates = pollGhostCandidates("Хотите помочь разобраться с преступностью на станции?", ROLE_FAMILIES,)
 	if(candidates.len)
 		//Pick the (un)lucky players
 		var/numagents = min(team_size, candidates.len)
@@ -47,26 +47,27 @@
 			if(!chosen_candidate.key)
 				continue
 
-			//Spawn the body
-			var/mob/living/carbon/human/cop = new(spawnloc)
-			// Prevent walking while customizing appearance
-			cop.captured = TRUE
-			INVOKE_ASYNC(GLOBAL_PROC, .proc/police_change_apperance, cop, chosen_candidate.client)
-			cop.key = chosen_candidate.key
-
-			//Give antag datum
-			var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
-			if(!faction)
-				faction = SSticker.mode.CreateFaction(/datum/faction/cops)
-			if(faction)
-				faction.roletype = cops_to_send
-				add_faction_member(faction, cop, TRUE, TRUE)
+			INVOKE_ASYNC(GLOBAL_PROC, .proc/police_create_apperance, spawnloc, chosen_candidate.client, cops_to_send)
 
 			numagents--
 
-/proc/police_change_apperance(mob/living/carbon/human/cop, client/C)
-	var/new_name = sanitize_safe(input(C, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
+/proc/police_create_apperance(spawnloc, client/C, cops_to_send)
+	var/mob/living/carbon/human/cop = new(null)
+
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(cop, new_name)
+
+	cop.loc = spawnloc
+	cop.key = C.key
+
+	//Give antag datum
+	var/datum/faction/cops/faction = find_faction_by_type(/datum/faction/cops)
+	if(!faction)
+		faction = SSticker.mode.CreateFaction(/datum/faction/cops)
+	if(faction)
+		faction.roletype = cops_to_send
+		add_faction_member(faction, cop, TRUE, TRUE)
+
 	var/obj/item/weapon/card/id/W = cop.wear_id
+	W.name = "[cop.real_name]'s ID Card ([W.assignment])"
 	W.registered_name = cop.real_name
-	cop.captured = FALSE

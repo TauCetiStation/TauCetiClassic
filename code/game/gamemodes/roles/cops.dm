@@ -9,6 +9,7 @@
 	logo_state = "undercover_cop"
 
 	var/free_clothes = list(
+					/obj/item/clothing/glasses/sunglasses,
 					/obj/item/clothing/under/rank/security/beatcop,
 					/obj/item/clothing/head/spacepolice,
 					)
