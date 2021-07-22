@@ -7,10 +7,6 @@
 	var/del_obj = TRUE // if extraction_point = null, then the thing flies away, but does not arrive
 	var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHHH")
 
-/obj/item/weapon/extraction_pack/atom_init(mapload, ...)
-	. = ..()
-	extraction_point = get_step(loc, SOUTH)
-
 /obj/item/weapon/extraction_pack/afterattack(atom/target, mob/user, proximity, params)
 	var/extract_time = 70
 	if(user.is_busy() || !proximity || !ismovable(target))
