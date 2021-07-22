@@ -26,7 +26,6 @@
 	synd_mind.current.real_name = choose_name
 
 /datum/role/operative/OnPostSetup(laterole)
-	. = ..()
 	antag.current.faction = "syndicate"
 	antag.current.real_name = "Gorlex Maradeurs Operative"
 
@@ -36,6 +35,7 @@
 	antag.current.add_language("Sy-Code")
 
 	INVOKE_ASYNC(src, .proc/NukeNameAssign, antag)
+	. = ..()
 
 /datum/role/operative/Greet(greeting, custom)
 	. = ..()

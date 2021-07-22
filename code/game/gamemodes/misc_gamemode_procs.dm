@@ -197,8 +197,9 @@
 			to_chat(M, msg)
 
 /proc/find_syndicate_uplink(mob/living/carbon/human/human)
-	var/list/L = human.GetAllContents()
-	for(var/obj/item/I in L)
+	var/list/L = human.get_all_contents_type(/obj/item)
+	for(var/A in L)
+		var/obj/item/I = A
 		if(I.hidden_uplink)
 			return I.hidden_uplink
 	return null
