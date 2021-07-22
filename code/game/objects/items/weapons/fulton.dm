@@ -20,9 +20,7 @@
 
 	if(ismob(AM))
 		extract_time = 100
-	if(AM.loc == user || AM == user) // No extracting stuff you're holding in your hands/yourself.
-		return
-	if(AM.anchored)
+	if(AM.anchored || !isturf(AM.loc))
 		return
 	to_chat(user, "<span class='notice'>You start attaching the pack to [AM]...</span>")
 	if(isitem(AM))
@@ -84,12 +82,8 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = AM
-		var/pain = H.gender == FEMALE ? pick(SOUNDIN_FEMALE_HEAVY_PAIN) : pick(SOUNDIN_MALE_HEAVY_PAIN)
 		H.say(pick(extraction_appends))
-		playsound(H, pain, VOL_EFFECTS_MASTER, null, FALSE)
-		H.SetParalysis(0) // wakey wakey
-		H.drowsyness = 0
-		H.SetSleeping(0)
+		H.emote("scream")
 
 	if(extr_point_needed)
 		qdel(target)
