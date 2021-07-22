@@ -4,7 +4,7 @@
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	var/turf/extraction_point
-	var/extr_point_needed = TRUE // if extraction_point = null, then the thing flies away, but does not arrive
+	var/del_target = TRUE // if extraction_point = null, then the thing flies away, but does not arrive
 	var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHHH")
 
 /obj/item/weapon/extraction_pack/afterattack(atom/target, mob/user, proximity, params)
@@ -14,7 +14,7 @@
 	if(istype(target, /obj/effect/extraction_holder)) // This is stupid...
 		return
 	var/atom/movable/AM = target
-	if(!isturf(extraction_point) && !extr_point_needed)
+	if(!isturf(extraction_point) && !del_target)
 		to_chat(user, "<span class='notice'>Error... Extraction point not found.</span>")
 		return
 
@@ -62,7 +62,7 @@
 	BPs.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/obj/effect/BPe
-	if(!extr_point_needed)
+	if(!del_target)
 		BPe = new /obj/effect(extraction_point)
 		BPe.icon = 'icons/effects/anomalies.dmi'
 		BPe.icon_state = "bluespace"
@@ -85,7 +85,7 @@
 		H.say(pick(extraction_appends))
 		H.emote("scream")
 
-	if(extr_point_needed)
+	if(del_target)
 		qdel(target)
 		qdel(holder_obj)
 		qdel(BPs)
