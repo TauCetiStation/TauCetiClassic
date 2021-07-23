@@ -12,11 +12,13 @@
 
 	if(!hud)
 		hud = TRUE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.add_hud_to(usr)
 	else
 		hud = FALSE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.remove_hud_from(usr)
 
 /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()

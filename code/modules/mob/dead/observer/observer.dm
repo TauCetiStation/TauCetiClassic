@@ -302,12 +302,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.has_enabled_antagHUD = TRUE
 	if(M.antagHUD)
 		M.antagHUD = FALSE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.remove_hud_from(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Disabled</B></span>")
 	else
 		M.antagHUD = TRUE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.add_hud_to(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
