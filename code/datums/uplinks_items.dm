@@ -536,6 +536,13 @@
 	cost = 1
 	uplink_types = list("dealer")
 
+/datum/uplink_item/stealthy_tools/spraycan
+	name = "Spray Can"
+	desc = "It's like crayons, but better."
+	item = /obj/item/toy/crayon/spraycan
+	cost = 1
+	uplink_types = list("dealer")
+
 /datum/uplink_item/stealthy_tools/chameleon_kit
 	name = "Chameleon Kit"
 	desc = "A set of clothes used to imitate the uniforms of Nanotrasen crewmembers."
@@ -555,6 +562,7 @@
 			known to survive intact even beyond the current shift. "
 	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 1
+	uplink_types = list()
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
@@ -652,6 +660,7 @@
 	desc = "Because sometimes quantity is quality. Contains 5 C-4 plastic explosives."
 	item = /obj/item/weapon/storage/backpack/dufflebag/c4
 	cost = 4 //10% discount!
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
@@ -677,6 +686,7 @@
 	desc = "Stolen prototype bone repair nanites. Contains three nanocalcium autoinjectors."
 	item = /obj/item/weapon/storage/box/syndie_kit/bonepen
 	cost = 4
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
@@ -765,6 +775,7 @@
 	Ordering this sends you a small beacon that will teleport the power sink to your location on activation."
 	item = /obj/item/device/powersink
 	cost = 12
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/syndcodebook
 	name = "Sy-Code Book"
