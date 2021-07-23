@@ -14,13 +14,16 @@
 /obj/item/weapon/paper_bin/MouseDrop(mob/user)
 	. = ..()
 	if(user == usr && !usr.incapacitated() && Adjacent(usr))
-		attack_hand(user = usr, just_pickup = TRUE)
+		var/prev_intent = user.a_intent
+		user.a_intent = INTENT_GRAB
+		attack_hand(user)
+		user.a_intent = prev_intent
 
 /obj/item/weapon/paper_bin/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/weapon/paper_bin/attack_hand(mob/user, just_pickup = FALSE)
-	if(just_pickup)
+/obj/item/weapon/paper_bin/attack_hand(mob/user)
+	if(user && user.a_intent == INTENT_GRAB)
 		return ..()
 
 	var/response = ""
