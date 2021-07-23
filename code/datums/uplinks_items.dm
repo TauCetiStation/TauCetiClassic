@@ -625,12 +625,14 @@
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/healthanalyzer/rad_laser
 	cost = 7
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The emag is a small card that unlocks hidden functions in electronic devices, subverts intended functions and characteristically breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 6
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
@@ -695,6 +697,11 @@
 	Hotter objects, such as warm bodies, cybernetic organisms and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 5
+	uplink_types = list("nuclear", "traitor")
+
+/datum/uplink_item/device_tools/thermal/dealer
+	cost = 8
+	uplink_types = list("dealer")
 
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
@@ -708,6 +715,7 @@
 	desc = "A key, that when inserted into a radio headset, allows you to listen to and talk with artificial intelligences and cybernetic organisms in binary. "
 	item = /obj/item/device/encryptionkey/binary
 	cost = 3
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
@@ -721,24 +729,28 @@
 	desc = "Box of illegal posters"
 	item = /obj/item/weapon/storage/box/syndie_kit/posters
 	cost = 1
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/headcan
 	name = "Biogel can"
 	desc = "Sophisticated device for sustaining life in head for a long period"
 	item = /obj/item/device/biocan
 	cost = 1
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
 	cost = 2
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. Be careful with their wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/freeform/syndicate
 	cost = 12
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/plastic_explosives
 	name = "Composition C-4"
@@ -760,7 +772,7 @@
 	This manual teaches you Sy-Code. Limited uses. Use :0 before saying something to speak in Sy-Code."
 	item = /obj/item/weapon/syndcodebook
 	cost = 1
-	uplink_types = list("traitor")
+	uplink_types = list("traitor", "dealer")
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
