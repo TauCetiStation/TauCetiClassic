@@ -5,7 +5,8 @@
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
-	products = list(/obj/item/clothing/head/that=4,
+	products = list(
+					/obj/item/clothing/head/that=4,
 					/obj/item/clothing/head/fedora=2,
 					/obj/item/clothing/glasses/monocle=2,
 					/obj/item/clothing/suit/jacket=4,
@@ -77,25 +78,31 @@
 					/obj/item/clothing/glasses/aviator_mirror=2,
 					/obj/item/clothing/glasses/jerusalem=2,
 					/obj/item/clothing/glasses/threedglasses=2,
-					/obj/item/clothing/glasses/gar=2)
+					/obj/item/clothing/glasses/gar=2,
+					)
 
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=4,
+	contraband = list(
+					  /obj/item/clothing/under/syndicate/tacticool=4,
 					  /obj/item/clothing/mask/balaclava=4,
 					  /obj/item/clothing/head/tacticool_hat=4,
 					  /obj/item/clothing/head/ushanka=2,
 					  /obj/item/clothing/under/soviet=2,
-					  /obj/item/clothing/mask/gas/fawkes = 6)
+					  /obj/item/clothing/mask/gas/fawkes = 6,
+					  )
 
-	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,
+	premium = list(
+				   /obj/item/clothing/under/suit_jacket/checkered=2,
 				   /obj/item/clothing/head/mailman=2,
 				   /obj/item/clothing/under/rank/mailman=2,
 				   /obj/item/clothing/suit/jacket/leather=2,
 				   /obj/item/clothing/suit/jacket/leather/overcoat=2,
 				   /obj/item/clothing/under/pants/mustangjeans=2,
 				   /obj/item/clothing/glasses/sunglasses/gar=1,
-				   /obj/item/clothing/glasses/sunglasses=1)
+				   /obj/item/clothing/glasses/sunglasses=1,
+				   )
 
-	prices = list(/obj/item/clothing/head/that=50,
+	prices = list(
+				  /obj/item/clothing/head/that=50,
 				  /obj/item/clothing/head/fedora=50,
 				  /obj/item/clothing/glasses/monocle=20,
 				  /obj/item/clothing/suit/jacket=75,
@@ -167,14 +174,16 @@
     			  /obj/item/clothing/glasses/aviator_mirror=30,
 				  /obj/item/clothing/glasses/jerusalem=30,
 				  /obj/item/clothing/glasses/threedglasses=25,
-				  /obj/item/clothing/glasses/gar=34)
+				  /obj/item/clothing/glasses/gar=34,
+				  )
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 /obj/machinery/vending/theater
 	name = "Theater-o-mat"
 	desc = "Special costume pack to add randomness in boring life."
 	icon_state = "Theater"
-	products = list(/obj/item/clothing/head/xenos = 5,
+	products = list(
+					/obj/item/clothing/head/xenos = 5,
 					/obj/item/clothing/suit/xenos = 5,
 					/obj/item/clothing/suit/monkeysuit = 5,
 					/obj/item/clothing/suit/syndicatefake = 5,
@@ -216,12 +225,17 @@
 					/obj/item/clothing/suit/hooded/angel_suit = 1,
 					/obj/item/clothing/mask/fake_face = 2,
 					/obj/item/clothing/suit/hooded/ian_costume = 1,
-					/obj/item/clothing/suit/hooded/carp_costume = 1)
-	prices = list(/obj/item/clothing/head/xenos = 50,
+					/obj/item/clothing/suit/hooded/carp_costume = 1,
+					)
+	prices = list(
+				  /obj/item/clothing/head/xenos = 50,
 				  /obj/item/clothing/suit/xenos = 80,
 				  /obj/item/clothing/suit/monkeysuit = 80,
-				  /obj/item/clothing/suit/hooded/carp_costume = 100)
-	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)
+				  /obj/item/clothing/suit/hooded/carp_costume = 100,
+				  )
+	contraband = list(
+					  /obj/item/clothing/mask/gas/fawkes = 2,
+					  )
 
 /obj/machinery/vending/noiromat
 	name = "Noir-O-Mat"
@@ -229,7 +243,8 @@
 	icon_state = "noiromat"
 	icon_deny = "noiromat-deny"
 	light_color = "#ffc444"
-	products = list(/obj/item/clothing/glasses/sunglasses/noir = 2,
+	products = list(
+					/obj/item/clothing/glasses/sunglasses/noir = 2,
 				    /obj/item/clothing/gloves/black = 2,
 					/obj/item/clothing/head/det_hat = 1,
 					/obj/item/clothing/head/det_hat = 1,
@@ -258,10 +273,13 @@
 					/obj/item/weapon/storage/box/evidence = 2,
 					/obj/item/weapon/storage/fancy/cigarettes = 10,
 					/obj/item/weapon/storage/fancy/cigarettes/menthol = 5,
-					/obj/item/weapon/storage/box/matches = 10)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 30,
+					/obj/item/weapon/storage/box/matches = 10,
+					)
+	prices = list(
+				  /obj/item/weapon/storage/fancy/cigarettes = 30,
 				  /obj/item/weapon/storage/fancy/cigarettes/menthol = 40,
-				  /obj/item/weapon/storage/box/matches = 10)
+				  /obj/item/weapon/storage/box/matches = 10,
+				  )
 	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access = list(68)
@@ -275,7 +293,8 @@
 	vend_delay = 15
 	vend_reply = "Have an enchanted evening!"
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
-	products = list(/obj/item/clothing/head/wizard = 1,
+	products = list(
+					/obj/item/clothing/head/wizard = 1,
 					/obj/item/clothing/suit/wizrobe = 1,
 					/obj/item/clothing/head/wizard/red = 1,
 					/obj/item/clothing/suit/wizrobe/red = 1,
@@ -288,5 +307,8 @@
 	 				/obj/item/clothing/head/wizard/redhood = 1,
 	 				/obj/item/clothing/head/wizard/bluehood = 1,
 	 				/obj/item/clothing/suit/wizrobe/wiz_blue = 1,
-	 				/obj/item/clothing/suit/wizrobe/wiz_red = 1)
-	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
+	 				/obj/item/clothing/suit/wizrobe/wiz_red = 1,
+	 				)
+	contraband = list(
+					  /obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1,
+					  )	//No one can get to the machine to hack it anyways; for the lulz - Microwave

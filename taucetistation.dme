@@ -758,7 +758,7 @@
 #include "code\game\machinery\vending\eat.dm"
 #include "code\game\machinery\vending\engineering.dm"
 #include "code\game\machinery\vending\hydroponics.dm"
-#include "code\game\machinery\vending\Medical.dm"
+#include "code\game\machinery\vending\medical.dm"
 #include "code\game\machinery\vending\modkit.dm"
 #include "code\game\machinery\vending\other.dm"
 #include "code\game\magic\Uristrunes.dm"

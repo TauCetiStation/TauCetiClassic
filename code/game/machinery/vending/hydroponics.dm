@@ -6,14 +6,18 @@
 	icon_state = "nutri"
 	light_color = "#34ff7b"
 	icon_deny = "nutri-deny"
-	products = list(/obj/item/nutrient/ez = 45,
+	products = list(
+					/obj/item/nutrient/ez = 45,
 					/obj/item/nutrient/l4z = 25,
 					/obj/item/nutrient/rh = 15,
 					/obj/item/weapon/pestspray = 20,
 					/obj/item/weapon/reagent_containers/syringe = 5,
-					/obj/item/weapon/storage/bag/plants = 5)
-	premium = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,
-				   /obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
+					/obj/item/weapon/storage/bag/plants = 5,
+					)
+	premium = list(
+				   /obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,
+				   /obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5,
+				   )
 	refill_canister = /obj/item/weapon/vending_refill/hydronutrients
 
 /obj/machinery/vending/hydroseeds
@@ -23,7 +27,8 @@
 	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
 	icon_state = "seeds"
 	light_color = "#34ff7b"
-	products = list(/obj/item/seeds/ambrosiavulgarisseed = 3,
+	products = list(
+					/obj/item/seeds/ambrosiavulgarisseed = 3,
 					/obj/item/seeds/appleseed = 3,
 					/obj/item/seeds/bananaseed = 3,
 					/obj/item/seeds/berryseed = 3,
@@ -53,14 +58,19 @@
 					/obj/item/seeds/watermelonseed = 3,
 					/obj/item/seeds/wheatseed = 3,
 					/obj/item/seeds/whitebeetseed = 3,
-					/obj/item/seeds/blackpepper = 5)
-	contraband = list(/obj/item/seeds/amanitamycelium = 2,
+					/obj/item/seeds/blackpepper = 5,
+					)
+	contraband = list(
+					  /obj/item/seeds/amanitamycelium = 2,
 					  /obj/item/seeds/glowshroom = 2,
 					  /obj/item/seeds/libertymycelium = 2,
 					  /obj/item/seeds/mtearseed = 2,
 					  /obj/item/seeds/nettleseed = 2,
 					  /obj/item/seeds/reishimycelium = 2,
 					  /obj/item/seeds/reishimycelium = 2,
-					  /obj/item/seeds/shandseed = 2,)
-	premium = list(/obj/item/toy/waterflower = 1)
+					  /obj/item/seeds/shandseed = 2,
+					  )
+	premium = list(
+				   /obj/item/toy/waterflower = 1,
+				   )
 	refill_canister = /obj/item/weapon/vending_refill/hydroseeds
