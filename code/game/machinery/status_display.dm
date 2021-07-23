@@ -176,7 +176,7 @@
 
 /obj/machinery/status_display/proc/get_SSshuttle_timer()
 	if(SSshuttle.moving)
-		var/timeleft = round((SSshuttle.eta_timeofday - world.timeofday) / 10,1)
+		var/timeleft = round((SSshuttle.eta_timeofday - REALTIMEOFDAY) / 10,1)
 		if(timeleft < 0)
 			return "Late"
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"

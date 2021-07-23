@@ -252,8 +252,11 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
-	//Holiday Round-start stuff	~Carn
-	Holiday_Game_Start()
+	if(length(SSholiday.holidays))
+		to_chat(world, "<span clas='notice'>and...</span>")
+		for(var/holidayname in SSholiday.holidays)
+			var/datum/holiday/holiday = SSholiday.holidays[holidayname]
+			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()
@@ -498,7 +501,8 @@ SUBSYSTEM_DEF(ticker)
 	mode.ShuttleDocked(location)
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in global.huds)
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		for(var/m in global.player_list)
 			var/mob/M = m
 			H.add_hud_to(M)

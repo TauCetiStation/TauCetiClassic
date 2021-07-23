@@ -30,7 +30,7 @@
 	var/time_passed = world.time
 	var/input = "Purify the station."
 	if(prob(10))
-		input = "Save Runtime and any other cute things on the station."
+		input = "Save Dusty and any other cute things on the station."
 
 	var/syndicate_leader_selected = 0 //when the leader is chosen. The last person spawned.
 
