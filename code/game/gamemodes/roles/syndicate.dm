@@ -35,7 +35,7 @@
 	antag.current.add_language("Sy-Code")
 
 	INVOKE_ASYNC(src, .proc/NukeNameAssign, antag)
-	. = ..()
+	return ..()
 
 /datum/role/operative/Greet(greeting, custom)
 	. = ..()
