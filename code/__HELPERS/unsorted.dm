@@ -1267,11 +1267,6 @@ var/list/WALLITEMS = typecacheof(list(
 	tY = clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
-/proc/iscatwalk(atom/A)
-	if(istype(A, /turf/simulated/floor/plating/airless/catwalk))
-		return 1
-	return 0
-
 /proc/getOPressureDifferential(turf/loc)
 	var/minp=16777216;
 	var/maxp=0;
@@ -1582,12 +1577,9 @@ var/list/WALLITEMS = typecacheof(list(
 	if(new_screen)
 		global.current_lobby_screen = new_screen
 	else
-		var/newyear
-		#ifdef NEWYEARCONTENT
-		global.current_lobby_screen = pick(global.new_year_screens)
-		newyear = TRUE
-		#endif
-		if(!newyear)
+		if(SSholiday.holidays[NEW_YEAR])
+			global.current_lobby_screen = pick(global.new_year_screens)
+		else
 			global.current_lobby_screen = pick(global.lobby_screens)
 
 	for(var/mob/dead/new_player/N in new_player_list)
