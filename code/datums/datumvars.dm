@@ -3,8 +3,7 @@
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	return
 
-/client
-	var/last_vv_search = ""
+/client/var/tmp/last_vv_search = ""
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
