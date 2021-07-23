@@ -34,7 +34,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 5,
 	)
 	contraband = list(
-		item/weapon/reagent_containers/food/drinks/tea = 10,
+		/item/weapon/reagent_containers/food/drinks/tea = 10,
 	)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
