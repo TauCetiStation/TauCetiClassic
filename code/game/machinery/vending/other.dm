@@ -161,7 +161,7 @@
 					  /obj/item/weapon/kitchenknife/butch = 2)
 	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 
-obj/machinery/vending/blood
+/obj/machinery/vending/blood
 	name = "Blood'O'Matic"
 	desc = "Human blood dispenser. With internal freezer. Brought to you by EmpireV corp."
 	icon_state = "blood2"
