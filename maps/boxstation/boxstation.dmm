@@ -82186,7 +82186,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/mediumcell{
 	dir = 8;
 	name = "Delivery Office APC";
 	pixel_x = -28

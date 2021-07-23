@@ -3,7 +3,7 @@
 
 #define SMESRATE 0.05 // Rate of internal charge to external power
 #define SMES_EPS 0.0001 // Closest to zero value
-#define SMES_START_CHARGE 0.2 // 20% of capacity
+#define SMES_START_CHARGE 0.25 // 25% of capacity
 
 
 /obj/machinery/power/smes
