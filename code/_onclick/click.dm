@@ -354,7 +354,7 @@
 	return
 
 /mob/living/carbon/human/LaserEyes(atom/A)
-	if(nutrition > 300)
+	if(get_nutrition() > 300)
 		..()
 		SetNextMove(CLICK_CD_MELEE)
 		var/obj/item/projectile/beam/LE = new (loc)

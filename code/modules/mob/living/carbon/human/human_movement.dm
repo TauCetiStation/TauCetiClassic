@@ -37,7 +37,7 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - nutrition) / 5
+	var/hungry = (500 - get_nutrition()) / 5
 	if(hungry >= 70) // Slow down if nutrition <= 150
 		tally += hungry / 50
 
