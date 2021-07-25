@@ -17,10 +17,7 @@
 			if(C.rig_restrict_helmet)
 				to_chat(src, "<span class='red'>You must fasten the helmet to a hardsuit first. (Target the head)</span>")// Stop eva helms equipping.
 			else
-				if(C.equip_time > 0)
-					delay_clothing_equip_to_slot_if_possible(C, slot)
-				else
-					equip_to_slot_if_possible(C, slot)
+				equip_to_slot_if_possible(C, slot)
 		else
 			equip_to_slot_if_possible(W, slot)
 
@@ -35,9 +32,9 @@
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
-	if(!istype(W)) return 0
-
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
+	if(!istype(W))
+		return 0
 	if(!W.mob_can_equip(src, slot, disable_warning))
 		if(del_on_fail)
 			qdel(W)
@@ -45,8 +42,23 @@
 			if(!disable_warning)
 				to_chat(src, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
 		return 0
-
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(H.wear_suit)
+			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
+			return
+	if(usr.is_busy())
+		return
+	if(W.equipping) // Item is already being equipped
+		return 0
+	to_chat(usr, "<span class='notice'>You start equipping the [W].</span>")
+	W.equipping = 1
+	if(do_after(usr, W.equip_time, target = W))
+		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+		to_chat(usr, "<span class='notice'>You have finished equipping the [W].</span>")
+	else
+		to_chat(src, "<span class='red'>\The [W] is too fiddly to fasten whilst moving.</span>")
+	W.equipping = 0
 	return 1
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
@@ -543,31 +555,6 @@ var/list/slot_equipment_priority = list(
 		to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	else
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
-	C.equipping = 0
-
-/mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
-	if(!istype(C))
-		return 0
-
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(H.wear_suit)
-			to_chat(H, "<span class='red'>You need to take off [H.wear_suit.name] first.</span>")
-			return
-
-	if(usr.is_busy())
-		return
-
-	if(C.equipping) // Item is already being equipped
-		return 0
-
-	to_chat(usr, "<span class='notice'>You start equipping the [C].</span>")
-	C.equipping = 1
-	if(do_after(usr, C.equip_time, target = C))
-		equip_to_slot_if_possible(C, slot)
-		to_chat(usr, "<span class='notice'>You have finished equipping the [C].</span>")
-	else
-		to_chat(src, "<span class='red'>\The [C] is too fiddly to fasten whilst moving.</span>")
 	C.equipping = 0
 
 /mob/proc/get_item_by_slot(slot_id)

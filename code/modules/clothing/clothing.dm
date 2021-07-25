@@ -2,8 +2,6 @@
 /obj/item/clothing
 	name = "clothing"
 	var/list/species_restricted = null //Only these species can wear this kit.
-	var/equip_time = 0
-	var/equipping = 0
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
 	var/gang //Is this a gang outfit?
 	var/species_restricted_locked = FALSE

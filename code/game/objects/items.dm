@@ -78,6 +78,8 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	var/equipping = 0
+	var/equip_time = 0
 
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)

@@ -21,7 +21,7 @@
 			else
 				var/obj/item/clothing/suit/space/rig/J = I
 				if(J.equip_time > 0)
-					delay_clothing_equip_to_slot_if_possible(J, SLOT_WEAR_SUIT)
+					equip_to_slot_if_possible(J, SLOT_WEAR_SUIT)
 					return 0
 
 		if(H.equip_to_appropriate_slot(I, TRUE))
