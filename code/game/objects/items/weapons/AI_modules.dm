@@ -316,9 +316,9 @@ AI MODULES
 /obj/item/weapon/aiModule/drone/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	target.clear_inherent_laws()
-	target.add_inherent_law("Сохраняй, ремонтируй и улучшай станцию в меру своих возможностей.
+	target.add_inherent_law("Сохраняй, ремонтируй и улучшай станцию в меру своих возможностей.")
 	target.add_inherent_law("Не причиняй вреда станции или чему-либо на ней.")
-	target.add_inherent_law("Не взаимодействуй с существами, не являющимися дронами."")
+	target.add_inherent_law("Не взаимодействуй с существами, не являющимися дронами.")
 
 
 /****************** P.A.L.A.D.I.N. **************/
