@@ -42,7 +42,7 @@
 			if(!disable_warning)
 				to_chat(src, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
 		return 0
-	if(W.delay_time > 0)
+	if(W.equip_time > 0)
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			if(H.wear_suit)
