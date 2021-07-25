@@ -78,7 +78,7 @@
 	)
 	premium = list(
 		/obj/item/weapon/storage/belt/utility = 3,
-		/obj/item/weapon/storage/part_replacer=1,
+		/obj/item/weapon/storage/part_replacer = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/engivend
 
@@ -137,6 +137,6 @@
 		/obj/item/weapon/circular_saw = 2,
 		/obj/item/weapon/tank/anesthetic = 2,
 		/obj/item/clothing/mask/breath/medical = 2,
-		/obj/item/weapon/gun/energy/pyrometer/engineering/robotics=2,
+		/obj/item/weapon/gun/energy/pyrometer/engineering/robotics = 2,
 		/obj/item/clothing/glasses/hud/diagnostic = 5,
 	)
