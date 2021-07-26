@@ -25,6 +25,10 @@
 		/obj/item/weapon/melee/baton = 1,
 	)
 
+	implants = list(
+		/obj/item/weapon/implant/mind_protect/loyalty,
+	)
+
 /datum/outfit/families_police/beatcop/armored
 	name = "Families: Вооруженный Офицер"
 	suit = /obj/item/clothing/suit/armor/vest/security
