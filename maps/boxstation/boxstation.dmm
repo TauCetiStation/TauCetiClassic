@@ -60208,8 +60208,7 @@
 	},
 /area/station/aisat/ai_chamber)
 "cow" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	name = "MiniSat External Power APC";
 	pixel_y = -25
 	},
@@ -61452,9 +61451,7 @@
 	},
 /area/station/aisat/antechamber)
 "cqQ" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -67970,8 +67967,7 @@
 /obj/machinery/bot/floorbot{
 	on = 0
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	name = "MiniSat Internal Power APC";
 	pixel_y = -25
 	},
