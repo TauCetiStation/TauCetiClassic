@@ -399,7 +399,7 @@
 			parrot_state = PARROT_SWOOP | PARROT_RETURN
 			return
 
-		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it 
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
 											// ! and i'm not going to invent new alg for this
 			if(isliving(parrot_interest))
 				steal_from_mob()
@@ -425,7 +425,7 @@
 			parrot_state = PARROT_WANDER
 			return
 
-		if(in_range(src, parrot_perch))	// ! changing this to Adjacent() will probably break it 
+		if(in_range(src, parrot_perch))	// ! changing this to Adjacent() will probably break it
 										// ! and i'm not going to invent new alg for this
 			src.loc = parrot_perch.loc
 			drop_held_item()
@@ -458,7 +458,7 @@
 		var/mob/living/L = parrot_interest
 
 		//If the mob is close enough to interact with
-		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it 
+		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
 											// ! and i'm not going to invent new alg for this
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
 			if(L.stat)
@@ -679,6 +679,7 @@
 /*
  * Sub-types
  */
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
@@ -708,7 +709,6 @@
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 	. = ..()
-	chief_animal_list += src
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

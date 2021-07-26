@@ -58,8 +58,10 @@
 /obj/structure/sign/poster/atom_init(mapload, rolled_official)
 	. = ..()
 	if(random_basetype)
-		var/obj/structure/sign/poster/selected = get_random_poster_type(random_basetype)
-		new selected(loc)
+		var/poster_type = get_random_poster_type(random_basetype)
+		var/obj/structure/sign/poster/new_poster = new poster_type(loc)
+		new_poster.pixel_x = pixel_x
+		new_poster.pixel_y = pixel_y
 		return INITIALIZE_HINT_QDEL
 	if(!ruined)
 		original_name = name // can't use initial because of random posters
@@ -428,6 +430,10 @@
 	desc = "A poster encouraging you to help fellow crewmembers."
 	icon_state = "poster4_legit"
 
+/obj/structure/sign/poster/official/help_others/examine(mob/user)
+	. = ..()
+	user.a_intent_change(INTENT_HELP)
+
 /obj/structure/sign/poster/official/build
 	name = "Build"
 	desc = "A poster glorifying the engineering team."
@@ -457,6 +463,12 @@
 	name = "Walk"
 	desc = "A poster instructing the viewer to walk instead of running."
 	icon_state = "poster10_legit"
+
+/obj/structure/sign/poster/official/walk/examine(mob/user)
+	. = ..()
+	if(isliving(user))
+		var/mob/living/L = user
+		L.set_m_intent(MOVE_INTENT_WALK)
 
 /obj/structure/sign/poster/official/state_laws
 	name = "State Laws"
