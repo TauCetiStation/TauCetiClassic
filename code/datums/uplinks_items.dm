@@ -710,6 +710,7 @@
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/thermal/dealer
+	item = /obj/item/clothing/glasses/thermal
 	cost = 8
 	uplink_types = list("dealer")
 
