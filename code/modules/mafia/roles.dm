@@ -604,7 +604,7 @@
 
 /datum/mafia_role/mafia
 	name = "Генокрад"
-	desc = "Вы член улья генокрадов. Используй ':j' чтобы разговаривать со своими коллегами."
+	desc = "Вы член улья генокрадов. Используй ':z' чтобы разговаривать со своими коллегами."
 	team = MAFIA_TEAM_MAFIA
 	role_type = MAFIA_REGULAR
 	hud_icon = "hudchangeling"
@@ -626,7 +626,7 @@
 //better detective for mafia
 /datum/mafia_role/mafia/thoughtfeeder
 	name = "Пожиратель Разума"
-	desc = "Вы - вариация генокрада, которая питается памятью других. Используй ':j' чтобы разговаривать со своими коллегами и посещайте людей по ночам, чтобы узнать их роль."
+	desc = "Вы - вариация генокрада, которая питается памятью других. Используй ':z' чтобы разговаривать со своими коллегами и посещайте людей по ночам, чтобы узнать их роль."
 	role_type = MAFIA_SPECIAL
 	hud_icon = "hudthoughtfeeder"
 	revealed_icon = "thoughtfeeder"
