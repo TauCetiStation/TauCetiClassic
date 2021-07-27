@@ -4,7 +4,9 @@
 	icon_state = "capspace"
 	item_state = "capspacehelmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Only for the most fashionable of military figureheads."
+	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | THICKMATERIAL | PHORONGUARD
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	permeability_coefficient = 0.01
 	armor = list(melee = 65, bullet = 45, laser = 45,energy = 25, bomb = 50, bio = 100, rad = 50)
 	siemens_coefficient = 0.4
