@@ -370,7 +370,9 @@
 
 /atom/movable/proc/get_size_flavor()
 	switch(w_class)
-		if(SIZE_MINUSCULE to SIZE_SMALL)
+		if(SIZE_MINUSCULE)
+			return "tiny"
+		if(SIZE_TINY to SIZE_SMALL)
 			return "small"
 		if(SIZE_NORMAL to SIZE_LARGE)
 			return "medium"
