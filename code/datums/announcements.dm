@@ -8,7 +8,7 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
 #define ANNOUNCE_TEXT  (1<<0)
 #define ANNOUNCE_SOUND (1<<1)
 #define ANNOUNCE_COMMS (1<<2)
-#define ANNOUNCE_ALL ALL // it's ~0
+#define ANNOUNCE_ALL (~0)
 
 /* Announcement sounds */
 var/list/announcement_sounds = list(
