@@ -356,7 +356,7 @@ var elements = document.getElementsByName('rights');
 		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
 
 	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND)
-		var/confirm = alert("You want to remove [ADMIN_RANK_ROUND] permissions from [target.ckey], are you sure?", "Confirmation", "Yes", "No")
+		var/confirm = tgui_alert(usr, "You want to remove [ADMIN_RANK_ROUND] permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
 		if (confirm != "Yes")
 			return
 
