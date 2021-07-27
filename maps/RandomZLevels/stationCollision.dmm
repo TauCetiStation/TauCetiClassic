@@ -1340,8 +1340,7 @@
 "dE" = (
 /obj/structure/window/reinforced,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 7500;
+/obj/machinery/power/apc/mediumcell{
 	dir = 8;
 	name = "Research APC";
 	pixel_x = -28
@@ -3150,8 +3149,7 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/arrivalblock)
 "ib" = (
-/obj/machinery/power/apc{
-	cell_type = 7500;
+/obj/machinery/power/apc/mediumcell{
 	dir = 8;
 	name = "Arrivals Block APC";
 	pixel_x = -28
