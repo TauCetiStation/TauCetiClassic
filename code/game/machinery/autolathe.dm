@@ -129,7 +129,6 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/ammo_box/magazine/c45m, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells, CATEGORY_AMMO),
-	R(/obj/item/ammo_box/eight_shells/stunslug, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/eight_shells/buckshot, CATEGORY_AMMO)
 )
 #undef R
