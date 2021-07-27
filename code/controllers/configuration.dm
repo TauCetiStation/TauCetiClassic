@@ -105,6 +105,7 @@ var/list/net_announcer_secret = list()
 
 	var/forbid_singulo_possession = 0
 
+	var/allow_holidays = FALSE
 	//game_options.txt configs
 
 	var/health_threshold_softcrit = 0
@@ -448,7 +449,7 @@ var/list/net_announcer_secret = list()
 					forbid_singulo_possession = 1
 
 				if("allow_holidays")
-					Holiday = 1
+					allow_holidays = TRUE
 
 				if("ticklag")
 					var/ticklag = text2num(value)

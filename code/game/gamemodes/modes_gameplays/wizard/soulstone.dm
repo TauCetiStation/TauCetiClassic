@@ -11,7 +11,7 @@
 	w_class = SIZE_MINUSCULE
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "bluespace=4;materials=4"
-	var/imprinted = "empty"
+	var/imprinted
 
 	var/static/class_images
 	var/list/classes = list(
@@ -46,7 +46,7 @@
 ///////////////////Options for using captured souls///////////////////////////////////////
 
 /obj/item/device/soulstone/attack_self(mob/user)
-	if(!in_range(src, user))
+	if(!Adjacent(user))
 		return
 
 	user.set_machine(src)
@@ -61,7 +61,7 @@
 
 /obj/item/device/soulstone/Topic(href, href_list)
 	var/mob/user = usr
-	if(!in_range(src, user) || user.machine != src)
+	if(!Adjacent(user) || user.machine != src)
 		user << browse(null, "window=aicard")
 		user.unset_machine()
 		return
@@ -73,7 +73,7 @@
 		for(var/mob/living/simple_animal/shade/A in src)
 			A.status_flags &= ~GODMODE
 			A.canmove = 1
-			to_chat(A, "<b>Вы были освобожденены из своей тюрьмы, но вы остаётесь привязанным к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой.</b>")
+			to_chat(A, "<b>Вы были освобождены из своей тюрьмы, но вы остаётесь привязанным к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой.</b>")
 			A.loc = user.loc
 			A.cancel_camera()
 			src.icon_state = "soulstone"
@@ -96,7 +96,7 @@
 	var/mob/living/carbon/human/H = target
 	var/obj/item/device/soulstone/C = src
 	if(target != user)
-		if(C.imprinted != "empty")
+		if(C.imprinted)
 			to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> В камне душ уже запечатана душа [C.imprinted]!")
 			return
 		if(H.stat == CONSCIOUS)
@@ -131,7 +131,7 @@
 	S.cancel_camera()
 	C.icon_state = "soulstone_glow_blink"
 	C.name = "Soul Stone: [S.real_name]"
-	to_chat(S, "Ваша душа была захвачена! Теперь вы привязанны к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой..")
+	to_chat(S, "Ваша душа была захвачена! Теперь вы привязаны к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой..")
 	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [H.real_name] была вырвана из его тела и помещена в камень душ.")
 	to_chat(user, "Камень душ запечатал разум [S.real_name], теперь вы не сможете захватить других душ.")
 	C.imprinted = "[S.name]"

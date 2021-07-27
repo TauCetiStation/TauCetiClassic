@@ -1,6 +1,7 @@
 /datum/game_mode/abduction
 	name = "Abduction"
 	config_name = "abduction"
+	probability = 50
 	factions_allowed = list(/datum/faction/abductors = 4)
 
 	minimum_player_count = 25

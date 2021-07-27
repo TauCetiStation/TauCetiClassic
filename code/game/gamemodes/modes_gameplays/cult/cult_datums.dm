@@ -49,7 +49,7 @@
 		user.say(pick("Хаккрутжу гопоенжим.", "Нхерасаи пивроиашан.", "Фиржжи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Мийф хон внор'с.", "Вакабаи хиж фен жусвикс."))
 	else
 		user.whisper(pick("Хаккрутжу гопоенжим.", "Нхерасаи пивроиашан.", "Фиржжи прхив мазенхор.", "Танах ех вакантахе.", "Облияе на ораие.", "Мийф хон внор'с.", "Вакабаи хиж фен жусвикс."))
-	holder.visible_message("<span class='danger'>Иероглиф начинает пульсировать незаметным светом и сразу тухнет.</span>","<span class='danger'>Вы слишите тихое шипение.</span>")
+	holder.visible_message("<span class='danger'>Иероглиф начинает пульсировать незаметным светом и сразу тухнет.</span>","<span class='danger'>Вы слышите тихое шипение.</span>")
 
 /datum/rune/cult
 
@@ -67,7 +67,7 @@
 	user.eject_from_wall(TRUE, companions = companions)
 	for(var/mob/M in companions + user)
 		if(M.client)
-			new /obj/screen/temp/cult_teleportation(M, M)
+			new /atom/movable/screen/temp/cult_teleportation(M, M)
 
 	after_tp(get_turf(user), user, companions)
 

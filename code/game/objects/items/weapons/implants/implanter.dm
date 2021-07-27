@@ -38,7 +38,7 @@
 	name = "implanter-mind shield"
 
 /obj/item/weapon/implanter/mindshield/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield(src)
+	imp = new /obj/item/weapon/implant/mind_protect/mindshield(src)
 	. = ..()
 	update()
 
@@ -46,7 +46,7 @@
 	name = "implanter-loyalty"
 
 /obj/item/weapon/implanter/loyalty/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	imp = new /obj/item/weapon/implant/mind_protect/loyalty(src)
 	. = ..()
 	update()
 

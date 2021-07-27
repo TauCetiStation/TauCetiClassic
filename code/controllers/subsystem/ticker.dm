@@ -25,11 +25,12 @@ SUBSYSTEM_DEF(ticker)
 	var/triai = 0							//Global holder for Triumvirate
 
 	var/timeLeft = 1800						//pregame timer
+	var/start_ASAP = FALSE					//the game will start as soon as possible, bypassing all pre-game nonsense
 
 	var/totalPlayers = 0					//used for pregame stats on statpanel
 	var/totalPlayersReady = 0				//used for pregame stats on statpanel
 
-	var/obj/screen/cinematic = null
+	var/atom/movable/screen/cinematic = null
 	var/datum/station_state/start_state = null
 
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
@@ -79,6 +80,8 @@ SUBSYSTEM_DEF(ticker)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
+			if(start_ASAP)
+				start_now()
 
 			//countdown
 			if(timeLeft < 0)
@@ -249,11 +252,16 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/M in player_list)
 		M.playsound_local(null, 'sound/AI/enjoyyourstay.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
 
-	//Holiday Round-start stuff	~Carn
-	Holiday_Game_Start()
+	if(length(SSholiday.holidays))
+		to_chat(world, "<span clas='notice'>and...</span>")
+		for(var/holidayname in SSholiday.holidays)
+			var/datum/holiday/holiday = SSholiday.holidays[holidayname]
+			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.PostSetup()
+		show_blurbs()
+
 		SSevents.start_roundstart_event()
 
 		for(var/mob/dead/new_player/N in new_player_list)
@@ -270,6 +278,9 @@ SUBSYSTEM_DEF(ticker)
 
 	return 1
 
+/datum/controller/subsystem/ticker/proc/show_blurbs()
+	for(var/datum/mind/M in SSticker.minds)
+		show_location_blurb(M.current.client)
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)
@@ -282,7 +293,7 @@ SUBSYSTEM_DEF(ticker)
 	var/summary = "summary_selfdes"
 	if(mode && !override)
 		override = mode.name
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
+	cinematic = new /atom/movable/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
 	for(var/mob/M in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
@@ -323,7 +334,7 @@ SUBSYSTEM_DEF(ticker)
 		flick(screen, cinematic)
 	addtimer(CALLBACK(src, .proc/station_explosion_effects, explosion, summary, cinematic), screen_time)
 
-/datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /obj/screen/cinematic)
+/datum/controller/subsystem/ticker/proc/station_explosion_effects(explosion, summary, /atom/movable/screen/cinematic)
 	for(var/mob/M in mob_list) //search any goodest
 		M.playsound_local(null, 'sound/effects/explosionfar.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)
 	if(explosion)
@@ -490,7 +501,8 @@ SUBSYSTEM_DEF(ticker)
 	mode.ShuttleDocked(location)
 
 	// Add AntagHUD to everyone, see who was really evil the whole time!
-	for(var/datum/atom_hud/antag/H in global.huds)
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		for(var/m in global.player_list)
 			var/mob/M = m
 			H.add_hud_to(M)

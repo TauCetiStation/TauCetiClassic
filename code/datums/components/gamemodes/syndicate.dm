@@ -157,7 +157,7 @@
 	give_uplink()
 
 	var/datum/role/R = parent
-	for(var/datum/objective/dehead/D in R.objectives.GetObjectives())
+	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
 		var/obj/item/device/biocan/B = new (traitor_mob.loc)
 		var/list/slots = list(
 			"backpack" = SLOT_IN_BACKPACK,

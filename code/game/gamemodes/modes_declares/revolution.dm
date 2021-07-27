@@ -1,6 +1,7 @@
 /datum/game_mode/revolution
 	name = "Revolution"
 	config_name = "revolution"
+	probability = 80
 
 	factions_allowed = list(/datum/faction/revolution)
 

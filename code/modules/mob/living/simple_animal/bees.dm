@@ -76,7 +76,7 @@
 				B.icon_state = "bees[B.strength]"
 				if(src.parent)
 					B.parent = src.parent
-					src.parent.owned_bee_swarms.Add(B)
+					parent.owned_bee_swarms.Add(B)
 
 		//make some noise
 		if(prob(0.5))

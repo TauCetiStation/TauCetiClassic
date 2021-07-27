@@ -9,8 +9,8 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = SIZE_SMALL
-	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	var/list/can_hold = list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 
 	var/max_w_class = SIZE_TINY //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_storage_space = null //Total storage cost of items this can hold. Will be autoset based on storage_slots if left null.
@@ -104,7 +104,7 @@
 	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
 		open(usr)
 		return
-	if (!( istype(over_object, /obj/screen) ))
+	if (!( istype(over_object, /atom/movable/screen) ))
 		return ..()
 
 	//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
@@ -417,7 +417,7 @@
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
+		if(verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
 			quick_empty()
 			return
 
@@ -501,7 +501,7 @@
 	return depth
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
-	if(A in contents)
+	if(A.loc == src)
 		usr = null
 		remove_from_storage(A, loc)
 

@@ -1,5 +1,6 @@
 //todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
 
+ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
@@ -16,7 +17,6 @@
 	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
-	toilet_list += src
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE * 1.5)

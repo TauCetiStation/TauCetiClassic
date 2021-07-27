@@ -172,7 +172,7 @@
 
 /obj/item/device/cult_camera/proc/off()
 	if(toggle)
-		UnregisterSignal(camera, list(COMSIG_PARENT_QDELETED))
+		UnregisterSignal(camera, list(COMSIG_PARENT_QDELETING))
 		current_user.reset_view()
 		current_user.force_remote_viewing = FALSE
 		camera.icon_state = initial(camera.icon_state)
@@ -209,7 +209,7 @@
 	current_user.reset_view(camera)
 	toggle = !toggle
 
-	RegisterSignal(camera, list(COMSIG_PARENT_QDELETED), .proc/feel_pain)
+	RegisterSignal(camera, list(COMSIG_PARENT_QDELETING), .proc/feel_pain)
 
 /obj/item/device/cult_camera/dropped(mob/living/carbon/human/user)
 	. = ..()

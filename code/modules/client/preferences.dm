@@ -35,9 +35,14 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
+	var/clientfps = -1
 
 	// Custom Keybindings
 	var/list/key_bindings = list()
+	// If hotkey mode is enabled, then clicking the map will automatically
+	// unfocus the text bar. This removes the red color from the text bar
+	// so that the visual focus indicator matches reality.
+	var/hotkeys = TRUE
 
 	var/tooltip = TRUE
 	var/tooltip_font = "Small Fonts"
@@ -488,12 +493,12 @@ var/const/MAX_SAVE_SLOTS = 10
 			dat += "как временный на [user.client.jobbancache[rank]["duration"]] минут. Истечёт [user.client.jobbancache[rank]["expiration"]]."
 			dat += "<hr>"
 			dat += "<br>"
-			dat += "Дополнительную информацию можно получить у администратора, выдашего джоббан. Апелляции и жалобы принимаются на форуме."
+			dat += "Дополнительную информацию можно получить у администратора, выдавшего джоббан. Апелляции и жалобы принимаются на форуме."
 		else
 			dat += "как бессрочный."
 			dat += "<hr>"
 			dat += "<br>"
-			dat += "Дополнительную информацию можно получить у администратора, выдашего бессрочный джоббан. С ним же стоит согласовывать снятие этого джоббана, если вы согласны с его выдачей. Если у вас есть не разрешаемые в личной беседе с администратором претензии или же администратор, с джоббаном от которого вы согласны, покинул состав, обратитесь на форум."
+			dat += "Дополнительную информацию можно получить у администратора, выдавшего бессрочный джоббан. С ним же стоит согласовывать снятие этого джоббана, если вы согласны с его выдачей. Если у вас есть не разрешаемые в личной беседе с администратором претензии или же администратор, с джоббаном от которого вы согласны, покинул состав, обратитесь на форум."
 
 		var/datum/browser/popup = new(user, "jobban_info", "Информация о джоббане", ntheme = CSS_THEME_LIGHT)
 		popup.set_content(dat)

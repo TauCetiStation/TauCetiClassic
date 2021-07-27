@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extinguisher_list)
 /obj/item/weapon/reagent_containers/spray/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -46,8 +47,6 @@
 	else
 		icon_state = "[initial(icon_state)]"
 	reagents.add_reagent(reagent_inside, volume)
-
-	extinguisher_list += src
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/station_spawned/atom_init() // Station-spawned, as in, in-cabinets extinguishers shouldn't be full by default.
 	. = ..()

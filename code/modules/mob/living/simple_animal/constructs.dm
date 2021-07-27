@@ -89,11 +89,11 @@
 	desc = "A possessed suit of armour driven by the will of the restless dead."
 	icon_state = "juggernaut"
 	icon_living = "juggernaut"
-	maxHealth = 250
-	health = 250
+	maxHealth = 200
+	health = 200
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
-	melee_damage = 20
+	melee_damage = 25
 	attacktext = "smash"
 	speed = 3
 	w_class = SIZE_MASSIVE
@@ -107,7 +107,7 @@
 /mob/living/simple_animal/construct/armoured/atom_init()
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
-	AddComponent(/datum/component/forcefield, "strong blood aura", 40, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
+	AddComponent(/datum/component/forcefield, "strong blood aura", 80, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 /mob/living/simple_animal/construct/armoured/Life()
@@ -145,11 +145,13 @@
 	icon_living = "wraith"
 	maxHealth = 75
 	health = 75
-	melee_damage = 25
+	melee_damage = 20
 	attacktext = "slash"
 	speed = -1
 	see_in_dark = 7
 	attack_sound = list('sound/weapons/bladeslice.ogg')
+	attack_push_vis_effect = ATTACK_EFFECT_SLASH
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift,
 		)
@@ -206,7 +208,7 @@
 /mob/living/simple_animal/construct/behemoth/atom_init()
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
-	AddComponent(/datum/component/forcefield, "strong blood aura", 1000, 30 SECONDS, 10 SECONDS, R, TRUE, TRUE)
+	AddComponent(/datum/component/forcefield, "strong blood aura", 500, 30 SECONDS, 10 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
 
@@ -226,6 +228,8 @@
 	see_in_dark = 7
 	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
+	attack_push_vis_effect = ATTACK_EFFECT_SLASH
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
 		)
@@ -268,6 +272,8 @@
 	speed = -2
 	response_harm = "pinch"
 	attack_sound = 'sound/weapons/punch2.ogg'
+
+	sight = SEE_MOBS
 
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
 /mob/living/simple_animal/hostile/pylon

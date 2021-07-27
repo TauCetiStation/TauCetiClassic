@@ -18,7 +18,7 @@
 
 	if(ismob(A))
 		ai_actual_track(A)
-	else if (!istype(A, /obj/screen))
+	else if (!istype(A, /atom/movable/screen))
 		A.move_camera_by_click()
 
 

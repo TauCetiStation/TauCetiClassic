@@ -76,36 +76,19 @@
 	favor_cost = 100
 	can_talismaned = FALSE
 
-/datum/religion_rites/instant/cult/convert/proc/can_convert(mob/living/user, obj/AOG)
-	if(!ishuman(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>Только человек может пройти через ритуал.</span>")
-		return FALSE
-
-	var/mob/living/carbon/human/H = AOG.buckled_mob
-	if(religion.is_member(H) || H.stat == DEAD || H.species.flags[NO_BLOOD])
-		to_chat(user, "<span class='warning'>Неподходящее тело.</span>")
-		return FALSE
-	if(!global.cult_religion.can_convert(H))
-		to_chat(user, "<span class='warning'>Разум тела сопротивляется.</span>")
-		return FALSE
-	if(jobban_isbanned(H, ROLE_CULTIST) || jobban_isbanned(H, "Syndicate"))
-		to_chat(user, "<span class='warning'>Нар-Си не нужно такое тело.</span>")
-		return FALSE
-
-	return TRUE
-
 /datum/religion_rites/instant/cult/convert/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
-	if(!can_convert(user, AOG))
+	if(!religion.can_convert(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>Вы не можете обратить это существо.</span>")
 		return FALSE
 
 	return TRUE
 
 /datum/religion_rites/instant/cult/convert/invoke_effect(mob/living/user, obj/AOG)
 	..()
-	if(!can_convert(user, AOG))
+	if(!religion.can_convert(AOG.buckled_mob))
 		return FALSE
 
 	religion.add_member(AOG.buckled_mob, CULT_ROLE_HIGHPRIEST)
@@ -134,7 +117,7 @@
 
 /datum/religion_rites/instant/cult/drain_torture
 	name = "Высасывание Жизни"
-	desc = "Высасывет жизнь из людей на заряженных столах пыток!"
+	desc = "Высасывает жизнь из людей на заряженных столах пыток!"
 	ritual_length = (1 SECONDS)
 	invoke_msg = "Дай мне сил!!!"
 	favor_cost = 100
@@ -174,7 +157,7 @@
 		return FALSE
 
 	user.visible_message("<span class='userdanger'>Кровь течет из пустоты в [user]!</span>", \
-		"<span class='[religion.style_text]'>Кровь начинает течь из дыры в пространстве в твое слабое смертное тело. Ты чувствуешь... переполненость.</span>", \
+		"<span class='[religion.style_text]'>Кровь начинает течь из дыры в пространстве в твое слабое смертное тело. Ты чувствуешь... переполненность.</span>", \
 		"<span class='userdanger'>Вы слышите течение жидкости.</span>")
 
 	if(ishuman(user))
@@ -193,12 +176,12 @@
 	desc = "Взрывает людей на столах пыток, но возрождает человека на алтаре."
 	ritual_length = (10 SECONDS)
 	invoke_msg = "Восстань из мертвых!!!"
-	favor_cost = 300
+	favor_cost = 100
 	can_talismaned = FALSE
 
 	needed_aspects = list(
 		ASPECT_OBSCURE = 2,
-		ASPECT_RESCUE = 2,
+		ASPECT_RESCUE = 1,
 	)
 
 /datum/religion_rites/instant/cult/raise_torture/can_start(mob/living/user, obj/AOG)
@@ -274,7 +257,7 @@
 	name = "Создание Гомункула"
 	desc = "Создаёт гомункула, который может существовать только внутри территории религии."
 	ritual_length = (1 SECONDS) // plus 15 seconds of pollGhostCandidates
-	invoke_msg = "Прийди же!!!"
+	invoke_msg = "Приди же!!!"
 	favor_cost = 325
 
 	needed_aspects = list(
@@ -298,7 +281,7 @@
 	..()
 	var/list/candidates = pollGhostCandidates("Не хотите ли вы стать гомункулом [religion.name]?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 15 SECONDS)
 	if(!candidates.len)
-		to_chat(user, "<span class='warning'>Ниодна душа не захотела вселяться в гомункула.</span>")
+		to_chat(user, "<span class='warning'>Ни одна душа не захотела вселяться в гомункула.</span>")
 		return FALSE
 	playsound(AOG, 'sound/magic/manifest.ogg', VOL_EFFECTS_MASTER)
 	for(var/i in 1 to divine_power)
@@ -330,7 +313,7 @@
 
 /datum/religion_rites/instant/cult/freedom
 	name = "Свобода"
-	desc = "Освобождает выбранного аколита из рабства."
+	desc = "Освобождает выбранного аколита от оков."
 	ritual_length = (5 SECONDS)
 	invoke_msg = "Освободись же!!!"
 	favor_cost = 100
@@ -352,7 +335,7 @@
 		to_chat(user, "<span class='warning'>В вашей религии нет членов, даже вы не член её...</span>")
 		return FALSE
 
-	var/mob/living/carbon/cultist = input("Выберите кого хотите освободить.", religion.name) as null|anything in cultists - user
+	var/mob/living/carbon/cultist = input("Выберите, кого хотите освободить.", religion.name) as null|anything in cultists - user
 	var/is_processed = FALSE
 	if(!cultist)
 		return FALSE
@@ -396,10 +379,10 @@
 
 /datum/religion_rites/instant/cult/summon_acolyt
 	name = "Призыв Аколита"
-	desc = "Телепортирует свободного от оков и живого аколита."
+	desc = "Телепортирует на алтарь тело аколита."
 	ritual_length = (20 SECONDS)
 	invoke_msg = "Появись же!!!"
-	favor_cost = 200
+	favor_cost = 300
 
 	needed_aspects = list(
 		ASPECT_CHAOS = 1,
@@ -419,12 +402,8 @@
 		to_chat(user, "<span class='warning'>В вашей религии нет членов, даже вы не член её...</span>")
 		return FALSE
 
-	var/mob/living/carbon/cultist = input("Выберите кого хотите призвать.", religion.name) as null|anything in cultists - user
+	var/mob/living/carbon/cultist = input("Выберите, кого хотите призвать.", religion.name) as null|anything in cultists - user
 	if(!cultist)
-		return FALSE
-
-	if(cultist.incapacitated() || !isturf(cultist.loc))
-		to_chat(user, "<span class='userdanger'>Вы не можете призвать [cultist].</span>")
 		return FALSE
 
 	cultist.visible_message("<span class='userdanger'>[cultist] внезапно исчезает!</span>")

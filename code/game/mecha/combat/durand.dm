@@ -17,6 +17,11 @@
 
 	var/datum/action/innate/mecha/mech_defence_mode/defence_action = new
 
+/obj/mecha/combat/durand/Destroy()
+	QDEL_NULL(defence_action)
+	return ..()
+
+
 /obj/mecha/combat/durand/GrantActions(mob/living/user, human_occupant = 0)
 	..()
 	defence_action.Grant(user, src)

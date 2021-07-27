@@ -32,7 +32,7 @@
 	active_power_usage = 100
 
 /obj/machinery/shield_gen/atom_init()
-	field = new/list()
+	field = list()
 	. = ..()
 
 /obj/machinery/shield_gen/atom_init_late()
@@ -91,7 +91,7 @@
 	return TRUE
 
 /obj/machinery/shield_gen/ui_interact(mob/user)
-	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
+	if (!Adjacent(user) || stat & (BROKEN|NOPOWER))
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")

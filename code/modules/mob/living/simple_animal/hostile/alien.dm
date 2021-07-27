@@ -17,6 +17,8 @@
 	melee_damage = 25
 	attacktext = "slash"
 	attack_sound = list('sound/weapons/bladeslice.ogg')
+	attack_push_vis_effect = ATTACK_EFFECT_CLAW
+	attack_disarm_vis_effect = ATTACK_EFFECT_CLAW
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0

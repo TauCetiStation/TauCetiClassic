@@ -47,7 +47,7 @@
 		return ..()
 
 /obj/item/weapon/xenoarch_utilizer/attack_self(mob/user)
-	if(in_range(src, user))
+	if(Adjacent(user))
 		return interact(user)
 
 /obj/item/weapon/xenoarch_utilizer/interact(mob/user)

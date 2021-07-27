@@ -124,7 +124,7 @@
 
 	return
 
-/mob/living/simple_animal/space_worm/proc/update_icon() //only for the sake of consistency with the other update icon procs
+/mob/living/simple_animal/space_worm/update_icon() //only for the sake of consistency with the other update icon procs
 	if(stat == CONSCIOUS || stat == UNCONSCIOUS)
 		if(previous) //midsection
 			icon_state = "spaceworm[get_dir(src,previous) | get_dir(src,next)]" //see 3 lines below

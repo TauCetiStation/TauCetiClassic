@@ -30,7 +30,9 @@ SUBSYSTEM_DEF(mapping)
 	LoadMapConfig()
 	station_image = config.station_image
 	station_name = config.station_name
+	station_name_ru = config.station_name_ru
 	system_name = config.system_name
+	system_name = config.system_name_ru
 
 	loadWorld()
 	renameAreas()

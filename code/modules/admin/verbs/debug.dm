@@ -816,7 +816,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			spawned_card.registered_name = M.real_name
 			M.equip_to_slot_or_del(spawned_card, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/IMP = new(M)
+			var/obj/item/weapon/implant/mind_protect/mindshield/IMP = new(M)
 			IMP.inject(M)
 
 			if(M.mind)
@@ -962,7 +962,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			var/obj/item/weapon/implant/mind_protect/loyalty/L = new(M)
 			L.inject(M)
 		if("hop")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(M), SLOT_W_UNIFORM)
@@ -1010,7 +1010,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			var/obj/item/weapon/implant/mind_protect/loyalty/L = new(M)
 			L.inject(M)
 		if("cmo")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(M), SLOT_W_UNIFORM)
@@ -1533,7 +1533,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
-			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			var/obj/item/weapon/implant/mind_protect/loyalty/L = new(M)
 			L.inject(M)
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), SLOT_W_UNIFORM)
@@ -1727,7 +1727,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 
 	for(var/obj/machinery/power/smes/SMES in machines)
 		if(SMES.anchored)
-			SMES.chargemode = 1
+			SMES.input_attempt = TRUE
+			SMES.input_level = 200000
 
 /client/proc/setup_supermatter_engine()
 	set category = "Debug"
@@ -1789,9 +1790,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 
 		else if(istype(M,/obj/machinery/power/smes))	//This is the SMES inside the engine room.  We don't need much power.
 			var/obj/machinery/power/smes/SMES = M
-			SMES.chargemode = 1
-			SMES.chargelevel = 200000
-			SMES.output = 75000
+			SMES.input_attempt = TRUE
+			SMES.input_level = 200000
+			SMES.output_level = 75000
 
 	if(!found_the_pump && response == "Setup Completely")
 		to_chat(src, "<span class='warning'>Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter</span>")
@@ -1849,22 +1850,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			log_admin("[key_name(src)] has toggled [saved_key]'s HULK block on!")
 	else
 		tgui_alert(usr, "Invalid mob")
-
-/client/proc/reload_nanoui_resources()
-	set category = "Debug"
-	set name = "Reload NanoUI Resources"
-	set desc = "Force the client to redownload NanoUI Resources"
-
-	// Close open NanoUIs.
-	nanomanager.close_user_uis(usr)
-
-	// Re-load the assets.
-	get_asset_datum(/datum/asset/nanoui)
-
-	// Clear the user's sent_assets so they get resent.
-	usr.client.sent_assets = list()
-
-	to_chat(usr, "Your NanoUI Resource files have been refreshed")
 
 // from Goonstation
 /client/proc/edit_color_matrix()

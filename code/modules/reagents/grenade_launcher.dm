@@ -7,7 +7,7 @@
 	throw_speed = 2
 	throw_range = 10
 	force = 5.0
-	var/list/grenades = new/list()
+	var/list/grenades = list()
 	var/max_grenades = 3
 	m_amt = 2000
 	slot_flags = SLOT_FLAGS_BACK

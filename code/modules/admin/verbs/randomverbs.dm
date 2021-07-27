@@ -815,7 +815,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Check Contents"
 
-	var/list/L = M.get_contents()
+	var/list/L = M.GetAllContents()
 	for(var/t in L)
 		to_chat(usr, "[t]")
 	feedback_add_details("admin_verb","CC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -857,9 +857,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "switches between 1x and custom views."
 
 	if(view == world.view)
-		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
+		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
-		view = world.view
+		change_view(world.view)
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("<span class='notice'>[key_name_admin(usr)] changed their view range to [view].</span>", 1)	//why? removed by order of XSI
@@ -880,7 +880,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(tgui_alert(src, "You sure?", "Confirm", list("Yes", "No")) != "Yes")
 		return
 
-	if(SSshuttle.always_fake_recall)
+	if(SSshuttle.fake_recall)
 		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
 					"Cancel shuttle call",
 					"Call it anyway",
@@ -889,8 +889,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if("Cancel shuttle call")
 				return
 			if("Call and allow it to fly to station")
-				SSshuttle.always_fake_recall = FALSE
-				SSshuttle.fake_recall = 0
+				SSshuttle.fake_recall = FALSE
+				SSshuttle.time_for_fake_recall = 0
 				log_admin("[key_name(usr)] disabled shuttle fake recall.")
 				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
 

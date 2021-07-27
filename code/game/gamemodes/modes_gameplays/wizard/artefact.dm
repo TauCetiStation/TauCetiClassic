@@ -126,7 +126,7 @@
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")
 		return
 
-	if(ismindshielded(H))
+	if(H.ismindprotect())
 		to_chat(H, "<span class='notice'>Something prevents you from becoming a magic girl that you've allways dreamed of</span>")
 		return
 
@@ -134,10 +134,11 @@
 		if(H.mind == mind)
 			to_chat(H, "<span class='notice'>Not so fast, self-confident fulmar</span>")
 			return
+
 	if(H.incapacitated())
 		return
 
-	if(loc == H || (in_range(src, H) && isturf(loc)))
+	if(Adjacent(H))
 		H.set_machine(src)
 		if(href_list["school"])
 			if(!uses)
@@ -188,11 +189,11 @@
 	if(wizard && wizard.current)
 		var/datum/role/wiz_app = M.mind.GetRole(WIZ_APPRENTICE)
 		if(istraitor(M))  //Because traitors gonna trait. Besides, mage with dualsaber and revolver is a bit too OP for this station
-			var/datum/objective/assassinate/new_objective = wiz_app.AppendObjective(/datum/objective/assassinate)
+			var/datum/objective/target/assassinate/new_objective = wiz_app.AppendObjective(/datum/objective/target/assassinate)
 			new_objective.explanation_text = "Assassinate [wizard.current.real_name], the wizard."
 			new_objective.target = wizard
 		else
-			var/datum/objective/protect/new_objective = wiz_app.AppendObjective(/datum/objective/protect)
+			var/datum/objective/target/protect/new_objective = wiz_app.AppendObjective(/datum/objective/target/protect)
 			new_objective.explanation_text = "Protect [wizard.current.real_name], the wizard."
 			new_objective.target = wizard
 	uses--

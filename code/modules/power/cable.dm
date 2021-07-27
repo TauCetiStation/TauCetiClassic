@@ -114,6 +114,12 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	qdel(src)
 
+/obj/structure/cable/proc/get_power_info()
+	if(powernet?.avail > 0)
+		return "<span class='alert'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>"
+
+	return "<span class='warning'>The cable is not powered.</span>"
+
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
 //   - Cable coil : merge cables
@@ -140,13 +146,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		coil.cable_join(src, user)
 
 	else if(ismultitool(W))
-
-		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='alert'>[powernet.avail]W in power network.</span>")
-
-		else
-			to_chat(user, "<span class='warning'>The cable is not powered.</span>")
-
+		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	else
@@ -188,25 +188,48 @@ By design, d1 is the smallest direction and d2 is the highest
 // Power related
 ///////////////////////////////////////////
 
+// All power generation handled in add_avail()
+// Machines (in proc/process()) should use add_load(), surplus(), avail()
+// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
+
 /obj/structure/cable/proc/add_avail(amount)
 	if(powernet)
 		powernet.newavail += amount
+		return TRUE
+
+	return FALSE
 
 /obj/structure/cable/proc/add_load(amount)
 	if(powernet)
-		powernet.newload += amount
+		powernet.load += amount
 
 /obj/structure/cable/proc/surplus()
 	if(powernet)
-		return powernet.avail-powernet.load
-	else
-		return 0
+		return powernet.avail - powernet.load
+
+	return 0
 
 /obj/structure/cable/proc/avail()
 	if(powernet)
 		return powernet.avail
-	else
-		return 0
+
+	return 0
+
+/obj/structure/cable/proc/add_delayedload(amount)
+	if(powernet)
+		powernet.delayedload += amount
+
+/obj/structure/cable/proc/delayed_surplus()
+	if(powernet)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+
+	return 0
+
+/obj/structure/cable/proc/newavail()
+	if(powernet)
+		return powernet.newavail
+
+	return 0
 
 /////////////////////////////////////////////////
 // Cable laying helpers
@@ -246,7 +269,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	for(var/AM in loc)
 		if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
-			if(C.d1 == 0 && d1==0) //only connected if they are both "nodes"
+			if(C.d1 == 0 && d1 == 0) //only connected if they are both "nodes"
 				if(C.powernet == powernet)
 					continue
 				if(C.powernet)

@@ -258,6 +258,11 @@
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
+/obj/machinery/door/firedoor/do_afterclose()
+	for(var/mob/living/L in get_turf(src))
+		try_move_adjacent(L)
+	..()
+
 /obj/machinery/door/firedoor/do_open()
 	..()
 	layer = base_layer

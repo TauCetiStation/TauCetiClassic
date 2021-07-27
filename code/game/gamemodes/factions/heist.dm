@@ -29,7 +29,7 @@
 
 		if(goal == "kidnap")
 			goals -= "kidnap"
-			AppendObjective(/datum/objective/heist/kidnap)
+			AppendObjective(/datum/objective/target/kidnap)
 		else if(goal == "loot")
 			AppendObjective(/datum/objective/heist/loot)
 		else

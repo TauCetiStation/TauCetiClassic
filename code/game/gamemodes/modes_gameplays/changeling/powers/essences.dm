@@ -7,8 +7,8 @@
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
 	var/is_changeling = FALSE
-	var/obj/screen/essence_voice/voice
-	var/obj/screen/essence_phantom/phantom_s
+	var/atom/movable/screen/essence_voice/voice
+	var/atom/movable/screen/essence_phantom/phantom_s
 	var/rehost_timer_id = 0
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
@@ -33,8 +33,7 @@
 
 /mob/living/parasite/essence/Login()
 	..()
-	if(hud_used)
-		hud_used.reload_fullscreen()
+	reload_fullscreen()
 	if(changeling)
 		for(var/mob/living/parasite/essence/E in changeling.essences)
 			if(E.phantom && E.phantom.showed)
@@ -221,7 +220,7 @@
 				clear_fullscreen(scr)
 
 		for(var/scr in host.screens)
-			var/obj/screen/fullscreen/host_screen = host.screens[scr]
+			var/atom/movable/screen/fullscreen/host_screen = host.screens[scr]
 			overlay_fullscreen(scr, host_screen.type, host_screen.severity)
 
 		for(var/alert in alerts) // alerts shit
@@ -229,10 +228,10 @@
 				clear_alert(alert)
 
 		for(var/alert in host.alerts)
-			var/obj/screen/alert/host_alert = host.alerts[alert]
+			var/atom/movable/screen/alert/host_alert = host.alerts[alert]
 			if(length(host_alert.overlays) > 0)
 				continue
-			var/obj/screen/alert/new_alert = throw_alert(alert, host_alert.type)
+			var/atom/movable/screen/alert/new_alert = throw_alert(alert, host_alert.type)
 			if(new_alert)
 				new_alert.icon_state = host_alert.icon_state
 

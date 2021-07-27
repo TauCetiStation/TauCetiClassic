@@ -48,7 +48,7 @@
 
 /obj/item/weapon/game_kit/MouseDrop(mob/user)
 	. = ..()
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || Adjacent(usr)))
 		interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
@@ -118,7 +118,7 @@
 		if(!istype(usr, /mob/dead/observer) || !istype(src, /obj/item/weapon/game_kit/chaplain))
 			return
 
-	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))
+	if (usr.contents.Find(src) || (Adjacent(usr) && istype(loc, /turf)))
 		if (href_list["s_piece"])
 			selected = href_list["s_piece"]
 		else if (href_list["mode"])

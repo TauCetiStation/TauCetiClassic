@@ -151,9 +151,11 @@
 					set_opacity(TRUE)
 
 	else
+		. = ..()
+		if(!.)
+			return FALSE
 		health -= W.force
 		CheckHealth()
-		return ..()
 
 /obj/structure/mineral_door/proc/CheckHealth()
 	if(health <= 0)
@@ -202,7 +204,6 @@
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel!</span>")
 		return
-	..()
 
 /obj/structure/mineral_door/silver
 	name = "silver door"

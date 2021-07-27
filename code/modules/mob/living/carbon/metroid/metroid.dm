@@ -17,6 +17,9 @@
 	see_in_dark = 8
 	update_slimes = 0
 
+	attack_push_vis_effect = ATTACK_EFFECT_SLIME
+	attack_disarm_vis_effect = ATTACK_EFFECT_SLIME
+
 	ventcrawler = 2
 
 	moveset_type = /datum/combat_moveset/slime
@@ -269,6 +272,17 @@
 /mob/living/carbon/slime/attack_ui(slot)
 	return
 
+/mob/living/carbon/slime/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[colour]
+	. = ..()
+
+/mob/living/carbon/slime/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
+
+/mob/living/carbon/slime/adult/rainbow/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	visual_effect_color = global.slime_colors[pick(global.slime_colors)]
+	. = ..()
 
 /mob/living/carbon/slime/hurtReaction(mob/living/attacker, show_message = TRUE)
 	if(Victim)

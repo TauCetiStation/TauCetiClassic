@@ -75,7 +75,7 @@
 						to_chat(user, "<span class='warning'>You press the button.</span>")
 						flick("c-4detonator_click", src)
 						if(src.bomb)
-							src.bomb.detonate()
+							bomb.detonate()
 							log_admin("[user.real_name]([user.ckey]) has triggered [src.bomb] with [src].")
 							message_admins("<span class='warning'>[user.real_name]([user.ckey]) has triggered [src.bomb] with [src]. [ADMIN_JMP(src)]</span>")
 

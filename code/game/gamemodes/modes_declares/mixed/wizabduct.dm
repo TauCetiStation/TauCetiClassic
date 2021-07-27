@@ -1,6 +1,7 @@
 /datum/game_mode/mix/wizabduct
 	name = "Visitors"
 	config_name = "visitors"
+	probability = 80
 	factions_allowed = list(
 		/datum/faction/wizards = 1,
 		/datum/faction/abductors = 4,

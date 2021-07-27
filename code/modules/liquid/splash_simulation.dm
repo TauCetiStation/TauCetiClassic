@@ -136,7 +136,7 @@ var/list/datum/puddle/puddles = list()
 	return FALSE
 
 /obj/effect/liquid/Destroy()
-	src.controller.liquid_objects.Remove(src)
+	controller.liquid_objects.Remove(src)
 	return ..()
 
 /obj/effect/liquid/proc/update_icon2()

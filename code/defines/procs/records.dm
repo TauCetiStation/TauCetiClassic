@@ -119,7 +119,7 @@
 		return
 	var/reason = sanitize(input(user, "Укажите причину:", "Причина", "не указана")  as message)
 	if(used_by_computer)
-		if(user.incapacitated() || (!in_range(source, user) && !issilicon(user) && !isobserver(user)))
+		if(user.incapacitated() || !(user.Adjacent(source) && isliving(user)))
 			return
 	S.fields["criminal"] = criminal_status
 	add_record(author, S, "Уголовный статус статус был изменен на <b>[criminal_status]</b><BR><b>Причина:</b> [reason]")

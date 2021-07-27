@@ -917,14 +917,15 @@
 		G.transfer_blood = 0
 
 /obj/item/add_dirt_cover()
-	if(!blood_overlay)
-		generate_blood_overlay()
-	..()
-	if(dirt_overlay)
-		if(blood_overlay.color != dirt_overlay.color)
-			cut_overlay(blood_overlay)
-			blood_overlay.color = dirt_overlay.color
-			add_overlay(blood_overlay)
+	. = ..()
+	if(!.)
+		return
+	if(blood_overlay && blood_overlay.color == dirt_overlay.color)
+		return
+	generate_blood_overlay()
+	cut_overlay(blood_overlay)
+	blood_overlay.color = dirt_overlay.color
+	add_overlay(blood_overlay)
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
@@ -935,21 +936,21 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
-var/global/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
+	var/static/list/items_blood_overlay_by_type = list()
+
 	if(blood_overlay)
 		return
 
-	var/image/IMG = items_blood_overlay_by_type[type]
-	if(IMG)
-		blood_overlay = IMG
-	else
-		var/icon/ICO = new /icon(icon, icon_state)
-		ICO.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD) // fills the icon_state with white (except where it's transparent)
-		ICO.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)   // adds blood and the remaining white areas become transparant
-		IMG = image("icon" = ICO)
-		items_blood_overlay_by_type[type] = IMG
-		blood_overlay = IMG
+	if(items_blood_overlay_by_type[type])
+		blood_overlay = items_blood_overlay_by_type[type]
+		return
+
+	var/image/blood = image(icon = 'icons/effects/blood.dmi', icon_state = "itemblood") // Needs to be a new one each time since we're slicing it up with filters.
+	blood.filters += filter(type = "alpha", icon = icon(icon, icon_state)) // Same, this filter is unique for each blood overlay per type
+	items_blood_overlay_by_type[type] = blood
+
+	blood_overlay = blood
 
 /obj/item/proc/showoff(mob/user)
 	user.visible_message("[user] holds up [src]. <a HREF=?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")

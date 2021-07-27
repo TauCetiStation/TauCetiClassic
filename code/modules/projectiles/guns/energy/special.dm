@@ -176,7 +176,7 @@
 /obj/item/weapon/gun/energy/sniperrifle/dropped(mob/user)
 	if(zoom)
 		if(user.client)
-			user.client.view = world.view
+			user.client.change_view(world.view)
 		if(user.hud_used)
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = 0
@@ -208,10 +208,10 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(usr.client.view == world.view)
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_REDUCED)
-		usr.client.view = 12
+		usr.client.change_view(12)
 		zoom = 1
 	else
-		usr.client.view = world.view
+		usr.client.change_view(world.view)
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoom = 0
@@ -472,7 +472,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 /obj/item/weapon/gun/energy/pyrometer/ce/dropped(mob/user)
 	if(zoomed)
 		if(user.client)
-			user.client.view = world.view
+			user.client.change_view(world.view)
 		if(user.hud_used)
 			user.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoomed = FALSE
@@ -499,10 +499,10 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(user.client.view == world.view)
 		if(user.hud_used)
 			user.hud_used.show_hud(HUD_STYLE_REDUCED)
-		user.client.view = 12
+		user.client.change_view(12)
 		zoomed = TRUE
 	else
-		usr.client.view = world.view
+		usr.client.change_view(world.view)
 		if(usr.hud_used)
 			usr.hud_used.show_hud(HUD_STYLE_STANDARD)
 		zoomed = FALSE

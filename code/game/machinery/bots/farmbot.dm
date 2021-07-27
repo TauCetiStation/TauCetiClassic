@@ -28,7 +28,6 @@
 	desc = "The botanist's best friend."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "farmbot0"
-	layer = 5.0
 	density = TRUE
 	anchored = FALSE
 	health = 50
@@ -562,7 +561,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)) as text, MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!user.Adjacent(src))
 			return
 
 		created_name = t
