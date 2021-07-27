@@ -87,6 +87,7 @@
 			return
 		admin_datums -= adm_ckey
 		D.disassociate()
+		change_permissions(adm_ckey, 0)
 		db_admin_rank_modification(adm_ckey, ADMIN_RANK_REMOVED)
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
@@ -113,7 +114,7 @@
 			return
 		if("*New Rank*")
 			new_rank = sanitize(input("Please input a new rank", "New custom rank", null, null) as null|text)
-			if(!new_rank)
+			if(!new_rank || (new_rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX, ADMIN_RANK_REMOVED)))
 				to_chat(usr, "<span class='alert'>Error: Topic 'editrights': Invalid rank</span>")
 				return
 	if(D)
@@ -215,7 +216,7 @@ var elements = document.getElementsByName('rights');
 	var/admin_id
 	while(select_query.NextRow())
 		admin_id = text2num(select_query.item[1])
-	if(!admin_id)
+	if(!admin_id) // also prevents changes to sandbox and round admins
 		return
 	var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = [new_rights] WHERE id = [admin_id]")
 	insert_query.Execute()
@@ -302,8 +303,10 @@ var elements = document.getElementsByName('rights');
 		return
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
-	if(new_rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX, ADMIN_RANK_REMOVED))
-		to_chat(usr, "<span class='alert'>You can not edit special admin rank [new_rank]!</span>")
+
+	var/datum/admins/D = admin_datums[adm_ckey]
+	if(D.rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX))
+		to_chat(usr, "<span class='alert'>You can not edit special rank [D.rank]!</span>")
 		return
 
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT id FROM erro_admin WHERE ckey = '[adm_ckey]'")
