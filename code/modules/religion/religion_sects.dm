@@ -40,6 +40,8 @@
 /********************/
 /*    CHAPLAIN      */
 /********************/
+/datum/religion_sect/preset/chaplain
+
 /datum/religion_sect/preset/chaplain/puritanism
 	name = "The Puritans of "
 	desc = "Nothing special."
@@ -55,10 +57,10 @@
 	desc = "Anything you need, little demon."
 	convert_opener = "Let the Great Harvest begin! Bring more blood!"
 	aspect_preset = list(
-	    /datum/aspect/death = 1,
+		/datum/aspect/death = 1,
 		/datum/aspect/lightbending/darkness = 1,
 		/datum/aspect/chaos = 1,
-    )
+	)
 
 /datum/religion_sect/preset/chaplain/technophile
 	name = "The Technomancers of "
@@ -133,6 +135,8 @@
 /********************/
 /*        CULT      */
 /********************/
+/datum/religion_sect/preset/cult
+
 /datum/religion_sect/preset/cult/blood
 	name = "The Cult of Blood"
 	desc = "Anything you need, little demon."

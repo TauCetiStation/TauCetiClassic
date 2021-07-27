@@ -1992,6 +1992,7 @@
 #include "code\modules\religion\atoms_religify.dm"
 #include "code\modules\religion\bible_info.dm"
 #include "code\modules\religion\building_agent.dm"
+#include "code\modules\religion\encyclopedia.dm"
 #include "code\modules\religion\holy_turf.dm"
 #include "code\modules\religion\religion.dm"
 #include "code\modules\religion\religion_sects.dm"

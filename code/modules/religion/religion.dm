@@ -162,6 +162,8 @@
 	area_types = typesof(area_type)
 	religify_area(null, null, null, TRUE)
 
+	init_encyclopedia()
+
 /datum/religion/process()
 	if(passive_favor_gain == 0.0)
 		STOP_PROCESSING(SSreligion, src)
