@@ -97,7 +97,7 @@
 
 /datum/faction/heist/proc/is_raider_crew_alive()
 	for(var/datum/role/vox_raider/V in members)
-		if(ishuman(V.antag.current) && V.antag.current.stat == DEAD)
+		if(ishuman(V.antag.current) && V.antag.current.stat != DEAD)
 			return TRUE
 
 	return FALSE
