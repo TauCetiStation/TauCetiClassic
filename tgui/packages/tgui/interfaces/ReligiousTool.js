@@ -23,8 +23,8 @@ export const ReligiousTool = (props, context) => {
     <Window
       width={1000}
       height={700}>
-      <Window.Content scrollable>
-        <Flex vertical fill>
+      <Window.Content>
+        <Flex>
           <Tabs textAlign="center" fluid>
             <Tabs.Tab
               selected={tab === 1}
@@ -225,7 +225,7 @@ const Encyclopedia = (props, context) => {
   const fontsize = "14px"
   // about categories here code\modules\religion\encyclopedia.dm
   return (
-    <Flex height="100%" m={1} mr={0} >
+    <Flex>
       <Tabs vertical={1} fontSize={fontsize}>
         {Object.keys(encyclopedia).map(category => (
           <Tabs.Tab
@@ -237,121 +237,122 @@ const Encyclopedia = (props, context) => {
           </Tabs.Tab>
         ))}
       </Tabs>
-      <Flex.Item
-        m={1} mr={0}
-        position="relative"
-        grow={1}>
-
-        {cat === "RITES" && (RITES.map(rite => (
-          <Section
-            title={rite.name}>
-            <BlockQuote fontSize={fontsize}>
-              <Box>
-                {rite.desc.replace(/<[\/]?i>/g, '')}
-              </Box>
-              <br />
-              <Box>
-                <b>Length:</b> {rite.ritual_length / 10} seconds.
-              </Box>
-              <Box
-                color={rite.can_talismaned ? "green" : "red"}>
-                Can{rite.can_talismaned ? "" : "'t"} be talismaned.
-              </Box>
-              <br />
-              {GetAspectBox("Needed Aspects:", rite.needed_aspects, false)}
-              {(!!rite.favor_cost || !!rite.piety_cost) && <br />}
-              {GetCostsBox(rite.favor_cost, rite.piety_cost, false)}
-              <Box>
-                {!!rite.tips.length && (
+      <Section
+        height={52}
+        scrollable
+        width="100%">
+        <Flex.Item>
+          {cat === "RITES" && (RITES.map(rite => (
+            <Section
+              title={rite.name}>
+              <BlockQuote fontSize={fontsize}>
+                <Box>
+                  {rite.desc.replace(/<[\/]?i>/g, '')}
+                </Box>
+                <br />
+                <Box>
+                  <b>Length:</b> {rite.ritual_length / 10} seconds.
+                </Box>
+                <Box
+                  color={rite.can_talismaned ? "green" : "red"}>
+                  Can{rite.can_talismaned ? "" : "'t"} be talismaned.
+                </Box>
+                <br />
+                {GetAspectBox("Needed Aspects:", rite.needed_aspects, false)}
+                {(!!rite.favor_cost || !!rite.piety_cost) && <br />}
+                {GetCostsBox(rite.favor_cost, rite.piety_cost, false)}
+                <Box>
+                  {!!rite.tips.length && (
+                    <Box>
+                      <Box bold> <br />
+                        Tips:
+                      </Box>
+                      <Box ml={3}>
+                        <ui>
+                          {rite.tips.map(tip => (
+                            <li>
+                              <Box>
+                                {tip.replace(/<[\/]?i>/g, '')}
+                              </Box>
+                            </li>
+                          ))}
+                        </ui>
+                      </Box>
+                    </Box>
+                  )}
+                </Box>
+              </BlockQuote>
+            </Section>
+          )))}
+          {cat === "SECTS" && (SECTS.map(sect => (
+            <Section
+              title={sect.name}>
+              <BlockQuote fontSize={fontsize}>
+                <Box>
+                  {sect.desc}
+                </Box><br />
+                {GetAspectBox("Aspect Preset:", sect.aspect_preset, false)}
+                {sect.aspects_count && (
                   <Box>
-                    <Box bold> <br />
-                      Tips:
-                    </Box>
-                    <Box ml={3}>
-                      <ui>
-                        {rite.tips.map(tip => (
-                          <li>
-                            <Box>
-                              {tip.replace(/<[\/]?i>/g, '')}
-                            </Box>
-                          </li>
-                        ))}
-                      </ui>
-                    </Box>
+                    You can choose {sect.aspects_count} aspects.
                   </Box>
                 )}
-              </Box>
-            </BlockQuote>
-          </Section>
-        )))}
-        {cat === "SECTS" && (SECTS.map(sect => (
-          <Section
-            title={sect.name}>
-            <BlockQuote fontSize={fontsize}>
-              <Box>
-                {sect.desc}
-              </Box><br />
-              {GetAspectBox("Aspect Preset:", sect.aspect_preset, false)}
-              {sect.aspects_count && (
+              </BlockQuote>
+            </Section>
+          )))}
+
+          {cat === "ASPECTS" && (ASPECTS.map(aspect => (
+            <Section
+              color={ASPECT2COLOR[aspect.name]}
+              title={aspect.name}>
+              <BlockQuote fontSize={fontsize}>
                 <Box>
-                  You can choose {sect.aspects_count} aspects.
+                  {aspect.desc}
                 </Box>
-              )}
-            </BlockQuote>
-          </Section>
-        )))}
+                {aspect.god_desc && (
+                  <Box> <br />
+                    {aspect.god_desc}
+                  </Box>
+                )}
+              </BlockQuote>
+            </Section>
+          )))}
 
-        {cat === "ASPECTS" && (ASPECTS.map(aspect => (
-          <Section
-            color={ASPECT2COLOR[aspect.name]}
-            title={aspect.name}>
-            <BlockQuote fontSize={fontsize}>
-              <Box>
-                {aspect.desc}
-              </Box>
-              {aspect.god_desc && (
-                <Box> <br />
-                  {aspect.god_desc}
+          {cat === "GOD SPELLS" && (encyclopedia[CODE2STR.GOD_SPELLS].map(spell => (
+            <Section
+              title={spell.name}>
+              <BlockQuote fontSize={fontsize}>
+                {GetAspectBox("Needed Aspects:", spell.needed_aspects)}
+                {GetCostsBox(spell.favor_cost)}
+                <Box>
+                  Cooldown: {spell.charge_max / 10} seconds
                 </Box>
-              )}
-            </BlockQuote>
-          </Section>
-        )))}
+              </BlockQuote>
+            </Section>
+          )))}
 
-        {cat === "GOD SPELLS" && (encyclopedia[CODE2STR.GOD_SPELLS].map(spell => (
-          <Section
-            title={spell.name}>
-            <BlockQuote fontSize={fontsize}>
-              {GetAspectBox("Needed Aspects:", spell.needed_aspects)}
-              {GetCostsBox(spell.favor_cost)}
-              <Box>
-                Cooldown: {spell.charge_max / 10} seconds
-              </Box>
-            </BlockQuote>
-          </Section>
-        )))}
+          {cat === "HOLY REAGENTS" && (encyclopedia[CODE2STR.HOLY_REAGENTS].map(reagent => (
+            <Section
+              title={reagent.name}>
+              <BlockQuote fontSize={fontsize}>
+                {GetAspectBox("Needed Aspects:", reagent.needed_aspects, false)}
+              </BlockQuote>
+            </Section>
+          )))}
 
-        {cat === "HOLY REAGENTS" && (encyclopedia[CODE2STR.HOLY_REAGENTS].map(reagent => (
-          <Section
-            title={reagent.name}>
-            <BlockQuote fontSize={fontsize}>
-              {GetAspectBox("Needed Aspects:", reagent.needed_aspects, false)}
-            </BlockQuote>
-          </Section>
-        )))}
+          {cat === "FAITH REACTIONS" && (encyclopedia[CODE2STR.FAITH_REACTIONS].map(reaction => (
+            <Section
+              title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
+              <BlockQuote fontSize={fontsize}>
+                {GetAspectBox("Needed Aspects:", reaction.needed_aspects, false)}
+                {!!reaction.favor_cost ? <br /> : ""}
+                {GetCostsBox(reaction.favor_cost, 0, false)}
+              </BlockQuote>
+            </Section>
+          )))}
 
-        {cat === "FAITH REACTIONS" && (encyclopedia[CODE2STR.FAITH_REACTIONS].map(reaction => (
-          <Section
-            title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
-            <BlockQuote fontSize={fontsize}>
-              {GetAspectBox("Needed Aspects:", reaction.needed_aspects, false)}
-              {!!reaction.favor_cost ? <br /> : ""}
-              {GetCostsBox(reaction.favor_cost, 0, false)}
-            </BlockQuote>
-          </Section>
-        )))}
-
-      </Flex.Item>
+        </Flex.Item>
+      </Section>
     </Flex>
   );
 };
