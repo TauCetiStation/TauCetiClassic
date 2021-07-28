@@ -189,7 +189,6 @@
 	var/mob/user = ui.user
 	switch(action)
 		if("sect_select")
-			to_chat(world, "kek [params["path"]]")
 			sect_select(user, params["path"])
 		if("perform_rite")
 			to_chat(world, "lol [params["path"]]")

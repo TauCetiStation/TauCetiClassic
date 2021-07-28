@@ -129,14 +129,14 @@ const GetCostsBox = (favor, piety, need_br = true) => {
           {!!favor && (
             <li>
               <Box color="yellow">
-                {favor} favor.
+                {favor} favor
               </Box>
             </li>
           )}
           {!!piety && (
             <li>
               <Box color="pink">
-                {piety} piety.
+                {piety} piety
               </Box>
             </li>
           )}
