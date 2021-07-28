@@ -11,6 +11,8 @@
 	/// Does this require something before being available as an option?
 	var/starter = TRUE
 
+	var/add_religion_name = TRUE
+
 /// Activates once selected
 /datum/religion_sect/proc/on_select(mob/living/L, datum/religion/R)
 	give_binding_rites(L, R)
@@ -136,6 +138,7 @@
 /*        CULT      */
 /********************/
 /datum/religion_sect/preset/cult
+	add_religion_name = FALSE
 
 /datum/religion_sect/preset/cult/blood
 	name = "The Cult of Blood"

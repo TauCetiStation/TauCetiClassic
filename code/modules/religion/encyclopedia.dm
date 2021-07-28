@@ -2,9 +2,9 @@
 #define RITES        "RITES"
 #define SECTS        "SECTS"
 #define ASPECTS      "ASPECTS"
-#define GOD_SPELLS   "GOD_SPELLS"
-#define HOLY_REAGS   "HOLY_REAGENTS"
-#define FAITH_REACTS "FAITH_REACTIONS"
+#define GOD_SPELLS   "GOD SPELLS"
+#define HOLY_REAGS   "HOLY REAGENTS"
+#define FAITH_REACTS "FAITH REACTIONS"
 
 // Rites info
 #define RITE_NAME        "name"
@@ -15,12 +15,14 @@
 #define RITE_PIETY       "piety_cost"
 #define RITE_ASPECTS     "needed_aspects"
 #define RITE_TALISMANED  "can_talismaned"
+#define RITE_PATH        "path"
 
 // Sects info
 #define SECT_NAME      "name"
 #define SECT_DESC      "desc"
 #define SECT_PRESET    "aspect_preset"
 #define SECT_ASP_COUNT "aspects_count"
+#define SECT_PATH      "path"
 
 // Aspect info
 #define ASP_NAME       "name"
@@ -85,6 +87,7 @@
 		rite_info[RITE_PIETY]      = RR.piety_cost
 		rite_info[RITE_ASPECTS]    = RR.needed_aspects
 		rite_info[RITE_TALISMANED] = RR.can_talismaned
+		rite_info[RITE_PATH]       = RR.type
 
 		encyclopedia[RITES] += list(rite_info)
 
@@ -106,14 +109,21 @@
 
 		var/list/sect_info = list()
 
-		sect_info[SECT_NAME] = RS.name + " [name]"
-		sect_info[SECT_DESC] = RS.desc
-		sect_info[SECT_PRESET] = null
+		sect_info[SECT_NAME]      = RS.name
+		if(RS.add_religion_name)
+			sect_info[SECT_NAME] += " [name]"
+		sect_info[SECT_DESC]      = RS.desc
+		sect_info[SECT_PRESET]    = null
 		sect_info[SECT_ASP_COUNT] = null
+		sect_info[SECT_PATH]      = RS.type
 
 		if(istype(RS, /datum/religion_sect/preset))
 			var/datum/religion_sect/preset/PRS = RS
-			sect_info[SECT_PRESET]    = PRS.aspect_preset
+			var/list/aspect_name_by_count = list()
+			for(var/asp_type in PRS.aspect_preset)
+				var/datum/aspect/asp_byond_cheat = asp_type
+				aspect_name_by_count[initial(asp_byond_cheat.name)] = PRS.aspect_preset[asp_type]
+			sect_info[SECT_PRESET]    = aspect_name_by_count
 		else if(istype(RS, /datum/religion_sect/custom))
 			var/datum/religion_sect/custom/CRS = RS
 			sect_info[SECT_ASP_COUNT] = CRS.aspects_count

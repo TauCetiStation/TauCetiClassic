@@ -18,8 +18,6 @@
 	var/datum/religion/religion //easy access
 
 	var/chosen_aspect = FALSE
-	var/choosing_sects = FALSE
-	var/change_preset_name = TRUE
 	var/look_piety = FALSE
 
 	// It's fucking science! I ain't gotta explain this.
@@ -161,6 +159,44 @@
 	else
 		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
 
+/obj/structure/altar_of_gods/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ReligiousTool", religion.name)
+		ui.open()
+
+/obj/structure/altar_of_gods/tgui_data(mob/user)
+	var/list/data = list()
+	//cannot find global vars, so lets offer options
+	if(!chosen_aspect)
+		data["sects"] = religion.encyclopedia[SECTS]
+	else
+		data["sects"] = null
+		data["name"] = religion.sect.name
+		data["desc"] = religion.sect.desc
+		data["favor"] = religion.favor
+		data["deity"] = pick(religion.deity_names)
+
+	return data
+
+/obj/structure/altar_of_gods/tgui_static_data(mob/user)
+	var/list/data = list()
+	data["encyclopedia"] = religion.encyclopedia
+	return data
+
+/obj/structure/altar_of_gods/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	var/mob/user = ui.user
+	switch(action)
+		if("sect_select")
+			to_chat(world, "kek [params["path"]]")
+			sect_select(user, params["path"])
+		if("perform_rite")
+			to_chat(world, "lol [params["path"]]")
+			perform_rite(user, params["rite_name"])
+		else
+			to_chat(world, action)
+
 // This proc should handle sect choice, and ritual execution.
 /obj/structure/altar_of_gods/proc/use_religion_tools(obj/item/I, mob/user)
 	if(!user.mind)
@@ -190,64 +226,33 @@
 	// Except when it is not.
 	return FALSE
 
-/obj/structure/altar_of_gods/proc/interact_nullrod(obj/item/I, mob/user)
-	if(!religion)
-		to_chat(user, "<span class ='warning'>First choose aspects in your religion!</span>")
-		return
-
+/obj/structure/altar_of_gods/proc/perform_rite(mob/user, rite_name)
 	if(performing_rite)
 		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
-		return
-
-	if(religion.rites_info.len == 0 || religion.rites_by_name.len == 0)
-		to_chat(user, "<span class='warning'>Your religion doesn't have any rites to perform!</span>")
 		return
 
 	if(!Adjacent(user))
 		to_chat(user, "<span class='warning'>You are too far away!</span>")
 		return
 
-	if(performing_rite)
-		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
-		return
-
-	if(rite_images.len < religion.rites_info.len)
-		rite_images = get_rite_choices()
-
-	var/choosed_rite = show_radial_menu(user, src, rite_images, require_near = TRUE, tooltips = TRUE)
-	if(!choosed_rite)
-		return
-
-	performing_rite = religion.rites_by_name[choosed_rite]
+	performing_rite = religion.rites_by_name[rite_name]
 	performing_rite.perform_rite(user, src)
 
-/obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
-	if(chosen_aspect || choosing_sects)
-		return
-
-	var/list/available_options = generate_available_sects(user)
-	if(!available_options)
-		return
-
-	choosing_sects = TRUE
-	var/sect_select = input(user, "Select a aspects preset", "Select a preset", null) in available_options
-	if(!Adjacent(user))
-		choosing_sects = FALSE
-		to_chat(user, "<span class='warning'>You are too far away!</span>")
-		return
-
-	var/obj/item/weapon/storage/bible/B = I
+/obj/structure/altar_of_gods/proc/interact_nullrod(obj/item/I, mob/user)
 	if(!religion)
-		religion = B.religion
+		religion = user.my_religion
 		religion.altars |= src
+	tgui_interact(user)
 
-	religion.sect = available_options[sect_select]
-
+/obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
+	religion.sect = new sect_type
 	religion.sect.on_select(user, religion)
 	chosen_aspect = TRUE
 
+/obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
+
 /obj/structure/altar_of_gods/proc/interact_talisman(obj/item/I, mob/user)
-	if(!chosen_aspect || !choosing_sects)
+	if(!chosen_aspect)
 		return
 
 	var/obj/item/weapon/paper/talisman/T = I
@@ -296,24 +301,6 @@
 		return
 
 	return ..()
-
-//eventually want to add sects you get from unlocking certain achievements
-/obj/structure/altar_of_gods/proc/generate_available_sects(mob/user)
-	var/list/variants = list()
-	var/list/sects = typesof(type_of_sects)
-	if(custom_sect_type)
-		sects += custom_sect_type
-	for(var/type in sects)
-		var/datum/religion_sect/sect = new type(src)
-		if(!sect.name)
-			continue
-		if(!sect.starter)
-			continue
-		if(change_preset_name)
-			sect.name += religion.name
-		variants[sect.name] = sect
-
-	return variants
 
 /obj/structure/altar_of_gods/proc/get_rite_choices()
 	var/list/rite_choices = list()
@@ -379,5 +366,4 @@
 /obj/structure/altar_of_gods/proc/setup_altar(datum/religion/R)
 	religion = R
 	religion.altars |= src
-	choosing_sects = TRUE
 	chosen_aspect = TRUE

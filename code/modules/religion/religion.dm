@@ -192,7 +192,6 @@
 
 	for(var/obj/structure/altar_of_gods/altar in altars)
 		altar.chosen_aspect = initial(altar.chosen_aspect)
-		altar.choosing_sects = initial(altar.choosing_sects)
 		altar.religion = initial(altar.religion)
 		altar.performing_rite = initial(altar.performing_rite)
 
