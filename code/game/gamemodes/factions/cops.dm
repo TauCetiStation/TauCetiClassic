@@ -70,7 +70,8 @@
 	. = ..()
 	. += "<br>Уровень розыска: [wanted_level]"
 	var/time_to_cops = ((end_time - start_time) - world.time) / 600
-	. += "<br>До прилёта полиции: [round(time_to_cops)] минут"
+	var/minutes = pluralize_russian(time_to_cops, "[time_to_cops] минута", "[time_to_cops] минуты", "[time_to_cops] минут")
+	. += "<br>До прилёта полиции: [minutes]"
 	. += "<br>Уникальных смертей: [global.deaths_during_shift]"
 
 /datum/faction/cops/custom_result()
