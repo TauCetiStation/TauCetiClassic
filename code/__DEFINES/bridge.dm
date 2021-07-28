@@ -29,6 +29,8 @@
 #define BRIDGE_COLOR_ADMINBAN   "#ff0000"
 #define BRIDGE_COLOR_ADMINWL    "#ffff00"
 
+#define BRIDGE_COLOR_BRIDGE     "#ADB3F0"
+
 //mention types, can be mappet to specific groups
 //if not listed - bot will try to find and slap user
 #define BRIDGE_MENTION_HERE       "here"

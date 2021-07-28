@@ -756,9 +756,12 @@ var/global/BSACooldown = 0
 	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(message)
-		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
+		do_admin_announce(message, (usr.client.holder.fakekey ? "Administrator" : usr.key))
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/do_admin_announce(message, from)
+	to_chat(world, "<span class='admin_announce'><b>[from] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"

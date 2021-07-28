@@ -208,7 +208,7 @@ var/list/alldepartments = list("Central Command")
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
 
-/proc/send_fax(mob/sender, obj/item/weapon/paper/P, department)
+/proc/send_fax(sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
 		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
 			F.print_fax(P.create_self_copy())

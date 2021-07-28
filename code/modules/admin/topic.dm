@@ -1013,13 +1013,13 @@
 				return
 			var/reason = sanitize(input("Please enter reason"))
 			if(!reason)
-				to_chat(M, "<span class='warning'>You have been kicked from the server</span>")
+				to_chat(M, "<span class='warning'>You have been kicked from the server by admin</span>")
 			else
-				to_chat(M, "<span class='warning'>You have been kicked from the server: [reason]</span>")
+				to_chat(M, "<span class='warning'>You have been kicked from the server by admin: [reason]</span>")
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("<span class='notice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
 			//M.client = null
-			qdel(M.client)
+			QDEL_IN(M.client, 2 SECONDS)
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return
