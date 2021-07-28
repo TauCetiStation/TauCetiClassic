@@ -43,7 +43,8 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-	global.deaths_during_shift++
+	if(mind)
+		global.deaths_during_shift++
 
 	//Handle species-specific deaths.
 	if(species)
