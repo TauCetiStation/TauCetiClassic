@@ -3,12 +3,22 @@ import { useBackend, useSharedState } from '../backend';
 import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex } from '../components';
 import { Window } from '../layouts';
 
+// TODO: REMOVE THIS!!!!
+import { createLogger } from '../logging';
+const logger = createLogger('aboba');
+
+const ASPECT2COLOR = []
+
 export const ReligiousTool = (props, context) => {
   const { act, data } = useBackend(context);
   const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
     sects,
+    encyclopedia,
   } = data;
+
+  encyclopedia.ASPECTS.map(aspect => (ASPECT2COLOR[aspect.name] = aspect.color))
+
   return (
     <Window
       width={1000}
@@ -47,7 +57,7 @@ export const ReligiousTool = (props, context) => {
             <RiteTab />
           )}
           {tab === 3 && (
-            <Encyclopediatab />
+            <Encyclopedia />
           )}
         </Flex.Item>
       </Window.Content>
@@ -82,11 +92,67 @@ const SectTab = (props, context) => {
   );
 };
 
+const GetAspectBox = (title, aspects, need_br = true) => {
+  if (!aspects)
+    return null;
+  return (
+    <Box>
+      <Box bold>
+        {title}
+      </Box>
+      <Box ml={3}>
+        <ui>
+          {Object.keys(aspects).map(aspect => (
+            <li>
+              <Box color={ASPECT2COLOR[aspect]}>
+                {aspect} = {aspects[aspect]}
+              </Box>
+            </li>
+          ))}
+        </ui>
+        {need_br ? <br /> : ""}
+      </Box>
+    </Box>
+  )
+}
+
+const GetCostsBox = (favor, piety, need_br = true) => {
+  if (!favor && !piety)
+    return null;
+  return (
+    <Box>
+      <Box bold>
+        Costs:
+      </Box>
+      <Box ml={3}>
+        <ui>
+          {!!favor && (
+            <li>
+              <Box color="yellow">
+                {favor} favor.
+              </Box>
+            </li>
+          )}
+          {!!piety && (
+            <li>
+              <Box color="pink">
+                {piety} piety.
+              </Box>
+            </li>
+          )}
+        </ui>
+      </Box>
+      {need_br ? <br /> : ""}
+    </Box>
+  )
+}
+
 const SectSelectTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     sects,
   } = data;
+
   return (
     <Section fill title="Sect Select">
       <Flex direction="column">
@@ -110,13 +176,7 @@ const SectSelectTab = (props, context) => {
                   </Box>
                   <Box>
                     {sect.aspect_preset || sect.aspects_count ? <br /> : ""}
-                    {sect.aspect_preset && (
-                      Object.keys(sect.aspect_preset).map(aspect => (
-                        <Box>
-                          {aspect} = {sect.aspect_preset[aspect]}
-                        </Box>
-                      ))
-                    )}
+                    {GetAspectBox("Aspects:", sect.aspect_preset)}
                     {sect.aspects_count && (
                       <Box>
                         You can choose {sect.aspects_count} aspects.
@@ -143,7 +203,7 @@ const SectSelectTab = (props, context) => {
   );
 };
 
-const Encyclopediatab = (props, context) => {
+const Encyclopedia = (props, context) => {
   const { act, data } = useBackend(context);
   const [cat, setCat] = useSharedState(context, 'cat', '');
   const {
@@ -163,7 +223,7 @@ const Encyclopediatab = (props, context) => {
   }
 
   const fontsize = "14px"
-
+  // about categories here code\modules\religion\encyclopedia.dm
   return (
     <Flex height="100%" m={1} mr={0} >
       <Tabs vertical={1} fontSize={fontsize}>
@@ -181,38 +241,45 @@ const Encyclopediatab = (props, context) => {
         m={1} mr={0}
         position="relative"
         grow={1}>
+
         {cat === "RITES" && (RITES.map(rite => (
           <Section
             title={rite.name}>
             <BlockQuote fontSize={fontsize}>
               <Box>
-                {rite.desc}
+                {rite.desc.replace(/<[\/]?i>/g, '')}
               </Box>
               <br />
-              {!!rite.needed_aspects && (
-                <div>Needed Aspects:
-                  <Box m={1} mr={1}>
-                    {Object.keys(rite.needed_aspects).map(aspect => (
-                      <Box>
-                        {aspect} = {rite.needed_aspects[aspect]}
-                      </Box>
-                    ))}
-                    <br />
-                  </Box>
-                </div>
-              )}
               <Box>
-                Costs: {rite.favor_cost} favor and {rite.piety_cost} piety.
-              </Box>
-              <Box>
-                Length: {rite.ritual_length / 10} seconds.
+                <b>Length:</b> {rite.ritual_length / 10} seconds.
               </Box>
               <Box
                 color={rite.can_talismaned ? "green" : "red"}>
                 Can{rite.can_talismaned ? "" : "'t"} be talismaned.
               </Box>
+              <br />
+              {GetAspectBox("Needed Aspects:", rite.needed_aspects, false)}
+              {(!!rite.favor_cost || !!rite.piety_cost) && <br />}
+              {GetCostsBox(rite.favor_cost, rite.piety_cost, false)}
               <Box>
-                {rite.tips}
+                {!!rite.tips.length && (
+                  <Box>
+                    <Box bold> <br />
+                      Tips:
+                    </Box>
+                    <Box ml={3}>
+                      <ui>
+                        {rite.tips.map(tip => (
+                          <li>
+                            <Box>
+                              {tip.replace(/<[\/]?i>/g, '')}
+                            </Box>
+                          </li>
+                        ))}
+                      </ui>
+                    </Box>
+                  </Box>
+                )}
               </Box>
             </BlockQuote>
           </Section>
@@ -223,27 +290,20 @@ const Encyclopediatab = (props, context) => {
             <BlockQuote fontSize={fontsize}>
               <Box>
                 {sect.desc}
-              </Box>
-              {sect.aspect_preset && (
-                <Box m={1} mr={1}><br />
-                  Aspect Preset:
-                  {sect.aspect_preset && (
-                    Object.keys(sect.aspect_preset).map(aspect => (
-                      <Box>
-                        {aspect} = {sect.aspect_preset[aspect]}
-                      </Box>)))}
-                </Box>)}
+              </Box><br />
+              {GetAspectBox("Aspect Preset:", sect.aspect_preset, false)}
               {sect.aspects_count && (
-                <Box><br />
+                <Box>
                   You can choose {sect.aspects_count} aspects.
                 </Box>
               )}
             </BlockQuote>
           </Section>
         )))}
+
         {cat === "ASPECTS" && (ASPECTS.map(aspect => (
           <Section
-            color={aspect.color}
+            color={ASPECT2COLOR[aspect.name]}
             title={aspect.name}>
             <BlockQuote fontSize={fontsize}>
               <Box>
@@ -257,71 +317,40 @@ const Encyclopediatab = (props, context) => {
             </BlockQuote>
           </Section>
         )))}
+
         {cat === "GOD SPELLS" && (encyclopedia[CODE2STR.GOD_SPELLS].map(spell => (
           <Section
             title={spell.name}>
             <BlockQuote fontSize={fontsize}>
-              {!!spell.needed_aspects && (
-                <div>Needed Aspects:
-                  <Box m={1} mr={1}>
-                    {Object.keys(spell.needed_aspects).map(aspect => (
-                      <Box>
-                        {aspect} = {spell.needed_aspects[aspect]}
-                      </Box>
-                    ))}
-                    <br />
-                  </Box>
-                </div>
-              )}
-              <Box>
-                Cost: {spell.favor_cost} favor
-              </Box>
+              {GetAspectBox("Needed Aspects:", spell.needed_aspects)}
+              {GetCostsBox(spell.favor_cost)}
               <Box>
                 Cooldown: {spell.charge_max / 10} seconds
               </Box>
             </BlockQuote>
           </Section>
         )))}
+
         {cat === "HOLY REAGENTS" && (encyclopedia[CODE2STR.HOLY_REAGENTS].map(reagent => (
           <Section
             title={reagent.name}>
             <BlockQuote fontSize={fontsize}>
-              {!!reagent.needed_aspects && (
-                <div>Needed Aspects:
-                  <Box m={1} mr={1}>
-                    {Object.keys(reagent.needed_aspects).map(aspect => (
-                      <Box>
-                        {aspect} = {reagent.needed_aspects[aspect]}
-                      </Box>
-                    ))}
-                  </Box>
-                </div>
-              )}
+              {GetAspectBox("Needed Aspects:", reagent.needed_aspects, false)}
             </BlockQuote>
           </Section>
         )))}
+
         {cat === "FAITH REACTIONS" && (encyclopedia[CODE2STR.FAITH_REACTIONS].map(reaction => (
           <Section
             title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
             <BlockQuote fontSize={fontsize}>
-              {!!reaction.needed_aspects && (
-                <div>Needed Aspects:
-                  <Box m={1} mr={1}>
-                    {Object.keys(reaction.needed_aspects).map(aspect => (
-                      <Box>
-                        {aspect} = {reaction.needed_aspects[aspect]}
-                      </Box>
-                    ))}
-                    <br />
-                  </Box>
-                </div>
-              )}
-              <Box>
-                Cost: {reaction.favor_cost} favor per unit
-              </Box>
+              {GetAspectBox("Needed Aspects:", reaction.needed_aspects, false)}
+              {!!reaction.favor_cost ? <br /> : ""}
+              {GetCostsBox(reaction.favor_cost, 0, false)}
             </BlockQuote>
           </Section>
         )))}
+
       </Flex.Item>
     </Flex>
   );
