@@ -135,7 +135,7 @@
 	return TRUE
 
 /obj/item/weapon/extraction_pack/syndicate/try_use_fulton(atom/movable/target, mob/user)
-	if(!istraitor(user))
+	if(!isgundealer(user))
 		to_chat(user, "<span class='warning'>Вы не знаете как это использовать.</span>")
 		return FALSE
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, CALLBACK(src, .proc/give_telecrystal, target.type, user))
@@ -146,7 +146,7 @@
 
 /obj/item/weapon/extraction_pack/syndicate/proc/give_telecrystal(atom/movable/target_type, mob/user)
 	sleep(10 SECONDS) // signals are called async
-	var/datum/role/traitor/is_traitor = istraitor(user)
+	var/datum/role/traitor/dealer/is_traitor = isgundealer(user)
 	if(!is_traitor)
 		return
 	var/datum/component/gamemode/syndicate/S = is_traitor.GetComponent(/datum/component/gamemode/syndicate)

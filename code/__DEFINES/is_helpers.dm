@@ -182,6 +182,8 @@
 
 #define isanygangster(H) isrolebytype(/datum/role/gangster, H)
 
+#define isgundealer(H) isrole(GANGSTER_DEALER, H)
+
 #define isanycop(H) isrolebytype(/datum/role/cop, H)
 
 // BLOB
