@@ -344,7 +344,7 @@ var elements = document.getElementsByName('rights');
 		return
 
 	if(!target.holder)
-		var/confirm = alert("You want to grant permissions for [target.ckey], are you sure?", "Confirmation", "Yes", "No")
+		var/confirm = tgui_alert(usr, "You want to grant permissions for [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
 		if (confirm != "Yes")
 			return
 
