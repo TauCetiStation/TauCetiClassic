@@ -66,16 +66,17 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, datum/callback/callback, datum/callback/early_callback)
 	src.thrownthing = thrownthing
-	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
 	src.target = target
-	src.target_turf = get_turf(target)
-	src.init_dir = get_dir(src, target)
+	src.target_turf = target_turf
+	src.init_dir = init_dir
 	src.maxrange = maxrange
 	src.speed = speed
 	src.thrower = thrower
 	src.diagonals_first = diagonals_first
 	src.callback = callback
 	src.early_callback = early_callback
+
+	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
 
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
