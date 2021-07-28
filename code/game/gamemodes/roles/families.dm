@@ -101,6 +101,7 @@
 
 /datum/role/traitor/dealer
 	name = "Gun Dealer"
+	id = GANGSTER_DEALER
 	required_pref = ROLE_FAMILIES
 
 	telecrystals = 10
