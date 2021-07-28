@@ -2910,9 +2910,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "fT" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -8869,9 +8867,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tf" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -12658,9 +12654,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "Kd" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -12891,9 +12885,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Ob" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"

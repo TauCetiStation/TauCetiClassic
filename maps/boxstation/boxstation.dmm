@@ -209,8 +209,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/table,
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 4;
 	name = "Firing Range APC";
 	pixel_x = 24;
@@ -890,8 +889,7 @@
 	},
 /area/space)
 "abC" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 4;
 	name = "Execution Chamber APC";
 	pixel_x = 24;
@@ -7609,8 +7607,7 @@
 /turf/simulated/floor,
 /area/station/security/lobby)
 "amp" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	dir = 4;
 	name = "Prison Wing APC";
 	pixel_x = 24
@@ -7789,9 +7786,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "amD" = (
-/obj/machinery/power/smes{
-	chargemode = 1
-	},
+/obj/machinery/power/smes/inputting,
 /obj/machinery/camera{
 	c_tag = "Security Substation";
 	network = list("SS13","Security")
@@ -37761,9 +37756,7 @@
 /area/station/rnd/telesci)
 "bpc" = (
 /obj/machinery/light/small,
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable,
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
@@ -60215,8 +60208,7 @@
 	},
 /area/station/aisat/ai_chamber)
 "cow" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	name = "MiniSat External Power APC";
 	pixel_y = -25
 	},
@@ -61459,9 +61451,7 @@
 	},
 /area/station/aisat/antechamber)
 "cqQ" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -65736,8 +65726,7 @@
 /obj/item/weapon/circuitboard/solar_control,
 /obj/item/weapon/tracker_electronics,
 /obj/item/weapon/paper/solar,
-/obj/machinery/power/apc{
-	cell_type = 20000;
+/obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Engineering APC";
 	pixel_y = 25
@@ -66581,8 +66570,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "cDD" = (
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	name = "MiniSat Antechamber Power APC";
 	pixel_y = -28
 	},
@@ -67979,8 +67967,7 @@
 /obj/machinery/bot/floorbot{
 	on = 0
 	},
-/obj/machinery/power/apc{
-	cell_type = 2500;
+/obj/machinery/power/apc/smallcell{
 	name = "MiniSat Internal Power APC";
 	pixel_y = -25
 	},
@@ -78051,8 +78038,7 @@
 /area/station/security/forensic_office)
 "peb" = (
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	cell_type = 2000;
+/obj/machinery/power/apc/smallcell{
 	name = "Forensic APC";
 	pixel_y = -24
 	},
@@ -82352,7 +82338,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/mediumcell{
 	dir = 8;
 	name = "Delivery Office APC";
 	pixel_x = -28
