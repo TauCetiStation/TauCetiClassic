@@ -28,6 +28,7 @@
 	if(world.time > (end_time - 5 MINUTES) && !sent_second_announcement)
 		five_minute_warning()
 		addtimer(CALLBACK(src, .proc/send_in_the_fuzz), 5 MINUTES)
+	
 	..()
 
 /datum/faction/cops/proc/five_minute_warning()

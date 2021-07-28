@@ -31,7 +31,7 @@
 	return TRUE
 
 /proc/spawn_space_police(team_size, cops_to_send)
-	var/list/candidates = pollGhostCandidates("Хотите помочь разобраться с преступностью на станции?", ROLE_FAMILIES,)
+	var/list/candidates = pollGhostCandidates("Хотите помочь разобраться с преступностью на станции?", ROLE_FAMILIES)
 	if(candidates.len)
 		//Pick the (un)lucky players
 		var/numagents = min(team_size, candidates.len)

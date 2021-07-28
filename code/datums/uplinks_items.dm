@@ -368,7 +368,7 @@
 /datum/uplink_item/ammo/deagle
 	name = "Ammo-.45 AE Magazine"
 	desc = "A 7-round .45 AE magazine for use in the desert eagle."
-	item = /obj/item/ammo_box/magazine/m50
+	item = /obj/item/ammo_box/magazine/m50/weakened
 	cost = 4
 	uplink_types = list("dealer")
 

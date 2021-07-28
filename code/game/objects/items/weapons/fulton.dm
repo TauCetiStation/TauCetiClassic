@@ -19,7 +19,7 @@
 		return FALSE
 	if(ismob(AM))
 		extract_time = 100
-	if(AM.anchored || !isturf(AM.loc))
+	if((AM.anchored && !istype(AM, /obj/mecha)) || !isturf(AM.loc))
 		return FALSE
 	to_chat(user, "<span class='notice'>You start attaching the pack to [AM]...</span>")
 	if(isitem(AM))
@@ -160,7 +160,7 @@
 	if(initial(target_type.price) < 1000)
 		to_chat(user, "<span class='warning'>Эта безделушка нам не нужна. Телекристаллы не будут отосланы.</span>")
 		return
-	var/telecrystals = min(10, round(initial(target_type.price) / 1000))
+	var/telecrystals = min(30, round(initial(target_type.price) / 1000))
 	var/sended_crystals_ru = pluralize_russian(telecrystals, "Был выслан [telecrystals] телекристалл", "Было выслано [telecrystals] телекристалла", "Было выслано [telecrystals] телекристаллов")
 	to_chat(user, "<span class='warning'>Посылка была принята. [sended_crystals_ru].</span>")
 
