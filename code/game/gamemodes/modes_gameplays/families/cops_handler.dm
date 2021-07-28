@@ -28,7 +28,7 @@
 	if(world.time > (end_time - 5 MINUTES) && !sent_second_announcement)
 		five_minute_warning()
 		addtimer(CALLBACK(src, .proc/send_in_the_fuzz), 5 MINUTES)
-	
+
 	..()
 
 /datum/faction/cops/proc/five_minute_warning()
@@ -139,19 +139,19 @@
 	switch(newlevel)
 		if(2)
 			if(!sent_second_announcement) // when you hear that they're "arriving in 5 minutes," that's a goddamn guarantee
-				end_time = start_time + 50 MINUTES
+				end_time= start_time + 70 MINUTES
 			announcement_message = "Небольшое количество транспорта ОБОП было замечено на пути к [station_name()]."
 		if(3)
 			if(!sent_second_announcement)
-				end_time = start_time + 40 MINUTES
+				end_time = start_time + 60 MINUTES
 			announcement_message = "Большой отряд транспорта ОБОП был замечен на пути к [station_name()]."
 		if(4)
 			if(!sent_second_announcement)
-				end_time = start_time + 35 MINUTES
+				end_time = start_time + 55 MINUTES
 			announcement_message = "Флот высокотехнологичного транспорта ОБОП был замечен на пути к [station_name()]."
 		if(5)
 			if(!sent_second_announcement)
-				end_time = start_time + 30 MINUTES
+				end_time = start_time + 50 MINUTES
 			announcement_message = "Флот, направляющийся к [station_name()], теперь имеет военизированный транспорт."
 
 	var/time_to_cops = round(((end_time - start_time) - world.time) / 600)
@@ -168,19 +168,19 @@
 	switch(newlevel)
 		if(1)
 			if(!sent_second_announcement)
-				end_time = start_time + 60 MINUTES
+				end_time = start_time + 80 MINUTES
 			announcement_message = "Сейчас только несколько едениц транспорта ОБОП направляется к [station_name()]."
 		if(2)
 			if(!sent_second_announcement)
-				end_time = start_time + 50 MINUTES
+				end_time = start_time + 70 MINUTES
 			announcement_message = "В сторону [station_name()] теперь направляется меньше транспорта ОБОП."
 		if(3)
 			if(!sent_second_announcement)
-				end_time = start_time + 40 MINUTES
+				end_time = start_time + 60 MINUTES
 			announcement_message = "Флот, направляющийся к [station_name()], больше не имеет высокотехнологичного трапспорта."
 		if(4)
 			if(!sent_second_announcement)
-				end_time = start_time + 35 MINUTES
+				end_time = start_time + 55 MINUTES
 			announcement_message = "Конвой, направляющийся к [station_name()], больше не имеет военизированный транспорт."
 
 	var/time_to_cops = round(((end_time - start_time) - world.time) / 600)

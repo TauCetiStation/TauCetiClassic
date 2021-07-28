@@ -22,7 +22,7 @@
 /datum/faction/cops/OnPostSetup()
 	. = ..()
 	start_time = world.time
-	end_time = start_time + 60 MINUTES
+	end_time = start_time + 80 MINUTES
 
 	addtimer(CALLBACK(src, .proc/send_syndicate), 30 MINUTES) // called here because cops are only faction
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
