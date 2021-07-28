@@ -3,6 +3,7 @@
 #define POSE_REST 4
 #define POSE_STAT 8
 
+ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian
 	name = "Ian"
 	real_name = "Ian"
@@ -64,7 +65,6 @@
 	. = ..()
 
 	verbs += /mob/living/carbon/proc/crawl
-	chief_animal_list += src
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
 	..()

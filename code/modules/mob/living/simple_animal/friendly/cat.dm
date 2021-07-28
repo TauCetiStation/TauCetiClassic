@@ -134,14 +134,12 @@
 	if(inventory_mouth)
 		add_overlay(image('icons/mob/animal.dmi',inventory_mouth.icon_state))
 
+
 //DUSTY IS ALIVE! SQUEEEEEEEE~
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 /mob/living/simple_animal/cat/dusty
 	name = "Dusty"
 	desc = "Its fur has the look and feel of velvet, and its tail quivers occasionally."
-
-/mob/living/simple_animal/cat/dusty/atom_init()
-	. = ..()
-	chief_animal_list += src
 
 /mob/living/simple_animal/cat/Syndi
 	name = "SyndiCat"

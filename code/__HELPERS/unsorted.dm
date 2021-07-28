@@ -1577,12 +1577,9 @@ var/list/WALLITEMS = typecacheof(list(
 	if(new_screen)
 		global.current_lobby_screen = new_screen
 	else
-		var/newyear
-		#ifdef NEWYEARCONTENT
-		global.current_lobby_screen = pick(global.new_year_screens)
-		newyear = TRUE
-		#endif
-		if(!newyear)
+		if(SSholiday.holidays[NEW_YEAR])
+			global.current_lobby_screen = pick(global.new_year_screens)
+		else
 			global.current_lobby_screen = pick(global.lobby_screens)
 
 	for(var/mob/dead/new_player/N in new_player_list)
@@ -1631,3 +1628,13 @@ var/list/WALLITEMS = typecacheof(list(
 			return "."
 		if(189)
 			return "-"
+
+// Format a power value in W, kW, MW, or GW
+/proc/DisplayPower(powerused)
+	if(powerused < 1000) // Less than a kW
+		return "[powerused] W"
+	if(powerused < 1000000) // Less than a MW
+		return "[round((powerused * 0.001), 0.01)] kW"
+	if(powerused < 1000000000) // Less than a GW
+		return "[round((powerused * 0.000001), 0.001)] MW"
+	return "[round((powerused * 0.000000001), 0.0001)] GW"
