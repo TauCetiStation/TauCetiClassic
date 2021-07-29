@@ -78,7 +78,7 @@
 	var/source_terminal = ""
 
 /proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
-	var/datum/money_account/M = create_account(H.real_name, start_money, H.age, null)
+	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -91,7 +91,7 @@
 		H.mind.initial_account = M
 	return M
 
-/proc/create_account(new_owner_name = "Default user", starting_funds = 0, age = 10, obj/machinery/account_database/source_db)
+/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)
 
 	//create a new account
 	var/datum/money_account/M = new()
