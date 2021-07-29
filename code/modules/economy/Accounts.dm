@@ -78,7 +78,7 @@
 	var/source_terminal = ""
 
 /proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
-	var/datum/money_account/M = create_account(H.real_name, start_money, null)
+	var/datum/money_account/M = create_account(H.real_name, start_money, H.age, null)
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -91,7 +91,7 @@
 		H.mind.initial_account = M
 	return M
 
-/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db)
+/proc/create_account(new_owner_name = "Default user", starting_funds = 0, age = 10, obj/machinery/account_database/source_db)
 
 	//create a new account
 	var/datum/money_account/M = new()
@@ -106,7 +106,7 @@
 	T.amount = starting_funds
 	if(!source_db)
 		//set a random date, time and location some time over the past decade
-		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year-rand(1,10)]"
+		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year-rand(1,age)]"
 		T.time = "[rand(0,23)]:[rand(11,59)]"
 		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
 
