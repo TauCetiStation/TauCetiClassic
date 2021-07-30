@@ -157,3 +157,5 @@
 	convert_opener = "Chaos is power."
 
 	aspects_count = 5
+
+	add_religion_name = FALSE

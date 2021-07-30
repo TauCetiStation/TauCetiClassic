@@ -8,7 +8,7 @@ import { Window } from '../layouts';
 import { createLogger } from '../logging';
 const logger = createLogger('aboba');
 
-const ASPECT2COLOR = []
+const ASPECT2COLOR = [];
 
 export const ReligiousTool = (props, context) => {
   const { act, data } = useBackend(context);
@@ -18,7 +18,7 @@ export const ReligiousTool = (props, context) => {
     encyclopedia,
   } = data;
 
-  encyclopedia.ASPECTS.map(aspect => (ASPECT2COLOR[aspect.name] = aspect.color))
+  encyclopedia.ASPECTS.map(aspect => (ASPECT2COLOR[aspect.name] = aspect.color));
 
   return (
     <Window
@@ -82,14 +82,14 @@ const GetInfoItem = (title, list) => {
       <Box color="gray">
         Nothing.
       </Box>
-    )
+    );
   } else {
     listItems = list.map(elem => (
-      <li>
+      <li key={elem}>
         <Box>
           {toTitleCase(elem)}
         </Box>
-      </li>))
+      </li>));
   }
 
   return (
@@ -104,8 +104,8 @@ const GetInfoItem = (title, list) => {
         </Box>
       </Section>
     </Flex.Item >
-  )
-}
+  );
+};
 
 const ReligionTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -142,7 +142,8 @@ const ReligionTab = (props, context) => {
                 <ui>
                   <li>
                     <Box color="yellow">
-                      Favor: {favor} / {max_favor} <span style="color:gray;font-size:8pt">(+{passive_favor_gain})</span>
+                      Favor: {favor} / {max_favor}
+                      <span style={{ 'color': 'gray', 'font-size': '8pt' }}>(+{passive_favor_gain})</span>
                     </Box>
                   </li>
                   <li>
@@ -172,13 +173,14 @@ const ReligionTab = (props, context) => {
           {GetInfoItem("Faith Reactions", faith_reactions)}
         </Flex>
       </Box>
-    </Section>
+    </Section >
   );
 };
 
 const GetAspectBox = (title, aspects, need_br = true) => {
-  if (!aspects)
+  if (!aspects) {
     return null;
+  }
   return (
     <Box>
       <Box bold>
@@ -187,7 +189,7 @@ const GetAspectBox = (title, aspects, need_br = true) => {
       <Box ml={3}>
         <ui>
           {Object.keys(aspects).map(aspect => (
-            <li>
+            <li key={aspect}>
               <Box color={ASPECT2COLOR[aspect]}>
                 {aspect} = {aspects[aspect]}
               </Box>
@@ -197,12 +199,13 @@ const GetAspectBox = (title, aspects, need_br = true) => {
         {need_br ? <br /> : ""}
       </Box>
     </Box>
-  )
-}
+  );
+};
 
 const GetCostsBox = (favor, piety, need_br = true) => {
-  if (!favor && !piety)
+  if (!favor && !piety) {
     return null;
+  }
   return (
     <Box>
       <Box bold>
@@ -228,8 +231,8 @@ const GetCostsBox = (favor, piety, need_br = true) => {
       </Box>
       {need_br ? <br /> : ""}
     </Box>
-  )
-}
+  );
+};
 
 const SectSelectTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -241,18 +244,16 @@ const SectSelectTab = (props, context) => {
     <Section fill title="Sect Select">
       <Flex direction="column">
         {sects.map(sect => (
-          <Collapsible
+          <Collapsible key={sect.name}
             title={(
               <Flex mt={-3.3} ml={3}>
-                <Flex.Item>
-                </Flex.Item>
                 <Flex.Item grow>
                   {sect.name}
                 </Flex.Item>
               </Flex>
             )}
             color="transparent">
-            <Flex.Item key={sect} >
+            <Flex.Item key={sect.name} >
               <BlockQuote>
                 <Box>
                   <Box bold>
@@ -369,11 +370,11 @@ const ERitesTab = (props, context) => {
         onInput={(e, v) => setSearchText(v)}
         mb={1} />
       {items.map(rite => (
-        <Section key={rite}
+        <Section key={rite.name}
           title={rite.name}>
           <BlockQuote>
             <Box>
-              {rite.desc.replace(/<[\/]?i>/g, '')}
+              {rite.desc.replace(/<[/]?i>/g, '')}
             </Box>
             <br />
             <Box>
@@ -396,9 +397,9 @@ const ERitesTab = (props, context) => {
                   <Box ml={3}>
                     <ui>
                       {rite.tips.map(tip => (
-                        <li>
+                        <li key={tip}>
                           <Box>
-                            {tip.replace(/<[\/]?i>/g, '')}
+                            {tip.replace(/<[/]?i>/g, '')}
                           </Box>
                         </li>
                       ))}
@@ -410,8 +411,8 @@ const ERitesTab = (props, context) => {
           </BlockQuote>
         </Section>
       ))}
-    </Box>)
-}
+    </Box>);
+};
 
 const ESectsTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -445,7 +446,7 @@ const ESectsTab = (props, context) => {
         onInput={(e, v) => setSearchText(v)}
         mb={1} />
       {items.map(sect => (
-        <Section key={sect}
+        <Section key={sect.name}
           title={sect.name}>
           <BlockQuote>
             <Box>
@@ -459,11 +460,10 @@ const ESectsTab = (props, context) => {
             )}
           </BlockQuote>
         </Section>
-      ))
-      }
+      ))}
     </Box>
-  )
-}
+  );
+};
 
 const EAspectsTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -497,7 +497,7 @@ const EAspectsTab = (props, context) => {
         onInput={(e, v) => setSearchText(v)}
         mb={1} />
       {items.map(aspect => (
-        <Section key={aspect}
+        <Section key={aspect.name}
           color={ASPECT2COLOR[aspect.name]}
           title={aspect.name}>
           <BlockQuote>
@@ -513,8 +513,8 @@ const EAspectsTab = (props, context) => {
         </Section>
       ))}
     </Box>
-  )
-}
+  );
+};
 
 const ESpellsTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -522,7 +522,7 @@ const ESpellsTab = (props, context) => {
     encyclopedia,
   } = data;
 
-  const GOD_SPELLS = encyclopedia["GOD SPELLS"]
+  const GOD_SPELLS = encyclopedia["GOD SPELLS"];
 
   const [
     searchText,
@@ -547,7 +547,7 @@ const ESpellsTab = (props, context) => {
         onInput={(e, v) => setSearchText(v)}
         mb={1} />
       {items.map(spell => (
-        <Section key={spell}
+        <Section key={spell.name}
           title={spell.name}>
           <BlockQuote>
             {GetAspectBox("Needed Aspects:", spell.needed_aspects)}
@@ -559,8 +559,8 @@ const ESpellsTab = (props, context) => {
         </Section>
       ))}
     </Box>
-  )
-}
+  );
+};
 
 const EReagentsTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -568,7 +568,7 @@ const EReagentsTab = (props, context) => {
     encyclopedia,
   } = data;
 
-  const HOLY_REAGENTS = encyclopedia["HOLY REAGENTS"]
+  const HOLY_REAGENTS = encyclopedia["HOLY REAGENTS"];
 
   const [
     searchText,
@@ -593,7 +593,7 @@ const EReagentsTab = (props, context) => {
         onInput={(e, v) => setSearchText(v)}
         mb={1} />
       {items.map(reagent => (
-        <Section key={reagent}
+        <Section key={reagent.name}
           title={reagent.name}>
           <BlockQuote>
             {GetAspectBox("Needed Aspects:", reagent.needed_aspects, false)}
@@ -601,8 +601,8 @@ const EReagentsTab = (props, context) => {
         </Section>
       ))}
     </Box>
-  )
-}
+  );
+};
 
 const EReactionsTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -610,7 +610,7 @@ const EReactionsTab = (props, context) => {
     encyclopedia,
   } = data;
 
-  const FAITH_REACTIONS = encyclopedia["FAITH REACTIONS"]
+  const FAITH_REACTIONS = encyclopedia["FAITH REACTIONS"];
 
   const [
     searchText,
@@ -635,18 +635,18 @@ const EReactionsTab = (props, context) => {
         onInput={(e, v) => setSearchText(v)}
         mb={1} />
       {items.map(reaction => (
-        <Section key={reaction}
+        <Section key={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}
           title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
           <BlockQuote>
             {GetAspectBox("Needed Aspects:", reaction.needed_aspects, false)}
-            {!!reaction.favor_cost ? <br /> : ""}
+            {reaction.favor_cost ? <br /> : ""}
             {GetCostsBox(reaction.favor_cost, 0, false)}
           </BlockQuote>
         </Section>
       ))}
     </Box>
-  )
-}
+  );
+};
 
 const RiteTab = (props, context) => {
   const { act, data } = useBackend(context);
@@ -654,6 +654,7 @@ const RiteTab = (props, context) => {
     rites,
     favor,
     piety,
+    can_talismaning,
   } = data;
 
   const [
@@ -683,20 +684,34 @@ const RiteTab = (props, context) => {
         mb={1} />
       <Flex direction="column">
         {items.map(rite => (
-          <Flex.Item mt={1}>
+          <Flex.Item mt={1} key={rite.name}>
             <Section
               title={rite.name}
               buttons={(
-                <Button
-                  fontColor="white"
-                  disabled={favor < rite.favor_cost || piety < rite.piety_cost}
-                  icon="arrow-right"
-                  onClick={() => act('perform_rite', {
-                    rite_name: rite.name,
-                  })} >
-                  Invoke
-                </Button>
-              )} >
+                <>
+                  <Button
+                    fontColor="white"
+                    disabled={favor < rite.favor_cost || piety < rite.piety_cost}
+                    icon="arrow-right"
+                    onClick={() => act('perform_rite', {
+                      rite_name: rite.name,
+                    })} >
+                    Invoke
+                  </Button>
+                  {can_talismaning && (
+                    <Button
+                      fontColor="white"
+                      tooltip="x2 costs"
+                      disabled={!rite.can_talismaned || favor < rite.favor_cost * 2 || piety < rite.piety_cost * 2}
+                      icon="scroll"
+                      onClick={() => act('talismaning_rite', {
+                        rite_name: rite.name,
+                      })} >
+                      Talismaning
+                    </Button>
+                  )}
+                </>
+              )}>
               <Box
                 color={favor < rite.favor_cost ? "red" : "yellow"}
                 mb={0.5}>
@@ -719,9 +734,9 @@ const RiteTab = (props, context) => {
                       <Box ml={3}>
                         <ui>
                           {rite.tips.map(tip => (
-                            <li>
+                            <li key={tip}>
                               <Box>
-                                {tip.replace(/<[\/]?i>/g, '')}
+                                {tip.replace(/<[/]?i>/g, '')}
                               </Box>
                             </li>
                           ))}
@@ -735,6 +750,6 @@ const RiteTab = (props, context) => {
           </Flex.Item>
         ))}
       </Flex>
-    </Section>
+    </Section >
   );
 };

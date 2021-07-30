@@ -22,6 +22,4 @@
 		if(user.mind.holy_role != CULT_ROLE_MASTER)
 			to_chat(user, "<span class='warning'>Только лидер культа может выбирать аспекты!</span>")
 			return
-		..(I, user)
-	else
-		interact_nullrod(I, user)
+	interact_nullrod(I, user)
