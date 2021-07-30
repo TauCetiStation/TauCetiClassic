@@ -1,8 +1,43 @@
 // Space Cash. Now it isn't that useless.
-/datum/export/stack/cash
+/datum/export/money/cash_c1
 	cost = 1 // Multiplied both by value of each bill and by amount of bills in stack.
 	unit_name = "credit chip"
-	export_types = list(/obj/item/weapon/spacecash)
+	export_types = list(/obj/item/weapon/spacecash/c1)
+
+/datum/export/money/cash_c10
+	cost = 5 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "credit chip"
+	export_types = list(/obj/item/weapon/spacecash/c10)
+
+/datum/export/money/cash_c20
+	cost = 10 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "credit chip"
+	export_types = list(/obj/item/weapon/spacecash/c20)
+
+/datum/export/money/cash_c50
+	cost = 25 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "credit chip"
+	export_types = list(/obj/item/weapon/spacecash/c50)
+
+/datum/export/money/cash_c100
+	cost = 50 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "credit chip"
+	export_types = list(/obj/item/weapon/spacecash/c100)
+
+/datum/export/money/cash_c200
+	cost = 100 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "credit chip"
+	export_types = list(/obj/item/weapon/spacecash/c200)
+
+/datum/export/money/cash_c500
+	cost = 250 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "credit chip"
+	export_types = list(/obj/item/weapon/spacecash/c500)
+
+/datum/export/money/cash_c1000
+	cost = 500 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "credit chip"
+	export_types = list(/obj/item/weapon/spacecash/c1000)
 
 /datum/export/stack/cash/get_amount(obj/O)
 	var/obj/item/weapon/spacecash/C = O
