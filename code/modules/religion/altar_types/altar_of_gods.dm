@@ -155,12 +155,12 @@
 		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
 
 /obj/structure/altar_of_gods/proc/can_interact(mob/user)
-	if(!religion && user.my_religion != religion)
+	if(religion && user.my_religion != religion)
 		to_chat(user, "Are you a member of another religion.")
 		return FALSE
 	if(!user.mind)
 		return FALSE
-	if(user.mind.holy < HOLY_ROLE_PRIEST)
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
 		return FALSE
 	return TRUE
 

@@ -346,50 +346,71 @@ const ERitesTab = (props, context) => {
     RITES,
   } = encyclopedia;
 
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, rite => rite.name);
+
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && RITES
+      .filter(testSearch)
+    // If none of that results in a list, return an empty list
+    || RITES;
+
   return (
-    RITES.map(rite => (
-      <Section key={rite}
-        title={rite.name}>
-        <BlockQuote>
-          <Box>
-            {rite.desc.replace(/<[\/]?i>/g, '')}
-          </Box>
-          <br />
-          <Box>
-            <b>Length:</b> {rite.ritual_length / 10} seconds.
-          </Box>
-          <Box
-            color={rite.can_talismaned ? "green" : "red"}>
-            Can{rite.can_talismaned ? "" : "'t"} be talismaned.
-          </Box>
-          {!rite.needed_aspects ? "" : <br />}
-          {GetAspectBox("Needed Aspects:", rite.needed_aspects, false)}
-          {(!!rite.favor_cost || !!rite.piety_cost) && <br />}
-          {GetCostsBox(rite.favor_cost, rite.piety_cost, false)}
-          <Box>
-            {!!rite.tips.length && (
-              <Box>
-                <Box bold> <br />
-                  Tips:
+    <Box>
+      <Input
+        autoFocus
+        fluid
+        placeholder="Search for..."
+        onInput={(e, v) => setSearchText(v)}
+        mb={1} />
+      {items.map(rite => (
+        <Section key={rite}
+          title={rite.name}>
+          <BlockQuote>
+            <Box>
+              {rite.desc.replace(/<[\/]?i>/g, '')}
+            </Box>
+            <br />
+            <Box>
+              <b>Length:</b> {rite.ritual_length / 10} seconds.
+            </Box>
+            <Box
+              color={rite.can_talismaned ? "green" : "red"}>
+              Can{rite.can_talismaned ? "" : "'t"} be talismaned.
+            </Box>
+            {!rite.needed_aspects ? "" : <br />}
+            {GetAspectBox("Needed Aspects:", rite.needed_aspects, false)}
+            {(!!rite.favor_cost || !!rite.piety_cost) && <br />}
+            {GetCostsBox(rite.favor_cost, rite.piety_cost, false)}
+            <Box>
+              {!!rite.tips.length && (
+                <Box>
+                  <Box bold> <br />
+                    Tips:
+                  </Box>
+                  <Box ml={3}>
+                    <ui>
+                      {rite.tips.map(tip => (
+                        <li>
+                          <Box>
+                            {tip.replace(/<[\/]?i>/g, '')}
+                          </Box>
+                        </li>
+                      ))}
+                    </ui>
+                  </Box>
                 </Box>
-                <Box ml={3}>
-                  <ui>
-                    {rite.tips.map(tip => (
-                      <li>
-                        <Box>
-                          {tip.replace(/<[\/]?i>/g, '')}
-                        </Box>
-                      </li>
-                    ))}
-                  </ui>
-                </Box>
-              </Box>
-            )}
-          </Box>
-        </BlockQuote>
-      </Section>
-    ))
-  )
+              )}
+            </Box>
+          </BlockQuote>
+        </Section>
+      ))}
+    </Box>)
 }
 
 const ESectsTab = (props, context) => {
@@ -401,23 +422,46 @@ const ESectsTab = (props, context) => {
     SECTS,
   } = encyclopedia;
 
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, sect => sect.name);
+
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && SECTS
+      .filter(testSearch)
+    // If none of that results in a list, return an empty list
+    || SECTS;
+
   return (
-    SECTS.map(sect => (
-      <Section key={sect}
-        title={sect.name}>
-        <BlockQuote>
-          <Box>
-            {sect.desc}
-          </Box><br />
-          {GetAspectBox("Aspect Preset:", sect.aspect_preset, false)}
-          {sect.aspects_count && (
+    <Box>
+      <Input
+        autoFocus
+        fluid
+        placeholder="Search for..."
+        onInput={(e, v) => setSearchText(v)}
+        mb={1} />
+      {items.map(sect => (
+        <Section key={sect}
+          title={sect.name}>
+          <BlockQuote>
             <Box>
-              You can choose {sect.aspects_count} aspects.
-            </Box>
-          )}
-        </BlockQuote>
-      </Section>
-    ))
+              {sect.desc}
+            </Box><br />
+            {GetAspectBox("Aspect Preset:", sect.aspect_preset, false)}
+            {sect.aspects_count && (
+              <Box>
+                You can choose {sect.aspects_count} aspects.
+              </Box>
+            )}
+          </BlockQuote>
+        </Section>
+      ))
+      }
+    </Box>
   )
 }
 
@@ -430,23 +474,45 @@ const EAspectsTab = (props, context) => {
     ASPECTS,
   } = encyclopedia;
 
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, aspect => aspect.name);
+
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && ASPECTS
+      .filter(testSearch)
+    // If none of that results in a list, return an empty list
+    || ASPECTS;
+
   return (
-    ASPECTS.map(aspect => (
-      <Section key={aspect}
-        color={ASPECT2COLOR[aspect.name]}
-        title={aspect.name}>
-        <BlockQuote>
-          <Box>
-            {aspect.desc}
-          </Box>
-          {aspect.god_desc && (
-            <Box> <br />
-              {aspect.god_desc}
+    <Box>
+      <Input
+        autoFocus
+        fluid
+        placeholder="Search for..."
+        onInput={(e, v) => setSearchText(v)}
+        mb={1} />
+      {items.map(aspect => (
+        <Section key={aspect}
+          color={ASPECT2COLOR[aspect.name]}
+          title={aspect.name}>
+          <BlockQuote>
+            <Box>
+              {aspect.desc}
             </Box>
-          )}
-        </BlockQuote>
-      </Section>
-    ))
+            {aspect.god_desc && (
+              <Box> <br />
+                {aspect.god_desc}
+              </Box>
+            )}
+          </BlockQuote>
+        </Section>
+      ))}
+    </Box>
   )
 }
 
@@ -458,19 +524,41 @@ const ESpellsTab = (props, context) => {
 
   const GOD_SPELLS = encyclopedia["GOD SPELLS"]
 
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, spell => spell.name);
+
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && GOD_SPELLS
+      .filter(testSearch)
+    // If none of that results in a list, return an empty list
+    || GOD_SPELLS;
+
   return (
-    GOD_SPELLS.map(spell => (
-      <Section key={spell}
-        title={spell.name}>
-        <BlockQuote>
-          {GetAspectBox("Needed Aspects:", spell.needed_aspects)}
-          {GetCostsBox(spell.favor_cost)}
-          <Box>
-            Cooldown: {spell.charge_max / 10} seconds
-          </Box>
-        </BlockQuote>
-      </Section>
-    ))
+    <Box>
+      <Input
+        autoFocus
+        fluid
+        placeholder="Search for..."
+        onInput={(e, v) => setSearchText(v)}
+        mb={1} />
+      {items.map(spell => (
+        <Section key={spell}
+          title={spell.name}>
+          <BlockQuote>
+            {GetAspectBox("Needed Aspects:", spell.needed_aspects)}
+            {GetCostsBox(spell.favor_cost)}
+            <Box>
+              Cooldown: {spell.charge_max / 10} seconds
+            </Box>
+          </BlockQuote>
+        </Section>
+      ))}
+    </Box>
   )
 }
 
@@ -482,15 +570,37 @@ const EReagentsTab = (props, context) => {
 
   const HOLY_REAGENTS = encyclopedia["HOLY REAGENTS"]
 
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, reagent => reagent.name);
+
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && HOLY_REAGENTS
+      .filter(testSearch)
+    // If none of that results in a list, return an empty list
+    || HOLY_REAGENTS;
+
   return (
-    HOLY_REAGENTS.map(reagent => (
-      <Section key={reagent}
-        title={reagent.name}>
-        <BlockQuote>
-          {GetAspectBox("Needed Aspects:", reagent.needed_aspects, false)}
-        </BlockQuote>
-      </Section>
-    ))
+    <Box>
+      <Input
+        autoFocus
+        fluid
+        placeholder="Search for..."
+        onInput={(e, v) => setSearchText(v)}
+        mb={1} />
+      {items.map(reagent => (
+        <Section key={reagent}
+          title={reagent.name}>
+          <BlockQuote>
+            {GetAspectBox("Needed Aspects:", reagent.needed_aspects, false)}
+          </BlockQuote>
+        </Section>
+      ))}
+    </Box>
   )
 }
 
@@ -502,17 +612,39 @@ const EReactionsTab = (props, context) => {
 
   const FAITH_REACTIONS = encyclopedia["FAITH REACTIONS"]
 
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, reaction => reaction.convertable_id + " to " + reaction.result_id);
+
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && FAITH_REACTIONS
+      .filter(testSearch)
+    // If none of that results in a list, return an empty list
+    || FAITH_REACTIONS;
+
   return (
-    FAITH_REACTIONS.map(reaction => (
-      <Section key={reaction}
-        title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
-        <BlockQuote>
-          {GetAspectBox("Needed Aspects:", reaction.needed_aspects, false)}
-          {!!reaction.favor_cost ? <br /> : ""}
-          {GetCostsBox(reaction.favor_cost, 0, false)}
-        </BlockQuote>
-      </Section>
-    ))
+    <Box>
+      <Input
+        autoFocus
+        fluid
+        placeholder="Search for..."
+        onInput={(e, v) => setSearchText(v)}
+        mb={1} />
+      {items.map(reaction => (
+        <Section key={reaction}
+          title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
+          <BlockQuote>
+            {GetAspectBox("Needed Aspects:", reaction.needed_aspects, false)}
+            {!!reaction.favor_cost ? <br /> : ""}
+            {GetCostsBox(reaction.favor_cost, 0, false)}
+          </BlockQuote>
+        </Section>
+      ))}
+    </Box>
   )
 }
 
@@ -574,6 +706,7 @@ const RiteTab = (props, context) => {
                 <Box>
                   {rite.desc}
                 </Box>
+                <br />
                 <Box>
                   Power: {rite.power}
                 </Box>
