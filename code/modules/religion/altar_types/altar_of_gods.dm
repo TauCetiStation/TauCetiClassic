@@ -68,12 +68,7 @@
 	if(look_piety)
 		piety = "and <span class='[religion.style_text]'>[round(religion.piety)] piety</span>"
 
-	msg += "<span class='notice'>The sect currently has [round(religion.favor)] favor [piety] with [pick(religion.deity_names)].\n</span>"
-
-	if(religion.rites_info.len != 0 || religion.rites_by_name.len != 0)
-		msg += "List of available Rites:"
-		for(var/name in religion.rites_info)
-			msg += "\n[religion.rites_info[name]]"
+	msg += "<span class='notice'>The religion currently has [round(religion.favor)] favor [piety] with [pick(religion.deity_names)].\n</span>"
 
 	to_chat(user, msg)
 
@@ -159,6 +154,16 @@
 	else
 		to_chat(user, "<span class='warning'>You don't know how to use this.</span>")
 
+/obj/structure/altar_of_gods/proc/can_interact(mob/user)
+	if(!religion && user.my_religion != religion)
+		to_chat(user, "Are you a member of another religion.")
+		return FALSE
+	if(!user.mind)
+		return FALSE
+	if(user.mind.holy < HOLY_ROLE_PRIEST)
+		return FALSE
+	return TRUE
+
 /obj/structure/altar_of_gods/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -195,25 +200,21 @@
 /obj/structure/altar_of_gods/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
 	var/mob/user = ui.user
+	if(!can_interact(user))
+		return FALSE
 	switch(action)
 		if("sect_select")
 			sect_select(user, params["path"])
+			return TRUE
 		if("perform_rite")
 			to_chat(world, "lol [params["path"]]")
 			perform_rite(user, params["rite_name"])
-		else
-			to_chat(world, action)
+			return FALSE
+	return FALSE
 
 // This proc should handle sect choice, and ritual execution.
 /obj/structure/altar_of_gods/proc/use_religion_tools(obj/item/I, mob/user)
-	if(!user.mind)
-		return
-
-	if(religion && user.my_religion != religion)
-		to_chat(user, "Are you a member of another religion.")
-		return
-
-	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+	if(!can_interact(user))
 		return
 
 	// Assume, that if we've gotten this far, it's a succesful tool use.
@@ -265,7 +266,6 @@
 	religion.sect = new sect_type
 	religion.sect.on_select(user, religion)
 	chosen_aspect = TRUE
-	//SStgui.update_uis(src)
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
 
@@ -304,15 +304,36 @@
 	religion.adjust_piety(-R.piety_cost*2)
 
 /obj/structure/altar_of_gods/proc/get_sects_list()
-	var/list/all_sects = religion.encyclopedia[SECTS]
+	var/list/all_sects = list()
+	for(var/sect_type in religion.get_sects_types())
+		var/datum/religion_sect/RS = new sect_type
 
-	var/list/sects_with_normal_names = all_sects.Copy()
-	for(var/list/sect in sects_with_normal_names)
-		var/datum/religion_sect/RS = sect[SECT_PATH]
-		if(initial(RS.add_religion_name))
-			sect[SECT_NAME] += religion.name
+		var/list/sect_info = list()
 
-	return sects_with_normal_names
+		sect_info[SECT_NAME]      = RS.name
+		if(RS.add_religion_name)
+			sect_info[SECT_NAME] += religion.name
+		sect_info[SECT_DESC]      = RS.desc
+		sect_info[SECT_PRESET]    = null
+		sect_info[SECT_ASP_COUNT] = null
+		sect_info[SECT_PATH]      = RS.type
+
+		if(istype(RS, /datum/religion_sect/preset))
+			var/datum/religion_sect/preset/PRS = RS
+			var/list/aspect_name_by_count = list()
+			for(var/asp_type in PRS.aspect_preset)
+				var/datum/aspect/asp_byond_cheat = asp_type
+				aspect_name_by_count[initial(asp_byond_cheat.name)] = PRS.aspect_preset[asp_type]
+			sect_info[SECT_PRESET]    = aspect_name_by_count
+		else if(istype(RS, /datum/religion_sect/custom))
+			var/datum/religion_sect/custom/CRS = RS
+			sect_info[SECT_ASP_COUNT] = CRS.aspects_count
+
+		all_sects += list(sect_info)
+
+		QDEL_NULL(RS)
+
+	return all_sects
 
 /obj/structure/altar_of_gods/proc/get_aspect_list()
 	var/list/aspects = list()
