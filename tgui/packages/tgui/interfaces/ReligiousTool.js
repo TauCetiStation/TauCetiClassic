@@ -1,6 +1,6 @@
 import { toTitleCase, capitalize, createSearch } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
-import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex } from '../components';
+import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex, Input } from '../components';
 import { FlexItem } from '../components/Flex';
 import { Window } from '../layouts';
 
@@ -447,13 +447,34 @@ const RiteTab = (props, context) => {
     favor,
     piety,
   } = data;
+
+  const [
+    searchText,
+    setSearchText,
+  ] = useSharedState(context, 'searchText', '');
+
+  const testSearch = createSearch(searchText, rite => rite.name);
+
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && rites
+      .filter(testSearch)
+    // If none of that results in a list, return an empty list
+    || rites;
+
   return (
     <Section
       height={52}
       scrollable
       width="100%">
+      <Input
+        autoFocus
+        fluid
+        placeholder="Search for..."
+        onInput={(e, v) => setSearchText(v)}
+        mb={1} />
       <Flex direction="column">
-        {rites.map(rite => (
+        {items.map(rite => (
           <Flex.Item mt={1}>
             <Section
               title={rite.name}
@@ -503,8 +524,7 @@ const RiteTab = (props, context) => {
               </BlockQuote>
             </Section>
           </Flex.Item>
-        ))
-        }
+        ))}
       </Flex>
     </Section>
   );
