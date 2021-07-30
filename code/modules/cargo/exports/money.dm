@@ -1,6 +1,6 @@
 // Space Cash. Now it isn't that useless.
 /datum/export/money/cash_c1
-	cost = 1 // Multiplied both by value of each bill and by amount of bills in stack.
+	cost = 0 // Multiplied both by value of each bill and by amount of bills in stack.
 	unit_name = "credit chip"
 	export_types = list(/obj/item/weapon/spacecash/c1)
 
