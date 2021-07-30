@@ -332,7 +332,6 @@ Class Procs:
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	if(..())
 		return TRUE
-
 	usr.set_machine(src)
 	add_fingerprint(usr)
 

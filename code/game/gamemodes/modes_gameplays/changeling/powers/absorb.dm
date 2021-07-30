@@ -58,7 +58,10 @@
 
 	changeling.absorb_dna(target)
 
-	if(user.get_nutrition() < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
+	var/nutr = user.get_nutrition()
+	if(nutr < 400)
+		user.nutrition += min(target.nutrition, 400 - nutr)
+
 	//Steal all of their languages!
 	for(var/language in target.languages)
 		if(!(language in changeling.absorbed_languages))

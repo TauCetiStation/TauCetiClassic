@@ -1843,6 +1843,7 @@
 
 	if(BP.ipc_head != "Default")
 		to_chat(usr, "<span class='warning'>Your head has no screen!</span>")
+		return
 
 	var/S = input("Write something to display on your screen (emoticons supported):", "Display Text") as text|null
 	if(!S)
