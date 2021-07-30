@@ -46,10 +46,6 @@
 #define REACITON_COST        "favor_cost"
 #define REACTION_ASPECTS     "needed_aspects"
 
-/datum/religion
-	// String information about rituals, sects, aspects, etc.
-	var/list/encyclopedia = list()
-
 /datum/religion/proc/init_encyclopedia()
 	encyclopedia[RITES]        = list()
 	encyclopedia[SECTS]        = list()
@@ -110,8 +106,6 @@
 		var/list/sect_info = list()
 
 		sect_info[SECT_NAME]      = RS.name
-		if(RS.add_religion_name)
-			sect_info[SECT_NAME] += " [name]"
 		sect_info[SECT_DESC]      = RS.desc
 		sect_info[SECT_PRESET]    = null
 		sect_info[SECT_ASP_COUNT] = null

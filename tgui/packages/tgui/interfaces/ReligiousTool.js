@@ -1,6 +1,7 @@
-import { toTitleCase, capitalize } from 'common/string';
+import { toTitleCase, capitalize, createSearch } from 'common/string';
 import { useBackend, useSharedState } from '../backend';
 import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex } from '../components';
+import { FlexItem } from '../components/Flex';
 import { Window } from '../layouts';
 
 // TODO: REMOVE THIS!!!!
@@ -23,34 +24,43 @@ export const ReligiousTool = (props, context) => {
     <Window
       width={1000}
       height={700}>
-      <Window.Content>
-        <Flex>
-          <Tabs textAlign="center" fluid>
-            <Tabs.Tab
-              selected={tab === 1}
-              onClick={() => setTab(1)}>
-              Sect <Icon name="place-of-worship" />
-            </Tabs.Tab>
-            {!sects && (
+      <Window.Content fontSize="14px">
+        <Tabs textAlign="center">
+          <Flex direction="raw" width="100%">
+            <Flex.Item grow={1}>
               <Tabs.Tab
-                selected={tab === 2}
-                onClick={() => setTab(2)}>
-                Rites <Icon name="pray" />
+                fluid
+                selected={tab === 1}
+                onClick={() => setTab(1)}>
+                Religion <Icon name="place-of-worship" />
               </Tabs.Tab>
+            </Flex.Item>
+            {!sects && (
+              <Flex.Item grow={1}>
+                <Tabs.Tab
+                  fluid
+                  selected={tab === 2}
+                  onClick={() => setTab(2)}>
+                  Rites <Icon name="pray" />
+                </Tabs.Tab>
+              </Flex.Item>
             )}
-            <Tabs.Tab
-              selected={tab === 3}
-              onClick={() => setTab(3)}>
-              Encyclopedia <Icon name="book-open" />
-            </Tabs.Tab>
-          </Tabs>
-        </Flex>
-        <Flex.Item grow={1}>
+            <Flex.Item grow={1}>
+              <Tabs.Tab
+                fluid
+                selected={tab === 3}
+                onClick={() => setTab(3)}>
+                Encyclopedia <Icon name="book-open" />
+              </Tabs.Tab>
+            </Flex.Item>
+          </Flex>
+        </Tabs>
+        <Flex.Item>
           {tab === 1 && (
             !!sects && (
               <SectSelectTab />
             ) || (
-              <SectTab />
+              <ReligionTab />
             )
           )}
           {tab === 2 && (
@@ -65,29 +75,103 @@ export const ReligiousTool = (props, context) => {
   );
 };
 
-const SectTab = (props, context) => {
+const GetInfoItem = (title, list) => {
+  let listItems = null;
+  if (!list.length) {
+    listItems = (
+      <Box color="gray">
+        Nothing.
+      </Box>
+    )
+  } else {
+    listItems = list.map(elem => (
+      <li>
+        <Box>
+          {toTitleCase(elem)}
+        </Box>
+      </li>))
+  }
+
+  return (
+    <Flex.Item width="100%" height={22}>
+      <Section
+        title={title}
+        fill={1}>
+        <Box
+          textAlign="left"
+          ml={!list.length ? 0 : 3}>
+          <ui>{listItems}</ui>
+        </Box>
+      </Section>
+    </Flex.Item >
+  )
+}
+
+const ReligionTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     name,
-    desc,
+    deities,
     favor,
-    deity,
+    piety,
+    max_favor,
+    passive_favor_gain,
+    aspects,
+    techs,
+    god_spells,
+    holy_reagents,
+    faith_reactions,
   } = data;
+
   return (
-    <Section fill>
-      <Flex fill vertical fontSize="15px" textAlign="center">
-        <Box>
-          <Flex.Item fontSize="32px" textAlign="center">
-            {" " + name + " "}
+    <Section
+      title={name}
+      textAlign="center">
+      <Box>
+        {deities}
+      </Box>
+      <Box>
+        <Flex mt={2}>
+          <Flex.Item width="100%" height={22}>
+            <Section
+              title="Resources"
+              fill={1}>
+              <Box
+                textAlign="left"
+                ml={3}>
+                <ui>
+                  <li>
+                    <Box color="yellow">
+                      Favor: {favor} / {max_favor} <span style="color:gray;font-size:8pt">(+{passive_favor_gain})</span>
+                    </Box>
+                  </li>
+                  <li>
+                    <Box color="pink">
+                      Piety: {piety}
+                    </Box>
+                  </li>
+                </ui>
+              </Box>
+            </Section>
           </Flex.Item>
-          <Flex.Item mb={2} textAlign="center">
-            {desc}
+          <Flex.Item width="100%" height={22}>
+            <Section
+              title="Aspects"
+              fill={1}>
+              <Box
+                textAlign="left">
+                {GetAspectBox("", aspects)}
+              </Box>
+            </Section>
           </Flex.Item>
-          <Flex.Item color={favor === 0 ? "white" : "green"}>
-            {favor}
-          </Flex.Item>
-        </Box>
-      </Flex>
+          {GetInfoItem("Techs", techs)}
+        </Flex>
+        <Flex>
+          {GetInfoItem("God Spells", god_spells)}
+          {GetInfoItem("Holy Reagents", holy_reagents)}
+          {GetInfoItem("Faith Reactions", faith_reactions)}
+        </Flex>
+      </Box>
     </Section>
   );
 };
@@ -222,13 +306,12 @@ const Encyclopedia = (props, context) => {
     FAITH_REACTIONS: 'FAITH REACTIONS',
   }
 
-  const fontsize = "14px"
   // about categories here code\modules\religion\encyclopedia.dm
   return (
     <Flex>
-      <Tabs vertical={1} fontSize={fontsize}>
+      <Tabs vertical={1}>
         {Object.keys(encyclopedia).map(category => (
-          <Tabs.Tab
+          <Tabs.Tab key={category}
             fluid
             key={category}
             selected={cat === category}
@@ -243,9 +326,9 @@ const Encyclopedia = (props, context) => {
         width="100%">
         <Flex.Item>
           {cat === "RITES" && (RITES.map(rite => (
-            <Section
+            <Section key={rite}
               title={rite.name}>
-              <BlockQuote fontSize={fontsize}>
+              <BlockQuote>
                 <Box>
                   {rite.desc.replace(/<[\/]?i>/g, '')}
                 </Box>
@@ -257,7 +340,7 @@ const Encyclopedia = (props, context) => {
                   color={rite.can_talismaned ? "green" : "red"}>
                   Can{rite.can_talismaned ? "" : "'t"} be talismaned.
                 </Box>
-                <br />
+                {!rite.needed_aspects ? "" : <br />}
                 {GetAspectBox("Needed Aspects:", rite.needed_aspects, false)}
                 {(!!rite.favor_cost || !!rite.piety_cost) && <br />}
                 {GetCostsBox(rite.favor_cost, rite.piety_cost, false)}
@@ -285,9 +368,9 @@ const Encyclopedia = (props, context) => {
             </Section>
           )))}
           {cat === "SECTS" && (SECTS.map(sect => (
-            <Section
+            <Section key={sect}
               title={sect.name}>
-              <BlockQuote fontSize={fontsize}>
+              <BlockQuote>
                 <Box>
                   {sect.desc}
                 </Box><br />
@@ -302,10 +385,10 @@ const Encyclopedia = (props, context) => {
           )))}
 
           {cat === "ASPECTS" && (ASPECTS.map(aspect => (
-            <Section
+            <Section key={aspect}
               color={ASPECT2COLOR[aspect.name]}
               title={aspect.name}>
-              <BlockQuote fontSize={fontsize}>
+              <BlockQuote>
                 <Box>
                   {aspect.desc}
                 </Box>
@@ -319,9 +402,9 @@ const Encyclopedia = (props, context) => {
           )))}
 
           {cat === "GOD SPELLS" && (encyclopedia[CODE2STR.GOD_SPELLS].map(spell => (
-            <Section
+            <Section key={spell}
               title={spell.name}>
-              <BlockQuote fontSize={fontsize}>
+              <BlockQuote>
                 {GetAspectBox("Needed Aspects:", spell.needed_aspects)}
                 {GetCostsBox(spell.favor_cost)}
                 <Box>
@@ -332,18 +415,18 @@ const Encyclopedia = (props, context) => {
           )))}
 
           {cat === "HOLY REAGENTS" && (encyclopedia[CODE2STR.HOLY_REAGENTS].map(reagent => (
-            <Section
+            <Section key={reagent}
               title={reagent.name}>
-              <BlockQuote fontSize={fontsize}>
+              <BlockQuote>
                 {GetAspectBox("Needed Aspects:", reagent.needed_aspects, false)}
               </BlockQuote>
             </Section>
           )))}
 
           {cat === "FAITH REACTIONS" && (encyclopedia[CODE2STR.FAITH_REACTIONS].map(reaction => (
-            <Section
+            <Section key={reaction}
               title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
-              <BlockQuote fontSize={fontsize}>
+              <BlockQuote>
                 {GetAspectBox("Needed Aspects:", reaction.needed_aspects, false)}
                 {!!reaction.favor_cost ? <br /> : ""}
                 {GetCostsBox(reaction.favor_cost, 0, false)}
@@ -361,65 +444,68 @@ const RiteTab = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     rites,
-    deity,
-    icon,
-    alignment,
     favor,
+    piety,
   } = data;
-  return (<div>kek</div>)
-}
-  /*
-return (
-<>
-{!rites.length && (
-<Section fill >
-<Dimmer>
-<Flex vertical>
-<Flex.Item textAlign="center">
-<Icon
-color={ALIGNMENT2COLOR[alignment]}
-name={icon}
-size={10}
-/>
-</Flex.Item>
-<Flex.Item fontSize="18px" color={ALIGNMENT2COLOR[alignment]}>
-{deity} does not have any invocations.
-</Flex.Item>
-</Flex>
-</Dimmer>
-</Section>
-)}
-<Flex vertical>
-{rites.map(rite => (
-<Flex.Item key={rite}>
-<Section
-title={rite.name}
-buttons={(
-<Button
-fontColor="white"
-iconColor={ALIGNMENT2COLOR[alignment]}
-disabled={favor < rite.favor}
-color="transparent"
-icon="arrow-right"
-onClick={() => act('perform_rite', {
-rite_name: rite.name,
-})} >
-Invoke
-</Button>
-)} >
-<Box
-color={favor < rite.favor ? "red" : "grey"}
-mb={0.5}>
-<Icon name="star" /> Costs {rite.favor} favor.
-</Box>
-<BlockQuote>
-{rite.desc}
-</BlockQuote>
-</Section>
-</Flex.Item>
-))}
-</Flex>
-</>
-);
+  return (
+    <Section
+      height={52}
+      scrollable
+      width="100%">
+      <Flex direction="column">
+        {rites.map(rite => (
+          <Flex.Item mt={1}>
+            <Section
+              title={rite.name}
+              buttons={(
+                <Button
+                  fontColor="white"
+                  disabled={favor < rite.favor_cost || piety < rite.piety_cost}
+                  icon="arrow-right"
+                  onClick={() => act('perform_rite', {
+                    rite_name: rite.name,
+                  })} >
+                  Invoke
+                </Button>
+              )} >
+              <Box
+                color={favor < rite.favor_cost ? "red" : "yellow"}
+                mb={0.5}>
+                <Icon name="star" /> Costs {rite.favor_cost} favor.
+              </Box>
+              <BlockQuote>
+                <Box>
+                  {rite.desc}
+                </Box>
+                <Box>
+                  Power: {rite.power}
+                </Box>
+                <Box>
+                  {!!rite.tips.length && (
+                    <Box>
+                      <Box bold> <br />
+                        Tips:
+                      </Box>
+                      <Box ml={3}>
+                        <ui>
+                          {rite.tips.map(tip => (
+                            <li>
+                              <Box>
+                                {tip.replace(/<[\/]?i>/g, '')}
+                              </Box>
+                            </li>
+                          ))}
+                        </ui>
+                      </Box>
+                    </Box>
+                  )}
+                </Box>
+              </BlockQuote>
+            </Section>
+          </Flex.Item>
+        ))
+        }
+      </Flex>
+    </Section>
+  );
 };
-*/

@@ -169,13 +169,21 @@
 	var/list/data = list()
 	//cannot find global vars, so lets offer options
 	if(!chosen_aspect)
-		data["sects"] = religion.encyclopedia[SECTS]
+		data["sects"] = get_sects_list()
 	else
 		data["sects"] = null
-		data["name"] = religion.sect.name
-		data["desc"] = religion.sect.desc
+		data["name"] = religion.name
+		data["deities"] = get_english_list(religion.deity_names)
 		data["favor"] = religion.favor
-		data["deity"] = pick(religion.deity_names)
+		data["piety"] = religion.piety
+		data["max_favor"] = religion.max_favor
+		data["passive_favor_gain"] = religion.passive_favor_gain
+		data["aspects"] = get_aspect_list()
+		data["rites"] = get_rites_list()
+		data["techs"] = get_techs_list()
+		data["god_spells"] = get_spells_list()
+		data["holy_reagents"] = get_reagents_list()
+		data["faith_reactions"] = get_reactions_list()
 
 	return data
 
@@ -226,6 +234,9 @@
 	return FALSE
 
 /obj/structure/altar_of_gods/proc/perform_rite(mob/user, rite_name)
+	if(!rite_name)
+		return
+
 	if(performing_rite)
 		to_chat(user, "<span class='warning'>You are already performing [performing_rite.name]!</span>")
 		return
@@ -238,15 +249,23 @@
 	performing_rite.perform_rite(user, src)
 
 /obj/structure/altar_of_gods/proc/interact_nullrod(obj/item/I, mob/user)
-	if(!religion)
+	if(!religion && user.my_religion)
 		religion = user.my_religion
 		religion.altars |= src
+
+	if(!religion)
+		return
+
 	tgui_interact(user)
 
 /obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
+	if(!sect_type)
+		return
+
 	religion.sect = new sect_type
 	religion.sect.on_select(user, religion)
 	chosen_aspect = TRUE
+	//SStgui.update_uis(src)
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
 
@@ -283,6 +302,67 @@
 	T.rite.piety_cost = 0
 	religion.adjust_favor(-R.favor_cost*2)
 	religion.adjust_piety(-R.piety_cost*2)
+
+/obj/structure/altar_of_gods/proc/get_sects_list()
+	var/list/all_sects = religion.encyclopedia[SECTS]
+
+	var/list/sects_with_normal_names = all_sects.Copy()
+	for(var/list/sect in sects_with_normal_names)
+		var/datum/religion_sect/RS = sect[SECT_PATH]
+		if(initial(RS.add_religion_name))
+			sect[SECT_NAME] += religion.name
+
+	return sects_with_normal_names
+
+/obj/structure/altar_of_gods/proc/get_aspect_list()
+	var/list/aspects = list()
+	for(var/aspect_name in religion.aspects)
+		var/datum/aspect/asp = religion.aspects[aspect_name]
+		aspects[aspect_name] = asp.power
+	return aspects
+
+/obj/structure/altar_of_gods/proc/get_rites_list()
+	var/list/all_rites = list()
+	for(var/rite_name in religion.rites_by_name)
+		var/list/rite_info = list()
+		var/datum/religion_rites/RR = religion.rites_by_name[rite_name]
+		rite_info[RITE_NAME]       = RR.name
+		rite_info[RITE_DESC]       = RR.desc
+		rite_info[RITE_TIPS]       = RR.tips
+		rite_info[RITE_LENGTH]     = RR.ritual_length
+		rite_info[RITE_FAVOR]      = RR.favor_cost
+		rite_info[RITE_PIETY]      = RR.piety_cost
+		rite_info[RITE_TALISMANED] = RR.can_talismaned
+		rite_info[RITE_PATH]       = RR.type
+		rite_info["power"]         = RR.divine_power
+		all_rites += list(rite_info)
+	return all_rites
+
+/obj/structure/altar_of_gods/proc/get_techs_list()
+	var/list/techs = list()
+	for(var/tech_name in religion.all_techs)
+		techs += tech_name
+	return techs
+
+/obj/structure/altar_of_gods/proc/get_spells_list()
+	var/list/all_spells = list()
+	for(var/type in religion.god_spells)
+		var/obj/spell = type
+		all_spells += initial(spell.name)
+	return all_spells
+
+/obj/structure/altar_of_gods/proc/get_reagents_list()
+	var/list/reagents = list()
+	for(var/reagent_name in religion.holy_reagents)
+		reagents += reagent_name
+	return reagents
+
+/obj/structure/altar_of_gods/proc/get_reactions_list()
+	var/list/reactions = list()
+	for(var/reaction_name in religion.faith_reactions)
+		var/datum/faith_reaction/FR = religion.faith_reactions[reaction_name]
+		reactions += "[FR.convertable_id] to [FR.result_id]"
+	return reactions
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
 	if(iswrench(C))
