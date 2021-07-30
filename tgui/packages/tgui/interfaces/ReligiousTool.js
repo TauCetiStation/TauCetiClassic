@@ -299,19 +299,16 @@ const Encyclopedia = (props, context) => {
     ASPECTS,
   } = encyclopedia;
 
-  // because space
-  const CODE2STR = {
-    GOD_SPELLS: 'GOD SPELLS',
-    HOLY_REAGENTS: 'HOLY REAGENTS',
-    FAITH_REACTIONS: 'FAITH REACTIONS',
-  }
+  const GOD_SPELLS = encyclopedia["GOD SPELLS"]
+  const HOLY_REAGENTS = encyclopedia["HOLY REAGENTS"]
+  const FAITH_REACTIONS = encyclopedia["FAITH REACTIONS"]
 
   // about categories here code\modules\religion\encyclopedia.dm
   return (
     <Flex>
       <Tabs vertical={1}>
         {Object.keys(encyclopedia).map(category => (
-          <Tabs.Tab key={category}
+          <Tabs.Tab
             fluid
             key={category}
             selected={cat === category}
@@ -401,7 +398,7 @@ const Encyclopedia = (props, context) => {
             </Section>
           )))}
 
-          {cat === "GOD SPELLS" && (encyclopedia[CODE2STR.GOD_SPELLS].map(spell => (
+          {cat === "GOD SPELLS" && (GOD_SPELLS.map(spell => (
             <Section key={spell}
               title={spell.name}>
               <BlockQuote>
@@ -414,7 +411,7 @@ const Encyclopedia = (props, context) => {
             </Section>
           )))}
 
-          {cat === "HOLY REAGENTS" && (encyclopedia[CODE2STR.HOLY_REAGENTS].map(reagent => (
+          {cat === "HOLY REAGENTS" && (HOLY_REAGENTS.map(reagent => (
             <Section key={reagent}
               title={reagent.name}>
               <BlockQuote>
@@ -423,7 +420,7 @@ const Encyclopedia = (props, context) => {
             </Section>
           )))}
 
-          {cat === "FAITH REACTIONS" && (encyclopedia[CODE2STR.FAITH_REACTIONS].map(reaction => (
+          {cat === "FAITH REACTIONS" && (FAITH_REACTIONS.map(reaction => (
             <Section key={reaction}
               title={capitalize(reaction.convertable_id) + " to " + capitalize(reaction.result_id)}>
               <BlockQuote>
