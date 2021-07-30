@@ -352,10 +352,9 @@
 	return FALSE // In case we didn't find anything.
 
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
-	if(vessel && regenerating_bodypart) // start fixing broken/destroyed limb
+	if(regenerating_bodypart) // start fixing broken/destroyed limb
 		if(remove_blood_amount)
-			for(var/datum/reagent/blood/B in vessel.reagent_list)
-				B.volume -= remove_blood_amount
+			blood_remove(remove_blood_amount)
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
 		if(regenerating_bodypart.is_stump)
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty

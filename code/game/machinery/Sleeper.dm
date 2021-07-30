@@ -99,10 +99,10 @@
 		if(filtering > 0)
 			if(beaker)
 				if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-					H.vessel.trans_to(beaker, 1)
+					H.blood_trans_to(beaker, 1)
 					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
 						H.reagents.trans_to(beaker, 3)
-						H.vessel.trans_to(beaker, 1)
+						H.blood_trans_to(beaker, 1)
 	return
 
 /obj/machinery/sleeper/blob_act()
