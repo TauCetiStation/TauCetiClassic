@@ -195,7 +195,7 @@
 
 /obj/structure/altar_of_gods/tgui_static_data(mob/user)
 	var/list/data = list()
-	data["encyclopedia"] = religion.encyclopedia
+	data["encyclopedia"] = religion.encyclopedia.get_entire_encyclopedia()
 	return data
 
 /obj/structure/altar_of_gods/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)

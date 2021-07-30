@@ -127,7 +127,7 @@
 	// It`s hud
 	var/symbol_icon_state
 	// String information about rituals, sects, aspects, etc.
-	var/list/encyclopedia = list()
+	var/datum/encyclopedia/religion/encyclopedia = new
 
 	/*
 		Building
@@ -164,7 +164,7 @@
 	area_types = typesof(area_type)
 	religify_area(null, null, null, TRUE)
 
-	init_encyclopedia()
+	encyclopedia.init_encyclopedia(src)
 
 /datum/religion/process()
 	if(passive_favor_gain == 0.0)

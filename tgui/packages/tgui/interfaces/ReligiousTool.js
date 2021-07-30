@@ -143,7 +143,7 @@ const ReligionTab = (props, context) => {
                   <li>
                     <Box color="yellow">
                       Favor: {favor} / {max_favor}
-                      <span style={{ 'color': 'gray', 'font-size': '8pt' }}>(+{passive_favor_gain})</span>
+                      <span style={{ 'color': 'gray', 'font-size': '8pt' }}> (+{passive_favor_gain})</span>
                     </Box>
                   </li>
                   <li>
