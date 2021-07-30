@@ -305,7 +305,7 @@
 		disable()
 
 /obj/effect/anomaly/bluespace/cult_portal/proc/send_request_to_ghost()
-	var/list/candidates = pollGhostCandidates("Хотите быть рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
+	var/list/candidates = pollGhostCandidates("Хотите стать рабом древнего бога?", ROLE_CULTIST, IGNORE_NARSIE_SLAVE, 10 SECONDS)
 	if(!candidates.len)
 		return
 
@@ -333,6 +333,13 @@
 	new /obj/effect/temp_visual/cult/sparks(T)
 
 	C.key = slave.key
+
+	if(global.cult_religion)
+		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)
+	else
+		SSticker.mode.CreateFaction(/datum/faction/cult)
+		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)// religion was created in faction
+
 	var/rand_num = rand(1, 3)
 	for(var/i in 1 to rand_num)
 		step(C, pick(alldirs))

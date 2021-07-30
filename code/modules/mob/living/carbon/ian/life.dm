@@ -123,8 +123,6 @@
 	handle_regular_status_updates()
 	update_canmove()
 
-	//handle_regular_hud_updates() mob/living/Life() handles this already. i'l leave this as reminder. need to fix for human, monkey and maybe aliens also.
-
 /mob/living/carbon/ian/handle_regular_hud_updates()
 	if(!..())
 		return FALSE
@@ -163,19 +161,19 @@
 			healths.icon_state = "health7"
 
 	if(hud_used && hud_used.staminadisplay)
-		var/obj/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
+		var/atom/movable/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
 		SB.icon_state = "stam_bar_[round(stamina, 5)]"
 
 	if(oxygen_alert)
-		throw_alert("ian_oxy", /obj/screen/alert/ian_oxy)
+		throw_alert("ian_oxy", /atom/movable/screen/alert/ian_oxy)
 	else
 		clear_alert("ian_oxy")
 	if(phoron_alert)
-		throw_alert("ian_tox", /obj/screen/alert/ian_tox)
+		throw_alert("ian_tox", /atom/movable/screen/alert/ian_tox)
 	else
 		clear_alert("ian_tox")
 	if(fire_alert)
-		throw_alert("ian_hot", /obj/screen/alert/ian_hot)
+		throw_alert("ian_hot", /atom/movable/screen/alert/ian_hot)
 	else
 		clear_alert("ian_hot")
 
@@ -488,19 +486,19 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-			throw_alert("pressure", /obj/screen/alert/highpressure, 2)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
 			clear_alert("pressure")
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+			throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 		else
 			if( !(COLD_RESISTANCE in mutations) )
 				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
 			else
-				throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+				throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
 
 /mob/living/carbon/ian/handle_fire()
 	if(..())
@@ -622,7 +620,5 @@
 	tod = worldtime2text()
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	if(SSticker.mode)
-		SSticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
 	return ..(gibbed)

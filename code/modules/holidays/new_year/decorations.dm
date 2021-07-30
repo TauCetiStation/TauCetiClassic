@@ -1,7 +1,7 @@
 /obj/item/decoration
 	name = "decoration"
 	desc = "Winter is coming!"
-	icon = 'code/modules/holidays/new_year/decorations.dmi'
+	icon = 'icons/holidays/new_year/decorations.dmi'
 	icon_state = "santa"
 	layer = 4.1
 
@@ -227,7 +227,7 @@
 /obj/structure/snowman
 	name = "snowman"
 	desc = "That's a snowman. He is staring at you. Where is his hat, though?"
-	icon = 'code/modules/holidays/new_year/decorations.dmi'
+	icon = 'icons/holidays/new_year/decorations.dmi'
 	icon_state = "snowman_s"
 	anchored = FALSE
 	var/health = 50

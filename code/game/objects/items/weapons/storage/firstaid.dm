@@ -133,7 +133,7 @@
 		var/new_color = input(user, "Choose color!") as color|null
 		if(!new_color)
 			return
-		if(!in_range(src, usr) || !A.use(1))
+		if(!Adjacent(usr) || !A.use(1))
 			return
 		wrapper_color = new_color
 		update_icon()

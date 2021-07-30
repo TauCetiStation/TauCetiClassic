@@ -606,7 +606,7 @@
 	name = "Exosuit Engineering Equipement (Hydraulic Clamp)"
 	id = "mech_hydraulic_clamp"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+	build_path = /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	starts_unlocked = TRUE
@@ -616,7 +616,7 @@
 	name = "Exosuit Engineering Equipement (Drill)"
 	id = "mech_drill"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill
+	build_path = /obj/item/mecha_parts/mecha_equipment/drill
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	starts_unlocked = TRUE
@@ -626,7 +626,7 @@
 	name = "Exosuit Engineering Equipement (Extinguisher)"
 	id = "mech_extinguisher"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/extinguisher
+	build_path = /obj/item/mecha_parts/mecha_equipment/extinguisher
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	starts_unlocked = TRUE
@@ -636,7 +636,7 @@
 	name = "Exosuit Engineering Equipement (Cable Layer)"
 	id = "mech_cable_layer"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/cable_layer
+	build_path = /obj/item/mecha_parts/mecha_equipment/cable_layer
 	materials = list(MAT_METAL=10000)
 	construction_time = 100
 	starts_unlocked = TRUE
@@ -646,7 +646,7 @@
 	name = "Exosuit Medical Equipement (Mounted Sleeper)"
 	id = "mech_sleeper"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/sleeper
+	build_path = /obj/item/mecha_parts/mecha_equipment/sleeper
 	materials = list(MAT_METAL=5000, MAT_GLASS=10000)
 	construction_time = 100
 	starts_unlocked = TRUE
@@ -797,7 +797,7 @@
 	desc = "An exosuit-mounted Rapid Construction Device."
 	id = "mech_rcd"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/rcd
+	build_path = /obj/item/mecha_parts/mecha_equipment/rcd
 	materials = list(MAT_METAL=30000, MAT_GOLD=20000, MAT_PHORON=25000, MAT_SILVER=20000)
 	construction_time = 1200
 	category = list("Exosuit Equipment")
@@ -857,7 +857,7 @@
 	desc = "Exosuit-mounted syringe gun and chemical synthesizer."
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun
+	build_path = /obj/item/mecha_parts/mecha_equipment/syringe_gun
 	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
 	construction_time = 200
 	category = list("Exosuit Equipment")
@@ -867,7 +867,7 @@
 	desc = "An upgraded version of the standard drill."
 	id = "mech_diamond_drill"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+	build_path = /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	materials = list(MAT_METAL=10000, MAT_DIAMOND=6500)
 	construction_time = 100
 	category = list("Exosuit Equipment")

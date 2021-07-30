@@ -2,7 +2,7 @@
 // will get logs that are one big line if the system is Linux and they are using notepad.  This solves it by adding CR to every line ending
 // in the logs.  ascii character 13 = CR
 
-/var/global/log_end= world.system_type == UNIX ? ascii2text(13) : ""
+/var/global/log_end = world.system_type == UNIX ? ascii2text(13) : ""
 
 //print an error message to world.log
 #define ERROR(MSG) error("[MSG] in [__FILE__] at line [__LINE__] src: [src] usr: [usr].")
@@ -23,7 +23,7 @@
 
 /proc/round_log(msg)
 	world.log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
-	game_log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
+	global.game_log << "\[[time_stamp()]][global.round_id ? "Round #[global.round_id]:" : ""] [msg][log_end]"
 
 /proc/log_href(text, say_type)
 	if (config && config.log_hrefs)
@@ -51,23 +51,46 @@
 	if (config && config.log_asset)
 		global.asset_log << "\[[time_stamp()]]ASSET: [text][log_end]"
 
-/proc/log_tgui(user_or_client, text)
-	if (config.log_tgui)
-		var/entry = ""
-		if(!user_or_client)
-			entry += "no user"
-		else if(istype(user_or_client, /mob))
-			var/mob/user = user_or_client
-			entry += "[user.ckey] (as [user])"
-		else if(istype(user_or_client, /client))
-			var/client/client = user_or_client
-			entry += "[client.ckey]"
-		entry += ":\n[text]"
-		global.tgui_log << "\[[time_stamp()]]TGUI: [entry][log_end]"
+/**
+ * Appends a tgui-related log entry. All arguments are optional.
+ */
+/proc/log_tgui(user, message, context, datum/tgui_window/window, datum/src_object)
+	if (!config.log_tgui)
+		return
+
+	var/entry = ""
+	// Insert user info
+	if(!user)
+		entry += "<nobody>"
+	else if(istype(user, /mob))
+		var/mob/mob = user
+		entry += "[mob.ckey] (as [mob] at [COORD(mob)])"
+	else if(istype(user, /client))
+		var/client/client = user
+		entry += "[client.ckey]"
+	// Insert context
+	if(context)
+		entry += " in [context]"
+	else if(window)
+		entry += " in [window.id]"
+	// Resolve src_object
+	if(!src_object && window && window.locked_by)
+		src_object = window.locked_by.src_object
+	// Insert src_object info
+	if(src_object)
+		entry += "\nUsing: [src_object.type] \ref[src_object]"
+	// Insert message
+	if(message)
+		entry += "\n[message]"
+	global.tgui_log << "\[[time_stamp()]]TGUI: [entry][log_end]"
 
 /proc/log_game(text)
 	if (config.log_game)
 		global.game_log << "\[[time_stamp()]]GAME: [text][log_end]"
+
+/proc/log_mode(text)
+	if (config.log_game)
+		global.game_log << "\[[time_stamp()]]MODE: [text][log_end]"
 
 /proc/log_vote(text)
 	if (config.log_vote)
@@ -190,7 +213,7 @@
 	if(dir & UP) comps += "UP"
 	if(dir & DOWN) comps += "DOWN"
 
-	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")
+	return get_english_list(comps, nothing_text="0", and_text="|", comma_text="|")
 
 /proc/log_fax(text)
 	if (config.log_fax)
@@ -224,12 +247,14 @@
 		temprole = Mind.special_role
 		objectives = ""
 		if(temprole)							//if they are an antagonist of some sort.
-			if(Mind.objectives.len)
-				for(var/datum/objective/O in Mind.objectives)
-					if(length(objectives))
-						objectives += " | "
-					objectives += "[O.explanation_text]"
-				objectives = " \[[objectives]\]"
+			for(var/role in Mind.antag_roles)
+				var/datum/role/R = Mind.antag_roles[role]
+				if(R.objectives.objectives.len)
+					for(var/datum/objective/O in R.objectives.GetObjectives())
+						if(length(objectives))
+							objectives += " | "
+						objectives += "[O.explanation_text]"
+					objectives = " \[[objectives]\]"
 
 			if(temprole in total_antagonists)	//If the role exists already, add the name to it
 				total_antagonists[temprole] += "\n, [Mind.name]([Mind.key])[objectives]"
@@ -254,11 +279,11 @@
 	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
 	stats["duration"] = roundduration2text()
 	stats["mode"] = SSticker.mode
-	stats["mode_result"] = SSticker.mode.mode_result
+	stats["mode_result"] = SSticker.mode.get_mode_result()
 	stats["map"] = SSmapping.config.map_name
 
-	stats["completion_html"] = SSticker.mode.completion_text
-	stats["completion_antagonists"] = antagonists_completion//todo: icon2base64 icons?
+	stats["completion_html"] = SSticker.mode.completition_text
+	stats["completion_antagonists"] = antagonists_completion
 
 	stats["score"] = score
 	stats["achievements"] = achievements

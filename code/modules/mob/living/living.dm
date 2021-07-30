@@ -7,7 +7,8 @@
 	default_pixel_y = pixel_y
 	default_layer = layer
 
-	for(var/datum/atom_hud/data/hud in global.huds)
+	for(var/H in get_all_data_huds())
+		var/datum/atom_hud/data/hud = H
 		hud.add_to_hud(src)
 
 	if(moveset_type)
@@ -688,7 +689,7 @@
 		if(moving_diagonally)
 			return .
 
-	if (s_active && !( s_active in contents ) && get_turf(s_active) != get_turf(src))	//check !( s_active in contents ) first so we hopefully don't have to call get_turf() so much.
+	if (s_active && s_active.loc != src && get_turf(s_active) != get_turf(src))	//check s_active.loc != src first so we hopefully don't have to call get_turf() so much.
 		s_active.close(src)
 
 	if(update_slimes)
@@ -717,7 +718,7 @@
 /mob/living/proc/makeTrail(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc))
 		return
-		
+
 	var/trail_type = getTrail()
 	if(!trail_type)
 		return
@@ -735,7 +736,7 @@
 			newdir = EAST
 	if((newdir in global.cardinal) && (prob(50)))
 		newdir = turn(newdir, 180)
-	
+
 	var/datum/dirt_cover/new_cover
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -1017,7 +1018,7 @@
 		to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
 
 //called when the mob receives a bright flash
-/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(override_blindness_check || !(disabilities & BLIND))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
@@ -1038,7 +1039,7 @@
 	return initial(pixel_y)
 
 //Attack animation port below
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
+/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/final_pixel_y = initial(pixel_y)
@@ -1071,10 +1072,15 @@
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = default_pixel_y
-	..(A, final_pixel_y)
+/mob/living/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	end_pixel_y = default_pixel_y
+	..()
 
+	if(has_effect)
+		do_item_attack_animation(A, visual_effect_icon, visual_effect_color)
+
+
+/mob/living/proc/do_item_attack_animation(atom/A, visual_effect_icon, visual_effect_color)
 	var/list/viewing = list()
 	for(var/mob/M in viewers(A))
 		if(M.client && (M.client.prefs.toggles & SHOW_ANIMATIONS))
@@ -1082,16 +1088,14 @@
 
 	//Show an image of the wielded weapon over the person who got dunked.
 	var/image/I
-	if(hand)
-		if(l_hand)
-			if(l_hand.alternate_appearances)
-				viewing = alternate_attack_animation(l_hand, A, viewing)
-			I = image(l_hand.icon,A,l_hand.icon_state,A.layer+1)
-	else
-		if(r_hand)
-			if(r_hand.alternate_appearances)
-				viewing = alternate_attack_animation(r_hand, A, viewing)
-			I = image(r_hand.icon,A,r_hand.icon_state,A.layer+1)
+	var/obj/item/used_item = get_active_hand()
+	if(used_item)
+		if(used_item.alternate_appearances)
+			viewing = alternate_attack_animation(used_item, A, viewing)
+		I = image(used_item.icon, A, used_item.icon_state, A.layer + 1)
+	else if(visual_effect_icon)
+		I = image('icons/effects/attack_overlays.dmi', A, visual_effect_icon, A.layer + 0.1)
+		I.color = visual_effect_color
 
 	if(I)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
@@ -1165,16 +1169,17 @@
 			harvest(user)
 		return TRUE
 
-/mob/living/proc/harvest(mob/user)
+/mob/living/proc/harvest(mob/user, turf/newloc = loc)
 	if(QDELETED(src))
 		return
 	if(length(butcher_results))
 		for(var/path in butcher_results)
 			for(var/i = 1 to butcher_results[path])
-				new path(src.loc)
+				new path(newloc)
 			//In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 			butcher_results.Remove(path)
-		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		if(user)
+			visible_message("<span class='notice'>[user] butchers [src].</span>")
 		gib()
 
 /mob/living/proc/get_taste_sensitivity()
@@ -1216,7 +1221,7 @@
 			lasttaste = world.time
 			return
 
-		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
+		to_chat(src, "<span class='notice'>You can taste [get_english_list(final_taste_list)].</span>")
 		lasttaste = world.time
 
 // This proc returns TRUE if less than given percentage is not covered.
@@ -1335,3 +1340,6 @@
 			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
 
 	return TRUE
+
+/mob/living/proc/swap_hand()
+	return

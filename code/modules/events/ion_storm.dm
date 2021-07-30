@@ -14,7 +14,7 @@
 /datum/event/ionstorm/start()
 	// Ion laws.
 	for(var/mob/living/silicon/ai/target in ai_list)
-		if(target.mind.special_role == "traitor")
+		if(istraitor(target))
 			continue
 		target.overload_ai_system()
 

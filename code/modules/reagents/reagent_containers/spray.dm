@@ -135,8 +135,8 @@
 			step(buckled_to, movementdirection)
 			sleep(3)
 			step(buckled_to, movementdirection)
-	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/tool/extinguisher))
-		var/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/ext = loc
+	else if (loc && istype(loc, /obj/item/mecha_parts/mecha_equipment/extinguisher))
+		var/obj/item/mecha_parts/mecha_equipment/extinguisher/ext = loc
 		if (ext.chassis)
 			ext.chassis.newtonian_move(movementdirection)
 	else
@@ -379,6 +379,7 @@
 		to_chat(usr, "<span class='notice'>Take the cap off first.</span>")
 
 //space cleaner
+ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_list)
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
@@ -391,8 +392,6 @@
 /obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
 	. = ..()
 	reagents.add_reagent("cleaner", volume)
-
-	cleaners_list += src
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper

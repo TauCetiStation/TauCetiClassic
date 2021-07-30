@@ -2175,6 +2175,16 @@
 	icon_state = "engine"
 	},
 /area/custom/arena)
+"afP" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/wiz,
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
 "afQ" = (
 /obj/structure/sign/mark{
 	icon_state = "yrt"
@@ -2184,11 +2194,47 @@
 	icon_state = "warnplate"
 	},
 /area/centcom/evac)
+"afR" = (
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/custom/wizard_station)
+"afS" = (
+/obj/structure/stool/bed/chair/wood/wings{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
+"afT" = (
+/obj/structure/stool/bed/chair/wood/wings{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/custom/wizard_station)
 "afU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light,
 /turf/simulated/shuttle/floor/evac/eng2,
 /area/shuttle/escape/centcom)
+"afV" = (
+/obj/effect/landmark/mafia_game_area,
+/turf/space,
+/area/space)
 "aga" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
@@ -8762,7 +8808,7 @@
 /obj/item/weapon/storage/backpack/ert/commander,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/gun/projectile/wjpp,
+/obj/item/weapon/gun/projectile/glock/spec,
 /obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
 	dir = 1;
@@ -15929,9 +15975,6 @@
 /area/custom/wizard_station)
 "baz" = (
 /obj/structure/table/woodentable,
-/obj/effect/landmark{
-	name = "Teleport-Scroll"
-	},
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "carpetside"
@@ -16104,10 +16147,11 @@
 	},
 /area/custom/wizard_station)
 "baU" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/effect/landmark/start{
+	name = "wizard"
+	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "engine"
 	},
 /area/custom/wizard_station)
 "baV" = (
@@ -17385,15 +17429,15 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bGb" = (
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer,
-/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill,
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher,
-/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp,
-/obj/item/mecha_parts/mecha_equipment/tool/rcd,
-/obj/item/mecha_parts/mecha_equipment/tool/rcd,
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper,
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun,
+/obj/item/mecha_parts/mecha_equipment/cable_layer,
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
+/obj/item/mecha_parts/mecha_equipment/extinguisher,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
+/obj/item/mecha_parts/mecha_equipment/rcd,
+/obj/item/mecha_parts/mecha_equipment/rcd,
+/obj/item/mecha_parts/mecha_equipment/sleeper,
+/obj/item/mecha_parts/mecha_equipment/sleeper,
+/obj/item/mecha_parts/mecha_equipment/syringe_gun,
 /obj/structure/table/reinforced,
 /turf/unsimulated/floor{
 	dir = 1;
@@ -29847,7 +29891,7 @@ bav
 bav
 bbo
 bbo
-bbo
+afT
 bbo
 bav
 aaY
@@ -30616,7 +30660,7 @@ bav
 bav
 bav
 bav
-bbr
+afS
 bbr
 bbr
 bbr
@@ -31897,7 +31941,7 @@ bar
 baB
 baJ
 baR
-baU
+afP
 baT
 bbh
 bar
@@ -32665,11 +32709,11 @@ aaM
 aaM
 aaM
 bas
-baD
+baU
 baD
 bar
 baW
-baT
+afR
 bbj
 bar
 bby
@@ -80411,7 +80455,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+afV
 aaM
 aaM
 aaM

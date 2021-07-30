@@ -64,6 +64,8 @@ var/global/sent_strike_team = FALSE
 
 	var/is_leader_seleceted = FALSE
 
+	var/datum/faction/strike_team/deathsquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/deathsquad)
+	S.forgeObjectives(input)
 	// Spawns commandos and equips them.
 	for (var/obj/effect/landmark/L in landmarks_list)
 		if (!commandos.len)
@@ -117,11 +119,10 @@ var/global/sent_strike_team = FALSE
 
 	// Creates mind stuff
 	new_commando.mind_initialize()
-	new_commando.mind.assigned_role = "MODE"
-	new_commando.mind.special_role = "Death Commando"
-	new_commando.mind.add_antag_hud(ANTAG_HUD_DEATHCOM, "huddeathsquad", new_commando)
-	SSticker.mode.traitors |= new_commando.mind //Adds them to current traitor list. Which is really the extra antagonist list.
 	new_commando.equip_death_commando(is_leader)
+	var/datum/faction/strike_team/deathsquad/D = find_faction_by_type(/datum/faction/strike_team/deathsquad)
+	if(D)
+		add_faction_member(D, new_commando, FALSE)
 	return new_commando
 
 /mob/living/carbon/human/proc/equip_death_commando(is_leader)
@@ -160,7 +161,7 @@ var/global/sent_strike_team = FALSE
 
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), SLOT_R_HAND)
 
-	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)
 	L.inject(src)
 
 	var/obj/item/weapon/card/id/centcom/C = new(src)

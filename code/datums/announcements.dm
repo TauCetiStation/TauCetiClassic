@@ -5,10 +5,10 @@ var/list/escape_area_transit = typecacheof(list(/area/shuttle/escape/transit,
                                                 /area/shuttle/escape_pod4/transit))
 
 #define IS_ON_ESCAPE_SHUTTLE is_type_in_typecache(get_area(M), escape_area_transit)
-#define ANNOUNCE_TEXT 1
-#define ANNOUNCE_SOUND 2
-#define ANNOUNCE_COMMS 4
-#define ANNOUNCE_ALL 7
+#define ANNOUNCE_TEXT  (1<<0)
+#define ANNOUNCE_SOUND (1<<1)
+#define ANNOUNCE_COMMS (1<<2)
+#define ANNOUNCE_ALL (~0)
 
 /* Announcement sounds */
 var/list/announcement_sounds = list(
@@ -86,7 +86,7 @@ var/list/announcement_sounds = list(
 /datum/announcement/proc/copy(announce_type)
 	var/datum/announcement/AT = announce_type
 	ASSERT(ispath(AT))
-	
+
 	name = initial(AT.name)
 	title = initial(AT.title)
 	subtitle = initial(AT.subtitle)
@@ -159,3 +159,6 @@ var/list/announcement_sounds = list(
 	..()
 
 /var/datum/announcement/announcement_ping = new /datum/announcement/ping // For sound-only
+
+/datum/announcement/proc/randomize_message()
+	return

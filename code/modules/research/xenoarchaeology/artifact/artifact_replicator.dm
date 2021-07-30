@@ -133,7 +133,7 @@
 	stored_materials.Add(W)
 	visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 
-/obj/machinery/replicator/is_operational_topic()
+/obj/machinery/replicator/is_operational()
 	return TRUE
 
 /obj/machinery/replicator/Topic(href, href_list)

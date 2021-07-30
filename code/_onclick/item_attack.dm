@@ -16,10 +16,10 @@
 /atom/movable/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(.) // Clickplace, no need for attack animation.
-		return
+		return FALSE
 
 	if(user.a_intent != INTENT_HARM)
-		return
+		return FALSE
 
 	var/had_effect = FALSE
 	if(!(W.flags & NOATTACKANIMATION))
@@ -31,7 +31,7 @@
 		had_effect = TRUE
 
 	if(!had_effect)
-		return
+		return FALSE
 
 	user.SetNextMove(CLICK_CD_MELEE)
 	add_fingerprint(user)
@@ -39,6 +39,8 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(W)
 	SSdemo.mark_dirty(user)
+
+	return TRUE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)

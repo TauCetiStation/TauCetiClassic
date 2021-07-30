@@ -19,7 +19,7 @@ var/list/fusion_reactions
 /proc/get_fusion_reaction(p_react, s_react, m_energy)
 	if(!fusion_reactions)
 		fusion_reactions = list()
-		for(var/rtype in typesof(/datum/fusion_reaction) - /datum/fusion_reaction)
+		for(var/rtype in subtypesof(/datum/fusion_reaction))
 			var/datum/fusion_reaction/cur_reaction = new rtype()
 			if(!fusion_reactions[cur_reaction.p_react])
 				fusion_reactions[cur_reaction.p_react] = list()

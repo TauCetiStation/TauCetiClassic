@@ -15,7 +15,7 @@
 				lawsync()
 				photosync()
 				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
-				if(mind && mind.special_role == "traitor" && mind.original == src)
+				if(istraitor(src) && mind.original == src)
 					to_chat(src, "<b>Remember, your AI does NOT share or know about your law 0.</b>")
 		else
 			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
@@ -23,7 +23,7 @@
 
 	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)
-	if (mind && (mind.special_role == "traitor" && mind.original == src) && connected_ai)
+	if (mind && (istraitor(src) && mind.original == src) && connected_ai)
 		to_chat(who, "<b>Remember, [connected_ai.name] is technically your master, but your objective comes first.</b>")
 	else if (connected_ai)
 		to_chat(who, "<b>Remember, [connected_ai.name] is your master, other AIs can be ignored.</b>")
@@ -45,7 +45,7 @@
 				laws.ion[index] = temp
 
 		if (!is_special_character(src) || mind.original != src)
-			if(master.zeroth_borg) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
+			if(!isnull(master.zeroth_borg)) //If the AI has a defined law zero specifically for its borgs, give it that one, otherwise give it the same one. --NEO
 				temp = master.zeroth_borg
 			else
 				temp = master.zeroth
@@ -72,7 +72,7 @@
 	return laws.zeroth
 
 /mob/living/silicon/robot/proc/set_zeroth_law(law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.set_zeroth_law(law)
 
@@ -82,32 +82,32 @@
 		to_chat(src, "<span class='warning'>Internal camera is currently being accessed.</span>")
 
 /mob/living/silicon/robot/proc/add_inherent_law(law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.add_inherent_law(law)
 
 /mob/living/silicon/robot/proc/clear_inherent_laws()
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.clear_inherent_laws()
 
 /mob/living/silicon/robot/proc/add_supplied_law(number, law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
 
 /mob/living/silicon/robot/proc/clear_supplied_laws()
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.clear_supplied_laws()
 
 /mob/living/silicon/robot/proc/add_ion_law(law)
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.add_ion_law(law)
 
 /mob/living/silicon/robot/proc/clear_ion_laws()
-	throw_alert("newlaw", /obj/screen/alert/newlaw)
+	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
 	laws_sanity_check()
 	laws.clear_ion_laws()
 
@@ -116,7 +116,7 @@
 //	set name = "State Laws"
 	say("Current Active Laws:")
 	//laws_sanity_check()
-	//src.laws.show_laws(world)
+	//laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 

@@ -276,8 +276,8 @@ var/list/turret_icons
 				return TRUE
 	return FALSE
 
-/obj/machinery/porta_turret/is_operational_topic()
-	return !((stat & (NOPOWER|BROKEN)) || HasController()) && anchored
+/obj/machinery/porta_turret/is_operational()
+	return !((stat & (NOPOWER | BROKEN)) || HasController()) && anchored
 
 /obj/machinery/porta_turret/Topic(href, href_list)
 	. = ..()
@@ -883,7 +883,7 @@ var/list/turret_icons
 		var/t = sanitize_safe(input(user, "Enter new turret name", name, input_default(finish_name)), MAX_NAME_LEN)
 		if(!t)
 			return
-		if(!in_range(src, usr) && loc != usr)
+		if(!Adjacent(user))
 			return
 
 		finish_name = t

@@ -865,7 +865,7 @@
 			return
 		if(usr.incapacitated())
 			return
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/id = href_list["name_disease"]
 		if(archive_diseases[id])
@@ -936,7 +936,7 @@
 								var/english_symptoms = list()
 								for(var/datum/symptom/S in A.symptoms)
 									english_symptoms += S.name
-								dat += english_list(english_symptoms)
+								dat += get_english_list(english_symptoms)
 
 
 			dat += "<BR><b>Contains antibodies to:</b> "

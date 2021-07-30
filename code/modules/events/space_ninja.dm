@@ -37,12 +37,18 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	//Here we pick a location and spawn the ninja.
 	if(ninjastart.len == 0)
 		for(var/obj/effect/landmark/L in landmarks_list)
-			if(L.name == "carpspawn")
+			if(L.name == "ninja")
 				ninjastart.Add(L)
 
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))
 	new_ninja.key = ninja_key
+
+	var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
+	if(!N)
+		N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+	add_faction_member(N, new_ninja, FALSE)
+
 	message_admins("[new_ninja] has spawned at [COORD(new_ninja)] [ADMIN_JMP(new_ninja)] [ADMIN_FLW(new_ninja)].")
 
 	if(assign_mission)
@@ -50,7 +56,6 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training! \nYour current mission is: <span class='warning'><B>[assign_mission]</B></span></span>")
 	else
 		set_ninja_objectives(new_ninja)
-	SSticker.mode.ninjas += new_ninja.mind
 
 	return TRUE
 
@@ -78,26 +83,22 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 	Their directives also influence behavior. At least in theory.*/
 	var/side = pick(NANOTRASEN_SIDE, SYNDICATE_SIDE)
 
-	var/datum/game_mode/current_mode = SSticker.mode
 	var/datum/mind/current_mind
 	var/list/xeno_list = list()//Aliens.
 	var/list/commando_list = list()//Commandos.
 	var/list/antagonist_list = list()//The main bad guys. Evil minds that plot destruction.
-	var/list/protagonist_list = current_mode.get_living_heads()//The good guys. Mostly Heads. Who are alive.
+	var/list/protagonist_list = get_living_heads()//The good guys. Mostly Heads. Who are alive.
 
 	/*No longer need to determine what mode it is since bad guys are basically universal.
 	And there is now a mode with two types of bad guys.*/
 
-	var/list/possible_bad_dudes = list(
-		current_mode.traitors,current_mode.head_revolutionaries,
-		current_mode.head_revolutionaries,
-		global.cult_religion.members,current_mode.wizards,
-		current_mode.changelings,current_mode.syndicates
-		)
-	for(var/list in possible_bad_dudes)//For every possible antagonist type.
-		for(current_mind in list)//For each mind in that list.
-			if(current_mind.current && current_mind.current.stat != DEAD)//If they are not destroyed and not dead.
-				antagonist_list += current_mind//Add them.
+	for(var/type in subtypesof(/datum/faction))
+		var/datum/faction/F = find_faction_by_type(type)
+		if(!F)
+			continue
+		for(var/datum/role/R in F.members)
+			if(R.antag.current && R.antag.current.stat != DEAD)
+				antagonist_list += R.antag
 
 	if(protagonist_list.len)//If the mind is both a protagonist and antagonist.
 		for(current_mind in protagonist_list)
@@ -112,7 +113,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 		if(istype(xeno))
 			xeno_list += xeno
 
-
+	var/datum/role/ninja/ninja = ninja_mind.GetRole(NINJA)
 	if(xeno_list.len > 3)//If there are more than three humanoid xenos on the station, time to get dangerous.
 		//Here we want the ninja to murder all the queens. The other aliens don't really matter.
 		var/list/xeno_queen_list = list()
@@ -121,32 +122,27 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				xeno_queen_list += xeno_queen
 		if(xeno_queen_list.len && side == NANOTRASEN_SIDE)//If there are queen about and the probability is 50.
 			for(var/mob/living/carbon/xenomorph/humanoid/queen/xeno_queen in xeno_queen_list)
-				var/datum/objective/assassinate/ninja_objective = new
-				ninja_objective.owner = ninja_mind
+				var/datum/objective/target/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/target/assassinate)
 				//We'll do some manual overrides to properly set it up.
 				ninja_objective.target = xeno_queen.mind
 				ninja_objective.explanation_text = "Kill \the [xeno_queen]."
-				ninja_mind.objectives += ninja_objective
 
 	if(sent_strike_team && side == SYNDICATE_SIDE && antagonist_list.len)//If a strike team was sent, murder them all like a champ.
 		for(current_mind in antagonist_list)//Search and destroy. Since we already have an antagonist list, they should appear there.
-			if(current_mind && current_mind.special_role == "Death Commando")
+			if(isdeathsquad(current_mind.current))
 				commando_list += current_mind
 		if(commando_list.len)//If there are living commandos still in play.
 			for(var/mob/living/carbon/human/commando in commando_list)
-				var/datum/objective/assassinate/ninja_objective = new
-				ninja_objective.owner = ninja_mind
+				var/datum/objective/target/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/target/assassinate)
 				ninja_objective.find_target_by_role(commando.mind.special_role,1)
-				ninja_mind.objectives += ninja_objective
 	/*
 	If there are no antogonists left it could mean one of two things:
 		A) The round is about to end. No harm in spawning the ninja here.
 		B) The round is still going and ghosts are probably rioting for something to happen.
 	In either case, it's a good idea to spawn the ninja with a semi-random set of objectives.
 	*/
-	if(!ninja_mind.objectives.len)//If mission was not set.
-
-		var/list/current_minds//List being looked on in the following code.
+	if(!ninja.objectives.objectives.len)//If mission was not set.
+		var/list/current_minds //List being looked on in the following code.
 		var/side_list = (side == NANOTRASEN_SIDE) ? NANOTRASEN_ENEMIES_LIST : SYNDICATE_ENEMIES_LIST//For logic gating.
 		var/list/hostile_targets = list()//The guys actually picked for the assassination or whatever.
 		var/list/friendly_targets = list()//The guys the ninja must protect.
@@ -182,21 +178,17 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 					current_mind = pick(hostile_targets)
 
 					if(current_mind)
-						var/datum/objective/assassinate/ninja_objective = new
-						ninja_objective.owner = ninja_mind
+						var/datum/objective/target/assassinate/ninja_objective = ninja.AppendObjective(/datum/objective/target/assassinate)
 						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role),(current_mind.special_role ? 1 : 0))//If they have a special role, use that instead to find em.
-						ninja_mind.objectives += ninja_objective
 
 					else
 						i++
 
 					hostile_targets -= current_mind//Remove them from the list.
 				if(STEAL)
-					var/datum/objective/steal/ninja_objective = new
-					ninja_objective.owner = ninja_mind
+					var/datum/objective/steal/ninja_objective = ninja.AppendObjective(/datum/objective/steal)
 					var/target_item = pick(ninja_objective.possible_items_special)
 					ninja_objective.set_target(target_item)
-					ninja_mind.objectives += ninja_objective
 
 					objective_list -= STEAL
 				if(PROTECT)
@@ -204,10 +196,8 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 					if(current_mind)
 
-						var/datum/objective/protect/ninja_objective = new
-						ninja_objective.owner = ninja_mind
+						var/datum/objective/target/protect/ninja_objective = ninja.AppendObjective(/datum/objective/target/protect)
 						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role), (current_mind.special_role ? 1 : 0))
-						ninja_mind.objectives += ninja_objective
 
 					else
 						i++
@@ -218,31 +208,24 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 					if(current_mind)
 
-						var/datum/objective/debrain/ninja_objective = new
-						ninja_objective.owner = ninja_mind
+						var/datum/objective/target/debrain/ninja_objective = ninja.AppendObjective(/datum/objective/target/debrain)
 						ninja_objective.find_target_by_role((current_mind.special_role ? current_mind.special_role : current_mind.assigned_role), (current_mind.special_role ? 1 : 0))
-						ninja_mind.objectives += ninja_objective
 
 					else
 						i++
 
 					hostile_targets -= current_mind//Remove them from the list.
 				if(DOWNLOAD_RESEARCH)
-					var/datum/objective/download/ninja_objective = new
-					ninja_objective.owner = ninja_mind
-					ninja_objective.gen_amount_goal()
-					ninja_mind.objectives += ninja_objective
+					ninja.AppendObjective(/datum/objective/download)
 
 					objective_list -= DOWNLOAD_RESEARCH
 				if(CAPTURE)
-					var/datum/objective/capture/ninja_objective = new
-					ninja_objective.owner = ninja_mind
+					var/datum/objective/capture/ninja_objective = ninja.AppendObjective(/datum/objective/capture)
 					ninja_objective.gen_amount_goal()
-					ninja_mind.objectives += ninja_objective
 
 					objective_list -= CAPTURE
 
-	if(!ninja_mind.objectives.len)//If they somehow did not get an objective at this point, time to destroy the station.
+	if(!ninja.objectives.objectives.len)//If they somehow did not get an objective at this point, time to destroy the station.
 		var/nuke_code
 		var/temp_code
 		for(var/obj/machinery/nuclearbomb/N in poi_list)
@@ -251,24 +234,17 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 				nuke_code = N.r_code
 				break
 		if(nuke_code)//If there is a nuke device in world and we got the code.
-			var/datum/objective/nuclear/ninja_objective = new//Fun.
-			ninja_objective.owner = ninja_mind
+			var/datum/objective/nuclear/ninja_objective = ninja.AppendObjective(/datum/objective/nuclear)
 			ninja_objective.explanation_text = "Destroy the station with a nuclear device. The code is [nuke_code]." //Let them know what the code is.
 
 	//Finally add a survival objective since it's usually broad enough for any round type.
-	var/datum/objective/survive/ninja_objective = new
-	ninja_objective.owner = ninja_mind
-	ninja_mind.objectives += ninja_objective
+	ninja.AppendObjective(/datum/objective/survive)
+
+	ninja.AnnounceObjectives()
 
 	var/directive = generate_ninja_directive(side)
 	to_chat(new_ninja, "<span class='notice'>\nYou are an elite mercenary assassin of the Spider Clan, [new_ninja.real_name]. The dreaded <span class='warning'><B>SPACE NINJA</B></span>! You have a variety of abilities at your disposal, thanks to your nano-enhanced cyber armor. Remember your training (initialize your suit by right clicking on it)! \nYour current directive is: <span class='warning'><B>[directive]</B></span></span>")
 	new_ninja.mind.store_memory("<B>Directive:</B> <span class='warning'>[directive]</span><br>")
-
-	var/obj_count = 1
-	to_chat(new_ninja, "<span class='notice'>Your current objectives:</span>")
-	for(var/datum/objective/objective in ninja_mind.objectives)
-		to_chat(new_ninja, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
 
 /*
 This proc will give the ninja a directive to follow. They are not obligated to do so but it's a fun roleplay reminder.

@@ -41,7 +41,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/syndicate_beacon/is_operational_topic()
+/obj/machinery/syndicate_beacon/is_operational()
 	return TRUE
 
 /obj/machinery/syndicate_beacon/Topic(href, href_list)
@@ -68,41 +68,8 @@
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
-			SSticker.mode.equip_traitor(N)
-			SSticker.mode.traitors += N.mind
-			N.mind.special_role = "traitor"
-			add_antag_hud(ANTAG_HUD_TRAITOR, "traitor", N)
-			var/objective = "Free Objective"
-			switch(rand(1,100))
-				if(1 to 50)
-					objective = "Steal [pick("a hand teleporter", "the Captain's antique laser gun", "a jetpack", "the Captain's ID", "the Captain's jumpsuit")]."
-				if(51 to 60)
-					objective = "Destroy 70% or more of the station's phoron tanks."
-				if(61 to 70)
-					objective = "Cut power to 80% or more of the station's tiles."
-				if(71 to 80)
-					objective = "Destroy the AI."
-				if(81 to 90)
-					objective = "Kill all monkeys aboard the station."
-				else
-					objective = "Make certain at least 80% of the station evacuates on the shuttle."
-			var/datum/objective/custom_objective = new(objective)
-			custom_objective.owner = N.mind
-			N.mind.objectives += custom_objective
-
-			var/datum/objective/escape/escape_objective = new
-			escape_objective.owner = N.mind
-			N.mind.objectives += escape_objective
-
-
-			to_chat(M, "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>")
-
-			message_admins("[N.name] ([N.ckey]) has accepted a traitor objective from a syndicate beacon. [ADMIN_JMP(N)]")
-
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				to_chat(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
-				obj_count++
+			var/datum/role/traitor/wishgranter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
+			T.Greet(GREET_SYNDBEACON)
 
 	updateUsrDialog()
 

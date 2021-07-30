@@ -1,11 +1,13 @@
 /mob/living/carbon/human/movement_delay()
 	if(iszombie(src))
 		return zombie_movement_delay()
-	if(mind && mind.changeling && mind.changeling.strained_muscles)
-		if(!has_gravity(src))
-			return -3   // speed boost in space.
-		else
-			return -2.5 // changeling ability also nulify any speed modifications and gives boost.
+	if(ischangeling(src))
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(C.strained_muscles)
+			if(!has_gravity(src))
+				return -3   // speed boost in space.
+			else
+				return -2.5 // changeling ability also nulify any speed modifications and gives boost.
 
 	if(!has_gravity(src))
 		return -1 // It's hard to be slowed down in space by... anything
