@@ -291,7 +291,7 @@
 	if(!H.should_have_organ(O_HEART))
 		return TRUE
 	var/obj/item/organ/internal/heart/heart = H.organs_by_name[O_HEART]
-	if(!heart || H.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SURVIVE)
+	if(!heart || H.blood_amount() < BLOOD_VOLUME_SURVIVE)
 		return FALSE
 	return TRUE
 

@@ -268,7 +268,7 @@ This function completely restores a damaged organ to perfect condition.
 			if(BURN)  fluid_loss_severity = FLUIDLOSS_WIDE_BURN
 			if(LASER) fluid_loss_severity = FLUIDLOSS_CONC_BURN
 		var/fluid_loss = (damage / (BP.owner.maxHealth - config.health_threshold_dead)) * 560/*owner.species.blood_volume*/ * fluid_loss_severity
-		BP.owner.remove_blood(fluid_loss)
+		BP.owner.blood_remove(fluid_loss)
 
 	// first check whether we can widen an existing wound
 	if(BP.wounds.len > 0 && prob(max(50 + (BP.number_wounds - 1) * 10, 90)))

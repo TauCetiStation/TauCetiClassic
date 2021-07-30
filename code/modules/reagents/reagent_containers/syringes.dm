@@ -163,14 +163,14 @@
 			for(var/datum/reagent/blood/d in src.reagents.reagent_list)
 				B = d
 				break
-			var/trans
+			var/trans = 5
 			if(B && istype(target,/mob/living/carbon))
 				var/list/virus2 = B.data["virus2"]
-				if(virus2.len)
+				if(virus2 && virus2.len)
 					message_admins("<font color='red'>Injected blood with virus to [target] by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) [ADMIN_JMP(user)]</font>",0,1)
 					log_game("Injected blood with virus to [target] by [key_name(user)] in [COORD(user)]")
 				var/mob/living/carbon/C = target
-				C.inject_blood(src,5)
+				C.inject_blood(src, 5)
 			else
 				trans = reagents.trans_to(target, amount_per_transfer_from_this)
 			to_chat(user, "<span class='notice'>You inject [trans] units of the solution. The syringe now contains [src.reagents.total_volume] units.</span>")

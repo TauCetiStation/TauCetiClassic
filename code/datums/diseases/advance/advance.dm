@@ -361,15 +361,14 @@ var/list/advance_cures = 	list(
 
 /proc/SetViruses(datum/reagent/R, list/data)
 	if(data)
-		var/list/preserve = list()
 		if(istype(data) && data["viruses"])
+			var/list/preserve = list()
 			for(var/datum/disease/A in data["viruses"])
 				preserve += A.Copy()
 			R.data = data.Copy()
+			R.data["viruses"] = preserve
 		else
 			R.data = data
-		if(preserve.len)
-			R.data["viruses"] = preserve
 
 /proc/AdminCreateVirus(mob/user)
 	var/i = 5
