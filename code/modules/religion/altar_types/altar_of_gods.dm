@@ -295,6 +295,7 @@
 	chosen_aspect = TRUE
 
 /obj/structure/altar_of_gods/proc/interact_bible(obj/item/I, mob/user)
+	return
 
 /obj/structure/altar_of_gods/proc/interact_talisman(obj/item/weapon/paper/talisman/T, mob/user)
 	if(!religion)
