@@ -9845,16 +9845,15 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
-/obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/locker)
 "aqh" = (
@@ -16982,11 +16981,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "aDA" = (
@@ -17153,11 +17151,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "aDR" = (
@@ -26891,11 +26888,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
@@ -32129,11 +32125,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -54039,14 +54034,13 @@
 	},
 /area/station/hallway/primary/central)
 "bXv" = (
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
 /obj/machinery/door/window/southright{
 	dir = 4;
 	name = "Medbay Storage";
 	req_access = list(72)
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 1
