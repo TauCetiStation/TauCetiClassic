@@ -64,8 +64,8 @@
 		world.log << "Command [command.name]"
 		command.execute(packet_data)
 
-#define BRIDGE_FROM_HTML_SNIPPET "<span class=\"bridge_[params["bridge_from_suffix"]]\">([params["bridge_from_suffix"]])</span>"
-#define BRIDGE_FROM_SNIPPET "[params["bridge_from_user"]]([params["bridge_from_suffix"]])"
+#define BRIDGE_FROM_HTML_SNIPPET "[params["bridge_from_user"]]<span class=\"bridge_[params["bridge_from_suffix"]]\">([params["bridge_from_suffix"]])</span>"
+#define BRIDGE_FROM_SNIPPET "[params["bridge_from_user"]]([params["bridge_from_suffix"]]:[params["bridge_from_uid"]])"
 
 var/global/list/bridge_commands
 
@@ -98,7 +98,8 @@ var/global/list/bridge_commands
 	var/footer = {"Where:
 ``%message%`` or ``%reason%`` - Just text. New line is allowed.
 ``%ckey%`` - Player key in ckey format: without spaces and \\_-
-``%duration%`` - Number for minutes or ``perma``"}
+``%duration%`` - Number for minutes or ``perma``
+``%banid%`` - ban ID, look in ``banlist`` command"}
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINIMPORTANT),
@@ -138,6 +139,7 @@ var/global/list/bridge_commands
 
 /datum/bridge_command/fax/execute(list/params)
 	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
+
 	if(!message)
 		return
 
@@ -172,6 +174,7 @@ var/global/list/bridge_commands
 
 /datum/bridge_command/centcomm/execute(list/params)
 	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
+
 	if(!message)
 		return
 
@@ -203,6 +206,9 @@ var/global/list/bridge_commands
 
 /datum/bridge_command/ooc/execute(list/params)
 	var/message = sanitize(params["bridge_message"])
+
+	if(!message)
+		return
 
 	send2ooc(message, BRIDGE_FROM_SNIPPET, BRIDGE_COLOR_BRIDGE, null, BRIDGE_FROM_HTML_SNIPPET)
 
@@ -265,7 +271,7 @@ var/global/list/bridge_commands
 /datum/bridge_command/banlist/execute(list/params)
 	var/ckey = ckey(params["bridge_ckey"])
 
-	if(!establish_db_connection("erro_ban"))
+	if(!ckey || !establish_db_connection("erro_ban"))
 		return
 
 	var/DBQuery/select_query = dbcon.NewQuery({"SELECT id, bantype, a_ckey, bantime, round_id, job, reason
@@ -311,14 +317,124 @@ var/global/list/bridge_commands
 	format = "@Bot ban ckey %duration% %reason%"
 	example = "@Bot ban taukitty 1440 For no reason"
 
-///datum/bridge_command/jobban
-///datum/bridge_command/unban
-///datum/bridge_command/pp
+/datum/bridge_command/ban/execute(list/params)
+	var/ckey = ckey(params["bridge_ckey"])
+	var/reason = sanitize(params["bridge_reason"])
+	var/duration = text2num(params["bridge_duration"])
 
-///datum/bridge_command/find
-// player online
-// player was online, cur offline
-// player offline, last seen date
+	if(!ckey || !reason || !establish_db_connection("erro_ban"))
+		return
+
+	reason = "[BRIDGE_FROM_SNIPPET]: [reason]" // todo: after HoP bot BD we can use trusted admin name as actual ban author
+
+	if(lowertext(params["bridge_duration"]) == "perma" && DB_ban_record_2(bantype = BANTYPE_PERMA, duration = -1, reason = reason, banckey = ckey))
+		world.send2bridge(
+			type = list(BRIDGE_ADMINBAN),
+			attachment_title = "Bridge: Ban",
+			attachment_msg = "<@![params["bridge_from_uid"]]> permabanned **[ckey]** with reason:\n*[reason]*",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+		ban_unban_log_save("[BRIDGE_FROM_SNIPPET] has permabanned [ckey]. - Reason: [reason] - This is a permanent ban.")
+		log_admin("[BRIDGE_FROM_SNIPPET] has banned [ckey].\nReason: [reason]\nThis is a permanent ban.")
+		message_admins("[BRIDGE_FROM_HTML_SNIPPET] has banned [ckey].\nReason: [reason]\nThis is a permanent ban.")
+
+
+	else if (duration && DB_ban_record_2(bantype = BANTYPE_TEMP, duration = duration, reason = reason, banckey = ckey))
+		world.send2bridge(
+			type = list(BRIDGE_ADMINBAN),
+			attachment_title = "Bridge: Ban",
+			attachment_msg = "<@![params["bridge_from_uid"]]> banned **[ckey]** for [duration] minutes with reason:\n*[reason]*",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+		ban_unban_log_save("[BRIDGE_FROM_SNIPPET] has banned [ckey]. - Reason: [reason]")
+		log_admin("[BRIDGE_FROM_SNIPPET] has banned [ckey].\nReason: [reason]")
+		message_admins("[BRIDGE_FROM_HTML_SNIPPET] has banned [ckey].\nReason: [reason]")
+	else
+		world.send2bridge(
+			type = list(BRIDGE_ADMINBAN),
+			attachment_title = "Bridge: Ban",
+			attachment_msg = "<@![params["bridge_from_uid"]]> was unable to ban **[ckey]**: wrong duration OR player has not been seen on server",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+
+/*
+// not today... can someone refactor ban/jobban system first?
+// /code/game/jobs/jobs.dm (need one world ID or job ID)
+/datum/bridge_command/jobban
+	name = "jobban"
+	desc = "Job ban player. You can find job ID with ``somecommand``"
+	format = "@Bot jobban ckey %jobid%"
+	example = "@Bot jobban taukitty 4" or "@Bot jobban taukitty CAPTAIN" or something */
+
+/datum/bridge_command/unban
+	name = "unban"
+	desc = "Unban player ban by ID. You can find ID with ``banlist``"
+	format = "@Bot unban ckey %banid%"
+	example = "@Bot unban taukitty 123"
+
+/datum/bridge_command/unban/execute(list/params)
+	var/ckey = ckey(params["bridge_ckey"])
+	var/id = text2num(params["bridge_banid"])
+
+	if(!ckey || !id || !establish_db_connection("erro_ban"))
+		return
+
+	var/DBQuery/select_query = dbcon.NewQuery({"SELECT bantype, a_ckey, job, reason
+		FROM erro_ban 
+		WHERE id='[id]' AND isnull(unbanned)"})
+	select_query.Execute()
+
+	if(!select_query.NextRow())
+		world.send2bridge(
+			type = list(BRIDGE_ADMINBAN),
+			attachment_title = "Bridge: Unban",
+			attachment_msg = "<@![params["bridge_from_uid"]]> wrong ban ID or ban already unbanned",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+		return
+
+	var/bantype  = select_query.item[1]
+	var/admin = select_query.item[2]
+	var/job = select_query.item[3]
+	var/reason = select_query.item[4]
+
+
+	var/DBQuery/update_query = dbcon.NewQuery({"UPDATE erro_ban 
+		SET unbanned = 1, unbanned_datetime = Now(), unbanned_ckey = '[BRIDGE_FROM_SNIPPET]', unbanned_computerid = '0000000000', unbanned_ip = '127.0.0.1' 
+		WHERE id = [id]"})
+	update_query.Execute()
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINBAN),
+		attachment_title = "UNBAN",
+		attachment_msg = "**<@![params["bridge_from_uid"]]> has lifted **[ckey]**'s ban:\n[bantype][job ? "([job])" : ""] by [admin] with reason:\n*[reason]*",
+		attachment_color = BRIDGE_COLOR_ADMINBAN,
+	)
+
+	ban_unban_log_save("[BRIDGE_FROM_SNIPPET] has lifted [ckey] ban.")
+	log_admin("[BRIDGE_FROM_SNIPPET] has lifted [ckey] ban.")
+	message_admins("[BRIDGE_FROM_HTML_SNIPPET] has lifted [ckey] ban.")
+
+/datum/bridge_command/pp
+	name = "pp"
+	desc = "Player panel (info on player)"
+	format = "@Bot pp %ckey%"
+	example = "@Bot pp taukitty"
+
+/datum/bridge_command/pp/execute(list/params)
+	var/ckey = ckey(params["bridge_ckey"])
+
+	if(!ckey || !establish_db_connection("erro_ban", "erro_player"))
+		return
+
+/*	for(var/client/C in clients)
+		if(C.ckey == ckey)
+			message = "[ckey] is currenlty online!"
+			return
+
+	if(!message && (ckey in joined_player_list))
+		message = "Client was in round, but currenlty offline."*/
+	// player offline, last seen date
 
 /datum/bridge_command/status
 	name = "status"
@@ -326,7 +442,7 @@ var/global/list/bridge_commands
 	format = "@Bot status"
 	example = "@Bot status"
 
-/datum/bridge_command/status/execute(var/params)
+/datum/bridge_command/status/execute(list/params)
 	var/message = ""
 
 	// round stat
@@ -371,6 +487,9 @@ var/global/list/bridge_commands
 			message += "without +BAN\[[get_english_list(adm["noflags"])]\]; "
 
 	message += "\n"
+
+	// mentors
+	message += "**Mentors**: [length(mentors)] mentors online\n"
 
 	// players
 	message += "**Players**: [length(clients)] clients and [length(player_list)] active players\n"
