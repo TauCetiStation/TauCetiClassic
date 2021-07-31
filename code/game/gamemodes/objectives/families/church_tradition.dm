@@ -4,7 +4,7 @@
 /datum/objective/gang/church_tradition/check_completion()
 	for(var/R in faction.members)
 		var/datum/role/gangster/G = R
-		if(!G.antag)
+		if(!G.antag || !G.antag.current)
 			continue
 		var/mob/M = G.antag.current
 		if(considered_alive(M.mind))
@@ -14,6 +14,6 @@
 		return OBJECTIVE_LOSS
 	if(global.chaplain_religion.members.len)
 		for(var/mob/M in global.chaplain_religion.members)
-			if(!considered_alive(M.mind) && !M.suiciding)
+			if(M && !considered_alive(M.mind) && !M.suiciding)
 				return OBJECTIVE_LOSS
 	return OBJECTIVE_WIN

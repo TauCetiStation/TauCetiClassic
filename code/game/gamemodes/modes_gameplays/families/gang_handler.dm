@@ -29,7 +29,7 @@ var/global/deaths_during_shift = 0
 /datum/faction/gang/proc/check_gang_clothes() // TODO: make this grab the sprite itself, average out what the primary color would be, then compare how close it is to the gang color so I don't have to manually fill shit out for 5 years for every gang type
 	for(var/role in members)
 		var/datum/role/gangster/G = role
-		if(!G.antag || !G.antag.current || !G.antag.current.client)
+		if(!G.antag || !G.antag.current || !G.antag.current.client || !ishuman(G.antag.current))
 			continue
 		var/mob/living/carbon/human/H = G.antag.current
 		for(var/clothing in H.get_all_slots())

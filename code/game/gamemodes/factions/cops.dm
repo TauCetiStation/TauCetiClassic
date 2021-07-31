@@ -72,7 +72,7 @@
 	var/time_to_cops = ((end_time - start_time) - world.time) / 600
 	var/minutes = pluralize_russian(time_to_cops, "[time_to_cops] минута", "[time_to_cops] минуты", "[time_to_cops] минут")
 	. += "<br>До прилёта полиции: [minutes]"
-	. += "<br>Уникальных смертей: [global.deaths_during_shift]"
+	. += "<br>Смертей: [global.deaths_during_shift]"
 
 /datum/faction/cops/custom_result()
 	var/list/all_gangs = find_factions_by_type(/datum/faction/gang)

@@ -4,7 +4,7 @@
 /datum/objective/gang/kill_undercover_cops/check_completion()
 	var/datum/faction/cops/cops = find_faction_by_type(/datum/faction/cops)
 	for(var/datum/role/cop/undercover/C in cops.members)
-		if(!C.antag)
+		if(!C.antag || !C.antag.current)
 			continue
 		if(considered_alive(C.antag))
 			return OBJECTIVE_LOSS
