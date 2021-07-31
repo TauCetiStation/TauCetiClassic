@@ -104,7 +104,8 @@
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
-	if(!check_rights(R_BAN))	return
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+		return
 
 	var/bantype_str
 	if(bantype)
