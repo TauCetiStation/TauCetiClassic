@@ -71,7 +71,7 @@
 		killer.aiRadio.keyslot1 = new /obj/item/device/encryptionkey/syndicate()
 		killer.aiRadio.recalculateChannels()
 
-/datum/role/traitor/Greet(greeting, custom)
+/datum/role/traitor/Greet(greeting = GREET_DEFAULT, custom)
 	antag.current.playsound_local(null, 'sound/antag/tatoralert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 	if(!greeting)
