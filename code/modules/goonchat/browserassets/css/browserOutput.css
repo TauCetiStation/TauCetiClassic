@@ -407,21 +407,37 @@ h1.alert, h2.alert		{color: #000000;}
 .hidden {display: none; visibility: hidden;}
 
 /* Popup windows */
-.embedded_tip{position: relative; display: inline;}
-.embedded_tip .embedded_tip-text{
+.embedded_tip{
+	position: relative;
+	display: inline;
+}
+.embedded_tip .embedded_tip-text {
 	display: none;
 	position: absolute;
 	padding: 5px;
 	z-index: 1;
 	bottom: 125%;
-	width: 90vw;
+	width: 90vw; // maybe max-width ??
 	word-wrap: break-word;
 	background-color:#353535;
 	color:white;
 	border:1px solid black;
 }
-.embedded_tip:hover .embedded_tip-text{display: block;}
-.embedded_tip-mark{font-style: italic;}
+.embedded_tip.embedded_tip--mini .embedded_tip-text {
+	width: auto;
+	left: 100%;
+	bottom: 100%;
+	margin-left: -1em;
+}
+.embedded_tip:hover .embedded_tip-text {
+	display: block;
+}
+.embedded_tip-mark {
+	position: relative;
+	top: -5px;
+	font-style: italic;
+	font-size: 10px;
+}
 
 table.staffwho {
 	border-spacing: 0;
