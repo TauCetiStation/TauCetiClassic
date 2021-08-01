@@ -154,7 +154,12 @@
 		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 		traitor_mob.mutations.Remove(CLUMSY)
 
-	give_uplink()
+	var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)
+	if(!guplink)
+		give_uplink()
+	else
+		guplink.uses = uplink_uses
+		total_TC = uplink_uses
 
 	var/datum/role/R = parent
 	for(var/datum/objective/target/dehead/D in R.objectives.GetObjectives())
@@ -177,19 +182,12 @@
 		to_chat(traitor_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 		traitor_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
-/datum/component/gamemode/syndicate/proc/find_syndicate_pda(mob/living/carbon/human/human)
-	var/list/L = human.GetAllContents()
-	for(var/obj/item/I in L)
-		if(I.hidden_uplink)
-			return I
-	return null
-
 /datum/component/gamemode/syndicate/proc/take_uplink()
 	var/mob/living/carbon/human/traitor_mob = get_current()
 	if(!traitor_mob || !istype(traitor_mob))
 		return
 
-	var/obj/item/I = find_syndicate_pda(traitor_mob)
+	var/obj/item/I = find_syndicate_uplink(traitor_mob)
 	if(I?.hidden_uplink)
 		QDEL_NULL(I.hidden_uplink)
 
