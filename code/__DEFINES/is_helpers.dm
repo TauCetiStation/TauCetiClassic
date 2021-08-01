@@ -148,7 +148,7 @@
 
 #define isvoxraider(H) isrole(VOXRAIDER, H)
 
-#define ischangeling(H) isrole(CHANGELING, H)
+#define ischangeling(H) isrolebytype(/datum/role/changeling, H)
 
 #define isanyrev(H) (isrevnothead(H) || isrevhead(H))
 

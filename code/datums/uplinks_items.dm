@@ -699,6 +699,7 @@
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
+	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -710,7 +711,7 @@
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/device_tools/thermal/dealer
-	item = /obj/item/clothing/glasses/thermal
+	item = /obj/item/clothing/glasses/thermal/dealer
 	cost = 8
 	uplink_types = list("dealer")
 
