@@ -5652,6 +5652,9 @@
 	dir = 1
 	},
 /obj/item/weapon/hand_tele,
+/obj/machinery/requests_console/captain{
+	pixel_x = -30
+	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "alg" = (
