@@ -371,17 +371,23 @@
 /atom/movable/proc/get_size_flavor()
 	switch(w_class)
 		if(SIZE_MINUSCULE)
-			return "tiny"
-		if(SIZE_TINY to SIZE_SMALL)
-			return "small"
+			. = "minuscule"
+		if(SIZE_TINY)
+			. = "tiny"
+		if(SIZE_SMALL)
+			. = "small"
 		if(SIZE_NORMAL to SIZE_LARGE)
-			return "medium"
+			. = "medium"
 		if(SIZE_HUMAN)
-			return "human"
+			. = "human"
 		if(SIZE_BIG_HUMAN to SIZE_MASSIVE)
-			return "huge"
+			. = "huge"
 		if(SIZE_GYGANT to SIZE_GARGANTUAN)
-			return "gygant"
+			. = "gygant"
+		else
+			. = "unknown"
+
+	. = EMBED_TIP_MINI(., repeat_string_times("*", w_class))
 
 // This proc guarantees no mouse vs queen tomfuckery.
 /atom/movable/proc/is_bigger_than(mob/living/target)
