@@ -670,17 +670,22 @@ var/list/blacklisted_builds = list(
 	if(byond_registration)
 		return byond_registration
 
+	return get_byond_registration_from_pager(ckey)
+
+/proc/get_byond_registration_from_pager(ckey)
+	ckey = ckey(ckey)
+	if(!ckey)
+		return
+
 	var/user_page = get_webpage("http://www.byond.com/members/[ckey]?format=text")
 
 	if (!user_page)
 		return
 
-	var/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
+	var/static/regex/joined_date_regex = regex("joined = \"(\\d+)-(\\d+)-(\\d+)\"")
 	joined_date_regex.Find(user_page)
 
-	byond_registration = list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
-
-	return byond_registration
+	return list(text2num(joined_date_regex.group[1]), text2num(joined_date_regex.group[2]), text2num(joined_date_regex.group[3]))
 
 /client/proc/GetRolePrefs()
 	var/list/roleprefs = list()

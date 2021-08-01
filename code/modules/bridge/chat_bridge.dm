@@ -74,6 +74,7 @@ var/global/list/bridge_commands
 	var/desc
 	var/format
 	var/example
+	var/arguments
 
 /datum/bridge_command/proc/execute(list/params)
 	return
@@ -83,6 +84,7 @@ var/global/list/bridge_commands
 	desc = "List of commands"
 	format = "@Bot help"
 	example = "@Bot help"
+	arguments = 0
 
 /datum/bridge_command/help/execute(list/params)
 	var/message = ""
@@ -99,7 +101,8 @@ var/global/list/bridge_commands
 ``%message%`` or ``%reason%`` - Just text. New line is allowed.
 ``%ckey%`` - Player key in ckey format: without spaces and \\_-
 ``%duration%`` - Number for minutes or ``perma``
-``%banid%`` - ban ID, look in ``banlist`` command"}
+``%banid%`` - ban ID, look in ``banlist`` command
+``%page%`` - optional parameter, by default 1"}
 
 	world.send2bridge(
 		type = list(BRIDGE_ADMINIMPORTANT),
@@ -114,6 +117,7 @@ var/global/list/bridge_commands
 	desc = "Admin announment message to server"
 	format = "@Bot announce %message%"
 	example = "@Bot announce Hello! How are you?"
+	arguments = 1
 
 /datum/bridge_command/announce/execute(list/params)
 	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
@@ -136,6 +140,7 @@ var/global/list/bridge_commands
 	desc = "Send fax from CentComm to all faxes, bb-codes allowed"
 	format = "@Bot fax %message%"
 	example = "@Bot fax You are all fired!"
+	arguments = 1
 
 /datum/bridge_command/fax/execute(list/params)
 	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
@@ -171,6 +176,7 @@ var/global/list/bridge_commands
 	desc = "Send centcomm message to crew" // todo: pub | priv
 	format = "@Bot centcomm %message%"
 	example = "@Bot centcomm You are all fired!"
+	arguments = 1
 
 /datum/bridge_command/centcomm/execute(list/params)
 	var/message = sanitize(params["bridge_message"], MAX_PAPER_MESSAGE_LEN, extra = 0)
@@ -197,12 +203,14 @@ var/global/list/bridge_commands
 	desc = "Send private message to player"
 	format = "@Bot pm %ckey% %message%"
 	example = "@Bot pm taukitty Hello! How are you?"
+	//arguments = 2
 
 /datum/bridge_command/ooc //todo: enable ooc channel for bridge
 	name = "ooc"
 	desc = "Send OOC message"
 	format = "@Bot ooc %message%"
 	example = "@Bot ooc Hello! How are you?"
+	arguments = 1
 
 /datum/bridge_command/ooc/execute(list/params)
 	var/message = sanitize(params["bridge_message"])
@@ -223,6 +231,7 @@ var/global/list/bridge_commands
 	desc = "Kick player"
 	format = "@Bot kick %ckey% %reason%"
 	example = "@Bot kick taukitty For no reason"
+	arguments = 2
 
 /datum/bridge_command/kick/execute(list/params)
 	var/ckey = ckey(params["bridge_ckey"])
@@ -265,11 +274,16 @@ var/global/list/bridge_commands
 /datum/bridge_command/banlist
 	name = "banlist"
 	desc = "Show active player bans."
-	format = "@Bot banlist %ckey%"
+	format = "@Bot banlist %ckey% %page%"
 	example = "@Bot banlist taukitty"
+	arguments = 1
 
 /datum/bridge_command/banlist/execute(list/params)
 	var/ckey = ckey(params["bridge_ckey"])
+	var/page_offset = text2num(params["bridge_page"])
+
+	if(!isnum(page_offset) || page_offset <= 1)
+		page_offset = 1
 
 	if(!ckey || !establish_db_connection("erro_ban"))
 		return
@@ -279,7 +293,8 @@ var/global/list/bridge_commands
 		WHERE ckey='[ckey]' 
 			AND (bantype = 'PERMABAN' OR bantype = 'JOB_PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now()) OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now()))
 			AND isnull(unbanned)
-		ORDER BY bantime DESC LIMIT 10"})
+		ORDER BY bantime DESC 
+		LIMIT 10 OFFSET [(page_offset-1)*10]"})
 	select_query.Execute()
 
 	var/message = ""
@@ -307,7 +322,7 @@ var/global/list/bridge_commands
 	world.send2bridge(
 		type = list(BRIDGE_ADMINIMPORTANT),
 		attachment_title = "Bridge: Ban List",
-		attachment_msg = "Last 10 active bans of **[ckey]**, requested by <@![params["bridge_from_uid"]]>\n[message]",
+		attachment_msg = "Active bans of **[ckey]**, page **[page_offset]**, requested by <@![params["bridge_from_uid"]]>\n---\n[message]",
 		attachment_color = BRIDGE_COLOR_BRIDGE,
 	)
 
@@ -316,6 +331,7 @@ var/global/list/bridge_commands
 	desc = "Ban player."
 	format = "@Bot ban ckey %duration% %reason%"
 	example = "@Bot ban taukitty 1440 For no reason"
+	arguments = 3
 
 /datum/bridge_command/ban/execute(list/params)
 	var/ckey = ckey(params["bridge_ckey"])
@@ -371,6 +387,7 @@ var/global/list/bridge_commands
 	desc = "Unban player ban by ID. You can find ID with ``banlist``"
 	format = "@Bot unban ckey %banid%"
 	example = "@Bot unban taukitty 123"
+	arguments = 2
 
 /datum/bridge_command/unban/execute(list/params)
 	var/ckey = ckey(params["bridge_ckey"])
@@ -415,32 +432,238 @@ var/global/list/bridge_commands
 	log_admin("[BRIDGE_FROM_SNIPPET] has lifted [ckey] ban.")
 	message_admins("[BRIDGE_FROM_HTML_SNIPPET] has lifted [ckey] ban.")
 
+/datum/bridge_command/notes
+	name = "notes"
+	desc = "Show player notes."
+	format = "@Bot notes %ckey% %page%"
+	example = "@Bot notes taukitty"
+	arguments = 1
+
+/datum/bridge_command/notes/execute(list/params)
+	var/ckey = ckey(params["bridge_ckey"])
+	var/page_offset = text2num(params["bridge_page"])
+
+	if(!isnum(page_offset) || page_offset <= 1)
+		page_offset = 1
+
+	if(!ckey || !establish_db_connection("erro_messages"))
+		return
+
+	var/DBQuery/select_query = dbcon.NewQuery({"SELECT id, type, adminckey, timestamp, round_id, text
+		FROM erro_messages 
+		WHERE targetckey='[ckey]' AND deleted=0
+		ORDER BY timestamp DESC
+		LIMIT 10 OFFSET [(page_offset-1)*10]"})
+	select_query.Execute()
+
+	var/message = ""
+
+	while(select_query.NextRow())
+		var/noteid = select_query.item[1]
+		var/notetype  = select_query.item[2]
+		var/admin = select_query.item[3]
+		var/notetime  = select_query.item[4]
+		var/roundid  = select_query.item[5]
+		var/text = select_query.item[6]
+
+		message += "**ID**: [noteid];  **Type**: [notetype]; **Admin**: [admin]; **Note time**: [notetime]; **Round**: [roundid];\n**Text**: *[text]*\n\n"
+
+	if(!length(message))
+		world.send2bridge(
+			type = list(BRIDGE_ADMINIMPORTANT),
+			attachment_title = "Bridge: Notes",
+			attachment_msg = "Client **[ckey]** has no notes, <@![params["bridge_from_uid"]]>",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+		return
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINIMPORTANT),
+		attachment_title = "Bridge: Ban List",
+		attachment_msg = "Notes of **[ckey]**, page **[page_offset]**, requested by <@![params["bridge_from_uid"]]>\n---\n[message]",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
+	)
+
+/datum/bridge_command/notedel
+	name = "notedel"
+	desc = "Delete player note by ID. You can find ID with ``notes``"
+	format = "@Bot notedel %ckey% %noteid%"
+	example = "@Bot notedel taukitty 123"
+
+/datum/bridge_command/notedel/execute(list/params)
+	var/ckey = ckey(params["bridge_ckey"])
+	var/id = text2num(params["bridge_banid"])
+
+	if(!ckey || !id || !establish_db_connection("erro_messages"))
+		return
+
+	var/DBQuery/select_query = dbcon.NewQuery({"SELECT type, adminckey, text
+		FROM erro_messages 
+		WHERE id='[id]' AND deleted=0"})
+	select_query.Execute()
+
+	if(!select_query.NextRow())
+		world.send2bridge(
+			type = list(BRIDGE_ADMINIMPORTANT),
+			attachment_title = "Bridge: Notedel",
+			attachment_msg = "<@![params["bridge_from_uid"]]> wrong note ID or note already deleted",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+		return
+
+	var/notetype = select_query.item[1]
+	var/admin = select_query.item[2]
+	var/text = select_query.item[3]
+
+
+	var/DBQuery/update_query = dbcon.NewQuery({"UPDATE erro_messages 
+		SET deleted = 1, deleted_ckey = '[BRIDGE_FROM_SNIPPET]'
+		WHERE id = [id]"})
+	update_query.Execute()
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINIMPORTANT),
+		attachment_title = "Bridge: Notedel",
+		attachment_msg = "**<@![params["bridge_from_uid"]]> has deleted **[ckey]**'s note:\n[notetype] by [admin] with text:\n*[text]*",
+		attachment_color = BRIDGE_COLOR_ADMINBAN,
+	)
+
+	log_admin("[BRIDGE_FROM_SNIPPET] has deleted [ckey] note.")
+	message_admins("[BRIDGE_FROM_HTML_SNIPPET] has deleted [ckey] note.")
+
 /datum/bridge_command/pp
 	name = "pp"
 	desc = "Player panel (info on player)"
 	format = "@Bot pp %ckey%"
 	example = "@Bot pp taukitty"
+	arguments = 2
 
 /datum/bridge_command/pp/execute(list/params)
 	var/ckey = ckey(params["bridge_ckey"])
 
-	if(!ckey || !establish_db_connection("erro_ban", "erro_player"))
+	if(!ckey || !establish_db_connection("erro_ban", "erro_messages", "erro_player"))
 		return
 
-/*	for(var/client/C in clients)
-		if(C.ckey == ckey)
-			message = "[ckey] is currenlty online!"
-			return
+	var/DBQuery/select_query_player = dbcon.NewQuery({"SELECT firstseen, lastseen, ingameage
+		FROM erro_player 
+		WHERE ckey='[ckey]'"})
+	select_query_player.Execute()
 
-	if(!message && (ckey in joined_player_list))
-		message = "Client was in round, but currenlty offline."*/
-	// player offline, last seen date
+	if(!select_query_player.NextRow())
+		world.send2bridge(
+			type = list(BRIDGE_ADMINIMPORTANT),
+			attachment_title = "Bridge: Player Panel",
+			attachment_msg = "<@![params["bridge_from_uid"]]> player **[ckey]** not found",
+			attachment_color = BRIDGE_COLOR_BRIDGE,
+		)
+		return
+
+	var/message = ""
+	var/client/online_client
+
+	for(var/client/C in clients)
+		if(C.ckey == ckey)
+			online_client = C
+			break
+
+	// age
+	var/firstseen = select_query_player.item[1]
+	var/lastseen = select_query_player.item[2]
+	var/ingameage = select_query_player.item[3]
+	var/list/byond_date = online_client ? online_client.get_byond_registration() : get_byond_registration_from_pager(ckey)
+
+	message += "**First seen**: [firstseen]; **Last seen**: [lastseen];\n **Ingame age**: [ingameage];"
+
+	if(length(byond_date))
+		message += " **Byond registration**: [byond_date[3]].[byond_date[2]].[byond_date[1]]"
+
+	message += "\n"
+
+	// online status
+	if(online_client)
+		message += "**Currenlty on server!**"
+	else if(ckey in joined_player_list)
+		message += "Was on server this round."
+	else
+		message += "Not on this server."
+
+	message += "\n"
+
+	//todo: if online - show IC info (character, antag)
+
+	// guard
+	if(online_client)
+		if(!length(online_client.guard.short_report))
+			online_client.guard.prepare()
+
+		message += "**Guard report**: [online_client.guard.short_report]"
+
+	else
+		message += "**Guard report**: not available for offline player"
+
+	message += "\n"
+
+	// bans
+	var/DBQuery/select_query_bans = dbcon.NewQuery({"SELECT bantype, job
+		FROM erro_ban 
+		WHERE ckey='[ckey]' 
+			AND (bantype = 'PERMABAN' OR bantype = 'JOB_PERMABAN' OR (bantype = 'TEMPBAN' AND expiration_time > Now()) OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now()))
+			AND isnull(unbanned)"})
+	select_query_bans.Execute()
+
+	var/flag_currently_banned = FALSE
+	var/jobbans_total = 0
+	var/jobbans_text = ""
+
+	while(select_query_bans.NextRow())
+		//var/bantype  = select_query_bans.item[1]
+		var/job = select_query_bans.item[2]
+		
+		if(job)
+			jobbans_total++
+			jobbans_text += "[job]; "
+		else
+			flag_currently_banned = TRUE
+
+	if(flag_currently_banned)
+		message += "Currently **banned** and can't play on server;"
+	else
+		message += "Has no active server bans;"
+
+	message += " Has **[jobbans_total]** jobbans[length(jobbans_text) ? " \[[trim(jobbans_text)]\]" : ""]"
+	message += "\n"
+
+	// notes
+	// todo: need different type for warnings in DB so we can show different types here
+	var/notes_count = 0
+
+	var/DBQuery/select_query_notes =  dbcon.NewQuery({"SELECT COUNT(*)
+		FROM erro_messages
+		WHERE targetckey='[ckey]' AND deleted=0"})
+	select_query_notes.Execute()
+
+	if(select_query_notes.NextRow())
+		notes_count = select_query_notes.item[1]
+	
+	message += "Has **[notes_count]** notes"
+
+	world.send2bridge(
+		type = list(BRIDGE_ADMINIMPORTANT),
+		attachment_title = "Bridge: Player Panel",
+		attachment_msg = "<@![params["bridge_from_uid"]]> player **[ckey]**:\n[message]",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
+	)
+
+
+///datum/bridge_command/noteadd
+///datum/bridge_command/notewarn
 
 /datum/bridge_command/status
 	name = "status"
 	desc = "Get server status"
 	format = "@Bot status"
 	example = "@Bot status"
+	arguments = 1
 
 /datum/bridge_command/status/execute(list/params)
 	var/message = ""
