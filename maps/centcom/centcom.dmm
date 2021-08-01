@@ -2235,6 +2235,30 @@
 /obj/effect/landmark/mafia_game_area,
 /turf/space,
 /area/space)
+"afW" = (
+/obj/structure/closet/emcloset,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "yellow"
+	},
+/area/space)
+"afX" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/space)
+"afY" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"afZ" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/space)
 "aga" = (
 /obj/structure/window/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries,
@@ -2256,12 +2280,62 @@
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
+"agc" = (
+/turf/unsimulated/wall/fakeglass,
+/area/space)
+"agd" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "yellow"
+	},
+/area/space)
+"age" = (
+/obj/structure/closet/crate,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/space)
+"agf" = (
+/obj/structure/largecrate,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/space)
+"agg" = (
+/obj/structure/closet/crate,
+/turf/unsimulated/floor{
+	icon_state = "yellow"
+	},
+/area/space)
+"agh" = (
+/obj/structure/ore_box,
+/turf/unsimulated/floor{
+	icon_state = "yellow"
+	},
+/area/space)
+"agi" = (
+/obj/structure/largecrate,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "yellow"
+	},
+/area/space)
 "agj" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
 	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"agk" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "centcomm_ferry";
+	name = "Arrival Airlock"
+	},
+/turf/unsimulated/floor{
+	icon_state = "greenfull"
+	},
+/area/space)
 "agl" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -22196,6 +22270,7 @@
 	},
 /area/centcom/living)
 "kHb" = (
+/obj/structure/ore_box,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -22404,15 +22479,16 @@
 /area/centcom/living)
 "llb" = (
 /obj/structure/largecrate,
-/obj/machinery/light,
 /turf/unsimulated/floor{
-	dir = 10;
+	dir = 8;
 	icon_state = "yellow"
 	},
 /area/centcom/holding)
 "lmb" = (
+/obj/machinery/light,
 /obj/structure/largecrate,
 /turf/unsimulated/floor{
+	dir = 10;
 	icon_state = "yellow"
 	},
 /area/centcom/holding)
@@ -22442,9 +22518,11 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "lnb" = (
-/obj/structure/ore_box,
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock"
+	},
 /turf/unsimulated/floor{
-	icon_state = "yellow"
+	icon_state = "yellowfull"
 	},
 /area/centcom/holding)
 "lob" = (
@@ -44738,10 +44816,10 @@ aOv
 aOv
 aRl
 aNs
-aaM
-aaM
-aaM
-aaM
+aeD
+agc
+agc
+aeD
 agW
 aho
 agT
@@ -44995,10 +45073,10 @@ aQz
 aQz
 aRm
 aNs
-aaM
-aaM
-aaM
-aeD
+afW
+agd
+agd
+agk
 agY
 ahr
 agT
@@ -45252,10 +45330,10 @@ aNs
 aNs
 aNs
 aNs
-aaM
-aaM
-aaM
-aeD
+afX
+afY
+afY
+agk
 agT
 ahr
 agT
@@ -45504,15 +45582,15 @@ aaM
 aNs
 kjb
 aOF
-kHb
-kHb
 lab
+kHb
 llb
+lmb
 aNs
-aaM
-aaM
-aaM
-aaM
+afX
+afY
+agg
+aeD
 aha
 aEw
 agT
@@ -45764,12 +45842,12 @@ aOF
 aOF
 aOF
 aOF
-lmb
-aaU
-aaM
-aaM
-aaM
-aaM
+lob
+lnb
+afY
+age
+agh
+aeD
 agZ
 ahs
 ahD
@@ -46021,12 +46099,12 @@ aOF
 aOF
 aOF
 aOF
+lob
 lnb
-aaU
-aaM
-aaM
-aaM
-aaM
+afZ
+agf
+agi
+aeD
 aaM
 ahu
 ajV
@@ -46280,10 +46358,10 @@ aOF
 aOF
 lob
 aNs
-aaM
-aaM
-aaM
-aaM
+aeD
+aeD
+aeD
+aeD
 aaM
 aht
 ahH

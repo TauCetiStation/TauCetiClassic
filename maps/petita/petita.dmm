@@ -3214,25 +3214,8 @@
 	},
 /area/station/security/brig)
 "age" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/flashbangs{
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/sunglasses{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/sunglasses{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "red"
-	},
-/area/station/security/brig)
+/turf/simulated/wall,
+/area/station/security/forensic_office)
 "agf" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -3261,15 +3244,14 @@
 	},
 /area/station/civilian/chapel)
 "agj" = (
-/obj/structure/table,
-/obj/item/device/detective_scanner,
-/obj/item/weapon/hand_labeler,
-/obj/item/weapon/packageWrap,
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "red"
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	name = "Forensic Maintenance";
+	req_access = list(4)
 	},
-/area/station/security/brig)
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/security/forensic_office)
 "agk" = (
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/device/camera,
@@ -4956,16 +4938,8 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "ajJ" = (
-/obj/machinery/idpainter{
-	pixel_x = -6
-	},
-/obj/machinery/pdapainter{
-	pixel_x = 8
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/bridge)
+/turf/simulated/wall,
+/area/station/security/detectives_office)
 "ajK" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -5736,17 +5710,22 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "alk" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "white"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/bridge/meeting_room)
+/area/station/security/forensic_office)
 "all" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/grass,
-/area/station/bridge/meeting_room)
+/obj/structure/closet/secure_closet/forensics,
+/obj/machinery/camera{
+	c_tag = "Forensic's Office";
+	network = list("SS13","Security")
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
 "alm" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -5775,19 +5754,22 @@
 	},
 /area/station/bridge/meeting_room)
 "alp" = (
-/turf/simulated/wall,
-/area/station/bridge/meeting_room)
+/obj/structure/closet{
+	name = "Evidence Closet"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
 "alq" = (
-/obj/structure/flora/ausbushes/grassybush{
-	pixel_x = 2;
-	pixel_y = 2
+/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/windowtint{
+	id = "Detective";
+	pixel_x = -25
 	},
-/obj/structure/flora/ausbushes/sunnybush{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/turf/simulated/floor/grass,
-/area/station/bridge/meeting_room)
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
 "alr" = (
 /obj/structure/stool,
 /turf/simulated/floor{
@@ -5815,13 +5797,10 @@
 	},
 /area/station/bridge/meeting_room)
 "alv" = (
-/obj/structure/flora/ausbushes/leafybush{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/grass,
-/area/station/bridge/meeting_room)
+/obj/machinery/computer/security/wooden_tv,
+/obj/structure/table/woodentable,
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
 "alw" = (
 /obj/structure/closet/wardrobe,
 /turf/simulated/floor{
@@ -5862,6 +5841,1187 @@
 	icon_state = "darkredfull"
 	},
 /area/station/bridge/meeting_room)
+"alB" = (
+/obj/item/weapon/twohanded/flora/pottedplant/thinbush,
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Detective APC";
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"alC" = (
+/obj/machinery/vending/noiromat,
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 4;
+	pixel_y = 28
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"alD" = (
+/obj/structure/closet/secure_closet/detective,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"alE" = (
+/obj/structure/coatrack,
+/obj/machinery/light_switch{
+	pixel_y = 25
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"alF" = (
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "Detective"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "Detective"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "Detective"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "Detective"
+	},
+/obj/structure/grille,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"alG" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "redcorner"
+	},
+/area/space)
+"alH" = (
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -25
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
+"alI" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/forensic_office)
+"alJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/forensic_office)
+"alK" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
+"alL" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_x = -30;
+	pixel_y = 1
+	},
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"alM" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/item/ashtray/bronze,
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"alN" = (
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"alO" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"alP" = (
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"alQ" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/door/airlock/security{
+	name = "Detective";
+	req_access = list(68)
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"alR" = (
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1475;
+	listening = 0;
+	name = "Station Intercom (Security)";
+	pixel_x = -30;
+	pixel_y = -4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
+"alS" = (
+/obj/machinery/photocopier,
+/obj/item/weapon/reagent_containers/food/drinks/coffee{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
+"alT" = (
+/obj/machinery/requests_console/detective{
+	pixel_x = -30
+	},
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"alU" = (
+/obj/structure/table/woodentable,
+/obj/item/device/flashlight/lamp/green{
+	on = 0;
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/drinks/flask/detflask,
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"alV" = (
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"alW" = (
+/obj/structure/table/woodentable,
+/obj/item/device/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/obj/item/weapon/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/device/camera_film,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"alX" = (
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "Detective"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "Detective"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 1;
+	id = "Detective"
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"alY" = (
+/obj/machinery/computer/forensic_scanning{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
+"alZ" = (
+/obj/structure/stool/bed/chair/office/dark,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/forensic_office)
+"ama" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
+"amb" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Forensic";
+	req_access = list(4)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "redfull"
+	},
+/area/station/security/forensic_office)
+"amc" = (
+/obj/machinery/light,
+/turf/simulated/floor/carpet/red,
+/area/station/security/detectives_office)
+"amd" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
+/obj/item/device/taperecorder,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"ame" = (
+/obj/structure/table/woodentable,
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/storage/briefcase,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	pixel_y = -30
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"amf" = (
+/obj/structure/table/woodentable,
+/obj/item/device/flash,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/weapon/handcuffs,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/station/security/detectives_office)
+"amg" = (
+/obj/structure/window/reinforced/polarized{
+	dir = 4;
+	id = "Detective"
+	},
+/obj/structure/window/reinforced/polarized{
+	id = "Detective"
+	},
+/obj/structure/window/reinforced/polarized{
+	dir = 8;
+	id = "Detective"
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"amh" = (
+/obj/item/weapon/hand_labeler,
+/obj/item/device/flash,
+/obj/item/clothing/glasses/sunglasses,
+/obj/structure/table/glass,
+/obj/machinery/requests_console/forensic{
+	pixel_y = -30
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitered"
+	},
+/area/station/security/forensic_office)
+"ami" = (
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/item/weapon/folder/red,
+/obj/structure/table/glass,
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
+/obj/item/weapon/storage/briefcase,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/security/forensic_office)
+"amj" = (
+/obj/structure/table,
+/obj/item/weapon/scalpel,
+/obj/item/clothing/gloves/white,
+/obj/item/device/taperecorder,
+/obj/item/weapon/autopsy_scanner,
+/obj/item/clothing/mask/surgical,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/security/forensic_office)
+"amk" = (
+/obj/machinery/optable,
+/obj/structure/window/reinforced,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/security/forensic_office)
+"aml" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/chapel)
+"amm" = (
+/obj/structure/table,
+/obj/item/weapon/hand_labeler,
+/obj/item/weapon/packageWrap,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "red"
+	},
+/area/station/security/brig)
+"amn" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/sunglasses{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "red"
+	},
+/area/station/security/brig)
+"amo" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Secure Gate";
+	name = "Security Blast Door";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/security{
+	name = "Security Maintenance";
+	req_access = list(1)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig)
+"amp" = (
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "red"
+	},
+/area/station/security/brig)
+"amq" = (
+/obj/item/weapon/mop,
+/turf/simulated/floor/plating,
+/area/space)
+"amr" = (
+/obj/machinery/door/airlock/maintenance{
+	req_one_access = list(11,12)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/space)
+"ams" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/space)
+"amt" = (
+/obj/machinery/hologram/holopad{
+	pixel_x = 16
+	},
+/turf/simulated/floor,
+/area/space)
+"amu" = (
+/obj/machinery/idpainter{
+	pixel_x = -6
+	},
+/obj/machinery/pdapainter{
+	pixel_x = 8
+	},
+/obj/item/weapon/reagent_containers/food/drinks/tea{
+	pixel_x = 13;
+	pixel_y = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/bridge)
+"amv" = (
+/obj/structure/stool/bed/chair/metal,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/space)
+"amw" = (
+/obj/structure/rack,
+/obj/item/weapon/reagent_containers/spray/extinguisher,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/clothing/mask/gas/coloured,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amx" = (
+/obj/random/scrap/moderate_weighted,
+/turf/simulated/floor/plating,
+/area/space)
+"amy" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amz" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/pointybush,
+/turf/simulated/floor/grass,
+/area/space)
+"amA" = (
+/obj/machinery/door/firedoor,
+/obj/structure/barricade/wooden{
+	layer = 2.8;
+	name = "doorway barricade"
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amB" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space)
+"amC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/table_parts,
+/obj/item/weapon/minihoe{
+	pixel_x = 3
+	},
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/paper{
+	info = "Harry, don't forget to water the fucking flowers.";
+	info_links = "Notes"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amD" = (
+/obj/structure/girder/displaced,
+/obj/structure/barricade/wooden,
+/turf/simulated/floor/plating,
+/area/space)
+"amE" = (
+/obj/structure/flora/ausbushes/grassybush{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/structure/flora/ausbushes/sunnybush{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/structure/sign/poster/official/cohiba_robusto_ad{
+	pixel_x = -32
+	},
+/turf/simulated/floor/grass,
+/area/space)
+"amF" = (
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/space)
+"amG" = (
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellowcorner"
+	},
+/area/space)
+"amH" = (
+/turf/simulated/wall,
+/area/station/civilian/locker)
+"amI" = (
+/obj/structure/flora/ausbushes/leafybush{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/sign/poster/official/enlist{
+	pixel_y = -32
+	},
+/turf/simulated/floor/grass,
+/area/space)
+"amJ" = (
+/obj/machinery/washing_machine,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/civilian/locker)
+"amK" = (
+/obj/structure/table,
+/obj/item/clothing/under/suit_jacket/navy{
+	pixel_y = 4
+	},
+/obj/item/clothing/under/suit_jacket/red{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/locker)
+"amL" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/locker)
+"amM" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/locker)
+"amN" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/locker)
+"amO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/space)
+"amP" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating,
+/area/space)
+"amQ" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating,
+/area/space)
+"amR" = (
+/obj/item/stack/sheet/metal{
+	amount = 2
+	},
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/plating,
+/area/space)
+"amS" = (
+/obj/item/weapon/twohanded/flora/random,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/locker)
+"amT" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space)
+"amU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool/bed/chair/metal{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"amV" = (
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/space)
+"amW" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/locker)
+"amX" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/fancy/crayons{
+	pixel_y = 5
+	},
+/obj/item/weapon/razor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/locker)
+"amY" = (
+/obj/structure/dresser,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/locker)
+"amZ" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	freq = 1400;
+	location = "Janitor"
+	},
+/obj/structure/plasticflaps{
+	opacity = 1
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
+	},
+/area/station/civilian/janitor)
+"ana" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Janitor's Maintenance";
+	req_access = list(26)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/civilian/janitor)
+"anb" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/wall,
+/area/station/civilian/janitor)
+"anc" = (
+/turf/simulated/wall,
+/area/station/civilian/janitor)
+"and" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/locker)
+"ane" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/personal,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/civilian/locker)
+"anf" = (
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/locker)
+"ang" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/civilian/locker)
+"anh" = (
+/obj/machinery/door/window/westleft{
+	dir = 2;
+	name = "Janitoral Delivery";
+	req_access = list(26)
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/civilian/janitor)
+"ani" = (
+/turf/simulated/floor{
+	icon_state = "whitepurplefull"
+	},
+/area/station/civilian/janitor)
+"anj" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/civilian/janitor)
+"ank" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "garbage"
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/janitor)
+"anl" = (
+/obj/machinery/disposal/deliveryChute{
+	dir = 8
+	},
+/obj/machinery/door/poddoor{
+	id = "Disposal Exit";
+	layer = 3.1;
+	name = "Disposal Exit Vent"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor/plating,
+/area/station/civilian/janitor)
+"anm" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor/plating,
+/area/station/civilian/janitor)
+"ann" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/locker)
+"ano" = (
+/obj/structure/closet/secure_closet/personal,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/civilian/locker)
+"anp" = (
+/obj/structure/stool/bed/chair/janitorialcart,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warnwhite"
+	},
+/area/station/civilian/janitor)
+"anq" = (
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurple"
+	},
+/area/station/civilian/janitor)
+"anr" = (
+/obj/structure/stool,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurple"
+	},
+/area/station/civilian/janitor)
+"ans" = (
+/obj/machinery/door_control{
+	id = "Disposal Exit";
+	name = "Disposal Vent Control";
+	pixel_x = -6;
+	pixel_y = -24;
+	req_access = list(26)
+	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "garbage";
+	name = "disposal coveyor"
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitepurple"
+	},
+/area/station/civilian/janitor)
+"ant" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/janitor)
+"anu" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/civilian/janitor)
+"anv" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/locker)
+"anw" = (
+/obj/structure/reagent_dispensers/aqueous_foam_tank,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warnwhite"
+	},
+/area/station/civilian/janitor)
+"anx" = (
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/janitor)
+"any" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/obj/item/weapon/legcuffs/beartrap,
+/obj/item/weapon/legcuffs/beartrap,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/storage/box/mousetraps,
+/turf/simulated/floor{
+	icon_state = "whitepurplecorner"
+	},
+/area/station/civilian/janitor)
+"anz" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/simulated/floor{
+	icon_state = "whitepurple"
+	},
+/area/station/civilian/janitor)
+"anA" = (
+/obj/structure/closet/wardrobe/black,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/civilian/locker)
+"anB" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/civilian/locker)
+"anC" = (
+/obj/structure/closet/wardrobe/white,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/civilian/locker)
+"anD" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warnwhite"
+	},
+/area/station/civilian/janitor)
+"anE" = (
+/obj/structure/table,
+/obj/item/weapon/grenade/chem_grenade/antiweed,
+/obj/item/weapon/grenade/chem_grenade/antiweed,
+/obj/item/weapon/grenade/chem_grenade/antiweed,
+/obj/item/weapon/grenade/chem_grenade/cleaner{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/weapon/grenade/chem_grenade/cleaner{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/weapon/grenade/chem_grenade/cleaner{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/glass/bucket{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitepurple"
+	},
+/area/station/civilian/janitor)
+"anF" = (
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/civilian/janitor)
+"anG" = (
+/turf/simulated/wall,
+/area/station/hallway/secondary/entry)
+"anH" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "Stairs_wide"
+	},
+/area/station/hallway/secondary/entry)
+"anI" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "Stairs2_wide"
+	},
+/area/station/hallway/secondary/entry)
+"anJ" = (
+/obj/structure/mopbucket,
+/obj/item/weapon/mop,
+/obj/machinery/newscaster{
+	pixel_x = -30
+	},
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "warnwhite"
+	},
+/area/station/civilian/janitor)
+"anK" = (
+/turf/simulated/floor{
+	icon_state = "whitepurplecorner"
+	},
+/area/station/civilian/janitor)
+"anL" = (
+/obj/structure/closet/l3closet/janitor,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "whitepurple"
+	},
+/area/station/civilian/janitor)
+"anM" = (
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/hallway/secondary/entry)
+"anN" = (
+/obj/machinery/door/airlock{
+	name = "Janitor's Room";
+	req_access = list(26)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/janitor)
+"anO" = (
+/obj/machinery/light_switch{
+	pixel_y = -26
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/janitor)
+"anP" = (
+/obj/machinery/requests_console/janitorial{
+	pixel_y = -29
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Janitor's Room APC";
+	pixel_y = 24
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/janitor)
+"anQ" = (
+/obj/structure/closet/jcloset,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitepurple"
+	},
+/area/station/civilian/janitor)
+"anR" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
+"anS" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrival Airlock"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
+"anT" = (
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
+"anU" = (
+/turf/space,
+/area/shuttle/transport1/station)
+"anV" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "arrival_ferry";
+	locked = 1;
+	name = "Arrival Airlock"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
+"anW" = (
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA"
+	},
+/turf/simulated/wall,
+/area/space)
 "aHA" = (
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots,
@@ -6365,13 +7525,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "bGk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/civilian/chapel)
+/obj/structure/lattice,
+/turf/space,
+/area/space)
 "bGw" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -45334,36 +46490,36 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+aaI
+wYU
+wYU
+hMb
 aaa
 aaa
 aaa
@@ -45590,37 +46746,37 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+hMb
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+aaB
+amr
+ams
+wYU
+wYU
+hMb
 aaa
 aaa
 aaa
@@ -45847,25 +47003,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+aaB
+age
+age
+age
+age
+age
 abb
 abb
 abb
 abb
 abb
 agV
+amo
 agV
 agV
 agV
-agV
 ahd
 ahd
 ahd
@@ -45874,7 +47030,7 @@ ahd
 ahd
 ahd
 ahd
-ajm
+aaF
 wYU
 wYU
 hMb
@@ -46104,22 +47260,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+age
+age
+alH
+alR
+alY
+amh
 abb
 abi
 afK
 agG
 abb
-age
-agj
+amm
+amp
 agV
 ahR
 agw
@@ -46361,15 +47517,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+age
+all
+alI
+alI
+alZ
+ami
 abb
 abk
 afN
@@ -46416,17 +47572,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -46618,15 +47774,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+agj
+alk
+alJ
+alI
+alI
+amj
 abb
 abn
 afM
@@ -46673,17 +47829,17 @@ aaa
 aaa
 aaa
 aaa
+bGk
 aaa
 aaa
 aaa
+anU
+anU
+anU
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -46875,15 +48031,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+age
+alp
+alK
+alS
+ama
+amk
 abb
 abm
 afP
@@ -46930,17 +48086,17 @@ aaa
 aaa
 aaa
 aaa
+bGk
 aaa
 aaa
 aaa
+anU
+anU
+anU
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -47132,21 +48288,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+age
+age
+age
+age
+amb
 aat
 aat
 aat
 aat
 aat
 agV
-agd
+amn
 ahN
 ahN
 ahT
@@ -47187,17 +48343,17 @@ aaa
 aaa
 aaa
 aaa
+bGk
 aaa
+anU
+anU
+anU
+anU
+anU
+anU
+anU
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -47389,14 +48545,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+ajJ
+alq
+alL
+alT
+alV
 aat
 aba
 abp
@@ -47444,17 +48600,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+bGk
 aaa
 aaa
 aaa
@@ -47646,14 +48802,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+ajJ
+alv
+alM
+alU
+amc
 aat
 abd
 abp
@@ -47701,17 +48857,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+bGk
 aaa
 aaa
 aaa
@@ -47903,14 +49059,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+ajJ
+alB
+alN
+alV
+alV
 aat
 abc
 abp
@@ -47958,17 +49114,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+bGk
 aaa
 aaa
 aaa
@@ -48160,14 +49316,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+ajJ
+alC
+alO
+alP
+amd
 aat
 abf
 abp
@@ -48215,17 +49371,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+bGk
 aaa
 aaa
 aaa
@@ -48417,14 +49573,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+ajJ
+alD
+alP
+alP
+ame
 aat
 abe
 abp
@@ -48472,17 +49628,17 @@ aaa
 aaa
 aaa
 aaa
+bGk
 aaa
+anU
+anU
+anU
+anU
+anU
+anU
+anU
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -48674,14 +49830,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+aaB
+aaB
+ajJ
+alE
+alP
+alW
+amf
 aat
 abh
 abp
@@ -48723,23 +49879,23 @@ aaa
 aaa
 aaa
 aaa
+anG
+anG
+anG
+anR
+anR
+anR
+bGk
 aaa
+anU
+anU
+anU
+anU
+anU
+anU
+anU
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -48932,13 +50088,13 @@ aaa
 aaa
 aaa
 hMb
-uKo
+afI
 hMb
-hMb
-hMb
-hMb
-hMb
-hMb
+ajJ
+alF
+alQ
+alX
+amg
 aat
 aat
 aat
@@ -48973,30 +50129,30 @@ hMb
 hMb
 hMb
 hMb
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+hMb
+anG
+anM
+anM
+anM
+anM
+anG
+anR
+anR
+anG
+anU
+anU
+anU
+anU
+anU
+bGk
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -49192,10 +50348,10 @@ bbL
 bat
 aaF
 aaM
-aaM
-aaM
-aaM
-aaM
+alG
+aie
+ajp
+ajp
 aaM
 aaM
 aaM
@@ -49228,32 +50384,32 @@ ajN
 ajN
 ajN
 ajN
+amF
 ajN
 ajN
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ajN
+ajN
+ajN
+ajN
+ajN
+ajN
+anH
+anM
+anM
+anM
+anM
+anS
+anT
+anT
+anV
+anU
+anU
+anU
+anU
+anU
+anW
+bGk
+hMb
 aaa
 aaa
 aaa
@@ -49482,35 +50638,35 @@ akl
 ahr
 aaL
 abo
+abo
 bar
 bau
-aaI
-abo
-abo
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amG
+afT
+afT
+afT
+afT
+afT
+afT
+afT
+afT
+anI
+anM
+anM
+anM
+anM
+anS
+anT
+anT
+anV
+anU
+anU
+anU
+anU
+anU
+hMb
+bGk
+anW
 aaa
 aaa
 aaa
@@ -49703,7 +50859,7 @@ aaa
 aaa
 aaa
 hMb
-uKo
+afI
 aaH
 aaH
 aaH
@@ -49714,7 +50870,7 @@ aaH
 aaH
 abr
 afS
-bGk
+aml
 afS
 abr
 abr
@@ -49740,34 +50896,34 @@ akz
 akh
 akh
 akh
-afI
 hMb
-hMb
-hMb
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amA
+amH
+amH
+amL
+amL
+amW
+and
+ann
+anv
+amH
+anG
+anM
+anM
+anM
+anM
+anG
+anR
+anR
+anG
+anU
+anU
+anU
+anU
+anU
+bGk
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -49997,34 +51153,34 @@ akA
 akK
 akX
 akh
-aaB
-aaB
-hMb
+amv
+amB
+amH
+amJ
+amM
+amM
+amX
+ane
+ano
+anf
+anA
+anc
+anN
+anc
+anR
+anR
+anR
+bGk
 aaa
 aaa
+anU
+anU
+anU
+anU
+anU
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -50254,34 +51410,34 @@ akB
 akh
 akh
 akh
-aaB
-aaB
-hMb
+amw
+amx
+amH
+amJ
+amM
+amM
+amM
+anf
+anf
+anf
+anB
+anc
+anO
+anc
 aaa
 aaa
 aaa
+bGk
 aaa
 aaa
 aaa
+anU
+anU
+anU
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -50501,7 +51657,7 @@ aiD
 wYU
 wYU
 wYU
-wYU
+amt
 wYU
 wYU
 ajV
@@ -50511,34 +51667,34 @@ akC
 akL
 akY
 akh
-aaB
-aaB
-hMb
+amx
+amC
+amH
+amK
+amM
+amS
+amY
+ang
+ano
+anf
+anC
+anc
+anP
+anc
 aaa
 aaa
 aaa
+bGk
 aaa
 aaa
 aaa
+anU
+anU
+anU
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -50768,34 +51924,34 @@ akD
 akh
 akh
 akh
-alk
-alp
-alp
-alp
+amy
+amD
+amH
+amH
+amN
+amH
+amH
+amH
+amH
+amH
+amH
+anc
+anx
+anF
 aaa
 aaa
 aaa
+bGk
 aaa
 aaa
+anU
+anU
+anU
+anU
+anU
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -51025,35 +52181,35 @@ akE
 akM
 akZ
 akh
-all
-alq
-alv
-alp
+amz
+amE
+amI
+amD
+amO
+aaB
+amZ
+anh
+anp
+anw
+anD
+anJ
+anx
+anF
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+bGk
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -51286,31 +52442,31 @@ alm
 alm
 alm
 oIb
+amP
+amT
+ana
+ani
+anq
+anx
+anx
+anx
+anx
+anF
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+anU
+bGk
 aaa
 aaa
 aaa
@@ -51501,7 +52657,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGk
 bBE
 bBE
 bBE
@@ -51543,31 +52699,31 @@ aln
 aln
 alw
 oIb
+amP
+aaB
+anb
+anj
+anq
+anx
+anx
+anK
+anQ
+anF
+aaa
+aaa
+bGk
+anU
+anU
+anU
+anU
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+anU
+anU
+anU
+anU
+bGk
 aaa
 aaa
 aaa
@@ -51758,7 +52914,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGk
 bBE
 aaK
 aaU
@@ -51787,7 +52943,7 @@ aOa
 ajd
 ajt
 ajC
-ajJ
+amu
 ajd
 aOa
 oIb
@@ -51800,31 +52956,31 @@ aln
 alr
 alx
 oIb
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amP
+amO
+anc
+ank
+anq
+any
+anE
+anL
+anF
+anF
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -52015,7 +53171,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGk
 bBE
 bAj
 bcV
@@ -52057,17 +53213,17 @@ alo
 als
 aly
 oIb
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amQ
+amB
+anc
+ank
+anr
+anz
+anF
+anF
+anF
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -52272,7 +53428,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGk
 bBE
 aaJ
 bBE
@@ -52290,7 +53446,7 @@ afL
 afL
 hMb
 hMb
-aaB
+amq
 aaB
 eRs
 beU
@@ -52314,16 +53470,16 @@ aln
 alt
 alz
 oIb
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amR
+aaB
+anc
+ank
+ans
+anc
+anF
+bGk
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -52529,16 +53685,16 @@ aaa
 aaa
 aaa
 aaa
+bGk
+bGk
+aaa
+bGk
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
 afL
 afZ
 agQ
@@ -52571,14 +53727,14 @@ aln
 alu
 alA
 oIb
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amP
+amU
+anc
+anl
+ant
+anc
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -52828,13 +53984,13 @@ oIb
 alm
 alm
 oIb
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMb
+amV
+anc
+anm
+anu
+anc
+bGk
 aaa
 aaa
 aaa
@@ -53081,16 +54237,16 @@ akG
 akS
 alf
 bdc
+bGk
 aaa
 aaa
+bGk
+bGk
+bGk
+bGk
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bGk
+bGk
 aaa
 aaa
 aaa
@@ -53573,9 +54729,9 @@ agU
 ahC
 afL
 afL
-aaa
-aaa
-aaa
+bGk
+bGk
+bGk
 ahl
 ahw
 aKN
@@ -53852,7 +55008,7 @@ akI
 bdc
 bdc
 bdc
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -54862,7 +56018,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGk
 ahz
 ahz
 ahz
@@ -54878,7 +56034,7 @@ bdc
 aky
 aky
 aky
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -55122,7 +56278,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGk
 aUG
 aja
 ajk
@@ -55132,7 +56288,7 @@ ajy
 ajT
 akg
 aUG
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -55379,7 +56535,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bGk
 aUG
 ajb
 ajb
@@ -55389,7 +56545,7 @@ ajM
 ajb
 ajb
 aUG
-aaa
+bGk
 aaa
 aaa
 aaa
@@ -55636,17 +56792,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+bGk
+bGk
+bGk
 ajl
 ajb
 ajb
 ajb
 ajl
-aaa
-aaa
-aaa
+bGk
+bGk
+bGk
 aaa
 aaa
 aaa
