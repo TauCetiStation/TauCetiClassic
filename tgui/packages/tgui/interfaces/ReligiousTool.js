@@ -4,10 +4,6 @@ import { BlockQuote, Box, Button, Collapsible, Icon, Section, Tabs, Flex, Input 
 import { FlexItem } from '../components/Flex';
 import { Window } from '../layouts';
 
-// TODO: REMOVE THIS!!!!
-import { createLogger } from '../logging';
-const logger = createLogger('aboba');
-
 const ASPECT2COLOR = [];
 
 export const ReligiousTool = (props, context) => {
