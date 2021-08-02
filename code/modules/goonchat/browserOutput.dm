@@ -174,6 +174,13 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 /var/list/bicon_cache = list()
 
+/icon
+	var/icon_info
+
+/icon/New(icon,icon_state,dir,frame,moving)
+	..()
+	icon_info = "[icon]#[icon_state]"
+
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
@@ -183,7 +190,8 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	iconCache[iconKey] << icon
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
+	var/list/almost_partial = splittext(partial[2], "}")
+	return replacetext(copytext(almost_partial[1], 3, -5), "\n", "")
 
 /proc/bicon(obj, css = "class='icon'") // if you don't want any styling just pass null to css
 	if (!obj)
@@ -196,9 +204,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		return
 
 	if (isicon(obj))
-		if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
-			bicon_cache["\ref[obj]"] = icon2base64(obj)
-		return "[bicon_cache["\ref[obj]"]]"
+		var/icon/I = obj
+		if (!bicon_cache[I.icon_info]) // Doesn't exist yet, make it.
+			bicon_cache[I.icon_info] = icon2base64(obj)
+		return "[bicon_cache[I.icon_info]]"
 
 	if (!isatom(obj)) // we don't need datums here. no runtimes :<
 		return
