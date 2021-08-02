@@ -2141,10 +2141,6 @@
 	
 	var/new_w_class = initial(w_class)
 	
-	var/datum/species/S = all_species[get_species()]
-	if(S)
-		new_w_class = S.w_class
-
 	if(SMALLSIZE in mutations)
 		new_w_class -= 1
 

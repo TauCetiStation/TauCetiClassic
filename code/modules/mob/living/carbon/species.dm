@@ -10,8 +10,6 @@
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
 
-	var/w_class = SIZE_HUMAN
-
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
 	var/unarmed                                          // For empty hand harm-intent attack
