@@ -179,7 +179,11 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 /icon/New(icon,icon_state,dir,frame,moving)
 	..()
-	icon_info = "[icon]#[icon_state]"
+	// A link to yourself, otherwise a file. A kind of guarantee.
+	if(istype(icon, /icon))
+		icon_info = "\ref[src]#[icon_state]"
+	else
+		icon_info = "\ref[icon]#[icon_state]"
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
@@ -203,21 +207,29 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if (!obj)
 		return
 
-	if (isicon(obj))
+	// This check will check for an icon object that already has a cool key.
+	if (istype(obj, /icon))
 		var/icon/I = obj
 		if (!bicon_cache[I.icon_info]) // Doesn't exist yet, make it.
 			bicon_cache[I.icon_info] = icon2base64(obj)
 		return "[bicon_cache[I.icon_info]]"
 
+	// This check will check if you pass it to this proc 'foo/bar.dmi', or something from your computer in game
+	if(isicon(obj))
+		var/key = "\ref[obj]"
+		if(!bicon_cache[key])
+			bicon_cache[key] = icon2base64(obj)
+		return "[bicon_cache[key]]"
+
 	if (!isatom(obj)) // we don't need datums here. no runtimes :<
 		return
 
 	var/atom/A = obj
-	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
+	var/key = "\ref[A.icon]#[A.icon_state]"
 	if (!bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I
-		if(!A.icon || !A.icon_state || !(A.icon_state in icon_states(A.icon))) // fixes freeze when client uses examine or anything else, when there is something wrong with icon data.
-			I = icon('icons/misc/buildmode.dmi', "buildhelp")                  // there is no logic with this icon choice, i just like it.
+		if(!A.icon_state || !(A.icon_state in icon_states(A.icon))) // fixes freeze when client uses examine or anything else, when there is something wrong with icon data.
+			I = A.icon ? A.icon : icon('icons/misc/buildmode.dmi', "buildhelp")                  // there is no logic with this icon choice, i just like it.
 		else
 			I = icon(A.icon, A.icon_state, SOUTH, 1)
 		if (ishuman(obj)) // Shitty workaround for a BYOND issue.
