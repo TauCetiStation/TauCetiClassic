@@ -101,7 +101,9 @@
 /obj/item/clothing/head/helmet/space/price = 8700
 /obj/item/clothing/head/helmet/space/rig/price = 12300
 /obj/item/clothing/head/helmet/tactical/price = 4444
+/obj/item/clothing/head/helmet/space/sk/price = 100
 /obj/item/clothing/head/welding/price = 250
+/obj/item/clothing/head/helmet/thunderdome/price = 0
 
 /obj/item/clothing/shoes/boots/combat/price = 2000
 /obj/item/clothing/shoes/boots/galoshes/price = 660
@@ -121,16 +123,18 @@
 /obj/item/clothing/suit/armor/swat/price = 33500
 /obj/item/clothing/suit/armor/tactical/price = 9990
 /obj/item/clothing/suit/captunic/price = 6000
-/obj/item/clothing/suit/ianshirt/price = 7500
-/obj/item/clothing/suit/space/price = 24456
-/obj/item/clothing/suit/space/rig/price = 32547
+/obj/item/clothing/suit/ianshirt/price = 3000
+/obj/item/clothing/suit/space/price = 15000
+/obj/item/clothing/suit/space/rig/price = 20000
 /obj/item/clothing/suit/space/sk/price = 400
-/obj/item/clothing/head/helmet/space/sk/price = 100
 /obj/item/clothing/suit/storage/labcoat/cmo/price = 5500
+/obj/item/clothing/suit/armor/tdome/price = 0
+
 /obj/item/clothing/accessory/holobadge/price = 350
 /obj/item/clothing/accessory/holster/price = 1600
 /obj/item/clothing/accessory/medal/price = 9500
 /obj/item/clothing/accessory/medal/gold/captain/price = 70000
+
 /obj/item/clothing/under/M35_Jacket/price = 750
 /obj/item/clothing/under/M35_Jacket_Oficer/price = 1000
 /obj/item/clothing/under/chameleon/price = 444
@@ -162,7 +166,7 @@
 /obj/item/device/guitar/price = 8880
 /obj/item/device/mass_spectrometer/price = 2650
 /obj/item/device/mass_spectrometer/adv/price = 3020
-/obj/item/device/mmi/posibrain/price = 30090
+/obj/item/device/mmi/posibrain/price = 25000
 /obj/item/device/radio/headset/price = 150
 /obj/item/device/radio/headset/ert/price = 7000
 /obj/item/device/radio/headset/heads/price = 5500
@@ -187,7 +191,7 @@
 /obj/item/stack/sheet/glass/phoronrglass/price = 37
 /obj/item/stack/sheet/leather/price = 220
 /obj/item/stack/sheet/metal/price = 14
-/obj/item/stack/sheet/mineral/diamond/price = 11500
+/obj/item/stack/sheet/mineral/diamond/price = 1100
 /obj/item/stack/sheet/mineral/gold/price = 730
 /obj/item/stack/sheet/mineral/iron/price = 12
 /obj/item/stack/sheet/mineral/phoron/price = 30
@@ -199,7 +203,7 @@
 /obj/item/stack/sheet/rglass/price = 27
 /obj/item/stack/sheet/wood/price = 6
 
-/obj/item/weapon/ore/diamond/price = 8500
+/obj/item/weapon/ore/diamond/price = 600
 /obj/item/weapon/ore/glass/price = 8
 /obj/item/weapon/ore/gold/price = 440
 /obj/item/weapon/ore/iron/price = 6
@@ -268,21 +272,21 @@
 /obj/item/weapon/pickaxe/drill/jackhammer/price = 13000
 /obj/item/weapon/pickaxe/gold/price = 5000
 /obj/item/weapon/pickaxe/silver/price = 2770
-/obj/item/weapon/pinpointer/price = 8000
-/obj/item/weapon/rcd/price = 19000
+/obj/item/weapon/pinpointer/price = 10000
+/obj/item/weapon/rcd/price = 8000
 /obj/item/weapon/rcd_ammo/price = 1700
 /obj/item/weapon/retractor/price = 1250
 /obj/item/weapon/scalpel/price = 1250
 /obj/item/weapon/soap/nanotrasen/price = 222
 /obj/item/weapon/stamp/price = 3330
 /obj/item/weapon/stamp/captain/price = 990
-/obj/item/weapon/stamp/clown/price = 25000
+/obj/item/weapon/stamp/clown/price = 2000
 /obj/item/weapon/stock_parts/price = 350
-/obj/item/weapon/storage/backpack/clown/price = 13000
+/obj/item/weapon/storage/backpack/clown/price = 3000
 /obj/item/weapon/storage/belt/champion/price = 8500
 /obj/item/weapon/surgicaldrill/price = 1250
 /obj/item/weapon/table_parts/price = 95
-/obj/item/weapon/tank/jetpack/price = 22000
+/obj/item/weapon/tank/jetpack/price = 15000
 /obj/item/weapon/tank/price = 45
 /obj/item/weapon/twohanded/fireaxe/price = 2500
 /obj/item/weapon/weldingtool/price = 120
@@ -303,16 +307,19 @@
 /obj/machinery/shieldgen/price = 700
 /obj/machinery/shieldwallgen/price = 700
 /obj/machinery/the_singularitygen/price = 25223
-/obj/machinery/vending/price = 15000
+/obj/machinery/vending/price = 1500
 
 /obj/mecha/working/ripley/price = 40000
 /obj/mecha/working/hoverpod/price = 25000
 /obj/mecha/medical/odysseus/price = 30000
 /obj/mecha/combat/price = 70000
+
 /obj/structure/closet/price = 200
-/obj/structure/device/piano/price = 25000
+/obj/structure/device/piano/price = 5000
 /obj/structure/flora/price = 300
 /obj/structure/stool/bed/chair/janitorialcart/price = 3000
 /obj/structure/mopbucket/price = 1500
 /obj/structure/particle_accelerator/price = 20000
 /obj/structure/sign/price = 987
+/obj/structure/big_bell/price = 20000
+/obj/structure/altar_of_gods/price = 15000
