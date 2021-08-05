@@ -155,7 +155,7 @@
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
-	list_reagents = list("cola" = 15, "orangejuice" = 15)
+	list_reagents = list("sodawater" = 15, "orangejuice" = 15)
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/space_up
 	name = "Space-Up"
