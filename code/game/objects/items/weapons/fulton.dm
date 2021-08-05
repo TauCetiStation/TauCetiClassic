@@ -62,7 +62,7 @@
 	BPs.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/obj/effect/BPe
-	if(extraction_point)
+	if(!del_target)
 		BPe = new /obj/effect(extraction_point)
 		BPe.icon = 'icons/effects/anomalies.dmi'
 		BPe.icon_state = "bluespace"
@@ -85,7 +85,7 @@
 		H.say(pick(extraction_appends))
 		H.emote("scream")
 
-	if(del_target && !extraction_point)
+	if(del_target)
 		qdel(target)
 		qdel(holder_obj)
 		qdel(BPs)
