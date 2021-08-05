@@ -163,7 +163,7 @@
 /obj/item/device/flash/price = 450
 /obj/item/device/flash/synthetic/price = 880
 /obj/item/device/flashlight/price = 65
-/obj/item/device/guitar/price = 8880
+/obj/item/device/guitar/price = 4880
 /obj/item/device/mass_spectrometer/price = 2650
 /obj/item/device/mass_spectrometer/adv/price = 3020
 /obj/item/device/mmi/posibrain/price = 25000
@@ -315,7 +315,7 @@
 /obj/mecha/combat/price = 70000
 
 /obj/structure/closet/price = 200
-/obj/structure/device/piano/price = 5000
+/obj/structure/device/piano/price = 10000
 /obj/structure/flora/price = 300
 /obj/structure/stool/bed/chair/janitorialcart/price = 3000
 /obj/structure/mopbucket/price = 1500
