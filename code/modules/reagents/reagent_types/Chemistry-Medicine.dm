@@ -749,7 +749,7 @@
 /datum/reagent/adrenaline
 	name = "Adrenaline"
 	id = "adrenaline"
-	description = "Adrenaline is a natural hormone which plays important role in fight-or-flight response by increasing blood flow to musckles and output of heart."
+	description = "Adrenaline is a natural hormone which plays important role in fight-or-flight response by increasing blood flow to muscles and output of heart."
 	reagent_state = LIQUID
 	color = "#a59b28" // rgb: 165, 155, 40
 	custom_metabolism = 0.03
