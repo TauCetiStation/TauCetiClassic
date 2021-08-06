@@ -557,8 +557,6 @@
 	..()
 	if(prob(5))
 		M.emote(pick("twitch","blink","shiver"))
-	if(prob(70))
-		M.adjustToxLoss(1)
 
 /datum/reagent/cryoxadone
 	name = "Cryoxadone"
