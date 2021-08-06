@@ -1,6 +1,6 @@
 /datum/admins/proc/stickyban(action, data)
 	// Entry point for stickyban admin control
-	if(!check_rights(R_BAN))
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 	switch (action)
 		if ("show")
@@ -270,8 +270,8 @@
 	)
 
 /datum/admins/proc/stickyban_show()
-	// Show browser window for stickyban panel if R_BAN rights
-	if(!check_rights(R_BAN))
+	// Show browser window for stickyban panel if R_BAN & R_LOG rights
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
 		return
 	var/list/bans = sticky_banned_ckeys()
 	var/header = "<title>Sticky Bans</title><style> .sign{ font-style: italic;}</style>"
