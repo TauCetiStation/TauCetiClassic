@@ -1,14 +1,14 @@
 #define LOWPOP_FAMILIES_COUNT 50
 
-#define TWO_STARS_HIGHPOP 11
-#define THREE_STARS_HIGHPOP 16
-#define FOUR_STARS_HIGHPOP 21
-#define FIVE_STARS_HIGHPOP 31
+#define TWO_STARS_HIGHPOP 4
+#define THREE_STARS_HIGHPOP 8
+#define FOUR_STARS_HIGHPOP 12
+#define FIVE_STARS_HIGHPOP 16
 
-#define TWO_STARS_LOW 6
-#define THREE_STARS_LOW 9
-#define FOUR_STARS_LOW 12
-#define FIVE_STARS_LOW 15
+#define TWO_STARS_LOW 2
+#define THREE_STARS_LOW 4
+#define FOUR_STARS_LOW 6
+#define FIVE_STARS_LOW 8
 
 // This is not at all like on /tg/.
 // "Family" and "gang" used interchangeably in code.
