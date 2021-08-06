@@ -517,7 +517,7 @@
 	icon_state = "bearmeat"
 	filling_color = "#db0000"
 	bitesize = 3
-	list_reagents = list("protein" = 12, "adrenaline" = 5, "vitamin" = 2)
+	list_reagents = list("protein" = 12, "hyperzine" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
