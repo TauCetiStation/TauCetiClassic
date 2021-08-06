@@ -46,22 +46,14 @@
 #define REACITON_COST        "favor_cost"
 #define REACTION_ASPECTS     "needed_aspects"
 
-/datum/encyclopedia
+/datum/religion_interface
 	var/list/encyclopedia = list()
-
-/datum/encyclopedia/proc/get_entire_encyclopedia()
-	return encyclopedia
-
-/datum/encyclopedia/proc/init_encyclopedia()
-	parse_all()
-
-/datum/encyclopedia/proc/parse_all()
-	return
-
-/datum/encyclopedia/religion
 	var/datum/religion/religion
 
-/datum/encyclopedia/religion/init_encyclopedia(datum/religion/R)
+/datum/religion_interface/proc/get_entire_encyclopedia()
+	return encyclopedia
+
+/datum/religion_interface/proc/init_encyclopedia(datum/religion/R)
 	religion = R
 
 	encyclopedia[RITES]        = list()
@@ -71,9 +63,9 @@
 	encyclopedia[HOLY_REAGS]   = list()
 	encyclopedia[FAITH_REACTS] = list()
 
-	..()
+	parse_all()
 
-/datum/encyclopedia/religion/parse_all()
+/datum/religion_interface/proc/parse_all()
 	parse_rites()
 	parse_sects()
 	parse_aspects()
@@ -81,7 +73,7 @@
 	parse_reags()
 	parse_reacts()
 
-/datum/encyclopedia/religion/proc/parse_rites()
+/datum/religion_interface/proc/parse_rites()
 	var/list/all_rites = subtypesof(/datum/religion_rites)
 	for(var/rite_type in all_rites)
 		var/datum/religion_rites/RR = new rite_type
@@ -115,7 +107,7 @@
 /datum/religion/cult/get_sects_types()
 	return subtypesof(/datum/religion_sect/preset/cult) + /datum/religion_sect/custom/cult
 
-/datum/encyclopedia/religion/proc/parse_sects()
+/datum/religion_interface/proc/parse_sects()
 	var/list/all_sects = religion.get_sects_types()
 	for(var/sect_type in all_sects)
 		var/datum/religion_sect/RS = new sect_type
@@ -143,7 +135,7 @@
 
 		QDEL_NULL(RS)
 
-/datum/encyclopedia/religion/proc/parse_aspects()
+/datum/religion_interface/proc/parse_aspects()
 	var/list/all_aspects = subtypesof(/datum/aspect)
 	for(var/asp_type in all_aspects)
 		var/datum/aspect/ASP = new asp_type
@@ -163,7 +155,7 @@
 
 		QDEL_NULL(ASP)
 
-/datum/encyclopedia/religion/proc/parse_spells()
+/datum/religion_interface/proc/parse_spells()
 	var/list/all_spells = subtypesof(/obj/effect/proc_holder/spell)
 	for(var/spell_type in all_spells)
 		var/obj/effect/proc_holder/spell/S = new spell_type
@@ -182,7 +174,7 @@
 
 		QDEL_NULL(S)
 
-/datum/encyclopedia/religion/proc/parse_reags()
+/datum/religion_interface/proc/parse_reags()
 	for(var/id in global.chemical_reagents_list)
 		var/datum/reagent/R = global.chemical_reagents_list[id]
 		if(!R.needed_aspects)
@@ -195,7 +187,7 @@
 
 		encyclopedia[HOLY_REAGS] += list(reagent_info)
 
-/datum/encyclopedia/religion/proc/parse_reacts()
+/datum/religion_interface/proc/parse_reacts()
 	for(var/id in global.faith_reactions)
 		var/datum/faith_reaction/FR = global.faith_reactions[id]
 		if(!FR.needed_aspects)

@@ -127,7 +127,7 @@
 	// It`s hud
 	var/symbol_icon_state
 	// String information about rituals, sects, aspects, etc.
-	var/datum/encyclopedia/religion/encyclopedia = new
+	var/datum/religion_interface/encyclopedia = new
 
 	/*
 		Building
