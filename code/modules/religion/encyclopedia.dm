@@ -1,51 +1,3 @@
-// Categories
-#define RITES        "RITES"
-#define SECTS        "SECTS"
-#define ASPECTS      "ASPECTS"
-#define GOD_SPELLS   "GOD SPELLS"
-#define HOLY_REAGS   "HOLY REAGENTS"
-#define FAITH_REACTS "FAITH REACTIONS"
-
-// Rites info
-#define RITE_NAME        "name"
-#define RITE_DESC        "desc"
-#define RITE_TIPS        "tips"
-#define RITE_LENGTH      "ritual_length"
-#define RITE_FAVOR       "favor_cost"
-#define RITE_PIETY       "piety_cost"
-#define RITE_ASPECTS     "needed_aspects"
-#define RITE_TALISMANED  "can_talismaned"
-#define RITE_PATH        "path"
-
-// Sects info
-#define SECT_NAME      "name"
-#define SECT_DESC      "desc"
-#define SECT_PRESET    "aspect_preset"
-#define SECT_ASP_COUNT "aspects_count"
-#define SECT_PATH      "path"
-
-// Aspect info
-#define ASP_NAME       "name"
-#define ASP_DESC       "desc"
-#define ASP_GOD_DESC   "god_desc"
-#define ASP_COLOR      "color"
-
-// Spell info
-#define SPELL_NAME    "name"
-#define SPELL_COST    "favor_cost"
-#define SPELL_CD      "charge_max"
-#define SPELL_ASPECTS "needed_aspects"
-
-// Holy reagents info
-#define REAGENT_NAME    "name"
-#define REAGENT_ASPECTS "needed_aspects"
-
-// Faith reactions info
-#define REACTION_CONVERTABLE "convertable_id"
-#define REACTION_RESULT      "result_id"
-#define REACITON_COST        "favor_cost"
-#define REACTION_ASPECTS     "needed_aspects"
-
 /datum/religion_interface
 	var/list/encyclopedia = list()
 	var/datum/religion/religion
@@ -56,12 +8,12 @@
 /datum/religion_interface/proc/init_encyclopedia(datum/religion/R)
 	religion = R
 
-	encyclopedia[RITES]        = list()
-	encyclopedia[SECTS]        = list()
-	encyclopedia[ASPECTS]      = list()
-	encyclopedia[GOD_SPELLS]   = list()
-	encyclopedia[HOLY_REAGS]   = list()
-	encyclopedia[FAITH_REACTS] = list()
+	encyclopedia[RITES_CAT]        = list()
+	encyclopedia[SECTS_CAT]        = list()
+	encyclopedia[ASPECTS_CAT]      = list()
+	encyclopedia[GOD_SPELLS_CAT]   = list()
+	encyclopedia[HOLY_REAGS_CAT]   = list()
+	encyclopedia[FAITH_REACTS_CAT] = list()
 
 	parse_all()
 
@@ -94,7 +46,7 @@
 		rite_info[RITE_TALISMANED] = RR.can_talismaned
 		rite_info[RITE_PATH]       = RR.type
 
-		encyclopedia[RITES] += list(rite_info)
+		encyclopedia[RITES_CAT] += list(rite_info)
 
 		QDEL_NULL(RR)
 
@@ -131,7 +83,7 @@
 			var/datum/religion_sect/custom/CRS = RS
 			sect_info[SECT_ASP_COUNT] = CRS.aspects_count
 
-		encyclopedia[SECTS] += list(sect_info)
+		encyclopedia[SECTS_CAT] += list(sect_info)
 
 		QDEL_NULL(RS)
 
@@ -151,7 +103,7 @@
 		aspect_info[ASP_GOD_DESC] = ASP.god_desc
 		aspect_info[ASP_COLOR]    = ASP.color
 
-		encyclopedia[ASPECTS] += list(aspect_info)
+		encyclopedia[ASPECTS_CAT] += list(aspect_info)
 
 		QDEL_NULL(ASP)
 
@@ -170,7 +122,7 @@
 		spell_info[SPELL_CD]      = S.charge_max
 		spell_info[SPELL_ASPECTS] = S.needed_aspects
 
-		encyclopedia[GOD_SPELLS] += list(spell_info)
+		encyclopedia[GOD_SPELLS_CAT] += list(spell_info)
 
 		QDEL_NULL(S)
 
@@ -185,7 +137,7 @@
 		reagent_info[REAGENT_NAME]    = R.name
 		reagent_info[REAGENT_ASPECTS] = R.needed_aspects
 
-		encyclopedia[HOLY_REAGS] += list(reagent_info)
+		encyclopedia[HOLY_REAGS_CAT] += list(reagent_info)
 
 /datum/religion_interface/proc/parse_reacts()
 	for(var/id in global.faith_reactions)
@@ -200,4 +152,4 @@
 		reaction_info[REACITON_COST]        = FR.favor_cost
 		reaction_info[REACTION_ASPECTS]     = FR.needed_aspects
 
-		encyclopedia[FAITH_REACTS] += list(reaction_info)
+		encyclopedia[FAITH_REACTS_CAT] += list(reaction_info)
