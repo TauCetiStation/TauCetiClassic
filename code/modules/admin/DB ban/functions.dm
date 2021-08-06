@@ -104,7 +104,8 @@
 
 /datum/admins/proc/DB_ban_unban(ckey, bantype, job = "")
 
-	if(!check_rights(R_BAN))	return
+	if(!check_rights(R_BAN))
+		return
 
 	var/bantype_str
 	if(bantype)
@@ -310,7 +311,8 @@
 	if(!usr.client)
 		return
 
-	if(!check_rights(R_BAN))	return
+	if(!(check_rights(R_LOG) && check_rights(R_BAN)))
+		return
 
 	if(!establish_db_connection("erro_ban"))
 		to_chat(usr, "<span class='warning'>Failed to establish database connection</span>")

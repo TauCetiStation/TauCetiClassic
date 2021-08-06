@@ -4,7 +4,7 @@
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	var/turf/extraction_point
-	var/del_target = TRUE // if extraction_point = null, then the thing flies away, but does not arrive
+	var/del_target = FALSE // the thing flies away, but does not arrive
 	var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHHH")
 
 /obj/item/weapon/extraction_pack/proc/can_use_to(atom/movable/target)
