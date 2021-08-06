@@ -33,7 +33,7 @@
 
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile/Click()
-	if(loc && in_range(usr, src))
+	if(loc && Adjacent(usr))
 		qdel(src)
 	else if(cast_check())
 		choose_targets()
@@ -94,7 +94,7 @@
 
 /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
 	name = "Отключить Технологию"
-	desc = "Отключает всю технологическую мумбу-юмбу в радиусе дейсвия."
+	desc = "Отключает всю технологическую мумбу-юмбу в радиусе действия."
 	charge_max = 400
 	clothes_req = 1
 	invocation = "NEC CANTIO"
@@ -338,7 +338,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Создание камня души"
-	desc = "Это заклинание вызывает легендарнейший фрагмен обелиска душ."
+	desc = "Это заклинание вызывает легендарнейший фрагмент обелиска душ."
 
 	school = "conjuration"
 	charge_max = 3000
@@ -354,7 +354,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
 	name = "Силовой барьер"
-	desc = "Это заклинание создает временное силовое полеcreates a temporary forcefield to shield yourself and allies from incoming fire."
+	desc = "Это заклинание создает временное силовое поле для защиты себя и союзников."
 
 	school = "transmutation"
 	charge_max = 300
@@ -368,12 +368,12 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
-	charge_max = 200
+	charge_max = 400
 	clothes_req = 0
 	invocation = "none"
 	invocation_type = "none"
 	phaseshift = 1
-	jaunt_duration = 50 //in deciseconds
+	jaunt_duration = 40 //in deciseconds
 	centcomm_cancast = 0 //Stop people from getting to centcomm
 
 	max_targets = 1
@@ -385,7 +385,7 @@
 	name = "Сообщить"
 	desc = "Позволяет отправить сообщение всем в твоей религии"
 
-	charge_max = 600
+	charge_max = 400
 	clothes_req = 0
 	range = -1
 	max_targets = 1

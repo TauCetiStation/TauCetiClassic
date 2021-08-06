@@ -130,7 +130,7 @@
 	var/ban = role_whitelist[target_ckey][role]["ban"]
 
 	if(ban_edit)
-		ban_edit = alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to BAN [role] for [target_ckey]?",,ban ? "Unban" : "Ban", "Cancel")
+		ban_edit = tgui_alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to BAN [role] for [target_ckey]?",, list(ban ? "Unban" : "Ban", "Cancel"))
 		switch(ban_edit)
 			if("Cancel")
 				return

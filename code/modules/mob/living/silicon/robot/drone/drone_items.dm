@@ -56,7 +56,7 @@
 /obj/item/weapon/gripper/proc/wrap(obj/item/I)
 	wrapped = I
 	I.forceMove(src)
-	RegisterSignal(I, list(COMSIG_PARENT_PREQDELETED), .proc/clear_wrapped)
+	RegisterSignal(I, list(COMSIG_PARENT_QDELETING), .proc/clear_wrapped)
 
 /obj/item/weapon/gripper/proc/attack_as_hand(datum/source, atom/T, mob/user, params)
 	if(wrapped)
@@ -98,7 +98,7 @@
 		I.forceMove(T)
 	else
 		I.forceMove(get_turf(user))
-	UnregisterSignal(wrapped, list(COMSIG_PARENT_PREQDELETED))
+	UnregisterSignal(wrapped, list(COMSIG_PARENT_QDELETING))
 	wrapped = null
 	return TRUE
 
@@ -146,17 +146,6 @@
 		/obj/item/weapon/newspaper
 		)
 
-/obj/item/weapon/gripper/chemistry
-	name = "chemistry gripper"
-	desc = "A simple grasping tool for chemical work."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "gripper"
-
-	can_hold = list(
-		/obj/item/weapon/reagent_containers/glass,
-		/obj/item/weapon/storage/pill_bottle
-		)
-
 /obj/item/weapon/gripper/service
 	name = "service gripper"
 	desc = "A simple grasping tool for service work."
@@ -194,6 +183,26 @@
 		/obj/item/device/flash
 		)
 
+/obj/item/weapon/gripper/medical
+	name = "medical gripper"
+	desc = "A holder for limbs and chemical containers."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/reagent_containers/blood,
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/organ/internal,
+		/obj/item/organ/external,
+		/obj/item/brain,
+		/obj/item/robot_parts/l_arm,
+		/obj/item/robot_parts/r_arm,
+		/obj/item/robot_parts/l_leg,
+		/obj/item/robot_parts/r_leg
+		)
+
 /obj/item/weapon/gripper/examine(mob/user)
 	..()
 	if(wrapped)
@@ -207,26 +216,11 @@
 			wrapped = null
 
 /obj/item/weapon/gripper/verb/drop_item_verb()
-
 	set name = "Drop Item"
 	set desc = "Release an item from your magnetic gripper."
 	set category = "Drone"
 
-	if(!wrapped)
-		//There's some weirdness with items being lost inside the arm. Trying to fix all cases. ~Z
-		for(var/obj/item/thing in src.contents)
-			thing.loc = get_turf(src)
-		return
-
-	if(wrapped.loc != src)
-		wrapped = null
-		return
-
-	to_chat(src.loc, "<span class='warning'>You drop \the [wrapped].</span>")
-	var/obj/item/I = wrapped
-	I.forceMove(get_turf(src))
-	wrapped = null
-	//update_icon()
+	SEND_SIGNAL(src, COMSIG_HAND_DROP_ITEM, get_turf(src))
 
 /obj/item/weapon/gripper/attack(mob/living/carbon/M, mob/living/carbon/user)
 	return
@@ -267,7 +261,7 @@
 
 	for(var/mob/M in T)
 		if(istype(M,/mob/living/simple_animal/lizard) || istype(M,/mob/living/simple_animal/mouse))
-			src.loc.visible_message("<span class='warning'>[src.loc] sucks [M] into its decompiler. There's a horrible crunching noise.</span>","<span class='warning'>It's a bit of a struggle, but you manage to suck [M] into your decompiler. It makes a series of visceral crunching noises.</span>")
+			loc.visible_message("<span class='warning'>[src.loc] sucks [M] into its decompiler. There's a horrible crunching noise.</span>","<span class='warning'>It's a bit of a struggle, but you manage to suck [M] into your decompiler. It makes a series of visceral crunching noises.</span>")
 			new/obj/effect/decal/cleanable/blood/splatter(get_turf(src))
 			qdel(M)
 			stored_comms["wood"]++

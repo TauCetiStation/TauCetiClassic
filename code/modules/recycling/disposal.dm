@@ -58,7 +58,7 @@
 
 	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash))
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(mode<=0) // It's off
 		if(isscrewdriver(I))
 			if(contents.len > 0)
@@ -86,10 +86,10 @@
 				if(W.use_tool(src, user, 20, volume = 100))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					var/obj/structure/disposalconstruct/C = new (src.loc)
-					src.transfer_fingerprints_to(C)
+					transfer_fingerprints_to(C)
 					C.ptype = 6 // 6 = disposal unit
-					C.anchored = 1
-					C.density = 1
+					C.anchored = TRUE
+					C.density = TRUE
 					C.update()
 					qdel(src)
 				return
@@ -118,7 +118,8 @@
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
 			if(G.use_tool(src, usr, 20))
-				GM.loc = src
+				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src)
+				GM.forceMove(src)
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
@@ -133,9 +134,9 @@
 
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
-	user.drop_item()
-	if(I)
-		I.loc = src
+	user.drop_from_inventory(I, src)
+	//INVOKE_ASYNC(I, /atom/movable.proc/do_simple_move_animation, src)
+	//user.remove_from_mob(I, src)
 
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
@@ -146,7 +147,7 @@
 /obj/machinery/disposal/proc/MouseDrop_Mob(mob/living/target, mob/living/user)
 	if(user.incapacitated())
 		return
-	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
+	if(target.buckled)
 		return
 	//animals cannot put mobs other than themselves into disposal
 	if(isanimal(user) && target != user)
@@ -154,7 +155,7 @@
 	if(isessence(user))
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	var/target_loc = target.loc
 	var/msg
 	var/self_msg
@@ -182,7 +183,8 @@
 	else
 		return
 
-	target.loc = src
+	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
+	target.forceMove(src)
 	target.instant_vision_update(1,src)
 
 	user.visible_message(msg, self_message = self_msg)
@@ -201,7 +203,7 @@
 		if(isanimal(user)) return
 		if(isessence(user))
 			return
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		var/target_loc = target.loc
 		var/msg
 		var/self_msg
@@ -223,7 +225,8 @@
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
 		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		target.loc = src
+		INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
+		target.forceMove(src)
 
 		user.visible_message(msg, self_message = self_msg)
 
@@ -329,7 +332,7 @@
 
 	return TRUE
 
-/obj/machinery/disposal/is_operational_topic()
+/obj/machinery/disposal/is_operational()
 	return !(stat & BROKEN)
 
 // eject the contents of the disposal unit
@@ -676,8 +679,8 @@
 	icon = 'icons/obj/pipes/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
@@ -888,7 +891,7 @@
 	var/turf/T = src.loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(user.is_busy()) return
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
@@ -930,10 +933,10 @@
 			C.ptype = 11
 		if("pipe-tagger-partial")
 			C.ptype = 12
-	src.transfer_fingerprints_to(C)
+	transfer_fingerprints_to(C)
 	C.set_dir(dir)
-	C.density = 0
-	C.anchored = 1
+	C.density = FALSE
+	C.anchored = TRUE
 	C.update()
 
 	qdel(src)
@@ -1225,7 +1228,7 @@
 	var/turf/T = src.loc
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
@@ -1259,7 +1262,7 @@
 				D.expel(H)	// expel at disposal
 	else
 		if(H)
-			src.expel(H, src.loc, 0)	// expel at turf
+			expel(H, src.loc, 0)	// expel at turf
 	return null
 
 	// nextdir
@@ -1296,8 +1299,8 @@
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "outlet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
@@ -1305,7 +1308,7 @@
 /obj/structure/disposaloutlet/atom_init(mapload, dir)
 	..()
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/disposaloutlet/atom_init_late()
@@ -1338,7 +1341,7 @@
 /obj/structure/disposaloutlet/attackby(obj/item/I, mob/user)
 	if(!I || !user)
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(isscrewdriver(I))
 		if(mode==0)
 			mode=1
@@ -1357,11 +1360,11 @@
 			if(W.use_tool(src, user, 20, volume = 100))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
-				src.transfer_fingerprints_to(C)
+				transfer_fingerprints_to(C)
 				C.ptype = 7 // 7 =  outlet
 				C.update()
-				C.anchored = 1
-				C.density = 1
+				C.anchored = TRUE
+				C.density = TRUE
 				C.set_dir(dir)
 				qdel(src)
 			return
@@ -1389,7 +1392,7 @@
 	else
 		dirs = alldirs.Copy()
 
-	src.streak(dirs)
+	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/robot/pipe_eject(direction)
 	var/list/dirs
@@ -1398,7 +1401,7 @@
 	else
 		dirs = alldirs.Copy()
 
-	src.streak(dirs)
+	streak(dirs)
 
 // hostile mob escape from disposals
 /obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)

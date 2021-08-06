@@ -9,8 +9,8 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = ITEM_SIZE_NORMAL
-	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	var/list/can_hold = list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 
 	var/max_w_class = ITEM_SIZE_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_storage_space = null //Total storage cost of items this can hold. Will be autoset based on storage_slots if left null.
@@ -102,9 +102,9 @@
 	if(!over_object)
 		return
 	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-		src.open(usr)
+		open(usr)
 		return
-	if (!( istype(over_object, /obj/screen) ))
+	if (!( istype(over_object, /atom/movable/screen) ))
 		return ..()
 
 	//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
@@ -126,7 +126,7 @@
 				if(!M.unEquip(src))
 					return
 				M.put_in_active_hand(src)
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -351,12 +351,12 @@
 
 /obj/item/weapon/storage/attack_hand(mob/user)
 	if (src.loc == user)
-		src.open(user)
+		open(user)
 	else
 		..()
 		if(storage_ui)
 			storage_ui.on_hand_attack(user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
@@ -417,8 +417,8 @@
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
-			src.quick_empty()
+		if(verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
+			quick_empty()
 			return
 
 	//Otherwise we'll try to fold it.
@@ -431,14 +431,14 @@
 	// Close any open UI windows first
 	for(var/mob/M in range(1))
 		if (M.s_active == src)
-			src.close(M)
+			close(M)
 		if ( M == user )
 			found = 1
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	new src.foldable(get_turf(src))
+	new foldable(get_turf(src))
 	qdel(src)
 //BubbleWrap END
 
@@ -501,7 +501,7 @@
 	return depth
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
-	if(A in contents)
+	if(A.loc == src)
 		usr = null
 		remove_from_storage(A, loc)
 
@@ -517,3 +517,11 @@
 	for(var/obj/O in contents)
 		remove_from_storage(O, T)
 		INVOKE_ASYNC(O, /obj.proc/tumble_async, 2)
+
+/obj/item/weapon/storage/proc/make_empty(delete = TRUE)
+	var/turf/T = get_turf(src)
+	for(var/A in contents)
+		if(delete)
+			qdel(A)
+		else
+			remove_from_storage(A, T)

@@ -6,7 +6,7 @@
 	icon_state = "orebox0"
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
-	density = 1
+	density = TRUE
 	var/last_update = 0
 	var/list/stored_ore = list()
 
@@ -69,12 +69,12 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["removeall"])
 		for (var/obj/item/weapon/ore/O in contents)
 			O.Move(src.loc)
 		to_chat(usr, "<span class='notice'>You empty the box</span>")
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/structure/ore_box/verb/empty_box()

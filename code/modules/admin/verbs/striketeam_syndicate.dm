@@ -13,9 +13,9 @@ var/global/sent_syndicate_strike_team = FALSE
 	if(sent_syndicate_strike_team == 1)
 		to_chat(usr, "<span class='warning'>The Syndicate are already sending a team, Mr. Dumbass.</span>")
 		return
-	if(alert("Do you want to send in the Syndicate Strike Team? Once enabled, this is irreversible.",,"Yes","No")=="No")
+	if(tgui_alert(usr, "Do you want to send in the Syndicate Strike Team? Once enabled, this is irreversible.",, list("Yes","No"))=="No")
 		return
-	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned syndicates have internals cameras which are viewable through a monitor inside the Syndicate Mothership Bridge. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
+	tgui_alert(usr, "This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned syndicates have internals cameras which are viewable through a monitor inside the Syndicate Mothership Bridge. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
 
 	if(sent_syndicate_strike_team)
 		to_chat(src, "Looks like someone beat you to it.")
@@ -24,7 +24,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	var/mission = null
 	mission = sanitize(input(src, "Please specify which mission the syndicate strike team shall undertake.", "Specify Mission", ""))
 	if(!mission)
-		if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
+		if(tgui_alert(usr, "Error, no mission set. Do you want to exit the setup process?",, list("Yes","No"))=="Yes")
 			return
 
 	var/paper_text = sanitize(input(usr, "Please, enter the text if you want to leave job details for an elite syndicate on paper.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
@@ -78,10 +78,12 @@ var/global/sent_syndicate_strike_team = FALSE
 		if(L.name == "Syndicate-Commando-Paper")
 			SCP = L
 
+	var/datum/faction/strike_team/syndiesquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/syndiesquad)
+	S.forgeObjectives(mission)
 	for(var/i = 1; i <= commandos.len; i++)
 		var/mob/living/carbon/human/new_syndicate_commando = new(get_turf(landmarkpos[i]))
 		new_syndicate_commando.key = commandos[i]
-		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader, mission)
+		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader)
 		new_syndicate_commando.internal = new_syndicate_commando.s_store
 		new_syndicate_commando.internals.icon_state = "internal1"
 
@@ -125,7 +127,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/initial_syndicate_commando(syndicate_commando, syndicate_leader_selected = FALSE, objectiv = null)
+/client/proc/initial_syndicate_commando(syndicate_commando, syndicate_leader_selected = FALSE)
 	var/mob/living/carbon/human/new_syndicate_commando = syndicate_commando
 	var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
@@ -143,19 +145,14 @@ var/global/sent_syndicate_strike_team = FALSE
 
 	//Creates mind stuff.
 	new_syndicate_commando.mind_initialize()
-	new_syndicate_commando.mind.assigned_role = "MODE"
-	new_syndicate_commando.mind.special_role = "Syndicate Elite Commando"
 	new_syndicate_commando.mind.current.faction = "syndicate"
-	SSticker.mode.syndicates += new_syndicate_commando.mind
-	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
-	if(objectiv)
-		var/datum/objective/syndi_elit_obj = new
-		new_syndicate_commando.mind.objectives += syndi_elit_obj
-		syndi_elit_obj.owner = new_syndicate_commando
-		syndi_elit_obj.explanation_text = objectiv
 
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+	var/datum/faction/strike_team/syndiesquad/S = find_faction_by_type(/datum/faction/strike_team/syndiesquad)
+	if(S)
+		add_faction_member(S, new_syndicate_commando, FALSE)
 
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader = FALSE)
 

@@ -75,11 +75,11 @@
 				B.icon_state = "bees[B.strength]"
 				if(src.parent)
 					B.parent = src.parent
-					src.parent.owned_bee_swarms.Add(B)
+					parent.owned_bee_swarms.Add(B)
 
 		//make some noise
 		if(prob(0.5))
-			src.visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
+			visible_message("<span class='notice'>[pick("Buzzzz.","Hmmmmm.","Bzzz.")]</span>")
 
 		//smoke, water and steam calms us down
 		var/calming = 0
@@ -98,7 +98,7 @@
 
 		if(calming)
 			if(feral > 0)
-				src.visible_message("<span class='notice'>The bees calm down!</span>")
+				visible_message("<span class='notice'>The bees calm down!</span>")
 			feral = -10
 			target_mob = null
 			target_turf = null
@@ -127,10 +127,10 @@
 						return
 					src.icon_state = "bees[B.strength]"
 					var/turf/simulated/floor/T = get_turf(get_step(src, pick(1,2,4,8)))
-					density = 1
+					density = TRUE
 					if(T.Enter(src, get_turf(src)))
 						src.loc = T
-					density = 0
+					density = FALSE
 				break
 
 		if(target_mob)
@@ -147,7 +147,7 @@
 			if(AStar(src, target_turf, /turf/proc/Distance, 1))
 				Move(get_step(src, get_dir(src,target_turf)))
 				if (prob(0.1))
-					src.visible_message("<span class='notice'>The bees swarm after [target_mob]!</span>")
+					visible_message("<span class='notice'>The bees swarm after [target_mob]!</span>")
 			if(src.loc == target_turf)
 				target_turf = null
 				wander = TRUE

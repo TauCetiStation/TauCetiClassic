@@ -231,7 +231,7 @@
 		var/obj/item/I = wear_suit
 		if(prob(I.Get_shield_chance() - round(damage / 3) ))
 			visible_message("<span class='userdanger'>The reactive teleport system flings [src] clear of [attack_text]!</span>")
-			var/list/turfs = new/list()
+			var/list/turfs = list()
 			for(var/turf/T in orange(6))
 				if(istype(T,/turf/space)) continue
 				if(T.density) continue
@@ -351,7 +351,10 @@
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(I.force + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
 					if(src != user && I.damtype == BRUTE && mind)
-						SSticker.mode.remove_revolutionary(mind)
+						for(var/id in list(HEADREV, REV))
+							var/datum/role/R = mind.GetRole(id)
+							if(R)
+								R.RemoveFromRole(mind)
 
 				if(bloody)//Apply blood
 					if(wear_mask)

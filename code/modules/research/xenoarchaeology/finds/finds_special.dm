@@ -106,7 +106,7 @@ var/list/bad_messages = list("Never take me off, please!",
 
 	if(charges >= 0.1)
 		if(prob(5))
-			src.visible_message("<span class='warning'>[bicon(src)] [src]'s eyes glow ruby red for a moment!</span>")
+			visible_message("<span class='warning'>[bicon(src)] [src]'s eyes glow ruby red for a moment!</span>")
 			charges -= 0.1
 
 	// check on our shadow wights
@@ -141,7 +141,7 @@ var/list/bad_messages = list("Never take me off, please!",
 		B.target_turf = pick(range(1, src))
 		B.blood_DNA = list()
 		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		M.vessel.remove_reagent("blood",rand(25,50))
+		M.blood_remove(rand(25, 50))
 
 // animated blood 2 SPOOKY
 /obj/effect/decal/cleanable/blood/splatter/animated
@@ -163,13 +163,13 @@ var/list/bad_messages = list("Never take me off, please!",
 		// leave some drips behind
 		if(prob(50))
 			var/obj/effect/decal/cleanable/blood/drip/D = new(src.loc)
-			D.blood_DNA = src.blood_DNA.Copy()
+			D.blood_DNA = blood_DNA.Copy()
 			if(prob(50))
 				D = new(src.loc)
-				D.blood_DNA = src.blood_DNA.Copy()
+				D.blood_DNA = blood_DNA.Copy()
 				if(prob(50))
 					D = new(src.loc)
-					D.blood_DNA = src.blood_DNA.Copy()
+					D.blood_DNA = blood_DNA.Copy()
 	else
 		..()
 
@@ -177,7 +177,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	name = "shadow wight"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
-	density = 1
+	density = TRUE
 
 /obj/effect/shadow_wight/atom_init()
 	. = ..()
@@ -235,13 +235,12 @@ var/list/bad_messages = list("Never take me off, please!",
 				var/mob/living/carbon/human/H = C
 				for(var/obj/item/organ/external/BP in H.bodyparts)
 					BP.heal_damage(rand(20,30), rand(20,30))
-				H.vessel.add_reagent("blood", 5)
+				H.blood_add(5)
+				H.fixblood()
 				H.nutrition += rand(30, 40)
 				H.adjustBrainLoss(rand(-10, -25))
 				H.radiation -= min(H.radiation, rand(20, 30))
 				H.bodytemperature = initial(H.bodytemperature)
-				spawn(1)
-					H.fixblood()
 
 			C.adjustOxyLoss(rand(-40, -20))
 			C.adjustToxLoss(rand(-40, -20))

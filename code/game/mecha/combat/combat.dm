@@ -77,11 +77,11 @@
 						return
 				M.updatehealth()
 			occupant_message("You hit [target].")
-			src.visible_message("<font color='red'><b>[src.name] hits [target].</b></font>")
+			visible_message("<font color='red'><b>[src.name] hits [target].</b></font>")
 		else
 			step_away(M,src)
 			occupant_message("You push [target] out of the way.")
-			src.visible_message("[src] pushes [target] out of the way.")
+			visible_message("[src] pushes [target] out of the way.")
 
 		melee_can_hit = 0
 		if(do_after(melee_cooldown))
@@ -93,13 +93,13 @@
 			for(var/target_type in src.destroyable_obj)
 				if(istype(target, target_type) && hascall(target, "attackby"))
 					occupant_message("You hit [target].")
-					src.visible_message("<font color='red'><b>[src.name] hits [target]</b></font>")
+					visible_message("<font color='red'><b>[src.name] hits [target]</b></font>")
 					if(!istype(target, /turf/simulated/wall))
 						target:attackby(src,src.occupant)
 					else if(prob(5))
 						target:dismantle_wall(1)
 						occupant_message("<span class='notice'>You smash through the wall.</span>")
-						src.visible_message("<b>[src.name] smashes through the wall</b>")
+						visible_message("<b>[src.name] smashes through the wall</b>")
 						playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
 					melee_can_hit = 0
 					if(do_after(melee_cooldown))

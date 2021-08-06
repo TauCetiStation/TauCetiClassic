@@ -385,7 +385,7 @@
 		var/mob/living/L = target
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			var/obj/item/organ/external/BP = H.get_bodypart(firer.zone_sel.selecting)
+			var/obj/item/organ/external/BP = H.get_bodypart(firer.get_targetzone())
 			if(!BP)
 				return "NONE"
 

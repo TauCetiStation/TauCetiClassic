@@ -165,7 +165,7 @@ LINEN BINS
 	desc = "A linen bin. It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
-	anchored = 1
+	anchored = TRUE
 	var/amount = 20
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -191,8 +191,7 @@ LINEN BINS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/bedsheet))
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		sheets.Add(I)
 		amount++
 		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")

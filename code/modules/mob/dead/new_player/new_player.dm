@@ -51,7 +51,7 @@
 	..()
 
 	if(statpanel("Lobby"))
-		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[master_mode]")
+		stat("Game Mode:", SSticker.bundle ? "[SSticker.bundle.name]" : "[master_mode]")
 
 		if(world.is_round_preparing())
 			stat("Time To Start:", (SSticker.timeLeft >= 0) ? "[round(SSticker.timeLeft / 10)]s" : "DELAYED")
@@ -90,7 +90,7 @@
 		if(!SSmapping.station_loaded)
 			to_chat(src, "<span class='red'>There is no station yet, please wait.</span>")
 			return
-		if(alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup","Yes","No") == "Yes")
+		if(tgui_alert(src,"Are you sure you wish to observe? You will have to wait 30 minutes before being able to respawn!","Player Setup", list("Yes","No")) == "Yes")
 			if(!client)
 				return
 			var/mob/dead/observer/observer = new()
@@ -130,7 +130,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 
 		LateChoices()
@@ -147,7 +147,7 @@
 
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
-				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
+				tgui_alert(usr, "You are currently not whitelisted to play [client.prefs.species].")
 				return FALSE
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
@@ -212,6 +212,7 @@
 
 		character = character.AIize(move=0) // AIize the character, but don't move them yet
 
+		show_location_blurb(character.client)
 		//AnnounceCyborg(character, rank, "has been downloaded to the empty core in \the [character.loc.loc]")
 		SSticker.mode.latespawn(character)
 
@@ -221,6 +222,7 @@
 
 	character.loc = pick(latejoin)
 	character.lastarea = get_area(loc)
+	show_location_blurb(character.client)
 	// Moving wheelchair if they have one
 	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
 		character.buckled.loc = character.loc

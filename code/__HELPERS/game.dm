@@ -14,12 +14,6 @@
 	src:Topic(href, href_list)
 	return null
 
-/proc/get_area(atom/A)
-	if(isarea(A))
-		return A
-	var/turf/T = get_turf(A)
-	return T ? T.loc : null
-
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
@@ -71,7 +65,7 @@
 /proc/circlerange(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/T in range(radius, centerturf))
@@ -86,7 +80,7 @@
 /proc/circleview(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/atoms = new/list()
+	var/list/atoms = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/atom/A in view(radius, centerturf))
@@ -109,7 +103,7 @@
 /proc/circlerangeturfs(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in range(radius, centerturf))
@@ -122,7 +116,7 @@
 /proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
 
 	var/turf/centerturf = get_turf(center)
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/rsq = radius * (radius+0.5)
 
 	for(var/turf/T in view(radius, centerturf))
@@ -350,7 +344,7 @@
 	return null
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
-	if(!isobj(O))	O = new /obj/screen/text()
+	if(!isobj(O))	O = new /atom/movable/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -504,8 +498,8 @@
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
-	var/list/processed_list = new/list()
-	var/found_atoms = new/list()
+	var/list/processed_list = list()
+	var/found_atoms = list()
 
 	while (processing_list.len)
 		var/atom/A = processing_list[1]
@@ -526,16 +520,24 @@
 	if (O)
 		return recursive_type_check(O, type_path) - O
 	else
-		return new/list()
+		return list()
 
 //============TG PORTS============
+/proc/remove_images_from_clients(image/I, list/show_to)
+	for(var/client/C in show_to)
+		C.images -= I
+
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	spawn(duration)
-		for(var/client/C in show_to)
-			C.images -= I
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
+/proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
+	var/list/viewing = list()
+	for(var/mob/M in viewers(target))
+		if(M.client)
+			viewing += M.client
+	flick_overlay(I, viewing, duration)
 
 //============Bay12 atmos=============
 /proc/convert_k2c(temp)
@@ -545,7 +547,7 @@
 	return ((temp + T0C))
 
 /proc/getCardinalAirInfo(turf/loc, list/stats=list("temperature"))
-	var/list/temps = new/list(4)
+	var/list/temps[4]
 	for(var/dir in cardinal)
 		var/direction
 		switch(dir)
@@ -558,7 +560,7 @@
 			if(WEST)
 				direction = 4
 		var/turf/simulated/T=get_turf(get_step(loc,dir))
-		var/list/rstats = new /list(stats.len)
+		var/list/rstats[stats.len]
 		if(T && istype(T) && T.zone)
 			var/datum/gas_mixture/environment = T.return_air()
 			for(var/i in 1 to stats.len)
@@ -624,7 +626,7 @@
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
 	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
-	var/ans = alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", "No", "Yes", "Not This Round")
+	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("No", "Yes", "Not This Round"))
 	switch(ans)
 		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
@@ -644,7 +646,7 @@
 
 // first answer "Yes" > transfer
 /mob/proc/try_request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
-	if(key || mind || stat != CONSCIOUS)
+	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
 	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
@@ -672,9 +674,9 @@
 /mob/proc/request_n_transfer(mob/M, Question = "Would you like to be a special role?", be_special_type, Ignore_Role, show_warnings = FALSE)
 	var/ans
 	if(Ignore_Role)
-		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes", "Not This Round")
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("No", "Yes", "Not This Round"))
 	else
-		ans = alert(M, Question, "[be_special_type] Request", "No", "Yes")
+		ans = tgui_alert(M, Question, "[be_special_type] Request", list("No", "Yes"))
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")

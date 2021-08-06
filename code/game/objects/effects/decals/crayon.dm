@@ -3,14 +3,14 @@
 	desc = "A rune drawn in crayon."
 	icon = 'icons/obj/rune.dmi'
 	layer = 2.1
-	anchored = 1
+	anchored = TRUE
 
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
 	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
 	if(istype(loc, /atom/movable))
 		RegisterSignal(loc, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
-	RegisterSignal(loc, list(COMSIG_PARENT_QDELETED), .proc/destroy_rune)
+	RegisterSignal(loc, list(COMSIG_PARENT_QDELETING), .proc/destroy_rune)
 	update_plane()
 
 	name = e_name

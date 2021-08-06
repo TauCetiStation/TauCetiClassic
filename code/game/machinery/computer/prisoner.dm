@@ -54,7 +54,7 @@
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
-		src.updateDialog()
+		updateDialog()
 	return
 
 
@@ -76,7 +76,7 @@
 		if(I)	I.activate(10)
 
 	else if(href_list["lock"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			screen = !screen
 		else
 			to_chat(usr, "Unauthorized Access.")
@@ -89,4 +89,4 @@
 			var/mob/living/carbon/R = I.imp_in
 			to_chat(R, "<span class='notice'>You hear a voice in your head saying: '[warning]'</span>")
 
-	src.updateUsrDialog()
+	updateUsrDialog()

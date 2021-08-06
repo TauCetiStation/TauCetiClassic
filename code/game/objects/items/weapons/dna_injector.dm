@@ -25,9 +25,9 @@
 		buf.dna = new
 		buf.types = datatype
 		buf.dna.ResetSE()
-		//testing("[name]: DNA2 SE blocks prior to SetValue: [english_list(buf.dna.SE)]")
+		//testing("[name]: DNA2 SE blocks prior to SetValue: [get_english_list(buf.dna.SE)]")
 		SetValue(value)
-		//testing("[name]: DNA2 SE blocks after SetValue: [english_list(buf.dna.SE)]")
+		//testing("[name]: DNA2 SE blocks after SetValue: [get_english_list(buf.dna.SE)]")
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user)
 	return attack_hand(user)
@@ -84,7 +84,7 @@
 					M.dna.unique_enzymes = buf.dna.unique_enzymes // bullshit
 				uses--
 			else
-				M.dna.SetUIValue(block,src.GetValue())
+				M.dna.SetUIValue(block,GetValue())
 				M.UpdateAppearance()
 				uses--
 		if (buf.types & DNA2_BUF_SE)
@@ -92,7 +92,7 @@
 				M.dna.SE = buf.dna.SE.Copy()
 				M.dna.UpdateSE()
 			else
-				M.dna.SetSEValue(block,src.GetValue())
+				M.dna.SetSEValue(block,GetValue())
 			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
 			uses--
 
@@ -122,7 +122,7 @@
 				log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] ([assigned_blocks[block]])")
 
 		else
-			//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
+			//testing("DNA injector with contents: [get_english_list(buf.dna.SE)]")
 			if (GetState(MONKEYBLOCK))
 				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] (MONKEY) [ADMIN_JMP(user)]")
 				log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")

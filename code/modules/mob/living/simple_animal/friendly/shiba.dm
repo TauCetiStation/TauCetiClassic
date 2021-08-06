@@ -89,4 +89,4 @@
 				set_dir(i)
 				sleep(1)
 		if(prob(40))
-			src.visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
+			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)

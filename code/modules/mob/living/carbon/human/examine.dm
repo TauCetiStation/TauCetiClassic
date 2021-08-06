@@ -24,6 +24,10 @@
 	if(wear_mask)
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
+	var/obj/item/organ/external/head/MyHead = bodyparts_by_name[BP_HEAD]
+	if(!istype(MyHead) || MyHead.is_stump)
+		skipface = TRUE
+
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
 	var/t_He = "It" //capitalised for use at the start of each line.
 	var/t_His = "Its"
@@ -68,7 +72,7 @@
 			var/obj/item/clothing/under/U = w_uniform
 			for(var/accessory in U.accessories)
 				ties += "[bicon(accessory)] \a [accessory]"
-		var/tie_msg = ties.len ? ". Attached to it is [english_list(ties)]" : ""
+		var/tie_msg = ties.len ? ". Attached to it is [get_english_list(ties)]" : ""
 
 		if(w_uniform.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][tie_msg]!</span>\n"
@@ -449,8 +453,10 @@
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their [BP.name]!</b></span>\n"
 	if(digitalcamo)
 		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
-	if(mind && mind.changeling && mind.changeling.isabsorbing)
-		msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
+	if(ischangeling(src))
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(C.isabsorbing)
+			msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 
 	if(!skipface)
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
@@ -459,6 +465,11 @@
 
 	if((!skipface || !skipjumpsuit || !skipgloves) && (HUSK in mutations))
 		msg += "<span class='warning'><b>[t_His] skin is looking cadaveric!</b></span>\n"
+
+	if(!skipface)
+		var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
+		if(istype(BP) && !BP.disfigured && BP.ipc_head == "Default" && length(BP.display_text) && h_style == "IPC text screen")
+			msg += "Отображает на экране: \"<span class=\"emojify\">[BP.display_text]</span>\"\n"
 
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"

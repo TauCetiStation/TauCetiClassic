@@ -83,7 +83,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["remove"])
 		var/obj/item/weapon/coin/COIN
 		switch(href_list["remove"])

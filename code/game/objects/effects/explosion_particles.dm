@@ -3,7 +3,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "explosion_particle"
 	opacity = 1
-	anchored = 1
+	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/expl_particles/atom_init()
@@ -35,7 +35,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
 	opacity = 1
-	anchored = 1
+	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
 	pixel_y = -32

@@ -633,7 +633,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!supplied_wound || (W in supplied_wound.embedded_objects)) // Just in case.
 		return
 
-	owner.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
+	owner.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 
 	supplied_wound.embedded_objects += W
 	implants += W
@@ -1001,7 +1001,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(open)
 			descriptors += "an open panel"
 
-		return english_list(descriptors)
+		return get_english_list(descriptors)
 
 	var/list/flavor_text = list()
 	if(is_stump)
@@ -1047,7 +1047,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(6 to INFINITY)
 				flavor_text += "a ton of [wound]\s"
 
-	return english_list(flavor_text)
+	return get_english_list(flavor_text)
 
 /mob/living/carbon/human/proc/get_missing_bodyparts()
 	var/list/missing = list()

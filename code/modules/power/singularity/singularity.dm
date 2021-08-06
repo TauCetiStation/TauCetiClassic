@@ -3,8 +3,8 @@
 	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	layer = SINGULARITY_LAYER
 	appearance_flags = 0
 	//light_range = 6

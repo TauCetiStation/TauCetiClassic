@@ -5,8 +5,8 @@
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "spacecash"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	force = 1.0
 	throwforce = 1.0
 	throw_speed = 1

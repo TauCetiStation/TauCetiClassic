@@ -16,14 +16,13 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 		if(user.l_hand != src && user.r_hand != src)
 			to_chat(user, "<span class='warning'>You'll need [src] in your hands to do that.</span>")
 			return
-		user.drop_item()
+		user.drop_from_inventory(I, src)
 		to_chat(user, "<span class='notice'>You screw [I] onto [src].</span>")
 		silenced = I
 		var/obj/item/weapon/silencer/S = I
 		S.oldsound = fire_sound
 		fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 		w_class = ITEM_SIZE_NORMAL
-		I.loc = src
 		update_icon()
 		return
 

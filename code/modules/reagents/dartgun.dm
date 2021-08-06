@@ -5,8 +5,8 @@
 	icon_state = "darts-5"
 	item_state = "rcdammo"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	origin_tech = "materials=2"
 	var/darts = 5
 
@@ -75,7 +75,7 @@
 
 		if(cartridge)
 			if(cartridge.darts <= 0)
-				src.remove_cartridge()
+				remove_cartridge()
 			else
 				to_chat(user, "<span class='notice'>There's already a cartridge in [src].</span>")
 				return 0
@@ -118,7 +118,7 @@
 		C.loc = get_turf(src)
 		C.update_icon()
 		cartridge = null
-		src.update_icon()
+		update_icon()
 
 /obj/item/weapon/gun/dartgun/proc/get_mixed_syringe()
 	if (!cartridge)
@@ -155,7 +155,7 @@
 			to_chat(user, "<span class='warning'>There are no reagents available!</span>")
 			return
 		cartridge.darts--
-		src.update_icon()
+		update_icon()
 		S.reagents.trans_to(D, S.reagents.total_volume)
 		qdel(S)
 		D.icon_state = "syringeproj"
@@ -253,7 +253,7 @@
 	return 0
 
 /obj/item/weapon/gun/dartgun/Topic(href, href_list)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["stop_mix"])
 		var/index = text2num(href_list["stop_mix"])
 		if(index <= beakers.len)
@@ -276,7 +276,7 @@
 				B.loc = get_turf(src)
 	else if (href_list["eject_cart"])
 		remove_cartridge()
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/item/weapon/gun/dartgun/Fire(atom/target, mob/living/user, params, reflex = 0)

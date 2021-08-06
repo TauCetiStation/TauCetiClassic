@@ -11,7 +11,7 @@
 	pass_flags = PASSTABLE
 	braintype = "Robot"
 	lawupdate = 0
-	density = 0
+	density = FALSE
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD)
@@ -124,7 +124,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	message = sanitize(message)

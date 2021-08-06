@@ -47,7 +47,7 @@
 	desc = "The words flicker as if they mean nothing."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "holosign"
-	anchored = 1
+	anchored = TRUE
 
 
 /obj/item/weapon/caution

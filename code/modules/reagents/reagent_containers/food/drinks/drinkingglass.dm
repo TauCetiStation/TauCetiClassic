@@ -9,9 +9,9 @@
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
-	if(reagents && reagents.total_volume)
-		src.reagents.reaction(loc, TOUCH)
+	reagents.standard_splash(loc)
 	qdel(src)
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
 		icon_state = "glass_brown"
@@ -526,34 +526,14 @@
 		return
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/attack(mob/target, mob/user, def_zone)
-	gulp_size = volume
 	if(user.a_intent == INTENT_HARM)
 		if(ismob(target) && target.reagents && reagents.total_volume)
 			to_chat(user, "<span class='warning'>You splash your drink in the [target] face!</span>")
-			var/mob/living/M = target
-			var/list/injected = list()
-			for(var/datum/reagent/R in src.reagents.reagent_list)
-				injected += R.name
-			var/contained = english_list(injected)
-
-			M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
-
+			reagents.standard_splash(target, user=user)
 			user.visible_message("<span class='warning'>[target] has been splashed with [src] in the face by [user]!</span>")
-			src.reagents.reaction(target, TOUCH)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/clear_reagents), 5)
 			return
-	else
-		if(user.a_intent == INTENT_HELP)
-			gulp_size = volume/10
-			..()
-			return
-	if(reagents.total_volume)
-		if(!CanEat(user, target, src, "drink"))
-			return
-		..()
-		target.visible_message("[target] gulped down the whole [src]. Wow!")
-		return
-	..()
+
+	return ..()
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda

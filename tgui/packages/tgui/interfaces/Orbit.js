@@ -13,6 +13,10 @@ const compareNumberedText = (a, b) => {
   const aName = a.name;
   const bName = b.name;
 
+  if (!aName || !bName) {
+    return 0;
+  }
+
   // Check if aName and bName are the same except for a number at the end
   // e.g. Medibot (2) and Medibot (3)
   const aNumberMatch = aName.match(PATTERN_NUMBER);
@@ -69,7 +73,7 @@ export const Orbit = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     alive,
-    auto_observe,
+    antagonists,
     dead,
     ghosts,
     misc,
@@ -78,9 +82,38 @@ export const Orbit = (props, context) => {
 
   const [searchText, setSearchText] = useLocalState(context, "searchText", "");
 
+  const collatedAntagonists = {};
+  for (const antagonist of antagonists) {
+    for (const anta of antagonist.antag) {
+      if (collatedAntagonists[anta] === undefined) {
+        collatedAntagonists[anta] = [];
+      }
+      collatedAntagonists[anta].push(antagonist);
+    }
+  }
+
+  const sortedAntagonists = Object.entries(collatedAntagonists);
+  sortedAntagonists.sort((a, b) => {
+    return compareString(a[0], b[0]);
+  });
+
+  const orbitMostRelevant = searchText => {
+    for (const source of [
+      sortedAntagonists.map(([_, antags]) => antags),
+      alive, ghosts, dead, npcs, misc,
+    ]) {
+      const member = source
+        .filter(searchFor(searchText))
+        .sort(compareNumberedText)[0];
+      if (member !== undefined) {
+        act("orbit", { ref: member.ref });
+        break;
+      }
+    }
+  };
 
   return (
-    <Window resizable>
+    <Window>
       <Window.Content scrollable>
         <Section>
           <Flex>
@@ -95,7 +128,8 @@ export const Orbit = (props, context) => {
                 autoFocus
                 fluid
                 value={searchText}
-                onInput={(_, value) => setSearchText(value)} />
+                onInput={(_, value) => setSearchText(value)}
+                onEnter={(_, value) => orbitMostRelevant(value)} />
             </Flex.Item>
             <Flex.Item>
               <Divider vertical />
@@ -111,6 +145,24 @@ export const Orbit = (props, context) => {
             </Flex.Item>
           </Flex>
         </Section>
+        {antagonists.length > 0 && (
+          <Section title="Antagonists">
+            {sortedAntagonists.map(([name, antags]) => (
+              <Section key={name} title={name} level={2}>
+                {antags
+                  .filter(searchFor(searchText))
+                  .sort(compareNumberedText)
+                  .map(antag => (
+                    <OrbitedButton
+                      key={antag.name}
+                      color="bad"
+                      thing={antag}
+                    />
+                  ))}
+              </Section>
+            ))}
+          </Section>
+        )}
 
         <Section title={`Alive - (${alive.length})`}>
           {alive

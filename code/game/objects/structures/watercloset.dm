@@ -1,12 +1,13 @@
 //todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
 
+ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "toilet00"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/open = 0			//if the lid is up
 	var/cistern = 0			//if the cistern bit is open
 	var/w_items = 0			//the combined w_class of all the items in the cistern
@@ -88,8 +89,7 @@
 		if(w_items + I.w_class > ITEM_SIZE_HUGE)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
-		user.drop_item()
-		I.loc = src
+		user.drop_from_inventory(I, src)
 		w_items += I.w_class
 		user.SetNextMove(CLICK_CD_INTERACT)
 		add_fingerprint(user)
@@ -103,8 +103,8 @@
 	desc = "The HU-452, an experimental urinal."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "urinal"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))
@@ -284,8 +284,8 @@
 	desc = "The HS-451. Installed in the 2550s by the Nanotrasen Hygiene Division."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	layer = MOB_LAYER + 1.1
 	var/on = 0
@@ -303,7 +303,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = MOB_LAYER + 1
-	anchored = 1
+	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/machinery/shower/attack_hand(mob/user)

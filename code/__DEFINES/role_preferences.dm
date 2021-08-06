@@ -23,6 +23,21 @@
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
 
+var/global/list/antag_roles = list(
+	ROLE_TRAITOR,
+	ROLE_OPERATIVE,
+	ROLE_CHANGELING,
+	ROLE_WIZARD,
+	ROLE_MALF,
+	ROLE_REV,
+	ROLE_ALIEN,
+	ROLE_CULTIST,
+	ROLE_BLOB,
+	ROLE_NINJA,
+	ROLE_RAIDER,
+	ROLE_SHADOWLING,
+	ROLE_ABDUCTOR,
+)
 
 var/global/list/special_roles = list(
 	ROLE_TRAITOR,

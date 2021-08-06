@@ -256,8 +256,8 @@ SUBSYSTEM_DEF(garbage)
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/start_tick = world.tick_usage
+		SEND_SIGNAL(D, COMSIG_PARENT_QDELETING, force) // Let the (remaining) components know about the result of Destroy
 		var/hint = D.Destroy(arglist(args.Copy(2))) // Let our friend know they're about to get fucked up.
-		SEND_SIGNAL(D, COMSIG_PARENT_QDELETED, force, hint) // Let the (remaining) components know about the result of Destroy
 		if(world.time != start_time)
 			I.slept_destroy++
 		else
@@ -331,7 +331,7 @@ SUBSYSTEM_DEF(garbage)
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
 
-		if(alert("Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", "Yes", "No") == "No")
+		if(tgui_alert(usr, "Running this will create a lot of lag until it finishes.  You can cancel it by running it again.  Would you like to begin the search?", "Find References", list("Yes", "No")) == "No")
 			running_find_references = null
 			return
 

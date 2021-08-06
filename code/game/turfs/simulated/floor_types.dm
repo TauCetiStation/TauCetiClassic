@@ -156,7 +156,7 @@
 	name = "wall"
 	icon_state = "wall1"
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 /turf/simulated/shuttle/floor
@@ -409,11 +409,7 @@
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
-
-//	accepts_lighting=0 			// Don't apply overlays
-
 	intact = 0
-
 	footstep = FOOTSTEP_CATWALK
 
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
@@ -436,18 +432,6 @@
 			if(propogate)
 				C.update_icon(0)
 	icon_state="catwalk[dirs]"
-
-
-/turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
-	if(isscrewdriver(C))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		ReplaceWithLattice()
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		return
-
-	if(iscoil(C))
-		var/obj/item/stack/cable_coil/coil = C
-		coil.turf_place(src, user)
 
 /turf/simulated/floor/plating/airless/catwalk/is_catwalk()
 	return TRUE

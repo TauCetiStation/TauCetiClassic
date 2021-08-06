@@ -19,7 +19,7 @@
 /obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
 	if(ishuman(usr))
 		var/mob/M = usr
-		if(!(istype(over_object, /obj/screen) ))
+		if(!(istype(over_object, /atom/movable/screen) ))
 			return ..()
 
 		if(!M.incapacitated())
@@ -103,8 +103,7 @@
 			if(!haspen)
 				if(istype(usr.get_active_hand(), /obj/item/weapon/pen))
 					var/obj/item/weapon/pen/W = usr.get_active_hand()
-					usr.drop_item()
-					W.loc = src
+					usr.drop_from_inventory(W, src)
 					haspen = W
 					to_chat(usr, "<span class='notice'>You slot the pen into \the [src].</span>")
 

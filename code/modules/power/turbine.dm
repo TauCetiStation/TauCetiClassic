@@ -3,8 +3,8 @@
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "compressor"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/simulated/inturf
@@ -20,8 +20,8 @@
 	desc = "A gas turbine used for backup power generation."
 	icon = 'icons/obj/pipes.dmi'
 	icon_state = "turbine"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/obj/machinery/compressor/compressor
 	var/turf/simulated/outturf
 	var/lastgen
@@ -33,8 +33,8 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "airtunnel"
 	circuit = /obj/item/weapon/circuitboard/turbine_control
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/compressor/compressor
 	var/list/obj/machinery/door/poddoor/doors
@@ -263,7 +263,7 @@
 
 /obj/machinery/computer/turbine_computer/atom_init_late()
 	search_turbine()
-	doors = new /list()
+	doors = list()
 	for(var/obj/machinery/door/poddoor/P in poddoor_list)
 		if(P.id == id)
 			doors += P
@@ -315,9 +315,9 @@
 	else if(href_list["search"])
 		search_turbine()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/computer/turbine_computer/process()
-	src.updateDialog()
+	updateDialog()
 	return

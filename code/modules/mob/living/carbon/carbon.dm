@@ -8,6 +8,9 @@
 	return ..()
 
 /mob/living/carbon/Life()
+	if(!loc)
+		return
+
 	..()
 
 	// Increase germ_level regularly
@@ -16,7 +19,7 @@
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(.)
+	if(. && !ISDIAGONALDIR(Dir))
 		handle_phantom_move(NewLoc, Dir)
 		if(nutrition && stat != DEAD)
 			var/met_factor = get_metabolism_factor()
@@ -67,18 +70,22 @@
 	. = ..()
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(!stat && C && C.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
 	if(istype(attacker))
@@ -140,8 +147,8 @@
 	return shock_damage
 
 
-/mob/living/carbon/proc/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
+/mob/living/carbon/swap_hand()
+	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
 			if(item_in_hand:wielded)
@@ -190,7 +197,7 @@
 	if (src.health >= config.health_threshold_crit)
 		if(src == M && istype(src, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src
-			src.visible_message( \
+			visible_message( \
 				text("<span class='notice'>[src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
@@ -345,7 +352,7 @@
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(eyecheck() < intensity || override_blindness_check)
 		return ..()
 
@@ -401,7 +408,7 @@
 	throw_mode_off()
 	if(usr.incapacitated() || !target)
 		return
-	if(target.type == /obj/screen)
+	if(target.type == /atom/movable/screen)
 		return
 
 	var/atom/movable/item = get_active_hand()
@@ -429,11 +436,18 @@
 
 	if(!item) return //Grab processing has a chance of returning null
 
-	src.remove_from_mob(item)
+	remove_from_mob(item)
 
 	//actually throw it!
 	if (item)
-		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
+		visible_message("<span class='rose'>[src] has thrown [item].</span>")
+
+		if(isitem(item))
+			var/obj/item/O = item
+			if(O.w_class >= ITEM_SIZE_NORMAL)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+
+		do_attack_animation(target, has_effect = FALSE)
 
 		newtonian_move(get_dir(target, src))
 
@@ -534,7 +548,7 @@
 	if(IsSleeping())
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+	if(tgui_alert(src, "You sure you want to sleep for a while?","Sleep", list("Yes","No")) == "Yes")
 		SetSleeping(40 SECONDS) //Short nap
 
 //Check for brain worms in head.
@@ -713,10 +727,13 @@
 	return is_nude(maximum_coverage = 20) && !istype(head, /obj/item/clothing/head/bearpelt) && !istype(head, /obj/item/weapon/holder)
 
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
-	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
+	if(!ischangeling(src))
+		return
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+	if(length(C.essences) < 1)
 		return
 	if(loc == NewLoc)
-		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
+		for(var/mob/living/parasite/essence/essence in C.essences)
 			if(essence.phantom.showed)
 				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
 
@@ -735,7 +752,11 @@
 	return
 
 /mob/living/carbon/get_nutrition()
-	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.
+	return nutrition + (reagents.get_reagent_amount("nutriment") \
+					+ reagents.get_reagent_amount("plantmatter") \
+					+ reagents.get_reagent_amount("protein") \
+					+ reagents.get_reagent_amount("dairy") \
+				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
 	. = metabolism_factor
@@ -801,7 +822,7 @@
 
 		stripPanelUnEquip(usr, slot, item_to_add)
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 		else
 			usr << browse(null, "window=mob\ref[src]")

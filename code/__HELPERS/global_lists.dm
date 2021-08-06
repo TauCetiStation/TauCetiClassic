@@ -50,6 +50,17 @@
 		surgery_steps += S
 	sort_surgeries()
 
+	// Keybindings
+	for(var/KB in subtypesof(/datum/keybinding))
+		var/datum/keybinding/keybinding = KB
+		if(!initial(keybinding.name))
+			continue
+		var/datum/keybinding/instance = new keybinding
+		global.keybindings_by_name[instance.name] = instance
+		if(length(instance.hotkey_keys))
+			for(var/bound_key in instance.hotkey_keys)
+				global.hotkey_keybinding_list_by_key[bound_key] += list(instance.name)
+
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 	init_subtypes(/datum/dirt_cover, global.all_dirt_covers)
 
@@ -202,8 +213,6 @@
 		global.faith_reactions_by_aspects[aspect_type] += id
 
 	populate_gear_list()
-
-	init_hud_list()
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

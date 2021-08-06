@@ -43,11 +43,6 @@
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
-	var/received_irc_pm = -99999
-	var/irc_admin			//IRC admin that spoke with them last.
-	var/mute_irc = 0
-
-
 		////////////////////////////////////
 		//things that require the database//
 		////////////////////////////////////
@@ -60,7 +55,7 @@
 	var/list/byond_registration // on demand get_byond_registration()
 
 	preload_rsc = 0 // This is 0 so we can set it to an URL once the player logs in and have them download the resources from a different server.
-	var/static/obj/screen/click_catcher/void
+	var/static/atom/movable/screen/click_catcher/void
 
 		// MEDIAAAAAAAA
 	// Set on login.
@@ -77,7 +72,7 @@
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
 
-	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
+	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = atom/movable/screen.
 
 	var/connection_time
 
@@ -88,6 +83,34 @@
 	/// Last asset send job id.
 	var/last_asset_job = 0
 	var/last_completed_asset_job = 0
+
+
+	///Amount of keydowns in the last keysend checking interval
+	var/client_keysend_amount = 0
+	///World tick time where client_keysend_amount will reset
+	var/next_keysend_reset = 0
+	///World tick time where keysend_tripped will reset back to false
+	var/next_keysend_trip_reset = 0
+	///When set to true, user will be autokicked if they trip the keysends in a second limit again
+	var/keysend_tripped = FALSE
+	///custom movement keys for this client
+	var/list/movement_keys = list()
+	///Are we locking our movement input?
+	var/movement_locked = FALSE
+
+	/// A buffer of currently held keys.
+	var/list/keys_held = list()
+	/// A buffer for combinations such of modifiers + keys (ex: CtrlD, AltE, ShiftT). Format: `"key"` -> `"combo"` (ex: `"D"` -> `"CtrlD"`)
+	var/list/key_combos_held = list()
+	/*
+	** These next two vars are to apply movement for keypresses and releases made while move delayed.
+	** Because discarding that input makes the game less responsive.
+	*/
+	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
+
 	var/list/topiclimiter
 
 	var/bwoink_sound = 'sound/effects/adminhelp.ogg'
@@ -96,6 +119,11 @@
 	 * Assoc list with all the active maps - when a screen obj is added to
 	 * a map, it's put in here as well.
 	 *
-	 * Format: list(<mapname> = list(/obj/screen))
+	 * Format: list(<mapname> = list(/atom/movable/screen))
 	 */
 	var/list/screen_maps = list()
+
+	// Last world.time that the player tried to request their resources.
+	var/last_ui_resource_send = 0
+
+	var/fullscreen = NONE

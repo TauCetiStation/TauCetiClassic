@@ -39,7 +39,7 @@
 		if(health > 0)
 			icon_state = icon_living
 			stat = CONSCIOUS
-			density = 1
+			density = TRUE
 		return
 	else if(health < 1)
 		Die()
@@ -54,7 +54,7 @@
 	if(prob(30))
 		var/msg = pick(insults)
 		msg = "Hey, [A.name].. [msg]"
-		src.say(msg)
+		say(msg)
 	else
 		var/msg = pick(comments)
-		src.say(msg)
+		say(msg)

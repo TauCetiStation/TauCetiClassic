@@ -24,14 +24,14 @@
 	color = color_windows()
 
 /obj/machinery/door/window/Destroy()
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	electronics = null
 	return ..()
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
-	if(src.check_access(null))
+	if(check_access(null))
 		sleep(50)
 	else //secure doors close faster
 		sleep(20)
@@ -54,7 +54,7 @@
 		if(!electronics)
 			ae = new/obj/item/weapon/airlock_electronics( src.loc )
 			if(!src.req_access)
-				src.check_access()
+				check_access()
 			if(src.req_access.len)
 				ae.conf_access = src.req_access
 			else if (src.req_one_access.len)
@@ -68,7 +68,7 @@
 			ae.icon_state = "door_electronics_smoked"
 			ae.broken = TRUE
 			operating = 0
-	src.density = 0
+	src.density = FALSE
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	if(display_message)
 		visible_message("[src] shatters!")
@@ -88,7 +88,7 @@
 	var/new_color = input(user, "Choose color!") as color|null
 	if(!new_color) return
 
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(1))
+	if((!Adjacent(usr) && src.loc != usr) || !W.use(1))
 		return
 	else
 		color = new_color
@@ -99,13 +99,13 @@
 	if (!( ismob(AM) ))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
-			if(src.check_access(bot.botcard))
+			if(check_access(bot.botcard))
 				open_and_close()
 			else
 				do_animate("deny")
 		else if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
-			if(mecha.occupant && src.allowed(mecha.occupant))
+			if(mecha.occupant && allowed(mecha.occupant))
 				open_and_close()
 			else
 				do_animate("deny")
@@ -120,8 +120,8 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
+	add_fingerprint(user)
+	if(!requiresID())
 		user = null
 
 	if(allowed(user))
@@ -309,7 +309,7 @@
 							if("rightsecure")
 								WA.icon_state = "r_secure_windoor_assembly02"
 								WA.secure = 1
-								WA.anchored = 1
+								WA.anchored = TRUE
 						WA.state= "02"
 						WA.set_dir(src.dir)
 						WA.ini_dir = src.dir
@@ -377,6 +377,18 @@
 		operating = -1
 		return TRUE
 	return FALSE
+
+/obj/machinery/door/window/emp_act(severity)
+	if(prob(20/severity))
+		open()
+	if(prob(40/severity))
+		if(secondsElectrified == 0)
+			secondsElectrified = -1
+			diag_hud_set_electrified()
+			spawn(300)
+				secondsElectrified = 0
+				diag_hud_set_electrified()
+	..()
 
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"

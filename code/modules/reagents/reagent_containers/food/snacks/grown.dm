@@ -297,13 +297,13 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/living/user)
-	src.set_light(0)
+	set_light(0)
 	user.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
 	..()
 	user.set_light(0)
-	src.set_light(2,1)
+	set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed_type = /obj/item/seeds/cocoapodseed
@@ -1017,7 +1017,7 @@
 	. = ..()
 	switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 		if(0 to 10)
-			new/obj/item/weapon/spacecash/(loc)
+			new/obj/item/weapon/spacecash(loc)
 		if(11 to 20)
 			new/obj/item/weapon/spacecash/c10(loc)
 		if(21 to 30)
@@ -1054,7 +1054,7 @@
 	var/mob/M = usr
 	var/outer_teleport_radius = potency / 10 //Plant potency determines radius of teleport.
 	var/inner_teleport_radius = potency / 15
-	var/list/turfs = new/list()
+	var/list/turfs = list()
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	if(inner_teleport_radius < 1) //Wasn't potent enough, it just splats.
 		new/obj/effect/decal/cleanable/blood/oil(loc)

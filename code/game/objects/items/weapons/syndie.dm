@@ -70,12 +70,12 @@
 		if("c-4detonator_1")
 			if(!pr_open)
 				pr_open = 1
-				switch(alert(user, "What would you like to do?", "Lighter", "Press the button.", "Close the lighter."))
+				switch(tgui_alert(user, "What would you like to do?", "Lighter", list("Press the button.", "Close the lighter.")))
 					if("Press the button.")
 						to_chat(user, "<span class='warning'>You press the button.</span>")
 						flick("c-4detonator_click", src)
 						if(src.bomb)
-							src.bomb.detonate()
+							bomb.detonate()
 							log_admin("[user.real_name]([user.ckey]) has triggered [src.bomb] with [src].")
 							message_admins("<span class='warning'>[user.real_name]([user.ckey]) has triggered [src.bomb] with [src]. [ADMIN_JMP(src)]</span>")
 

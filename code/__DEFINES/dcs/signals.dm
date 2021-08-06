@@ -18,8 +18,8 @@
 #define COMSIG_COMPONENT_REMOVING "component_removing"
 /// before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 #define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"
-/// after a datum's Destroy() is called: (force, qdel_hint), at this point none of the other components chose to interrupt qdel and Destroy has been called
-#define COMSIG_PARENT_QDELETED "parent_qdeleted"
+/// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
+#define COMSIG_PARENT_QDELETING "parent_qdeleting"
 
 // /datum/religion_rites signals
 /// from base of religion_rites/on_chosen(): (/mob, /obj)
@@ -40,7 +40,17 @@
 
 // /datum/religion signals
 /// from base of religion/add_membern(): (/mob, holy_role)
-#define COMSIG_REL_ADD_MEMBER "rite_on_chosen"
+#define COMSIG_REL_ADD_MEMBER "rel_add_member"
+
+// /datum/role signals
+/// from base of role/GetScoreboard(): ()
+#define COMSIG_ROLE_GETSCOREBOARD "role_getscoreboard"
+/// from base of role/extraPanelButtons(): ()
+#define COMSIG_ROLE_PANELBUTTONS "role_panelbuttons"
+/// from base of role/RoleTopic(): (href, href_list, datum/mind/M, admin_auth)
+#define COMSIG_ROLE_ROLETOPIC "role_roletopic"
+/// from base of role/OnPostSetup(): (laterole)
+#define COMSIG_ROLE_POSTSETUP "role_postsetup"
 
 // light related signals
 /// from base of /atom/movable/lighting_object/update(): (turf/my_turf)

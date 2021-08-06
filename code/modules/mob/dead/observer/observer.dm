@@ -9,10 +9,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	layer = MOB_LAYER // on tg it is FLOAT LAYER
 	plane = FLOAT_PLANE
 	stat = DEAD
-	density = 0
+	density = FALSE
 	canmove = 0
 	blinded = 0
-	anchored = 1	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	hud_type = /datum/hud/ghost
@@ -157,7 +157,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 			var/mob/M = mousize()
 			if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
-				var/response = alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
+				var/response = tgui_alert(M, "Do you want to become a maintenance drone?","Are you sure you want to beep?", list("Beep!","Nope!"))
 				if(response == "Beep!")
 					M.dronize()
 					qdel(M)
@@ -186,7 +186,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(stat == DEAD)
 		if(fake_death)
-			var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
+			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
 			var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)
@@ -194,7 +194,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		else
 			ghostize(can_reenter_corpse = TRUE)
 	else
-		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
+		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 
@@ -294,7 +294,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='danger'>You have been banned from using this feature.</span>")
 		return
 	if(config.antag_hud_restricted && !M.has_enabled_antagHUD && !client.holder)
-		var/response = alert(src, "If you turn this on, you will not be able to take any part in the round.","Are you sure you want to turn this feature on?","Yes","No")
+		var/response = tgui_alert(src, "If you turn this on, you will not be able to take any part in the round.","Do you want to on this feature?", list("Yes","No"))
 		if(response == "No")
 			return
 		M.can_reenter_corpse = FALSE
@@ -302,12 +302,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		M.has_enabled_antagHUD = TRUE
 	if(M.antagHUD)
 		M.antagHUD = FALSE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.remove_hud_from(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Disabled</B></span>")
 	else
 		M.antagHUD = TRUE
-		for(var/datum/atom_hud/antag/H in global.huds)
+		for(var/hud in get_all_antag_huds())
+			var/datum/atom_hud/antag/H = hud
 			H.add_hud_to(src)
 		to_chat(src, "<span class='info'><B>AntagHUD Enabled</B></span>")
 
@@ -322,7 +324,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	spawn(30)
 		usr.verbs += /mob/dead/observer/proc/dead_tele
 
-	var/A = input("Area to jump to", "BOOYEA") as null|anything in ghostteleportlocs
+	var/A = tgui_input_list(usr, "Area to jump to", "BOOYEA", ghostteleportlocs)
 	if(!A)
 		return
 	var/area/thearea = ghostteleportlocs[A]
@@ -398,7 +400,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/target = null	   //Chosen target.
 
 		dest += getpois(mobs_only = TRUE) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
+		target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", dest)
 
 		if (!target)//Make sure we actually have a target
 			return
@@ -471,7 +473,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>You may only spawn again as a mouse more than [mouse_respawn_time] minutes after your death. You have [timedifference_text] left.</span>")
 		return
 
-	var/response = alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?","Squeek!","Nope!")
+	var/response = tgui_alert(src, "Are you -sure- you want to become a mouse?","Are you sure you want to squeek?", list("Squeek!","Nope!"))
 	if(response != "Squeek!")
 		return  //Hit the wrong key...again.
 
@@ -514,7 +516,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
 		return
 
-	var/response = alert(src, "Are you -sure- you want to find Bag Boss?","Are you sure you want to become II?","Soap Pain!","Nope!")
+	var/response = tgui_alert(src, "You want to find Bag Boss?","Do you want to be Ian?", list("Soap Pain!","Nope!"))
 	if(response != "Soap Pain!")
 		return
 
@@ -644,3 +646,26 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/IsAdvancedToolUser()
 	return IsAdminGhost(src)
+
+/mob/dead/observer/verb/mafia_game_signup()
+	set category = "Ghost"
+	set name = "Signup for Mafia"
+	set desc = "Sign up for a game of Mafia to pass the time while dead."
+
+	mafia_signup()
+
+/mob/dead/observer/proc/mafia_signup()
+	if(!client)
+		return
+	if(!isobserver(src))
+		to_chat(usr, "<span class='warning'>You must be a ghost to join mafia!</span>")
+		return
+	var/datum/mafia_controller/game = global.mafia_game //this needs to change if you want multiple mafia games up at once.
+	if(!game)
+		game = create_mafia_game()
+	game.tgui_interact(usr)
+
+/mob/dead/observer/Stat()
+	..()
+	if(statpanel("Status"))
+		stat(null, "Station Time: [worldtime2text()]")

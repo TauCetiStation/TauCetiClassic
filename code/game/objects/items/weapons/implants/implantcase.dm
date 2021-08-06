@@ -20,11 +20,11 @@
 	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(name), null)  as text, MAX_NAME_LEN)
 
-		if (user.get_active_hand() != I || (!in_range(src, usr) && loc != user))
+		if(user.get_active_hand() != I || !Adjacent(usr))
 			return
 
 		name = "Glass Case"
-		if (t)
+		if(t)
 			name += " - '[t]'"
 
 	else if(istype(I, /obj/item/weapon/reagent_containers/syringe))
@@ -108,7 +108,7 @@
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/mindshield/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield(src)
+	imp = new /obj/item/weapon/implant/mind_protect/mindshield(src)
 	. = ..()
 
 /obj/item/weapon/implantcase/loyalty
@@ -118,7 +118,7 @@
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/loyalty/atom_init()
-	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	imp = new /obj/item/weapon/implant/mind_protect/loyalty(src)
 	. = ..()
 
 /obj/item/weapon/implantcase/death_alarm

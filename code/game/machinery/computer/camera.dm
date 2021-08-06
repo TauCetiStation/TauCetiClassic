@@ -25,10 +25,10 @@
 
 	// Stuff needed to render the map
 	var/map_name
-	var/obj/screen/map_view/cam_screen
+	var/atom/movable/screen/map_view/cam_screen
 	/// All the plane masters that need to be applied.
 	var/list/cam_plane_masters
-	var/obj/screen/background/cam_background
+	var/atom/movable/screen/background/cam_background
 
 	var/camera_cache = null
 
@@ -45,8 +45,8 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/obj/screen/plane_master))
-		var/obj/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
+		var/atom/movable/screen/instance = new plane()
 		instance.assigned_map = map_name
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
@@ -107,7 +107,7 @@
 		var/c_tag = params["name"]
 		var/list/cameras = get_cached_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
-		
+
 		switch_to_camera(selected_camera)
 
 		return TRUE
@@ -222,7 +222,7 @@
 /obj/machinery/computer/security/proc/get_cached_cameras()
 	if (isnull(camera_cache))
 		camera_cache = get_available_cameras()
-	
+
 	return camera_cache
 
 /obj/machinery/computer/security/tgui_data()
@@ -279,7 +279,7 @@
 	state_nopower_preset = null
 	light_color = "#ffffbb"
 	network = list("thunder")
-	density = 0
+	density = FALSE
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)

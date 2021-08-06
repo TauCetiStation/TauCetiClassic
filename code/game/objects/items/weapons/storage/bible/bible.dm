@@ -43,7 +43,7 @@
 		return FALSE
 	if(!target.reagents)
 		return FALSE
-	if(!in_range(user, target))
+	if(!user.Adjacent(target))
 		return FALSE
 	return TRUE
 

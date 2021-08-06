@@ -37,7 +37,7 @@
 		return ..()
 
 	if(user.a_intent != INTENT_HELP)
-		if(user.zone_sel.selecting == "head" || user.zone_sel.selecting == "eyes")
+		if(user.get_targetzone() == "head" || user.get_targetzone() == "eyes")
 			if((CLUMSY in user.mutations) && prob(50))
 				M = user
 			return eyestab(M,user)
@@ -222,7 +222,7 @@
 
 	M.log_combat(user, "attacked with [name]")
 
-	var/t = user.zone_sel.selecting
+	var/t = user.get_targetzone()
 	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M

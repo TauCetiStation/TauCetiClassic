@@ -24,6 +24,7 @@
 	has_leg = TRUE
 
 //Captain fox
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/fox/Renault, chief_animal_list)
 /mob/living/simple_animal/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox. I wonder what it says?"

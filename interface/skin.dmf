@@ -1,373 +1,32 @@
-macro "macro"
-	elem "MACRO-TAB"
-		name = "TAB"
-		command = ".winset \"mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true\""
-	elem "MACRO-CENTER+REP"
-		name = "CENTER+REP"
-		command = ".center"
-	elem "MACRO-NORTHEAST"
-		name = "NORTHEAST"
-		command = ".northeast"
-	elem "MACRO-SOUTHEAST"
-		name = "SOUTHEAST"
-		command = ".southeast"
-	elem "MACRO-SOUTHWEST"
-		name = "SOUTHWEST"
-		command = ".southwest"
-	elem "MACRO-NORTHWEST"
-		name = "NORTHWEST"
-		command = ".northwest"
-	elem "MACRO-CTRL+WEST"
-		name = "CTRL+WEST"
-		command = "westface"
-	elem "MACRO-WEST+REP"
-		name = "WEST+REP"
-		command = ".west"
-	elem "MACRO-CTRL+NORTH"
-		name = "CTRL+NORTH"
-		command = "northface"
-	elem "MACRO-NORTH+REP"
-		name = "NORTH+REP"
-		command = ".north"
-	elem "MACRO-CTRL+EAST"
-		name = "CTRL+EAST"
-		command = "eastface"
-	elem "MACRO-EAST+REP"
-		name = "EAST+REP"
-		command = ".east"
-	elem "MACRO-CTRL+SOUTH"
-		name = "CTRL+SOUTH"
-		command = "southface"
-	elem "MACRO-SOUTH+REP"
-		name = "SOUTH+REP"
-		command = ".south"
-	elem "MACRO-INSERT"
-		name = "INSERT"
-		command = "a-intent right"
-	elem "MACRO-DELETE"
-		name = "DELETE"
-		command = "delete-key-pressed"
-	elem "MACRO-CTRL+1"
-		name = "CTRL+1"
-		command = "a-intent help"
-	elem "MACRO-CTRL+2"
-		name = "CTRL+2"
-		command = "a-intent disarm"
-	elem "MACRO-CTRL+3"
-		name = "CTRL+3"
-		command = "a-intent grab"
-	elem "MACRO-CTRL+4"
-		name = "CTRL+4"
-		command = "a-intent hurt"
-	elem "MACRO-CTRL+A+REP"
-		name = "CTRL+A+REP"
-		command = ".west"
-	elem "MACRO-CTRL+B"
-		name = "CTRL+B"
-		command = "Click-On-Self"
-	elem "MACRO-CTRL+D+REP"
-		name = "CTRL+D+REP"
-		command = ".east"
-	elem "MACRO-CTRL+E"
-		name = "CTRL+E"
-		command = "quick-equip"
-	elem "MACRO-CTRL+F"
-		name = "CTRL+F"
-		command = "a-intent left"
-	elem "MACRO-CTRL+G"
-		name = "CTRL+G"
-		command = "a-intent right"
-	elem "MACRO-CTRL+H"
-		name = "CTRL+H"
-		command = "holster"
-	elem "MACRO-CTRL+Q"
-		name = "CTRL+Q"
-		command = ".northwest"
-	elem "MACRO-CTRL+R"
-		name = "CTRL+R"
-		command = ".southwest"
-	elem "MACRO-CTRL+S+REP"
-		name = "CTRL+S+REP"
-		command = ".south"
-	elem "MACRO-CTRL+W+REP"
-		name = "CTRL+W+REP"
-		command = ".north"
-	elem 
-		name = "CTRL+X"
-		command = ".northeast"
-	elem "MACRO-CTRL+Y"
-		name = "CTRL+Y"
-		command = "Click-On-Held-Object"
-	elem "MACRO-CTRL+Z"
-		name = "CTRL+Z"
-		command = "Click-On-Held-Object"
-	elem "MACRO-F1"
-		name = "F1"
-		command = "adminhelp"
-	elem "MACRO-CTRL+SHIFT+F1+REP"
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
-	elem "MACRO-F2"
-		name = "F2"
-		command = "ooc"
-	elem "MACRO-F2+REP"
-		name = "F2+REP"
-		command = ".screenshot auto"
-	elem "MACRO-SHIFT+F2+REP"
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem "MACRO-F3"
-		name = "F3"
-		command = ".say"
-	elem "MACRO-F4"
-		name = "F4"
-		command = ".me"
-	elem "MACRO-F5"
-		name = "F5"
-		command = "asay"
-	elem "MACRO-F6"
-		name = "F6"
-		command = "Player-Panel-New"
-	elem "MACRO-F7"
-		name = "F7"
-		command = "Admin-PM"
-	elem "MACRO-F8"
-		name = "F8"
-		command = "Invisimin"
-	elem "MACRO-F9"
-		name = "F9"
-		command = "mentorhelp"
-	elem "MACRO-F12"
-		name = "F12"
-		command = "F12"
-
-macro "hotkeymode"
-	elem "HKMODE-TAB"
-		name = "Tab"
-		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true\""
-	elem "HKMODE-CENTER+REP"
-		name = "Center+REP"
-		command = ".center"
-	elem "HKMODE-NORTHEAST"
-		name = "Northeast"
-		command = ".northeast"
-	elem "HKMODE-SOUTHEAST"
-		name = "Southeast"
-		command = ".southeast"
-	elem "HKMODE-SOUTHWEST"
-		name = "Southwest"
-		command = ".southwest"
-	elem "HKMODE-NORTHWEST"
-		name = "Northwest"
-		command = ".northwest"
-	elem "HKMODE-CTRL+WEST"
-		name = "CTRL+West"
-		command = "westface"
-	elem "HKMODE-WEST+REP"
-		name = "West+REP"
-		command = ".west"
-	elem "HKMODE-CTRL+NORTH"
-		name = "CTRL+North"
-		command = "northface"
-	elem "HKMODE-NORTH+REP"
-		name = "North+REP"
-		command = ".north"
-	elem "HKMODE-CTRL+EAST"
-		name = "CTRL+East"
-		command = "eastface"
-	elem "HKMODE-EAST+REP"
-		name = "East+REP"
-		command = ".east"
-	elem "HKMODE-CTRL+SOUTH"
-		name = "CTRL+South"
-		command = "southface"
-	elem "HKMODE-SOUTH+REP"
-		name = "South+REP"
-		command = ".south"
-	elem "HKMODE-INSERT"
-		name = "Insert"
-		command = "a-intent right"
-	elem "HKMODE-DELETE"
-		name = "Delete"
-		command = "delete-key-pressed"
-	elem "HKMODE-1"
-		name = "1"
-		command = "a-intent help"
-	elem "HKMODE-CTRL+1"
-		name = "CTRL+1"
-		command = "a-intent help"
-	elem "HKMODE-2"
-		name = "2"
-		command = "a-intent push"
-	elem "HKMODE-CTRL+2"
-		name = "CTRL+2"
-		command = "a-intent push"
-	elem "HKMODE-3"
-		name = "3"
-		command = "a-intent grab"
-	elem "HKMODE-CTRL+3"
-		name = "CTRL+3"
-		command = "a-intent grab"
-	elem "HKMODE-4"
-		name = "4"
-		command = "a-intent harm"
-	elem "HKMODE-CTRL+4"
-		name = "CTRL+4"
-		command = "a-intent harm"
-	elem "HKMODE-A+REP"
-		name = "A+REP"
-		command = ".west"
-	elem "HKMODE-CTRL+A+REP"
-		name = "CTRL+A+REP"
-		command = ".west"
-	elem "HKMODE-B"
-		name = "B"
-		command = "Click-On-Self"
-	elem "HKMODE-CTRL+B"
-		name = "CTRL+B"
-		command = "Click-On-Self"
-	elem "HKMODE-D+REP"
-		name = "D+REP"
-		command = ".east"
-	elem "HKMODE-CTRL+D+REP"
-		name = "CTRL+D+REP"
-		command = ".east"
-	elem "HKMODE-E"
-		name = "E"
-		command = "quick-equip"
-	elem "HKMODE-CTRL+E"
-		name = "CTRL+E"
-		command = "quick-equip"
-	elem "HKMODE-F"
-		name = "F"
-		command = "a-intent left"
-	elem "HKMODE-CTRL+F"
-		name = "CTRL+F"
-		command = "a-intent left"
-	elem "HKMODE-G"
-		name = "G"
-		command = "a-intent right"
-	elem "HKMODE-CTRL+G"
-		name = "CTRL+G"
-		command = "a-intent right"
-	elem "HKMODE-H"
-		name = "H"
-		command = "holster"
-	elem "HKMODE-CTRL+H"
-		name = "CTRL+H"
-		command = "holster"
-	elem "HKMODE-Q"
-		name = "Q"
-		command = ".northwest"
-	elem "HKMODE-CTRL+Q"
-		name = "CTRL+Q"
-		command = ".northwest"
-	elem "HKMODE-R"
-		name = "R"
-		command = ".southwest"
-	elem "HKMODE-CTRL+R"
-		name = "CTRL+R"
-		command = ".southwest"
-	elem "s_key"
-		name = "S+REP"
-		command = ".south"
-	elem "HKMODE-CTRL+S+REP"
-		name = "CTRL+S+REP"
-		command = ".south"
-	elem "HKMODE-T"
-		name = "T"
-		command = ".say"
-	elem "w_key"
-		name = "W+REP"
-		command = ".north"
-	elem "HKMODE-CTRL+W+REP"
-		name = "CTRL+W+REP"
-		command = ".north"
-	elem "HKMODE-X"
-		name = "X"
-		command = ".northeast"
-	elem "HKMODE-CTRL+X"
-		name = "CTRL+X"
-		command = ".northeast"
-	elem "HKMODE-Y"
-		name = "Y"
-		command = "Click-On-Held-Object"
-	elem "HKMODE-CTRL+Y"
-		name = "CTRL+Y"
-		command = "Click-On-Held-Object"
-	elem "HKMODE-Z"
-		name = "Z"
-		command = "Click-On-Held-Object"
-	elem "HKMODE-CTRL+Z"
-		name = "CTRL+Z"
-		command = "Click-On-Held-Object"
-	elem "HKMODE-F1"
-		name = "F1"
-		command = "adminhelp"
-	elem "HKMODE-CTRL+SHIFT+F1+REP"
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
-	elem "HKMODE-F2"
-		name = "F2"
-		command = "ooc"
-	elem "HKMODE-F2+REP"
-		name = "F2+REP"
-		command = ".screenshot auto"
-	elem "HKMODE-SHIFT+F2+REP"
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem "HKMODE-F3"
-		name = "F3"
-		command = ".say"
-	elem "HKMODE-F4"
-		name = "F4"
-		command = ".me"
-	elem "HKMODE-F5"
-		name = "F5"
-		command = "asay"
-	elem "HKMODE-F6"
-		name = "F6"
-		command = "Player-Panel-New"
-	elem "HKMODE-F7"
-		name = "F7"
-		command = "Admin-PM"
-	elem "HKMODE-F8"
-		name = "F8"
-		command = "Invisimin"
-	elem "HKMODE-F9"
-		name = "F9"
-		command = "mentorhelp"
-	elem "HKMODE-F12"
-		name = "F12"
-		command = "F12"
+macro "default"
 
 
 menu "menu"
-	elem 
+	elem
 		name = "&File"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quick screenshot\tF2"
 		command = ".screenshot auto"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Save screenshot as...\tShift+F2"
 		command = ".screenshot"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Quit"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Icons"
 		command = ""
 		saved-params = "is-checked"
@@ -414,7 +73,7 @@ menu "menu"
 		can-check = true
 		group = "size"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = ""
 		command = ""
 		category = "&Icons"
@@ -425,7 +84,7 @@ menu "menu"
 		category = "&Icons"
 		can-check = true
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Scaling Mode"
 		command = ""
 		saved-params = "is-checked"
@@ -451,27 +110,22 @@ menu "menu"
 		can-check = true
 		group = "scaling"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Options"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Audio"
 		command = ".showvolumecontrols"
 		category = "&Options"
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
-	elem 
+	elem
 		name = "&Admin help\tF1"
 		command = "adminhelp"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem 
-		name = "&Hotkeys"
-		command = "hotkeys-help"
 		category = "&Help"
 		saved-params = "is-checked"
 
@@ -489,8 +143,9 @@ window "mainwindow"
 		statusbar = false
 		is-maximized = true
 		icon = 'icons\\ss13_64.png'
-		macro = "macro"
+		macro = "default"
 		menu = "menu"
+		on-size = "onresize"
 	elem "asset_cache_browser"
 		type = BROWSER
 		pos = 424,208
@@ -500,55 +155,15 @@ window "mainwindow"
 		is-visible = false
 		auto-format = false
 		saved-params = ""
-	elem "hotkey_toggle"
-		type = BUTTON
-		pos = 560,420
-		size = 80x20
-		anchor1 = 100,100
-		anchor2 = none
-		saved-params = ""
-		text = "Hotkey Toggle"
-		command = ".winset \"mainwindow.macro!=macro ? mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true : mainwindow.macro=hotkeymode hotkey_toggle.is-checked=true mapwindow.map.focus=true\""
-		button-type = pushbox
 	elem "mainvsplit"
 		type = CHILD
-		pos = 3,0
-		size = 634x416
+		pos = 0,0
+		size = 640x440
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
 		right = "rpane"
 		is-vert = true
-	elem "input"
-		type = INPUT
-		pos = 3,420
-		size = 477x20
-		anchor1 = 0,100
-		anchor2 = 100,100
-		background-color = #d3b5b5
-		is-default = true
-		border = sunken
-		saved-params = "command"
-	elem "saybutton"
-		type = BUTTON
-		pos = 520,420
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = none
-		saved-params = "is-checked"
-		text = "Chat"
-		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\""
-		button-type = pushbox
-	elem "mebutton"
-		type = BUTTON
-		pos = 480,420
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = none
-		saved-params = "is-checked"
-		text = "Emote"
-		command = ".winset \"mebutton.is-checked=true?input.command=\"!me \\\"\" macrobutton.is-checked=false:input.command=\"\"mebutton.is-checked=true?saybutton.is-checked=false\""
-		button-type = pushbox
 	elem "tooltip"
 		type = BROWSER
 		pos = 0,0
@@ -630,7 +245,7 @@ window "outputwindow"
 	elem "browseroutput"
 		type = BROWSER
 		pos = 0,0
-		size = 640x480
+		size = 640x460
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #ffffff
@@ -641,11 +256,41 @@ window "outputwindow"
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
-		size = 640x480
+		size = 640x460
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
+	elem "input"
+		type = INPUT
+		pos = 2,460
+		size = 560x20
+		anchor1 = 0,100
+		anchor2 = 100,100
+		background-color = #d3b5b5
+		is-default = true
+		border = sunken
+		saved-params = "command"
+	elem "saybutton"
+		type = BUTTON
+		pos = 600,460
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Chat"
+		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\""
+		button-type = pushbox
+	elem "mebutton"
+		type = BUTTON
+		pos = 560,460
+		size = 40x20
+		anchor1 = 100,100
+		anchor2 = none
+		saved-params = "is-checked"
+		text = "Emote"
+		command = ".winset \"mebutton.is-checked=true?input.command=\"!me \\\"\" macrobutton.is-checked=false:input.command=\"\"mebutton.is-checked=true?saybutton.is-checked=false\""
+		button-type = pushbox
 
 window "preferences_window"
 	elem "preferences_window"

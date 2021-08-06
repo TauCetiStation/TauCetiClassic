@@ -215,7 +215,7 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 /obj/effect/datacore/proc/manifest()
 	set waitfor = FALSE
 	for(var/mob/living/carbon/human/H in player_list)
-		manifest_inject(H)
+		manifest_inject(H, H.client)
 
 		CHECK_TICK
 
@@ -244,7 +244,7 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 		foundrecord.fields["rank"] = assignment
 		foundrecord.fields["real_rank"] = real_title
 
-/obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H)
+/obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 
 	set waitfor = FALSE
 	if(PDA_Manifest.len)
@@ -263,10 +263,12 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 
 		var/static/record_id_num = 1001
 		var/id = num2hex(record_id_num++, 6)
+		if(!C)
+			C = H.client
 
 		//General Record
 		//Creating photo
-		var/icon/ticon = get_id_photo(H, cardinal)
+		var/icon/ticon = get_id_photo(H, C, cardinal)
 		var/icon/photo_front = new(ticon, dir = SOUTH)
 		var/icon/photo_side = new(ticon, dir = WEST)
 		var/datum/data/record/G = new()

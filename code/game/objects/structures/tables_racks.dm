@@ -15,8 +15,8 @@
 	desc = "A square piece of metal standing on four metal legs. It can not move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "box"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	climbable = 1
@@ -57,12 +57,12 @@
 
 /obj/structure/table/proc/destroy()
 	new parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/rack/proc/destroy()
 	new parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/table/update_icon()
@@ -119,6 +119,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
@@ -144,7 +145,7 @@
 		glasstable.shatter()
 	else
 		new /obj/item/weapon/table_parts(loc)
-	density = 0
+	density = FALSE
 	qdel(src)
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
@@ -588,8 +589,8 @@
 	desc = "Different from the Middle Ages version."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
@@ -639,8 +640,9 @@
 		qdel(src)
 		return
 
-	if(user.a_intent != INTENT_HARM)
-		return ..()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	var/can_cut = FALSE
 	if(istype(W, /obj/item/weapon/melee/energy))

@@ -36,14 +36,14 @@
 						</head>
 						<body>
 						<div id='content'>
-						[src.get_stats_part()]
+						[get_stats_part()]
 						</div>
 						<div id='eq_list'>
-						[src.get_equipment_list()]
+						[get_equipment_list()]
 						</div>
 						<hr>
 						<div id='commands'>
-						[src.get_commands()]
+						[get_commands()]
 						</div>
 						</body>
 						</html>
@@ -221,7 +221,7 @@
 		if(usr != src.occupant)
 			return
 
-		send_byjax(src.occupant,"exosuit.browser","content",src.get_stats_part())
+		send_byjax(src.occupant,"exosuit.browser","content",get_stats_part())
 		return
 
 	if(href_list["close"])
@@ -241,33 +241,33 @@
 			selected = equip
 			occupant_message("You switch to [equip]")
 			visible_message("[src] raises [equip]")
-			send_byjax(src.occupant,"exosuit.browser","eq_list",src.get_equipment_list())
+			send_byjax(src.occupant,"exosuit.browser","eq_list",get_equipment_list())
 		return
 
 	if(href_list["eject"])
 		if(usr != src.occupant)
 			return
-		src.eject()
+		eject()
 		return
 
 	if(href_list["toggle_lights"])
 		if(usr != src.occupant)
 			return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.toggle_lights()
+		toggle_lights()
 		return
 	if(href_list["toggle_strafe"])
 		if(usr != src.occupant)
 			return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.toggle_strafe()
+		toggle_strafe()
 		return
 
 	if(href_list["toggle_airtank"])
 		if(usr != src.occupant)
 			return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.toggle_internal_tank()
+		toggle_internal_tank()
 		return
 
 	if(href_list["rmictoggle"])
@@ -301,21 +301,21 @@
 		if(usr != src.occupant)
 			return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.disconnect_from_port()
+		disconnect_from_port()
 		return
 
 	if (href_list["connect_to_port"])
 		if(usr != src.occupant)
 			return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.connect_to_port()
+		connect_to_port()
 		return
 
 	if (href_list["view_log"])
 		if(usr != src.occupant)
 			return
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
+		src.occupant << browse(get_log_html(), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
 
@@ -348,13 +348,13 @@
 		return
 
 	if(href_list["req_access"] && add_req_access)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["maint_access"] && maint_access)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/mob/user = F.getMob("user")
 		if(user)
@@ -368,7 +368,7 @@
 		return
 
 	if(href_list["set_internal_tank_valve"] && state >=1)
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		var/mob/user = F.getMob("user")
 		if(user)
@@ -378,21 +378,21 @@
 				to_chat(user, "The internal pressure valve has been set to [internal_tank_valve]kPa.")
 
 	if(href_list["add_req_access"] && add_req_access && F.getObj("id_card"))
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		operation_req_access += F.getNum("add_req_access")
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["del_req_access"] && add_req_access && F.getObj("id_card"))
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		operation_req_access -= F.getNum("del_req_access")
 		output_access_dialog(F.getObj("id_card"),F.getMob("user"))
 		return
 
 	if(href_list["finish_req_access"])
-		if(!in_range(src, usr))
+		if(!Adjacent(usr))
 			return
 		add_req_access = 0
 		var/mob/user = F.getMob("user")
@@ -422,7 +422,7 @@
 		if(usr != src.occupant)
 			return
 		occupant_message("Recalibrating coordination system.")
-		src.log_message("Recalibration of coordination system started.")
+		log_message("Recalibration of coordination system started.")
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		addtimer(CALLBACK(src, .proc/stationary_repair), TIME_TO_RECALIBRATION, TIMER_UNIQUE)
 
@@ -431,11 +431,11 @@
 ///Repairs internal damage if the mech hasn't moved.
 /obj/mecha/proc/stationary_repair(location)
 	if(location == loc)
-		src.clearInternalDamage(MECHA_INT_CONTROL_LOST)
+		clearInternalDamage(MECHA_INT_CONTROL_LOST)
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		occupant_message("<font color='blue'>Recalibration successful.</font>")
-		src.log_message("Recalibration of coordination system finished with 0 errors.")
+		log_message("Recalibration of coordination system finished with 0 errors.")
 	else
 		occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		occupant_message("<font color='red'>Recalibration failed.</font>")
-		src.log_message("Recalibration of coordination system failed with 1 error.", 1)
+		log_message("Recalibration of coordination system failed with 1 error.", 1)

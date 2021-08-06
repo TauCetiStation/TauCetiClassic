@@ -3,7 +3,7 @@
 	desc = "Apply butt."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1.0
+	anchored = TRUE
 
 /obj/structure/stool/bar
 	name = "bar stool"
@@ -69,7 +69,7 @@
 /obj/structure/stool/MouseDrop(atom/over_object)
 	if(ishuman(over_object) && type == /obj/structure/stool)
 		var/mob/living/carbon/human/H = over_object
-		if(H == usr && !H.restrained() && !H.stat && in_range(src, over_object))
+		if(H == usr && !H.restrained() && !H.stat && Adjacent(over_object))
 			var/obj/item/weapon/stool/S = new
 			S.origin_stool = src
 			src.loc = S

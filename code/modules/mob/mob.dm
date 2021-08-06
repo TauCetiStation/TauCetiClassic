@@ -16,7 +16,7 @@
 	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
-	qdel(hud_used)
+	QDEL_NULL(hud_used)
 	ghostize(bancheck = TRUE)
 	my_religion?.remove_member(src)
 
@@ -463,7 +463,7 @@
 
 /mob/Topic(href, href_list)
 	if (href_list["refresh"])
-		if(machine && in_range(src, usr))
+		if(machine && in_range(src, usr)) // ? i'm sure changing this to Adjacent() will bug something
 			show_inv(machine)
 
 	if(href_list["flavor_more"])
@@ -665,10 +665,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(client.holder)
 				if (config.registration_panic_bunker_age)
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
-				if(SSticker.mode && SSticker.mode.config_tag == "malfunction")
-					var/datum/game_mode/malfunction/GM = SSticker.mode
-					if(GM.malf_mode_declared)
-						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+				if(GM?.malf_mode_declared)
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
@@ -769,7 +768,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
 			canmove = FALSE
-			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+			if(G.state == GRAB_NECK && G.assailant.get_targetzone() == BP_CHEST)
 				lying = FALSE
 				density = TRUE
 			break
@@ -1022,7 +1021,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(O == selection)
 			pinned -= O
 		if(!pinned.len)
-			anchored = 0
+			anchored = FALSE
 	return 1
 
 ///Get the ghost of this mob (from the mind)
@@ -1101,7 +1100,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(XRAY in mutations)
 				return
 			else
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+				overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 				if(A)
 					client.perspective = EYE_PERSPECTIVE
 				client.eye = A
@@ -1113,7 +1112,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
@@ -1170,6 +1169,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 				var/image/I = image('icons/mob/hud.dmi', src, "")
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
+
+/mob/keybind_face_direction(direction)
+	facedir(direction)
 
 ///Spin this mob around it's central axis
 /mob/proc/spin(spintime, speed)

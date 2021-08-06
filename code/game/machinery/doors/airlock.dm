@@ -74,7 +74,7 @@ var/list/airlock_overlays = list()
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
-		src.set_dir(dir)
+		set_dir(dir)
 
 	update_icon()
 	return INITIALIZE_HINT_LATELOAD
@@ -620,10 +620,11 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/proc/door_rupture(mob/user)
 	var/obj/structure/door_assembly/da = new assembly_type(loc)
-	da.anchored = 0
+	da.anchored = FALSE
 	var/target = da.loc
-	for(var/i in 1 to 4)
-		target = get_turf(get_step(target,user.dir))
+	if(user)
+		for(var/i in 1 to 4)
+			target = get_turf(get_step(target,user.dir))
 	da.throw_at(target, 200, 100, spin = FALSE)
 	if(mineral)
 		da.change_mineral_airlock_type(mineral)
@@ -960,7 +961,7 @@ var/list/airlock_overlays = list()
 				to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 
 				var/obj/structure/door_assembly/da = new assembly_type(loc)
-				da.anchored = 1
+				da.anchored = TRUE
 				if(mineral)
 					da.change_mineral_airlock_type(mineral)
 				if(glass && da.can_insert_glass)
@@ -1127,7 +1128,7 @@ var/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!in_range(src, usr) && loc != usr) || !W.use(10))
+	if((!Adjacent(usr) && loc != usr) || !W.use(10))
 		return
 	switch(paintjob)
 		if("Public")
@@ -1168,6 +1169,15 @@ var/list/airlock_overlays = list()
 			icon          = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	update_icon()
+
+/obj/machinery/door/airlock/emp_act(severity)
+	if(!wires)
+		return
+	for(var/i in 1 to severity)
+		if(!prob(50 / severity))
+			continue
+		var/wire = 1 << rand(0, wires.wire_count - 1)
+		wires.pulse_index(wire)
 
 /obj/structure/door_scrap
 	name = "Door Scrap"

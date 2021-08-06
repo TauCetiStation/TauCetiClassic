@@ -28,7 +28,7 @@
 	icon_state = "abed"
 
 /obj/structure/stool/bed/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
@@ -59,7 +59,7 @@
 	name = "roller bed"
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "down"
-	anchored = 0
+	anchored = FALSE
 	var/type_roller = /obj/item/roller
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W, mob/user)
@@ -81,6 +81,10 @@
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(has_gravity(src))
 		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
 
@@ -138,16 +142,16 @@
 			M.pass_flags &= ~PASSCRAWL
 			M.crawling = FALSE
 			M.layer = 4.0
-		density = 1
+		density = TRUE
 		icon_state = "up"
 	else
-		density = 0
+		density = FALSE
 		icon_state = "down"
 	return ..()
 
 /obj/structure/stool/bed/roller/MouseDrop(over_object, src_location, over_location)
 	..()
-	if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
+	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr))
 			return
 		if(buckled_mob)

@@ -23,6 +23,10 @@
 	transform = turn(transform,rand(0,360))
 	update_icon()
 
+/obj/item/ammo_casing/Destroy()
+	QDEL_NULL(BB)
+	return ..()
+
 /obj/item/ammo_casing/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
@@ -100,6 +104,16 @@
 			return 1
 	return 0
 
+/obj/item/ammo_box/proc/make_empty(deleting = TRUE)
+	if(deleting)
+		stored_ammo = list()
+		update_icon()
+	else
+		var/turf/T = get_turf(src)
+		for(var/obj/ammo in stored_ammo)
+			stored_ammo -= ammo
+			ammo.forceMove(T)
+
 /obj/item/ammo_box/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = 0
 	if(istype(I, /obj/item/ammo_box))
@@ -118,6 +132,7 @@
 			num_loaded++
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+		playsound(src, 'sound/weapons/guns/ammo_insert.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		I.update_icon()
 		update_icon()
 		return num_loaded

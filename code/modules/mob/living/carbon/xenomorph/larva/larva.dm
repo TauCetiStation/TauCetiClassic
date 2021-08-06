@@ -9,7 +9,7 @@
 	storedPlasma = 50
 	max_plasma = 50
 
-	density = 0
+	density = FALSE
 	small = 1
 	var/amount_grown = 0
 	var/max_grown = 200

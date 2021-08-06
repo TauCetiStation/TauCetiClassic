@@ -48,7 +48,7 @@
 			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
 			message_admins("<span class='notice'>[key_name_admin(src)] triggers their deadman's switch! [ADMIN_JMP(src)]</span>")
 			log_game("<span class='notice'>[key_name(src)] triggers their deadman's switch!</span>")
-			src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
+			visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
 			signaler.signal()
 
 	//Armor
@@ -86,7 +86,7 @@
 		var/zone
 		var/mob/living/L = isliving(throwingdatum.thrower) ? throwingdatum.thrower : null
 		if(L)
-			zone = check_zone(L.zone_sel.selecting)
+			zone = check_zone(L.get_targetzone())
 		else
 			zone = ran_zone(BP_CHEST, 75) // Hits a random part of the body, geared towards the chest
 
@@ -213,7 +213,7 @@
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
 		playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
-		src.visible_message("<span class='warning'>[src] catches fire!</span>",
+		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		update_fire()
@@ -287,59 +287,6 @@
 
 /mob/living/proc/regular_hud_updates()
 	update_action_buttons()
-
-/mob/living/update_action_buttons()
-	if(!hud_used) return
-	if(!client) return
-
-	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
-		return
-
-	client.screen -= hud_used.hide_actions_toggle
-	for(var/datum/action/A in actions)
-		if(A.button)
-			client.screen -= A.button
-
-	if(hud_used.action_buttons_hidden)
-		if(!hud_used.hide_actions_toggle)
-			hud_used.hide_actions_toggle = new(hud_used)
-			hud_used.hide_actions_toggle.UpdateIcon()
-
-		if(!hud_used.hide_actions_toggle.moved)
-			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,1)
-
-		client.screen += hud_used.hide_actions_toggle
-		return
-
-	var/button_number = 0
-	for(var/datum/action/A in actions)
-		button_number++
-		if(A.button == null)
-			var/obj/screen/movable/action_button/N = new(hud_used)
-			N.owner = A
-			A.button = N
-
-		var/obj/screen/movable/action_button/B = A.button
-
-		B.UpdateIcon()
-
-		B.name = A.UpdateName()
-
-		client.screen += B
-
-		if(!B.moved)
-			B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)
-			//hud_used.SetButtonCoords(B,button_number)
-
-	if(button_number > 0)
-		if(!hud_used.hide_actions_toggle)
-			hud_used.hide_actions_toggle = new(hud_used)
-			hud_used.hide_actions_toggle.InitialiseIcon(src)
-		if(!hud_used.hide_actions_toggle.moved)
-			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
-			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
-		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/incapacitated(restrained_type = ARMS)
 	return stat || paralysis || stunned || weakened || restrained(restrained_type)

@@ -30,7 +30,7 @@
 			to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 			return 0
 
-		var/choice = alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", "Authorize", "Repeal", "Abort")
+		var/choice = tgui_alert(user, text("Would you like to (un)authorize a shortened launch time? [] authorization\s are still needed. Use abort to cancel all authorizations.", src.auth_need - src.authorized.len), "Shuttle Launch", list("Authorize", "Repeal", "Abort"))
 		if(SSshuttle.location != 1 && user.get_active_hand() != W)
 			return 0
 		switch(choice)
@@ -40,28 +40,28 @@
 				if (src.auth_need - src.authorized.len > 0)
 					message_admins("[key_name_admin(user)] has authorized early shuttle launch")
 					log_game("[user.ckey] has authorized early shuttle launch")
-					to_chat(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+					visible_message("<span class='notice'><B>Alert: [auth_need - authorized.len] authorizations needed until shuttle is launched early</B></span>")
 				else
 					message_admins("[key_name_admin(user)] has launched the shuttle")
 					log_game("[user.ckey] has launched the shuttle early")
-					to_chat(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+					visible_message("<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 					SSshuttle.online = 1
 					SSshuttle.settimeleft(10)
-					src.authorized.Cut()
+					authorized.Cut()
 
 			if("Repeal")
 				src.authorized -= W:registered_name
-				to_chat(world, text("<span class='notice'><B>Alert: [] authorizations needed until shuttle is launched early</B></span>", src.auth_need - src.authorized.len))
+				visible_message("<span class='notice'><B>Alert: [auth_need - authorized.len] authorizations needed until shuttle is launched early</B></span>")
 
 			if("Abort")
-				to_chat(world, "<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>")
-				src.authorized.Cut()
+				visible_message("<span class='notice'><B>All authorizations to shortening time for shuttle launch have been revoked!</B></span>")
+				authorized.Cut()
 	return
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(emagged)
 		return FALSE
-	var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
+	var/choice = tgui_alert(user, "Would you like to launch the shuttle?","Shuttle control", list("Launch", "Cancel"))
 	if(SSshuttle.location == 1)
 		switch(choice)
 			if("Launch")

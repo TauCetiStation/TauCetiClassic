@@ -32,6 +32,7 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
+	faction = "untouchable"
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -189,6 +190,7 @@
 	holder_type = /obj/item/weapon/holder/mouse/brown
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."

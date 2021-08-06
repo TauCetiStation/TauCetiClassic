@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		STATE_COUNT_DIAGONAL = 8
 
 #ifdef MANUAL_ICON_SMOOTH
-	var/create_false_wall_animations = alert(usr, "Generate false wall animation states?", "Confirmation", "Yes", "No") == "Yes" ? TRUE : FALSE
+	var/create_false_wall_animations = tgui_alert(usr, "Generate false wall animation states?", "Confirmation", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 #else
 	var/create_false_wall_animations = findtext("[dmifile]", "has_false_walls") ? TRUE : FALSE
 #endif

@@ -60,8 +60,8 @@ for reference:
 	desc = "This space is blocked off by a wooden barricade."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
-	anchored = 1.0
-	density = 1.0
+	anchored = TRUE
+	density = TRUE
 	var/health = 100.0
 	var/maxhealth = 100.0
 
@@ -136,8 +136,8 @@ for reference:
 	name = "deployable barrier"
 	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
 	icon = 'icons/obj/objects.dmi'
-	anchored = 0.0
-	density = 1.0
+	anchored = FALSE
+	density = TRUE
 	icon_state = "barrier0"
 	var/health = 100.0
 	var/maxhealth = 100.0
@@ -150,7 +150,7 @@ for reference:
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id))
-		if (src.allowed(user))
+		if (allowed(user))
 			if	(src.emagged < 2.0)
 				src.locked = !src.locked
 				src.anchored = !src.anchored
@@ -191,7 +191,7 @@ for reference:
 				src.health -= W.force * 0.5
 			else
 		if (src.health <= 0)
-			src.explode()
+			explode()
 		..()
 
 /obj/machinery/deployable/barrier/emag_act(mob/user)
@@ -216,12 +216,12 @@ for reference:
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.explode()
+			explode()
 			return
 		if(2.0)
 			src.health -= 25
 			if (src.health <= 0)
-				src.explode()
+				explode()
 			return
 /obj/machinery/deployable/barrier/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -234,7 +234,7 @@ for reference:
 /obj/machinery/deployable/barrier/blob_act()
 	src.health -= 25
 	if (src.health <= 0)
-		src.explode()
+		explode()
 	return
 
 /obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.

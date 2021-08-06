@@ -84,17 +84,16 @@
 		if(crystals.len >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal ports.</span>")
 			return
-		user.drop_item()
+		user.drop_from_inventory(W)
+		W.loc =  null
 		crystals += W
-		W.loc = null
 		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
 		updateDialog()
 		return
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
-			user.drop_from_inventory(W)
-			W.loc = src
+			user.drop_from_inventory(W, src)
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
 		return
 	else if(ismultitool(W))

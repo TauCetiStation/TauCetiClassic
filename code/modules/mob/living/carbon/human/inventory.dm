@@ -364,8 +364,8 @@
 			W.equipped(src, slot)
 			update_inv_s_store()
 		if(SLOT_IN_BACKPACK)
-			if(src.get_active_hand() == W)
-				src.remove_from_mob(W)
+			if(get_active_hand() == W)
+				remove_from_mob(W)
 			W.loc = src.back
 		if(SLOT_TIE)
 			var/obj/item/clothing/under/uniform = w_uniform

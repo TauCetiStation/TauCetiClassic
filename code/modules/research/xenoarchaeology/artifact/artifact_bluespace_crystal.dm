@@ -3,10 +3,10 @@
 	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
 	icon_state = "artifact_13"
 	icon_num = 0
-	density = 1
+	density = TRUE
 	being_used = 0
 	need_inicial = 0
-	anchored = 1
+	anchored = TRUE
 	light_color = "#24c1ff"
 	var/health = 200
 	var/anomaly_spawn_list = list ("gravitational anomaly" = 1, "flux wave anomaly" = 1, "bluespace anomaly" = 6, "pyroclastic anomaly" = 1, "vortex anomaly" = 1,)

@@ -9,7 +9,7 @@
 /datum/orbit_menu/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Orbit", "Orbit Menu")
+		ui = new(user, src, "Orbit", "Orbit Menu", 800, 600)
 		ui.open()
 
 /datum/orbit_menu/tgui_act(action, list/params, datum/tgui/ui)
@@ -40,38 +40,46 @@
 
 /datum/orbit_menu/tgui_static_data(mob/user)
 	var/list/data = list()
-	var/list/alive = list()
-	var/list/dead = list()
-	var/list/ghosts = list()
-	var/list/misc = list()
-	var/list/npcs = list()
+	data["misc"] = list()
+	data["ghosts"] = list()
+	data["dead"] = list()
+	data["npcs"] = list()
+	data["alive"] = list()
+	data["antagonists"] = list()
+
 
 	var/list/pois = getpois(mobs_only = FALSE, skip_mindless = FALSE)
 	for(var/name in pois)
 		var/list/serialized = list()
-		serialized["name"] = name
-
 		var/poi = pois[name]
 
+		serialized["name"] = name
 		serialized["ref"] = "\ref[poi]"
 
 		var/mob/M = poi
-		if(istype(M))
-			if (isobserver(M))
-				ghosts += list(serialized)
-			else if(M.stat == DEAD)
-				dead += list(serialized)
-			else if(M.mind == null)
-				npcs += list(serialized)
-			else
-				alive += list(serialized)
+		if(!istype(M))
+			data["misc"] += list(serialized)
+			continue
 
-		else
-			misc += list(serialized)
+		if(isobserver(M))
+			data["ghosts"] += list(serialized)
+			continue
 
-	data["alive"] = alive
-	data["dead"] = dead
-	data["ghosts"] = ghosts
-	data["misc"] = misc
-	data["npcs"] = npcs
+		if(M.stat == DEAD)
+			data["dead"] += list(serialized)
+			continue
+
+		if(M.mind == null)
+			data["npcs"] += list(serialized)
+			continue
+
+		data["alive"] += list(serialized)
+
+		var/mob/dead/observer/O = user
+		if((O.antagHUD || O.client.holder) && isanyantag(M))
+			var/antag_serialized = serialized.Copy()
+			for(var/antag_category in M.mind.antag_roles)
+				antag_serialized["antag"] += list(antag_category)
+			data["antagonists"] += list(antag_serialized)
+
 	return data

@@ -2,26 +2,26 @@ var/global/obj/effect/overlay/plmaster = null
 var/global/obj/effect/overlay/slmaster = null
 
 // nanomanager, the manager for Nano UIs
-var/datum/nanomanager/nanomanager = new()
+var/global/datum/nanomanager/nanomanager = new()
 
 // Announcer intercom, because too much stuff creates an intercom for one message then hard del()s it.
 var/global/obj/item/device/radio/intercom/global_announcer
 
-var/list/paper_tag_whitelist = list("center","p","div","span","h1","h2","h3","h4","h5","h6","hr","pre",	\
+var/global/list/paper_tag_whitelist = list("center","p","div","span","h1","h2","h3","h4","h5","h6","hr","pre",	\
 	"big","small","font","i","u","b","s","sub","sup","tt","br","hr","ol","ul","li","caption","col",	\
 	"table","td","th","tr")
-var/list/paper_blacklist = list("java","onblur","onchange","onclick","ondblclick","onfocus","onkeydown",	\
+var/global/list/paper_blacklist = list("java","onblur","onchange","onclick","ondblclick","onfocus","onkeydown",	\
 	"onkeypress","onkeyup","onload","onmousedown","onmousemove","onmouseout","onmouseover",	\
 	"onmouseup","onreset","onselect","onsubmit","onunload")
 
-var/gravity_is_on = 1
-var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
-var/visual_counter = 1
+var/global/gravity_is_on = 1
+#define TAB "&nbsp;&nbsp;&nbsp;&nbsp;"
+var/global/visual_counter = 1
 
 //Goonstyle scoreboard
 // NOW AN ASSOCIATIVE LIST
 // NO FUCKING EXCUSE FOR THE ATROCITY THAT WAS
-var/list/score=list(
+var/global/list/score=list(
 	"crewscore"      = 0, // this is the overall var/score for the whole round
 	"stuffshipped"   = 0, // how many useful items have cargo shipped out?
 	"stuffharvested" = 0, // how many harvests have hydroponics done?
@@ -65,6 +65,8 @@ var/list/score=list(
 	"dmgestkey"     = 0
 )
 
+var/global/list/greek_pronunciation = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
+
 //line format: key, name, title, desc
 var/global/list/achievements = list()
 
@@ -76,15 +78,15 @@ var/global/list/antagonists_completion = list()
 
 // Icons that appear on the Round End pop-up browser
 var/global/list/end_icons = list()
-var/endgame_info_logged = 0
+var/global/endgame_info_logged = 0
 
 // Xenomorphs
-var/facehuggers_control_type = FACEHUGGERS_PLAYABLE
+var/global/facehuggers_control_type = FACEHUGGERS_PLAYABLE
 
 // Unsorted stuff
-var/global_message_cooldown = 1
-var/list/stealth_keys = list()
-var/list/ignore_vision_inside = list(
+var/global/global_message_cooldown = 1
+var/global/list/stealth_keys = list()
+var/global/list/ignore_vision_inside = list(
 	/obj/mecha,
 	/obj/machinery/abductor/experiment,
 	/obj/machinery/atmospherics/components/unary/cryo_cell,

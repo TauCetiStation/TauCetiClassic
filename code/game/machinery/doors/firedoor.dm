@@ -5,7 +5,7 @@
 	icon_state = "door_open"
 	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
-	density = 0
+	density = FALSE
 	layer = FIREDOOR_LAYER
 	base_layer = FIREDOOR_LAYER
 	glass = 0
@@ -139,14 +139,6 @@
 			alarmed = 1
 			break
 
-	var/answer = alert(user, "Would you like to [density ? "open" : "close"] this [src.name]?[ alarmed && density ? "\nNote that by doing so, you acknowledge any damages from opening this\n[src.name] as being your own fault, and you will be held accountable under the law." : ""]",\
-	"\The [src]", "Yes, [density ? "open" : "close"]", "No")
-	if(answer == "No")
-		return
-	if(user.incapacitated() || (get_dist(src, user) > 1  && !isAI(user)))
-		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
-		return
-
 	var/needs_to_close = 0
 	if(density)
 		if(alarmed)
@@ -205,8 +197,8 @@
 					new/obj/item/weapon/airalarm_electronics(src.loc)
 
 					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
-					FA.anchored = 1
-					FA.density = 1
+					FA.anchored = TRUE
+					FA.density = TRUE
 					FA.wired = 1
 					FA.update_icon()
 					qdel(src)
@@ -265,6 +257,11 @@
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
+
+/obj/machinery/door/firedoor/do_afterclose()
+	for(var/mob/living/L in get_turf(src))
+		try_move_adjacent(L)
+	..()
 
 /obj/machinery/door/firedoor/do_open()
 	..()

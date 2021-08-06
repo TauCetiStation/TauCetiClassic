@@ -273,7 +273,7 @@
 								new_species += S
 								whitelisted = 1
 						if(!whitelisted)
-							alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
+							tgui_alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted check our forum.")
 					else //Not using the whitelist? Aliens for everyone!
 						new_species = whitelisted_species
 

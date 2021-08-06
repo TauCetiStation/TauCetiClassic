@@ -1,8 +1,8 @@
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300
 	active_power_usage = 300
@@ -124,7 +124,7 @@
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
 			transfer_fingerprints_to(A)
 			A.circuit = circuit
-			A.anchored = 1
+			A.anchored = TRUE
 			A.set_dir(dir)
 			circuit = null
 			for (var/obj/C in src)
@@ -166,7 +166,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())
@@ -231,6 +231,7 @@
 /obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hulk))
 		var/mob/living/simple_animal/hulk/Hulk = M
+		Hulk.do_attack_animation(src)
 		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
 		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
 		Hulk.health -= rand(2,4)

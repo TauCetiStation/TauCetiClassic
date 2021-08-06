@@ -100,7 +100,7 @@
 					if(!M.unEquip(src))
 						return
 					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 	return
 
 /obj/item/weapon/picture_frame/attack_self(mob/user)
@@ -330,7 +330,7 @@
 				else
 					to_chat(M,"<span class='notice'>There is no photo inside the \the [src].</span>")
 
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 	return
 
 /obj/structure/picture_frame/update_icon()

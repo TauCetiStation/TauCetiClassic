@@ -106,13 +106,15 @@
 		if(M != user)
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
-				user.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>")
+				M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 
 				if(!do_mob(user, M)) return
 
 				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
 
-				user.visible_message("<span class='danger'>[user] feeds [M] [src].</span>")
+				M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 			else
 				to_chat(user, "<span class='warning'>This creature does not seem to have a mouth!</span>")
@@ -154,9 +156,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/add_fuel()
 	if(prob(95))
-		src.reagents.add_reagent("luminophore", rand(18,36))
+		reagents.add_reagent("luminophore", rand(18,36))
 	else
-		src.reagents.add_reagent("luminophore", rand(1,2))
+		reagents.add_reagent("luminophore", rand(1,2))
 	var/datum/reagents/R = reagents
 	for(var/datum/reagent/luminophore/luminophore in R.reagent_list)
 		if(luminophore)

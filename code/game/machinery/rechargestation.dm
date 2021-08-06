@@ -143,7 +143,7 @@
 		occupant = null
 		set_power_use(IDLE_POWER_USE)
 	open = 1
-	density = 0
+	density = FALSE
 	build_icon()
 
 /obj/machinery/recharge_station/close_machine()
@@ -158,7 +158,7 @@
 			add_fingerprint(R)
 			break
 		open = 0
-		density = 1
+		density = TRUE
 		build_icon()
 
 /obj/machinery/recharge_station/update_icon()

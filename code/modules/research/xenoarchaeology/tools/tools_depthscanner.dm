@@ -68,7 +68,7 @@
 				to_chat(L, "<span class='notice'>[bicon(src)] [src] pings [pick("madly", "wildly", "excitedly", "crazily")]!.</span>")
 
 /obj/item/device/depth_scanner/attack_self(mob/user)
-	return src.interact(user)
+	return interact(user)
 
 /obj/item/device/depth_scanner/interact(mob/user)
 	var/dat = "<b>Co-ordinates with positive matches</b><br>"

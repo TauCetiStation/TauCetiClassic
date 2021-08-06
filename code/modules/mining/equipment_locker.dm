@@ -6,8 +6,8 @@
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets, but cannot produce alloys such as Plasteel. Points for ore are generated based on type and can be redeemed at a mining equipment locker."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	input_dir = NORTH
 	output_dir = SOUTH
 	req_one_access = list(access_mining_station, access_chemistry, access_bar, access_research, access_ce, access_virology)
@@ -92,9 +92,8 @@
 	if(istype(W,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = usr.get_active_hand()
 		if(istype(I) && !istype(inserted_id))
-			if(!user.drop_item())
+			if(!user.drop_from_inventory(I, src))
 				return
-			I.loc = src
 			inserted_id = I
 			updateUsrDialog()
 		return
@@ -200,7 +199,7 @@
 		else
 			to_chat(usr, "<span class='warning'>Required access not found.</span>")
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
@@ -230,6 +229,12 @@
 		s.plane = initial(s.plane)
 
 
+// Use this define to register something as a purchasable!
+// * n — The proper name of the purchasable
+// * o — The object type path of the purchasable to spawn
+// * p — The price of the purchasable in mining points
+#define EQUIPMENT(n, o, p) n = new /datum/data/mining_equipment(n, o, p)
+
 /**********************Mining Equipment Locker**************************/
 
 /obj/machinery/mineral/equipment_vendor
@@ -237,34 +242,17 @@
 	desc = "An equipment locker for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	var/static/list/selection_items
 	var/obj/item/weapon/card/id/inserted_id
-	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Stimpack",			     /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,   100),
-		new /datum/data/mining_equipment("Chili",                    /obj/item/weapon/reagent_containers/food/snacks/hotchili,              100),
-		new /datum/data/mining_equipment("Cigar",                    /obj/item/clothing/mask/cigarette/cigar/havana,                        100),
-		new /datum/data/mining_equipment("Vodka",                    /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,          150),
-		new /datum/data/mining_equipment("Soap",                     /obj/item/weapon/soap/nanotrasen, 						                150),
-		new /datum/data/mining_equipment("lipozine pill",            /obj/item/weapon/reagent_containers/pill/lipozine,                     200),
-		new /datum/data/mining_equipment("leporazine autoinjector",  /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine, 300),
-		new /datum/data/mining_equipment("Alien toy",                /obj/item/clothing/mask/facehugger_toy, 		                        250),
-		new /datum/data/mining_equipment("Stimpack Bundle",	         /obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
-		new /datum/data/mining_equipment("Point card",    	         /obj/item/weapon/card/mining_point_card,               			    500),
-		new /datum/data/mining_equipment("Space first-aid kit",      /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,            1000),
-		new /datum/data/mining_equipment("Accelerator upgrade",      /obj/item/kinetic_upgrade/speed,										2500),
-		new /datum/data/mining_equipment("Standart capsule",         /obj/item/weapon/survivalcapsule, 										3000),
-		new /datum/data/mining_equipment("Space cash",    	         /obj/item/weapon/spacecash/c1000,                    			        5000),
-		new /datum/data/mining_equipment("Improved capsule",    	 /obj/item/weapon/survivalcapsule/improved,								6000),
-		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000),
-		new /datum/data/mining_equipment("Elite capsule(Bar)",    	 /obj/item/weapon/survivalcapsule/elite,                    	        12000)
-		)
-
+	var/list/prize_list
+	var/dirty_items = FALSE
 /datum/data/mining_equipment
 	var/equipment_name = "generic"
 	var/equipment_path = null
 	var/cost = 0
+
 
 /datum/data/mining_equipment/New(name, path, cost)
 	src.equipment_name = name
@@ -280,6 +268,33 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
+	prize_list = list()
+	prize_list["Gear"] = list(
+		EQUIPMENT("GPS Device",									/obj/item/device/gps/mining,										100),
+	)
+	prize_list["Consumables"] = list(
+		EQUIPMENT("Stimpack",					/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,			100),
+		EQUIPMENT("lipozine pill",				/obj/item/weapon/reagent_containers/pill/lipozine,								200),
+		EQUIPMENT("leporazine autoinjector",	/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,			300),
+		EQUIPMENT("Stimpack Bundle",			/obj/item/weapon/storage/box/autoinjector/stimpack,								400),
+		EQUIPMENT("Space first-aid kit",		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1000),
+		EQUIPMENT("Standart capsule",			/obj/item/weapon/survivalcapsule,												500),
+		EQUIPMENT("Improved capsule",			/obj/item/weapon/survivalcapsule/improved,										1000),
+		EQUIPMENT("Elite capsule(Bar)",			/obj/item/weapon/survivalcapsule/elite,											1500),
+	)
+	prize_list["Digging Tools"] = list(
+		EQUIPMENT("Accelerator upgrade",			/obj/item/kinetic_upgrade/speed,	2500),
+	)
+	prize_list["Miscellaneous"] = list(
+		EQUIPMENT("Chili",						/obj/item/weapon/reagent_containers/food/snacks/hotchili,			100),
+		EQUIPMENT("Vodka",						/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,		150),
+		EQUIPMENT("Soap",						/obj/item/weapon/soap/nanotrasen,									150),
+		EQUIPMENT("Alien toy",					/obj/item/clothing/mask/facehugger_toy,								250),
+		EQUIPMENT("Point card",					/obj/item/weapon/card/mining_point_card,							500),
+		EQUIPMENT("Space cash",					/obj/item/weapon/spacecash/c1000,									5000),
+		EQUIPMENT("Mining voucher",				/obj/item/weapon/mining_voucher,									10000),
+	)
+
 
 /obj/machinery/mineral/equipment_vendor/power_change()
 	..()
@@ -292,54 +307,95 @@
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_vendor/ui_interact(mob/user)
-	var/dat
-	dat +="<div class='Section'>"
-	if(istype(inserted_id))
-		dat += "You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>"
+/obj/machinery/mineral/equipment_vendor/attack_hand(mob/user)
+	if(..())
+		return
+	tgui_interact(user)
+
+/obj/machinery/mineral/equipment_vendor/tgui_data(mob/user)
+	var/list/data = ..()
+
+	// ID
+	if(inserted_id)
+		data["has_id"] = TRUE
+		data["id"] = list()
+		data["id"]["name"] = inserted_id.registered_name
+		data["id"]["points"] = get_points(inserted_id)
 	else
-		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>"
-	dat += "</div>"
-	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
-	for(var/datum/data/mining_equipment/prize in prize_list)
-		dat += "<tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr>"
-	dat += "</table>"
+		data["has_id"] = FALSE
 
-	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 680)
-	popup.set_content(dat)
-	popup.open()
+	return data
 
-/obj/machinery/mineral/equipment_vendor/Topic(href, href_list)
-	. = ..()
-	if(!.)
+/obj/machinery/mineral/equipment_vendor/proc/get_points(obj/item/weapon/card/id/target)
+	if(!istype(target))
+		return 0
+	return target.mining_points
+
+/obj/machinery/mineral/equipment_vendor/proc/remove_points(obj/item/weapon/card/id/target, amt)
+	target.mining_points -= amt
+
+/obj/machinery/mineral/equipment_vendor/tgui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/equipment_locker),
+	)
+
+/obj/machinery/mineral/equipment_vendor/tgui_static_data(mob/user)
+	var/list/static_data[0]
+
+	// Available items - in static data because we don't wanna compute this list every time! It hardly changes.
+	static_data["items"] = list()
+	for(var/cat in prize_list)
+		var/list/cat_items = list()
+		for(var/prize_name in prize_list[cat])
+			var/datum/data/mining_equipment/prize = prize_list[cat][prize_name]
+			cat_items[prize_name] = list("name" = prize_name, "price" = prize.cost)
+			cat_items[prize_name]["path"] = replacetext(replacetext("[prize.equipment_path]", "[/obj/item]/", ""), "/", "-")
+		static_data["items"][cat] = cat_items
+
+	return static_data
+
+/obj/machinery/mineral/equipment_vendor/tgui_interact(mob/user, datum/tgui/ui = null)
+	// Update static data if need be
+	if(dirty_items)
+		update_static_data(user, ui)
+		dirty_items = FALSE
+
+	// Open the window
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MiningVendor", name)
+		ui.open()
+		ui.set_autoupdate(FALSE)
+
+
+/obj/machinery/mineral/equipment_vendor/tgui_act(action, params)
+	if(..())
 		return
 
-	if(href_list["choice"])
-		if(istype(inserted_id))
-			if(href_list["choice"] == "eject")
-				inserted_id.loc = loc
-				inserted_id.verb_pickup()
-				inserted_id = null
-		else if(href_list["choice"] == "insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_hand()
-			if(istype(I))
-				if(!usr.drop_item())
-					return
-				I.loc = src
-				inserted_id = I
-			else
-				to_chat(usr, "<span class='danger'>No valid ID.</span>")
-	if(href_list["purchase"])
-		if(istype(inserted_id))
-			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
-			if (!prize || !(prize in prize_list))
+	. = TRUE
+	switch(action)
+		if("logoff")
+			if(!inserted_id)
 				return
-			if(prize.cost > inserted_id.mining_points)
-			else
-				inserted_id.mining_points -= prize.cost
-				new prize.equipment_path(src.loc)
+			usr.put_in_hands(inserted_id)
+			inserted_id = null
+		if("purchase")
+			if(!inserted_id)
+				return
+			var/category = params["cat"] // meow
+			var/name = params["name"]
+			if(!(category in prize_list) || !(name in prize_list[category])) // Not trying something that's not in the list, are you?
+				return
+			var/datum/data/mining_equipment/prize = prize_list[category][name]
+			if(prize.cost > get_points(inserted_id)) // shouldn't be able to access this since the button is greyed out, but..
+				to_chat(usr, "<span class='danger'>You have insufficient points.</span>")
+				return
 
-	src.updateUsrDialog()
+			remove_points(inserted_id, prize.cost)
+			new prize.equipment_path(loc)
+		else
+			return FALSE
+	add_fingerprint()
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mining_voucher))
@@ -348,26 +404,26 @@
 	if(istype(I,/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = usr.get_active_hand()
 		if(istype(C) && !istype(inserted_id))
-			usr.drop_item()
-			C.loc = src
+			usr.drop_from_inventory(C, src)
 			inserted_id = C
-			updateUsrDialog()
+			tgui_interact(user)
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
-		updateUsrDialog()
+		tgui_interact(user)
 		return
 	if(panel_open)
 		if(iscrowbar(I))
 			default_deconstruction_crowbar(I)
-		return 1
-	..()
+		return
+	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/populate_selection()
 	selection_items = list(
 	"Resonator kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
 	"Kinetic Accelerator" = image(icon = 'icons/obj/mining/hand_tools.dmi', icon_state = "kineticgun100"),
 	"Mining Drone" = image(icon = 'icons/obj/aibots.dmi', icon_state = "mining_drone"),
-	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining")
+	"Special Mining Rig" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-mining"),
+	"Mining Meson HUD" = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "mesonmininghud")
 	)
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/voucher, redeemer)
@@ -389,6 +445,8 @@
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 		if("Special Mining Rig")
 			new /obj/item/mining_rig_pack(src.loc)
+		if("Mining Meson HUD")
+			new /obj/item/clothing/glasses/hud/mining/meson(src.loc)
 		if("Cancel")
 			voucher.in_use = 0
 			return
@@ -539,7 +597,7 @@
 	..()
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity, params)
-	if(target in user.contents)
+	if(target.loc == user)
 		return
 	if(proximity)
 		CreateResonance(target, user)
@@ -757,7 +815,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
-	if(in_range(user, src))
+	if(Adjacent(user))
 		to_chat(user, "<span class='notice'>You unloaded ore to the floor.</span>")
 		DropOre()
 
@@ -902,3 +960,6 @@
 	desc = "A sign that warns would be travellers of hostile alien life in the vicinity."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "xeno_warning"
+
+#undef EQUIPMENT
+#undef MAX_NOTICES

@@ -59,7 +59,7 @@
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/power/emitter/Destroy()
@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && avail(active_power_usage))
+	if (active && powered)
 		icon_state = "emitter-active"
 	else if(panel_open)
 		icon_state = "emitter-open"
@@ -131,15 +131,15 @@
 		return
 	if(((src.last_shot + src.fire_delay) <= world.time) && (src.active == 1))
 
-		if(!active_power_usage || avail(active_power_usage))
+		if(!active_power_usage || active_power_usage <= max(surplus(), 0))
 			add_load(active_power_usage)
 			if(!powered)
-				powered = 1
+				powered = TRUE
 				update_icon()
 				log_investigate("regained power and turned <font color='green'>on</font>",INVESTIGATE_SINGULO)
 		else
 			if(powered)
-				powered = 0
+				powered = FALSE
 				update_icon()
 				log_investigate("lost power and turned <font color='red'>off</font>",INVESTIGATE_SINGULO)
 			return
@@ -184,14 +184,14 @@
 				user.visible_message("[user.name] secures [src.name] to the floor.", \
 					"You secure the external reinforcing bolts to the floor.", \
 					"You hear a ratchet")
-				src.anchored = 1
+				src.anchored = TRUE
 			if(1)
 				state = 0
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				user.visible_message("[user.name] unsecures [src.name] reinforcing bolts from the floor.", \
 					"You undo the external reinforcing bolts.", \
 					"You hear a ratchet")
-				src.anchored = 0
+				src.anchored = FALSE
 			if(2)
 				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
@@ -234,7 +234,7 @@
 		if(emagged)
 			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
-		if(src.allowed(user))
+		if(allowed(user))
 			if(active)
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")

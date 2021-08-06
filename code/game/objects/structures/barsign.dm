@@ -1,7 +1,7 @@
 /obj/structure/sign/double/barsign
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/sign/double/barsign/proc/get_valid_states()
 	. = icon_states(icon)

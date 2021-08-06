@@ -65,14 +65,14 @@ var/global/list/spawned_surprises = list()
 	var/x_len = input("Desired length.","Length",5) as num
 	var/y_len = input("Desired width.","Width",5) as num
 	var/clean = input("Delete existing items in area?" , "Clean area?", 0) as num
-	switch(alert("Wall type",null,"Reinforced wall","Regular wall","Resin wall"))
+	switch(tgui_alert(usr, "Wall type",, list("Reinforced wall","Regular wall","Resin wall")))
 		if("Reinforced wall")
 			wall=/turf/simulated/wall/r_wall
 		if("Regular wall")
 			wall=/turf/simulated/wall
 		if("Resin wall")
 			wall=/obj/structure/alien/resin/wall
-	switch(alert("Floor type",null,"Regular floor","Reinforced floor"))
+	switch(tgui_alert(usr, "Floor type",, list("Regular floor","Reinforced floor")))
 		if("Regular floor")
 			floor=/turf/simulated/floor
 		if("Reinforced floor")

@@ -48,15 +48,14 @@
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil))
-		user.drop_item()
-		W.loc = src.loc
+		user.drop_from_inventory(W, loc)
 		switch(scan_fossil(W))
 			if(1)
-				src.visible_message("<span class='red'> [bicon(src)] [src] scans the fossil and rejects it.</span>")
+				visible_message("<span class='red'> [bicon(src)] [src] scans the fossil and rejects it.</span>")
 			if(2)
 				visible_message("<span class='red'> [bicon(src)] [src] can not extract any more genetic data from new fossils.</span>")
 			if(4)
-				src.visible_message("<span class='notice'>[bicon(src)] [user] inserts [W] into [src], the fossil is consumed as [src] extracts genetic data from it.</span>")
+				visible_message("<span class='notice'>[bicon(src)] [user] inserts [W] into [src], the fossil is consumed as [src] extracts genetic data from it.</span>")
 				qdel(W)
 				updateDialog()
 	else if (istype(W, /obj/item/weapon/storage))

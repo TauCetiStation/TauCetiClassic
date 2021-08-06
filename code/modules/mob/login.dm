@@ -14,7 +14,7 @@
 				if( (M.computer_id == client.computer_id) )
 					if(matches)	matches += " and "
 					matches += "ID ([client.computer_id])"
-					spawn() alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+					spawn() tgui_alert(usr, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 				if(matches)
 					if(M.client)
 						message_admins("<font color='red'><B>Notice: </B></font><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as <A href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name_admin(M)]</A>.</font>", R_LOG)
@@ -47,7 +47,7 @@
 		client.perspective = MOB_PERSPECTIVE
 
 	//Some weird magic to block users who cant see lighting normally
-	var/obj/screen/blocker = new /obj/screen()
+	var/atom/movable/screen/blocker = new /atom/movable/screen()
 	blocker.screen_loc = "WEST,SOUTH to EAST,NORTH"
 	blocker.icon = 'icons/effects/chaos.dmi'
 	blocker.icon_state = "8"
@@ -67,9 +67,6 @@
 	add_click_catcher()
 
 	client.screen += blocker
-
-	//Clear ability list and update from mob.
-	client.verbs -= ability_verbs
 
 	if(abilities)
 		client.verbs |= abilities

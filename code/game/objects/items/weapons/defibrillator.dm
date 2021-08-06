@@ -78,7 +78,7 @@
 		var/mob/M = loc
 		if(!M.unEquip(src))
 			return
-		src.add_fingerprint(usr)
+		add_fingerprint(usr)
 		M.put_in_hands(src)
 
 
@@ -291,7 +291,7 @@
 	if(!H.should_have_organ(O_HEART))
 		return TRUE
 	var/obj/item/organ/internal/heart/heart = H.organs_by_name[O_HEART]
-	if(!heart || H.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SURVIVE)
+	if(!heart || H.blood_amount() < BLOOD_VOLUME_SURVIVE)
 		return FALSE
 	return TRUE
 
@@ -492,26 +492,6 @@
 			playsound(src, 'sound/items/surgery/defib_safetyOff.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		update_icon()
 	..()
-
-/obj/item/weapon/twohanded/shockpaddles/robot
-	name = "defibrillator paddles"
-	desc = "A pair of advanced shockpaddles powered by a robot's internal power cell, able to penetrate thick clothing."
-	charge_cost = 50
-	combat = TRUE
-	cooldown_time = 3 SECONDS
-
-/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.charge >= charge_amt)
-
-/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(charge_amt)
-	if(isrobot(loc))
-		var/mob/living/silicon/robot/R = loc
-		return (R.cell && R.cell.use(charge_amt))
-
-/obj/item/weapon/twohanded/shockpaddles/robot/attack_self(mob/user)
-	return //No, this can't be wielded
 
 /*
 	Shockpaddles that are linked to a base unit

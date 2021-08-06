@@ -102,6 +102,11 @@
 	icon_state = "refill_snack"
 	charges =  14// of 40
 
+/obj/item/weapon/vending_refill/donut
+	machine_name = "Monkin' Donuts"
+	icon_state = "refill_donut"
+	charges =  10// of 30
+
 /obj/item/weapon/vending_refill/assist
 	machine_name = "Vendomat"
 	charges =  6// of 17

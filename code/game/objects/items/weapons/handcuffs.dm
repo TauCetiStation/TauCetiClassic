@@ -40,12 +40,14 @@
 
 /obj/item/weapon/handcuffs/proc/place_handcuffs(mob/living/carbon/target, mob/user)
 	if(user.is_busy(target))
-		return
+		return FALSE
 
 	playsound(src, cuff_sound, VOL_EFFECTS_MASTER, 30, null, -2)
 
 	if (ishuman(target) || isIAN(target) || ismonkey(target))
 		target.log_combat(user, "handcuffed (attempt) with [name]")
+		target.visible_message("<span class='warning'><B>[user]</B> attempts to handcuff <B>[target]</B>!</span>", \
+			 "<span class='warning'><B>[user]</B> attempts to handcuff you!</span>")
 
 		if(do_mob(user, target, HUMAN_STRIP_DELAY) && mob_can_equip(target, SLOT_HANDCUFFED))
 			if(!isrobot(user) && !isIAN(user) && user != target)
@@ -56,7 +58,7 @@
 						break
 				if (!grabbing)
 					to_chat(user, "<span class='warning'>Your grasp was broken before you could restrain [target]!</span>")
-					return
+					return FALSE
 
 			var/obj/item/weapon/handcuffs/cuffs = src
 			if(!dispenser)
@@ -67,6 +69,7 @@
 			target.equip_to_slot(cuffs, SLOT_HANDCUFFED, TRUE)
 			target.attack_log += "\[[time_stamp()]\] <font color='orange'>[user.name] ([user.ckey]) placed on our [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
 			user.attack_log += "\[[time_stamp()]\] <font color='red'>Placed on [target.name]'s ([target.ckey]) [target.slot_id_to_name(SLOT_HANDCUFFED)] ([cuffs])</font>"
+			return TRUE
 
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
@@ -108,5 +111,5 @@
 	dispenser = 1
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(!C.handcuffed)
+	if(istype(C) && !C.handcuffed)
 		place_handcuffs(C, user)

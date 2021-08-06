@@ -46,15 +46,13 @@
 	if(!holder_type || buckled || pinned.len)
 		return
 	var/obj/item/weapon/holder/H = new holder_type(loc)
-	src.loc = H
+	forceMove(H)
 	H.name = src.name
 	H.attack_hand(grabber)
 
 	to_chat(grabber, "You scoop up [src].")
 	to_chat(src, "[grabber] scoops you up.")
 	LAssailant = grabber
-
-	return
 
 // Mob specific holders.
 

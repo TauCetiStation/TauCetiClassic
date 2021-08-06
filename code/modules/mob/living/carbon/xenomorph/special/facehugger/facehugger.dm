@@ -7,7 +7,7 @@
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "facehugger"
 	item_state = "facehugger"
-	density = 1
+	density = TRUE
 	layer = MOB_LAYER
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES
 	body_parts_covered = FACE|EYES
@@ -313,8 +313,7 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
-			QDEL_NULL(current_hugger)
-			new_xeno.mind.add_antag_hud(ANTAG_HUD_ALIEN, "hudalien", new_xeno)
+			qdel(current_hugger)
 		target.unEquip(src)
 		target.status_flags |= XENO_HOST
 		target.med_hud_set_status()

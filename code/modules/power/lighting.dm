@@ -8,12 +8,8 @@
 #define LIGHT_EMPTY 1
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
-#ifdef NEWYEARCONTENT
-    #define LAMP_BRIGHTNESS 1.5
-#else
-    #define LAMP_BRIGHTNESS 2
-#endif
-
+#define LAMP_BRIGHTNESS 2
+#define LAMP_BRIGHTNESS_HOLIDAY 1.5
 
 
 /obj/item/light_fixture_frame
@@ -78,7 +74,7 @@
 	desc = "A light fixture under construction."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-stage1"
-	anchored = 1
+	anchored = TRUE
 	layer = 5
 	var/stage = 1
 	var/fixture_type = "tube"
@@ -102,7 +98,7 @@
 				to_chat(user, "The casing is closed.")
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	if (iswrench(W))
 		if (src.stage == 1)
@@ -175,7 +171,7 @@
 					newlight = new /obj/machinery/light/small/built(src.loc)
 
 			newlight.set_dir(src.dir)
-			src.transfer_fingerprints_to(newlight)
+			transfer_fingerprints_to(newlight)
 			qdel(src)
 			return
 	..()
@@ -185,7 +181,7 @@
 	desc = "A small light fixture under construction."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "bulb-construct-stage1"
-	anchored = 1
+	anchored = TRUE
 	layer = 5
 	stage = 1
 	fixture_type = "bulb"
@@ -198,7 +194,7 @@
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
-	anchored = 1
+	anchored = TRUE
 	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 0
@@ -227,6 +223,11 @@
 	var/nightshift_light_color = "#ffdbb5"
 
 // the smaller bulb light fixture
+
+/obj/machinery/light/atom_init()
+	. = ..()
+	if(SSholiday.holidays[NEW_YEAR] && brightness_power == LAMP_BRIGHTNESS)
+		brightness_power = LAMP_BRIGHTNESS_HOLIDAY
 
 /obj/machinery/light/small
 	icon_state = "bulb1"
@@ -398,7 +399,7 @@
 			to_chat(user, "There is a [fitting] already inserted.")
 			return
 		else
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
 			if(istype(L, light_type))
 				status = L.status
@@ -411,7 +412,6 @@
 				on = has_power()
 				update()
 
-				user.drop_item()	//drop the item to update overlays and such
 				qdel(L)
 
 				playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
@@ -807,7 +807,7 @@
 
 /obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("<span class='warning'>[name] shatters.</span>","<span class='warning'>You hear a small glass object shatter.</span>")
+		visible_message("<span class='warning'>[name] shatters.</span>","<span class='warning'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
 		sharp = 1

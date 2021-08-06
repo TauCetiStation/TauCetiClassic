@@ -82,12 +82,13 @@
 		to_chat(usr, "<span class='alert'>Error: Topic 'editrights': No valid ckey</span>")
 		return
 	var/datum/admins/D = admin_datums[adm_ckey]
-	if(alert("Are you sure you want to remove [adm_ckey] from admins?","Message","Yes","Cancel") == "Yes")
+	if(tgui_alert(usr, "Are you sure you want to remove [adm_ckey] from admins?","Message", list("Yes","Cancel")) == "Yes")
 		if(!D)
 			return
 		admin_datums -= adm_ckey
 		D.disassociate()
-		db_admin_rank_modification(adm_ckey, "Removed")
+		change_permissions(adm_ckey, 0)
+		db_admin_rank_modification(adm_ckey, ADMIN_RANK_REMOVED)
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 
@@ -113,7 +114,7 @@
 			return
 		if("*New Rank*")
 			new_rank = sanitize(input("Please input a new rank", "New custom rank", null, null) as null|text)
-			if(!new_rank)
+			if(!new_rank || (new_rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX, ADMIN_RANK_REMOVED)))
 				to_chat(usr, "<span class='alert'>Error: Topic 'editrights': Invalid rank</span>")
 				return
 	if(D)
@@ -215,7 +216,7 @@ var elements = document.getElementsByName('rights');
 	var/admin_id
 	while(select_query.NextRow())
 		admin_id = text2num(select_query.item[1])
-	if(!admin_id)
+	if(!admin_id) // also prevents changes to sandbox and round admins
 		return
 	var/DBQuery/insert_query = dbcon.NewQuery("UPDATE `erro_admin` SET flags = [new_rights] WHERE id = [admin_id]")
 	insert_query.Execute()
@@ -267,7 +268,7 @@ var elements = document.getElementsByName('rights');
 	if(!ment_ckey)
 		to_chat(usr, "<span class='alert'>Error: Topic 'editmentorlist': [ment_ckey] is not a valid mentor.</span>")
 		return
-	if(alert("Are you sure you want to remove [ment_ckey] from mentors?","Message","Yes","Cancel") == "Yes")
+	if(tgui_alert(usr, "Are you sure you want to remove [ment_ckey] from mentors?","Message", list("Yes","Cancel")) == "Yes")
 		mentor_ckeys -= ment_ckey
 		mentors -= directory[ment_ckey]
 		message_admins("[key_name_admin(usr)] removed [ment_ckey] from the mentors list")
@@ -302,6 +303,12 @@ var elements = document.getElementsByName('rights');
 		return
 	if(!istext(adm_ckey) || !istext(new_rank))
 		return
+
+	var/datum/admins/D = admin_datums[adm_ckey]
+	if(D.rank in list(ADMIN_RANK_ROUND, ADMIN_RANK_SANDBOX))
+		to_chat(usr, "<span class='alert'>You can not edit special rank [D.rank]!</span>")
+		return
+
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT id FROM erro_admin WHERE ckey = '[adm_ckey]'")
 	select_query.Execute()
 	var/new_admin = 1
@@ -322,3 +329,42 @@ var elements = document.getElementsByName('rights');
 			var/DBQuery/log_query = dbcon.NewQuery("INSERT INTO `erro_admin_log` (`id` ,`datetime` ,`round_id` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , [global.round_id], '[ckey(usr.ckey)]', '[sanitize_sql(usr.client.address)]', 'Edited the rank of [adm_ckey] to [sanitize_sql(new_rank)]');")
 			log_query.Execute()
 			to_chat(usr, "<span class='notice'>Admin rank changed.</span>")
+
+/client/proc/add_round_admin()
+	set category = "Admin"
+	set name = "Round Admin"
+	set desc = "Add or remove temporary admin"
+
+	if(!check_rights(R_PERMISSIONS))
+		return
+
+	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND] rank for the duration of the round.") as null|anything in clients
+
+	if(!target)
+		return
+
+	if(!target.holder)
+		var/confirm = tgui_alert(usr, "You want to grant permissions for [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
+		if (confirm != "Yes")
+			return
+
+		new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN), target.ckey)
+		target.holder = admin_datums[target.ckey]
+		target.holder.associate(target)
+
+		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
+		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
+
+	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND)
+		var/confirm = tgui_alert(usr, "You want to remove [ADMIN_RANK_ROUND] permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
+		if (confirm != "Yes")
+			return
+
+		var/datum/admins/D = target.holder
+		admin_datums -= target.ckey
+		D.disassociate()
+
+		message_admins("[key_name_admin(usr)] removed [ADMIN_RANK_ROUND] [key_name_admin(target)] from the admins list")
+		log_admin("[key_name(usr)] removed [ADMIN_RANK_ROUND] [key_name(target)] from the admins list")
+	else
+		to_chat(usr, "<span class='alert'>Wrong client!</span>")

@@ -1,11 +1,13 @@
 /mob/living/carbon/human/movement_delay()
 	if(iszombie(src))
-		return src.zombie_movement_delay()
-	if(mind && mind.changeling && mind.changeling.strained_muscles)
-		if(!has_gravity(src))
-			return -3   // speed boost in space.
-		else
-			return -2.5 // changeling ability also nulify any speed modifications and gives boost.
+		return zombie_movement_delay()
+	if(ischangeling(src))
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(C.strained_muscles)
+			if(!has_gravity(src))
+				return -3   // speed boost in space.
+			else
+				return -2.5 // changeling ability also nulify any speed modifications and gives boost.
 
 	if(!has_gravity(src))
 		return -1 // It's hard to be slowed down in space by... anything
@@ -35,8 +37,8 @@
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - get_nutrition()) / 5 // So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
+	var/hungry = (500 - get_nutrition()) / 5
+	if(hungry >= 70) // Slow down if nutrition <= 150
 		tally += hungry / 50
 
 	if(buckled) // so, if we buckled we have large debuff

@@ -1,7 +1,7 @@
 /obj/item/decoration
 	name = "decoration"
 	desc = "Winter is coming!"
-	icon = 'code/modules/holidays/new_year/decorations.dmi'
+	icon = 'icons/holidays/new_year/decorations.dmi'
 	icon_state = "santa"
 	layer = 4.1
 
@@ -15,7 +15,7 @@
 		return
 	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
-		src.forceMove(target)
+		forceMove(target)
 
 // Garland
 /obj/item/decoration/garland
@@ -123,14 +123,12 @@
 		if(src && recipient && sender && present && get_dist(src, user) <= 1)
 			present.recipient = recipient
 			present.sender = sender
-			user.drop_item()
-			present.forceMove(src)
+			user.drop_from_inventory(present, src)
 			user.visible_message("[user] gently puts a gift under \the [src] .", "<span class='notice'>You gently put a gift under \the [src].</span>")
 		return
 	if(!(I.flags & ABSTRACT))
-		if(user.drop_item())
+		if(user.drop_from_inventory(I, loc))
 			user.visible_message("[user] attaches [I] to \the [src] .", "<span class='notice'>You attach [I] to \the [src].</span>")
-			I.forceMove(loc)
 			I.layer = 5.1 // Item should be on the tree, not under
 			I.anchored = TRUE // Make item a part of the tree
 			decals += I
@@ -158,7 +156,7 @@
 	if(how_many_gifts)
 		var/obj/item/weapon/gift/G = choosen_gift
 		to_chat(user, "<span class='notice'>Looks like there is [how_many_gifts] gifts for you under \the tree!</span>")
-		src.visible_message("<span class='notice'>[H] takes a gift from \the [src].</span>",
+		visible_message("<span class='notice'>[H] takes a gift from \the [src].</span>",
 			"<span class='notice'>You take a gift from \the [src].</span>")
 		G.forceMove(H.loc)
 		user.put_in_active_hand(G)
@@ -217,10 +215,10 @@
 			I.layer = initial(layer)
 			I.pixel_x = initial(pixel_x)
 			I.pixel_y = initial(pixel_y)
-			I.anchored = 0
+			I.anchored = FALSE
 			decals.Cut()
 
-		src.visible_message("Something dropped from \the [src].")
+		visible_message("Something dropped from \the [src].")
 
 /obj/item/device/flashlight/lamp/fir/special/alternative
 	icon = 'icons/obj/flora/pinetrees.dmi'
@@ -229,7 +227,7 @@
 /obj/structure/snowman
 	name = "snowman"
 	desc = "That's a snowman. He is staring at you. Where is his hat, though?"
-	icon = 'code/modules/holidays/new_year/decorations.dmi'
+	icon = 'icons/holidays/new_year/decorations.dmi'
 	icon_state = "snowman_s"
 	anchored = FALSE
 	var/health = 50
@@ -238,10 +236,9 @@
 	. = ..()
 	if(istype(W, /obj/item/clothing/head/that))
 		if(icon_state == "snowman_s")
-			user.drop_item()
 			qdel(W)
 			icon_state = "snowman_hat"
-			src.visible_message("<span class='notice'>[user] puts a hat on the snowman. He looks happy!</span>",
+			visible_message("<span class='notice'>[user] puts a hat on the snowman. He looks happy!</span>",
 			"<span class='notice'>You put a hat on the snowman. He looks happy!</span>")
 		else
 			to_chat(user, "<span class='warning'>But snowman already has a hat!</span>")

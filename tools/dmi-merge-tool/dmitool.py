@@ -16,7 +16,7 @@ def _dmitool_call(*dmitool_args, **popen_args):
 def _safe_parse(dict, key, deferred_value):
     try:
         dict[key] = deferred_value()
-    except Exception as e: 
+    except Exception as e:
         print("Could not parse property '%s': %s" % (key, e))
         return e
     return False
@@ -35,7 +35,7 @@ def help():
 
 
 def info(filepath):
-    """ Totally not a hack that parses the output from dmitool into a dictionary. 
+    """ Totally not a hack that parses the output from dmitool into a dictionary.
         May break at any moment.
     """
     subproc = _dmitool_call("info", filepath, stdout=PIPE)
@@ -53,7 +53,7 @@ def info(filepath):
         _safe_parse(result, "size", lambda: header[2].split()[1].strip())
 
     # parse state information
-    states = []    
+    states = []
     for item in data:
         if not len(item):
             continue
@@ -91,7 +91,7 @@ def import_state(target_path, input_path, icon_state, replace=False, delays=None
     """ Inserts an input png given by the input_path into the target_path.
     """
     args = ["import", target_path, icon_state, input_path]
-    
+
     if replace:
         args.append("nodup")
     if rewind:

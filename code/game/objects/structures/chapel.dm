@@ -209,7 +209,7 @@
 		to_chat(user, "<span class='warning'>You can't alarm the whole station so often! Please wait [round((next_global_ring - world.time) * 0.1, 0.1)] seconds before next ring.</span>")
 		return
 
-	if(alert(user, "Are you sure you want to alert the entire station with [src]?", "[src]", "Yes", "No") == "No")
+	if(tgui_alert(user, "Are you sure you want to alert the entire station with [src]?", "[src]", list("Yes", "No")) == "No")
 		return
 	var/ring_msg = capitalize(sanitize(input(user, "What do you want to ring on [src]?", "Enter message") as null|text))
 	if(!ring_msg)

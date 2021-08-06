@@ -1,4 +1,5 @@
 //Wall-E
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/walle, chief_animal_list)
 /mob/living/simple_animal/walle
 	name = "Wall-E"
 	desc = "The robot which looks for EVA."

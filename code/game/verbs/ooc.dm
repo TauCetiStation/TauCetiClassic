@@ -10,8 +10,10 @@ var/global/bridge_ooc_colour = "#7b804f"
 		to_chat(usr, "<span class='red'>Speech is currently admin-disabled.</span>")
 		return
 
-	if(!mob || !msg)
+	if(!mob)
 		return
+
+	msg = sanitize(msg)
 
 	if(!msg)	return
 
@@ -60,11 +62,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 	)
 
 /proc/send2ooc(msg, name, colour, client/sender)
-	msg = sanitize(msg)
-
-	if(!msg)
-		return
-
 	if(sender)
 		log_ooc("[key_name(sender)] : [msg]")
 	else
@@ -187,42 +184,42 @@ var/global/bridge_ooc_colour = "#7b804f"
 	set name = "Fix chat"
 	set category = "OOC"
 	if (!chatOutput || !istype(chatOutput))
-		var/action = alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
+		var/action = tgui_alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", list("Recreate Chat Output data", "Cancel"))
 		if (action != "Recreate Chat Output data")
 			return
 		chatOutput = new /datum/chatOutput(src)
 		chatOutput.start()
-		action = alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+		action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
 		if (action == "Fixed")
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum")
 		else
 			chatOutput.load()
-			action = alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+			action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum and forcing a load()")
 			else
-				action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 				if (action == "Switch to old chat")
 					winset(src, "output", "is-visible=true;is-disabled=false")
 					winset(src, "browseroutput", "is-visible=false")
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after recreating the chatOutput and forcing a load()")
 
 	else if (chatOutput.loaded)
-		var/action = alert(src, "ChatOutput seems to be loaded\nDo you want me to force a reload, wiping the chat log or just refresh the chat window because it broke/went away?", "Hmmm", "Force Reload", "Refresh", "Cancel")
+		var/action = tgui_alert(src, "ChatOutput seems to be loaded\nDo you want me to force a reload, wiping the chat log or just refresh the chat window because it broke/went away?", "Hmmm", list("Force Reload", "Refresh", "Cancel"))
 		switch (action)
 			if ("Force Reload")
 				chatOutput.loaded = FALSE
 				chatOutput.start() //this is likely to fail since it asks , but we should try it anyways so we know.
-				action = alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+				action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
 				if (action == "Fixed")
 					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a start()")
 				else
 					chatOutput.load()
-					action = alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+					action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
-						action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 						if (action == "Switch to old chat")
 							winset(src, "output", "is-visible=true;is-disabled=false")
 							winset(src, "browseroutput", "is-visible=false")
@@ -230,17 +227,17 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 			if ("Refresh")
 				chatOutput.showChat()
-				action = alert(src, "Goon chat refreshing, wait a bit and tell me if it's fixed", "", "Fixed", "Nope, force a reload")
+				action = tgui_alert(src, "Goon chat refreshing, wait a bit and tell me if it's fixed",, list("Fixed", "Nope, force a reload"))
 				if (action == "Fixed")
 					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a show()")
 				else
 					chatOutput.loaded = FALSE
 					chatOutput.load()
-					action = alert(src, "How about now? (give it a moment)", "", "Yes", "No")
+					action = tgui_alert(src, "How about now? (give it a moment)",, list("Yes", "No"))
 					if (action == "Yes")
 						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
 					else
-						action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 						if (action == "Switch to old chat")
 							winset(src, "output", "is-visible=true;is-disabled=false")
 							winset(src, "browseroutput", "is-visible=false")
@@ -249,17 +246,42 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	else
 		chatOutput.start()
-		var/action = alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed", "", "Fixed", "Nope")
+		var/action = tgui_alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
 		if (action == "Fixed")
 			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start()")
 		else
 			chatOutput.load()
-			alert(src, "How about now? (give it a moment (it may also try to load twice))", "", "Yes", "No")
+			tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
 			if (action == "Yes")
 				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start() and forcing a load()")
 			else
-				action = alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat", "", "Thanks anyways", "Switch to old chat")
+				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
 				if (action == "Switch to old chat")
 					winset(src, "output", list2params(list("on-show" = "", "is-disabled" = "false", "is-visible" = "true")))
 					winset(src, "browseroutput", "is-disabled=true;is-visible=false")
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after manually calling start() and forcing a load()")
+
+/client/verb/fix_ui()
+	set name = "Fix UI"
+	set desc = "Closes all opened NanoUI/TGUI and Reload your TGUI/NanoUI assets if they are not working"
+	set category = "OOC"
+
+	if(last_ui_resource_send > world.time)
+		to_chat(usr, "<span class='warning'>You requested your TGUI/NanoUI resource files too quickly. This will reload your NanoUI and TGUI/NanoUI resources. If you have any open UIs this may break them. Please try again in [(last_ui_resource_send - world.time)/10] seconds.</span>")
+		return
+	last_ui_resource_send = world.time + 60 SECONDS
+
+	// Close all NanoUI/TGUI windows
+	nanomanager.close_user_uis(usr)
+	SStgui.force_close_all_windows(usr)
+
+	// Clear the user's cache so they get resent.
+	// This is not fully clearing their BYOND cache, just their assets sent from the server this round
+	sent_assets = list()
+
+	// Resend the resources
+	get_asset_datum(/datum/asset/nanoui)
+	get_asset_datum(/datum/asset/simple/tgui)
+
+	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
+

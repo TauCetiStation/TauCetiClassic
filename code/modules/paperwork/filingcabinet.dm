@@ -14,8 +14,8 @@
 	desc = "A large cabinet with drawers."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "filingcabinet"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 
 /obj/structure/filingcabinet/chestdrawer
@@ -97,7 +97,7 @@
 
 		//var/retrieveindex = text2num(href_list["retrieve"])
 		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
-		if(P && in_range(src, usr))
+		if(P && Adjacent(usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"

@@ -245,7 +245,7 @@
 			to_chat(user, "<span class='notice'>You secure [src].</span>")
 		else
 			to_chat(user, "<span class='info'>[src] can now be attached and modified.</span>")
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		return
 	if(!secured && istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
@@ -266,7 +266,7 @@
 		if (user.client)
 			user.client.screen -= src
 		src.loc = F
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		return
 	return ..()
 
@@ -316,7 +316,7 @@
 			log_game("[key_name(user)] triggered a [tank] explosion.")
 			to_chat(user, "<span class='rose'>That was stupid of you.</span>")
 			return
-	if (src.isOn())
+	if (isOn())
 		use(1)
 		var/turf/location = get_turf(user)
 		if (isturf(location))

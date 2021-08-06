@@ -75,7 +75,7 @@
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
-	src.transfer_fingerprints_to(B)
+	transfer_fingerprints_to(B)
 
 	qdel(src)
 
@@ -87,13 +87,11 @@
 	show_filler_on_icon(3, 24, 0)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
-
-	if(!target)
-		return
-
 	if(user.a_intent != INTENT_HARM || !is_glass)
 		return ..()
 
+	if(!target)
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
@@ -157,10 +155,10 @@
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
-		src.reagents.reaction(target, TOUCH)
+		reagents.reaction(target, TOUCH)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
-	src.smash(target, user)
+	smash(target, user)
 
 	// We're smashing the bottle into mob's face. There's no need for an afterattack.
 	return TRUE
@@ -175,8 +173,7 @@
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
-		if(reagents && reagents.total_volume)
-			src.reagents.reaction(loc, TOUCH)
+		reagents.standard_splash(loc)
 		qdel(src)
 
 

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
-	anchored = 1
+	anchored = TRUE
 	interact_offline = TRUE
 
 	var/waterlevel = 100             //The amount of water in the tray (max 100)
@@ -688,11 +688,11 @@
 
 		if(!anchored && !isinspace())
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			anchored = 1
+			anchored = TRUE
 			to_chat(user, "You wrench [src] in place.")
 		else if(anchored)
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "You unwrench [src].")
 
 		wrenched_change()
@@ -702,12 +702,12 @@
 		if(anchored)
 			if(anchored == 2)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				anchored = 1
+				anchored = TRUE
 				to_chat(user, "<span class='notice'>You snip \the [src]'s hoses.</span>")
 
 			else if(anchored == 1)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				anchored = 2
+				anchored = TRUE
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
 			wrenched_change()
@@ -753,7 +753,7 @@
 	if(issilicon(user))//AI doesn't know what is planted
 		return TRUE
 	if(harvest)
-		if(!in_range(src, user))
+		if(!Adjacent(user))
 			return TRUE
 		myseed.harvest()
 	else if(dead)

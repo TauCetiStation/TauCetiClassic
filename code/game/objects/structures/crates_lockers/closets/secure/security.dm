@@ -32,11 +32,10 @@
 	new /obj/item/device/remote_device/captain(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "Head of Personnel's Locker"
@@ -134,11 +133,10 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "Warden's Locker"
@@ -179,12 +177,12 @@
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/weapon/storage/box/mines/shock(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
+ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_list)
 /obj/structure/closet/secure_closet/security
 	name = "Security Officer's Locker"
 	req_access = list(access_brig)
@@ -219,11 +217,11 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/gun/energy/taser(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/ushanka(src)
-	#endif
+	if(SSholiday.holidays[NEW_YEAR])
+		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/ushanka(src)
+
 
 /obj/structure/closet/secure_closet/security/cargo
 
@@ -296,7 +294,7 @@
 /obj/structure/closet/secure_closet/brig
 	name = "Brig Locker"
 	req_access = list(access_brig)
-	anchored = 1
+	anchored = TRUE
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()
@@ -320,7 +318,7 @@
 	name = "wall locker"
 	req_access = list(access_brig)
 	icon_state = "wall-locker1"
-	density = 1
+	density = TRUE
 	icon_closed = "wall-locker"
 	icon_locked = "wall-locker1"
 	icon_opened = "wall-lockeropen"
@@ -364,3 +362,17 @@
 	new /obj/item/device/detective_scanner(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
+
+/obj/structure/closet/secure_closet/pistols
+	name = "Pistol Secure Closet"
+	req_access = list(access_armory)
+	icon_state = "syndicatealtsecure1"
+	icon_closed = "syndicatealtsecure"
+	icon_locked = "syndicatealtsecure1"
+	icon_opened = "syndicatealtsecureopen"
+	icon_broken = "syndicatealtsecurebroken"
+	icon_off = "syndicatealtsecureoff"
+
+/obj/structure/closet/secure_closet/pistols/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/gun/projectile/glock(src)

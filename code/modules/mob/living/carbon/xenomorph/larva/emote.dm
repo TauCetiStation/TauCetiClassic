@@ -57,11 +57,11 @@
 //  ========== EXTENDED ==========
 
 		if("dance")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> dances around [pick("happily", "joyfully")]."
 				m_type = SHOWMSG_VISUAL
 		if("roll")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> rolls [pick("like a snake", "on the floor", "around itslef")]."
 				m_type = SHOWMSG_VISUAL
 		if("gnarl")
@@ -69,11 +69,11 @@
 				message = "<B>The [src.name]</B> gnarls and shows its teeth."
 				m_type = SHOWMSG_VISUAL
 		if("jump")
-			if(!src.restrained())
+			if(!restrained())
 				message = "<B>The [src.name]</B> jumps around[pick(" happily", " joyfully", "")]."
 				m_type = SHOWMSG_VISUAL
 		if("scratch")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>The [src.name]</B> scratches."
 				m_type = SHOWMSG_VISUAL
 		if ("pray")
@@ -95,7 +95,7 @@
 					return
 				m_type = SHOWMSG_AUDIO
 			else
-				alert("Unable to use this emote, must be either hearable or visible.")
+				tgui_alert(usr, "Unable to use this emote, must be either hearable or visible.")
 				return
 			return custom_emote(m_type, message)
 		if ("me")
@@ -103,7 +103,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='warning'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return

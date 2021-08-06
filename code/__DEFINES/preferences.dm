@@ -51,3 +51,6 @@
 #define JP_LEVELS list(JP_HIGH, JP_MEDIUM, JP_LOW)
 
 #define TOOLTIP_NORTH "TOP+0.1, CENTER-3"
+
+//recommened client FPS
+#define RECOMMENDED_FPS 40

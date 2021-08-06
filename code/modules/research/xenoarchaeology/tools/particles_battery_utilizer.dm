@@ -47,8 +47,8 @@
 		return ..()
 
 /obj/item/weapon/xenoarch_utilizer/attack_self(mob/user)
-	if(in_range(src, user))
-		return src.interact(user)
+	if(Adjacent(user))
+		return interact(user)
 
 /obj/item/weapon/xenoarch_utilizer/interact(mob/user)
 
@@ -99,7 +99,7 @@
 		cooldown -= 1
 		if(cooldown <= 0)
 			cooldown = 0
-			src.visible_message("<span class='notice'>[bicon(src)] [src] chimes.</span>", "<span class='notice'>[bicon(src)] You hear something chime.</span>")
+			visible_message("<span class='notice'>[bicon(src)] [src] chimes.</span>", "<span class='notice'>[bicon(src)] You hear something chime.</span>")
 	else if(activated)
 		if(inserted_battery && inserted_battery.battery_effect)
 			// make sure the effect is active
@@ -135,7 +135,7 @@
 	if(activated)
 		activated = FALSE
 		timing = FALSE
-		src.visible_message("<span class='notice'>[bicon(src)] [src] buzzes.</span>", "[bicon(src)]<span class='notice'>You hear something buzz.</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] buzzes.</span>", "[bicon(src)]<span class='notice'>You hear something buzz.</span>")
 
 		cooldown = archived_time / 2
 
@@ -202,7 +202,7 @@
 				H.put_in_hands(inserted_battery)
 		inserted_battery = null
 		update_icon()
-	src.interact(usr)
+	interact(usr)
 	..()
 	updateDialog()
 	update_icon()

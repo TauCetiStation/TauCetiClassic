@@ -40,9 +40,9 @@
 	desc = "Leftover rock from an excavation, it's been partially dug out already but there's still a lot to go."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "boulder1"
-	density = 1
+	density = TRUE
 	opacity = 1
-	anchored = 1
+	anchored = TRUE
 	var/excavation_level = 0
 	var/datum/geosample/geological_data
 	var/datum/artifact_find/artifact_find
@@ -106,7 +106,7 @@
 					var/obj/machinery/artifact/A = O
 					if(A.my_effect)
 						A.my_effect.artifact_id = artifact_find.artifact_id
-				src.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
+				visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
 			else
 				user.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>",\
 				"<span class='notice'>[src] has been whittled away under your careful excavation, but there was nothing of interest inside.</span>")
@@ -128,5 +128,5 @@
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/tool/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)

@@ -55,13 +55,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 */
 
+ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_list)
 /obj/structure/particle_accelerator
 	name = "Particle Accelerator"
 	desc = "Part of a Particle Accelerator."
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	var/obj/machinery/particle_accelerator/control_box/master = null
 	var/construction_state = 0
 	var/reference = null
@@ -94,7 +95,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.set_dir(turn(src.dir, 270))
+	set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/structure/particle_accelerator/verb/rotateccw()
@@ -105,7 +106,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/structure/particle_accelerator/examine(mob/user)
@@ -125,7 +126,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(process_tool_hit(W,user))
 			return
 	..()
 	return
@@ -133,7 +134,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(master && master.active)
+	if(master && master.active && !moving_diagonally)
 		master.toggle_power()
 		log_investigate("was moved whilst active; it <font color='red'>powered down</font>.",INVESTIGATE_SINGULO)
 
@@ -211,14 +212,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		if(0)
 			if(iswrench(O))
 				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 1
+					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
 			if(iswrench(O))
 				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 0
+					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--
@@ -258,8 +259,8 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	desc = "Part of a Particle Accelerator."
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
 	icon_state = "none"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -279,7 +280,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.set_dir(turn(src.dir, 270))
+	set_dir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/particle_accelerator/verb/rotateccw()
@@ -290,7 +291,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if (src.anchored || usr:stat)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	src.set_dir(turn(src.dir, 90))
+	set_dir(turn(src.dir, 90))
 	return 1
 
 /obj/machinery/particle_accelerator/update_icon()
@@ -313,7 +314,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(process_tool_hit(W,user))
 			return
 	..()
 	return
@@ -355,14 +356,14 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		if(0)
 			if(iswrench(O))
 				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 1
+					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
 			if(iswrench(O))
 				if(O.use_tool(src, user, 20, volume = 75))
-					src.anchored = 0
+					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--

@@ -12,8 +12,8 @@
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "Charges exosuits. It consumes a lot of energy when working."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	dir = 4
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
@@ -87,8 +87,8 @@
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
 	desc = "Used to control mechbay power ports."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "recharge_comp"
 	state_broken_preset = "techb"

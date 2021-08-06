@@ -559,7 +559,7 @@
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
-		H.leap_icon = new /obj/screen/leap()
+		H.leap_icon = new /atom/movable/screen/leap()
 		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
@@ -852,6 +852,7 @@
 	..()
 	H.verbs += /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs += /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs += /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
 		H.set_light(BP.screen_brightness)
@@ -859,6 +860,7 @@
 /datum/species/machine/on_loose(mob/living/carbon/human/H)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
 	H.verbs -= /mob/living/carbon/human/proc/IPC_toggle_screen
+	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
 		H.set_light(0)
@@ -935,6 +937,7 @@
 	,NO_EMOTION = TRUE
 	,NO_VOMIT = TRUE
 	,NO_MUTATION = TRUE
+	,NO_FAT = TRUE
 	)
 
 	has_bodypart = list(
@@ -1105,7 +1108,8 @@
 		NO_FINGERPRINT = TRUE,
 		NO_MINORCUTS = TRUE,
 		NO_EMOTION = TRUE,
-		NO_MUTATION = TRUE
+		NO_MUTATION = TRUE,
+		NO_FAT = TRUE,
 		)
 
 	has_organ = list(

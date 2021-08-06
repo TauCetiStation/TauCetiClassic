@@ -20,8 +20,8 @@
 			var/obj/effect/energy_field/E = new (locate(T.x,T.y,T.z))
 			created_field.Add(E)
 			E.strength = 1
-			E.density = 1
-			E.anchored = 1
+			E.density = TRUE
+			E.anchored = TRUE
 			E.invisibility = 0
 		spawn(10)
 			UpdateMove()
@@ -42,8 +42,8 @@
 			//for now, just instantly respawn the fields when they get destroyed
 			var/obj/effect/energy_field/E = new (locate(T.x,T.y,T))
 			created_field.Add(E)
-			E.anchored = 1
-			E.density = 1
+			E.anchored = TRUE
+			E.density = TRUE
 			E.invisibility = 0
 
 		var/obj/effect/energy_field/E = created_field[1]

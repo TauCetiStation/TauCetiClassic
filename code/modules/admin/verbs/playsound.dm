@@ -10,7 +10,7 @@ var/global/list/sounds_cache_local = list()
 
 
 
-	var/choice = alert("Category",,"Cache", "File", "Cancel")
+	var/choice = tgui_alert(usr,"Category",, list("Cache", "File", "Cancel"))
 	var/sound/S
 
 	switch(choice)
@@ -27,7 +27,7 @@ var/global/list/sounds_cache_local = list()
 		to_chat(src, "<span class='notice'>Operation aborted. Reason: no input sound.</span>")
 		return
 
-	if(alert("Do you ready?\nSong: [S]\nDon't overuse this (knopka) play (or UNPEDALITY)! Suits for music and sound effects.", null, "Play", "Cancel") == "Cancel")
+	if(tgui_alert(usr, "Do you ready?\nSong: [S]\nDon't overuse this (knopka) play (or UNPEDALITY)! Suits for music and sound effects.",, list("Play", "Cancel")) == "Cancel")
 		return
 
 	log_admin("[key_name(src)] played sound [S].")
@@ -46,7 +46,7 @@ var/global/list/sounds_cache_local = list()
 	if(!check_rights(R_SOUNDS))
 		return
 
-	var/choice = alert("Category",,"Cache", "File", "Cancel")
+	var/choice = tgui_alert(usr, "Category",, list("Cache", "File", "Cancel"))
 	var/sound/S
 	var/set_vary
 
@@ -63,13 +63,13 @@ var/global/list/sounds_cache_local = list()
 					set_vary = sounds_cache_local[cache_entry]["vary"]
 
 		if("File")
-			if(alert("For sound effects only, not music.", "Agreement", "Accept", "Cancel") == "Cancel")
+			if(tgui_alert(usr, "For sound effects only, not music.", "Agreement", list("Accept", "Cancel")) == "Cancel")
 				return
 
 			S = input("Select a sound from the local repository") as null|sound
 
 			if(isfile(S))
-				set_vary = alert("Vary?", "Set Vary", "Yes", "No")
+				set_vary = tgui_alert(usr, "Vary?", "Set Vary", list("Yes", "No"))
 				if(set_vary == "Yes")
 					set_vary = TRUE
 				else
@@ -104,7 +104,7 @@ var/global/list/sounds_cache_local = list()
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/choice = alert("Category",,"Cache", "File", "Cancel")
+	var/choice = tgui_alert(usr, "Category",, list("Cache", "File", "Cancel"))
 	var/sound/S
 
 	switch(choice)
@@ -120,5 +120,5 @@ var/global/list/sounds_cache_local = list()
 	if(!isfile(S))
 		to_chat(src, "<span class='notice'>Operation aborted. Reason: no input sound.</span>")
 		return
-	
+
 	bwoink_sound = S

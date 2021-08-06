@@ -135,13 +135,12 @@
 			return
 		else
 			var/obj/item/gland/gland = tool
-			user.drop_item()
+			user.drop_from_inventory(gland, target)
 			gland.Inject(target)
 			BP.cavity = 0
 			return
-	user.drop_item()
+	user.drop_from_inventory(tool, target)
 	BP.hidden = tool
-	tool.loc = target
 	BP.cavity = 0
 
 /datum/surgery_step/cavity/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
