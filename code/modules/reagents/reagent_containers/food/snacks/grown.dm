@@ -280,29 +280,16 @@
 	seed_type = /obj/item/seeds/glowberryseed
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
-	var/brightness_on = 2 //luminosity when on
 	filling_color = "#d3ff9e"
 	icon_state = "glowberrypile"
+	light_range = 2
+	light_system = MOVABLE_LIGHT
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", round((potency / 10), 1))
 	reagents.add_reagent("uranium", 3+round(potency / 5, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Destroy()
-	if(istype(loc,/mob))
-		loc.set_light(0)
-	return ..()
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/living/user)
-	set_light(0)
-	user.set_light(2,1)
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	..()
-	user.set_light(0)
-	set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed_type = /obj/item/seeds/cocoapodseed

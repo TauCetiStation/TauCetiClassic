@@ -5,32 +5,30 @@
 	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "flood00"
 	density = TRUE
-	light_power = 2
 	interact_offline = TRUE
-	var/on = FALSE
 	var/obj/item/weapon/stock_parts/cell/high/cell = null
 	var/use = 5
 	var/unlocked = FALSE
 	var/open = FALSE
-	var/brightness_on = 7
+	light_range = 7
+	light_power = 2
+	light_on = FALSE
+	light_system = MOVABLE_LIGHT
 
 /obj/machinery/floodlight/atom_init()
 	cell = new(src)
 	. = ..()
 
 /obj/machinery/floodlight/proc/toggle(on = !on)
-	src.on = on
-	if(on)
-		set_light(brightness_on)
-	else
-		set_light(0)
+	light_on = on
+	set_light_on(on)
 	update_icon()
 
 /obj/machinery/floodlight/update_icon()
-	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[on]"
+	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[light_on]"
 
 /obj/machinery/floodlight/process()
-	if(on)
+	if(light_on)
 		if(cell && cell.charge >= use)
 			cell.use(use)
 		else
@@ -55,7 +53,7 @@
 		to_chat(user, "You remove the power cell")
 		return
 
-	if(on)
+	if(light_on)
 		toggle(FALSE)
 		to_chat(user, "<span class='notice'>You turn off the light</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)

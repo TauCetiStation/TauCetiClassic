@@ -4,12 +4,13 @@
 	icon_state = "hardhat_standard"
 	item_state = "hardhat_standard"
 	item_color = "standard"
-	var/brightness_on = 4 //luminosity when on
-	var/on = 0
 	armor = list(melee = 30, bullet = 5, laser = 20,energy = 10, bomb = 20, bio = 10, rad = 20)
 	flags_inv = 0
 	action_button_name = "Toggle Hardhat"
 	siemens_coefficient = 0.9
+	light_range = 4
+	light_on = FALSE
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
 /obj/item/clothing/head/hardhat/atom_init()
 	. = ..()
@@ -20,18 +21,14 @@
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
 
-	on = !on
 	update_icon()
 
-	if(on)
-		set_light(brightness_on)
-	else
-		set_light(0)
+	set_light_on(!light_on)
 
 	user.update_inv_head()
 
 /obj/item/clothing/head/hardhat/update_icon()
-	icon_state = "[initial(icon_state)][on]"
+	icon_state = "[initial(icon_state)][light_on]"
 	item_state = icon_state
 
 /obj/item/clothing/head/hardhat/yellow

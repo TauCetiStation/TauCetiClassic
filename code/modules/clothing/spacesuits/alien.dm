@@ -8,8 +8,6 @@
 
 
 	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
-	var/brightness_on = 4 //luminosity when on
-	var/on = 0
 
 	light_color = "#00ffff"
 
@@ -17,12 +15,9 @@
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
-	on = !on
-	icon_state = "[initial(icon_state)][on ? "-light" : ""]"
+	set_light_on(!light_on)
+	icon_state = "[initial(icon_state)][light_on ? "-light" : ""]"
 	usr.update_inv_head()
-
-	if(on)	set_light(brightness_on)
-	else	set_light(0)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -73,8 +68,6 @@
 	item_color = "unathi_helm_cheap"
 
 	action_button_name = "Toggle Helmet Light"
-	var/brightness_on = 4 //luminosity when on
-	var/on = 0
 
 	light_color = "#00ffff"
 
@@ -82,12 +75,9 @@
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
-	on = !on
-	icon_state = "unathi_helm_cheap[on ? "-light" : ""]"
+	set_light_on(!light_on)
+	icon_state = "unathi_helm_cheap[light_on ? "-light" : ""]"
 	usr.update_inv_head()
-
-	if(on)	set_light(brightness_on)
-	else	set_light(0)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

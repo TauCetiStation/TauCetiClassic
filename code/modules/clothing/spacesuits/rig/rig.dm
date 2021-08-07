@@ -8,8 +8,6 @@
 
 	action_button_name = "Toggle Helmet Light"
 	allowed = list(/obj/item/device/flashlight)
-	var/brightness_on = 4 //luminosity when on
-	var/on = 0
 	item_color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
@@ -35,13 +33,10 @@
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
-	on = !on
-	icon_state = "rig[on]-[item_color]"
+	set_light_on(!light_on)
+	icon_state = "rig[light_on]-[item_color]"
 //	item_state = "rig[on]-[color]"
 	usr.update_inv_head()
-
-	if(on)	set_light(brightness_on)
-	else	set_light(0)
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -679,18 +674,19 @@
 		update_icon(user)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/proc/checklight()
-	if(on)
-		set_light(l_range = brightness_on, l_color = light_color)
+	if(light_on)
+		set_light_on(!light_on)
 	else if(combat_mode)
-		set_light(l_range = 1.23) // Minimal possible light_range that'll make helm lights visible in full dark from distance. Most likely going to break if somebody will touch lightning formulae.
+		set_light_range(1.1) // Minimal possible light_range that'll make helm lights visible in full dark from distance. Most likely going to break if somebody will touch lightning formulae.
+		set_light_on(!light_on)
 	else
-		set_light(0)
+		set_light_on(!light_on)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
-	icon_state = "rig[on]-[rig_type][combat_mode ? "-combat" : ""]"
+	icon_state = "rig[light_on]-[rig_type][combat_mode ? "-combat" : ""]"
 	if(user)
 		user.cut_overlay(lamp)
-		if(equipped_on_head && camera && on)
+		if(equipped_on_head && camera && light_on)
 			lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "[glowtype][combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
 			lamp.plane = LIGHTING_PLANE + 1
 			user.add_overlay(lamp)
@@ -698,9 +694,7 @@
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
-	if(camera)
-		on = !on
-	else
+	if(!camera)
 		camera = new /obj/machinery/camera(src)
 		camera.replace_networks(list("NUKE"))
 		cameranet.removeCamera(camera)
@@ -992,8 +986,9 @@
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
 
 	action_button_name = "Toggle Hardsuit Light"
-	var/brightness_on = 2 //luminosity when on
-	var/on = 0
+	light_range = 2 //luminosity when on
+	light_on = FALSE
+	light_system = MOVABLE_LIGHT
 
 	light_color = "#ff00ff"
 
@@ -1001,12 +996,9 @@
 	if(!isturf(user.loc))
 		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
 		return
-	on = !on
-	icon_state = "rig-sec[on ? "-light" : ""]"
+	set_light_on(!light_on)
+	icon_state = "[initial(icon_state)][light_on ? "-light" : ""]"
 	usr.update_inv_wear_suit()
-
-	if(on)	set_light(brightness_on)
-	else	set_light(0)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

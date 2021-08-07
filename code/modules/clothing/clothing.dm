@@ -441,6 +441,9 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	light_range = 4
+	light_on = FALSE
+	light_system = MOVABLE_LIGHT
 
 /obj/item/clothing/suit/space
 	name = "space suit"
