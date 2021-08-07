@@ -1023,6 +1023,9 @@
 
 	action_button_name = FALSE
 
+/obj/item/clothing/suit/space/rig/security/hos/attack_self(mob/user)
+	return
+
 //Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
 	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has improved thermal protection and minor radiation shielding."
