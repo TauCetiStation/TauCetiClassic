@@ -138,6 +138,9 @@
 #define ESSENCE_EMOTE 256
 #define ESSENCE_ALL 511
 
-//dir macros
+/* Directions */
 ///Returns true if the dir is diagonal, false otherwise
 #define ISDIAGONALDIR(d) (d&(d-1))
+
+///All the cardinal direction bitflags.
+#define ALL_CARDINALS (NORTH|SOUTH|EAST|WEST)

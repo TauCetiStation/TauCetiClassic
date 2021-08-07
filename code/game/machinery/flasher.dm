@@ -14,6 +14,9 @@
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = TRUE
+	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_range = FLASH_LIGHT_RANGE
+	light_on = FALSE
 
 /obj/machinery/flasher/atom_init()
 	. = ..()
@@ -59,6 +62,9 @@
 	else
 		return
 
+/obj/machinery/flasher/proc/flash_end()
+	set_light_on(FALSE)
+
 /obj/machinery/flasher/proc/flash()
 	if (!(powered()))
 		return
@@ -68,7 +74,8 @@
 
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("[base_state]_flash", src)
-	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
+	set_light_on(TRUE)
+	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	src.last_flash = world.time
 	use_power(1000)
 

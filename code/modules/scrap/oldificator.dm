@@ -195,12 +195,12 @@
 /obj/item/device/flashlight/make_old()
 	..()
 	if(prob(75))
-		brightness_on = brightness_on / 2
+		light_range = light_range / 2
 
 /obj/machinery/floodlight/make_old()
 	..()
 	if(prob(75))
-		brightness_on = brightness_on / 2
+		light_range = light_range / 2
 
 /obj/machinery/make_old()
 	..()

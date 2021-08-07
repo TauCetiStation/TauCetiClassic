@@ -459,7 +459,7 @@
 					var/var_new = input("Select new color:", "Color", O.vars[variable]) as null|color
 					if(isnull(var_new))
 						return
-					O.set_light(l_color = var_new)
+					O.set_light_color(var_new)
 				if("ckey")
 					var/var_new = ckey(input("Enter new text:", "Text", O.vars[variable]) as null|text)
 					if(isnull(var_new))
@@ -481,12 +481,17 @@
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
-					O.set_light(var_new)
+					O.set_light_range(var_new)
 				if("light_power")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
-					O.set_light(l_power = var_new)
+					O.set_light_power(var_new)
+				if("light_on")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_light_on(var_new)
 				if("dynamic_lighting")
 					if(!isarea(O) && !isturf(O))
 						to_chat(usr, "This can only be used on instances of type /area and /turf")

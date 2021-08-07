@@ -84,12 +84,18 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 
-	if(light_power && light_range)
+	if(light_system == IMMOBILE_LIGHT && light_power && light_range)
 		update_light()
 
 	if(opacity && isturf(src.loc))
 		var/turf/T = src.loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	switch(light_system)
+		if(MOVABLE_LIGHT)
+			AddComponent(/datum/component/overlay_lighting)
+		if(MOVABLE_LIGHT_DIRECTIONAL)
+			AddComponent(/datum/component/overlay_lighting, null, null, null, TRUE)
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -134,6 +140,7 @@
 				L.drop_from_inventory(M, src)
 			else
 				M.forceMove(src)
+			SEND_SIGNAL(M, COMSIG_ATOM_USED_IN_CRAFT, src)
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null

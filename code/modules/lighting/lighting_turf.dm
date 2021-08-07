@@ -1,5 +1,8 @@
 /turf
+	///Lumcount added by sources other than lighting datum objects, such as the overlay lighting component.
+	var/dynamic_lumcount = 0
 	var/dynamic_lighting = TRUE
+
 	luminosity           = 1
 
 	var/tmp/lighting_corners_initialised = FALSE
@@ -74,6 +77,8 @@
 
 	totallums = (totallums - minlum) / (maxlum - minlum)
 
+	totallums += dynamic_lumcount
+
 	return CLAMP01(totallums)
 
 // Returns a boolean whether the turf is on soft lighting.
@@ -84,7 +89,7 @@
 	if (!lighting_object)
 		return FALSE
 
-	return !lighting_object.luminosity
+	return !(luminosity || dynamic_lumcount)
 
 // Can't think of a good name, this proc will recalculate the has_opaque_atom variable.
 /turf/proc/recalc_atom_opacity()

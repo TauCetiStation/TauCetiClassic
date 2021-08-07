@@ -10,27 +10,27 @@
 	m_amt = 50
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_range = 5
+	light_power = 1
+	light_on = FALSE
 	var/on = 0
 	var/button_sound = 'sound/items/flashlight.ogg' // Sound when using light
-	var/brightness_on = 5 //luminosity when on
 	var/last_button_sound = 0 // Prevents spamming for Object lights
 
 /obj/item/device/flashlight/atom_init()
 	. = ..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		set_light(0)
+	update_brightness()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+
+	set_light_on(on)
+	if(light_system == IMMOBILE_LIGHT)
+		update_light()
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if (last_button_sound >= world.time)
@@ -53,11 +53,6 @@
 	if(on)
 		return 10
 	return 0
-
-/obj/item/device/flashlight/Destroy()
-	if(on)
-		set_light(0)
-	return ..()
 
 
 /obj/item/device/flashlight/attack(mob/living/M, mob/living/user, def_zone)
@@ -113,7 +108,7 @@
 	item_state = ""
 	flags = CONDUCT
 	button_sound = 'sound/items/penlight.ogg'
-	brightness_on = 2
+	light_range = 2
 	w_class = ITEM_SIZE_TINY
 
 /obj/item/device/flashlight/drone
@@ -122,7 +117,7 @@
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
-	brightness_on = 2
+	light_range = 2
 	w_class = ITEM_SIZE_TINY
 
 
@@ -133,11 +128,12 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	button_sound = 'sound/items/buttonclick.ogg'
-	brightness_on = 4
+	light_range = 4
 	w_class = ITEM_SIZE_LARGE
 	flags = CONDUCT
 	m_amt = 0
 	g_amt = 0
+	light_system = MOVABLE_LIGHT
 	on = 1
 
 /obj/item/device/flashlight/lamp/get_current_temperature()
@@ -150,7 +146,7 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 4
+	light_range = 4
 
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
@@ -167,15 +163,15 @@
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = ITEM_SIZE_SMALL
-	brightness_on = 4
+	light_range = 4
 	icon_state = "flare"
 	item_state = "flare"
 	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
+	light_system = MOVABLE_LIGHT
 	light_color = LIGHT_COLOR_FLARE
-	light_power = 2
 	action_button_name = "Toggle Flare"
 
 
@@ -243,7 +239,8 @@
 	w_class = ITEM_SIZE_TINY
 	m_amt = 0
 	g_amt = 0
-	brightness_on = 6
+	light_range = 6
+	light_system = MOVABLE_LIGHT
 	on = 1 //Bio-luminesence has one setting, on.
 
 /obj/item/device/flashlight/slime/atom_init()

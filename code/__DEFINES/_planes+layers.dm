@@ -71,8 +71,12 @@ What is the naming convention for planes or layers?
 
 #define LIGHTING_PLANE         15
 #define LIGHTING_LAYER         15
-#define ABOVE_LIGHTING_PLANE   16
-#define ABOVE_LIGHTING_LAYER   16
+
+#define LIGHTING_VISUAL_PLANE  16
+#define LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+
+#define ABOVE_LIGHTING_PLANE   17
+#define ABOVE_LIGHTING_LAYER   17
 
 //HUD layer defines
 

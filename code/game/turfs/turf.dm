@@ -250,6 +250,7 @@
 	var/old_dynamic_lighting = dynamic_lighting
 	var/old_affecting_lights = affecting_lights
 	var/old_lighting_object = lighting_object
+	var/old_dynamic_lumcount = dynamic_lumcount
 	var/old_corners = corners
 
 	var/old_basetype = basetype
@@ -322,6 +323,8 @@
 	basetype = old_basetype
 
 	queue_smooth_neighbors(W)
+
+	dynamic_lumcount = old_dynamic_lumcount
 
 	if(SSlighting.initialized)
 		recalc_atom_opacity()

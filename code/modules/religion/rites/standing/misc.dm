@@ -285,18 +285,18 @@
 		for(var/obj/item/device/flashlight/F in H.contents)
 			if(is_type_in_list(F, blacklisted_lights))
 				continue
-			if(F.brightness_on)
+			if(F.light_on)
 				if(!F.on)
 					F.on = !F.on
 					F.icon_state = "[initial(F.icon_state)]-on"
-					F.set_light(F.brightness_on)
+					F.set_light_on(FALSE)
 
 	for(var/obj/item/device/flashlight/F in range(3, get_turf(AOG)))
-		if(F.brightness_on)
+		if(F.light_on)
 			if(!F.on)
 				F.on = !F.on
 				F.icon_state = "[initial(F.icon_state)]-on"
-				F.set_light(F.brightness_on)
+				F.set_light_on(FALSE)
 
 	var/image/I = image('icons/effects/effects.dmi', icon_state = shield_icon, layer = MOB_LAYER + 0.01)
 	var/matrix/M = matrix(I.transform)

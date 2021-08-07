@@ -32,6 +32,17 @@
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/atom/movable/screen/plane_master/lighting/atom_init(mapload, ...)
+	. = ..()
+	filters += filter(type="alpha", render_source = LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE)
+
+/atom/movable/screen/plane_master/o_light_visual
+	name = "overlight light visual plane master"
+	plane = LIGHTING_VISUAL_PLANE
+	render_target = LIGHTING_VISUAL_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_MULTIPLY
+
 /atom/movable/screen/plane_master/parallax
 	name = "parallax plane master"
 	plane = PLANE_SPACE_PARALLAX

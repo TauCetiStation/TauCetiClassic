@@ -280,7 +280,6 @@
 	seed_type = /obj/item/seeds/glowberryseed
 	name = "bunch of glow-berries"
 	desc = "Nutritious!"
-	var/light_on = 1
 	var/brightness_on = 2 //luminosity when on
 	filling_color = "#d3ff9e"
 	icon_state = "glowberrypile"

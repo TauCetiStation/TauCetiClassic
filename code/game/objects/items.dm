@@ -443,6 +443,8 @@
 		qdel(src)
 	set_alt_apperances_layers()
 
+	set_dir(user.dir)
+
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	return
@@ -468,6 +470,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	set_alt_apperances_layers()
+
+	set_dir(user.dir)
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
@@ -1041,6 +1045,14 @@
 
 	if(usr.client.outlined_item.len)
 		remove_outline()
+
+	// If there is a problem when hovering at an object with a overlay lighting (big [outline_color] circle)
+	// use this code:
+	// var/image/IMG = image(null, src)
+	// IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	// IMG.appearance = src
+
+	// This should help, but I don't know what problems it there may be
 
 	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
 	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
