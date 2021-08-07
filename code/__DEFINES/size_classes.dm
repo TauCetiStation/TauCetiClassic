@@ -4,8 +4,9 @@
 // ITEM_SIZE_TINY -> SIZE_MINUSCULE
 // ITEM_SIZE_SMALL -> SIZE_TINY
 // ITEM_SIZE_NORMAL -> SIZE_SMALL
-// ITEM_SIZE_BIG -> SIZE_NORMAL
-// ITEM_SIZE_LARGE -> SIZE_BIG
+// ITEM_SIZE_LARGE -> SIZE_NORMAL
+// ITEM_SIZE_HUGE -> SIZE_BIG
+
 // mob.small -> SIZE_MINUSCULE or SIZE_TINY
 
 #define SIZE_MINUSCULE  1   // Usually items smaller then a human hand, ex: Mouse, Playing Cards, Lighter, Scalpel, Coins/Money

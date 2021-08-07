@@ -230,12 +230,14 @@
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
 
-	var/total_storage_space = W.get_storage_cost()
-	if(total_storage_space >= SIZE_LARGE)
+	// by design SIZE_LARGE can't be placed in storages
+	// and now this check works correctly
+	if(W.w_class >= SIZE_LARGE)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>\The [W] cannot be placed in [src].</span>")
 		return FALSE
 
+	var/total_storage_space = W.get_storage_cost()
 	total_storage_space += storage_space_used() //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(total_storage_space > max_storage_space)
 		if(!stop_messages)
