@@ -187,17 +187,16 @@
 		if(found_broken)
 			message += "<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span><br>"
 
-		if(H.vessel)
-			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-			var/blood_percent =  blood_volume / 560
-			var/blood_type = H.dna.b_type
-			blood_percent *= 100
-			if(blood_volume <= 500 && blood_volume > 336)
-				message += "<span class='warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Type: [blood_type]</span><br>"
-			else if(blood_volume <= 336)
-				message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
-			else
-				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+		var/blood_volume = H.blood_amount()
+		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
+		var/blood_type = H.dna.b_type
+		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
+			message += "<span class='warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Type: [blood_type]</span><br>"
+		else if(blood_volume <= BLOOD_VOLUME_OKAY)
+			message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
+		else
+			message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+
 		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
 		if(Heart)
 			switch(Heart.heart_status)
