@@ -218,8 +218,6 @@
 //Mood (/datum/component/mood) signals
 ///called when you send a mood event from anywhere in the code.
 #define COMSIG_ADD_MOOD_EVENT "add_mood"
-///Mood event that only RnD members listen for
-#define COMSIG_ADD_MOOD_EVENT_RND "RND_add_mood"
 ///called when you clear a mood event from anywhere in the code.
 #define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
 
@@ -273,10 +271,6 @@
 #define COMSIG_LIVING_LEARN_COMBO "learn_combo"
 // from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
 #define COMSIG_LIVING_FORGET_COMBO "forget_combo"
-
-// /mob/living/carbon/human signals (and synths, I guess)
-///Whenever EquipRanked is called, called after job is set
-#define COMSIG_JOB_RECEIVED "job_received"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)

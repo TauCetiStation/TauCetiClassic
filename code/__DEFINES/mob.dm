@@ -129,9 +129,6 @@
 #define NUTRITION_PERCENT_MAX 120
 #define NUTRITION_PERCENT_ZERO 0
 
-#define NUTRITION_LEVEL_START_MIN 250
-#define NUTRITION_LEVEL_START_MAX 400
-
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
 
