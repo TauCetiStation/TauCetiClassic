@@ -204,7 +204,7 @@
 		if(9)
 			setSanity(sanity + 0.6*  delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 
-	//HandleNutrition()
+	HandleNutrition()
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
@@ -342,7 +342,6 @@
 		return
 	print_mood(user)
 
-/*
 /datum/component/mood/proc/HandleNutrition()
 	var/mob/living/L = parent
 
@@ -364,7 +363,6 @@
 
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
-*/
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A)
 	SIGNAL_HANDLER
