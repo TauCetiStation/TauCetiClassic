@@ -77,7 +77,7 @@
 		if(9)
 			msg += "<span class='nicegreen'>I love life!</span>\n"
 
-	msg += "<span class='notice'>Moodlets:</span>\n"//All moodlets
+	msg += "<span class='notice'>Moodlets:</span>\n"
 	if(mood_events.len)
 		var/list/m_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
 		var/datum/mood_event/most_important = m_events[m_events[1]]
