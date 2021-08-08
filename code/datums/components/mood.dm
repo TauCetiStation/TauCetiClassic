@@ -205,6 +205,7 @@
 			setSanity(sanity + 0.6*  delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 
 	HandleNutrition()
+	HandleShock()
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
@@ -363,6 +364,29 @@
 
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+
+/datum/component/mood/proc/HandleShock()
+	if(!iscarbon(parent))
+		return
+	var/mob/living/carbon/C = parent
+
+	if(C.shock_stage <= 0)
+		if(C.traumatic_shock < 10)
+			clear_event(null, "pain")
+		else
+			add_event(null, "pain", /datum/mood_event/mild_pain)
+
+		return
+
+	switch(C.shock_stage)
+		if(0 to 30)
+			add_event(null, "pain", /datum/mood_event/moderate_pain)
+		if(30 to 60)
+			add_event(null, "pain", /datum/mood_event/intense_pain)
+		if(60 to 120)
+			add_event(null, "pain", /datum/mood_event/unspeakable_pain)
+		if(120 to INFINITY)
+			add_event(null, "pain", /datum/mood_event/agony)
 
 /datum/component/mood/proc/check_area_mood(datum/source, area/A)
 	SIGNAL_HANDLER
