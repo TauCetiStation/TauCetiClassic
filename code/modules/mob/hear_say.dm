@@ -2,11 +2,11 @@
 
 /mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
 	if(!client)
-		return
+		return FALSE
 
 	if(stat == UNCONSCIOUS)
 		hear_sleep(message)
-		return
+		return FALSE
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
@@ -16,7 +16,7 @@
 	if(!say_understands(speaker,language))
 		var/scrambled_msg = speaker.get_scrambled_message(message, language)
 		if(!scrambled_msg)
-			return
+			return FALSE
 		message = scrambled_msg
 
 	var/speaker_name = speaker.name
@@ -74,6 +74,7 @@
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
+	return TRUE
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
