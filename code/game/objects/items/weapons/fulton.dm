@@ -126,6 +126,7 @@
 // used for accept telecrystal for costly items
 /obj/item/weapon/extraction_pack/syndicate
 	name = "syndicate fulton"
+	del_target = TRUE
 
 /obj/item/weapon/extraction_pack/syndicate/can_use_to(atom/movable/target)
 	if(!..())
