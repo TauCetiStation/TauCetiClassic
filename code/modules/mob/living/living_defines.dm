@@ -70,4 +70,4 @@
 	var/datum/modval/beauty
 
 	var/beauty_living = 0.0
-	var/beauty_dead = 0.0
+	var/beauty_dead = -100.0
