@@ -91,7 +91,7 @@
 #define SS_WAIT_QUIRKS       10
 #define SS_WAIT_DEFAULT      20
 #define SS_WAIT_UNIT_TESTS   20
-#define SS_WAIT_DCS			  1 SECONDS
+#define SS_WAIT_DCS           1 SECONDS
 #define SS_WAIT_SUN         600
 #define SS_WAIT_NIGHTSHIFT  600
 
