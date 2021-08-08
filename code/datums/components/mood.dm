@@ -21,6 +21,7 @@
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
+	RegisterSignal(get_area(parent), COMSIG_AREA_UPDATE_BEAUTY, .proc/update_beauty)
 	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 
@@ -34,6 +35,7 @@
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
 	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
+	UnregisterSignal(get_area(parent), list(COMSIG_AREA_UPDATE_BEAUTY))
 	unmodify_hud()
 	return ..()
 
@@ -325,6 +327,8 @@
 	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
+	update_mood_icon()
+
 /datum/component/mood/proc/unmodify_hud(datum/source)
 	SIGNAL_HANDLER
 
@@ -391,6 +395,9 @@
 /datum/component/mood/proc/check_area_mood(datum/source, area/A)
 	SIGNAL_HANDLER
 
+	UnregisterSignal(get_area(parent), list(COMSIG_AREA_UPDATE_BEAUTY))
+	RegisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY))
+
 	update_beauty(A)
 	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
 		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
@@ -398,6 +405,8 @@
 		clear_event(null, "area")
 
 /datum/component/mood/proc/update_beauty(area/A)
+	SIGNAL_HANDLER
+
 	//if we're outside, we don't care.
 	if(A.outdoors)
 		clear_event(null, "area_beauty")
