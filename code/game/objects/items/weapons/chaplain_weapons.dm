@@ -11,9 +11,13 @@
 	throw_speed = 1
 	throw_range = 4
 	throwforce = 10
+	w_class = ITEM_SIZE_SMALL
+
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
+	light_range = 3
 	light_color = "#4c4cff"
 	light_power = 3
-	w_class = ITEM_SIZE_SMALL
 
 	// Deconvering mobs
 	var/deconverting = FALSE
@@ -86,11 +90,11 @@
 		if(ismob(A))
 			var/mob/M = A
 			if(iscultist(M))
-				set_light(3)
-				addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+				set_light_on(TRUE)
+				addtimer(CALLBACK(src, .atom/proc/set_light_on, FALSE), 20)
 		if(is_type_in_typecache(A, scum))
-			set_light(3)
-			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+			set_light_on(TRUE)
+			addtimer(CALLBACK(src, .atom/proc/set_light_on, FALSE), 20)
 
 /obj/item/weapon/nullrod/proc/convert_effect(turf/T, turf_type)
 	new /obj/effect/temp_visual/religion/pulse(T)

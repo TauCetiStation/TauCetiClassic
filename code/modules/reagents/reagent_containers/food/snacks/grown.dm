@@ -948,9 +948,12 @@
 	potency = 30
 	plant_type = 2
 
+	light_system = MOVABLE_LIGHT
+	light_color = "#daff91"
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/atom_init()
 	. = ..()
-	set_light(round(potency/10,1))
+	set_light_range(round(potency/10,1))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(istype(user.loc,/turf/space))
@@ -964,11 +967,6 @@
 	qdel(src)
 
 	to_chat(user, "<span class='notice'>You plant the glowshroom.</span>")
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
-	if(istype(loc,/mob))
-		loc.set_light(round(loc.luminosity - potency/10,1))
-	return ..()
 
 // *************************************
 // Complex Grown Object Defines -

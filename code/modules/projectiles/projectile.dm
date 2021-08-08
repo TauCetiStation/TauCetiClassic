@@ -19,6 +19,9 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = 0
+
+	light_system = MOVABLE_LIGHT
+
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -80,7 +83,7 @@
 		if(T)
 			T.timestop(src)
 	. = ..()
-	if(light_color)
+	if(light_color && light_system == IMMOBILE_LIGHT)
 		set_light(light_range,light_power,light_color)
 
 /obj/item/projectile/Destroy()

@@ -63,9 +63,10 @@
 	desc = "This is an unusual plant. It's bulbous ends emit a soft blue light."
 	icon_state = "plant-9"
 
-/obj/item/weapon/twohanded/flora/pottedplant/unusual/atom_init()
-	. = ..()
-	set_light(2, 0.5, "#007fff")
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 0.5
+	light_color = "#007fff"
 
 /obj/item/weapon/twohanded/flora/pottedplant/orientaltree
 	name = "potted oriental tree"
@@ -122,9 +123,10 @@
 	desc = "This is a subterranean plant. It's bulbous ends glow faintly."
 	icon_state = "plant-20"
 
-/obj/item/weapon/twohanded/flora/pottedplant/subterranean/atom_init()
-	. = ..()
-	set_light(2, 0.5, "#ff6633")
+	light_system = MOVABLE_LIGHT
+	light_range = 2
+	light_power = 0.5
+	light_color = "#ff6633"
 
 /obj/item/weapon/twohanded/flora/pottedplant/minitree
 	name = "potted tree"

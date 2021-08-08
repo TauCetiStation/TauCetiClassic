@@ -481,12 +481,18 @@
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
-					O.set_light_range(var_new)
+					if(O.light_system == IMMOBILE_LIGHT)
+						O.set_light(l_range = var_new)
+					else
+						O.set_light_range(var_new)
 				if("light_power")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))
 						return
-					O.set_light_power(var_new)
+					if(O.light_system == IMMOBILE_LIGHT)
+						O.set_light(l_power = var_new)
+					else
+						O.set_light_power(var_new)
 				if("light_on")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))

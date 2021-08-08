@@ -22,6 +22,12 @@
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "utilizer"
 	w_class = ITEM_SIZE_SMALL
+
+	light_system = MOVABLE_LIGHT
+	light_color = "#8f66f4"
+	light_range = 2
+	light_on = FALSE
+
 	var/cooldown = 0
 	var/activated = FALSE
 	var/timing = FALSE
@@ -214,9 +220,9 @@
 	var/is_emitting = "_off"
 	if(activated && inserted_battery && inserted_battery.battery_effect)
 		is_emitting = "_on"
-		set_light(2, 1, "#8f66f4")
+		set_light_on(TRUE)
 	else
-		set_light(0)
+		set_light_on(FALSE)
 	var/power_battery = (inserted_battery.stored_charge / inserted_battery.capacity) * 100
 	power_battery = min(power_battery, 100)
 	icon_state = "utilizer[round(power_battery, 25)][is_emitting]"

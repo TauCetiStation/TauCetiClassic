@@ -215,6 +215,11 @@
 
 	origin_tech = "engineering=1" // R&D tech level
 
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
+	light_range = 2
+	light_color = LIGHT_COLOR_FIRE
+
 	var/active = FALSE          // Welding tool is off or on
 	var/welding = FALSE         // While welding something - TRUE
 	var/secured = TRUE          // Welder is secured or unsecured (able to attach rods to it to make a flamethrower)
@@ -279,8 +284,7 @@
 			icon_state = initial(icon_state) + "1"
 		if(prob(5)) // passive fuel burning
 			use(1)
-		light_color = LIGHT_COLOR_FIRE
-		set_light(2)
+		set_light_on(TRUE)
 	else
 		hitsound = initial(hitsound)
 		if(icon_state != "welder") // Check that the sprite is correct, if it isnt, it means toggle() was not called
@@ -288,7 +292,7 @@
 			damtype = "brute"
 			icon_state = initial(icon_state)
 			active = FALSE
-		set_light(0)
+		set_light_on(FALSE)
 		if(!istype(src, /obj/item/weapon/weldingtool/experimental))
 			STOP_PROCESSING(SSobj, src)
 		return

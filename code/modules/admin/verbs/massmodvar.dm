@@ -234,7 +234,10 @@
 				var/var_new = input("Select new color:", "Color", O.vars[variable]) as null|color
 				if(isnull(var_new))
 					return
-				O.set_light_color(var_new)
+				if(O.light_system == IMMOBILE_LIGHT)
+					O.set_light(l_color = var_value)
+				else
+					O.set_light_color(var_value)
 			else
 				new_value = input("Enter new text:", "Text", O.vars[variable]) as text|null
 				if(isnull(new_value))
@@ -246,7 +249,10 @@
 					for(var/mob/M in mob_list)
 						if(istype(M, O.type))
 							if(variable == "light_color")
-								M.set_light(l_color = new_value)
+								if(M.light_system == IMMOBILE_LIGHT)
+									M.set_light(l_color = new_value)
+								else
+									M.set_light_color(new_value)
 							else
 								M.vars[variable] = O.vars[variable]
 
@@ -254,7 +260,10 @@
 					for(var/obj/A in world)
 						if(istype(A, O.type))
 							if(variable == "light_color")
-								A.set_light(l_color = new_value)
+								if(A.light_system == IMMOBILE_LIGHT)
+									A.set_light(l_color = new_value)
+								else
+									A.set_light_color(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -262,7 +271,10 @@
 					for(var/turf/A in world)
 						if(istype(A, O.type))
 							if(variable == "light_color")
-								A.set_light(l_color = new_value)
+								if(A.light_system == IMMOBILE_LIGHT)
+									A.set_light(l_color = new_value)
+								else
+									A.set_light_color(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 			else
@@ -270,7 +282,10 @@
 					for(var/mob/M in mob_list)
 						if(M.type == O.type)
 							if(variable == "light_color")
-								M.set_light(l_color = new_value)
+								if(M.light_system == IMMOBILE_LIGHT)
+									M.set_light(l_color = new_value)
+								else
+									M.set_light_color(new_value)
 							else
 								M.vars[variable] = O.vars[variable]
 
@@ -278,7 +293,10 @@
 					for(var/obj/A in world)
 						if(A.type == O.type)
 							if(variable == "light_color")
-								A.set_light(l_color = new_value)
+								if(A.light_system == IMMOBILE_LIGHT)
+									A.set_light(l_color = new_value)
+								else
+									A.set_light_color(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -286,7 +304,10 @@
 					for(var/turf/A in world)
 						if(A.type == O.type)
 							if(variable == "light_color")
-								A.set_light(l_color = new_value)
+								if(O.light_system == IMMOBILE_LIGHT)
+									O.set_light(l_color = new_value)
+								else
+									O.set_light_color(new_value)
 							else
 								A.vars[variable] = O.vars[variable]
 
@@ -329,9 +350,15 @@
 								if("opacity")
 									M.set_opacity(new_value)
 								if("light_range")
-									M.set_light_range(new_value)
+									if(M.light_system == IMMOBILE_LIGHT)
+										M.set_light(l_range = new_value)
+									else
+										M.set_light_range(new_value)
 								if("light_power")
-									M.set_light_power(new_value)
+									if(M.light_system == IMMOBILE_LIGHT)
+										M.set_light(l_power = new_value)
+									else
+										M.set_light_power(new_value)
 								if("light_on")
 									M.set_light_on(new_value)
 								if("resize")
@@ -348,9 +375,15 @@
 								if("opacity")
 									A.set_opacity(new_value)
 								if("light_range")
-									A.set_light_range(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_range = new_value)
+									else
+										A.set_light_range(new_value)
 								if("light_power")
-									A.set_light_power(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_power = new_value)
+									else
+										A.set_light_power(new_value)
 								if("light_on")
 									A.set_light_on(new_value)
 								if("resize")
@@ -367,9 +400,15 @@
 								if("opacity")
 									A.set_opacity(new_value)
 								if("light_range")
-									A.set_light_range(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_range = new_value)
+									else
+										A.set_light_range(new_value)
 								if("light_power")
-									A.set_light_power(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_power = new_value)
+									else
+										A.set_light_power(new_value)
 								if("light_on")
 									A.set_light_on(new_value)
 								if("dynamic_lighting")
@@ -399,9 +438,15 @@
 								if("opacity")
 									M.set_opacity(new_value)
 								if("light_range")
-									M.set_light_range(new_value)
+									if(M.light_system == IMMOBILE_LIGHT)
+										M.set_light(l_range = new_value)
+									else
+										M.set_light_range(new_value)
 								if("light_power")
-									M.set_light_power(new_value)
+									if(M.light_system == IMMOBILE_LIGHT)
+										M.set_light(l_power = new_value)
+									else
+										M.set_light_power(new_value)
 								if("light_on")
 									M.set_light_on(new_value)
 								if("resize")
@@ -418,9 +463,15 @@
 								if("opacity")
 									A.set_opacity(new_value)
 								if("light_range")
-									A.set_light_range(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_range = new_value)
+									else
+										A.set_light_range(new_value)
 								if("light_power")
-									A.set_light_power(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_power = new_value)
+									else
+										A.set_light_power(new_value)
 								if("light_on")
 									A.set_light_on(new_value)
 								if("resize")
@@ -437,9 +488,15 @@
 								if("opacity")
 									A.set_opacity(new_value)
 								if("light_range")
-									A.set_light_range(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_range = new_value)
+									else
+										A.set_light_range(new_value)
 								if("light_power")
-									A.set_light_power(new_value)
+									if(A.light_system == IMMOBILE_LIGHT)
+										A.set_light(l_power = new_value)
+									else
+										A.set_light_power(new_value)
 								if("light_on")
 									A.set_light_on(new_value)
 								if("dynamic_lighting")

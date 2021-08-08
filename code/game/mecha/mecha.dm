@@ -22,6 +22,11 @@
 	layer = MOB_LAYER //icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
+
+	light_system = MOVABLE_LIGHT
+	light_range = 4
+	light_on = FALSE
+
 	var/initial_icon = null //Mech type for resetting icon. Only used for reskinning kits (see custom items)
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
@@ -87,8 +92,6 @@
 
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 	var/mouse_pointer
-
-	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -883,10 +886,7 @@
 		return
 
 	lights = !lights
-	if(lights)
-		set_light(light_range + lights_power)
-	else
-		set_light(light_range - lights_power)
+	set_light_on(lights)
 	occupant_message("Toggled lights [lights?"on":"off"].")
 	log_message("Toggled lights [lights?"on":"off"].")
 	return
@@ -1256,7 +1256,7 @@
 		use_power(lights_power)
 	else
 		lights = 0
-		set_light(light_range - lights_power)
+		set_light_on(lights)
 	return
 
 #undef MECHA_TIME_TO_ENTER

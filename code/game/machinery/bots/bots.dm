@@ -11,9 +11,12 @@
 /obj/machinery/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
-	light_range = 3
 	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_NONE
+
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
 	var/health = 0 //do not forget to set health for your bot!
@@ -38,12 +41,12 @@
 /obj/machinery/bot/proc/turn_on()
 	if(stat)	return 0
 	on = 1
-	set_light(initial(light_range))
+	set_light_on(on)
 	return 1
 
 /obj/machinery/bot/proc/turn_off()
 	on = 0
-	set_light(0)
+	set_light_on(on)
 
 /obj/machinery/bot/proc/explode()
 	qdel(src)

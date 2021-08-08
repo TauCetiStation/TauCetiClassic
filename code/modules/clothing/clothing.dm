@@ -466,6 +466,10 @@ BLIND     // can't see anything
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX, VOX_ARMALIS)
+
+	light_on = FALSE
+	light_system = MOVABLE_LIGHT
+
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
 /obj/item/clothing/suit/space/equipped(mob/M)

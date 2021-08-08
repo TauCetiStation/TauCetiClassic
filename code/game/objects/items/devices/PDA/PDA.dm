@@ -11,6 +11,10 @@
 	w_class = ITEM_SIZE_SMALL
 	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
 
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_on = FALSE
+	light_range = 2
+
 	//Main variables
 	var/owner = null
 	var/default_cartridge = 0 // Access level defined by cartridge
@@ -23,8 +27,6 @@
 
 	//Secondary variables
 	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
-	var/fon = 0 //Is the flashlight function on?
-	var/f_lum = 2 //Luminosity for the flashlight function
 	var/message_silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote[0]  //Current Texts
@@ -437,7 +439,7 @@
 
 	data["mode"] = mode					// The current view
 	data["scanmode"] = scanmode				// Scanners
-	data["fon"] = fon					// Flashlight on?
+	data["fon"] = light_on					// Flashlight on?
 	data["pai"] = (isnull(pai) ? 0 : 1)			// pAI inserted?
 	data["note"] = note					// current pda notes
 	data["message_silent"] = message_silent					// does the pda make noise when it receives a message?
@@ -699,12 +701,7 @@
 //MAIN FUNCTIONS===================================
 
 		if("Light")
-			if(fon)
-				fon = 0
-				set_light(0)
-			else
-				fon = 1
-				set_light(f_lum)
+			set_light_on(!light_on)
 		if("Medical Scan")
 			if(scanmode == 1)
 				scanmode = 0

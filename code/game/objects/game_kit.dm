@@ -40,6 +40,11 @@
 	desc = "Allows you to play chess, checkers, or whichever game involving those pieces, even from beyond our world!"
 	icon_state = "game_kit_chaplain"
 
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_on = FALSE
+	light_color = "#a2fad1"
+
 /obj/item/weapon/game_kit/atom_init()
 	. = ..()
 	//Parts of this terrible string is being changed into codename of pieces, and then - transformed into pictures
@@ -88,8 +93,8 @@
 	return
 
 /obj/item/weapon/game_kit/chaplain/attack_ghost(mob/dead/observer/user)
-	set_light(3, 1, "#a2fad1")
-	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
+	set_light_on(TRUE)
+	addtimer(CALLBACK(src, .atom/proc/set_light_on, FALSE), 10)
 	return interact(user)
 
 /obj/item/weapon/game_kit/chaplain/attackby(obj/item/I, mob/user, params)

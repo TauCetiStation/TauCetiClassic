@@ -145,7 +145,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.anchored = TRUE//So space wind cannot drag it.
 	hologram.name = "[A.name]"//If someone decides to right click.
 	hologram.desc = "Hologram of [A.name]"
-	hologram.set_light(2)	//hologram lighting
+	hologram.light_system = MOVABLE_LIGHT
+	hologram.AddComponent(/datum/component/overlay_lighting, 2, null, "#9ed3ff")
 	set_light(2)			//pad lighting
 	icon_state = "holopad1"
 	A.holo = src
@@ -158,7 +159,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
-//	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
 	qdel(hologram)//Get rid of hologram.
 	hologram = null
 	if(master.holo == src)
@@ -201,7 +201,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
-	var/obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
+	var/obj/effect/overlay/hologram //The projection itself. If there is one, the instrument is on, off otherwise.
 
 /obj/machinery/hologram/power_change()
 	if (powered())

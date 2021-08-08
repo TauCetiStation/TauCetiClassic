@@ -855,7 +855,8 @@
 	H.verbs += /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP)
-		H.set_light(BP.screen_brightness)
+		H.light_system = MOVABLE_LIGHT_DIRECTIONAL
+		H.AddComponent(/datum/component/overlay_lighting, BP.screen_brightness, 0.01, null, TRUE)
 
 /datum/species/machine/on_loose(mob/living/carbon/human/H)
 	H.verbs -= /mob/living/carbon/human/proc/IPC_change_screen
@@ -863,7 +864,7 @@
 	H.verbs -= /mob/living/carbon/human/proc/IPC_display_text
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
-		H.set_light(0)
+		H.set_light_on(FALSE)
 	..()
 
 /datum/species/machine/handle_death(mob/living/carbon/human/H)
@@ -872,7 +873,7 @@
 		H.r_hair = 15
 		H.g_hair = 15
 		H.b_hair = 15
-		H.set_light(0)
+		H.set_light_on(FALSE)
 		if(BP.ipc_head == "Default")
 			H.h_style = "IPC off screen"
 		H.update_hair()

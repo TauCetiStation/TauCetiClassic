@@ -987,9 +987,6 @@
 
 	action_button_name = "Toggle Hardsuit Light"
 	light_range = 2 //luminosity when on
-	light_on = FALSE
-	light_system = MOVABLE_LIGHT
-
 	light_color = "#ff00ff"
 
 /obj/item/clothing/suit/space/rig/security/attack_self(mob/user)

@@ -10,7 +10,7 @@
 
 /obj/effect/projectile/atom_init()
 	. = ..()
-	if(light_color)
+	if(light_color && light_system == IMMOBILE_LIGHT)
 		set_light(light_range,light_power,light_color)
 
 /obj/effect/projectile/proc/set_transform(matrix/M)

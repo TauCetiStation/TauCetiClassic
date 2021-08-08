@@ -10,12 +10,16 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	icon_state = "white_candle"
 	item_state = "white_candle"
 
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
+	light_range = CANDLE_LUMINOSITY
+	light_color = LIGHT_COLOR_FIRE
+
 	var/candle_color
 	w_class = ITEM_SIZE_TINY
 
 	var/wax = 0
 	var/lit = FALSE
-	light_color = LIGHT_COLOR_FIRE
 
 	var/infinite = FALSE
 	var/start_lit = FALSE
@@ -35,7 +39,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		lit = TRUE
 		//src.damtype = "fire"
 		visible_message(flavor_text)
-		set_light(CANDLE_LUMINOSITY, 1)
+		set_light_on(lit)
 		START_PROCESSING(SSobj, src)
 		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
@@ -114,7 +118,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		user.visible_message("<span class='notice'>[user] blows out the [src].</span>")
 		lit = FALSE
 		update_icon()
-		set_light(0)
+		set_light_on(lit)
 		STOP_PROCESSING(SSobj, src)
 
  // Ghost candle

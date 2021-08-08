@@ -203,28 +203,19 @@
 	edge = 1
 	can_embed = 0
 
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
+	light_range = 2
+
 	sweep_step = 2
 
 /obj/item/weapon/twohanded/dualsaber/atom_init()
 	. = ..()
 	reflect_chance = rand(50, 65)
 	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
-	switch(item_color)
-		if("red")
-			light_color = COLOR_RED
-		if("blue")
-			light_color = COLOR_BLUE
-		if("green")
-			light_color = COLOR_GREEN
-		if("purple")
-			light_color = COLOR_PURPLE
-			light_power = 2
-		if("yellow")
-			light_color = COLOR_YELLOW
-		if("pink")
-			light_color = COLOR_PINK
-		if("black")
-			light_color = COLOR_GRAY
+
+	// good list has already invented
+	set_light_color(global.slime_colors[item_color])
 
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list()
@@ -328,13 +319,13 @@
 	..()
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
-	set_light(0)
+	set_light_on(FALSE)
 	hitsound = initial(hitsound)
 	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
-	set_light(2)
+	set_light_on(TRUE)
 	hitsound = list('sound/weapons/blade1.ogg')
 	w_class = ITEM_SIZE_HUGE
 	return ..()

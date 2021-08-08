@@ -22,6 +22,10 @@
 	icon_state = "gd6"
 	attack_verb = list("diced", "accursed")
 
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
+	light_color = "#a2fad1"
+
 /obj/item/weapon/dice/ghost/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
@@ -40,13 +44,12 @@
 	loc.visible_message("<span class='warning'>[src] trembles in a scary manner.</span>")
 	var/time = 30
 	var/amplitude
-	var/light_range
 	while(time > 0)
 		amplitude = time/10
-		light_range = (30-time)/10
 		pixel_x = rand(-amplitude, amplitude)
 		pixel_y = rand(-amplitude/3, amplitude/3)
-		set_light(light_range, 1, "#a2fad1")
+		set_light_range((30-time)/10)
+		set_light_on(TRUE)
 		time--
 		sleep(1)
 	for(var/mob/living/A in viewers(3,   loc))

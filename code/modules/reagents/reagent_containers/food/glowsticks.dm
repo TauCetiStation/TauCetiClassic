@@ -8,7 +8,12 @@
 	item_state = null
 	action_button_name = null	//just pull it manually, neckbeard.
 	slot_flags = SLOT_FLAGS_BELT
+
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
 	light_power = 2
+	light_range = 4
+
 	var/on = 0
 	var/colourName = null
 	var/eaten = 0
@@ -37,20 +42,23 @@
 	if(liquid_fuel.volume)
 		if(liquid_fuel.volume < reagents.maximum_volume/3)
 			if(light_range == 3)
-				set_light(2,1)
+				set_light_range(2)
+				set_light_power(1)
+				set_light_on(TRUE)
 			return
 		else if(liquid_fuel.volume < reagents.maximum_volume/2)
 			if(light_range == 4)
-				set_light(3)
+				set_light_range(3)
+				set_light_on(TRUE)
 			return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "glowstick_[colourName]-on"
-		set_light(start_brightness)
+		set_light_on(TRUE)
 	else
 		icon_state = "glowstick_[colourName]"
-		set_light(0)
+		set_light_on(FALSE)
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/turn_off()
 	on = 0
@@ -206,7 +214,7 @@
 ///////////////////// POWER GLOWSTICK //////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power
-	start_brightness = 7
+	light_range = 7
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/atom_init()
 	name = "Advanset [colourName] glowstick"
@@ -216,11 +224,13 @@
 	if(liquid_fuel.volume)
 		if(liquid_fuel.volume < reagents.maximum_volume/3)
 			if(light_range == 5)
-				set_light(3)
+				set_light_range(3)
+				set_light_on(TRUE)
 			return
 		else if(liquid_fuel.volume < reagents.maximum_volume/2)
 			if(light_range == 7)
-				set_light(5)
+				set_light_range(5)
+				set_light_on(TRUE)
 			return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/green

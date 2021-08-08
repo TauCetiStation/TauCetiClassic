@@ -443,7 +443,8 @@
 		qdel(src)
 	set_alt_apperances_layers()
 
-	set_dir(user.dir)
+	if(user)
+		set_dir(user.dir)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -471,7 +472,8 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	set_alt_apperances_layers()
 
-	set_dir(user.dir)
+	if(user)
+		set_dir(user.dir)
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.

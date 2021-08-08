@@ -17,6 +17,8 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD, HOLY_HUD, DIAG_BATT_HUD)
 	typing_indicator_type = "machine"
 
+	light_range = 3
+
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
 	var/obj/item/stack/sheet/metal/cyborg/stack_metal = null

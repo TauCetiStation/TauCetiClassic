@@ -1779,7 +1779,7 @@
 		return
 
 	if(!BP.screen_toggle)
-		set_light(BP.screen_brightness)
+		set_light_on(TRUE)
 		BP.screen_toggle = TRUE
 
 	var/list/valid_hairstyles = get_valid_styles_from_cache(hairs_cache, get_species(), gender, BP.ipc_head)
@@ -1813,18 +1813,18 @@
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || (BP.is_stump))
-		set_light(0)
+		set_light_on(FALSE)
 		return
 
 	BP.screen_toggle = !BP.screen_toggle
 	if(BP.screen_toggle)
 		IPC_change_screen()
-		set_light(BP.screen_brightness)
+		set_light_on(TRUE)
 	else
 		r_hair = 15
 		g_hair = 15
 		b_hair = 15
-		set_light(0)
+		set_light_on(FALSE)
 		if(BP.ipc_head == "Default")
 			h_style = "IPC off screen"
 		update_hair()
@@ -1855,7 +1855,7 @@
 		return
 
 	if(!BP.screen_toggle)
-		set_light(BP.screen_brightness)
+		set_light_on(TRUE)
 		BP.screen_toggle = TRUE
 
 	BP.display_text = S

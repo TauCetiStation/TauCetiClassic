@@ -10,6 +10,8 @@
 	var/frequency = 1
 	hitscan = 1
 
+	light_system = IMMOBILE_LIGHT
+
 	muzzle_type = /obj/effect/projectile/laser/muzzle
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact

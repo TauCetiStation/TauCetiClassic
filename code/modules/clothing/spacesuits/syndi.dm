@@ -6,8 +6,7 @@
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	action_button_name = "Toggle Helmet Light"
-	var/brightness = 3 //light_range when on
-	var/lit = FALSE
+	light_range = 3 //light_range when on
 	species_restricted = list("exclude" , DIONA , VOX)
 	var/image/lamp = null
 
@@ -30,14 +29,13 @@
 
 /obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
 	. = ..()
-	icon_state = "[initial(icon_state)][lit ? "-lit" : ""]"
+	icon_state = "[initial(icon_state)][light_on ? "-lit" : ""]"
 	if(user)
 		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/syndicate/attack_self(mob/user)
 	. = ..()
-	lit = !lit
-	set_light(lit ? brightness : 0)
+	set_light_on(!light_on)
 	update_icon(user)
 
 
@@ -65,7 +63,7 @@
 	icon_state = "syndicate-helm-striker"
 	item_state = "syndicate-helm-striker"
 	armor = list(melee = 60, bullet = 45, laser = 40,energy = 45, bomb = 50, bio = 100, rad = 30)
-	brightness = 4
+	light_range = 4
 
 /obj/item/clothing/suit/space/syndicate/striker
 	name = "striker space suit"

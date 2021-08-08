@@ -490,6 +490,11 @@
 	icon_state = "nuclear"
 	suit_overlay = "nuclear"
 
+	light_system = MOVABLE_LIGHT
+	light_range = 5
+	light_color = LIGHT_COLOR_FLARE
+	light_on = FALSE
+
 	passive_power_cost = -50
 	var/unstable = FALSE
 
@@ -510,8 +515,7 @@
 				holder.visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable</span>")
 			unstable = TRUE
 			addtimer(CALLBACK(src, .proc/boom), rand(60 SECONDS, 120 SECONDS))
-			light_color = LIGHT_COLOR_FLARE
-			set_light(5)
+			set_light_on(TRUE)
 
 	return passive_power_cost
 

@@ -11,6 +11,10 @@
 
 	typing_indicator_type = "robot"
 
+	light_system = MOVABLE_LIGHT_DIRECTIONAL
+	light_range = 5
+	light_on = FALSE
+
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
@@ -401,10 +405,10 @@
 	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
-		set_light(5)
+		set_light_on(lights_on)
 		playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
-		set_light(0)
+		set_light_on(lights_on)
 		playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 /mob/living/silicon/robot/proc/toggle_component()

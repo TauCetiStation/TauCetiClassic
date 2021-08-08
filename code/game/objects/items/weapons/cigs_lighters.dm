@@ -440,6 +440,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	attack_verb = list("burnt", "singed")
 	var/lit = 0
 
+	light_system = MOVABLE_LIGHT
+	light_on = FALSE
+	light_range = 1
+	light_color = LIGHT_COLOR_FIRE
+
 	action_button_name = "Toggle Lighter"
 
 /obj/item/weapon/lighter/zippo
@@ -487,7 +492,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 						user.apply_damage(2, BURN, BP_R_ARM)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
-			set_light(2)
+			set_light_on(TRUE)
 			START_PROCESSING(SSobj, src)
 		else
 			lit = 0
@@ -500,7 +505,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].</span>")
 				playsound(src, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 
-			set_light(0)
+			set_light_on(FALSE)
 			STOP_PROCESSING(SSobj, src)
 	else
 		return ..()

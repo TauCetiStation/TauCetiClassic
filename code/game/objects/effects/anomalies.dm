@@ -10,10 +10,13 @@
 	anchored = TRUE
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
+	light_system = MOVABLE_LIGHT
+	light_range = 3
+	light_power = 5
+
 /obj/effect/anomaly/atom_init()
 	. = ..()
 	poi_list += src
-	set_light(3, 5, light_color)
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)

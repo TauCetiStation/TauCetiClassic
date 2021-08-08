@@ -390,9 +390,8 @@
 	butcher_results = null //we can't butcher it
 	randomify = FALSE
 
-/mob/living/simple_animal/hostile/carp/holodeck/atom_init()
-	. = ..()
-	set_light(2) //hologram lighting
+	light_system = MOVABLE_LIGHT
+	light_range = 2
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)
 	if (safe)

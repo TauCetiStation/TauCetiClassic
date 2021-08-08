@@ -157,6 +157,12 @@
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
+
+	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_range = 8
+	light_power = FLASH_LIGHT_POWER
+	light_on = FALSE
+
 	var/flash_enabled = TRUE
 	var/pictures_max = 10
 	var/pictures_left = 10
@@ -311,7 +317,8 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	if(flash_enabled)
-		flash_lighting_fx(8, light_power, light_color)
+		set_light_on(TRUE)
+		addtimer(CALLBACK(src, /atom.proc/set_light_on, FALSE), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 	var/mobs = ""
 	var/list/mob_names = list()

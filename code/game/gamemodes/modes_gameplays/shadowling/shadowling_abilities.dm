@@ -49,7 +49,10 @@
 			if(is_type_in_list(F, blacklisted_lights))
 				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 				return
-			F.set_light(0)
+			if(F.light_system == IMMOBILE_LIGHT)
+				F.set_light(0)
+			else
+				F.set_light_on(FALSE)
 
 		for(var/obj/machinery/light/L in T.contents)
 			L.on = 0
@@ -61,8 +64,14 @@
 				if(is_type_in_list(F, blacklisted_lights))
 					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 					return
-				F.set_light(0)
-			H.set_light(0) //This is required with the object-based lighting
+				if(F.light_system == IMMOBILE_LIGHT)
+					F.set_light(0)
+				else
+					F.set_light_on(FALSE)
+			if(H.light_system == IMMOBILE_LIGHT)
+				H.set_light(0)
+			else
+				H.set_light_on(FALSE)
 
 		for(var/obj/machinery/door/airlock/A in T.contents)
 			if(get_dist(center, A) <= 4)

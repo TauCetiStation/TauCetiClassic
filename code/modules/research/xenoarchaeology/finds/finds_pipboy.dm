@@ -12,6 +12,11 @@
 	protect_fingers = FALSE
 	clipped = TRUE
 
+	light_system = MOVABLE_LIGHT
+	light_color = "#59f65f"
+	light_range = 2
+	light_on = FALSE
+
 	var/on = 1 // Is it on.
 	var/profile_name = null // Master's name.
 	var/screen = 1 // Which screen is currently showing.
@@ -75,7 +80,7 @@
 	icon_state = "[initial(icon_state)]_off"
 	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 	on = 0
-	set_light(0)
+	set_light_on(on)
 	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
 
 /obj/item/clothing/gloves/pipboy/verb/toggle_output()
@@ -203,8 +208,8 @@
 	else
 		icon_state = "[initial(icon_state)]"
 		to_chat(user, "<span class='notice'>[bicon(src)]You blow the dust off the [name]'s screen and twist the power button. A small screen happily lights up. This device is now on.</span>")
-		set_light(2, 1, "#59f65f")
 		on = 1
+		set_light_on(on)
 		verbs += /obj/item/clothing/gloves/pipboy/verb/switch_off
 		playsound(src, 'sound/mecha/powerup.ogg', VOL_EFFECTS_MASTER, 30)
 		return

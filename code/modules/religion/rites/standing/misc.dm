@@ -307,7 +307,8 @@
 	I.pixel_x = 12
 	I.pixel_y = 12
 	user.add_overlay(I)
-	user.set_light(7)
+	user.light_system = MOVABLE_LIGHT_DIRECTIONAL
+	user.AddComponent(/datum/component/overlay_lighting, 4, 0.5, COLOR_YELLOW, TRUE)
 	return TRUE
 
 /*

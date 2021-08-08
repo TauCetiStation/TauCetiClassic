@@ -84,7 +84,10 @@
 			if(istype(T,/turf/space)) continue
 			turfs_around += T
 			for(var/obj/item/F in T.contents)
-				F.set_light(0)
+				if(F.light_system == IMMOBILE_LIGHT)
+					F.set_light(0)
+				else
+					F.set_light_on(FALSE)
 			for(var/obj/machinery/L in T.contents)
 				if(istype(L, /obj/machinery/power/apc))
 					var/obj/machinery/power/apc/apc = L
@@ -94,21 +97,33 @@
 					Light.on = 0
 					Light.update(0)
 				else
-					L.set_light(0)
+					if(L.light_system == IMMOBILE_LIGHT)
+						L.set_light(0)
+					else
+						L.set_light_on(FALSE)
 			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
 				qdel(G)
 			for(var/mob/living/carbon/human/H in T.contents)
 				for(var/obj/item/F in H)
-					F.set_light(0)
+					if(F.light_system == IMMOBILE_LIGHT)
+						F.set_light(0)
+					else
+						F.set_light_on(FALSE)
 					if(istype(F, /obj/item/device/flashlight)) //More survival!
 						var/obj/item/device/flashlight/FL = F
 						if(FL.on)
 							H.drop_from_inventory(FL)
 							if(prob(45)) //Poooof
 								qdel(FL)
-				H.set_light(0) //This is required with the object-based lighting
+				if(H.light_system == IMMOBILE_LIGHT)
+					H.set_light(0)
+				else
+					H.set_light_on(FALSE)
 			for(var/mob/living/silicon/robot/R in T.contents)
-				R.set_light(0)
+				if(R.light_system == IMMOBILE_LIGHT)
+					R.set_light(0)
+				else
+					R.set_light_on(FALSE)
 
 	for(var/mob/living/L in view(7,src))
 		if(L == src) continue

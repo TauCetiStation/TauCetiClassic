@@ -59,7 +59,7 @@
 		src.has_power = 0
 		if(lights_on) // Light is on but there is no power!
 			lights_on = 0
-			set_light(0)
+			set_light_on(lights_on)
 	diag_hud_set_borgcell()
 
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
