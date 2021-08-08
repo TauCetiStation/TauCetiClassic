@@ -34,10 +34,10 @@
 	SEND_SIGNAL(src, COMSIG_MODVAL_UPDATE, old_value)
 
 /datum/modval/proc/AddModifier(category, base_multiplier=0.0, base_additive=0.0, multiple=0.0, additive=0.0, update=TRUE)
+	if(modifiers && modifiers[category])
+		RemoveModifier(category, update=FALSE)
 	if(!modifiers)
 		modifiers = list()
-	if(modifiers[category])
-		RemoveModifier(category, update=FALSE)
 
 	var/datum/modval_modifier/MM = new(base_multiplier, base_additive, multiple, additive)
 	base_multiplier += MM.base_multiplier
