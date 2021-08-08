@@ -32,3 +32,8 @@
 
 /datum/mood_event/refreshing_clothes/add_effects(_mood_change)
 	mood_change = _mood_change
+
+/datum/mood_event/slipped
+	description = "<span class='warning'>I slipped. I should be more careful next time...</span>\n"
+	mood_change = -2
+	timeout = 3 MINUTES

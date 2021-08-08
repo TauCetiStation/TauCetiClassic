@@ -24,6 +24,7 @@
 	RegisterSignal(get_area(parent), COMSIG_AREA_UPDATE_BEAUTY, .proc/update_beauty)
 	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
+	RegisterSignal(parent, COMSIG_MOB_SLIP, .proc/on_slip)
 
 	var/mob/living/owner = parent
 	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
@@ -438,6 +439,12 @@
 	SIGNAL_HANDLER
 
 	setSanity(sanity + amount)
+
+///Called when parent slips.
+/datum/component/mood/proc/on_slip(datum/source)
+	SIGNAL_HANDLER
+
+	add_event(null, "slipped", /datum/mood_event/slipped)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
