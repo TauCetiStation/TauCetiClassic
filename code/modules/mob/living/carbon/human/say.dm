@@ -19,7 +19,7 @@
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/chit_chat, speaker)
 		return
 
-	if(speech_imbalance < 2.0 && speech_amount > 300)
+	if(speech_imbalance < 2.0 && speech_amount > 500)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/deep_conversation, speaker)
 		return
 
