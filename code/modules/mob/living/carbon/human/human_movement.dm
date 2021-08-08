@@ -103,6 +103,8 @@
 
 	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
+	tally += mood_additive_speed_modifier
+
 	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)

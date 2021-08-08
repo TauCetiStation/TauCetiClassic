@@ -61,6 +61,7 @@
 #define SS_PRIORITY_SPACEDRIFT    30
 #define SS_PRIORITY_THROWING      25
 #define SS_PRIORITY_FASTPROCESS   25
+#define SS_PRIORITY_PROCESS       25
 #define SS_PRIORITY_AIR           20
 #define SS_PRIORITY_FLUIDS        20
 #define SS_PRIORITY_GARBAGE       15

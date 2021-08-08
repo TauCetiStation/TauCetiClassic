@@ -287,7 +287,10 @@
 		icon_state = "pull0"
 
 /atom/movable/screen/Click(location, control, params)
-	if(!usr)	return 1
+	if(!usr)
+		return 1
+
+	SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 
 	switch(name)
 		if("toggle")
@@ -844,3 +847,8 @@
 		cooldown.callback = callback
 	cooldown.start_cooldown(time)
 	return cooldown
+
+/atom/movable/screen/mood
+	name = "mood"
+	icon_state = "mood5"
+	screen_loc = ui_mood

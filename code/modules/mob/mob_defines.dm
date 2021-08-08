@@ -163,6 +163,18 @@
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
 	var/captured = 0 //Functionally, should give the same effect as being buckled into a chair when true.
 
+	// Determines how mood affects actionspeed.
+	// If ever used by anything else but mood, please
+	// port /datum/actionspeed_modifier system from /tg.
+	// The value is multiplicative.
+	var/mood_multiplicative_actionspeed_modifier = 0.0
+	// Determines how mood affects movespeed.
+	// used only in humans, because mood only is.
+	// If ever used by anything else but mood, please
+	// port /datum/movespeed_modifier system from /tg.
+	// The value is additive.
+	var/mood_additive_speed_modifier = 0.0
+
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.
 	//Also unlike the spell list, this would only store the object in contents, not an object in itself.

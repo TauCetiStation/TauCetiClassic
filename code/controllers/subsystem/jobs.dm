@@ -371,6 +371,8 @@ SUBSYSTEM_DEF(job)
 	var/datum/job/job = GetJob(rank)
 	var/list/spawn_in_storage = list()
 
+	SEND_SIGNAL(H, COMSIG_JOB_RECEIVED, job)
+
 	if(job)
 
 		//Equip custom gear loadout.
