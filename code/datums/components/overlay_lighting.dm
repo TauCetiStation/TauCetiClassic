@@ -7,6 +7,12 @@
 
 #define SHORT_CAST 2
 
+#define X_OFFSET(n, d) (n * (!!(d & EAST) + !!(d & WEST) * -1))
+
+#define Y_OFFSET(n, d) (n * (!!(d & NORTH) + !!(d & SOUTH) * -1))
+
+#define LOCATE_DIRECTIONAL_OFFSET(n, d, source) locate(source.x + X_OFFSET(n, d), source.y + Y_OFFSET(n, d), source.z)
+
 /**
  * Movable atom overlay-based lighting component.
  *
@@ -166,8 +172,14 @@
 /datum/component/overlay_lighting/proc/get_new_turfs()
 	if(!current_holder)
 		return
+	var/light_position = current_holder
+	if(directional)
+		light_position = LOCATE_DIRECTIONAL_OFFSET(cast_range, current_direction, current_holder)
+
 	. = list()
-	for(var/turf/lit_turf in view(lumcount_range, get_turf(current_holder)))
+	// I do not know who calculated this, but the real radius of light is 1 less
+	var/real_lumcount_range = max(lumcount_range - 1, 1)
+	for(var/turf/lit_turf in view(real_lumcount_range, get_turf(light_position)))
 		lit_turf.dynamic_lumcount += lum_power
 		. += lit_turf
 	if(length(.))
@@ -506,3 +518,7 @@
 #undef LIGHTING_ATTACHED
 #undef GET_PARENT
 #undef SHORT_CAST
+
+#undef X_OFFSET
+#undef Y_OFFSET
+#undef LOCATE_DIRECTIONAL_OFFSET
