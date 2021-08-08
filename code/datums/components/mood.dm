@@ -1,6 +1,3 @@
-#define MINOR_INSANITY_PEN 5
-#define MAJOR_INSANITY_PEN 10
-
 /datum/component/mood
 	var/mood //Real happiness
 	var/sanity = SANITY_NEUTRAL //Current sanity
@@ -9,7 +6,6 @@
 	var/sanity_level = 2 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
-	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/atom/movable/screen/mood/screen_obj
 
 /datum/component/mood/Initialize()
@@ -191,8 +187,6 @@
 		if(9)
 			setSanity(sanity + 0.6*  delta_time, SANITY_NEUTRAL, SANITY_MAXIMUM)
 
-	//HandleNutrition()
-
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
@@ -209,49 +203,30 @@
 	var/mob/living/master = parent
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
-			setInsanityEffect(MAJOR_INSANITY_PEN)
 			master.mood_additive_speed_modifier = 1.0
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.mood_additive_speed_modifier = 0.5
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			setInsanityEffect(0)
 			master.mood_additive_speed_modifier = 0.25
 			master.mood_multiplicative_actionspeed_modifier = 0.25
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			setInsanityEffect(0)
 			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = 0.0
 			sanity_level = 3
 		if(SANITY_NEUTRAL + 1 to SANITY_GREAT + 1) //shitty hack but +1 to prevent it from responding to super small differences
-			setInsanityEffect(0)
 			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			sanity_level = 2
 		if(SANITY_GREAT + 1 to INFINITY)
-			setInsanityEffect(0)
 			master.mood_additive_speed_modifier = 0.0
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			sanity_level = 1
 	update_mood_icon()
-
-/datum/component/mood/proc/setInsanityEffect(newval)
-	if(newval == insanity_effect)
-		return
-
-	// I personally do not think this effect fits our build
-	// People drop to crit on 100 damage,
-	// and then they have to wait for 100 more to die
-	// which is a slow and very unfun process
-	// making the death even longer is terrible imho ~Luduk
-	// var/mob/living/master = parent
-	// master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
-	insanity_effect = newval
 
 // Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 /datum/component/mood/proc/add_event(datum/source, category, type, ...)
@@ -329,30 +304,6 @@
 		return
 	print_mood(user)
 
-/*
-/datum/component/mood/proc/HandleNutrition()
-	var/mob/living/L = parent
-
-	switch(L.nutrition)
-		if(NUTRITION_LEVEL_FULL to INFINITY)
-			add_event(null, "nutrition", /datum/mood_event/fat)
-
-		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-			add_event(null, "nutrition", /datum/mood_event/wellfed)
-
-		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-			add_event(null, "nutrition", /datum/mood_event/fed)
-
-		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-			clear_event(null, "nutrition")
-
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			add_event(null, "nutrition", /datum/mood_event/hungry)
-
-		if(0 to NUTRITION_LEVEL_STARVING)
-			add_event(null, "nutrition", /datum/mood_event/starving)
-*/
-
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source)
 	SIGNAL_HANDLER
@@ -365,6 +316,3 @@
 	SIGNAL_HANDLER
 
 	setSanity(sanity + amount)
-
-#undef MINOR_INSANITY_PEN
-#undef MAJOR_INSANITY_PEN

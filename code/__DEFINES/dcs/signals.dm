@@ -250,10 +250,6 @@
 // from mob/living/forget_combo(): (datum/combat_combo/combo, datum/combat_moveset/moveset)
 #define COMSIG_LIVING_FORGET_COMBO "forget_combo"
 
-// /mob/living/carbon/human signals (and synths, I guess)
-///Whenever EquipRanked is called, called after job is set
-#define COMSIG_JOB_RECEIVED "job_received"
-
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)
 #define COMSIG_MOB_HOSTILE_ATTACKINGTARGET "mob_hostile_attackingtarget"
