@@ -1,3 +1,8 @@
+/datum/mood_event/naked
+	description = "<span class='warning'>I am naked... And the worst part, people are noticing it!</span>\n"
+	mood_change = -10
+	timeout = 1 MINUTE
+
 /datum/mood_event/dirty_clothes
 	description = "<span class='warning'>I don't like wearing dirty clothes...</span>\n"
 	mood_change = -1
