@@ -21,6 +21,12 @@
 /// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
 #define COMSIG_PARENT_QDELETING "parent_qdeleting"
 
+// /datum/element signals
+/// fires on the target datum when an element is attached to it (/datum/element)
+#define COMSIG_ELEMENT_ATTACH "element_attach"
+/// fires on the target datum when an element is attached to it  (/datum/element)
+#define COMSIG_ELEMENT_DETACH "element_detach"
+
 // /datum/religion_rites signals
 /// from base of religion_rites/on_chosen(): (/mob, /obj)
 #define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"
@@ -148,9 +154,9 @@
 	#define COMPONENT_PREVENT_GRAB 1
 /// hopefully called from all places where pixel_x and pixel_y is set. used by multi_carry, and waddle. (): ()
 #define COMSIG_MOVABLE_PIXELMOVE "movable_pixelmove"
-///from base of area/Entered(): (/area)
+///from base of area/Entered(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_ENTER_AREA "enter_area"
-///from base of area/Exited(): (/area)
+///from base of area/Exited(): (/area). Sent to "area-sensitive" movables, see __DEFINES/traits.dm for info.
 #define COMSIG_EXIT_AREA "exit_area"
 
 // /obj

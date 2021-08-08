@@ -20,10 +20,12 @@
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 
 	var/mob/living/owner = parent
+	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
 	if(owner.hud_used)
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
@@ -31,6 +33,7 @@
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
+	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
 	unmodify_hud()
 	return ..()
 
@@ -362,6 +365,35 @@
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
 */
+
+/datum/component/mood/proc/check_area_mood(datum/source, area/A)
+	SIGNAL_HANDLER
+
+	update_beauty(A)
+	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
+		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
+	else
+		clear_event(null, "area")
+
+/datum/component/mood/proc/update_beauty(area/A)
+	//if we're outside, we don't care.
+	if(A.outdoors)
+		clear_event(null, "area_beauty")
+		return FALSE
+
+	switch(A.beauty)
+		if(-INFINITY to BEAUTY_LEVEL_HORRID)
+			add_event(null, "area_beauty", /datum/mood_event/horridroom)
+		if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+			add_event(null, "area_beauty", /datum/mood_event/badroom)
+		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
+			clear_event(null, "area_beauty")
+		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+			add_event(null, "area_beauty", /datum/mood_event/decentroom)
+		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+			add_event(null, "area_beauty", /datum/mood_event/goodroom)
+		if(BEAUTY_LEVEL_GREAT to INFINITY)
+			add_event(null, "area_beauty", /datum/mood_event/greatroom)
 
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source)
