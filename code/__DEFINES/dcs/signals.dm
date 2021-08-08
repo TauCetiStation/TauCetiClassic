@@ -27,6 +27,10 @@
 /// fires on the target datum when an element is attached to it  (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
+// /datum/modval
+/// from base of datum/modval/Update(): (old_value)
+#define COMSIG_MODVAL_UPDATE "modval_update"
+
 // /datum/religion_rites signals
 /// from base of religion_rites/on_chosen(): (/mob, /obj)
 #define COMSIG_RITE_ON_CHOSEN "rite_on_chosen"

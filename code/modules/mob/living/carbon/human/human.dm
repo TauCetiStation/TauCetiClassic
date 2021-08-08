@@ -25,6 +25,9 @@
 
 	moveset_type = /datum/combat_moveset/human
 
+	beauty_living = 0
+	beauty_dead = -1500
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
