@@ -118,6 +118,10 @@
 	#define COMPONENT_NO_MOUSEDROP 1
 /// from base of atom/MouseDrop_T: (/atom/from, /mob/user)
 #define COMSIG_MOUSEDROPPED_ONTO "mousedropped_onto"
+/// from base of atom/add_dirt_cover: (datum/dirt_cover/dirt_datum)
+#define COMSIG_ATOM_ADD_DIRT "atom_add_dirt"
+/// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
+#define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
 
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
@@ -182,6 +186,10 @@
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
+/// from base of obj/item/make_wet
+#define COMSIG_ITEM_MAKE_WET "item_make_wet"
+/// from obj/item/dry_process
+#define COMSIG_ITEM_MAKE_DRY "item_make_dry"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -213,6 +221,10 @@
 #define COMSIG_MOB_DIED "mob_died"
 ///from base of mob/create_mob_hud(): ()
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
+///from base of item/equipped(): (obj/item/I, slot)
+#define COMSIG_MOB_EQUIPPED "mob_equipped"
+///from base of item/dropped(): (obj/item/I)
+#define COMSIG_MOB_DROPPED "mob_dropped"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()

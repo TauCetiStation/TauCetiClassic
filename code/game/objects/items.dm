@@ -57,7 +57,6 @@
 		/obj/machinery/autolathe
 	)
 	var/can_be_holstered = FALSE
-	var/uncleanable = 0
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
@@ -439,6 +438,7 @@
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
+	SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 	if(flags & DROPDEL)
 		qdel(src)
 	set_alt_apperances_layers()
@@ -467,6 +467,7 @@
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
+	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.

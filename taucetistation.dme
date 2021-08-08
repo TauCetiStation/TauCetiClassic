@@ -317,6 +317,8 @@
 #include "code\datums\keybinding\movement.dm"
 #include "code\datums\keybinding\robot.dm"
 #include "code\datums\mood_events\_mood_event.dm"
+#include "code\datums\mood_events\generic_negative_events.dm"
+#include "code\datums\mood_events\generic_positive_events.dm"
 #include "code\datums\outfits\_defines.dm"
 #include "code\datums\outfits\nuclear.dm"
 #include "code\datums\outfits\outfit.dm"

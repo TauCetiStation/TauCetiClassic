@@ -52,6 +52,8 @@
 	AddComponent(/datum/component/mood)
 	human_list += src
 
+	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
+
 	if(dna)
 		dna.real_name = real_name
 
@@ -2138,3 +2140,104 @@
 
 #undef MASSAGE_RHYTM_RIGHT
 #undef MASSAGE_ALLOWED_ERROR
+
+/mob/living/carbon/human/proc/AdjustWetClothes(amount)
+	wet_clothes += amount
+	if(wet_clothes <= 0)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "wet_clothes")
+		return
+
+	if(species.flags[IS_SYNTHETIC])
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/dangerous_clothes, wet_clothes * 2)
+		return
+	if(get_species() in list(SKRELL, DIONA))
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/refreshing_clothes, wet_clothes)
+		return
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "wet_clothes", /datum/mood_event/wet_clothes, wet_clothes)
+
+/mob/living/carbon/human/proc/AdjustDirtyClothes(amount)
+	dirty_clothes += amount
+	if(dirty_clothes <= 0)
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "dirty_clothes")
+		return
+
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "dirty_clothes", /datum/mood_event/dirty_clothes, dirty_clothes)
+
+/mob/living/carbon/human/proc/mood_item_equipped(datum/source, obj/item/I, slot)
+	SIGNAL_HANDLER
+
+	if(I.slot_equipped)
+		return
+
+	if(I.wet)
+		AdjustWetClothes(1)
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+	else
+		RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+
+	if(I.dirt_overlay)
+		AdjustDirtyClothes(1)
+		RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+	else
+		RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+
+	RegisterSignal(I, list(COMSIG_ITEM_DROPPED), .proc/mood_item_dropped)
+
+/mob/living/carbon/human/proc/mood_item_dropped(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	if(I.wet)
+		AdjustWetClothes(-1)
+		UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))
+	else
+		UnregisterSignal(I, list(COMSIG_ITEM_MAKE_WET))
+
+	if(I.dirt_overlay)
+		AdjustDirtyClothes(-1)
+		UnregisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD))
+	else
+		UnregisterSignal(I, list(COMSIG_ATOM_ADD_DIRT))
+
+	UnregisterSignal(I, list(COMSIG_ITEM_DROPPED))
+
+/mob/living/carbon/human/proc/mood_item_add_dirt(datum/source, datum/dirt_cover/dirt_datum)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustDirtyClothes(1)
+
+	RegisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD), .proc/mood_item_clean_blood)
+	UnregisterSignal(I, list(COMSIG_ATOM_ADD_DIRT))
+
+/mob/living/carbon/human/proc/mood_item_clean_blood(datum/source)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustDirtyClothes(-1)
+
+	RegisterSignal(I, list(COMSIG_ATOM_ADD_DIRT), .proc/mood_item_add_dirt)
+	UnregisterSignal(I, list(COMSIG_ATOM_CLEAN_BLOOD))
+
+/mob/living/carbon/human/proc/mood_item_make_wet(datum/source)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustWetClothes(1)
+
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_DRY), .proc/mood_item_make_dry)
+	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_WET))
+
+/mob/living/carbon/human/proc/mood_item_make_dry(datum/source)
+	SIGNAL_HANDLER
+
+	var/obj/item/I = source
+
+	AdjustWetClothes(-1)
+
+	RegisterSignal(I, list(COMSIG_ITEM_MAKE_WET), .proc/mood_item_make_wet)
+	UnregisterSignal(I, list(COMSIG_ITEM_MAKE_DRY))

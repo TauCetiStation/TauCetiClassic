@@ -515,6 +515,8 @@ BLIND     // can't see anything
 	var/rolled_down = 0
 	var/basecolor
 
+	var/fresh_laundered_until = 0
+
 	sprite_sheet_slot = SPRITE_SHEET_UNIFORM
 
 /obj/item/clothing/under/emp_act(severity)
@@ -522,6 +524,12 @@ BLIND     // can't see anything
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)
 			A.emplode(severity)
+
+/obj/item/clothing/under/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
+		fresh_laundered_until = world.time
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
 /obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
 	if(istype(A))
@@ -627,6 +635,9 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
+	if(fresh_laundered_until > world.time)
+		to_chat(user, "It looks fresh and clean.")
+
 	switch(src.sensor_mode)
 		if(SUIT_SENSOR_OFF)
 			to_chat(user, "Its sensors appear to be disabled.")

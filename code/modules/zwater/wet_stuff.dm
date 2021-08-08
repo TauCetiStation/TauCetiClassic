@@ -2,8 +2,10 @@
 /obj/item/var/dry_inprocess = 0
 
 /obj/item/proc/make_wet(shower = 0)
-	if(!src) return
-	if(src.flags & THICKMATERIAL) return
+	if(!src)
+		return
+	if(src.flags & THICKMATERIAL)
+		return
 
 	var/wet_weight = rand(18,28)
 	if(wet)
@@ -15,6 +17,9 @@
 		wet = wet_weight
 		SSdrying.drying |= src
 
+	SEND_SIGNAL(src, COMSIG_ITEM_MAKE_WET)
+
+
 /obj/item/Destroy()
 	SSdrying.drying -= src
 	return ..()
@@ -23,6 +28,7 @@
 	if(!src) return
 
 	if(wet < 1)
+		SEND_SIGNAL(src, COMSIG_ITEM_MAKE_DRY)
 		SSdrying.drying -= src
 		return
 

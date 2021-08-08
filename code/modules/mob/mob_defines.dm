@@ -101,6 +101,9 @@
 
 	var/timeofdeath = 0.0//Living
 
+	// Clothes count. Used in mood.
+	var/wet_clothes = 0
+	var/dirty_clothes = 0
 
 	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon
