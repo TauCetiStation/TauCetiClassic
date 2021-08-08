@@ -69,7 +69,7 @@
 /datum/faction/cops/AdminPanelEntry()
 	. = ..()
 	. += "<br>Уровень розыска: [wanted_level]"
-	var/time_to_cops = ((end_time - start_time) - world.time) / 600
+	var/time_to_cops = max(((end_time - world.time) / 600), 0)
 	var/minutes = pluralize_russian(time_to_cops, "[time_to_cops] минута", "[time_to_cops] минуты", "[time_to_cops] минут")
 	. += "<br>До прилёта полиции: [minutes]"
 	. += "<br>Смертей: [global.deaths_during_shift]"

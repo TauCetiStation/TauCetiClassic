@@ -154,7 +154,7 @@
 				end_time = start_time + 50 MINUTES
 			announcement_message = "Флот, направляющийся к [station_name()], теперь имеет военизированный транспорт."
 
-	var/time_to_cops = round(((end_time - start_time) - world.time) / 600)
+	var/time_to_cops = round((end_time - world.time) / 600)
 	announcement_message += " ОБОП прибудет через [time_to_cops] минут."
 	if(newlevel == 1) // specific exception to stop the announcement from triggering right after the families themselves are announced because aesthetics
 		return
@@ -183,7 +183,7 @@
 				end_time = start_time + 55 MINUTES
 			announcement_message = "Конвой, направляющийся к [station_name()], больше не имеет военизированный транспорт."
 
-	var/time_to_cops = round(((end_time - start_time) - world.time) / 600)
+	var/time_to_cops = round((end_time - world.time) / 600)
 	announcement_message += " ОБОП прибудут через [time_to_cops] минут."
 	announce.play(announcement_message)
 
