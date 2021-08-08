@@ -74,9 +74,19 @@
 
 	msg += "<span class='notice'>Moodlets:</span>\n"//All moodlets
 	if(mood_events.len)
-		for(var/i in mood_events)
-			var/datum/mood_event/event = mood_events[i]
-			msg += event.description
+		var/list/m_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
+		var/datum/mood_event/most_important = m_events[m_events[1]]
+
+		var/shown = 0
+
+		for(var/i in m_events)
+			var/datum/mood_event/event = m_events[i]
+			if(shown > 4)
+				break
+			if(abs(event.mood_change) < abs(most_important.mood_change * 0.25))
+				continue
+			shown += 1
+
 	else
 		msg += "<span class='notice'>I don't have much of a reaction to anything right now.\n</span>"
 	to_chat(user, msg)
