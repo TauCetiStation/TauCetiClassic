@@ -1048,14 +1048,6 @@
 	if(usr.client.outlined_item.len)
 		remove_outline()
 
-	// If there is a problem when hovering at an object with a overlay lighting (big [outline_color] circle)
-	// use this code:
-	// var/image/IMG = image(null, src)
-	// IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	// IMG.appearance = src
-
-	// This should help, but I don't know what problems it there may be
-
 	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
 	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	IMG.vis_contents += src
