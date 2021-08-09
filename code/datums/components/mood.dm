@@ -32,7 +32,9 @@
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
 	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
-	UnregisterSignal(get_area(parent), list(COMSIG_AREA_UPDATE_BEAUTY))
+	var/area/A = get_area(parent)
+	if(A)
+		UnregisterSignal(A, list(COMSIG_AREA_UPDATE_BEAUTY))
 	unmodify_hud()
 	return ..()
 
