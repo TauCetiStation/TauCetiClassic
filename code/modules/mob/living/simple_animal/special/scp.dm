@@ -94,7 +94,7 @@
 					Light.on = 0
 					Light.update(0)
 				else
-					L.F.turn_off_light_any_system()
+					L.turn_off_light_any_system()
 			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
 				qdel(G)
 			for(var/mob/living/carbon/human/H in T.contents)

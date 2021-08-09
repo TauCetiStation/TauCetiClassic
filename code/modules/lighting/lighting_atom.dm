@@ -178,7 +178,7 @@
 	luminosity += affecting_dynamic_lumi
 
 /atom/movable/proc/turn_off_light_any_system()
-	if(F.light_system == IMMOBILE_LIGHT)
-		F.set_light(0)
+	if(light_system == IMMOBILE_LIGHT)
+		set_light(0)
 	else
-		F.set_light_on(FALSE)
+		set_light_on(FALSE)
