@@ -78,13 +78,12 @@
 
 	msg += "<span class='notice'>Moodlets:</span>\n"
 	if(mood_events.len)
-		var/list/m_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
-		var/datum/mood_event/most_important = m_events[m_events[1]]
+		var/datum/mood_event/most_important = mood_events[mood_events[1]]
 
 		var/shown = 0
 
-		for(var/i in m_events)
-			var/datum/mood_event/event = m_events[i]
+		for(var/i in mood_events)
+			var/datum/mood_event/event = mood_events[i]
 			if(shown > 4)
 				break
 			if(abs(event.mood_change) < abs(most_important.mood_change * 0.25))
@@ -273,6 +272,8 @@
 
 	if(the_event.timeout)
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+	mood_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER
