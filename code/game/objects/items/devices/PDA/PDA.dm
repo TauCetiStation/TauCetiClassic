@@ -650,6 +650,7 @@
 		if ("Authenticate")//Checks for ID
 			id_check(U, 1)
 		if("UpdateInfo")
+			owner = id.registered_name
 			ownjob = id.assignment
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
