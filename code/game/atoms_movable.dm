@@ -198,17 +198,6 @@
 		return TRUE
 	return FALSE
 
-/atom/movable/proc/moveToNullspace()
-	var/atom/oldloc = loc
-	loc = null
-	if (oldloc)
-		var/area/old_area = get_area(oldloc)
-		oldloc.Exited(src, NONE)
-		if(old_area)
-			old_area.Exited(src, NONE)
-
-	Moved(oldloc, NONE)
-
 //called when src is thrown into hit_atom
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	hit_atom.hitby(src, throwingdatum)
