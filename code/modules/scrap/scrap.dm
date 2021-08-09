@@ -45,6 +45,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/scrap, scrap_list)
 	. = ..()
 	update_icon(1)
 
+	AddElement(/datum/element/beauty, -300)
 
 /obj/effect/scrapshot
 	name = "This thins shoots scrap everywhere with a delay"
