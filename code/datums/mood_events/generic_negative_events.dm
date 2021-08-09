@@ -53,3 +53,8 @@
 /datum/mood_event/hot
 	description = "<span class='warning'>It's getting hot in here.</span>\n"
 	mood_change = -5
+
+/datum/mood_event/self_tending
+	description = "<span class='warning'>I had to tend my own wounds, is there nobody else to help me?</span>\n"
+	mood_change = -3
+	timeout = 1 MINUTE
