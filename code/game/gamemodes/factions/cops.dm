@@ -44,6 +44,7 @@
 
 		candidates -= candidate
 		spawncount--
+		indx++
 
 /datum/faction/cops/proc/traitor_create_apperance(spawnloc, client/C)
 	var/mob/living/carbon/human/H = new(null)

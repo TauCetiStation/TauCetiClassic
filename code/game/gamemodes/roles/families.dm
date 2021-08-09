@@ -119,11 +119,15 @@
 	for(var/GG in gangs)
 		var/datum/faction/gang/G = GG
 		if(G.help_sent)
+			gangs -= G
 			continue
 		if(G.points < min_points)
 			min_points = G.points
 			weakest_gang = G
 	gangs -= weakest_gang
+
+	if(!length(gangs))
+		return
 
 	var/datum/faction/gang/G = pick(gangs)
 	G.help_sent = TRUE
