@@ -1,11 +1,11 @@
 /mob/living/carbon/human
 	var/list/conversations
-	var/conversation_expiration = 1 MINUTE
+	var/conversation_expiration = 45 SECONDS
 
 /mob/living/carbon/human/proc/handle_conversation(speaker, speak_tags, hear_tags)
 	var/speech_amount = speak_tags + hear_tags
 
-	if(speech_amount < 25)
+	if(speech_amount < 30)
 		return
 
 	var/speech_imbalance = 1.0
@@ -14,7 +14,7 @@
 	else
 		speech_imbalance = (hear_tags + 1) / (speak_tags + 1)
 
-	if(speech_amount < 100)
+	if(speech_amount < 150)
 		if(speech_imbalance < 20.0)
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/chit_chat, speaker)
 		return
