@@ -395,6 +395,7 @@
 			IO.heart_normalize()
 			H.reanimate_body(H)
 			H.stat = UNCONSCIOUS
+			H.beauty.AddModifier("stat", additive=H.beauty_living)
 			H.return_to_body_dialog(src)
 		else
 			IO.heart_normalize()
