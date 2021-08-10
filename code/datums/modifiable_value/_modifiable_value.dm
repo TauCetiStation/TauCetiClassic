@@ -40,10 +40,10 @@
 		modifiers = list()
 
 	var/datum/modval_modifier/MM = new(base_multiplier, base_additive, multiple, additive)
-	base_multiplier += MM.base_multiplier
-	base_additive += MM.base_multiplier
-	multiple += MM.multiple
-	additive += MM.additive
+	src.base_multiplier += MM.base_multiplier
+	src.base_additive += MM.base_multiplier
+	src.multiple += MM.multiple
+	src.additive += MM.additive
 
 	if(update)
 		Update()
