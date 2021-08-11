@@ -35,8 +35,9 @@
 
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
-/atom/Click(location,control,params)
+/atom/Click(location, control, params)
 	if(src)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)

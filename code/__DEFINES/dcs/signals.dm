@@ -61,7 +61,6 @@
 #define COMSIG_REAGENT_REACTION_TURF "reagent_reaction_turf"
 
 // /datum/species signals
-
 ///from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)
 #define COMSIG_SPECIES_GAIN "species_gain"
 ///from datum/species/on_species_loss(): (datum/species/lost_species)
@@ -81,6 +80,8 @@
 #define COMSIG_AREA_EXITED "area_exited"
 
 // /atom signals
+///from base of atom/Click(): (location, control, params, mob/user)
+#define COMSIG_CLICK "atom_click"
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
@@ -194,6 +195,12 @@
 /// from mob/living/silicon/robot/get_active_hand(): (mob/user)
 #define COMSIG_HAND_GET_ITEM "hand_get_item"
 
+//Mood (/datum/component/mood) signals
+///called when you send a mood event from anywhere in the code.
+#define COMSIG_ADD_MOOD_EVENT "add_mood"
+///called when you clear a mood event from anywhere in the code.
+#define COMSIG_CLEAR_MOOD_EVENT "clear_mood"
+
 // mob signals
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
@@ -202,6 +209,8 @@
 #define COMSIG_MOB_SLIP "movable_slip"
 /// from base of mob/death(): (gibbed)
 #define COMSIG_MOB_DIED "mob_died"
+///from base of mob/create_mob_hud(): ()
+#define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
