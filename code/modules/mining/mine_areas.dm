@@ -57,8 +57,7 @@
 	. = ..()
 	// 8 is 1 more than client's view. So mobs spawn right after the view's border
 	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
-	AddComponent(
-		/datum/component/spawn_area,
+	AddComponent(/datum/component/spawn_area,
 		"asteroid",
 		CALLBACK(src, .proc/Spawn),
 		CALLBACK(src, .proc/Despawn),
