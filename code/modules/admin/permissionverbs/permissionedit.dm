@@ -85,10 +85,13 @@
 	if(tgui_alert(usr, "Are you sure you want to remove [adm_ckey] from admins?","Message", list("Yes","Cancel")) == "Yes")
 		if(!D)
 			return
-		admin_datums -= adm_ckey
-		D.disassociate()
+
 		change_permissions(adm_ckey, 0)
 		db_admin_rank_modification(adm_ckey, ADMIN_RANK_REMOVED)
+
+		admin_datums -= adm_ckey
+		D.disassociate()
+		
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 

@@ -416,7 +416,7 @@ var/list/ghostteleportlocs = list()
  */
 /area/Entered(atom/movable/A)
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, A)
-	for(var/atom/movable/recipient as anything in A.area_sensitive_contents)
+	for(var/atom/movable/recipient in A.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
 
 	if (!isliving(A))
@@ -468,7 +468,7 @@ var/list/ghostteleportlocs = list()
   */
 /area/Exited(atom/movable/A)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, A)
-	for(var/atom/movable/recipient as anything in A.area_sensitive_contents)
+	for(var/atom/movable/recipient in A.area_sensitive_contents)
 		SEND_SIGNAL(recipient, COMSIG_EXIT_AREA, src)
 
 /area/proc/gravitychange(gravitystate = FALSE)

@@ -518,10 +518,6 @@
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
-
-	if(!skipface && print_flavor_text())
-		msg += "[print_flavor_text()]\n"
-
 	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 	if(mood)
 		switch(mood.shown_mood)
@@ -537,6 +533,10 @@
 				msg += "[t_He] appears to be very happy."
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
 				msg += "[t_He] appears to be ecstatic."
+
+	if(!skipface && print_flavor_text())
+		msg += "[print_flavor_text()]\n"
+
 	msg += "*---------*</span><br>"
 
 	if(applying_pressure)
