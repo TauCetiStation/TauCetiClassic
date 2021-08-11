@@ -53,29 +53,8 @@
 
 	..()
 
-	if(intercept_hacked == TRUE)
-		intercept_apcs = 4;
-
 	if(malf_mode_declared)
 		return
-
-	if(SSticker.hacked_apcs >= (intercept_apcs + 3) && AI_malf_revealed < 1)
-		AI_malf_revealed = 1
-		var/datum/announcement/centcomm/malf/first/announce_first = new
-		announce_first.play()
-	else if(SSticker.hacked_apcs >= (intercept_apcs + 5) && AI_malf_revealed < 2)
-		AI_malf_revealed = 2
-		var/datum/announcement/centcomm/malf/second/announce_second = new
-		announce_second.play()
-	else if(SSticker.hacked_apcs >= (intercept_apcs + 7) && AI_malf_revealed < 3)
-		AI_malf_revealed = 3
-		var/datum/announcement/centcomm/malf/third/announce_third = new
-		announce_third.play()
-	else if(SSticker.hacked_apcs >= (intercept_apcs + 9) && AI_malf_revealed < 4)
-		AI_malf_revealed = 4
-		var/datum/announcement/centcomm/malf/fourth/announce_forth = new
-		announce_forth.play()
-		takeover()
 
 /datum/faction/malf_silicons/proc/capture_the_station()
 	to_chat(world, "<FONT size = 3><B>The AI has won!</B></FONT>")

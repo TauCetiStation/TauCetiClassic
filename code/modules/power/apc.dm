@@ -540,35 +540,8 @@
 					locked = 0
 					to_chat(user, "You emag the APC interface.")
 					update_icon()
-					SSticker.hacked_apcs += 1
-					if(SSticker.mode != /datum/game_mode/malfunction)
-						if(SSticker.hacked_apcs == 3)
-							var/datum/announcement/centcomm/malf/first/announce_first = new
-							announce_first.play()
-						else if(SSticker.hacked_apcs == 5)
-							var/datum/announcement/centcomm/malf/second/announce_second = new
-							announce_second.play()
-						else if(SSticker.hacked_apcs == 7)
-							var/datum/announcement/centcomm/malf/third/announce_third = new
-							announce_third.play()
-						else if(SSticker.hacked_apcs == 9)
-							var/datum/announcement/centcomm/malf/fourth/announce_forth = new
-							announce_forth.play()
-					else
-						var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
-						if(malf_ai.intercept_hacked == TRUE)
-							if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 3))
-								var/datum/announcement/centcomm/malf/first/announce_first = new
-								announce_first.play()
-							else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 5))
-								var/datum/announcement/centcomm/malf/second/announce_second = new
-								announce_second.play()
-							else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 7))
-								var/datum/announcement/centcomm/malf/third/announce_third = new
-								announce_third.play()
-							else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 9))
-								var/datum/announcement/centcomm/malf/fourth/announce_forth = new
-								announce_forth.play()
+					SSticker.hacked_apcs ++
+					announce_hacker()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
 
@@ -948,7 +921,7 @@
 	if(malfai)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			operating ? SSticker.hacked_apcs++ : SSticker.hacked_apcs
+			operating ? SSticker.hacked_apcs++ : SSticker.hacked_apcs--
 	update()
 	update_icon()
 
@@ -973,8 +946,44 @@
 		else
 			malfai = ai
 		to_chat(ai, "Hack complete. The APC is now under your exclusive control.")
+		announce_hacker()
 		update_icon()
 
+/obj/machinery/power/apc/proc/announce_hacker()
+	var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
+	if(SSticker.mode != /datum/game_mode/malfunction)
+		if(SSticker.hacked_apcs == 3)
+			var/datum/announcement/centcomm/malf/first/announce_first = new
+			announce_first.play()
+		else if(SSticker.hacked_apcs == 5)
+			var/datum/announcement/centcomm/malf/second/announce_second = new
+			announce_second.play()
+		else if(SSticker.hacked_apcs == 7)
+			var/datum/announcement/centcomm/malf/third/announce_third = new
+			announce_third.play()
+		else if(SSticker.hacked_apcs == 9)
+			var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+			announce_forth.play()
+	else
+		if(malf_ai.intercept_hacked)
+			malf_ai.intercept_apcs = 4
+			if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 3) && malf_ai.AI_malf_revealed < 1)
+				malf_ai.AI_malf_revealed = 1
+				var/datum/announcement/centcomm/malf/first/announce_first = new
+				announce_first.play()
+			else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 5) && malf_ai.AI_malf_revealed < 2)
+				malf_ai.AI_malf_revealed = 2
+				var/datum/announcement/centcomm/malf/second/announce_second = new
+				announce_second.play()
+			else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 7) && malf_ai.AI_malf_revealed < 3)
+				malf_ai.AI_malf_revealed = 3
+				var/datum/announcement/centcomm/malf/third/announce_third = new
+				announce_third.play()
+			else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 9) && malf_ai.AI_malf_revealed < 4)
+				malf_ai.AI_malf_revealed = 4
+				var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+				announce_forth.play()
+				malf_ai.takeover()
 ////////////////////////////////
 
 
