@@ -163,5 +163,6 @@
 // medical stuff I guess
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
+#define MOOD_COMPONENT_TRAIT "mood_component"
 
 #define FEAR_TRAIT         "fear"
