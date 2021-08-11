@@ -20,13 +20,15 @@
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// set to -1 to have the conveyour belt be inverted, so you can use the other corner icons
 
-// Auto conveyour is always on unless unpowered
+/obj/machinery/conveyor/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace)
 
+// Auto conveyour is always on unless unpowered
 /obj/machinery/conveyor/auto/atom_init(mapload, newdir)
 	. = ..(mapload, newdir)
 	operating = 1
 	update_move_direction()
-	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/conveyor/auto/update()
 	if(stat & BROKEN)
