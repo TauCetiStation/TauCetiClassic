@@ -522,17 +522,17 @@
 	if(mood)
 		switch(mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)
-				msg += "[t_He] appears to be depressed."
+				msg += "[t_He] appears to be depressed.\n"
 			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
-				msg += "[t_He] appears to be very sad."
+				msg += "[t_He] appears to be very sad.\n"
 			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
-				msg += "[t_He] appears to be a bit down."
+				msg += "[t_He] appears to be a bit down.\n"
 			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
-				msg += "[t_He] appears to be quite happy."
+				msg += "[t_He] appears to be quite happy.\n"
 			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
-				msg += "[t_He] appears to be very happy."
+				msg += "[t_He] appears to be very happy.\n"
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
-				msg += "[t_He] appears to be ecstatic."
+				msg += "[t_He] appears to be ecstatic.\n"
 
 	if(!skipface && print_flavor_text())
 		msg += "[print_flavor_text()]\n"
