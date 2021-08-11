@@ -186,29 +186,29 @@
 
 	switch(mood_level)
 		if(1)
-			setSanity(spirit - 0.3 * delta_time, SPIRIT_BAD)
+			setSpirit(spirit - 0.3 * delta_time, SPIRIT_BAD)
 		if(2)
-			setSanity(spirit - 0.15 * delta_time, SPIRIT_BAD)
+			setSpirit(spirit - 0.15 * delta_time, SPIRIT_BAD)
 		if(3)
-			setSanity(spirit - 0.1 * delta_time, SPIRIT_LOW)
+			setSpirit(spirit - 0.1 * delta_time, SPIRIT_LOW)
 		if(4)
-			setSanity(spirit - 0.05 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit - 0.05 * delta_time, SPIRIT_POOR)
 		if(5)
-			setSanity(spirit, SPIRIT_POOR) //This makes sure that mood gets increased should you be below the minimum.
+			setSpirit(spirit, SPIRIT_POOR) //This makes sure that mood gets increased should you be below the minimum.
 		if(6)
-			setSanity(spirit + 0.2 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit + 0.2 * delta_time, SPIRIT_POOR)
 		if(7)
-			setSanity(spirit  +0.3 * delta_time, SPIRIT_POOR)
+			setSpirit(spirit  +0.3 * delta_time, SPIRIT_POOR)
 		if(8)
-			setSanity(spirit + 0.4 * delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
+			setSpirit(spirit + 0.4 * delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 		if(9)
-			setSanity(spirit + 0.6*  delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
+			setSpirit(spirit + 0.6*  delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 
 	HandleNutrition()
 	HandleShock()
 
 ///Sets spirit to the specified amount and applies effects.
-/datum/component/mood/proc/setSanity(amount, minimum=SPIRIT_BAD, maximum=SPIRIT_HIGH)
+/datum/component/mood/proc/setSpirit(amount, minimum=SPIRIT_BAD, maximum=SPIRIT_HIGH)
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
@@ -412,13 +412,13 @@
 	SIGNAL_HANDLER
 
 	remove_temp_moods()
-	setSanity(initial(spirit))
+	setSpirit(initial(spirit))
 
 ///Causes direct drain of someone's spirit, call it with a numerical value corresponding how badly you want to hurt their spirit
 /datum/component/mood/proc/direct_spirit_drain(datum/source, amount)
 	SIGNAL_HANDLER
 
-	setSanity(sanity + amount)
+	setSpirit(spirit + amount)
 
 ///Called when parent slips.
 /datum/component/mood/proc/on_slip(datum/source)
