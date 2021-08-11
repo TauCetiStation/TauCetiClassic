@@ -45,6 +45,40 @@
 		'sound/music/dwarf_fortress.ogg'
 	)
 
+	var/static/list/mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath = 5,
+		/mob/living/simple_animal/hostile/asteroid/basilisk = 4,
+		/mob/living/simple_animal/hostile/asteroid/hivelord = 3,
+		/mob/living/simple_animal/hostile/asteroid/goldgrub = 2,
+		/mob/living/simple_animal/hostile/retaliate/malf_drone/mining = 1
+	)
+
+/area/asteroid/mine/unexplored/atom_init()
+	. = ..()
+	// 8 is 1 more than client's view. So mobs spawn right after the view's border
+	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
+	AddComponent(
+		/datum/component/spawn_area,
+		"asteroid",
+		CALLBACK(src, .proc/Spawn),
+		CALLBACK(src, .proc/Despawn),
+		CALLBACK(src, .proc/CheckSpawn),
+		8,
+		16,
+		2 MINUTES,
+		1.5 MINUTES
+	)
+
+/area/asteroid/mine/unexplored/proc/Spawn(turf/T)
+	var/to_spawn = pickweight(mob_spawn_list)
+	new to_spawn(T)
+
+/area/asteroid/mine/unexplored/proc/Despawn(atom/movable/instance)
+	qdel(instance)
+
+/area/asteroid/mine/unexplored/proc/CheckSpawn(turf/T)
+	return T.is_mob_placeable(null)
+
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"
