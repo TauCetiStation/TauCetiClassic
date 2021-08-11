@@ -110,13 +110,13 @@
 #define MOOD_LEVEL_SAD4 -20
 
 //Sanity levels for humans
-#define SANITY_MAXIMUM 150
-#define SANITY_GREAT 125
-#define SANITY_NEUTRAL 100
-#define SANITY_DISTURBED 75
-#define SANITY_UNSTABLE 50
-#define SANITY_CRAZY 25
-#define SANITY_INSANE 0
+#define SPIRIT_MAXIMUM 150
+#define SPIRIT_HIGH 125
+#define SPIRIT_NEUTRAL 100
+#define SPIRIT_DISTURBED 75
+#define SPIRIT_POOR 50
+#define SPIRIT_LOW 25
+#define SPIRIT_BAD 0
 
 //Nutrition levels for humans.
 #define NUTRITION_LEVEL_FAT 600
