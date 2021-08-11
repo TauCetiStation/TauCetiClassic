@@ -170,7 +170,7 @@
 	if(malfai && operating)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			GM.apcs--
+			SSticker.hacked_apcs--;
 	area.apc = null
 	area.power_light = 0
 	area.power_equip = 0
@@ -540,6 +540,35 @@
 					locked = 0
 					to_chat(user, "You emag the APC interface.")
 					update_icon()
+					SSticker.hacked_apcs += 1
+					if(SSticker.mode != /datum/game_mode/malfunction)
+						if(SSticker.hacked_apcs == 3)
+							var/datum/announcement/centcomm/malf/first/announce_first = new
+							announce_first.play()
+						else if(SSticker.hacked_apcs == 5)
+							var/datum/announcement/centcomm/malf/second/announce_second = new
+							announce_second.play()
+						else if(SSticker.hacked_apcs == 7)
+							var/datum/announcement/centcomm/malf/third/announce_third = new
+							announce_third.play()
+						else if(SSticker.hacked_apcs == 9)
+							var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+							announce_forth.play()
+					else
+						var/datum/faction/malf_silicons/malf_ai = find_faction_by_type(/datum/faction/malf_silicons)
+						if(malf_ai.intercept_hacked == TRUE)
+							if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 3))
+								var/datum/announcement/centcomm/malf/first/announce_first = new
+								announce_first.play()
+							else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 5))
+								var/datum/announcement/centcomm/malf/second/announce_second = new
+								announce_second.play()
+							else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 7))
+								var/datum/announcement/centcomm/malf/third/announce_third = new
+								announce_third.play()
+							else if(SSticker.hacked_apcs >= (malf_ai.intercept_apcs + 9))
+								var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+								announce_forth.play()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
 
@@ -919,7 +948,7 @@
 	if(malfai)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			operating ? GM.apcs++ : GM.apcs--
+			operating ? SSticker.hacked_apcs++ : SSticker.hacked_apcs
 	update()
 	update_icon()
 
@@ -938,7 +967,7 @@
 		ai.malfhacking = FALSE
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			GM.apcs++
+			SSticker.hacked_apcs++
 		if(ai.parent)
 			malfai = ai.parent
 		else
@@ -1191,7 +1220,7 @@
 	if(malfai && operating)
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
-			GM.apcs--
+			SSticker.hacked_apcs--
 	stat |= BROKEN
 	operating = 0
 	update_icon()
@@ -1264,8 +1293,6 @@
 		return
 	last_nightshift_switch = world.time
 	set_nightshift(nightshift_lights, preset)
-
-
 
 /obj/machinery/power/apc/smallcell
 	cell_type = 2500

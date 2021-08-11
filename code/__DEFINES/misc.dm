@@ -122,9 +122,6 @@
 #define APC_MIN_TO_MALF_DECLARE 5
 //if malf apcs < than this, malf can't begin the takeover attempt
 
-#define APC_BONUS_WITH_INTERCEPT 4
-//If AI intercepts message, he can hack additional APC_BONUS_WITH_INTERCEPT APCs without attracting attention
-
 #define MALF_SMALL_MODULE_PRICE 10
 #define MALF_LARGE_MODULE_PRICE 50
 //Malf modules prices

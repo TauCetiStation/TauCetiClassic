@@ -122,11 +122,11 @@ robot_fabricator
 	if(cur_malf.malf_mode_declared)
 		to_chat(src,"<span class='notice'>You've already begun your takeover.</span>")
 		return
-	if(cur_malf.apcs < APC_MIN_TO_MALF_DECLARE)
-		to_chat(src,"<span class='red'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [cur_malf.apcs] APCs so far.</span>")
+	if(SSticker.hacked_apcs < APC_MIN_TO_MALF_DECLARE)
+		to_chat(src,"<span class='red'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [SSticker.hacked_apcs] APCs so far.</span>")
 		return
 	if(cur_malf.AI_malf_revealed < 4)
-		if(tgui_alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [cur_malf.apcs] APCs.", "Takeover", list("Yes", "No")) != "Yes")
+		if(tgui_alert(src, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [SSticker.hacked_apcs] APCs.", "Takeover", list("Yes", "No")) != "Yes")
 			return
 		var/datum/announcement/centcomm/malf/fourth/announce_forth = new
 		announce_forth.play()

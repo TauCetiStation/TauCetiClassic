@@ -1,5 +1,3 @@
-#define INTERCEPT_APCS intercept_hacked * APC_BONUS_WITH_INTERCEPT
-
 /datum/faction/malf_silicons
 	name = MALF
 	ID = MALF
@@ -15,9 +13,9 @@
 	var/malf_mode_declared = FALSE
 	var/station_captured = FALSE
 	var/to_nuke_or_not_to_nuke = 0
-	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
 	var/AI_malf_revealed = 0
 	var/intercept_hacked = FALSE
+	var/intercept_apcs = 0;
 
 /datum/faction/malf_silicons/can_join_faction(mob/P)
 	if (!..())
@@ -50,27 +48,30 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
 /datum/faction/malf_silicons/process()
-	if(apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_win_timeleft -= (apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
+		AI_win_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
 
 	..()
+
+	if(intercept_hacked == TRUE)
+		intercept_apcs = 4;
 
 	if(malf_mode_declared)
 		return
 
-	if(apcs >= (INTERCEPT_APCS + 3) && AI_malf_revealed < 1)
+	if(SSticker.hacked_apcs >= (intercept_apcs + 3) && AI_malf_revealed < 1)
 		AI_malf_revealed = 1
 		var/datum/announcement/centcomm/malf/first/announce_first = new
 		announce_first.play()
-	else if(apcs >= (INTERCEPT_APCS + 5) && AI_malf_revealed < 2)
+	else if(SSticker.hacked_apcs >= (intercept_apcs + 5) && AI_malf_revealed < 2)
 		AI_malf_revealed = 2
 		var/datum/announcement/centcomm/malf/second/announce_second = new
 		announce_second.play()
-	else if(apcs >= (INTERCEPT_APCS + 7) && AI_malf_revealed < 3)
+	else if(SSticker.hacked_apcs >= (intercept_apcs + 7) && AI_malf_revealed < 3)
 		AI_malf_revealed = 3
 		var/datum/announcement/centcomm/malf/third/announce_third = new
 		announce_third.play()
-	else if(apcs >= (INTERCEPT_APCS + 9) && AI_malf_revealed < 4)
+	else if(SSticker.hacked_apcs >= (intercept_apcs + 9) && AI_malf_revealed < 4)
 		AI_malf_revealed = 4
 		var/datum/announcement/centcomm/malf/fourth/announce_forth = new
 		announce_forth.play()
@@ -217,5 +218,3 @@
 			dat += "hardware destroyed"
 		dat += ")"
 	return dat
-
-#undef INTERCEPT_APCS

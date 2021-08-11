@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(ticker)
 	var/station_was_nuked = FALSE //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = FALSE //sit back and relax
 	var/nar_sie_has_risen = FALSE //check, if there is already one god in the world who was summoned (only for tomes)
+	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
