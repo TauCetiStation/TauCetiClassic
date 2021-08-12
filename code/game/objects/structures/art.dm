@@ -40,6 +40,7 @@
 	desc = "Draw out your soul on this canvas!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
+	w_class = SIZE_NORMAL
 	var/width = 11
 	var/height = 11
 	var/list/grid
