@@ -1856,10 +1856,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	id = null;
-	name = "Weapons locker"
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1868,6 +1864,9 @@
 	},
 /obj/item/weapon/gun/energy/ionrifle{
 	pixel_y = -3
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -2386,10 +2385,6 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/door/window/brigdoor{
-	id = null;
-	name = "Weapons locker"
-	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = 4
 	},
@@ -2398,6 +2393,9 @@
 	},
 /obj/item/weapon/gun/energy/gun{
 	pixel_y = -4
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -2408,16 +2406,15 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	id = null;
-	name = "Weapons locker"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/laser,
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -2432,15 +2429,13 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/door/window/brigdoor{
-	id = null;
-	name = "Weapons locker";
-	req_access = list(3)
-	},
 /obj/structure/rack,
 /obj/item/weapon/storage/box/flashbangs,
 /obj/item/weapon/storage/box/teargas,
 /obj/item/weapon/storage/box/teargas,
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3248,10 +3243,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	id = null;
-	name = "Weapons locker"
-	},
 /obj/item/ammo_box/magazine/plasma,
 /obj/item/ammo_box/magazine/plasma,
 /obj/item/weapon/gun/plasma/p104sass{
@@ -3259,6 +3250,9 @@
 	},
 /obj/item/weapon/gun/plasma{
 	pixel_y = -4
+	},
+/obj/machinery/door/window/brigdoor{
+	name = "Weapons locker"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -3270,17 +3264,16 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	id = null;
 	name = "Weapons locker"
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3291,12 +3284,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/item/weapon/gun/projectile/m79,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
-	id = null;
 	name = "Weapons locker"
 	},
-/obj/item/weapon/gun/projectile/m79,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -3553,16 +3545,15 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	id = null;
-	name = "Weapons locker"
-	},
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/ammo_box/shotgun/beanbag,
 /obj/item/weapon/storage/box/r4046/EMP,
 /obj/item/weapon/storage/box/r4046/rubber,
 /obj/item/weapon/storage/box/r4046/teargas,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -4761,15 +4752,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	id = null;
-	name = "Weapons locker"
-	},
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal{
 	pixel_y = 4
 	},
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
