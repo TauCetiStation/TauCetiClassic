@@ -8,6 +8,7 @@
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1
+	w_class = SIZE_MASSIVE
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -199,6 +200,10 @@
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] creature.\n"
+
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
