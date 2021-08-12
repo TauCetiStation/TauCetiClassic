@@ -49,6 +49,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
+	AddComponent(/datum/component/mood)
 	human_list += src
 
 	if(dna)

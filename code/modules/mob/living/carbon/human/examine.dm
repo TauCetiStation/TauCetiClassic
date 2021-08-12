@@ -522,7 +522,23 @@
 	if(!skipface && print_flavor_text())
 		msg += "[print_flavor_text()]\n"
 
+	var/datum/component/mood/mood = GetComponent(/datum/component/mood)
+	if(mood)
+		switch(mood.shown_mood)
+			if(-INFINITY to MOOD_LEVEL_SAD4)
+				msg += "[t_He] appears to be depressed."
+			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD3)
+				msg += "[t_He] appears to be very sad."
+			if(MOOD_LEVEL_SAD3 to MOOD_LEVEL_SAD2)
+				msg += "[t_He] appears to be a bit down."
+			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY3)
+				msg += "[t_He] appears to be quite happy."
+			if(MOOD_LEVEL_HAPPY3 to MOOD_LEVEL_HAPPY4)
+				msg += "[t_He] appears to be very happy."
+			if(MOOD_LEVEL_HAPPY4 to INFINITY)
+				msg += "[t_He] appears to be ecstatic."
 	msg += "*---------*</span><br>"
+
 	if(applying_pressure)
 		msg += applying_pressure
 	else if(busy_with_action)
