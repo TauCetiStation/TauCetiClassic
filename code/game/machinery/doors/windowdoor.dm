@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
+
 /obj/machinery/door/window
 	name = "interior door"
 	desc = "A strong door."
@@ -13,6 +15,8 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
 	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	// For use with door control buttons. Currently just that.
+	var/id = null
 
 /obj/machinery/door/window/atom_init()
 	. = ..()
@@ -396,7 +400,6 @@
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
 /obj/machinery/door/window/brigdoor/atom_init()
