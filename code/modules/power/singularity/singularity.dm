@@ -87,6 +87,9 @@
 	consume(A)
 	return
 
+/obj/singularity/proc/callback()
+	return TRUE
+
 /obj/singularity/process()
 	if(current_size >= STAGE_TWO)
 		move()

@@ -326,10 +326,11 @@ field_generator power level display
 	var/temp = TRUE //stops spam
 	for(var/obj/singularity/O in poi_list)
 		if(O.last_warning && temp)
-			if((world.time - O.last_warning) > 50) //to stop message-spam
-				temp = FALSE
-				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
-				log_investigate("has <font color='red'>failed</font> whilst a singulo exists.",INVESTIGATE_SINGULO)
+			if(O.callback())
+				if((world.time - O.last_warning) > 50) //to stop message-spam
+					temp = FALSE
+					message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
+					log_investigate("has <font color='red'>failed</font> whilst a singulo exists.",INVESTIGATE_SINGULO)
 		O.last_warning = world.time
 
 
