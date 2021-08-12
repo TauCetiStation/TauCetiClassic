@@ -320,6 +320,11 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/painting_frame))
+		var/obj/item/painting_frame/AH = W
+		AH.try_build(src)
+		return
+
 	//Poster stuff
 	else if(istype(W,/obj/item/weapon/poster))
 		place_poster(W,user)
