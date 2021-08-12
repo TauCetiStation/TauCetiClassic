@@ -87,7 +87,7 @@
 	consume(A)
 	return
 
-/obj/singularity/proc/callback()
+/obj/singularity/proc/singularity_admin_callback()
 	return TRUE
 
 /obj/singularity/process()
