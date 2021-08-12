@@ -3,7 +3,7 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 1000
 	fire_delay = 0
 	recoil = 1

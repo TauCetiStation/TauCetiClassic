@@ -76,6 +76,7 @@
 	attacktext = "discharg"
 	attack_sound = list('sound/weapons/blaster.ogg')
 	faction = "bluespace"
+	w_class = SIZE_HUMAN
 	health = 32
 	maxHealth = 32
 	melee_damage = 8

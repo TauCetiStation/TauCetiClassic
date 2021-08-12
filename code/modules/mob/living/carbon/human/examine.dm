@@ -238,12 +238,6 @@
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
 
-	if(SMALLSIZE in mutations)
-		if(gnomed)
-			msg += "[t_He] [t_is] a gnome!\n"
-		else
-			msg += "[t_He] [t_is] a small halfling!\n"
-
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
@@ -518,6 +512,9 @@
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
+
+	if(w_class)
+		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
 
 	if(!skipface && print_flavor_text())
 		msg += "[print_flavor_text()]\n"

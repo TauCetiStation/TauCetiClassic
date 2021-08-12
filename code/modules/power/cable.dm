@@ -413,7 +413,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = COLOR_WHITE
 	desc = "A coil of power cable."
 	throwforce = 10
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 50
@@ -424,7 +424,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	hitsound = list('sound/items/tools/cable-slap.ogg')
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
-	full_w_class = ITEM_SIZE_SMALL
+	full_w_class = SIZE_TINY
 	merge_type = /obj/item/stack/cable_coil
 
 /obj/item/stack/cable_coil/cyborg
