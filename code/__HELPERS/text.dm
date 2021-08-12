@@ -217,6 +217,10 @@
 		t = "[t] "
 	return t
 
+/proc/repeat_string_times(t, u)
+	for(var/i in 1 to u)
+		. += t
+
 // Returns a string with reserved characters and spaces before the first letter removed
 // not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_left(text)

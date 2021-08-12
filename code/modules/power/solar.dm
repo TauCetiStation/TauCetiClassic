@@ -189,7 +189,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "sp_base"
 	item_state = "electropack"
-	w_class = ITEM_SIZE_LARGE // Pretty big!
+	w_class = SIZE_NORMAL // Pretty big!
 	anchored = FALSE
 	var/tracker = 0
 	var/glass_type = null
