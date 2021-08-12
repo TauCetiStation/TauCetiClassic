@@ -983,7 +983,6 @@
 				malf_ai.AI_malf_revealed = 4
 				var/datum/announcement/centcomm/malf/fourth/announce_forth = new
 				announce_forth.play()
-				malf_ai.takeover()
 ////////////////////////////////
 
 
