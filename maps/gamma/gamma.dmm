@@ -33512,7 +33512,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	name = "Weapons locker";
-	req_access = list(3)
+	req_access = list(2)
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -34461,7 +34461,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	name = "Weapons locker";
-	req_access = list(3)
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -44515,7 +44515,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker";
-	req_access = list(3)
+	req_access = list(2)
 	},
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
@@ -67251,7 +67251,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker";
-	req_access = list(3)
+	req_access = list(2)
 	},
 /obj/item/clothing/suit/armor/laserproof,
 /obj/item/clothing/suit/armor/laserproof,
@@ -68430,7 +68430,7 @@
 	},
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker";
-	req_access = list(3)
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -69685,7 +69685,7 @@
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	name = "Weapons locker";
-	req_access = list(3)
+	req_access = list(2)
 	},
 /turf/simulated/floor{
 	dir = 8;
