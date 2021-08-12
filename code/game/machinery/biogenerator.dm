@@ -173,6 +173,11 @@
 			dat += "Medium generic pouch: <A href='?src=\ref[src];action=create;item=mpounch'>Make</A> ([500/efficiency])<BR>"
 			dat += "Large generic pouch: <A href='?src=\ref[src];action=create;item=lpounch'>Make</A> ([1000/efficiency])<BR>"
 			dat += "</div>"
+			dat += "<h3>Miscellanous:</h3>"
+			dat += "<div class='Section'>"
+			dat += "Rags: <A href='?src=\ref[src];action=create;item=rags'>Make</A><A href='?src=\ref[src];action=create;item=rags5'>x5</A> ([40/efficiency])<BR>"
+			dat += "Cloth: <A href='?src=\ref[src];action=create;item=cloth'>Make</A><A href='?src=\ref[src];action=create;item=cloth5'>x5</A> ([200/efficiency])<BR>"
+			dat += "</div>"
 		else
 			dat += "<div class='Section'>No beaker inside, please insert beaker.</div>"
 
@@ -341,6 +346,18 @@
 		if("overcoat")
 			if (check_cost(1000/efficiency)) return 0
 			else new/obj/item/clothing/suit/jacket/leather/overcoat(src.loc)
+		if("rags")
+			if (check_cost(40/efficiency)) return 0
+			else new/obj/item/stack/medical/bruise_pack/rags(src.loc)
+		if("cloth")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/stack/sheet/cloth(src.loc)
+		if("rags5")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/stack/medical/bruise_pack/rags(src.loc, 5)
+		if("cloth5")
+			if (check_cost(1000/efficiency)) return 0
+			else new/obj/item/stack/sheet/cloth(src.loc, 5)
 	processing = 0
 	menustat = "complete"
 	update_icon()

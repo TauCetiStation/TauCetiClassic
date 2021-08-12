@@ -135,19 +135,21 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /*
  * Wood
  */
-var/global/list/datum/stack_recipe/wood_recipes = list ( \
-	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
-	new/datum/stack_recipe("condiment shelf", /obj/item/weapon/condiment_shelf, 5, time = 15), \
-	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
-	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
-	new/datum/stack_recipe("fancy table parts", /obj/item/weapon/table_parts/wood/fancy, 2), \
-	new/datum/stack_recipe("black fancy table parts", /obj/item/weapon/table_parts/wood/fancy/black, 2), \
-	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("bonfire", /obj/structure/bonfire/dynamic, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("wooden picture frame", /obj/item/weapon/picture_frame/wooden, 1, time = 15)
+var/global/list/datum/stack_recipe/wood_recipes = list (
+	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1),
+	new/datum/stack_recipe("condiment shelf", /obj/item/weapon/condiment_shelf, 5, time = 15),
+	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20),
+	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2),
+	new/datum/stack_recipe("fancy table parts", /obj/item/weapon/table_parts/wood/fancy, 2),
+	new/datum/stack_recipe("black fancy table parts", /obj/item/weapon/table_parts/wood/fancy/black, 2),
+	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("bonfire", /obj/structure/bonfire/dynamic, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("wooden picture frame", /obj/item/weapon/picture_frame/wooden, 1, time = 15),
+	new/datum/stack_recipe("painting frame", /obj/item/painting_frame, 2, time = 15),
+	new/datum/stack_recipe("painting easel", /obj/structure/easel, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = FALSE, on_floor = FALSE)
 	)
 
@@ -171,12 +173,23 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 /*
  * Cloth
  */
+var/global/list/datum/stack_recipe/cloth_recipes = list (
+	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags, 1, 5, 25, 15),
+	null,
+	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, time = 30),
+	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, time = 30),
+	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, time = 30),
+	)
 /obj/item/stack/sheet/cloth
 	name = "cloth"
 	desc = "This roll of cloth is made from only the finest chemicals and bunny rabbits."
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
+
+/obj/item/stack/sheet/cloth/atom_init()
+	recipes = cloth_recipes
+	. = ..()
 
 /*
  * Cardboard

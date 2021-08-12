@@ -90,7 +90,7 @@
 	if(gibbed)
 		var/list/pos_turfs = RANGE_TURFS(3, src)
 		for(var/i in 1 to 5)
-			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src), null, null, FALSE)
+			var/obj/item/stack/sheet/cloth/R = new(get_turf(src))
 			R.color = color
 			var/turf/target = pick(pos_turfs)
 			R.throw_at(target, 3, 2)
