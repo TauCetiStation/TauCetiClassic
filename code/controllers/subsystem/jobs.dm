@@ -1,3 +1,6 @@
+// If there are more than this much players, critical occupations must be fulfilled.
+#define MIN_CRITICAL_OCUPATIONS_PLAYER_AMOUNT 15
+
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
 
@@ -384,12 +387,16 @@ SUBSYSTEM_DEF(job)
 			unassigned -= player
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
 
+	// If there is less than a certain amount of players, don't care about fulfilling all critical roles.
+	if(player_list.len < MIN_CRITICAL_OCUPATIONS_PLAYER_AMOUNT)
+		return TRUE
+
 	// If there wasn't some important role, and there are enough players to fulfill all roles -
 	// Round shouldn't start.
 	if(critical_unfulfilled.len > 0 && player_list.len >= total_critical_occupations)
 		return FALSE
 
-	return 1
+	return TRUE
 
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/living/carbon/human/H, rank, joined_late=0)
@@ -750,3 +757,5 @@ SUBSYSTEM_DEF(job)
 	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = "LEFT+1,BOTTOM+2"
+
+#undef MIN_CRITICAL_OCUPATIONS_PLAYER_AMOUNT
