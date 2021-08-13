@@ -89,6 +89,7 @@
 			if(abs(event.mood_change) < abs(most_important.mood_change * 0.25))
 				continue
 			shown += 1
+			msg += event.description
 
 	else
 		msg += "<span class='notice'>I don't have much of a reaction to anything right now.\n</span>"
