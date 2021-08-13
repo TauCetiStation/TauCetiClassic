@@ -441,9 +441,6 @@
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	// apperantly there can be a drop with no user :shrug:
-	if(user)
-		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 	if(flags & DROPDEL)
 		qdel(src)
 	set_alt_apperances_layers()
