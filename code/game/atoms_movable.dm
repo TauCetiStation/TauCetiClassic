@@ -370,13 +370,13 @@
 /atom/movable/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
 	if(AM.area_sensitive_contents)
-		for(var/atom/movable/location in get_nested_locs(src) + src)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYREMOVE(location.area_sensitive_contents, AM.area_sensitive_contents)
 
 /atom/movable/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
 	if(AM.area_sensitive_contents)
-		for(var/atom/movable/location in get_nested_locs(src) + src)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADD(location.area_sensitive_contents, AM.area_sensitive_contents)
 
 /// See traits.dm. Use this in place of ADD_TRAIT.

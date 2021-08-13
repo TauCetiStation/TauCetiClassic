@@ -233,8 +233,6 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
 #define COMSIG_MOB_EQUIPPED "mob_equipped"
-///from base of item/dropped(): (obj/item/I)
-#define COMSIG_MOB_DROPPED "mob_dropped"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
