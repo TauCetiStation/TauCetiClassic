@@ -5,6 +5,8 @@
 
 	required_pref = ROLE_WIZARD
 
+	restricted_jobs = list("Head of Security", "Captain")
+
 	antag_hud_type = ANTAG_HUD_WIZ
 	antag_hud_name = "hudwizard"
 

@@ -2,6 +2,8 @@
 	disallow_job = TRUE
 	required_pref = ROLE_ABDUCTOR
 
+	restricted_jobs = list("Head of Security", "Captain")
+
 	antag_hud_type = ANTAG_HUD_ABDUCTOR
 	antag_hud_name = "abductor"
 

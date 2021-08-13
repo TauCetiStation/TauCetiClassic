@@ -4,6 +4,8 @@
 	required_pref = ROLE_ALIEN
 	disallow_job = TRUE
 
+	restricted_jobs = list("Head of Security", "Captain")
+
 	antag_hud_type = ANTAG_HUD_ALIEN
 	antag_hud_name = "hudalien"
 

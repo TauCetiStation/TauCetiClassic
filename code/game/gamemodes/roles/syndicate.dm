@@ -8,6 +8,8 @@
 	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "hudsyndicate"
 
+	restricted_jobs = list("Head of Security", "Captain")
+
 	logo_state = "nuke-logo"
 
 	var/nuclear_outfit = /datum/outfit/nuclear

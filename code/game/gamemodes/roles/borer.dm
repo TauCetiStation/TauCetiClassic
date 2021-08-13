@@ -3,6 +3,8 @@
 	id = BORER
 	disallow_job = TRUE
 
+	restricted_jobs = list("Head of Security", "Captain")
+
 	logo_state = "borer-logo"
 
 /datum/role/borer/Greet(greeting, custom)

@@ -7,7 +7,7 @@
 	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "hudninja"
 
-	restricted_jobs = list("Cyborg", "AI")
+	restricted_jobs = list("Cyborg", "AI", "Captain", "Head of Security")
 	logo_state = "ninja-logo"
 
 /datum/role/ninja/OnPostSetup(laterole)

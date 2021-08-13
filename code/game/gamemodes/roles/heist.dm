@@ -4,6 +4,8 @@
 	required_pref = ROLE_RAIDER
 	disallow_job = TRUE
 
+	restricted_jobs = list("Head of Security", "Captain")
+
 	logo_state = "raider-logo"
 
 /datum/role/vox_raider/Greet(greeting, custom)
