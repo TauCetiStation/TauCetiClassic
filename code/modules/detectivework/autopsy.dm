@@ -9,7 +9,7 @@
 	icon_state = "autopsy_main"
 	item_state = "autopsy"
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "materials=1;biotech=1"
 	var/list/datum/autopsy_body_part/organs = list()
 	var/list/datum/autopsy_body_part/chemtraces = list()

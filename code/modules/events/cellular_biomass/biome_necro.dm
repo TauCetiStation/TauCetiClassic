@@ -62,6 +62,7 @@
 	desc = "This thing is fast!"
 	icon = 'icons/obj/structures/cellular_biomass/necromorphs.dmi'
 	faction = "necro"
+	w_class = SIZE_HUMAN
 	health = 60
 	maxHealth = 60
 	melee_damage = 15
