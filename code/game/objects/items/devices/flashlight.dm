@@ -4,7 +4,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 50
@@ -114,7 +114,7 @@
 	flags = CONDUCT
 	button_sound = 'sound/items/penlight.ogg'
 	brightness_on = 2
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 /obj/item/device/flashlight/drone
 	name = "low-power flashlight"
@@ -123,7 +123,7 @@
 	item_state = ""
 	flags = CONDUCT
 	brightness_on = 2
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 
 
 // the desk lamps are a bit special
@@ -134,7 +134,7 @@
 	item_state = "lamp"
 	button_sound = 'sound/items/buttonclick.ogg'
 	brightness_on = 4
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	flags = CONDUCT
 	m_amt = 0
 	g_amt = 0
@@ -166,7 +166,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	brightness_on = 4
 	icon_state = "flare"
 	item_state = "flare"
@@ -240,7 +240,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	m_amt = 0
 	g_amt = 0
 	brightness_on = 6

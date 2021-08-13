@@ -113,7 +113,7 @@
 	item_state = "arm_blade"
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	force = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0

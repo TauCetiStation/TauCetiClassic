@@ -444,7 +444,7 @@
 
 		if(isitem(item))
 			var/obj/item/O = item
-			if(O.w_class >= ITEM_SIZE_NORMAL)
+			if(O.w_class >= SIZE_SMALL)
 				playsound(loc, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 
 		do_attack_animation(target, has_effect = FALSE)
@@ -815,7 +815,7 @@
 			item_to_add = null
 
 		if(item_to_add && get_slot_ref(slot))
-			if(item_to_add.w_class > ITEM_SIZE_SMALL)
+			if(item_to_add.w_class > SIZE_TINY)
 				to_chat(usr, "<span class='red'>[src] is already wearing something. You need empty hand to take that off (or holding small item).</span>")
 				return
 			item_to_add = null
