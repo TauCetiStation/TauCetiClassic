@@ -79,7 +79,7 @@
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))
 			var/obj/item/I = x
-			if(I && !(I.flags & ABSTRACT) && I.w_class >= ITEM_SIZE_NORMAL)
+			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
 				tally += 0.5 * (I.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
 
 	if(shock_stage >= 10)

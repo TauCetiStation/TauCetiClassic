@@ -4,8 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_TINY
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_MINUSCULE
+	full_w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
 
@@ -331,8 +331,8 @@
 	item_state = "splint"
 	amount = 5
 	max_amount = 5
-	w_class = ITEM_SIZE_SMALL
-	full_w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
+	full_w_class = SIZE_TINY
 
 	self_delay = 50
 	other_delay = 25

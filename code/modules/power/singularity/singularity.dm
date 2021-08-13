@@ -9,7 +9,8 @@
 	appearance_flags = 0
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
-	var/current_size = 1
+	w_class = SIZE_MASSIVE
+	var/current_size = 1 // todo: merge with w_class
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
 	var/energy = 100 //How strong are we?
@@ -126,6 +127,7 @@
 	switch(temp_allowed_size)
 		if(STAGE_ONE)
 			current_size = STAGE_ONE
+			w_class = SIZE_HUMAN
 			icon = 'icons/obj/singularity.dmi'
 			icon_state = "singularity_s1"
 			pixel_x = 0
@@ -137,6 +139,7 @@
 			dissipate_strength = 1
 		if(STAGE_TWO)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
 			current_size = STAGE_TWO
+			w_class = SIZE_MASSIVE
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
 			pixel_x = -32
@@ -149,6 +152,7 @@
 		if(STAGE_THREE)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 				current_size = STAGE_THREE
+				w_class = SIZE_GYGANT
 				icon = 'icons/effects/160x160.dmi'
 				icon_state = "singularity_s5"
 				pixel_x = -64
@@ -161,6 +165,7 @@
 		if(STAGE_FOUR)
 			if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
 				current_size = STAGE_FOUR
+				w_class = SIZE_GARGANTUAN
 				icon = 'icons/effects/224x224.dmi'
 				icon_state = "singularity_s7"
 				pixel_x = -96
@@ -172,6 +177,7 @@
 				dissipate_strength = 10
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
+			w_class = SIZE_GARGANTUAN
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
 			pixel_x = -128

@@ -16,6 +16,8 @@
 
 	var/moving_diagonally = 0
 
+	var/w_class = 0
+
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0
@@ -370,20 +372,20 @@
 /atom/movable/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
 	if(AM.area_sensitive_contents)
-		for(var/atom/movable/location in get_nested_locs(src) + src)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYREMOVE(location.area_sensitive_contents, AM.area_sensitive_contents)
 
 /atom/movable/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
 	if(AM.area_sensitive_contents)
-		for(var/atom/movable/location in get_nested_locs(src) + src)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADD(location.area_sensitive_contents, AM.area_sensitive_contents)
 
 /// See traits.dm. Use this in place of ADD_TRAIT.
 /atom/movable/proc/become_area_sensitive(trait_source = GENERIC_TRAIT)
 	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
-		for(var/atom/movable/location in get_nested_locs(src) + src)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 			LAZYADD(location.area_sensitive_contents, src)
 	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
 
@@ -391,5 +393,39 @@
 	SIGNAL_HANDLER
 
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
-	for(var/atom/movable/location in get_nested_locs(src) + src)
+	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVE(location.area_sensitive_contents, src)
+/* Sizes stuff */
+
+/atom/movable/proc/get_size_flavor()
+	switch(w_class)
+		if(SIZE_MINUSCULE)
+			. = "minuscule"
+		if(SIZE_TINY)
+			. = "tiny"
+		if(SIZE_SMALL)
+			. = "small"
+		if(SIZE_NORMAL to SIZE_LARGE)
+			. = "medium"
+		if(SIZE_HUMAN)
+			. = "human"
+		if(SIZE_BIG_HUMAN to SIZE_MASSIVE)
+			. = "huge"
+		if(SIZE_GYGANT to SIZE_GARGANTUAN)
+			. = "gygant"
+		else
+			. = "unknown"
+
+	. = EMBED_TIP_MINI(., repeat_string_times("*", w_class))
+
+// This proc guarantees no mouse vs queen tomfuckery.
+/atom/movable/proc/is_bigger_than(mob/living/target)
+	if(w_class - target.w_class >= 3)
+		return TRUE
+	return FALSE
+
+/proc/get_size_ratio(atom/movable/dividend, atom/movable/divisor)
+	return (dividend.w_class / divisor.w_class)
+
+/atom/movable/proc/update_size_class()
+	return w_class
