@@ -12,6 +12,10 @@ SUBSYSTEM_DEF(job)
 	var/list/job_debug = list()			//Debug info
 	var/obj/effect/landmark/start/fallback_landmark
 
+	// Amount of each job there needs to be for a round to start.
+	// If there isn't enough players to satisfy all of these, round starts anyway.
+	// TO-DO: make datum/occupation_requirement with more flexible requirements than just an amount of a job?
+	// (e.g.: you don't need a captain for a round of 3 people) ~Luduk
 	var/static/list/critical_occupations = list(
 		"Captain" = 1,
 		"Head of Security" = 1,
