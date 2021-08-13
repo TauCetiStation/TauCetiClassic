@@ -19,7 +19,6 @@ SUBSYSTEM_DEF(job)
 	var/static/list/critical_occupations = list(
 		"Captain" = 1,
 		"Head of Security" = 1,
-		"Internal Affairs Agent" = 1,
 	)
 	var/list/critical_unfulfilled = list()
 
