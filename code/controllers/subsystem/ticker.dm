@@ -95,6 +95,10 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				if(start_ASAP)
+					message_admins("<font color='blue'>Due to setup failure, the game will begin as normal.</font>")
+
+					start_ASAP = FALSE
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -215,7 +219,7 @@ SUBSYSTEM_DEF(ticker)
 			else
 				unfulfilled += ", [position]([SSjob.critical_occupations[position]])"
 
-		to_chat(world, "<B>Error setting up the round. Some critical position has been unfulfilled: [unfulfilled].</B> Reverting to pre-game lobby.")
+		to_chat(world, "<B>Error setting up the round. Some critical positions have been unfulfilled: [unfulfilled].</B> Reverting to pre-game lobby.")
 		SSjob.ResetOccupations()
 		return FALSE
 
