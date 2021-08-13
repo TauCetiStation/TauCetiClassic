@@ -201,19 +201,33 @@ SUBSYSTEM_DEF(ticker)
 		QDEL_NULL(mode)
 		current_state = GAME_STATE_PREGAME
 		SSjob.ResetOccupations()
-		return 0
+		return FALSE
 
 	//Configure mode and assign player to special mode stuff
-	SSjob.DivideOccupations() //Distribute jobs
-	var/can_continue = mode.Setup() //Setup special modes
-	if(!can_continue)
+	//Distribute jobs
+	if(!SSjob.DivideOccupations())
+		// Some important condition wasn't fulfilled, such as no captain in round.
+		current_state = GAME_STATE_PREGAME
+		var/unfulfilled = ""
+		for(var/position in SSjob.critical_occupations)
+			if(unfulfilled == "")
+				unfulfilled += "[position]([SSjob.critical_occupations[position]])"
+			else
+				unfulfilled += ", [position]([SSjob.critical_occupations[position]])"
+
+		to_chat(world, "<B>Error setting up the round. Some critical position has been unfulfilled: [unfulfilled].</B> Reverting to pre-game lobby.")
+		SSjob.ResetOccupations()
+		return FALSE
+
+	//Setup special modes
+	if(!mode.Setup())
 		current_state = GAME_STATE_PREGAME
 		to_chat(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
 		log_admin("The gamemode setup for [mode.name] errored out.")
 		world.log << "The gamemode setup for [mode.name] errored out."
 		QDEL_NULL(mode)
 		SSjob.ResetOccupations()
-		return 0
+		return FALSE
 
 	if(!bundle || !bundle.hidden)
 		mode.announce()

@@ -12,6 +12,12 @@ SUBSYSTEM_DEF(job)
 	var/list/job_debug = list()			//Debug info
 	var/obj/effect/landmark/start/fallback_landmark
 
+	var/static/list/critical_occupations = list(
+		"Captain" = 1,
+		"Head of Security" = 1,
+		"Internal Affairs Agent" = 1,
+	)
+
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
 	init_joblist()
@@ -80,6 +86,10 @@ SUBSYSTEM_DEF(job)
 		player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 		unassigned -= player
 		job.current_positions++
+		if(critical_occupations[rank])
+			critical_occupations[rank] -= 1
+			if(critical_occupations[rank] <= 0)
+				critical_occupations -= rank
 		return 1
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
@@ -245,6 +255,10 @@ SUBSYSTEM_DEF(job)
 	Debug("Running DO")
 	SetupOccupations()
 
+	var/total_critical_occupations = 0
+	for(var/occupation in critical_occupations)
+		total_critical_occupations += critical_occupations[occupation]
+
 	//Holder for Triumvirate is stored in the ticker, this just processes it
 	if(SSticker)
 		for(var/datum/job/ai/A in occupations)
@@ -363,6 +377,12 @@ SUBSYSTEM_DEF(job)
 			player.client << output(player.ready, "lobbybrowser:imgsrc")
 			unassigned -= player
 			to_chat(player, "<span class='alert bold'>You were returned to the lobby because your job preferences unavailable.  You can change this behavior in preferences.</span>")
+
+	// If there wasn't some important role, and there are enough players to fulfill all roles -
+	// Round shouldn't start.
+	if(critical_occupations.len > 0 && player_list.len > total_critical_occupations)
+		return FALSE
+
 	return 1
 
 //Gives the player the stuff he should have with his rank
