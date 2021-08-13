@@ -21,6 +21,7 @@ SUBSYSTEM_DEF(job)
 		"Head of Security" = 1,
 		"Internal Affairs Agent" = 1,
 	)
+	var/list/critical_unfulfilled = list()
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	SSmapping.LoadMapConfig() // Required before SSmapping initialization so we can modify the jobs
@@ -90,10 +91,10 @@ SUBSYSTEM_DEF(job)
 		player.mind.role_alt_title = GetPlayerAltTitle(player, rank)
 		unassigned -= player
 		job.current_positions++
-		if(critical_occupations[rank])
-			critical_occupations[rank] -= 1
-			if(critical_occupations[rank] <= 0)
-				critical_occupations -= rank
+		if(critical_unfulfilled[rank])
+			critical_unfulfilled[rank] -= 1
+			if(critical_unfulfilled[rank] <= 0)
+				critical_unfulfilled -= rank
 		return 1
 	Debug("AR has failed, Player: [player], Rank: [rank]")
 	return 0
@@ -171,6 +172,7 @@ SUBSYSTEM_DEF(job)
 			player.mind.assigned_job = null
 			player.mind.special_role = null
 	SetupOccupations()
+	critical_unfulfilled = list()
 	unassigned = list()
 	return
 
@@ -262,6 +264,7 @@ SUBSYSTEM_DEF(job)
 	var/total_critical_occupations = 0
 	for(var/occupation in critical_occupations)
 		total_critical_occupations += critical_occupations[occupation]
+		critical_unfulfilled[occupation] = critical_occupations[occupation]
 
 	//Holder for Triumvirate is stored in the ticker, this just processes it
 	if(SSticker)
@@ -384,7 +387,7 @@ SUBSYSTEM_DEF(job)
 
 	// If there wasn't some important role, and there are enough players to fulfill all roles -
 	// Round shouldn't start.
-	if(critical_occupations.len > 0 && player_list.len > total_critical_occupations)
+	if(critical_unfulfilled.len > 0 && player_list.len >= total_critical_occupations)
 		return FALSE
 
 	return 1
