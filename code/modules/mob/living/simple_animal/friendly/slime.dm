@@ -34,6 +34,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
+	w_class = SIZE_HUMAN
 	var/colour = "grey"
 
 	typing_indicator_type = "slime"

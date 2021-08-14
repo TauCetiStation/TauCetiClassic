@@ -8,7 +8,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
 
 	//Main variables
@@ -650,6 +650,7 @@
 		if ("Authenticate")//Checks for ID
 			id_check(U, 1)
 		if("UpdateInfo")
+			owner = id.registered_name
 			ownjob = id.assignment
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head

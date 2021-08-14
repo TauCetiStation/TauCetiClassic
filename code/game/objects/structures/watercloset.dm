@@ -83,10 +83,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
 	if(cistern)
-		if(I.w_class > ITEM_SIZE_NORMAL)
+		if(I.w_class > SIZE_SMALL)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
-		if(w_items + I.w_class > ITEM_SIZE_HUGE)
+		if(w_items + I.w_class > SIZE_BIG)
 			to_chat(user, "<span class='notice'>The cistern is full.</span>")
 			return
 		user.drop_from_inventory(I, src)
