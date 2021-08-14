@@ -14,7 +14,6 @@
 		new /obj/item/weapon/grenade/flashbang(src)
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/handcuffs(src)
-	for (var/i in 1 to 3)
 		new /obj/item/ammo_box/magazine/m556(src)
 
 /datum/outfit/families_police/beatcop
