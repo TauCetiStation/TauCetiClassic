@@ -2,6 +2,7 @@
 	density = TRUE
 	layer = 4.0
 	animate_movement = 2
+	w_class = SIZE_LARGE
 //	flags = NOREACT
 	var/datum/mind/mind
 
@@ -87,7 +88,6 @@
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
-	var/small = 0
 	var/list/pinned = list()            // List of things pinning this creature to walls (see living_defense.dm)
 	var/list/embedded = list()          // Embedded items, since simple mobs don't have organs.
 	var/list/languages = list()         // For speaking/listening.
@@ -162,6 +162,18 @@
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
 	var/captured = 0 //Functionally, should give the same effect as being buckled into a chair when true.
+
+	// Determines how mood affects actionspeed.
+	// If ever used by anything else but mood, please
+	// port /datum/actionspeed_modifier system from /tg.
+	// The value is multiplicative.
+	var/mood_multiplicative_actionspeed_modifier = 0.0
+	// Determines how mood affects movespeed.
+	// used only in humans, because mood only is.
+	// If ever used by anything else but mood, please
+	// port /datum/movespeed_modifier system from /tg.
+	// The value is additive.
+	var/mood_additive_speed_modifier = 0.0
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.

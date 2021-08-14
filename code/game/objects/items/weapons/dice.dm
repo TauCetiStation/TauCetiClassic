@@ -6,7 +6,7 @@
 	desc = "A die with six sides. Basic and servicable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	var/sides = 6
 	var/result
 	var/accursed_type = /obj/item/weapon/dice/ghost

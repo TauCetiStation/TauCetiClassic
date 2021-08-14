@@ -285,7 +285,7 @@
 	item_state = "bucket"
 	m_amt = 200
 	g_amt = 0
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,20,30,50,70)
 	volume = 70

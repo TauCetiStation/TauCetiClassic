@@ -128,6 +128,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	icon_state = "1"
 	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
+	flags = ABSTRACT
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()
 

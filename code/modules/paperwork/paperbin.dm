@@ -4,7 +4,7 @@
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 3
 	throw_range = 7
 	var/amount = 30 // How much paper is in the bin.
