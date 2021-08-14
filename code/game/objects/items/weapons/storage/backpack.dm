@@ -178,6 +178,11 @@
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
 
+/obj/item/weapon/storage/backpack/satchel/sec/cops
+	name = "police satchel"
+	desc = "A robust satchel for police related needs."
+	icon_state = "satchel-cops"
+
 /obj/item/weapon/storage/backpack/satchel/hyd
 	name = "hydroponics satchel"
 	desc = "A green satchel for plant related work."
