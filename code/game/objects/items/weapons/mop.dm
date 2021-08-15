@@ -7,7 +7,7 @@
 	throwforce = 10.0
 	throw_speed = 5
 	throw_range = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 
 	sweep_step = 4
@@ -65,7 +65,7 @@
 		var/obj/item/I = target
 		if(I.anchored)
 			return
-		if(I.w_class <= ITEM_SIZE_NORMAL)
+		if(I.w_class <= SIZE_SMALL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
@@ -80,7 +80,7 @@
 			continue
 		if(I.anchored)
 			continue
-		if(I.w_class <= ITEM_SIZE_NORMAL)
+		if(I.w_class <= SIZE_SMALL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)
@@ -95,7 +95,7 @@
 			continue
 		if(I.anchored)
 			continue
-		if(I.w_class <= ITEM_SIZE_NORMAL)
+		if(I.w_class <= SIZE_SMALL)
 			var/obj/item/weapon/storage/bag/trash/TR = user.get_inactive_hand()
 			if(istype(TR) && TR.can_be_inserted(I))
 				TR.handle_item_insertion(I, prevent_warning = TRUE)

@@ -86,7 +86,7 @@
 	force = 10
 	hitsound = list('sound/items/chair_fall.ogg')
 	throwforce = 10
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	var/obj/structure/stool/origin_stool = null
 
 /obj/item/weapon/stool/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)

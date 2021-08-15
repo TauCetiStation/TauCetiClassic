@@ -36,6 +36,6 @@ BONUS
 			else
 				M.emote("cough")
 				var/obj/item/I = M.get_active_hand()
-				if(I && I.w_class < ITEM_SIZE_NORMAL)
+				if(I && I.w_class < SIZE_SMALL)
 					M.drop_item()
 	return

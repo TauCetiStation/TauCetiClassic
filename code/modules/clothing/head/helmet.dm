@@ -11,7 +11,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	force = 5
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 
@@ -159,7 +159,7 @@
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
-	icon_state = "oldwardenhelm"
+	icon_state = "policehelm"
 	item_state = "helmet"
 	force = 0
 	hitsound = list()
